@@ -1,0 +1,69 @@
+/**
+ * Login css.
+ *
+ * This file is part of MeTools.
+ *
+ * MeTools is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * MeTools is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MeTools.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @package		MeCms\webroot\css
+ */
+
+/* Body */
+body {
+	background: #eee;
+	padding-top: 60px;
+}
+
+/* Form */
+#content .form {
+	background: #f8f8f8;
+	border-radius: 5px;
+    box-shadow: 0 3px 6px -6px #000;
+    margin: auto;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* Form, alert message */
+#content .form .alert {
+	margin-bottom: 10px;
+	padding: 10px 8px;
+}
+
+/* Form, alert message, close button */
+#content .form .alert .close {
+	line-height: .9;
+}
+
+/* Form, input div */
+#content .form .form-group {
+	margin-bottom: 5px;
+}
+
+/* Form, input div, input */
+#content .form .form-group input {
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}
+
+/* Form, input div, input on focus */
+#content .form .form-group input:focus {
+	border-color: #66AFE9;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
+}

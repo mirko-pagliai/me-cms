@@ -1,0 +1,1 @@
+cake schema create -p MeCms -y

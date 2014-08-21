@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="ApiGen 2.8.0">
+
+	<title>Class MeCmsAppController | MeCms</title>
+
+	<script type="text/javascript" src="resources/combined.js?117538352"></script>
+	<script type="text/javascript" src="elementlist.js?236406270"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+		</div>
+
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
+				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
+				<li><a href="class-Page.html">Page</a></li>
+				<li><a href="class-PagesController.html">PagesController</a></li>
+				<li><a href="class-Post.html">Post</a></li>
+				<li><a href="class-PostsCategoriesController.html">PostsCategoriesController</a></li>
+				<li><a href="class-PostsCategory.html">PostsCategory</a></li>
+				<li><a href="class-PostsController.html">PostsController</a></li>
+				<li><a href="class-User.html">User</a></li>
+				<li><a href="class-UsersController.html">UsersController</a></li>
+				<li><a href="class-UsersGroup.html">UsersGroup</a></li>
+				<li><a href="class-UsersGroupsController.html">UsersGroupsController</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text">
+		<input type="submit" value="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+			<li>
+				<a href="todo.html" title="Todo list"><span>Todo</span></a>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="mecms-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
+			</li>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class MeCmsAppController</h1>
+
+
+	<div class="description">
+	
+<p>Application level controller.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+MeToolsAppController
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MeCmsAppController</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-PagesController.html">PagesController</a>, 
+			<a href="class-PostsCategoriesController.html">PostsCategoriesController</a>, 
+			<a href="class-PostsController.html">PostsController</a>, 
+			<a href="class-UsersController.html">UsersController</a>, 
+			<a href="class-UsersGroupsController.html">UsersGroupsController</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		
+
+		<b>Located at</b> <a href="source-class-MeCmsAppController.html#29-98" title="Go to source code">MeCmsAppController.php</a><br>
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="_loadConfig" id="__loadConfig">
+
+		<td class="attributes"><code>
+			 private 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__loadConfig">#</a>
+		<code><a href="source-class-MeCmsAppController.html#58-71" title="Go to source code">_loadConfig</a>( )</code>
+
+		<div class="description short">
+			
+<p>Loads the configuration file The file will be searched before in the APP
+(<code>app/Config</code>). If not available, it will be loaded by the plugin
+(<code>app/Plugin/MeCms/Config</code>)</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Loads the configuration file The file will be searched before in the APP
+(<code>app/Config</code>). If not available, it will be loaded by the plugin
+(<code>app/Plugin/MeCms/Config</code>)</p>
+
+
+
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>InternalErrorException</code><br>
+				</div>
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code></code><br>to load the configuration file<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeFilter" id="_beforeFilter">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeFilter">#</a>
+		<code><a href="source-class-MeCmsAppController.html#73-83" title="Go to source code">beforeFilter</a>( )</code>
+
+		<div class="description short">
+			
+<p>Called before the controller action. It's used to perform logic before each
+controller action.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Called before the controller action. It's used to perform logic before each
+controller action.</p>
+
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-MeCmsAppController.html#__loadConfig">MeCmsAppController::_loadConfig()</a></code></code><br>to load the configuration file<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeRender" id="_beforeRender">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeRender">#</a>
+		<code><a href="source-class-MeCmsAppController.html#85-97" title="Go to source code">beforeRender</a>( )</code>
+
+		<div class="description short">
+			
+<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every
+request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every
+request.</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="components" id="$components">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#33-50" title="Go to source code"><var>$components</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>(
+	<span class="php-quote">'Auth'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'authenticate'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Form'</span> =&gt; <span class="php-keyword1">array</span>(
+			<span class="php-quote">'contain'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Group'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span>, <span class="php-quote">'name'</span>, <span class="php-quote">'level'</span>)),
+			<span class="php-quote">'passwordHasher'</span>	=&gt; <span class="php-quote">'Blowfish'</span>,
+			<span class="php-quote">'userModel'</span>			=&gt; <span class="php-quote">'MeCms.User'</span>
+		)),
+		<span class="php-quote">'authError'</span>			=&gt; <span class="php-quote">'You need to login first'</span>,
+		<span class="php-quote">'loginAction'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'users'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'login'</span>, <span class="php-quote">'admin'</span> =&gt; <span class="php-keyword1">FALSE</span>),
+        <span class="php-quote">'loginRedirect'</span>		=&gt; <span class="php-quote">'/admin'</span>,
+        <span class="php-quote">'logoutRedirect'</span>	=&gt; <span class="php-quote">'/login'</span>
+    ),
+	<span class="php-quote">'Session'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeSession'</span>)
+)</code></td>
+		<td class="description"><div>
+			<a href="#$components" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Components</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Components</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="helpers" id="$helpers">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#52-56" title="Go to source code"><var>$helpers</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'MeTools.Library'</span>)</code></td>
+		<td class="description"><div>
+			<a href="#$helpers" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Helpers</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Helpers</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>
