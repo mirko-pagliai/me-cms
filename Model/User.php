@@ -161,6 +161,10 @@ class User extends MeCmsAppModel {
 			'message'	=> 'You have to select a valid option',
 			'rule'		=> array('boolean')
 		),
+		'banned' => array(
+			'message'	=> 'You have to select a valid option',
+			'rule'		=> array('boolean')
+		),
 		'created' => array(
 			'message'	=> 'Must be a valid date',
 			'rule'		=> array('datetime')
