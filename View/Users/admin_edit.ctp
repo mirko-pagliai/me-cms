@@ -31,9 +31,6 @@
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('group_id');
-				echo $this->Form->input('active', array(
-					'tip' => __d('me_cms', 'If is not active, the user won\'t be able to login')
-				));
 			?>
 		</div>
 		<fieldset>
