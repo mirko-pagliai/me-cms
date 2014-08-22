@@ -38,15 +38,21 @@
 			<th class="text-center"><?php echo $this->Paginator->sort('group_id'); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('post_count', __d('me_cms', 'Posts')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('created'); ?></th>
-			<th></th>
 		</tr>
 		<?php foreach($users as $user): ?>
 			<tr>
 				<td>
-					<?php				
-						echo $this->Html->strong(
-							$this->Html->link($user['User']['username'], array('action' => 'view', $user['User']['id']))
-						);
+					<?php
+						$title = $this->Html->link($user['User']['username'], array('action' => 'view', $user['User']['id']));
+						
+						//If the user is banned
+						if($user['User']['banned'])
+							$title = sprintf('%s - %s', $title, $this->Html->span(lcfirst(__d('me_cms', 'Banned')), array('class' => 'text-danger')));
+						//Else, if the user is not active (pending)
+						elseif(!$user['User']['active'])
+							$title = sprintf('%s - %s', $title, $this->Html->span(lcfirst(__d('me_cms', 'Pending')), array('class' => 'text-warning')));
+						
+						echo $this->Html->strong($title);
 						
 						echo $this->Html->ul(array(
 							$this->Html->link(__d('me_cms', 'View'), array('action' => 'view', $user['User']['id']), array('icon' => 'eye')),
@@ -69,19 +75,6 @@
 				</td>
 				<td class="min-width text-center">
 					<?php echo $this->Time->format($user['User']['created'], $config['datetime']['short']); ?>
-				</td>
-				<td class="min-width text-center">
-					<?php
-						//If the user is banned
-						if($user['User']['banned'])
-							echo $this->Html->icon('ban', array('class' => 'cursor-pointer text-danger', 'title' => __d('me_cms', 'Banned')));
-						//Else, if the user is pending (not active)
-						elseif(!$user['User']['active'])
-							echo $this->Html->icon('check', array('class' => 'cursor-pointer text-warning', 'title' => __d('me_cms', 'Pending')));
-						//Else, if the user is active
-						else
-							echo $this->Html->icon('check', array('class' => 'cursor-pointer text-success', 'title' => __d('me_cms', 'Active')));
-					?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
