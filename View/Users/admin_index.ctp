@@ -47,10 +47,10 @@
 						
 						//If the user is banned
 						if($user['User']['banned'])
-							$title = sprintf('%s - %s', $title, $this->Html->span(lcfirst(__d('me_cms', 'Banned')), array('class' => 'text-danger')));
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Banned'), array('class' => 'text-danger')));
 						//Else, if the user is not active (pending)
 						elseif(!$user['User']['active'])
-							$title = sprintf('%s - %s', $title, $this->Html->span(lcfirst(__d('me_cms', 'Pending')), array('class' => 'text-warning')));
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Pending'), array('class' => 'text-warning')));
 						
 						echo $this->Html->strong($title);
 						
