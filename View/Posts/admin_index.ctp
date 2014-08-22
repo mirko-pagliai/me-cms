@@ -43,9 +43,12 @@
 				<td>
 					<?php
 						$title = $this->Html->link($post['Post']['title'], array('action' => 'edit', $post['Post']['id']));
+						
+						//If the post is not active (it's a draft)
 						if(!$post['Post']['active'])
-							$title = sprintf('%s - %s', $title, __d('me_cms', 'Draft'));
-						echo $this->Html->div(NULL, $this->Html->strong($title));
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), array('class' => 'text-warning')));
+						
+						echo $this->Html->strong($title);
 						
 						echo $this->Html->ul(array(
 							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $post['Post']['id']), array('icon' => 'pencil')),
