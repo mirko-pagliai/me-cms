@@ -50,6 +50,12 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	);
 	
 	/**
+	 * MeCms Backend configuration
+	 * @var array
+	 */
+	protected $config = array();
+
+	/**
 	 * Helpers
 	 * @var array 
 	 */
@@ -83,6 +89,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	public function beforeFilter() {
 		//Loads configuration file
 		$this->_loadConfig();
+		$this->config = Configure::read('MeCmsBackend');
 		
 		parent::beforeFilter();
 	}
@@ -97,7 +104,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
 			$this->layout = 'admin';
 		
 		//Sets the configuration of MeCms for the view
-		$this->set('config', Configure::read('MeCms'));
+		$this->set('config', $this->config);
 		
 		parent::beforeRender();
 	}

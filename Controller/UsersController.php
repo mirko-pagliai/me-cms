@@ -56,7 +56,7 @@ class UsersController extends MeCmsBackendAppController {
 		$this->paginate = array(
 			'contain'	=> 'Group.label',
 			'fields'	=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created'),
-			'limit'		=> Configure::read('MeCms.site.records_for_page')
+			'limit'		=> $this->config['site']['records_for_page']
 		);
 		
 		$this->set(array(

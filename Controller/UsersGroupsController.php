@@ -36,7 +36,7 @@ class UsersGroupsController extends MeCmsBackendAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'fields'	=> array('id', 'name', 'label', 'level', 'user_count'),
-			'limit'		=> Configure::read('MeCms.site.records_for_page')
+			'limit'		=> $this->config['site']['records_for_page']
 		);
 		
 		$this->set(array(

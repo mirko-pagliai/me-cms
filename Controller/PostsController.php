@@ -37,7 +37,7 @@ class PostsController extends MeCmsBackendAppController {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.username'),
 			'fields'	=> array('id', 'title', 'priority', 'active', 'created'),
-			'limit'		=> Configure::read('MeCms.site.records_for_page'),
+			'limit'		=> $this->config['site']['records_for_page'],
 			'order'		=> array('created' => 'desc')
 		);
 		
