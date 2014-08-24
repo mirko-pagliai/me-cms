@@ -1,6 +1,4 @@
 <?php
-App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
-
 /**
  * UsersGroupsController
  *
@@ -26,6 +24,7 @@ App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
  * @package		MeCmsBackend\Controller
  */
 
+App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
 /**
  * UsersGroups Controller
  */

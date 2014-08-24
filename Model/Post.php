@@ -1,7 +1,4 @@
 <?php
-App::uses('CakeTime', 'Utility');
-App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
-
 /**
  * Post
  *
@@ -27,6 +24,8 @@ App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
  * @package		MeCmsBackend\Model
  */
 
+App::uses('CakeTime', 'Utility');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 /**
  * Post Model
  */

@@ -1,7 +1,4 @@
 <?php
-App::uses('Folder', 'Utility');
-App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
-
 /**
  * Page
  *
@@ -27,6 +24,8 @@ App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
  * @package		MeCmsBackend\Model
  */
 
+App::uses('Folder', 'Utility');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 /**
  * Page Model
  */

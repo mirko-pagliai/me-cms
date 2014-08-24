@@ -1,6 +1,4 @@
 <?php
-App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
-
 /**
  * PostsCategory
  *
@@ -26,6 +24,7 @@ App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
  * @package		MeCmsBackend\Model
  */
 
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 /**
  * PostsCategory Model
  */

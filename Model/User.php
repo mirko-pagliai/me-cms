@@ -1,7 +1,4 @@
 <?php
-App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
-App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
-
 /**
  * User
  *
@@ -27,6 +24,8 @@ App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
  * @package		MeCmsBackend\Model
  */
 
+App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 /**
  * User Model
  */

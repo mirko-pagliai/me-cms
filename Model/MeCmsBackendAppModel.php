@@ -1,5 +1,4 @@
 <?php
-App::uses('MeToolsAppModel', 'MeTools.Model');
 
 /**
  * MeCmsBackendAppModel
@@ -26,6 +25,7 @@ App::uses('MeToolsAppModel', 'MeTools.Model');
  * @package		MeCmsBackend\Model
  */
 
+App::uses('MeToolsAppModel', 'MeTools.Model');
 /**
  * Application level model.
  */

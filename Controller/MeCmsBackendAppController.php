@@ -1,6 +1,4 @@
 <?php
-App::uses('MeToolsAppController', 'MeTools.Controller');
-
 /**
  * MeCmsBackendAppController
  *
@@ -26,6 +24,7 @@ App::uses('MeToolsAppController', 'MeTools.Controller');
  * @package		MeCmsBackend\Controller
  */
 
+App::uses('MeToolsAppController', 'MeTools.Controller');
 /**
  * Application level controller.
  */
