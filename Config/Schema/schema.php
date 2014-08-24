@@ -3,7 +3,7 @@ App::uses('ClassRegistry', 'Utility');
 App::uses('User', 'MeCmsBackend.Model');
 App::uses('UsersGroup', 'MeCmsBackend.Model');
 
-class MeCmSchema extends CakeSchema {
+class MeCmsBackendSchema extends CakeSchema {
 
 	public function before($event = array()) {
 		$db = ConnectionManager::getDataSource($this->connection);
