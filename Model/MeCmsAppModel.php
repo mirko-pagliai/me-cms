@@ -2,7 +2,7 @@
 App::uses('MeToolsAppModel', 'MeTools.Model');
 
 /**
- * MeToolsAppModel
+ * MeCmsAppModel
  *
  * This file is part of MeCms Backend.
  *
