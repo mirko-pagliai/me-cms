@@ -1,5 +1,5 @@
 <?php
-App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
 
 /**
  * PagesController
@@ -29,14 +29,14 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
 /**
  * Pages Controller
  */
-class PagesController extends MeCmsAppController {
+class PagesController extends MeCmsBackendAppController {
 	/**
 	 * List pages
 	 */
 	public function admin_index() {
 		$this->set(array(
 			'pages'				=> $this->Page->getList(),
-			'title_for_layout'	=> __d('me_cms', 'Pages')
+			'title_for_layout'	=> __d('me_cms_backend', 'Pages')
 		));
 	}
 	
@@ -47,7 +47,7 @@ class PagesController extends MeCmsAppController {
 	public function admin_view($id = NULL) {
 		$this->set(array(
 			'page'				=> $this->Page->getPage($id),
-			'title_for_layout'	=> __d('me_cms', 'Page')
+			'title_for_layout'	=> __d('me_cms_backend', 'Page')
 		));
 	}
 	

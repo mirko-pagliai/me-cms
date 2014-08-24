@@ -1,5 +1,5 @@
 <?php
-App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
 
 /**
  * PostsCategoriesController
@@ -29,7 +29,7 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
 /**
  * PostsCategories Controller
  */
-class PostsCategoriesController extends MeCmsAppController {	
+class PostsCategoriesController extends MeCmsBackendAppController {	
 	/**
 	 * List posts categories
 	 */
@@ -50,7 +50,7 @@ class PostsCategoriesController extends MeCmsAppController {
 		
 		$this->set(array(
 			'postsCategories'	=> $categories,
-			'title_for_layout'	=> __d('me_cms', 'Posts categories'))
+			'title_for_layout'	=> __d('me_cms_backend', 'Posts categories'))
 		);
 	}
 
@@ -61,16 +61,16 @@ class PostsCategoriesController extends MeCmsAppController {
 		if($this->request->is('post')) {
 			$this->PostsCategory->create();
 			if($this->PostsCategory->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The posts category has been created'));
+				$this->Session->flash(__d('me_cms_backend', 'The posts category has been created'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The posts category could not be created. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The posts category could not be created. Please, try again'), 'error');
 		}
 
 		$this->set(array(
 			'parents'			=> $this->PostsCategory->generateTreeList(),
-			'title_for_layout'	=> __d('me_cms', 'Add posts category')
+			'title_for_layout'	=> __d('me_cms_backend', 'Add posts category')
 		));
 	}
 
@@ -81,15 +81,15 @@ class PostsCategoriesController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->PostsCategory->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid posts category'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid posts category'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->PostsCategory->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The posts category has been edited'));
+				$this->Session->flash(__d('me_cms_backend', 'The posts category has been edited'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The posts category could not be edited. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The posts category could not be edited. Please, try again'), 'error');
 		} 
 		else
 			$this->request->data = $this->PostsCategory->find('first', array(
@@ -99,7 +99,7 @@ class PostsCategoriesController extends MeCmsAppController {
 
 		$this->set(array(
 			'parents'			=> $this->PostsCategory->generateTreeList(),
-			'title_for_layout'	=> __d('me_cms', 'Edit posts category')
+			'title_for_layout'	=> __d('me_cms_backend', 'Edit posts category')
 		));
 	}
 
@@ -111,19 +111,19 @@ class PostsCategoriesController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->PostsCategory->id = $id;
 		if(!$this->PostsCategory->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid posts category'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid posts category'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
 		//Checks if the category has many posts
 		if($this->PostsCategory->field('post_count'))
-			$this->Session->flash(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
 		//Now we can delete the user...
 		else {
 			if($this->PostsCategory->delete())
-				$this->Session->flash(__d('me_cms', 'The posts category has been deleted'));
+				$this->Session->flash(__d('me_cms_backend', 'The posts category has been deleted'));
 			else
-				$this->Session->flash(__d('me_cms', 'The posts category was not deleted'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The posts category was not deleted'), 'error');
 		}
 			
 		$this->redirect(array('action' => 'index'));

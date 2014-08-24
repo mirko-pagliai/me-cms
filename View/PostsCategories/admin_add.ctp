@@ -29,12 +29,12 @@
 ?>
 
 <div class="postsCategories form">
-	<?php echo $this->Html->h2(__d('me_cms', 'Add posts category')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Add posts category')); ?>
 	<?php echo $this->Form->create('PostsCategory', array('class' => 'form-base')); ?>
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('parent_id', array(
-					'label' => __d('me_cms', 'Parent category')
+					'label' => __d('me_cms_backend', 'Parent category')
 				));
 			?>
 		</div>
@@ -43,7 +43,7 @@
 				echo $this->Form->input('title', array('id' => 'title'));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
-					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
+					'tip'	=> __d('me_cms_backend', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 				));
 				echo $this->Form->input('description', array(
 					'rows' => 3,
@@ -51,5 +51,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add posts category')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Add posts category')); ?>
 </div>

@@ -30,14 +30,14 @@
 	<head>
 		<?php 
 			echo $this->Html->charset();
-			echo $this->Html->title(sprintf('%s - %s', __d('me_cms', 'Login'), $config['site']['title']));
+			echo $this->Html->title(sprintf('%s - %s', __d('me_cms_backend', 'Login'), $config['site']['title']));
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->fetch('meta');
 			echo $this->Html->css(array(
 				'/MeTools/css/bootstrap.min',
 				'/MeTools/css/default.min',
 				'/MeTools/css/forms.min',
-				'/MeCms/css/layouts/login'
+				'/MeCmsBackend/css/layouts/login'
 			), array('inline' => TRUE));
 			echo $this->fetch('css');
 			echo $this->Html->script(array(

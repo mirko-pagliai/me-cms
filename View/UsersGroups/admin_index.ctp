@@ -27,15 +27,15 @@
 	
 <div class="usersGroups index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Users groups'));
-		echo $this->Html->button(__d('me_cms', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
+		echo $this->Html->h2(__d('me_cms_backend', 'Users groups'));
+		echo $this->Html->button(__d('me_cms_backend', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('label'); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('level'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('user_count', __d('me_cms', 'Users')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('user_count', __d('me_cms_backend', 'Users')); ?></th>
 		</tr>
 		<?php foreach($usersGroups as $usersGroup): ?>
 			<tr>
@@ -44,8 +44,8 @@
 						echo $this->Html->strong($usersGroup['UsersGroup']['name']);
 						
 						echo $this->Html->ul(array(
-							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $usersGroup['UsersGroup']['id']), array('icon' => 'pencil')),
-							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $usersGroup['UsersGroup']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this users group?'))
+							$this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $usersGroup['UsersGroup']['id']), array('icon' => 'pencil')),
+							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $usersGroup['UsersGroup']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this users group?'))
 						), array('class' => 'actions'));
 					?>
 				</td>

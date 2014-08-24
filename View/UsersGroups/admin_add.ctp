@@ -26,7 +26,7 @@
 <?php $this->extend('/Common/users'); ?>
 
 <div class="usersGroups form">
-	<?php echo $this->Html->h2(__d('me_cms', 'Add users group')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Add users group')); ?>
 	<?php echo $this->Form->create('UsersGroup', array('class' => 'form-base')); ?>
 		<div class='float-form'>
 			<?php
@@ -43,5 +43,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add users group')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Add users group')); ?>
 </div>

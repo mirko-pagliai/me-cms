@@ -27,10 +27,10 @@
 
 <?php
 	$this->start('sidebar');
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'List posts'), array('controller' => 'posts', 'action' => 'index')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add post'), array('controller' => 'posts', 'action' => 'add')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'List categories'), array('controller' => 'posts_categories', 'action' => 'index')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add category'), array('controller' => 'posts_categories', 'action' => 'add')));
+		echo $this->Html->li($this->Html->link(__d('me_cms_backend', 'List posts'), array('controller' => 'posts', 'action' => 'index')));
+		echo $this->Html->li($this->Html->link(__d('me_cms_backend', 'Add post'), array('controller' => 'posts', 'action' => 'add')));
+		echo $this->Html->li($this->Html->link(__d('me_cms_backend', 'List categories'), array('controller' => 'posts_categories', 'action' => 'index')));
+		echo $this->Html->li($this->Html->link(__d('me_cms_backend', 'Add category'), array('controller' => 'posts_categories', 'action' => 'add')));
 	$this->end();
 
 	echo $this->fetch('content');

@@ -1,6 +1,6 @@
 <?php
 App::uses('Folder', 'Utility');
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 
 /**
  * Page
@@ -30,7 +30,7 @@ App::uses('MeCmsAppModel', 'MeCms.Model');
 /**
  * Page Model
  */
-class Page extends MeCmsAppModel {
+class Page extends MeCmsBackendAppModel {
 	/**
 	 * Pages path.
 	 * It will be set in the constructor.

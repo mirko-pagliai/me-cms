@@ -24,25 +24,25 @@
 ?>
 	
 <div class="users form">
-	<?php echo $this->Html->h2(__d('me_cms', 'Change password')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Change password')); ?>
 	<?php echo $this->Form->create('User', array('class' => 'form-base')); ?>
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('old_password', array(
-					'label'	=> __d('me_cms', 'Old password'),
-					'tip'	=> __d('me_cms', 'Enter your old password'),
+					'label'	=> __d('me_cms_backend', 'Old password'),
+					'tip'	=> __d('me_cms_backend', 'Enter your old password'),
 					'type'	=> 'password'
 				));
 				echo $this->Form->input('password', array(
-					'tip' => __d('me_cms', 'Enter your new password')
+					'tip' => __d('me_cms_backend', 'Enter your new password')
 				));
 				echo $this->Form->input('password_repeat', array(
-					'label'	=> __d('me_cms', 'Repeat password'),
-					'tip'	=> __d('me_cms', 'Repeat your new password'),
+					'label'	=> __d('me_cms_backend', 'Repeat password'),
+					'tip'	=> __d('me_cms_backend', 'Repeat your new password'),
 					'type'	=> 'password'
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Change password')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Change password')); ?>
 </div>

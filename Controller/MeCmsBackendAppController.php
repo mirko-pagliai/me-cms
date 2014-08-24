@@ -2,7 +2,7 @@
 App::uses('MeToolsAppController', 'MeTools.Controller');
 
 /**
- * MeCmsAppController
+ * MeCmsBackendAppController
  *
  * This file is part of MeCms Backend
  *
@@ -29,7 +29,7 @@ App::uses('MeToolsAppController', 'MeTools.Controller');
 /**
  * Application level controller.
  */
-class MeCmsAppController extends MeToolsAppController {
+class MeCmsBackendAppController extends MeToolsAppController {
 	/**
 	 * Components
 	 * @var array
@@ -39,7 +39,7 @@ class MeCmsAppController extends MeToolsAppController {
             'authenticate' => array('Form' => array(
 				'contain'			=> array('Group' => array('id', 'name', 'level')),
 				'passwordHasher'	=> 'Blowfish',
-				'userModel'			=> 'MeCms.User'
+				'userModel'			=> 'MeCmsBackend.User'
 			)),
 			'authError'			=> 'You need to login first',
 			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE),
@@ -69,10 +69,10 @@ class MeCmsAppController extends MeToolsAppController {
 		if(is_readable(APP.($path = 'Config'.DS.'mecms.php')))
 			Configure::load('mecms');
 		//Searches for the file in the plugin `Config`
-		elseif(is_readable(App::pluginPath('MeCms').$path))
-			Configure::load('MeCms.mecms');
+		elseif(is_readable(App::pluginPath('MeCmsBackend').$path))
+			Configure::load('MeCmsBackend.mecms');
 		else
-			throw new InternalErrorException(__d('me_cms', 'The configuration file for %s was not found', 'MeCms'));
+			throw new InternalErrorException(__d('me_cms_backend', 'The configuration file for %s was not found', 'MeCms'));
 	}
 	
 	/**

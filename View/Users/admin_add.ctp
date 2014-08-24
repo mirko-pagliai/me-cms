@@ -26,7 +26,7 @@
 <?php $this->extend('/Common/users'); ?>
 
 <div class="users form">
-	<?php echo $this->Html->h2(__d('me_cms', 'Add user')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Add user')); ?>
 	<?php echo $this->Form->create('User', array('class' => 'form-base')); ?>
 		<div class='float-form'>
 			<?php
@@ -35,7 +35,7 @@
 				));
 				echo $this->Form->input('active', array(
 					'checked'	=> TRUE,
-					'tip'		=> __d('me_cms', 'If is not active, the user won\'t be able to login')
+					'tip'		=> __d('me_cms_backend', 'If is not active, the user won\'t be able to login')
 				));
 			?>
 		</div>
@@ -45,12 +45,12 @@
 				echo $this->Form->input('email');
 				echo $this->Form->input('password');
 				echo $this->Form->input('password_repeat', array(
-					'label'	=> __d('me_cms', 'Repeat password'),
+					'label'	=> __d('me_cms_backend', 'Repeat password'),
 					'type'	=> 'password'
 				));
 				echo $this->Form->input('first_name');
 				echo $this->Form->input('last_name');
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add user')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Add user')); ?>
 </div>

@@ -1,5 +1,5 @@
 <?php
-App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
 
 /**
  * PostsController
@@ -29,7 +29,7 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
 /**
  * Posts Controller
  */
-class PostsController extends MeCmsAppController {	
+class PostsController extends MeCmsBackendAppController {	
 	/**
 	 * List posts
 	 */
@@ -43,7 +43,7 @@ class PostsController extends MeCmsAppController {
 		
 		$this->set(array(
 			'posts'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Posts')
+			'title_for_layout'	=> __d('me_cms_backend', 'Posts')
 		));
 	}
 
@@ -56,23 +56,23 @@ class PostsController extends MeCmsAppController {
 		
 		//Checks for categories
 		if(empty($categories)) {
-			$this->Session->flash(__d('me_cms', 'Before you can add a post, you have to create at least one category'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'Before you can add a post, you have to create at least one category'), 'error');
 			$this->redirect(array('controller' => 'posts_categories', 'action' => 'index'));
 		}
 		
 		if($this->request->is('post')) {
 			$this->Post->create();
 			if($this->Post->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The post has been created'));
+				$this->Session->flash(__d('me_cms_backend', 'The post has been created'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The post could not be created. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The post could not be created. Please, try again'), 'error');
 		}
 
 		$this->set(array(
 			'categories'		=> $categories,
-			'title_for_layout'	=> __d('me_cms', 'Add post'),
+			'title_for_layout'	=> __d('me_cms_backend', 'Add post'),
 			'users'				=> $this->Post->User->find('list')
 		));
 	}
@@ -84,15 +84,15 @@ class PostsController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Post->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid post'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid post'));
 					
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Post->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The post has been edited'));
+				$this->Session->flash(__d('me_cms_backend', 'The post has been edited'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The post could not be edited. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The post could not be edited. Please, try again'), 'error');
 		} 
 		else
 			$this->request->data = $this->Post->find('first', array(
@@ -102,7 +102,7 @@ class PostsController extends MeCmsAppController {
 
 		$this->set(array(
 			'categories'		=> $this->Post->Category->generateTreeList(),
-			'title_for_layout'	=> __d('me_cms', 'Edit post'),
+			'title_for_layout'	=> __d('me_cms_backend', 'Edit post'),
 			'users'				=> $this->Post->User->find('list')
 		));
 	}
@@ -115,14 +115,14 @@ class PostsController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Post->id = $id;
 		if(!$this->Post->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid post'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid post'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
 		if($this->Post->delete())
-			$this->Session->flash(__d('me_cms', 'The post has been deleted'));
+			$this->Session->flash(__d('me_cms_backend', 'The post has been deleted'));
 		else
-			$this->Session->flash(__d('me_cms', 'The post was not deleted'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'The post was not deleted'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
 	}

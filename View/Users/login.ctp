@@ -34,13 +34,13 @@
 				echo $this->Form->input('username', array(
 					'autofocus'		=> TRUE,
 					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Username')
+					'placeholder'	=> __d('me_cms_backend', 'Username')
 				));
 				echo $this->Form->input('password', array(
 					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Password')
+					'placeholder'	=> __d('me_cms_backend', 'Password')
 				));
-				echo $this->Form->submit(__d('me_cms', 'Login'), array('class' => 'btn-primary btn-lg btn-block'));
+				echo $this->Form->submit(__d('me_cms_backend', 'Login'), array('class' => 'btn-primary btn-lg btn-block'));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(); ?>

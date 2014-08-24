@@ -26,10 +26,10 @@
 <?php $this->extend('/Common/pages'); ?>
 	
 <div class="pages index">
-	<?php echo $this->Html->h2(__d('me_cms', 'Pages')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Pages')); ?>
 	<table class="table table-striped">
 		<tr>
-			<th><?php echo __d('me_cms', 'Filename'); ?></th>
+			<th><?php echo __d('me_cms_backend', 'Filename'); ?></th>
 		</tr>
 		<?php foreach($pages as $page): ?>
 		<tr>
@@ -39,8 +39,8 @@
 					echo $this->Html->div(NULL, $this->Html->strong($title));
 					
 					echo $this->Html->ul(array(
-						$this->Html->link(__d('me_cms', 'View'), array('action' => 'view', $id), array('icon' => 'eye')),
-						$this->Html->link(__d('me_cms', 'Open'), am(explode('/', $page['Page']['args']), array('action' => 'view', 'admin' => FALSE, 'plugin' => FALSE)), array('icon' => 'external-link', 'target' => '_blank'))
+						$this->Html->link(__d('me_cms_backend', 'View'), array('action' => 'view', $id), array('icon' => 'eye')),
+						$this->Html->link(__d('me_cms_backend', 'Open'), am(explode('/', $page['Page']['args']), array('action' => 'view', 'admin' => FALSE, 'plugin' => FALSE)), array('icon' => 'external-link', 'target' => '_blank'))
 					), array('class' => 'actions'));
 				?>
 			</td>

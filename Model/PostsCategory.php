@@ -1,5 +1,5 @@
 <?php
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 
 /**
  * PostsCategory
@@ -29,7 +29,7 @@ App::uses('MeCmsAppModel', 'MeCms.Model');
 /**
  * PostsCategory Model
  */
-class PostsCategory extends MeCmsAppModel {
+class PostsCategory extends MeCmsBackendAppModel {
 	/**
 	 * Behaviors
 	 * @var array 
@@ -103,7 +103,7 @@ class PostsCategory extends MeCmsAppModel {
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
-			'className' => 'MeCms.PostsCategory',
+			'className' => 'MeCmsBackend.PostsCategory',
 			'foreignKey' => 'parent_id'
 		)
 	);
@@ -114,12 +114,12 @@ class PostsCategory extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'Child' => array(
-			'className' => 'MeCms.PostsCategory',
+			'className' => 'MeCmsBackend.PostsCategory',
 			'foreignKey' => 'parent_id',
 			'dependent' => FALSE
 		),
 		'Post' => array(
-			'className' => 'MeCms.Post',
+			'className' => 'MeCmsBackend.Post',
 			'foreignKey' => 'category_id',
 			'dependent' => FALSE
 		)

@@ -27,14 +27,14 @@
 	
 <div class="postsCategories index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Posts categories'));
-		echo $this->Html->button(__d('me_cms', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
+		echo $this->Html->h2(__d('me_cms_backend', 'Posts categories'));
+		echo $this->Html->button(__d('me_cms_backend', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
 	<table class="table table-striped">
 		<tr>
-			<th><?php echo __d('me_cms', 'Title'); ?></th>
-			<th><?php echo __d('me_cms', 'Parent'); ?></th>
-			<th class="min-width text-center"><?php echo __d('me_cms', 'Posts'); ?></th>
+			<th><?php echo __d('me_cms_backend', 'Title'); ?></th>
+			<th><?php echo __d('me_cms_backend', 'Parent'); ?></th>
+			<th class="min-width text-center"><?php echo __d('me_cms_backend', 'Posts'); ?></th>
 		</tr>
 		<?php foreach($postsCategories as $postsCategory): ?>
 			<tr>
@@ -44,8 +44,8 @@
 						echo $this->Html->div(NULL, $this->Html->strong($title));
 
 						echo $this->Html->ul(array(
-							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $postsCategory['PostsCategory']['id']), array('icon' => 'pencil')),
-							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $postsCategory['PostsCategory']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this posts category?'))							
+							$this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $postsCategory['PostsCategory']['id']), array('icon' => 'pencil')),
+							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $postsCategory['PostsCategory']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this posts category?'))							
 						), array('class' => 'actions'));
 					?>
 				</td>

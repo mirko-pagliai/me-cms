@@ -31,35 +31,35 @@
 ?>
 
 <div class="posts form">
-	<?php echo $this->Html->h2(__d('me_cms', 'Add post')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Add post')); ?>
 	<?php echo $this->Form->create('Post', array('class' => 'form-base')); ?>
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('user_id', array(
 					'default'	=> $auth['id'],
-					'label'		=> __d('me_cms', 'Author')
+					'label'		=> __d('me_cms_backend', 'Author')
 				));
 				echo $this->Form->input('category_id');
 				echo $this->Form->datetimepicker('created', array(
 					'tip' => array(
-						sprintf('%s.', __d('me_cms', 'If blank, the current date and time will be used')),
-						sprintf('%s.', __d('me_cms', 'You can delay the post by entering a later date'))
+						sprintf('%s.', __d('me_cms_backend', 'If blank, the current date and time will be used')),
+						sprintf('%s.', __d('me_cms_backend', 'You can delay the post by entering a later date'))
 					)
 				));
 				echo $this->Form->input('priority', array(
 					'default'	=> '3',
 					'options'	=> array(
-						'1' => sprintf('1 - %s', __d('me_cms', 'Very low')),
-						'2' => sprintf('2 - %s', __d('me_cms', 'Low')),
-						'3' => sprintf('3 - %s', __d('me_cms', 'Normal')),
-						'4' => sprintf('4 - %s', __d('me_cms', 'High')),
-						'5' => sprintf('5 - %s', __d('me_cms', 'Very high')),
+						'1' => sprintf('1 - %s', __d('me_cms_backend', 'Very low')),
+						'2' => sprintf('2 - %s', __d('me_cms_backend', 'Low')),
+						'3' => sprintf('3 - %s', __d('me_cms_backend', 'Normal')),
+						'4' => sprintf('4 - %s', __d('me_cms_backend', 'High')),
+						'5' => sprintf('5 - %s', __d('me_cms_backend', 'Very high')),
 					)
 				));
 				echo $this->Form->input('active', array(
 					'checked'	=> TRUE,
-					'label'		=> sprintf('%s?', __d('me_cms', 'Published')),
-					'tip'		=> __d('me_cms', 'Disable this option to save as a draft')
+					'label'		=> sprintf('%s?', __d('me_cms_backend', 'Published')),
+					'tip'		=> __d('me_cms_backend', 'Disable this option to save as a draft')
 				));
 			?>
 		</div>
@@ -68,10 +68,10 @@
 				echo $this->Form->input('title', array('id' => 'title'));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
-					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
+					'tip'	=> __d('me_cms_backend', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 				));
 				echo $this->Form->ckeditor('text');
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add post')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Add post')); ?>
 </div>

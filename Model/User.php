@@ -1,6 +1,6 @@
 <?php
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 
 /**
  * User
@@ -30,7 +30,7 @@ App::uses('MeCmsAppModel', 'MeCms.Model');
 /**
  * User Model
  */
-class User extends MeCmsAppModel {
+class User extends MeCmsBackendAppModel {
 	/**
 	 * Display field
 	 * @var string
@@ -181,7 +181,7 @@ class User extends MeCmsAppModel {
 	 */
 	public $belongsTo = array(
 		'Group' => array(
-			'className' => 'MeCms.UsersGroup',
+			'className' => 'MeCmsBackend.UsersGroup',
 			'foreignKey' => 'group_id',
 			'counterCache' => TRUE
 		)
@@ -193,7 +193,7 @@ class User extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'Post' => array(
-			'className' => 'MeCms.Post',
+			'className' => 'MeCmsBackend.Post',
 			'foreignKey' => 'user_id',
 			'dependent' => FALSE
 		)

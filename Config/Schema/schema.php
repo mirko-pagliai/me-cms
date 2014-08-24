@@ -1,7 +1,7 @@
 <?php
 App::uses('ClassRegistry', 'Utility');
-App::uses('User', 'MeCms.Model');
-App::uses('UsersGroup', 'MeCms.Model');
+App::uses('User', 'MeCmsBackend.Model');
+App::uses('UsersGroup', 'MeCmsBackend.Model');
 
 class MeCmSchema extends CakeSchema {
 
@@ -22,7 +22,7 @@ class MeCmSchema extends CakeSchema {
 	}
 	
 	public function insertUsers() {
-		$groups = ClassRegistry::init('MeCms.UsersGroup');
+		$groups = ClassRegistry::init('MeCmsBackend.UsersGroup');
 		$groups->create();
 		$save = $groups->saveMany(array(
 			array('name' => 'admin', 'label' => 'Admin', 'level' => '100', 'User' => array(

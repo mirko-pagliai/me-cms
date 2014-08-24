@@ -1,5 +1,5 @@
 <?php
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 
 /**
  * UsersGroup
@@ -29,7 +29,7 @@ App::uses('MeCmsAppModel', 'MeCms.Model');
 /**
  * UsersGroup Model
  */
-class UsersGroup extends MeCmsAppModel {
+class UsersGroup extends MeCmsBackendAppModel {
 	/**
 	 * Display field
 	 * @var string
@@ -91,7 +91,7 @@ class UsersGroup extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'User' => array(
-			'className' => 'MeCms.User',
+			'className' => 'MeCmsBackend.User',
 			'foreignKey' => 'group_id',
 			'dependent' => FALSE
 		)

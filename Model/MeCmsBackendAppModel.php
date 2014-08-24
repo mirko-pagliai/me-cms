@@ -2,7 +2,7 @@
 App::uses('MeToolsAppModel', 'MeTools.Model');
 
 /**
- * MeCmsAppModel
+ * MeCmsBackendAppModel
  *
  * This file is part of MeCms Backend.
  *
@@ -29,5 +29,5 @@ App::uses('MeToolsAppModel', 'MeTools.Model');
 /**
  * Application level model.
  */
-class MeCmsAppModel extends MeToolsAppModel {
+class MeCmsBackendAppModel extends MeToolsAppModel {
 }

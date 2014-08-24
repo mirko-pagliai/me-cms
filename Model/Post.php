@@ -1,6 +1,6 @@
 <?php
 App::uses('CakeTime', 'Utility');
-App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 
 /**
  * Post
@@ -30,7 +30,7 @@ App::uses('MeCmsAppModel', 'MeCms.Model');
 /**
  * Post Model
  */
-class Post extends MeCmsAppModel {
+class Post extends MeCmsBackendAppModel {
 	/**
 	 * Display field
 	 * @var string
@@ -111,12 +111,12 @@ class Post extends MeCmsAppModel {
 	 */
 	public $belongsTo = array(
 		'Category' => array(
-			'className' => 'MeCms.PostsCategory',
+			'className' => 'MeCmsBackend.PostsCategory',
 			'foreignKey' => 'category_id',
 			'counterCache' => TRUE
 		),
 		'User' => array(
-			'className' => 'MeCms.User',
+			'className' => 'MeCmsBackend.User',
 			'foreignKey' => 'user_id',
 			'counterCache' => TRUE
 		)

@@ -42,10 +42,10 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<?php
 				echo $this->Html->ul(array(
-					$this->Html->link(NULL,			'/admin',												array('icon' => 'home', 'title' => __d('me_cms', 'Home'))),
-					$this->Html->link(__d('me_cms', 'Posts'),	array('controller' => 'posts', 'action' => 'index'),	array('icon' => 'thumb-tack')),
-					$this->Html->link(__d('me_cms', 'Pages'),	array('controller' => 'pages', 'action' => 'index'),	array('icon' => 'files-o')),
-					$this->Html->link(__d('me_cms', 'Users'),	array('controller' => 'users', 'action' => 'index'),	array('icon' => 'users')),
+					$this->Html->link(NULL,			'/admin',												array('icon' => 'home', 'title' => __d('me_cms_backend', 'Home'))),
+					$this->Html->link(__d('me_cms_backend', 'Posts'),	array('controller' => 'posts', 'action' => 'index'),	array('icon' => 'thumb-tack')),
+					$this->Html->link(__d('me_cms_backend', 'Pages'),	array('controller' => 'pages', 'action' => 'index'),	array('icon' => 'files-o')),
+					$this->Html->link(__d('me_cms_backend', 'Users'),	array('controller' => 'users', 'action' => 'index'),	array('icon' => 'users')),
 				), array('class' => 'nav navbar-nav'));
 			?>
 			<ul class="nav navbar-nav navbar-right">
@@ -53,8 +53,8 @@
 					<?php
 						echo $this->Html->linkDropdown($auth['full_name'], array('icon' => 'user'));
 						echo $this->Html->dropdown(array(
-							$this->Html->link(__d('me_cms', 'Change password'), array('controller' => 'users', 'action' => 'change_password')),
-							$this->Html->link(__d('me_cms', 'Logout'), array('controller' => 'users', 'action' => 'logout', 'admin' => FALSE))
+							$this->Html->link(__d('me_cms_backend', 'Change password'), array('controller' => 'users', 'action' => 'change_password')),
+							$this->Html->link(__d('me_cms_backend', 'Logout'), array('controller' => 'users', 'action' => 'logout', 'admin' => FALSE))
 						));
 					?>
 				</li>

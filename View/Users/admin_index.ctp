@@ -27,16 +27,16 @@
 	
 <div class="users index">
 	<?php 
-		echo $this->Html->h2(__d('me_cms', 'Users'));
-		echo $this->Html->button(__d('me_cms', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
+		echo $this->Html->h2(__d('me_cms_backend', 'Users'));
+		echo $this->Html->button(__d('me_cms_backend', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('username'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('full_name', __d('me_cms', 'Name')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('full_name', __d('me_cms_backend', 'Name')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('email'); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('group_id'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('post_count', __d('me_cms', 'Posts')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('post_count', __d('me_cms_backend', 'Posts')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('created'); ?></th>
 		</tr>
 		<?php foreach($users as $user): ?>
@@ -47,17 +47,17 @@
 						
 						//If the user is banned
 						if($user['User']['banned'])
-							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Banned'), array('class' => 'text-danger')));
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms_backend', 'Banned'), array('class' => 'text-danger')));
 						//Else, if the user is not active (pending)
 						elseif(!$user['User']['active'])
-							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Pending'), array('class' => 'text-warning')));
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms_backend', 'Pending'), array('class' => 'text-warning')));
 						
 						echo $this->Html->strong($title);
 						
 						echo $this->Html->ul(array(
-							$this->Html->link(__d('me_cms', 'View'), array('action' => 'view', $user['User']['id']), array('icon' => 'eye')),
-							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $user['User']['id']), array('icon' => 'pencil')),
-							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $user['User']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this user?'))
+							$this->Html->link(__d('me_cms_backend', 'View'), array('action' => 'view', $user['User']['id']), array('icon' => 'eye')),
+							$this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $user['User']['id']), array('icon' => 'pencil')),
+							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $user['User']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this user?'))
 						), array('class' => 'actions'));
 					?>
 				</td>
