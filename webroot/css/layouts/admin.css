@@ -106,11 +106,6 @@ body {
 	text-decoration: none;
 }
 
-/* Content, actions for records, elements list, link, icon */
-#content ul.actions li a i.fa {
-	margin-right: 3px;
-}
-
 /* Content, tables, actions for records */
 #content table.table td > .actions {
 	margin: 0;
