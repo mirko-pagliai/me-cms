@@ -23,6 +23,11 @@
  * @package		MeCmsBackend\webroot\css
  */
 
+/* Font-awesome icons */
+.fa {
+	display: inline;
+}
+
 /* Body */
 body {
 	padding-top: 70px;
