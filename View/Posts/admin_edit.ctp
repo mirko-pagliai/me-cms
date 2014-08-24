@@ -26,6 +26,7 @@
 <?php 
 	$this->extend('/Common/posts');
 	$this->Library->slugify();
+	$this->Library->ckeditor();
 	$this->Library->datetimepicker();
 ?>
 
@@ -66,7 +67,7 @@
 					'id'	=> 'slug',
 					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 				));
-				echo $this->Form->input('text');
+				echo $this->Form->ckeditor('text');
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Edit post')); ?>
