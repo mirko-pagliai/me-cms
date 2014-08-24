@@ -4,10 +4,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class PostsCategory | MeCms</title>
+	<title>Class PostsCategory | MeCms Backend</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?2421756793"></script>
+	<script type="text/javascript" src="elementlist.js?941200527"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -19,25 +19,30 @@
 
 
 		<div id="groups">
+			<h3>Packages</h3>
+			<ul>
+				<li class="active main"><a href="package-MeCmsBackend.html">MeCmsBackend<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCmsBackend.Controller.html">Controller</a>
+						</li>
+				<li class="active main"><a href="package-MeCmsBackend.Model.html">Model</a>
+						</li>
+							</ul></li>
+			</ul>
 		</div>
 
+		<hr>
 
 
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
 				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
-				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li><a href="class-Post.html">Post</a></li>
-				<li><a href="class-PostsCategoriesController.html">PostsCategoriesController</a></li>
 				<li class="active"><a href="class-PostsCategory.html">PostsCategory</a></li>
-				<li><a href="class-PostsController.html">PostsController</a></li>
 				<li><a href="class-User.html">User</a></li>
-				<li><a href="class-UsersController.html">UsersController</a></li>
 				<li><a href="class-UsersGroup.html">UsersGroup</a></li>
-				<li><a href="class-UsersGroupsController.html">UsersGroupsController</a></li>
 			</ul>
 
 
@@ -64,6 +69,9 @@
 			<li>
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
+			<li>
+				<a href="package-MeCmsBackend.Model.html" title="Summary of MeCmsBackend\Model"><span>Package</span></a>
+			</li>
 			<li class="active">
 <span>Class</span>			</li>
 		</ul>
@@ -77,7 +85,7 @@
 		</ul>
 		<ul>
 			<li>
-				<a href="mecms-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
+				<a href="mecms-backend-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
 			</li>
 		</ul>
 	</div>
@@ -124,9 +132,16 @@ MeToolsAppModel
 		
 		
 		
-		
+		<b>Package:</b> <a href="package-MeCmsBackend.html">MeCmsBackend</a>\<a href="package-MeCmsBackend.Model.html">Model</a><br>
 
-		<b>Located at</b> <a href="source-class-PostsCategory.html#29-127" title="Go to source code">PostsCategory.php</a><br>
+				<b>Copyright:</b>
+				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br>
+				<b>License:</b>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<b>Author:</b>
+				Mirko Pagliai &lt;<a
+href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
+		<b>Located at</b> <a href="source-class-PostsCategory.html#28-126" title="Go to source code">PostsCategory.php</a><br>
 	</div>
 
 
@@ -152,7 +167,7 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#33-37" title="Go to source code"><var>$actsAs</var></a>
+				<a href="source-class-PostsCategory.html#32-36" title="Go to source code"><var>$actsAs</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'MeTools.MeTree'</span>)</code></td>
 		<td class="description"><div>
@@ -179,7 +194,7 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#39-43" title="Go to source code"><var>$displayField</var></a>
+				<a href="source-class-PostsCategory.html#38-42" title="Go to source code"><var>$displayField</var></a>
 		</td>
 		<td class="value"><code><span class="php-quote">'title'</span></code></td>
 		<td class="description"><div>
@@ -206,7 +221,7 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#45-98" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-PostsCategory.html#44-97" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -282,7 +297,7 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#100-109" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-PostsCategory.html#99-108" title="Go to source code"><var>$belongsTo</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Parent'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -314,7 +329,7 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#111-126" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-PostsCategory.html#110-125" title="Go to source code"><var>$hasMany</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Child'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -355,7 +370,7 @@ MeToolsAppModel
 </div>
 
 	<div id="footer">
-		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+		MeCms Backend API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
 	</div>
 </div>
 </div>
