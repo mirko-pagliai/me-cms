@@ -46,7 +46,14 @@ body {
     color: #fff;
 }
 
-/* Content, page title */
+/* Content, first wrapper */
+#content > .index,
+#content > .view,
+#content > .form {
+	overflow: hidden;
+}
+
+/* Content, first wrapper, title */
 #content > .index > h2,
 #content > .view > h2,
 #content > .form > h2 {
