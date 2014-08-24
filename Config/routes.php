@@ -3,7 +3,7 @@
 /**
  * Routes.
  *
- * This file is part of MeCms Backend
+ * This file is part of MeCms Backend.
  *
  * MeCms Backend is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
