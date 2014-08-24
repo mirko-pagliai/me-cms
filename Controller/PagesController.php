@@ -49,24 +49,4 @@ class PagesController extends MeCmsBackendAppController {
 			'title_for_layout'	=> __d('me_cms_backend', 'Page')
 		));
 	}
-	
-	/**
-	 * View page
-	 * @throws MissingViewException
-	 * @throws NotFoundException
-	 */
-	public function view() {
-		$path = func_get_args();
-		
-		try {
-			$this->render(implode('/', $path));
-		} 
-		catch(MissingViewException $e) {
-			if(Configure::read('debug'))
-				throw $e;
-			throw new NotFoundException();
-		}
-		
-		$this->set('title_for_layout', Inflector::humanize($path[count($path) - 1]));
-	}
 }
