@@ -7,7 +7,7 @@
 	<title>Class User | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?236406270"></script>
+	<script type="text/javascript" src="elementlist.js?2421756793"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -26,8 +26,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
-				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
+				<li><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
+				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li><a href="class-Post.html">Post</a></li>
@@ -100,7 +100,7 @@ MeToolsAppModel
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCmsAppModel.html"><span>MeCmsAppModel</span></a>
+			<a href="class-MeCmsBackendAppModel.html"><span>MeCmsBackendAppModel</span></a>
 			
 			
 			
@@ -126,7 +126,7 @@ MeToolsAppModel
 		
 		
 
-		<b>Located at</b> <a href="source-class-User.html#30-247" title="Go to source code">User.php</a><br>
+		<b>Located at</b> <a href="source-class-User.html#30-257" title="Go to source code">User.php</a><br>
 	</div>
 
 
@@ -144,7 +144,7 @@ MeToolsAppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-User.html#192-205" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#202-215" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -188,7 +188,7 @@ to halt the save.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeValidate">#</a>
-		<code><a href="source-class-User.html#207-218" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#217-228" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -230,7 +230,7 @@ to halt the save.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_oldPasswordIsRight">#</a>
-		<code><a href="source-class-User.html#220-235" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#230-245" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
 
 		<div class="description short">
 			
@@ -279,7 +279,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordsMatch">#</a>
-		<code><a href="source-class-User.html#237-246" title="Go to source code">passwordsMatch</a>( )</code>
+		<code><a href="source-class-User.html#247-256" title="Go to source code">passwordsMatch</a>( )</code>
 
 		<div class="description short">
 			
@@ -347,6 +347,33 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 			</div>
 		</div></td>
 	</tr>
+	<tr data-order="order" id="$order">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-User.html#40-44" title="Go to source code"><var>$order</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'username'</span> =&gt; <span class="php-quote">'ASC'</span>)</code></td>
+		<td class="description"><div>
+			<a href="#$order" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Order</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Order</p>
+
+
+			</div>
+		</div></td>
+	</tr>
 	<tr data-order="virtualFields" id="$virtualFields">
 		<td class="attributes"><code>
 			public  
@@ -354,7 +381,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#40-44" title="Go to source code"><var>$virtualFields</var></a>
+				<a href="source-class-User.html#46-50" title="Go to source code"><var>$virtualFields</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'full_name'</span> =&gt; <span class="php-quote">'CONCAT(User.first_name, &quot; &quot;, User.last_name)'</span>)</code></td>
 		<td class="description"><div>
@@ -381,7 +408,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#46-166" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-User.html#52-176" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -491,6 +518,10 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'You have to select a valid option'</span>,
 		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'boolean'</span>)
 	),
+	<span class="php-quote">'banned'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'You have to select a valid option'</span>,
+		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'boolean'</span>)
+	),
 	<span class="php-quote">'created'</span> =&gt; <span class="php-keyword1">array</span>(
 		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'Must be a valid date'</span>,
 		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'datetime'</span>)
@@ -524,11 +555,11 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#168-178" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-User.html#178-188" title="Go to source code"><var>$belongsTo</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Group'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.UsersGroup'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.UsersGroup'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'group_id'</span>,
 		<span class="php-quote">'counterCache'</span> =&gt; <span class="php-keyword1">TRUE</span>
 	)
@@ -557,11 +588,11 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#180-190" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-User.html#190-200" title="Go to source code"><var>$hasMany</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Post'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Post'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.Post'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'user_id'</span>,
 		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
 	)

@@ -7,7 +7,7 @@
 	<title>Class UsersGroup | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?236406270"></script>
+	<script type="text/javascript" src="elementlist.js?2421756793"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -26,8 +26,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
-				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
+				<li><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
+				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li><a href="class-Post.html">Post</a></li>
@@ -100,7 +100,7 @@ MeToolsAppModel
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCmsAppModel.html"><span>MeCmsAppModel</span></a>
+			<a href="class-MeCmsBackendAppModel.html"><span>MeCmsBackendAppModel</span></a>
 			
 			
 			
@@ -126,7 +126,7 @@ MeToolsAppModel
 		
 		
 
-		<b>Located at</b> <a href="source-class-UsersGroup.html#29-93" title="Go to source code">UsersGroup.php</a><br>
+		<b>Located at</b> <a href="source-class-UsersGroup.html#29-99" title="Go to source code">UsersGroup.php</a><br>
 	</div>
 
 
@@ -172,6 +172,33 @@ MeToolsAppModel
 			</div>
 		</div></td>
 	</tr>
+	<tr data-order="order" id="$order">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-UsersGroup.html#39-43" title="Go to source code"><var>$order</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'name'</span> =&gt; <span class="php-quote">'ASC'</span>)</code></td>
+		<td class="description"><div>
+			<a href="#$order" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Order</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Order</p>
+
+
+			</div>
+		</div></td>
+	</tr>
 	<tr data-order="validate" id="$validate">
 		<td class="attributes"><code>
 			public  
@@ -179,7 +206,7 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-UsersGroup.html#39-80" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-UsersGroup.html#45-86" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -243,11 +270,11 @@ MeToolsAppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-UsersGroup.html#82-92" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-UsersGroup.html#88-98" title="Go to source code"><var>$hasMany</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'User'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.User'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.User'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'group_id'</span>,
 		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
 	)

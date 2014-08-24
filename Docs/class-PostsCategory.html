@@ -7,7 +7,7 @@
 	<title>Class PostsCategory | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?236406270"></script>
+	<script type="text/javascript" src="elementlist.js?2421756793"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -26,8 +26,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
-				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
+				<li><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
+				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li><a href="class-Post.html">Post</a></li>
@@ -100,7 +100,7 @@ MeToolsAppModel
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCmsAppModel.html"><span>MeCmsAppModel</span></a>
+			<a href="class-MeCmsBackendAppModel.html"><span>MeCmsBackendAppModel</span></a>
 			
 			
 			
@@ -286,7 +286,7 @@ MeToolsAppModel
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Parent'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.PostsCategory'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'parent_id'</span>
 	)
 )</code></td>
@@ -318,12 +318,12 @@ MeToolsAppModel
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Child'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.PostsCategory'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'parent_id'</span>,
 		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
 	),
 	<span class="php-quote">'Post'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Post'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.Post'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'category_id'</span>,
 		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
 	)

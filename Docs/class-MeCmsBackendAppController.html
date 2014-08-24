@@ -4,10 +4,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class MeCmsAppController | MeCms</title>
+	<title>Class MeCmsBackendAppController | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?236406270"></script>
+	<script type="text/javascript" src="elementlist.js?2421756793"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -26,8 +26,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
-				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
+				<li class="active"><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
+				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li><a href="class-Post.html">Post</a></li>
@@ -83,7 +83,7 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class MeCmsAppController</h1>
+	<h1>Class MeCmsBackendAppController</h1>
 
 
 	<div class="description">
@@ -100,7 +100,7 @@ MeToolsAppController
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCmsAppController</span></b>			
+<b><span>MeCmsBackendAppController</span></b>			
 			
 			
 		</dd>
@@ -127,7 +127,7 @@ MeToolsAppController
 		
 		
 
-		<b>Located at</b> <a href="source-class-MeCmsAppController.html#29-98" title="Go to source code">MeCmsAppController.php</a><br>
+		<b>Located at</b> <a href="source-class-MeCmsBackendAppController.html#29-104" title="Go to source code">MeCmsBackendAppController.php</a><br>
 	</div>
 
 
@@ -145,7 +145,7 @@ MeToolsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#__loadConfig">#</a>
-		<code><a href="source-class-MeCmsAppController.html#58-71" title="Go to source code">_loadConfig</a>( )</code>
+		<code><a href="source-class-MeCmsBackendAppController.html#61-76" title="Go to source code">_loadConfig</a>( )</code>
 
 		<div class="description short">
 			
@@ -172,7 +172,7 @@ MeToolsAppController
 
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code></code><br>to load the configuration file<br>
+						<code><code><a href="class-MeCmsBackendAppController.html#_beforeFilter">MeCmsBackendAppController::beforeFilter()</a></code></code><br>to load the configuration file<br>
 				</div>
 
 
@@ -190,7 +190,7 @@ MeToolsAppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCmsAppController.html#73-83" title="Go to source code">beforeFilter</a>( )</code>
+		<code><a href="source-class-MeCmsBackendAppController.html#78-88" title="Go to source code">beforeFilter</a>( )</code>
 
 		<div class="description short">
 			
@@ -211,7 +211,7 @@ controller action.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-MeCmsAppController.html#__loadConfig">MeCmsAppController::_loadConfig()</a></code></code><br>to load the configuration file<br>
+						<code><code><a href="class-MeCmsBackendAppController.html#__loadConfig">MeCmsBackendAppController::_loadConfig()</a></code></code><br>to load the configuration file<br>
 				</div>
 
 
@@ -229,7 +229,7 @@ controller action.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCmsAppController.html#85-97" title="Go to source code">beforeRender</a>( )</code>
+		<code><a href="source-class-MeCmsBackendAppController.html#90-103" title="Go to source code">beforeRender</a>( )</code>
 
 		<div class="description short">
 			
@@ -277,14 +277,14 @@ request.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsAppController.html#33-50" title="Go to source code"><var>$components</var></a>
+				<a href="source-class-MeCmsBackendAppController.html#33-50" title="Go to source code"><var>$components</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Auth'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'authenticate'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Form'</span> =&gt; <span class="php-keyword1">array</span>(
 			<span class="php-quote">'contain'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Group'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span>, <span class="php-quote">'name'</span>, <span class="php-quote">'level'</span>)),
 			<span class="php-quote">'passwordHasher'</span>	=&gt; <span class="php-quote">'Blowfish'</span>,
-			<span class="php-quote">'userModel'</span>			=&gt; <span class="php-quote">'MeCms.User'</span>
+			<span class="php-quote">'userModel'</span>			=&gt; <span class="php-quote">'MeCmsBackend.User'</span>
 		)),
 		<span class="php-quote">'authError'</span>			=&gt; <span class="php-quote">'You need to login first'</span>,
 		<span class="php-quote">'loginAction'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'users'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'login'</span>, <span class="php-quote">'admin'</span> =&gt; <span class="php-keyword1">FALSE</span>),
@@ -317,9 +317,12 @@ request.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsAppController.html#52-56" title="Go to source code"><var>$helpers</var></a>
+				<a href="source-class-MeCmsBackendAppController.html#52-59" title="Go to source code"><var>$helpers</var></a>
 		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'MeTools.Library'</span>)</code></td>
+		<td class="value"><code><span class="php-keyword1">array</span>(
+	<span class="php-quote">'MeTools.Library'</span>,
+	<span class="php-quote">'Paginator'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MePaginator'</span>)
+)</code></td>
 		<td class="description"><div>
 			<a href="#$helpers" class="anchor">#</a>
 

@@ -8,7 +8,7 @@
 	<title>File Post.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?236406270"></script>
+	<script type="text/javascript" src="elementlist.js?2421756793"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -27,8 +27,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
-				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
+				<li><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
+				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li class="active"><a href="class-Post.html">Post</a></li>
@@ -86,37 +86,37 @@
 
 <pre><code><span id="1" class="l"><a class="l" href="#1">  1: </a><span class="xlang">&lt;?php</span>
 </span><span id="2" class="l"><a class="l" href="#2">  2: </a>App::uses(<span class="php-quote">'CakeTime'</span>, <span class="php-quote">'Utility'</span>);
-</span><span id="3" class="l"><a class="l" href="#3">  3: </a>App::uses(<span class="php-quote">'MeCmsAppModel'</span>, <span class="php-quote">'MeCms.Model'</span>);
+</span><span id="3" class="l"><a class="l" href="#3">  3: </a>App::uses(<span class="php-quote">'MeCmsBackendAppModel'</span>, <span class="php-quote">'MeCmsBackend.Model'</span>);
 </span><span id="4" class="l"><a class="l" href="#4">  4: </a>
 </span><span id="5" class="l"><a class="l" href="#5">  5: </a><span class="php-comment">/**
 </span></span><span id="6" class="l"><a class="l" href="#6">  6: </a><span class="php-comment"> * Post
 </span></span><span id="7" class="l"><a class="l" href="#7">  7: </a><span class="php-comment"> *
-</span></span><span id="8" class="l"><a class="l" href="#8">  8: </a><span class="php-comment"> * This file is part of MeTools.
+</span></span><span id="8" class="l"><a class="l" href="#8">  8: </a><span class="php-comment"> * This file is part of MeCms Backend.
 </span></span><span id="9" class="l"><a class="l" href="#9">  9: </a><span class="php-comment"> *
-</span></span><span id="10" class="l"><a class="l" href="#10"> 10: </a><span class="php-comment"> * MeTools is free software: you can redistribute it and/or modify
+</span></span><span id="10" class="l"><a class="l" href="#10"> 10: </a><span class="php-comment"> * MeCms Backend is free software: you can redistribute it and/or modify
 </span></span><span id="11" class="l"><a class="l" href="#11"> 11: </a><span class="php-comment"> * it under the terms of the GNU Affero General Public License as
 </span></span><span id="12" class="l"><a class="l" href="#12"> 12: </a><span class="php-comment"> * published by the Free Software Foundation, either version 3 of the
 </span></span><span id="13" class="l"><a class="l" href="#13"> 13: </a><span class="php-comment"> * License, or (at your option) any later version.
 </span></span><span id="14" class="l"><a class="l" href="#14"> 14: </a><span class="php-comment"> *
-</span></span><span id="15" class="l"><a class="l" href="#15"> 15: </a><span class="php-comment"> * MeTools is distributed in the hope that it will be useful,
+</span></span><span id="15" class="l"><a class="l" href="#15"> 15: </a><span class="php-comment"> * MeCms Backend is distributed in the hope that it will be useful,
 </span></span><span id="16" class="l"><a class="l" href="#16"> 16: </a><span class="php-comment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of
 </span></span><span id="17" class="l"><a class="l" href="#17"> 17: </a><span class="php-comment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 </span></span><span id="18" class="l"><a class="l" href="#18"> 18: </a><span class="php-comment"> * GNU Affero General Public License for more details.
 </span></span><span id="19" class="l"><a class="l" href="#19"> 19: </a><span class="php-comment"> *
 </span></span><span id="20" class="l"><a class="l" href="#20"> 20: </a><span class="php-comment"> * You should have received a copy of the GNU Affero General Public License
-</span></span><span id="21" class="l"><a class="l" href="#21"> 21: </a><span class="php-comment"> * along with MeTools.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</span></span><span id="21" class="l"><a class="l" href="#21"> 21: </a><span class="php-comment"> * along with MeCms Backend.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 </span></span><span id="22" class="l"><a class="l" href="#22"> 22: </a><span class="php-comment"> *
 </span></span><span id="23" class="l"><a class="l" href="#23"> 23: </a><span class="php-comment"> * @author      Mirko Pagliai &lt;mirko.pagliai@gmail.com&gt;
 </span></span><span id="24" class="l"><a class="l" href="#24"> 24: </a><span class="php-comment"> * @copyright   Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
 </span></span><span id="25" class="l"><a class="l" href="#25"> 25: </a><span class="php-comment"> * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
 </span></span><span id="26" class="l"><a class="l" href="#26"> 26: </a><span class="php-comment"> * @link        http://git.novatlantis.it Nova Atlantis Ltd
-</span></span><span id="27" class="l"><a class="l" href="#27"> 27: </a><span class="php-comment"> * @package     MeCms\Model
+</span></span><span id="27" class="l"><a class="l" href="#27"> 27: </a><span class="php-comment"> * @package     MeCmsBackend\Model
 </span></span><span id="28" class="l"><a class="l" href="#28"> 28: </a><span class="php-comment"> */</span>
 </span><span id="29" class="l"><a class="l" href="#29"> 29: </a>
 </span><span id="30" class="l"><a class="l" href="#30"> 30: </a><span class="php-comment">/**
 </span></span><span id="31" class="l"><a class="l" href="#31"> 31: </a><span class="php-comment"> * Post Model
 </span></span><span id="32" class="l"><a class="l" href="#32"> 32: </a><span class="php-comment"> */</span>
-</span><span id="33" class="l"><a class="l" href="#33"> 33: </a><span class="php-keyword1">class</span> <a id="Post" href="#Post">Post</a> <span class="php-keyword1">extends</span> MeCmsAppModel {
+</span><span id="33" class="l"><a class="l" href="#33"> 33: </a><span class="php-keyword1">class</span> <a id="Post" href="#Post">Post</a> <span class="php-keyword1">extends</span> MeCmsBackendAppModel {
 </span><span id="34" class="l"><a class="l" href="#34"> 34: </a>    <span class="php-comment">/**
 </span></span><span id="35" class="l"><a class="l" href="#35"> 35: </a><span class="php-comment">     * Display field
 </span></span><span id="36" class="l"><a class="l" href="#36"> 36: </a><span class="php-comment">     * @var string
@@ -197,12 +197,12 @@
 </span></span><span id="111" class="l"><a class="l" href="#111">111: </a><span class="php-comment">     */</span>
 </span><span id="112" class="l"><a class="l" href="#112">112: </a>    <span class="php-keyword1">public</span> <span class="php-var"><a id="$belongsTo" href="#$belongsTo">$belongsTo</a></span> = <span class="php-keyword1">array</span>(
 </span><span id="113" class="l"><a class="l" href="#113">113: </a>        <span class="php-quote">'Category'</span> =&gt; <span class="php-keyword1">array</span>(
-</span><span id="114" class="l"><a class="l" href="#114">114: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
+</span><span id="114" class="l"><a class="l" href="#114">114: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.PostsCategory'</span>,
 </span><span id="115" class="l"><a class="l" href="#115">115: </a>            <span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'category_id'</span>,
 </span><span id="116" class="l"><a class="l" href="#116">116: </a>            <span class="php-quote">'counterCache'</span> =&gt; <span class="php-keyword1">TRUE</span>
 </span><span id="117" class="l"><a class="l" href="#117">117: </a>        ),
 </span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-quote">'User'</span> =&gt; <span class="php-keyword1">array</span>(
-</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.User'</span>,
+</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.User'</span>,
 </span><span id="120" class="l"><a class="l" href="#120">120: </a>            <span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'user_id'</span>,
 </span><span id="121" class="l"><a class="l" href="#121">121: </a>            <span class="php-quote">'counterCache'</span> =&gt; <span class="php-keyword1">TRUE</span>
 </span><span id="122" class="l"><a class="l" href="#122">122: </a>        )
