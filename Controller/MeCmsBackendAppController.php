@@ -49,7 +49,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	);
 	
 	/**
-	 * MeCms Backend configuration
+	 * Configuration
 	 * @var array
 	 */
 	protected $config = array();
@@ -66,31 +66,33 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	);
 	
 	/**
-	 * Loads the configuration file
+	 * Loads and gets the configuration.
 	 * The file will be searched before in the APP (`app/Config`).
-	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCms/Config`)
+	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCmsBackend/Config`)
+	 * @return type
 	 * @throws InternalErrorException
 	 */
-	private function _loadConfig() {
+	private function _getConfig() {
 		//Searches for the file in the APP `Config`
-		if(is_readable(APP.($path = 'Config'.DS.'mecms.php')))
-			Configure::load('mecms');
+		if(is_readable(APP.($path = 'Config'.DS.'mecms_backend.php')))
+			Configure::load('mecms_backend');
 		//Searches for the file in the plugin `Config`
 		elseif(is_readable(App::pluginPath('MeCmsBackend').$path))
-			Configure::load('MeCmsBackend.mecms');
+			Configure::load('MeCmsBackend.mecms_backend');
 		else
-			throw new InternalErrorException(__d('me_cms_backend', 'The configuration file for %s was not found', 'MeCms'));
+			throw new InternalErrorException(__d('me_cms_backend', 'The configuration file for the %s was not found', 'MeCms Backend'));
+	
+		return Configure::read('MeCmsBackend');
 	}
 	
 	/**
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
-	 * @uses _loadConfig() to load the configuration file
+	 * @uses _getConfig() to load the configuration file
 	 */
 	public function beforeFilter() {
-		//Loads configuration file
-		$this->_loadConfig();
-		$this->config = Configure::read('MeCmsBackend');
+		//Loads and gets the configuration
+		$this->config = $this->_getConfig();
 		
 		parent::beforeFilter();
 	}
