@@ -2,6 +2,7 @@
 App::uses('ClassRegistry', 'Utility');
 App::uses('User', 'MeCmsBackend.Model');
 App::uses('UsersGroup', 'MeCmsBackend.Model');
+App::uses('PostsCategory', 'MeCmsBackend.Model');
 
 class MeCmsBackendSchema extends CakeSchema {
 
@@ -14,11 +15,35 @@ class MeCmsBackendSchema extends CakeSchema {
 	public function after($event = array()) {
 		if(isset($event['create'])) {
             switch($event['create']) {
+				case 'posts_categories':
+					$this->insertPosts();
+					break;
                 case 'users_groups':
                     $this->insertUsers();
                     break;
             }
         }
+	}
+	
+	public function insertPosts() {
+		$categories = ClassRegistry::init('MeCmsBackend.PostsCategory');
+		$categories->create();
+		
+		$save = $categories->saveAll(array(
+			array(
+				'title'			=> 'Your first category', 
+				'slug'			=> 'your-first-category',
+				'description'	=> 'This is your first category',
+				'post_count'	=> '1',
+				'Post' => array(array(
+					'user_id'	=> '1', 
+					'title'		=> 'Your first post', 
+					'slug'		=> 'your-first-post', 
+					'text'		=> 'Hello, this is your first post!'
+				))
+			)
+			
+		), array('counterCache' => FALSE, 'deep' => TRUE, 'validate' => FALSE));
 	}
 	
 	public function insertUsers() {
