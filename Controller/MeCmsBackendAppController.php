@@ -69,7 +69,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	 * Loads and gets the configuration.
 	 * The file will be searched before in the APP (`app/Config`).
 	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCmsBackend/Config`)
-	 * @return type
+	 * @return array Configuration
 	 * @throws InternalErrorException
 	 */
 	private function _getConfig() {
