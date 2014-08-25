@@ -17,6 +17,7 @@ $config = array('MeCmsBackend' => array(
 	),
 	//Site options
 	'site' => array(
+		//Number of records to show per page
 		'records_for_page' => 10,
 		//Site title
 		'title' => 'MeCms Backend'
