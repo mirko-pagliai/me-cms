@@ -1,6 +1,5 @@
 <?php
 App::uses('ClassRegistry', 'Utility');
-App::uses('User', 'MeCmsBackend.Model');
 App::uses('UsersGroup', 'MeCmsBackend.Model');
 App::uses('PostsCategory', 'MeCmsBackend.Model');
 
@@ -42,20 +41,37 @@ class MeCmsBackendSchema extends CakeSchema {
 					'text'		=> 'Hello, this is your first post!'
 				))
 			)
-			
 		), array('counterCache' => FALSE, 'deep' => TRUE, 'validate' => FALSE));
 	}
 	
 	public function insertUsers() {
 		$groups = ClassRegistry::init('MeCmsBackend.UsersGroup');
 		$groups->create();
-		$save = $groups->saveMany(array(
-			array('name' => 'admin', 'label' => 'Admin', 'level' => '100', 'User' => array(
-				array('username' => 'admin', 'email' => 'admin@example.it', 'password' => 'admin')
-			)),
-			array('name' => 'manager', 'label' => 'Manager', 'level' => '50'),
-			array('name' => 'user', 'label' => 'User', 'level' => '10')
-		), array('deep' => TRUE, 'validate' => FALSE));
+		
+		$save = $groups->saveAll(array(
+			array(
+				'name'			=> 'admin', 
+				'label'			=> 'Admin', 
+				'level'			=> '100',
+				'user_count'	=> '1',
+				'User' => array(array(
+					'username'		=> 'admin', 
+					'email'			=> 'admin@example.it', 
+					'password'		=> 'admin',
+					'post_count'	=> '1'
+				))
+			),
+			array(
+				'name'	=> 'manager',
+				'label' => 'Manager',
+				'level' => '50'
+			),
+			array(
+				'name'	=> 'user',
+				'label' => 'User',
+				'level' => '10'
+			)
+		), array('counterCache' => FALSE, 'deep' => TRUE, 'validate' => FALSE));
 	}
 
 	public $posts = array(
