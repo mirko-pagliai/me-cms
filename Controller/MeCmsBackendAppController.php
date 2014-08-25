@@ -59,6 +59,8 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	 * @var array 
 	 */
 	public $helpers = array(
+		'Form' => array('className' => 'MeTools.MeForm'),
+		'Html' => array('className' => 'MeTools.MeHtml'),
 		'MeTools.Library',
 		'Paginator' => array('className' => 'MeTools.MePaginator')
 	);
