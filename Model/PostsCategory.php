@@ -40,6 +40,12 @@ class PostsCategory extends MeCmsBackendAppModel {
 	 * @var string
 	 */
 	public $displayField = 'title';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('PostsCategory.lft' => 'ASC');
 
 	/**
 	 * Validation rules
