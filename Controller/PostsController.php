@@ -35,7 +35,7 @@ class PostsController extends MeCmsBackendAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.username'),
-			'fields'	=> array('id', 'title', 'priority', 'active', 'created'),
+			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
 			'limit'		=> $this->config['site']['records_for_page'],
 			'order'		=> array('created' => 'desc')
 		);
