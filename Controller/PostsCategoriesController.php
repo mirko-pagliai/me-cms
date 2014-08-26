@@ -36,7 +36,7 @@ class PostsCategoriesController extends MeCmsBackendAppController {
 		//Gets the categories
 		$categories = $this->PostsCategory->find('all', array(
 			'contain'	=> array('Parent.title'),
-			'fields'	=> array('id', 'title', 'post_count')
+			'fields'	=> array('id', 'title', 'slug', 'post_count')
 		));
 		
 		//Gets the tree list

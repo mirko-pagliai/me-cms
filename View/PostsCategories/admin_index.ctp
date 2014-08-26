@@ -45,7 +45,8 @@
 
 						echo $this->Html->ul(array(
 							$this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $postsCategory['PostsCategory']['id']), array('icon' => 'pencil')),
-							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $postsCategory['PostsCategory']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this posts category?'))							
+							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $postsCategory['PostsCategory']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this posts category?')),					
+							$this->Html->link(__d('me_cms_backend', 'Open'), array('controller' => 'posts', 'action' => 'index', $postsCategory['PostsCategory']['slug'], 'admin' => FALSE, 'plugin' => 'me_cms_frontend'), array('icon' => 'external-link', 'target' => '_blank'))
 						), array('class' => 'actions'));
 					?>
 				</td>
