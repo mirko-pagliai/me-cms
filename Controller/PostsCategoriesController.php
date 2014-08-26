@@ -36,13 +36,13 @@ class PostsCategoriesController extends MeCmsBackendAppController {
 		//Gets the categories
 		$categories = $this->PostsCategory->find('all', array(
 			'contain'	=> array('Parent.title'),
-			'fields'	=> array('id', 'title', 'slug', 'post_count')
+			'fields'	=> array('id', 'slug', 'post_count')
 		));
 		
 		//Gets the tree list
 		$treeList = $this->PostsCategory->generateTreeList();
 		
-		//Changes the category names, replacing them with the names of the tree list
+		//Changes the category titles, replacing them with the titles of the tree list
 		array_walk($categories, function(&$v, $k, $treeList) {
 			$v['PostsCategory']['title'] =  $treeList[$v['PostsCategory']['id']];
 		}, $treeList);
