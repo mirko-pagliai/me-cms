@@ -44,7 +44,7 @@ class PostsCategoriesController extends MeCmsBackendAppController {
 		
 		//Changes the category titles, replacing them with the titles of the tree list
 		array_walk($categories, function(&$v, $k, $treeList) {
-			$v['PostsCategory']['title'] =  $treeList[$v['PostsCategory']['id']];
+			$v['PostsCategory']['title'] = $treeList[$v['PostsCategory']['id']];
 		}, $treeList);
 		
 		$this->set(array(
