@@ -55,7 +55,7 @@ class PostsController extends MeCmsBackendAppController {
 		
 		//Checks for categories
 		if(empty($categories)) {
-			$this->Session->flash(__d('me_cms_backend', 'Before you can add a post, you have to create at least one category'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'Before you can add a post, you have to create at least a category'), 'error');
 			$this->redirect(array('controller' => 'posts_categories', 'action' => 'index'));
 		}
 		
