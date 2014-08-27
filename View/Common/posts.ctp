@@ -1,6 +1,6 @@
 <?php
 /**
- * Common view used by post and posts category views.
+ * Common view used by post and posts categories views.
  *
  * This file is part of MeCms Backend.
  *
