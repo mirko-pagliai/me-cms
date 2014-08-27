@@ -69,8 +69,9 @@ class Photo extends MeCmsBackendAppModel {
 	 */
 	public $belongsTo = array(
 		'Album' => array(
-			'className' => 'PhotosAlbum',
-			'foreignKey' => 'album_id'
+			'className'		=> 'PhotosAlbum',
+			'foreignKey'	=> 'album_id',
+			'counterCache'	=> TRUE
 		)
 	);
 	
