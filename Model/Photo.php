@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
+App::uses('Folder', 'Utility');
 
 /**
  * Photo Model
@@ -72,4 +73,13 @@ class Photo extends MeCmsBackendAppModel {
 			'foreignKey' => 'album_id'
 		)
 	);
+	
+	/**
+	 * Gets the list of the photos in the temporary directory (`APP/tmp/photos`)
+	 * @return array Photos list
+	 */
+	public function getTmp() {
+		$dir = new Folder(TMP.'photos');
+		return $dir->find('.*\.(gif|jpg|jpeg|png)', TRUE);	
+	}
 }
