@@ -26,7 +26,14 @@
 <?php $this->extend('/Common/pages'); ?>
 
 <div class="pages view">
-	<?php echo $this->Html->h2(__d('me_cms_backend', 'Page')); ?>
-	<?php echo $this->Html->para(NULL, sprintf('%s: %s', $this->Html->strong(__d('me_cms_backend', 'Path')), $this->Html->code($page['Page']['path']))); ?>
+	<?php 
+		echo $this->Html->h2(__d('me_cms_backend', 'Page'));
+		echo $this->Html->para(NULL,
+			sprintf('%s: %s', $this->Html->strong(__d('me_cms_backend', 'Full path')), $this->Html->code($page['Page']['path']))
+		);
+		echo $this->Html->para(NULL,
+			sprintf('%s: %s', $this->Html->strong(__d('me_cms_backend', 'Title')), $page['Page']['title'])
+		);
+	?>
 	<pre class="pre-scrollable"><?php echo htmlspecialchars($page['Page']['content']); ?></pre>
 </div>

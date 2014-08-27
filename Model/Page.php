@@ -85,6 +85,7 @@ class Page extends MeCmsBackendAppModel {
 				
 		return array_map(function($filename, $id) {
 			$filename = preg_replace(sprintf('/^%s/', preg_quote($this->path, '/')), '', $filename);
+			$title = Inflector::humanize(pathinfo($filename, PATHINFO_FILENAME));
 			$args = pathinfo($filename, PATHINFO_DIRNAME);
 			
 			if($args != '.')
@@ -92,7 +93,7 @@ class Page extends MeCmsBackendAppModel {
 			else
 				$args = pathinfo($filename, PATHINFO_FILENAME);
 			
-			return array('Page' => compact('id', 'filename', 'args'));
+			return array('Page' => compact('id', 'filename', 'title', 'args'));
 		}, $files, range(1, count($files)));
 	}
 	
@@ -108,7 +109,9 @@ class Page extends MeCmsBackendAppModel {
 		
 		//Gets the content of the page
 		$content = file_get_contents($path);
+		
+		$title = Inflector::humanize(pathinfo($path, PATHINFO_FILENAME));
 
-		return array('Page' => compact('id', 'content', 'path'));
+		return array('Page' => compact('id', 'title', 'content', 'path'));
 	}
 }

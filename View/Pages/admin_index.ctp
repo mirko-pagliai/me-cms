@@ -30,13 +30,14 @@
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo __d('me_cms_backend', 'Filename'); ?></th>
+			<th><?php echo __d('me_cms_backend', 'Title'); ?></th>
 		</tr>
 		<?php foreach($pages as $page): ?>
 		<tr>
 			<td>
 				<?php
-					$title = $this->Html->link($filename = $page['Page']['filename'], array('action' => 'view', $id = $page['Page']['id']));
-					echo $this->Html->div(NULL, $this->Html->strong($title));
+					$filename = $this->Html->link($page['Page']['filename'], array('action' => 'view', $id = $page['Page']['id']));
+					echo $this->Html->div(NULL, $this->Html->strong($filename));
 					
 					echo $this->Html->ul(array(
 						$this->Html->link(__d('me_cms_backend', 'View'), array('action' => 'view', $id), array('icon' => 'eye')),
@@ -44,6 +45,7 @@
 					), array('class' => 'actions'));
 				?>
 			</td>
+			<td><?php echo $page['Page']['title']; ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</table>
