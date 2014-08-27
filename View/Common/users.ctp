@@ -1,6 +1,6 @@
 <?php
 /**
- * Common view used by user and users group views.
+ * Common view used by user and users groups views.
  *
  * This file is part of MeCms Backend.
  *
