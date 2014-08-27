@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
+
 /**
  * PostsCategory Model
  */

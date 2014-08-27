@@ -26,6 +26,7 @@
 
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
+
 /**
  * User Model
  */
