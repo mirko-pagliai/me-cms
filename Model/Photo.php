@@ -52,8 +52,14 @@ class Photo extends MeCmsBackendAppModel {
 			'rule'		=> array('naturalNumber')
 		),
 		'filename' => array(
-			'message'	=> 'This extension is invalid',
-			'rule'		=> array('extension', array('gif', 'jpg', 'jpeg', 'png'))
+			'extension' => array(
+				'message'	=> 'This extension is invalid',
+				'rule'		=> array('extension', array('gif', 'jpg', 'jpeg', 'png'))
+			),
+			'isUnique' => array(
+				'message'	=> 'This value is already used',
+				'rule'		=> 'isUnique'
+			)
 		),
 		'description' => array(
 			'allowEmpty'	=> TRUE,
