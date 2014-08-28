@@ -37,11 +37,11 @@ App::uses('Folder', 'Utility');
  */
 class Album {
 	/**
-	 * Checks if an album directory is writeable.
+	 * Checks if the directory album is writeable.
 	 * 
 	 * If an album ID is specified, it checks the directory of that album.
-	 * Otherwise, it checks the album parent directory.
-	 * @param string $albumId Album ID
+	 * Otherwise, it checks the parent directory.
+	 * @param int $albumId Album ID
 	 * @return boolean TRUE if is writeable, otherwise FALSE;
 	 * @uses getAlbumPath() to get the album path
 	 */
@@ -68,15 +68,15 @@ class Album {
 	static public function createAlbum($albumId) {
 		//Creates the directory and make it writable
 		$folder = new Folder();
-		return (bool) @$folder->create(self::getAlbumPath($albumId), '0777');
+		return (bool) @$folder->create(self::getAlbumPath($albumId), 0755);
 	}
 	
 	/**
 	 * Gets the path of an album.
 	 * 
 	 * If an album ID is specified, it returns the path of that album.
-	 * Otherwise, it returns the path of the album parent directory.
-	 * @param string $albumId Album ID
+	 * Otherwise, it returns the path of the parent directory.
+	 * @param int $albumId Album ID
 	 * @return string Path
 	 */
 	static public function getAlbumPath($albumId = NULL) {
@@ -84,7 +84,7 @@ class Album {
 	}
 	
 	/**
-	 * Gets the list of the photos in the temporary directory (`APP/tmp/photos`)
+	 * Gets the list of the photos in the temporary directory (`APP/tmp/photos`).
 	 * @return array Photos list
 	 * @uses getTmpPath() to get the path of the photos temporary directory
 	 */
@@ -94,10 +94,26 @@ class Album {
 	}
 	
 	/**
-	 * Gets the path of the photos temporary directory
+	 * Gets the path of the temporary directory
 	 * @return string Path
 	 */
 	static public function getTmpPath() {
 		return TMP.'photos';
+	}
+	
+	/**
+	 * Saves a photo from the temporary directory to the album directory.
+	 * @param string $filename Filename, relative to the temporary directory
+	 * @param int $albumId Album ID
+	 * @return boolean TRUE if the photo has been saved, otherwise FALSE
+	 * @uses getTmpPath() to get the path of the temporary directory
+	 * @uses getAlbumPath() to get the album path
+	 */
+	static public function savePhoto($filename, $albumId) {
+		$file = new File(self::getTmpPath().DS.$filename);
+		if($success = $file->copy(self::getAlbumPath($albumId).DS.$filename))
+			$file->delete();
+		
+		return $success;
 	}
 }
