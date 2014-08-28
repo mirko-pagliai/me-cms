@@ -25,11 +25,10 @@
  */
 
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
-App::uses('Folder', 'Utility');
+App::uses('Album', 'MeCmsBackend.Utility');
 
 /**
  * Photo Model
- * @property Album $Album
  */
 class Photo extends MeCmsBackendAppModel {
 	/**
@@ -76,20 +75,19 @@ class Photo extends MeCmsBackendAppModel {
 	);
 	
 	/**
-	 * Gets the list of the photos in the temporary directory (`APP/tmp/photos`)
-	 * @return array Photos list
-	 * @uses getTmpPath() to get the path of the photos temporary directory
+	 * Called before each save operation, after validation. Return a non-true result to halt the save.
+	 * @param array $options Options passed from Model::save()
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 * @uses Album::checkIfWritable() to check if the album is writeable
 	 */
-	public function getTmp() {
-		$dir = new Folder($this->getTmpPath());
-		return $dir->find('.*\.(gif|jpg|jpeg|png)', TRUE);	
-	}
-	
-	/**
-	 * Gets the path of the photos temporary directory
-	 * @return string Path
-	 */
-	public function getTmpPath() {
-		return TMP.'photos';
+	public function beforeSave($options = array()) {
+		//Checks if the album directory is writeable
+		if(!empty($this->data[$this->alias]['album_id'])) {
+			//Gets the album slug
+			$slug = $this->Album->field('slug', array('id' => $this->data[$this->alias]['album_id']));
+			return Album::checkIfWriteable($slug);
+		}
+		
+		return TRUE;
 	}
 }
