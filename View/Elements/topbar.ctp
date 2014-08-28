@@ -42,10 +42,11 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<?php
 				echo $this->Html->ul(array(
-					$this->Html->link(NULL,								'/admin',												array('icon' => 'home', 'title' => __d('me_cms_backend', 'Home'))),
-					$this->Html->link(__d('me_cms_backend', 'Posts'),	array('controller' => 'posts', 'action' => 'index'),	array('icon' => 'thumb-tack')),
-					$this->Html->link(__d('me_cms_backend', 'Pages'),	array('controller' => 'pages', 'action' => 'index'),	array('icon' => 'files-o')),
-					$this->Html->link(__d('me_cms_backend', 'Users'),	array('controller' => 'users', 'action' => 'index'),	array('icon' => 'users')),
+					$this->Html->link(NULL,	'admin', array('icon' => 'home', 'title' => __d('me_cms_backend', 'Home'))),
+					$this->Html->link(__d('me_cms_backend', 'Posts'),	array('controller' => 'posts',			'action' => 'index'),	array('icon' => 'thumb-tack')),
+					$this->Html->link(__d('me_cms_backend', 'Pages'),	array('controller' => 'pages',			'action' => 'index'),	array('icon' => 'files-o')),
+					$this->Html->link(__d('me_cms_backend', 'Photos'),	array('controller' => 'photos_albums',	'action' => 'index'),	array('icon' => 'image')),
+					$this->Html->link(__d('me_cms_backend', 'Users'),	array('controller' => 'users',			'action' => 'index'),	array('icon' => 'users')),
 				), array('class' => 'nav navbar-nav'));
 			?>
 			<ul class="nav navbar-nav navbar-right">
