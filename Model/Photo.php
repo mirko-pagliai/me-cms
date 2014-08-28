@@ -81,6 +81,18 @@ class Photo extends MeCmsBackendAppModel {
 	);
 	
 	/**
+	 * Called after each successful save operation.
+	 * @param boolean $created TRUE if this save created a new record
+	 * @param array $options Options passed from Model::save().
+	 * @uses Album::savePhoto() to save the photos
+	 */
+	public function afterSave($created, $options = array()) {
+		//Saves the photos
+		if($created)
+			Album::savePhoto($this->data[$this->alias]['filename'], $this->data[$this->alias]['album_id']);
+	}
+	
+	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
@@ -88,11 +100,8 @@ class Photo extends MeCmsBackendAppModel {
 	 */
 	public function beforeSave($options = array()) {
 		//Checks if the album directory is writeable
-		if(!empty($this->data[$this->alias]['album_id'])) {
-			//Gets the album slug
-			$slug = $this->Album->field('slug', array('id' => $this->data[$this->alias]['album_id']));
-			return Album::checkIfWriteable($slug);
-		}
+		if(!empty($this->data[$this->alias]['album_id']))
+			return Album::albumIsWriteable($this->data[$this->alias]['album_id']);
 		
 		return TRUE;
 	}
