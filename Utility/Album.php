@@ -38,13 +38,13 @@ App::uses('Folder', 'Utility');
 class Album {	
 	/**
 	 * Checks if an album directory is writeable
-	 * @param string $slug Album slug
+	 * @param string $albumId Album ID
 	 * @return boolean TRUE if is writeable, otherwise FALSE;
 	 * @uses getPath() to get the album path
 	 */
-	static public function checkIfWriteable($slug) {
+	static public function checkIfWriteable($albumId) {
 		//Checks if the album directory exists and is writable
-		if(is_writable($path = self::getPath($slug)))
+		if(is_writable($path = self::getPath($albumId)))
 			return TRUE;
 
 		//Creates the directory and make it writable
@@ -55,11 +55,11 @@ class Album {
 	
 	/**
 	 * Gets the path of an album
-	 * @param string $slug Album slug
+	 * @param string $albumId Album ID
 	 * @return string Path
 	 */
-	static public function getPath($slug) {
-		return Configure::read('MeCmsBackend.photos.path').DS.$slug;
+	static public function getPath($albumId) {
+		return Configure::read('MeCmsBackend.photos.path').DS.$albumId;
 	}
 	
 	/**
