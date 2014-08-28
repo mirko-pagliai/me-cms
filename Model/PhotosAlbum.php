@@ -101,10 +101,8 @@ class PhotosAlbum extends MeCmsBackendAppModel {
 	 */
 	public function beforeSave($options = array()) {
 		if(!empty($this->data[$this->alias]['slug'])) {
-			$path = $this->getPath($this->data[$this->alias]['slug']);
-			
 			//Checks if the album directory exists and is writable
-			if(is_writable($path))
+			if(is_writable($path = $this->getPath($this->data[$this->alias]['slug'])))
 				return TRUE;
 			
 			//Creates the directory and make it writable
