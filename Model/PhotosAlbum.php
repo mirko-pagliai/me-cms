@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
+App::uses('Folder', 'Utility');
 
 /**
  * PhotosAlbum Model
@@ -92,5 +93,34 @@ class PhotosAlbum extends MeCmsBackendAppModel {
 			'dependent' => FALSE
 		)
 	);
-
+	
+	/**
+	 * Called before each save operation, after validation. Return a non-true result to halt the save.
+	 * @param array $options Options passed from Model::save()
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 */
+	public function beforeSave($options = array()) {
+		if(!empty($this->data[$this->alias]['slug'])) {
+			$path = $this->getPath($this->data[$this->alias]['slug']);
+			
+			//Checks if the album directory exists and is writable
+			if(is_writable($path))
+				return TRUE;
+			
+			//Creates the directory and make it writable
+			$folder = new Folder();
+			return @$folder->create($path, '0777');
+		}
+		
+		return TRUE;
+	}
+	
+	/**
+	 * Gets the path of an album
+	 * @param string $slug Album slug
+	 * @return string Path
+	 */
+	public function getPath($slug) {
+		return Configure::read('MeCmsBackend.photos.path').DS.$slug;
+	}
 }
