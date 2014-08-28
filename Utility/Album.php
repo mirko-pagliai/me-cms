@@ -35,30 +35,33 @@ App::uses('Folder', 'Utility');
  * App::uses('Album', 'MeCmsBackend.Utility');
  * </code>
  */
-class Album {	
+class Album {
 	/**
 	 * Checks if an album directory is writeable
 	 * @param string $albumId Album ID
 	 * @return boolean TRUE if is writeable, otherwise FALSE;
 	 * @uses getPath() to get the album path
 	 */
-	static public function checkIfWriteable($albumId) {
+	static public function checkIfWriteable($albumId = NULL) {
 		//Checks if the album directory exists and is writable
 		if(is_writable($path = self::getPath($albumId)))
 			return TRUE;
 
-		//Creates the directory and make it writable
-		$folder = new Folder();
-		return (bool) @$folder->create($path, '0777');
+		if(!empty($albumId)) {
+			//Creates the directory and make it writable
+			$folder = new Folder();
+			return (bool) @$folder->create($path, '0777');
+		}
+		
+		return FALSE;
 	}
-	
 	
 	/**
 	 * Gets the path of an album
 	 * @param string $albumId Album ID
 	 * @return string Path
 	 */
-	static public function getPath($albumId) {
+	static public function getPath($albumId = NULL) {
 		return Configure::read('MeCmsBackend.photos.path').DS.$albumId;
 	}
 	
