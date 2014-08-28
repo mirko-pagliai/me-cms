@@ -95,16 +95,24 @@ class PhotosAlbum extends MeCmsBackendAppModel {
 	);
 	
 	/**
+	 * Called after each successful save operation.
+	 * @param boolean $created TRUE if this save created a new record
+	 * @param array $options Options passed from Model::save().
+	 * @uses Album::createAlbum() to create the album directory
+	 */
+	public function afterSave($created, $options = array()) {
+		//Creates the album directory
+		if($created)
+			Album::createAlbum($this->id);
+	}
+	
+	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
-	 * @uses Album::checkIfWritable() to check if the album is writeable
+	 * @uses Album::albumIsWriteable() to check if the album parent directory is writeable
 	 */
 	public function beforeSave($options = array()) {
-		//Checks if the album directory is writeable
-		if(!empty($this->data[$this->alias]['slug']))
-			return Album::checkIfWriteable($this->data[$this->alias]['slug']);
-		
-		return TRUE;
+		return Album::albumIsWriteable();
 	}
 }

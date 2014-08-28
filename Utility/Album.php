@@ -37,14 +37,17 @@ App::uses('Folder', 'Utility');
  */
 class Album {
 	/**
-	 * Checks if an album directory is writeable
+	 * Checks if an album directory is writeable.
+	 * 
+	 * If an album ID is specified, it checks the directory of that album.
+	 * Otherwise, it checks the album parent directory.
 	 * @param string $albumId Album ID
 	 * @return boolean TRUE if is writeable, otherwise FALSE;
-	 * @uses getPath() to get the album path
+	 * @uses getAlbumPath() to get the album path
 	 */
-	static public function checkIfWriteable($albumId = NULL) {
+	static public function albumIsWriteable($albumId = NULL) {
 		//Checks if the album directory exists and is writable
-		if(is_writable($path = self::getPath($albumId)))
+		if(is_writable($path = self::getAlbumPath($albumId)))
 			return TRUE;
 
 		if(!empty($albumId)) {
@@ -57,11 +60,26 @@ class Album {
 	}
 	
 	/**
-	 * Gets the path of an album
+	 * Creates the album directory
+	 * @param int $albumId Album id
+	 * @return boolean TRUE if the directory was created, otherwise FALSE
+	 * @uses getAlbumPath() to get the album path
+	 */
+	static public function createAlbum($albumId) {
+		//Creates the directory and make it writable
+		$folder = new Folder();
+		return (bool) @$folder->create(self::getAlbumPath($albumId), '0777');
+	}
+	
+	/**
+	 * Gets the path of an album.
+	 * 
+	 * If an album ID is specified, it returns the path of that album.
+	 * Otherwise, it returns the path of the album parent directory.
 	 * @param string $albumId Album ID
 	 * @return string Path
 	 */
-	static public function getPath($albumId = NULL) {
+	static public function getAlbumPath($albumId = NULL) {
 		return Configure::read('MeCmsBackend.photos.path').DS.$albumId;
 	}
 	
