@@ -37,10 +37,11 @@
 			<tr>
 				<td>
 					<?php
-						echo $this->Html->strong($photosAlbum['PhotosAlbum']['title']);
+						$title = $this->Html->link($photosAlbum['PhotosAlbum']['title'], array('controller' => 'photos', $photosAlbum['PhotosAlbum']['id']));
+						echo $this->Html->strong($title);
 						
 						echo $this->Html->ul(array(
-							$this->Html->link(__d('me_cms_backend', 'View'), array('action' => 'view', $photosAlbum['PhotosAlbum']['id']), array('icon' => 'eye')),
+							$this->Html->link(__d('me_cms_backend', 'View'), array('controller' => 'photos', $photosAlbum['PhotosAlbum']['id']), array('icon' => 'eye')),
 							$this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $photosAlbum['PhotosAlbum']['id']), array('icon' => 'pencil')),
 							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $photosAlbum['PhotosAlbum']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this  photos album?')),
 							$this->Html->link(__d('me_cms_backend', 'Open'), array('action' => 'view', $photosAlbum['PhotosAlbum']['slug'], 'admin' => FALSE, 'plugin' => 'me_cms_frontend'), array('icon' => 'external-link', 'target' => '_blank'))
