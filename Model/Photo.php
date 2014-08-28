@@ -78,9 +78,18 @@ class Photo extends MeCmsBackendAppModel {
 	/**
 	 * Gets the list of the photos in the temporary directory (`APP/tmp/photos`)
 	 * @return array Photos list
+	 * @uses getTmpPath() to get the path of the photos temporary directory
 	 */
 	public function getTmp() {
-		$dir = new Folder(TMP.'photos');
+		$dir = new Folder($this->getTmpPath());
 		return $dir->find('.*\.(gif|jpg|jpeg|png)', TRUE);	
+	}
+	
+	/**
+	 * Gets the path of the photos temporary directory
+	 * @return string Path
+	 */
+	public function getTmpPath() {
+		return TMP.'photos';
 	}
 }
