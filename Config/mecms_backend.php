@@ -15,6 +15,11 @@ $config = array('MeCmsBackend' => array(
 		//Short format
 		'short'	=> '%y/%m/%d, %H:%M'
 	),
+	//Photos options
+	'photos' => array(
+		//Albums path
+		'path' => WWW_ROOT.'img'.DS.'photos',
+	),
 	//Site options
 	'site' => array(
 		//Number of records to show per page
