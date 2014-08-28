@@ -98,6 +98,7 @@ class PhotosAlbum extends MeCmsBackendAppModel {
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 * @uses getPath() to get the album path
 	 */
 	public function beforeSave($options = array()) {
 		if(!empty($this->data[$this->alias]['slug'])) {
