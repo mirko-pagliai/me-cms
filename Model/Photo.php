@@ -53,10 +53,12 @@ class Photo extends MeCmsBackendAppModel {
 		),
 		'filename' => array(
 			'extension' => array(
+				'last'		=> FALSE,
 				'message'	=> 'This extension is invalid',
 				'rule'		=> array('extension', array('gif', 'jpg', 'jpeg', 'png'))
 			),
 			'isUnique' => array(
+				'last'		=> FALSE,
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
 			)
