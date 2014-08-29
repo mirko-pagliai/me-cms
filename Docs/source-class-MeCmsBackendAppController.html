@@ -8,7 +8,7 @@
 	<title>File MeCmsBackendAppController.php | MeCms Backend</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?941200527"></script>
+	<script type="text/javascript" src="elementlist.js?3420629403"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -40,6 +40,8 @@
 			<ul>
 				<li class="active"><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
+				<li><a href="class-PhotosAlbumsController.html">PhotosAlbumsController</a></li>
+				<li><a href="class-PhotosController.html">PhotosController</a></li>
 				<li><a href="class-PostsCategoriesController.html">PostsCategoriesController</a></li>
 				<li><a href="class-PostsController.html">PostsController</a></li>
 				<li><a href="class-UsersController.html">UsersController</a></li>
@@ -143,7 +145,7 @@
 </span><span id="49" class="l"><a class="l" href="#49"> 49: </a>    );
 </span><span id="50" class="l"><a class="l" href="#50"> 50: </a>    
 </span><span id="51" class="l"><a class="l" href="#51"> 51: </a>    <span class="php-comment">/**
-</span></span><span id="52" class="l"><a class="l" href="#52"> 52: </a><span class="php-comment">     * MeCms Backend configuration
+</span></span><span id="52" class="l"><a class="l" href="#52"> 52: </a><span class="php-comment">     * Configuration
 </span></span><span id="53" class="l"><a class="l" href="#53"> 53: </a><span class="php-comment">     * @var array
 </span></span><span id="54" class="l"><a class="l" href="#54"> 54: </a><span class="php-comment">     */</span>
 </span><span id="55" class="l"><a class="l" href="#55"> 55: </a>    <span class="php-keyword1">protected</span> <span class="php-var"><a id="$config" href="#$config">$config</a></span> = <span class="php-keyword1">array</span>();
@@ -153,55 +155,59 @@
 </span></span><span id="59" class="l"><a class="l" href="#59"> 59: </a><span class="php-comment">     * @var array 
 </span></span><span id="60" class="l"><a class="l" href="#60"> 60: </a><span class="php-comment">     */</span>
 </span><span id="61" class="l"><a class="l" href="#61"> 61: </a>    <span class="php-keyword1">public</span> <span class="php-var"><a id="$helpers" href="#$helpers">$helpers</a></span> = <span class="php-keyword1">array</span>(
-</span><span id="62" class="l"><a class="l" href="#62"> 62: </a>        <span class="php-quote">'MeTools.Library'</span>,
-</span><span id="63" class="l"><a class="l" href="#63"> 63: </a>        <span class="php-quote">'Paginator'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MePaginator'</span>)
-</span><span id="64" class="l"><a class="l" href="#64"> 64: </a>    );
-</span><span id="65" class="l"><a class="l" href="#65"> 65: </a>    
-</span><span id="66" class="l"><a class="l" href="#66"> 66: </a>    <span class="php-comment">/**
-</span></span><span id="67" class="l"><a class="l" href="#67"> 67: </a><span class="php-comment">     * Loads the configuration file
-</span></span><span id="68" class="l"><a class="l" href="#68"> 68: </a><span class="php-comment">     * The file will be searched before in the APP (`app/Config`).
-</span></span><span id="69" class="l"><a class="l" href="#69"> 69: </a><span class="php-comment">     * If not available, it will be loaded by the plugin (`app/Plugin/MeCms/Config`)
-</span></span><span id="70" class="l"><a class="l" href="#70"> 70: </a><span class="php-comment">     * @throws InternalErrorException
-</span></span><span id="71" class="l"><a class="l" href="#71"> 71: </a><span class="php-comment">     */</span>
-</span><span id="72" class="l"><a class="l" href="#72"> 72: </a>    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> <a id="__loadConfig" href="#__loadConfig">_loadConfig</a>() {
-</span><span id="73" class="l"><a class="l" href="#73"> 73: </a>        <span class="php-comment">//Searches for the file in the APP `Config`</span>
-</span><span id="74" class="l"><a class="l" href="#74"> 74: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">is_readable</span>(APP.(<span class="php-var">$path</span> = <span class="php-quote">'Config'</span>.DS.<span class="php-quote">'mecms.php'</span>)))
-</span><span id="75" class="l"><a class="l" href="#75"> 75: </a>            Configure::load(<span class="php-quote">'mecms'</span>);
-</span><span id="76" class="l"><a class="l" href="#76"> 76: </a>        <span class="php-comment">//Searches for the file in the plugin `Config`</span>
-</span><span id="77" class="l"><a class="l" href="#77"> 77: </a>        <span class="php-keyword1">elseif</span>(<span class="php-keyword2">is_readable</span>(App::pluginPath(<span class="php-quote">'MeCmsBackend'</span>).<span class="php-var">$path</span>))
-</span><span id="78" class="l"><a class="l" href="#78"> 78: </a>            Configure::load(<span class="php-quote">'MeCmsBackend.mecms'</span>);
-</span><span id="79" class="l"><a class="l" href="#79"> 79: </a>        <span class="php-keyword1">else</span>
-</span><span id="80" class="l"><a class="l" href="#80"> 80: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> InternalErrorException(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The configuration file for %s was not found'</span>, <span class="php-quote">'MeCms'</span>));
-</span><span id="81" class="l"><a class="l" href="#81"> 81: </a>    }
-</span><span id="82" class="l"><a class="l" href="#82"> 82: </a>    
-</span><span id="83" class="l"><a class="l" href="#83"> 83: </a>    <span class="php-comment">/**
-</span></span><span id="84" class="l"><a class="l" href="#84"> 84: </a><span class="php-comment">     * Called before the controller action. 
-</span></span><span id="85" class="l"><a class="l" href="#85"> 85: </a><span class="php-comment">     * It's used to perform logic before each controller action.
-</span></span><span id="86" class="l"><a class="l" href="#86"> 86: </a><span class="php-comment">     * @uses _loadConfig() to load the configuration file
-</span></span><span id="87" class="l"><a class="l" href="#87"> 87: </a><span class="php-comment">     */</span>
-</span><span id="88" class="l"><a class="l" href="#88"> 88: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeFilter" href="#_beforeFilter">beforeFilter</a>() {
-</span><span id="89" class="l"><a class="l" href="#89"> 89: </a>        <span class="php-comment">//Loads configuration file</span>
-</span><span id="90" class="l"><a class="l" href="#90"> 90: </a>        <span class="php-var">$this</span>-&gt;_loadConfig();
-</span><span id="91" class="l"><a class="l" href="#91"> 91: </a>        <span class="php-var">$this</span>-&gt;config = Configure::read(<span class="php-quote">'MeCmsBackend'</span>);
-</span><span id="92" class="l"><a class="l" href="#92"> 92: </a>        
-</span><span id="93" class="l"><a class="l" href="#93"> 93: </a>        parent::beforeFilter();
-</span><span id="94" class="l"><a class="l" href="#94"> 94: </a>    }
-</span><span id="95" class="l"><a class="l" href="#95"> 95: </a>    
-</span><span id="96" class="l"><a class="l" href="#96"> 96: </a>    <span class="php-comment">/**
-</span></span><span id="97" class="l"><a class="l" href="#97"> 97: </a><span class="php-comment">     * Called after the controller action is run, but before the view is rendered. 
-</span></span><span id="98" class="l"><a class="l" href="#98"> 98: </a><span class="php-comment">     * It's used to perform logic or set view variables that are required on every request.
-</span></span><span id="99" class="l"><a class="l" href="#99"> 99: </a><span class="php-comment">     */</span>
-</span><span id="100" class="l"><a class="l" href="#100">100: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeRender" href="#_beforeRender">beforeRender</a>() {
-</span><span id="101" class="l"><a class="l" href="#101">101: </a>        <span class="php-comment">//Sets the admin layout</span>
-</span><span id="102" class="l"><a class="l" href="#102">102: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'admin'</span>]))
-</span><span id="103" class="l"><a class="l" href="#103">103: </a>            <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'admin'</span>;
-</span><span id="104" class="l"><a class="l" href="#104">104: </a>        
-</span><span id="105" class="l"><a class="l" href="#105">105: </a>        <span class="php-comment">//Sets the configuration of MeCms for the view</span>
-</span><span id="106" class="l"><a class="l" href="#106">106: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'config'</span>, <span class="php-var">$this</span>-&gt;config);
-</span><span id="107" class="l"><a class="l" href="#107">107: </a>        
-</span><span id="108" class="l"><a class="l" href="#108">108: </a>        parent::beforeRender();
-</span><span id="109" class="l"><a class="l" href="#109">109: </a>    }
-</span><span id="110" class="l"><a class="l" href="#110">110: </a></span>}</code></pre>
+</span><span id="62" class="l"><a class="l" href="#62"> 62: </a>        <span class="php-quote">'Form'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeForm'</span>),
+</span><span id="63" class="l"><a class="l" href="#63"> 63: </a>        <span class="php-quote">'Html'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeHtml'</span>),
+</span><span id="64" class="l"><a class="l" href="#64"> 64: </a>        <span class="php-quote">'MeTools.Library'</span>,
+</span><span id="65" class="l"><a class="l" href="#65"> 65: </a>        <span class="php-quote">'Paginator'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MePaginator'</span>)
+</span><span id="66" class="l"><a class="l" href="#66"> 66: </a>    );
+</span><span id="67" class="l"><a class="l" href="#67"> 67: </a>    
+</span><span id="68" class="l"><a class="l" href="#68"> 68: </a>    <span class="php-comment">/**
+</span></span><span id="69" class="l"><a class="l" href="#69"> 69: </a><span class="php-comment">     * Loads and gets the configuration.
+</span></span><span id="70" class="l"><a class="l" href="#70"> 70: </a><span class="php-comment">     * The file will be searched before in the APP (`app/Config`).
+</span></span><span id="71" class="l"><a class="l" href="#71"> 71: </a><span class="php-comment">     * If not available, it will be loaded by the plugin (`app/Plugin/MeCmsBackend/Config`)
+</span></span><span id="72" class="l"><a class="l" href="#72"> 72: </a><span class="php-comment">     * @return array Configuration
+</span></span><span id="73" class="l"><a class="l" href="#73"> 73: </a><span class="php-comment">     * @throws InternalErrorException
+</span></span><span id="74" class="l"><a class="l" href="#74"> 74: </a><span class="php-comment">     */</span>
+</span><span id="75" class="l"><a class="l" href="#75"> 75: </a>    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> <a id="__getConfig" href="#__getConfig">_getConfig</a>() {
+</span><span id="76" class="l"><a class="l" href="#76"> 76: </a>        <span class="php-comment">//Searches for the file in the APP `Config`</span>
+</span><span id="77" class="l"><a class="l" href="#77"> 77: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">is_readable</span>(APP.(<span class="php-var">$path</span> = <span class="php-quote">'Config'</span>.DS.<span class="php-quote">'mecms_backend.php'</span>)))
+</span><span id="78" class="l"><a class="l" href="#78"> 78: </a>            Configure::load(<span class="php-quote">'mecms_backend'</span>);
+</span><span id="79" class="l"><a class="l" href="#79"> 79: </a>        <span class="php-comment">//Searches for the file in the plugin `Config`</span>
+</span><span id="80" class="l"><a class="l" href="#80"> 80: </a>        <span class="php-keyword1">elseif</span>(<span class="php-keyword2">is_readable</span>(App::pluginPath(<span class="php-quote">'MeCmsBackend'</span>).<span class="php-var">$path</span>))
+</span><span id="81" class="l"><a class="l" href="#81"> 81: </a>            Configure::load(<span class="php-quote">'MeCmsBackend.mecms_backend'</span>);
+</span><span id="82" class="l"><a class="l" href="#82"> 82: </a>        <span class="php-keyword1">else</span>
+</span><span id="83" class="l"><a class="l" href="#83"> 83: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> InternalErrorException(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The configuration file for the %s was not found'</span>, <span class="php-quote">'MeCms Backend'</span>));
+</span><span id="84" class="l"><a class="l" href="#84"> 84: </a>    
+</span><span id="85" class="l"><a class="l" href="#85"> 85: </a>        <span class="php-keyword1">return</span> Configure::read(<span class="php-quote">'MeCmsBackend'</span>);
+</span><span id="86" class="l"><a class="l" href="#86"> 86: </a>    }
+</span><span id="87" class="l"><a class="l" href="#87"> 87: </a>    
+</span><span id="88" class="l"><a class="l" href="#88"> 88: </a>    <span class="php-comment">/**
+</span></span><span id="89" class="l"><a class="l" href="#89"> 89: </a><span class="php-comment">     * Called before the controller action. 
+</span></span><span id="90" class="l"><a class="l" href="#90"> 90: </a><span class="php-comment">     * It's used to perform logic before each controller action.
+</span></span><span id="91" class="l"><a class="l" href="#91"> 91: </a><span class="php-comment">     * @uses _getConfig() to load the configuration file
+</span></span><span id="92" class="l"><a class="l" href="#92"> 92: </a><span class="php-comment">     */</span>
+</span><span id="93" class="l"><a class="l" href="#93"> 93: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeFilter" href="#_beforeFilter">beforeFilter</a>() {
+</span><span id="94" class="l"><a class="l" href="#94"> 94: </a>        <span class="php-comment">//Loads and gets the configuration</span>
+</span><span id="95" class="l"><a class="l" href="#95"> 95: </a>        <span class="php-var">$this</span>-&gt;config = <span class="php-var">$this</span>-&gt;_getConfig();
+</span><span id="96" class="l"><a class="l" href="#96"> 96: </a>        
+</span><span id="97" class="l"><a class="l" href="#97"> 97: </a>        parent::beforeFilter();
+</span><span id="98" class="l"><a class="l" href="#98"> 98: </a>    }
+</span><span id="99" class="l"><a class="l" href="#99"> 99: </a>    
+</span><span id="100" class="l"><a class="l" href="#100">100: </a>    <span class="php-comment">/**
+</span></span><span id="101" class="l"><a class="l" href="#101">101: </a><span class="php-comment">     * Called after the controller action is run, but before the view is rendered. 
+</span></span><span id="102" class="l"><a class="l" href="#102">102: </a><span class="php-comment">     * It's used to perform logic or set view variables that are required on every request.
+</span></span><span id="103" class="l"><a class="l" href="#103">103: </a><span class="php-comment">     */</span>
+</span><span id="104" class="l"><a class="l" href="#104">104: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeRender" href="#_beforeRender">beforeRender</a>() {
+</span><span id="105" class="l"><a class="l" href="#105">105: </a>        <span class="php-comment">//Sets the admin layout</span>
+</span><span id="106" class="l"><a class="l" href="#106">106: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'admin'</span>]))
+</span><span id="107" class="l"><a class="l" href="#107">107: </a>            <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'admin'</span>;
+</span><span id="108" class="l"><a class="l" href="#108">108: </a>        
+</span><span id="109" class="l"><a class="l" href="#109">109: </a>        <span class="php-comment">//Sets the configuration of MeCms for the view</span>
+</span><span id="110" class="l"><a class="l" href="#110">110: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'config'</span>, <span class="php-var">$this</span>-&gt;config);
+</span><span id="111" class="l"><a class="l" href="#111">111: </a>        
+</span><span id="112" class="l"><a class="l" href="#112">112: </a>        parent::beforeRender();
+</span><span id="113" class="l"><a class="l" href="#113">113: </a>    }
+</span><span id="114" class="l"><a class="l" href="#114">114: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms Backend API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>

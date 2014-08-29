@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class PostsCategory | MeCms Backend</title>
+	<title>Class PhotosAlbum | MeCms Backend</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
 	<script type="text/javascript" src="elementlist.js?3420629403"></script>
@@ -40,9 +40,9 @@
 				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-Photo.html">Photo</a></li>
-				<li><a href="class-PhotosAlbum.html">PhotosAlbum</a></li>
+				<li class="active"><a href="class-PhotosAlbum.html">PhotosAlbum</a></li>
 				<li><a href="class-Post.html">Post</a></li>
-				<li class="active"><a href="class-PostsCategory.html">PostsCategory</a></li>
+				<li><a href="class-PostsCategory.html">PostsCategory</a></li>
 				<li><a href="class-User.html">User</a></li>
 				<li><a href="class-UsersGroup.html">UsersGroup</a></li>
 			</ul>
@@ -93,12 +93,12 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class PostsCategory</h1>
+	<h1>Class PhotosAlbum</h1>
 
 
 	<div class="description">
 	
-<p>PostsCategory Model</p>
+<p>PhotosAlbum Model</p>
 
 	</div>
 
@@ -117,7 +117,7 @@ MeToolsAppModel
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>PostsCategory</span></b>			
+<b><span>PhotosAlbum</span></b>			
 			
 			
 		</dd>
@@ -143,11 +143,106 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-PostsCategory.html#29-133" title="Go to source code">PostsCategory.php</a><br>
+		<b>Located at</b> <a href="source-class-PhotosAlbum.html#30-118" title="Go to source code">PhotosAlbum.php</a><br>
 	</div>
 
 
 
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="afterSave" id="_afterSave">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterSave">#</a>
+		<code><a href="source-class-PhotosAlbum.html#97-107" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			
+<p>Called after each successful save operation.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Called after each successful save operation.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$created</var></dt>
+					<dd><code>boolean</code><br>$created TRUE if this save created a new record</dd>
+					<dt><var>$options</var></dt>
+					<dd><code>array</code><br>$options Options passed from Model::save().</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						Album::createAlbum() to create the album directory<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeSave" id="_beforeSave">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeSave">#</a>
+		<code><a href="source-class-PhotosAlbum.html#109-117" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			
+<p>Called before each save operation, after validation. Return a non-true result
+to halt the save.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Called before each save operation, after validation. Return a non-true result
+to halt the save.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$options</var></dt>
+					<dd><code>array</code><br>$options Options passed from Model::save()</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if the operation should continue, FALSE if it should abort<br>
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						Album::albumIsWriteable() to check if the album parent directory is writeable<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
 
 
 
@@ -162,33 +257,6 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 	<table class="summary" id="properties">
 	<caption>Properties summary</caption>
-	<tr data-order="actsAs" id="$actsAs">
-		<td class="attributes"><code>
-			public  
-			array
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-PostsCategory.html#33-37" title="Go to source code"><var>$actsAs</var></a>
-		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'MeTools.MeTree'</span>)</code></td>
-		<td class="description"><div>
-			<a href="#$actsAs" class="anchor">#</a>
-
-			<div class="description short">
-				
-<p>Behaviors</p>
-
-			</div>
-
-			<div class="description detailed hidden">
-				
-<p>Behaviors</p>
-
-
-			</div>
-		</div></td>
-	</tr>
 	<tr data-order="displayField" id="$displayField">
 		<td class="attributes"><code>
 			public  
@@ -196,7 +264,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#39-43" title="Go to source code"><var>$displayField</var></a>
+				<a href="source-class-PhotosAlbum.html#35-39" title="Go to source code"><var>$displayField</var></a>
 		</td>
 		<td class="value"><code><span class="php-quote">'title'</span></code></td>
 		<td class="description"><div>
@@ -216,33 +284,6 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 			</div>
 		</div></td>
 	</tr>
-	<tr data-order="order" id="$order">
-		<td class="attributes"><code>
-			public  
-			array
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-PostsCategory.html#45-49" title="Go to source code"><var>$order</var></a>
-		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'PostsCategory.lft'</span> =&gt; <span class="php-quote">'ASC'</span>)</code></td>
-		<td class="description"><div>
-			<a href="#$order" class="anchor">#</a>
-
-			<div class="description short">
-				
-<p>Order</p>
-
-			</div>
-
-			<div class="description detailed hidden">
-				
-<p>Order</p>
-
-
-			</div>
-		</div></td>
-	</tr>
 	<tr data-order="validate" id="$validate">
 		<td class="attributes"><code>
 			public  
@@ -250,24 +291,13 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#51-104" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-PhotosAlbum.html#41-83" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
 		<span class="php-comment">//Blank on create</span>
 		<span class="php-quote">'on'</span>	=&gt; <span class="php-quote">'create'</span>,
 		<span class="php-quote">'rule'</span>	=&gt; <span class="php-quote">'blank'</span>
-	),
-	<span class="php-quote">'parent_id'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">TRUE</span>,
-		<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'You have to select a valid option'</span>,
-		<span class="php-quote">'rule'</span>			=&gt; <span class="php-quote">'naturalnumber'</span>
-	),
-	<span class="php-quote">'lft'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'rule'</span> =&gt; <span class="php-quote">'blank'</span>
-	),
-	<span class="php-quote">'rght'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'rule'</span> =&gt; <span class="php-quote">'blank'</span>
 	),
 	<span class="php-quote">'title'</span> =&gt; <span class="php-keyword1">array</span>(
 		<span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -319,38 +349,6 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 			</div>
 		</div></td>
 	</tr>
-	<tr data-order="belongsTo" id="$belongsTo">
-		<td class="attributes"><code>
-			public  
-			array
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-PostsCategory.html#106-115" title="Go to source code"><var>$belongsTo</var></a>
-		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(
-	<span class="php-quote">'Parent'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.PostsCategory'</span>,
-		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'parent_id'</span>
-	)
-)</code></td>
-		<td class="description"><div>
-			<a href="#$belongsTo" class="anchor">#</a>
-
-			<div class="description short">
-				
-<p>belongsTo associations</p>
-
-			</div>
-
-			<div class="description detailed hidden">
-				
-<p>belongsTo associations</p>
-
-
-			</div>
-		</div></td>
-	</tr>
 	<tr data-order="hasMany" id="$hasMany">
 		<td class="attributes"><code>
 			public  
@@ -358,17 +356,12 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PostsCategory.html#117-132" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-PhotosAlbum.html#85-95" title="Go to source code"><var>$hasMany</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
-	<span class="php-quote">'Child'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.PostsCategory'</span>,
-		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'parent_id'</span>,
-		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
-	),
-	<span class="php-quote">'Post'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.Post'</span>,
-		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'category_id'</span>,
+	<span class="php-quote">'Photo'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'Photo'</span>,
+		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'album_id'</span>,
 		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
 	)
 )</code></td>

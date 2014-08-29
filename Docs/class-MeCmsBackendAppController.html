@@ -7,7 +7,7 @@
 	<title>Class MeCmsBackendAppController | MeCms Backend</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?941200527"></script>
+	<script type="text/javascript" src="elementlist.js?3420629403"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -39,6 +39,8 @@
 			<ul>
 				<li class="active"><a href="class-MeCmsBackendAppController.html">MeCmsBackendAppController</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
+				<li><a href="class-PhotosAlbumsController.html">PhotosAlbumsController</a></li>
+				<li><a href="class-PhotosController.html">PhotosController</a></li>
 				<li><a href="class-PostsCategoriesController.html">PostsCategoriesController</a></li>
 				<li><a href="class-PostsController.html">PostsController</a></li>
 				<li><a href="class-UsersController.html">UsersController</a></li>
@@ -118,6 +120,8 @@ MeToolsAppController
 	<div>
 		<h4>Direct known subclasses</h4>
 			<a href="class-PagesController.html">PagesController</a>, 
+			<a href="class-PhotosAlbumsController.html">PhotosAlbumsController</a>, 
+			<a href="class-PhotosController.html">PhotosController</a>, 
 			<a href="class-PostsCategoriesController.html">PostsCategoriesController</a>, 
 			<a href="class-PostsController.html">PostsController</a>, 
 			<a href="class-UsersController.html">UsersController</a>, 
@@ -142,43 +146,47 @@ MeToolsAppController
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-MeCmsBackendAppController.html#28-110" title="Go to source code">MeCmsBackendAppController.php</a><br>
+		<b>Located at</b> <a href="source-class-MeCmsBackendAppController.html#28-114" title="Go to source code">MeCmsBackendAppController.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="_loadConfig" id="__loadConfig">
+	<tr data-order="_getConfig" id="__getConfig">
 
 		<td class="attributes"><code>
 			 private 
-			
+			array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#__loadConfig">#</a>
-		<code><a href="source-class-MeCmsBackendAppController.html#66-81" title="Go to source code">_loadConfig</a>( )</code>
+		<a class="anchor" href="#__getConfig">#</a>
+		<code><a href="source-class-MeCmsBackendAppController.html#68-86" title="Go to source code">_getConfig</a>( )</code>
 
 		<div class="description short">
 			
-<p>Loads the configuration file The file will be searched before in the APP
+<p>Loads and gets the configuration. The file will be searched before in the APP
 (<code>app/Config</code>). If not available, it will be loaded by the plugin
-(<code>app/Plugin/MeCms/Config</code>)</p>
+(<code>app/Plugin/MeCmsBackend/Config</code>)</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Loads the configuration file The file will be searched before in the APP
+<p>Loads and gets the configuration. The file will be searched before in the APP
 (<code>app/Config</code>). If not available, it will be loaded by the plugin
-(<code>app/Plugin/MeCms/Config</code>)</p>
+(<code>app/Plugin/MeCmsBackend/Config</code>)</p>
 
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br>Configuration<br>
+				</div>
 
 				<h4>Throws</h4>
 				<div class="list">
@@ -205,7 +213,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCmsBackendAppController.html#83-94" title="Go to source code">beforeFilter</a>( )</code>
+		<code><a href="source-class-MeCmsBackendAppController.html#88-98" title="Go to source code">beforeFilter</a>( )</code>
 
 		<div class="description short">
 			
@@ -226,7 +234,7 @@ controller action.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-MeCmsBackendAppController.html#__loadConfig">MeCmsBackendAppController::_loadConfig()</a></code></code><br>to load the configuration file<br>
+						<code><code><a href="class-MeCmsBackendAppController.html#__getConfig">MeCmsBackendAppController::_getConfig()</a></code></code><br>to load the configuration file<br>
 				</div>
 
 
@@ -244,7 +252,7 @@ controller action.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCmsBackendAppController.html#96-109" title="Go to source code">beforeRender</a>( )</code>
+		<code><a href="source-class-MeCmsBackendAppController.html#100-113" title="Go to source code">beforeRender</a>( )</code>
 
 		<div class="description short">
 			
@@ -340,13 +348,13 @@ request.</p>
 
 			<div class="description short">
 				
-<p>MeCms Backend configuration</p>
+<p>Configuration</p>
 
 			</div>
 
 			<div class="description detailed hidden">
 				
-<p>MeCms Backend configuration</p>
+<p>Configuration</p>
 
 
 			</div>
@@ -359,9 +367,11 @@ request.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsBackendAppController.html#57-64" title="Go to source code"><var>$helpers</var></a>
+				<a href="source-class-MeCmsBackendAppController.html#57-66" title="Go to source code"><var>$helpers</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
+	<span class="php-quote">'Form'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeForm'</span>),
+	<span class="php-quote">'Html'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeHtml'</span>),
 	<span class="php-quote">'MeTools.Library'</span>,
 	<span class="php-quote">'Paginator'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MePaginator'</span>)
 )</code></td>
