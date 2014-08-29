@@ -19,6 +19,9 @@ $config = array('MeCmsBackend' => array(
 	'photos' => array(
 		//Albums path
 		'path' => WWW_ROOT.'img'.DS.'photos',
+		//Number of photos to show per page
+		//This must be a multiple of 4
+		'photos_for_page' => 12,
 	),
 	//Site options
 	'site' => array(
