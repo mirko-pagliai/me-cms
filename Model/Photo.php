@@ -61,6 +61,11 @@ class Photo extends MeCmsBackendAppModel {
 				'last'		=> FALSE,
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
+			),
+			'blank' => array(
+				//Blank on update
+				'on'	=> 'update',
+				'rule'	=> 'blank'
 			)
 		),
 		'description' => array(
