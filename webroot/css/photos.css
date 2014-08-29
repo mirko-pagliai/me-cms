@@ -1,0 +1,118 @@
+/**
+ * Photos css.
+ *
+ * This file is part of MeCms Backend.
+ *
+ * MeCms Backend is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * MeCms Backend is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MeCms Backend.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @package		MeCmsBackend\webroot\css
+ */
+
+/* -------------------------------- */
+/*			Photo box				*/
+/* -------------------------------- */
+/* Photo box */
+.photos .photo-box {
+	background: #e8e8e8;
+	display: inline-block;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+/* Photo box, photo filename */
+.photos .photo-box .photo-filename {
+	background: #fff;
+    margin: 0 0 5px;
+    padding: 2px 6px 0;
+}
+
+/* Photo box, photo thumbnail */
+.photos .photo-box img.thumb {
+	max-width: 100%;
+}
+
+/* Photo box, photo description */
+.photos .photo-box .photo-description {
+	margin: 0;
+}
+
+/* -------------------------------- */
+/*		Photo box on indexes		*/
+/* -------------------------------- */
+/* Photo box, photo description */
+.photos.index .photo-box .photo-description {
+    background: #000;
+    bottom: 0;
+    color: #fff;
+	display: none;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    opacity: .75;
+    padding: 4px 8px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+/* Photo box, photo description on hover on photo box */
+.photos .photo-box:hover .photo-description {
+	display: block;
+}
+
+/* Photo box, photos links */
+.photos .photo-box .photo-links {
+	background: #fff;
+    margin-top: 5px;
+    padding: 4px 6px;
+	text-align: center;
+}
+
+/* Photo box, photos links, link */
+.photos .photo-box .photo-links > a {
+	border-right: 1px solid #bbb;
+    margin-right: 6px;
+    padding-right: 6px;
+    text-decoration: none;
+}
+
+/* Photo box, photos links, last link */
+.photos .photo-box .photo-links > a:last-child {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+/* -------------------------------- */
+/*		Photo box on forms			*/
+/* -------------------------------- */
+/* Photo box, photo filename */
+.photos.form .photo-box .photo-filename {
+    padding: 2px 0 0;
+}
+
+/* Photo box, photo thumbnail */
+.photos.form .photo-box img.thumb {
+	margin-bottom: 5px;
+}
+
+/* Photo box, photo description, input */
+.photos.form .photo-box .photo-description textarea {
+	border-radius: 0;
+    height: auto;
+    padding: 2px 6px;
+}

@@ -1,0 +1,67 @@
+<?php
+/**
+ * This file is part of MeCms Backend.
+ *
+ * MeCms Backend is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * MeCms Backend is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MeCms Backend.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @package		MeCmsBackend\View\Photos
+ */
+?>
+	
+<?php
+	$this->extend('/Common/photos');
+	$this->Html->css('/MeCmsBackend/css/photos');
+?>
+
+<div class="photos form">
+	<?php echo $this->Html->h2(__('Add photos')); ?>
+	<?php echo $this->Form->create('Photo', array('class' => 'form-base')); ?>
+		<div class='float-form'>
+			<?php echo $this->Form->input('album_id', array('default' => $albumId)); ?>
+		</div>
+		<fieldset>
+			<div class='clearfix'>
+				<?php foreach($photos as $k => $photo): ?>
+					<?php if($k%4 === 0) echo '<div class=\'row\'>'; ?>
+					<div class='col-md-3'>
+						<div class='photo-box'>
+							<?php
+								echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
+									'div'			=> array('class' => 'photo-filename'),
+									'hiddenField'	=> FALSE,
+									'label'			=> $photo,
+									'type'			=> 'checkbox',
+									'value'			=> $photo
+								));
+								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '184'));
+								echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
+									'div'			=> array('class' => 'photo-description'),
+									'label'			=> FALSE,
+									'placeholder'	=> __d('me_cms_backend', 'Description...'),
+									'rows'			=> 2,
+									'type'			=> 'textarea'
+								));
+							?>
+						</div>
+					</div>
+					<?php if($k%4 === 3 || $k +1 === count($photos)) echo '</div>'; ?>
+				<?php endforeach; ?>
+			</div>
+		</fieldset>
+	<?php echo $this->Form->end(__('Add photos')); ?>
+</div>
