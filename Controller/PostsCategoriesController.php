@@ -114,16 +114,15 @@ class PostsCategoriesController extends MeCmsBackendAppController {
 			
 		$this->request->onlyAllow('post', 'delete');
 		
-		//Checks if the category has many posts
-		if($this->PostsCategory->field('post_count'))
-			$this->Session->flash(__d('me_cms_backend', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
-		//Now we can delete the user...
-		else {
+		//Before deleting, it checks if the category has some posts
+		if(!$this->PostsCategory->field('post_count')) {
 			if($this->PostsCategory->delete())
 				$this->Session->flash(__d('me_cms_backend', 'The posts category has been deleted'));
 			else
 				$this->Session->flash(__d('me_cms_backend', 'The posts category was not deleted'), 'error');
 		}
+		else
+			$this->Session->flash(__d('me_cms_backend', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
 	}

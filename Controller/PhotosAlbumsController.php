@@ -93,18 +93,22 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
-		//TO-DO: verificare che l'album sia vuoto!
 		$this->PhotosAlbum->id = $id;
 		if(!$this->PhotosAlbum->exists())
 			throw new NotFoundException(__d('me_cms_backend', 'Invalid photos album'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
-		if($this->PhotosAlbum->delete())
-			$this->Session->flash(__d('me_cms_backend', 'The photos album has been deleted'));
+		//Before deleting, it checks if the album has some photos
+		if(!$this->PhotosAlbum->field('photo_count')) {
+			if($this->PhotosAlbum->delete())
+				$this->Session->flash(__d('me_cms_backend', 'The photos album has been deleted'));
+			else
+				$this->Session->flash(__d('me_cms_backend', 'The photos album was not deleted'), 'error');
+		}
 		else
-			$this->Session->flash(__d('me_cms_backend', 'The photos album was not deleted'), 'error');
-			
+			$this->Session->flash(__d('me_cms_backend', 'Before you delete this albums, you have to delete its photos or assign them to another album'), 'error');
+					
 		$this->redirect(array('action' => 'index'));
 	}
 }

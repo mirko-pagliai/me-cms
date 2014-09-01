@@ -100,20 +100,18 @@ class UsersGroupsController extends MeCmsBackendAppController {
 			throw new NotFoundException(__d('me_cms_backend', 'Invalid users group'));
 			
 		$this->request->onlyAllow('post', 'delete');
-		
-		//Checks if the users group is a necessary group
-		if($id <= 3)
-			$this->Session->flash(__d('me_cms_backend', 'You cannot delete this users group, because it\'s a necessary group'), 'error');
-		//Checks if the users group has many users
-		elseif($this->UsersGroup->field('user_count'))
-			$this->Session->flash(__d('me_cms_backend', 'Before you delete this users group, you have to delete its users or assign them to another group'), 'error');
-		//Now we can delete the users group...
-		else {
+				
+		//Before deleting, it checks if the group is a necessary group or if the group has some users
+		if($id > 3 && !$this->UsersGroup->field('user_count')) {
 			if($this->UsersGroup->delete())
 				$this->Session->flash(__d('me_cms_backend', 'The users group has been deleted'));
 			else
 				$this->Session->flash(__d('me_cms_backend', 'The users group was not deleted'), 'error');
 		}
+		elseif($id <= 3)
+			$this->Session->flash(__d('me_cms_backend', 'You cannot delete this users group, because it\'s a necessary group'), 'error');
+		else
+			$this->Session->flash(__d('me_cms_backend', 'Before you delete this users group, you have to delete its users or assign them to another group'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
 	}

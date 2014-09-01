@@ -151,20 +151,18 @@ class UsersController extends MeCmsBackendAppController {
 			throw new NotFoundException(__d('me_cms_backend', 'Invalid user'));
 			
 		$this->request->onlyAllow('post', 'delete');
-		
-		//Checks if the user is the admin founder
-		if($id == 1)
-			$this->Session->flash(__d('me_cms_backend', 'You cannot delete this user, because he\'s the admin founder'), 'error');
-		//Checks if the user has many posts
-		elseif($this->User->field('post_count'))
-			$this->Session->flash(__d('me_cms_backend', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
-		//Now we can delete the user...
-		else {
+				
+		//Before deleting, it checks if the user is a admin found or if the user has some posts
+		if($id > 1 && !$this->User->field('post_count')) {
 			if($this->User->delete())
 				$this->Session->flash(__d('me_cms_backend', 'The user has been deleted'));
 			else
 				$this->Session->flash(__d('me_cms_backend', 'The user was not deleted'), 'error');
 		}
+		elseif($id == 1)
+			$this->Session->flash(__d('me_cms_backend', 'You cannot delete this user, because he\'s the admin founder'), 'error');
+		else
+			$this->Session->flash(__d('me_cms_backend', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
 		
 		$this->redirect(array('action' => 'index'));
 	}
