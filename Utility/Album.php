@@ -72,6 +72,18 @@ class Album {
 	}
 	
 	/**
+	 * Deletes a photo
+	 * @param string $filename Photo filename
+	 * @param int $albumId Album ID
+	 * @return TRUE if the photo has been deleted, otherwise FALSE
+	 * @uses getAlbumPath() to get the album path
+	 */
+	static public function deletePhoto($filename, $albumId) {
+		$file = new File(self::getAlbumPath($albumId).DS.$filename);
+		return $file->delete();
+	}
+	
+	/**
 	 * Gets the path of an album.
 	 * 
 	 * If an album ID is specified, it returns the path of that album.
@@ -103,7 +115,7 @@ class Album {
 	
 	/**
 	 * Saves a photo from the temporary directory to the album directory.
-	 * @param string $filename Filename, relative to the temporary directory
+	 * @param string $filename Photo filename, relative to the temporary directory
 	 * @param int $albumId Album ID
 	 * @return boolean TRUE if the photo has been saved, otherwise FALSE
 	 * @uses getTmpPath() to get the path of the temporary directory
