@@ -29,7 +29,7 @@
 ?>
 
 <div class="photosAlbums form">
-	<?php echo $this->Html->h2(__('Add photos album')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Add photos album')); ?>
 	<?php echo $this->Form->create('PhotosAlbum', array('class' => 'form-base')); ?>
 		<fieldset>
 			<?php
@@ -41,5 +41,5 @@
 				echo $this->Form->input('description');
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__('Add photos album')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Add photos album')); ?>
 </div>

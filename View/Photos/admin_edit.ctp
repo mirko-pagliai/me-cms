@@ -29,7 +29,7 @@
 ?>
 
 <div class="photos form">
-	<?php echo $this->Html->h2(__('Edit photo')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Edit photo')); ?>
 	<?php echo $this->Form->create('Photo', array('class' => 'form-base')); ?>
 		<div class='float-form'>
 			<?php echo $this->Form->input('album_id'); ?>
@@ -46,5 +46,5 @@
 				echo $this->Form->input('description');
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__('Edit photo')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Edit photo')); ?>
 </div>

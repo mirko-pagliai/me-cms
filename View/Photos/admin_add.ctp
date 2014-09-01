@@ -29,7 +29,7 @@
 ?>
 
 <div class="photos form">
-	<?php echo $this->Html->h2(__('Add photos')); ?>
+	<?php echo $this->Html->h2(__d('me_cms_backend', 'Add photos')); ?>
 	<?php echo $this->Form->create('Photo', array('class' => 'form-base')); ?>
 		<div class='float-form'>
 			<?php echo $this->Form->input('album_id', array('default' => $albumId)); ?>
@@ -63,5 +63,5 @@
 				<?php endforeach; ?>
 			</div>
 		</fieldset>
-	<?php echo $this->Form->end(__('Add photos')); ?>
+	<?php echo $this->Form->end(__d('me_cms_backend', 'Add photos')); ?>
 </div>

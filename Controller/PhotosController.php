@@ -37,7 +37,7 @@ class PhotosController extends MeCmsBackendAppController {
 	 */
 	public function admin_index($albumId = NULL) {
 		if(!$this->Photo->Album->exists($albumId))
-			throw new NotFoundException(__('Invalid album'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid album'));
 		
 		$this->paginate = array(
 			'conditions'	=> array('album_id' => $albumId),
@@ -48,7 +48,7 @@ class PhotosController extends MeCmsBackendAppController {
 		$this->set(array(
 			'albumPath'			=> Album::getAlbumPath($albumId),
 			'photos'			=> $this->paginate(),
-			'title_for_layout'	=> __('Photos')
+			'title_for_layout'	=> __d('me_cms_backend', 'Photos')
 		));
 	}
 
@@ -117,7 +117,7 @@ class PhotosController extends MeCmsBackendAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Photo->exists($id))
-			throw new NotFoundException(__('Invalid photo'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid photo'));
 		
 		//Gets the photo
 		$photo = $this->Photo->find('first', array(
@@ -127,11 +127,11 @@ class PhotosController extends MeCmsBackendAppController {
 		
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Photo->save($this->request->data)) {
-				$this->Session->flash(__('The photo has been edited'));
+				$this->Session->flash(__d('me_cms_backend', 'The photo has been edited'));
 				$this->redirect(array('action' => 'index', $photo['Photo']['album_id']));
 			}
 			else
-				$this->Session->flash(__('The photo could not be edited. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The photo could not be edited. Please, try again'), 'error');
 		} 
 		else
 			$this->request->data = $photo;
@@ -140,7 +140,7 @@ class PhotosController extends MeCmsBackendAppController {
 			'albumPath'			=> Album::getAlbumPath($photo['Photo']['album_id']),
 			'albums'			=> $this->Photo->Album->find('list'),
 			'photo'				=> $photo['Photo']['filename'],
-			'title_for_layout'	=> __('Edit photo')
+			'title_for_layout'	=> __d('me_cms_backend', 'Edit photo')
 		));
 	}
 
@@ -152,16 +152,16 @@ class PhotosController extends MeCmsBackendAppController {
 	public function admin_delete($id = NULL) {
 		$this->Photo->id = $id;
 		if(!$this->Photo->exists())
-			throw new NotFoundException(__('Invalid photo'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid photo'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
 		$albumId = $this->Photo->field('album_id', array('id' => $id));
 		
 		if($this->Photo->delete())
-			$this->Session->flash(__('The photo has been deleted'));
+			$this->Session->flash(__d('me_cms_backend', 'The photo has been deleted'));
 		else
-			$this->Session->flash(__('The photo was not deleted'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'The photo was not deleted'), 'error');
 			
 		$this->redirect(array('action' => 'index', $albumId));
 	}

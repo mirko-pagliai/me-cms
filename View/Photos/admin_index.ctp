@@ -47,7 +47,7 @@
 					<div class='photo-links'>
 						<?php
 							echo $this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $photo['Photo']['id']), array('icon' => 'pencil'));
-							echo $this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $photo['Photo']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __('Are you sure you want to delete this photo?'));
+							echo $this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $photo['Photo']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this photo?'));
 						?>
 					</div>
 				</div>

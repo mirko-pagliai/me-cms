@@ -41,7 +41,7 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 		
 		$this->set(array(
 			'photosAlbums'		=> $this->paginate(),
-			'title_for_layout'	=> __('Photos albums')
+			'title_for_layout'	=> __d('me_cms_backend', 'Photos albums')
 		));
 	}
 
@@ -52,14 +52,14 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 		if($this->request->is('post')) {
 			$this->PhotosAlbum->create();
 			if($this->PhotosAlbum->save($this->request->data)) {
-				$this->Session->flash(__('The photos album has been created'));
+				$this->Session->flash(__d('me_cms_backend', 'The photos album has been created'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__('The photos album could not be created. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The photos album could not be created. Please, try again'), 'error');
 		}
 
-		$this->set('title_for_layout', __('Add photos album'));
+		$this->set('title_for_layout', __d('me_cms_backend', 'Add photos album'));
 	}
 
 	/**
@@ -69,22 +69,22 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->PhotosAlbum->exists($id))
-			throw new NotFoundException(__('Invalid photos album'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid photos album'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->PhotosAlbum->save($this->request->data)) {
-				$this->Session->flash(__('The photos album has been edited'));
+				$this->Session->flash(__d('me_cms_backend', 'The photos album has been edited'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__('The photos album could not be edited. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms_backend', 'The photos album could not be edited. Please, try again'), 'error');
 		} 
 		else
 			$this->request->data = $this->PhotosAlbum->find('first', array(
 				'conditions' => array('PhotosAlbum.'.$this->PhotosAlbum->primaryKey => $id)
 			));
 
-		$this->set('title_for_layout', __('Edit photos album'));
+		$this->set('title_for_layout', __d('me_cms_backend', 'Edit photos album'));
 	}
 
 	/**
@@ -96,14 +96,14 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 		//TO-DO: verificare che l'album sia vuoto!
 		$this->PhotosAlbum->id = $id;
 		if(!$this->PhotosAlbum->exists())
-			throw new NotFoundException(__('Invalid photos album'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid photos album'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
 		if($this->PhotosAlbum->delete())
-			$this->Session->flash(__('The photos album has been deleted'));
+			$this->Session->flash(__d('me_cms_backend', 'The photos album has been deleted'));
 		else
-			$this->Session->flash(__('The photos album was not deleted'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'The photos album was not deleted'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
 	}
