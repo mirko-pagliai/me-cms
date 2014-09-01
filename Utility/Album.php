@@ -72,6 +72,17 @@ class Album {
 	}
 	
 	/**
+	 * Deletes and album
+	 * @param int $albumId Album ID
+	 * @return TRUE if the album has been deleted, otherwise FALSE
+	 * @uses getAlbumPath() to get the album path
+	 */
+	static public function deleteAlbum($albumId) {
+		$folder = new Folder(self::getAlbumPath($albumId));
+		return $folder->delete();
+	}
+	
+	/**
 	 * Deletes a photo
 	 * @param string $filename Photo filename
 	 * @param int $albumId Album ID
