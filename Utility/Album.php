@@ -28,7 +28,7 @@
 App::uses('Folder', 'Utility');
 
 /**
- * An utility to manage photo albums and photos
+ * An utility to manage photo albums and photos.
  * 
  * You can use this utility by adding in your controller:
  * <code>
