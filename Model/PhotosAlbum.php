@@ -107,6 +107,16 @@ class PhotosAlbum extends MeCmsBackendAppModel {
 	}
 	
 	/**
+	 * Called before every deletion operation.
+	 * @param boolean $cascade If TRUE records that depend on this record will also be deleted
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 */
+	public function beforeDelete($cascade = TRUE) {
+		//Deletes the album and returns
+		return Album::deleteAlbum($this->id);
+	}
+	
+	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
