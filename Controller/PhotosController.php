@@ -37,7 +37,7 @@ class PhotosController extends MeCmsBackendAppController {
 	 */
 	public function admin_index($albumId = NULL) {
 		if(!$this->Photo->Album->exists($albumId))
-			throw new NotFoundException(__d('me_cms_backend', 'Invalid album'));
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid photos album'));
 		
 		$this->paginate = array(
 			'conditions'	=> array('album_id' => $albumId),
