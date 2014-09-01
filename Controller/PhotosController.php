@@ -35,7 +35,10 @@ class PhotosController extends MeCmsBackendAppController {
 	 * List photos
 	 * @uses Album::getAlbumPath() to get the album path
 	 */
-	public function admin_index($albumId) {
+	public function admin_index($albumId = NULL) {
+		if(!$this->Photo->Album->exists($albumId))
+			throw new NotFoundException(__('Invalid album'));
+		
 		$this->paginate = array(
 			'conditions'	=> array('album_id' => $albumId),
 			'fields'		=> array('id', 'filename', 'description'),
