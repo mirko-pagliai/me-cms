@@ -100,6 +100,22 @@ class Photo extends MeCmsBackendAppModel {
 	}
 	
 	/**
+	 * Called before every deletion operation.
+	 * @param boolean $cascade If TRUE records that depend on this record will also be deleted
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 */
+	public function beforeDelete($cascade = TRUE) {
+		//Gets the photo
+		$photo = $this->find('first', array(
+			'conditions'	=> array('id' => $this->id),
+			'fields'		=> array('album_id', 'filename')
+		));
+		
+		//Deletes the photo and returns
+		return Album::deletePhoto($photo['Photo']['filename'], $photo['Photo']['album_id']);
+	}
+	
+	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
