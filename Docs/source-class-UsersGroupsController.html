@@ -8,7 +8,7 @@
 	<title>File UsersGroupsController.php | MeCms Backend</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?3420629403"></script>
+	<script type="text/javascript" src="elementlist.js?720168064"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -196,24 +196,22 @@
 </span><span id="100" class="l"><a class="l" href="#100">100: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'Invalid users group'</span>));
 </span><span id="101" class="l"><a class="l" href="#101">101: </a>            
 </span><span id="102" class="l"><a class="l" href="#102">102: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>);
-</span><span id="103" class="l"><a class="l" href="#103">103: </a>        
-</span><span id="104" class="l"><a class="l" href="#104">104: </a>        <span class="php-comment">//Checks if the users group is a necessary group</span>
-</span><span id="105" class="l"><a class="l" href="#105">105: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$id</span> &lt;= <span class="php-num">3</span>)
-</span><span id="106" class="l"><a class="l" href="#106">106: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'You cannot delete this users group, because it\'s a necessary group'</span>), <span class="php-quote">'error'</span>);
-</span><span id="107" class="l"><a class="l" href="#107">107: </a>        <span class="php-comment">//Checks if the users group has many users</span>
-</span><span id="108" class="l"><a class="l" href="#108">108: </a>        <span class="php-keyword1">elseif</span>(<span class="php-var">$this</span>-&gt;UsersGroup-&gt;field(<span class="php-quote">'user_count'</span>))
-</span><span id="109" class="l"><a class="l" href="#109">109: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'Before you delete this users group, you have to delete its users or assign them to another group'</span>), <span class="php-quote">'error'</span>);
-</span><span id="110" class="l"><a class="l" href="#110">110: </a>        <span class="php-comment">//Now we can delete the users group...</span>
-</span><span id="111" class="l"><a class="l" href="#111">111: </a>        <span class="php-keyword1">else</span> {
-</span><span id="112" class="l"><a class="l" href="#112">112: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;UsersGroup-&gt;<span class="php-keyword2">delete</span>())
-</span><span id="113" class="l"><a class="l" href="#113">113: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The users group has been deleted'</span>));
-</span><span id="114" class="l"><a class="l" href="#114">114: </a>            <span class="php-keyword1">else</span>
-</span><span id="115" class="l"><a class="l" href="#115">115: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The users group was not deleted'</span>), <span class="php-quote">'error'</span>);
-</span><span id="116" class="l"><a class="l" href="#116">116: </a>        }
-</span><span id="117" class="l"><a class="l" href="#117">117: </a>            
-</span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>));
-</span><span id="119" class="l"><a class="l" href="#119">119: </a>    }
-</span><span id="120" class="l"><a class="l" href="#120">120: </a></span>}</code></pre>
+</span><span id="103" class="l"><a class="l" href="#103">103: </a>                
+</span><span id="104" class="l"><a class="l" href="#104">104: </a>        <span class="php-comment">//Before deleting, it checks if the group is a necessary group or if the group has some users</span>
+</span><span id="105" class="l"><a class="l" href="#105">105: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$id</span> &gt; <span class="php-num">3</span> &amp;&amp; !<span class="php-var">$this</span>-&gt;UsersGroup-&gt;field(<span class="php-quote">'user_count'</span>)) {
+</span><span id="106" class="l"><a class="l" href="#106">106: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;UsersGroup-&gt;<span class="php-keyword2">delete</span>())
+</span><span id="107" class="l"><a class="l" href="#107">107: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The users group has been deleted'</span>));
+</span><span id="108" class="l"><a class="l" href="#108">108: </a>            <span class="php-keyword1">else</span>
+</span><span id="109" class="l"><a class="l" href="#109">109: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The users group was not deleted'</span>), <span class="php-quote">'error'</span>);
+</span><span id="110" class="l"><a class="l" href="#110">110: </a>        }
+</span><span id="111" class="l"><a class="l" href="#111">111: </a>        <span class="php-keyword1">elseif</span>(<span class="php-var">$id</span> &lt;= <span class="php-num">3</span>)
+</span><span id="112" class="l"><a class="l" href="#112">112: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'You cannot delete this users group, because it\'s a necessary group'</span>), <span class="php-quote">'error'</span>);
+</span><span id="113" class="l"><a class="l" href="#113">113: </a>        <span class="php-keyword1">else</span>
+</span><span id="114" class="l"><a class="l" href="#114">114: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'Before you delete this users group, you have to delete its users or assign them to another group'</span>), <span class="php-quote">'error'</span>);
+</span><span id="115" class="l"><a class="l" href="#115">115: </a>            
+</span><span id="116" class="l"><a class="l" href="#116">116: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>));
+</span><span id="117" class="l"><a class="l" href="#117">117: </a>    }
+</span><span id="118" class="l"><a class="l" href="#118">118: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms Backend API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>

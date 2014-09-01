@@ -8,7 +8,7 @@
 	<title>File PostsCategoriesController.php | MeCms Backend</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?3420629403"></script>
+	<script type="text/javascript" src="elementlist.js?720168064"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -210,20 +210,19 @@
 </span><span id="114" class="l"><a class="l" href="#114">114: </a>            
 </span><span id="115" class="l"><a class="l" href="#115">115: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>);
 </span><span id="116" class="l"><a class="l" href="#116">116: </a>        
-</span><span id="117" class="l"><a class="l" href="#117">117: </a>        <span class="php-comment">//Checks if the category has many posts</span>
-</span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;PostsCategory-&gt;field(<span class="php-quote">'post_count'</span>))
-</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'Before you delete this category, you have to delete its posts or assign them to another category'</span>), <span class="php-quote">'error'</span>);
-</span><span id="120" class="l"><a class="l" href="#120">120: </a>        <span class="php-comment">//Now we can delete the user...</span>
-</span><span id="121" class="l"><a class="l" href="#121">121: </a>        <span class="php-keyword1">else</span> {
-</span><span id="122" class="l"><a class="l" href="#122">122: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;PostsCategory-&gt;<span class="php-keyword2">delete</span>())
-</span><span id="123" class="l"><a class="l" href="#123">123: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The posts category has been deleted'</span>));
-</span><span id="124" class="l"><a class="l" href="#124">124: </a>            <span class="php-keyword1">else</span>
-</span><span id="125" class="l"><a class="l" href="#125">125: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The posts category was not deleted'</span>), <span class="php-quote">'error'</span>);
-</span><span id="126" class="l"><a class="l" href="#126">126: </a>        }
-</span><span id="127" class="l"><a class="l" href="#127">127: </a>            
-</span><span id="128" class="l"><a class="l" href="#128">128: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>));
-</span><span id="129" class="l"><a class="l" href="#129">129: </a>    }
-</span><span id="130" class="l"><a class="l" href="#130">130: </a></span>}</code></pre>
+</span><span id="117" class="l"><a class="l" href="#117">117: </a>        <span class="php-comment">//Before deleting, it checks if the category has some posts</span>
+</span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;PostsCategory-&gt;field(<span class="php-quote">'post_count'</span>)) {
+</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;PostsCategory-&gt;<span class="php-keyword2">delete</span>())
+</span><span id="120" class="l"><a class="l" href="#120">120: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The posts category has been deleted'</span>));
+</span><span id="121" class="l"><a class="l" href="#121">121: </a>            <span class="php-keyword1">else</span>
+</span><span id="122" class="l"><a class="l" href="#122">122: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'The posts category was not deleted'</span>), <span class="php-quote">'error'</span>);
+</span><span id="123" class="l"><a class="l" href="#123">123: </a>        }
+</span><span id="124" class="l"><a class="l" href="#124">124: </a>        <span class="php-keyword1">else</span>
+</span><span id="125" class="l"><a class="l" href="#125">125: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms_backend'</span>, <span class="php-quote">'Before you delete this category, you have to delete its posts or assign them to another category'</span>), <span class="php-quote">'error'</span>);
+</span><span id="126" class="l"><a class="l" href="#126">126: </a>            
+</span><span id="127" class="l"><a class="l" href="#127">127: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>));
+</span><span id="128" class="l"><a class="l" href="#128">128: </a>    }
+</span><span id="129" class="l"><a class="l" href="#129">129: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms Backend API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
