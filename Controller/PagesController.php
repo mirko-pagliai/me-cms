@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
+
 /**
  * Pages Controller
  */
@@ -33,20 +34,75 @@ class PagesController extends MeCmsBackendAppController {
 	 * List pages
 	 */
 	public function admin_index() {
+		$this->paginate = array(
+			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
+			'limit'		=> $this->config['site']['records_for_page'],
+			'order'		=> array('created' => 'DESC')
+		);
+		
 		$this->set(array(
-			'pages'				=> $this->Page->getList(),
+			'pages'				=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms_backend', 'Pages')
 		));
 	}
-	
+
 	/**
-	 * View page
-	 * @param string $id Page id
+	 * Add page
 	 */
-	public function admin_view($id = NULL) {
-		$this->set(array(
-			'page'				=> $this->Page->getPage($id),
-			'title_for_layout'	=> __d('me_cms_backend', 'Page')
-		));
+	public function admin_add() {
+		if($this->request->is('post')) {
+			$this->Page->create();
+			if($this->Page->save($this->request->data)) {
+				$this->Session->flash(__d('me_cms_backend', 'The page has been created'));
+				$this->redirect(array('action' => 'index'));
+			}
+			else
+				$this->Session->flash(__d('me_cms_backend', 'The page could not be created. Please, try again'), 'error');
+		}
+
+		$this->set('title_for_layout', __d('me_cms_backend', 'Add page'));
+	}
+
+	/**
+	 * Edit page
+	 * @param string $id Page id
+	 * @throws NotFoundException
+	 */
+	public function admin_edit($id = NULL) {
+		if(!$this->Page->exists($id))
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid page'));
+			
+		if($this->request->is('post') || $this->request->is('put')) {
+			if($this->Page->save($this->request->data)) {
+				$this->Session->flash(__d('me_cms_backend', 'The page has been edited'));
+				$this->redirect(array('action' => 'index'));
+			}
+			else
+				$this->Session->flash(__d('me_cms_backend', 'The page could not be edited. Please, try again'), 'error');
+		} 
+		else
+			$this->request->data = $this->Page->find('first', array('conditions' => array('id' => $id)));
+
+		$this->set('title_for_layout', __d('me_cms_backend', 'Edit page'));
+	}
+
+	/**
+	 * Delete page
+	 * @param string $id Page id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->Page->id = $id;
+		if(!$this->Page->exists())
+			throw new NotFoundException(__d('me_cms_backend', 'Invalid page'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		if($this->Page->delete())
+			$this->Session->flash(__d('me_cms_backend', 'The page has been deleted'));
+		else
+			$this->Session->flash(__d('me_cms_backend', 'The page was not deleted'), 'error');
+			
+		$this->redirect(array('action' => 'index'));
 	}
 }

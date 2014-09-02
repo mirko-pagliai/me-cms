@@ -26,27 +26,61 @@
 <?php $this->extend('/Common/pages'); ?>
 	
 <div class="pages index">
-	<?php echo $this->Html->h2(__d('me_cms_backend', 'Pages')); ?>
+	<?php
+		echo $this->Html->h2(__d('me_cms_backend', 'Pages'));
+		echo $this->Html->button(__d('me_cms_backend', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
+	?>
 	<table class="table table-striped">
 		<tr>
-			<th><?php echo __d('me_cms_backend', 'Filename'); ?></th>
-			<th><?php echo __d('me_cms_backend', 'Title'); ?></th>
+			<th><?php echo $this->Paginator->sort('title'); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('priority'); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('created'); ?></th>
 		</tr>
 		<?php foreach($pages as $page): ?>
-		<tr>
-			<td>
-				<?php
-					$filename = $this->Html->link($page['Page']['filename'], array('action' => 'view', $id = $page['Page']['id']));
-					echo $this->Html->div(NULL, $this->Html->strong($filename));
-					
-					echo $this->Html->ul(array(
-						$this->Html->link(__d('me_cms_backend', 'View'), array('action' => 'view', $id), array('icon' => 'eye')),
-						$this->Html->link(__d('me_cms_backend', 'Open'), am(explode('/', $page['Page']['args']), array('action' => 'view', 'admin' => FALSE, 'plugin' => FALSE)), array('icon' => 'external-link', 'target' => '_blank'))
-					), array('class' => 'actions'));
-				?>
-			</td>
-			<td><?php echo $page['Page']['title']; ?></td>
-		</tr>
+			<tr>
+				<td>
+					<?php
+						$title = $this->Html->link($page['Page']['title'], array('action' => 'edit', $page['Page']['id']));
+						
+						//If the page is not active (it's a draft)
+						if(!$page['Page']['active'])
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms_backend', 'Draft'), array('class' => 'text-warning')));
+						
+						echo $this->Html->strong($title);
+						
+						echo $this->Html->ul(array(
+							$this->Html->link(__d('me_cms_backend', 'Edit'), array('action' => 'edit', $page['Page']['id']), array('icon' => 'pencil')),
+							$this->Form->postLink(__d('me_cms_backend', 'Delete'), array('action' => 'delete', $page['Page']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms_backend', 'Are you sure you want to delete this page?')),
+							$this->Html->link(__d('me_cms_backend', 'Open'), array('action' => 'view', $page['Page']['slug'], 'admin' => FALSE, 'plugin' => 'me_cms_frontend'), array('icon' => 'external-link', 'target' => '_blank'))
+						), array('class' => 'actions'));
+					?>
+				</td>
+				<td class="min-width text-center">
+					<?php
+						switch($page['Page']['priority']) {
+							case '1':
+								echo $this->Html->badge('1', array('class' => 'priority-verylow', 'tooltip' => __d('me_cms_backend', 'Very low')));
+								break;
+							case '2':
+								echo $this->Html->badge('2', array('class' => 'priority-low', 'tooltip' => __d('me_cms_backend', 'Low')));
+								break;
+							case '4':	
+								echo $this->Html->badge('4', array('class' => 'priority-high', 'tooltip' => __d('me_cms_backend', 'High')));
+								break;
+							case '5':
+								echo $this->Html->badge('5', array('class' => 'priority-veryhigh', 'tooltip' => __d('me_cms_backend', 'Very high')));
+								break;
+							default:
+								echo $this->Html->badge('3', array('class' => 'priority-normal', 'tooltip' => __d('me_cms_backend', 'Normal')));
+								break;
+						}
+					?>
+				</td>
+				<td class="min-width text-center">
+					<?php echo $this->Time->format($page['Page']['created'], $config['datetime']['short']); ?>
+				</td>
+			</tr>
 		<?php endforeach; ?>
 	</table>
+	<?php echo $this->element('MeTools.paginator'); ?>
 </div>
