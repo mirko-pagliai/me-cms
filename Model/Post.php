@@ -24,8 +24,8 @@
  * @package		MeCmsBackend\Model
  */
 
-App::uses('CakeTime', 'Utility');
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
+App::uses('CakeTime', 'Utility');
 
 /**
  * Post Model
