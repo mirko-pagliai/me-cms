@@ -36,6 +36,12 @@ class Post extends MeCmsBackendAppModel {
 	 * @var string
 	 */
 	public $displayField = 'title';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('created' => 'DESC');
 
 	/**
 	 * Validation rules
