@@ -24,7 +24,6 @@
  * @package		MeCmsBackend\Model
  */
 
-App::uses('Folder', 'Utility');
 App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
 
 /**
@@ -32,87 +31,62 @@ App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
  */
 class Page extends MeCmsBackendAppModel {
 	/**
-	 * Pages path.
-	 * It will be set in the constructor.
-	 * @var string 
+	 * Validation rules
+	 * @var array
 	 */
-	private $path;
-	
-	/**
-	 * This model doesn't use a database table
-	 * @var boolean 
-	 */
-    public $useTable = FALSE;
-	
-	/**
-	 * Construct function
-	 */
-	public function __construct() {
-		//Sets the pages path
-		$this->path = APP.'View'.DS.'Pages'.DS;
-		
-		parent::__construct();
-	}
-	
-	/**
-	 * Gets the path for a page
-	 * @param int $id Page id
-	 * @return string Page path
-	 * @uses getList() to get the list of pages
-	 */
-	private function _getPath($id) {		
-		$path = FALSE;
-		
-		foreach($this->getList() as $page)
-			if($page['Page']['id'] == $id) {
-				$path = $this->path.$page['Page']['filename'];
-				break;
-			}
-		
-		return $path;
-	}
-
-	/**
-	 * Gets the list of pages
-	 * @return array List of pages
-	 */
-	public function getList() {
-		//Checks if is readable
-		if(!is_readable($this->path))
-			return array();
-		
-		$dir = new Folder($this->path);
-		$files = $dir->findRecursive('.+\.ctp', TRUE);
-				
-		return array_map(function($filename, $id) {
-			$filename = preg_replace(sprintf('/^%s/', preg_quote($this->path, '/')), '', $filename);
-			$title = Inflector::humanize(pathinfo($filename, PATHINFO_FILENAME));
-			$args = pathinfo($filename, PATHINFO_DIRNAME);
-			
-			if($args != '.')
-				$args .= DS.pathinfo($filename, PATHINFO_FILENAME);
-			else
-				$args = pathinfo($filename, PATHINFO_FILENAME);
-			
-			return array('Page' => compact('id', 'filename', 'title', 'args'));
-		}, $files, range(1, count($files)));
-	}
-	
-	/**
-	 * Gets the content for a page
-	 * @param int $id Page id
-	 * @return string Page content
-	 * @uses _getPath() to get the page path
-	 */
-	public function getPage($id) {		
-		if(!is_readable($path = $this->_getPath($id)))
-			return FALSE;
-		
-		//Gets the content of the page
-		$content = file_get_contents($path);
-		
-		$title = Inflector::humanize(pathinfo($path, PATHINFO_FILENAME));
-
-		return array('Page' => compact('id', 'title', 'content', 'path'));
-	}
+	public $validate = array(
+		'id' => array(
+			//Blank on create
+			'on'	=> 'create',
+			'rule'	=> 'blank'
+		),
+		'title' => array(
+			'between' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Must be between %d and %d chars',
+				'rule'		=> array('between', 3, 100)
+			),
+			'isUnique' => array(
+				'message'	=> 'This value is already used',
+				'rule'		=> 'isUnique'
+			)
+		),
+		'slug' => array(
+			'slug' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
+				'rule'		=> array('custom', '/^[a-z0-9\-]+$/')
+			),
+			'between' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Must be between %d and %d chars',
+				'rule'		=> array('between', 3, 100)
+			),
+			'isUnique' => array(
+				'message'	=> 'This value is already used',
+				'rule'		=> 'isUnique'
+			)
+		),
+		'text' => array(
+			'message'	=> 'This field can not be empty',
+			'rule'		=> array('notEmpty')
+		),
+		'priority' => array(
+			'message'	=> 'You have to select a valid option',
+			'rule'		=> array('range', 0, 6)
+		),
+		'active' => array(
+			'message'	=> 'You have to select a valid option',
+			'rule'		=> array('boolean')
+		),
+		'created' => array(
+			'allowEmpty'	=> TRUE,
+			'message'		=> 'Must be a valid datetime',
+			'rule'			=> array('datetime')
+		),
+		'modified' => array(
+			'message'	=> 'Must be a valid datetime',
+			'rule'		=> array('datetime')
+		)
+	);
 }
