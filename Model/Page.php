@@ -31,6 +31,18 @@ App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
  */
 class Page extends MeCmsBackendAppModel {
 	/**
+	 * Display field
+	 * @var string
+	 */
+	public $displayField = 'title';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('title' => 'ASC');
+	
+	/**
 	 * Validation rules
 	 * @var array
 	 */
