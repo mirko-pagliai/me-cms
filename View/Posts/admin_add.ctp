@@ -43,7 +43,7 @@
 				echo $this->Form->datetimepicker('created', array(
 					'tip' => array(
 						sprintf('%s.', __d('me_cms_backend', 'If blank, the current date and time will be used')),
-						sprintf('%s.', __d('me_cms_backend', 'You can delay the post by entering a later date'))
+						sprintf('%s.', __d('me_cms_backend', 'You can delay the publication by entering a future date'))
 					)
 				));
 				echo $this->Form->input('priority', array(
