@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
+
 /**
  * Posts Controller
  */
@@ -37,7 +38,7 @@ class PostsController extends MeCmsBackendAppController {
 			'contain'	=> array('Category.title', 'User.username'),
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
 			'limit'		=> $this->config['site']['records_for_page'],
-			'order'		=> array('created' => 'desc')
+			'order'		=> array('created' => 'DESC')
 		);
 		
 		$this->set(array(
