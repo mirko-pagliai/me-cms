@@ -103,7 +103,7 @@ class Album {
 	 * @return string Path
 	 */
 	static public function getAlbumPath($albumId = NULL) {
-		return Configure::read('MeCmsBackend.photos.path').DS.$albumId;
+		return WWW_ROOT.'img'.DS.'photos'.DS.$albumId;
 	}
 	
 	/**
