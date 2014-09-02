@@ -30,4 +30,29 @@ App::uses('MeToolsAppModel', 'MeTools.Model');
  * Application level model.
  */
 class MeCmsBackendAppModel extends MeToolsAppModel {
+	/**
+	 * Find methods
+	 * @var array
+	 */
+    public $findMethods = array('random' =>  TRUE);
+	
+	/**
+	 * "Random" search method. It searches random records
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findRandom($state, $query, $results = array()) {
+        if($state === 'before') {
+			//If not specified, the limit is '1'
+			$query['limit'] = empty($query['limit']) ? 1 : $query['limit'];
+			//Order
+			$query['order']	= 'rand()';
+			
+            return $query;
+        }
+		
+        return $results;
+    }
 }
