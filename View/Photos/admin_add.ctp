@@ -26,6 +26,7 @@
 <?php
 	$this->extend('/Common/photos');
 	$this->Html->css('/MeCmsBackend/css/photos');
+	$this->Html->js('/MeCmsBackend/js/photos');
 ?>
 
 <div class="photos form">
@@ -36,6 +37,12 @@
 		</div>
 		<fieldset>
 			<div class='clearfix'>
+				<div class='btn-group margin-10'>
+					<?php
+						echo $this->Html->button(__d('me_cms_backend', 'Check all'), '#', array('class' => 'check-all btn-primary', 'icon' => 'check-square-o'));
+						echo $this->Html->button(__d('me_cms_backend', 'Uncheck all'), '#', array('class' => 'uncheck-all btn-primary', 'icon' => 'minus-square-o'));
+					?>
+				</div>
 				<?php foreach($photos as $k => $photo): ?>
 					<?php if($k%4 === 0) echo '<div class=\'row\'>'; ?>
 					<div class='col-md-3'>
