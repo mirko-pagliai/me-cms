@@ -26,7 +26,10 @@
 <?php $this->extend('/Common/photos'); ?>
 	
 <div class="photosAlbums index">
-	<?php echo $this->Html->h2(__d('me_cms_backend', 'Photos albums')); ?>
+	<?php
+		echo $this->Html->h2(__d('me_cms_backend', 'Photos albums'));
+		echo $this->Html->button(__d('me_cms_backend', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
+	?>
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
