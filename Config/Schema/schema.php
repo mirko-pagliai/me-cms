@@ -1,7 +1,8 @@
 <?php
 App::uses('ClassRegistry', 'Utility');
-App::uses('UsersGroup', 'MeCmsBackend.Model');
+App::uses('Page', 'MeCmsBackend.Model');
 App::uses('PostsCategory', 'MeCmsBackend.Model');
+App::uses('UsersGroup', 'MeCmsBackend.Model');
 
 class MeCmsBackendSchema extends CakeSchema {
 
@@ -14,6 +15,9 @@ class MeCmsBackendSchema extends CakeSchema {
 	public function after($event = array()) {
 		if(isset($event['create'])) {
             switch($event['create']) {
+				case 'pages':
+					$this->insertPages();
+					break;
 				case 'posts_categories':
 					$this->insertPosts();
 					break;
@@ -22,6 +26,17 @@ class MeCmsBackendSchema extends CakeSchema {
                     break;
             }
         }
+	}
+	
+	public function insertPages() {
+		$pages = ClassRegistry::init('MeCmsBackend.Page');
+		$pages->create();
+		
+		$save = $pages->saveAll(array(
+			'title'	=> 'Your first page',
+			'slug'	=> 'your-first-page',
+			'text'	=> 'Hello, this is your first page!'			
+		), array('counterCache' => FALSE, 'deep' => TRUE, 'validate' => FALSE));
 	}
 	
 	public function insertPosts() {
@@ -73,6 +88,21 @@ class MeCmsBackendSchema extends CakeSchema {
 			)
 		), array('counterCache' => FALSE, 'deep' => TRUE, 'validate' => FALSE));
 	}
+
+	public $pages = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'text' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'priority' => array('type' => 'integer', 'null' => false, 'default' => '3', 'length' => 1, 'unsigned' => false),
+		'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'InnoDB')
+	);
 
 	public $photos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
