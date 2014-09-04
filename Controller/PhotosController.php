@@ -55,7 +55,7 @@ class PhotosController extends MeCmsBackendAppController {
 	}
 
 	/**
-	 * Add photo
+	 * Add photo from the tmp directory (`APP/tmp/photos`)
 	 * @uses Album::getTmp() to get the list of the photos in the temporary directory
 	 * @uses Album::getTmpPath() to get the path of the temporary directory
 	 */
@@ -69,12 +69,12 @@ class PhotosController extends MeCmsBackendAppController {
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
-		//Gets the list of the photos in the temporary directory (`APP/tmp/photos`)
+		//Gets the list of the photos located in the tmp directory
 		$tmpPhotos = Album::getTmp();
 		
 		//Checks for photos
 		if(empty($tmpPhotos)) {
-			$this->Session->flash(__d('me_cms_backend', 'There is no photo in the directory %s', Album::getTmpPath()), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'There is no photo in the temporary directory %s', Album::getTmpPath()), 'error');
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
