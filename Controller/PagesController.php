@@ -80,7 +80,10 @@ class PagesController extends MeCmsBackendAppController {
 				$this->Session->flash(__d('me_cms_backend', 'The page could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->Page->find('first', array('conditions' => array('id' => $id)));
+			$this->request->data = $this->Page->find('first', array(
+				'conditions'	=> array('id' => $id),
+				'fields'		=> array('id', 'title', 'slug', 'text', 'priority', 'active', 'created')
+			));
 
 		$this->set('title_for_layout', __d('me_cms_backend', 'Edit page'));
 	}
