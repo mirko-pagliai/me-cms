@@ -48,7 +48,7 @@ class PhotosController extends MeCmsBackendAppController {
 		);
 		
 		$this->set(array(
-			'albumPath'			=> Album::getAlbumPath($albumId),
+			'path'				=> Album::getAlbumPath($albumId),
 			'photos'			=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms_backend', 'Photos')
 		));
