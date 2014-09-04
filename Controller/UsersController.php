@@ -204,7 +204,7 @@ class UsersController extends MeCmsBackendAppController {
 			if($this->Auth->login()) {
 				//Gets the user data ("active" and "banned" fields)
 				$user =	$this->User->find('first', array(
-					'conditions'	=> array('User.'.$this->User->primaryKey => $this->Auth->user('id')),
+					'conditions'	=> array('id' => $this->Auth->user('id')),
 					'fields'		=> array('active', 'banned')
 				));
 				
