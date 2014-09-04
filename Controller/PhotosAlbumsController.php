@@ -81,7 +81,8 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 		} 
 		else
 			$this->request->data = $this->PhotosAlbum->find('first', array(
-				'conditions' => array('PhotosAlbum.'.$this->PhotosAlbum->primaryKey => $id)
+				'conditions'	=> array('id' => $id),
+				'fields'		=> array('id', 'title', 'slug', 'description')
 			));
 
 		$this->set('title_for_layout', __d('me_cms_backend', 'Edit photos album'));
