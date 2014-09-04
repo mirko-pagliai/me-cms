@@ -77,7 +77,7 @@ class UsersController extends MeCmsBackendAppController {
 		$user = $this->User->find('first', array(
 			'conditions'	=> array('User.id' => $id),
 			'contain'		=> 'Group.label',
-			'fields'		=> array('id', 'username', 'email', 'full_name', 'banned', 'post_count', 'created')
+			'fields'		=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created')
 		));
 		
 		$this->set(array(
