@@ -108,7 +108,7 @@ class PhotosAlbumsController extends MeCmsBackendAppController {
 				$this->Session->flash(__d('me_cms_backend', 'The photos album was not deleted'), 'error');
 		}
 		else
-			$this->Session->flash(__d('me_cms_backend', 'Before you delete this albums, you have to delete its photos or assign them to another album'), 'error');
+			$this->Session->flash(__d('me_cms_backend', 'Before you delete this album, you have to delete its photos or assign them to another album'), 'error');
 					
 		$this->redirect(array('action' => 'index'));
 	}
