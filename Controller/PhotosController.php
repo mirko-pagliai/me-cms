@@ -33,6 +33,8 @@ App::uses('Album', 'MeCmsBackend.Utility');
 class PhotosController extends MeCmsBackendAppController {
 	/**
 	 * List photos
+	 * @param string $albumId Photos album id
+	 * @throws NotFoundException
 	 * @uses Album::getAlbumPath() to get the album path
 	 */
 	public function admin_index($albumId = NULL) {
