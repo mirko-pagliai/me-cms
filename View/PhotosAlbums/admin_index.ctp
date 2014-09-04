@@ -33,8 +33,9 @@
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
-			<th><?php echo $this->Paginator->sort('description'); ?></th>
-			<th class="min-width text-center"><?php echo $this->Paginator->sort('photo_count', __d('me_cms_backend', 'Photos')); ?></th>
+			<th class="min-width text-center">
+				<?php echo $this->Paginator->sort('photo_count', __d('me_cms_backend', 'Photos')); ?>
+			</th>
 		</tr>
 		<?php foreach($photosAlbums as $photosAlbum): ?>
 			<tr>
@@ -51,7 +52,6 @@
 						), array('class' => 'actions'));
 					?>
 				</td>
-				<td><?php echo $photosAlbum['PhotosAlbum']['description']; ?></td>
 				<td class="min-width text-center"><?php echo $photosAlbum['PhotosAlbum']['photo_count']; ?></td>
 			</tr>
 		<?php endforeach; ?>
