@@ -60,10 +60,10 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	 * @var array 
 	 */
 	public $helpers = array(
-		'Form' => array('className' => 'MeTools.MeForm'),
-		'Html' => array('className' => 'MeTools.MeHtml'),
-		'MeTools.Library',
-		'Paginator' => array('className' => 'MeTools.MePaginator')
+		'Form'		=> array('className' => 'MeTools.MeForm'),
+		'Html'		=> array('className' => 'MeTools.MeHtml'),
+		'Library'	=> array('className' => 'MeTools.Library'),
+		'Paginator'	=> array('className' => 'MeTools.MePaginator')
 	);
 	
 	/**
@@ -81,7 +81,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
 		elseif(is_readable(App::pluginPath('MeCmsBackend').$path))
 			Configure::load('MeCmsBackend.mecms_backend');
 		else
-			throw new InternalErrorException(__d('me_cms_backend', 'The configuration file for the %s was not found', 'MeCms Backend'));
+			throw new InternalErrorException(__d('me_cms_backend', 'The configuration file for %s was not found', 'MeCms Backend'));
 	
 		return Configure::read('MeCmsBackend');
 	}
@@ -107,7 +107,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
 		if(!empty($this->request->params['admin']))
 			$this->layout = 'admin';
 		
-		//Sets the configuration of MeCms for the view
+		//Sets the configuration array
 		$this->set('config', $this->config);
 		
 		parent::beforeRender();
