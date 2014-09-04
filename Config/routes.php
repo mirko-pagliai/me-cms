@@ -28,9 +28,7 @@
 Router::connect('/admin',	array('controller' => 'posts', 'plugin' => 'me_cms_backend', 'admin' => TRUE));
 
 //Login and logout
-Router::connect('/admin/login',		array('controller' => 'users',	'action' => 'login',	'plugin' => 'me_cms_backend'));
 Router::connect('/login',			array('controller' => 'users',	'action' => 'login',	'plugin' => 'me_cms_backend'));
-Router::connect('/admin/logout',		array('controller' => 'users',	'action' => 'logout',	'plugin' => 'me_cms_backend'));
 Router::connect('/logout',			array('controller' => 'users',	'action' => 'logout',	'plugin' => 'me_cms_backend'));
 
 //Each "admin" request is directed to the plugin
