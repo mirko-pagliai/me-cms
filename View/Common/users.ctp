@@ -27,10 +27,7 @@
 
 <?php
 	$this->start('sidebar');
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'List users'),		array('controller' => 'users',			'action' => 'index')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add user'),		array('controller' => 'users',			'action' => 'add')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups',	'action' => 'index')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups',	'action' => 'add')));
+		echo $this->Menu->get('users', 'nav');
 	$this->end();
 
 	echo $this->fetch('content');

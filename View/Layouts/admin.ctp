@@ -60,7 +60,7 @@
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
 				<div class="row">
 					<div id="sidebar" class="col-sm-3 col-md-2">
-						<ul class="nav"><?php echo $sidebar; ?></ul>
+						<?php echo $sidebar; ?>
 					</div>
 					<div id="content" class="col-sm-9 col-md-10">
 						<?php 

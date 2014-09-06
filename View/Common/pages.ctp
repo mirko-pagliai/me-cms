@@ -27,8 +27,7 @@
 
 <?php
 	$this->start('sidebar');
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'List pages'), array('controller' => 'pages', 'action' => 'index')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add page'),	array('controller' => 'pages', 'action' => 'add')));
+		echo $this->Menu->get('pages', 'nav');
 	$this->end();
 
 	echo $this->fetch('content');

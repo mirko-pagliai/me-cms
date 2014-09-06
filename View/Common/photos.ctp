@@ -27,9 +27,7 @@
 
 <?php
 	$this->start('sidebar');
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add photos'),		array('controller' => 'photos',			'action' => 'add')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index')));
-		echo $this->Html->li($this->Html->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add')));
+		echo $this->Menu->get('photos', 'nav');
 	$this->end();
 
 	echo $this->fetch('content');
