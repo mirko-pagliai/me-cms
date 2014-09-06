@@ -37,7 +37,8 @@
 class MenuHelper extends MeHtmlHelper {
 	/**
 	 * Internal function to generate the menu for "pages" actions
-	 * @return array
+	 * @param string $type Type of menu
+	 * @return mixed Menu
 	 */
 	private function _pages($type) {
 		$menu = array(
@@ -53,7 +54,8 @@ class MenuHelper extends MeHtmlHelper {
 	
 	/**
 	 * Internal function to generate the menu for "post" actions
-	 * @return array
+	 * @param string $type Type of menu
+	 * @return mixed Menu
 	 */
 	private function _posts($type) {
 		$menu = array(
@@ -71,7 +73,8 @@ class MenuHelper extends MeHtmlHelper {
 	
 	/**
 	 * Internal function to generate the menu for "photos" actions
-	 * @return array
+	 * @param string $type Type of menu
+	 * @return mixed Menu
 	 */
 	private function _photos($type) {
 		$menu = array(
@@ -88,7 +91,8 @@ class MenuHelper extends MeHtmlHelper {
 	
 	/**
 	 * Internal function to generate the menu for "users" actions
-	 * @return array
+	 * @param string $type Type of menu
+	 * @return mixed Menu
 	 */
 	private function _users($type) {
 		$menu = array(
@@ -108,7 +112,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * Generates and returns a menu for an action.
 	 * @param string $name Name of the action for which to generate the menu
 	 * @param string $type Type of menu (optional, `ul`, `nav` or `dropdown`)
-	 * @return mixed
+	 * @return mixed Menu
 	 * @uses _pages() to generate the menu for "pages" actions
 	 * @uses _photos() to generate the menu for "photos" actions
 	 * @uses _posts() to generate the menu for "posts" actions
