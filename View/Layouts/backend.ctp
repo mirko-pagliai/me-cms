@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin layout.
+ * Backend layout (admin requests).
  *
  * This file is part of MeCms.
  *
