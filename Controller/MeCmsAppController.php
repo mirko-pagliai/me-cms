@@ -100,6 +100,12 @@ class MeCmsAppController extends MeToolsAppController {
 		$this->config = $this->_getConfig();
 		
 		parent::beforeFilter();
+		
+		//Sets the "backend" layout for admin requests
+		if($this->isAdmin())
+			$this->layout = 'backend';
+		else
+			$this->layout = 'frontend';
 	}
 	
 	/**
@@ -107,12 +113,6 @@ class MeCmsAppController extends MeToolsAppController {
 	 * It's used to perform logic or set view variables that are required on every request.
 	 */
 	public function beforeRender() {
-		//Sets the "backend" layout for admin requests
-		if($this->isAdmin())
-			$this->layout = 'backend';
-		else
-			$this->layout = 'frontend';
-		
 		//Sets the configuration array
 		$this->set('config', $this->config);
 		
