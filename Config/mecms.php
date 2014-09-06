@@ -9,6 +9,17 @@ $config = array(
 		//Number of records to show per page
 		'records_for_page' => 10
 	),
+	//Frontend options
+	'frontend' => array(
+		//Site logo. Relative path to APP/webroot/img
+		'logo' => 'logo.png',
+		//Number of records to show per page
+		'records_for_page' => 10,
+		//Number of characters to truncate a text
+		'truncate_to' => 1500,
+		//Widgets
+		'widgets' => array('categories', 'latest_posts', 'random_photo')
+	),
 	//General options
 	'general' => array(
 		//Date formats

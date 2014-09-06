@@ -55,7 +55,7 @@
 		?>
 	</head>
 	<body>
-		<?php echo $this->element('topbar'); ?>
+		<?php echo $this->element('backend/topbar'); ?>
 		<div class="container-fluid">
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
 				<div class="row">
