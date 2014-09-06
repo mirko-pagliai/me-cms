@@ -4,10 +4,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class Post | MeCms Backend</title>
+	<title>Class Post | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?2772033229"></script>
+	<script type="text/javascript" src="elementlist.js?2254614763"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -21,11 +21,11 @@
 		<div id="groups">
 			<h3>Packages</h3>
 			<ul>
-				<li class="active main"><a href="package-MeCmsBackend.html">MeCmsBackend<span></span></a>
+				<li class="active main"><a href="package-MeCms.html">MeCms<span></span></a>
 						<ul>
-				<li class="main"><a href="package-MeCmsBackend.Controller.html">Controller</a>
+				<li class="main"><a href="package-MeCms.Controller.html">Controller</a>
 						</li>
-				<li class="active main"><a href="package-MeCmsBackend.Model.html">Model</a>
+				<li class="active main"><a href="package-MeCms.Model.html">Model</a>
 						</li>
 							</ul></li>
 			</ul>
@@ -37,7 +37,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCmsBackendAppModel.html">MeCmsBackendAppModel</a></li>
+				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-Photo.html">Photo</a></li>
 				<li><a href="class-PhotosAlbum.html">PhotosAlbum</a></li>
@@ -72,7 +72,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="package-MeCmsBackend.Model.html" title="Summary of MeCmsBackend\Model"><span>Package</span></a>
+				<a href="package-MeCms.Model.html" title="Summary of MeCms\Model"><span>Package</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -87,7 +87,7 @@
 		</ul>
 		<ul>
 			<li>
-				<a href="mecms-backend-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
+				<a href="mecms-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
 			</li>
 		</ul>
 	</div>
@@ -110,7 +110,7 @@ MeToolsAppModel
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCmsBackendAppModel.html"><span>MeCmsBackendAppModel</span></a>
+			<a href="class-MeCmsAppModel.html"><span>MeCmsAppModel</span></a>
 			
 			
 			
@@ -134,7 +134,7 @@ MeToolsAppModel
 		
 		
 		
-		<b>Package:</b> <a href="package-MeCmsBackend.html">MeCmsBackend</a>\<a href="package-MeCmsBackend.Model.html">Model</a><br>
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Model.html">Model</a><br>
 
 				<b>Copyright:</b>
 				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br>
@@ -143,7 +143,7 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-Post.html#30-137" title="Go to source code">Post.php</a><br>
+		<b>Located at</b> <a href="source-class-Post.html#30-143" title="Go to source code">Post.php</a><br>
 	</div>
 
 
@@ -161,7 +161,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-Post.html#125-136" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Post.html#131-142" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -197,10 +197,10 @@ to halt the save.</p>
 	</table>
 
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-MeCmsBackendAppModel.html#methods">MeCmsBackendAppModel</a></caption>
+	<caption>Methods inherited from <a href="class-MeCmsAppModel.html#methods">MeCmsAppModel</a></caption>
 	<tr>
 		<td><code>
-			<a href="class-MeCmsBackendAppModel.html#__findRandom">_findRandom()</a>
+			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -244,6 +244,33 @@ to halt the save.</p>
 			</div>
 		</div></td>
 	</tr>
+	<tr data-order="order" id="$order">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Post.html#40-44" title="Go to source code"><var>$order</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'created'</span> =&gt; <span class="php-quote">'DESC'</span>)</code></td>
+		<td class="description"><div>
+			<a href="#$order" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Order</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Order</p>
+
+
+			</div>
+		</div></td>
+	</tr>
 	<tr data-order="validate" id="$validate">
 		<td class="attributes"><code>
 			public  
@@ -251,7 +278,7 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Post.html#40-106" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-Post.html#46-112" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -340,16 +367,16 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Post.html#108-123" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-Post.html#114-129" title="Go to source code"><var>$belongsTo</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Category'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.PostsCategory'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'category_id'</span>,
 		<span class="php-quote">'counterCache'</span> =&gt; <span class="php-keyword1">TRUE</span>
 	),
 	<span class="php-quote">'User'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCmsBackend.User'</span>,
+		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.User'</span>,
 		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'user_id'</span>,
 		<span class="php-quote">'counterCache'</span> =&gt; <span class="php-keyword1">TRUE</span>
 	)
@@ -374,10 +401,10 @@ to halt the save.</p>
 	</table>
 
 	<table class="summary inherited">
-	<caption>Properties inherited from <a href="class-MeCmsBackendAppModel.html#properties">MeCmsBackendAppModel</a></caption>
+	<caption>Properties inherited from <a href="class-MeCmsAppModel.html#properties">MeCmsAppModel</a></caption>
 	<tr>
 		<td><code>
-			<a href="class-MeCmsBackendAppModel.html#$findMethods"><var>$findMethods</var></a>
+			<a href="class-MeCmsAppModel.html#$findMethods"><var>$findMethods</var></a>
 		</code></td>
 	</tr>
 	</table>
@@ -389,7 +416,7 @@ to halt the save.</p>
 </div>
 
 	<div id="footer">
-		MeCms Backend API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
 	</div>
 </div>
 </div>
