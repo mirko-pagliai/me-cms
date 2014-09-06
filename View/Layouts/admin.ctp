@@ -59,10 +59,10 @@
 		<div class="container-fluid">
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
 				<div class="row">
-					<div id="sidebar" class="col-sm-3 col-md-2">
+					<div id="sidebar" class="col-md-2 hidden-xs hidden-sm">
 						<?php echo $sidebar; ?>
 					</div>
-					<div id="content" class="col-sm-9 col-md-10">
+					<div id="content" class="col-md-10">
 						<?php 
 							echo $this->Session->flash();
 							echo $this->fetch('content');
