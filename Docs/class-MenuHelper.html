@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="ApiGen 2.8.0">
+
+	<title>Class MenuHelper | MeCms</title>
+
+	<script type="text/javascript" src="resources/combined.js?117538352"></script>
+	<script type="text/javascript" src="elementlist.js?2302939173"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Packages</h3>
+			<ul>
+				<li class="active main"><a href="package-MeCms.html">MeCms<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCms.Controller.html">Controller</a>
+						</li>
+				<li class="main"><a href="package-MeCms.Model.html">Model</a>
+						</li>
+				<li class="main"><a href="package-MeCms.Utility.html">Utility</a>
+						</li>
+				<li class="active main"><a href="package-MeCms.View.html">View<span></span></a>
+						<ul>
+				<li class="active main"><a href="package-MeCms.View.Helper.html">Helper</a>
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-MenuHelper.html">MenuHelper</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text">
+		<input type="submit" value="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="package-MeCms.View.Helper.html" title="Summary of MeCms\View\Helper"><span>Package</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+			<li>
+				<a href="todo.html" title="Todo list"><span>Todo</span></a>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="mecms-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
+			</li>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class MenuHelper</h1>
+
+
+	<div class="description">
+	
+<p>Menu Helper.</p>
+
+<p>It can be used to generate a menu for an action. It supports these types of
+menu: <code>ul</code>, <code>nav</code> and <code>dropdown</code>.</p>
+
+<p>To generate a menu, you have to use the <code>get</code> method. For
+example:</p>
+
+<pre>
+<span class="php-var">$this</span>-&gt;Menu-&gt;get(<span
+class="php-quote">'photos'</span>, <span
+class="php-quote">'dropdown'</span>)
+</pre>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+MeHtmlHelper
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MenuHelper</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.View.html">View</a>\<a href="package-MeCms.View.Helper.html">Helper</a><br>
+
+				<b>Copyright:</b>
+				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br>
+				<b>License:</b>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<b>Author:</b>
+				Mirko Pagliai &lt;<a
+href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
+		<b>Located at</b> <a href="source-class-MenuHelper.html#27-138" title="Go to source code">Helper/MenuHelper.php</a><br>
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="_pages" id="__pages">
+
+		<td class="attributes"><code>
+			 private 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__pages">#</a>
+		<code><a href="source-class-MenuHelper.html#38-53" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Internal function to generate the menu for "pages" actions</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Internal function to generate the menu for "pages" actions</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type Type of menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Menu<br>
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-MenuHelper.html#_get">MenuHelper::get()</a></code></code><br>to generate the menu for "pages" actions<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_posts" id="__posts">
+
+		<td class="attributes"><code>
+			 private 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__posts">#</a>
+		<code><a href="source-class-MenuHelper.html#55-72" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Internal function to generate the menu for "post" actions</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Internal function to generate the menu for "post" actions</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type Type of menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Menu<br>
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-MenuHelper.html#_get">MenuHelper::get()</a></code></code><br>to generate the menu for "posts" actions<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_photos" id="__photos">
+
+		<td class="attributes"><code>
+			 private 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__photos">#</a>
+		<code><a href="source-class-MenuHelper.html#74-90" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Internal function to generate the menu for "photos" actions</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Internal function to generate the menu for "photos" actions</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type Type of menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Menu<br>
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-MenuHelper.html#_get">MenuHelper::get()</a></code></code><br>to generate the menu for "photos" actions<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_users" id="__users">
+
+		<td class="attributes"><code>
+			 private 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__users">#</a>
+		<code><a href="source-class-MenuHelper.html#92-109" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Internal function to generate the menu for "users" actions</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Internal function to generate the menu for "users" actions</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type Type of menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Menu<br>
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-MenuHelper.html#_get">MenuHelper::get()</a></code></code><br>to generate the menu for "users" actions<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="get" id="_get">
+
+		<td class="attributes"><code>
+			 public 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_get">#</a>
+		<code><a href="source-class-MenuHelper.html#111-137" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Generates and returns a menu for an action.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Generates and returns a menu for an action.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name Name of the action for which to generate the menu</dd>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type Type of menu (optional, <code>ul</code>, <code>nav</code> or
+<code>dropdown</code>)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Menu<br>
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-MenuHelper.html#__pages">MenuHelper::_pages()</a></code></code><br>to generate the menu for "pages" actions<br>
+						<code><code><a href="class-MenuHelper.html#__photos">MenuHelper::_photos()</a></code></code><br>to generate the menu for "photos" actions<br>
+						<code><code><a href="class-MenuHelper.html#__posts">MenuHelper::_posts()</a></code></code><br>to generate the menu for "posts" actions<br>
+						<code><code><a href="class-MenuHelper.html#__users">MenuHelper::_users()</a></code></code><br>to generate the menu for "users" actions<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>
