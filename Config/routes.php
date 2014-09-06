@@ -28,8 +28,8 @@
 Router::connect('/admin',	array('controller' => 'posts', 'plugin' => 'me_cms', 'admin' => TRUE));
 
 //Login and logout
-Router::connect('/login',			array('controller' => 'users',	'action' => 'login',	'plugin' => 'me_cms'));
-Router::connect('/logout',			array('controller' => 'users',	'action' => 'logout',	'plugin' => 'me_cms'));
+Router::connect('/login',	array('controller' => 'users',	'action' => 'login',	'plugin' => 'me_cms'));
+Router::connect('/logout',	array('controller' => 'users',	'action' => 'logout',	'plugin' => 'me_cms'));
 
 //Each "admin" request is directed to the plugin
 Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE));
