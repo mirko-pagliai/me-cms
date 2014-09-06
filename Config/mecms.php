@@ -1,6 +1,6 @@
 <?php
 
-$config = array('MeCmsBackend' => array(
+$config = array('MeCms' => array(
 	//Date formats
 	'date' => array(
 		//Long format
@@ -26,7 +26,7 @@ $config = array('MeCmsBackend' => array(
 		//Number of records to show per page
 		'records_for_page' => 10,
 		//Site title
-		'title' => 'MeCms Backend'
+		'title' => 'MeCms'
 	),
 	//Users options
 	'users' => array(

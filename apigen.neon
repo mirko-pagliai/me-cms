@@ -3,7 +3,7 @@ autocomplete: "classes,constants,functions,methods,properties,classconstants"
 destination: Docs
 download: yes
 source: {Controller, Model}
-main: MeCmsBackend
+main: MeCms
 php: no
-title: "MeCms Backend"
+title: "MeCms"
 todo: "yes"

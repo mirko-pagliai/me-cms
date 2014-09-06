@@ -1,10 +1,10 @@
 <?php
 App::uses('ClassRegistry', 'Utility');
-App::uses('Page', 'MeCmsBackend.Model');
-App::uses('PostsCategory', 'MeCmsBackend.Model');
-App::uses('UsersGroup', 'MeCmsBackend.Model');
+App::uses('Page', 'MeCms.Model');
+App::uses('PostsCategory', 'MeCms.Model');
+App::uses('UsersGroup', 'MeCms.Model');
 
-class MeCmsBackendSchema extends CakeSchema {
+class MeCmSchema extends CakeSchema {
 
 	public function before($event = array()) {
 		$db = ConnectionManager::getDataSource($this->connection);
@@ -29,7 +29,7 @@ class MeCmsBackendSchema extends CakeSchema {
 	}
 	
 	public function insertPages() {
-		$pages = ClassRegistry::init('MeCmsBackend.Page');
+		$pages = ClassRegistry::init('MeCms.Page');
 		$pages->create();
 		
 		$save = $pages->saveAll(array(
@@ -40,7 +40,7 @@ class MeCmsBackendSchema extends CakeSchema {
 	}
 	
 	public function insertPosts() {
-		$categories = ClassRegistry::init('MeCmsBackend.PostsCategory');
+		$categories = ClassRegistry::init('MeCms.PostsCategory');
 		$categories->create();
 		
 		$save = $categories->saveAll(array(
@@ -60,7 +60,7 @@ class MeCmsBackendSchema extends CakeSchema {
 	}
 	
 	public function insertUsers() {
-		$groups = ClassRegistry::init('MeCmsBackend.UsersGroup');
+		$groups = ClassRegistry::init('MeCms.UsersGroup');
 		$groups->create();
 		
 		$save = $groups->saveAll(array(

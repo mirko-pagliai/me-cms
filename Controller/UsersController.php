@@ -2,34 +2,34 @@
 /**
  * UsersController
  *
- * This file is part of MeCms Backend
+ * This file is part of MeCms.
  *
- * MeCms Backend is free software: you can redistribute it and/or modify
+ * MeCms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeCms Backend is distributed in the hope that it will be useful,
+ * MeCms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeCms Backend.  If not, see <http://www.gnu.org/licenses/>.
+ * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCmsBackend\Controller
+ * @package		MeCms\Controller
  */
 
-App::uses('MeCmsBackendAppController', 'MeCmsBackend.Controller');
+App::uses('MeCmsAppController', 'MeCms.Controller');
 
 /**
  * Users Controller
  */
-class UsersController extends MeCmsBackendAppController {
+class UsersController extends MeCmsAppController {
 	/**
 	 * Internal function to logout
 	 * @return boolean
@@ -61,7 +61,7 @@ class UsersController extends MeCmsBackendAppController {
 		
 		$this->set(array(
 			'users'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms_backend', 'Users')
+			'title_for_layout'	=> __d('me_cms', 'Users')
 		));
 	}
 
@@ -72,7 +72,7 @@ class UsersController extends MeCmsBackendAppController {
 	 */
 	public function admin_view($id = NULL) {
 		if(!$this->User->exists($id))
-			throw new NotFoundException(__d('me_cms_backend', 'Invalid user'));
+			throw new NotFoundException(__d('me_cms', 'Invalid user'));
 		
 		$user = $this->User->find('first', array(
 			'conditions'	=> array('User.id' => $id),
@@ -82,7 +82,7 @@ class UsersController extends MeCmsBackendAppController {
 		
 		$this->set(array(
 			'user'				=> $user,
-			'title_for_layout'	=> __d('me_cms_backend', 'View user')
+			'title_for_layout'	=> __d('me_cms', 'View user')
 		));
 	}
 
@@ -93,16 +93,16 @@ class UsersController extends MeCmsBackendAppController {
 		if($this->request->is('post')) {
 			$this->User->create();
 			if($this->User->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms_backend', 'The user has been created'));
+				$this->Session->flash(__d('me_cms', 'The user has been created'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms_backend', 'The user could not be created. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The user could not be created. Please, try again'), 'error');
 		}
 
 		$this->set(array(
 			'groups'			=> $this->User->Group->find('list'),
-			'title_for_layout'	=> __d('me_cms_backend', 'Add user')
+			'title_for_layout'	=> __d('me_cms', 'Add user')
 		));
 	}
 
@@ -114,7 +114,7 @@ class UsersController extends MeCmsBackendAppController {
 	public function admin_edit($id = NULL) {
 		//TO-DO: verificare non si stia modificando utente con ID 1
 		if(!$this->User->exists($id))
-			throw new NotFoundException(__d('me_cms_backend', 'Invalid user'));
+			throw new NotFoundException(__d('me_cms', 'Invalid user'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			//This prevents a blank password is saved
@@ -122,11 +122,11 @@ class UsersController extends MeCmsBackendAppController {
 				unset($this->request->data['User']['password']);
 				
 			if($this->User->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms_backend', 'The user has been edited'));
+				$this->Session->flash(__d('me_cms', 'The user has been edited'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms_backend', 'The user could not be edited. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The user could not be edited. Please, try again'), 'error');
 		} 
 		else
 			$this->request->data = $this->User->find('first', array(
@@ -137,7 +137,7 @@ class UsersController extends MeCmsBackendAppController {
 
 		$this->set(array(
 			'groups'			=> $this->User->Group->find('list'),
-			'title_for_layout'	=> __d('me_cms_backend', 'Edit user')
+			'title_for_layout'	=> __d('me_cms', 'Edit user')
 		));
 	}
 
@@ -149,21 +149,21 @@ class UsersController extends MeCmsBackendAppController {
 	public function admin_delete($id = NULL) {
 		$this->User->id = $id;
 		if(!$this->User->exists())
-			throw new NotFoundException(__d('me_cms_backend', 'Invalid user'));
+			throw new NotFoundException(__d('me_cms', 'Invalid user'));
 			
 		$this->request->onlyAllow('post', 'delete');
 				
 		//Before deleting, it checks if the user is a admin found or if the user has some posts
 		if($id > 1 && !$this->User->field('post_count')) {
 			if($this->User->delete())
-				$this->Session->flash(__d('me_cms_backend', 'The user has been deleted'));
+				$this->Session->flash(__d('me_cms', 'The user has been deleted'));
 			else
-				$this->Session->flash(__d('me_cms_backend', 'The user was not deleted'), 'error');
+				$this->Session->flash(__d('me_cms', 'The user was not deleted'), 'error');
 		}
 		elseif($id == 1)
-			$this->Session->flash(__d('me_cms_backend', 'You cannot delete this user, because he\'s the admin founder'), 'error');
+			$this->Session->flash(__d('me_cms', 'You cannot delete this user, because he\'s the admin founder'), 'error');
 		else
-			$this->Session->flash(__d('me_cms_backend', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
 		
 		$this->redirect(array('action' => 'index'));
 	}
@@ -177,14 +177,14 @@ class UsersController extends MeCmsBackendAppController {
 		
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->User->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms_backend', 'The password has been changed'));
+				$this->Session->flash(__d('me_cms', 'The password has been changed'));
 				$this->redirect('/admin');
 			}
 			else
-				$this->Session->flash(__d('me_cms_backend', 'The password has not been changed. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The password has not been changed. Please, try again'), 'error');
 		}
 		
-		$this->set('title_for_layout', __d('me_cms_backend', 'Change password'));
+		$this->set('title_for_layout', __d('me_cms', 'Change password'));
 	}
 	
 	/**
@@ -196,7 +196,7 @@ class UsersController extends MeCmsBackendAppController {
 	public function login() {
 		//Checks if the user is already logged in
 		if($this->isLogged()) {
-			$this->Session->flash(__d('me_cms_backend', 'You are already logged in'), 'alert');
+			$this->Session->flash(__d('me_cms', 'You are already logged in'), 'alert');
 			return $this->redirect($this->Auth->redirect());
 		}
 		
@@ -210,12 +210,12 @@ class UsersController extends MeCmsBackendAppController {
 				
 				//Checks if the user is banned
 				if($user['User']['banned']) {
-					$this->Session->flash(__d('me_cms_backend', 'Your account has been banned by an admin'), 'error');
+					$this->Session->flash(__d('me_cms', 'Your account has been banned by an admin'), 'error');
 					return $this->_logout();
 				}
 				//Checks if the user is disabled (the account should still be enabled)
 				elseif(!$user['User']['active']) {
-					$this->Session->flash(__d('me_cms_backend', 'Your account has not been activated yet'), 'error');
+					$this->Session->flash(__d('me_cms', 'Your account has not been activated yet'), 'error');
 					return $this->_logout();
 				}
 				
@@ -223,7 +223,7 @@ class UsersController extends MeCmsBackendAppController {
 				return $this->redirect($this->Auth->redirect());
 			}
 			else
-				$this->Session->flash(__d('me_cms_backend', 'Invalid username or password'), 'error');
+				$this->Session->flash(__d('me_cms', 'Invalid username or password'), 'error');
 		}
 		
 		$this->layout = 'login';
@@ -235,7 +235,7 @@ class UsersController extends MeCmsBackendAppController {
 	 * @uses _logout() to logout the user
 	 */
 	public function logout() {
-		$this->Session->flash(__d('me_cms_backend', 'You are successfully logged out'));
+		$this->Session->flash(__d('me_cms', 'You are successfully logged out'));
 		return $this->_logout();
 	}
 }

@@ -1,27 +1,27 @@
 <?php
 /**
- * MeCmsBackendAppController
+ * MeCmsAppController
  *
- * This file is part of MeCms Backend
+ * This file is part of MeCms.
  *
- * MeCms Backend is free software: you can redistribute it and/or modify
+ * MeCms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeCms Backend is distributed in the hope that it will be useful,
+ * MeCms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeCms Backend.  If not, see <http://www.gnu.org/licenses/>.
+ * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCmsBackend\Controller
+ * @package		MeCms\Controller
  */
 
 App::uses('MeToolsAppController', 'MeTools.Controller');
@@ -29,7 +29,7 @@ App::uses('MeToolsAppController', 'MeTools.Controller');
 /**
  * Application level controller.
  */
-class MeCmsBackendAppController extends MeToolsAppController {
+class MeCmsAppController extends MeToolsAppController {
 	/**
 	 * Components
 	 * @var array
@@ -39,7 +39,7 @@ class MeCmsBackendAppController extends MeToolsAppController {
             'authenticate' => array('Form' => array(
 				'contain'			=> array('Group' => array('id', 'name', 'level')),
 				'passwordHasher'	=> 'Blowfish',
-				'userModel'			=> 'MeCmsBackend.User'
+				'userModel'			=> 'MeCms.User'
 			)),
 			'authError'			=> 'You need to login first',
 			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE),
@@ -69,21 +69,21 @@ class MeCmsBackendAppController extends MeToolsAppController {
 	/**
 	 * Loads and gets the configuration.
 	 * The file will be searched before in the APP (`app/Config`).
-	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCmsBackend/Config`)
+	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCms/Config`)
 	 * @return array Configuration
 	 * @throws InternalErrorException
 	 */
 	private function _getConfig() {
 		//Searches for the file in the APP `Config`
-		if(is_readable(APP.($path = 'Config'.DS.'mecms_backend.php')))
-			Configure::load('mecms_backend');
+		if(is_readable(APP.($path = 'Config'.DS.'mecms.php')))
+			Configure::load('mecms');
 		//Searches for the file in the plugin `Config`
-		elseif(is_readable(App::pluginPath('MeCmsBackend').$path))
-			Configure::load('MeCmsBackend.mecms_backend');
+		elseif(is_readable(App::pluginPath('MeCms').$path))
+			Configure::load('MeCms.mecms');
 		else
-			throw new InternalErrorException(__d('me_cms_backend', 'The configuration file for %s was not found', 'MeCms Backend'));
+			throw new InternalErrorException(__d('me_cms', 'The configuration file for %s was not found', 'MeCms'));
 	
-		return Configure::read('MeCmsBackend');
+		return Configure::read('MeCms');
 	}
 	
 	/**

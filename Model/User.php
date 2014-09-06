@@ -2,35 +2,35 @@
 /**
  * User
  *
- * This file is part of MeCms Backend.
+ * This file is part of MeCms.
  *
- * MeCms Backend is free software: you can redistribute it and/or modify
+ * MeCms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeCms Backend is distributed in the hope that it will be useful,
+ * MeCms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeCms Backend.  If not, see <http://www.gnu.org/licenses/>.
+ * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCmsBackend\Model
+ * @package		MeCms\Model
  */
 
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
-App::uses('MeCmsBackendAppModel', 'MeCmsBackend.Model');
+App::uses('MeCmsAppModel', 'MeCms.Model');
 
 /**
  * User Model
  */
-class User extends MeCmsBackendAppModel {
+class User extends MeCmsAppModel {
 	/**
 	 * Display field
 	 * @var string
@@ -181,7 +181,7 @@ class User extends MeCmsBackendAppModel {
 	 */
 	public $belongsTo = array(
 		'Group' => array(
-			'className' => 'MeCmsBackend.UsersGroup',
+			'className' => 'MeCms.UsersGroup',
 			'foreignKey' => 'group_id',
 			'counterCache' => TRUE
 		)
@@ -193,7 +193,7 @@ class User extends MeCmsBackendAppModel {
 	 */
 	public $hasMany = array(
 		'Post' => array(
-			'className' => 'MeCmsBackend.Post',
+			'className' => 'MeCms.Post',
 			'foreignKey' => 'user_id',
 			'dependent' => FALSE
 		)

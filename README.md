@@ -1,1 +1,1 @@
-cake schema create -p MeCmsBackend -y
+cake schema create -p MeCms -y
