@@ -84,7 +84,7 @@ class MeCmsAppController extends MeToolsAppController {
 			throw new InternalErrorException(__d('me_cms', 'The configuration file for %s was not found', 'MeCms'));
 	
 		//If admin
-		if(!empty($this->request->params['admin']))
+		if($this->isAdmin())
 			return am(Configure::read('backend'), Configure::read('general'));
 		
 		return Configure::read('general');
@@ -108,7 +108,7 @@ class MeCmsAppController extends MeToolsAppController {
 	 */
 	public function beforeRender() {
 		//Sets the admin layout
-		if(!empty($this->request->params['admin']))
+		if($this->isAdmin())
 			$this->layout = 'admin';
 		
 		//Sets the configuration array
