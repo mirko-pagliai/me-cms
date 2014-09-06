@@ -37,7 +37,7 @@ class PostsController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.username'),
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
-			'limit'		=> $this->config['site']['records_for_page']
+			'limit'		=> $this->config['records_for_page']
 		);
 		
 		$this->set(array(

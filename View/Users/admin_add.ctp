@@ -31,7 +31,7 @@
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('group_id', array(
-					'default'	=> empty($this->request->data['User']['group_id']) ? $config['users']['default_group'] : $this->request->data['User']['group_id']
+					'default'	=> empty($this->request->data['User']['group_id']) ? $config['default_group'] : $this->request->data['User']['group_id']
 				));
 				echo $this->Form->input('active', array(
 					'checked'	=> TRUE,

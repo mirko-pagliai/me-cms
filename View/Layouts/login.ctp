@@ -30,7 +30,7 @@
 	<head>
 		<?php 
 			echo $this->Html->charset();
-			echo $this->Html->title(sprintf('%s - %s', __d('me_cms', 'Login'), $config['site']['title']));
+			echo $this->Html->title(sprintf('%s - %s', __d('me_cms', 'Login'), $config['title']));
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->fetch('meta');
 			echo $this->Html->css(array(
