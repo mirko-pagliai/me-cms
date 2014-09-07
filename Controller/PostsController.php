@@ -197,6 +197,7 @@ class PostsController extends MeCmsAppController {
 				'User'		=> array('first_name', 'last_name')
 			),
 			'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+			'limit'			=> 1
 		));
 		
 		$this->set(array(
