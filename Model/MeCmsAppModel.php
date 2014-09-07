@@ -45,10 +45,7 @@ class MeCmsAppModel extends MeToolsAppModel {
 	 * @return mixed Query or results
 	 */
 	protected function _findActive($state, $query, $results = array()) {
-        if($state === 'before') {
-			//If not specified, the limit is '1'
-			$query['limit'] = empty($query['limit']) ? 1 : $query['limit'];
-			
+        if($state === 'before') {			
 			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
 			
 			//Only active items
