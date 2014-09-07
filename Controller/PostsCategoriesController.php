@@ -127,4 +127,37 @@ class PostsCategoriesController extends MeCmsAppController {
 			
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * Gets the categories list, with the slug as key and the title as value.
+	 * This method works only with `requestAction()`.
+	 * @return array Categories list
+	 * @throws ForbiddenException
+	 */
+	public function request_list() {
+		//This method works only with "requestAction()"
+		if(empty($this->request->params['requested']))
+            throw new ForbiddenException();
+		
+		//Gets the categories
+		$categories = $this->PostsCategory->find('active', array('fields' => array('id', 'slug', 'post_count')));
+				
+		if(empty($categories))
+			return array();
+		
+		//Gets the tree list
+		$treeList = $this->PostsCategory->generateTreeList();
+		
+		$categoriesTmp = array();
+		
+		foreach($categories as $category) {
+			//Changes the category titles, replacing them with the titles of the tree list and adding the "post_count" value
+			$category['PostsCategory']['title'] = sprintf('%s (%s)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
+			
+			//The new array has the slug as key and the title as value
+			$categoriesTmp[$category['PostsCategory']['slug']] = $category['PostsCategory']['title'];
+		}
+		
+		return $categoriesTmp;
+	}
 }
