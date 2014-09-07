@@ -35,7 +35,7 @@
 			<?php if($k%4 === 0) echo '<div class=\'row\'>'; ?>
 			<div class='col-md-3'>
 				<div class='photo-box'>
-					<?php echo $this->Html->para('photo-filename text-center', $this->Html->strong($photo['Photo']['filename'])); ?>
+					<?php echo $this->Html->para('photo-filename', $photo['Photo']['filename']); ?>
 					<div class='relative'>
 						<?php
 							echo $this->Html->thumb($path.DS.$photo['Photo']['filename'], array('side' => '270'));

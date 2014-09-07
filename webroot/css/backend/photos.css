@@ -37,8 +37,10 @@
 /* Photo box, photo filename */
 .photos .photo-box .photo-filename {
 	background: #fff;
+	font-weight: bold;
     margin: 0 0 5px;
     padding: 2px 6px 0;
+	text-align: center;
 }
 
 /* Photo box, photo thumbnail */
