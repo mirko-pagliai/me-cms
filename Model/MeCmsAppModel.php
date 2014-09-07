@@ -35,7 +35,32 @@ class MeCmsAppModel extends MeToolsAppModel {
 	 * Find methods
 	 * @var array
 	 */
-    public $findMethods = array('random' =>  TRUE);
+    public $findMethods = array('active' => TRUE, 'random' =>  TRUE);
+	
+	/**
+	 * "Active" find method. It finds for active records.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findActive($state, $query, $results = array()) {
+        if($state === 'before') {
+			//If not specified, the limit is '1'
+			$query['limit'] = empty($query['limit']) ? 1 : $query['limit'];
+			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only active items
+			$query['conditions'][$this->alias.'.active'] = TRUE;
+			//Only items published in the past
+			$query['conditions'][$this->alias.'.created <='] = date('Y-m-d H:i:s');
+			
+            return $query;
+        }
+		
+        return $results;
+    }
 	
 	/**
 	 * "Random" search method. It searches random records
