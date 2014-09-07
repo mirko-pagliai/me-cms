@@ -22,8 +22,8 @@
  * @package		MeCms\View\UsersGroups
  */
 ?>
-	
-<?php $this->extend('/Common/users'); ?>
+
+<?php $this->assign('sidebar', $this->Menu->get('users', 'nav')); ?>
 
 <div class="usersGroups form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit users group')); ?>

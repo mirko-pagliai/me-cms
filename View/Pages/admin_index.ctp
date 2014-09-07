@@ -23,7 +23,7 @@
  */
 ?>
 	
-<?php $this->extend('/Common/pages'); ?>
+<?php $this->assign('sidebar', $this->Menu->get('pages', 'nav')); ?>
 	
 <div class="pages index">
 	<?php

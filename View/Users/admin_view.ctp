@@ -22,8 +22,8 @@
  * @package		MeCms\View\Users
  */
 ?>
-	
-<?php $this->extend('/Common/users'); ?>
+
+<?php $this->assign('sidebar', $this->Menu->get('users', 'nav')); ?>
 
 <div class="users view">
 	<?php 

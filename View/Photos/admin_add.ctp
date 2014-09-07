@@ -24,7 +24,7 @@
 ?>
 	
 <?php
-	$this->extend('/Common/photos');
+	$this->assign('sidebar', $this->Menu->get('photos', 'nav'));
 	$this->Html->css('/MeCms/css/photos');
 	$this->Html->js('/MeCms/js/photos');
 ?>

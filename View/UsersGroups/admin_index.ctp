@@ -22,8 +22,8 @@
  * @package		MeCms\View\UsersGroups
  */
 ?>
-	
-<?php $this->extend('/Common/users'); ?>
+
+<?php $this->assign('sidebar', $this->Menu->get('users', 'nav')); ?>
 	
 <div class="usersGroups index">
 	<?php

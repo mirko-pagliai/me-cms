@@ -23,7 +23,7 @@
  */
 ?>
 	
-<?php $this->extend('/Common/posts'); ?>
+<?php $this->assign('sidebar', $this->Menu->get('posts', 'nav')); ?>
 	
 <div class="posts index">
 	<?php

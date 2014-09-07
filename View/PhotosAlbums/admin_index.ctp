@@ -23,7 +23,7 @@
  */
 ?>
 	
-<?php $this->extend('/Common/photos'); ?>
+<?php $this->assign('sidebar', $this->Menu->get('photos', 'nav')); ?>
 	
 <div class="photosAlbums index">
 	<?php

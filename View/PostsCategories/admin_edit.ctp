@@ -23,7 +23,7 @@
  */
 ?>
 	
-<?php $this->extend('/Common/posts'); ?>
+<?php $this->assign('sidebar', $this->Menu->get('posts', 'nav')); ?>
 
 <div class="postsCategories form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit posts category')); ?>
