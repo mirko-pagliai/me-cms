@@ -37,7 +37,7 @@
 	
 			$list = array();
 			foreach($posts as $post)
-				$list[] = $this->Html->link($post['Post']['title'], $post['Post']['slug']);
+				$list[] = $this->Html->link($post['Post']['title'], array('controller' => 'posts', 'action' => 'view', $post['Post']['slug']));
 
 			echo $this->Html->ul($list, array('class' => 'fa-ul'), array('icon' => 'li caret-right'));
 		?>
