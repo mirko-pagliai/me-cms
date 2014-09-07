@@ -201,7 +201,7 @@ class PostsController extends MeCmsAppController {
 		
 		$this->set(array(
 			'post'				=> $post,
-			'title_for_layout'	=> __d('me_cms_frontend', 'Post')
+			'title_for_layout'	=> $post['Post']['title']
 		));
 	}
 }
