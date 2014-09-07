@@ -24,6 +24,21 @@
  * @package		MeCms\Config
  */
 
+//Home page
+Router::connect('/',			array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
+
+//Pages controller
+Router::connect('/pages',	array('controller' => 'pages', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/page/*',	array('controller' => 'pages', 'action' => 'view',	'plugin' => 'me_cms'));
+
+//Posts categories controller
+Router::connect('/categories',	array('controller' => 'posts_categories',	'action' => 'index',	'plugin' => 'me_cms'));
+Router::connect('/category/*',	array('controller' => 'posts',				'action' => 'index',	'plugin' => 'me_cms'));
+
+//Posts controller
+Router::connect('/posts',	array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/post/*',	array('controller' => 'posts', 'action' => 'view',	'plugin' => 'me_cms'));
+
 //Admin home page
 Router::connect('/admin',	array('controller' => 'posts', 'plugin' => 'me_cms', 'admin' => TRUE));
 
