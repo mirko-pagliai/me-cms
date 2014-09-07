@@ -38,7 +38,7 @@ class PostsController extends MeCmsAppController {
 		parent::beforeFilter();
 		
 		//Allowed actions (public)
-		$this->Auth->allow('view', 'index');
+		$this->Auth->allow('request_latest');
 	}
 	
 	/**

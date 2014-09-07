@@ -32,6 +32,17 @@ App::uses('Album', 'MeCms.Utility');
  */
 class PhotosController extends MeCmsAppController {
 	/**
+	 * Called before the controller action. 
+	 * It's used to perform logic before each controller action.
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		
+		//Allowed actions (public)
+		$this->Auth->allow('request_random');
+	}
+	
+	/**
 	 * List photos
 	 * @param string $albumId Photos album id
 	 * @throws NotFoundException

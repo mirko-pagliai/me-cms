@@ -29,7 +29,18 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
 /**
  * PostsCategories Controller
  */
-class PostsCategoriesController extends MeCmsAppController {	
+class PostsCategoriesController extends MeCmsAppController {
+	/**
+	 * Called before the controller action. 
+	 * It's used to perform logic before each controller action.
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		
+		//Allowed actions (public)
+		$this->Auth->allow('request_list');
+	}
+	
 	/**
 	 * List posts categories
 	 */
