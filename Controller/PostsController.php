@@ -153,7 +153,7 @@ class PostsController extends MeCmsAppController {
 		if(!empty($this->request->query['category']))
 			$category = $this->request->query['category'];
 				
-		//Adds the categoriy to the conditions, if it has been specified
+		//Adds the category to the conditions, if it has been specified
 		if(!empty($category))
 			$conditions = array('Category.slug' => $category);
 		
@@ -177,6 +177,7 @@ class PostsController extends MeCmsAppController {
 	/**
 	 * View post
 	 * @param string $slug Post slug
+	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
 		$post = $this->Post->find('active', array(
@@ -188,6 +189,9 @@ class PostsController extends MeCmsAppController {
 			'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
 			'limit'			=> 1
 		));
+		
+		if(empty($post))
+			throw new NotFoundException(__d('me_cms', 'Invalid post'));
 		
 		$this->set(array(
 			'post'				=> $post,

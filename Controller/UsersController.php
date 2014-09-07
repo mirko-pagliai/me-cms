@@ -215,6 +215,7 @@ class UsersController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'Invalid username or password'), 'error');
 		}
 		
+		$this->set('title_for_layout', __d('me_cms', 'Login'));
 		$this->layout = 'login';
 	}
 

@@ -137,6 +137,7 @@ class PagesController extends MeCmsAppController {
 	/**
 	 * View page
 	 * @param string $slug Page slug
+	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
 		$page = $this->Page->find('active', array(
@@ -144,6 +145,9 @@ class PagesController extends MeCmsAppController {
 			'fields'		=> array('title', 'slug', 'text', 'created'),
 			'limit'			=> 1
 		));
+		
+		if(empty($page))
+			throw new NotFoundException(__d('me_cms', 'Invalid page'));
 		
 		$this->set(array(
 			'page'				=> $page,
