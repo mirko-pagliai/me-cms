@@ -109,6 +109,20 @@ class PagesController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Gets the pages list, with the slug as key and the title as value.
+	 * This method works only with `requestAction()`.
+	 * @return array Pages list
+	 * @throws ForbiddenException
+	 */
+	public function request_list() {
+		//This method works only with "requestAction()"
+		if(empty($this->request->params['requested']))
+            throw new ForbiddenException();
+		
+		return $this->Page->find('active', array('fields' => array('title', 'slug')));
+	}
+	
+	/**
 	 * List pages
 	 */
 	public function index() {
