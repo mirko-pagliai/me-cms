@@ -101,8 +101,9 @@ class MeCmsAppController extends MeToolsAppController {
 		
 		parent::beforeFilter();
 		
-		//Allowed actions (public actions)
-		$this->Auth->allow('index', 'view');
+		//If it's not an admin request, authorizes the current action
+		if(!$this->isAdmin())
+			$this->Auth->allow($this->request->params['action']);
 		
 		//Sets the "backend" layout for admin requests
 		if($this->isAdmin())

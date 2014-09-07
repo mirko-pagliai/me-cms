@@ -39,17 +39,6 @@ class UsersController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Called before the controller action. 
-	 * It's used to perform logic before each controller action.
-	 */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		
-		//Allows users to logout
-		$this->Auth->allow('logout');
-	}
-	
-	/**
 	 * List users
 	 */
 	public function admin_index() {
