@@ -100,10 +100,20 @@ class Album {
 	 * If an album ID is specified, it returns the path of that album.
 	 * Otherwise, it returns the path of the parent directory.
 	 * @param int $albumId Album ID
-	 * @return string Path
+	 * @return string Album path
 	 */
 	static public function getAlbumPath($albumId = NULL) {
 		return WWW_ROOT.'img'.DS.'photos'.DS.$albumId;
+	}
+	
+	/**
+	 * Gets the path of a photo.
+	 * @param int $albumId Album ID
+	 * @param string $filename Filename
+	 * @return string File path
+	 */
+	static public function getPhotoPath($albumId, $filename) {
+		return self::getAlbumPath($albumId).DS.$filename;
 	}
 	
 	/**
