@@ -29,7 +29,7 @@
 		
 		$list = array();
 		foreach($categories as $category)
-			$list[] = $this->Html->link($category['PostsCategory']['title'], array('action' => 'view', $category['PostsCategory']['slug']));
+			$list[] = $this->Html->link($category['PostsCategory']['title'], array('controller' => 'posts', 'action' => 'index', $category['PostsCategory']['slug']));
 
 		echo $this->Html->ul($list, array('class' => 'fa-ul'), array('icon' => 'li caret-right'));
 	?>
