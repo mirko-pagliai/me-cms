@@ -57,7 +57,7 @@
 				<?php
 					//If the text has been truncated, it shows the "Read more" link
 					if($truncate !== $post['Post']['text'])
-						echo $this->Html->button(__d('me_cms', 'Read more'), $urlPost, array('class' => 'btn-sm btn-primary pull-right post-read-more'));
+						echo $this->Html->button(__d('me_cms', 'Read more'), $urlPost, array('class' => 'pull-right post-read-more'));
 				?>
 			</div>
 		</div>

@@ -95,3 +95,24 @@
 .post-container .post-content p {
 	text-align: justify;
 }
+
+/* Posts, post buttons, read more button */
+.post-container .post-buttons .post-read-more {
+    background-color: #ddd;
+    color: #666;
+    font-size: 13px;
+    padding: 4px 10px;
+}
+
+/* Posts, post buttons, read more button on hover */
+.post-container .post-buttons .post-read-more:hover {
+	color: #222;
+}
+
+/* Posts, post buttons, read more button, icon */
+.post-container .post-buttons .post-read-more:after {
+	content: "\f178";
+	font-family: FontAwesome;
+	font-size: 12px;
+	margin-left: 6px;
+}
