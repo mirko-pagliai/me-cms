@@ -59,6 +59,9 @@ class MeCmsAppModel extends MeToolsAppModel {
             return $query;
         }
 		
+		if($query['limit'] < 2 && !empty($results[0]))
+			return $results[0];
+		
         return $results;
     }
 	
@@ -78,6 +81,9 @@ class MeCmsAppModel extends MeToolsAppModel {
 			
             return $query;
         }
+		
+		if($query['limit'] < 2 && !empty($results[0]))
+			return $results[0];
 		
         return $results;
     }
