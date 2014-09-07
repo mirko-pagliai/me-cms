@@ -22,7 +22,7 @@
  * @package		MeCms\View\PostsCategories
  */
 ?>
-	
+
 <?php 
 	$this->assign('sidebar', $this->Menu->get('posts', 'nav'));
 	$this->Library->slugify();

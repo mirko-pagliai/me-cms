@@ -22,8 +22,11 @@
  * @package		MeCms\View\PostsCategories
  */
 ?>
-	
-<?php $this->assign('sidebar', $this->Menu->get('posts', 'nav')); ?>
+
+<?php 
+	$this->assign('sidebar', $this->Menu->get('posts', 'nav'));
+	$this->Library->slugify();
+?>
 
 <div class="postsCategories form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit posts category')); ?>
