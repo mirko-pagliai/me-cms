@@ -29,7 +29,18 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
 /**
  * Posts Controller
  */
-class PostsController extends MeCmsAppController {	
+class PostsController extends MeCmsAppController {
+	/**
+	 * Called before the controller action. 
+	 * It's used to perform logic before each controller action.
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		
+		//Allowed actions (public)
+		$this->Auth->allow('view', 'index');
+	}
+	
 	/**
 	 * List posts
 	 */
@@ -124,5 +135,35 @@ class PostsController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'The post was not deleted'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
+	}
+	
+	/**
+	 * List posts
+	 * @param string $category Category slug, optional
+	 */
+	public function index($category = NULL) {
+		//The category can also be passed as query
+		if(!empty($this->request->query['category']))
+			$category = $this->request->query['category'];
+				
+		//Adds the categoriy to the conditions, if it has been specified
+		if(!empty($category))
+			$conditions = array('Category.slug' => $category);
+		
+		$this->paginate = array(
+			'conditions'	=> empty($conditions) ? NULL : $conditions,
+			'contain'		=> array(
+				'Category'	=> array('title', 'slug'),
+				'User'		=> array('first_name', 'last_name')
+			),
+			'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+			'findType'		=> 'active',
+			'limit'			=> $this->config['records_for_page']
+		);
+		
+		$this->set(array(
+			'posts'				=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Posts')
+		));
 	}
 }
