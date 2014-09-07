@@ -88,6 +88,22 @@ class Photo extends MeCmsAppModel {
 	);
 	
 	/**
+	 * Called after each find operation. Can be used to modify any results returned by find().
+	 * @param mixed $results The results of the find operation
+	 * @param boolean $primary Whether this model is being queried directly
+	 * @return mixed Result of the find operation
+	 */
+	public function afterFind($results, $primary = FALSE) {
+		foreach($results as $k => $v) {
+			//If the album ID and the filename are available, adds the file path
+			if(!empty($v['album_id']) && !(empty($v['filename'])))
+				$results[$k]['path'] = Album::getPhotoPath($v['album_id'], $v['filename']);
+		}
+		
+		return $results;
+	}
+	
+	/**
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save().
