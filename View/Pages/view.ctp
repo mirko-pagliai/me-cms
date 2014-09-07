@@ -24,22 +24,22 @@
 ?>
 
 <div class="pages view">
-	<div class="page-container clearfix">
-		<div class="page-header">
+	<div class="post-container clearfix">
+		<div class="post-header">
 			<?php
 				$urlPage = Router::url(array('controller' => 'pages', 'action' => 'view', $page['Page']['slug']), TRUE);
-				echo $this->Html->h3($this->Html->link($page['Page']['title'], $urlPage), array('class' => 'page-title'));
+				echo $this->Html->h3($this->Html->link($page['Page']['title'], $urlPage), array('class' => 'post-title'));
 			?>
-			<div class="page-info">
+			<div class="post-info">
 				<?php
 					if(!empty($page['Page']['created'])) {
 						$created = $this->Time->format($page['Page']['created'], $config['datetime']['long']);
-						echo $this->Html->div('page-created', __d('me_cms', 'Posted on %s', $created), array('icon' => 'clock-o'));
+						echo $this->Html->div('post-created', __d('me_cms', 'Posted on %s', $created), array('icon' => 'clock-o'));
 					}
 				?>
 			</div>
 		</div>
-		<?php echo $this->Html->div('page-content', $page['Page']['text']);	?>
+		<?php echo $this->Html->div('post-content', $page['Page']['text']);	?>
 	</div>
 </div>
 
