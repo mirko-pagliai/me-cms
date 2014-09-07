@@ -1,6 +1,7 @@
 <?php
 /**
- * Login layout.
+ * Users layout.
+ * This is used for some user actions, such as login or password recovery.
  *
  * This file is part of MeCms.
  *
@@ -42,7 +43,7 @@
 				'/MeTools/css/bootstrap.min',
 				'/MeTools/css/default.min',
 				'/MeTools/css/forms.min',
-				'/MeCms/css/layouts/login'
+				'/MeCms/css/users/users'
 			), array('inline' => TRUE));
 			echo $this->fetch('css');
 			echo $this->Html->script(array(
