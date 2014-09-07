@@ -130,4 +130,27 @@ class PostsCategory extends MeCmsAppModel {
 			'dependent' => FALSE
 		)
 	);
+	
+	/**
+	 * "Active" find method. It finds for active records.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findActive($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only categories with posts
+			$query['conditions'][$this->alias.'.post_count >'] = 0;
+			
+            return $query;
+        }
+		
+		if($query['limit'] === '1' && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
 }
