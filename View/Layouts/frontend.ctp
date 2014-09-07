@@ -62,7 +62,7 @@
 				$logo = $this->Html->img($config['logo']);
 			echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo')));		
 			
-			echo $this->element('frontend/topbar');
+			echo $this->element('topbar');
 		?>
 		<div class="container">
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
