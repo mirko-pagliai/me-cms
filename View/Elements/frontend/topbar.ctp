@@ -41,7 +41,7 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<?php
-					echo $this->Html->li($this->Html->link(__d('me_cms', 'Home'), '/admin', array('icon' => 'home')));
+					echo $this->Html->li($this->Html->link(__d('me_cms', 'Home'), '/', array('icon' => 'home')));
 				?>
 			</ul>
 		</div><!-- /.navbar-collapse -->
