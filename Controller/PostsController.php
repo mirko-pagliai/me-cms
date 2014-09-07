@@ -166,4 +166,24 @@ class PostsController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_cms', 'Posts')
 		));
 	}
+	
+	/**
+	 * View post
+	 * @param string $slug Post slug
+	 */
+	public function view($slug = NULL) {
+		$post = $this->Post->find('active', array(
+			'conditions'	=> array('Post.slug' => $slug),
+			'contain'		=> array(
+				'Category'	=> array('title', 'slug'),
+				'User'		=> array('first_name', 'last_name')
+			),
+			'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+		));
+		
+		$this->set(array(
+			'post'				=> $post,
+			'title_for_layout'	=> __d('me_cms_frontend', 'Post')
+		));
+	}
 }
