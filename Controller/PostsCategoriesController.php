@@ -171,4 +171,16 @@ class PostsCategoriesController extends MeCmsAppController {
 		
 		return $categoriesTmp;
 	}
+	
+	/**
+	 * List posts categories
+	 */
+	public function index() {
+		$categories = $this->PostsCategory->find('active', array('fields' => array('title', 'slug')));
+		
+		$this->set(array(
+			'categories'		=> $categories,
+			'title_for_layout'	=> __d('me_cms_frontend', 'Categories')
+		));
+	}
 }
