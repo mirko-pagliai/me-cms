@@ -107,4 +107,33 @@ class PagesController extends MeCmsAppController {
 			
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * List pages
+	 */
+	public function index() {
+		$pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
+		
+		$this->set(array(
+			'pages'				=> $pages,
+			'title_for_layout'	=> __d('me_cms_frontend', 'Pages')
+		));
+	}
+	
+	/**
+	 * View page
+	 * @param string $slug Page slug
+	 */
+	public function view($slug = NULL) {
+		$page = $this->Page->find('active', array(
+			'conditions'	=> array('slug' => $slug),
+			'fields'		=> array('title', 'slug', 'text', 'created'),
+			'limit'			=> 1
+		));
+		
+		$this->set(array(
+			'page'				=> $page,
+			'title_for_layout'	=> $page['Page']['title']
+		));
+	}
 }
