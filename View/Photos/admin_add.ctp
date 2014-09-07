@@ -25,7 +25,7 @@
 	
 <?php
 	$this->assign('sidebar', $this->Menu->get('photos', 'nav'));
-	$this->Html->css('/MeCms/css/photos');
+	$this->Html->css('/MeCms/css/backend/photos');
 	$this->Html->js('/MeCms/js/photos');
 ?>
 
