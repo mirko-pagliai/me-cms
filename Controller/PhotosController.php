@@ -167,4 +167,24 @@ class PhotosController extends MeCmsAppController {
 			
 		$this->redirect(array('action' => 'index', $albumId));
 	}
+	
+	/**
+	 * Gets a random photo.
+	 * This method works only with `requestAction()`.
+	 * @return array Photo
+	 * @throws ForbiddenException
+	 */
+	public function request_random() {
+		//This method works only with "requestAction()"
+		if(empty($this->request->params['requested']))
+            throw new ForbiddenException();
+		
+		//Gets the photo
+		$photo = $this->Photo->find('random', array('fields' => array('album_id', 'filename')));
+		
+		//Adds the full path
+		$photo['Photo']['path'] = Album::getAlbumPath($photo['Photo']['album_id']).DS.$photo['Photo']['filename'];
+		
+		return $photo;
+	}
 }
