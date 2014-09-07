@@ -41,6 +41,14 @@
     font-weight: bold;
 }
 
+/* Content, index and view actions, title */
+#content .index > h2, #content .view > h2 {
+	border-left: 4px solid #777;
+	font-size: 22px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
 /* -------------------------------- */
 /*			Posts (and pages)		*/
 /* -------------------------------- */
