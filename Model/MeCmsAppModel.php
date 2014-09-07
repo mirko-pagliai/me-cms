@@ -59,7 +59,7 @@ class MeCmsAppModel extends MeToolsAppModel {
             return $query;
         }
 		
-		if($query['limit'] === '1' && !empty($results[0]))
+		if($query['limit'] === 1 && !empty($results[0]))
 			return $results[0];
 		
         return $results;
@@ -82,7 +82,7 @@ class MeCmsAppModel extends MeToolsAppModel {
             return $query;
         }
 		
-		if($query['limit'] === '1' && !empty($results[0]))
+		if($query['limit'] === 1 && !empty($results[0]))
 			return $results[0];
 		
         return $results;
