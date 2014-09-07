@@ -168,9 +168,17 @@ class PostsController extends MeCmsAppController {
 			'limit'			=> $this->config['records_for_page']
 		);
 		
+		$posts = $this->paginate();
+		
+		//Uses the category title as the title of the layout, if it's available
+		if(!empty($category) && !empty($posts[0]['Category']['title']))
+			$title_for_layout = $posts[0]['Category']['title'];
+		else
+			$title_for_layout = __d('me_cms', 'Posts');
+		
 		$this->set(array(
-			'posts'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Posts')
+			'posts'				=> $posts,
+			'title_for_layout'	=> $title_for_layout
 		));
 	}
 	
