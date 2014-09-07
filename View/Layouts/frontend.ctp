@@ -85,6 +85,12 @@
 							echo $this->fetch('content');
 						?>
 					</div>
+					<div id="sidebar" class="col-sm-4 col-md-3">
+						<?php
+							foreach($config['widgets'] as $widget)
+								echo $this->element(sprintf('widgets/%s', $widget));
+						?>
+					</div>
 				</div>
 			<?php endif; ?>
 			<?php echo $this->element('MeTools.sql_dump'); ?>
