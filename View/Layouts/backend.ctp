@@ -43,7 +43,7 @@
 				'/MeTools/css/bootstrap.min',
 				'/MeTools/css/default.min',
 				'/MeTools/css/forms.min',
-				'/MeCms/css/layouts/admin'
+				'/MeCms/css/backend/backend'
 			), array('inline' => TRUE));
 			echo $this->fetch('css');
 			echo $this->Html->script(array(
