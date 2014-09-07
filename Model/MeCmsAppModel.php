@@ -63,7 +63,7 @@ class MeCmsAppModel extends MeToolsAppModel {
     }
 	
 	/**
-	 * "Random" search method. It searches random records
+	 * "Random" find method. It finds random records.
 	 * @param string $state Either "before" or "after"
 	 * @param array $query
 	 * @param array $results
