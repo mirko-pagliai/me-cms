@@ -25,13 +25,15 @@
  */
 ?>
 
+<?php				
+	//Gets the latest posts
+	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'request_latest', 10));
+?>
+
 <?php if(!empty($posts)): ?>
 	<div class="widget sidebar-widget">
 		<?php 
 			echo $this->Html->h4(__d('me_cms', 'Latest posts'));
-						
-			//Gets the latest posts
-			$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'request_latest', 10));
 	
 			$list = array();
 			foreach($posts as $post)
