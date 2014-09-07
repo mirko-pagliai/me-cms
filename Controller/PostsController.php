@@ -138,6 +138,24 @@ class PostsController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Gets the list of the latest posts.
+	 * This method works only with `requestAction()`.
+	 * @param int $limit Number of latest posts
+	 * @return array List of latest posts
+	 * @throws ForbiddenException
+	 */
+	public function request_latest($limit = 10) {
+		//This method works only with "requestAction()"
+		if(empty($this->request->params['requested']))
+            throw new ForbiddenException();
+		
+		return $this->Post->find('active', array(
+			'fields'	=> array('slug', 'title'),
+			'limit'		=> $limit
+		));
+	}
+	
+	/**
 	 * List posts
 	 * @param string $category Category slug, optional
 	 */
