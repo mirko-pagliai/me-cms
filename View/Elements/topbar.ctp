@@ -25,7 +25,7 @@
  */
 ?>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav id="topbar" class="navbar navbar-default" role="navigation">
 	<div class="container">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
@@ -42,6 +42,7 @@
 			<ul class="nav navbar-nav">
 				<?php
 					echo $this->Html->li($this->Html->link(__d('me_cms', 'Home'), '/', array('icon' => 'home')));
+					echo $this->Html->li($this->Html->link(__d('me_cms', 'Pages'), array('controller' => 'pages', 'action' => 'index')));
 				?>
 			</ul>
 		</div><!-- /.navbar-collapse -->
