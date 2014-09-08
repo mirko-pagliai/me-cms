@@ -95,6 +95,29 @@ class PhotosAlbum extends MeCmsAppModel {
 	);
 	
 	/**
+	 * "Active" find method. It finds for active records.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findActive($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only albums with photos
+			$query['conditions'][$this->alias.'.photo_count >'] = 0;
+			
+            return $query;
+        }
+		
+		if($query['limit'] === 1 && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
+	
+	/**
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save().
