@@ -169,7 +169,7 @@ class PostsCategoriesController extends MeCmsAppController {
 		
 		$this->set(array(
 			'categories'		=> $categories,
-			'title_for_layout'	=> __d('me_cms_frontend', 'Categories')
+			'title_for_layout'	=> __d('me_cms', 'Categories')
 		));
 	}
 }

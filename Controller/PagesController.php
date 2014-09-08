@@ -130,7 +130,7 @@ class PagesController extends MeCmsAppController {
 		
 		$this->set(array(
 			'pages'				=> $pages,
-			'title_for_layout'	=> __d('me_cms_frontend', 'Pages')
+			'title_for_layout'	=> __d('me_cms', 'Pages')
 		));
 	}
 	

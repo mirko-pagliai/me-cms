@@ -25,7 +25,7 @@
 
 <div class="pages index">
 	<?php
-		echo $this->Html->h2(__d('me_cms_frontend', 'Pages'));
+		echo $this->Html->h2(__d('me_cms', 'Pages'));
 		
 		$list = array();
 		foreach($pages as $page)

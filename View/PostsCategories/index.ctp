@@ -25,7 +25,7 @@
 
 <div class="postsCategories index">
 	<?php
-		echo $this->Html->h2(__d('me_cms_frontend', 'Categories'));
+		echo $this->Html->h2(__d('me_cms', 'Categories'));
 		
 		$list = array();
 		foreach($categories as $category)
