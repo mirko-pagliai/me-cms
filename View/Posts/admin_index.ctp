@@ -53,7 +53,7 @@
 						echo $this->Html->ul(array(
 							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $post['Post']['id']), array('icon' => 'pencil')),
 							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $post['Post']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this post?')),
-							$this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $post['Post']['slug'], 'admin' => FALSE, 'plugin' => 'me_cms_frontend'), array('icon' => 'external-link', 'target' => '_blank'))
+							$this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $post['Post']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'))
 						), array('class' => 'actions'));
 					?>
 				</td>

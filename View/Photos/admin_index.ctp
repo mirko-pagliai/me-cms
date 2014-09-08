@@ -48,6 +48,7 @@
 						<?php
 							echo $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $photo['Photo']['id']), array('icon' => 'pencil'));
 							echo $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $photo['Photo']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this photo?'));
+							echo $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $photo['Photo']['id'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
 						?>
 					</div>
 				</div>

@@ -48,7 +48,7 @@
 							$this->Html->link(__d('me_cms', 'View'), array('controller' => 'photos', $photosAlbum['PhotosAlbum']['id']), array('icon' => 'eye')),
 							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $photosAlbum['PhotosAlbum']['id']), array('icon' => 'pencil')),
 							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $photosAlbum['PhotosAlbum']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this  photos album?')),
-							$this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $photosAlbum['PhotosAlbum']['slug'], 'admin' => FALSE, 'plugin' => 'me_cms_frontend'), array('icon' => 'external-link', 'target' => '_blank'))
+							$this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $photosAlbum['PhotosAlbum']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'))
 						), array('class' => 'actions'));
 					?>
 				</td>
