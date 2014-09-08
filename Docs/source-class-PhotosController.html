@@ -8,7 +8,7 @@
 	<title>File PhotosController.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?2302939173"></script>
+	<script type="text/javascript" src="elementlist.js?1636131360"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -132,7 +132,7 @@
 </span><span id="30" class="l"><a class="l" href="#30"> 30: </a><span class="php-comment">/**
 </span></span><span id="31" class="l"><a class="l" href="#31"> 31: </a><span class="php-comment"> * Photos Controller
 </span></span><span id="32" class="l"><a class="l" href="#32"> 32: </a><span class="php-comment"> */</span>
-</span><span id="33" class="l"><a class="l" href="#33"> 33: </a><span class="php-keyword1">class</span> <a id="PhotosController" href="#PhotosController">PhotosController</a> <span class="php-keyword1">extends</span> MeCmsAppController {
+</span><span id="33" class="l"><a class="l" href="#33"> 33: </a><span class="php-keyword1">class</span> <a id="PhotosController" href="#PhotosController">PhotosController</a> <span class="php-keyword1">extends</span> MeCmsAppController { 
 </span><span id="34" class="l"><a class="l" href="#34"> 34: </a>    <span class="php-comment">/**
 </span></span><span id="35" class="l"><a class="l" href="#35"> 35: </a><span class="php-comment">     * List photos
 </span></span><span id="36" class="l"><a class="l" href="#36"> 36: </a><span class="php-comment">     * @param string $albumId Photos album id
@@ -146,7 +146,7 @@
 </span><span id="44" class="l"><a class="l" href="#44"> 44: </a>        <span class="php-var">$this</span>-&gt;paginate = <span class="php-keyword1">array</span>(
 </span><span id="45" class="l"><a class="l" href="#45"> 45: </a>            <span class="php-quote">'conditions'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'album_id'</span> =&gt; <span class="php-var">$albumId</span>),
 </span><span id="46" class="l"><a class="l" href="#46"> 46: </a>            <span class="php-quote">'fields'</span>        =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span>, <span class="php-quote">'filename'</span>, <span class="php-quote">'description'</span>),
-</span><span id="47" class="l"><a class="l" href="#47"> 47: </a>            <span class="php-quote">'limit'</span>         =&gt; <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'photos'</span>][<span class="php-quote">'photos_for_page'</span>]
+</span><span id="47" class="l"><a class="l" href="#47"> 47: </a>            <span class="php-quote">'limit'</span>         =&gt; <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'photos_for_page'</span>]
 </span><span id="48" class="l"><a class="l" href="#48"> 48: </a>        );
 </span><span id="49" class="l"><a class="l" href="#49"> 49: </a>        
 </span><span id="50" class="l"><a class="l" href="#50"> 50: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword1">array</span>(
@@ -269,7 +269,41 @@
 </span><span id="167" class="l"><a class="l" href="#167">167: </a>            
 </span><span id="168" class="l"><a class="l" href="#168">168: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>, <span class="php-var">$albumId</span>));
 </span><span id="169" class="l"><a class="l" href="#169">169: </a>    }
-</span><span id="170" class="l"><a class="l" href="#170">170: </a></span>}</code></pre>
+</span><span id="170" class="l"><a class="l" href="#170">170: </a>    
+</span><span id="171" class="l"><a class="l" href="#171">171: </a>    <span class="php-comment">/**
+</span></span><span id="172" class="l"><a class="l" href="#172">172: </a><span class="php-comment">     * Gets a random photo.
+</span></span><span id="173" class="l"><a class="l" href="#173">173: </a><span class="php-comment">     * This method works only with `requestAction()`.
+</span></span><span id="174" class="l"><a class="l" href="#174">174: </a><span class="php-comment">     * @return array Photo
+</span></span><span id="175" class="l"><a class="l" href="#175">175: </a><span class="php-comment">     * @throws ForbiddenException
+</span></span><span id="176" class="l"><a class="l" href="#176">176: </a><span class="php-comment">     */</span>
+</span><span id="177" class="l"><a class="l" href="#177">177: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_request_random" href="#_request_random">request_random</a>() {
+</span><span id="178" class="l"><a class="l" href="#178">178: </a>        <span class="php-comment">//This method works only with &quot;requestAction()&quot;</span>
+</span><span id="179" class="l"><a class="l" href="#179">179: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'requested'</span>]))
+</span><span id="180" class="l"><a class="l" href="#180">180: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ForbiddenException();
+</span><span id="181" class="l"><a class="l" href="#181">181: </a>        
+</span><span id="182" class="l"><a class="l" href="#182">182: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;Photo-&gt;find(<span class="php-quote">'random'</span>, <span class="php-keyword1">array</span>(<span class="php-quote">'fields'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'album_id'</span>, <span class="php-quote">'filename'</span>)));
+</span><span id="183" class="l"><a class="l" href="#183">183: </a>    }
+</span><span id="184" class="l"><a class="l" href="#184">184: </a>    
+</span><span id="185" class="l"><a class="l" href="#185">185: </a>    <span class="php-comment">/**
+</span></span><span id="186" class="l"><a class="l" href="#186">186: </a><span class="php-comment">     * View photo
+</span></span><span id="187" class="l"><a class="l" href="#187">187: </a><span class="php-comment">     * @param int $id Photo ID
+</span></span><span id="188" class="l"><a class="l" href="#188">188: </a><span class="php-comment">     * @throws NotFoundException
+</span></span><span id="189" class="l"><a class="l" href="#189">189: </a><span class="php-comment">     */</span>
+</span><span id="190" class="l"><a class="l" href="#190">190: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_view" href="#_view">view</a>(<span class="php-var">$id</span> = <span class="php-keyword1">NULL</span>) {
+</span><span id="191" class="l"><a class="l" href="#191">191: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Photo-&gt;exists(<span class="php-var">$id</span>))
+</span><span id="192" class="l"><a class="l" href="#192">192: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid photo'</span>));
+</span><span id="193" class="l"><a class="l" href="#193">193: </a>        
+</span><span id="194" class="l"><a class="l" href="#194">194: </a>        <span class="php-var">$photo</span> = <span class="php-var">$this</span>-&gt;Photo-&gt;find(<span class="php-quote">'first'</span>, <span class="php-keyword1">array</span>(
+</span><span id="195" class="l"><a class="l" href="#195">195: </a>            <span class="php-quote">'conditions'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span> =&gt; <span class="php-var">$id</span>),
+</span><span id="196" class="l"><a class="l" href="#196">196: </a>            <span class="php-quote">'fields'</span>        =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'album_id'</span>, <span class="php-quote">'filename'</span>)
+</span><span id="197" class="l"><a class="l" href="#197">197: </a>        ));
+</span><span id="198" class="l"><a class="l" href="#198">198: </a>        
+</span><span id="199" class="l"><a class="l" href="#199">199: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword1">array</span>(
+</span><span id="200" class="l"><a class="l" href="#200">200: </a>            <span class="php-quote">'photo'</span>             =&gt; <span class="php-var">$photo</span>,
+</span><span id="201" class="l"><a class="l" href="#201">201: </a>            <span class="php-quote">'title_for_layout'</span>  =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Photo'</span>)
+</span><span id="202" class="l"><a class="l" href="#202">202: </a>        ));
+</span><span id="203" class="l"><a class="l" href="#203">203: </a>    }
+</span><span id="204" class="l"><a class="l" href="#204">204: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>

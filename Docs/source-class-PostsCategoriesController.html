@@ -8,7 +8,7 @@
 	<title>File PostsCategoriesController.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?2302939173"></script>
+	<script type="text/javascript" src="elementlist.js?1636131360"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -229,7 +229,52 @@
 </span><span id="127" class="l"><a class="l" href="#127">127: </a>            
 </span><span id="128" class="l"><a class="l" href="#128">128: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>));
 </span><span id="129" class="l"><a class="l" href="#129">129: </a>    }
-</span><span id="130" class="l"><a class="l" href="#130">130: </a></span>}</code></pre>
+</span><span id="130" class="l"><a class="l" href="#130">130: </a>    
+</span><span id="131" class="l"><a class="l" href="#131">131: </a>    <span class="php-comment">/**
+</span></span><span id="132" class="l"><a class="l" href="#132">132: </a><span class="php-comment">     * Gets the categories list, with the slug as key and the title as value.
+</span></span><span id="133" class="l"><a class="l" href="#133">133: </a><span class="php-comment">     * This method works only with `requestAction()`.
+</span></span><span id="134" class="l"><a class="l" href="#134">134: </a><span class="php-comment">     * @return array Categories list
+</span></span><span id="135" class="l"><a class="l" href="#135">135: </a><span class="php-comment">     * @throws ForbiddenException
+</span></span><span id="136" class="l"><a class="l" href="#136">136: </a><span class="php-comment">     */</span>
+</span><span id="137" class="l"><a class="l" href="#137">137: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_request_list" href="#_request_list">request_list</a>() {
+</span><span id="138" class="l"><a class="l" href="#138">138: </a>        <span class="php-comment">//This method works only with &quot;requestAction()&quot;</span>
+</span><span id="139" class="l"><a class="l" href="#139">139: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'requested'</span>]))
+</span><span id="140" class="l"><a class="l" href="#140">140: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ForbiddenException();
+</span><span id="141" class="l"><a class="l" href="#141">141: </a>        
+</span><span id="142" class="l"><a class="l" href="#142">142: </a>        <span class="php-comment">//Gets the categories</span>
+</span><span id="143" class="l"><a class="l" href="#143">143: </a>        <span class="php-var">$categories</span> = <span class="php-var">$this</span>-&gt;PostsCategory-&gt;find(<span class="php-quote">'active'</span>, <span class="php-keyword1">array</span>(<span class="php-quote">'fields'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'post_count'</span>)));
+</span><span id="144" class="l"><a class="l" href="#144">144: </a>                
+</span><span id="145" class="l"><a class="l" href="#145">145: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$categories</span>))
+</span><span id="146" class="l"><a class="l" href="#146">146: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">array</span>();
+</span><span id="147" class="l"><a class="l" href="#147">147: </a>        
+</span><span id="148" class="l"><a class="l" href="#148">148: </a>        <span class="php-comment">//Gets the tree list</span>
+</span><span id="149" class="l"><a class="l" href="#149">149: </a>        <span class="php-var">$treeList</span> = <span class="php-var">$this</span>-&gt;PostsCategory-&gt;generateTreeList();
+</span><span id="150" class="l"><a class="l" href="#150">150: </a>        
+</span><span id="151" class="l"><a class="l" href="#151">151: </a>        <span class="php-var">$categoriesTmp</span> = <span class="php-keyword1">array</span>();
+</span><span id="152" class="l"><a class="l" href="#152">152: </a>        
+</span><span id="153" class="l"><a class="l" href="#153">153: </a>        <span class="php-keyword1">foreach</span>(<span class="php-var">$categories</span> <span class="php-keyword1">as</span> <span class="php-var">$category</span>) {
+</span><span id="154" class="l"><a class="l" href="#154">154: </a>            <span class="php-comment">//Changes the category titles, replacing them with the titles of the tree list and adding the &quot;post_count&quot; value</span>
+</span><span id="155" class="l"><a class="l" href="#155">155: </a>            <span class="php-var">$category</span>[<span class="php-quote">'PostsCategory'</span>][<span class="php-quote">'title'</span>] = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s (%s)'</span>, <span class="php-var">$treeList</span>[<span class="php-var">$category</span>[<span class="php-quote">'PostsCategory'</span>][<span class="php-quote">'id'</span>]], <span class="php-var">$category</span>[<span class="php-quote">'PostsCategory'</span>][<span class="php-quote">'post_count'</span>]);
+</span><span id="156" class="l"><a class="l" href="#156">156: </a>            
+</span><span id="157" class="l"><a class="l" href="#157">157: </a>            <span class="php-comment">//The new array has the slug as key and the title as value</span>
+</span><span id="158" class="l"><a class="l" href="#158">158: </a>            <span class="php-var">$categoriesTmp</span>[<span class="php-var">$category</span>[<span class="php-quote">'PostsCategory'</span>][<span class="php-quote">'slug'</span>]] = <span class="php-var">$category</span>[<span class="php-quote">'PostsCategory'</span>][<span class="php-quote">'title'</span>];
+</span><span id="159" class="l"><a class="l" href="#159">159: </a>        }
+</span><span id="160" class="l"><a class="l" href="#160">160: </a>        
+</span><span id="161" class="l"><a class="l" href="#161">161: </a>        <span class="php-keyword1">return</span> <span class="php-var">$categoriesTmp</span>;
+</span><span id="162" class="l"><a class="l" href="#162">162: </a>    }
+</span><span id="163" class="l"><a class="l" href="#163">163: </a>    
+</span><span id="164" class="l"><a class="l" href="#164">164: </a>    <span class="php-comment">/**
+</span></span><span id="165" class="l"><a class="l" href="#165">165: </a><span class="php-comment">     * List posts categories
+</span></span><span id="166" class="l"><a class="l" href="#166">166: </a><span class="php-comment">     */</span>
+</span><span id="167" class="l"><a class="l" href="#167">167: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_index" href="#_index">index</a>() {
+</span><span id="168" class="l"><a class="l" href="#168">168: </a>        <span class="php-var">$categories</span> = <span class="php-var">$this</span>-&gt;PostsCategory-&gt;find(<span class="php-quote">'active'</span>, <span class="php-keyword1">array</span>(<span class="php-quote">'fields'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>)));
+</span><span id="169" class="l"><a class="l" href="#169">169: </a>        
+</span><span id="170" class="l"><a class="l" href="#170">170: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword1">array</span>(
+</span><span id="171" class="l"><a class="l" href="#171">171: </a>            <span class="php-quote">'categories'</span>        =&gt; <span class="php-var">$categories</span>,
+</span><span id="172" class="l"><a class="l" href="#172">172: </a>            <span class="php-quote">'title_for_layout'</span>  =&gt; __d(<span class="php-quote">'me_cms_frontend'</span>, <span class="php-quote">'Categories'</span>)
+</span><span id="173" class="l"><a class="l" href="#173">173: </a>        ));
+</span><span id="174" class="l"><a class="l" href="#174">174: </a>    }
+</span><span id="175" class="l"><a class="l" href="#175">175: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
