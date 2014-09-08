@@ -187,4 +187,24 @@ class PhotosController extends MeCmsAppController {
 		
 		return $photo;
 	}
+	
+	/**
+	 * View photo
+	 * @param int $id Photo ID
+	 * @throws NotFoundException
+	 */
+	public function view($id = NULL) {
+		if(!$this->Photo->exists($id))
+			throw new NotFoundException(__d('me_cms', 'Invalid photo'));
+		
+		$photo = $this->Photo->find('first', array(
+			'conditions'	=> array('id' => $id),
+			'fields'		=> array('album_id', 'filename')
+		));
+		
+		$this->set(array(
+			'photo'				=> $photo,
+			'title_for_layout'	=> __d('me_cms', 'Photo')
+		));
+	}
 }

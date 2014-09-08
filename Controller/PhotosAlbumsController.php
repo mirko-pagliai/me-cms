@@ -112,4 +112,47 @@ class PhotosAlbumsController extends MeCmsAppController {
 					
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * List albums
+	 */
+	public function index() {
+		$albums = $this->PhotosAlbum->find('active', array(
+			'contain'	=> array('Photo' => array(
+				'fields'	=> 'filename',
+				'limit'		=> 1,
+				'order'		=> 'rand()'
+			)),
+			'fields'	=> array('title', 'slug', 'photo_count')
+		));
+		
+		$this->set(array(
+			'albums'			=> $albums,
+			'title_for_layout'	=> __d('me_cms', 'Photos albums')
+		));
+	}
+	
+	/**
+	 * View album
+	 * @param string $slug Album slug
+	 * @throws NotFoundException
+	 */
+	public function view($slug = NULL) {
+		$album = $this->PhotosAlbum->find('active', array(
+			'conditions'	=> array('slug' => $slug),
+			'contain'		=> array('Photo' => array(
+				'fields' => array('id', 'filename')
+			)),
+			'fields'		=> 'title',
+			'limit'			=> 1
+		));
+		
+		if(empty($album))
+			throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+		
+		$this->set(array(
+			'album'				=> $album,
+			'title_for_layout'	=> $album['PhotosAlbum']['title']
+		));
+	}
 }
