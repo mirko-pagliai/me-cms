@@ -179,13 +179,7 @@ class PhotosController extends MeCmsAppController {
 		if(empty($this->request->params['requested']))
             throw new ForbiddenException();
 		
-		//Gets the photo
-		$photo = $this->Photo->find('random', array('fields' => array('album_id', 'filename')));
-		
-		//Adds the full path
-		$photo['Photo']['path'] = Album::getAlbumPath($photo['Photo']['album_id']).DS.$photo['Photo']['filename'];
-		
-		return $photo;
+		return $this->Photo->find('random', array('fields' => array('album_id', 'filename')));
 	}
 	
 	/**
