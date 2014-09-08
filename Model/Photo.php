@@ -96,8 +96,10 @@ class Photo extends MeCmsAppModel {
 	public function afterFind($results, $primary = FALSE) {
 		foreach($results as $k => $v) {
 			//If the album ID and the filename are available, adds the file path
-			if(!empty($v['album_id']) && !(empty($v['filename'])))
+			if(!empty($v['album_id']) && !empty($v['filename']))
 				$results[$k]['path'] = Album::getPhotoPath($v['album_id'], $v['filename']);
+			elseif(!empty($v[$this->alias]['album_id']) && !empty($v[$this->alias]['filename']))
+				$results[$k][$this->alias]['path'] = Album::getPhotoPath($v[$this->alias]['album_id'], $v[$this->alias]['filename']);
 		}
 		
 		return $results;
