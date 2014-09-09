@@ -41,6 +41,7 @@ Router::connect('/post/*',	array('controller' => 'posts', 'action' => 'view',	'p
 
 //Photos albums controller
 Router::connect('/albums',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/photos',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
 Router::connect('/album/*',	array('controller' => 'photos_albums', 'action' => 'view',	'plugin' => 'me_cms'));
 
 //Photos controller
