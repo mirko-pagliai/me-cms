@@ -34,7 +34,7 @@
 	<div class="widget sidebar-widget">
 		<?php 
 			echo $this->Html->h4(__d('me_cms', 'Random photo'));
-			$thumb = $this->Html->thumb($photo['Photo']['path'], array('width' => '263'));
+			$thumb = $this->Html->thumb($photo['Photo']['path'], array('side' => '263'));
 			echo $this->Html->link($thumb, array('controller' => 'photos', 'action' => 'index'));
 		?>
 	</div>
