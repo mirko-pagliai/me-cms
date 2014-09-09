@@ -39,7 +39,7 @@
 			foreach($pages as $page)
 				$list[] = $this->Html->link($page['Page']['title'], array('controller' => 'pages', 'action' => 'view', $page['Page']['slug']));
 
-			echo $this->Html->ul($list, array('class' => 'fa-ul'), array('icon' => 'li caret-right'));
+			echo $this->Html->ul($list, array('icon' => 'caret-right'));
 		?>
 	</div>
 <?php endif; ?>

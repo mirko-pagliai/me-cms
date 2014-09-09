@@ -31,6 +31,6 @@
 		foreach($categories as $category)
 			$list[] = $this->Html->link($category['PostsCategory']['title'], array('controller' => 'posts', 'action' => 'index', $category['PostsCategory']['slug']));
 
-		echo $this->Html->ul($list, array('class' => 'fa-ul'), array('icon' => 'li caret-right'));
+		echo $this->Html->ul($list, array('icon' => 'caret-right'));
 	?>
 </div>
