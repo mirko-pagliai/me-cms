@@ -44,9 +44,9 @@
 /* Content, index and view actions, title */
 #content .index > h2, #content .view > h2 {
 	border-left: 4px solid #777;
-	font-size: 22px;
-    margin-bottom: 10px;
-    padding-left: 10px;
+	font-size: 22px;    
+	margin: 0 0 10px;
+    padding: 5px 0 5px 10px;
 }
 
 /* -------------------------------- */
