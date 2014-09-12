@@ -32,7 +32,7 @@
 
 <div class="posts form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit post')); ?>
-	<?php echo $this->Form->create('Post', array('class' => 'form-base')); ?>
+	<?php echo $this->Form->create('Post'); ?>
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('user_id', array('label' => __d('me_cms', 'Author')));

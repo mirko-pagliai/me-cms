@@ -30,7 +30,7 @@
 
 <div class="photosAlbums form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit photos album')); ?>
-	<?php echo $this->Form->create('PhotosAlbum', array('class' => 'form-base')); ?>
+	<?php echo $this->Form->create('PhotosAlbum'); ?>
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');

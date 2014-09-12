@@ -27,7 +27,7 @@
 
 <div class="users form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit user')); ?>
-	<?php echo $this->Form->create('User', array('class' => 'form-base')); ?>
+	<?php echo $this->Form->create('User'); ?>
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('group_id');

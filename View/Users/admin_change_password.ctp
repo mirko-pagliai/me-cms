@@ -25,7 +25,7 @@
 	
 <div class="users form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Change password')); ?>
-	<?php echo $this->Form->create('User', array('class' => 'form-base')); ?>
+	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');

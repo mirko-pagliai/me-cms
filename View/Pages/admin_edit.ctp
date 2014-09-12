@@ -32,7 +32,7 @@
 
 <div class="pages form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit page')); ?>
-	<?php echo $this->Form->create('Page', array('class' => 'form-base')); ?>		
+	<?php echo $this->Form->create('Page'); ?>		
 		<div class='float-form'>
 			<?php
 				echo $this->Form->datetimepicker('created', array(

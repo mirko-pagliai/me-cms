@@ -30,7 +30,7 @@
 
 <div class="postsCategories form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit posts category')); ?>
-	<?php echo $this->Form->create('PostsCategory', array('class' => 'form-base')); ?>
+	<?php echo $this->Form->create('PostsCategory'); ?>
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('parent_id', array(

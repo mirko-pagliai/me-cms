@@ -27,7 +27,7 @@
 
 <div class="usersGroups form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add users group')); ?>
-	<?php echo $this->Form->create('UsersGroup', array('class' => 'form-base')); ?>
+	<?php echo $this->Form->create('UsersGroup'); ?>
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('level');
