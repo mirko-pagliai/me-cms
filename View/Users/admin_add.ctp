@@ -45,8 +45,7 @@
 				echo $this->Form->input('email');
 				echo $this->Form->input('password');
 				echo $this->Form->input('password_repeat', array(
-					'label'	=> __d('me_cms', 'Repeat password'),
-					'type'	=> 'password'
+					'label'	=> __d('me_cms', 'Repeat password')
 				));
 				echo $this->Form->input('first_name');
 				echo $this->Form->input('last_name');
