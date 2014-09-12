@@ -35,6 +35,12 @@
  * </code>
  */
 class MenuHelper extends MeHtmlHelper {
+    /**
+     * Helpers
+     * @var array
+     */
+    public $helpers = array('Dropdown' => array('className' => 'MeTools.Dropdown'));
+	
 	/**
 	 * Internal function to generate the menu for "pages" actions
 	 * @param string $type Type of menu
@@ -47,7 +53,7 @@ class MenuHelper extends MeHtmlHelper {
 		);
 		
 		if($type == 'dropdown')
-			return $this->linkDropdown(__d('me_cms', 'Pages'), array('icon' => 'files-o')).PHP_EOL.$this->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Pages'), array('icon' => 'files-o')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		
 		return $menu;
 	}
@@ -66,7 +72,7 @@ class MenuHelper extends MeHtmlHelper {
 		);
 		
 		if($type == 'dropdown')
-			return $this->linkDropdown(__d('me_cms', 'Posts'), array('icon' => 'thumb-tack')).PHP_EOL.$this->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Posts'), array('icon' => 'thumb-tack')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		
 		return $menu;
 	}
@@ -84,7 +90,7 @@ class MenuHelper extends MeHtmlHelper {
 		);
 		
 		if($type == 'dropdown')
-			return $this->linkDropdown(__d('me_cms', 'Photos'), array('icon' => 'image')).PHP_EOL.$this->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Photos'), array('icon' => 'image')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		
 		return $menu;
 	}
@@ -103,7 +109,7 @@ class MenuHelper extends MeHtmlHelper {
 		);
 		
 		if($type == 'dropdown')
-			return $this->linkDropdown(__d('me_cms', 'Users'), array('icon' => 'users')).PHP_EOL.$this->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Users'), array('icon' => 'users')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		
 		return $menu;
 	}
