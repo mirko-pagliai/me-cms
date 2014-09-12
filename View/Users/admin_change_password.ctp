@@ -39,8 +39,7 @@
 				));
 				echo $this->Form->input('password_repeat', array(
 					'label'	=> __d('me_cms', 'Repeat password'),
-					'tip'	=> __d('me_cms', 'Repeat your new password'),
-					'type'	=> 'password'
+					'tip'	=> __d('me_cms', 'Repeat your new password')
 				));
 			?>
 		</fieldset>
