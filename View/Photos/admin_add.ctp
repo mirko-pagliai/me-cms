@@ -55,7 +55,7 @@
 									'type'			=> 'checkbox',
 									'value'			=> $photo
 								));
-								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '184'));
+								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '201'));
 								echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
 									'div'			=> array('class' => 'photo-description'),
 									'label'			=> FALSE,
