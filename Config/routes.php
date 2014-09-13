@@ -36,8 +36,9 @@ Router::connect('/categories',	array('controller' => 'posts_categories',	'action
 Router::connect('/category/*',	array('controller' => 'posts',				'action' => 'index',	'plugin' => 'me_cms'));
 
 //Posts controller
-Router::connect('/posts',	array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
-Router::connect('/post/*',	array('controller' => 'posts', 'action' => 'view',	'plugin' => 'me_cms'));
+Router::connect('/posts',		array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms'));
+Router::connect('/post/*',		array('controller' => 'posts', 'action' => 'view',		'plugin' => 'me_cms'));
+Router::connect('/search/*',		array('controller' => 'posts', 'action' => 'search',	'plugin' => 'me_cms'));
 
 //Photos albums controller
 Router::connect('/albums',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));

@@ -206,4 +206,31 @@ class PostsController extends MeCmsAppController {
 			'title_for_layout'	=> $post['Post']['title']
 		));
 	}
+	
+	/**
+	 * Search post
+	 */
+	public function search() {
+		//Gets the pattern
+		$pattern = trim($this->request->query['p']);
+		
+		//Checks if the pattern is at least 4 characters long
+		if(!empty($pattern) && strlen($pattern) >= 4) {
+			$posts = $this->Post->find('active', array(
+				'conditions'	=> array('text LIKE' => sprintf('%%%s%%', $pattern)),
+				'fields'		=> array('title', 'slug', 'text', 'created')
+			));
+			
+			$this->set(array(
+				'pattern'	=> $pattern,
+				'posts'		=> $posts
+			));
+		}
+		else {
+			$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
+			return $this->redirect($this->referer('/'));
+		}
+		
+		$this->set('title_for_layout', __d('me_cms', 'Search posts'));
+	}
 }
