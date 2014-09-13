@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class PhotosController | MeCms</title>
+	<title>Class SystemsController | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
 	<script type="text/javascript" src="elementlist.js?2764358526"></script>
@@ -46,10 +46,10 @@
 				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
 				<li><a href="class-PagesController.html">PagesController</a></li>
 				<li><a href="class-PhotosAlbumsController.html">PhotosAlbumsController</a></li>
-				<li class="active"><a href="class-PhotosController.html">PhotosController</a></li>
+				<li><a href="class-PhotosController.html">PhotosController</a></li>
 				<li><a href="class-PostsCategoriesController.html">PostsCategoriesController</a></li>
 				<li><a href="class-PostsController.html">PostsController</a></li>
-				<li><a href="class-SystemsController.html">SystemsController</a></li>
+				<li class="active"><a href="class-SystemsController.html">SystemsController</a></li>
 				<li><a href="class-UsersController.html">UsersController</a></li>
 				<li><a href="class-UsersGroupsController.html">UsersGroupsController</a></li>
 			</ul>
@@ -100,12 +100,12 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class PhotosController</h1>
+	<h1>Class SystemsController</h1>
 
 
 	<div class="description">
 	
-<p>Photos Controller</p>
+<p>Systems Controller</p>
 
 	</div>
 
@@ -124,7 +124,7 @@ MeToolsAppController
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>PhotosController</span></b>			
+<b><span>SystemsController</span></b>			
 			
 			
 		</dd>
@@ -150,229 +150,55 @@ MeToolsAppController
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-PhotosController.html#30-204" title="Go to source code">PhotosController.php</a><br>
+		<b>Located at</b> <a href="source-class-SystemsController.html#30-123" title="Go to source code">SystemsController.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="admin_index" id="_admin_index">
+	<tr data-order="_getVersion" id="__getVersion">
 
 		<td class="attributes"><code>
-			 public 
-			
+			 private 
+			string
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-PhotosController.html#34-55" title="Go to source code">admin_index</a>( <span>string <var>$albumId</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<a class="anchor" href="#__getVersion">#</a>
+		<code><a href="source-class-SystemsController.html#34-40" title="Go to source code">_getVersion</a>( )</code>
 
 		<div class="description short">
 			
-<p>List photos</p>
+<p>Gets the MeCMS version number.</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>List photos</p>
-
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$albumId</var></dt>
-					<dd><code>string</code><br>$albumId Photos album id</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					<code>NotFoundException</code><br>
-				</div>
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><code><a href="class-Album.html#_getAlbumPath">Album::getAlbumPath()</a></code></code><br>to get the album path<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="admin_add" id="_admin_add">
-
-		<td class="attributes"><code>
-			 public 
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-PhotosController.html#57-112" title="Go to source code">admin_add</a>( )</code>
-
-		<div class="description short">
-			
-<p>Add photo from the tmp directory (<code>APP/tmp/photos</code>)</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Add photo from the tmp directory (<code>APP/tmp/photos</code>)</p>
-
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><code><a href="class-Album.html#_getTmp">Album::getTmp()</a></code></code><br>to get the list of the photos in the temporary directory<br>
-						<code><code><a href="class-Album.html#_getTmpPath">Album::getTmpPath()</a></code></code><br>to get the path of the temporary directory<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="admin_edit" id="_admin_edit">
-
-		<td class="attributes"><code>
-			 public 
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-PhotosController.html#114-147" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
-
-		<div class="description short">
-			
-<p>Edit photo</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Edit photo</p>
-
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd><code>string</code><br>$id Photo id</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					<code>NotFoundException</code><br>
-				</div>
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><code><a href="class-Album.html#_getAlbumPath">Album::getAlbumPath()</a></code></code><br>to get the album path<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="admin_delete" id="_admin_delete">
-
-		<td class="attributes"><code>
-			 public 
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-PhotosController.html#149-169" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
-
-		<div class="description short">
-			
-<p>Delete photo</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Delete photo</p>
-
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd><code>string</code><br>$id Photo id</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					<code>NotFoundException</code><br>
-				</div>
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="request_random" id="_request_random">
-
-		<td class="attributes"><code>
-			 public 
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_request_random">#</a>
-		<code><a href="source-class-PhotosController.html#171-183" title="Go to source code">request_random</a>( )</code>
-
-		<div class="description short">
-			
-<p>Gets a random photo. This method works only with
-<code>requestAction()</code>.</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Gets a random photo. This method works only with
-<code>requestAction()</code>.</p>
+<p>Gets the MeCMS version number.</p>
 
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code>array</code><br>Photo<br>
+					<code>string</code><br>MeCMS version number<br>
 				</div>
 
-				<h4>Throws</h4>
+
+				<h4>Used by</h4>
 				<div class="list">
-					<code>ForbiddenException</code><br>
+						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br>
 				</div>
-
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="view" id="_view">
+	<tr data-order="admin_cache" id="_admin_cache">
 
 		<td class="attributes"><code>
 			 public 
@@ -382,32 +208,144 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-PhotosController.html#185-203" title="Go to source code">view</a>( <span>integer <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<a class="anchor" href="#_admin_cache">#</a>
+		<code><a href="source-class-SystemsController.html#42-54" title="Go to source code">admin_cache</a>( )</code>
 
 		<div class="description short">
 			
-<p>View photo</p>
+<p>Manage cache and thumbnails.</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>View photo</p>
+<p>Manage cache and thumbnails.</p>
 
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd><code>integer</code><br>$id Photo ID</dd>
-				</dl></div>
 
 
-				<h4>Throws</h4>
+
+				<h4>Uses</h4>
 				<div class="list">
-					<code>NotFoundException</code><br>
+						System::checkCacheStatus()<br>
+						System::getCacheSize()<br>
+						System::getThumbsSize()<br>
 				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="admin_checkup" id="_admin_checkup">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_admin_checkup">#</a>
+		<code><a href="source-class-SystemsController.html#56-93" title="Go to source code">admin_checkup</a>( )</code>
+
+		<div class="description short">
+			
+<p>System checkup.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>System checkup.</p>
+
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-SystemsController.html#__getVersion">SystemsController::_getVersion()</a></code></code> <br>
+						System::checkApacheModule()<br>
+						System::checkCache()<br>
+						System::checkCacheStatus()<br>
+						System::checkLogs()<br>
+						System::checkPhpExtension()<br>
+						System::checkPhpVersion()<br>
+						System::checkThumbs()<br>
+						System::checkTmp()<br>
+						System::dirIsWritable()<br>
+						System::getCakeVersion()<br>
+						System::getPluginsVersion()<br>
+						System::which()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="admin_clear_cache" id="_admin_clear_cache">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_admin_clear_cache">#</a>
+		<code><a href="source-class-SystemsController.html#95-108" title="Go to source code">admin_clear_cache</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clear the cache.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clear the cache.</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="admin_clear_thumbs" id="_admin_clear_thumbs">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_admin_clear_thumbs">#</a>
+		<code><a href="source-class-SystemsController.html#110-122" title="Go to source code">admin_clear_thumbs</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clear the thumbs.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clear the thumbs.</p>
+
+
+
+
+
 
 
 
