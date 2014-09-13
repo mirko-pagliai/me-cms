@@ -95,7 +95,10 @@
 					</div>
 				</div>
 			<?php endif; ?>
-			<?php echo $this->element('MeTools.sql_dump'); ?>
+			<?php
+				echo $this->element('footer');
+				echo $this->element('MeTools.sql_dump');
+			?>
 		</div>
 	</body>
 </html>
