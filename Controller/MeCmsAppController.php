@@ -102,6 +102,8 @@ class MeCmsAppController extends MeToolsAppController {
 		
 		parent::beforeFilter();
 		
+		Configure::write('Session.timeout', $this->config['timeout']);
+		
 		//If it's not an admin request, authorizes the current action
 		if(!$this->isAdmin())
 			$this->Auth->allow($this->request->params['action']);

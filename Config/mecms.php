@@ -36,6 +36,8 @@ $config = array(
 			//Short format
 			'short'	=> '%y/%m/%d, %H:%M'
 		),
+		//Session (login) timeout, in seconds
+		'timeout' => 30,
 		//Site title
 		'title' => 'MeCms'
 	)
