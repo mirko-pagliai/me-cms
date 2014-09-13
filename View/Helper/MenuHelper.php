@@ -45,6 +45,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "pages" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
 	 */
 	private function _pages($type) {
 		$menu = array(
@@ -62,6 +65,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "post" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
 	 */
 	private function _posts($type) {
 		$menu = array(
@@ -81,6 +87,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "photos" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
 	 */
 	private function _photos($type) {
 		$menu = array(
@@ -99,6 +108,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "users" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
 	 */
 	private function _users($type) {
 		$menu = array(
@@ -118,6 +130,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "system" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
 	 */
 	private function _systems($type) {
 		$menu = array(
