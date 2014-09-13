@@ -23,15 +23,44 @@
  * @package		MeCms\webroot\css\frontend
  */
 
+/* -------------------------------- */
+/*		Header (logo and topbar)	*/
+/* -------------------------------- */
+/* Header */
+#header {
+	background: #f9f9f9;
+    box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .5);
+	margin-bottom: 35px;
+}
+
 /* Site logo */
 #logo {
 	display: inline-block;
-	margin: 20px 0;
 	text-decoration: none;
+}
+
+/* Logo (as image) */
+#logo img {
+	margin: 25px 0 5px;
+}
+
+/* Logo (as text) */
+#logo h1 {
+	color: #555;
+	font-size: 42px;
+    margin: 30px 0 10px;
+	padding: 0 30px;
+}
+
+/* Logo (as text) on hover */
+#logo:hover h1 {
+	color: #333;
 }
 
 /* Topbar */
 #topbar {
+	background: none;
+	border: 0;
 	margin-bottom: 30px;
 }
 

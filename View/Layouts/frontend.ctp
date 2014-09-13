@@ -55,15 +55,17 @@
 		?>
 	</head>
 	<body>
-		<?php
-			$logo = $this->Html->h1($config['title']);
-			//Check if the logo image exists
-			if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
-				$logo = $this->Html->img($config['logo']);
-			echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo')));		
-			
-			echo $this->element('topbar');
-		?>
+		<div id="header">
+			<?php
+				$logo = $this->Html->h1($config['title']);
+				//Check if the logo image exists
+				if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
+					$logo = $this->Html->img($config['logo']);
+				echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo')));		
+
+				echo $this->element('topbar');
+			?>
+		</div>
 		<div class="container">
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
 				<div class="row">
