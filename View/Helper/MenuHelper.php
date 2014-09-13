@@ -42,7 +42,7 @@ class MenuHelper extends MeHtmlHelper {
     public $helpers = array('Dropdown' => array('className' => 'MeTools.Dropdown'));
 	
 	/**
-	 * Internal function to generate the menu for "pages" actions
+	 * Internal function to generate the menu for "pages" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 */
@@ -59,7 +59,7 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "post" actions
+	 * Internal function to generate the menu for "post" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 */
@@ -78,7 +78,7 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "photos" actions
+	 * Internal function to generate the menu for "photos" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 */
@@ -96,7 +96,7 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "users" actions
+	 * Internal function to generate the menu for "users" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 */
@@ -110,6 +110,23 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Users'), array('icon' => 'users')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		
+		return $menu;
+	}
+	
+	/**
+	 * Internal function to generate the menu for "system" actions.
+	 * @param string $type Type of menu
+	 * @return mixed Menu
+	 */
+	private function _systems($type) {
+		$menu = array(
+			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache')),
+			$this->link(__d('me_cms', 'Checkup'),			array('controller' => 'systems', 'action' => 'checkup'))
+		);
+		
+		if($type == 'dropdown')
+			return $this->Dropdown->link(__d('me_cms', 'System'), array('icon' => 'wrench')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		
 		return $menu;
 	}

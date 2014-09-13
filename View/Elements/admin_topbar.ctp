@@ -43,14 +43,11 @@
 			<ul class="nav navbar-nav">
 				<?php
 					echo $this->Html->li($this->Html->link(NULL, '/admin', array('icon' => 'home', 'title' => __d('me_cms', 'Home'))));
-					
 					echo $this->Html->li($this->Menu->get('posts', 'dropdown'), array('class' => 'dropdown'));
-					
 					echo $this->Html->li($this->Menu->get('pages', 'dropdown'), array('class' => 'dropdown'));
-					
 					echo $this->Html->li($this->Menu->get('photos', 'dropdown'), array('class' => 'dropdown'));
-					
 					echo $this->Html->li($this->Menu->get('users', 'dropdown'), array('class' => 'dropdown'));
+					echo $this->Html->li($this->Menu->get('systems', 'dropdown'), array('class' => 'dropdown'));
 				?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
