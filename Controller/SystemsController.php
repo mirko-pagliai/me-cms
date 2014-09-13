@@ -32,7 +32,7 @@ App::uses('System', 'MeTools.Utility');
  */
 class SystemsController extends MeCmsAppController {
 	/**
-	 * Gets the MeCMS version number
+	 * Gets the MeCMS version number.
 	 * @return string MeCMS version number
 	 */
 	private function _getVersion() {
@@ -40,6 +40,7 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Manage cache and thumbnails.
 	 * @uses System::checkCacheStatus()
 	 * @uses System::getCacheSize()
 	 * @uses System::getThumbsSize()
