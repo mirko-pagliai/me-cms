@@ -70,19 +70,22 @@
     font-weight: bold;
 }
 
+/* -------------------------------- */
+/*			Sidebar widgets			*/
+/* -------------------------------- */
+.widget.sidebar-widget {
+	margin-bottom: 20px;
+}
+
+/* -------------------------------- */
+/*				Content				*/
+/* -------------------------------- */
 /* Content, index and view actions, title */
 #content .index > h2, #content .view > h2 {
 	border-left: 4px solid #777;
 	font-size: 22px;    
 	margin: 0 0 10px;
     padding: 5px 0 5px 10px;
-}
-
-/* -------------------------------- */
-/*			Sidebar widgets			*/
-/* -------------------------------- */
-.widget.sidebar-widget {
-	margin-bottom: 20px;
 }
 
 /* -------------------------------- */
