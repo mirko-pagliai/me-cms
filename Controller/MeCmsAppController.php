@@ -42,6 +42,7 @@ class MeCmsAppController extends MeToolsAppController {
 				'userModel'			=> 'MeCms.User'
 			)),
 			'authError'			=> 'You need to login first',
+			'className'			=> 'MeCms.MeAuth',
 			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE),
             'loginRedirect'		=> '/admin',
             'logoutRedirect'	=> '/login'

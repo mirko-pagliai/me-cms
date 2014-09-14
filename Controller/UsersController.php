@@ -180,11 +180,11 @@ class UsersController extends MeCmsAppController {
 	 * Login
 	 * @return boolean
 	 * @uses _logout() to logout the user, if his account has not been activated or if he has been banned
-	 * @uses isLogged() to checks if the user is already logged in
+	 * @uses MeAuthComponent::isLogged() to checks if the user is already logged in
 	 */
 	public function login() {
 		//Checks if the user is already logged in
-		if($this->isLogged()) {
+		if($this->Auth->isLogged()) {
 			$this->Session->flash(__d('me_cms', 'You are already logged in'), 'alert');
 			return $this->redirect($this->Auth->redirect());
 		}
