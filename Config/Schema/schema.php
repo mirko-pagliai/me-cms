@@ -65,16 +65,9 @@ class MeCmSchema extends CakeSchema {
 		
 		$save = $groups->saveAll(array(
 			array(
-				'name'			=> 'admin', 
-				'label'			=> 'Admin', 
-				'level'			=> '100',
-				'user_count'	=> '1',
-				'User' => array(array(
-					'username'		=> 'admin', 
-					'email'			=> 'admin@example.it', 
-					'password'		=> 'admin',
-					'post_count'	=> '1'
-				))
+				'name'	=> 'admin', 
+				'label'	=> 'Admin', 
+				'level'	=> '100',
 			),
 			array(
 				'name'	=> 'manager',
