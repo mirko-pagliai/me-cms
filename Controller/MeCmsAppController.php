@@ -74,6 +74,7 @@ class MeCmsAppController extends MeToolsAppController {
 	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCms/Config`)
 	 * @return array Configuration
 	 * @throws InternalErrorException
+	 * @uses isAdminRequest()
 	 */
 	private function _getConfig() {
 		//Searches for the file in the APP `Config`
@@ -85,8 +86,8 @@ class MeCmsAppController extends MeToolsAppController {
 		else
 			throw new InternalErrorException(__d('me_cms', 'The configuration file for %s was not found', 'MeCms'));
 	
-		//If admin request
-		if($this->isAdmin())
+		//If it's an admin request
+		if($this->isAdminRequest())
 			return am(Configure::read('backend'), Configure::read('general'));
 		
 		return am(Configure::read('frontend'), Configure::read('general'));
@@ -96,6 +97,7 @@ class MeCmsAppController extends MeToolsAppController {
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @uses _getConfig() to load the configuration file
+	 * @uses isAdminRequest()
 	 */
 	public function beforeFilter() {
 		//Loads and gets the configuration
@@ -104,16 +106,13 @@ class MeCmsAppController extends MeToolsAppController {
 		parent::beforeFilter();
 		
 		Configure::write('Session.timeout', $this->config['timeout']);
-		
+				
 		//If it's not an admin request, authorizes the current action
-		if(!$this->isAdmin())
+		if(!$this->isAdminRequest())
 			$this->Auth->allow($this->request->params['action']);
-		
-		//Sets the "backend" layout for admin requests
-		if($this->isAdmin())
-			$this->layout = 'backend';
-		else
-			$this->layout = 'frontend';
+			
+		//Sets the layout	
+		$this->layout = $this->isAdminRequest() ? 'backend' : 'frontend';
 	}
 	
 	/**
