@@ -85,7 +85,7 @@ class MeAuthComponent extends AuthComponent {
 	 * @return type
 	 */
 	public function isLogged() {
-		return !empty($this->Auth->user('id'));
+		return !empty($this->user('id'));
 	}
 	
 	/**
