@@ -119,7 +119,6 @@ class MeAuthComponent extends AuthComponent {
 	 * @return boolean
 	 */
 	public function isManager() {
-		debug($this->user('group_id'));
 		if(empty($this->user('group_id')) && empty($this->user('Group.name')))
 			return FALSE;
 		
