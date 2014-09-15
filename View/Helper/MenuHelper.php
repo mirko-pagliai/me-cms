@@ -39,7 +39,10 @@ class MenuHelper extends MeHtmlHelper {
      * Helpers
      * @var array
      */
-    public $helpers = array('Dropdown' => array('className' => 'MeTools.Dropdown'));
+    public $helpers = array(
+		'Auth'		=> array('className' => 'MeCms.Auth'),
+		'Dropdown'	=> array('className' => 'MeTools.Dropdown')
+	);
 	
 	/**
 	 * Internal function to generate the menu for "pages" actions.
@@ -68,14 +71,20 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses link()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
+	 * @uses AuthHelper::isManager()
 	 */
 	private function _posts($type) {
 		$menu = array(
-			$this->link(__d('me_cms', 'List posts'),		array('controller' => 'posts',				'action' => 'index')),
-			$this->link(__d('me_cms', 'Add post'),			array('controller' => 'posts',				'action' => 'add')),
-			$this->link(__d('me_cms', 'List categories'),	array('controller' => 'posts_categories',	'action' => 'index')),
-			$this->link(__d('me_cms', 'Add category'),		array('controller' => 'posts_categories',	'action' => 'add'))
+			$this->link(__d('me_cms', 'List posts'),	array('controller' => 'posts', 'action' => 'index')),
+			$this->link(__d('me_cms', 'Add post'),		array('controller' => 'posts', 'action' => 'add'))
 		);
+		
+		//Only admins and managers can access these actions
+		if($this->Auth->isManager())
+			$menu = am($menu, array(
+				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'posts_categories', 'action' => 'index')),
+				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'posts_categories', 'action' => 'add'))
+			));
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Posts'), array('icon' => 'thumb-tack')).PHP_EOL.$this->Dropdown->dropdown($menu);
@@ -111,14 +120,25 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses link()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
+	 * @uses AuthHelper::isAdmin()
+	 * @uses AuthHelper::isManager()
 	 */
 	private function _users($type) {
+		//Only admins and managers can access this controller
+		if(!$this->Auth->isManager())
+			return array();
+		
 		$menu = array(
-			$this->link(__d('me_cms', 'List users'),	array('controller' => 'users',			'action' => 'index')),
-			$this->link(__d('me_cms', 'Add user'),		array('controller' => 'users',			'action' => 'add')),
-			$this->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups',	'action' => 'index')),
-			$this->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups',	'action' => 'add'))
+			$this->link(__d('me_cms', 'List users'),	array('controller' => 'users', 'action' => 'index')),
+			$this->link(__d('me_cms', 'Add user'),		array('controller' => 'users', 'action' => 'add'))
 		);
+		
+		//Only admins can access these actions
+		if($this->Auth->isAdmin())
+			$menu = am($menu, array(
+				$this->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups', 'action' => 'index')),
+				$this->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups', 'action' => 'add'))
+			));
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Users'), array('icon' => 'users')).PHP_EOL.$this->Dropdown->dropdown($menu);
@@ -133,8 +153,13 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses link()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
+	 * @uses AuthHelper::isAdmin()
 	 */
 	private function _systems($type) {
+		//Only admins can access this controller
+		if(!$this->Auth->isAdmin())
+			return array();
+		
 		$menu = array(
 			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache')),
 			$this->link(__d('me_cms', 'Checkup'),			array('controller' => 'systems', 'action' => 'checkup'))
