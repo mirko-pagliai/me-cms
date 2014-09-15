@@ -35,15 +35,33 @@ App::uses('AuthComponent', 'Controller/Component');
  */
 class MeAuthComponent extends AuthComponent {
 	/**
+	 * Currant action name
+	 * @var string
+	 */
+	static public $action;
+	
+    /**
+     * Called before the controller's beforeFilter method.
+     * @param Controller $controller
+     * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
+     */	
+	public function initialize(Controller $controller) {
+		parent::initialize($controller);
+		
+		//Sets the current action name
+		self::$action = $controller->request->params['action'];
+	}
+
+	/**
 	 * Checks whether the user has a specific id
 	 * @param type $id
 	 * @return boolean
 	 */
-	public function hasId($id) {
-		if(empty($this->user('id')))
+	static public function hasId($id) {
+		if(empty(self::user('id')))
 			return FALSE;
 		
-		return (int) $this->user('id') === (int) $id;
+		return (int) self::user('id') === (int) $id;
 	}
 	
 	/**
@@ -51,11 +69,11 @@ class MeAuthComponent extends AuthComponent {
 	 * @param type $level
 	 * @return boolean
 	 */
-	public function hasLevel($level) {
-		if(empty($this->user('Group.level')))
+	static public function hasLevel($level) {
+		if(empty(self::user('Group.level')))
 			return FALSE;
 		
-		return (int) $this->user('Group.level') >= (int) $level;
+		return (int) self::user('Group.level') >= (int) $level;
 	}
 	
 	/**
@@ -74,54 +92,54 @@ class MeAuthComponent extends AuthComponent {
 	 * It returns TRUE if the current action is `admin_edit` or `admin_delete`, otherwise FALSE.
 	 * @return type TRUE if the action to check is the current action, otherwise FALSE
 	 */
-	public function isAction() {
+	static public function isAction() {
 		$actions = func_get_args();
 		
 		array_walk($actions, function(&$v) {
 			$v = sprintf('admin_%s', $v);
 		});
-			
-		return in_array($this->request->params['action'], $actions);
+		
+		return in_array(self::$action, $actions);
 	}
 	
 	/**
 	 * Checks whether the user is an administrator
 	 * @return boolean
 	 */
-	public function isAdmin() {
-		if(empty($this->user('group_id')) && empty($this->user('Group.name')))
+	static public function isAdmin() {
+		if(empty(self::user('group_id')) && empty(self::user('Group.name')))
 			return FALSE;
 		
-		return $this->user('group_id') === 1 || $this->user('Group.name') === 'admin';
+		return self::user('group_id') === 1 || self::user('Group.name') === 'admin';
 	}
 	
 	/**
 	 * Checks whether the user is the admin founder
 	 * @return boolean
 	 */
-	public function isFounder() {
-		if(empty($this->user('id')))
+	static public function isFounder() {
+		if(empty(self::user('id')))
 			return FALSE;
 		
-		return $this->user('id') === 1;
+		return self::user('id') === 1;
 	}
 	
 	/**
 	 * Checks whether the user is logged
 	 * @return type
 	 */
-	public function isLogged() {
-		return !empty($this->user('id'));
+	static public function isLogged() {
+		return !empty(self::user('id'));
 	}
 	
 	/**
 	 * Checks whether the user is a manager (manager or administrator)
 	 * @return boolean
 	 */
-	public function isManager() {
-		if(empty($this->user('group_id')) && empty($this->user('Group.name')))
+	static public function isManager() {
+		if(empty(self::user('group_id')) && empty(self::user('Group.name')))
 			return FALSE;
 		
-		return $this->user('group_id') <= 2 || $this->user('Group.name') === 'admin' || $this->user('Group.name') === 'manager';
+		return self::user('group_id') <= 2 || self::user('Group.name') === 'admin' || self::user('Group.name') === 'manager';
 	}
 }
