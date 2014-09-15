@@ -41,6 +41,7 @@ class MeCmsAppController extends MeToolsAppController {
 				'passwordHasher'	=> 'Blowfish',
 				'userModel'			=> 'MeCms.User'
 			)),
+			'authorize'			=> array('Controller'),
 			'authError'			=> 'You need to login first',
 			'className'			=> 'MeCms.MeAuth',
 			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE),
@@ -106,10 +107,10 @@ class MeCmsAppController extends MeToolsAppController {
 		parent::beforeFilter();
 		
 		Configure::write('Session.timeout', $this->config['timeout']);
-				
+		
 		//If it's not an admin request, authorizes the current action
 		if(!$this->isAdminRequest())
-			$this->Auth->allow($this->request->params['action']);
+			$this->Auth->allow($this->action);
 			
 		//Sets the layout	
 		$this->layout = $this->isAdminRequest() ? 'backend' : 'frontend';
