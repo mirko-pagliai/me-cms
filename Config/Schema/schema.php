@@ -64,21 +64,9 @@ class MeCmSchema extends CakeSchema {
 		$groups->create();
 		
 		$save = $groups->saveAll(array(
-			array(
-				'name'	=> 'admin', 
-				'label'	=> 'Admin', 
-				'level'	=> '100',
-			),
-			array(
-				'name'	=> 'manager',
-				'label' => 'Manager',
-				'level' => '50'
-			),
-			array(
-				'name'	=> 'user',
-				'label' => 'User',
-				'level' => '10'
-			)
+			array('name' => 'admin',	'label' => 'Admin'),
+			array('name' => 'manager',	'label' => 'Manager'),
+			array('name' => 'user',		'label' => 'User')
 		), array('counterCache' => FALSE, 'deep' => TRUE, 'validate' => FALSE));
 	}
 
@@ -183,7 +171,6 @@ class MeCmSchema extends CakeSchema {
 		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'index', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'label' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 20, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'description' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'level' => array('type' => 'integer', 'null' => false, 'default' => '1', 'unsigned' => false),
 		'user_count' => array('type' => 'integer', 'null' => false, 'default' => '0', 'unsigned' => false),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
@@ -191,5 +178,4 @@ class MeCmSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'InnoDB')
 	);
-
 }

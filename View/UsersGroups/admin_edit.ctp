@@ -28,11 +28,6 @@
 <div class="usersGroups form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit users group')); ?>
 	<?php echo $this->Form->create('UsersGroup'); ?>
-		<div class='float-form'>
-			<?php
-				echo $this->Form->input('level');
-			?>
-		</div>
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');

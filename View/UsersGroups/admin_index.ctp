@@ -34,7 +34,6 @@
 		<tr>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('label'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('level'); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('user_count', __d('me_cms', 'Users')); ?></th>
 		</tr>
 		<?php foreach($usersGroups as $usersGroup): ?>
@@ -50,9 +49,6 @@
 					?>
 				</td>
 				<td><?php echo $usersGroup['UsersGroup']['label']; ?></td>
-				<td class="min-width text-center">
-					<?php echo $usersGroup['UsersGroup']['level']; ?>
-				</td>
 				<td class="min-width text-center">
 					<?php echo $usersGroup['UsersGroup']['user_count']; ?>
 				</td>

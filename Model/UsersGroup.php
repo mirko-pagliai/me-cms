@@ -78,10 +78,6 @@ class UsersGroup extends MeCmsAppModel {
 			'allowEmpty'	=> TRUE,
 			'message'		=> 'Must be at most %d chars',
 			'rule'			=> array('maxLength', 255)
-		),
-		'level' => array(
-			'message'	=> 'You have to enter a valid value',
-			'rule'		=> array('range', 0, 101)
 		)
 	);
 

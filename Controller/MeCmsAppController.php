@@ -37,7 +37,7 @@ class MeCmsAppController extends MeToolsAppController {
 	public $components = array(
 		'Auth' => array(
             'authenticate' => array('Form' => array(
-				'contain'			=> array('Group' => array('id', 'name', 'level')),
+				'contain'			=> array('Group' => array('id', 'name')),
 				'passwordHasher'	=> 'Blowfish',
 				'userModel'			=> 'MeCms.User'
 			)),

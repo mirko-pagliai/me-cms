@@ -65,18 +65,6 @@ class MeAuthComponent extends AuthComponent {
 	}
 	
 	/**
-	 * Checks whether the user has a specific level
-	 * @param type $level
-	 * @return boolean
-	 */
-	static public function hasLevel($level) {
-		if(empty(self::user('Group.level')))
-			return FALSE;
-		
-		return (int) self::user('Group.level') >= (int) $level;
-	}
-	
-	/**
 	 * Checks if an action is the current action.
 	 * 
 	 * Example:

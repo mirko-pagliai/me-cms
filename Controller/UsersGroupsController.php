@@ -46,7 +46,7 @@ class UsersGroupsController extends MeCmsAppController {
 	 */
 	public function admin_index() {
 		$this->paginate = array(
-			'fields'	=> array('id', 'name', 'label', 'level', 'user_count'),
+			'fields'	=> array('id', 'name', 'label', 'user_count'),
 			'limit'		=> $this->config['records_for_page']
 		);
 		
@@ -94,7 +94,7 @@ class UsersGroupsController extends MeCmsAppController {
 		else
 			$this->request->data = $this->UsersGroup->find('first', array(
 				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'name', 'label', 'description', 'level')
+				'fields'		=> array('id', 'name', 'label', 'description')
 			));
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit users group'));
