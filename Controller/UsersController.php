@@ -47,7 +47,7 @@ class UsersController extends MeCmsAppController {
 		if($this->Auth->isAction('delete'))
 			return $this->Auth->isAdmin();
 		
-		parent::isAuthorized($user);
+		return parent::isAuthorized($user);
 	}
 	/**
 	 * Internal function to logout
