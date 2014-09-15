@@ -39,11 +39,13 @@
 				echo $this->Form->input('username');
 				echo $this->Form->input('email');
 				echo $this->Form->input('password', array(
-					'tip' => __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty')
+					'autocomplete'	=> FALSE,
+					'tip'			=> __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty')
 				));
 				echo $this->Form->input('password_repeat', array(
-					'label'	=> __d('me_cms', 'Repeat password'),
-					'type'	=> 'password'
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Repeat password'),
+					'type'			=> 'password'
 				));
 				echo $this->Form->input('first_name');
 				echo $this->Form->input('last_name');

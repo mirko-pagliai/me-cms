@@ -30,16 +30,19 @@
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('old_password', array(
-					'label'	=> __d('me_cms', 'Old password'),
-					'tip'	=> __d('me_cms', 'Enter your old password'),
-					'type'	=> 'password'
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Old password'),
+					'tip'			=> __d('me_cms', 'Enter your old password'),
+					'type'			=> 'password'
 				));
 				echo $this->Form->input('password', array(
-					'tip' => __d('me_cms', 'Enter your new password')
+					'autocomplete'	=> FALSE,
+					'tip'			=> __d('me_cms', 'Enter your new password')
 				));
 				echo $this->Form->input('password_repeat', array(
-					'label'	=> __d('me_cms', 'Repeat password'),
-					'tip'	=> __d('me_cms', 'Repeat your new password')
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Repeat password'),
+					'tip'			=> __d('me_cms', 'Repeat your new password')
 				));
 			?>
 		</fieldset>
