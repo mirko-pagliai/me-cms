@@ -59,6 +59,32 @@ class MeAuthComponent extends AuthComponent {
 	}
 	
 	/**
+	 * Checks if an action is the current action.
+	 * 
+	 * Example:
+	 * <code>
+	 * $this->Auth->isAction('delete');
+	 * </code>
+	 * It returns TRUE if the current action is `admin_delete`, otherwise FALSE.
+	 * 
+	 * Example:
+	 * <code>
+	 * $this->Auth->isAction('edit', 'delete');
+	 * </code>
+	 * It returns TRUE if the current action is `admin_edit` or `admin_delete`, otherwise FALSE.
+	 * @return type TRUE if the action to check is the current action, otherwise FALSE
+	 */
+	public function isAction() {
+		$actions = func_get_args();
+		
+		array_walk($actions, function(&$v) {
+			$v = sprintf('admin_%s', $v);
+		});
+			
+		return in_array($this->request->params['action'], $actions);
+	}
+	
+	/**
 	 * Checks whether the user is an administrator
 	 * @return boolean
 	 */
@@ -93,6 +119,7 @@ class MeAuthComponent extends AuthComponent {
 	 * @return boolean
 	 */
 	public function isManager() {
+		debug($this->user('group_id'));
 		if(empty($this->user('group_id')) && empty($this->user('Group.name')))
 			return FALSE;
 		
