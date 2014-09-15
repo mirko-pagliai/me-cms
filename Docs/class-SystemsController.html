@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="generator" content="ApiGen 2.8.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
 
 	<title>Class SystemsController | MeCms</title>
 
-	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?2764358526"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
+	<script type="text/javascript" src="resources/combined.js?394153670"></script>
+	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
 
@@ -23,8 +23,11 @@
 			<ul>
 				<li class="active main"><a href="package-MeCms.html">MeCms<span></span></a>
 						<ul>
-				<li class="active main"><a href="package-MeCms.Controller.html">Controller</a>
+				<li class="active main"><a href="package-MeCms.Controller.html">Controller<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCms.Controller.Component.html">Component</a>
 						</li>
+							</ul></li>
 				<li class="main"><a href="package-MeCms.Model.html">Model</a>
 						</li>
 				<li class="main"><a href="package-MeCms.Utility.html">Utility</a>
@@ -37,7 +40,7 @@
 			</ul>
 		</div>
 
-		<hr>
+		<hr />
 
 
 		<div id="elements">
@@ -67,10 +70,10 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="">
-		<input type="hidden" name="ie" value="UTF-8">
-		<input type="text" name="q" class="text">
-		<input type="submit" value="Search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
 	</form>
 
 	<div id="navigation">
@@ -116,14 +119,14 @@ MeToolsAppController
 			
 		</dd>
 		<dd style="padding-left:30px">
-			<img src="resources/inherit.png" alt="Extended by">
+			<img src="resources/inherit.png" alt="Extended by" />
 			<a href="class-MeCmsAppController.html"><span>MeCmsAppController</span></a>
 			
 			
 			
 		</dd>
 		<dd style="padding-left:60px">
-			<img src="resources/inherit.png" alt="Extended by">
+			<img src="resources/inherit.png" alt="Extended by" />
 <b><span>SystemsController</span></b>			
 			
 			
@@ -141,22 +144,71 @@ MeToolsAppController
 		
 		
 		
-		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Controller.html">Controller</a><br>
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Controller.html">Controller</a><br />
 
 				<b>Copyright:</b>
-				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br>
+				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br />
 				<b>License:</b>
-				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br />
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
-href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-SystemsController.html#30-123" title="Go to source code">SystemsController.php</a><br>
+href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
+		<b>Located at</b> <a href="source-class-SystemsController.html#30-134" title="Go to source code">SystemsController.php</a><br />
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-SystemsController.html#34-43" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code>array</code><br>$user The user to check the authorization of. If empty the user in the session
+will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if $user is authorized, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeAuthComponenet::isAdmin()<br />
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_getVersion" id="__getVersion">
 
 		<td class="attributes"><code>
@@ -168,7 +220,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__getVersion">#</a>
-		<code><a href="source-class-SystemsController.html#34-40" title="Go to source code">_getVersion</a>( )</code>
+		<code><a href="source-class-SystemsController.html#45-51" title="Go to source code">_getVersion</a>( )</code>
 
 		<div class="description short">
 			
@@ -185,13 +237,13 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code>string</code><br>MeCMS version number<br>
+					<code>string</code><br>MeCMS version number<br />
 				</div>
 
 
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br>
+						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br />
 				</div>
 
 
@@ -209,7 +261,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_cache">#</a>
-		<code><a href="source-class-SystemsController.html#42-54" title="Go to source code">admin_cache</a>( )</code>
+		<code><a href="source-class-SystemsController.html#53-65" title="Go to source code">admin_cache</a>( )</code>
 
 		<div class="description short">
 			
@@ -228,9 +280,9 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Uses</h4>
 				<div class="list">
-						System::checkCacheStatus()<br>
-						System::getCacheSize()<br>
-						System::getThumbsSize()<br>
+						System::checkCacheStatus()<br />
+						System::getCacheSize()<br />
+						System::getThumbsSize()<br />
 				</div>
 
 
@@ -248,7 +300,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_checkup">#</a>
-		<code><a href="source-class-SystemsController.html#56-93" title="Go to source code">admin_checkup</a>( )</code>
+		<code><a href="source-class-SystemsController.html#67-104" title="Go to source code">admin_checkup</a>( )</code>
 
 		<div class="description short">
 			
@@ -267,19 +319,19 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-SystemsController.html#__getVersion">SystemsController::_getVersion()</a></code></code> <br>
-						System::checkApacheModule()<br>
-						System::checkCache()<br>
-						System::checkCacheStatus()<br>
-						System::checkLogs()<br>
-						System::checkPhpExtension()<br>
-						System::checkPhpVersion()<br>
-						System::checkThumbs()<br>
-						System::checkTmp()<br>
-						System::dirIsWritable()<br>
-						System::getCakeVersion()<br>
-						System::getPluginsVersion()<br>
-						System::which()<br>
+						<code><code><a href="class-SystemsController.html#__getVersion">SystemsController::_getVersion()</a></code></code> <br />
+						System::checkApacheModule()<br />
+						System::checkCache()<br />
+						System::checkCacheStatus()<br />
+						System::checkLogs()<br />
+						System::checkPhpExtension()<br />
+						System::checkPhpVersion()<br />
+						System::checkThumbs()<br />
+						System::checkTmp()<br />
+						System::dirIsWritable()<br />
+						System::getCakeVersion()<br />
+						System::getPluginsVersion()<br />
+						System::which()<br />
 				</div>
 
 
@@ -297,7 +349,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_clear_cache">#</a>
-		<code><a href="source-class-SystemsController.html#95-108" title="Go to source code">admin_clear_cache</a>( )</code>
+		<code><a href="source-class-SystemsController.html#106-119" title="Go to source code">admin_clear_cache</a>( )</code>
 
 		<div class="description short">
 			
@@ -330,7 +382,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_clear_thumbs">#</a>
-		<code><a href="source-class-SystemsController.html#110-122" title="Go to source code">admin_clear_thumbs</a>( )</code>
+		<code><a href="source-class-SystemsController.html#121-133" title="Go to source code">admin_clear_thumbs</a>( )</code>
 
 		<div class="description short">
 			

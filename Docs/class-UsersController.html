@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="generator" content="ApiGen 2.8.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
 
 	<title>Class UsersController | MeCms</title>
 
-	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?2764358526"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
+	<script type="text/javascript" src="resources/combined.js?394153670"></script>
+	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
 
@@ -23,8 +23,11 @@
 			<ul>
 				<li class="active main"><a href="package-MeCms.html">MeCms<span></span></a>
 						<ul>
-				<li class="active main"><a href="package-MeCms.Controller.html">Controller</a>
+				<li class="active main"><a href="package-MeCms.Controller.html">Controller<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCms.Controller.Component.html">Component</a>
 						</li>
+							</ul></li>
 				<li class="main"><a href="package-MeCms.Model.html">Model</a>
 						</li>
 				<li class="main"><a href="package-MeCms.Utility.html">Utility</a>
@@ -37,7 +40,7 @@
 			</ul>
 		</div>
 
-		<hr>
+		<hr />
 
 
 		<div id="elements">
@@ -67,10 +70,10 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="">
-		<input type="hidden" name="ie" value="UTF-8">
-		<input type="text" name="q" class="text">
-		<input type="submit" value="Search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
 	</form>
 
 	<div id="navigation">
@@ -116,14 +119,14 @@ MeToolsAppController
 			
 		</dd>
 		<dd style="padding-left:30px">
-			<img src="resources/inherit.png" alt="Extended by">
+			<img src="resources/inherit.png" alt="Extended by" />
 			<a href="class-MeCmsAppController.html"><span>MeCmsAppController</span></a>
 			
 			
 			
 		</dd>
 		<dd style="padding-left:60px">
-			<img src="resources/inherit.png" alt="Extended by">
+			<img src="resources/inherit.png" alt="Extended by" />
 <b><span>UsersController</span></b>			
 			
 			
@@ -141,22 +144,73 @@ MeToolsAppController
 		
 		
 		
-		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Controller.html">Controller</a><br>
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Controller.html">Controller</a><br />
 
 				<b>Copyright:</b>
-				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br>
+				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br />
 				<b>License:</b>
-				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br />
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
-href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-UsersController.html#29-231" title="Go to source code">UsersController.php</a><br>
+href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
+		<b>Located at</b> <a href="source-class-UsersController.html#29-250" title="Go to source code">UsersController.php</a><br />
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-UsersController.html#33-51" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code>array</code><br>$user The user to check the authorization of. If empty the user in the session
+will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if $user is authorized, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeAuthComponenet::isAction()<br />
+						MeAuthComponenet::isAdmin()<br />
+						MeAuthComponenet::isManager()<br />
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_logout" id="__logout">
 
 		<td class="attributes"><code>
@@ -168,7 +222,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__logout">#</a>
-		<code><a href="source-class-UsersController.html#33-39" title="Go to source code">_logout</a>( )</code>
+		<code><a href="source-class-UsersController.html#52-58" title="Go to source code">_logout</a>( )</code>
 
 		<div class="description short">
 			
@@ -185,14 +239,14 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code>boolean</code><br>
+					<code>boolean</code><br />
 				</div>
 
 
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-UsersController.html#_login">UsersController::login()</a></code></code><br>to logout the user, if his account has not been activated or if he has been banned<br>
-						<code><code><a href="class-UsersController.html#_logout">UsersController::logout()</a></code></code><br>to logout the user<br>
+						<code><code><a href="class-UsersController.html#_login">UsersController::login()</a></code></code><br>to logout the user, if his account has not been activated or if he has been banned<br />
+						<code><code><a href="class-UsersController.html#_logout">UsersController::logout()</a></code></code><br>to logout the user<br />
 				</div>
 
 
@@ -210,7 +264,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-UsersController.html#41-55" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-UsersController.html#60-74" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			
@@ -243,7 +297,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_view">#</a>
-		<code><a href="source-class-UsersController.html#57-76" title="Go to source code">admin_view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#76-95" title="Go to source code">admin_view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -266,7 +320,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Throws</h4>
 				<div class="list">
-					<code>NotFoundException</code><br>
+					<code>NotFoundException</code><br />
 				</div>
 
 
@@ -285,7 +339,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-UsersController.html#78-96" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-UsersController.html#97-115" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			
@@ -318,7 +372,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-UsersController.html#98-131" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#117-150" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -341,7 +395,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Throws</h4>
 				<div class="list">
-					<code>NotFoundException</code><br>
+					<code>NotFoundException</code><br />
 				</div>
 
 
@@ -360,7 +414,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-UsersController.html#133-158" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#152-177" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -383,7 +437,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Throws</h4>
 				<div class="list">
-					<code>NotFoundException</code><br>
+					<code>NotFoundException</code><br />
 				</div>
 
 
@@ -402,7 +456,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_change_password">#</a>
-		<code><a href="source-class-UsersController.html#160-177" title="Go to source code">admin_change_password</a>( )</code>
+		<code><a href="source-class-UsersController.html#179-196" title="Go to source code">admin_change_password</a>( )</code>
 
 		<div class="description short">
 			
@@ -435,7 +489,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_login">#</a>
-		<code><a href="source-class-UsersController.html#179-220" title="Go to source code">login</a>( )</code>
+		<code><a href="source-class-UsersController.html#198-239" title="Go to source code">login</a>( )</code>
 
 		<div class="description short">
 			
@@ -452,14 +506,14 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code>boolean</code><br>
+					<code>boolean</code><br />
 				</div>
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code></code><br>to logout the user, if his account has not been activated or if he has been banned<br>
-						isLogged() to checks if the user is already logged in<br>
+						<code><code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code></code><br>to logout the user, if his account has not been activated or if he has been banned<br />
+						<code><code><a href="class-MeAuthComponent.html#_isLogged">MeAuthComponent::isLogged()</a></code></code><br>to checks if the user is already logged in<br />
 				</div>
 
 
@@ -477,7 +531,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logout">#</a>
-		<code><a href="source-class-UsersController.html#222-230" title="Go to source code">logout</a>( )</code>
+		<code><a href="source-class-UsersController.html#241-249" title="Go to source code">logout</a>( )</code>
 
 		<div class="description short">
 			
@@ -494,13 +548,13 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code>boolean</code><br>
+					<code>boolean</code><br />
 				</div>
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code></code><br>to logout the user<br>
+						<code><code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code></code><br>to logout the user<br />
 				</div>
 
 
