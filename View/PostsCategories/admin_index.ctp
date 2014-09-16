@@ -40,17 +40,17 @@
 			<tr>
 				<td>
 					<?php
-						$title = $this->Html->link($postsCategory['PostsCategory']['title'], array('action' => 'edit', $postsCategory['PostsCategory']['id']));
-						echo $this->Html->div(NULL, $this->Html->strong($title));
+						$title = $this->Html->link($postsCategory['PostsCategory']['title'], array('action' => 'edit', $id = $postsCategory['PostsCategory']['id']));
+						echo $this->Html->strong($title);
 
 						echo $this->Html->ul(array(
-							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $postsCategory['PostsCategory']['id']), array('icon' => 'pencil')),
-							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $postsCategory['PostsCategory']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this posts category?')),					
+							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil')),
+							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this posts category?')),					
 							$this->Html->link(__d('me_cms', 'Open'), array('controller' => 'posts', 'action' => 'index', $postsCategory['PostsCategory']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'))
 						), array('class' => 'actions'));
 					?>
 				</td>
-				<td><?php echo $this->Html->link($postsCategory['Parent']['title'], array('controller' => 'posts_categories', 'action' => 'view', $postsCategory['Parent']['id'])); ?></td>
+				<td><?php echo $postsCategory['Parent']['title']; ?></td>
 				<td class="text-center"><?php echo $postsCategory['PostsCategory']['post_count']; ?></td>
 			</tr>
 		<?php endforeach; ?>
