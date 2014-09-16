@@ -49,13 +49,14 @@
 						<div class='photo-box'>
 							<?php
 								echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
+									'checked'		=> TRUE,
 									'div'			=> array('class' => 'photo-filename'),
 									'hiddenField'	=> FALSE,
 									'label'			=> $photo,
 									'type'			=> 'checkbox',
 									'value'			=> $photo
 								));
-								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '201'));
+								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '211'));
 								echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
 									'div'			=> array('class' => 'photo-description'),
 									'label'			=> FALSE,
