@@ -42,6 +42,11 @@
 				<td>
 					<?php
 						$title = $this->Html->link($photosAlbum['PhotosAlbum']['title'], array('controller' => 'photos', $photosAlbum['PhotosAlbum']['id']));
+					
+						//If the photos album is not active (not published)
+						if(!$photosAlbum['PhotosAlbum']['active'])
+							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), array('class' => 'text-warning')));
+						
 						echo $this->Html->strong($title);
 						
 						echo $this->Html->ul(array(

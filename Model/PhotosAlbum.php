@@ -79,6 +79,10 @@ class PhotosAlbum extends MeCmsAppModel {
 			'allowEmpty'	=> TRUE,
 			'message'		=> 'Must be at most %d chars',
 			'rule'			=> array('maxLength', 255)
+		),
+		'active' => array(
+			'message'	=> 'You have to select a valid option',
+			'rule'		=> array('boolean')
 		)
 	);
 
@@ -105,6 +109,8 @@ class PhotosAlbum extends MeCmsAppModel {
         if($state === 'before') {			
 			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
 			
+			//Only active albums
+			$query['conditions'][$this->alias.'.active'] = TRUE;
 			//Only albums with photos
 			$query['conditions'][$this->alias.'.photo_count >'] = 0;
 			

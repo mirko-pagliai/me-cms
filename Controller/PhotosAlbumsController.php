@@ -35,7 +35,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 */
 	public function admin_index() {
 		$this->paginate = array(
-			'fields'	=> array('id', 'slug', 'title', 'photo_count'),
+			'fields'	=> array('id', 'slug', 'title', 'photo_count', 'active'),
 			'limit'		=> $this->config['records_for_page']
 		);
 		
@@ -82,7 +82,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 		else
 			$this->request->data = $this->PhotosAlbum->find('first', array(
 				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'title', 'slug', 'description')
+				'fields'		=> array('id', 'title', 'slug', 'description', 'active')
 			));
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit photos album'));

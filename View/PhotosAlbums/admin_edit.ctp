@@ -31,6 +31,13 @@
 <div class="photosAlbums form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit photos album')); ?>
 	<?php echo $this->Form->create('PhotosAlbum'); ?>
+		<div class='float-form'>
+			<?php
+				echo $this->Form->input('active', array(
+					'label' => sprintf('%s?', __d('me_cms', 'Published'))
+				));
+			?>
+		</div>
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');
