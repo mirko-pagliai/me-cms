@@ -31,6 +31,21 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
  */
 class PagesController extends MeCmsAppController {
 	/**
+	 * Check if the provided user is authorized for the request.
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
+	 * @return bool TRUE if $user is authorized, otherwise FALSE
+	 * @uses MeAuthComponenet::isAction()
+	 * @uses MeAuthComponenet::isAdmin()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins can delete pages
+		if($this->Auth->isAction('delete'))
+			return $this->Auth->isAdmin();
+		
+		return parent::isAuthorized($user);
+	}
+	
+	/**
 	 * List pages
 	 */
 	public function admin_index() {
