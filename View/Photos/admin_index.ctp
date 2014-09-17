@@ -44,13 +44,18 @@
 								echo $this->Html->div('photo-description', $photo['Photo']['description']);
 						?>
 					</div>
-					<div class='photo-links'>
-						<?php
-							echo $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id = $photo['Photo']['id']), array('icon' => 'pencil'));
-							echo $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this photo?'));
-							echo $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $id, 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
-						?>
-					</div>
+					<?php
+						$actions = array(
+							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id = $photo['Photo']['id']), array('icon' => 'pencil')),
+							$this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $id, 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'))
+						);
+
+						//Only admins and managers can delete photos
+						if($this->Auth->isManager())
+							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this photo?'));
+
+						echo $this->Html->ul($actions, array('class' => 'photo-links'));
+					?>
 				</div>
 			</div>
 			<?php if($k%4 === 3 || $k +1 === count($photos)) echo '</div>'; ?>
