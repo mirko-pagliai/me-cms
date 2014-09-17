@@ -36,8 +36,16 @@ class PostsController extends MeCmsAppController {
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
 	 * @uses MeAuthComponenet::isAction()
 	 * @uses MeAuthComponenet::isManager()
+	 * @uses Post::isOwnedBy()
 	 */
-	public function isAuthorized($user = NULL) {		
+	public function isAuthorized($user = NULL) {
+		//Only admins and managers can edit all posts
+		//Users can edit only their own posts
+		if($this->Auth->isAction('edit') && !$this->Auth->isManager()) {
+			$id = (int) $this->request->params['pass'][0];
+			return $this->Post->isOwnedBy($id, $this->Auth->user('id'));
+		}
+		
 		//Only admins and managers can delete posts
 		if($this->Auth->isAction('delete'))
 			return $this->Auth->isManager();
