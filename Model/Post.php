@@ -140,4 +140,14 @@ class Post extends MeCmsAppModel {
 		
 		return TRUE;
 	}
+	
+	/**
+	 * Checks whether a post belongs to a user.
+	 * @param int $id Post id
+	 * @param int $user_id User id
+	 * @return bool TRUE if the post belongs to the user, otherwise FALSE
+	 */
+	public function isOwnedBy($id, $user_id) {
+		return $this->field('id', compact('id', 'user_id')) !== FALSE;
+	}
 }
