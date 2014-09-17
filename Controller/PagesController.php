@@ -36,13 +36,18 @@ class PagesController extends MeCmsAppController {
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
 	 * @uses MeAuthComponenet::isAction()
 	 * @uses MeAuthComponenet::isAdmin()
+	 * @uses MeAuthComponenet::isManager()
 	 */
 	public function isAuthorized($user = NULL) {
+		//Only admins and manager can add and edit pages
+		if($this->Auth->isAction('add', 'edit'))
+			return $this->Auth->isManager();
+		
 		//Only admins can delete pages
 		if($this->Auth->isAction('delete'))
 			return $this->Auth->isAdmin();
 		
-		return parent::isAuthorized($user);
+		return TRUE;
 	}
 	
 	/**

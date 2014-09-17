@@ -48,10 +48,13 @@
 						
 						echo $this->Html->strong($title);
 						
-						$actions = array(
-							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil')),
-							$this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $page['Page']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'))
-						);
+						$actions = array();
+						
+						//Only admins and managers can edit pages
+						if($this->Auth->isManager())
+							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil'));
+						
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $page['Page']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
 						
 						//Only admins can delete pages
 						if($this->Auth->isAdmin())

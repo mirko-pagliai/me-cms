@@ -51,12 +51,16 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses link()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
+	 * @uses AuthHelper::isManager()
 	 */
 	private function _pages($type) {
 		$menu = array(
-			$this->link(__d('me_cms', 'List pages'),	array('controller' => 'pages', 'action' => 'index')),
-			$this->link(__d('me_cms', 'Add page'),		array('controller' => 'pages', 'action' => 'add'))
+			$this->link(__d('me_cms', 'List pages'), array('controller' => 'pages', 'action' => 'index'))
 		);
+		
+		//Only admins and manages can add pages
+		if($this->Auth->isManager())
+			$menu[] = $this->link(__d('me_cms', 'Add page'), array('controller' => 'pages', 'action' => 'add'));
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Pages'), array('icon' => 'files-o')).PHP_EOL.$this->Dropdown->dropdown($menu);
