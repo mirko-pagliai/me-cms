@@ -11,6 +11,13 @@ Cache::config('pages', array(
 	'groups' => array('pages')
 ));
 
+Cache::config('photos', array(
+    'engine' => $engine,
+    'duration' => $duration,
+    'prefix' => $prefix,
+	'groups' => array('photos')
+));
+
 Cache::config('posts', array(
     'engine' => $engine,
     'duration' => $duration,

@@ -207,13 +207,21 @@ class PhotosController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function view($id = NULL) {
-		if(!$this->Photo->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid photo'));
+		//Tries to get data from the cache
+		$photo = Cache::read($cache = sprintf('photos_view_%s', $id), 'photos');
 		
-		$photo = $this->Photo->find('first', array(
-			'conditions'	=> array('id' => $id),
-			'fields'		=> array('album_id', 'filename')
-		));
+		//If the data are not available from the cache
+        if(empty($photo)) {
+			if(!$this->Photo->exists($id))
+				throw new NotFoundException(__d('me_cms', 'Invalid photo'));
+
+			$photo = $this->Photo->find('first', array(
+				'conditions'	=> array('id' => $id),
+				'fields'		=> array('album_id', 'filename')
+			));
+			
+            Cache::write($cache, $photo, 'photos');
+		}
 		
 		$this->set(array(
 			'photo'				=> $photo,

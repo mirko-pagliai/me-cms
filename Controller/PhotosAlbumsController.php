@@ -132,14 +132,22 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 * List albums
 	 */
 	public function index() {
-		$albums = $this->PhotosAlbum->find('active', array(
-			'contain'	=> array('Photo' => array(
-				'fields'	=> 'filename',
-				'limit'		=> 1,
-				'order'		=> 'rand()'
-			)),
-			'fields'	=> array('title', 'slug', 'photo_count')
-		));
+		//Tries to get data from the cache
+		$albums = Cache::read($cache = 'albums_index', 'photos');
+		
+		//If the data are not available from the cache
+        if(empty($albums)) {
+			$albums = $this->PhotosAlbum->find('active', array(
+				'contain'	=> array('Photo' => array(
+					'fields'	=> 'filename',
+					'limit'		=> 1,
+					'order'		=> 'rand()'
+				)),
+				'fields'	=> array('title', 'slug', 'photo_count')
+			));
+			
+            Cache::write($cache, $albums, 'photos');
+		}
 		
 		//If there is only one album, it redirects to that album
 		if(count($albums) === 1)
@@ -157,17 +165,25 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
-		$album = $this->PhotosAlbum->find('active', array(
-			'conditions'	=> array('slug' => $slug),
-			'contain'		=> array('Photo' => array(
-				'fields' => array('id', 'filename')
-			)),
-			'fields'		=> 'title',
-			'limit'			=> 1
-		));
+		//Tries to get data from the cache
+		$album = Cache::read($cache = sprintf('albums_view_%s', $slug), 'photos');
 		
-		if(empty($album))
-			throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+		//If the data are not available from the cache
+        if(empty($album)) {
+			$album = $this->PhotosAlbum->find('active', array(
+				'conditions'	=> array('slug' => $slug),
+				'contain'		=> array('Photo' => array(
+					'fields' => array('id', 'filename')
+				)),
+				'fields'		=> 'title',
+				'limit'			=> 1
+			));
+
+			if(empty($album))
+				throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+			
+            Cache::write($cache, $album, 'photos');
+		}
 		
 		$this->set(array(
 			'album'				=> $album,
