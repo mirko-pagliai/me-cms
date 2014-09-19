@@ -141,6 +141,10 @@ class PhotosAlbumsController extends MeCmsAppController {
 			'fields'	=> array('title', 'slug', 'photo_count')
 		));
 		
+		//If there is only one album, it redirects to that album
+		if(count($albums) === 1)
+			$this->redirect(array('action' => 'view', $albums[0]['PhotosAlbum']['slug']));
+		
 		$this->set(array(
 			'albums'			=> $albums,
 			'title_for_layout'	=> __d('me_cms', 'Photos albums')
