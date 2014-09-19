@@ -62,4 +62,5 @@
 			</div>
 		</div>
 	<?php endforeach; ?>
+	<?php echo $this->element('MeTools.paginator'); ?>
 </div>
