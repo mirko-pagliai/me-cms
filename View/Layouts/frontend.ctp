@@ -89,8 +89,10 @@
 					</div>
 					<div id="sidebar" class="col-sm-4 col-md-3">
 						<?php
-							foreach($config['widgets'] as $widget)
-								echo $this->element(sprintf('widgets/%s', $widget));
+							foreach($config['widgets'] as $widget) {
+								if($this->elementExists($widget = sprintf('widgets/%s', $widget)))
+									echo $this->element($widget);
+							}
 						?>
 					</div>
 				</div>
