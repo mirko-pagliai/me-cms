@@ -43,32 +43,32 @@
 						echo $this->Html->button(__d('me_cms', 'Uncheck all'), '#', array('class' => 'uncheck-all btn-primary btn-sm', 'icon' => 'minus-square-o'));
 					?>
 				</div>
-				<?php foreach($photos as $k => $photo): ?>
-					<?php if($k%4 === 0) echo '<div class=\'row\'>'; ?>
-					<div class='col-md-3'>
-						<div class='photo-box'>
-							<?php
-								echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
-									'checked'		=> TRUE,
-									'div'			=> array('class' => 'photo-filename'),
-									'hiddenField'	=> FALSE,
-									'label'			=> $photo,
-									'type'			=> 'checkbox',
-									'value'			=> $photo
-								));
-								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '211'));
-								echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
-									'div'			=> array('class' => 'photo-description'),
-									'label'			=> FALSE,
-									'placeholder'	=> __d('me_cms', 'Description...'),
-									'rows'			=> 2,
-									'type'			=> 'textarea'
-								));
-							?>
+				<div class='row'>
+					<?php foreach($photos as $k => $photo): ?>
+						<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
+							<div class='photo-box'>
+								<?php
+									echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
+										'checked'		=> TRUE,
+										'div'			=> array('class' => 'photo-filename'),
+										'hiddenField'	=> FALSE,
+										'label'			=> $photo,
+										'type'			=> 'checkbox',
+										'value'			=> $photo
+									));
+									echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => '263'));
+									echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
+										'div'			=> array('class' => 'photo-description'),
+										'label'			=> FALSE,
+										'placeholder'	=> __d('me_cms', 'Description...'),
+										'rows'			=> 2,
+										'type'			=> 'textarea'
+									));
+								?>
+							</div>
 						</div>
-					</div>
-					<?php if($k%4 === 3 || $k +1 === count($photos)) echo '</div>'; ?>
-				<?php endforeach; ?>
+					<?php endforeach; ?>
+				</div>
 			</div>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Add photos')); ?>
