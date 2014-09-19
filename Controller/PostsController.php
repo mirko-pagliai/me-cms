@@ -171,37 +171,70 @@ class PostsController extends MeCmsAppController {
 		if(empty($this->request->params['requested']))
             throw new ForbiddenException();
 		
-		return $this->Post->find('active', array(
+		//Tries to get data from the cache
+		$posts = Cache::read($cache = 'posts_request_latest', 'posts');
+		
+		//If the data are not available from the cache
+        if(empty($posts)) {
+            $posts = $this->Post->find('active', array(
 				'fields'	=> array('slug', 'title'),
 				'limit'		=> $limit
 			));
+			
+            Cache::write($cache, $posts, 'posts');
         }
+		
+		return $posts;
+	}
 		
 	/**
 	 * List posts
 	 * @param string $category Category slug, optional
 	 */
 	public function index($category = NULL) {
-		//The category can also be passed as query
-		if(!empty($this->request->query['category']))
-			$category = $this->request->query['category'];
-				
-		//Adds the category to the conditions, if it has been specified
-		if(!empty($category))
-			$conditions = array('Category.slug' => $category);
+		//Sets the initial cache name
+		$cache = 'posts_index';
+		//Sets the initial conditions query
+		$conditions = array();
 		
-		$this->paginate = array(
-			'conditions'	=> empty($conditions) ? NULL : $conditions,
-			'contain'		=> array(
-				'Category'	=> array('title', 'slug'),
-				'User'		=> array('first_name', 'last_name')
-			),
-			'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
-			'findType'		=> 'active',
-			'limit'			=> $this->config['records_for_page']
-		);
+		//Checks if has been specified a category
+		if(!empty($category) || !empty($this->request->query['category'])) {
+			//The category can also be passed as query
+			$category = empty($category) ? $this->request->query['category'] : $category;
+			
+			//Adds the category to the conditions, if it has been specified
+			$conditions['Category.slug'] = $category;
+			
+			//Updates the cache name with the category name
+			$cache = sprintf('%s_%s', $cache, $category);
+		}
 		
-		$posts = $this->paginate();
+		//Updates the cache name with the number of the page
+		$cache = sprintf('%s_page_%s', $cache, empty($this->request->named['page']) ? '1' : $this->request->named['page']);
+						
+		//Tries to get data from the cache
+		$posts = Cache::read($cache, 'posts');
+		$paging = Cache::read(sprintf('%s_paging', $cache), 'posts');
+		
+		//If the data are not available from the cache
+		if(empty($posts) || empty($paging)) {
+			$this->paginate = array(
+				'conditions'	=> $conditions,
+				'contain'		=> array(
+					'Category'	=> array('title', 'slug'),
+					'User'		=> array('first_name', 'last_name')
+				),
+				'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+				'findType'		=> 'active',
+				'limit'			=> $this->config['records_for_page']
+			);
+			
+            Cache::write($cache, $posts = $this->paginate(), 'posts');
+			Cache::write(sprintf('%s_paging', $cache), $this->request->params['paging'], 'posts');
+		}
+		//Else, sets the paging params
+		else
+			$this->request->params['paging'] = $paging;
 		
 		//Uses the category title as the title of the layout, if it's available
 		if(!empty($category) && !empty($posts[0]['Category']['title']))
@@ -221,18 +254,26 @@ class PostsController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
-		$post = $this->Post->find('active', array(
-			'conditions'	=> array('Post.slug' => $slug),
-			'contain'		=> array(
-				'Category'	=> array('title', 'slug'),
-				'User'		=> array('first_name', 'last_name')
-			),
-			'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
-			'limit'			=> 1
-		));
+		//Tries to get data from the cache
+		$post = Cache::read($cache = sprintf('posts_view_%s', $slug), 'posts');
 		
-		if(empty($post))
-			throw new NotFoundException(__d('me_cms', 'Invalid post'));
+		//If the data are not available from the cache
+		if(empty($post)) {
+			$post = $this->Post->find('active', array(
+				'conditions'	=> array('Post.slug' => $slug),
+				'contain'		=> array(
+					'Category'	=> array('title', 'slug'),
+					'User'		=> array('first_name', 'last_name')
+				),
+				'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+				'limit'			=> 1
+			));
+
+			if(empty($post))
+				throw new NotFoundException(__d('me_cms', 'Invalid post'));
+			
+            Cache::write($cache, $post, 'posts');			
+		}
 		
 		$this->set(array(
 			'post'				=> $post,

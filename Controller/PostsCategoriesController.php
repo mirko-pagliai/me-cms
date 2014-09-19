@@ -139,33 +139,49 @@ class PostsCategoriesController extends MeCmsAppController {
 		if(empty($this->request->params['requested']))
             throw new ForbiddenException();
 		
-		//Gets the categories
-		$categories = $this->PostsCategory->find('active', array('fields' => array('id', 'slug', 'post_count')));
-				
-		if(empty($categories))
-			return array();
+		//Tries to get data from the cache
+		$categories = Cache::read($cache = 'posts_categories_request_list', 'posts');
 		
-		//Gets the tree list
-		$treeList = $this->PostsCategory->generateTreeList();
-		
-		$categoriesTmp = array();
-		
-		foreach($categories as $category) {
-			//Changes the category titles, replacing them with the titles of the tree list and adding the "post_count" value
-			$category['PostsCategory']['title'] = sprintf('%s (%s)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
+		//If the data are not available from the cache
+        if(empty($categories)) {
+			//Gets the categories
+			$catsTmp = $this->PostsCategory->find('active', array('fields' => array('id', 'slug', 'post_count')));
 			
-			//The new array has the slug as key and the title as value
-			$categoriesTmp[$category['PostsCategory']['slug']] = $category['PostsCategory']['title'];
-		}
+			if(empty($catsTmp))
+				return array();
+
+			//Gets the tree list
+			$treeList = $this->PostsCategory->generateTreeList();
+			
+			$categories = array();
+			
+			foreach($catsTmp as $category) {
+				//Changes the category titles, replacing them with the titles of the tree list and adding the "post_count" value
+				$category['PostsCategory']['title'] = sprintf('%s (%s)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
+
+				//The new array has the slug as key and the title as value
+				$categories[$category['PostsCategory']['slug']] = $category['PostsCategory']['title'];
+			}
+			
+            Cache::write($cache, $categories, 'posts');
+        }
 		
-		return $categoriesTmp;
+		return $categories;
 	}
 	
 	/**
 	 * List posts categories
 	 */
 	public function index() {
-		$categories = $this->PostsCategory->find('active', array('fields' => array('title', 'slug')));
+		//Tries to get data from the cache
+		$categories = Cache::read($cache = 'posts_categories_index', 'posts');
+		
+		//If the data are not available from the cache
+        if(empty($categories)) {
+			$categories = $this->PostsCategory->find('active', array('fields' => array('title', 'slug')));
+			
+            Cache::write($cache, $categories, 'posts');
+        }
 		
 		$this->set(array(
 			'categories'		=> $categories,

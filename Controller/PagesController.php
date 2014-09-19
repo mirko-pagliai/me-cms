@@ -139,14 +139,32 @@ class PagesController extends MeCmsAppController {
 		if(empty($this->request->params['requested']))
             throw new ForbiddenException();
 		
-		return $this->Page->find('active', array('fields' => array('title', 'slug')));
+		//Tries to get data from the cache
+		$pages = Cache::read($cache = 'pages_request_list', 'pages');
+		
+		//If the data are not available from the cache
+        if(empty($pages)) {
+            $pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
+			
+            Cache::write($cache, $pages, 'pages');
+        }
+		
+		return $pages;
 	}
 	
 	/**
 	 * List pages
 	 */
 	public function index() {
-		$pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
+		//Tries to get data from the cache
+		$pages = Cache::read($cache = 'pages_index', 'pages');
+		
+		//If the data are not available from the cache
+        if(empty($pages)) {
+            $pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
+			
+            Cache::write($cache, $pages, 'pages');
+        }
 		
 		$this->set(array(
 			'pages'				=> $pages,
@@ -160,14 +178,22 @@ class PagesController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
-		$page = $this->Page->find('active', array(
-			'conditions'	=> array('slug' => $slug),
-			'fields'		=> array('title', 'slug', 'text', 'created'),
-			'limit'			=> 1
-		));
+		//Tries to get data from the cache
+		$page = Cache::read($cache = sprintf('pages_view_%s', $slug), 'pages');
 		
-		if(empty($page))
-			throw new NotFoundException(__d('me_cms', 'Invalid page'));
+		//If the data are not available from the cache
+        if(empty($page)) {
+			$page = $this->Page->find('active', array(
+				'conditions'	=> array('slug' => $slug),
+				'fields'		=> array('title', 'slug', 'text', 'created'),
+				'limit'			=> 1
+			));
+			
+			if(empty($page))
+				throw new NotFoundException(__d('me_cms', 'Invalid page'));
+			
+            Cache::write($cache, $page, 'pages');
+        }
 		
 		$this->set(array(
 			'page'				=> $page,
