@@ -129,6 +129,16 @@ class Post extends MeCmsAppModel {
 	);
 	
 	/**
+	 * Called after each successful save operation.
+	 * @param boolean $created TRUE if this save created a new record
+	 * @param array $options Options passed from Model::save().
+	 */
+	public function afterSave($created, $options = array()) {
+		//Clears the cache group
+		Cache::clearGroup('posts', 'posts');
+	}
+	
+	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort

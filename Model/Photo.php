@@ -112,6 +112,9 @@ class Photo extends MeCmsAppModel {
 	 * @uses Album::savePhoto() to save the photos
 	 */
 	public function afterSave($created, $options = array()) {
+		//Clears the cache group
+		Cache::clearGroup('photos', 'photos');
+		
 		//Saves the photos
 		if($created)
 			Album::savePhoto($this->data[$this->alias]['filename'], $this->data[$this->alias]['album_id']);

@@ -153,4 +153,14 @@ class PostsCategory extends MeCmsAppModel {
 		
         return $results;
     }
+	
+	/**
+	 * Called after each successful save operation.
+	 * @param boolean $created TRUE if this save created a new record
+	 * @param array $options Options passed from Model::save().
+	 */
+	public function afterSave($created, $options = array()) {
+		//Clears the cache group
+		Cache::clearGroup('posts', 'posts');
+	}
 }

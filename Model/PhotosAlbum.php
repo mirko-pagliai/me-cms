@@ -130,6 +130,9 @@ class PhotosAlbum extends MeCmsAppModel {
 	 * @uses Album::createAlbum() to create the album directory
 	 */
 	public function afterSave($created, $options = array()) {
+		//Clears the cache group
+		Cache::clearGroup('photos', 'photos');
+		
 		//Creates the album directory
 		if($created)
 			Album::createAlbum($this->id);
