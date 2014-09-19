@@ -71,6 +71,7 @@ class PostsController extends MeCmsAppController {
 
 	/**
 	 * Add post
+	 * @uses MeAuthComponent::isManager()
 	 */
 	public function admin_add() {
 		//Gets categories
@@ -83,6 +84,10 @@ class PostsController extends MeCmsAppController {
 		}
 		
 		if($this->request->is('post')) {
+			//Only admins and managers can add posts on behalf of other users
+			if(!$this->Auth->isManager())
+				$this->request->data['Post']['user_id'] = $this->Auth->user('id');
+			
 			$this->Post->create();
 			if($this->Post->save($this->request->data)) {
 				$this->Session->flash(__d('me_cms', 'The post has been created'));
@@ -103,12 +108,17 @@ class PostsController extends MeCmsAppController {
 	 * Edit post
 	 * @param string $id Post id
 	 * @throws NotFoundException
+	 * @uses MeAuthComponent::isManager()
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Post->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid post'));
 					
 		if($this->request->is('post') || $this->request->is('put')) {
+			//Only admins and managers can edit posts on behalf of other users
+			if(!$this->Auth->isManager())
+				$this->request->data['Post']['user_id'] = $this->Auth->user('id');
+			
 			if($this->Post->save($this->request->data)) {
 				$this->Session->flash(__d('me_cms', 'The post has been edited'));
 				$this->redirect(array('action' => 'index'));
@@ -162,11 +172,11 @@ class PostsController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		return $this->Post->find('active', array(
-			'fields'	=> array('slug', 'title'),
-			'limit'		=> $limit
-		));
-	}
-	
+				'fields'	=> array('slug', 'title'),
+				'limit'		=> $limit
+			));
+        }
+		
 	/**
 	 * List posts
 	 * @param string $category Category slug, optional

@@ -35,7 +35,10 @@
 	<?php echo $this->Form->create('Post'); ?>
 		<div class='float-form'>
 			<?php
-				echo $this->Form->input('user_id', array('label' => __d('me_cms', 'Author')));
+				//Only admins and managers can edit posts on behalf of other users
+				if($this->Auth->isManager())
+					echo $this->Form->input('user_id', array('label' => __d('me_cms', 'Author')));
+				
 				echo $this->Form->input('category_id');
 				echo $this->Form->datetimepicker('created', array(
 					'tip'	=> array(
