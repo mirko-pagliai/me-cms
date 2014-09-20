@@ -25,6 +25,7 @@
  */
 
 App::uses('MeToolsAppShell', 'MeTools.Console/Command');
+App::uses('Album', 'MeCms.Utility');
 
 /**
  * Install shell.
@@ -44,21 +45,10 @@ class InstallShell extends MeToolsAppShell {
 	public $tasks = array('MeTools.Database');
 	
 	/**
-	 * The main method.
-	 * It installs MeCms, creating the database schema and adding the first administrator user.
+	 * Creates the database schema and the first administrator user.
 	 * @uses DatabaseTask::create()
 	 */
-    public function main() {
-		$this->out('This shell allows you to install MeCMS');
-		$this->out('If you continue, the database will be completely erased and will create a new administrator user');
-
-		//Asks the user whether to continue
-		if($this->in('Continue?', array('y', 'n'), 'y') === 'n') {
-			$this->out('Ok, i\'m exiting...');
-			exit;
-		}
-		
-		$this->out();
+	public function install_database() {
 		$this->out('Now you have to insert the data to create the administrator user');
 		
 		//Gets the necessary data to create the administrator user 
@@ -73,12 +63,10 @@ class InstallShell extends MeToolsAppShell {
 		//Creates the database schema
 		$this->Database->create('MeCms');
 		
-		//Saves the administrator user
+		//Creates the administrator user
 		$this->User->create();
-		if($this->User->save(array('User' => am($input, array('group_id' => 1))))) {
+		if($this->User->save(array('User' => am($input, array('group_id' => 1)))))
 			$this->out(sprintf('<success>%s</success>', 'The database schema and the administrator user have been created'));
-			$this->out(sprintf('<success>%s</success>', 'MeCMS has been properly installed. Now you can login'));
-		}
 		else {
 			//Prints all errors
 			foreach($this->User->validationErrors as $field => $errors)
@@ -87,6 +75,56 @@ class InstallShell extends MeToolsAppShell {
 			
 			$this->error('the admin user was not created. Try again');
 		}
+	}
+	
+	/**
+	 * Creates the folders
+	 */
+	public function install_folders() {
+		if(!is_writable($path = Album::getAlbumPath())) {
+			$folder = new Folder();
+			if(@$folder->create($path, 0777))
+				$this->out(sprintf('<success>%s</success>', sprintf('The directory %s has been created', $path)));
+			else
+				$this->out(sprintf('<warning>%s</warning>', sprintf('The directory %s has not been created. You have to create it manually', $path)));
+		}
+		
+		if(!is_writable($path = Album::getTmpPath())) {
+			$folder = new Folder();
+			if(@$folder->create($path, 0777))
+				$this->out(sprintf('<success>%s</success>', sprintf('The directory %s has been created', $path)));
+			else
+				$this->out(sprintf('<warning>%s</warning>', sprintf('The directory %s has not been created. You have to create it manually', $path)));
+		}
+	}
+	
+	/**
+	 * The main method.
+	 * It installs MeCms, creating the database schema, adding the first administrator user and creating the folders.
+	 * @uses install_database()
+	 * @uses install_folders()
+	 */
+    public function main() {
+		$this->out('This shell allows you to install MeCMS');
+		$this->out('If you continue, the database will be completely erased and will create a new administrator user');
+
+		//Asks the user whether to continue
+		if($this->in('Continue?', array('y', 'n'), 'y') === 'n') {
+			$this->out('Ok, i\'m exiting...');
+			exit;
+		}
+		
+		$this->out();
+		
+		//Creates folders
+		$this->install_folders();
+		
+		//Installs database
+		$this->install_database();
+		
+		$this->out();
+		
+		$this->out(sprintf('<success>%s</success>', 'MeCMS has been properly installed. Now you can login'));
     }
 	
 	/**
