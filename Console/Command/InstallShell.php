@@ -29,7 +29,7 @@ App::uses('Album', 'MeCms.Utility');
 
 /**
  * Install shell.
- * It installs MeCms, creating the database schema and adding the first administrator user.
+ * It installs MeCms, creating the database schema, the first administrator user and the folders.
  */
 class InstallShell extends MeToolsAppShell {
 	/**
@@ -48,7 +48,7 @@ class InstallShell extends MeToolsAppShell {
 	 * Creates the database schema and the first administrator user.
 	 * @uses DatabaseTask::create()
 	 */
-	public function install_database() {
+	private function _install_database() {
 		$this->out('Now you have to insert the data to create the administrator user');
 		
 		//Gets the necessary data to create the administrator user 
@@ -78,9 +78,9 @@ class InstallShell extends MeToolsAppShell {
 	}
 	
 	/**
-	 * Creates the folders
+	 * Creates the folders.
 	 */
-	public function install_folders() {
+	private function _install_folders() {
 		if(!is_writable($path = Album::getAlbumPath())) {
 			$folder = new Folder();
 			if(@$folder->create($path, 0777))
@@ -101,8 +101,8 @@ class InstallShell extends MeToolsAppShell {
 	/**
 	 * The main method.
 	 * It installs MeCms, creating the database schema, adding the first administrator user and creating the folders.
-	 * @uses install_database()
-	 * @uses install_folders()
+	 * @uses _install_database()
+	 * @uses _install_folders()
 	 */
     public function main() {
 		$this->out('This shell allows you to install MeCMS');
@@ -117,10 +117,10 @@ class InstallShell extends MeToolsAppShell {
 		$this->out();
 		
 		//Creates folders
-		$this->install_folders();
+		$this->_install_folders();
 		
 		//Installs database
-		$this->install_database();
+		$this->_install_database();
 		
 		$this->out();
 		
