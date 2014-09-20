@@ -45,6 +45,25 @@ class InstallShell extends MeToolsAppShell {
 	public $tasks = array('MeTools.Database');
 	
 	/**
+	 * Creates a folder.
+	 * @param string $path Folder path
+	 * @return bool TRUE if the directory has been created or if it already existed, otherwise FALSE
+	 */
+	private function _create_folder($path) {
+		$create = TRUE;
+		
+		if(!is_writable($path)) {
+			$folder = new Folder();
+			if($create = (bool) @$folder->create($path, 0777))
+				$this->out(sprintf('<success>%s</success>', sprintf('The directory %s has been created', $path)));
+			else
+				$this->out(sprintf('<warning>%s</warning>', sprintf('The directory %s has not been created. You have to create it manually', $path)));
+		}
+		
+		return $create;
+	}
+	
+	/**
 	 * Creates the database schema and the first administrator user.
 	 * @uses DatabaseTask::create()
 	 */
@@ -79,23 +98,18 @@ class InstallShell extends MeToolsAppShell {
 	
 	/**
 	 * Creates the folders.
+	 * @uses _create_folder()
 	 */
 	private function _install_folders() {
-		if(!is_writable($path = Album::getAlbumPath())) {
-			$folder = new Folder();
-			if(@$folder->create($path, 0777))
-				$this->out(sprintf('<success>%s</success>', sprintf('The directory %s has been created', $path)));
-			else
-				$this->out(sprintf('<warning>%s</warning>', sprintf('The directory %s has not been created. You have to create it manually', $path)));
-		}
+		//Creates the directory to save photos
+		$this->_create_folder(Album::getAlbumPath());
 		
-		if(!is_writable($path = Album::getTmpPath())) {
-			$folder = new Folder();
-			if(@$folder->create($path, 0777))
-				$this->out(sprintf('<success>%s</success>', sprintf('The directory %s has been created', $path)));
-			else
-				$this->out(sprintf('<warning>%s</warning>', sprintf('The directory %s has not been created. You have to create it manually', $path)));
-		}
+		//Creates the folder where you upload photos 
+		$this->_create_folder(Album::getTmpPath());
+		
+		//Creates the folders for thumbnails
+		$this->_create_folder(TMP.'thumbs'.DS.'photos');
+		$this->_create_folder(TMP.'thumbs'.DS.'videos');
 	}
 	
 	/**
