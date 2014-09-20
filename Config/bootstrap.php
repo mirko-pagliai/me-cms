@@ -1,5 +1,8 @@
 <?php
 
+//Adds the admin routes prefix
+Configure::write('Routing.prefixes', array('admin'));
+
 $duration = '+999 days';
 $engine = 'File';
 $prefix = 'mecms_';
