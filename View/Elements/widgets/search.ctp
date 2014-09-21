@@ -31,9 +31,10 @@
 		
 		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search')));
 		echo $this->Form->input('p', array(
-			'default' => empty($pattern) ? NULL : $pattern
+			'default'		=> empty($pattern) ? NULL : $pattern,
+			'placeholder'	=> __d('me_cms', 'Search...')
 		));
-		echo $this->Form->submit(NULL, array('class' => 'btn-primary', 'icon' => 'search'));
+		echo $this->Form->submit(NULL, array('class' => 'hidden-xs hidden-sm btn-primary', 'icon' => 'search'));
 		echo $this->Form->end();
 	?>
 </div>
