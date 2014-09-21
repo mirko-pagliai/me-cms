@@ -104,10 +104,14 @@ class InstallShell extends MeToolsAppShell {
 		//Creates the directory to save photos
 		$this->_create_folder(Album::getAlbumPath());
 		
-		//Creates the folder where you upload photos 
+		//Creates the directory where you upload photos 
 		$this->_create_folder(Album::getTmpPath());
 		
-		//Creates the folders for thumbnails
+		//Creates the cache directory
+		$cacheSettings = Cache::settings();
+		$this->_create_folder($cacheSettings['path']);
+		
+		//Creates the thumbnails directory
 		$this->_create_folder(TMP.'thumbs'.DS.'photos');
 		$this->_create_folder(TMP.'thumbs'.DS.'videos');
 	}
