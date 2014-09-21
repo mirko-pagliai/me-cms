@@ -34,7 +34,7 @@ $options = array(
 	'duration'	=> '+999 days',
 	'engine'	=> 'File',
 	'mask'		=> 0666,
-	'path'		=> CACHE.'mecms'.DS,
+	'path'		=> CACHE.'me_cms'.DS,
 	'prefix'	=> NULL
 );
 
