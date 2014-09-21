@@ -34,7 +34,7 @@
 			'default'		=> empty($pattern) ? NULL : $pattern,
 			'placeholder'	=> __d('me_cms', 'Search...')
 		));
-		echo $this->Form->submit(NULL, array('class' => 'hidden-xs hidden-sm btn-primary', 'icon' => 'search'));
+		echo $this->Form->submit(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
 		echo $this->Form->end();
 	?>
 </div>
