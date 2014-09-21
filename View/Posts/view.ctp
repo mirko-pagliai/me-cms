@@ -27,7 +27,7 @@
 	<div class="post-container clearfix">
 		<div class="post-header">
 			<?php
-				$urlCategory = Router::url(array($post['Category']['slug']), TRUE);
+				$urlCategory = Router::url(array('action' => 'index', $post['Category']['slug']), TRUE);
 				echo $this->Html->h4($this->Html->link($post['Category']['title'], $urlCategory), array('class' => 'post-category'));
 
 				$urlPost = Router::url(array('controller' => 'posts', 'action' => 'view', $post['Post']['slug']), TRUE);
