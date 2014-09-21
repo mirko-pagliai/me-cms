@@ -108,16 +108,15 @@ class Photo extends MeCmsAppModel {
 	/**
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
-	 * @param array $options Options passed from Model::save().
+	 * @param array $options Options passed from Model::save()
 	 * @uses Album::savePhoto() to save the photos
 	 */
 	public function afterSave($created, $options = array()) {
-		//Clears the cache group
-		Cache::clearGroup('photos', 'photos');
-		
 		//Saves the photos
 		if($created)
 			Album::savePhoto($this->data[$this->alias]['filename'], $this->data[$this->alias]['album_id']);
+		
+		Cache::clearGroup('photos', 'photos');
 	}
 	
 	/**
