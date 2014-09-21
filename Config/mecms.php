@@ -7,14 +7,18 @@ $config = array(
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos_for_page' => 12,
 		//Number of records to show per page
-		'records_for_page' => 10
+		'records_for_page' => 10,
+		//Theme. Must be located in `APP/View/Themed/`
+		'theme' => FALSE
 	),
 	//Frontend options
 	'frontend' => array(
-		//Site logo. Relative path to APP/webroot/img
+		//Site logo. Relative path to `APP/webroot/img/`
 		'logo' => 'logo.png',
 		//Number of records to show per page
 		'records_for_page' => 10,
+		//Theme. Must be located in `APP/View/Themed/`
+		'theme' => FALSE,
 		//Number of characters to truncate a text
 		'truncate_to' => 1500,
 		//Widgets

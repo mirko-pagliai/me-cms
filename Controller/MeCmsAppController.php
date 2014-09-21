@@ -97,6 +97,7 @@ class MeCmsAppController extends MeToolsAppController {
 	/**
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
+	 * @throws InternalErrorException
 	 * @uses _getConfig() to load the configuration file
 	 * @uses isAdminRequest()
 	 */
@@ -111,8 +112,17 @@ class MeCmsAppController extends MeToolsAppController {
 		//If it's not an admin request, authorizes the current action
 		if(!$this->isAdminRequest())
 			$this->Auth->allow($this->action);
+		
+		//Sets the theme
+		if(!empty($this->config['theme'])) {
+			//Checks if the theme exists
+			if(!is_readable(App::themePath($theme = $this->config['theme'])))
+				throw new InternalErrorException(__d('me_cms', 'The theme %s was not found', $theme));
+
+			$this->theme = $theme;
+		}
 			
-		//Sets the layout	
+		//Sets the layout
 		$this->layout = $this->isAdminRequest() ? 'backend' : 'frontend';
 	}
 	
