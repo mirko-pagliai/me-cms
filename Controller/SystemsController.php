@@ -32,7 +32,7 @@ App::uses('System', 'MeTools.Utility');
  */
 class SystemsController extends MeCmsAppController {
 	/**
-	 * Check if the provided user is authorized for the request.
+	 * Checks if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
 	 * @uses MeAuthComponenet::isAdmin()
@@ -51,7 +51,7 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Manage cache and thumbnails.
+	 * Manages cache and thumbnails.
 	 * @uses System::checkCacheStatus()
 	 * @uses System::getCacheSize()
 	 * @uses System::getThumbsSize()
@@ -104,12 +104,16 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Clear the cache.
+	 * Clears the cache.
+	 * @uses System::clearCache()
 	 */
 	public function admin_clear_cache() {
 		$this->request->onlyAllow('post', 'delete'); 
 		
-		if(System::clearCache())
+		//Clears the cache groups
+		$success = Cache::clearGroup('pages', 'pages') && Cache::clearGroup('photos', 'photos') && Cache::clearGroup('posts', 'posts');
+		
+		if($success && System::clearCache())
 			$this->Session->flash(__('The cache has been cleared'), 'success');
 		else
 			$this->Session->flash(__('The cache has not been cleared'), 'error');
@@ -119,7 +123,8 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Clear the thumbs.
+	 * Clears the thumbnails.
+	 * @uses System::clearThumbs()
 	 */
 	public function admin_clear_thumbs() {
 		$this->request->onlyAllow('post', 'delete');
