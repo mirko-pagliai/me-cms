@@ -46,7 +46,7 @@
 				'/MeCms/css/backend/backend'
 			), array('inline' => TRUE));
 			echo $this->fetch('css');
-			echo $this->Html->script(array(
+			echo $this->Html->js(array(
 				'/MeTools/js/jquery.min',
 				'/MeTools/js/bootstrap.min',
 				'/MeTools/js/default.min'
