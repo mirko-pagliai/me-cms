@@ -49,3 +49,13 @@ Per utilizzare un tema, creare o installare il tema in `APP/View/Themed/`. Ad es
 `APP/View/Themed/AnotherTheme/Layout/frontend.ctp`.
 
 Per abilitare il tema, modifica la configurazione di MeCms.
+
+## Pagine statiche
+MeCms può utilizzare le pagine statiche, oltre a quelle gestite dal database.
+
+È sufficiente creare la directory `APP/View/StaticPages/`.  
+Ad esempio, richiamando l'url `http://localhost/your-site/page/about/our-staff` verrà mostrata la view 
+`APP/View/StaticPages/about/our-staff.ctp`.
+
+MeCms darà sempre la precedenza alle pagine statiche. Questo significa che se esistono una pagina statica e una pagina nel
+database con lo stesso nome, MeCms utilizzerà la pagina statica.

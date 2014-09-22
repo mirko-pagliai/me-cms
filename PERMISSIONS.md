@@ -18,6 +18,7 @@ Gli amministratori e i manager possono eliminare gli album fotografici.
 
 ### Pagine
 Gli utenti possono visualizzare le pagine.
+Gli utenti possono visualizzare le pagine statiche.
 Gli amministratori e i manager possono aggiungere e modificare le pagine.
 Gli amministratori possono eliminare le pagine.
 
