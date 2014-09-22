@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('StaticPage', 'MeCms.Utility');
 
 /**
  * Pages Controller
@@ -62,6 +63,19 @@ class PagesController extends MeCmsAppController {
 		$this->set(array(
 			'pages'				=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Pages')
+		));
+	}
+	
+	/**
+	 * List static pages.
+	 * 
+	 * Static pages must be located in `APP/View/StaticPages/`.
+	 * @uses StaticPage::getAll()
+	 */
+	public function admin_index_statics() {
+		$this->set(array(
+			'pages'				=> StaticPage::getAll(),
+			'title_for_layout'	=> __d('me_cms', 'Static pages')
 		));
 	}
 
@@ -173,11 +187,28 @@ class PagesController extends MeCmsAppController {
 	}
 	
 	/**
-	 * View page
+	 * View page.
+	 * 
+	 * It first checks if there exists a static page, using all the passed arguments.
+	 * Otherwise, it looks for the page in the database, using the slug.
+	 * 
+	 * Static pages must be located in `APP/View/StaticPages/`.
 	 * @param string $slug Page slug
 	 * @throws NotFoundException
+	 * @uses StaticPage::exists()
 	 */
 	public function view($slug = NULL) {
+		//Checks if there exists a static page, using all the passed arguments
+		if(StaticPage::exists($args = func_get_args())) {
+			//Sets the relative path
+			$path = implode(DS, $args);
+			
+			//Sets the title (the last argument)			
+			$this->set('title_for_layout', Inflector::humanize($args[count($args)-1]));
+			
+			return $this->render('StaticPages'.DS.$path);
+		}
+		
 		//Tries to get data from the cache
 		$page = Cache::read($cache = sprintf('pages_view_%s', $slug), 'pages');
 		

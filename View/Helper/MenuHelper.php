@@ -62,6 +62,8 @@ class MenuHelper extends MeHtmlHelper {
 		if($this->Auth->isManager())
 			$menu[] = $this->link(__d('me_cms', 'Add page'), array('controller' => 'pages', 'action' => 'add'));
 		
+		$menu[] = $this->link(__d('me_cms', 'List static pages'), array('controller' => 'pages', 'action' => 'index_statics'));
+		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Pages'), array('icon' => 'files-o')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		
