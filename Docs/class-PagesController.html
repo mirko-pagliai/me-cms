@@ -7,7 +7,7 @@
 	<title>Class PagesController | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<script type="text/javascript" src="elementlist.js?2295948851"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -153,13 +153,64 @@ MeToolsAppController
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
-		<b>Located at</b> <a href="source-class-PagesController.html#29-157" title="Go to source code">PagesController.php</a><br />
+		<b>Located at</b> <a href="source-class-PagesController.html#30-234" title="Go to source code">PagesController.php</a><br />
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-PagesController.html#34-52" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code>array</code><br>$user The user to check the authorization of. If empty the user in the session
+will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if $user is authorized, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeAuthComponenet::isAction()<br />
+						MeAuthComponenet::isAdmin()<br />
+						MeAuthComponenet::isManager()<br />
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="admin_index" id="_admin_index">
 
 		<td class="attributes"><code>
@@ -171,7 +222,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-PagesController.html#33-46" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-PagesController.html#54-67" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			
@@ -193,6 +244,45 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="admin_index_statics" id="_admin_index_statics">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_admin_index_statics">#</a>
+		<code><a href="source-class-PagesController.html#69-80" title="Go to source code">admin_index_statics</a>( )</code>
+
+		<div class="description short">
+			
+<p>List static pages.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>List static pages.</p>
+
+<p>Static pages must be located in <code>APP/View/StaticPages/</code>.</p>
+
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-StaticPage.html#_getAll">StaticPage::getAll()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="admin_add" id="_admin_add">
 
 		<td class="attributes"><code>
@@ -204,7 +294,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-PagesController.html#48-63" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-PagesController.html#82-97" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			
@@ -237,7 +327,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-PagesController.html#65-89" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PagesController.html#99-123" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -279,7 +369,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-PagesController.html#91-109" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PagesController.html#125-143" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -321,7 +411,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_request_list">#</a>
-		<code><a href="source-class-PagesController.html#111-123" title="Go to source code">request_list</a>( )</code>
+		<code><a href="source-class-PagesController.html#145-167" title="Go to source code">request_list</a>( )</code>
 
 		<div class="description short">
 			
@@ -364,7 +454,7 @@ works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-PagesController.html#125-135" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-PagesController.html#169-187" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			
@@ -397,17 +487,22 @@ works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-PagesController.html#137-156" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PagesController.html#189-233" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
-<p>View page</p>
+<p>View page.</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>View page</p>
+<p>View page.</p>
+
+<p>It first checks if there exists a static page, using all the passed
+arguments. Otherwise, it looks for the page in the database, using the slug.</p>
+
+<p>Static pages must be located in <code>APP/View/StaticPages/</code>.</p>
 
 
 
@@ -423,6 +518,10 @@ works only with <code>requestAction()</code>.</p>
 					<code>NotFoundException</code><br />
 				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-StaticPage.html#_exists">StaticPage::exists()</a></code></code> <br />
+				</div>
 
 
 		</div>
@@ -435,8 +534,7 @@ works only with <code>requestAction()</code>.</p>
 	<tr>
 		<td><code>
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
-			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
-			<a href="class-MeCmsAppController.html#_isAuthorized">isAuthorized()</a>
+			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>
 		</code></td>
 	</tr>
 	</table>

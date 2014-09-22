@@ -7,7 +7,7 @@
 	<title>Class PhotosAlbum | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<script type="text/javascript" src="elementlist.js?2295948851"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -152,7 +152,7 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
-		<b>Located at</b> <a href="source-class-PhotosAlbum.html#30-151" title="Go to source code">PhotosAlbum.php</a><br />
+		<b>Located at</b> <a href="source-class-PhotosAlbum.html#30-159" title="Go to source code">PhotosAlbum.php</a><br />
 	</div>
 
 
@@ -170,7 +170,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__findActive">#</a>
-		<code><a href="source-class-PhotosAlbum.html#97-118" title="Go to source code">_findActive</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-PhotosAlbum.html#101-124" title="Go to source code">_findActive</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -218,7 +218,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-PhotosAlbum.html#120-130" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-PhotosAlbum.html#126-138" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -237,7 +237,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 					<dt><var>$created</var></dt>
 					<dd><code>boolean</code><br>$created TRUE if this save created a new record</dd>
 					<dt><var>$options</var></dt>
-					<dd><code>array</code><br>$options Options passed from Model::save().</dd>
+					<dd><code>array</code><br>$options Options passed from Model::save()</dd>
 				</dl></div>
 
 
@@ -262,7 +262,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeDelete">#</a>
-		<code><a href="source-class-PhotosAlbum.html#132-140" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+		<code><a href="source-class-PhotosAlbum.html#140-148" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -304,7 +304,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-PhotosAlbum.html#142-150" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-PhotosAlbum.html#150-158" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -398,7 +398,7 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PhotosAlbum.html#41-83" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-PhotosAlbum.html#41-87" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -437,6 +437,10 @@ to halt the save.</p>
 		<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">TRUE</span>,
 		<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'Must be at most %d chars'</span>,
 		<span class="php-quote">'rule'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">255</span>)
+	),
+	<span class="php-quote">'active'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'You have to select a valid option'</span>,
+		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'boolean'</span>)
 	)
 )</code></td>
 		<td class="description"><div>
@@ -463,7 +467,7 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PhotosAlbum.html#85-95" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-PhotosAlbum.html#89-99" title="Go to source code"><var>$hasMany</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Photo'</span> =&gt; <span class="php-keyword1">array</span>(

@@ -7,7 +7,7 @@
 	<title>Class MeAuthComponent | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<script type="text/javascript" src="elementlist.js?2295948851"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -142,17 +142,61 @@ AuthComponent
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
-		<b>Located at</b> <a href="source-class-MeAuthComponent.html#29-127" title="Go to source code">Component/MeAuthComponent.php</a><br />
+		<b>Located at</b> <a href="source-class-MeAuthComponent.html#29-133" title="Go to source code">Component/MeAuthComponent.php</a><br />
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="hasId" id="_hasId">
+	<tr data-order="initialize" id="_initialize">
 
 		<td class="attributes"><code>
 			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initialize">#</a>
+		<code><a href="source-class-MeAuthComponent.html#43-53" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Called before the controller's beforeFilter method.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Called before the controller's beforeFilter method.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$controller</var></dt>
+					<dd><code>Controller</code><br>$controller</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<a
+href="http://api.cakephp.org/2.5/class-Component.html#_initialize">http://api.cakephp.org/2.5/class-Component.html#_initialize</a>
+CakePHP Api<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hasId" id="_hasId">
+
+		<td class="attributes"><code>
+			 public static
 			boolean
 			
 			</code>
@@ -160,7 +204,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_hasId">#</a>
-		<code><a href="source-class-MeAuthComponent.html#37-47" title="Go to source code">hasId</a>( <span>type <var>$id</var></span> )</code>
+		<code><a href="source-class-MeAuthComponent.html#55-65" title="Go to source code">hasId</a>( <span>type <var>$id</var></span> )</code>
 
 		<div class="description short">
 			
@@ -191,52 +235,10 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="hasLevel" id="_hasLevel">
-
-		<td class="attributes"><code>
-			 public 
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_hasLevel">#</a>
-		<code><a href="source-class-MeAuthComponent.html#49-59" title="Go to source code">hasLevel</a>( <span>type <var>$level</var></span> )</code>
-
-		<div class="description short">
-			
-<p>Checks whether the user has a specific level</p>
-
-		</div>
-
-		<div class="description detailed hidden">
-			
-<p>Checks whether the user has a specific level</p>
-
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$level</var></dt>
-					<dd><code>type</code><br>$level</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					<code>boolean</code><br />
-				</div>
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="isAction" id="_isAction">
 
 		<td class="attributes"><code>
-			 public 
+			 public static
 			type
 			
 			</code>
@@ -244,7 +246,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAction">#</a>
-		<code><a href="source-class-MeAuthComponent.html#61-85" title="Go to source code">isAction</a>( )</code>
+		<code><a href="source-class-MeAuthComponent.html#67-91" title="Go to source code">isAction</a>( )</code>
 
 		<div class="description short">
 			
@@ -294,7 +296,7 @@ class="php-quote">'delete'</span>);
 	<tr data-order="isAdmin" id="_isAdmin">
 
 		<td class="attributes"><code>
-			 public 
+			 public static
 			boolean
 			
 			</code>
@@ -302,7 +304,7 @@ class="php-quote">'delete'</span>);
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAdmin">#</a>
-		<code><a href="source-class-MeAuthComponent.html#87-96" title="Go to source code">isAdmin</a>( )</code>
+		<code><a href="source-class-MeAuthComponent.html#93-102" title="Go to source code">isAdmin</a>( )</code>
 
 		<div class="description short">
 			
@@ -331,7 +333,7 @@ class="php-quote">'delete'</span>);
 	<tr data-order="isFounder" id="_isFounder">
 
 		<td class="attributes"><code>
-			 public 
+			 public static
 			boolean
 			
 			</code>
@@ -339,7 +341,7 @@ class="php-quote">'delete'</span>);
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isFounder">#</a>
-		<code><a href="source-class-MeAuthComponent.html#98-107" title="Go to source code">isFounder</a>( )</code>
+		<code><a href="source-class-MeAuthComponent.html#104-113" title="Go to source code">isFounder</a>( )</code>
 
 		<div class="description short">
 			
@@ -368,7 +370,7 @@ class="php-quote">'delete'</span>);
 	<tr data-order="isLogged" id="_isLogged">
 
 		<td class="attributes"><code>
-			 public 
+			 public static
 			type
 			
 			</code>
@@ -376,7 +378,7 @@ class="php-quote">'delete'</span>);
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isLogged">#</a>
-		<code><a href="source-class-MeAuthComponent.html#109-115" title="Go to source code">isLogged</a>( )</code>
+		<code><a href="source-class-MeAuthComponent.html#115-121" title="Go to source code">isLogged</a>( )</code>
 
 		<div class="description short">
 			
@@ -409,7 +411,7 @@ class="php-quote">'delete'</span>);
 	<tr data-order="isManager" id="_isManager">
 
 		<td class="attributes"><code>
-			 public 
+			 public static
 			boolean
 			
 			</code>
@@ -417,7 +419,7 @@ class="php-quote">'delete'</span>);
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isManager">#</a>
-		<code><a href="source-class-MeAuthComponent.html#117-126" title="Go to source code">isManager</a>( )</code>
+		<code><a href="source-class-MeAuthComponent.html#123-132" title="Go to source code">isManager</a>( )</code>
 
 		<div class="description short">
 			
@@ -438,6 +440,11 @@ class="php-quote">'delete'</span>);
 				</div>
 
 
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PostsController.html#_admin_add">PostsController::admin_add()</a></code></code> <br />
+						<code><code><a href="class-PostsController.html#_admin_edit">PostsController::admin_edit()</a></code></code> <br />
+				</div>
 
 
 		</div>
@@ -456,6 +463,36 @@ class="php-quote">'delete'</span>);
 
 
 
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="action" id="$action">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeAuthComponent.html#37-41" title="Go to source code"><var>$action</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$action" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Currant action name</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Currant action name</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
 
 
 

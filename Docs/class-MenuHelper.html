@@ -7,7 +7,7 @@
 	<title>Class MenuHelper | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<script type="text/javascript" src="elementlist.js?2295948851"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -46,6 +46,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-AuthHelper.html">AuthHelper</a></li>
 				<li class="active"><a href="class-MenuHelper.html">MenuHelper</a></li>
 			</ul>
 
@@ -150,7 +151,7 @@ MeHtmlHelper
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
-		<b>Located at</b> <a href="source-class-MenuHelper.html#27-176" title="Go to source code">Helper/MenuHelper.php</a><br />
+		<b>Located at</b> <a href="source-class-MenuHelper.html#27-207" title="Go to source code">Helper/MenuHelper.php</a><br />
 	</div>
 
 
@@ -168,7 +169,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__pages">#</a>
-		<code><a href="source-class-MenuHelper.html#44-62" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#47-71" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -199,6 +200,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 						link()<br />
 						DropdownHelper::dropdown()<br />
 						DropdownHelper::link()<br />
+						AuthHelper::isManager()<br />
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -220,7 +222,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__posts">#</a>
-		<code><a href="source-class-MenuHelper.html#64-84" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#73-99" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -251,6 +253,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 						link()<br />
 						DropdownHelper::dropdown()<br />
 						DropdownHelper::link()<br />
+						AuthHelper::isManager()<br />
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -272,7 +275,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__photos">#</a>
-		<code><a href="source-class-MenuHelper.html#86-105" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#101-120" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -324,7 +327,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__users">#</a>
-		<code><a href="source-class-MenuHelper.html#107-127" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#122-153" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -355,6 +358,8 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 						link()<br />
 						DropdownHelper::dropdown()<br />
 						DropdownHelper::link()<br />
+						AuthHelper::isAdmin()<br />
+						AuthHelper::isManager()<br />
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -376,7 +381,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__systems">#</a>
-		<code><a href="source-class-MenuHelper.html#129-147" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#155-178" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -407,6 +412,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 						link()<br />
 						DropdownHelper::dropdown()<br />
 						DropdownHelper::link()<br />
+						AuthHelper::isAdmin()<br />
 				</div>
 
 
@@ -424,7 +430,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get">#</a>
-		<code><a href="source-class-MenuHelper.html#149-175" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MenuHelper.html#180-206" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -487,9 +493,12 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MenuHelper.html#38-42" title="Go to source code"><var>$helpers</var></a>
+				<a href="source-class-MenuHelper.html#38-45" title="Go to source code"><var>$helpers</var></a>
 		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'Dropdown'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Dropdown'</span>))</code></td>
+		<td class="value"><code><span class="php-keyword1">array</span>(
+	<span class="php-quote">'Auth'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Auth'</span>),
+	<span class="php-quote">'Dropdown'</span>	=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Dropdown'</span>)
+)</code></td>
 		<td class="description"><div>
 			<a href="#$helpers" class="anchor">#</a>
 

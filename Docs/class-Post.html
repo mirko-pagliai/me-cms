@@ -7,7 +7,7 @@
 	<title>Class Post | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<script type="text/javascript" src="elementlist.js?2295948851"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -152,13 +152,53 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
-		<b>Located at</b> <a href="source-class-Post.html#30-143" title="Go to source code">Post.php</a><br />
+		<b>Located at</b> <a href="source-class-Post.html#30-162" title="Go to source code">Post.php</a><br />
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="afterSave" id="_afterSave">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterSave">#</a>
+		<code><a href="source-class-Post.html#131-138" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			
+<p>Called after each successful save operation.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Called after each successful save operation.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$created</var></dt>
+					<dd><code>boolean</code><br>$created TRUE if this save created a new record</dd>
+					<dt><var>$options</var></dt>
+					<dd><code>array</code><br>$options Options passed from Model::save()</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="beforeSave" id="_beforeSave">
 
 		<td class="attributes"><code>
@@ -170,7 +210,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-Post.html#131-142" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Post.html#140-151" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -198,6 +238,54 @@ to halt the save.</p>
 				</div>
 
 
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isOwnedBy" id="_isOwnedBy">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isOwnedBy">#</a>
+		<code><a href="source-class-Post.html#153-161" title="Go to source code">isOwnedBy</a>( <span>integer <var>$id</var></span>, <span>integer <var>$user_id</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Checks whether a post belongs to a user.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Checks whether a post belongs to a user.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd><code>integer</code><br>$id Post id</dd>
+					<dt><var>$user_id</var></dt>
+					<dd><code>integer</code><br>$user_id User id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if the post belongs to the user, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PostsController.html#_isAuthorized">PostsController::isAuthorized()</a></code></code> <br />
+				</div>
 
 
 		</div>

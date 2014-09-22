@@ -8,7 +8,7 @@
 	<title>File SystemsController.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?1912708410"></script>
+	<script type="text/javascript" src="elementlist.js?2295948851"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -138,7 +138,7 @@
 </span></span><span id="32" class="l"><a class="l" href="#32"> 32: </a><span class="php-comment"> */</span>
 </span><span id="33" class="l"><a class="l" href="#33"> 33: </a><span class="php-keyword1">class</span> <a id="SystemsController" href="#SystemsController">SystemsController</a> <span class="php-keyword1">extends</span> MeCmsAppController {
 </span><span id="34" class="l"><a class="l" href="#34"> 34: </a>    <span class="php-comment">/**
-</span></span><span id="35" class="l"><a class="l" href="#35"> 35: </a><span class="php-comment">     * Check if the provided user is authorized for the request.
+</span></span><span id="35" class="l"><a class="l" href="#35"> 35: </a><span class="php-comment">     * Checks if the provided user is authorized for the request.
 </span></span><span id="36" class="l"><a class="l" href="#36"> 36: </a><span class="php-comment">     * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 </span></span><span id="37" class="l"><a class="l" href="#37"> 37: </a><span class="php-comment">     * @return bool TRUE if $user is authorized, otherwise FALSE
 </span></span><span id="38" class="l"><a class="l" href="#38"> 38: </a><span class="php-comment">     * @uses MeAuthComponenet::isAdmin()
@@ -157,7 +157,7 @@
 </span><span id="51" class="l"><a class="l" href="#51"> 51: </a>    }
 </span><span id="52" class="l"><a class="l" href="#52"> 52: </a>    
 </span><span id="53" class="l"><a class="l" href="#53"> 53: </a>    <span class="php-comment">/**
-</span></span><span id="54" class="l"><a class="l" href="#54"> 54: </a><span class="php-comment">     * Manage cache and thumbnails.
+</span></span><span id="54" class="l"><a class="l" href="#54"> 54: </a><span class="php-comment">     * Manages cache and thumbnails.
 </span></span><span id="55" class="l"><a class="l" href="#55"> 55: </a><span class="php-comment">     * @uses System::checkCacheStatus()
 </span></span><span id="56" class="l"><a class="l" href="#56"> 56: </a><span class="php-comment">     * @uses System::getCacheSize()
 </span></span><span id="57" class="l"><a class="l" href="#57"> 57: </a><span class="php-comment">     * @uses System::getThumbsSize()
@@ -210,34 +210,39 @@
 </span><span id="104" class="l"><a class="l" href="#104">104: </a>    }
 </span><span id="105" class="l"><a class="l" href="#105">105: </a>    
 </span><span id="106" class="l"><a class="l" href="#106">106: </a>    <span class="php-comment">/**
-</span></span><span id="107" class="l"><a class="l" href="#107">107: </a><span class="php-comment">     * Clear the cache.
-</span></span><span id="108" class="l"><a class="l" href="#108">108: </a><span class="php-comment">     */</span>
-</span><span id="109" class="l"><a class="l" href="#109">109: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_admin_clear_cache" href="#_admin_clear_cache">admin_clear_cache</a>() {
-</span><span id="110" class="l"><a class="l" href="#110">110: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>); 
-</span><span id="111" class="l"><a class="l" href="#111">111: </a>        
-</span><span id="112" class="l"><a class="l" href="#112">112: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearCache())
-</span><span id="113" class="l"><a class="l" href="#113">113: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'The cache has been cleared'</span>), <span class="php-quote">'success'</span>);
-</span><span id="114" class="l"><a class="l" href="#114">114: </a>        <span class="php-keyword1">else</span>
-</span><span id="115" class="l"><a class="l" href="#115">115: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'The cache has not been cleared'</span>), <span class="php-quote">'error'</span>);
-</span><span id="116" class="l"><a class="l" href="#116">116: </a>        
-</span><span id="117" class="l"><a class="l" href="#117">117: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>));
-</span><span id="118" class="l"><a class="l" href="#118">118: </a>        
-</span><span id="119" class="l"><a class="l" href="#119">119: </a>    }
-</span><span id="120" class="l"><a class="l" href="#120">120: </a>    
-</span><span id="121" class="l"><a class="l" href="#121">121: </a>    <span class="php-comment">/**
-</span></span><span id="122" class="l"><a class="l" href="#122">122: </a><span class="php-comment">     * Clear the thumbs.
-</span></span><span id="123" class="l"><a class="l" href="#123">123: </a><span class="php-comment">     */</span>
-</span><span id="124" class="l"><a class="l" href="#124">124: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_admin_clear_thumbs" href="#_admin_clear_thumbs">admin_clear_thumbs</a>() {
-</span><span id="125" class="l"><a class="l" href="#125">125: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>);
-</span><span id="126" class="l"><a class="l" href="#126">126: </a>        
-</span><span id="127" class="l"><a class="l" href="#127">127: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearThumbs())
-</span><span id="128" class="l"><a class="l" href="#128">128: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'Thumbnails have been deleted'</span>), <span class="php-quote">'success'</span>);
-</span><span id="129" class="l"><a class="l" href="#129">129: </a>        <span class="php-keyword1">else</span>
-</span><span id="130" class="l"><a class="l" href="#130">130: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'Thumbnails have not been deleted'</span>), <span class="php-quote">'error'</span>);
+</span></span><span id="107" class="l"><a class="l" href="#107">107: </a><span class="php-comment">     * Clears the cache.
+</span></span><span id="108" class="l"><a class="l" href="#108">108: </a><span class="php-comment">     * @uses System::clearCache()
+</span></span><span id="109" class="l"><a class="l" href="#109">109: </a><span class="php-comment">     */</span>
+</span><span id="110" class="l"><a class="l" href="#110">110: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_admin_clear_cache" href="#_admin_clear_cache">admin_clear_cache</a>() {
+</span><span id="111" class="l"><a class="l" href="#111">111: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>); 
+</span><span id="112" class="l"><a class="l" href="#112">112: </a>        
+</span><span id="113" class="l"><a class="l" href="#113">113: </a>        <span class="php-comment">//Clears the cache groups</span>
+</span><span id="114" class="l"><a class="l" href="#114">114: </a>        <span class="php-var">$success</span> = Cache::clearGroup(<span class="php-quote">'pages'</span>, <span class="php-quote">'pages'</span>) &amp;&amp; Cache::clearGroup(<span class="php-quote">'photos'</span>, <span class="php-quote">'photos'</span>) &amp;&amp; Cache::clearGroup(<span class="php-quote">'posts'</span>, <span class="php-quote">'posts'</span>);
+</span><span id="115" class="l"><a class="l" href="#115">115: </a>        
+</span><span id="116" class="l"><a class="l" href="#116">116: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$success</span> &amp;&amp; <span class="php-keyword2">System</span>::clearCache())
+</span><span id="117" class="l"><a class="l" href="#117">117: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'The cache has been cleared'</span>), <span class="php-quote">'success'</span>);
+</span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-keyword1">else</span>
+</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'The cache has not been cleared'</span>), <span class="php-quote">'error'</span>);
+</span><span id="120" class="l"><a class="l" href="#120">120: </a>        
+</span><span id="121" class="l"><a class="l" href="#121">121: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>));
+</span><span id="122" class="l"><a class="l" href="#122">122: </a>        
+</span><span id="123" class="l"><a class="l" href="#123">123: </a>    }
+</span><span id="124" class="l"><a class="l" href="#124">124: </a>    
+</span><span id="125" class="l"><a class="l" href="#125">125: </a>    <span class="php-comment">/**
+</span></span><span id="126" class="l"><a class="l" href="#126">126: </a><span class="php-comment">     * Clears the thumbnails.
+</span></span><span id="127" class="l"><a class="l" href="#127">127: </a><span class="php-comment">     * @uses System::clearThumbs()
+</span></span><span id="128" class="l"><a class="l" href="#128">128: </a><span class="php-comment">     */</span>
+</span><span id="129" class="l"><a class="l" href="#129">129: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_admin_clear_thumbs" href="#_admin_clear_thumbs">admin_clear_thumbs</a>() {
+</span><span id="130" class="l"><a class="l" href="#130">130: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>);
 </span><span id="131" class="l"><a class="l" href="#131">131: </a>        
-</span><span id="132" class="l"><a class="l" href="#132">132: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>));
-</span><span id="133" class="l"><a class="l" href="#133">133: </a>    }
-</span><span id="134" class="l"><a class="l" href="#134">134: </a></span>}</code></pre>
+</span><span id="132" class="l"><a class="l" href="#132">132: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearThumbs())
+</span><span id="133" class="l"><a class="l" href="#133">133: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'Thumbnails have been deleted'</span>), <span class="php-quote">'success'</span>);
+</span><span id="134" class="l"><a class="l" href="#134">134: </a>        <span class="php-keyword1">else</span>
+</span><span id="135" class="l"><a class="l" href="#135">135: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'Thumbnails have not been deleted'</span>), <span class="php-quote">'error'</span>);
+</span><span id="136" class="l"><a class="l" href="#136">136: </a>        
+</span><span id="137" class="l"><a class="l" href="#137">137: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>));
+</span><span id="138" class="l"><a class="l" href="#138">138: </a>    }
+</span><span id="139" class="l"><a class="l" href="#139">139: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
