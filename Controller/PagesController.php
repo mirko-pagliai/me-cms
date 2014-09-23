@@ -204,7 +204,7 @@ class PagesController extends MeCmsAppController {
 			$path = implode(DS, $args);
 			
 			//Sets the title (the last argument)			
-			$this->set('title_for_layout', Inflector::humanize($args[count($args)-1]));
+			$this->set('title_for_layout', Inflector::humanize(str_replace('-', '_', $args[count($args)-1])));
 			
 			return $this->render('StaticPages'.DS.$path);
 		}
