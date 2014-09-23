@@ -24,8 +24,6 @@
 ?>
 
 <?php
-	$this->Html->css('/MeCms/css/frontend/photos');
-
 	if($config['fancybox']) {
 		$this->Html->css('/MeCms/fancybox/fancybox.min');
 		$this->Html->js('/MeCms/fancybox/fancybox.min');

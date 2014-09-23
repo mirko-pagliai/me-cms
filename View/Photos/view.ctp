@@ -23,10 +23,6 @@
  */
 ?>
 
-<?php $this->Html->css('/MeCms/css/frontend/photos'); ?>
-
 <div class="photos view">
-	<div class='photo-box'>
-		<?php echo $this->Html->thumb($photo['Photo']['path'], array('side' => '828')); ?>
-	</div>
+	<?php echo $this->Html->thumb($photo['Photo']['path'], array('side' => 828)); ?>
 </div>

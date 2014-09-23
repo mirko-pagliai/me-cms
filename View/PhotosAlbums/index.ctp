@@ -23,8 +23,6 @@
  */
 ?>
 
-<?php $this->Html->css('/MeCms/css/frontend/photos'); ?>
-
 <div class="photosAlbums index">
 	<div class='clearfix'>
 		<?php foreach($albums as $album): ?>

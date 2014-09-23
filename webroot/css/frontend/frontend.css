@@ -181,3 +181,44 @@
 	font-size: 12px;
 	margin-left: 6px;
 }
+
+/* -------------------------------- */
+/*			Photos albums			*/
+/* -------------------------------- */
+/* Photos albums, thumbnail */
+.photosAlbums a.thumbnail {
+	position: relative;
+}
+
+/* Photos albums, thumbnail, info wrapper */
+.photosAlbums a.thumbnail .info-wrapper {
+    background: rgba(0, 0, 0, .4);
+    border-radius: 2px;
+    bottom: 0;
+	display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+/* Photos albums, thumbnail on hover, info wrapper */
+.photosAlbums a.thumbnail:hover .info-wrapper {
+	display: block;
+}
+
+/* Photos albums, thumbnail, info wrapper, information */
+.photosAlbums a.thumbnail .info-wrapper .info {
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    margin-bottom: 10px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+/* Photos albums, thumbnail, info wrapper, information, child elements */
+.photosAlbums a.thumbnail .info-wrapper .info > div {
+	padding: 0 10px;
+}
