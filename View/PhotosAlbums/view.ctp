@@ -23,21 +23,37 @@
  */
 ?>
 
-<?php $this->Html->css('/MeCms/css/frontend/photos'); ?>
+<?php
+	$this->Html->css('/MeCms/css/frontend/photos');
+
+	if($config['fancybox']) {
+		$this->Html->css('/MeCms/fancybox/fancybox.min');
+		$this->Html->js('/MeCms/fancybox/fancybox.min');
+	}
+?>
 
 <div class="photosAlbums index">
 	<div class='clearfix'>
-		<?php foreach($album['Photo'] as $k => $photo): ?>
-			<?php if($k%4 === 0) echo '<div class=\'row\'>'; ?>
-			<div class='col-md-3'>
-				<div class='photo-box'>
-					<?php
-						$thumb = $this->Html->thumb($photo['path'], array('side' => '270'));
-						echo $this->Html->link($thumb, array('controller' => 'photos', 'action' => 'view', $photo['id']));
-					?>
-				</div>
+		<?php foreach($album['Photo'] as $photo): ?>
+			<div class='col-sm-6 col-md-4'>
+				<?php
+					$thumb = $this->Html->thumb($photo['path'], array('side' => 270));
+					
+					$info = $this->Html->div('small', $photo['description']);
+					$info = $this->Html->div('info-wrapper', $this->Html->div('info', $info));
+
+					if($config['fancybox']) 
+						echo $this->Html->link($thumb.$info,
+							$this->Html->thumbUrl($photo['path'], array('height' => 1280)),
+							array('class' => 'fancybox thumbnail', 'rel' => 'group', 'title' => $photo['description'])
+						);
+					else
+						echo $this->Html->link($thumb.$info,
+							array('controller' => 'photos', 'action' => 'view', $photo['id']),
+							array('class' => 'thumbnail', 'title' => $photo['description'])
+						);
+				?>
 			</div>
-			<?php if($k%4 === 3 || $k +1 === count($album['Photo'])) echo '</div>'; ?>
 		<?php endforeach; ?>
 	</div>
 </div>

@@ -23,33 +23,40 @@
  * @package		MeCms\webroot\css\frontend
  */
 
-/* Album box and photo box */
-.album-box, .photo-box {
-	background: #e8e8e8;
+/* Photos albums, thumbnail */
+.photosAlbums a.thumbnail {
+	position: relative;
+}
+
+/* Photos albums, thumbnail, info wrapper */
+.photosAlbums a.thumbnail .info-wrapper {
+    background: rgba(0, 0, 0, .4);
+    border-radius: 2px;
+    bottom: 0;
+	/*display: none;*/
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+/* Photos albums, thumbnail on hover, info wrapper */
+.photosAlbums a.thumbnail:hover .info-wrapper {
+	display: block;
+}
+
+/* Photos albums, thumbnail, info wrapper, information */
+.photosAlbums a.thumbnail .info-wrapper .info {
+    bottom: 0;
+    color: #fff;
+    left: 0;
     margin-bottom: 10px;
-    padding: 10px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
 
-/* Album box and photo box, image (photo thumbnail) */
-.album-box > img, .photo-box > img {
-	margin: auto;
-}
-
-/* Album box, title and photo count */
-.album-box .album-title, .album-box .album-photo-count {
-	background: #fff;
-	margin-bottom: 0;
-    padding: 2px 6px 0;
-	text-align: center;
-}
-
-/* Album box, title */
-.album-box .album-title {
-	font-weight: bold;
-    margin-top: 5px;
-}
-
-/* Album box, photo count */
-.album-box .album-photo-count {
-	font-size: 90%;
+/* Photos albums, thumbnail, info wrapper, information, child elements */
+.photosAlbums a.thumbnail .info-wrapper .info > div {
+	padding: 0 10px;
 }

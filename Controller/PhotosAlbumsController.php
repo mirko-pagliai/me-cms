@@ -172,7 +172,9 @@ class PhotosAlbumsController extends MeCmsAppController {
         if(empty($album)) {
 			$album = $this->PhotosAlbum->find('active', array(
 				'conditions'	=> array('slug' => $slug),
-				'contain'		=> array('Photo.id', 'Photo.filename'),
+				'contain'		=> array('Photo' => array(
+					'fields' => array('id', 'filename', 'description')
+				)),
 				'fields'		=> 'title',
 				'limit'			=> 1
 			));

@@ -27,20 +27,21 @@
 
 <div class="photosAlbums index">
 	<div class='clearfix'>
-		<?php foreach($albums as $k => $album): ?>
-			<?php if($k%3 === 0) echo '<div class=\'row\'>'; ?>
-			<div class='col-md-4'>
-				<div class='album-box'>
-					<?php
-						$thumb = $this->Html->thumb($album['Photo'][0]['path'], array('side' => '270'));
-						echo $this->Html->link($thumb, array('action' => 'view', $album['PhotosAlbum']['slug']));
-						
-						echo $this->Html->para('album-title', $album['PhotosAlbum']['title']);
-						echo $this->Html->para('album-photo-count', __d('me_cms', '%s photos', $album['PhotosAlbum']['photo_count']));
-					?>
-				</div>
+		<?php foreach($albums as $album): ?>
+			<div class='col-sm-6 col-md-4'>
+				<?php
+					$thumb = $this->Html->thumb($album['Photo'][0]['path'], array('side' => 270));
+
+					$info = $this->Html->div('strong', $album['PhotosAlbum']['title']);
+					$info .= $this->Html->div('small', __d('me_cms', '%s photos', $album['PhotosAlbum']['photo_count']));
+					$info = $this->Html->div('info-wrapper', $this->Html->div('info', $info));
+
+					echo $this->Html->link($thumb.$info,
+						array('action' => 'view', $album['PhotosAlbum']['slug']),
+						array('class' => 'thumbnail', 'title' => $album['PhotosAlbum']['title'])
+					);
+				?>
 			</div>
-			<?php if($k%3 === 2 || $k +1 === count($albums)) echo '</div>'; ?>
 		<?php endforeach; ?>
 	</div>
 </div>

@@ -13,6 +13,8 @@ $config = array(
 	),
 	//Frontend options
 	'frontend' => array(
+		//Fancybox for photos
+		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`
 		'logo' => 'logo.png',
 		//Number of records to show per page
