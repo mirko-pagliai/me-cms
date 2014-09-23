@@ -1,0 +1,92 @@
+/**
+ * Frontend layout, posts (and pages) css.
+ *
+ * This file is part of MeCms.
+ *
+ * MeCms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * MeCms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @package		MeCms\webroot\css\frontend
+ */
+
+/* -------------------------------- */
+/*			Posts (and pages)		*/
+/* -------------------------------- */
+/* Posts, post header */
+.post-container .post-header {
+	border-left: 4px solid #777;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/* Posts, post header, post category */
+.post-container .post-header .post-category {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+/* Posts, post header, post category, link */
+.post-container .post-header .post-category a {
+	color: #555;
+}
+
+/* Posts, post header, post title */
+.post-container .post-header .post-title {
+    font-size: 22px;
+    margin: 0;
+}
+
+/* Posts, post header, post title, link */
+.post-container .post-header .post-title a {
+	color: #444	
+}
+
+/* Posts, post header, post information */
+.post-container .post-header .post-info {
+	color: #555;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+	margin-top: 4px;
+}
+
+/* Posts, post content, paragraph */
+.post-container .post-content p {
+	text-align: justify;
+}
+
+/* Posts, post buttons, read more button */
+.post-container .post-buttons .post-read-more {
+    background-color: #ddd;
+    color: #666;
+    font-size: 13px;
+    padding: 5px 10px;
+}
+
+/* Posts, post buttons, read more button on hover */
+.post-container .post-buttons .post-read-more:hover {
+	color: #222;
+}
+
+/* Posts, post buttons, read more button, icon */
+.post-container .post-buttons .post-read-more:after {
+	content: "\f178";
+	font-family: FontAwesome;
+	font-size: 12px;
+	margin-left: 6px;
+}
