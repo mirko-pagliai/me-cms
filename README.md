@@ -59,3 +59,9 @@ Ad esempio, richiamando l'url `http://localhost/your-site/page/about/our-staff` 
 
 MeCms darà sempre la precedenza alle pagine statiche. Questo significa che se esistono una pagina statica e una pagina nel
 database con lo stesso nome, MeCms utilizzerà la pagina statica.
+
+## Librerie e script
+MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko-pagliai/MeTools#libraries-and-script).  
+Oltre questi, MeCms include:
+
+- fancyBox 2.1.5 ([sito](//fancyapps.com/fancybox)).
