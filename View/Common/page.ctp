@@ -1,5 +1,7 @@
 <?php
 /**
+ * Common view for pages.
+ * 
  * This file is part of MeCms.
  *
  * MeCms is free software: you can redistribute it and/or modify
@@ -19,14 +21,33 @@
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Pages
+ * @package		MeCms\View\Common
  */
 ?>
 
-<?php
-	$this->extend('/Common/page');
-	$this->assign('created', $page['Page']['created']);
-	$this->assign('title', $page['Page']['title']);
-	
-	echo $page['Page']['text'];
-?>
+<div class="pages view">
+	<div class="page-container clearfix">
+		<div class="page-header">
+			<?php
+				if(!empty($this->fetch('title')))
+					echo $this->Html->h3($this->Html->link($this->fetch('title'), 
+						am(array('controller' => 'pages', 'action' => 'view'), $this->request->params['pass'])),
+						array('class' => 'page-title')
+					);
+			?>
+			<div class="page-info">
+				<?php
+					if(!empty($this->fetch('created')))
+						echo $this->Html->div('page-created',
+							__d('me_cms', 'Posted on %s', $this->Time->format($this->fetch('created'), $config['datetime']['long'])), 
+							array('icon' => 'clock-o')
+						);
+				?>
+			</div>
+		</div>
+		<?php
+			if(!empty($this->fetch('content')))
+				echo $this->Html->div('page-content', $this->fetch('content'));
+		?>
+	</div>
+</div>
