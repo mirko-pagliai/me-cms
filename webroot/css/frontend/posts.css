@@ -24,69 +24,92 @@
  */
 
 /* -------------------------------- */
-/*			Posts (and pages)		*/
+/*			Posts and pages			*/
 /* -------------------------------- */
-/* Posts, post header */
-.post-container .post-header {
-	border-left: 4px solid #777;
-    margin-bottom: 10px;
-    padding-left: 10px;
+/* Main container */
+.posts .post-container,
+.pages .page-container {
+	margin-bottom: 20px;
 }
 
-/* Posts, post header, post category */
-.post-container .post-header .post-category {
+/* Header */
+.posts .post-header,
+.pages .page-header {
+	border-color: #777;
+	border-style: solid;
+	border-width: 0 0 0 4px;
+    margin: 0 0 10px;
+    padding: 0 0 0 10px;
+}
+
+/* Header, category */
+.posts .post-header .post-category {
     font-family: Verdana,Arial,sans-serif;
     font-size: 14px;
     font-weight: bold;
     margin: 0 0 5px;
 }
 
-/* Posts, post header, post category, link */
-.post-container .post-header .post-category a {
-	color: #555;
-}
-
-/* Posts, post header, post title */
-.post-container .post-header .post-title {
+/* Header, title */
+.posts .post-header .post-title,
+.pages .page-header .page-title {
     font-size: 22px;
     margin: 0;
 }
 
-/* Posts, post header, post title, link */
-.post-container .post-header .post-title a {
-	color: #444	
+/* Header, category and title links */
+.posts .post-header .post-category a,
+.posts .post-header .post-title a,
+.pages .page-header .page-title a {
+	color: #555;
 }
 
-/* Posts, post header, post information */
-.post-container .post-header .post-info {
+/* Header, category and title links on hover */
+.posts .post-header .post-category a:hover,
+.posts .post-header .post-title a:hover,
+.pages .page-header .page-title a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+/* Header, info (author, date, etc) */
+.posts .post-header .post-info,
+.pages .page-header .page-info {
 	color: #555;
     font-family: Arial,sans-serif;
     font-size: 12px;
 	margin-top: 4px;
 }
 
-/* Posts, post content, paragraph */
-.post-container .post-content p {
+/* Content */
+.posts .post-content,
+.pages .page-content {
 	text-align: justify;
 }
 
-/* Posts, post buttons, read more button */
-.post-container .post-buttons .post-read-more {
+/* Buttons */
+.posts .post-buttons {
+	margin-top: 10px;
+	overflow: hidden;
+}
+
+/* Buttons, "read more" button */
+.posts .post-buttons .post-readmore {
     background-color: #ddd;
     color: #666;
     font-size: 13px;
     padding: 5px 10px;
 }
 
-/* Posts, post buttons, read more button on hover */
-.post-container .post-buttons .post-read-more:hover {
-	color: #222;
-}
-
-/* Posts, post buttons, read more button, icon */
-.post-container .post-buttons .post-read-more:after {
+/* Buttons, "read more" button, icon */
+.posts .post-buttons .post-readmore:after {
 	content: "\f178";
 	font-family: FontAwesome;
 	font-size: 12px;
 	margin-left: 6px;
+}
+
+/* Buttons, "read more" button on hover */
+.posts .post-buttons .post-readmore:hover {
+	color: #222;
 }
