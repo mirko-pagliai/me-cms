@@ -1,5 +1,5 @@
 ## Installazione
-Scarica e installa [CakePHP](//cakephp.org).  
+Scarica e installa [CakePHP](http://cakephp.org).  
 Rendi scrivibile la directory temporanea (`tmp/`):
 
 	$ chmod -R 777 tmp/
@@ -64,4 +64,4 @@ database con lo stesso nome, MeCms utilizzerà la pagina statica.
 MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko-pagliai/MeTools#libraries-and-script).  
 Oltre questi, MeCms include:
 
-- fancyBox 2.1.5 ([sito](//fancyapps.com/fancybox)).
+- fancyBox 2.1.5 ([sito](http://fancyapps.com/fancybox)).
