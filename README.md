@@ -64,4 +64,5 @@ database con lo stesso nome, MeCms utilizzerà la pagina statica.
 MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko-pagliai/MeTools#libraries-and-script).  
 Oltre questi, MeCms include:
 
-- fancyBox 2.1.5 ([sito](http://fancyapps.com/fancybox)).
+- fancyBox 2.1.5 ([sito](http://fancyapps.com/fancybox));
+- Roboto font ([sito](http://google.com/fonts/specimen/Roboto)).
