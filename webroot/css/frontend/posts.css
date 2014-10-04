@@ -44,16 +44,14 @@
 
 /* Header, category */
 .posts .post-header .post-category {
-    font-family: Verdana,Arial,sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    margin: 0 0 5px;
+    font-size: 18px;
+    margin: 0 0 10px;
 }
 
 /* Header, title */
 .posts .post-header .post-title,
 .pages .page-header .page-title {
-    font-size: 22px;
+    font-size: 28px;
     margin: 0;
 }
 
@@ -75,21 +73,28 @@
 /* Header, info (author, date, etc) */
 .posts .post-header .post-info,
 .pages .page-header .page-info {
-	color: #555;
-    font-family: Arial,sans-serif;
-    font-size: 12px;
-	margin-top: 4px;
+    color: #666;
+    font-family: Roboto,sans-serif;
+    margin-top: 8px;
+}
+
+/* Header, info (author, date, etc), icons */
+.posts .post-header .post-info .fa,
+.pages .page-header .page-info .fa {
+	margin-right: 4px;
 }
 
 /* Content */
 .posts .post-content,
 .pages .page-content {
-	text-align: justify;
+	font-family: Roboto, sans-serif;
+    line-height: 1.6;
+    text-align: justify;
 }
 
 /* Buttons */
 .posts .post-buttons {
-	margin-top: 10px;
+	margin-top: 15px;
 	overflow: hidden;
 }
 
