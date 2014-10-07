@@ -51,5 +51,5 @@ Cache::config('pages', am($options, array('groups' => array('pages'))));
 Cache::config('photos', am($options, array('groups' => array('photos'))));
 Cache::config('posts', am($options, array('groups' => array('posts'))));
 
-//Default cache configuration for MeCms
-Cache::config('default', $options);
+//Default cache configuration
+Cache::config('default', am($options, array('path' => CACHE)));
