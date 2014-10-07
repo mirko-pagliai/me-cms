@@ -24,12 +24,12 @@
  * @package		MeCms\Controller
  */
 
-App::uses('MeToolsAppController', 'MeTools.Controller');
+App::uses('AppController', 'Controller');
 
 /**
  * Application level controller.
  */
-class MeCmsAppController extends MeToolsAppController {
+class MeCmsAppController extends AppController {
 	/**
 	 * Components
 	 * @var array
@@ -95,6 +95,14 @@ class MeCmsAppController extends MeToolsAppController {
 	}
 	
 	/**
+	 * Checks if this is an admin request
+	 * @return boolean TRUE if is an admin request, otherwise FALSE
+	 */
+	protected function isAdminRequest() {
+		return !empty($this->request->params['admin']);
+	}
+	
+	/**
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
@@ -105,7 +113,10 @@ class MeCmsAppController extends MeToolsAppController {
 		//Loads and gets the configuration
 		$this->config = $this->_getConfig();
 		
-		parent::beforeFilter();
+		//Sets the element that will be used for flash auth errors
+		//http://stackoverflow.com/a/20545037/1480263
+		if(!empty($this->Auth))
+			$this->Auth->flash['element'] = 'MeTools.error';
 		
 		Configure::write('Session.timeout', $this->config['timeout']);
 		
@@ -124,6 +135,8 @@ class MeCmsAppController extends MeToolsAppController {
 			
 		//Sets the layout
 		$this->layout = $this->isAdminRequest() ? 'backend' : 'frontend';
+		
+		parent::beforeFilter();
 	}
 	
 	/**
@@ -131,8 +144,12 @@ class MeCmsAppController extends MeToolsAppController {
 	 * It's used to perform logic or set view variables that are required on every request.
 	 */
 	public function beforeRender() {
-		//Sets the configuration array
-		$this->set('config', $this->config);
+		//Sets the user authentication data, the configuration array and the 'isMobile' var
+		$this->set(array(
+			'auth'		=> empty($this->Auth) ? FALSE : $this->Auth->user(),
+			'config'	=> $this->config,
+			'isMobile'	=> $this->request->isMobile()
+		));
 		
 		parent::beforeRender();
 	}
