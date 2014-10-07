@@ -27,7 +27,7 @@
 
 <?php
 	//Gets a random photo
-	$photo = $this->requestAction(array('controller' => 'photos', 'action' => 'request_random'));
+	$photo = $this->requestAction(array('controller' => 'photos', 'action' => 'request_random', 'plugin' => 'me_cms'));
 ?>
 
 <?php if(!empty($photo)): ?>

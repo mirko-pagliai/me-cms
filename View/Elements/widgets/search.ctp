@@ -29,7 +29,7 @@
 	<?php 
 		echo $this->Html->h4(__d('me_cms', 'Search posts'));
 		
-		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search')));
+		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search', 'plugin' => 'me_cms')));
 		echo $this->Form->input('p', array(
 			'default'		=> empty($pattern) ? NULL : $pattern,
 			'placeholder'	=> __d('me_cms', 'Search...')
