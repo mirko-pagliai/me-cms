@@ -34,7 +34,7 @@
 	<div class="widget sidebar-widget">
 		<?php 
 			echo $this->Html->h4(__d('me_cms', 'Categories'));
-			echo $this->Form->create(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'index')));
+			echo $this->Form->create(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms')));
 			echo $this->Form->input('category', array(
 				'empty'		=> __d('me_cms', 'Select a category'),
 				'label'		=> FALSE,
