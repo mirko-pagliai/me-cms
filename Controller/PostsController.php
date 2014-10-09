@@ -160,19 +160,51 @@ class PostsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Gets the list of the latest posts.
+	 * Gets the latest posts.
 	 * This method works only with `requestAction()`.
 	 * @param int $limit Number of latest posts
-	 * @return array List of latest posts
+	 * @return array Latest posts
 	 * @throws ForbiddenException
 	 */
-	public function request_latest($limit = 10) {
+	public function request_latest($limit = 5) {
 		//This method works only with "requestAction()"
 		if(empty($this->request->params['requested']))
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
 		$posts = Cache::read($cache = 'posts_request_latest', 'posts');
+		
+		//If the data are not available from the cache
+        if(empty($posts)) {
+            $posts = $this->Post->find('active', array(
+				'contain'	=> array(
+					'Category'	=> array('title', 'slug'),
+					'User'		=> array('first_name', 'last_name')
+				),
+				'fields'	=> array('id', 'title', 'slug', 'text', 'created'),
+				'limit'		=> $limit
+			));
+			
+            Cache::write($cache, $posts, 'posts');
+        }
+		
+		return $posts;
+	}
+	
+	/**
+	 * Gets the latest posts as list.
+	 * This method works only with `requestAction()`.
+	 * @param int $limit Number of latest posts
+	 * @return array List of latest posts
+	 * @throws ForbiddenException
+	 */
+	public function request_latest_list($limit = 10) {
+		//This method works only with "requestAction()"
+		if(empty($this->request->params['requested']))
+            throw new ForbiddenException();
+		
+		//Tries to get data from the cache
+		$posts = Cache::read($cache = 'posts_request_latest_list', 'posts');
 		
 		//If the data are not available from the cache
         if(empty($posts)) {

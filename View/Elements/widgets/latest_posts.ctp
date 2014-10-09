@@ -26,8 +26,8 @@
 ?>
 
 <?php				
-	//Gets the latest posts
-	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'request_latest', 'plugin' => 'me_cms', 10));
+	//Gets the list of latest posts
+	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'request_latest_list', 'plugin' => 'me_cms', 10));
 ?>
 
 <?php if(!empty($posts)): ?>
