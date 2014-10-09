@@ -31,7 +31,7 @@
 			<?php
 				if(!empty($this->fetch('title')))
 					echo $this->Html->h3($this->Html->link($this->fetch('title'), 
-						am(array('controller' => 'pages', 'action' => 'view'), $this->request->params['pass'])),
+						am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
 						array('class' => 'page-title')
 					);
 			?>
