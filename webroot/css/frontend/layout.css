@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* Header */
 #header {
 	background: #f9f9f9;
-    box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .5);
+    box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .3);
 	margin-bottom: 35px;
 }
 
