@@ -24,52 +24,10 @@
 ?>
 
 <div class="posts index">
-	<?php foreach($posts as $post): ?>
-		<div class="post-container clearfix">
-			<div class="post-header">
-				<?php
-					echo $this->Html->h4(
-						$this->Html->link($post['Category']['title'], array('action' => 'index', $post['Category']['slug'])),
-						array('class' => 'post-category')
-					);
-
-					echo $this->Html->h3(
-						$this->Html->link($post['Post']['title'], array('controller' => 'posts', 'action' => 'view', $post['Post']['slug'])),
-						array('class' => 'post-title')
-					);
-				?>
-				<div class="post-info">
-					<?php
-						if(!empty($post['User']['first_name']) && !empty($post['User']['last_name']))
-							echo $this->Html->div('post-author',
-								__d('me_cms', 'Posted by %s', sprintf('%s %s', $post['User']['first_name'], $post['User']['last_name'])),
-								array('icon' => 'user')
-							);
-						
-						if(!empty($post['Post']['created']))
-							echo $this->Html->div('post-created',
-								__d('me_cms', 'Posted on %s', $this->Time->format($post['Post']['created'], $config['datetime']['long'])),
-								array('icon' => 'clock-o')
-							);
-					?>
-				</div>
-			</div>
-			<?php
-				echo $this->Html->div('post-content', $truncate = $this->Text->truncate(
-					$post['Post']['text'], $config['truncate_to'], array('exact' => FALSE, 'html' => TRUE)
-				));
-			?>
-			<div class="post-buttons pull-right">
-				<?php
-					//If the text has been truncated, it shows the "Read more" link
-					if($truncate !== $post['Post']['text'])
-						echo $this->Html->button(__d('me_cms', 'Read more'),
-							array('controller' => 'posts', 'action' => 'view', $post['Post']['slug']),
-							array('class' => 'post-readmore')
-						);
-				?>
-			</div>
-		</div>
-	<?php endforeach; ?>
-	<?php echo $this->element('MeTools.paginator'); ?>
+	<?php 
+		foreach($posts as $post)
+			echo $this->element('view/post', array('post' => $post, 'truncate' => TRUE));
+	
+		echo $this->element('MeTools.paginator');
+	?>
 </div>
