@@ -32,13 +32,13 @@
 		<?php
 			if(!empty($post['Category']['title']) && !empty($post['Category']['slug']))
 				echo $this->Html->h4($this->Html->link($post['Category']['title'],
-					array('controller' => 'posts', 'action' => 'index', $post['Category']['slug'])),
+					array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms', $post['Category']['slug'])),
 					array('class' => 'post-category')
 				);
 
 			if(!empty($post['Post']['title']) && !empty($post['Post']['slug']))
 				echo $this->Html->h3($this->Html->link($post['Post']['title'],
-					array('controller' => 'posts', 'action' => 'view', $post['Post']['slug'])),
+					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug'])),
 					array('class' => 'post-title')
 				);
 		?>
@@ -75,7 +75,7 @@
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
 			if(!empty($truncate) && $truncate !== $post['Post']['text'])
 				echo $this->Html->button(__d('me_cms', 'Read more'),
-					array('controller' => 'posts', 'action' => 'view', $post['Post']['slug']),
+					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
 					array('class' => 'post-readmore')
 				);
 		?>
