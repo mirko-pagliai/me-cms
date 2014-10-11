@@ -55,7 +55,7 @@
 		?>
 	</head>
 	<body>
-		<?php echo $this->element('admin_topbar', array(), array('cache' => TRUE)); ?>
+		<?php echo $this->element('backend/topbar', array(), array('cache' => TRUE)); ?>
 		<div class="container-fluid">
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
 				<div class="row">
