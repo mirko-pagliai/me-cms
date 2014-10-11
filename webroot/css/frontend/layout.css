@@ -112,9 +112,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* Content, index and view actions, title */
 #content .index > h2, #content .view > h2 {
 	border-left: 4px solid #777;
-	font-size: 22px;    
+	font-size: 24px;    
 	margin: 0 0 10px;
-    padding: 5px 0 5px 10px;
+    padding: 5px 0 8px 10px;
 }
 
 /* -------------------------------- */
