@@ -22,7 +22,7 @@ $config = array(
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text
-		'truncate_to' => 1500,
+		'truncate_to' => 1000,
 		//Widgets
 		'widgets' => array('search', 'categories', 'latest_posts', 'random_photo', 'pages')
 	),
