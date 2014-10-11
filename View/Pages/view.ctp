@@ -23,10 +23,4 @@
  */
 ?>
 
-<?php
-	$this->extend('/Common/page');
-	$this->assign('created', $page['Page']['created']);
-	$this->assign('title', $page['Page']['title']);
-	
-	echo $page['Page']['text'];
-?>
+<?php echo $this->Html->div('pages view', $this->element('view/page', compact('page'))); ?>
