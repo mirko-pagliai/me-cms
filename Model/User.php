@@ -142,8 +142,8 @@ class User extends MeCmsAppModel {
 				'rule'		=> array('between', 2, 40)
 			),
 			'first_name' => array(
-				'message'	=> 'Allowed chars: letters, comma, apostrophe',
-				'rule'		=> array('custom', '/^[A-z\',\ ]+$/')
+				'message'	=> 'Allowed chars: letters, apostrophe, space',
+				'rule'		=> array('custom', '/^[A-z\'\ ]+$/')
 			)
 		),
 		'last_name' => array(
@@ -153,8 +153,8 @@ class User extends MeCmsAppModel {
 				'rule'		=> array('between', 2, 40)
 			),
 			'last_name' => array(
-				'message'	=> 'Allowed chars: letters, comma, apostrophe',
-				'rule'		=> array('custom', '/^[A-z\',\ ]+$/')
+				'message'	=> 'Allowed chars: letters, apostrophe, space',
+				'rule'		=> array('custom', '/^[A-z\'\ ]+$/')
 			)
 		),
 		'active' => array(
