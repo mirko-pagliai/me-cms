@@ -168,7 +168,7 @@ class MenuHelper extends MeHtmlHelper {
 		
 		$menu = array(
 			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache')),
-			$this->link(__d('me_cms', 'Checkup'),			array('controller' => 'systems', 'action' => 'checkup'))
+			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup'))
 		);
 		
 		if($type == 'dropdown')
