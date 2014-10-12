@@ -60,7 +60,7 @@
 									echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
 										'div'			=> array('class' => 'photo-description'),
 										'label'			=> FALSE,
-										'placeholder'	=> __d('me_cms', 'Description...'),
+										'placeholder'	=> sprintf('%s...', __d('me_cms', 'Description')),
 										'rows'			=> 2,
 										'type'			=> 'textarea'
 									));
