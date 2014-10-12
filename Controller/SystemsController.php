@@ -114,9 +114,9 @@ class SystemsController extends MeCmsAppController {
 		$success = Cache::clearGroup('pages', 'pages') && Cache::clearGroup('photos', 'photos') && Cache::clearGroup('posts', 'posts');
 		
 		if($success && System::clearCache())
-			$this->Session->flash(__('The cache has been cleared'), 'success');
+			$this->Session->flash(__d('me_cms', 'The cache has been cleared'), 'success');
 		else
-			$this->Session->flash(__('The cache has not been cleared'), 'error');
+			$this->Session->flash(__d('me_cms', 'The cache has not been cleared'), 'error');
 		
 		$this->redirect(array('action' => 'cache'));
 		
@@ -130,9 +130,9 @@ class SystemsController extends MeCmsAppController {
 		$this->request->onlyAllow('post', 'delete');
 		
 		if(System::clearThumbs())
-			$this->Session->flash(__('Thumbnails have been deleted'), 'success');
+			$this->Session->flash(__d('me_cms', 'Thumbnails have been deleted'), 'success');
 		else
-			$this->Session->flash(__('Thumbnails have not been deleted'), 'error');
+			$this->Session->flash(__d('me_cms', 'Thumbnails have not been deleted'), 'error');
 		
 		$this->redirect(array('action' => 'cache'));
 	}
