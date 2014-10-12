@@ -31,7 +31,7 @@
 	
 		echo $this->Html->ul(array(
 			$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $user['User']['id']), array('icon' => 'pencil')),
-			$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $user['User']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this user?'))
+			$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $user['User']['id']), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'))
 		), array('class' => 'actions'));
 	?>
 	
@@ -98,7 +98,7 @@
 					<td class="actions">
 						<?php echo $this->Html->linkButton(NULL, array('controller' => 'posts', 'action' => 'view', $post['id']), array('icon' => 'eye', 'tooltip' => __d('me_cms', 'View'))); ?>
 						<?php echo $this->Html->linkButton(NULL, array('controller' => 'posts', 'action' => 'edit', $post['id']), array('icon' => 'pencil', 'tooltip' => __d('me_cms', 'Edit'))); ?>
-						<?php echo $this->Form->postButton(NULL, array('controller' => 'posts', 'action' => 'delete', $post['id']), array('class' => 'btn-danger', 'icon' => 'trash-o', 'tooltip' => __d('me_cms', 'Delete')), __d('me_cms', 'Are you sure you want to delete this record?')); ?>
+						<?php echo $this->Form->postButton(NULL, array('controller' => 'posts', 'action' => 'delete', $post['id']), array('class' => 'btn-danger', 'icon' => 'trash-o', 'tooltip' => __d('me_cms', 'Delete')), __d('me_cms', 'Are you sure you want to delete this?')); ?>
 					</td>
 					<td><?php echo $post['id']; ?></td>
 					<td><?php echo $post['category_id']; ?></td>

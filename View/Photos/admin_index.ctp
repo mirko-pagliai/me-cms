@@ -52,7 +52,7 @@
 
 							//Only admins and managers can delete photos
 							if($this->Auth->isManager())
-								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this photo?'));
+								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
 
 							echo $this->Html->ul($actions, array('class' => 'photo-links'));
 						?>

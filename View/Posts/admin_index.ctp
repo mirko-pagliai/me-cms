@@ -61,7 +61,7 @@
 						
 						//Only admins and managers can delete posts
 						if($this->Auth->isManager())
-							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this post?'));
+							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
 						
 						echo $this->Html->ul($actions, array('class' => 'actions'));
 					?>
