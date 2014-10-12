@@ -89,7 +89,7 @@ class PhotosController extends MeCmsAppController {
 		
 		//Checks for photos
 		if(empty($tmpPhotos)) {
-			$this->Session->flash(__d('me_cms', 'There is no photo in the temporary directory %s', Album::getTmpPath()), 'error');
+			$this->Session->flash(__d('me_cms', 'There are no photos in the temporary directory %s', Album::getTmpPath()), 'error');
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
