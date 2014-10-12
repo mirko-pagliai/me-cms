@@ -1,0 +1,1065 @@
+# LANGUAGE translation of MeCms
+# Copyright 2014 Mirko Pagliai <mirko.pagliai@gmail.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2014-10-12 18:04+0200\n"
+"PO-Revision-Date: 2014-10-12 18:07+0200\n"
+"Last-Translator: Mirko Pagliai\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
+
+#: Controller/MeCmsAppController.php:88
+msgid "The configuration file for %s was not found"
+msgstr "Il file di configurazione per %s non è stato trovato"
+
+#: Controller/MeCmsAppController.php:131
+msgid "The theme %s was not found"
+msgstr "Il tema %s non è stato trovato"
+
+#: Controller/PagesController.php:65;185
+#: View/Elements/frontend/topbar.ctp:46
+#: View/Elements/widgets/pages.ctp:36
+#: View/Helper/MenuHelper.php:68
+#: View/Pages/admin_index.ctp:30
+#: View/Pages/index.ctp:28
+msgid "Pages"
+msgstr "Pagine"
+
+#: Controller/PagesController.php:78
+#: View/Pages/admin_index_statics.ctp:29
+msgid "Static pages"
+msgstr "Pagine statiche"
+
+#: Controller/PagesController.php:89
+msgid "The page has been created"
+msgstr "La pagina è stata creata"
+
+#: Controller/PagesController.php:93
+msgid "The page could not be created. Please, try again"
+msgstr "La pagina non può essere creata. Prova ancora"
+
+#: Controller/PagesController.php:96
+#: View/Helper/MenuHelper.php:63
+#: View/Pages/admin_add.ctp:34;71
+msgid "Add page"
+msgstr "Aggiungi pagina"
+
+#: Controller/PagesController.php:106;133;224
+msgid "Invalid page"
+msgstr "Pagina non valida"
+
+#: Controller/PagesController.php:110
+msgid "The page has been edited"
+msgstr "La pagina è stata modifica"
+
+#: Controller/PagesController.php:114
+msgid "The page could not be edited. Please, try again"
+msgstr "La pagina non può essere modificata. Prova ancora"
+
+#: Controller/PagesController.php:122
+#: View/Pages/admin_edit.ctp:34;71
+msgid "Edit page"
+msgstr "Modifica pagina"
+
+#: Controller/PagesController.php:138
+msgid "The page has been deleted"
+msgstr "La pagina è stata cancellata"
+
+#: Controller/PagesController.php:140
+msgid "The page was not deleted"
+msgstr "La pagina non è stata cancellata"
+
+#: Controller/PhotosAlbumsController.php:59;158
+#: View/PhotosAlbums/admin_index.ctp:30
+msgid "Photos albums"
+msgstr "Album"
+
+#: Controller/PhotosAlbumsController.php:70
+msgid "The photos album has been created"
+msgstr "L'album è stato creato"
+
+#: Controller/PhotosAlbumsController.php:74
+msgid "The photos album could not be created. Please, try again"
+msgstr "L'album non può essere creato. Prova ancora"
+
+#: Controller/PhotosAlbumsController.php:77
+#: View/PhotosAlbums/admin_add.ctp:32;52
+msgid "Add photos album"
+msgstr "Aggiungi album"
+
+#: Controller/PhotosAlbumsController.php:87;114;183
+#: Controller/PhotosController.php:57
+msgid "Invalid photos album"
+msgstr "Album non valido"
+
+#: Controller/PhotosAlbumsController.php:91
+msgid "The photos album has been edited"
+msgstr "L'album è stato modificato"
+
+#: Controller/PhotosAlbumsController.php:95
+msgid "The photos album could not be edited. Please, try again"
+msgstr "L'album  non può essere modificato. Prova ancora"
+
+#: Controller/PhotosAlbumsController.php:103
+#: View/PhotosAlbums/admin_edit.ctp:32;52
+msgid "Edit photos album"
+msgstr "Modifica album"
+
+#: Controller/PhotosAlbumsController.php:121
+msgid "The photos album has been deleted"
+msgstr "L'album è stato cancellato"
+
+#: Controller/PhotosAlbumsController.php:123
+msgid "The photos album was not deleted"
+msgstr "L'album non è stato cancellato"
+
+#: Controller/PhotosAlbumsController.php:126
+msgid ""
+"Before you delete this album, you have to delete its photos or assign them to "
+"another album"
+msgstr ""
+"Prima di cancellare questo album, devi cancellare le sue foto o assegnarle a "
+"un altro album"
+
+#: Controller/PhotosController.php:68
+#: View/Elements/frontend/topbar.ctp:47
+#: View/Helper/MenuHelper.php:117
+#: View/Photos/admin_index.ctp:32
+#: View/PhotosAlbums/admin_index.ctp:37
+#: View/Systems/admin_checkup.ctp:73
+msgid "Photos"
+msgstr "Foto"
+
+#: Controller/PhotosController.php:83
+msgid "Before you can add photos, you have to create at least an album"
+msgstr "Prima di aggiungere foto, devi creare almeno un album"
+
+#: Controller/PhotosController.php:92
+msgid "There are no photos in the temporary directory %s"
+msgstr "Non ci sono foto nella directory temporanea %s"
+
+#: Controller/PhotosController.php:113
+msgid "The photos has been saved"
+msgstr "Le foto sono state salvate"
+
+#: Controller/PhotosController.php:117
+msgid "The photos could not be saved. Please, try again"
+msgstr "Le foto non possono essere salvate. Prova ancora"
+
+#: Controller/PhotosController.php:124
+#: View/Helper/MenuHelper.php:111
+#: View/Photos/admin_add.ctp:33;74
+msgid "Add photos"
+msgstr "Aggiungi foto"
+
+#: Controller/PhotosController.php:137;172;216
+msgid "Invalid photo"
+msgstr "Foto non valida"
+
+#: Controller/PhotosController.php:147
+msgid "The photo has been edited"
+msgstr "La foto è stata modificata"
+
+#: Controller/PhotosController.php:151
+msgid "The photo could not be edited. Please, try again"
+msgstr "La foto non può essere modificata. Prova ancora"
+
+#: Controller/PhotosController.php:160
+#: View/Photos/admin_edit.ctp:32;49
+msgid "Edit photo"
+msgstr "Modifica foto"
+
+#: Controller/PhotosController.php:179
+msgid "The photo has been deleted"
+msgstr "La foto è stata cancellata"
+
+#: Controller/PhotosController.php:181
+msgid "The photo was not deleted"
+msgstr "La foto non è stata cancellata"
+
+#: Controller/PhotosController.php:228
+msgid "Photo"
+msgstr "Foto"
+
+#: Controller/PostsCategoriesController.php:53
+#: View/PostsCategories/admin_index.ctp:30
+msgid "Posts categories"
+msgstr "Categorie"
+
+#: Controller/PostsCategoriesController.php:64
+msgid "The posts category has been created"
+msgstr "La categoria è stata creata"
+
+#: Controller/PostsCategoriesController.php:68
+msgid "The posts category could not be created. Please, try again"
+msgstr "La categoria non può essere creata. Prova ancora"
+
+#: Controller/PostsCategoriesController.php:73
+#: View/PostsCategories/admin_add.ctp:32;54
+msgid "Add posts category"
+msgstr "Aggiungi categoria"
+
+#: Controller/PostsCategoriesController.php:84;114
+msgid "Invalid posts category"
+msgstr "Categoria non valida"
+
+#: Controller/PostsCategoriesController.php:88
+msgid "The posts category has been edited"
+msgstr "La categoria è stata modificata"
+
+#: Controller/PostsCategoriesController.php:92
+msgid "The posts category could not be edited. Please, try again"
+msgstr "La categoria non può essere modificata. Prova ancora"
+
+#: Controller/PostsCategoriesController.php:102
+#: View/PostsCategories/admin_edit.ctp:32;55
+msgid "Edit posts category"
+msgstr "Modifica categoria"
+
+#: Controller/PostsCategoriesController.php:121
+msgid "The posts category has been deleted"
+msgstr "La categoria è stata cancellata"
+
+#: Controller/PostsCategoriesController.php:123
+msgid "The posts category was not deleted"
+msgstr "La categoria non è stata cancellata"
+
+#: Controller/PostsCategoriesController.php:126
+msgid ""
+"Before you delete this category, you have to delete its posts or assign them "
+"to another category"
+msgstr ""
+"Prima di cancellare questa categoria, devi cancellare i suoi articoli o "
+"assegnarli a un'altra categoria"
+
+#: Controller/PostsCategoriesController.php:188
+#: View/Elements/frontend/topbar.ctp:45
+#: View/Elements/widgets/categories.ctp:36
+#: View/PostsCategories/index.ctp:28
+msgid "Categories"
+msgstr "Categorie"
+
+#: Controller/PostsController.php:68;275
+#: View/Helper/MenuHelper.php:96
+#: View/Posts/admin_index.ctp:30
+#: View/PostsCategories/admin_index.ctp:37
+#: View/Users/admin_index.ctp:39
+#: View/Users/admin_view.ctp:65
+msgid "Posts"
+msgstr "Articoli"
+
+#: Controller/PostsController.php:82
+msgid "Before you can add a post, you have to create at least a category"
+msgstr "Prima di aggiungere un articolo, devi creare almeno una categoria"
+
+#: Controller/PostsController.php:93
+msgid "The post has been created"
+msgstr "L'articolo è stato creato"
+
+#: Controller/PostsController.php:97
+msgid "The post could not be created. Please, try again"
+msgstr "L'articolo non può essere creato. Prova ancora"
+
+#: Controller/PostsController.php:102
+#: View/Helper/MenuHelper.php:85
+#: View/Posts/admin_add.ctp:34;79
+msgid "Add post"
+msgstr "Aggiungi articolo"
+
+#: Controller/PostsController.php:115;150;305
+msgid "Invalid post"
+msgstr "Articolo non valido"
+
+#: Controller/PostsController.php:123
+msgid "The post has been edited"
+msgstr "L'articolo è stato modificato"
+
+#: Controller/PostsController.php:127
+msgid "The post could not be edited. Please, try again"
+msgstr "L'articolo non può essere modificato. Prova ancora"
+
+#: Controller/PostsController.php:137
+#: View/Posts/admin_edit.ctp:34;76
+msgid "Edit post"
+msgstr "Modifica articolo"
+
+#: Controller/PostsController.php:155
+msgid "The post has been deleted"
+msgstr "L'articolo è stato cancellato"
+
+#: Controller/PostsController.php:157
+msgid "The post was not deleted"
+msgstr "L'articolo non è stato cancellato"
+
+#: Controller/PostsController.php:336
+msgid "You have to search at least a word of %d characters"
+msgstr "Devi cercare un parola di almeno %d caratteri"
+
+#: Controller/PostsController.php:340
+#: View/Elements/widgets/search.ctp:30
+#: View/Posts/search.ctp:28
+msgid "Search posts"
+msgstr "Cerca articoli"
+
+#: Controller/SystemsController.php:117
+msgid "The cache has been cleared"
+msgstr "La cache è stata svuotata"
+
+#: Controller/SystemsController.php:119
+msgid "The cache has not been cleared"
+msgstr "La cache non è stata svuotata"
+
+#: Controller/SystemsController.php:133
+msgid "Thumbnails have been deleted"
+msgstr "Le miniature sono state cancellate"
+
+#: Controller/SystemsController.php:135
+msgid "Thumbnails have not been deleted"
+msgstr "Le miniature non sono state cancellate"
+
+#: Controller/UsersController.php:73
+#: View/Helper/MenuHelper.php:150
+#: View/Users/admin_index.ctp:30
+#: View/UsersGroups/admin_index.ctp:37
+msgid "Users"
+msgstr "Utenti"
+
+#: Controller/UsersController.php:84;126;161
+msgid "Invalid user"
+msgstr "Utente non valido"
+
+#: Controller/UsersController.php:94
+msgid "View user"
+msgstr "Vedi utente"
+
+#: Controller/UsersController.php:105
+msgid "The user has been created"
+msgstr "L'utente è stato creato"
+
+#: Controller/UsersController.php:109
+msgid "The user could not be created. Please, try again"
+msgstr "L'utente non può essere creato. Prova ancora"
+
+#: Controller/UsersController.php:114
+#: View/Helper/MenuHelper.php:139
+#: View/Users/admin_add.ctp:29;61
+msgid "Add user"
+msgstr "Aggiungi utente"
+
+#: Controller/UsersController.php:134
+msgid "The user has been edited"
+msgstr "L'utente è stato modificato"
+
+#: Controller/UsersController.php:138
+msgid "The user could not be edited. Please, try again"
+msgstr "L'utente non può essere modificato. Prova ancora"
+
+#: Controller/UsersController.php:149
+#: View/Users/admin_edit.ctp:29;54
+msgid "Edit user"
+msgstr "Modifica utente"
+
+#: Controller/UsersController.php:168
+msgid "The user has been deleted"
+msgstr "L'utente è stato cancellato"
+
+#: Controller/UsersController.php:170
+msgid "The user was not deleted"
+msgstr "L'utente non è stato cancellato"
+
+#: Controller/UsersController.php:173
+msgid "You cannot delete this user, because he's the admin founder"
+msgstr "Non puoi cancellare questo utente, perché è l'amministratore fondatore"
+
+#: Controller/UsersController.php:175
+msgid ""
+"Before you delete this user, you have to delete his posts or assign them to "
+"another user"
+msgstr ""
+"Prima di cancellare questo utente, devi cancellare i suoi articoli o "
+"assegnarli a un altro utente"
+
+#: Controller/UsersController.php:189
+msgid "The password has been edited"
+msgstr "La password è stata modificata"
+
+#: Controller/UsersController.php:193
+msgid "The password has not been edited. Please, try again"
+msgstr "La password non è stata modificata. Prova ancora"
+
+#: Controller/UsersController.php:196
+#: View/Elements/backend/topbar.ctp:58
+#: View/Users/admin_change_password.ctp:27;49
+msgid "Change password"
+msgstr "Cambia password"
+
+#: Controller/UsersController.php:208
+msgid "You are already logged in"
+msgstr "Sei già loggato"
+
+#: Controller/UsersController.php:222
+msgid "Your account has been banned by an admin"
+msgstr "Il tuo account è stato bannato da un amministratore"
+
+#: Controller/UsersController.php:227
+msgid "Your account has not been activated yet"
+msgstr "Il tuo account non è stato ancora attivato"
+
+#: Controller/UsersController.php:235
+msgid "Invalid username or password"
+msgstr "Username o password non validi"
+
+#: Controller/UsersController.php:238
+#: View/Users/login.ctp:43
+msgid "Login"
+msgstr "Login"
+
+#: Controller/UsersController.php:248
+msgid "You are successfully logged out"
+msgstr "Ti sei disconnesso correttamente"
+
+#: Controller/UsersGroupsController.php:55
+#: View/UsersGroups/admin_index.ctp:30
+msgid "Users groups"
+msgstr "Gruppi utenti"
+
+#: Controller/UsersGroupsController.php:66
+msgid "The users group has been created"
+msgstr "Il gruppo utenti è stato creato"
+
+#: Controller/UsersGroupsController.php:70
+msgid "The users group could not be created. Please, try again"
+msgstr "Il gruppo utenti non può essere creato. Prova ancora"
+
+#: Controller/UsersGroupsController.php:73
+#: View/UsersGroups/admin_add.ctp:29;41
+msgid "Add users group"
+msgstr "Aggiungi gruppo utenti"
+
+#: Controller/UsersGroupsController.php:84;112
+msgid "Invalid users group"
+msgstr "Gruppo utenti non valido"
+
+#: Controller/UsersGroupsController.php:88
+msgid "The users group has been edited"
+msgstr "Il gruppo utente è stato modificato"
+
+#: Controller/UsersGroupsController.php:92
+msgid "The users group could not be edited. Please, try again"
+msgstr "Il gruppo utenti non è stato modificato. Prova ancora"
+
+#: Controller/UsersGroupsController.php:100
+#: View/UsersGroups/admin_edit.ctp:29;42
+msgid "Edit users group"
+msgstr "Modifica gruppo utenti"
+
+#: Controller/UsersGroupsController.php:119
+msgid "The users group has been deleted"
+msgstr "Il gruppo utenti è stato cancellato"
+
+#: Controller/UsersGroupsController.php:121
+msgid "The users group was not deleted"
+msgstr "Il gruppo utente non è stato cancellato"
+
+#: Controller/UsersGroupsController.php:124
+msgid "You cannot delete this users group, because it's a necessary group"
+msgstr ""
+"Non puoi cancellare questo gruppo utenti, perché è un gruppo necessario"
+
+#: Controller/UsersGroupsController.php:126
+msgid ""
+"Before you delete this users group, you have to delete its users or assign "
+"them to another group"
+msgstr ""
+"Prima di cancellare questo gruppo utenti, devi cancellare i suoi utenti o "
+"assegnarli a un altro gruppo"
+
+#: View/Elements/backend/topbar.ctp:33
+#: View/Elements/frontend/topbar.ctp:33
+msgid "Toggle navigation"
+msgstr "Cambia navigazione"
+
+#: View/Elements/backend/topbar.ctp:45
+#: View/Elements/frontend/topbar.ctp:44
+msgid "Home"
+msgstr "Home"
+
+#: View/Elements/backend/topbar.ctp:59
+msgid "Logout"
+msgstr "Logout"
+
+#: View/Elements/frontend/footer.ctp:30
+msgid "Powered by %s. Copyright %s"
+msgstr "Powered by %s. Copyright %s"
+
+#: View/Elements/frontend/footer.ctp:31
+msgid "Developed by %s for %s"
+msgstr "Sviluppato da %s per %s"
+
+#: View/Elements/view/page.ctp:43
+#: View/Elements/view/post.ctp:56
+msgid "Posted on %s"
+msgstr "Pubblicato il %s"
+
+#: View/Elements/view/page.ctp:65
+#: View/Elements/view/post.ctp:77
+msgid "Read more"
+msgstr "Leggi tutto"
+
+#: View/Elements/view/post.ctp:49
+msgid "Posted by %s"
+msgstr "Pubblicato da %s"
+
+#: View/Elements/widgets/categories.ctp:39
+msgid "Select a category"
+msgstr "Seleziona una categoria"
+
+#: View/Elements/widgets/latest_posts.ctp:36
+msgid "Latest posts"
+msgstr "Ultimi articoli"
+
+#: View/Elements/widgets/random_photo.ctp:36
+msgid "Random photo"
+msgstr "Foto casuale"
+
+#: View/Elements/widgets/search.ctp:35
+msgid "Search"
+msgstr "Cerca"
+
+#: View/Helper/MenuHelper.php:58
+msgid "List pages"
+msgstr "Lista pagine"
+
+#: View/Helper/MenuHelper.php:65
+msgid "List static pages"
+msgstr "Lista pagine statiche"
+
+#: View/Helper/MenuHelper.php:84
+msgid "List posts"
+msgstr "Lista articoli"
+
+#: View/Helper/MenuHelper.php:91
+msgid "List categories"
+msgstr "Lista categorie"
+
+#: View/Helper/MenuHelper.php:92
+msgid "Add category"
+msgstr "Aggiungi categoria"
+
+#: View/Helper/MenuHelper.php:112
+msgid "List albums"
+msgstr "Lista album"
+
+#: View/Helper/MenuHelper.php:113
+msgid "Add album"
+msgstr "Aggiungi album"
+
+#: View/Helper/MenuHelper.php:138
+msgid "List users"
+msgstr "Lista utenti"
+
+#: View/Helper/MenuHelper.php:145
+msgid "List groups"
+msgstr "Lista gruppi"
+
+#: View/Helper/MenuHelper.php:146
+msgid "Add group"
+msgstr "Aggiungi gruppo"
+
+#: View/Helper/MenuHelper.php:170
+#: View/Systems/admin_cache.ctp:30
+msgid "Cache and thumbs"
+msgstr "Cache e miniature"
+
+#: View/Helper/MenuHelper.php:171
+#: View/Systems/admin_checkup.ctp:30
+msgid "System checkup"
+msgstr "Checkup del sistema"
+
+#: View/Helper/MenuHelper.php:175
+msgid "System"
+msgstr "Sistema"
+
+#: View/Pages/admin_add.ctp:40
+#: View/Pages/admin_edit.ctp:40
+#: View/Posts/admin_add.ctp:48
+#: View/Posts/admin_edit.ctp:45
+msgid "If blank, the current date and time will be used"
+msgstr "Se vuoto, saranno usate la data e l'orario correnti"
+
+#: View/Pages/admin_add.ctp:41
+#: View/Pages/admin_edit.ctp:41
+#: View/Posts/admin_add.ctp:49
+#: View/Posts/admin_edit.ctp:46
+msgid "You can delay the publication by entering a future date"
+msgstr "Puoi posticipare la pubblicazione inserendo una data futura"
+
+#: View/Pages/admin_add.ctp:47
+#: View/Pages/admin_edit.ctp:47
+#: View/Pages/admin_index.ctp:70
+#: View/Posts/admin_add.ctp:55
+#: View/Posts/admin_edit.ctp:52
+#: View/Posts/admin_index.ctp:77
+msgid "Very low"
+msgstr "Molto basso"
+
+#: View/Pages/admin_add.ctp:48
+#: View/Pages/admin_edit.ctp:48
+#: View/Pages/admin_index.ctp:73
+#: View/Posts/admin_add.ctp:56
+#: View/Posts/admin_edit.ctp:53
+#: View/Posts/admin_index.ctp:80
+msgid "Low"
+msgstr "Basso"
+
+#: View/Pages/admin_add.ctp:49
+#: View/Pages/admin_edit.ctp:49
+#: View/Pages/admin_index.ctp:82
+#: View/Posts/admin_add.ctp:57
+#: View/Posts/admin_edit.ctp:54
+#: View/Posts/admin_index.ctp:89
+msgid "Normal"
+msgstr "Normale"
+
+#: View/Pages/admin_add.ctp:50
+#: View/Pages/admin_edit.ctp:50
+#: View/Pages/admin_index.ctp:76
+#: View/Posts/admin_add.ctp:58
+#: View/Posts/admin_edit.ctp:55
+#: View/Posts/admin_index.ctp:83
+msgid "High"
+msgstr "Alto"
+
+#: View/Pages/admin_add.ctp:51
+#: View/Pages/admin_edit.ctp:51
+#: View/Pages/admin_index.ctp:79
+#: View/Posts/admin_add.ctp:59
+#: View/Posts/admin_edit.ctp:56
+#: View/Posts/admin_index.ctp:86
+msgid "Very high"
+msgstr "Molto alto"
+
+#: View/Pages/admin_add.ctp:56
+#: View/Pages/admin_edit.ctp:55
+#: View/PhotosAlbums/admin_add.ctp:38
+#: View/PhotosAlbums/admin_edit.ctp:37
+#: View/Posts/admin_add.ctp:64
+#: View/Posts/admin_edit.ctp:60
+msgid "Published"
+msgstr "Pubblicato"
+
+#: View/Pages/admin_add.ctp:57
+#: View/Pages/admin_edit.ctp:56
+#: View/Posts/admin_add.ctp:65
+#: View/Posts/admin_edit.ctp:61
+msgid "Disable this option to save as a draft"
+msgstr "Disabilita questa opzione per salvare come bozza"
+
+#: View/Pages/admin_add.ctp:66
+#: View/Pages/admin_edit.ctp:66
+#: View/PhotosAlbums/admin_add.ctp:47
+#: View/PhotosAlbums/admin_edit.ctp:47
+#: View/Posts/admin_add.ctp:74
+#: View/Posts/admin_edit.ctp:71
+#: View/PostsCategories/admin_add.ctp:46
+#: View/PostsCategories/admin_edit.ctp:47
+msgid ""
+"The slug is a string identifying a resource. If you do not have special "
+"needs, let it be generated automatically"
+msgstr ""
+"Lo slug è una stringa che identifica una risorsa. Se non hai particolari "
+"necessità, lascia che sia generato automaticamente"
+
+#: View/Pages/admin_index.ctp:31
+#: View/PhotosAlbums/admin_index.ctp:31
+#: View/Posts/admin_index.ctp:31
+#: View/PostsCategories/admin_index.ctp:31
+#: View/Users/admin_index.ctp:31
+#: View/UsersGroups/admin_index.ctp:31
+msgid "Add new"
+msgstr "Aggiungi nuovo"
+
+#: View/Pages/admin_index.ctp:47
+#: View/Posts/admin_index.ctp:49
+msgid "Draft"
+msgstr "Bozza"
+
+#: View/Pages/admin_index.ctp:55
+#: View/Photos/admin_index.ctp:49
+#: View/PhotosAlbums/admin_index.ctp:54
+#: View/Posts/admin_index.ctp:58
+#: View/PostsCategories/admin_index.ctp:47
+#: View/Users/admin_index.ctp:59
+#: View/Users/admin_view.ctp:33;100
+#: View/UsersGroups/admin_index.ctp:47
+msgid "Edit"
+msgstr "Modifica"
+
+#: View/Pages/admin_index.ctp:57
+#: View/Pages/admin_index_statics.ctp:45
+#: View/Photos/admin_index.ctp:50
+#: View/PhotosAlbums/admin_index.ctp:55
+#: View/Posts/admin_index.ctp:60
+#: View/PostsCategories/admin_index.ctp:49
+msgid "Open"
+msgstr "Apri"
+
+#: View/Pages/admin_index.ctp:61
+#: View/Photos/admin_index.ctp:55
+#: View/PhotosAlbums/admin_index.ctp:60
+#: View/Posts/admin_index.ctp:64
+#: View/PostsCategories/admin_index.ctp:48
+#: View/Users/admin_index.ctp:64
+#: View/Users/admin_view.ctp:34;101
+#: View/UsersGroups/admin_index.ctp:48
+msgid "Delete"
+msgstr "Cancella"
+
+#: View/Pages/admin_index.ctp:61
+#: View/Photos/admin_index.ctp:55
+#: View/PhotosAlbums/admin_index.ctp:60
+#: View/Posts/admin_index.ctp:64
+#: View/PostsCategories/admin_index.ctp:48
+#: View/Users/admin_index.ctp:64
+#: View/Users/admin_view.ctp:34;101
+#: View/UsersGroups/admin_index.ctp:48
+msgid "Are you sure you want to delete this?"
+msgstr "Sei sicuro di volerlo cancellare?"
+
+#: View/Pages/admin_index_statics.ctp:32
+msgid "Filename"
+msgstr "Filename"
+
+#: View/Pages/admin_index_statics.ctp:33
+#: View/PostsCategories/admin_index.ctp:35
+#: View/Users/admin_view.ctp:88
+msgid "Title"
+msgstr "Titolo"
+
+#: View/Pages/admin_index_statics.ctp:34
+msgid "Path"
+msgstr "Percorso"
+
+#: View/Photos/admin_add.ctp:42
+msgid "Check all"
+msgstr "Seleziona tutti"
+
+#: View/Photos/admin_add.ctp:43
+msgid "Uncheck all"
+msgstr "Deseleziona tutti"
+
+#: View/Photos/admin_add.ctp:63
+msgid "Description"
+msgstr "Descrizione"
+
+#: View/PhotosAlbums/admin_index.ctp:48
+msgid "Not published"
+msgstr "Non pubblicato"
+
+#: View/PhotosAlbums/admin_index.ctp:53
+#: View/Users/admin_index.ctp:58
+#: View/Users/admin_view.ctp:99
+msgid "View"
+msgstr "Vedi"
+
+#: View/PhotosAlbums/index.ctp:34
+msgid "%s photos"
+msgstr "%s foto"
+
+#: View/Posts/admin_add.ctp:42
+#: View/Posts/admin_edit.ctp:40
+#: View/Posts/admin_index.ctp:36
+msgid "Author"
+msgstr "Autore"
+
+#: View/Posts/admin_index.ctp:39
+msgid "Date"
+msgstr "Data"
+
+#: View/Posts/search.ctp:31
+msgid "You have searched for: %s"
+msgstr "Hai cercato: %s"
+
+#: View/PostsCategories/admin_add.ctp:37
+#: View/PostsCategories/admin_edit.ctp:37
+msgid "Parent category"
+msgstr "Categoria genitore"
+
+#: View/PostsCategories/admin_index.ctp:36
+msgid "Parent"
+msgstr "Genitore"
+
+#: View/Systems/admin_cache.ctp:32
+msgid "Cache"
+msgstr "Cache"
+
+#: View/Systems/admin_cache.ctp:34
+#: View/Systems/admin_checkup.ctp:91
+msgid "The cache is enabled"
+msgstr "La cache è abilitata"
+
+#: View/Systems/admin_cache.ctp:35
+msgid "Cache size: %s"
+msgstr "Dimensioni cache: %s"
+
+#: View/Systems/admin_cache.ctp:36
+msgid ""
+"Note: you should not need to clear the cache, unless you have not edited the "
+"configuration or after an upgrade"
+msgstr ""
+"Nota: non dovresti aver bisogno di svuotare la cache, a meno che tu non abbia "
+"modificato la configurazione o dopo un aggiornamento"
+
+#: View/Systems/admin_cache.ctp:37
+msgid "Clear the cache"
+msgstr "Svuota la cache"
+
+#: View/Systems/admin_cache.ctp:40
+#: View/Systems/admin_checkup.ctp:93
+msgid "The cache is disabled or debugging is active"
+msgstr "La cache è disabilitata o il debug è attivo"
+
+#: View/Systems/admin_cache.ctp:42
+msgid "Thumbs"
+msgstr "Miniature"
+
+#: View/Systems/admin_cache.ctp:43
+msgid "Thumbs size: %s"
+msgstr "Dimensione miniature: %s"
+
+#: View/Systems/admin_cache.ctp:44
+msgid ""
+"Note: you should not need to clear the thumbnails and that this will slow "
+"down the images loading the first time that are displayed. You should clear "
+"thumbnails only when they have reached a large size or when many images are "
+"no longer used"
+msgstr ""
+"Nota: non dovresti aver bisogno di svuotare le miniature e questo rallenterà "
+"il caricamento delle immagini la prima volta che saranno visualizzate. "
+"Dovresti cancellare le miniature solo se queste hanno raggiunto una grossa "
+"dimensione o quando molte immagini non sono più utilizzate"
+
+#: View/Systems/admin_cache.ctp:45
+msgid "Clear thumbs"
+msgstr "Svuota le miniature"
+
+#: View/Systems/admin_checkup.ctp:32;33
+msgid "%s version: %s"
+msgstr "Versione di %s: %s"
+
+#: View/Systems/admin_checkup.ctp:36
+msgid "Plugins"
+msgstr "Plugin"
+
+#: View/Systems/admin_checkup.ctp:38
+msgid "%s plugin version: %s"
+msgstr "Versione del plugin %s: %s"
+
+#: View/Systems/admin_checkup.ctp:47;52
+msgid "The %s module is enabled"
+msgstr "Il modulo %s è abilitato"
+
+#: View/Systems/admin_checkup.ctp:49;54
+msgid "The %s module is not enabled"
+msgstr "Il modulo %s non è abilitato"
+
+#: View/Systems/admin_checkup.ctp:58
+msgid "The %s version is at least %s"
+msgstr "La versione di %s è almeno %s"
+
+#: View/Systems/admin_checkup.ctp:60
+msgid "The %s version is less than %s"
+msgstr "La versione di %s è inferiore a %s"
+
+#: View/Systems/admin_checkup.ctp:63
+msgid "The %s extension is enabled"
+msgstr "L'estensione %s è abilitata"
+
+#: View/Systems/admin_checkup.ctp:65
+msgid "The %s extension is not enabled"
+msgstr "L'estensione %s non è abilitata"
+
+#: View/Systems/admin_checkup.ctp:69
+msgid "%s is available"
+msgstr "%s è disponibile"
+
+#: View/Systems/admin_checkup.ctp:71
+msgid "%s is not available"
+msgstr "%s non è disponibile"
+
+#: View/Systems/admin_checkup.ctp:75
+msgid "The webroot photos directory is readable and writable"
+msgstr "La directory delle foto nella webroot è leggibile e scrivibile"
+
+#: View/Systems/admin_checkup.ctp:77
+msgid "The webroot photos directory is not readable or writable"
+msgstr "La directory delle foto nella webroot non è leggibile o scrivibile"
+
+#: View/Systems/admin_checkup.ctp:79
+msgid "The temporary photos directory is readable and writable"
+msgstr "La directory temporanea delle foto è leggibile e scrivibile"
+
+#: View/Systems/admin_checkup.ctp:81
+msgid "The temporary photos directory is not readable or writable"
+msgstr "La directory temporanea delle foto non è leggibile o scrivibile"
+
+#: View/Systems/admin_checkup.ctp:84
+msgid "Temporary directories"
+msgstr "Directory temporanee"
+
+#: View/Systems/admin_checkup.ctp:86
+msgid "The temporary directory is readable and writable"
+msgstr "La directory temporanea è leggibile e scrivibile"
+
+#: View/Systems/admin_checkup.ctp:88
+msgid "The temporary directory is not readable or writable"
+msgstr "La directory temporanea non è leggibile o scrivibile"
+
+#: View/Systems/admin_checkup.ctp:96
+msgid "The cache is readable and writable"
+msgstr "La cache è leggibile e scrivibile"
+
+#: View/Systems/admin_checkup.ctp:98
+msgid "The cache is not readable or writable"
+msgstr "La cache non è leggibile o scrivibile"
+
+#: View/Systems/admin_checkup.ctp:101
+msgid "The logs directory is readable and writable"
+msgstr "La directory dei log è leggibile e scrivibile"
+
+#: View/Systems/admin_checkup.ctp:103
+msgid "The logs directory is not readable or writable"
+msgstr "La directory dei log non è leggibile o scrivibile"
+
+#: View/Systems/admin_checkup.ctp:106
+msgid "The thumbnail directory is readable and writable"
+msgstr "La directory delle miniature è leggibile e scrivibile"
+
+#: View/Systems/admin_checkup.ctp:108
+msgid "The thumbnail directory is not readable or writable"
+msgstr "La directory delle miniature non è leggibile o scrivibile"
+
+#: View/Users/admin_add.ctp:38
+msgid "If is not active, the user won't be able to login"
+msgstr "Se non è attivo, l'utente non potrà loggarsi"
+
+#: View/Users/admin_add.ctp:55
+#: View/Users/admin_change_password.ctp:44
+#: View/Users/admin_edit.ctp:47
+msgid "Repeat password"
+msgstr "Ripeti password"
+
+#: View/Users/admin_change_password.ctp:34
+msgid "Old password"
+msgstr "Vecchia password"
+
+#: View/Users/admin_change_password.ctp:35
+msgid "Enter your old password"
+msgstr "Inserisci la tua vecchia password"
+
+#: View/Users/admin_change_password.ctp:40
+msgid "Enter your new password"
+msgstr "Inserisci la tua nuova password"
+
+#: View/Users/admin_change_password.ctp:45
+msgid "Repeat your new password"
+msgstr "Ripeti la tua nuova password"
+
+#: View/Users/admin_edit.ctp:43
+msgid ""
+"If you want to change the password just type a new one. Otherwise, leave the "
+"field empty"
+msgstr ""
+"Se vuoi cambiare la password inseriscine una nuova. Altrimenti, lascia questo "
+"campo vuoto"
+
+#: View/Users/admin_index.ctp:36
+#: View/Users/admin_view.ctp:46
+msgid "Name"
+msgstr "Nome"
+
+#: View/Users/admin_index.ctp:50
+#: View/Users/admin_view.ctp:56
+msgid "Banned"
+msgstr "Bannato"
+
+#: View/Users/admin_index.ctp:53
+#: View/Users/admin_view.ctp:59
+msgid "Pending"
+msgstr "In attivazione"
+
+#: View/Users/admin_view.ctp:30
+msgid "User"
+msgstr "Utente"
+
+#: View/Users/admin_view.ctp:40
+#: View/Users/login.ctp:37
+msgid "Username"
+msgstr "Username"
+
+#: View/Users/admin_view.ctp:43
+msgid "Email"
+msgstr "Email"
+
+#: View/Users/admin_view.ctp:49
+msgid "Group"
+msgstr "Gruppo"
+
+#: View/Users/admin_view.ctp:52
+msgid "Status"
+msgstr "Stato"
+
+#: View/Users/admin_view.ctp:62;92
+msgid "Active"
+msgstr "Attivo"
+
+#: View/Users/admin_view.ctp:69;93
+msgid "Created"
+msgstr "Creato"
+
+#: View/Users/admin_view.ctp:77
+msgid "Related posts"
+msgstr "Articoli correlati"
+
+#: View/Users/admin_view.ctp:79
+msgid "New post"
+msgstr "Nuovo articolo"
+
+#: View/Users/admin_view.ctp:85
+msgid "Id"
+msgstr "Id"
+
+#: View/Users/admin_view.ctp:86
+msgid "Category Id"
+msgstr "Id categoria"
+
+#: View/Users/admin_view.ctp:87
+msgid "User Id"
+msgstr "Id utente"
+
+#: View/Users/admin_view.ctp:89
+msgid "Slug"
+msgstr "Slug"
+
+#: View/Users/admin_view.ctp:90
+msgid "Text"
+msgstr "Testo"
+
+#: View/Users/admin_view.ctp:91
+msgid "Priority"
+msgstr "Priorità"
+
+#: View/Users/admin_view.ctp:94
+msgid "Modified"
+msgstr "Modificato"
+
+#: View/Users/login.ctp:41
+msgid "Password"
+msgstr "Password"
+
+
