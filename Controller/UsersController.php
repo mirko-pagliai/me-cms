@@ -186,11 +186,11 @@ class UsersController extends MeCmsAppController {
 		
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->User->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The password has been changed'));
+				$this->Session->flash(__d('me_cms', 'The password has been edited'));
 				$this->redirect('/admin');
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The password has not been changed. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The password has not been edited. Please, try again'), 'error');
 		}
 		
 		$this->set('title_for_layout', __d('me_cms', 'Change password'));
