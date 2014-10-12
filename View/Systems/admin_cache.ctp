@@ -33,7 +33,7 @@
 		if($cacheStatus) {
 			echo $this->Html->para(NULL, __d('me_cms', 'The cache is enabled'));
 			echo $this->Html->para(NULL, __d('me_cms', 'Cache size: %s', $this->Number->toReadableSize($cacheSize)));
-			echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the cache, unless you have not changed the configuration or after an upgrade'));
+			echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade'));
 			echo $this->Form->postButton(__d('me_cms', 'Clear the cache'), array('action' => 'clear_cache'), array('class' => 'btn-success', 'icon' => 'trash-o'));
 		}
 		else
