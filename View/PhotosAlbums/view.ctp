@@ -31,6 +31,7 @@
 ?>
 
 <div class="photosAlbums index">
+	<?php echo $this->Html->h2($album['PhotosAlbum']['title']); ?>
 	<div class='clearfix'>
 		<?php foreach($album['Photo'] as $photo): ?>
 			<div class='col-sm-6 col-md-4'>

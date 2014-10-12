@@ -24,6 +24,7 @@
 ?>
 
 <div class="photosAlbums index">
+	<?php echo $this->Html->h2(__d('me_cms', 'Photos')); ?>
 	<div class='clearfix'>
 		<?php foreach($albums as $album): ?>
 			<div class='col-sm-6 col-md-4'>
