@@ -36,16 +36,20 @@
     background: rgba(0, 0, 0, .4);
     border-radius: 2px;
     bottom: 0;
-	display: none;
     height: 100%;
     left: 0;
+	opacity: 0;
     position: absolute;
     width: 100%;
+	/* Transition for "opacity" propriety */
+	transition: opacity .5s ease-in-out;
+	-moz-transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity .5s ease-in-out;
 }
 
 /* Photos albums, thumbnail on hover, info wrapper */
 .photosAlbums a.thumbnail:hover .info-wrapper {
-	display: block;
+	opacity: 1;
 }
 
 /* Photos albums, thumbnail, info wrapper, information */
