@@ -75,6 +75,7 @@
 .pages .page-header .page-info {
     color: #666;
     font-family: Roboto,sans-serif;
+	font-size: 15px;
     margin-top: 5px;
 }
 
@@ -101,8 +102,9 @@
 /* Buttons, "read more" button */
 .posts .post-buttons .post-readmore {
     background-color: #ddd;
-    color: #666;
+    color: #777;
     font-size: 13px;
+	font-weight: bold;
     padding: 5px 10px;
 }
 
@@ -116,5 +118,5 @@
 
 /* Buttons, "read more" button on hover */
 .posts .post-buttons .post-readmore:hover {
-	color: #222;
+	color: #444;
 }
