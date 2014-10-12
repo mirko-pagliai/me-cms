@@ -27,18 +27,19 @@
 
 <div class="systems index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Manage cache and thumbs'));
+		echo $this->Html->h2(__d('me_cms', 'Cache and thumbs'));
 
-		echo $this->Html->h3(__d('me_cms', 'Cache'));
+		echo $this->Html->h4(__d('me_cms', 'Cache'));
 		if($cacheStatus) {
-			echo $this->Html->para(NULL, __d('me_cms', 'The cache is enabled. Cache size: %s', $this->Number->toReadableSize($cacheSize)));
+			echo $this->Html->para(NULL, __d('me_cms', 'The cache is enabled'));
+			echo $this->Html->para(NULL, __d('me_cms', 'Cache size: %s', $this->Number->toReadableSize($cacheSize)));
 			echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the cache, unless you have not changed the configuration or after an upgrade'));
 			echo $this->Form->postButton(__d('me_cms', 'Clear the cache'), array('action' => 'clear_cache'), array('class' => 'btn-success', 'icon' => 'trash-o'));
 		}
 		else
 			echo $this->Html->para('text-danger', __d('me_cms', 'The cache is disabled or debugging is active').'.');
 
-		echo $this->Html->h3(__d('me_cms', 'Thumbs'));
+		echo $this->Html->h4(__d('me_cms', 'Thumbs'));
 		echo $this->Html->para(NULL, __d('me_cms', 'Thumbs size: %s', $this->Number->toReadableSize($thumbsSize)));
 		echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used'));
 		echo $this->Form->postButton(__d('me_cms', 'Clear thumbs'), array('action' => 'clear_thumbs'), array('class' => 'btn-success', 'icon' => 'trash-o'));
