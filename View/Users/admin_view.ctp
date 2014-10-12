@@ -62,7 +62,7 @@
 				echo $this->Html->dd(__d('me_cms', 'Active'), array('class' => 'text-success'));
 			
 			if(!empty($user['User']['post_count'])) {
-				echo $this->Html->dt(__d('me_cms', 'Post Count'));
+				echo $this->Html->dt(__d('me_cms', 'Posts'));
 				echo $this->Html->dd($user['User']['post_count']);
 			}
 			
