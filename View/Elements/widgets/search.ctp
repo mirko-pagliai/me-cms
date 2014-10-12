@@ -32,7 +32,7 @@
 		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search', 'plugin' => 'me_cms')));
 		echo $this->Form->input('p', array(
 			'default'		=> empty($pattern) ? NULL : $pattern,
-			'placeholder'	=> __d('me_cms', 'Search...')
+			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
 		));
 		echo $this->Form->submit(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
 		echo $this->Form->end();
