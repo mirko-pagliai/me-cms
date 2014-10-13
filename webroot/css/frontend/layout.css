@@ -86,16 +86,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* Topbar, links */
-#topbar ul.nav a {
+#topbar .navbar-collapse a {
 	font-family: Roboto, sans-serif;
     font-size: 16px;
     font-weight: bold;
+	/* Transition for "background" and "color" proprieties */
+	transition: background .25s ease-in-out, color .25s ease-in-out;
+	-moz-transition: background .25s ease-in-out, color .25s ease-in-out;
+	-webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
 }
 
 /* Topbar, links on hover */
-#topbar ul.nav a:hover {
-	background: #d8d8d8;
-	color: #333;
+#topbar .navbar-collapse a:hover {
+	background: #d1d1d1;
+	color: #444;
 }
 
 /* -------------------------------- */
