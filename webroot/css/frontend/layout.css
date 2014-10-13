@@ -80,26 +80,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     border: 0;
 }
 
-/* Topbar, navbar element */
-#topbar .navbar-collapse {
-	padding: 0;
-}
+/* Navbar NOT collapsed */
+@media (min-width: 768px) {
+	/* Topbar, navbar element */
+	#topbar .navbar-collapse {
+		padding: 0;
+	}
 
-/* Topbar, links */
-#topbar .navbar-collapse a {
-	font-family: Roboto, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-	/* Transition for "background" and "color" proprieties */
-	transition: background .25s ease-in-out, color .25s ease-in-out;
-	-moz-transition: background .25s ease-in-out, color .25s ease-in-out;
-	-webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
-}
+	/* Topbar, links */
+	#topbar .navbar-collapse a {
+		font-family: Roboto, sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+		/* Transition for "background" and "color" proprieties */
+		transition: background .25s ease-in-out, color .25s ease-in-out;
+		-moz-transition: background .25s ease-in-out, color .25s ease-in-out;
+		-webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
+	}
 
-/* Topbar, links on hover */
-#topbar .navbar-collapse a:hover {
-	background: #d1d1d1;
-	color: #444;
+	/* Topbar, links on hover */
+	#topbar .navbar-collapse a:hover {
+		background: #d1d1d1;
+		color: #444;
+	}
 }
 
 /* -------------------------------- */
