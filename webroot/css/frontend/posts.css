@@ -93,6 +93,18 @@
     text-align: justify;
 }
 
+/* Content, images pulled on left */
+.posts .post-content img.pull-left,
+.pages .page-content img.pull-left {
+	margin: 2px 16px 8px 0;
+}
+
+/* Content, images pulled on right */
+.posts .post-content img.pull-right,
+.pages .page-content img.pull-right {
+	margin: 2px 0 8px 16px;
+}
+
 /* Buttons */
 .posts .post-buttons {
 	margin-top: 15px;
