@@ -23,10 +23,7 @@
  */
 ?>
 	
-<?php
-	$this->assign('sidebar', $this->Menu->get('photos', 'nav'));
-	$this->Html->css('/MeCms/css/backend/photos');
-?>
+<?php $this->assign('sidebar', $this->Menu->get('photos', 'nav')); ?>
 
 <div class="photos form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit photo')); ?>
