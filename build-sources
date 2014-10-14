@@ -22,9 +22,6 @@ find . -name ".directory" -type f -exec rm -rf {} \;
 # Remove old files
 find . -name "*.old.*" -type f -exec rm -rf {} \;
 
-# Delete uncompressed files
-rm -rf webroot/css/backend webroot/css/frontend webroot/css/users webroot/js/backend 
-
 # Go back to build/
 cd ../
 
