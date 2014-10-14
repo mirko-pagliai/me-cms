@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="generator" content="ApiGen 2.8.0" />
-	<meta name="robots" content="noindex" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="ApiGen 2.8.0">
+	<meta name="robots" content="noindex">
 
 	<title>File SystemsController.php | MeCms</title>
 
-	<script type="text/javascript" src="resources/combined.js?394153670"></script>
-	<script type="text/javascript" src="elementlist.js?2295948851"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+	<script type="text/javascript" src="resources/combined.js?117538352"></script>
+	<script type="text/javascript" src="elementlist.js?936475305"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
 
@@ -41,7 +41,7 @@
 			</ul>
 		</div>
 
-		<hr />
+		<hr>
 
 
 		<div id="elements">
@@ -71,10 +71,10 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="" />
-		<input type="hidden" name="ie" value="UTF-8" />
-		<input type="text" name="q" class="text" />
-		<input type="submit" value="Search" />
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text">
+		<input type="submit" value="Search">
 	</form>
 
 	<div id="navigation">
@@ -220,9 +220,9 @@
 </span><span id="114" class="l"><a class="l" href="#114">114: </a>        <span class="php-var">$success</span> = Cache::clearGroup(<span class="php-quote">'pages'</span>, <span class="php-quote">'pages'</span>) &amp;&amp; Cache::clearGroup(<span class="php-quote">'photos'</span>, <span class="php-quote">'photos'</span>) &amp;&amp; Cache::clearGroup(<span class="php-quote">'posts'</span>, <span class="php-quote">'posts'</span>);
 </span><span id="115" class="l"><a class="l" href="#115">115: </a>        
 </span><span id="116" class="l"><a class="l" href="#116">116: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$success</span> &amp;&amp; <span class="php-keyword2">System</span>::clearCache())
-</span><span id="117" class="l"><a class="l" href="#117">117: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'The cache has been cleared'</span>), <span class="php-quote">'success'</span>);
+</span><span id="117" class="l"><a class="l" href="#117">117: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The cache has been cleared'</span>), <span class="php-quote">'success'</span>);
 </span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-keyword1">else</span>
-</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'The cache has not been cleared'</span>), <span class="php-quote">'error'</span>);
+</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The cache has not been cleared'</span>), <span class="php-quote">'error'</span>);
 </span><span id="120" class="l"><a class="l" href="#120">120: </a>        
 </span><span id="121" class="l"><a class="l" href="#121">121: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>));
 </span><span id="122" class="l"><a class="l" href="#122">122: </a>        
@@ -236,9 +236,9 @@
 </span><span id="130" class="l"><a class="l" href="#130">130: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>);
 </span><span id="131" class="l"><a class="l" href="#131">131: </a>        
 </span><span id="132" class="l"><a class="l" href="#132">132: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearThumbs())
-</span><span id="133" class="l"><a class="l" href="#133">133: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'Thumbnails have been deleted'</span>), <span class="php-quote">'success'</span>);
+</span><span id="133" class="l"><a class="l" href="#133">133: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Thumbnails have been deleted'</span>), <span class="php-quote">'success'</span>);
 </span><span id="134" class="l"><a class="l" href="#134">134: </a>        <span class="php-keyword1">else</span>
-</span><span id="135" class="l"><a class="l" href="#135">135: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__(<span class="php-quote">'Thumbnails have not been deleted'</span>), <span class="php-quote">'error'</span>);
+</span><span id="135" class="l"><a class="l" href="#135">135: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Thumbnails have not been deleted'</span>), <span class="php-quote">'error'</span>);
 </span><span id="136" class="l"><a class="l" href="#136">136: </a>        
 </span><span id="137" class="l"><a class="l" href="#137">137: </a>        <span class="php-var">$this</span>-&gt;redirect(<span class="php-keyword1">array</span>(<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>));
 </span><span id="138" class="l"><a class="l" href="#138">138: </a>    }
