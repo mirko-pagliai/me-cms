@@ -1,0 +1,62 @@
+# This script combines all the CSS and JS file into two files only, 
+# "webroot/css/libraries.css" and "webroot/js/libraries.js". It's only 
+# necessary to set the CSS and JS arrays, making sure that file paths 
+# are correct and the files are correctly ordered (with reguard to 
+# libraries dependencies).
+#
+#!/bin/bash
+
+# CSS file to combine. You should to change this.
+CSS=(
+	"/home/mirko/Server/MeTools_Plugin/webroot/css/bootstrap.min"
+	"/home/mirko/Server/MeTools_Plugin/webroot/css/default.min"
+	"/home/mirko/Server/MeTools_Plugin/webroot/css/forms.min"
+	"webroot/css/users/layout.min"
+)
+CSS_ASSET="webroot/css/users.css"
+
+# JS file to combine. You should to change this.
+JS=(
+	"/home/mirko/Server/MeTools_Plugin/webroot/js/jquery.min"
+	"/home/mirko/Server/MeTools_Plugin/webroot/js/default.min"
+)
+JS_ASSET="webroot/js/users.js"
+
+# Colors
+RED="\e[1;31m" 		# Red
+GREEN="\e[1;32m" 	# Green
+Z="\e[0m"			# Reset
+
+rm -f $CSS_ASSET $JS_ASSET
+
+for i in ${CSS[@]}; do
+	if [ -r $i.css ]; then
+		cat ${i}.css >> $CSS_ASSET
+		echo >> $CSS_ASSET
+		echo -e "added ${i}.css"
+	else
+		echo -e $RED"${i}.css doesn't exist or is not readable"$Z
+	fi
+done
+
+# Remove empty lines
+sed -i '/^$/d' $CSS_ASSET
+
+echo -e $GREEN"the file $CSS_ASSET has been created/updated"$Z
+
+for i in ${JS[@]}; do
+	if [ -r $i.js ]; then
+		cat ${i}.js >> $JS_ASSET
+		echo >> $JS_ASSET
+		echo -e "added ${i}.js"
+	else
+		echo -e $RED"${i}.js doesn't exist or is not readable"$Z
+	fi
+done
+
+# Remove empty lines
+sed -i '/^$/d' $JS_ASSET
+
+echo -e $GREEN"the file $JS_ASSET has been created/updated"$Z
+
+exit 0
