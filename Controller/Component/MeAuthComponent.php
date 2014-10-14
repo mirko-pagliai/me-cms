@@ -40,28 +40,40 @@ class MeAuthComponent extends AuthComponent {
 	 */
 	static public $action;
 	
+	/**
+	 * User data
+	 * @var array 
+	 */
+	static private $user;
+	
     /**
      * Called before the controller's beforeFilter method.
      * @param Controller $controller
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
+	 * @uses $action
+	 * @uses $user
      */	
 	public function initialize(Controller $controller) {
 		parent::initialize($controller);
 		
 		//Sets the current action name
 		self::$action = $controller->request->params['action'];
+		
+		//Gets the user data
+		self::$user = self::user();
 	}
 
 	/**
 	 * Checks whether the user has a specific id
 	 * @param type $id
 	 * @return boolean
+	 * @uses $user
 	 */
 	static public function hasId($id) {
-		if(empty(self::user('id')))
+		if(empty(self::$user['id']))
 			return FALSE;
 		
-		return (int) self::user('id') === (int) $id;
+		return (int) self::$user['id'] === (int) $id;
 	}
 	
 	/**
@@ -79,6 +91,8 @@ class MeAuthComponent extends AuthComponent {
 	 * </code>
 	 * It returns TRUE if the current action is `admin_edit` or `admin_delete`, otherwise FALSE.
 	 * @return type TRUE if the action to check is the current action, otherwise FALSE
+	 * @uses $action
+	 * @uses $user
 	 */
 	static public function isAction() {
 		$actions = func_get_args();
@@ -93,41 +107,45 @@ class MeAuthComponent extends AuthComponent {
 	/**
 	 * Checks whether the user is an administrator
 	 * @return boolean
+	 * @uses $user
 	 */
 	static public function isAdmin() {
-		if(empty(self::user('group_id')) && empty(self::user('Group.name')))
+		if(empty(self::$user['group_id']) && empty(self::$user['Group.name']))
 			return FALSE;
 		
-		return self::user('group_id') === 1 || self::user('Group.name') === 'admin';
+		return self::$user['group_id'] === 1 || self::$user['Group.name'] === 'admin';
 	}
 	
 	/**
 	 * Checks whether the user is the admin founder
 	 * @return boolean
+	 * @uses $user
 	 */
 	static public function isFounder() {
-		if(empty(self::user('id')))
+		if(empty($user['id']))
 			return FALSE;
 		
-		return self::user('id') === 1;
+		return $user['id'] === 1;
 	}
 	
 	/**
 	 * Checks whether the user is logged
-	 * @return type
+	 * @return boolean
+	 * @uses $user
 	 */
 	static public function isLogged() {
-		return !empty(self::user('id'));
+		return !empty($user['id']);
 	}
 	
 	/**
 	 * Checks whether the user is a manager (manager or administrator)
 	 * @return boolean
+	 * @uses $user
 	 */
 	static public function isManager() {
-		if(empty(self::user('group_id')) && empty(self::user('Group.name')))
+		if(empty(self::$user['group_id']) && empty(self::$user['Group.name']))
 			return FALSE;
 		
-		return self::user('group_id') <= 2 || self::user('Group.name') === 'admin' || self::user('Group.name') === 'manager';
+		return self::$user['group_id'] <= 2 || self::$user['Group.name'] === 'admin' || self::$user['Group.name'] === 'manager';
 	}
 }
