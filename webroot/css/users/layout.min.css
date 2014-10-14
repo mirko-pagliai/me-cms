@@ -1,0 +1,7 @@
+/**
+ * This file is part of MeCms.
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ */
+body{background:#eee;padding-top:60px}#content .form{background:#f8f8f8;border-radius:5px;box-shadow:0 3px 6px -6px #000;margin:auto;max-width:400px;padding:20px}#content .form .alert{margin-bottom:10px;padding:10px 8px}#content .form .alert .close{line-height:.9}#content .form .form-group{margin-bottom:5px}#content .form .form-group input{font-size:16px;height:auto;padding:10px}#content .form .form-group input:focus{border-color:#66AFE9;box-shadow:0 1px 1px rgba(0,0,0,.075)inset,0 0 8px rgba(102,175,233,.6)}

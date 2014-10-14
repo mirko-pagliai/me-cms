@@ -25,7 +25,7 @@
 	
 <?php
 	$this->assign('sidebar', $this->Menu->get('photos', 'nav'));
-	$this->Html->js('/MeCms/js/backend/photos');
+	$this->Html->js('/MeCms/js/backend/photos.min');
 ?>
 
 <div class="photos form">
