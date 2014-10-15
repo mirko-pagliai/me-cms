@@ -113,11 +113,16 @@ class MeCmsAppController extends AppController {
 		//Loads and gets the configuration
 		$this->config = $this->_getConfig();
 		
+		//Sets debug and cache
+		Configure::write('debug', $this->config['debug'] ? 2 : 0);
+		Configure::write('Cache.disable', !$this->config['cache']);
+		
 		//Sets the element that will be used for flash auth errors
 		//http://stackoverflow.com/a/20545037/1480263
 		if(!empty($this->Auth))
 			$this->Auth->flash['element'] = 'MeTools.error';
 		
+		//Sets the session timeout
 		Configure::write('Session.timeout', $this->config['timeout']);
 		
 		//If it's not an admin request, authorizes the current action

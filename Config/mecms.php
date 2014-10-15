@@ -30,6 +30,8 @@ $config = array(
 	),
 	//General options
 	'general' => array(
+		//Cache (enabled or disabled)
+		'cache' => FALSE,
 		//Date formats
 		'date' => array(
 			//Long format
@@ -44,6 +46,8 @@ $config = array(
 			//Short format
 			'short'	=> '%y/%m/%d, %H:%M'
 		),
+		//Debug (enabled or disabled)
+		'debug' => TRUE,
 		//Session (login) timeout, in minutes
 		'timeout' => 30,
 		//Site title
