@@ -13,6 +13,8 @@ $config = array(
 	),
 	//Frontend options
 	'frontend' => array(
+		//Google Analytics ID or FALSE
+		'analytics' => FALSE,
 		//Fancybox for photos
 		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`

@@ -113,6 +113,11 @@
 			<?php
 				echo $this->element('frontend/footer', array(), array('cache' => TRUE));
 				echo $this->element('MeTools.sql_dump');
+				
+				if(!empty($config['analytics']))
+					echo $this->Library->analytics($config['analytics'], array('block' => 'script_bottom'));
+				
+				echo $this->fetch('script_bottom');
 			?>
 		</div>
 	</body>
