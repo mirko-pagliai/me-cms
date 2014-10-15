@@ -131,7 +131,7 @@ class Album {
 	 * @return string Path
 	 */
 	static public function getTmpPath() {
-		return TMP.'photos';
+		return TMP.'uploads'.DS.'photos';
 	}
 	
 	/**
