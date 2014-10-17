@@ -43,13 +43,13 @@
 				echo $this->Html->css(array(
 					'/MeTools/css/font-awesome.min',
 					'/MeTools/css/bootstrap.min',
-					'/MeTools/css/default.min',
-					'/MeTools/css/forms.min',
-					'/MeCms/css/backend/layout.min',
-					'/MeCms/css/backend/photos.min'
+					'/MeTools/css/default',
+					'/MeTools/css/forms',
+					'/MeCms/css/backend/layout',
+					'/MeCms/css/backend/photos'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->css('/MeCms/css/backend.css');
+				echo $this->Html->css('/MeCms/assets/backend.min');
 			
 			echo $this->fetch('css');
 			
@@ -57,10 +57,10 @@
 				echo $this->Html->js(array(
 					'/MeTools/js/jquery.min',
 					'/MeTools/js/bootstrap.min',
-					'/MeTools/js/default.min'
+					'/MeTools/js/default'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->js('/MeCms/js/backend.js');
+				echo $this->Html->js('/MeCms/assets/backend.min');
 			
 			echo $this->fetch('script');
 		?>

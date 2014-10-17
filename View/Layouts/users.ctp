@@ -43,22 +43,22 @@
 			if(Configure::read('debug'))
 				echo $this->Html->css(array(
 					'/MeTools/css/bootstrap.min',
-					'/MeTools/css/default.min',
-					'/MeTools/css/forms.min',
-					'/MeCms/css/users/layout.min'
+					'/MeTools/css/default',
+					'/MeTools/css/forms',
+					'/MeCms/css/users/layout'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->css('/MeCms/css/users.css');
+				echo $this->Html->css('/MeCms/assets/users.min');
 			
 			echo $this->fetch('css');
 			
 			if(Configure::read('debug'))
 				echo $this->Html->js(array(
 					'/MeTools/js/jquery.min',
-					'/MeTools/js/default.min'
+					'/MeTools/js/default'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->js('/MeCms/js/users.js');
+				echo $this->Html->js('/MeCms/assets/users.min');
 			
 			echo $this->fetch('script');
 		?>

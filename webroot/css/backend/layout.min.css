@@ -1,7 +1,0 @@
-/**
- * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- */
-body{padding-top:70px}#topbar .navbar-nav>li>a{font-family:Arial,sans-serif;font-size:110%;font-weight:700}#sidebar{background-color:#f5f5f5;border-right:2px solid #eee;padding:20px 10px}#sidebar>.nav>li>a{padding:10px}#sidebar>.nav>li>a:hover{background-color:#428bca;color:#fff}#content>.form,#content>.index,#content>.view{overflow:hidden}#content>.form>h2,#content>.index>h2,#content>.view>h2{font-size:24px;display:inline-block}#content>.index>h2+a.btn{display:inline-block;font-size:13px;margin:20px 0 10px 15px;padding:3px 8px;vertical-align:bottom}#content>.index>h2+a.btn>.fa{font-size:11px}#content table.table td{vertical-align:top}#content table.table a{text-decoration:none}#content ul.actions{padding-left:10px}#content ul.actions li{border-right:1px solid #bbb;display:inline;margin-right:6px;padding-right:6px}#content ul.actions li:last-child{border:0;margin:0;padding:0}#content ul.actions li a{text-decoration:none}#content table.table td>.actions{margin:0}.priority-high,.priority-low,.priority-normal,.priority-veryhigh,.priority-verylow{font-size:13px;padding:4px 7px}.priority-verylow{background:#A4E0A3}.priority-low{background:#6fde6f}.priority-normal{background:#5CB85C}.priority-high{background:#499149}.priority-veryhigh{background:#366b36}

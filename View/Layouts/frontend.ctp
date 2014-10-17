@@ -39,19 +39,19 @@
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
 			echo $this->fetch('meta');
-			
+
 			if(Configure::read('debug'))
 				echo $this->Html->css(array(
 					'/MeTools/css/font-awesome.min',
 					'/MeTools/css/bootstrap.min',
-					'/MeTools/css/default.min',
-					'/MeTools/css/forms.min',
-					'/MeCms/css/frontend/layout.min',
-					'/MeCms/css/frontend/posts.min',
-					'/MeCms/css/frontend/photos.min'
+					'/MeTools/css/default',
+					'/MeTools/css/forms',
+					'/MeCms/css/frontend/layout',
+					'/MeCms/css/frontend/posts',
+					'/MeCms/css/frontend/photos'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->css('/MeCms/css/frontend.css');
+				echo $this->Html->css('/MeCms/assets/frontend.min');
 			
 			echo $this->fetch('css');
 			
@@ -59,10 +59,10 @@
 				echo $this->Html->js(array(
 					'/MeTools/js/jquery.min',
 					'/MeTools/js/bootstrap.min',
-					'/MeTools/js/default.min'
+					'/MeTools/js/default'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->js('/MeCms/js/frontend.js');
+				echo $this->Html->js('/MeCms/assets/frontend.min');
 			
 			echo $this->fetch('script');
 		?>
