@@ -110,10 +110,10 @@ class MeAuthComponent extends AuthComponent {
 	 * @uses $user
 	 */
 	static public function isAdmin() {
-		if(empty(self::$user['group_id']) && empty(self::$user['Group.name']))
+		if(empty(self::$user['group_id']) && empty(self::$user['Group']['name']))
 			return FALSE;
 		
-		return self::$user['group_id'] === 1 || self::$user['Group.name'] === 'admin';
+		return self::$user['group_id'] === 1 || self::$user['Group']['name'] === 'admin';
 	}
 	
 	/**
@@ -143,9 +143,9 @@ class MeAuthComponent extends AuthComponent {
 	 * @uses $user
 	 */
 	static public function isManager() {
-		if(empty(self::$user['group_id']) && empty(self::$user['Group.name']))
+		if(empty(self::$user['group_id']) && empty(self::$user['Group']['name']))
 			return FALSE;
 		
-		return self::$user['group_id'] <= 2 || self::$user['Group.name'] === 'admin' || self::$user['Group.name'] === 'manager';
+		return self::$user['group_id'] <= 2 || self::$user['Group']['name'] === 'admin' || self::$user['Group']['name'] === 'manager';
 	}
 }
