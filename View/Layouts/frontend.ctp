@@ -40,7 +40,7 @@
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
 			echo $this->fetch('meta');
 			
-			if(Configure::read('debug') > 0)
+			if(Configure::read('debug'))
 				echo $this->Html->css(array(
 					'/MeTools/css/font-awesome.min',
 					'/MeTools/css/bootstrap.min',
@@ -55,7 +55,7 @@
 			
 			echo $this->fetch('css');
 			
-			if(Configure::read('debug') > 0)
+			if(Configure::read('debug'))
 				echo $this->Html->js(array(
 					'/MeTools/js/jquery.min',
 					'/MeTools/js/bootstrap.min',

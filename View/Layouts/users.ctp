@@ -40,7 +40,7 @@
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->fetch('meta');
 			
-			if(Configure::read('debug') > 0)
+			if(Configure::read('debug'))
 				echo $this->Html->css(array(
 					'/MeTools/css/bootstrap.min',
 					'/MeTools/css/default.min',
@@ -52,7 +52,7 @@
 			
 			echo $this->fetch('css');
 			
-			if(Configure::read('debug') > 0)
+			if(Configure::read('debug'))
 				echo $this->Html->js(array(
 					'/MeTools/js/jquery.min',
 					'/MeTools/js/default.min'
