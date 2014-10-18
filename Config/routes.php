@@ -39,6 +39,7 @@ Router::connect('/category/*',	array('controller' => 'posts',				'action' => 'in
 Router::connect('/posts',		array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms'));
 Router::connect('/post/*',		array('controller' => 'posts', 'action' => 'view',		'plugin' => 'me_cms'));
 Router::connect('/search/*',		array('controller' => 'posts', 'action' => 'search',	'plugin' => 'me_cms'));
+Router::connect('/rss',			array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms', 'ext' => 'rss'));
 
 //Photos albums controller
 Router::connect('/albums',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
@@ -58,3 +59,6 @@ Router::connect('/logout',	array('controller' => 'users',	'action' => 'logout',	
 //Each "admin" request is directed to the plugin
 Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE));
 Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_cms', 'admin' => TRUE));
+
+//Enables the 'rss' extension
+Router::parseExtensions('rss');

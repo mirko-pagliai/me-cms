@@ -29,7 +29,13 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
 /**
  * Posts Controller
  */
-class PostsController extends MeCmsAppController {	
+class PostsController extends MeCmsAppController {
+	/**
+	 * Components
+	 * @var array
+	 */
+	public $components = array('RequestHandler');
+	
 	/**
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
@@ -218,12 +224,31 @@ class PostsController extends MeCmsAppController {
 		
 		return $posts;
 	}
-		
+
 	/**
 	 * List posts
 	 * @param string $category Category slug, optional
+	 * @return array List of latest post (only when requested as rss)
 	 */
 	public function index($category = NULL) {
+		//If the posts were requested as rss
+		if($this->RequestHandler->isRss()) {
+			//Tries to get data from the cache
+			$posts = Cache::read($cache = 'posts_rss', 'posts');
+
+			//If the data are not available from the cache
+			if(empty($posts)) {
+				$posts = $this->Post->find('active', array(
+					'fields'	=> array('title', 'slug', 'text', 'created'),
+					'limit'		=> 20
+				));
+
+				Cache::write($cache, $posts, 'posts');
+			}
+			
+			return $this->set(compact('posts'));
+		}
+
 		//Sets the initial cache name
 		$cache = 'posts_index';
 		//Sets the initial conditions query
