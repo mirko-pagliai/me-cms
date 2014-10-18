@@ -57,7 +57,8 @@
 				echo $this->Html->js(array(
 					'/MeTools/js/jquery.min',
 					'/MeTools/js/bootstrap.min',
-					'/MeTools/js/default'
+					'/MeTools/js/default',
+					'/MeCms/js/backend/photos'
 				), array('inline' => TRUE));
 			else
 				echo $this->Html->js('/MeCms/assets/backend.min');
