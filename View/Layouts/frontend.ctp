@@ -38,6 +38,7 @@
 
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
+			echo $this->Html->meta(__d('me_cms', 'Posts'), '/rss', array('type' => 'rss'));
 			echo $this->fetch('meta');
 
 			if(Configure::read('debug'))
