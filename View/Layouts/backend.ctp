@@ -49,7 +49,7 @@
 					'/MeCms/css/backend/photos'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->css('/MeCms/assets/backend.min');
+				echo $this->Html->css('/MeCms/assets/backend.min', array('inline' => TRUE));
 			
 			echo $this->fetch('css');
 			
@@ -61,7 +61,7 @@
 					'/MeCms/js/backend/photos'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->js('/MeCms/assets/backend.min');
+				echo $this->Html->js('/MeCms/assets/backend.min', array('inline' => TRUE));
 			
 			echo $this->fetch('script');
 		?>

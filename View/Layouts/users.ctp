@@ -48,7 +48,7 @@
 					'/MeCms/css/users/layout'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->css('/MeCms/assets/users.min');
+				echo $this->Html->css('/MeCms/assets/users.min', array('inline' => TRUE));
 			
 			echo $this->fetch('css');
 			
@@ -58,7 +58,7 @@
 					'/MeTools/js/default'
 				), array('inline' => TRUE));
 			else
-				echo $this->Html->js('/MeCms/assets/users.min');
+				echo $this->Html->js('/MeCms/assets/users.min', array('inline' => TRUE));
 			
 			echo $this->fetch('script');
 		?>
