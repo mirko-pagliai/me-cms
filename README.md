@@ -65,4 +65,4 @@ MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko
 Oltre questi, MeCms include:
 
 - fancyBox 2.1.5 ([sito](http://fancyapps.com/fancybox));
-- Roboto font ([sito](http://google.com/fonts/specimen/Roboto)).
+- Roboto font ([sito](http://google.com/fonts#UsePlace:use/Collection:Roboto)).
