@@ -60,8 +60,8 @@ class User extends MeCmsAppModel {
 			'rule'	=> 'blank'
 		),
 		'group_id' => array(
-			'message'		=> 'You have to select a valid option',
-			'rule'			=> 'naturalnumber'
+			'message'	=> 'You have to select a valid option',
+			'rule'		=> 'naturalnumber'
 		),
 		'username' => array(
 			'between' => array(
