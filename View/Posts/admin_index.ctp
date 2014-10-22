@@ -56,12 +56,12 @@
 						//Users can edit only their own posts
 						if($this->Auth->isManager() || $this->Auth->hasId($post['User']['id']))
 							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil'));					
-						
-						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $post['Post']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
-						
+									
 						//Only admins and managers can delete posts
 						if($this->Auth->isManager())
 							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
+						
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $post['Post']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
 						
 						echo $this->Html->ul($actions, array('class' => 'actions'));
 					?>
