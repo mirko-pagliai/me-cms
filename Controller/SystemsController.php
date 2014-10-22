@@ -59,9 +59,10 @@ class SystemsController extends MeCmsAppController {
 	 */
 	public function admin_cache() {
         $this->set(array(
-           'cacheStatus'    => System::checkCacheStatus(),
-           'cacheSize'      => System::getCacheSize(),
-           'thumbsSize'     => System::getThumbsSize()
+			'cacheStatus'		=> System::checkCacheStatus(),
+			'cacheSize'			=> System::getCacheSize(),
+			'title_for_layout'	=> __d('me_cms', 'Cache and thumbs'),
+			'thumbsSize'		=> System::getThumbsSize()
         ));
     }
 	
@@ -86,6 +87,7 @@ class SystemsController extends MeCmsAppController {
 	public function admin_checkup() {
 		$phpRequired = '5.2.8';
 		
+		//Sets the results of the checks
 		$this->set(array(
 			'cache'				=> System::checkCache(),
 			'cacheStatus'		=> System::checkCacheStatus(),
@@ -104,6 +106,8 @@ class SystemsController extends MeCmsAppController {
 			'thumbs'			=> System::checkThumbs(),
 			'version'			=> self::_getVersion()
 		));
+		
+		$this->set('title_for_layout', __d('me_cms', 'System checkup'));
 	}
 	
 	/**
