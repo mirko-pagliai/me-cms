@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('Album', 'MeCms.Utility');
 App::uses('System', 'MeTools.Utility');
 
 /**
@@ -67,6 +68,8 @@ class SystemsController extends MeCmsAppController {
 	/**
 	 * System checkup.
 	 * @uses _getVersion()
+	 * @uses Album::getAlbumPath()
+	 * @uses Album::getTmpPath()
 	 * @uses System::checkApacheModule()
 	 * @uses System::checkCache()
 	 * @uses System::checkCacheStatus()
@@ -91,8 +94,8 @@ class SystemsController extends MeCmsAppController {
 			'ffmpegthumbnailer'	=> System::which('ffmpegthumbnailer'),
 			'imagick'			=> System::checkPhpExtension('imagick'),
 			'logs'				=> System::checkLogs(),
-			'photosWWW'			=> System::dirIsWritable(WWW_ROOT.'img'.DS.'photos'),
-			'photosTmp'			=> System::dirIsWritable(TMP.'photos'),
+			'photosWWW'			=> System::dirIsWritable(Album::getAlbumPath()),
+			'photosTmp'			=> System::dirIsWritable(Album::getTmpPath()),
 			'phpRequired'		=> $phpRequired,
 			'phpVersion'		=> System::checkPhpVersion($phpRequired),
 			'plugins'			=> System::getPluginsVersion('MeCms'),
