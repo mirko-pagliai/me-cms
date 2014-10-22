@@ -32,8 +32,8 @@
 	?>
 	<table class="table table-striped">
 		<tr>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('label'); ?></th>
+			<th><?php echo $this->Paginator->sort('name', __d('me_cms', 'Name')); ?></th>
+			<th><?php echo $this->Paginator->sort('label', __d('me_cms', 'Label')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('user_count', __d('me_cms', 'Users')); ?></th>
 		</tr>
 		<?php foreach($usersGroups as $usersGroup): ?>

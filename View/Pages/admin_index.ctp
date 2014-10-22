@@ -32,9 +32,9 @@
 	?>
 	<table class="table table-striped">
 		<tr>
-			<th><?php echo $this->Paginator->sort('title'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('priority'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('created'); ?></th>
+			<th><?php echo $this->Paginator->sort('title', __d('me_cms', 'Title')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('priority', __d('me_cms', 'Priority')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('created', __d('me_cms', 'Date')); ?></th>
 		</tr>
 		<?php foreach($pages as $page): ?>
 			<tr>

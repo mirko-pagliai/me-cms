@@ -32,12 +32,12 @@
 	?>
 	<table class="table table-striped">
 		<tr>
-			<th><?php echo $this->Paginator->sort('username'); ?></th>
+			<th><?php echo $this->Paginator->sort('username', __d('me_cms', 'Username')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('full_name', __d('me_cms', 'Name')); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('email'); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('group_id'); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('email', __d('me_cms', 'Email')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('group_id', __d('me_cms', 'Group')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('post_count', __d('me_cms', 'Posts')); ?></th>
-			<th class="text-center"><?php echo $this->Paginator->sort('created'); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('created', __d('me_cms', 'Date')); ?></th>
 		</tr>
 		<?php foreach($users as $user): ?>
 			<tr>
