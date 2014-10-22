@@ -42,7 +42,9 @@
 						'label'		=> __d('me_cms', 'Author')
 					));
 				
-				echo $this->Form->input('category_id');
+				echo $this->Form->input('category_id', array(
+					'default' => count($categories) < 2 ? $categories[1] : NULL //If there's only one category...
+				));
 				echo $this->Form->datetimepicker('created', array(
 					'tip' => array(
 						sprintf('%s.', __d('me_cms', 'If blank, the current date and time will be used')),
