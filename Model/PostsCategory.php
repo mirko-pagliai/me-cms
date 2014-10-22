@@ -109,8 +109,8 @@ class PostsCategory extends MeCmsAppModel {
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
-			'className' => 'MeCms.PostsCategory',
-			'foreignKey' => 'parent_id'
+			'className'		=> 'MeCms.PostsCategory',
+			'foreignKey'	=> 'parent_id'
 		)
 	);
 
@@ -120,14 +120,14 @@ class PostsCategory extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'Child' => array(
-			'className' => 'MeCms.PostsCategory',
-			'foreignKey' => 'parent_id',
-			'dependent' => FALSE
+			'className'		=> 'MeCms.PostsCategory',
+			'foreignKey'	=> 'parent_id',
+			'dependent'		=> FALSE
 		),
 		'Post' => array(
-			'className' => 'MeCms.Post',
-			'foreignKey' => 'category_id',
-			'dependent' => FALSE
+			'className'		=> 'MeCms.Post',
+			'foreignKey'	=> 'category_id',
+			'dependent'		=> FALSE
 		)
 	);
 	

@@ -181,9 +181,9 @@ class User extends MeCmsAppModel {
 	 */
 	public $belongsTo = array(
 		'Group' => array(
-			'className' => 'MeCms.UsersGroup',
-			'foreignKey' => 'group_id',
-			'counterCache' => TRUE
+			'className'		=> 'MeCms.UsersGroup',
+			'foreignKey'	=> 'group_id',
+			'counterCache'	=> TRUE
 		)
 	);
 
@@ -193,9 +193,9 @@ class User extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'Post' => array(
-			'className' => 'MeCms.Post',
-			'foreignKey' => 'user_id',
-			'dependent' => FALSE
+			'className'		=> 'MeCms.Post',
+			'foreignKey'	=> 'user_id',
+			'dependent'		=> FALSE
 		)
 	);
 

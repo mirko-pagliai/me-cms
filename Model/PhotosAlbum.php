@@ -92,9 +92,9 @@ class PhotosAlbum extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'Photo' => array(
-			'className' => 'MeCms.Photo',
-			'foreignKey' => 'album_id',
-			'dependent' => FALSE
+			'className'		=> 'MeCms.Photo',
+			'foreignKey'	=> 'album_id',
+			'dependent'		=> FALSE
 		)
 	);
 	

@@ -117,14 +117,14 @@ class Post extends MeCmsAppModel {
 	 */
 	public $belongsTo = array(
 		'Category' => array(
-			'className' => 'MeCms.PostsCategory',
-			'foreignKey' => 'category_id',
-			'counterCache' => TRUE
+			'className'		=> 'MeCms.PostsCategory',
+			'foreignKey'	=> 'category_id',
+			'counterCache'	=> TRUE
 		),
 		'User' => array(
-			'className' => 'MeCms.User',
-			'foreignKey' => 'user_id',
-			'counterCache' => TRUE
+			'className'		=> 'MeCms.User',
+			'foreignKey'	=> 'user_id',
+			'counterCache'	=> TRUE
 		)
 	);
 	

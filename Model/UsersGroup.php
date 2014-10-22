@@ -87,9 +87,9 @@ class UsersGroup extends MeCmsAppModel {
 	 */
 	public $hasMany = array(
 		'User' => array(
-			'className' => 'MeCms.User',
-			'foreignKey' => 'group_id',
-			'dependent' => FALSE
+			'className'		=> 'MeCms.User',
+			'foreignKey'	=> 'group_id',
+			'dependent'		=> FALSE
 		)
 	);
 }
