@@ -37,7 +37,10 @@
 	
 			$list = array();
 			foreach($posts as $post)
-				$list[] = $this->Html->link($post['Post']['title'], array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']));
+				$list[] = $this->Html->link($post['Post']['title'],
+					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
+					array('class' => 'block no-wrap')
+				);
 
 			echo $this->Html->ul($list, array('icon' => 'caret-right'));
 		?>
