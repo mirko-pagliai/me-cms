@@ -29,7 +29,16 @@
 	<?php echo $this->Html->h2(__d('me_cms', 'Add photos')); ?>
 	<?php echo $this->Form->create('Photo'); ?>
 		<div class='float-form'>
-			<?php echo $this->Form->input('album_id', array('default' => $albumId)); ?>
+			<?php
+				//If it's already specified a album ID
+				if(!empty($albumId))
+					$options = array('default' => $albumId);
+				//Else, if there's only one album
+				elseif(count($albums) < 2)
+					$options = array('default' => $albums[1]);
+				
+				echo $this->Form->input('album_id', empty($options) ? array() : $options);
+			?>
 		</div>
 		<fieldset>
 			<div class='clearfix'>
