@@ -117,7 +117,7 @@ class Album {
 	}
 	
 	/**
-	 * Gets the list of the photos in the temporary directory (`APP/tmp/photos`).
+	 * Gets the list of the photos in the temporary directory (`APP/tmp/uploads/photos`).
 	 * @return array Photos list
 	 * @uses getTmpPath() to get the path of the photos temporary directory
 	 */
