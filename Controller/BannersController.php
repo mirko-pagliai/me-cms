@@ -36,7 +36,7 @@ class BannersController extends MeCmsAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'contain'	=> 'Position.name',
-			'fields'	=> array('id', 'filename', 'url', 'description', 'active'),
+			'fields'	=> array('id', 'filename', 'target', 'description', 'active'),
 			'limit'		=> $this->config['records_for_page']
 		);
 		
@@ -59,7 +59,7 @@ class BannersController extends MeCmsAppController {
 		$banner = $this->Banner->find('first', array(
 			'conditions'	=> array('Banner.id' => $id),
 			'contain'		=> 'Position.name',
-			'fields'		=> array('id', 'filename', 'url', 'description', 'active')
+			'fields'		=> array('id', 'filename', 'target', 'description', 'active')
 		));
 		
 		debug($banner);
@@ -86,15 +86,15 @@ class BannersController extends MeCmsAppController {
 		if($this->request->is('post')) {
 			$this->Banner->create();
 			if($this->Banner->save($this->request->data)) {
-				$this->Session->flash( __d('me_cms', 'The banner has been created'));
+				$this->Session->flash(__d('me_cms', 'The banner has been created'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash( __d('me_cms', 'The banner could not be created. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The banner could not be created. Please, try again'), 'error');
 		}
 
 		$this->set('positions', $positions);
-		$this->set('title_for_layout',  __d('me_cms', 'Add banner'));
+		$this->set('title_for_layout', __d('me_cms', 'Add banner'));
 	}
 
 	/**
@@ -104,15 +104,15 @@ class BannersController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Banner->exists($id))
-			throw new NotFoundException( __d('me_cms', 'Invalid banner'));
+			throw new NotFoundException(__d('me_cms', 'Invalid banner'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Banner->save($this->request->data)) {
-				$this->Session->flash( __d('me_cms', 'The banner has been edited'));
+				$this->Session->flash(__d('me_cms', 'The banner has been edited'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash( __d('me_cms', 'The banner could not be edited. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The banner could not be edited. Please, try again'), 'error');
 		} 
 		else
 			$this->request->data = $this->Banner->find('first', array(
@@ -120,7 +120,7 @@ class BannersController extends MeCmsAppController {
 			));
 
 		$this->set('positions', $this->Banner->Position->find('list'));
-		$this->set('title_for_layout',  __d('me_cms', 'Edit banner'));
+		$this->set('title_for_layout', __d('me_cms', 'Edit banner'));
 	}
 
 	/**
@@ -131,14 +131,14 @@ class BannersController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Banner->id = $id;
 		if(!$this->Banner->exists())
-			throw new NotFoundException( __d('me_cms', 'Invalid banner'));
+			throw new NotFoundException(__d('me_cms', 'Invalid banner'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
 		if($this->Banner->delete())
-			$this->Session->flash( __d('me_cms', 'The banner has been deleted'));
+			$this->Session->flash(__d('me_cms', 'The banner has been deleted'));
 		else
-			$this->Session->flash( __d('me_cms', 'The banner was not deleted'), 'error');
+			$this->Session->flash(__d('me_cms', 'The banner was not deleted'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
 	}
