@@ -110,11 +110,11 @@ class PhotosController extends MeCmsAppController {
 			
 			$this->Photo->create();
 			if($this->Photo->saveMany(array_filter($this->request->data['Photo']))) {
-				$this->Session->flash(__d('me_cms', 'The photos has been saved'));
+				$this->Session->flash(__d('me_cms', 'The photos have been saved'));
 				$this->redirect(array('action' => 'index', $albumId));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The photos could not be saved. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The photos can not be saved. Please, try again'), 'error');
 		}
 
 		$this->set(array(
