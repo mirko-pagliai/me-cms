@@ -80,7 +80,7 @@ class PostsController extends MeCmsAppController {
 	 * @uses MeAuthComponent::isManager()
 	 */
 	public function admin_add() {
-		//Gets categories
+		//Gets the categories
 		$categories = $this->Post->Category->generateTreeList();
 		
 		//Checks for categories
