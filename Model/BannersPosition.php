@@ -61,6 +61,11 @@ class BannersPosition extends MeCmsAppModel {
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
 			)
+		),
+		'description' => array(
+			'allowEmpty'	=> TRUE,
+			'message'		=> 'Must be at most %d chars',
+			'rule'			=> array('maxLength', 255)
 		)
 	);
 
