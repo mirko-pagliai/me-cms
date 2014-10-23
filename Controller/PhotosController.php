@@ -70,9 +70,9 @@ class PhotosController extends MeCmsAppController {
 	}
 
 	/**
-	 * Add photo from the tmp directory (`APP/tmp/photos`)
-	 * @uses Album::getTmp() to get the list of the photos in the temporary directory
-	 * @uses Album::getTmpPath() to get the path of the temporary directory
+	 * Add photo from the tmp directory (`APP/tmp/uploads/photos`)
+	 * @uses Album::getTmp()
+	 * @uses Album::getTmpPath()
 	 */
 	public function admin_add() {
 		//Gets albums
@@ -84,11 +84,11 @@ class PhotosController extends MeCmsAppController {
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
-		//Gets the list of the photos located in the tmp directory
-		$tmpPhotos = Album::getTmp();
+		//Gets the list of the files located in the temporary directory
+		$tmpFiles = Album::getTmp();
 		
-		//Checks for photos
-		if(empty($tmpPhotos)) {
+		//Checks for temporary files
+		if(empty($tmpFiles)) {
 			$this->Session->flash(__d('me_cms', 'There are no photos in the temporary directory %s', Album::getTmpPath()), 'error');
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
@@ -120,7 +120,7 @@ class PhotosController extends MeCmsAppController {
 		$this->set(array(
 			'albumId'			=> empty($albumId) ? NULL : $albumId,
 			'albums'			=> $albums,
-			'photos'			=> $tmpPhotos,
+			'photos'			=> $tmpFiles,
 			'title_for_layout'	=> __d('me_cms', 'Add photos'),
 			'tmpPath'			=> Album::getTmpPath()
 		));
