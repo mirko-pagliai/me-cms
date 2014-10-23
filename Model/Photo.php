@@ -92,6 +92,7 @@ class Photo extends MeCmsAppModel {
 	 * @param mixed $results The results of the find operation
 	 * @param boolean $primary Whether this model is being queried directly
 	 * @return mixed Result of the find operation
+	 * @uses Album::getPhotoPath()
 	 */
 	public function afterFind($results, $primary = FALSE) {
 		foreach($results as $k => $v) {
@@ -109,7 +110,7 @@ class Photo extends MeCmsAppModel {
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save()
-	 * @uses Album::savePhoto() to save the photos
+	 * @uses Album::savePhoto()
 	 */
 	public function afterSave($created, $options = array()) {
 		//Saves the photos
@@ -123,6 +124,7 @@ class Photo extends MeCmsAppModel {
 	 * Called before every deletion operation.
 	 * @param boolean $cascade If TRUE records that depend on this record will also be deleted
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 * @uses Album::deletePhoto()
 	 */
 	public function beforeDelete($cascade = TRUE) {
 		//Gets the photo
@@ -139,7 +141,7 @@ class Photo extends MeCmsAppModel {
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
-	 * @uses Album::checkIfWritable() to check if the album is writeable
+	 * @uses Album::checkIfWritable()
 	 */
 	public function beforeSave($options = array()) {
 		//Checks if the album directory is writeable
