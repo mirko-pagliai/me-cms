@@ -99,12 +99,22 @@ class InstallShell extends MeToolsAppShell {
 	/**
 	 * Creates the folders.
 	 * @uses _create_folder()
+	 * @uses Album::getAlbumPath()
+	 * @uses Album::getTmpPath()
+	 * @uses BannerManager::getPath()
+	 * @uses BannerManager::getTmpPath()
 	 */
 	private function _install_folders() {
+		//Creates the directory to save banners
+		$this->_create_folder(BannerManager::getPath());
+		
 		//Creates the directory to save photos
 		$this->_create_folder(Album::getAlbumPath());
 		
-		//Creates the directory where you upload photos 
+		//Creates the directory where you can upload banners 
+		$this->_create_folder(BannerManager::getTmpPath());
+		
+		//Creates the directory where you can upload photos 
 		$this->_create_folder(Album::getTmpPath());
 		
 		//Creates the cache directory
