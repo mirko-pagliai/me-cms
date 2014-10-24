@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class Photo | MeCms</title>
+	<title>Class Banner | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
 	<script type="text/javascript" src="elementlist.js?1795384447"></script>
@@ -46,11 +46,11 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-Banner.html">Banner</a></li>
+				<li class="active"><a href="class-Banner.html">Banner</a></li>
 				<li><a href="class-BannersPosition.html">BannersPosition</a></li>
 				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
-				<li class="active"><a href="class-Photo.html">Photo</a></li>
+				<li><a href="class-Photo.html">Photo</a></li>
 				<li><a href="class-PhotosAlbum.html">PhotosAlbum</a></li>
 				<li><a href="class-Post.html">Post</a></li>
 				<li><a href="class-PostsCategory.html">PostsCategory</a></li>
@@ -104,12 +104,12 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class Photo</h1>
+	<h1>Class Banner</h1>
 
 
 	<div class="description">
 	
-<p>Photo Model</p>
+<p>Banner Model</p>
 
 	</div>
 
@@ -128,7 +128,7 @@ MeToolsAppModel
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>Photo</span></b>			
+<b><span>Banner</span></b>			
 			
 			
 		</dd>
@@ -154,7 +154,7 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-Photo.html#30-153" title="Go to source code">Photo.php</a><br>
+		<b>Located at</b> <a href="source-class-Banner.html#30-153" title="Go to source code">Banner.php</a><br>
 	</div>
 
 
@@ -172,7 +172,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterFind">#</a>
-		<code><a href="source-class-Photo.html#90-107" title="Go to source code">afterFind</a>( <span>mixed <var>$results</var></span>, <span>boolean <var>$primary</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Banner.html#93-110" title="Go to source code">afterFind</a>( <span>mixed <var>$results</var></span>, <span>boolean <var>$primary</var> = <span class="php-keyword1">FALSE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -204,7 +204,7 @@ by find().</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-Album.html#_getPhotoPath">Album::getPhotoPath()</a></code></code> <br>
+						<code><code><a href="class-BannerManager.html#_getUrl">BannerManager::getUrl()</a></code></code> <br>
 				</div>
 
 
@@ -222,7 +222,7 @@ by find().</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-Photo.html#109-121" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Banner.html#112-124" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -248,7 +248,7 @@ by find().</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-Album.html#_savePhoto">Album::savePhoto()</a></code></code> <br>
+						<code><code><a href="class-BannerManager.html#_save">BannerManager::save()</a></code></code> <br>
 				</div>
 
 
@@ -266,7 +266,7 @@ by find().</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeDelete">#</a>
-		<code><a href="source-class-Photo.html#123-138" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+		<code><a href="source-class-Banner.html#126-141" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -294,7 +294,7 @@ by find().</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-Album.html#_deletePhoto">Album::deletePhoto()</a></code></code> <br>
+						<code><code><a href="class-BannerManager.html#_delete">BannerManager::delete()</a></code></code> <br>
 				</div>
 
 
@@ -312,7 +312,7 @@ by find().</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-Photo.html#140-152" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Banner.html#143-152" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -342,7 +342,7 @@ to halt the save.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						Album::checkIfWritable()<br>
+						<code><code><a href="class-BannerManager.html#_folderIsWritable">BannerManager::folderIsWritable()</a></code></code> <br>
 				</div>
 
 
@@ -373,33 +373,6 @@ to halt the save.</p>
 
 	<table class="summary" id="properties">
 	<caption>Properties summary</caption>
-	<tr data-order="displayField" id="$displayField">
-		<td class="attributes"><code>
-			public  
-			string
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-Photo.html#34-38" title="Go to source code"><var>$displayField</var></a>
-		</td>
-		<td class="value"><code><span class="php-quote">'filename'</span></code></td>
-		<td class="description"><div>
-			<a href="#$displayField" class="anchor">#</a>
-
-			<div class="description short">
-				
-<p>Display field</p>
-
-			</div>
-
-			<div class="description detailed hidden">
-				
-<p>Display field</p>
-
-
-			</div>
-		</div></td>
-	</tr>
 	<tr data-order="validate" id="$validate">
 		<td class="attributes"><code>
 			public  
@@ -407,7 +380,7 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Photo.html#40-76" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-Banner.html#34-79" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -415,9 +388,9 @@ to halt the save.</p>
 		<span class="php-quote">'on'</span>	=&gt; <span class="php-quote">'create'</span>,
 		<span class="php-quote">'rule'</span>	=&gt; <span class="php-quote">'blank'</span>
 	),
-	<span class="php-quote">'album_id'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'You have to select an option'</span>,
-		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'naturalNumber'</span>)
+	<span class="php-quote">'position_id'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'You have to select a valid option'</span>,
+		<span class="php-quote">'rule'</span>		=&gt; <span class="php-quote">'naturalnumber'</span>
 	),
 	<span class="php-quote">'filename'</span> =&gt; <span class="php-keyword1">array</span>(
 		<span class="php-quote">'extension'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -436,10 +409,19 @@ to halt the save.</p>
 			<span class="php-quote">'rule'</span>	=&gt; <span class="php-quote">'blank'</span>
 		)
 	),
+	<span class="php-quote">'target'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">TRUE</span>,
+		<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'Must be a valid url'</span>,
+		<span class="php-quote">'rule'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'url'</span>, <span class="php-keyword1">TRUE</span>)
+	),
 	<span class="php-quote">'description'</span> =&gt; <span class="php-keyword1">array</span>(
 		<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">TRUE</span>,
 		<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'Must be at most %d chars'</span>,
 		<span class="php-quote">'rule'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">255</span>)
+	),
+	<span class="php-quote">'active'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'You have to select a valid option'</span>,
+		<span class="php-quote">'rule'</span>		=&gt; <span class="php-quote">'boolean'</span>
 	)
 )</code></td>
 		<td class="description"><div>
@@ -466,12 +448,12 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Photo.html#78-88" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-Banner.html#81-91" title="Go to source code"><var>$belongsTo</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
-	<span class="php-quote">'Album'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span>		=&gt; <span class="php-quote">'PhotosAlbum'</span>,
-		<span class="php-quote">'foreignKey'</span>	=&gt; <span class="php-quote">'album_id'</span>,
+	<span class="php-quote">'Position'</span> =&gt; <span class="php-keyword1">array</span>(
+		<span class="php-quote">'className'</span>		=&gt; <span class="php-quote">'MeCms.BannersPosition'</span>,
+		<span class="php-quote">'foreignKey'</span>	=&gt; <span class="php-quote">'position_id'</span>,
 		<span class="php-quote">'counterCache'</span>	=&gt; <span class="php-keyword1">TRUE</span>
 	)
 )</code></td>

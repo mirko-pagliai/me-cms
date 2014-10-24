@@ -8,7 +8,7 @@
 	<title>File PostsCategory.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?1883047435"></script>
+	<script type="text/javascript" src="elementlist.js?1795384447"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -47,6 +47,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-Banner.html">Banner</a></li>
+				<li><a href="class-BannersPosition.html">BannersPosition</a></li>
 				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-Photo.html">Photo</a></li>
@@ -214,8 +216,8 @@
 </span></span><span id="109" class="l"><a class="l" href="#109">109: </a><span class="php-comment">     */</span>
 </span><span id="110" class="l"><a class="l" href="#110">110: </a>    <span class="php-keyword1">public</span> <span class="php-var"><a id="$belongsTo" href="#$belongsTo">$belongsTo</a></span> = <span class="php-keyword1">array</span>(
 </span><span id="111" class="l"><a class="l" href="#111">111: </a>        <span class="php-quote">'Parent'</span> =&gt; <span class="php-keyword1">array</span>(
-</span><span id="112" class="l"><a class="l" href="#112">112: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
-</span><span id="113" class="l"><a class="l" href="#113">113: </a>            <span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'parent_id'</span>
+</span><span id="112" class="l"><a class="l" href="#112">112: </a>            <span class="php-quote">'className'</span>     =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
+</span><span id="113" class="l"><a class="l" href="#113">113: </a>            <span class="php-quote">'foreignKey'</span>    =&gt; <span class="php-quote">'parent_id'</span>
 </span><span id="114" class="l"><a class="l" href="#114">114: </a>        )
 </span><span id="115" class="l"><a class="l" href="#115">115: </a>    );
 </span><span id="116" class="l"><a class="l" href="#116">116: </a>
@@ -225,14 +227,14 @@
 </span></span><span id="120" class="l"><a class="l" href="#120">120: </a><span class="php-comment">     */</span>
 </span><span id="121" class="l"><a class="l" href="#121">121: </a>    <span class="php-keyword1">public</span> <span class="php-var"><a id="$hasMany" href="#$hasMany">$hasMany</a></span> = <span class="php-keyword1">array</span>(
 </span><span id="122" class="l"><a class="l" href="#122">122: </a>        <span class="php-quote">'Child'</span> =&gt; <span class="php-keyword1">array</span>(
-</span><span id="123" class="l"><a class="l" href="#123">123: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
-</span><span id="124" class="l"><a class="l" href="#124">124: </a>            <span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'parent_id'</span>,
-</span><span id="125" class="l"><a class="l" href="#125">125: </a>            <span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
+</span><span id="123" class="l"><a class="l" href="#123">123: </a>            <span class="php-quote">'className'</span>     =&gt; <span class="php-quote">'MeCms.PostsCategory'</span>,
+</span><span id="124" class="l"><a class="l" href="#124">124: </a>            <span class="php-quote">'foreignKey'</span>    =&gt; <span class="php-quote">'parent_id'</span>,
+</span><span id="125" class="l"><a class="l" href="#125">125: </a>            <span class="php-quote">'dependent'</span>     =&gt; <span class="php-keyword1">FALSE</span>
 </span><span id="126" class="l"><a class="l" href="#126">126: </a>        ),
 </span><span id="127" class="l"><a class="l" href="#127">127: </a>        <span class="php-quote">'Post'</span> =&gt; <span class="php-keyword1">array</span>(
-</span><span id="128" class="l"><a class="l" href="#128">128: </a>            <span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Post'</span>,
-</span><span id="129" class="l"><a class="l" href="#129">129: </a>            <span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'category_id'</span>,
-</span><span id="130" class="l"><a class="l" href="#130">130: </a>            <span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
+</span><span id="128" class="l"><a class="l" href="#128">128: </a>            <span class="php-quote">'className'</span>     =&gt; <span class="php-quote">'MeCms.Post'</span>,
+</span><span id="129" class="l"><a class="l" href="#129">129: </a>            <span class="php-quote">'foreignKey'</span>    =&gt; <span class="php-quote">'category_id'</span>,
+</span><span id="130" class="l"><a class="l" href="#130">130: </a>            <span class="php-quote">'dependent'</span>     =&gt; <span class="php-keyword1">FALSE</span>
 </span><span id="131" class="l"><a class="l" href="#131">131: </a>        )
 </span><span id="132" class="l"><a class="l" href="#132">132: </a>    );
 </span><span id="133" class="l"><a class="l" href="#133">133: </a>    

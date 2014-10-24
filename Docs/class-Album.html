@@ -7,7 +7,7 @@
 	<title>Class Album | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?1883047435"></script>
+	<script type="text/javascript" src="elementlist.js?1795384447"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -47,6 +47,7 @@
 			<h3>Classes</h3>
 			<ul>
 				<li class="active"><a href="class-Album.html">Album</a></li>
+				<li><a href="class-BannerManager.html">BannerManager</a></li>
 				<li><a href="class-StaticPage.html">StaticPage</a></li>
 			</ul>
 
@@ -186,7 +187,7 @@ Otherwise, it checks the parent directory.</p>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-PhotosAlbum.html#_beforeSave">PhotosAlbum::beforeSave()</a></code></code><br>to check if the album parent directory is writeable<br>
+						<code><code><a href="class-PhotosAlbum.html#_beforeSave">PhotosAlbum::beforeSave()</a></code></code> <br>
 				</div>
 
 
@@ -236,7 +237,7 @@ Otherwise, it checks the parent directory.</p>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-PhotosAlbum.html#_afterSave">PhotosAlbum::afterSave()</a></code></code><br>to create the album directory<br>
+						<code><code><a href="class-PhotosAlbum.html#_afterSave">PhotosAlbum::afterSave()</a></code></code> <br>
 				</div>
 
 
@@ -283,6 +284,10 @@ Otherwise, it checks the parent directory.</p>
 				<h4>Uses</h4>
 				<div class="list">
 						<code><code><a href="class-Album.html#_getAlbumPath">Album::getAlbumPath()</a></code></code><br>to get the album path<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PhotosAlbum.html#_beforeDelete">PhotosAlbum::beforeDelete()</a></code></code> <br>
 				</div>
 
 
@@ -331,6 +336,10 @@ Otherwise, it checks the parent directory.</p>
 				<h4>Uses</h4>
 				<div class="list">
 						<code><code><a href="class-Album.html#_getAlbumPath">Album::getAlbumPath()</a></code></code><br>to get the album path<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-Photo.html#_beforeDelete">Photo::beforeDelete()</a></code></code> <br>
 				</div>
 
 
@@ -386,6 +395,7 @@ returns the path of the parent directory.</p>
 						<code><code><a href="class-Album.html#_savePhoto">Album::savePhoto()</a></code></code><br>to get the album path<br>
 						<code><code><a href="class-PhotosController.html#_admin_index">PhotosController::admin_index()</a></code></code><br>to get the album path<br>
 						<code><code><a href="class-PhotosController.html#_admin_edit">PhotosController::admin_edit()</a></code></code><br>to get the album path<br>
+						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br>
 				</div>
 
 
@@ -431,6 +441,10 @@ returns the path of the parent directory.</p>
 				</div>
 
 
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-Photo.html#_afterFind">Photo::afterFind()</a></code></code> <br>
+				</div>
 
 
 		</div>
@@ -452,14 +466,14 @@ returns the path of the parent directory.</p>
 		<div class="description short">
 			
 <p>Gets the list of the photos in the temporary directory
-(<code>APP/tmp/photos</code>).</p>
+(<code>APP/tmp/uploads/photos</code>).</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
 <p>Gets the list of the photos in the temporary directory
-(<code>APP/tmp/photos</code>).</p>
+(<code>APP/tmp/uploads/photos</code>).</p>
 
 
 
@@ -476,7 +490,7 @@ returns the path of the parent directory.</p>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-PhotosController.html#_admin_add">PhotosController::admin_add()</a></code></code><br>to get the list of the photos in the temporary directory<br>
+						<code><code><a href="class-PhotosController.html#_admin_add">PhotosController::admin_add()</a></code></code> <br>
 				</div>
 
 
@@ -519,7 +533,8 @@ returns the path of the parent directory.</p>
 				<div class="list">
 						<code><code><a href="class-Album.html#_getTmp">Album::getTmp()</a></code></code><br>to get the path of the photos temporary directory<br>
 						<code><code><a href="class-Album.html#_savePhoto">Album::savePhoto()</a></code></code><br>to get the path of the temporary directory<br>
-						<code><code><a href="class-PhotosController.html#_admin_add">PhotosController::admin_add()</a></code></code><br>to get the path of the temporary directory<br>
+						<code><code><a href="class-PhotosController.html#_admin_add">PhotosController::admin_add()</a></code></code> <br>
+						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br>
 				</div>
 
 
@@ -572,7 +587,7 @@ returns the path of the parent directory.</p>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
-						<code><code><a href="class-Photo.html#_afterSave">Photo::afterSave()</a></code></code><br>to save the photos<br>
+						<code><code><a href="class-Photo.html#_afterSave">Photo::afterSave()</a></code></code> <br>
 				</div>
 
 

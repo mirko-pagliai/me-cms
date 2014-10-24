@@ -7,7 +7,7 @@
 	<title>Class MenuHelper | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?1883047435"></script>
+	<script type="text/javascript" src="elementlist.js?1795384447"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -151,13 +151,62 @@ MeHtmlHelper
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-MenuHelper.html#27-207" title="Go to source code">Helper/MenuHelper.php</a><br>
+		<b>Located at</b> <a href="source-class-MenuHelper.html#27-234" title="Go to source code">Helper/MenuHelper.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="_banners" id="__banners">
+
+		<td class="attributes"><code>
+			 private 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__banners">#</a>
+		<code><a href="source-class-MenuHelper.html#47-72" title="Go to source code">_banners</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Internal function to generate the menu for "banners" actions.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Internal function to generate the menu for "banners" actions.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type Type of menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Menu<br>
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						link()<br>
+						DropdownHelper::dropdown()<br>
+						DropdownHelper::link()<br>
+						AuthHelper::isAdmin()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_pages" id="__pages">
 
 		<td class="attributes"><code>
@@ -169,7 +218,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__pages">#</a>
-		<code><a href="source-class-MenuHelper.html#47-71" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#74-98" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -222,7 +271,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__posts">#</a>
-		<code><a href="source-class-MenuHelper.html#73-99" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#100-126" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -275,7 +324,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__photos">#</a>
-		<code><a href="source-class-MenuHelper.html#101-120" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#128-147" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -327,7 +376,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__users">#</a>
-		<code><a href="source-class-MenuHelper.html#122-153" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#149-180" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -381,7 +430,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__systems">#</a>
-		<code><a href="source-class-MenuHelper.html#155-178" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#182-205" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			
@@ -430,7 +479,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get">#</a>
-		<code><a href="source-class-MenuHelper.html#180-206" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MenuHelper.html#207-233" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			

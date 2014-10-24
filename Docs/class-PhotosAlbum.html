@@ -7,7 +7,7 @@
 	<title>Class PhotosAlbum | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?1883047435"></script>
+	<script type="text/javascript" src="elementlist.js?1795384447"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -46,6 +46,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-Banner.html">Banner</a></li>
+				<li><a href="class-BannersPosition.html">BannersPosition</a></li>
 				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-Photo.html">Photo</a></li>
@@ -152,7 +154,7 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-PhotosAlbum.html#30-159" title="Go to source code">PhotosAlbum.php</a><br>
+		<b>Located at</b> <a href="source-class-PhotosAlbum.html#30-160" title="Go to source code">PhotosAlbum.php</a><br>
 	</div>
 
 
@@ -244,7 +246,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-Album.html#_createAlbum">Album::createAlbum()</a></code></code><br>to create the album directory<br>
+						<code><code><a href="class-Album.html#_createAlbum">Album::createAlbum()</a></code></code> <br>
 				</div>
 
 
@@ -262,7 +264,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeDelete">#</a>
-		<code><a href="source-class-PhotosAlbum.html#140-148" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+		<code><a href="source-class-PhotosAlbum.html#140-149" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -288,6 +290,10 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 				</div>
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-Album.html#_deleteAlbum">Album::deleteAlbum()</a></code></code> <br>
+				</div>
 
 
 		</div>
@@ -304,7 +310,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-PhotosAlbum.html#150-158" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-PhotosAlbum.html#151-159" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -334,7 +340,7 @@ to halt the save.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><code><a href="class-Album.html#_albumIsWriteable">Album::albumIsWriteable()</a></code></code><br>to check if the album parent directory is writeable<br>
+						<code><code><a href="class-Album.html#_albumIsWriteable">Album::albumIsWriteable()</a></code></code> <br>
 				</div>
 
 
@@ -471,9 +477,9 @@ to halt the save.</p>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Photo'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Photo'</span>,
-		<span class="php-quote">'foreignKey'</span> =&gt; <span class="php-quote">'album_id'</span>,
-		<span class="php-quote">'dependent'</span> =&gt; <span class="php-keyword1">FALSE</span>
+		<span class="php-quote">'className'</span>		=&gt; <span class="php-quote">'MeCms.Photo'</span>,
+		<span class="php-quote">'foreignKey'</span>	=&gt; <span class="php-quote">'album_id'</span>,
+		<span class="php-quote">'dependent'</span>		=&gt; <span class="php-keyword1">FALSE</span>
 	)
 )</code></td>
 		<td class="description"><div>
