@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsAppModel', 'MeCms.Model');
+App::uses('BannerManager', 'MeCms.Utility');
 
 /**
  * Banner Model
@@ -61,9 +62,19 @@ class Banner extends MeCmsAppModel {
 				'rule'	=> 'blank'
 			)
 		),
+		'target' => array(
+			'allowEmpty'	=> TRUE,
+			'message'		=> 'Must be a valid url',
+			'rule'			=> array('url', TRUE)
+		),
+		'description' => array(
+			'allowEmpty'	=> TRUE,
+			'message'		=> 'Must be at most %d chars',
+			'rule'			=> array('maxLength', 255)
+		),
 		'active' => array(
 			'message'	=> 'You have to select a valid option',
-			'rule'		=> array('boolean')
+			'rule'		=> 'boolean'
 		)
 	);
 
@@ -78,4 +89,65 @@ class Banner extends MeCmsAppModel {
 			'counterCache'	=> TRUE
 		)
 	);
+	
+	/**
+	 * Called after each find operation. Can be used to modify any results returned by find().
+	 * @param mixed $results The results of the find operation
+	 * @param boolean $primary Whether this model is being queried directly
+	 * @return mixed Result of the find operation
+	 * @uses BannerManager::getUrl()
+	 */
+	public function afterFind($results, $primary = FALSE) {
+		foreach($results as $k => $v) {
+			//If the filename is available, adds the file url
+			if(!empty($v['filename']))
+				$results[$k]['url'] = BannerManager::getUrl($v['filename']);
+			elseif(!empty($v[$this->alias]['filename']))
+				$results[$k][$this->alias]['url'] = BannerManager::getUrl($v[$this->alias]['filename']);
+		}
+		
+		return $results;
+	}
+	
+	/**
+	 * Called after each successful save operation.
+	 * @param boolean $created TRUE if this save created a new record
+	 * @param array $options Options passed from Model::save()
+	 * @uses BannerManager::save()
+	 */
+	public function afterSave($created, $options = array()) {
+		//Saves the file
+		if($created)
+			BannerManager::save($this->data[$this->alias]['filename']);
+		
+		Cache::clearGroup('banners', 'banners');
+	}
+	
+	/**
+	 * Called before every deletion operation.
+	 * @param boolean $cascade If TRUE records that depend on this record will also be deleted
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 * @uses BannerManager::delete()
+	 */
+	public function beforeDelete($cascade = TRUE) {
+		//Gets the banner
+		$banner = $this->find('first', array(
+			'conditions'	=> array('id' => $this->id),
+			'fields'		=> array('filename')
+		));
+		
+		//Deletes the banner and returns
+		return BannerManager::delete($banner['Banner']['filename']);
+	}
+	
+	/**
+	 * Called before each save operation, after validation. Return a non-true result to halt the save.
+	 * @param array $options Options passed from Model::save()
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 * @uses BannerManager::folderIsWritable
+	 */
+	public function beforeSave($options = array()) {
+		//Checks if the folder is writeable
+		return BannerManager::folderIsWritable();
+	}
 }

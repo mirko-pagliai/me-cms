@@ -80,4 +80,13 @@ class BannersPosition extends MeCmsAppModel {
 			'dependent'		=> FALSE
 		)
 	);
+	
+	/**
+	 * Called after each successful save operation.
+	 * @param boolean $created TRUE if this save created a new record
+	 * @param array $options Options passed from Model::save()
+	 */
+	public function afterSave($created, $options = array()) {		
+		Cache::clearGroup('banners', 'banners');
+	}
 }

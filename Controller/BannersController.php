@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('BannerManager', 'MeCms.Utility');
 
 /**
  * Banners Controller
@@ -62,8 +63,6 @@ class BannersController extends MeCmsAppController {
 			'fields'		=> array('id', 'filename', 'target', 'description', 'active')
 		));
 		
-		debug($banner);
-		
 		$this->set(array(
 			'banner'			=> $banner,
 			'title_for_layout'	=> __d('me_cms', 'View banner')
@@ -72,6 +71,8 @@ class BannersController extends MeCmsAppController {
 
 	/**
 	 * Add banner
+	 * @uses BannerManager::getTmp()
+	 * @uses BannerManager::getTmpPath()
 	 */
 	public function admin_add() {
 		//Gets the positions
@@ -83,23 +84,38 @@ class BannersController extends MeCmsAppController {
 			$this->redirect(array('controller' => 'banners_positions', 'action' => 'index'));
 		}
 		
+		//Gets the first file located in the temporary directory
+		$tmpFile = array_values(BannerManager::getTmp())[0];
+		
+		//Checks for the temporary file
+		if(empty($tmpFile)) {
+			$this->Session->flash(__d('me_cms', 'There are no files in the temporary directory %s', BannerManager::getTmpPath()), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		
+		//Sets the filename e the full path for the temporary file
+		$tmpFile = array('filename' => $tmpFile, 'path' => BannerManager::getTmpPath().DS.$tmpFile);
+				
 		if($this->request->is('post')) {
 			$this->Banner->create();
 			if($this->Banner->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The banner has been created'));
+				$this->Session->flash(__d('me_cms', 'The banner has been saved'));
 				$this->redirect(array('action' => 'index'));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'The banner could not be created. Please, try again'), 'error');
+				$this->Session->flash(__d('me_cms', 'The banner could not be saved. Please, try again'), 'error');
 		}
 
-		$this->set('positions', $positions);
-		$this->set('title_for_layout', __d('me_cms', 'Add banner'));
+		$this->set(array(
+			'positions'			=> $positions,
+			'tmpFile'			=> $tmpFile,
+			'title_for_layout'	=> __d('me_cms', 'Add banner')
+		));
 	}
 
 	/**
 	 * Edit banner
-	 * @param string $id Banner id
+	 * @param string $id Banner ID
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
@@ -116,16 +132,19 @@ class BannersController extends MeCmsAppController {
 		} 
 		else
 			$this->request->data = $this->Banner->find('first', array(
-				'conditions' => array('Banner.'.$this->Banner->primaryKey => $id)
+				'conditions'	=> array('id' => $id),
+				'fields'		=> array('id', 'position_id', 'filename', 'target', 'description', 'active')
 			));
 
-		$this->set('positions', $this->Banner->Position->find('list'));
-		$this->set('title_for_layout', __d('me_cms', 'Edit banner'));
+		$this->set(array(
+			'positions'			=> $this->Banner->Position->find('list'),
+			'title_for_layout'	=> __d('me_cms', 'Edit banner')
+		));
 	}
 
 	/**
 	 * Delete banner
-	 * @param string $id Banner id
+	 * @param string $id Banner ID
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {

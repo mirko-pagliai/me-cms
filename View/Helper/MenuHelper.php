@@ -45,6 +45,33 @@ class MenuHelper extends MeHtmlHelper {
 	);
 	
 	/**
+	 * Internal function to generate the menu for "banners" actions.
+	 * @param string $type Type of menu
+	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
+	 * @uses AuthHelper::isAdmin()
+	 */
+	private function _banners($type) {
+		//Only admins can access these controllers
+		if(!$this->Auth->isAdmin())
+			return array();
+		
+		$menu = array(
+			$this->link(__d('me_cms', 'List banners'),		array('controller' => 'banners', 'action' => 'index')),
+			$this->link(__d('me_cms', 'Add banner'),		array('controller' => 'banners', 'action' => 'add')),
+			$this->link(__d('me_cms', 'List positions'),	array('controller' => 'banners_positions', 'action' => 'index')),
+			$this->link(__d('me_cms', 'Add position'),		array('controller' => 'banners_positions', 'action' => 'add'))
+		);
+		
+		if($type == 'dropdown')
+			return $this->Dropdown->link(__d('me_cms', 'Banners'), array('icon' => 'dollar')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		
+		return $menu;
+	}
+	
+	/**
 	 * Internal function to generate the menu for "pages" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu

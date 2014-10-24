@@ -47,6 +47,7 @@
 					echo $this->Html->li($this->Menu->get('pages', 'dropdown'), array('class' => 'dropdown'));
 					echo $this->Html->li($this->Menu->get('photos', 'dropdown'), array('class' => 'dropdown'));
 					echo $this->Html->li($this->Menu->get('users', 'dropdown'), array('class' => 'dropdown'));
+					echo $this->Html->li($this->Menu->get('banners', 'dropdown'), array('class' => 'dropdown'));
 					echo $this->Html->li($this->Menu->get('systems', 'dropdown'), array('class' => 'dropdown'));
 				?>
 			</ul>
