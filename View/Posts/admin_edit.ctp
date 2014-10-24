@@ -37,10 +37,15 @@
 			<?php
 				//Only admins and managers can edit posts on behalf of other users
 				if($this->Auth->isManager())
-					echo $this->Form->input('user_id', array('label' => __d('me_cms', 'Author')));
+					echo $this->Form->input('user_id', array(
+						'label' => __d('me_cms', 'Author')
+					));
 				
-				echo $this->Form->input('category_id');
+				echo $this->Form->input('category_id', array(
+					'label' => __d('me_cms', 'Category')
+				));
 				echo $this->Form->datetimepicker('created', array(
+					'label'	=> __d('me_cms', 'Date'),
 					'tip'	=> array(
 						sprintf('%s.', __d('me_cms', 'If blank, the current date and time will be used')),
 						sprintf('%s.', __d('me_cms', 'You can delay the publication by entering a future date'))
@@ -48,7 +53,8 @@
 					'value'	=> $this->Time->format($this->request->data['Post']['created'], '%Y-%m-%d %H:%M')
 				));
 				echo $this->Form->input('priority', array(
-					'options' => array(
+					'label'		=> __d('me_cms', 'Priority'),
+					'options'	=> array(
 						'1' => sprintf('1 - %s', __d('me_cms', 'Very low')),
 						'2' => sprintf('2 - %s', __d('me_cms', 'Low')),
 						'3' => sprintf('3 - %s', __d('me_cms', 'Normal')),
@@ -65,12 +71,18 @@
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title', array('id' => 'title'));
+				echo $this->Form->input('title', array(
+					'id'	=> 'title',
+					'label'	=> __d('me_cms', 'Title')
+				));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
+					'label'	=> __d('me_cms', 'Slug'),
 					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 				));
-				echo $this->Form->ckeditor('text');
+				echo $this->Form->ckeditor('text', array(
+					'label' => __d('me_cms', 'Text')
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Edit post')); ?>
