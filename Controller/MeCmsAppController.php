@@ -42,7 +42,6 @@ class MeCmsAppController extends AppController {
 				'userModel'			=> 'MeCms.User'
 			)),
 			'authorize'			=> array('Controller'),
-			'authError'			=> 'You need to login first',
 			'className'			=> 'MeCms.MeAuth',
 			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE),
             'loginRedirect'		=> '/admin',
@@ -117,6 +116,8 @@ class MeCmsAppController extends AppController {
 		Configure::write('debug', $this->config['debug'] ? 2 : 0);
 		Configure::write('Cache.disable', !$this->config['cache']);
 		
+		//Sets the authenticaton message error
+		$this->Auth->authError = __d('me_cms', 'You need to login first');
 		//Sets the element that will be used for flash auth errors
 		//http://stackoverflow.com/a/20545037/1480263
 		if(!empty($this->Auth))
