@@ -112,12 +112,12 @@ class BannerManager {
 	 * Saves a file from the temporary directory
 	 * @param string $filename Filename
 	 * @return boolean TRUE if the file has been saved, otherwise FALSE
-	 * @uses getFolderPath()
+	 * @uses getFolder()
 	 * @uses getTmpPath()
 	 */
 	static public function save($filename) {
 		$file = new File(self::getTmpPath().DS.$filename);
-		if($success = $file->copy(self::getFolderPath().DS.$filename))
+		if($success = $file->copy(self::getFolder().DS.$filename))
 			$file->delete();
 		
 		return $success;
