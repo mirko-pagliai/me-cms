@@ -75,6 +75,9 @@
 					'id'	=> 'title',
 					'label'	=> __d('me_cms', 'Title')
 				));
+				echo $this->Form->input('subtitle', array(
+					'label'	=> __d('me_cms', 'Subtitle')
+				));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
 					'label'	=> __d('me_cms', 'Slug'),

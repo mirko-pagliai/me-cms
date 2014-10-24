@@ -72,6 +72,11 @@ class Post extends MeCmsAppModel {
 				'rule'		=> 'isUnique'
 			)
 		),
+		'subtitle' => array(
+			'allowEmpty'	=> TRUE,
+			'message'		=> 'Must be at most %d chars',
+			'rule'			=> array('maxLength', 150)
+		),
 		'slug' => array(
 			'slug' => array(
 				'last'		=> FALSE,
