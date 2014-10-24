@@ -32,6 +32,17 @@ App::uses('BannerManager', 'MeCms.Utility');
  */
 class BannersController extends MeCmsAppController {
 	/**
+	 * Checks if the provided user is authorized for the request.
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
+	 * @return bool TRUE if $user is authorized, otherwise FALSE
+	 * @uses MeAuthComponenet::isAdmin()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins can access this controller
+		return $this->Auth->isAdmin();
+	}
+	
+	/**
 	 * List banners
 	 */
 	public function admin_index() {
