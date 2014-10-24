@@ -47,6 +47,7 @@ $options = array(
 //	'prefix'	=> Inflector::slug(APP_DIR).'_'
 //);
 
+Cache::config('banners', am($options, array('groups' => array('banners'))));
 Cache::config('pages', am($options, array('groups' => array('pages'))));
 Cache::config('photos', am($options, array('groups' => array('photos'))));
 Cache::config('posts', am($options, array('groups' => array('posts'))));
