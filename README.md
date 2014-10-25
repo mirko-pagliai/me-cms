@@ -72,6 +72,17 @@ All'interno di questa directory, creare il file `.htaccess`:
 		php_value session.name CAKEPHP
 	</IfModule>
 
+### KCFinder con CKEditor
+Copia il file `APP/Plugin/MeTools/webroot/ckeditor/ckeditor_init.js` in `APP/webroot/js`. Modifica il file, decommentando le
+ultime linee e modificando la posizione di KCFinder:
+
+	filebrowserBrowseUrl:		'../../../kcfinder/browse.php?type=files',
+	filebrowserImageBrowseUrl:	'../../../kcfinder/browse.php?type=images',
+	filebrowserFlashBrowseUrl:	'../../../kcfinder/browse.php?type=flash',
+	filebrowserUploadUrl:		'../../../kcfinder/upload.php?type=files',
+	filebrowserImageUploadUrl:	'../../../kcfinder/upload.php?type=images',
+	filebrowserFlashUploadUrl:	'../../../kcfinder/upload.php?type=flash'
+
 ## Librerie e script
 MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko-pagliai/MeTools#libraries-and-script).  
 Oltre questi, MeCms include:
