@@ -23,9 +23,26 @@
  */
 ?>
 
+<?php $this->Html->scriptStart(); ?>
+	//Function to resize the iframe
+	function resizeKcfinder() {
+		var maxHeight = $(window).height() - $('#topbar').outerHeight(true) - 20;
+		$('#kcfinder').height(maxHeight);
+	}
+	
+	$(function() {
+		//Resizes the iframe on load
+		resizeKcfinder();
+		
+		//Resizes the iframe on window resize
+		$(window).resize(resizeKcfinder);
+	});
+<?php $this->Html->scriptEnd(); ?>
+
 <?php
 	echo $this->Html->iframe(array(
-		'height'	=> '500',
+		'height'	=> '550',
+		'id'		=> 'kcfinder',
 		'src'		=> $kcfinder,
 		'width'		=> '100%'
 	));
