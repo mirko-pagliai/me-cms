@@ -52,6 +52,36 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Media browser with KCFinder
+	 */
+	public function admin_browser() {
+		//Checks for KCFinder
+		if(!is_readable(WWW_ROOT.'kcfinder')) {
+			$this->Session->flash(__d('me_cms', '%s is not present into %s', 'FKFinder', WWW_ROOT.'kcfinder'), 'error');
+			$this->redirect('/admin');
+		}
+		
+		//Sets the KCFinder session values
+		$this->Session->write('KCFINDER', array(
+			'denyExtensionRename'	=> TRUE,
+			'denyUpdateCheck'		=> TRUE,
+			'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
+			'disabled'				=> FALSE,
+			'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
+			'jpegQuality'			=> 100,
+			'uploadURL'				=> sprintf('%s/%s', $this->webroot.WEBROOT_DIR, 'uploads')
+		));
+		
+		//Sets the KCFinder path
+		$kcfinder = sprintf('%s/%s/browse.php?lang=%s', $this->webroot.WEBROOT_DIR, 'kcfinder', Configure::read('Config.language'));
+				
+		$this->set(array(
+			'kcfinder'			=> $kcfinder,
+			'title_for_layout'	=> __d('me_cms', 'Media browser')
+        ));
+	}
+	
+	/**
 	 * Manages cache and thumbnails.
 	 * @uses System::checkCacheStatus()
 	 * @uses System::getCacheSize()

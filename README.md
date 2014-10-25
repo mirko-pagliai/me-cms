@@ -60,6 +60,18 @@ Ad esempio, richiamando l'url `http://localhost/your-site/page/about/our-staff` 
 MeCms darà sempre la precedenza alle pagine statiche. Questo significa che se esistono una pagina statica e una pagina nel
 database con lo stesso nome, MeCms utilizzerà la pagina statica.
 
+## KCFinder
+Se si desidera utilizzare [KCFinder](http://kcfinder.sunhater.com), scaricare e scompattare il pacchetto in 
+`APP/webroot/kcfinder`. 
+
+All'interno di questa directory, creare il file `.htaccess`:
+
+	<IfModule mod_php5.c>
+		php_value session.cache_limiter must-revalidate
+		php_value session.cookie_lifetime 14400
+		php_value session.name CAKEPHP
+	</IfModule>
+
 ## Librerie e script
 MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko-pagliai/MeTools#libraries-and-script).  
 Oltre questi, MeCms include:
