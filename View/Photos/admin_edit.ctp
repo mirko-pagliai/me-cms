@@ -29,7 +29,7 @@
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit photo')); ?>
 	<?php echo $this->Form->create('Photo'); ?>
 		<div class='float-form'>
-			<?php echo $this->Form->input('album_id'); ?>
+			<?php echo $this->Form->input('album_id', array('label' => __d('me_cms', 'Album'))); ?>
 		</div>
 		<fieldset>
 			<div class='photo-box'>
@@ -40,7 +40,7 @@
 			</div>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('description');
+				echo $this->Form->input('description', array('label' => __d('me_cms', 'Description')));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Edit photo')); ?>

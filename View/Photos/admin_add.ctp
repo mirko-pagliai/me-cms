@@ -30,14 +30,15 @@
 	<?php echo $this->Form->create('Photo'); ?>
 		<div class='float-form'>
 			<?php
+				$options = array();
 				//If it's already specified a album ID
 				if(!empty($albumId))
-					$options = array('default' => $albumId);
+					$options['default'] = $albumId;
 				//Else, if there's only one album
 				elseif(count($albums) < 2)
-					$options = array('default' => $albums[1]);
+					$options['default'] = $albums[1];
 				
-				echo $this->Form->input('album_id', empty($options) ? array() : $options);
+				echo $this->Form->input('album_id', am($options, array('label' => __d('me_cms', 'Album'))));
 			?>
 		</div>
 		<fieldset>
