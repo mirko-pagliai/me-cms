@@ -41,12 +41,18 @@
 		</div>
 		<fieldset>
 			<?php
-				echo $this->Form->input('title', array('id' => 'title'));
+				echo $this->Form->input('title', array(
+					'id'	=> 'title',
+					'label'	=> __d('me_cms', 'Title')
+				));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
+					'label'	=> __d('me_cms', 'Slug'),
 					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 				));
-				echo $this->Form->input('description');
+				echo $this->Form->input('description', array(
+					'label'	=> __d('me_cms', 'Description')
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Add photos album')); ?>
