@@ -30,16 +30,26 @@
 	<?php echo $this->Form->create('Banner'); ?>
 		<div class='float-form'>
 			<?php
-				echo $this->Form->input('position_id', array('label' => __d('me_cms', 'Position')));
-				echo $this->Form->input('active', array('label' => sprintf('%s?', __d('me_cms', 'Published'))));
+				echo $this->Form->input('position_id', array(
+					'label' => __d('me_cms', 'Position')
+				));
+				echo $this->Form->input('active', array(
+					'label' => sprintf('%s?', __d('me_cms', 'Published')
+				)));
 			?>
 		</div>
 		<fieldset>
 			<?php
-				echo $this->Html->para(NULL, $this->Html->img($this->request->data['Banner']['url'], array('class' => 'img-thumbnail')));
+				echo $this->Html->img($this->request->data['Banner']['url'], array('class' => 'img-thumbnail margin-15'));
 				
 				echo $this->Form->input('id');
-				echo $this->Form->input('target', array('label' => __d('me_cms', 'Web address')));
+				echo $this->Form->input('filename', array(
+					'disabled'	=> TRUE,
+					'filename'	=> __d('me_cms', 'Filename')
+				));
+				echo $this->Form->input('target', array(
+					'label' => __d('me_cms', 'Web address')
+				));
 				echo $this->Form->input('description', array(
 					'label'	=> __d('me_cms', 'Description'),
 					'type'	=> 'textarea'
