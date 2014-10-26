@@ -41,7 +41,7 @@
 			<tr>
 				<td>
 					<?php
-						$title = $this->Html->link($banner['Banner']['filename'], array('action' => 'view', $id = $banner['Banner']['id']));
+						$title = $this->Html->link($banner['Banner']['filename'], array('action' => 'edit', $id = $banner['Banner']['id']));
 						
 						//If the banner is not active (not published)
 						if(!$banner['Banner']['active'])
@@ -50,7 +50,6 @@
 						echo $this->Html->strong($title);
 												
 						echo $this->Html->ul(array(
-							$this->Html->link(__d('me_cms', 'View'), array('action' => 'view', $id), array('icon' => 'eye')),
 							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id ), array('icon' => 'pencil')),
 							$this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'))
 						), array('class' => 'actions'));

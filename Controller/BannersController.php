@@ -59,28 +59,6 @@ class BannersController extends MeCmsAppController {
 	}
 
 	/**
-	 * View banner
-	 * @param string $id Banner ID
-	 * @throws NotFoundException
-	 */
-	public function admin_view($id = NULL) {
-		if(!$this->Banner->exists($id))
-			throw new NotFoundException( __d('me_cms', 'Invalid banner'));
-		
-		//Gets the banner
-		$banner = $this->Banner->find('first', array(
-			'conditions'	=> array('Banner.id' => $id),
-			'contain'		=> 'Position.name',
-			'fields'		=> array('id', 'filename', 'target', 'description', 'active')
-		));
-		
-		$this->set(array(
-			'banner'			=> $banner,
-			'title_for_layout'	=> __d('me_cms', 'View banner')
-		));
-	}
-
-	/**
 	 * Add banner
 	 * @uses BannerManager::getTmp()
 	 * @uses BannerManager::getTmpPath()
