@@ -29,7 +29,7 @@
 	<?php echo $this->Html->h2(__d('me_cms', 'Photos')); ?>
 	<div class='clearfix'>
 		<div class='row'>
-			<?php foreach($photos as $k => $photo): ?>
+			<?php foreach($photos as $photo): ?>
 				<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
 					<div class='photo-box'>
 						<?php echo $this->Html->para('photo-filename', $photo['Photo']['filename']); ?>
