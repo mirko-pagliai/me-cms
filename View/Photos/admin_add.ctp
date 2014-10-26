@@ -37,7 +37,7 @@
 				//Else, if there's only one album
 				elseif(count($albums) < 2)
 					$options['default'] = $albums[1];
-				.
+				
 				echo $this->Form->input('album_id', am($options, array('label' => __d('me_cms', 'Album'))));
 			?>
 		</div>
