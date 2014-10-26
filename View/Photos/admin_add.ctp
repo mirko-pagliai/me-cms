@@ -28,7 +28,7 @@
 <div class="photos form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add photos')); ?>
 	<?php echo $this->Form->create('Photo'); ?>
-		<div class='float-form'>
+		<div class="float-form">
 			<?php
 				$options = array();
 				//If it's already specified a album ID
@@ -42,39 +42,37 @@
 			?>
 		</div>
 		<fieldset>
-			<div class='clearfix'>
-				<div class='btn-group margin-10'>
-					<?php
-						echo $this->Html->button(__d('me_cms', 'Check all'), '#', array('class' => 'check-all btn-primary btn-sm', 'icon' => 'check-square-o'));
-						echo $this->Html->button(__d('me_cms', 'Uncheck all'), '#', array('class' => 'uncheck-all btn-primary btn-sm', 'icon' => 'minus-square-o'));
-					?>
-				</div>
-				<div class='row'>
-					<?php foreach($photos as $k => $photo): ?>
-						<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
-							<div class='photo-box'>
-								<?php
-									echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
-										'checked'		=> TRUE,
-										'div'			=> array('class' => 'photo-filename'),
-										'hiddenField'	=> FALSE,
-										'label'			=> $photo,
-										'type'			=> 'checkbox',
-										'value'			=> $photo
-									));
-									echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => 263));
-									echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
-										'div'			=> array('class' => 'photo-description'),
-										'label'			=> FALSE,
-										'placeholder'	=> sprintf('%s...', __d('me_cms', 'Description')),
-										'rows'			=> 2,
-										'type'			=> 'textarea'
-									));
-								?>
-							</div>
+			<div class="btn-group margin-10 clearfix">
+				<?php
+					echo $this->Html->button(__d('me_cms', 'Check all'), '#', array('class' => 'check-all btn-primary', 'icon' => 'check-square-o'));
+					echo $this->Html->button(__d('me_cms', 'Uncheck all'), '#', array('class' => 'uncheck-all btn-primary', 'icon' => 'minus-square-o'));
+				?>
+			</div>
+			<div class="clearfix">
+				<?php foreach($photos as $k => $photo): ?>
+					<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
+						<div class='photo-box'>
+							<?php
+								echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
+									'checked'		=> TRUE,
+									'div'			=> array('class' => 'title'),
+									'hiddenField'	=> FALSE,
+									'label'			=> $photo,
+									'type'			=> 'checkbox',
+									'value'			=> $photo
+								));
+								echo $this->Html->thumb($tmpPath.DS.$photo, array('side' => 263));
+								echo $this->Form->input(sprintf('Photo.%s.description', $k), array(
+									'div'			=> array('class' => 'description'),
+									'label'			=> FALSE,
+									'placeholder'	=> sprintf('%s...', __d('me_cms', 'Description')),
+									'rows'			=> 2,
+									'type'			=> 'textarea'
+								));
+							?>
 						</div>
-					<?php endforeach; ?>
-				</div>
+					</div>
+				<?php endforeach; ?>
 			</div>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Add photos')); ?>

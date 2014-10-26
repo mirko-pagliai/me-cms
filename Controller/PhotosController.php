@@ -58,12 +58,11 @@ class PhotosController extends MeCmsAppController {
 		
 		$this->paginate = array(
 			'conditions'	=> array('album_id' => $albumId),
-			'fields'		=> array('id', 'filename', 'description'),
+			'fields'		=> array('id', 'album_id', 'filename'),
 			'limit'			=> $this->config['photos_for_page']
 		);
 		
 		$this->set(array(
-			'path'				=> Album::getAlbumPath($albumId),
 			'photos'			=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Photos')
 		));
@@ -128,7 +127,7 @@ class PhotosController extends MeCmsAppController {
 
 	/**
 	 * Edit photo
-	 * @param string $id Photo id
+	 * @param string $id Photo ID
 	 * @throws NotFoundException
 	 * @uses Album::getAlbumPath() to get the album path
 	 */
@@ -154,16 +153,15 @@ class PhotosController extends MeCmsAppController {
 			$this->request->data = $photo;
 
 		$this->set(array(
-			'albumPath'			=> Album::getAlbumPath($photo['Photo']['album_id']),
 			'albums'			=> $this->Photo->Album->find('list'),
-			'photo'				=> $photo['Photo']['filename'],
+			'photo'				=> $photo,
 			'title_for_layout'	=> __d('me_cms', 'Edit photo')
 		));
 	}
 
 	/**
 	 * Delete photo
-	 * @param string $id Photo id
+	 * @param string $id Photo ID
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {

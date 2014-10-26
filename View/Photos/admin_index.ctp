@@ -28,35 +28,27 @@
 <div class="photos index">
 	<?php echo $this->Html->h2(__d('me_cms', 'Photos')); ?>
 	<div class='clearfix'>
-		<div class='row'>
-			<?php foreach($photos as $photo): ?>
-				<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
-					<div class='photo-box'>
-						<?php echo $this->Html->para('photo-filename', $photo['Photo']['filename']); ?>
-						<div class='relative'>
-							<?php
-								echo $this->Html->thumb($path.DS.$photo['Photo']['filename'], array('side' => 347));
+		<?php foreach($photos as $photo): ?>
+			<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
+				<div class='photo-box'>
+					<?php 
+						echo $this->Html->div('title', $photo['Photo']['filename']);
+						echo $this->Html->thumb($photo['Photo']['path'], array('side' => 400));
 
-								if(!empty($photo['Photo']['description']))
-									echo $this->Html->div('photo-description', $photo['Photo']['description']);
-							?>
-						</div>
-						<?php
-							$actions = array();
-							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id = $photo['Photo']['id']), array('icon' => 'pencil'));
+						$actions = array();
+						$actions[] = $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id = $photo['Photo']['id']), array('icon' => 'pencil'));
 
-							//Only admins and managers can delete photos
-							if($this->Auth->isManager())
-								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
+						//Only admins and managers can delete photos
+						if($this->Auth->isManager())
+							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
 
-							$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $id, 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
-							
-							echo $this->Html->ul($actions, array('class' => 'photo-links'));
-						?>
-					</div>
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $id, 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
+
+						echo $this->Html->ul($actions, array('class' => 'actions'));
+					?>
 				</div>
-			<?php endforeach; ?>
-		</div>
+			</div>
+		<?php endforeach; ?>
 	</div>
 	<?php echo $this->element('MeTools.paginator'); ?>
 </div>

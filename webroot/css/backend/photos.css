@@ -6,23 +6,23 @@
  */
 
 /* -------------------------------- */
-/*			Photo box				*/
+/*			Photo boxes				*/
 /* -------------------------------- */
 /* Photo box */
-.photos .photo-box {
+.photo-box {
 	background: #e8e8e8;
     margin-bottom: 10px;
     padding: 10px;
 }
 
-/* Photo box, photo filename */
-.photos .photo-box .photo-filename {
+/* Photo box, title */
+.photo-box .title {
 	background: #fff;
-	font-family: Arial,sans-serif;
+    font-family: Arial,sans-serif;
     font-size: 12px;
 	font-weight: bold;
-    margin: 0 0 5px;
-	padding: 3px 6px;
+	margin: 0;
+	padding: 6px;
 	text-align: center;
 	/* Text truncated */
 	overflow: hidden;
@@ -30,95 +30,50 @@
     white-space: nowrap;
 }
 
-/* Photo box, photo thumbnail */
-.photos .photo-box img.thumb {
+/* Photo box, thumbnail */
+.photo-box img.thumb {
 	margin: 0 auto;
 	max-width: 100%;
 }
 
-/* Photo box, photo description */
-.photos .photo-box .photo-description {
-	margin: 0;
-}
-
 /* -------------------------------- */
-/*		Photo box on indexes		*/
+/*		Photo boxes on indexes		*/
 /* -------------------------------- */
-/* Photo box, photo description */
-.photos.index .photo-box .photo-description {
-    background: #000;
-    bottom: 0;
-    color: #fff;
-	display: none;
-    font-family: Arial,sans-serif;
-    font-size: 12px;
-    opacity: .75;
-    padding: 4px 8px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-}
-
-/* Photo box, photo description on hover on photo box */
-.photos .photo-box:hover .photo-description {
-	display: block;
-}
-
-/* Photo box, photos links */
-.photos .photo-box ul.photo-links {
+/* Photo box, actions */
+.index .photo-box .actions {
     background: #fff;
-    margin: 5px 0 0;
-    padding: 0;
+	margin: 0;
+	padding: 6px !important;
     text-align: center;
 }
 
-/* Photo box, photos links, list element */
-.photos .photo-box ul.photo-links > li {
+/* Photo box, actions, element list */
+.index .photo-box .actions li {
     border-right: 1px solid #bbb;
     display: inline-block;
-    margin: 4px 6px 4px 0;
     padding-right: 6px;
 }
 
-/* Photo box, photos links, last list element */
-.photos .photo-box ul.photo-links > li:last-child {
+/* Photo box, actions, last element list */
+.index .photo-box .actions li:last-child {
 	border: 0;
-	margin: 0;
 	padding: 0;
 }
 
-/* Photo box, photos links, last list element, link */
-.photos .photo-box ul.photo-links > li a {
+/* Photo box, actions, links */
+.index .photo-box .actions a {
     text-decoration: none;
 }
 
 /* -------------------------------- */
-/*		Photo box on forms			*/
+/*		Photo boxes on forms		*/
 /* -------------------------------- */
-/* Photo box, photo filename, label */
-.photos .photo-box .photo-filename label {
-	display: block;
-	/* Text truncated */
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* Photo box, title, checkbox icon */
+form .photo-box .title label:before {
+	font-size: 14px;
 }
 
-/* Photo box, photo filename, error message */
-.photos .photo-box .photo-filename .error-message {
-	border-radius: 0;
-    margin: 0;
-    padding: 2px 4px;
-}
-	
-/* Photo box, photo thumbnail */
-.photos.form .photo-box img.thumb {
-	margin-bottom: 5px;
-}
-
-/* Photo box, photo description, input */
-.photos.form .photo-box .photo-description textarea {
-	border-radius: 0;
-    height: auto;
-    padding: 2px 6px;
+/* Photo box, input div (except for "title") */
+form .photo-box div.input:not(.title) {
+	margin: 5px 0 0;
 }

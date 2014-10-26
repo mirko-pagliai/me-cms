@@ -28,19 +28,27 @@
 <div class="photos form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit photo')); ?>
 	<?php echo $this->Form->create('Photo'); ?>
-		<div class='float-form'>
+		<div class="float-form">
 			<?php echo $this->Form->input('album_id', array('label' => __d('me_cms', 'Album'))); ?>
 		</div>
 		<fieldset>
-			<div class='photo-box'>
-				<?php 
-					echo $this->Html->para('photo-filename text-center', $this->Html->strong($photo));
-					echo $this->Html->thumb($albumPath.DS.$photo, array('side' => '270'));
-				?>
+			<div class="clearfix">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="photo-box">
+						<?php
+							echo $this->Html->div('title', $photo['Photo']['filename']);
+							echo $this->Html->thumb($photo['Photo']['path'], array('side' => '270'));
+						?>
+					</div>
+				</div>
 			</div>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('description', array('label' => __d('me_cms', 'Description')));
+				echo $this->Form->input('description', array(
+					'label' => __d('me_cms', 'Description'),
+					'rows'	=> 2,
+					'type'	=> 'textarea'
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Edit photo')); ?>
