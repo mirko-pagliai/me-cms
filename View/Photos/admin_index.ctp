@@ -35,7 +35,7 @@
 						<?php echo $this->Html->para('photo-filename', $photo['Photo']['filename']); ?>
 						<div class='relative'>
 							<?php
-								echo $this->Html->thumb($path.DS.$photo['Photo']['filename'], array('side' => '335'));
+								echo $this->Html->thumb($path.DS.$photo['Photo']['filename'], array('side' => 347));
 
 								if(!empty($photo['Photo']['description']))
 									echo $this->Html->div('photo-description', $photo['Photo']['description']);
