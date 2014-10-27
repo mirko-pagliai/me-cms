@@ -35,8 +35,7 @@
 						echo $this->Html->div('title', $photo['Photo']['filename']);
 						echo $this->Html->thumb($photo['Photo']['path'], array('side' => 400));
 
-						$actions = array();
-						$actions[] = $this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id = $photo['Photo']['id']), array('icon' => 'pencil'));
+						$actions = array($this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id = $photo['Photo']['id']), array('icon' => 'pencil')));
 
 						//Only admins and managers can delete photos
 						if($this->Auth->isManager())

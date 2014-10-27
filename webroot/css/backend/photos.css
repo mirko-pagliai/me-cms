@@ -12,6 +12,7 @@
 .photo-box {
 	background: #e8e8e8;
     margin-bottom: 10px;
+	max-width: 400px;
     padding: 10px;
 }
 
@@ -68,7 +69,14 @@
 /* -------------------------------- */
 /*		Photo boxes on forms		*/
 /* -------------------------------- */
-/* Photo box, title, checkbox icon */
+/* Photo box, title, label */
+form .photo-box .title label {
+	/* Text truncated */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* Photo box, title, label, checkbox icon */
 form .photo-box .title label:before {
 	font-size: 14px;
 }
