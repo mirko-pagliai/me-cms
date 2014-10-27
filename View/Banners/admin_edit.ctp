@@ -45,13 +45,15 @@
 				echo $this->Form->input('id');
 				echo $this->Form->input('filename', array(
 					'disabled'	=> TRUE,
-					'filename'	=> __d('me_cms', 'Filename')
+					'label'	=> __d('me_cms', 'Filename')
 				));
 				echo $this->Form->input('target', array(
-					'label' => __d('me_cms', 'Web address')
+					'label' => __d('me_cms', 'Web address'),
+					'tip'	=> __d('me_cms', 'The address should begin with %s', $this->Html->em('http://'))
 				));
 				echo $this->Form->input('description', array(
 					'label'	=> __d('me_cms', 'Description'),
+					'rows'	=> 2,
 					'type'	=> 'textarea'
 				));
 			?>

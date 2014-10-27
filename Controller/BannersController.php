@@ -64,42 +64,47 @@ class BannersController extends MeCmsAppController {
 	 * @uses BannerManager::getTmpPath()
 	 */
 	public function admin_add() {
-		//Gets the positions
+		//Gets the positions and checks
 		$positions = $this->Banner->Position->find('list');
-		
-		//Checks for positions
 		if(empty($positions)) {
 			$this->Session->flash(__d('me_cms', 'Before you can add a banner, you have to create at least a banner position'), 'error');
 			$this->redirect(array('controller' => 'banners_positions', 'action' => 'index'));
 		}
 		
-		//Gets the first file located in the temporary directory
-		$tmpFile = array_values(BannerManager::getTmp())[0];
-		
-		//Checks for the temporary file
-		if(empty($tmpFile)) {
+		//Gets the temporary files and checks
+		$tmpFiles = BannerManager::getTmp();
+		if(empty($tmpFiles)) {
 			$this->Session->flash(__d('me_cms', 'There are no files in the temporary directory %s', BannerManager::getTmpPath()), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		//Sets the filename e the full path for the temporary file
-		$tmpFile = array('filename' => $tmpFile, 'path' => BannerManager::getTmpPath().DS.$tmpFile);
-				
-		if($this->request->is('post')) {
-			$this->Banner->create();
-			if($this->Banner->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The banner has been saved'));
-				$this->redirect(array('action' => 'index'));
+		//Sets values as keys
+		$tmpFiles = array_combine($tmpFiles, $tmpFiles);
+		
+		//If the file to be used has been specified
+		if(!empty($this->request->query['file'])) {
+			if($this->request->is('post')) {
+				$this->Banner->create();
+				if($this->Banner->save($this->request->data)) {
+					$this->Session->flash(__d('me_cms', 'The banner has been saved'));
+					$this->redirect(array('action' => 'index'));
+				}
+				else
+					$this->Session->flash(__d('me_cms', 'The banner could not be saved. Please, try again'), 'error');
 			}
-			else
-				$this->Session->flash(__d('me_cms', 'The banner could not be saved. Please, try again'), 'error');
+			
+			//Sets the filename e the full path for the temporary file
+			$tmpFile = array(
+				'filename'	=> $tmpFiles[$this->request->query['file']],
+				'path'		=> BannerManager::getTmpPath().DS.$tmpFiles[$this->request->query['file']]
+			);
+			
+			$this->set(compact('tmpFile'));
 		}
-
-		$this->set(array(
-			'positions'			=> $positions,
-			'tmpFile'			=> $tmpFile,
-			'title_for_layout'	=> __d('me_cms', 'Add banner')
-		));
+		
+		$this->set(am(array(
+			'title_for_layout' => __d('me_cms', 'Add banner')
+		), compact('positions', 'tmpFiles')));
 	}
 
 	/**
