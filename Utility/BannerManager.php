@@ -47,7 +47,7 @@ class BannerManager {
 	
 	/**
 	 * Checks if the main folder is writable.
-	 * @return boolean TRUE if is writable, otherwise FALSE;
+	 * @return boolean TRUE if is writable, otherwise FALSE
 	 * @uses getFolder()
 	 */
 	static public function folderIsWritable() {
