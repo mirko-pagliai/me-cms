@@ -25,7 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
-App::uses('Album', 'MeCms.Utility');
+App::uses('PhotoManager', 'MeCms.Utility');
 
 /**
  * Photos Controller
@@ -50,7 +50,6 @@ class PhotosController extends MeCmsAppController {
 	 * List photos
 	 * @param string $albumId Photos album id
 	 * @throws NotFoundException
-	 * @uses Album::getAlbumPath() to get the album path
 	 */
 	public function admin_index($albumId = NULL) {
 		if(!$this->Photo->Album->exists($albumId))
@@ -70,8 +69,8 @@ class PhotosController extends MeCmsAppController {
 
 	/**
 	 * Add photo from the tmp directory (`APP/tmp/uploads/photos`)
-	 * @uses Album::getTmp()
-	 * @uses Album::getTmpPath()
+	 * @uses PhotoManager::getTmp()
+	 * @uses PhotoManager::getTmpPath()
 	 */
 	public function admin_add() {
 		//Gets albums
@@ -83,12 +82,13 @@ class PhotosController extends MeCmsAppController {
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
-		//Gets the list of the files located in the temporary directory
-		$tmpFiles = Album::getTmp();
+		//Gets the list of the files located in the temporary directory and sets the temporary directory path
+		$tmpFiles = PhotoManager::getTmp();
+		$tmpPath = PhotoManager::getTmpPath();
 		
 		//Checks for temporary files
 		if(empty($tmpFiles)) {
-			$this->Session->flash(__d('me_cms', 'There are no photos in the temporary directory %s', Album::getTmpPath()), 'error');
+			$this->Session->flash(__d('me_cms', 'There are no photos in the temporary directory %s', $tmpPath), 'error');
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
@@ -121,7 +121,7 @@ class PhotosController extends MeCmsAppController {
 			'albums'			=> $albums,
 			'photos'			=> $tmpFiles,
 			'title_for_layout'	=> __d('me_cms', 'Add photos'),
-			'tmpPath'			=> Album::getTmpPath()
+			'tmpPath'			=> $tmpPath
 		));
 	}
 
@@ -129,7 +129,6 @@ class PhotosController extends MeCmsAppController {
 	 * Edit photo
 	 * @param string $id Photo ID
 	 * @throws NotFoundException
-	 * @uses Album::getAlbumPath() to get the album path
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Photo->exists($id))

@@ -25,7 +25,7 @@
  */
 
 App::uses('MeCmsAppModel', 'MeCms.Model');
-App::uses('Album', 'MeCms.Utility');
+App::uses('PhotoManager', 'MeCms.Utility');
 
 /**
  * Photo Model
@@ -92,15 +92,15 @@ class Photo extends MeCmsAppModel {
 	 * @param mixed $results The results of the find operation
 	 * @param boolean $primary Whether this model is being queried directly
 	 * @return mixed Result of the find operation
-	 * @uses Album::getPhotoPath()
+	 * @uses PhotoManager::getPath()
 	 */
 	public function afterFind($results, $primary = FALSE) {
 		foreach($results as $k => $v) {
-			//If the album ID and the filename are available, adds the file path
-			if(!empty($v['album_id']) && !empty($v['filename']))
-				$results[$k]['path'] = Album::getPhotoPath($v['album_id'], $v['filename']);
-			elseif(!empty($v[$this->alias]['album_id']) && !empty($v[$this->alias]['filename']))
-				$results[$k][$this->alias]['path'] = Album::getPhotoPath($v[$this->alias]['album_id'], $v[$this->alias]['filename']);
+			//If the file name and the album ID are available, adds the file path
+			if(!empty($v['filename']) && !empty($v['album_id']))
+				$results[$k]['path'] = PhotoManager::getPath($v['filename'], $v['album_id']);
+			elseif(!empty($v[$this->alias]['filename']) && !empty($v[$this->alias]['album_id']))
+				$results[$k][$this->alias]['path'] = PhotoManager::getPath($v[$this->alias]['filename'], $v[$this->alias]['album_id']);
 		}
 		
 		return $results;
@@ -110,12 +110,12 @@ class Photo extends MeCmsAppModel {
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save()
-	 * @uses Album::savePhoto()
+	 * @uses PhotoManager::save()
 	 */
 	public function afterSave($created, $options = array()) {
 		//Saves the photos
 		if($created)
-			Album::savePhoto($this->data[$this->alias]['filename'], $this->data[$this->alias]['album_id']);
+			PhotoManager::save($this->data[$this->alias]['filename'], $this->data[$this->alias]['album_id']);
 		
 		Cache::clearGroup('photos', 'photos');
 	}
@@ -124,7 +124,7 @@ class Photo extends MeCmsAppModel {
 	 * Called before every deletion operation.
 	 * @param boolean $cascade If TRUE records that depend on this record will also be deleted
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
-	 * @uses Album::deletePhoto()
+	 * @uses PhotoManager::delete()
 	 */
 	public function beforeDelete($cascade = TRUE) {
 		//Gets the photo
@@ -133,20 +133,20 @@ class Photo extends MeCmsAppModel {
 			'fields'		=> array('album_id', 'filename')
 		));
 		
-		//Deletes the photo and returns
-		return Album::deletePhoto($photo['Photo']['filename'], $photo['Photo']['album_id']);
+		//Deletes the photo
+		return PhotoManager::delete($photo['Photo']['filename'], $photo['Photo']['album_id']);
 	}
 	
 	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
-	 * @uses Album::checkIfWritable()
+	 * @uses PhotoManager::folderIsWritable()
 	 */
 	public function beforeSave($options = array()) {
-		//Checks if the album directory is writeable
+		//Checks if the album folder is writable
 		if(!empty($this->data[$this->alias]['album_id']))
-			return Album::albumIsWriteable($this->data[$this->alias]['album_id']);
+			return PhotoManager::folderIsWritable($this->data[$this->alias]['album_id']);
 		
 		return TRUE;
 	}

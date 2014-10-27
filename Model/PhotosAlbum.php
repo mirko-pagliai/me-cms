@@ -25,7 +25,7 @@
  */
 
 App::uses('MeCmsAppModel', 'MeCms.Model');
-App::uses('Album', 'MeCms.Utility');
+App::uses('PhotoManager', 'MeCms.Utility');
 
 /**
  * PhotosAlbum Model
@@ -127,12 +127,12 @@ class PhotosAlbum extends MeCmsAppModel {
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save()
-	 * @uses Album::createAlbum()
+	 * @uses PhotoManager::createFolder()
 	 */
 	public function afterSave($created, $options = array()) {
-		//Creates the album directory
+		//Creates the album folder
 		if($created)
-			Album::createAlbum($this->id);
+			PhotoManager::createFolder($this->id);
 		
 		Cache::clearGroup('photos', 'photos');
 	}
@@ -141,20 +141,21 @@ class PhotosAlbum extends MeCmsAppModel {
 	 * Called before every deletion operation.
 	 * @param boolean $cascade If TRUE records that depend on this record will also be deleted
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
-	 * @uses Album::deleteAlbum()
+	 * @uses PhotoManager::deleteFolder()
 	 */
 	public function beforeDelete($cascade = TRUE) {
-		//Deletes the album and returns
-		return Album::deleteAlbum($this->id);
+		//Deletes the album folder
+		return PhotoManager::deleteFolder($this->id);
 	}
 	
 	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
-	 * @uses Album::albumIsWriteable()
+	 * @uses PhotoManager::folderIsWritable()
 	 */
 	public function beforeSave($options = array()) {
-		return Album::albumIsWriteable();
+		//Checks if the main folder is writable
+		return PhotoManager::folderIsWritable();
 	}
 }
