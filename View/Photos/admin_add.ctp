@@ -50,8 +50,8 @@
 			</div>
 			<div class="clearfix">
 				<?php foreach($photos as $k => $photo): ?>
-					<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
-						<div class='photo-box'>
+					<div class="col-sm-6 col-md-4 col-lg-3">
+						<div class="photo-box">
 							<?php
 								echo $this->Form->input(sprintf('Photo.%s.filename', $k), array(
 									'checked'		=> TRUE,

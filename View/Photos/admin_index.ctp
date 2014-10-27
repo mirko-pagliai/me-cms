@@ -29,8 +29,8 @@
 	<?php echo $this->Html->h2(__d('me_cms', 'Photos')); ?>
 	<div class='clearfix'>
 		<?php foreach($photos as $photo): ?>
-			<div class='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
-				<div class='photo-box'>
+			<div class="col-sm-6 col-md-4 col-lg-3">
+				<div class="photo-box">
 					<?php 
 						echo $this->Html->div('title', $photo['Photo']['filename']);
 						echo $this->Html->thumb($photo['Photo']['path'], array('side' => 400));

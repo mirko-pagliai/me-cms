@@ -71,6 +71,7 @@
 /* -------------------------------- */
 /* Photo box, title, label */
 form .photo-box .title label {
+	display: block;
 	/* Text truncated */
 	overflow: hidden;
     text-overflow: ellipsis;
