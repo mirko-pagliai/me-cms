@@ -36,11 +36,11 @@
 			<th><?php echo $this->Paginator->sort('description', __d('me_cms', 'Description')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('banner_count', __d('me_cms', 'Banners')); ?></th>
 		</tr>
-		<?php foreach($bannersPositions as $bannersPosition): ?>
+		<?php foreach($positions as $position): ?>
 			<tr>
 				<td>
 					<?php 
-						$title = $this->Html->link($bannersPosition['BannersPosition']['name'], array('action' => 'edit', $id = $bannersPosition['BannersPosition']['id']));
+						$title = $this->Html->link($position['BannersPosition']['name'], array('action' => 'edit', $id = $position['BannersPosition']['id']));
 						echo $this->Html->strong($title);
 												
 						echo $this->Html->ul(array(
@@ -49,9 +49,9 @@
 						), array('class' => 'actions'));
 					?>
 				</td>
-				<td><?php echo $bannersPosition['BannersPosition']['description']; ?></td>
+				<td><?php echo $position['BannersPosition']['description']; ?></td>
 				<td class="min-width text-center">
-					<?php echo $bannersPosition['BannersPosition']['banner_count']; ?>
+					<?php echo $position['BannersPosition']['banner_count']; ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

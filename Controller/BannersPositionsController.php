@@ -51,7 +51,7 @@ class BannersPositionsController extends MeCmsAppController {
 		);
 		
 		$this->set(array(
-			'bannersPositions'	=> $this->paginate(),
+			'positions'			=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Banners positions')
 		));
 	}
