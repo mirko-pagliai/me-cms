@@ -25,6 +25,7 @@
  */
 
 App::uses('Folder', 'Utility');
+
 /**
  * An utility to manage banners.
  * 
@@ -35,8 +36,8 @@ App::uses('Folder', 'Utility');
  */
 class BannerManager {
 	/**
-	 * Deletes a file
-	 * @param string $filename File
+	 * Deletes a file.
+	 * @param string $filename File name
 	 * @return TRUE if the file has been deleted, otherwise FALSE
 	 * @uses getPath()
 	 */
@@ -55,7 +56,7 @@ class BannerManager {
 	}
 	
 	/**
-	 * Gets the main folder path
+	 * Gets the main folder path.
 	 * @return string Folder path
 	 */
 	static public function getFolder() {
@@ -63,7 +64,7 @@ class BannerManager {
 	}
 	
 	/**
-	 * Gets the main folder url
+	 * Gets the main folder url.
 	 * @return string Folder url
 	 */
 	static public function getFolderUrl() {
@@ -71,7 +72,7 @@ class BannerManager {
 	}
 	
 	/**
-	 * Gets the full path for a file
+	 * Gets the full path for a file.
 	 * @param string $filename File name
 	 * @return string File path
 	 * @uses getFolder()
@@ -81,7 +82,7 @@ class BannerManager {
 	}
 	
 	/**
-	 * Gets the list of the file in the temporary directory (`APP/tmp/uploads/banners`).
+	 * Gets the file list of the temporary directory.
 	 * @return array File list
 	 * @uses getTmpPath()
 	 */
@@ -91,7 +92,7 @@ class BannerManager {
 	}
 	
 	/**
-	 * Gets the path of the temporary directory
+	 * Gets the temporary directory path.
 	 * @return string Path
 	 */
 	static public function getTmpPath() {
@@ -99,7 +100,7 @@ class BannerManager {
 	}
 	
 	/**
-	 * Gets the url for a file
+	 * Gets the url for a file.
 	 * @param string $filename File name
 	 * @return string File url
 	 * @uses getFolderUrl()
@@ -109,8 +110,8 @@ class BannerManager {
 	}
 
 	/**
-	 * Saves a file from the temporary directory
-	 * @param string $filename Filename
+	 * Saves a file.
+	 * @param string $filename File name
 	 * @return boolean TRUE if the file has been saved, otherwise FALSE
 	 * @uses getFolder()
 	 * @uses getTmpPath()

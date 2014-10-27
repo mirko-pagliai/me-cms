@@ -25,6 +25,7 @@
  */
 
 App::uses('Folder', 'Utility');
+
 /**
  * An utility to manage photos.
  * 
@@ -34,8 +35,6 @@ App::uses('Folder', 'Utility');
  * </code>
  */
 class PhotoManager {
-	
-	
 	/**
 	 * Creates the album folder.
 	 * @param int $albumId Album ID
@@ -49,8 +48,8 @@ class PhotoManager {
 	}
 	
 	/**
-	 * Deletes a file
-	 * @param string $filename File
+	 * Deletes a file.
+	 * @param string $filename File name
 	 * @param int $albumId Album ID
 	 * @return TRUE if the photo has been deleted, otherwise FALSE
 	 * @uses getFolder()
@@ -73,6 +72,7 @@ class PhotoManager {
 	
 	/**
 	 * Checks if the main folder is writable.
+	 * 
 	 * If an album ID is specified, it checks if the album folder is writable.
 	 * @param int $albumId Album ID
 	 * @return boolean TRUE if is writeble, otherwise FALSE
@@ -108,7 +108,7 @@ class PhotoManager {
 	}
 	
 	/**
-	 * Gets the full path for a file
+	 * Gets the full path for a file.
 	 * @param string $filename File name
 	 * @param int $albumId Album ID
 	 * @return string File path
@@ -119,7 +119,7 @@ class PhotoManager {
 	}
 	
 	/**
-	 * Gets the list of the file in the temporary directory (`APP/tmp/uploads/photos`).
+	 * Gets the file list of the temporary directory.
 	 * @return array File list
 	 * @uses getTmpPath()
 	 */
@@ -129,7 +129,7 @@ class PhotoManager {
 	}
 	
 	/**
-	 * Gets the path of the temporary directory
+	 * Gets the temporary directory path.
 	 * @return string Path
 	 */
 	static public function getTmpPath() {
@@ -137,8 +137,8 @@ class PhotoManager {
 	}
 	
 	/**
-	 * Saves a photo from the temporary directory.
-	 * @param string $filename File
+	 * Saves a file.
+	 * @param string $filename File name
 	 * @param int $albumId Album ID
 	 * @return boolean TRUE if the file has been saved, otherwise FALSE
 	 * @uses getTmpPath()
