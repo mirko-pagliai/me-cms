@@ -99,8 +99,8 @@ class SystemsController extends MeCmsAppController {
 	/**
 	 * System checkup.
 	 * @uses _getVersion()
-	 * @uses Album::getAlbumPath()
-	 * @uses Album::getTmpPath()
+	 * @uses PhotoManager::getFolder()
+	 * @uses PhotoManager::getTmpPath()
 	 * @uses System::checkApacheModule()
 	 * @uses System::checkCache()
 	 * @uses System::checkCacheStatus()
@@ -126,8 +126,8 @@ class SystemsController extends MeCmsAppController {
 			'ffmpegthumbnailer'	=> System::which('ffmpegthumbnailer'),
 			'imagick'			=> System::checkPhpExtension('imagick'),
 			'logs'				=> System::checkLogs(),
-			'photosWWW'			=> System::dirIsWritable(Album::getAlbumPath()),
-			'photosTmp'			=> System::dirIsWritable(Album::getTmpPath()),
+			'photosWWW'			=> System::dirIsWritable(PhotoManager::getFolder()),
+			'photosTmp'			=> System::dirIsWritable(PhotoManager::getTmpPath()),
 			'phpRequired'		=> $phpRequired,
 			'phpVersion'		=> System::checkPhpVersion($phpRequired),
 			'plugins'			=> System::getPluginsVersion('MeCms'),
