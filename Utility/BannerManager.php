@@ -87,8 +87,15 @@ class BannerManager {
 	 * @uses getTmpPath()
 	 */
 	static public function getTmp() {
-		$dir = new Folder(self::getTmpPath());
-		return $dir->find('.*\.(gif|jpg|jpeg|png)', TRUE);	
+		$dir = new Folder($tmpPath = self::getTmpPath());
+		$files = $dir->find('.*\.(gif|jpg|jpeg|png)', TRUE);
+		
+		//Removes files that are now writable
+		array_walk($files, function(&$v, $k, $path) {
+			$v = is_writable($path.DS.$v)? $v : FALSE;
+		}, $tmpPath);
+		
+		return array_filter($files);
 	}
 	
 	/**
