@@ -64,10 +64,10 @@ class ConfigComponent extends Component {
 		
 		//If it's an admin request
 		if($controller->isAdminRequest())
-			$this->config = am(Configure::read('backend'), Configure::read('general'));
+			$this->config = am(Configure::read('MeCms.backend'), Configure::read('MeCms.general'));
 		//Else, if it is not ad admin request
 		else
-			$this->config = am(Configure::read('frontend'), Configure::read('general'));
+			$this->config = am(Configure::read('MeCms.frontend'), Configure::read('MeCms.general'));
 		
 		//Sets debug
 		Configure::write('debug', $this->config['debug'] ? 2 : 0);
