@@ -47,7 +47,7 @@ $config = array('MeCms' => array(
 			'short'	=> '%y/%m/%d, %H:%M'
 		),
 		//Debug (enabled or disabled)
-		'debug' => TRUE,
+		'debug' => FALSE,
 		//Session (login) timeout, in minutes
 		'timeout' => 30,
 		//Site title
