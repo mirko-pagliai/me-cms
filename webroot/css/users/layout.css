@@ -7,45 +7,61 @@
 
 /* Body */
 body {
-	background: #eee;
+	background: #e4e4e4;
 	padding-top: 60px;
 }
 
-/* Form */
-#content .form {
-	background: #f8f8f8;
-	border-radius: 5px;
+/* Content */
+#content {
+	background: #fff;
+	border-radius: 8px;
     box-shadow: 0 3px 6px -6px #000;
     margin: auto;
-    max-width: 400px;
     padding: 20px;
+	width: -moz-min-content;
+	width: -webkit-min-content;
+	width: min-content;
 }
 
-/* Form, alert message */
+/* Content, logo */
+#content #logo {
+	margin-bottom: 20px;
+	max-width: 400px;
+}
+
+/* Content, form, alert message */
 #content .form .alert {
 	margin-bottom: 10px;
 	padding: 10px 8px;
 }
 
-/* Form, alert message, close button */
+/* Content, form, alert message, close button */
 #content .form .alert .close {
 	line-height: .9;
 }
 
-/* Form, input div */
+/* Content, form, input div */
 #content .form .form-group {
 	margin-bottom: 5px;
 }
 
-/* Form, input div, input */
+/* Content, form, input div, input */
 #content .form .form-group input {
     font-size: 16px;
     height: auto;
     padding: 10px;
 }
 
-/* Form, input div, input on focus */
+/* Content, form, input div, input on focus */
 #content .form .form-group input:focus {
 	border-color: #66AFE9;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
+}
+
+/* -------------------------------- */
+/*			Login form				*/
+/* -------------------------------- */
+/* Login wrapper */
+#login {
+	max-width: 400px;
 }

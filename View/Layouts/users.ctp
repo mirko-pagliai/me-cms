@@ -65,11 +65,15 @@
 	</head>
 	<body>
 		<div id="content" class="container">
-			<?php					
+			<?php
+				//Check if the logo image exists
+				if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
+					echo $this->Html->img($config['logo'], array('id' => 'logo'));
+				
 				echo $this->Session->flash();
 				echo $this->fetch('content');
-				echo $this->element('MeTools.sql_dump');
 			?>
 		</div>
+		<?php echo $this->Html->div('container', $this->element('MeTools.sql_dump')); ?>
 	</body>
 </html>

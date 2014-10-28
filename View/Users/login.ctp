@@ -23,7 +23,7 @@
  */
 ?>
 	
-<div class="login form">
+<div id="login" class="users form">
 	<?php
 		echo $this->Session->flash();
 		echo $this->Session->flash('auth');
