@@ -56,9 +56,11 @@ Router::connect('/admin',	array('controller' => 'posts', 'plugin' => 'me_cms', '
 Router::connect('/login',	array('controller' => 'users',	'action' => 'login',	'plugin' => 'me_cms'));
 Router::connect('/logout',	array('controller' => 'users',	'action' => 'logout',	'plugin' => 'me_cms'));
 
+$controllers = '(banners|banners_positions|pages|photos_albums|photos|posts_categories|posts|systems|users|users_groups)';
+
 //Each "admin" request is directed to the plugin
-Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE));
-Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_cms', 'admin' => TRUE));
+Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE), array('controller' => $controllers));
+Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_cms', 'admin' => TRUE), array('controller' => $controllers));
 
 //Enables the 'rss' extension
 Router::parseExtensions('rss');
