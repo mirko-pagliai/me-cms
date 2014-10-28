@@ -27,7 +27,7 @@
 App::uses('AuthComponent', 'Controller/Component');
 
 /**
- * Authentication control component class
+ * Authentication control component class.
  *
  * Binds access control with user authentication and session management.
  * 
