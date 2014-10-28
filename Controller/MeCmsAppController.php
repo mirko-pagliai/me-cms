@@ -22,6 +22,7 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  * @package		MeCms\Controller\Component
+ */
 
 App::uses('AppController', 'Controller');
 
