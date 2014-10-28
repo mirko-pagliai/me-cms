@@ -70,6 +70,16 @@
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', '%s is not available', $this->Html->strong('ffmpegthumbnailer')), $errorOptions);
 		
+		echo $this->Html->h4(__d('me_cms', 'Banners'));
+		if($bannersWWW)
+			echo $this->Html->para($successClasses, __d('me_cms', 'The webroot banners directory is readable and writable'), $successOptions);
+		else
+			echo $this->Html->para($errorClasses, __d('me_cms', 'The webroot banners directory is not readable or writable'), $errorOptions);
+		if($bannersTmp)
+			echo $this->Html->para($successClasses, __d('me_cms', 'The temporary banners directory is readable and writable'), $successOptions);
+		else
+			echo $this->Html->para($errorClasses, __d('me_cms', 'The temporary banners directory is not readable or writable'), $errorOptions);
+		
 		echo $this->Html->h4(__d('me_cms', 'Photos'));
 		if($photosWWW)
 			echo $this->Html->para($successClasses, __d('me_cms', 'The webroot photos directory is readable and writable'), $successOptions);

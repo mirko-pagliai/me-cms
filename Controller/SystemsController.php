@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('BannerManager', 'MeCms.Utility');
 App::uses('PhotoManager', 'MeCms.Utility');
 App::uses('System', 'MeTools.Utility');
 
@@ -99,6 +100,8 @@ class SystemsController extends MeCmsAppController {
 	/**
 	 * System checkup.
 	 * @uses _getVersion()
+	 * @uses BannerManager::getFolder()
+	 * @uses BannerManager::getTmpPath()
 	 * @uses PhotoManager::getFolder()
 	 * @uses PhotoManager::getTmpPath()
 	 * @uses System::checkApacheModule()
@@ -119,6 +122,8 @@ class SystemsController extends MeCmsAppController {
 		
 		//Sets the results of the checks
 		$this->set(array(
+			'bannersWWW'		=> System::dirIsWritable(BannerManager::getFolder()),
+			'bannersTmp'		=> System::dirIsWritable(BannerManager::getTmpPath()),
 			'cache'				=> System::checkCache(),
 			'cacheStatus'		=> System::checkCacheStatus(),
 			'cakeVersion'		=> System::getCakeVersion(),
