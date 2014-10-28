@@ -27,17 +27,6 @@
 
 <nav id="topbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#backend-topbar-collapse">
-				<span class="sr-only"><?php echo __d('me_cms', 'Toggle navigation'); ?></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<?php echo $this->Html->link($config['title'], '#', array('class' => 'navbar-brand')); ?>
-		</div>
-
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="backend-topbar-collapse">
 			<ul class="nav navbar-nav">
