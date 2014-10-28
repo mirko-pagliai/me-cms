@@ -39,9 +39,11 @@ L'installazione è terminata e ora puoi accedere al sito. Per accedere al pannel
 all'indirizzo `http://localhost/your-site/admin` ed effettuare il login con i dati indicati durante l'installazione.
 
 ## Configurazione
-È possibile impostare il funzionamento di MeCms modificando il file di configurazione `APP/Plugin/MeCms/Config.mecms.php`.  
-Tuttavia, è consigliato non modificare direttamente il file, ma copiarlo nella configurazione della propria applicazione 
-(`APP/Config`). MeCms cercherà il file di configurazione prima nell'applicazione, poi nel plugin.
+La configurazione di MeCms si trova in `APP/Plugin/MeCms/Config.mecms.php`.  
+Non modificare questo file! Se vuoi modificare la configurazione, copia il file all'intero della tua applicazione, 
+in `APP/Config`. È sufficiente impostare solo le opzioni che si desidera sovrascrivere.  
+MeCms caricherà prima il proprio file di configurazione, successivamente quello presente nell'applicazione, se esiste.
+I valori impostati nel file presente nell'applicazione sovrascriveranno quelli impostati nel file di MeCms.
 
 ## Temi
 Per utilizzare un tema, creare o installare il tema in `APP/View/Themed/`. Ad esempio, per utilizzare il tema 
