@@ -1,6 +1,6 @@
 <?php
 /**
- * MeCmsAppController
+ * MeAuthComponent
  *
  * This file is part of MeCms.
  *
@@ -21,8 +21,7 @@
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\Controller
- */
+ * @package		MeCms\Controller\Component
 
 App::uses('AppController', 'Controller');
 
@@ -47,11 +46,13 @@ class MeCmsAppController extends AppController {
             'loginRedirect'		=> '/admin',
             'logoutRedirect'	=> '/login'
         ),
-		'Session' => array('className' => 'MeTools.MeSession')
+		'Config'	=> array('className' => 'MeCms.Config'),
+		'Session'	=> array('className' => 'MeTools.MeSession')
 	);
 	
 	/**
-	 * Configuration
+	 * Configuration.
+	 * It will be set by `ConfigComponent`.
 	 * @var array
 	 */
 	protected $config = array();
@@ -69,74 +70,31 @@ class MeCmsAppController extends AppController {
 	);
 	
 	/**
-	 * Loads and gets the configuration.
-	 * The file will be searched before in the APP (`app/Config`).
-	 * If not available, it will be loaded by the plugin (`app/Plugin/MeCms/Config`)
-	 * @return array Configuration
-	 * @throws InternalErrorException
-	 * @uses isAdminRequest()
-	 */
-	private function _getConfig() {
-		//Searches for the file in the APP `Config`
-		if(is_readable(APP.($path = 'Config'.DS.'mecms.php')))
-			Configure::load('mecms');
-		//Searches for the file in the plugin `Config`
-		elseif(is_readable(App::pluginPath('MeCms').$path))
-			Configure::load('MeCms.mecms');
-		else
-			throw new InternalErrorException(__d('me_cms', 'The configuration file for %s was not found', 'MeCms'));
-	
-		//If it's an admin request
-		if($this->isAdminRequest())
-			return am(Configure::read('backend'), Configure::read('general'));
-		
-		return am(Configure::read('frontend'), Configure::read('general'));
-	}
-	
-	/**
-	 * Checks if this is an admin request
-	 * @return boolean TRUE if is an admin request, otherwise FALSE
-	 */
-	protected function isAdminRequest() {
-		return !empty($this->request->params['admin']);
-	}
-	
-	/**
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
-	 * @uses _getConfig() to load the configuration file
 	 * @uses isAdminRequest()
 	 */
 	public function beforeFilter() {
-		//Loads and gets the configuration
-		$this->config = $this->_getConfig();
-		
-		//Sets debug and cache
-		Configure::write('debug', $this->config['debug'] ? 2 : 0);
-		Configure::write('Cache.disable', !$this->config['cache']);
-		
 		//Sets the authenticaton message error
 		$this->Auth->authError = __d('me_cms', 'You need to login first');
+		
 		//Sets the element that will be used for flash auth errors
 		//http://stackoverflow.com/a/20545037/1480263
 		if(!empty($this->Auth))
 			$this->Auth->flash['element'] = 'MeTools.error';
 		
-		//Sets the session timeout
-		Configure::write('Session.timeout', $this->config['timeout']);
-		
-		//If it's not an admin request, authorizes the current action
+		//Authorizes the current action, if it's not an admin request
 		if(!$this->isAdminRequest())
 			$this->Auth->allow($this->action);
 		
 		//Sets the theme
 		if(!empty($this->config['theme'])) {
 			//Checks if the theme exists
-			if(!is_readable(App::themePath($theme = $this->config['theme'])))
-				throw new InternalErrorException(__d('me_cms', 'The theme %s was not found', $theme));
+			if(!is_readable(App::themePath($this->config['theme'])))
+				throw new InternalErrorException(__d('me_cms', 'The theme %s was not found', $this->config['theme']));
 
-			$this->theme = $theme;
+			$this->theme = $this->config['theme'];
 		}
 			
 		//Sets the layout
@@ -150,14 +108,21 @@ class MeCmsAppController extends AppController {
 	 * It's used to perform logic or set view variables that are required on every request.
 	 */
 	public function beforeRender() {
-		//Sets the user authentication data, the configuration array and the 'isMobile' var
+		//Sets the user authentication data and the `isMobile` var
 		$this->set(array(
 			'auth'		=> empty($this->Auth) ? FALSE : $this->Auth->user(),
-			'config'	=> $this->config,
 			'isMobile'	=> $this->request->isMobile()
 		));
 		
 		parent::beforeRender();
+	}
+	
+	/**
+	 * Checks if this is an admin request
+	 * @return boolean TRUE if is an admin request, otherwise FALSE
+	 */
+	public function isAdminRequest() {
+		return !empty($this->request->params['admin']);
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 <?php
-$config = array(
+$config = array('MeCms' => array(
 	//Backend options
 	'backend' => array(
 		//ID of the default users group
@@ -53,4 +53,4 @@ $config = array(
 		//Site title
 		'title' => 'MeCms'
 	)
-);
+));
