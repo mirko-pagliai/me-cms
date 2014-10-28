@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class PhotoManager | MeCms</title>
+
+	<script type="text/javascript" src="resources/combined.js?394153670"></script>
+	<script type="text/javascript" src="elementlist.js?2155668678"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Packages</h3>
+			<ul>
+				<li class="active main"><a href="package-MeCms.html">MeCms<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCms.Controller.html">Controller<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCms.Controller.Component.html">Component</a>
+						</li>
+							</ul></li>
+				<li class="main"><a href="package-MeCms.Model.html">Model</a>
+						</li>
+				<li class="active main"><a href="package-MeCms.Utility.html">Utility</a>
+						</li>
+				<li class="main"><a href="package-MeCms.View.html">View<span></span></a>
+						<ul>
+				<li class="main"><a href="package-MeCms.View.Helper.html">Helper</a>
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-BannerManager.html">BannerManager</a></li>
+				<li class="active"><a href="class-PhotoManager.html">PhotoManager</a></li>
+				<li><a href="class-StaticPage.html">StaticPage</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="package-MeCms.Utility.html" title="Summary of MeCms\Utility"><span>Package</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+			<li>
+				<a href="todo.html" title="Todo list"><span>Todo</span></a>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="mecms-api-documentation.zip" title="Download documentation as ZIP archive"><span>Download</span></a>
+			</li>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class PhotoManager</h1>
+
+
+	<div class="description">
+	
+<p>An utility to manage photos.</p>
+
+<p>You can use this utility by adding in your controller:</p>
+
+<pre>
+App::uses(<span class="php-quote">'PhotoManager'</span>, <span
+class="php-quote">'MeCms.Utility'</span>);
+</pre>
+
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Utility.html">Utility</a><br />
+
+				<b>Copyright:</b>
+				Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd<br />
+				<b>License:</b>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br />
+				<b>Author:</b>
+				Mirko Pagliai &lt;<a
+href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!---->gmail.com</a>&gt;<br />
+		<b>Located at</b> <a href="source-class-PhotoManager.html#29-161" title="Go to source code">PhotoManager.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="createFolder" id="_createFolder">
+
+		<td class="attributes"><code>
+			 public static
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createFolder">#</a>
+		<code><a href="source-class-PhotoManager.html#38-48" title="Go to source code">createFolder</a>( <span>integer <var>$albumId</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Creates the album folder.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Creates the album folder.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if the directory was created, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_folderIsWritable">PhotoManager::folderIsWritable()</a></code></code> <br />
+						<code><code><a href="class-PhotosAlbum.html#_afterSave">PhotosAlbum::afterSave()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="delete" id="_delete">
+
+		<td class="attributes"><code>
+			 public static
+			true
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_delete">#</a>
+		<code><a href="source-class-PhotoManager.html#50-60" title="Go to source code">delete</a>( <span>string <var>$filename</var></span>, <span>integer <var>$albumId</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Deletes a file.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Deletes a file.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd><code>string</code><br>$filename File name</dd>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>true</code><br>if the photo has been deleted, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-Photo.html#_beforeDelete">Photo::beforeDelete()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="deleteFolder" id="_deleteFolder">
+
+		<td class="attributes"><code>
+			 public static
+			true
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_deleteFolder">#</a>
+		<code><a href="source-class-PhotoManager.html#62-71" title="Go to source code">deleteFolder</a>( <span>integer <var>$albumId</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Deletes an album folder.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Deletes an album folder.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>true</code><br>if the album has been deleted, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PhotosAlbum.html#_beforeDelete">PhotosAlbum::beforeDelete()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="folderIsWritable" id="_folderIsWritable">
+
+		<td class="attributes"><code>
+			 public static
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_folderIsWritable">#</a>
+		<code><a href="source-class-PhotoManager.html#73-92" title="Go to source code">folderIsWritable</a>( <span>integer <var>$albumId</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Checks if the main folder is writable.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Checks if the main folder is writable.</p>
+
+<p>If an album ID is specified, it checks if the album folder is writable.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if is writeble, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_createFolder">PhotoManager::createFolder()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-Photo.html#_beforeSave">Photo::beforeSave()</a></code></code> <br />
+						<code><code><a href="class-PhotosAlbum.html#_beforeSave">PhotosAlbum::beforeSave()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getFolder" id="_getFolder">
+
+		<td class="attributes"><code>
+			 public static
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getFolder">#</a>
+		<code><a href="source-class-PhotoManager.html#94-108" title="Go to source code">getFolder</a>( <span>integer <var>$albumId</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets the main folder path.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets the main folder path.</p>
+
+<p>If an album ID is specified, it returns the album folder path.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br>Folder path<br />
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_createFolder">PhotoManager::createFolder()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_delete">PhotoManager::delete()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_deleteFolder">PhotoManager::deleteFolder()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_folderIsWritable">PhotoManager::folderIsWritable()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_getPath">PhotoManager::getPath()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_save">PhotoManager::save()</a></code></code> <br />
+						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPath" id="_getPath">
+
+		<td class="attributes"><code>
+			 public static
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPath">#</a>
+		<code><a href="source-class-PhotoManager.html#110-119" title="Go to source code">getPath</a>( <span>string <var>$filename</var></span>, <span>integer <var>$albumId</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets the full path for a file.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets the full path for a file.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd><code>string</code><br>$filename File name</dd>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br>File path<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-Photo.html#_afterFind">Photo::afterFind()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTmp" id="_getTmp">
+
+		<td class="attributes"><code>
+			 public static
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTmp">#</a>
+		<code><a href="source-class-PhotoManager.html#121-136" title="Go to source code">getTmp</a>( )</code>
+
+		<div class="description short">
+			
+<p>Gets the file list of the temporary directory.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets the file list of the temporary directory.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br>File list<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getTmpPath">PhotoManager::getTmpPath()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PhotosController.html#_admin_add">PhotosController::admin_add()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTmpPath" id="_getTmpPath">
+
+		<td class="attributes"><code>
+			 public static
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTmpPath">#</a>
+		<code><a href="source-class-PhotoManager.html#138-144" title="Go to source code">getTmpPath</a>( )</code>
+
+		<div class="description short">
+			
+<p>Gets the temporary directory path.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets the temporary directory path.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br>Path<br />
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getTmp">PhotoManager::getTmp()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_save">PhotoManager::save()</a></code></code> <br />
+						<code><code><a href="class-PhotosController.html#_admin_add">PhotosController::admin_add()</a></code></code> <br />
+						<code><code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="save" id="_save">
+
+		<td class="attributes"><code>
+			 public static
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_save">#</a>
+		<code><a href="source-class-PhotoManager.html#146-160" title="Go to source code">save</a>( <span>string <var>$filename</var></span>, <span>integer <var>$albumId</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Saves a file.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Saves a file.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd><code>string</code><br>$filename File name</dd>
+					<dt><var>$albumId</var></dt>
+					<dd><code>integer</code><br>$albumId Album ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if the file has been saved, otherwise FALSE<br />
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><code><a href="class-PhotoManager.html#_getTmpPath">PhotoManager::getTmpPath()</a></code></code> <br />
+						<code><code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code></code> <br />
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><code><a href="class-Photo.html#_afterSave">Photo::afterSave()</a></code></code> <br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>
