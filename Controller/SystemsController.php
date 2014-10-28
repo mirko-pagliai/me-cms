@@ -25,7 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
-App::uses('Album', 'MeCms.Utility');
+App::uses('PhotoManager', 'MeCms.Utility');
 App::uses('System', 'MeTools.Utility');
 
 /**
