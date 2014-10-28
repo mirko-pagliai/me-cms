@@ -67,6 +67,7 @@ class MeCmsAppController extends AppController {
 		'Form'		=> array('className' => 'MeTools.MeForm'),
 		'Html'		=> array('className' => 'MeTools.MeHtml'),
 		'Library'	=> array('className' => 'MeTools.Library'),
+		'Menu'		=> array('className' => 'MeCms.Menu'),
 		'Paginator'	=> array('className' => 'MeTools.MePaginator')
 	);
 	
@@ -99,7 +100,7 @@ class MeCmsAppController extends AppController {
 		}
 			
 		//Sets the layout
-		$this->layout = $this->isAdminRequest() ? 'backend' : 'frontend';
+		$this->layout = $this->isAdminRequest() ? 'MeCms.backend' : 'MeCms.frontend';
 		
 		parent::beforeFilter();
 	}

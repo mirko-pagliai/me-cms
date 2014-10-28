@@ -239,7 +239,7 @@ class UsersController extends MeCmsAppController {
 		}
 		
 		$this->set('title_for_layout', __d('me_cms', 'Login'));
-		$this->layout = 'users';
+		$this->layout = 'MeCms.users';
 	}
 
 	/**

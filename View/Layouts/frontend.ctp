@@ -77,7 +77,7 @@
 					$logo = $this->Html->img($config['logo']);
 				echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo')));		
 
-				echo $this->element('frontend/topbar', array(), array('cache' => TRUE));
+				echo $this->element('MeCms.frontend/topbar', array(), array('cache' => TRUE));
 			?>
 		</div>
 		<div class="container">
@@ -112,7 +112,7 @@
 				</div>
 			<?php endif; ?>
 			<?php
-				echo $this->element('frontend/footer', array(), array('cache' => TRUE));
+				echo $this->element('MeCms.frontend/footer', array(), array('cache' => TRUE));
 				echo $this->element('MeTools.sql_dump');
 				
 				if(!empty($config['analytics']))
