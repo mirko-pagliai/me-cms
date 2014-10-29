@@ -24,6 +24,8 @@
  * @package		MeCms\View\Helper
  */
 
+App::uses('MeHtmlHelper', 'MeTools.View/Helper');
+
 /**
  * Menu Helper.
  * 
@@ -53,7 +55,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses DropdownHelper::link()
 	 * @uses AuthHelper::isAdmin()
 	 */
-	private function _banners($type) {
+	protected function _banners($type) {
 		//Only admins can access these controllers
 		if(!$this->Auth->isAdmin())
 			return array();
@@ -80,7 +82,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses DropdownHelper::link()
 	 * @uses AuthHelper::isManager()
 	 */
-	private function _pages($type) {
+	protected function _pages($type) {
 		$menu = array(
 			$this->link(__d('me_cms', 'List pages'), array('controller' => 'pages', 'action' => 'index'))
 		);
@@ -98,7 +100,7 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "post" actions.
+	 * Internal function to generate the menu for "posts" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
@@ -106,7 +108,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses DropdownHelper::link()
 	 * @uses AuthHelper::isManager()
 	 */
-	private function _posts($type) {
+	protected function _posts($type) {
 		$menu = array(
 			$this->link(__d('me_cms', 'List posts'),	array('controller' => 'posts', 'action' => 'index')),
 			$this->link(__d('me_cms', 'Add post'),		array('controller' => 'posts', 'action' => 'add'))
@@ -133,7 +135,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
 	 */
-	private function _photos($type) {
+	protected function _photos($type) {
 		$menu = array(
 			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add')),
 			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index')),
@@ -156,7 +158,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses AuthHelper::isAdmin()
 	 * @uses AuthHelper::isManager()
 	 */
-	private function _users($type) {
+	protected function _users($type) {
 		//Only admins and managers can access this controller
 		if(!$this->Auth->isManager())
 			return array();
@@ -180,7 +182,7 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "system" actions.
+	 * Internal function to generate the menu for "systems" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
@@ -188,7 +190,7 @@ class MenuHelper extends MeHtmlHelper {
 	 * @uses DropdownHelper::link()
 	 * @uses AuthHelper::isAdmin()
 	 */
-	private function _systems($type) {
+	protected function _systems($type) {
 		//Only admins can access this controller
 		if(!$this->Auth->isAdmin())
 			return array();
@@ -210,20 +212,16 @@ class MenuHelper extends MeHtmlHelper {
 	 * @param string $name Name of the action for which to generate the menu
 	 * @param string $type Type of menu (optional, `ul`, `nav` or `dropdown`)
 	 * @return mixed Menu
-	 * @uses _pages() to generate the menu for "pages" actions
-	 * @uses _photos() to generate the menu for "photos" actions
-	 * @uses _posts() to generate the menu for "posts" actions
-	 * @uses _users() to generate the menu for "users" actions
 	 */
 	public function get($name, $type = NULL) {
 		//Dynamic call to the method that generates the requested menu
 		$name = sprintf('_%s', $name);
 		
 		//Checks if the method exists
-		if(!method_exists(get_class(), $name))
-			throw new InternalErrorException(__d('me_cms', 'The %s method does not exist', sprintf('%s::%s()', get_class(), $name)));
+		if(!method_exists($class = get_called_class(), $name))
+			throw new InternalErrorException(__d('me_cms', 'The %s method does not exist', sprintf('%s::%s()', $class, $name)));
 		
-		$menu = $this->$name($type);
+		$menu = $class::$name($type);
 			
 		//Switch the type of menu
 		switch($type) {

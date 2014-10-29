@@ -24,6 +24,8 @@
  * @package		MeCms\View\Helper
  */
 
+App::uses('MeAuthComponent', 'MeCms.Controller/Component');
+
 /**
  * Auth Helper.
  * 
