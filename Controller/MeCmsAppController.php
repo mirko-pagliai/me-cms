@@ -68,7 +68,6 @@ class MeCmsAppController extends AppController {
 		'Form'		=> array('className' => 'MeTools.MeForm'),
 		'Html'		=> array('className' => 'MeTools.MeHtml'),
 		'Library'	=> array('className' => 'MeTools.Library'),
-		'Menu'		=> array('className' => 'MeCms.Menu'),
 		'Paginator'	=> array('className' => 'MeTools.MePaginator')
 	);
 	
@@ -100,8 +99,16 @@ class MeCmsAppController extends AppController {
 			$this->theme = $this->config['theme'];
 		}
 			
-		//Sets the layout
-		$this->layout = $this->isAdminRequest() ? 'MeCms.backend' : 'MeCms.frontend';
+		//If this is an admin request
+		if($this->isAdminRequest()) {
+			//Loads the `MenuHelper`
+			$this->helpers['Menu'] = array('className' => 'MeCms.Menu');
+			//Sets the layout
+			$this->layout = 'MeCms.backend';
+		}
+		//Else, sets the layout
+		else
+			$this->layout = 'MeCms.frontend';
 		
 		parent::beforeFilter();
 	}
