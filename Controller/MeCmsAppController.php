@@ -63,6 +63,7 @@ class MeCmsAppController extends AppController {
 	 * @var array 
 	 */
 	public $helpers = array(
+		'Auth'		=> array('className' => 'MeCms.Auth'),
 		'Dropdown'	=> array('className' => 'MeTools.Dropdown'),
 		'Form'		=> array('className' => 'MeTools.MeForm'),
 		'Html'		=> array('className' => 'MeTools.MeHtml'),
