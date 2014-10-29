@@ -9,7 +9,9 @@ $config = array('MeCms' => array(
 		//Number of records to show per page
 		'records_for_page' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
-		'theme' => FALSE
+		'theme' => FALSE,
+		//Topbar elements
+		'topbar' => array('posts', 'pages', 'photos', 'users', 'banners', 'systems')
 	),
 	//Frontend options
 	'frontend' => array(
