@@ -218,6 +218,11 @@ class MenuHelper extends MeHtmlHelper {
 	public function get($name, $type = NULL) {
 		//Dynamic call to the method that generates the requested menu
 		$name = sprintf('_%s', $name);
+		
+		//Checks if the method exists
+		if(!method_exists(get_class(), $name))
+			throw new InternalErrorException(__d('me_cms', 'The %s method does not exist', sprintf('%s::%s()', get_class(), $name)));
+		
 		$menu = $this->$name($type);
 			
 		//Switch the type of menu
