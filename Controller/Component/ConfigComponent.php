@@ -31,12 +31,6 @@ App::uses('Component', 'Controller');
  */
 class ConfigComponent extends Component {
 	/**
-	 * Configuration
-	 * @var array
-	 */
-	protected $config = array();
-
-	/**
 	 * Turns a string of words separated by commas (and optional spaces) into an array.
 	 * 
 	 * For example:
@@ -57,51 +51,69 @@ class ConfigComponent extends Component {
 	}
 
 	/**
+	 * Loads and writes the configuration.
+	 * @uses MeCmsAppController::isAdminRequest()
+	 * @uses _turnsAsArray()
+	 */
+	protected function _writeConfig(Controller $controller) {
+		//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)
+		Configure::load('MeCms.mecms');
+
+		//Loads the configuration from the app, if exists (`APP/Config/mecms.php`).
+		//This configuration will overwrite the one obtained by the plugin
+		if(is_readable(APP.'Config'.DS.'mecms.php'))
+			Configure::load('mecms');
+
+		//Turns some values as array
+		Configure::write($key = 'MeCms.backend.topbar', $this->_turnsAsArray(Configure::read($key)));
+		Configure::write($key = 'MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read($key)));
+
+		//If it's an admin request
+		if($controller->isAdminRequest())
+			Configure::write('MeCms', am(Configure::read('MeCms.backend'), Configure::read('MeCms.general')));
+		//Else, if it is not ad admin request
+		else
+			Configure::write('MeCms', am(Configure::read('MeCms.frontend'), Configure::read('MeCms.general')));
+	}
+
+	/**
 	 * Is called after the controller executes the requested action's logic, 
 	 * but before the controller's renders views and layout.
 	 * @param Controller $controller
 	 */
 	public function beforeRender(Controller $controller) {
 		//Sets the configuration for the view
-		$controller->set('config', $this->config);
+		$controller->set('config', Configure::read('MeCms'));
 	}
 	
     /**
      * Called before the controller's beforeFilter method.
      * @param Controller $controller
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
-	 * @uses config
-	 * @uses MeCmsAppController::isAdminRequest()
-	 * @uses _turnsAsArray()
+	 * @uses _writeConfig()
+	 * @uses MeCmsAppController::config
      */	
-	public function initialize(Controller $controller) {		
-		//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)
-		Configure::load('MeCms.mecms');
+	public function initialize(Controller $controller) {
+		//Tries to get data from the cache
+		$config = Cache::read($cache = 'configuration', 'me_cms');
 		
-		//Loads the configuration from the app, if exists (`APP/Config/mecms.php`).
-		//This configuration will overwrite the one obtained by the plugin
-		if(is_readable(APP.'Config'.DS.'mecms.php'))
-			Configure::load('mecms');
-		
-		//Turns some values as array
-		Configure::write($key = 'MeCms.backend.topbar', $this->_turnsAsArray(Configure::read($key)));
-		Configure::write($key = 'MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read($key)));
-				
-		//If it's an admin request
-		if($controller->isAdminRequest())
-			$this->config = am(Configure::read('MeCms.backend'), Configure::read('MeCms.general'));
-		//Else, if it is not ad admin request
+		//If the data are not available from the cache
+		if(empty($config)) {
+			$this->_writeConfig($controller);
+			
+            Cache::write($cache, Configure::read('MeCms'), 'me_cms');	
+		}
 		else
-			$this->config = am(Configure::read('MeCms.frontend'), Configure::read('MeCms.general'));
-		
+			Configure::write('MeCms', $config);
+
 		//Sets debug
-		Configure::write('debug', $this->config['debug'] ? 2 : 0);
+		Configure::write('debug', Configure::read('MeCms.debug') ? 2 : 0);
 		//Sets cache
-		Configure::write('Cache.disable', !$this->config['cache']);
+		Configure::write('Cache.disable', !Configure::read('MeCms.cache'));
 		//Sets the session timeout
-		Configure::write('Session.timeout', $this->config['timeout']);
+		Configure::write('Session.timeout', Configure::read('MeCms.timeout'));
 		
 		//Sets the configuration so that the controller can read it
-		$controller->config = $this->config;
+		$controller->config = Configure::read('MeCms');
 	}
 }
