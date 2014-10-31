@@ -47,6 +47,9 @@ $options = array(
 //	'prefix'	=> Inflector::slug(APP_DIR).'_'
 //);
 
+//MeCms cache configuration
+Cache::config('me_cms', $options);
+
 Cache::config('banners', am($options, array('groups' => array('banners'))));
 Cache::config('pages', am($options, array('groups' => array('pages'))));
 Cache::config('photos', am($options, array('groups' => array('photos'))));
