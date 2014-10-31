@@ -61,10 +61,10 @@ class MenuHelper extends MeHtmlHelper {
 			return array();
 		
 		$menu = array(
-			$this->link(__d('me_cms', 'List banners'),		array('controller' => 'banners', 'action' => 'index')),
-			$this->link(__d('me_cms', 'Add banner'),		array('controller' => 'banners', 'action' => 'add')),
-			$this->link(__d('me_cms', 'List positions'),	array('controller' => 'banners_positions', 'action' => 'index')),
-			$this->link(__d('me_cms', 'Add position'),		array('controller' => 'banners_positions', 'action' => 'add'))
+			$this->link(__d('me_cms', 'List banners'),		array('controller' => 'banners', 'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add banner'),		array('controller' => 'banners', 'action' => 'add', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'List positions'),	array('controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add position'),		array('controller' => 'banners_positions', 'action' => 'add', 'plugin' => 'me_cms'))
 		);
 		
 		if($type == 'dropdown')
@@ -84,14 +84,14 @@ class MenuHelper extends MeHtmlHelper {
 	 */
 	protected function _pages($type) {
 		$menu = array(
-			$this->link(__d('me_cms', 'List pages'), array('controller' => 'pages', 'action' => 'index'))
+			$this->link(__d('me_cms', 'List pages'), array('controller' => 'pages', 'action' => 'index', 'plugin' => 'me_cms'))
 		);
 		
 		//Only admins and manages can add pages
 		if($this->Auth->isManager())
-			$menu[] = $this->link(__d('me_cms', 'Add page'), array('controller' => 'pages', 'action' => 'add'));
+			$menu[] = $this->link(__d('me_cms', 'Add page'), array('controller' => 'pages', 'action' => 'add', 'plugin' => 'me_cms'));
 		
-		$menu[] = $this->link(__d('me_cms', 'List static pages'), array('controller' => 'pages', 'action' => 'index_statics'));
+		$menu[] = $this->link(__d('me_cms', 'List static pages'), array('controller' => 'pages', 'action' => 'index_statics', 'plugin' => 'me_cms'));
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Pages'), array('icon' => 'files-o')).PHP_EOL.$this->Dropdown->dropdown($menu);
@@ -110,15 +110,15 @@ class MenuHelper extends MeHtmlHelper {
 	 */
 	protected function _posts($type) {
 		$menu = array(
-			$this->link(__d('me_cms', 'List posts'),	array('controller' => 'posts', 'action' => 'index')),
-			$this->link(__d('me_cms', 'Add post'),		array('controller' => 'posts', 'action' => 'add'))
+			$this->link(__d('me_cms', 'List posts'),	array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add post'),		array('controller' => 'posts', 'action' => 'add', 'plugin' => 'me_cms'))
 		);
 		
 		//Only admins and managers can access these actions
 		if($this->Auth->isManager())
 			$menu = am($menu, array(
-				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'posts_categories', 'action' => 'index')),
-				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'posts_categories', 'action' => 'add'))
+				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'posts_categories', 'action' => 'index', 'plugin' => 'me_cms')),
+				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'posts_categories', 'action' => 'add', 'plugin' => 'me_cms'))
 			));
 		
 		if($type == 'dropdown')
@@ -137,9 +137,9 @@ class MenuHelper extends MeHtmlHelper {
 	 */
 	protected function _photos($type) {
 		$menu = array(
-			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add')),
-			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index')),
-			$this->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add'))
+			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add', 'plugin' => 'me_cms'))
 		);
 		
 		if($type == 'dropdown')
@@ -164,15 +164,15 @@ class MenuHelper extends MeHtmlHelper {
 			return array();
 		
 		$menu = array(
-			$this->link(__d('me_cms', 'List users'),	array('controller' => 'users', 'action' => 'index')),
-			$this->link(__d('me_cms', 'Add user'),		array('controller' => 'users', 'action' => 'add'))
+			$this->link(__d('me_cms', 'List users'),	array('controller' => 'users', 'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add user'),		array('controller' => 'users', 'action' => 'add', 'plugin' => 'me_cms'))
 		);
 		
 		//Only admins can access these actions
 		if($this->Auth->isAdmin())
 			$menu = am($menu, array(
-				$this->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups', 'action' => 'index')),
-				$this->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups', 'action' => 'add'))
+				$this->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups', 'action' => 'index', 'plugin' => 'me_cms')),
+				$this->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups', 'action' => 'add', 'plugin' => 'me_cms'))
 			));
 		
 		if($type == 'dropdown')
@@ -196,9 +196,9 @@ class MenuHelper extends MeHtmlHelper {
 			return array();
 		
 		$menu = array(
-			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache')),
-			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup')),
-			$this->link(__d('me_cms', 'Media browser'),		array('controller' => 'systems', 'action' => 'browser'))
+			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Media browser'),		array('controller' => 'systems', 'action' => 'browser', 'plugin' => 'me_cms'))
 		);
 		
 		if($type == 'dropdown')
