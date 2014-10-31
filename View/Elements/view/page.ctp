@@ -35,6 +35,12 @@
 					am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
 					array('class' => 'page-title')
 				);
+			
+			if(!empty($page['Page']['subtitle']))
+				echo $this->Html->h4($this->Html->link($page['Page']['subtitle'],
+					am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
+					array('class' => 'page-subtitle')
+				);
 		?>
 		<div class="page-info">
 			<?php

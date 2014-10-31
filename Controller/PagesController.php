@@ -216,7 +216,7 @@ class PagesController extends MeCmsAppController {
         if(empty($page)) {
 			$page = $this->Page->find('active', array(
 				'conditions'	=> array('slug' => $slug),
-				'fields'		=> array('title', 'slug', 'text', 'created'),
+				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'limit'			=> 1
 			));
 			

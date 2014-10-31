@@ -31,7 +31,7 @@
 	<div class="post-header">
 		<?php
 			if(!empty($post['Category']['title']) && !empty($post['Category']['slug']))
-				echo $this->Html->h4($this->Html->link($post['Category']['title'],
+				echo $this->Html->h5($this->Html->link($post['Category']['title'],
 					array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms', $post['Category']['slug'])),
 					array('class' => 'post-category')
 				);
@@ -40,6 +40,12 @@
 				echo $this->Html->h3($this->Html->link($post['Post']['title'],
 					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug'])),
 					array('class' => 'post-title')
+				);
+			
+			if(!empty($post['Post']['subtitle']) && !empty($post['Post']['slug']))
+				echo $this->Html->h4($this->Html->link($post['Post']['subtitle'],
+					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug'])),
+					array('class' => 'post-subtitle')
 				);
 		?>
 		<div class="post-info">

@@ -36,17 +36,28 @@
     margin: 0;
 }
 
-/* Header, category and title links */
+/* Header, subtitle */
+.posts .post-header .post-subtitle,
+.pages .page-header .page-subtitle {
+    font-size: 22px;
+    margin: 4px 0 0;
+}
+
+/* Header, category, title and subtitle links */
 .posts .post-header .post-category a,
 .posts .post-header .post-title a,
-.pages .page-header .page-title a {
+.posts .post-header .post-subtitle a,
+.pages .page-header .page-title a,
+.pages .page-header .page-subtitle a {
 	color: #555;
 }
 
-/* Header, category and title links on hover */
+/* Header, category, title and subtitle links on hover */
 .posts .post-header .post-category a:hover,
 .posts .post-header .post-title a:hover,
-.pages .page-header .page-title a:hover {
+.posts .post-header .post-subtitle a:hover,
+.pages .page-header .page-title a:hover,
+.pages .page-header .page-subtitle a:hover {
 	color: #333;
 	text-decoration: none;
 }

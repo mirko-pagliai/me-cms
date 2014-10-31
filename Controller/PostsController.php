@@ -187,7 +187,7 @@ class PostsController extends MeCmsAppController {
 					'Category'	=> array('title', 'slug'),
 					'User'		=> array('first_name', 'last_name')
 				),
-				'fields'	=> array('id', 'title', 'slug', 'text', 'created'),
+				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'limit'		=> $limit
 			));
 			
@@ -281,7 +281,7 @@ class PostsController extends MeCmsAppController {
 					'Category'	=> array('title', 'slug'),
 					'User'		=> array('first_name', 'last_name')
 				),
-				'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'findType'		=> 'active',
 				'limit'			=> $this->config['records_for_page']
 			);
@@ -322,7 +322,7 @@ class PostsController extends MeCmsAppController {
 					'Category'	=> array('title', 'slug'),
 					'User'		=> array('first_name', 'last_name')
 				),
-				'fields'		=> array('id', 'title', 'slug', 'text', 'created'),
+				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'limit'			=> 1
 			));
 
