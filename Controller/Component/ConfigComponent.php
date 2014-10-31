@@ -94,17 +94,8 @@ class ConfigComponent extends Component {
 	 * @uses MeCmsAppController::config
      */	
 	public function initialize(Controller $controller) {
-		//Tries to get data from the cache
-		$config = Cache::read($cache = 'configuration', 'me_cms');
-		
-		//If the data are not available from the cache
-		if(empty($config)) {
-			$this->_writeConfig($controller);
-			
-            Cache::write($cache, Configure::read('MeCms'), 'me_cms');	
-		}
-		else
-			Configure::write('MeCms', $config);
+		//Writes the configuration
+		$this->_writeConfig($controller);
 
 		//Sets debug
 		Configure::write('debug', Configure::read('MeCms.debug') ? 2 : 0);
