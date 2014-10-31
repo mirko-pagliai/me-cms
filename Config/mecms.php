@@ -10,7 +10,7 @@ $config = array('MeCms' => array(
 		'records_for_page' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
-		//Topbar elements
+		//Topbar menus
 		'topbar' => array('posts', 'pages', 'photos', 'users', 'banners', 'systems')
 	),
 	//Frontend options
