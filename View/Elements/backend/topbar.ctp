@@ -32,9 +32,14 @@
 			<ul class="nav navbar-nav">
 				<?php
 					echo $this->Html->li($this->Html->link(NULL, '/admin', array('icon' => 'home', 'title' => __d('me_cms', 'Home'))));
-					
-					foreach($config['topbar'] as $type)
-						echo $this->Html->li($this->Menu->get($type, 'dropdown'), array('class' => 'dropdown'));
+										
+					foreach($config['topbar'] as $name) {
+						list($plugin, $name) = pluginSplit($name);
+						
+						$helper = empty($plugin) ? 'Menu' : sprintf('%sMenu', $plugin);
+						
+						echo $this->Html->li($this->$helper->get($name, 'dropdown'), array('class' => 'dropdown'));
+					}
 				?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -51,3 +56,7 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
+
+<?php
+//	$this->MeYoutubeMenu->hello();
+?>

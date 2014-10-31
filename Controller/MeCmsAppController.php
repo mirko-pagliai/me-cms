@@ -72,6 +72,20 @@ class MeCmsAppController extends AppController {
 	);
 	
 	/**
+	 * Loads all the plugin helpers for creating menus.
+	 */
+	protected function _loadMenus() {
+		//Loads the `MenuHelper` from MeCms
+		$this->helpers['Menu'] = array('className' => 'MeCms.Menu');
+			
+		foreach(CakePlugin::loaded() as $plugin)
+			if(is_readable(CakePlugin::path($plugin).'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php')) {
+				$helper = sprintf('%sMenu', $plugin);
+				$this->helpers[$helper] = array('className' => sprintf('%s.%s', $plugin, $helper));
+			}
+	}
+	
+	/**
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
@@ -101,8 +115,8 @@ class MeCmsAppController extends AppController {
 			
 		//If this is an admin request
 		if($this->isAdminRequest()) {
-			//Loads the `MenuHelper`
-			$this->helpers['Menu'] = array('className' => 'MeCms.Menu');
+			//Loads all the plugin helpers for creating menus.
+			$this->_loadMenus();
 			//Sets the layout
 			$this->layout = 'MeCms.backend';
 		}
