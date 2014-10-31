@@ -135,7 +135,7 @@ class PostsController extends MeCmsAppController {
 		else
 			$this->request->data = $this->Post->find('first', array(
 				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'category_id', 'user_id', 'title', 'slug', 'text', 'created', 'priority', 'active')
+				'fields'		=> array('id', 'category_id', 'user_id', 'title', 'subtitle', 'slug', 'text', 'created', 'priority', 'active')
 			));
 
 		$this->set(array(
