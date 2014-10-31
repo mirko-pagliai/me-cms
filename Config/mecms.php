@@ -11,7 +11,7 @@ $config = array('MeCms' => array(
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Topbar menus
-		'topbar' => array('posts', 'pages', 'photos', 'users', 'banners', 'systems')
+		'topbar' => 'posts, pages, photos, users, banners, systems'
 	),
 	//Frontend options
 	'frontend' => array(
@@ -28,7 +28,7 @@ $config = array('MeCms' => array(
 		//Number of characters to truncate a text
 		'truncate_to' => 1000,
 		//Widgets
-		'widgets' => array('search', 'categories', 'latest_posts', 'random_photo', 'pages')
+		'widgets' => 'search, categories, latest_posts, random_photo, pages'
 	),
 	//General options
 	'general' => array(

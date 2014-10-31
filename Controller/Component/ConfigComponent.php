@@ -37,6 +37,26 @@ class ConfigComponent extends Component {
 	protected $config = array();
 
 	/**
+	 * Turns a string of words separated by commas (and optional spaces) into an array.
+	 * 
+	 * For example:
+	 * <pre>'alfa, beta, gamma'</pre>
+	 * 
+	 * Becomes:
+	 * <code>array(
+	 *	(int) 0 => 'alfa',
+	 *	(int) 1 => 'beta',
+	 *	(int) 2 => 'gamma'
+	 * )
+	 * </code>
+	 * @param string $string String of words separated by commas (and optional spaces)
+	 * @return array Array of values
+	 */
+	protected function _turnsAsArray($string) {
+		return explode(',', preg_replace('/\s/', NULL, $string));
+	}
+
+	/**
 	 * Is called after the controller executes the requested action's logic, 
 	 * but before the controller's renders views and layout.
 	 * @param Controller $controller
@@ -52,8 +72,9 @@ class ConfigComponent extends Component {
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
 	 * @uses config
 	 * @uses MeCmsAppController::isAdminRequest()
+	 * @uses _turnsAsArray()
      */	
-	public function initialize(Controller $controller) {
+	public function initialize(Controller $controller) {		
 		//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)
 		Configure::load('MeCms.mecms');
 		
@@ -62,6 +83,10 @@ class ConfigComponent extends Component {
 		if(is_readable(APP.'Config'.DS.'mecms.php'))
 			Configure::load('mecms');
 		
+		//Turns some values as array
+		Configure::write($key = 'MeCms.backend.topbar', $this->_turnsAsArray(Configure::read($key)));
+		Configure::write($key = 'MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read($key)));
+				
 		//If it's an admin request
 		if($controller->isAdminRequest())
 			$this->config = am(Configure::read('MeCms.backend'), Configure::read('MeCms.general'));
