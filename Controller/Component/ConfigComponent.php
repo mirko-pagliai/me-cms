@@ -31,6 +31,15 @@ App::uses('Component', 'Controller');
  */
 class ConfigComponent extends Component {
 	/**
+	 * Checks if debugging for localhost should be forced
+	 * @param Controller $controller
+	 * @return bool TRUE if debugging should be forced, otherwise FALSE
+	 */
+	protected function _debugForLocalhost(Controller $controller) {
+		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.debug_on_localhost');
+	}
+
+	/**
 	 * Turns a string of words separated by commas (and optional spaces) into an array.
 	 * 
 	 * For example:
@@ -90,15 +99,20 @@ class ConfigComponent extends Component {
      * Called before the controller's beforeFilter method.
      * @param Controller $controller
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
+	 * @uses _debugForLocalhost()
 	 * @uses _writeConfig()
 	 * @uses MeCmsAppController::config
      */	
 	public function initialize(Controller $controller) {
 		//Writes the configuration
 		$this->_writeConfig($controller);
-
+		
 		//Sets debug
-		Configure::write('debug', Configure::read('MeCms.debug') ? 2 : 0);
+		if(Configure::read('MeCms.debug') || $this->_debugForLocalhost($controller))
+			Configure::write('debug', 2);
+		else
+			Configure::write('debug', 0);
+			
 		//Sets cache
 		Configure::write('Cache.disable', !Configure::read('MeCms.cache'));
 		//Sets the session timeout

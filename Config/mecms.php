@@ -50,6 +50,8 @@ $config = array('MeCms' => array(
 		),
 		//Debug (enabled or disabled)
 		'debug' => FALSE,
+		//It forces debugging for the localhost (enabled or disabled)
+		'debug_on_localhost' => TRUE,
 		//Session (login) timeout, in minutes
 		'timeout' => 30,
 		//Site title
