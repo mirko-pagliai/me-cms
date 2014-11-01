@@ -120,7 +120,7 @@ class PhotosController extends MeCmsAppController {
 			'albumId'			=> empty($albumId) ? NULL : $albumId,
 			'photos'			=> $tmpFiles,
 			'title_for_layout'	=> __d('me_cms', 'Add photos'),
-		)), compact('albums', 'tmpPath'));
+		), compact('albums', 'tmpPath')));
 	}
 
 	/**
@@ -152,7 +152,7 @@ class PhotosController extends MeCmsAppController {
 		$this->set(am(array(
 			'albums'			=> $this->Photo->Album->find('list'),
 			'title_for_layout'	=> __d('me_cms', 'Edit photo')
-		)), compact('photo'));
+		), compact('photo')));
 	}
 
 	/**
@@ -217,6 +217,6 @@ class PhotosController extends MeCmsAppController {
             Cache::write($cache, $photo, 'photos');
 		}
 		
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photo'))), compact('photo'));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photo')), compact('photo')));
 	}
 }

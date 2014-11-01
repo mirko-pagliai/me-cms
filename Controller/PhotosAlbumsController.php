@@ -153,7 +153,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 		if(count($albums) === 1)
 			$this->redirect(array('action' => 'view', $albums[0]['PhotosAlbum']['slug']));
 		
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photos albums'))), compact('albums'));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photos albums')), compact('albums')));
 	}
 	
 	/**
@@ -180,6 +180,6 @@ class PhotosAlbumsController extends MeCmsAppController {
             Cache::write($cache, $album, 'photos');
 		}
 		
-		$this->set(am(array('title_for_layout' => $album['PhotosAlbum']['title'])), compact('album'));
+		$this->set(am(array('title_for_layout' => $album['PhotosAlbum']['title']), compact('album')));
 	}
 }

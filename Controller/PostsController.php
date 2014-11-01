@@ -185,7 +185,7 @@ class PostsController extends MeCmsAppController {
             $posts = $this->Post->find('active', am(array(
 				'contain'	=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
 				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created')
-			)), compact('limit'));
+			), compact('limit')));
 			
             Cache::write($cache, $posts, 'posts');
         }
@@ -210,7 +210,7 @@ class PostsController extends MeCmsAppController {
 		
 		//If the data are not available from the cache
         if(empty($posts)) {
-            $posts = $this->Post->find('active', am(array('fields' => array('slug', 'title'))), compact('limit'));
+            $posts = $this->Post->find('active', am(array('fields' => array('slug', 'title')), compact('limit')));
 			
             Cache::write($cache, $posts, 'posts');
         }
@@ -316,7 +316,7 @@ class PostsController extends MeCmsAppController {
             Cache::write($cache, $post, 'posts');			
 		}
 		
-		$this->set(am(array('title_for_layout' => $post['Post']['title'])), compact('post'));
+		$this->set(am(array('title_for_layout' => $post['Post']['title']), compact('post')));
 	}
 	
 	/**

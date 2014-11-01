@@ -76,7 +76,7 @@ class SystemsController extends MeCmsAppController {
 		//Sets the KCFinder path
 		$kcfinder = sprintf('%s/%s/browse.php?lang=%s', $this->webroot.WEBROOT_DIR, 'kcfinder', Configure::read('Config.language'));
 				
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Media browser'))), compact('kcfinder'));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Media browser')), compact('kcfinder')));
 	}
 	
 	/**
