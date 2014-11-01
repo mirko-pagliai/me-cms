@@ -33,7 +33,7 @@ $config = array('MeCms' => array(
 	//General options
 	'general' => array(
 		//Cache (enabled or disabled)
-		'cache' => FALSE,
+		'cache' => TRUE,
 		//Date formats
 		'date' => array(
 			//Long format
