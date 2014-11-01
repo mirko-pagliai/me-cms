@@ -43,7 +43,7 @@ class MeCmsAppController extends AppController {
 			)),
 			'authorize'			=> array('Controller'),
 			'className'			=> 'MeCms.MeAuth',
-			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE),
+			'loginAction'		=> array('controller' => 'users', 'action' => 'login', 'admin' => FALSE, 'plugin' => 'me_cms'),
             'loginRedirect'		=> '/admin',
             'logoutRedirect'	=> '/login'
         ),
