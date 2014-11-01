@@ -109,6 +109,10 @@ class User extends MeCmsAppModel {
 				'message'		=> 'Must be at least %d characters',
 				'on'			=> 'update',
 				'rule'			=> array('minLength', 8)
+			),
+			'passwordIsStrong' => array(
+				'message'	=> 'The password should contain letters, numbers and symbols',
+				'rule'		=> 'passwordIsStrong'
 			)
 		),
 		//This is used to check that the password has been correctly inserted
@@ -253,5 +257,25 @@ class User extends MeCmsAppModel {
 			return FALSE;
 		
 		return strcmp($this->data[$this->alias]['password'], $this->data[$this->alias]['password_repeat']) == 0;
+	}
+	
+	/**
+	 * Checks that the password contains letters, numbers and symbols.
+	 * @return bool TRUE if the password contains letters, numbers and symbols, otherwise FALSE
+	 */
+	function passwordIsStrong() {
+		//Checks if the password contains at least one letter
+		if(!preg_match('/[a-z]+/i', $password = $this->data[$this->alias]['password']))
+			return FALSE;
+		
+		//Checks if the password contains at least one digit
+		if(!preg_match('/[0-9]+/', $password))
+			return FALSE;
+		
+		//Checks if the password contains at least one symbol
+		if(!preg_match('/[^a-z0-9]+/i', $password))
+			return FALSE;
+		
+		return TRUE;
 	}
 }
