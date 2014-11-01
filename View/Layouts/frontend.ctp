@@ -104,7 +104,7 @@
 					<div id="sidebar" class="col-sm-4 col-md-3">
 						<?php
 							foreach($config['widgets'] as $widget) {
-								if($this->elementExists($widget = sprintf('widgets/%s', $widget)))
+								if($this->elementExists($widget = sprintf('MeCms.widgets/%s', $widget)))
 									echo $this->element($widget);
 							}
 						?>
