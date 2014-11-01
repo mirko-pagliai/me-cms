@@ -102,9 +102,7 @@ class BannersController extends MeCmsAppController {
 			$this->set(compact('tmpFile'));
 		}
 		
-		$this->set(am(array(
-			'title_for_layout' => __d('me_cms', 'Add banner')
-		), compact('positions', 'tmpFiles')));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Add banner')), compact('positions', 'tmpFiles')));
 	}
 
 	/**

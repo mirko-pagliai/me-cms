@@ -182,14 +182,10 @@ class PostsController extends MeCmsAppController {
 		
 		//If the data are not available from the cache
         if(empty($posts)) {
-            $posts = $this->Post->find('active', array(
-				'contain'	=> array(
-					'Category'	=> array('title', 'slug'),
-					'User'		=> array('first_name', 'last_name')
-				),
-				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created'),
-				'limit'		=> $limit
-			));
+            $posts = $this->Post->find('active', am(array(
+				'contain'	=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
+				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created')
+			)), compact('limit'));
 			
             Cache::write($cache, $posts, 'posts');
         }
@@ -214,10 +210,7 @@ class PostsController extends MeCmsAppController {
 		
 		//If the data are not available from the cache
         if(empty($posts)) {
-            $posts = $this->Post->find('active', array(
-				'fields'	=> array('slug', 'title'),
-				'limit'		=> $limit
-			));
+            $posts = $this->Post->find('active', am(array('fields' => array('slug', 'title'))), compact('limit'));
 			
             Cache::write($cache, $posts, 'posts');
         }
@@ -277,10 +270,7 @@ class PostsController extends MeCmsAppController {
 		if(empty($posts) || empty($paging)) {
 			$this->paginate = array(
 				'conditions'	=> $conditions,
-				'contain'		=> array(
-					'Category'	=> array('title', 'slug'),
-					'User'		=> array('first_name', 'last_name')
-				),
+				'contain'		=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
 				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'findType'		=> 'active',
 				'limit'			=> $this->config['records_for_page']
@@ -299,10 +289,7 @@ class PostsController extends MeCmsAppController {
 		else
 			$title_for_layout = __d('me_cms', 'Posts');
 		
-		$this->set(array(
-			'posts'				=> $posts,
-			'title_for_layout'	=> $title_for_layout
-		));
+		$this->set(compact('posts', 'title_for_layout'));
 	}
 	
 	/**
@@ -318,10 +305,7 @@ class PostsController extends MeCmsAppController {
 		if(empty($post)) {
 			$post = $this->Post->find('active', array(
 				'conditions'	=> array('Post.slug' => $slug),
-				'contain'		=> array(
-					'Category'	=> array('title', 'slug'),
-					'User'		=> array('first_name', 'last_name')
-				),
+				'contain'		=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
 				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'limit'			=> 1
 			));
@@ -332,10 +316,7 @@ class PostsController extends MeCmsAppController {
             Cache::write($cache, $post, 'posts');			
 		}
 		
-		$this->set(array(
-			'post'				=> $post,
-			'title_for_layout'	=> $post['Post']['title']
-		));
+		$this->set(am(array('title_for_layout' => $post['Post']['title'])), compact('post'));
 	}
 	
 	/**
@@ -352,10 +333,7 @@ class PostsController extends MeCmsAppController {
 				'fields'		=> array('title', 'slug', 'text', 'created')
 			));
 			
-			$this->set(array(
-				'pattern'	=> $pattern,
-				'posts'		=> $posts
-			));
+			$this->set(compact('pattern', 'posts'));
 		}
 		else {
 			$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');

@@ -116,13 +116,11 @@ class PhotosController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The photos can not be saved. Please, try again'), 'error');
 		}
 
-		$this->set(array(
+		$this->set(am(array(
 			'albumId'			=> empty($albumId) ? NULL : $albumId,
-			'albums'			=> $albums,
 			'photos'			=> $tmpFiles,
 			'title_for_layout'	=> __d('me_cms', 'Add photos'),
-			'tmpPath'			=> $tmpPath
-		));
+		)), compact('albums', 'tmpPath'));
 	}
 
 	/**
@@ -151,11 +149,10 @@ class PhotosController extends MeCmsAppController {
 		else
 			$this->request->data = $photo;
 
-		$this->set(array(
+		$this->set(am(array(
 			'albums'			=> $this->Photo->Album->find('list'),
-			'photo'				=> $photo,
 			'title_for_layout'	=> __d('me_cms', 'Edit photo')
-		));
+		)), compact('photo'));
 	}
 
 	/**
@@ -220,9 +217,6 @@ class PhotosController extends MeCmsAppController {
             Cache::write($cache, $photo, 'photos');
 		}
 		
-		$this->set(array(
-			'photo'				=> $photo,
-			'title_for_layout'	=> __d('me_cms', 'Photo')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photo'))), compact('photo'));
 	}
 }

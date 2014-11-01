@@ -36,7 +36,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	public function admin_index() {
 		//Gets the categories
 		$categories = $this->PostsCategory->find('all', array(
-			'contain'	=> array('Parent.title'),
+			'contain'	=> 'Parent.title',
 			'fields'	=> array('id', 'slug', 'post_count')
 		));
 		
@@ -183,9 +183,6 @@ class PostsCategoriesController extends MeCmsAppController {
             Cache::write($cache, $categories, 'posts');
         }
 		
-		$this->set(array(
-			'categories'		=> $categories,
-			'title_for_layout'	=> __d('me_cms', 'Categories')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Categories'))), compact('categories'));
 	}
 }

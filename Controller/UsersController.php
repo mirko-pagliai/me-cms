@@ -92,10 +92,7 @@ class UsersController extends MeCmsAppController {
 			'fields'		=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created')
 		));
 		
-		$this->set(array(
-			'user'				=> $user,
-			'title_for_layout'	=> __d('me_cms', 'View user')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'View user'))), compact('user'));
 	}
 
 	/**

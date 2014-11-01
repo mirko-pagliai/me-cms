@@ -180,10 +180,7 @@ class PagesController extends MeCmsAppController {
             Cache::write($cache, $pages, 'pages');
         }
 		
-		$this->set(array(
-			'pages'				=> $pages,
-			'title_for_layout'	=> __d('me_cms', 'Pages')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Pages')), compact('pages')));
 	}
 	
 	/**
@@ -226,9 +223,6 @@ class PagesController extends MeCmsAppController {
             Cache::write($cache, $page, 'pages');
         }
 		
-		$this->set(array(
-			'page'				=> $page,
-			'title_for_layout'	=> $page['Page']['title']
-		));
+		$this->set(am(array('title_for_layout' => $page['Page']['title']), compact('page')));
 	}
 }
