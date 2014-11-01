@@ -28,37 +28,37 @@
 ?>
 
 <div class="post-container clearfix">
-	<div class="post-header">
+	<div class="content-header">
 		<?php
 			if(!empty($post['Category']['title']) && !empty($post['Category']['slug']))
 				echo $this->Html->h5($this->Html->link($post['Category']['title'],
 					array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms', $post['Category']['slug'])),
-					array('class' => 'post-category')
+					array('class' => 'content-category')
 				);
 
 			if(!empty($post['Post']['title']) && !empty($post['Post']['slug']))
 				echo $this->Html->h3($this->Html->link($post['Post']['title'],
 					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug'])),
-					array('class' => 'post-title')
+					array('class' => 'content-title')
 				);
 			
 			if(!empty($post['Post']['subtitle']) && !empty($post['Post']['slug']))
 				echo $this->Html->h4($this->Html->link($post['Post']['subtitle'],
 					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug'])),
-					array('class' => 'post-subtitle')
+					array('class' => 'content-subtitle')
 				);
 		?>
-		<div class="post-info">
+		<div class="content-info">
 			<?php
 				if(!empty($post['User']['first_name']) && !empty($post['User']['last_name']))
-					echo $this->Html->div('post-author',
+					echo $this->Html->div('content-author',
 						__d('me_cms', 'Posted by %s',
 						sprintf('%s %s', $post['User']['first_name'], $post['User']['last_name'])),
 						array('icon' => 'user')
 					);
 
 				if(!empty($post['Post']['created']))
-					echo $this->Html->div('post-created',
+					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on %s', $this->Time->format($post['Post']['created'], $config['datetime']['long'])),
 						array('icon' => 'clock-o')
 					);
@@ -69,20 +69,20 @@
 		if(!empty($post['Post']['text'])) {
 			//If it was requested to truncate the text
 			if(!empty($truncate))
-				echo $this->Html->div('post-content', $truncate = $this->Text->truncate(
+				echo $this->Html->div('content-text', $truncate = $this->Text->truncate(
 					$post['Post']['text'], $config['truncate_to'], array('exact' => FALSE, 'html' => TRUE)
 				));
 			else
-				echo $this->Html->div('post-content', $post['Post']['text']);
+				echo $this->Html->div('content-text', $post['Post']['text']);
 		}
 	?>
-	<div class="post-buttons pull-right">
+	<div class="content-buttons pull-right">
 		<?php
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
 			if(!empty($truncate) && $truncate !== $post['Post']['text'])
 				echo $this->Html->button(__d('me_cms', 'Read more'),
 					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
-					array('class' => 'post-readmore')
+					array('class' => 'readmore')
 				);
 		?>
 	</div>

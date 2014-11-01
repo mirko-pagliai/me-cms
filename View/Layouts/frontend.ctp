@@ -48,7 +48,7 @@
 					'/MeTools/css/default',
 					'/MeTools/css/forms',
 					'/MeCms/css/frontend/layout',
-					'/MeCms/css/frontend/posts',
+					'/MeCms/css/frontend/contents',
 					'/MeCms/css/frontend/photos'
 				), array('inline' => TRUE));
 			else

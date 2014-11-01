@@ -28,24 +28,24 @@
 ?>
 
 <div class="page-container clearfix">
-	<div class="page-header">
+	<div class="content-header">
 		<?php
 			if(!empty($page['Page']['title']))
 				echo $this->Html->h3($this->Html->link($page['Page']['title'],
 					am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
-					array('class' => 'page-title')
+					array('class' => 'content-title')
 				);
 			
 			if(!empty($page['Page']['subtitle']))
 				echo $this->Html->h4($this->Html->link($page['Page']['subtitle'],
 					am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
-					array('class' => 'page-subtitle')
+					array('class' => 'content-subtitle')
 				);
 		?>
-		<div class="page-info">
+		<div class="content-info">
 			<?php
 				if(!empty($page['Page']['created']))
-					echo $this->Html->div('page-created',
+					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on %s', $this->Time->format($page['Page']['created'], $config['datetime']['long'])), 
 						array('icon' => 'clock-o')
 					);
@@ -56,21 +56,21 @@
 		if(!empty($page['Page']['text'])) {
 			//If it was requested to truncate the text
 			if(!empty($truncate))
-				echo $this->Html->div('page-content', $truncate = $this->Text->truncate(
+				echo $this->Html->div('content-text', $truncate = $this->Text->truncate(
 					$$page['Page']['text'], $config['truncate_to'], array('exact' => FALSE, 'html' => TRUE)
 				));
 			else
-				echo $this->Html->div('page-content', $page['Page']['text']);
+				echo $this->Html->div('content-text', $page['Page']['text']);
 		}
 	?>
 </div>
-<div class="page-buttons pull-right">
+<div class="content-buttons pull-right">
 	<?php
 		//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
 		if(!empty($truncate) && $truncate !== $page['Page']['text'])
 			echo $this->Html->button(__d('me_cms', 'Read more'),
 				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass']),
-				array('class' => 'page-readmore')
+				array('class' => 'readmore')
 			);
 	?>
 </div>

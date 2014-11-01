@@ -5,17 +5,10 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 /* -------------------------------- */
-/*			Posts and pages			*/
+/*	Contents, as posts or pages		*/
 /* -------------------------------- */
-/* Main container */
-.posts .post-container,
-.pages .page-container {
-	margin-bottom: 20px;
-}
-
 /* Header */
-.posts .post-header,
-.pages .page-header {
+.content-header {
 	border-color: #777;
 	border-style: solid;
 	border-width: 0 0 0 4px;
@@ -23,48 +16,37 @@
     padding: 0 0 0 10px;
 }
 
+/* Header. links */
+.content-header a {
+	color: #555;
+}
+
+/* Header. links on hover */
+.content-header a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
 /* Header, category */
-.posts .post-header .post-category {
+.content-header .content-category {
     font-size: 18px;
     margin: 0 0 4px;
 }
 
 /* Header, title */
-.posts .post-header .post-title,
-.pages .page-header .page-title {
+.content-header .content-title {
     font-size: 28px;
     margin: 0;
 }
 
 /* Header, subtitle */
-.posts .post-header .post-subtitle,
-.pages .page-header .page-subtitle {
+.content-header .content-subtitle {
     font-size: 22px;
     margin: 4px 0 0;
 }
 
-/* Header, category, title and subtitle links */
-.posts .post-header .post-category a,
-.posts .post-header .post-title a,
-.posts .post-header .post-subtitle a,
-.pages .page-header .page-title a,
-.pages .page-header .page-subtitle a {
-	color: #555;
-}
-
-/* Header, category, title and subtitle links on hover */
-.posts .post-header .post-category a:hover,
-.posts .post-header .post-title a:hover,
-.posts .post-header .post-subtitle a:hover,
-.pages .page-header .page-title a:hover,
-.pages .page-header .page-subtitle a:hover {
-	color: #333;
-	text-decoration: none;
-}
-
 /* Header, info (author, date, etc) */
-.posts .post-header .post-info,
-.pages .page-header .page-info {
+.content-header .content-info {
     color: #666;
     font-family: Roboto,sans-serif;
 	font-size: 15px;
@@ -72,39 +54,37 @@
 }
 
 /* Header, info (author, date, etc), icons */
-.posts .post-header .post-info .fa,
-.pages .page-header .page-info .fa {
+.content-header .content-info .fa {
 	margin-right: 4px;
 }
 
 /* Content */
-.posts .post-content,
-.pages .page-content {
+.content-text {
 	font-family: Roboto, sans-serif;
     line-height: 1.6;
     text-align: justify;
 }
 
 /* Content, images pulled on left */
-.posts .post-content img.pull-left,
-.pages .page-content img.pull-left {
+.content-text img.pull-left,
+.content-text img[style~="float:left"] {
 	margin: 2px 16px 8px 0;
 }
 
 /* Content, images pulled on right */
-.posts .post-content img.pull-right,
-.pages .page-content img.pull-right {
+.content-text img.pull-right,
+.content-text img[style~="float:right"] {
 	margin: 2px 0 8px 16px;
 }
 
 /* Buttons */
-.posts .post-buttons {
-	margin-top: 15px;
+.content-buttons {
+	margin: 10px 0 20px;
 	overflow: hidden;
 }
 
 /* Buttons, "read more" button */
-.posts .post-buttons .post-readmore {
+.content-buttons .readmore {
     background-color: #ddd;
     color: #777;
     font-size: 13px;
@@ -113,7 +93,7 @@
 }
 
 /* Buttons, "read more" button, icon */
-.posts .post-buttons .post-readmore:after {
+.content-buttons .readmore:after {
 	content: "\f178";
 	font-family: FontAwesome;
 	font-size: 12px;
@@ -121,6 +101,6 @@
 }
 
 /* Buttons, "read more" button on hover */
-.posts .post-buttons .post-readmore:hover {
+.content-buttons .readmore:hover {
 	color: #444;
 }
