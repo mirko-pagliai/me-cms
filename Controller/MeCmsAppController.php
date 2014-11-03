@@ -48,6 +48,7 @@ class MeCmsAppController extends AppController {
             'logoutRedirect'	=> '/login'
         ),
 		'Config'	=> array('className' => 'MeCms.Config'),
+		'RequestHandler',
 		'Session'	=> array('className' => 'MeTools.MeSession')
 	);
 	
