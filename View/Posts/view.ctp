@@ -25,6 +25,6 @@
 
 <?php
 	echo $this->Html->div('posts view', 
-		$this->element('view/post', compact($post))
+		$this->element('MeCms.view'.DS.'post', compact($post))
 	);
 ?>

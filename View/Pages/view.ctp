@@ -23,4 +23,4 @@
  */
 ?>
 
-<?php echo $this->Html->div('pages view', $this->element('view/page', compact('page'))); ?>
+<?php echo $this->Html->div('pages view', $this->element('MeCms.view'.DS.'page', compact('page'))); ?>
