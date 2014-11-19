@@ -34,13 +34,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /* Site logo */
 #logo {
-	display: inline-block;
+	display: block;
 	text-decoration: none;
 }
 
 /* Logo (as image) */
 #logo img {
-	margin: 25px 0 5px;
+	margin: 25px 0 10px;
 }
 
 /* Logo (as text) */
