@@ -38,7 +38,7 @@ class ConfigComponent extends Component {
 	protected function _debugForLocalhost(Controller $controller) {
 		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.debug_on_localhost');
 	}
-
+	
 	/**
 	 * Turns a string of words separated by commas (and optional spaces) into an array.
 	 * 
@@ -53,10 +53,13 @@ class ConfigComponent extends Component {
 	 * )
 	 * </code>
 	 * @param string $string String of words separated by commas (and optional spaces)
-	 * @return array Array of values
+	 * @return mixed Array of values
 	 */
-	protected function _turnsAsArray($string) {
-		return explode(',', preg_replace('/\s/', NULL, $string));
+	protected function _turnsAsArray($string) {		
+		if(empty(trim($string)))
+			return $string;
+		
+		return explode(',', preg_replace('/\s/', NULL, trim($string)));
 	}
 
 	/**
@@ -76,7 +79,7 @@ class ConfigComponent extends Component {
 		//Turns some values as array
 		Configure::write($key = 'MeCms.backend.topbar', $this->_turnsAsArray(Configure::read($key)));
 		Configure::write($key = 'MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read($key)));
-
+		
 		//If it's an admin request
 		if($controller->isAdminRequest())
 			Configure::write('MeCms', am(Configure::read('MeCms.backend'), Configure::read('MeCms.general')));
