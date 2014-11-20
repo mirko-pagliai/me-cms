@@ -79,6 +79,13 @@ class ConfigComponent extends Component {
 		//Turns some values as array
 		Configure::write($key = 'MeCms.backend.topbar', $this->_turnsAsArray(Configure::read($key)));
 		Configure::write($key = 'MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read($key)));
+
+		//If the current action is the homepage and the homepage widgets have been set, it overrides the widgets with the homepage widgets
+		if(in_array($controller->request->params['action'], array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
+			Configure::write('MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read('MeCms.frontend.widgets_homepage')));
+
+		//Deletes the homepage widgets key
+		Configure::delete('MeCms.frontend.widgets_homepage');
 		
 		//If it's an admin request
 		if($controller->isAdminRequest())
