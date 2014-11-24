@@ -91,6 +91,29 @@ class Banner extends MeCmsAppModel {
 	);
 	
 	/**
+	 * "Active" find method. It finds for active records.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findActive($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only active items
+			$query['conditions'][$this->alias.'.active'] = TRUE;
+			
+            return $query;
+        }
+		
+		if($query['limit'] === 1 && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
+	
+	/**
 	 * Called after each find operation. Can be used to modify any results returned by find().
 	 * @param mixed $results The results of the find operation
 	 * @param boolean $primary Whether this model is being queried directly
