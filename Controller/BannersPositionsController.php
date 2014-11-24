@@ -112,7 +112,7 @@ class BannersPositionsController extends MeCmsAppController {
 		$this->request->onlyAllow('post', 'delete');
 		
 		//Before deleting, it checks if the position has some banners
-		if(!$this->PostsCategory->field('banner_count')) {
+		if(!$this->BannersPosition->field('banner_count')) {
 			if($this->BannersPosition->delete())
 				$this->Session->flash(__d('me_cms', 'The banners position has been deleted'));
 			else
