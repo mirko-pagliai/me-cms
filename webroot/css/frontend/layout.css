@@ -96,6 +96,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* -------------------------------- */
+/*			Sidebar banners			*/
+/* -------------------------------- */
+.banner.banner-right {
+	margin-bottom: 20px;
+    text-align: center;
+}
+
+/* -------------------------------- */
 /*				Content				*/
 /* -------------------------------- */
 /* Content, index and view actions, title */
