@@ -118,15 +118,20 @@ class Banner extends MeCmsAppModel {
 	 * @param mixed $results The results of the find operation
 	 * @param boolean $primary Whether this model is being queried directly
 	 * @return mixed Result of the find operation
+	 * @uses BannerManager::getPath()
 	 * @uses BannerManager::getUrl()
 	 */
 	public function afterFind($results, $primary = FALSE) {
 		foreach($results as $k => $v) {
 			//If the filename is available, adds the file url
-			if(!empty($v['filename']))
+			if(!empty($v['filename'])) {
+				$results[$k]['path'] = BannerManager::getPath($v['filename']);
 				$results[$k]['url'] = BannerManager::getUrl($v['filename']);
-			elseif(!empty($v[$this->alias]['filename']))
+			}
+			elseif(!empty($v[$this->alias]['filename'])) {
+				$results[$k][$this->alias]['path'] = BannerManager::getPath($v[$this->alias]['filename']);
 				$results[$k][$this->alias]['url'] = BannerManager::getUrl($v[$this->alias]['filename']);
+			}
 		}
 		
 		return $results;
