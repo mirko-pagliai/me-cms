@@ -75,7 +75,7 @@
 				//Check if the logo image exists
 				if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
 					$logo = $this->Html->img($config['logo']);
-				echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo')));		
+				echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo', 'title' => __d('me_cms', 'Homepage'))));		
 
 				echo $this->element('MeCms.frontend/topbar', array(), array('cache' => TRUE));
 			?>
