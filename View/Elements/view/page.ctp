@@ -27,7 +27,7 @@
  */
 ?>
 
-<div class="page-container clearfix">
+<div class="page-container content-container clearfix">
 	<div class="content-header">
 		<?php
 			if(!empty($page['Page']['title']))

@@ -27,7 +27,7 @@
  */
 ?>
 
-<div class="post-container clearfix">
+<div class="post-container content-container clearfix">
 	<div class="content-header">
 		<?php
 			if(!empty($post['Category']['title']) && !empty($post['Category']['slug']))
