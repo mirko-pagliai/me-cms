@@ -7,6 +7,11 @@
 /* -------------------------------- */
 /*	Contents, as posts or pages		*/
 /* -------------------------------- */
+/* Container */
+.content-container {
+	margin-bottom: 20px;
+}
+
 /* Header */
 .content-header {
 	border-color: #777;
@@ -62,8 +67,12 @@
 .content-text {
 	font-family: Roboto, sans-serif;
     line-height: 1.6;
-	margin-bottom: 20px;
     text-align: justify;
+}
+
+/* Content, last paragraph */
+.content-text p:last-child {
+	margin-bottom: 0;
 }
 
 /* Content, images pulled on left */
@@ -79,8 +88,8 @@
 }
 
 /* Buttons */
-.content-buttons a {
-	margin: 10px 0 20px;
+.content-buttons {
+	margin-top: 20px;
 }
 
 /* Buttons, "read more" button */
