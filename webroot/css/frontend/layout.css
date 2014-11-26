@@ -60,6 +60,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 #topbar {
     background: #eee;
     border: 0;
+	border-radius: 0;
 }
 
 /* Navbar NOT collapsed */
