@@ -178,7 +178,7 @@ class PostsController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$posts = Cache::read($cache = 'posts_request_latest', 'posts');
+		$posts = Cache::read($cache = sprintf('posts_request_latest_%d', $limit), 'posts');
 		
 		//If the data are not available from the cache
         if(empty($posts)) {
@@ -206,7 +206,7 @@ class PostsController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$posts = Cache::read($cache = 'posts_request_latest_list', 'posts');
+		$posts = Cache::read($cache = sprintf('posts_request_latest_%d_list', $limit), 'posts');
 		
 		//If the data are not available from the cache
         if(empty($posts)) {
