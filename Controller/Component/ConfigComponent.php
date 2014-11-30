@@ -31,12 +31,43 @@ App::uses('Component', 'Controller');
  */
 class ConfigComponent extends Component {
 	/**
+	 * Controller
+	 * @var Object, controller 
+	 */
+	protected $controller;
+	
+	/**
 	 * Checks if debugging for localhost should be forced
-	 * @param Controller $controller
 	 * @return bool TRUE if debugging should be forced, otherwise FALSE
 	 */
-	protected function _debugForLocalhost(Controller $controller) {
+	protected function _debugForLocalhost() {
 		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.debug_on_localhost');
+	}
+	
+	/**
+	 * Sets the widgets.
+	 * @uses controller
+	 */
+	protected function _setWidgets() {
+		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
+		if(in_array($this->controller->request->params['action'], array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
+			$widgets = Configure::read('MeCms.frontend.widgets_homepage');
+		//Else, gets the default widgets
+		else
+			$widgets = Configure::read('MeCms.frontend.widgets');
+			
+		//Deletes the homepage widgets key
+		Configure::delete('MeCms.frontend.widgets_homepage');
+		
+		//For each widget, sets the plugin name, if exists, and the relative path
+		foreach($widgets as $k => $widget) {
+			list($plugin, $name) = pluginSplit($widget);
+			
+			$widgets[$k] = empty($plugin) ? sprintf('widgets/%s', $name) : sprintf('%s.widgets/%s', $plugin, $name);
+		}
+		
+		//Writes the configuration
+		Configure::write('MeCms.frontend.widgets', $widgets);
 	}
 	
 	/**
@@ -64,10 +95,12 @@ class ConfigComponent extends Component {
 
 	/**
 	 * Loads and writes the configuration.
-	 * @uses MeCmsAppController::isAdminRequest()
+	 * @uses controller
+	 * @uses _setWidgets()
 	 * @uses _turnsAsArray()
+	 * @uses MeCmsAppController::isAdminRequest()
 	 */
-	protected function _writeConfig(Controller $controller) {
+	protected function _setConfig() {
 		//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)
 		Configure::load('MeCms.mecms');
 
@@ -77,18 +110,14 @@ class ConfigComponent extends Component {
 			Configure::load('mecms');
 
 		//Turns some values as array
-		Configure::write($key = 'MeCms.backend.topbar', $this->_turnsAsArray(Configure::read($key)));
-		Configure::write($key = 'MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read($key)));
+		foreach(array('MeCms.backend.topbar', 'MeCms.frontend.widgets', 'MeCms.frontend.widgets_homepage') as $key)
+			Configure::write($key, $this->_turnsAsArray(Configure::read($key)));
 
-		//If the current action is the homepage and the homepage widgets have been set, it overrides the widgets with the homepage widgets
-		if(in_array($controller->request->params['action'], array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
-			Configure::write('MeCms.frontend.widgets', $this->_turnsAsArray(Configure::read('MeCms.frontend.widgets_homepage')));
+		//Sets the widgets
+		$this->_setWidgets();
 
-		//Deletes the homepage widgets key
-		Configure::delete('MeCms.frontend.widgets_homepage');
-		
 		//If it's an admin request
-		if($controller->isAdminRequest())
+		if($this->controller->isAdminRequest())
 			Configure::write('MeCms', am(Configure::read('MeCms.backend'), Configure::read('MeCms.general')));
 		//Else, if it is not ad admin request
 		else
@@ -99,26 +128,30 @@ class ConfigComponent extends Component {
 	 * Is called after the controller executes the requested action's logic, 
 	 * but before the controller's renders views and layout.
 	 * @param Controller $controller
+	 * @see http://api.cakephp.org/2.5/class-Component.html#_beforeRender CakePHP Api
 	 */
 	public function beforeRender(Controller $controller) {
 		//Sets the configuration for the view
 		$controller->set('config', Configure::read('MeCms'));
 	}
 	
-    /**
+	/**
      * Called before the controller's beforeFilter method.
-     * @param Controller $controller
+	 * @param Controller $controller
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
 	 * @uses _debugForLocalhost()
-	 * @uses _writeConfig()
+	 * @uses _setConfig()
 	 * @uses MeCmsAppController::config
-     */	
+	 */
 	public function initialize(Controller $controller) {
-		//Writes the configuration
-		$this->_writeConfig($controller);
+		//Sets the controller
+		$this->controller = $controller;
+		
+		//Sets the configuration
+		$this->_setConfig();
 		
 		//Sets debug
-		if(Configure::read('MeCms.debug') || $this->_debugForLocalhost($controller))
+		if(Configure::read('MeCms.debug') || $this->_debugForLocalhost())
 			Configure::write('debug', 2);
 		else
 			Configure::write('debug', 0);
