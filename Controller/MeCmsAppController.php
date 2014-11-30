@@ -90,6 +90,7 @@ class MeCmsAppController extends AppController {
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
+	 * @uses _loadMenus()
 	 * @uses isAdminRequest()
 	 */
 	public function beforeFilter() {
