@@ -27,8 +27,8 @@ $config = array('MeCms' => array(
 		'theme' => FALSE,
 		//Number of characters to truncate a text
 		'truncate_to' => 1000,
-		//Widgets
-		'widgets' => 'search, categories, latest_posts, random_photo, pages',
+		//Widgets. You can use the plugin notation (eg., `PluginName.widgetName`)
+		'widgets' => 'MeCms.search, MeCms.categories, MeCms.latest_posts, MeCms.random_photo, pages',
 		//Specific widgets for the homepage. If this is set to "FALSE", will be used the default widget
 		'widgets_homepage' => FALSE
 	),
