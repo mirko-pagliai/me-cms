@@ -45,32 +45,6 @@ class ConfigComponent extends Component {
 	}
 	
 	/**
-	 * Sets the widgets.
-	 * @uses controller
-	 */
-	protected function _setWidgets() {
-		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
-		if(in_array($this->controller->request->params['action'], array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
-			$widgets = Configure::read('MeCms.frontend.widgets_homepage');
-		//Else, gets the default widgets
-		else
-			$widgets = Configure::read('MeCms.frontend.widgets');
-			
-		//Deletes the homepage widgets key
-		Configure::delete('MeCms.frontend.widgets_homepage');
-		
-		//For each widget, sets the plugin name, if exists, and the relative path
-		foreach($widgets as $k => $widget) {
-			list($plugin, $name) = pluginSplit($widget);
-			
-			$widgets[$k] = empty($plugin) ? sprintf('widgets/%s', $name) : sprintf('%s.widgets/%s', $plugin, $name);
-		}
-		
-		//Writes the configuration
-		Configure::write('MeCms.frontend.widgets', $widgets);
-	}
-	
-	/**
 	 * Turns a string of words separated by commas (and optional spaces) into an array.
 	 * 
 	 * For example:
@@ -113,8 +87,12 @@ class ConfigComponent extends Component {
 		foreach(array('MeCms.backend.topbar', 'MeCms.frontend.widgets', 'MeCms.frontend.widgets_homepage') as $key)
 			Configure::write($key, $this->_turnsAsArray(Configure::read($key)));
 
-		//Sets the widgets
-		$this->_setWidgets();
+		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
+		if(in_array($this->controller->request->params['action'], array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
+			Configure::write('MeCms.frontend.widgets', Configure::read('MeCms.frontend.widgets_homepage'));
+			
+		//Deletes the homepage widgets key
+		Configure::delete('MeCms.frontend.widgets_homepage');
 
 		//If it's an admin request
 		if($this->controller->isAdminRequest())
