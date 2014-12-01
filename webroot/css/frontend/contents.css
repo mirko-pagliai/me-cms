@@ -21,15 +21,15 @@
     padding: 0 0 0 10px;
 }
 
-/* Header. links */
+/* Header, links */
 .content-header a {
 	color: #555;
+	text-decoration: none;
 }
 
 /* Header. links on hover */
-.content-header a:hover {
+.content-header a:hover, .content-header a:active {
 	color: #333;
-	text-decoration: none;
 }
 
 /* Header, category */
