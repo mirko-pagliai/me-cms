@@ -104,9 +104,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
+	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
-	 * @uses AuthHelper::isManager()
 	 */
 	protected function _posts($type) {
 		$menu = array(
