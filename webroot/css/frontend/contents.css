@@ -21,6 +21,15 @@
     padding: 0 0 0 10px;
 }
 
+/* Header, title and subtitle */
+.content-header .content-title,
+.content-header .content-subtitle {
+	/* No wrap, text truncated with ellipses */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* Header, links */
 .content-header a {
 	color: #555;
@@ -28,7 +37,7 @@
 }
 
 /* Header. links on hover */
-.content-header a:hover, .content-header a:active {
+.content-header a:hover {
 	color: #333;
 }
 
