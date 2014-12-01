@@ -34,7 +34,8 @@
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('parent_id', array(
-					'label' => __d('me_cms', 'Parent category')
+					'label' => __d('me_cms', 'Parent category'),
+					'tip'	=> __d('me_cms', 'Leave blank to create a parent category')
 				));
 			?>
 		</div>
