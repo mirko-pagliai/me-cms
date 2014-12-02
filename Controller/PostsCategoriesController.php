@@ -183,6 +183,6 @@ class PostsCategoriesController extends MeCmsAppController {
             Cache::write($cache, $categories, 'posts');
         }
 		
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Categories')), compact('categories')));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Posts categories')), compact('categories')));
 	}
 }
