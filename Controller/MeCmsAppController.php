@@ -93,14 +93,14 @@ class MeCmsAppController extends AppController {
 	 * @uses _loadMenus()
 	 * @uses isAdminRequest()
 	 */
-	public function beforeFilter() {
-		//Sets the authenticaton message error
-		$this->Auth->authError = __d('me_cms', 'You need to login first');
-		
-		//Sets the element that will be used for flash auth errors
-		//http://stackoverflow.com/a/20545037/1480263
-		if(!empty($this->Auth))
+	public function beforeFilter() {		
+		if(!empty($this->Auth)) {
+			//Sets the authenticaton message error
+			$this->Auth->authError = __d('me_cms', 'You need to login first');
+			//Sets the element that will be used for flash auth errors
+			//http://stackoverflow.com/a/20545037/1480263
 			$this->Auth->flash['element'] = 'MeTools.error';
+		}
 		
 		//Authorizes the current action, if it's not an admin request
 		if(!$this->isAdminRequest())
