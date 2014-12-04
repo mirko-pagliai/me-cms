@@ -283,7 +283,7 @@ class PostsController extends MeCmsAppController {
 		else
 			$this->request->params['paging'] = $paging;
 		
-		//Uses the category title as the title of the layout, if it's available
+		//Sets the category title as the title of the layout, if it's available
 		if(!empty($category) && !empty($posts[0]['Category']['title']))
 			$title_for_layout = $posts[0]['Category']['title'];
 		else
