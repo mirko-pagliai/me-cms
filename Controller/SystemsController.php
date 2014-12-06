@@ -147,15 +147,12 @@ class SystemsController extends MeCmsAppController {
 	 * @uses System::clearCache()
 	 */
 	public function admin_clear_cache() {
-		$this->request->onlyAllow('post', 'delete'); 
+		$this->request->onlyAllow('post', 'delete');
 		
-		//Clears the cache groups
-		$success = Cache::clearGroup('pages', 'pages') && Cache::clearGroup('photos', 'photos') && Cache::clearGroup('posts', 'posts');
-		
-		if($success && System::clearCache())
+		if(System::clearCache())
 			$this->Session->flash(__d('me_cms', 'The cache has been cleared'), 'success');
 		else
-			$this->Session->flash(__d('me_cms', 'The cache has not been cleared'), 'error');
+			$this->Session->flash(__d('me_cms', 'The cache is not writable'), 'error');
 		
 		$this->redirect(array('action' => 'cache'));
 		
