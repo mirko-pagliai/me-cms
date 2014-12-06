@@ -28,7 +28,7 @@
 <div class="banners index">
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Banners'));
-		echo $this->Html->button(__d('me_cms', 'Add new'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
+		echo $this->Html->button(__d('me_cms', 'Add'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
 	<table class="table table-striped">
 		<tr>
