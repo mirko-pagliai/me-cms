@@ -25,7 +25,7 @@
  */
 
 //Home page
-Router::connect('/',			array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/', array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
 
 //Pages controller
 Router::connect('/pages',	array('controller' => 'pages', 'action' => 'index', 'plugin' => 'me_cms'));
@@ -50,11 +50,11 @@ Router::connect('/album/*',	array('controller' => 'photos_albums', 'action' => '
 Router::connect('/photo/*',	array('controller' => 'photos', 'action' => 'view', 'plugin' => 'me_cms'));
 
 //Admin home page
-Router::connect('/admin',	array('controller' => 'posts', 'plugin' => 'me_cms', 'admin' => TRUE));
+Router::connect('/admin', array('controller' => 'posts', 'plugin' => 'me_cms', 'admin' => TRUE));
 
 //Login and logout
-Router::connect('/login',	array('controller' => 'users',	'action' => 'login',	'plugin' => 'me_cms'));
-Router::connect('/logout',	array('controller' => 'users',	'action' => 'logout',	'plugin' => 'me_cms'));
+Router::connect('/login',	array('controller' => 'users', 'action' => 'login',		'plugin' => 'me_cms'));
+Router::connect('/logout',	array('controller' => 'users', 'action' => 'logout',	'plugin' => 'me_cms'));
 
 $controllers = '(banners|banners_positions|pages|photos_albums|photos|posts_categories|posts|systems|users|users_groups)';
 
