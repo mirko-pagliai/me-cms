@@ -155,7 +155,6 @@ class SystemsController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'The cache is not writable'), 'error');
 		
 		$this->redirect(array('action' => 'cache'));
-		
 	}
 	
 	/**
