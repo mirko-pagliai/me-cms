@@ -77,6 +77,7 @@ class MeCmSchema extends CakeSchema {
 		'target' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'description' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
+		'click_count' => array('type' => 'integer', 'null' => false, 'default' => '0', 'unsigned' => false),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'position_id' => array('column' => 'position_id', 'unique' => 0)

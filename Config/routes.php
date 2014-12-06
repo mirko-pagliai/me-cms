@@ -27,6 +27,9 @@
 //Home page
 Router::connect('/', array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
 
+//Banner controller
+Router::connect('/banner/*', array('controller' => 'banners', 'action' => 'open', 'plugin' => 'me_cms'));
+
 //Pages controller
 Router::connect('/pages',	array('controller' => 'pages', 'action' => 'index', 'plugin' => 'me_cms'));
 Router::connect('/page/*',	array('controller' => 'pages', 'action' => 'view',	'plugin' => 'me_cms'));

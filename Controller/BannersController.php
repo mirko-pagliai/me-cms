@@ -153,4 +153,28 @@ class BannersController extends MeCmsAppController {
 			
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * Open a banner target (link)
+	 * @param string $id Banner ID
+	 * @throws NotFoundException
+	 */
+	public function open($id = NULL) {
+		$this->Banner->id = $id;
+		if(!$this->Banner->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid banner'));
+		
+		//Gets the banner target
+		$target = $this->Banner->field('target');
+		
+		//Checks for target
+		if(empty($target))
+			throw new NotFoundException(__d('me_cms', 'Invalid banner target'));
+		
+		//Increases the click count
+		$this->Banner->updateAll(array('click_count' => 'click_count+1'), array('Banner.id' => $id));
+		
+		//Redirects
+		$this->redirect($target);
+	}
 }

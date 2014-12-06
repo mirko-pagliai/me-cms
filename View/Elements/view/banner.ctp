@@ -36,8 +36,8 @@
 		$image = $this->Html->img($banner['Banner']['url'], array('class' => 'img-thumbnail'));
 	
 		if(!empty($banner['Banner']['target']))
-			echo $this->Html->link($image, $banner['Banner']['target'], array(
-				'target' => '_blank',
+			echo $this->Html->link($image, array('controller' => 'banners', 'action' => 'open', 'plugin' => 'me_cms', $banner['Banner']['id']), array(
+				'target'	=> '_blank',
 				'title'		=> empty($banner['Banner']['description']) ? NULL : $banner['Banner']['description']
 			));
 		else
