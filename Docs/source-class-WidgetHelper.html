@@ -5,7 +5,7 @@
 	<meta name="generator" content="ApiGen 2.8.0">
 	<meta name="robots" content="noindex">
 
-	<title>File Helper/AuthHelper.php | MeCms</title>
+	<title>File Helper/WidgetHelper.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
 	<script type="text/javascript" src="elementlist.js?200599138"></script>
@@ -47,9 +47,9 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-AuthHelper.html">AuthHelper</a></li>
+				<li><a href="class-AuthHelper.html">AuthHelper</a></li>
 				<li><a href="class-MenuHelper.html">MenuHelper</a></li>
-				<li><a href="class-WidgetHelper.html">WidgetHelper</a></li>
+				<li class="active"><a href="class-WidgetHelper.html">WidgetHelper</a></li>
 			</ul>
 
 
@@ -80,7 +80,7 @@
 				<a href="package-MeCms.View.Helper.html" title="Summary of MeCms\View\Helper"><span>Package</span></a>
 			</li>
 			<li>
-				<a href="class-AuthHelper.html" title="Summary of AuthHelper"><span>Class</span></a>
+				<a href="class-WidgetHelper.html" title="Summary of WidgetHelper"><span>Class</span></a>
 			</li>
 		</ul>
 		<ul>
@@ -100,7 +100,7 @@
 
 <pre><code><span id="1" class="l"><a class="l" href="#1"> 1: </a><span class="xlang">&lt;?php</span>
 </span><span id="2" class="l"><a class="l" href="#2"> 2: </a><span class="php-comment">/**
-</span></span><span id="3" class="l"><a class="l" href="#3"> 3: </a><span class="php-comment"> * AuthHelper.
+</span></span><span id="3" class="l"><a class="l" href="#3"> 3: </a><span class="php-comment"> * WidgetHelper.
 </span></span><span id="4" class="l"><a class="l" href="#4"> 4: </a><span class="php-comment"> *
 </span></span><span id="5" class="l"><a class="l" href="#5"> 5: </a><span class="php-comment"> * This file is part of MeCms.
 </span></span><span id="6" class="l"><a class="l" href="#6"> 6: </a><span class="php-comment"> *
@@ -124,24 +124,25 @@
 </span></span><span id="24" class="l"><a class="l" href="#24">24: </a><span class="php-comment"> * @package     MeCms\View\Helper
 </span></span><span id="25" class="l"><a class="l" href="#25">25: </a><span class="php-comment"> */</span>
 </span><span id="26" class="l"><a class="l" href="#26">26: </a>
-</span><span id="27" class="l"><a class="l" href="#27">27: </a>App::uses(<span class="php-quote">'MeAuthComponent'</span>, <span class="php-quote">'MeCms.Controller/Component'</span>);
-</span><span id="28" class="l"><a class="l" href="#28">28: </a>
-</span><span id="29" class="l"><a class="l" href="#29">29: </a><span class="php-comment">/**
-</span></span><span id="30" class="l"><a class="l" href="#30">30: </a><span class="php-comment"> * Auth Helper.
-</span></span><span id="31" class="l"><a class="l" href="#31">31: </a><span class="php-comment"> * 
-</span></span><span id="32" class="l"><a class="l" href="#32">32: </a><span class="php-comment"> * This helper allows you to access to the MeAuthComponent also from views.
-</span></span><span id="33" class="l"><a class="l" href="#33">33: </a><span class="php-comment"> */</span>
-</span><span id="34" class="l"><a class="l" href="#34">34: </a><span class="php-keyword1">class</span> <a id="AuthHelper" href="#AuthHelper">AuthHelper</a> <span class="php-keyword1">extends</span> AppHelper {
-</span><span id="35" class="l"><a class="l" href="#35">35: </a>    <span class="php-comment">/**
-</span></span><span id="36" class="l"><a class="l" href="#36">36: </a><span class="php-comment">     * Method that is called automatically when the method doesn't exist.
-</span></span><span id="37" class="l"><a class="l" href="#37">37: </a><span class="php-comment">     * @param string $method Method to invoke
-</span></span><span id="38" class="l"><a class="l" href="#38">38: </a><span class="php-comment">     * @param array $params Array of params for the method
-</span></span><span id="39" class="l"><a class="l" href="#39">39: </a><span class="php-comment">     * @return type
-</span></span><span id="40" class="l"><a class="l" href="#40">40: </a><span class="php-comment">     */</span>
-</span><span id="41" class="l"><a class="l" href="#41">41: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="___call" href="#___call">__call</a>(<span class="php-var">$method</span>, <span class="php-var">$params</span>) {
-</span><span id="42" class="l"><a class="l" href="#42">42: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">call_user_func_array</span>(<span class="php-keyword1">array</span>(<span class="php-quote">'MeAuthComponent'</span>, <span class="php-var">$method</span>), <span class="php-var">$params</span>);
-</span><span id="43" class="l"><a class="l" href="#43">43: </a>    }
-</span><span id="44" class="l"><a class="l" href="#44">44: </a></span>}</code></pre>
+</span><span id="27" class="l"><a class="l" href="#27">27: </a><span class="php-comment">/**
+</span></span><span id="28" class="l"><a class="l" href="#28">28: </a><span class="php-comment"> * Widget Helper.
+</span></span><span id="29" class="l"><a class="l" href="#29">29: </a><span class="php-comment"> * 
+</span></span><span id="30" class="l"><a class="l" href="#30">30: </a><span class="php-comment"> * This helper allows you to use widgets.
+</span></span><span id="31" class="l"><a class="l" href="#31">31: </a><span class="php-comment"> */</span>
+</span><span id="32" class="l"><a class="l" href="#32">32: </a><span class="php-keyword1">class</span> <a id="WidgetHelper" href="#WidgetHelper">WidgetHelper</a> <span class="php-keyword1">extends</span> AppHelper {
+</span><span id="33" class="l"><a class="l" href="#33">33: </a>    <span class="php-comment">/**
+</span></span><span id="34" class="l"><a class="l" href="#34">34: </a><span class="php-comment">     * Render a widget.
+</span></span><span id="35" class="l"><a class="l" href="#35">35: </a><span class="php-comment">     * @param string $widget Widget name
+</span></span><span id="36" class="l"><a class="l" href="#36">36: </a><span class="php-comment">     * @return string Html, element
+</span></span><span id="37" class="l"><a class="l" href="#37">37: </a><span class="php-comment">     */</span>
+</span><span id="38" class="l"><a class="l" href="#38">38: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_render" href="#_render">render</a>(<span class="php-var">$widget</span>) {
+</span><span id="39" class="l"><a class="l" href="#39">39: </a>        <span class="php-keyword1">list</span>(<span class="php-var">$plugin</span>, <span class="php-var">$name</span>) = pluginSplit(<span class="php-var">$widget</span>);
+</span><span id="40" class="l"><a class="l" href="#40">40: </a>            
+</span><span id="41" class="l"><a class="l" href="#41">41: </a>        <span class="php-var">$widget</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$plugin</span>) ? <span class="php-keyword2">sprintf</span>(<span class="php-quote">'widgets/%s'</span>, <span class="php-var">$name</span>) : <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.widgets/%s'</span>, <span class="php-var">$plugin</span>, <span class="php-var">$name</span>);
+</span><span id="42" class="l"><a class="l" href="#42">42: </a>            
+</span><span id="43" class="l"><a class="l" href="#43">43: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;_View-&gt;element(<span class="php-var">$widget</span>);
+</span><span id="44" class="l"><a class="l" href="#44">44: </a>    }
+</span><span id="45" class="l"><a class="l" href="#45">45: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
