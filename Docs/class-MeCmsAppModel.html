@@ -7,7 +7,7 @@
 	<title>Class MeCmsAppModel | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?200599138"></script>
+	<script type="text/javascript" src="elementlist.js?289363024"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -159,7 +159,7 @@ MeToolsAppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-MeCmsAppModel.html#30-87" title="Go to source code">MeCmsAppModel.php</a><br>
+		<b>Located at</b> <a href="source-class-MeCmsAppModel.html#29-102" title="Go to source code">MeCmsAppModel.php</a><br>
 	</div>
 
 
@@ -177,7 +177,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__findActive">#</a>
-		<code><a href="source-class-MeCmsAppModel.html#40-63" title="Go to source code">_findActive</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-MeCmsAppModel.html#45-68" title="Go to source code">_findActive</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -223,7 +223,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#__findRandom">#</a>
-		<code><a href="source-class-MeCmsAppModel.html#65-86" title="Go to source code">_findRandom</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-MeCmsAppModel.html#70-91" title="Go to source code">_findRandom</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -258,6 +258,50 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="isOwnedBy" id="_isOwnedBy">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isOwnedBy">#</a>
+		<code><a href="source-class-MeCmsAppModel.html#93-101" title="Go to source code">isOwnedBy</a>( <span>integer <var>$id</var></span>, <span>integer <var>$user_id</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Checks whether an object belongs to a user.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Checks whether an object belongs to a user.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd><code>integer</code><br>$id Object id</dd>
+					<dt><var>$user_id</var></dt>
+					<dd><code>integer</code><br>$user_id User id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if it belongs to the user, otherwise FALSE<br>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	</table>
 
 
@@ -280,7 +324,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsAppModel.html#34-38" title="Go to source code"><var>$findMethods</var></a>
+				<a href="source-class-MeCmsAppModel.html#33-37" title="Go to source code"><var>$findMethods</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(<span class="php-quote">'active'</span> =&gt; <span class="php-keyword1">TRUE</span>, <span class="php-quote">'random'</span> =&gt;  <span class="php-keyword1">TRUE</span>)</code></td>
 		<td class="description"><div>
@@ -295,6 +339,33 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 			<div class="description detailed hidden">
 				
 <p>Find methods</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="validationDomain" id="$validationDomain">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppModel.html#39-43" title="Go to source code"><var>$validationDomain</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">'validation_me_cms'</span></code></td>
+		<td class="description"><div>
+			<a href="#$validationDomain" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Validation domain</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Validation domain</p>
 
 
 			</div>

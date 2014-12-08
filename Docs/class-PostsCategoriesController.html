@@ -7,7 +7,7 @@
 	<title>Class PostsCategoriesController | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?200599138"></script>
+	<script type="text/javascript" src="elementlist.js?289363024"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -154,13 +154,62 @@ AppController
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-PostsCategoriesController.html#29-188" title="Go to source code">PostsCategoriesController.php</a><br>
+		<b>Located at</b> <a href="source-class-PostsCategoriesController.html#29-196" title="Go to source code">PostsCategoriesController.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-PostsCategoriesController.html#33-42" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Check if the provided user is authorized for the request.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code>array</code><br>$user The user to check the authorization of. If empty the user in the session
+will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>TRUE if $user is authorized, otherwise FALSE<br>
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeAuthComponenet::isManager()<br>
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="admin_index" id="_admin_index">
 
 		<td class="attributes"><code>
@@ -172,17 +221,17 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-PostsCategoriesController.html#33-55" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-PostsCategoriesController.html#44-63" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			
-<p>List posts categories</p>
+<p>List categories</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>List posts categories</p>
+<p>List categories</p>
 
 
 
@@ -205,17 +254,17 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-PostsCategoriesController.html#57-75" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-PostsCategoriesController.html#65-83" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			
-<p>Add posts category</p>
+<p>Add category</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Add posts category</p>
+<p>Add category</p>
 
 
 
@@ -238,24 +287,24 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-PostsCategoriesController.html#77-104" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsCategoriesController.html#85-112" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
-<p>Edit posts category</p>
+<p>Edit category</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Edit posts category</p>
+<p>Edit category</p>
 
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$id</var></dt>
-					<dd><code>string</code><br>$id Posts category id</dd>
+					<dd><code>string</code><br>$id Category id</dd>
 				</dl></div>
 
 
@@ -280,24 +329,24 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-PostsCategoriesController.html#106-129" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsCategoriesController.html#114-137" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
-<p>Delete posts category</p>
+<p>Delete category</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Delete posts category</p>
+<p>Delete category</p>
 
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$id</var></dt>
-					<dd><code>string</code><br>$id Posts category id</dd>
+					<dd><code>string</code><br>$id Category id</dd>
 				</dl></div>
 
 
@@ -322,7 +371,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_request_list">#</a>
-		<code><a href="source-class-PostsCategoriesController.html#131-170" title="Go to source code">request_list</a>( )</code>
+		<code><a href="source-class-PostsCategoriesController.html#139-178" title="Go to source code">request_list</a>( )</code>
 
 		<div class="description short">
 			
@@ -365,17 +414,17 @@ method works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-PostsCategoriesController.html#172-187" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-PostsCategoriesController.html#180-195" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			
-<p>List posts categories</p>
+<p>List categories</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>List posts categories</p>
+<p>List categories</p>
 
 
 
@@ -396,8 +445,7 @@ method works only with <code>requestAction()</code>.</p>
 			<a href="class-MeCmsAppController.html#__loadMenus">_loadMenus()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
-			<a href="class-MeCmsAppController.html#_isAdminRequest">isAdminRequest()</a>, 
-			<a href="class-MeCmsAppController.html#_isAuthorized">isAuthorized()</a>
+			<a href="class-MeCmsAppController.html#_isAdminRequest">isAdminRequest()</a>
 		</code></td>
 	</tr>
 	</table>

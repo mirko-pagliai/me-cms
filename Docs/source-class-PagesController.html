@@ -8,7 +8,7 @@
 	<title>File PagesController.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?200599138"></script>
+	<script type="text/javascript" src="elementlist.js?289363024"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -210,7 +210,7 @@
 </span></span><span id="103" class="l"><a class="l" href="#103">103: </a><span class="php-comment">     */</span>
 </span><span id="104" class="l"><a class="l" href="#104">104: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_admin_edit" href="#_admin_edit">admin_edit</a>(<span class="php-var">$id</span> = <span class="php-keyword1">NULL</span>) {
 </span><span id="105" class="l"><a class="l" href="#105">105: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Page-&gt;exists(<span class="php-var">$id</span>))
-</span><span id="106" class="l"><a class="l" href="#106">106: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid page'</span>));
+</span><span id="106" class="l"><a class="l" href="#106">106: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid object'</span>));
 </span><span id="107" class="l"><a class="l" href="#107">107: </a>            
 </span><span id="108" class="l"><a class="l" href="#108">108: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'post'</span>) || <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'put'</span>)) {
 </span><span id="109" class="l"><a class="l" href="#109">109: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Page-&gt;save(<span class="php-var">$this</span>-&gt;request-&gt;data)) {
@@ -237,7 +237,7 @@
 </span><span id="130" class="l"><a class="l" href="#130">130: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_admin_delete" href="#_admin_delete">admin_delete</a>(<span class="php-var">$id</span> = <span class="php-keyword1">NULL</span>) {
 </span><span id="131" class="l"><a class="l" href="#131">131: </a>        <span class="php-var">$this</span>-&gt;Page-&gt;id = <span class="php-var">$id</span>;
 </span><span id="132" class="l"><a class="l" href="#132">132: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Page-&gt;exists())
-</span><span id="133" class="l"><a class="l" href="#133">133: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid page'</span>));
+</span><span id="133" class="l"><a class="l" href="#133">133: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid object'</span>));
 </span><span id="134" class="l"><a class="l" href="#134">134: </a>            
 </span><span id="135" class="l"><a class="l" href="#135">135: </a>        <span class="php-var">$this</span>-&gt;request-&gt;onlyAllow(<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>);
 </span><span id="136" class="l"><a class="l" href="#136">136: </a>        
@@ -325,7 +325,7 @@
 </span><span id="218" class="l"><a class="l" href="#218">218: </a>            ));
 </span><span id="219" class="l"><a class="l" href="#219">219: </a>            
 </span><span id="220" class="l"><a class="l" href="#220">220: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$page</span>))
-</span><span id="221" class="l"><a class="l" href="#221">221: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid page'</span>));
+</span><span id="221" class="l"><a class="l" href="#221">221: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid object'</span>));
 </span><span id="222" class="l"><a class="l" href="#222">222: </a>            
 </span><span id="223" class="l"><a class="l" href="#223">223: </a>            Cache::write(<span class="php-var">$cache</span>, <span class="php-var">$page</span>, <span class="php-quote">'pages'</span>);
 </span><span id="224" class="l"><a class="l" href="#224">224: </a>        }
