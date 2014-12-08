@@ -36,7 +36,7 @@
 			else
 				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['title']));
 
-			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
+			echo $this->Html->viewport();
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('/MeCms/assets/backend.min.css', array(
