@@ -59,7 +59,7 @@ class PostsCategoriesController extends MeCmsAppController {
 		}, $treeList);
 		
 		$this->set(array(
-			'postsCategories'	=> $categories,
+			'categories'		=> $categories,
 			'title_for_layout'	=> __d('me_cms', 'Posts categories'))
 		);
 	}

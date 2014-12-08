@@ -36,7 +36,7 @@
 			<th><?php echo __d('me_cms', 'Parent'); ?></th>
 			<th class="min-width text-center"><?php echo __d('me_cms', 'Posts'); ?></th>
 		</tr>
-		<?php foreach($postsCategories as $category): ?>
+		<?php foreach($categories as $category): ?>
 			<tr>
 				<td>
 					<?php
