@@ -38,6 +38,12 @@ class MeCmsAppModel extends MeToolsAppModel {
     public $findMethods = array('active' => TRUE, 'random' =>  TRUE);
 	
 	/**
+	 * Validation domain
+	 * @var string
+	 */
+    public $validationDomain = 'validation_me_cms';
+	
+	/**
 	 * "Active" find method. It finds for active records.
 	 * @param string $state Either "before" or "after"
 	 * @param array $query
