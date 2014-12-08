@@ -85,7 +85,7 @@ class UsersController extends MeCmsAppController {
 	 */
 	public function admin_view($id = NULL) {
 		if(!$this->User->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid user'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		$user = $this->User->find('first', array(
 			'conditions'	=> array('User.id' => $id),
@@ -124,7 +124,7 @@ class UsersController extends MeCmsAppController {
 	public function admin_edit($id = NULL) {
 		//TO-DO: verificare non si stia modificando utente con ID 1
 		if(!$this->User->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid user'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			//This prevents a blank password is saved
@@ -159,7 +159,7 @@ class UsersController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->User->id = $id;
 		if(!$this->User->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid user'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 				

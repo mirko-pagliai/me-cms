@@ -84,7 +84,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->PhotosAlbum->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid album'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->PhotosAlbum->save($this->request->data)) {
@@ -111,7 +111,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->PhotosAlbum->id = $id;
 		if(!$this->PhotosAlbum->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid album'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -175,7 +175,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 			));
 
 			if(empty($album))
-				throw new NotFoundException(__d('me_cms', 'Invalid album'));
+				throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
             Cache::write($cache, $album, 'photos');
 		}

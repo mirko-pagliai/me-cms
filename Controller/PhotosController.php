@@ -53,7 +53,7 @@ class PhotosController extends MeCmsAppController {
 	 */
 	public function admin_index($albumId = NULL) {
 		if(!$this->Photo->Album->exists($albumId))
-			throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		$this->paginate = array(
 			'conditions'	=> array('album_id' => $albumId),
@@ -130,7 +130,7 @@ class PhotosController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Photo->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid photo'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		//Gets the photo
 		$photo = $this->Photo->find('first', array(
@@ -163,7 +163,7 @@ class PhotosController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Photo->id = $id;
 		if(!$this->Photo->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid photo'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -207,7 +207,7 @@ class PhotosController extends MeCmsAppController {
 		//If the data are not available from the cache
         if(empty($photo)) {
 			if(!$this->Photo->exists($id))
-				throw new NotFoundException(__d('me_cms', 'Invalid photo'));
+				throw new NotFoundException(__d('me_cms', 'Invalid object'));
 
 			$photo = $this->Photo->find('first', array(
 				'conditions'	=> array('id' => $id),

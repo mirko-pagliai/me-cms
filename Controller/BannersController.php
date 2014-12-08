@@ -112,7 +112,7 @@ class BannersController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Banner->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid banner'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Banner->save($this->request->data)) {
@@ -142,7 +142,7 @@ class BannersController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Banner->id = $id;
 		if(!$this->Banner->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid banner'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -162,14 +162,14 @@ class BannersController extends MeCmsAppController {
 	public function open($id = NULL) {
 		$this->Banner->id = $id;
 		if(!$this->Banner->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid banner'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		//Gets the banner target
 		$target = $this->Banner->field('target');
 		
 		//Checks for target
 		if(empty($target))
-			throw new NotFoundException(__d('me_cms', 'Invalid banner target'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		//Increases the click count
 		$this->Banner->updateAll(array('click_count' => 'click_count+1'), array('Banner.id' => $id));

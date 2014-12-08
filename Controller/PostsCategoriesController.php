@@ -89,7 +89,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->PostsCategory->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid category'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->PostsCategory->save($this->request->data)) {
@@ -119,7 +119,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->PostsCategory->id = $id;
 		if(!$this->PostsCategory->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid category'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		

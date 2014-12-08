@@ -103,7 +103,7 @@ class PagesController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Page->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid page'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Page->save($this->request->data)) {
@@ -130,7 +130,7 @@ class PagesController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Page->id = $id;
 		if(!$this->Page->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid page'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -218,7 +218,7 @@ class PagesController extends MeCmsAppController {
 			));
 			
 			if(empty($page))
-				throw new NotFoundException(__d('me_cms', 'Invalid page'));
+				throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
             Cache::write($cache, $page, 'pages');
         }

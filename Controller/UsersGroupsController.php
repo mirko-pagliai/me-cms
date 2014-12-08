@@ -81,7 +81,7 @@ class UsersGroupsController extends MeCmsAppController {
 	public function admin_edit($id = NULL) {
 		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
 		if(!$this->UsersGroup->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid group'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->UsersGroup->save($this->request->data)) {
@@ -109,7 +109,7 @@ class UsersGroupsController extends MeCmsAppController {
 		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
 		$this->UsersGroup->id = $id;
 		if(!$this->UsersGroup->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid group'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 				

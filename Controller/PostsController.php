@@ -119,7 +119,7 @@ class PostsController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->Post->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid post'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 					
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Only admins and managers can edit posts on behalf of other users
@@ -154,7 +154,7 @@ class PostsController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->Post->id = $id;
 		if(!$this->Post->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid post'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -312,7 +312,7 @@ class PostsController extends MeCmsAppController {
 			));
 
 			if(empty($post))
-				throw new NotFoundException(__d('me_cms', 'Invalid post'));
+				throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
             Cache::write($cache, $post, 'posts');			
 		}

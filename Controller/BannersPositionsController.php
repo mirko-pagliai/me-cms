@@ -80,7 +80,7 @@ class BannersPositionsController extends MeCmsAppController {
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->BannersPosition->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid position'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->BannersPosition->save($this->request->data)) {
@@ -107,7 +107,7 @@ class BannersPositionsController extends MeCmsAppController {
 	public function admin_delete($id = NULL) {
 		$this->BannersPosition->id = $id;
 		if(!$this->BannersPosition->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid position'));
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
