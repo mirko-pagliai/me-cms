@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2014-12-07 20:34+0100\n"
-"PO-Revision-Date: 2014-12-08 16:55+0100\n"
-"Last-Translator: Mirko Pagliai\n"
+"POT-Creation-Date: 2014-12-08 18:05+0100\n"
+"PO-Revision-Date: 2014-12-08 18:07+0100\n"
+"Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,9 +44,17 @@ msgstr "Il banner non è stato salvato. Prova ancora"
 msgid "Add banner"
 msgstr "Aggiungi banner"
 
-#: Controller/BannersController.php:115;145;165
-msgid "Invalid banner"
-msgstr "Banner non valido"
+#: Controller/BannersController.php:115;145;165;172
+#: Controller/BannersPositionsController.php:83;110
+#: Controller/PagesController.php:106;133;221
+#: Controller/PhotosAlbumsController.php:87;114;178
+#: Controller/PhotosController.php:56;133;166;210
+#: Controller/PostsCategoriesController.php:92;122
+#: Controller/PostsController.php:122;157;315
+#: Controller/UsersController.php:88;127;162
+#: Controller/UsersGroupsController.php:84;112
+msgid "Invalid object"
+msgstr "Oggetto non valido"
 
 #: Controller/BannersController.php:119
 msgid "The banner has been edited"
@@ -69,10 +77,6 @@ msgstr "Il banner è stato eliminato"
 msgid "The banner was not deleted"
 msgstr "Il banner non è stato eliminato"
 
-#: Controller/BannersController.php:172
-msgid "Invalid banner target"
-msgstr "Target del banner non valido"
-
 #: Controller/BannersPositionsController.php:55
 #: View/BannersPositions/admin_index.ctp:30
 msgid "Banners positions"
@@ -90,10 +94,6 @@ msgstr "La posizione dei banner non può essere creata. Prova ancora"
 #: View/BannersPositions/admin_add.ctp:29;37
 msgid "Add banners position"
 msgstr "Aggiungi posizione dei banner"
-
-#: Controller/BannersPositionsController.php:83;110
-msgid "Invalid banners position"
-msgstr "Posizione dei banner non valida"
 
 #: Controller/BannersPositionsController.php:87
 msgid "The banners position has been edited"
@@ -160,10 +160,6 @@ msgstr "La pagina non può essere creata. Prova ancora"
 msgid "Add page"
 msgstr "Aggiungi pagina"
 
-#: Controller/PagesController.php:106;133;221
-msgid "Invalid page"
-msgstr "Pagina non valida"
-
 #: Controller/PagesController.php:110
 msgid "The page has been edited"
 msgstr "La pagina è stata modifica"
@@ -203,11 +199,6 @@ msgstr "L'album non può essere creato. Prova ancora"
 msgid "Add photos album"
 msgstr "Aggiungi album"
 
-#: Controller/PhotosAlbumsController.php:87;114;178
-#: Controller/PhotosController.php:56
-msgid "Invalid photos album"
-msgstr "Album non valido"
-
 #: Controller/PhotosAlbumsController.php:91
 msgid "The photos album has been edited"
 msgstr "L'album è stato modificato"
@@ -239,7 +230,7 @@ msgstr ""
 
 #: Controller/PhotosController.php:66
 #: View/Elements/frontend/topbar.ctp:47
-#: View/Helper/MenuHelper.php:146
+#: View/Helper/MenuHelper.php:118
 #: View/Photos/admin_index.ctp:29
 #: View/PhotosAlbums/admin_index.ctp:37
 #: View/PhotosAlbums/index.ctp:27
@@ -264,14 +255,10 @@ msgid "The photos can not be saved. Please, try again"
 msgstr "La foto non è stata salvata. Prova ancora"
 
 #: Controller/PhotosController.php:122
-#: View/Helper/MenuHelper.php:140
+#: View/Helper/MenuHelper.php:112
 #: View/Photos/admin_add.ctp:29;78
 msgid "Add photos"
 msgstr "Aggiungi foto"
-
-#: Controller/PhotosController.php:133;166;210
-msgid "Invalid photo"
-msgstr "Foto non valida"
 
 #: Controller/PhotosController.php:143
 msgid "The photo has been edited"
@@ -298,51 +285,47 @@ msgstr "La foto non è stata cancellata"
 msgid "Photo"
 msgstr "Foto"
 
-#: Controller/PostsCategoriesController.php:53;186
+#: Controller/PostsCategoriesController.php:61;194
 #: View/PostsCategories/admin_index.ctp:30
 #: View/PostsCategories/index.ctp:28
 msgid "Posts categories"
 msgstr "Categorie"
 
-#: Controller/PostsCategoriesController.php:64
+#: Controller/PostsCategoriesController.php:72
 msgid "The posts category has been created"
 msgstr "La categoria è stata creata"
 
-#: Controller/PostsCategoriesController.php:68
+#: Controller/PostsCategoriesController.php:76
 msgid "The posts category could not be created. Please, try again"
 msgstr "La categoria non può essere creata. Prova ancora"
 
-#: Controller/PostsCategoriesController.php:73
+#: Controller/PostsCategoriesController.php:81
 #: View/PostsCategories/admin_add.ctp:32;55
 msgid "Add posts category"
 msgstr "Aggiungi categoria"
 
-#: Controller/PostsCategoriesController.php:84;114
-msgid "Invalid posts category"
-msgstr "Categoria non valida"
-
-#: Controller/PostsCategoriesController.php:88
+#: Controller/PostsCategoriesController.php:96
 msgid "The posts category has been edited"
 msgstr "La categoria è stata modificata"
 
-#: Controller/PostsCategoriesController.php:92
+#: Controller/PostsCategoriesController.php:100
 msgid "The posts category could not be edited. Please, try again"
 msgstr "La categoria non può essere modificata. Prova ancora"
 
-#: Controller/PostsCategoriesController.php:102
+#: Controller/PostsCategoriesController.php:110
 #: View/PostsCategories/admin_edit.ctp:32;56
 msgid "Edit posts category"
 msgstr "Modifica categoria"
 
-#: Controller/PostsCategoriesController.php:121
+#: Controller/PostsCategoriesController.php:129
 msgid "The posts category has been deleted"
 msgstr "La categoria è stata cancellata"
 
-#: Controller/PostsCategoriesController.php:123
+#: Controller/PostsCategoriesController.php:131
 msgid "The posts category was not deleted"
 msgstr "La categoria non è stata cancellata"
 
-#: Controller/PostsCategoriesController.php:126
+#: Controller/PostsCategoriesController.php:134
 msgid ""
 "Before you delete this category, you have to delete its posts or assign them "
 "to another category"
@@ -350,8 +333,8 @@ msgstr ""
 "Prima di cancellare questa categoria, devi cancellare i suoi articoli o "
 "assegnarli a un'altra categoria"
 
-#: Controller/PostsController.php:74;290
-#: View/Helper/MenuHelper.php:125
+#: Controller/PostsController.php:75;291
+#: View/Helper/MenuHelper.php:146
 #: View/Layouts/frontend.ctp:41
 #: View/Posts/admin_index.ctp:30
 #: View/PostsCategories/admin_index.ctp:37
@@ -360,54 +343,50 @@ msgstr ""
 msgid "Posts"
 msgstr "Articoli"
 
-#: Controller/PostsController.php:88
+#: Controller/PostsController.php:89
 msgid "Before you can add a post, you have to create at least a category"
 msgstr "Prima di aggiungere un articolo, devi creare almeno una categoria"
 
-#: Controller/PostsController.php:99
+#: Controller/PostsController.php:100
 msgid "The post has been created"
 msgstr "L'articolo è stato creato"
 
-#: Controller/PostsController.php:103
+#: Controller/PostsController.php:104
 msgid "The post could not be created. Please, try again"
 msgstr "L'articolo non può essere creato. Prova ancora"
 
-#: Controller/PostsController.php:108
-#: View/Helper/MenuHelper.php:114
+#: Controller/PostsController.php:109
+#: View/Helper/MenuHelper.php:135
 #: View/Posts/admin_add.ctp:34;93
 msgid "Add post"
 msgstr "Aggiungi articolo"
 
-#: Controller/PostsController.php:121;156;314
-msgid "Invalid post"
-msgstr "Articolo non valido"
-
-#: Controller/PostsController.php:129
+#: Controller/PostsController.php:130
 msgid "The post has been edited"
 msgstr "L'articolo è stato modificato"
 
-#: Controller/PostsController.php:133
+#: Controller/PostsController.php:134
 msgid "The post could not be edited. Please, try again"
 msgstr "L'articolo non può essere modificato. Prova ancora"
 
-#: Controller/PostsController.php:143
+#: Controller/PostsController.php:144
 #: View/Posts/admin_edit.ctp:34;91
 msgid "Edit post"
 msgstr "Modifica articolo"
 
-#: Controller/PostsController.php:161
+#: Controller/PostsController.php:162
 msgid "The post has been deleted"
 msgstr "L'articolo è stato cancellato"
 
-#: Controller/PostsController.php:163
+#: Controller/PostsController.php:164
 msgid "The post was not deleted"
 msgstr "L'articolo non è stato cancellato"
 
-#: Controller/PostsController.php:339
+#: Controller/PostsController.php:340
 msgid "You have to search at least a word of %d characters"
 msgstr "Devi cercare un parola di almeno %d caratteri"
 
-#: Controller/PostsController.php:343
+#: Controller/PostsController.php:344
 #: View/Elements/widgets/search.ctp:30
 #: View/Posts/search.ctp:28
 msgid "Search posts"
@@ -450,61 +429,57 @@ msgstr "Le miniature sono state cancellate"
 msgid "Thumbnails have not been deleted"
 msgstr "Le miniature non sono state cancellate"
 
-#: Controller/UsersController.php:76
+#: Controller/UsersController.php:77
 #: View/Helper/MenuHelper.php:179
 #: View/Users/admin_index.ctp:30
 #: View/UsersGroups/admin_index.ctp:37
 msgid "Users"
 msgstr "Utenti"
 
-#: Controller/UsersController.php:87;126;161
-msgid "Invalid user"
-msgstr "Utente non valido"
-
-#: Controller/UsersController.php:95
+#: Controller/UsersController.php:96
 msgid "View user"
 msgstr "Vedi utente"
 
-#: Controller/UsersController.php:105
+#: Controller/UsersController.php:106
 msgid "The user has been created"
 msgstr "L'utente è stato creato"
 
-#: Controller/UsersController.php:109
+#: Controller/UsersController.php:110
 msgid "The user could not be created. Please, try again"
 msgstr "L'utente non può essere creato. Prova ancora"
 
-#: Controller/UsersController.php:114
+#: Controller/UsersController.php:115
 #: View/Helper/MenuHelper.php:168
 #: View/Users/admin_add.ctp:29;61
 msgid "Add user"
 msgstr "Aggiungi utente"
 
-#: Controller/UsersController.php:134
+#: Controller/UsersController.php:135
 msgid "The user has been edited"
 msgstr "L'utente è stato modificato"
 
-#: Controller/UsersController.php:138
+#: Controller/UsersController.php:139
 msgid "The user could not be edited. Please, try again"
 msgstr "L'utente non può essere modificato. Prova ancora"
 
-#: Controller/UsersController.php:149
+#: Controller/UsersController.php:150
 #: View/Users/admin_edit.ctp:29;54
 msgid "Edit user"
 msgstr "Modifica utente"
 
-#: Controller/UsersController.php:168
+#: Controller/UsersController.php:169
 msgid "The user has been deleted"
 msgstr "L'utente è stato cancellato"
 
-#: Controller/UsersController.php:170
+#: Controller/UsersController.php:171
 msgid "The user was not deleted"
 msgstr "L'utente non è stato cancellato"
 
-#: Controller/UsersController.php:173
+#: Controller/UsersController.php:174
 msgid "You cannot delete this user, because he's the admin founder"
 msgstr "Non puoi cancellare questo utente, perché è l'amministratore fondatore"
 
-#: Controller/UsersController.php:175
+#: Controller/UsersController.php:176
 msgid ""
 "Before you delete this user, you have to delete his posts or assign them to "
 "another user"
@@ -512,42 +487,42 @@ msgstr ""
 "Prima di cancellare questo utente, devi cancellare i suoi articoli o "
 "assegnarli a un altro utente"
 
-#: Controller/UsersController.php:189
+#: Controller/UsersController.php:190
 msgid "The password has been edited"
 msgstr "La password è stata modificata"
 
-#: Controller/UsersController.php:193
+#: Controller/UsersController.php:194
 msgid "The password has not been edited. Please, try again"
 msgstr "La password non è stata modificata. Prova ancora"
 
-#: Controller/UsersController.php:196
+#: Controller/UsersController.php:197
 #: View/Elements/backend/topbar.ctp:50
 #: View/Users/admin_change_password.ctp:27;49
 msgid "Change password"
 msgstr "Cambia password"
 
-#: Controller/UsersController.php:208
+#: Controller/UsersController.php:209
 msgid "You are already logged in"
 msgstr "Sei già loggato"
 
-#: Controller/UsersController.php:222
+#: Controller/UsersController.php:223
 msgid "Your account has been banned by an admin"
 msgstr "Il tuo account è stato bannato da un amministratore"
 
-#: Controller/UsersController.php:227
+#: Controller/UsersController.php:228
 msgid "Your account has not been activated yet"
 msgstr "Il tuo account non è stato ancora attivato"
 
-#: Controller/UsersController.php:235
+#: Controller/UsersController.php:236
 msgid "Invalid username or password"
 msgstr "Username o password non validi"
 
-#: Controller/UsersController.php:238
+#: Controller/UsersController.php:239
 #: View/Users/login.ctp:43
 msgid "Login"
 msgstr "Login"
 
-#: Controller/UsersController.php:248
+#: Controller/UsersController.php:249
 msgid "You are successfully logged out"
 msgstr "Ti sei disconnesso correttamente"
 
@@ -568,10 +543,6 @@ msgstr "Il gruppo utenti non può essere creato. Prova ancora"
 #: View/UsersGroups/admin_add.ctp:29;41
 msgid "Add users group"
 msgstr "Aggiungi gruppo utenti"
-
-#: Controller/UsersGroupsController.php:84;112
-msgid "Invalid users group"
-msgstr "Gruppo utenti non valido"
 
 #: Controller/UsersGroupsController.php:88
 msgid "The users group has been edited"
@@ -808,24 +779,24 @@ msgid "List static pages"
 msgstr "Elenca pagine statiche"
 
 #: View/Helper/MenuHelper.php:113
-msgid "List posts"
-msgstr "Elenca articoli"
-
-#: View/Helper/MenuHelper.php:120
-msgid "List categories"
-msgstr "Elenca categorie"
-
-#: View/Helper/MenuHelper.php:121
-msgid "Add category"
-msgstr "Aggiungi categoria"
-
-#: View/Helper/MenuHelper.php:141
 msgid "List albums"
 msgstr "Elenca album"
 
-#: View/Helper/MenuHelper.php:142
+#: View/Helper/MenuHelper.php:114
 msgid "Add album"
 msgstr "Aggiungi album"
+
+#: View/Helper/MenuHelper.php:134
+msgid "List posts"
+msgstr "Elenca articoli"
+
+#: View/Helper/MenuHelper.php:141
+msgid "List categories"
+msgstr "Elenca categorie"
+
+#: View/Helper/MenuHelper.php:142
+msgid "Add category"
+msgstr "Aggiungi categoria"
 
 #: View/Helper/MenuHelper.php:167
 msgid "List users"
