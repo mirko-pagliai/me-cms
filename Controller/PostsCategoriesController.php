@@ -39,7 +39,8 @@ class PostsCategoriesController extends MeCmsAppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can access this controller
 		return $this->Auth->isManager();
-	}	
+	}
+	
 	/**
 	 * List categories
 	 */
