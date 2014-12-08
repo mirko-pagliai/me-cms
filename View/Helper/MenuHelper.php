@@ -100,6 +100,27 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
+	 * Internal function to generate the menu for "photos" actions.
+	 * @param string $type Type of menu
+	 * @return mixed Menu
+	 * @uses link()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
+	 */
+	protected function _photos($type) {
+		$menu = array(
+			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add', 'plugin' => 'me_cms'))
+		);
+		
+		if($type == 'dropdown')
+			return $this->Dropdown->link(__d('me_cms', 'Photos'), array('icon' => 'image')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		
+		return $menu;
+	}
+	
+	/**
 	 * Internal function to generate the menu for "posts" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
@@ -128,35 +149,14 @@ class MenuHelper extends MeHtmlHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "photos" actions.
-	 * @param string $type Type of menu
-	 * @return mixed Menu
-	 * @uses link()
-	 * @uses DropdownHelper::dropdown()
-	 * @uses DropdownHelper::link()
-	 */
-	protected function _photos($type) {
-		$menu = array(
-			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add', 'plugin' => 'me_cms'))
-		);
-		
-		if($type == 'dropdown')
-			return $this->Dropdown->link(__d('me_cms', 'Photos'), array('icon' => 'image')).PHP_EOL.$this->Dropdown->dropdown($menu);
-		
-		return $menu;
-	}
-	
-	/**
 	 * Internal function to generate the menu for "users" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
-	 * @uses DropdownHelper::dropdown()
-	 * @uses DropdownHelper::link()
 	 * @uses AuthHelper::isAdmin()
 	 * @uses AuthHelper::isManager()
+	 * @uses DropdownHelper::dropdown()
+	 * @uses DropdownHelper::link()
 	 */
 	protected function _users($type) {
 		//Only admins and managers can access this controller
@@ -186,9 +186,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
+	 * @uses AuthHelper::isAdmin()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
-	 * @uses AuthHelper::isAdmin()
 	 */
 	protected function _systems($type) {
 		//Only admins can access this controller
