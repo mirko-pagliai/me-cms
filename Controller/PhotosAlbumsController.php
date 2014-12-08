@@ -175,7 +175,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 			));
 
 			if(empty($album))
-				throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+				throw new NotFoundException(__d('me_cms', 'Invalid album'));
 			
             Cache::write($cache, $album, 'photos');
 		}

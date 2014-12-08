@@ -36,11 +36,11 @@
 			<th><?php echo $this->Paginator->sort('label', __d('me_cms', 'Label')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('user_count', __d('me_cms', 'Users')); ?></th>
 		</tr>
-		<?php foreach($usersGroups as $usersGroup): ?>
+		<?php foreach($groups as $group): ?>
 			<tr>
 				<td>
 					<?php
-						$title = $this->Html->link($usersGroup['UsersGroup']['name'], array('action' => 'edit', $id = $usersGroup['UsersGroup']['id']));
+						$title = $this->Html->link($group['UsersGroup']['name'], array('action' => 'edit', $id = $group['UsersGroup']['id']));
 						echo $this->Html->strong($title);
 						
 						echo $this->Html->ul(array(
@@ -49,9 +49,9 @@
 						), array('class' => 'actions'));
 					?>
 				</td>
-				<td><?php echo $usersGroup['UsersGroup']['label']; ?></td>
+				<td><?php echo $group['UsersGroup']['label']; ?></td>
 				<td class="min-width text-center">
-					<?php echo $usersGroup['UsersGroup']['user_count']; ?>
+					<?php echo $group['UsersGroup']['user_count']; ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

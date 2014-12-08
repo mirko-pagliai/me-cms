@@ -42,7 +42,7 @@ class BannersPositionsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List banners positions
+	 * List positions
 	 */
 	public function admin_index() {
 		$this->paginate = array(
@@ -57,7 +57,7 @@ class BannersPositionsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Add banners position
+	 * Add position
 	 */
 	public function admin_add() {
 		if($this->request->is('post')) {
@@ -74,13 +74,13 @@ class BannersPositionsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Edit banners position
-	 * @param string $id Banners position ID
+	 * Edit position
+	 * @param string $id Position ID
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->BannersPosition->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid banners position'));
+			throw new NotFoundException(__d('me_cms', 'Invalid position'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->BannersPosition->save($this->request->data)) {
@@ -100,14 +100,14 @@ class BannersPositionsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Delete banners position
-	 * @param string $id Banners position ID
+	 * Delete position
+	 * @param string $id Position ID
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
 		$this->BannersPosition->id = $id;
 		if(!$this->BannersPosition->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid banners position'));
+			throw new NotFoundException(__d('me_cms', 'Invalid position'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		

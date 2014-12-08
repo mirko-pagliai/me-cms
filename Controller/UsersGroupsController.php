@@ -42,7 +42,7 @@ class UsersGroupsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List users groups
+	 * List groups
 	 */
 	public function admin_index() {
 		$this->paginate = array(
@@ -51,13 +51,13 @@ class UsersGroupsController extends MeCmsAppController {
 		);
 		
 		$this->set(array(
-			'usersGroups'		=> $this->paginate(),
+			'groups'			=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Users groups')
 		));
 	}
 
 	/**
-	 * Add users group
+	 * Add group
 	 */
 	public function admin_add() {
 		if($this->request->is('post')) {
@@ -74,14 +74,14 @@ class UsersGroupsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Edit users group
-	 * @param string $id Users group id
+	 * Edit group
+	 * @param string $id Group id
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
 		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
 		if(!$this->UsersGroup->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid users group'));
+			throw new NotFoundException(__d('me_cms', 'Invalid group'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->UsersGroup->save($this->request->data)) {
@@ -101,15 +101,15 @@ class UsersGroupsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Delete users group
-	 * @param string $id Users group id
+	 * Delete group
+	 * @param string $id Group id
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
 		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
 		$this->UsersGroup->id = $id;
 		if(!$this->UsersGroup->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid users group'));
+			throw new NotFoundException(__d('me_cms', 'Invalid group'));
 			
 		$this->request->onlyAllow('post', 'delete');
 				
