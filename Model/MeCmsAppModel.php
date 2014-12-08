@@ -89,4 +89,14 @@ class MeCmsAppModel extends MeToolsAppModel {
 		
         return $results;
     }
+	
+	/**
+	 * Checks whether an object belongs to a user.
+	 * @param int $id Object id
+	 * @param int $user_id User id
+	 * @return bool TRUE if it belongs to the user, otherwise FALSE
+	 */
+	public function isOwnedBy($id, $user_id) {
+		return $this->field('id', compact('id', 'user_id')) !== FALSE;
+	}
 }
