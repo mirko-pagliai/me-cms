@@ -41,7 +41,7 @@ class PostsCategoriesController extends MeCmsAppController {
 		return $this->Auth->isManager();
 	}	
 	/**
-	 * List posts categories
+	 * List categories
 	 */
 	public function admin_index() {
 		//Gets the categories
@@ -65,7 +65,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	}
 
 	/**
-	 * Add posts category
+	 * Add category
 	 */
 	public function admin_add() {		
 		if($this->request->is('post')) {
@@ -85,13 +85,13 @@ class PostsCategoriesController extends MeCmsAppController {
 	}
 
 	/**
-	 * Edit posts category
-	 * @param string $id Posts category id
+	 * Edit category
+	 * @param string $id Category id
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->PostsCategory->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid posts category'));
+			throw new NotFoundException(__d('me_cms', 'Invalid category'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->PostsCategory->save($this->request->data)) {
@@ -114,14 +114,14 @@ class PostsCategoriesController extends MeCmsAppController {
 	}
 
 	/**
-	 * Delete posts category
-	 * @param string $id Posts category id
+	 * Delete category
+	 * @param string $id Category id
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
 		$this->PostsCategory->id = $id;
 		if(!$this->PostsCategory->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid posts category'));
+			throw new NotFoundException(__d('me_cms', 'Invalid category'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		
@@ -180,7 +180,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List posts categories
+	 * List categories
 	 */
 	public function index() {
 		//Tries to get data from the cache
