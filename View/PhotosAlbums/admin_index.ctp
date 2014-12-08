@@ -37,14 +37,14 @@
 				<?php echo $this->Paginator->sort('photo_count', __d('me_cms', 'Photos')); ?>
 			</th>
 		</tr>
-		<?php foreach($photosAlbums as $photosAlbum): ?>
+		<?php foreach($albums as $album): ?>
 			<tr>
 				<td>
 					<?php
-						$title = $this->Html->link($photosAlbum['PhotosAlbum']['title'], array('controller' => 'photos', $id = $photosAlbum['PhotosAlbum']['id']));
+						$title = $this->Html->link($album['PhotosAlbum']['title'], array('controller' => 'photos', $id = $album['PhotosAlbum']['id']));
 					
-						//If the photos album is not active (not published)
-						if(!$photosAlbum['PhotosAlbum']['active'])
+						//If the album is not active (not published)
+						if(!$album['PhotosAlbum']['active'])
 							$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), array('class' => 'text-warning')));
 						
 						echo $this->Html->strong($title);
@@ -54,16 +54,16 @@
 							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil'))
 						);
 						
-						//Only admins and managers can delete photos albums
+						//Only admins and managers can delete albums
 						if($this->Auth->isManager())
 							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
 
-						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $photosAlbum['PhotosAlbum']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), array('action' => 'view', $album['PhotosAlbum']['slug'], 'admin' => FALSE), array('icon' => 'external-link', 'target' => '_blank'));
 						
 						echo $this->Html->ul($actions, array('class' => 'actions'));
 					?>
 				</td>
-				<td class="min-width text-center"><?php echo $photosAlbum['PhotosAlbum']['photo_count']; ?></td>
+				<td class="min-width text-center"><?php echo $album['PhotosAlbum']['photo_count']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

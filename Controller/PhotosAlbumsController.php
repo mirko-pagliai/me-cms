@@ -38,7 +38,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 * @uses MeAuthComponenet::isManager()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins and managers can delete photos albums
+		//Only admins and managers can delete albums
 		if($this->Auth->isAction('delete'))
 			return $this->Auth->isManager();
 		
@@ -46,7 +46,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List photos albums
+	 * List albums
 	 */
 	public function admin_index() {
 		$this->paginate = array(
@@ -55,13 +55,13 @@ class PhotosAlbumsController extends MeCmsAppController {
 		);
 		
 		$this->set(array(
-			'photosAlbums'		=> $this->paginate(),
+			'albums'			=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Photos albums')
 		));
 	}
 
 	/**
-	 * Add photos album
+	 * Add album
 	 */
 	public function admin_add() {
 		if($this->request->is('post')) {
@@ -78,13 +78,13 @@ class PhotosAlbumsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Edit photos album
-	 * @param string $id Photos album id
+	 * Edit album
+	 * @param string $id Album id
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
 		if(!$this->PhotosAlbum->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+			throw new NotFoundException(__d('me_cms', 'Invalid album'));
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->PhotosAlbum->save($this->request->data)) {
@@ -104,14 +104,14 @@ class PhotosAlbumsController extends MeCmsAppController {
 	}
 
 	/**
-	 * Delete photos album
-	 * @param string $id Photos album id
+	 * Delete album
+	 * @param string $id Album id
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
 		$this->PhotosAlbum->id = $id;
 		if(!$this->PhotosAlbum->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid photos album'));
+			throw new NotFoundException(__d('me_cms', 'Invalid album'));
 			
 		$this->request->onlyAllow('post', 'delete');
 		

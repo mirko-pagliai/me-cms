@@ -51,9 +51,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
+	 * @uses AuthHelper::isAdmin()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
-	 * @uses AuthHelper::isAdmin()
 	 */
 	protected function _banners($type) {
 		//Only admins can access these controllers
@@ -78,9 +78,9 @@ class MenuHelper extends MeHtmlHelper {
 	 * @param string $type Type of menu
 	 * @return mixed Menu
 	 * @uses link()
+	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
-	 * @uses AuthHelper::isManager()
 	 */
 	protected function _pages($type) {
 		$menu = array(
