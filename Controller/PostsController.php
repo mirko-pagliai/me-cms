@@ -42,6 +42,7 @@ class PostsController extends MeCmsAppController {
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
 	 * @uses MeAuthComponenet::isAction()
 	 * @uses MeAuthComponenet::isManager()
+	 * @uses MeAuthComponenet::user()
 	 * @uses Post::isOwnedBy()
 	 */
 	public function isAuthorized($user = NULL) {
