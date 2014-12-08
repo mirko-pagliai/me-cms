@@ -41,30 +41,22 @@
 			echo $this->Html->meta(__d('me_cms', 'Posts'), '/rss', array('type' => 'rss'));
 			echo $this->fetch('meta');
 
-			if(Configure::read('debug'))
-				echo $this->Html->css(array(
-					'/MeTools/css/font-awesome.min',
-					'/MeTools/css/bootstrap.min',
-					'/MeTools/css/default',
-					'/MeTools/css/forms',
-					'/MeCms/css/frontend/layout',
-					'/MeCms/css/frontend/contents',
-					'/MeCms/css/frontend/photos'
-				), array('inline' => TRUE));
-			else
-				echo $this->Html->css('/MeCms/assets/frontend.min', array('inline' => TRUE));
-			
+			echo $this->Layout->css('/MeCms/assets/frontend.min.css', array(
+				'/MeTools/css/font-awesome.min',
+				'/MeTools/css/bootstrap.min',
+				'/MeTools/css/default',
+				'/MeTools/css/forms',
+				'/MeCms/css/frontend/layout',
+				'/MeCms/css/frontend/contents',
+				'/MeCms/css/frontend/photos'
+			));
 			echo $this->fetch('css');
 			
-			if(Configure::read('debug'))
-				echo $this->Html->js(array(
-					'/MeTools/js/jquery.min',
-					'/MeTools/js/bootstrap.min',
-					'/MeTools/js/default'
-				), array('inline' => TRUE));
-			else
-				echo $this->Html->js('/MeCms/assets/frontend.min', array('inline' => TRUE));
-			
+			echo $this->Layout->js('/MeCms/assets/frontend.min.js', array(
+				'/MeTools/js/jquery.min',
+				'/MeTools/js/bootstrap.min',
+				'/MeTools/js/default'
+			));
 			echo $this->fetch('script');
 		?>
 	</head>

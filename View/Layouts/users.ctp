@@ -40,26 +40,18 @@
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->fetch('meta');
 			
-			if(Configure::read('debug'))
-				echo $this->Html->css(array(
-					'/MeTools/css/bootstrap.min',
-					'/MeTools/css/default',
-					'/MeTools/css/forms',
-					'/MeCms/css/users/layout'
-				), array('inline' => TRUE));
-			else
-				echo $this->Html->css('/MeCms/assets/users.min', array('inline' => TRUE));
-			
+			echo $this->Layout->css('/MeCms/assets/users.min.css', array(
+				'/MeTools/css/bootstrap.min',
+				'/MeTools/css/default',
+				'/MeTools/css/forms',
+				'/MeCms/css/users/layout'
+			));
 			echo $this->fetch('css');
 			
-			if(Configure::read('debug'))
-				echo $this->Html->js(array(
-					'/MeTools/js/jquery.min',
-					'/MeTools/js/default'
-				), array('inline' => TRUE));
-			else
-				echo $this->Html->js('/MeCms/assets/users.min', array('inline' => TRUE));
-			
+			echo $this->Layout->js('/MeCms/assets/users.min.js', array(
+				'/MeTools/js/jquery.min',
+				'/MeTools/js/default'
+			));
 			echo $this->fetch('script');
 		?>
 	</head>

@@ -39,30 +39,22 @@
 			echo $this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'));
 			echo $this->fetch('meta');
 			
-			if(Configure::read('debug'))
-				echo $this->Html->css(array(
-					'/MeTools/css/font-awesome.min',
-					'/MeTools/css/bootstrap.min',
-					'/MeTools/css/default',
-					'/MeTools/css/forms',
-					'/MeCms/css/backend/layout',
-					'/MeCms/css/backend/photos'
-				), array('inline' => TRUE));
-			else
-				echo $this->Html->css('/MeCms/assets/backend.min', array('inline' => TRUE));
-			
+			echo $this->Layout->css('/MeCms/assets/backend.min.css', array(
+				'/MeTools/css/font-awesome.min',
+				'/MeTools/css/bootstrap.min',
+				'/MeTools/css/default',
+				'/MeTools/css/forms',
+				'/MeCms/css/backend/layout',
+				'/MeCms/css/backend/photos'
+			));
 			echo $this->fetch('css');
 			
-			if(Configure::read('debug'))
-				echo $this->Html->js(array(
-					'/MeTools/js/jquery.min',
-					'/MeTools/js/bootstrap.min',
-					'/MeTools/js/default',
-					'/MeCms/js/backend/photos'
-				), array('inline' => TRUE));
-			else
-				echo $this->Html->js('/MeCms/assets/backend.min', array('inline' => TRUE));
-			
+			echo $this->Layout->js('/MeCms/assets/backend.min.js', array(
+				'/MeTools/js/jquery.min',
+				'/MeTools/js/bootstrap.min',
+				'/MeTools/js/default',
+				'/MeCms/js/backend/photos'
+			));
 			echo $this->fetch('script');
 		?>
 	</head>
