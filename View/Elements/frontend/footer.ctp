@@ -21,7 +21,7 @@
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Elements
+ * @package		MeCms\View\Elements\frontend
  */
 ?>
 
