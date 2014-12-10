@@ -108,6 +108,31 @@ body {
 }
 
 /* -------------------------------- */
+/*				Footer				*/
+/* -------------------------------- */
+/* Footer */
+#footer {
+    background: #f2f2f2;
+    border-radius: 10px;
+    color: #888;
+	margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Footer, paragraphs */
+#footer p {
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    margin: 0;
+}
+
+/* Footer, links */
+#footer a {
+	color: #666;
+}
+
+/* -------------------------------- */
 /*			Priority badges			*/
 /* -------------------------------- */
 /* All priority badges */
