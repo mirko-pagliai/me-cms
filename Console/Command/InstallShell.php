@@ -138,7 +138,7 @@ class InstallShell extends MeToolsAppShell {
 
 		//Asks the user whether to continue
 		if($this->in('Continue?', array('y', 'n'), 'y') === 'n') {
-			$this->out('Ok, i\'m exiting...');
+			$this->out('Ok, I\'m exiting...');
 			exit;
 		}
 		
