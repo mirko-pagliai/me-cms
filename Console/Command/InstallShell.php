@@ -92,38 +92,33 @@ class InstallShell extends MeToolsAppShell {
 				foreach($errors as $error)
 					$this->out(sprintf('<error>Error:</error> "%s": %s', $field, $error));
 			
-			$this->error('the admin user was not created. Try again');
+			$this->error('the administrator user was not created. Try again');
 		}
 	}
 	
 	/**
-	 * Creates the folders.
+	 * Creates folders.
 	 * @uses _create_folder()
-	 * @uses PhotoManager::getFolder()
-	 * @uses PhotoManager::getTmpPath()
 	 * @uses BannerManager::getFolder()
 	 * @uses BannerManager::getTmpPath()
+	 * @uses PhotoManager::getFolder()
+	 * @uses PhotoManager::getTmpPath()
 	 */
 	private function _install_folders() {
-		//Creates the directory to save banners
-		$this->_create_folder(BannerManager::getFolder());
-		
-		//Creates the directory to save photos
-		$this->_create_folder(PhotoManager::getFolder());
-		
-		//Creates the directory where you can upload banners 
-		$this->_create_folder(BannerManager::getTmpPath());
-		
-		//Creates the directory where you can upload photos 
-		$this->_create_folder(PhotoManager::getTmpPath());
-		
-		//Creates the cache directory
 		$cacheSettings = Cache::settings();
-		$this->_create_folder($cacheSettings['path']);
 		
-		//Creates the thumbnails directory
-		$this->_create_folder(TMP.'thumbs'.DS.'photos');
-		$this->_create_folder(TMP.'thumbs'.DS.'videos');
+		$folders = array(
+			BannerManager::getFolder(),
+			BannerManager::getTmpPath(),
+			PhotoManager::getFolder(),
+			PhotoManager::getTmpPath(),
+			$cacheSettings['path'],
+			TMP.'thumbs'.DS.'photos',
+			TMP.'thumbs'.DS.'videos'
+		);
+		
+		foreach($folders as $folder)
+			$this->_create_folder($folder);
 	}
 	
 	/**
