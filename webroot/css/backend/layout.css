@@ -136,7 +136,11 @@ body {
 /*			Priority badges			*/
 /* -------------------------------- */
 /* All priority badges */
-.priority-verylow, .priority-low, .priority-normal, .priority-high, .priority-veryhigh {
+.priority-verylow,
+.priority-low,
+.priority-normal,
+.priority-high,
+.priority-veryhigh {
 	font-size: 13px;
     padding: 4px 7px;
 }
