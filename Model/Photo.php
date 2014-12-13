@@ -144,6 +144,8 @@ class Photo extends MeCmsAppModel {
 	 * @uses PhotoManager::folderIsWritable()
 	 */
 	public function beforeSave($options = array()) {
+		parent::beforeSave($options);
+		
 		//Checks if the album folder is writable
 		if(!empty($this->data[$this->alias]['album_id']))
 			return PhotoManager::folderIsWritable($this->data[$this->alias]['album_id']);

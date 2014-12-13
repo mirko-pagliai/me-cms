@@ -91,6 +91,19 @@ class MeCmsAppModel extends MeToolsAppModel {
     }
 	
 	/**
+	 * Called before each save operation, after validation. Return a non-true result to halt the save.
+	 * @param array $options Options passed from Model::save()
+	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
+	 */
+	public function beforeSave($options = array()) {		
+		//If the creation datetime isn't set but the field exists, then it is the current datetime
+		if(isset($this->data[$this->alias]['created']) && empty($this->data[$this->alias]['created']))
+			$this->data[$this->alias]['created'] = CakeTime::format(time(), '%Y-%m-%d %H:%M:%S');
+		
+		return TRUE;
+	}
+	
+	/**
 	 * Checks whether an object belongs to a user.
 	 * @param int $id Object id
 	 * @param int $user_id User id

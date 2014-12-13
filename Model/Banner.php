@@ -175,6 +175,8 @@ class Banner extends MeCmsAppModel {
 	 * @uses BannerManager::folderIsWritable
 	 */
 	public function beforeSave($options = array()) {
+		parent::beforeSave($options);
+		
 		//Checks if the folder is writeable
 		return BannerManager::folderIsWritable();
 	}

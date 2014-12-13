@@ -209,6 +209,8 @@ class User extends MeCmsAppModel {
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
 	 */
 	public function beforeSave($options = array()) {
+		parent::beforeSave($options);
+		
 		//Password hash
 		if(!empty($this->data[$this->alias]['password'])) {
 			$passwordHasher = new BlowfishPasswordHasher();
