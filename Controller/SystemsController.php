@@ -62,6 +62,12 @@ class SystemsController extends MeCmsAppController {
 			$this->redirect('/admin');
 		}
 		
+		//Checks for uploads directory (`APP/webroot/files`)
+		if(!is_writable($path = WWW_ROOT.'files')) {
+			$this->Session->flash(__d('me_cms', 'The directory %s is not readable or writable', $path), 'error');
+			$this->redirect('/admin');
+		}
+		
 		//Sets the KCFinder session values
 		$this->Session->write('KCFINDER', array(
 			'denyExtensionRename'	=> TRUE,
@@ -70,7 +76,7 @@ class SystemsController extends MeCmsAppController {
 			'disabled'				=> FALSE,
 			'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
 			'jpegQuality'			=> 100,
-			'uploadURL'				=> sprintf('%s/%s', $this->webroot.WEBROOT_DIR, 'uploads')
+			'uploadURL'				=> sprintf('%s/%s', $this->webroot.WEBROOT_DIR, 'files')
 		));
 		
 		//Sets the KCFinder path
