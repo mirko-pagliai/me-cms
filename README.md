@@ -93,6 +93,9 @@ All'interno di questa directory, creare il file `.htaccess`:
 		php_value session.name CAKEPHP
 	</IfModule>
 
+Per gli upload verrà utilizzata la directory `APP/webroot/files`. Verificare che la directory esista e che sia leggibile e 
+scrivibile.
+
 ### KCFinder con CKEditor
 Copia il file `APP/Plugin/MeTools/webroot/ckeditor/ckeditor_init.js` in `APP/webroot/js`. Modifica il file, decommentando le
 ultime linee e modificando la posizione di KCFinder:
