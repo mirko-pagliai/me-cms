@@ -23,10 +23,16 @@ Abilita i plugin, aggiungendo in `Config/bootstrap.php`:
 		array('routes' => TRUE, 'bootstrap' => TRUE, 'ignoreMissing' => TRUE)
 	));
 	
-Modifica il file `Config/routes.php`, eliminando le due rotte presenti. Alla fine, il file dovrà contenere solo:
+Modifica il file `Config/routes.php`, eliminando le rotte di default presenti. Alla fine, il file dovrà contenere solo:
 
-	CakePlugin::routes();
-	require CAKE . 'Config' . DS . 'routes.php';
+	<?php
+
+		CakePlugin::routes();
+		require CAKE . 'Config' . DS . 'routes.php';
+
+Opzionalmente, impostare un nuovo prefisso per i file della cache modificando la relativa riga nel file `Config/core.php`:
+
+	$prefix = 'myapp_';
 	
 Ora è possibile installare MeCms, eseguendo nella shell:
 
@@ -39,7 +45,7 @@ L'installazione è terminata e ora puoi accedere al sito. Per accedere al pannel
 all'indirizzo `http://localhost/your-site/admin` ed effettuare il login con i dati indicati durante l'installazione.
 
 ## Configurazione
-La configurazione di MeCms si trova in `APP/Plugin/MeCms/Config.mecms.php`.  
+La configurazione di MeCms si trova in `APP/Plugin/MeCms/Config/mecms.php`.  
 Non modificare questo file! Se vuoi modificare la configurazione, copia il file all'intero della tua applicazione, 
 in `APP/Config`. È sufficiente impostare solo le opzioni che si desidera sovrascrivere.  
 MeCms caricherà prima il proprio file di configurazione, successivamente quello presente nell'applicazione, se esiste.
@@ -61,6 +67,19 @@ Ad esempio, richiamando l'url `http://localhost/your-site/page/about/our-staff` 
 
 MeCms darà sempre la precedenza alle pagine statiche. Questo significa che se esistono una pagina statica e una pagina nel
 database con lo stesso nome, MeCms utilizzerà la pagina statica.
+
+Per un maggiore controllo delle pagine statiche, puoi estendere la view presente in MeCms. Ad esempio:
+
+	<?php
+		$this->set('title_for_layout', 'My custom page');
+		$page['Page']['title'] = 'My custom page';
+		ob_start();
+	?>
+	<p>This is my custom page</p>
+	<?php
+		$page['Page']['text'] = ob_get_clean();
+		echo $this->Html->div('pages view', $this->element('view/page', compact('page')));
+	?>
 
 ## KCFinder
 Se si desidera utilizzare [KCFinder](http://kcfinder.sunhater.com), scaricare e scompattare il pacchetto in 
