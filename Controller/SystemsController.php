@@ -58,7 +58,7 @@ class SystemsController extends MeCmsAppController {
 	public function admin_browser() {
 		//Checks for KCFinder
 		if(!is_readable(WWW_ROOT.'kcfinder')) {
-			$this->Session->flash(__d('me_cms', '%s is not present into %s', 'FKFinder', WWW_ROOT.'kcfinder'), 'error');
+			$this->Session->flash(__d('me_cms', '%s is not present into %s', 'KCFinder', WWW_ROOT.'kcfinder'), 'error');
 			$this->redirect('/admin');
 		}
 		
