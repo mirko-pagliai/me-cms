@@ -25,7 +25,8 @@
  */
 
 App::uses('MeToolsAppShell', 'MeTools.Console/Command');
-App::uses('Album', 'MeCms.Utility');
+App::uses('BannerManager', 'MeCms.Utility');
+App::uses('PhotoManager', 'MeCms.Utility');
 
 /**
  * Install shell.
