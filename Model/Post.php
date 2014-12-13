@@ -147,10 +147,10 @@ class Post extends MeCmsAppModel {
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
 	 */
-	public function beforeSave($options = array()) {
+	public function beforeSave($options = array()) {		
 		//If the creation datetime isn't set, then it is the current datetime
 		if(empty($this->data[$this->alias]['created']))
-			$this->data[$this->alias]['created'] = CakeTime::format(time(), '%Y-%m-%d %H:%M');
+			$this->data[$this->alias]['created'] = CakeTime::format(time(), '%Y-%m-%d %H:%M:%S');
 		
 		return TRUE;
 	}

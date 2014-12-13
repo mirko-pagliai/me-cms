@@ -125,7 +125,7 @@ class Page extends MeCmsAppModel {
 	public function beforeSave($options = array()) {
 		//If the creation datetime isn't set, then it is the current datetime
 		if(empty($this->data[$this->alias]['created']))
-			$this->data[$this->alias]['created'] = CakeTime::format(time(), '%Y-%m-%d %H:%M');
+			$this->data[$this->alias]['created'] = CakeTime::format(time(), '%Y-%m-%d %H:%M:%S');
 		
 		return TRUE;
 	}
