@@ -72,6 +72,7 @@ class ConfigComponent extends Component {
 	 * @uses controller
 	 * @uses _setWidgets()
 	 * @uses _turnsAsArray()
+	 * @uses MeCmsAppController::isAction()
 	 * @uses MeCmsAppController::isAdminRequest()
 	 */
 	protected function _setConfig() {
@@ -88,7 +89,7 @@ class ConfigComponent extends Component {
 			Configure::write($key, $this->_turnsAsArray(Configure::read($key)));
 
 		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
-		if(in_array($this->controller->request->params['action'], array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
+		if($this->controller->isAction(array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
 			Configure::write('MeCms.frontend.widgets', Configure::read('MeCms.frontend.widgets_homepage'));
 			
 		//Deletes the homepage widgets key

@@ -141,10 +141,11 @@ class PostsCategoriesController extends MeCmsAppController {
 	 * This method works only with `requestAction()`.
 	 * @return array Categories list
 	 * @throws ForbiddenException
+	 * @uses isRequestAction()
 	 */
 	public function request_list() {
 		//This method works only with "requestAction()"
-		if(empty($this->request->params['requested']))
+		if(!$this->isRequestAction())
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache

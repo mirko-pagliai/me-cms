@@ -34,17 +34,17 @@ class UsersController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses MeAuthComponenet::isAction()
+	 * @uses isAction()
 	 * @uses MeAuthComponenet::isAdmin()
 	 * @uses MeAuthComponenet::isManager()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Everyone can change their own password
-		if($this->Auth->isAction('change_password'))
+		if($this->isAction('admin_change_password'))
 			return TRUE;
 		
 		//Only admins can delete users
-		if($this->Auth->isAction('delete'))
+		if($this->isAction('admin_delete'))
 			return $this->Auth->isAdmin();
 		
 		//Only admins and managers can access every action

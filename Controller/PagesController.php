@@ -35,17 +35,17 @@ class PagesController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses MeAuthComponenet::isAction()
+	 * @uses isAction()
 	 * @uses MeAuthComponenet::isAdmin()
 	 * @uses MeAuthComponenet::isManager()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins and manager can add and edit pages
-		if($this->Auth->isAction('add', 'edit'))
+		if($this->isAction(array('admin_add', 'admin_edit')))
 			return $this->Auth->isManager();
 		
 		//Only admins can delete pages
-		if($this->Auth->isAction('delete'))
+		if($this->isAction->isAction('admin_delete'))
 			return $this->Auth->isAdmin();
 		
 		return TRUE;
@@ -147,10 +147,11 @@ class PagesController extends MeCmsAppController {
 	 * This method works only with `requestAction()`.
 	 * @return array Pages list
 	 * @throws ForbiddenException
+	 * @uses isRequestAction()
 	 */
 	public function request_list() {
 		//This method works only with "requestAction()"
-		if(empty($this->request->params['requested']))
+		if(!$this->isRequestAction())
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache

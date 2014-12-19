@@ -124,7 +124,7 @@ class MeCmsAppController extends AppController {
 			$this->layout = 'MeCms.backend';
 		}
 		//Else, if the site has been taken offline
-		elseif($this->config['offline'] && !$this->isAction('login', 'users') && !$this->isAction('logout', 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction())
+		elseif($this->config['offline'] && !$this->isAction(array('login', 'logout'), 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction())
 			$this->redirect(array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
 		//Else, if this is not an admin request and the site is online
 		else {
@@ -153,16 +153,31 @@ class MeCmsAppController extends AppController {
 	}
 	
 	/**
-	 * Checks if the specified action is the current one.
+	 * Checks if the specified action is the current one. The action can be a string or an array of actions.
 	 * 
 	 * Optionally, it can also check the controller.
-	 * @param string $action Action name
+	 * 
+	 * Example:
+	 * <code>
+	 * $this->isAction('delete');
+	 * </code>
+	 * It returns TRUE if the current action is `delete`, otherwise FALSE.
+	 * 
+	 * Example:
+	 * <code>
+	 * $this->isAction(array('edit', 'delete'), 'users');
+	 * </code>
+	 * It returns TRUE if the current action is `edit` or `delete` and if the controller is `users`, otherwise FALSE.
+	 * @param string|array $action Action name
 	 * @param string $controller Controller name
 	 * @return bool TRUE if it's the current one, otherwise FALSE
 	 * @uses isController()
 	 */
 	public function isAction($action, $controller = NULL) {
-		$action = $this->request->params['action'] === $action;
+		if(is_array($action))
+			$action = in_array($this->request->params['action'], $action);
+		else
+			$action = $this->request->params['action'] === $action;
 		
 		if(empty($controller))
 			return $action;

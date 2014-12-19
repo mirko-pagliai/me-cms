@@ -33,13 +33,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * 
  * Rewrites `AuthComponent` provided by CakePHP.
  */
-class MeAuthComponent extends AuthComponent {
-	/**
-	 * Currant action name
-	 * @var string
-	 */
-	static public $action;
-	
+class MeAuthComponent extends AuthComponent {	
 	/**
 	 * User data
 	 * @var array 
@@ -50,14 +44,10 @@ class MeAuthComponent extends AuthComponent {
      * Called before the controller's beforeFilter method.
      * @param Controller $controller
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
-	 * @uses $action
 	 * @uses $user
      */	
 	public function initialize(Controller $controller) {
 		parent::initialize($controller);
-		
-		//Sets the current action name
-		self::$action = $controller->request->params['action'];
 		
 		//Gets the user data
 		self::$user = self::user();
@@ -74,35 +64,7 @@ class MeAuthComponent extends AuthComponent {
 			return FALSE;
 		
 		return (int) self::$user['id'] === (int) $id;
-	}
-	
-	/**
-	 * Checks if an action is the current action.
-	 * 
-	 * Example:
-	 * <code>
-	 * $this->Auth->isAction('delete');
-	 * </code>
-	 * It returns TRUE if the current action is `admin_delete`, otherwise FALSE.
-	 * 
-	 * Example:
-	 * <code>
-	 * $this->Auth->isAction('edit', 'delete');
-	 * </code>
-	 * It returns TRUE if the current action is `admin_edit` or `admin_delete`, otherwise FALSE.
-	 * @return type TRUE if the action to check is the current action, otherwise FALSE
-	 * @uses $action
-	 * @uses $user
-	 */
-	static public function isAction() {
-		$actions = func_get_args();
-		
-		array_walk($actions, function(&$v) {
-			$v = sprintf('admin_%s', $v);
-		});
-		
-		return in_array(self::$action, $actions);
-	}
+	}	
 	
 	/**
 	 * Checks whether the user is an administrator

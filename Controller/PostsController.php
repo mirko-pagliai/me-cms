@@ -40,7 +40,7 @@ class PostsController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses MeAuthComponenet::isAction()
+	 * @uses isAction()
 	 * @uses MeAuthComponenet::isManager()
 	 * @uses MeAuthComponenet::user()
 	 * @uses Post::isOwnedBy()
@@ -48,13 +48,13 @@ class PostsController extends MeCmsAppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all posts
 		//Users can edit only their own posts
-		if($this->Auth->isAction('edit') && !$this->Auth->isManager()) {
+		if($this->isAction('admin_edit') && !$this->Auth->isManager()) {
 			$id = (int) $this->request->params['pass'][0];
 			return $this->Post->isOwnedBy($id, $this->Auth->user('id'));
 		}
 		
 		//Only admins and managers can delete posts
-		if($this->Auth->isAction('delete'))
+		if($this->isAction('admin_delete'))
 			return $this->Auth->isManager();
 		
 		return TRUE;
@@ -175,7 +175,7 @@ class PostsController extends MeCmsAppController {
 	 */
 	public function request_latest($limit = 5) {
 		//This method works only with "requestAction()"
-		if(empty($this->request->params['requested']))
+		if(!$this->isRequestAction())
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
@@ -200,10 +200,11 @@ class PostsController extends MeCmsAppController {
 	 * @param int $limit Number of latest posts
 	 * @return array List of latest posts
 	 * @throws ForbiddenException
+	 * @uses isRequestAction()
 	 */
 	public function request_latest_list($limit = 10) {
 		//This method works only with "requestAction()"
-		if(empty($this->request->params['requested']))
+		if(!$this->isRequestAction())
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
