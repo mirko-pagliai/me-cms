@@ -123,7 +123,10 @@ class MeCmsAppController extends AppController {
 			//Sets the layout
 			$this->layout = 'MeCms.backend';
 		}
-		//Else, if this is not an admin request
+		//Else, if the site has been taken offline
+		elseif($this->config['offline'] && !$this->isAction('login', 'users') && !$this->isAction('logout', 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction())
+			$this->redirect(array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
+		//Else, if this is not an admin request and the site is online
 		else {
 			//Loads the `WidgetHelper`
 			$this->helpers['Widget'] = array('className' => 'MeCms.Widget');

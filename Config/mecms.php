@@ -21,6 +21,10 @@ $config = array('MeCms' => array(
 		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`
 		'logo' => 'logo.png',
+		//Sets the site offline
+		'offline' => FALSE,
+		//Text to display when the site is offline
+		'offline_text' => FALSE,
 		//Number of records to show per page
 		'records_for_page' => 10,
 		//Theme. Must be located in `APP/View/Themed/`

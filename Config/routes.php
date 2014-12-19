@@ -52,6 +52,9 @@ Router::connect('/album/*',	array('controller' => 'photos_albums', 'action' => '
 //Photos controller
 Router::connect('/photo/*',	array('controller' => 'photos', 'action' => 'view', 'plugin' => 'me_cms'));
 
+//System controller
+Router::connect('/offline', array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
+
 //Admin home page
 Router::connect('/admin', array('controller' => 'posts', 'plugin' => 'me_cms', 'admin' => TRUE));
 

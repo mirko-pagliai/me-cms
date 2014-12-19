@@ -177,4 +177,12 @@ class SystemsController extends MeCmsAppController {
 		
 		$this->redirect(array('action' => 'cache'));
 	}
+	
+	/**
+	 * Offline page
+	 */
+	public function offline() {
+		//Sets the layout
+		$this->layout = 'MeCms.users';
+	}
 }

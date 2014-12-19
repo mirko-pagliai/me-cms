@@ -4,10 +4,19 @@
  * @copyright	Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  */
+/* -------------------------------- */
+/*				Fonts				*/
+/* -------------------------------- */
+/* "Roboto" font */
+@font-face {
+    font-family: 'Roboto';
+    src: url(../../fonts/Roboto-Regular.ttf);
+}
 
 /* Body */
 body {
 	background: #e4e4e4;
+	font-family: Roboto, sans-serif;
 	padding-top: 60px;
 }
 
@@ -16,11 +25,18 @@ body {
 	background: #fff;
 	border-radius: 8px;
     box-shadow: 0 3px 6px -6px #000;
+	font-size: 16px;
     margin: auto;
     padding: 20px;
+	text-align: center;
 	width: -moz-min-content;
 	width: -webkit-min-content;
 	width: min-content;
+}
+
+/* Content, last paragraph */
+#content > p:last-child {
+	margin: 0;
 }
 
 /* Content, logo */
