@@ -11,7 +11,7 @@ $config = array('MeCms' => array(
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Topbar menus
-		'topbar' => 'posts, pages, photos, users, banners, systems'
+		'topbar' => 'posts, pages, photos, banners, users, systems'
 	),
 	//Frontend options
 	'frontend' => array(
