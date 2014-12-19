@@ -115,7 +115,7 @@ class MeCmsAppController extends AppController {
 
 			$this->theme = $this->config['theme'];
 		}
-			
+		
 		//If this is an admin request
 		if($this->isAdminRequest()) {
 			//Loads all the plugin helpers for creating menus.
@@ -150,6 +150,24 @@ class MeCmsAppController extends AppController {
 	}
 	
 	/**
+	 * Checks if the specified action is the current one.
+	 * 
+	 * Optionally, it can also check the controller.
+	 * @param string $action Action name
+	 * @param string $controller Controller name
+	 * @return bool TRUE if it's the current one, otherwise FALSE
+	 * @uses isController()
+	 */
+	public function isAction($action, $controller = NULL) {
+		$action = $this->request->params['action'] === $action;
+		
+		if(empty($controller))
+			return $action;
+		
+		return $action && $this->isController($controller);
+	}
+	
+	/**
 	 * Checks if this is an admin request
 	 * @return boolean TRUE if is an admin request, otherwise FALSE
 	 */
@@ -166,5 +184,22 @@ class MeCmsAppController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can access every action
 		return $this->Auth->isManager();
+	}
+	
+	/**
+	 * Checks if the specified controller is the current one
+	 * @param string $controller Controller name
+	 * @return bool TRUE if it's the current one, otherwise FALSE
+	 */
+	public function isController($controller) {
+		return $this->request->params['controller'] === $controller;
+	}
+	
+	/**
+	 * Checks if the current action is a "request action"
+	 * @return bool TRUE if it's a "request action", otherwise FALSE
+	 */
+	public function isRequestAction() {
+		return !empty($this->request->params['requested']);
 	}
 }
