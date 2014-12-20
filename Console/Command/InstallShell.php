@@ -115,6 +115,7 @@ class InstallShell extends MeToolsAppShell {
 			PhotoManager::getTmpPath(),
 			$cacheSettings['path'],
 			TMP.'thumbs'.DS.'photos',
+			TMP.'thumbs'.DS.'remotes',
 			TMP.'thumbs'.DS.'videos'
 		);
 		
