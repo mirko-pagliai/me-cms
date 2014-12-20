@@ -24,17 +24,29 @@
  * @package		MeCms\Model
  */
 
-App::uses('MeToolsAppModel', 'MeTools.Model');
+App::uses('AppModel', 'Model');
 
 /**
  * Application level model.
  */
-class MeCmsAppModel extends MeToolsAppModel {
+class MeCmsAppModel extends AppModel {
+	/**
+	 * Behaviors
+	 * @var array 
+	 */
+	public $actsAs = array('Containable');
+	
 	/**
 	 * Find methods
 	 * @var array
 	 */
     public $findMethods = array('active' => TRUE, 'random' =>  TRUE);
+	
+	/**
+	 * Recursive level
+	 * @var int
+	 */
+	public $recursive = -1;
 	
 	/**
 	 * Validation domain
