@@ -45,7 +45,7 @@ class PagesController extends MeCmsAppController {
 			return $this->Auth->isManager();
 		
 		//Only admins can delete pages
-		if($this->isAction->isAction('admin_delete'))
+		if($this->isAction('admin_delete'))
 			return $this->Auth->isAdmin();
 		
 		return TRUE;
