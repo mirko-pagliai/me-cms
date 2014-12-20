@@ -93,11 +93,13 @@ class MeCmsAppController extends AppController {
 	 * @throws InternalErrorException
 	 * @uses _loadMenus()
 	 * @uses isAdminRequest()
+	 * @uses isOffline()
 	 */
 	public function beforeFilter() {		
 		if(!empty($this->Auth)) {
 			//Sets the authenticaton message error
 			$this->Auth->authError = __d('me_cms', 'You need to login first');
+			
 			//Sets the element that will be used for flash auth errors
 			//http://stackoverflow.com/a/20545037/1480263
 			$this->Auth->flash['element'] = 'MeTools.error';
@@ -124,7 +126,7 @@ class MeCmsAppController extends AppController {
 			$this->layout = 'MeCms.backend';
 		}
 		//Else, if the site has been taken offline
-		elseif($this->config['offline'] && !$this->isAction(array('login', 'logout'), 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction())
+		elseif($this->isOffline())
 			$this->redirect(array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
 		//Else, if this is not an admin request and the site is online
 		else {
@@ -211,6 +213,14 @@ class MeCmsAppController extends AppController {
 	 */
 	public function isController($controller) {
 		return $this->request->params['controller'] === $controller;
+	}
+	
+	/**
+	 * Checks if the site is offline
+	 * @return bool TRUE if the site is offline, otherwise FALSE
+	 */
+	public function isOffline() {
+		return $this->config['offline'] && !$this->isAction(array('login', 'logout'), 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction();
 	}
 	
 	/**
