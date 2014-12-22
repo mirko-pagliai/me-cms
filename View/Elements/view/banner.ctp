@@ -33,7 +33,7 @@
 
 <div class="banner <?php echo $classes; ?>">
 	<?php
-		$image = $this->Html->img($banner['Banner']['url'], array('class' => 'img-thumbnail'));
+		$image = $this->Html->img($banner['Banner']['url']);
 	
 		if(!empty($banner['Banner']['target']))
 			echo $this->Html->link($image, array('controller' => 'banners', 'action' => 'open', 'plugin' => 'me_cms', $banner['Banner']['id']), array(
