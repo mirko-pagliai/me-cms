@@ -100,11 +100,18 @@
 
 /* Buttons, "read more" button */
 .content-buttons .readmore {
-    background-color: #ddd;
+    background: #ddd;
+	border: 0;
     color: #777;
-    font-size: 13px;
+	font-family: Roboto, sans-serif;
+    font-size: 14px;
 	font-weight: bold;
-    padding: 5px 10px;
+	line-height: 1;
+    padding: 10px;
+	/* Transition for "color" propriety */
+	transition: color .5s ease-in-out;
+	-moz-transition: color .5s ease-in-out;
+	-webkit-transition: color .5s ease-in-out;
 }
 
 /* Buttons, "read more" button, icon */
