@@ -60,10 +60,7 @@ class ConfigComponent extends Component {
 	 * @param string $string String of words separated by commas (and optional spaces)
 	 * @return mixed Array of values
 	 */
-	protected function _turnsAsArray($string) {		
-		if(empty(trim($string)))
-			return $string;
-		
+	protected function _turnsAsArray($string) {
 		return explode(',', preg_replace('/\s/', NULL, trim($string)));
 	}
 
