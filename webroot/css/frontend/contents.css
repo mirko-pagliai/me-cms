@@ -91,6 +91,17 @@
 	margin: 2px 0 8px 16px;
 }
 
+/* Extra small devices */
+@media (max-width: 767px) {
+	/* Content, images pulled on right and on left */
+	.content-text img.pull-left,
+	.content-text img[style~="float:left"],
+	.content-text img.pull-right,
+	.content-text img[style~="float:right"] {
+		max-width: 40%;
+	}
+}
+
 /* Buttons */
 .content-buttons {
 	margin-top: 20px;
