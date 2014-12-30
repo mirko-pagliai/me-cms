@@ -118,6 +118,45 @@ body {
 }
 
 /* -------------------------------- */
+/*				Pagination			*/
+/* -------------------------------- */
+/* Navbar collapsed */
+@media (max-width: 767px) {
+	.pagination {
+		background: #f2f2f2;
+		border-radius: 0;
+		display: block;
+		margin: 20px -15px;
+		padding: 0 10px;
+	}
+
+	.pagination > li {
+		display: inline-block;
+	}
+
+	.pagination > li > a, .pagination > li > span {
+		background: transparent;
+		border: 0;
+		border-radius: 0 !important;
+		display: block;
+		float: none;
+		padding: 12px;
+	}
+
+	.pagination > li > a > .fa {
+		padding: 0 8px;
+	}
+
+	.pagination > li > a:hover, .pagination > li > a:focus {
+		background: #ddd;
+	}
+
+	.pagination > li > span:hover, .pagination > li > span:focus {
+		background: inherit;
+	}
+}
+
+/* -------------------------------- */
 /*				Footer				*/
 /* -------------------------------- */
 /* Footer */
