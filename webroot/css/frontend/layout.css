@@ -17,6 +17,10 @@
 /* -------------------------------- */
 /*	Common elements and classes		*/
 /* -------------------------------- */
+/* Body */
+body {
+    font-family: Roboto,sans-serif;
+}
 /* Headers */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-family: Roboto, sans-serif;
@@ -73,7 +77,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 	/* Topbar, links */
 	#topbar .navbar-collapse a {
-		font-family: Roboto, sans-serif;
 		font-size: 16px;
 		font-weight: bold;
 		/* Transition for "background" and "color" proprieties */
