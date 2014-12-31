@@ -24,11 +24,12 @@
 /* Header, links */
 .content-header a {
 	color: #555;    
-	display: inline-block;
+	display: block;
+	line-height: 1.25;
     max-width: 100%;
     text-decoration: none;
 	/* No wrap, text truncated with ellipses */
-	overflow: hidden;
+	overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -53,7 +54,7 @@
 /* Header, subtitle */
 .content-header .content-subtitle {
     font-size: 22px;
-    margin: 4px 0 0;
+    margin: 2px 0 0;
 }
 
 /* Header, info (author, date, etc) */
