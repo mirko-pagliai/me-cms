@@ -26,7 +26,7 @@
 	padding: 6px;
 	text-align: center;
 	/* Text truncated */
-	overflow: hidden;
+	overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -73,7 +73,7 @@
 form .photo-box .title label {
 	display: block;
 	/* Text truncated */
-	overflow: hidden;
+	overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
