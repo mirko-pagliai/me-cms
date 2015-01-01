@@ -184,5 +184,7 @@ class SystemsController extends MeCmsAppController {
 	public function offline() {
 		//Sets the layout
 		$this->layout = 'MeCms.users';
+		
+		$this->set('title_for_layout', FALSE);
 	}
 }
