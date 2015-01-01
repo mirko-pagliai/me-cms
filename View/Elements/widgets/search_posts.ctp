@@ -25,15 +25,17 @@
  */
 ?>
 
-<div class="widget sidebar-widget">
-	<?php 
-		echo $this->Html->h4(__d('me_cms', 'Search posts'));
-		
-		echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search', 'plugin' => 'me_cms')));
-		echo $this->Form->input('p', array(
-			'default'		=> empty($pattern) ? NULL : $pattern,
-			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
-		));
-		echo $this->Form->end(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
-	?>
-</div>
+<?php if($this->request->params['controller'] != 'posts' || $this->request->params['action'] != 'search') : ?>
+	<div class="widget sidebar-widget">
+		<?php 
+			echo $this->Html->h4(__d('me_cms', 'Search posts'));
+
+			echo $this->Form->createInline(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search', 'plugin' => 'me_cms')));
+			echo $this->Form->input('p', array(
+				'default'		=> empty($pattern) ? NULL : $pattern,
+				'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
+			));
+			echo $this->Form->end(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
+		?>
+	</div>
+<?php endif; ?>
