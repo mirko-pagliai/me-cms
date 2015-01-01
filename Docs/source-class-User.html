@@ -8,7 +8,7 @@
 	<title>File User.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?289363024"></script>
+	<script type="text/javascript" src="elementlist.js?4244670446"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -125,7 +125,7 @@
 </span></span><span id="18" class="l"><a class="l" href="#18"> 18: </a><span class="php-comment"> * along with MeCms.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 </span></span><span id="19" class="l"><a class="l" href="#19"> 19: </a><span class="php-comment"> *
 </span></span><span id="20" class="l"><a class="l" href="#20"> 20: </a><span class="php-comment"> * @author      Mirko Pagliai &lt;mirko.pagliai@gmail.com&gt;
-</span></span><span id="21" class="l"><a class="l" href="#21"> 21: </a><span class="php-comment"> * @copyright   Copyright (c) 2014, Mirko Pagliai for Nova Atlantis Ltd
+</span></span><span id="21" class="l"><a class="l" href="#21"> 21: </a><span class="php-comment"> * @copyright   Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
 </span></span><span id="22" class="l"><a class="l" href="#22"> 22: </a><span class="php-comment"> * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
 </span></span><span id="23" class="l"><a class="l" href="#23"> 23: </a><span class="php-comment"> * @link        http://git.novatlantis.it Nova Atlantis Ltd
 </span></span><span id="24" class="l"><a class="l" href="#24"> 24: </a><span class="php-comment"> * @package     MeCms\Model
@@ -316,76 +316,78 @@
 </span></span><span id="209" class="l"><a class="l" href="#209">209: </a><span class="php-comment">     * @return boolean TRUE if the operation should continue, FALSE if it should abort
 </span></span><span id="210" class="l"><a class="l" href="#210">210: </a><span class="php-comment">     */</span>
 </span><span id="211" class="l"><a class="l" href="#211">211: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeSave" href="#_beforeSave">beforeSave</a>(<span class="php-var">$options</span> = <span class="php-keyword1">array</span>()) {
-</span><span id="212" class="l"><a class="l" href="#212">212: </a>        <span class="php-comment">//Password hash</span>
-</span><span id="213" class="l"><a class="l" href="#213">213: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>])) {
-</span><span id="214" class="l"><a class="l" href="#214">214: </a>            <span class="php-var">$passwordHasher</span> = <span class="php-keyword1">new</span> BlowfishPasswordHasher();
-</span><span id="215" class="l"><a class="l" href="#215">215: </a>            <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>] = <span class="php-var">$passwordHasher</span>-&gt;<span class="php-keyword2">hash</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]);
-</span><span id="216" class="l"><a class="l" href="#216">216: </a>        }
-</span><span id="217" class="l"><a class="l" href="#217">217: </a>        
-</span><span id="218" class="l"><a class="l" href="#218">218: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
-</span><span id="219" class="l"><a class="l" href="#219">219: </a>    }
-</span><span id="220" class="l"><a class="l" href="#220">220: </a>    
-</span><span id="221" class="l"><a class="l" href="#221">221: </a>    <span class="php-comment">/**
-</span></span><span id="222" class="l"><a class="l" href="#222">222: </a><span class="php-comment">     * Called during validation operations, before validation.
-</span></span><span id="223" class="l"><a class="l" href="#223">223: </a><span class="php-comment">     * @param array $options Options passed from Model::save()
-</span></span><span id="224" class="l"><a class="l" href="#224">224: </a><span class="php-comment">     * @return boolean TRUE if validate operation should continue, FALSE to abort
-</span></span><span id="225" class="l"><a class="l" href="#225">225: </a><span class="php-comment">     */</span>
-</span><span id="226" class="l"><a class="l" href="#226">226: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeValidate" href="#_beforeValidate">beforeValidate</a>(<span class="php-var">$options</span> = <span class="php-keyword1">array</span>()) {
-</span><span id="227" class="l"><a class="l" href="#227">227: </a>        <span class="php-comment">//If the &quot;password&quot; field is not blank, then the &quot;password_field&quot; field must also be filled out.</span>
-</span><span id="228" class="l"><a class="l" href="#228">228: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]) &amp;&amp; <span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password_repeat'</span>]))        
-</span><span id="229" class="l"><a class="l" href="#229">229: </a>            <span class="php-var">$this</span>-&gt;validator()-&gt;getField(<span class="php-quote">'password_repeat'</span>)-&gt;getRule(<span class="php-quote">'passwordsMatchOnUpdate'</span>)-&gt;allowEmpty = <span class="php-keyword1">FALSE</span>;
-</span><span id="230" class="l"><a class="l" href="#230">230: </a>        
-</span><span id="231" class="l"><a class="l" href="#231">231: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
-</span><span id="232" class="l"><a class="l" href="#232">232: </a>    }
-</span><span id="233" class="l"><a class="l" href="#233">233: </a>    
-</span><span id="234" class="l"><a class="l" href="#234">234: </a>    <span class="php-comment">/**
-</span></span><span id="235" class="l"><a class="l" href="#235">235: </a><span class="php-comment">     * Checks if the old password is right.
-</span></span><span id="236" class="l"><a class="l" href="#236">236: </a><span class="php-comment">     * This is only used when a user changes his password
-</span></span><span id="237" class="l"><a class="l" href="#237">237: </a><span class="php-comment">     * @param mixed $check Field to be checked
-</span></span><span id="238" class="l"><a class="l" href="#238">238: </a><span class="php-comment">     * @return boolean TRUE if the old password is right
-</span></span><span id="239" class="l"><a class="l" href="#239">239: </a><span class="php-comment">     * @see http://stackoverflow.com/a/17252517/1480263
-</span></span><span id="240" class="l"><a class="l" href="#240">240: </a><span class="php-comment">     */</span>
-</span><span id="241" class="l"><a class="l" href="#241">241: </a>    <span class="php-keyword1">function</span> <a id="_oldPasswordIsRight" href="#_oldPasswordIsRight">oldPasswordIsRight</a>(<span class="php-var">$check</span>) {       
-</span><span id="242" class="l"><a class="l" href="#242">242: </a>        <span class="php-comment">//Gets the hash of the old password from the database</span>
-</span><span id="243" class="l"><a class="l" href="#243">243: </a>        <span class="php-var">$old_password</span> = <span class="php-var">$this</span>-&gt;field(<span class="php-quote">'password'</span>, <span class="php-keyword1">array</span>(<span class="php-quote">'User.id'</span> =&gt; AuthComponent::user(<span class="php-quote">'id'</span>)));
-</span><span id="244" class="l"><a class="l" href="#244">244: </a>        
-</span><span id="245" class="l"><a class="l" href="#245">245: </a>        <span class="php-comment">//Gets the hash of the old password entered by the user</span>
-</span><span id="246" class="l"><a class="l" href="#246">246: </a>        <span class="php-var">$newHash</span> = Security::<span class="php-keyword2">hash</span>(<span class="php-var">$check</span>[<span class="php-quote">'old_password'</span>], <span class="php-quote">'blowfish'</span>, <span class="php-var">$old_password</span>);
-</span><span id="247" class="l"><a class="l" href="#247">247: </a>        
-</span><span id="248" class="l"><a class="l" href="#248">248: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">strcmp</span>(<span class="php-var">$old_password</span>, <span class="php-var">$newHash</span>) == <span class="php-num">0</span>;
-</span><span id="249" class="l"><a class="l" href="#249">249: </a>    }
-</span><span id="250" class="l"><a class="l" href="#250">250: </a>    
-</span><span id="251" class="l"><a class="l" href="#251">251: </a>    <span class="php-comment">/**
-</span></span><span id="252" class="l"><a class="l" href="#252">252: </a><span class="php-comment">     * Checks if the password has been correctly inserted
-</span></span><span id="253" class="l"><a class="l" href="#253">253: </a><span class="php-comment">     * @return bool TRUE if they match
-</span></span><span id="254" class="l"><a class="l" href="#254">254: </a><span class="php-comment">     */</span>
-</span><span id="255" class="l"><a class="l" href="#255">255: </a>    <span class="php-keyword1">function</span> <a id="_passwordsMatch" href="#_passwordsMatch">passwordsMatch</a>() {
-</span><span id="256" class="l"><a class="l" href="#256">256: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]))
-</span><span id="257" class="l"><a class="l" href="#257">257: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="258" class="l"><a class="l" href="#258">258: </a>        
-</span><span id="259" class="l"><a class="l" href="#259">259: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">strcmp</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>], <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password_repeat'</span>]) == <span class="php-num">0</span>;
-</span><span id="260" class="l"><a class="l" href="#260">260: </a>    }
-</span><span id="261" class="l"><a class="l" href="#261">261: </a>    
-</span><span id="262" class="l"><a class="l" href="#262">262: </a>    <span class="php-comment">/**
-</span></span><span id="263" class="l"><a class="l" href="#263">263: </a><span class="php-comment">     * Checks that the password contains letters, numbers and symbols.
-</span></span><span id="264" class="l"><a class="l" href="#264">264: </a><span class="php-comment">     * @return bool TRUE if the password contains letters, numbers and symbols, otherwise FALSE
-</span></span><span id="265" class="l"><a class="l" href="#265">265: </a><span class="php-comment">     */</span>
-</span><span id="266" class="l"><a class="l" href="#266">266: </a>    <span class="php-keyword1">function</span> <a id="_passwordIsStrong" href="#_passwordIsStrong">passwordIsStrong</a>() {
-</span><span id="267" class="l"><a class="l" href="#267">267: </a>        <span class="php-comment">//Checks if the password contains at least one letter</span>
-</span><span id="268" class="l"><a class="l" href="#268">268: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/[a-z]+/i'</span>, <span class="php-var">$password</span> = <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]))
-</span><span id="269" class="l"><a class="l" href="#269">269: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="270" class="l"><a class="l" href="#270">270: </a>        
-</span><span id="271" class="l"><a class="l" href="#271">271: </a>        <span class="php-comment">//Checks if the password contains at least one digit</span>
-</span><span id="272" class="l"><a class="l" href="#272">272: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/[0-9]+/'</span>, <span class="php-var">$password</span>))
-</span><span id="273" class="l"><a class="l" href="#273">273: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="274" class="l"><a class="l" href="#274">274: </a>        
-</span><span id="275" class="l"><a class="l" href="#275">275: </a>        <span class="php-comment">//Checks if the password contains at least one symbol</span>
-</span><span id="276" class="l"><a class="l" href="#276">276: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/[^a-z0-9]+/i'</span>, <span class="php-var">$password</span>))
-</span><span id="277" class="l"><a class="l" href="#277">277: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="278" class="l"><a class="l" href="#278">278: </a>        
-</span><span id="279" class="l"><a class="l" href="#279">279: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
-</span><span id="280" class="l"><a class="l" href="#280">280: </a>    }
-</span><span id="281" class="l"><a class="l" href="#281">281: </a></span>}</code></pre>
+</span><span id="212" class="l"><a class="l" href="#212">212: </a>        parent::beforeSave(<span class="php-var">$options</span>);
+</span><span id="213" class="l"><a class="l" href="#213">213: </a>        
+</span><span id="214" class="l"><a class="l" href="#214">214: </a>        <span class="php-comment">//Password hash</span>
+</span><span id="215" class="l"><a class="l" href="#215">215: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>])) {
+</span><span id="216" class="l"><a class="l" href="#216">216: </a>            <span class="php-var">$passwordHasher</span> = <span class="php-keyword1">new</span> BlowfishPasswordHasher();
+</span><span id="217" class="l"><a class="l" href="#217">217: </a>            <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>] = <span class="php-var">$passwordHasher</span>-&gt;<span class="php-keyword2">hash</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]);
+</span><span id="218" class="l"><a class="l" href="#218">218: </a>        }
+</span><span id="219" class="l"><a class="l" href="#219">219: </a>        
+</span><span id="220" class="l"><a class="l" href="#220">220: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
+</span><span id="221" class="l"><a class="l" href="#221">221: </a>    }
+</span><span id="222" class="l"><a class="l" href="#222">222: </a>    
+</span><span id="223" class="l"><a class="l" href="#223">223: </a>    <span class="php-comment">/**
+</span></span><span id="224" class="l"><a class="l" href="#224">224: </a><span class="php-comment">     * Called during validation operations, before validation.
+</span></span><span id="225" class="l"><a class="l" href="#225">225: </a><span class="php-comment">     * @param array $options Options passed from Model::save()
+</span></span><span id="226" class="l"><a class="l" href="#226">226: </a><span class="php-comment">     * @return boolean TRUE if validate operation should continue, FALSE to abort
+</span></span><span id="227" class="l"><a class="l" href="#227">227: </a><span class="php-comment">     */</span>
+</span><span id="228" class="l"><a class="l" href="#228">228: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_beforeValidate" href="#_beforeValidate">beforeValidate</a>(<span class="php-var">$options</span> = <span class="php-keyword1">array</span>()) {
+</span><span id="229" class="l"><a class="l" href="#229">229: </a>        <span class="php-comment">//If the &quot;password&quot; field is not blank, then the &quot;password_field&quot; field must also be filled out.</span>
+</span><span id="230" class="l"><a class="l" href="#230">230: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]) &amp;&amp; <span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password_repeat'</span>]))        
+</span><span id="231" class="l"><a class="l" href="#231">231: </a>            <span class="php-var">$this</span>-&gt;validator()-&gt;getField(<span class="php-quote">'password_repeat'</span>)-&gt;getRule(<span class="php-quote">'passwordsMatchOnUpdate'</span>)-&gt;allowEmpty = <span class="php-keyword1">FALSE</span>;
+</span><span id="232" class="l"><a class="l" href="#232">232: </a>        
+</span><span id="233" class="l"><a class="l" href="#233">233: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
+</span><span id="234" class="l"><a class="l" href="#234">234: </a>    }
+</span><span id="235" class="l"><a class="l" href="#235">235: </a>    
+</span><span id="236" class="l"><a class="l" href="#236">236: </a>    <span class="php-comment">/**
+</span></span><span id="237" class="l"><a class="l" href="#237">237: </a><span class="php-comment">     * Checks if the old password is right.
+</span></span><span id="238" class="l"><a class="l" href="#238">238: </a><span class="php-comment">     * This is only used when a user changes his password
+</span></span><span id="239" class="l"><a class="l" href="#239">239: </a><span class="php-comment">     * @param mixed $check Field to be checked
+</span></span><span id="240" class="l"><a class="l" href="#240">240: </a><span class="php-comment">     * @return boolean TRUE if the old password is right
+</span></span><span id="241" class="l"><a class="l" href="#241">241: </a><span class="php-comment">     * @see http://stackoverflow.com/a/17252517/1480263
+</span></span><span id="242" class="l"><a class="l" href="#242">242: </a><span class="php-comment">     */</span>
+</span><span id="243" class="l"><a class="l" href="#243">243: </a>    <span class="php-keyword1">function</span> <a id="_oldPasswordIsRight" href="#_oldPasswordIsRight">oldPasswordIsRight</a>(<span class="php-var">$check</span>) {       
+</span><span id="244" class="l"><a class="l" href="#244">244: </a>        <span class="php-comment">//Gets the hash of the old password from the database</span>
+</span><span id="245" class="l"><a class="l" href="#245">245: </a>        <span class="php-var">$old_password</span> = <span class="php-var">$this</span>-&gt;field(<span class="php-quote">'password'</span>, <span class="php-keyword1">array</span>(<span class="php-quote">'User.id'</span> =&gt; AuthComponent::user(<span class="php-quote">'id'</span>)));
+</span><span id="246" class="l"><a class="l" href="#246">246: </a>        
+</span><span id="247" class="l"><a class="l" href="#247">247: </a>        <span class="php-comment">//Gets the hash of the old password entered by the user</span>
+</span><span id="248" class="l"><a class="l" href="#248">248: </a>        <span class="php-var">$newHash</span> = Security::<span class="php-keyword2">hash</span>(<span class="php-var">$check</span>[<span class="php-quote">'old_password'</span>], <span class="php-quote">'blowfish'</span>, <span class="php-var">$old_password</span>);
+</span><span id="249" class="l"><a class="l" href="#249">249: </a>        
+</span><span id="250" class="l"><a class="l" href="#250">250: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">strcmp</span>(<span class="php-var">$old_password</span>, <span class="php-var">$newHash</span>) == <span class="php-num">0</span>;
+</span><span id="251" class="l"><a class="l" href="#251">251: </a>    }
+</span><span id="252" class="l"><a class="l" href="#252">252: </a>    
+</span><span id="253" class="l"><a class="l" href="#253">253: </a>    <span class="php-comment">/**
+</span></span><span id="254" class="l"><a class="l" href="#254">254: </a><span class="php-comment">     * Checks if the password has been correctly inserted
+</span></span><span id="255" class="l"><a class="l" href="#255">255: </a><span class="php-comment">     * @return bool TRUE if they match
+</span></span><span id="256" class="l"><a class="l" href="#256">256: </a><span class="php-comment">     */</span>
+</span><span id="257" class="l"><a class="l" href="#257">257: </a>    <span class="php-keyword1">function</span> <a id="_passwordsMatch" href="#_passwordsMatch">passwordsMatch</a>() {
+</span><span id="258" class="l"><a class="l" href="#258">258: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]))
+</span><span id="259" class="l"><a class="l" href="#259">259: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="260" class="l"><a class="l" href="#260">260: </a>        
+</span><span id="261" class="l"><a class="l" href="#261">261: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">strcmp</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>], <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password_repeat'</span>]) == <span class="php-num">0</span>;
+</span><span id="262" class="l"><a class="l" href="#262">262: </a>    }
+</span><span id="263" class="l"><a class="l" href="#263">263: </a>    
+</span><span id="264" class="l"><a class="l" href="#264">264: </a>    <span class="php-comment">/**
+</span></span><span id="265" class="l"><a class="l" href="#265">265: </a><span class="php-comment">     * Checks that the password contains letters, numbers and symbols.
+</span></span><span id="266" class="l"><a class="l" href="#266">266: </a><span class="php-comment">     * @return bool TRUE if the password contains letters, numbers and symbols, otherwise FALSE
+</span></span><span id="267" class="l"><a class="l" href="#267">267: </a><span class="php-comment">     */</span>
+</span><span id="268" class="l"><a class="l" href="#268">268: </a>    <span class="php-keyword1">function</span> <a id="_passwordIsStrong" href="#_passwordIsStrong">passwordIsStrong</a>() {
+</span><span id="269" class="l"><a class="l" href="#269">269: </a>        <span class="php-comment">//Checks if the password contains at least one letter</span>
+</span><span id="270" class="l"><a class="l" href="#270">270: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/[a-z]+/i'</span>, <span class="php-var">$password</span> = <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'password'</span>]))
+</span><span id="271" class="l"><a class="l" href="#271">271: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="272" class="l"><a class="l" href="#272">272: </a>        
+</span><span id="273" class="l"><a class="l" href="#273">273: </a>        <span class="php-comment">//Checks if the password contains at least one digit</span>
+</span><span id="274" class="l"><a class="l" href="#274">274: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/[0-9]+/'</span>, <span class="php-var">$password</span>))
+</span><span id="275" class="l"><a class="l" href="#275">275: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="276" class="l"><a class="l" href="#276">276: </a>        
+</span><span id="277" class="l"><a class="l" href="#277">277: </a>        <span class="php-comment">//Checks if the password contains at least one symbol</span>
+</span><span id="278" class="l"><a class="l" href="#278">278: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">preg_match</span>(<span class="php-quote">'/[^a-z0-9]+/i'</span>, <span class="php-var">$password</span>))
+</span><span id="279" class="l"><a class="l" href="#279">279: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="280" class="l"><a class="l" href="#280">280: </a>        
+</span><span id="281" class="l"><a class="l" href="#281">281: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
+</span><span id="282" class="l"><a class="l" href="#282">282: </a>    }
+</span><span id="283" class="l"><a class="l" href="#283">283: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
