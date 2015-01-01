@@ -169,14 +169,16 @@ body {
     text-align: center;
 }
 
+/* Footer, links */
+#footer a {
+	border-bottom: 1px dashed;
+    color: #666;
+    text-decoration: none;
+}
+
 /* Footer, paragraphs */
 #footer p {
     font-family: Arial,sans-serif;
     font-size: 12px;
     margin: 0;
-}
-
-/* Footer, links */
-#footer a {
-	color: #666;
 }
