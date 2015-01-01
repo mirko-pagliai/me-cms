@@ -123,7 +123,7 @@ class MeCmsAppController extends AppController {
 			//Loads all the plugin helpers for creating menus.
 			$this->_loadMenus();
 			//Sets the layout
-			$this->layout = 'backend';
+			$this->layout = 'MeCms.backend';
 		}
 		//Else, if the site has been taken offline
 		elseif($this->isOffline())
@@ -134,7 +134,7 @@ class MeCmsAppController extends AppController {
 			$this->helpers['Widget'] = array('className' => 'MeCms.Widget');
 			
 			//Sets the layout
-			$this->layout = 'frontend';
+			$this->layout = 'MeCms.frontend';
 		}
 		
 		parent::beforeFilter();
