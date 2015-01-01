@@ -27,20 +27,42 @@
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Search posts'));
 		
-		if(!empty($pattern))
-			echo $this->Html->para('bg-info padding-10', __d('me_cms', 'You have searched for: %s', $this->Html->i($pattern)));
-
+		echo $this->Form->create(FALSE, array('class' => 'margin-20', 'type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'search', 'plugin' => 'me_cms')));
+		echo $this->Form->input('p', array(
+			'default'		=> empty($pattern) ? NULL : $pattern,
+			'label'			=> FALSE,
+			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
+		));
+		echo $this->Form->end(__d('me_cms', 'Search'), array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
+	?>
+	
+	<?php if(!empty($pattern)): ?>
+		<div class='bg-info margin-20 padding-10'>
+			<?php
+				echo $this->Html->div(NULL, __d('me_cms', 'You have searched for: %s', $this->Html->em($pattern)));
+				
+				if(!empty($count))
+					echo $this->Html->div(NULL, __d('me_cms', 'Number of results found: %d', $count));
+				else
+					echo $this->Html->div(NULL,__d('me_cms', 'No results found'));
+			?>
+		</div>
+	<?php endif; ?>
+		
+	<?php
 		if(!empty($posts)) {
 			$list = array();
 			foreach($posts as $post) {
 				$title = $this->Html->link($post['Post']['title'], array('action' => 'view', $post['Post']['slug']));
 				$list[] = $this->Html->div(NULL, 
-					sprintf('%s (%s)', $title, $this->Time->format($post['Post']['created'], $config['datetime']['short'])).
-					$this->Html->para('text-justify', $this->Text->truncate(strip_tags($post['Post']['text']), 500, array('exact' => FALSE, 'html' => TRUE)))
+					sprintf('%s - %s', $title, $this->Time->format($post['Post']['created'], $config['datetime']['short'])).
+					$this->Html->para('text-justify', $this->Text->truncate(strip_tags($post['Post']['text']), 350, array('exact' => FALSE, 'html' => TRUE)))
 				);
 			}
 
 			echo $this->Html->ul($list, array(), array('icon' => 'caret-right'));
+			
+			echo $this->element('MeTools.paginator');
 		}
 	?>
 </div>

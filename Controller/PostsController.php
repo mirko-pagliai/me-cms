@@ -325,23 +325,34 @@ class PostsController extends MeCmsAppController {
 	 * Search post
 	 */
 	public function search() {
-		//Gets the pattern
-		$pattern = trim($this->request->query['p']);
+		$pattern = empty($this->request->query['p']) ? FALSE : trim($this->request->query['p']);
 		
-		//Checks if the pattern is at least 4 characters long
-		if(!empty($pattern) && strlen($pattern) >= 4) {
-			$posts = $this->Post->find('active', array(
-				'conditions'	=> array('text LIKE' => sprintf('%%%s%%', $pattern)),
-				'fields'		=> array('title', 'slug', 'text', 'created')
-			));
-			
-			$this->set(compact('pattern', 'posts'));
-		}
-		else {
-			$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
-			return $this->redirect($this->referer('/'));
+		if(!empty($pattern)) {
+			//Checks if the pattern is at least 4 characters long
+			if(strlen($pattern) >= 4) {
+				$this->paginate = array(
+					'conditions'	=> array('OR' => array(
+						'title LIKE'	=> sprintf('%%%s%%', $pattern),
+						'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+						'text LIKE'		=> sprintf('%%%s%%', $pattern)
+					)),
+					'fields'		=> array('title', 'slug', 'text', 'created'),
+					'findType'		=> 'active',
+					'limit'			=> 10
+				);
+
+				try {
+					$posts = $this->paginate();
+					$count = $this->request->params['paging']['Post']['count'];
+				}
+				catch(NotFoundException $e) {}
+
+				$this->set(compact('count', 'posts'));
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
 		}
 		
-		$this->set('title_for_layout', __d('me_cms', 'Search posts'));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Search posts')), compact('pattern')));
 	}
 }
