@@ -85,13 +85,13 @@ Per un maggiore controllo delle pagine statiche, puoi estendere la view presente
 Se si desidera utilizzare [KCFinder](http://kcfinder.sunhater.com), scaricare e scompattare il pacchetto in 
 `APP/webroot/kcfinder`. 
 
-All'interno di questa directory, creare il file `.htaccess`:
+Aggiungere alla fine del file `APP/webroot/kcfinder/core/autoload.php`:
 
-	<IfModule mod_php5.c>
-		php_value session.cache_limiter must-revalidate
-		php_value session.cookie_lifetime 14400
-		php_value session.name CAKEPHP
-	</IfModule>
+	ini_set('session.cache_limiter', "must-revalidate");
+	ini_set('session.cookie_httponly', "On");
+	ini_set('session.cookie_lifetime', "14400");
+	ini_set('session.gc_maxlifetime', "14400");
+	ini_set('session.name', "CAKEPHP");
 
 Per gli upload verrà utilizzata la directory `APP/webroot/files`. Verificare che la directory esista e che sia leggibile e 
 scrivibile.
