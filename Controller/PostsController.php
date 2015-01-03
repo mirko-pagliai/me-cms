@@ -81,7 +81,7 @@ class PostsController extends MeCmsAppController {
 	 * @uses MeAuthComponent::isManager()
 	 */
 	public function admin_add() {
-		//Gets the categories
+		//Gets categories
 		$categories = $this->Post->Category->generateTreeList();
 		
 		//Checks for categories
@@ -89,6 +89,9 @@ class PostsController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'Before you can add a post, you have to create at least a category'), 'error');
 			$this->redirect(array('controller' => 'posts_categories', 'action' => 'index'));
 		}
+		
+		//Gets users
+		$users = $this->Video->User->find('list', array('fields' => array('id', 'full_name')));
 		
 		if($this->request->is('post')) {
 			//Only admins and managers can add posts on behalf of other users
@@ -104,11 +107,7 @@ class PostsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The post could not be created. Please, try again'), 'error');
 		}
 
-		$this->set(array(
-			'categories'		=> $categories,
-			'title_for_layout'	=> __d('me_cms', 'Add post'),
-			'users'				=> $this->Post->User->find('list')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Add post')), compact('categories', 'users')));
 	}
 
 	/**
@@ -120,6 +119,12 @@ class PostsController extends MeCmsAppController {
 	public function admin_edit($id = NULL) {
 		if(!$this->Post->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+		
+		//Gets categories
+		$categories = $this->Post->Category->generateTreeList();
+		
+		//Gets users
+		$users = $this->Video->User->find('list', array('fields' => array('id', 'full_name')));
 					
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Only admins and managers can edit posts on behalf of other users
@@ -139,11 +144,7 @@ class PostsController extends MeCmsAppController {
 				'fields'		=> array('id', 'category_id', 'user_id', 'title', 'subtitle', 'slug', 'text', 'created', 'priority', 'active')
 			));
 
-		$this->set(array(
-			'categories'		=> $this->Post->Category->generateTreeList(),
-			'title_for_layout'	=> __d('me_cms', 'Edit post'),
-			'users'				=> $this->Post->User->find('list')
-		));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Edit post')), compact('categories', 'users')));
 	}
 
 	/**
