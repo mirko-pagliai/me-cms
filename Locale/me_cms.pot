@@ -1,10 +1,10 @@
 # LANGUAGE translation of MeCms
-# Copyright 2014 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2014-12-08 18:05+0100\n"
+"POT-Creation-Date: 2015-01-03 17:41+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: Mirko Pagliai\n"
 "MIME-Version: 1.0\n"
@@ -44,11 +44,11 @@ msgstr ""
 
 #: Controller/BannersController.php:115;145;165;172
 #: Controller/BannersPositionsController.php:83;110
-#: Controller/PagesController.php:106;133;221
+#: Controller/PagesController.php:106;133;222
 #: Controller/PhotosAlbumsController.php:87;114;178
-#: Controller/PhotosController.php:56;133;166;210
+#: Controller/PhotosController.php:56;133;166;211
 #: Controller/PostsCategoriesController.php:92;122
-#: Controller/PostsController.php:122;157;315
+#: Controller/PostsController.php:121;158;317
 #: Controller/UsersController.php:88;127;162
 #: Controller/UsersGroupsController.php:84;112
 msgid "Invalid object"
@@ -118,15 +118,15 @@ msgstr ""
 msgid "Before you delete this position, you have to delete its banners or assign them to another position"
 msgstr ""
 
-#: Controller/MeCmsAppController.php:99
+#: Controller/MeCmsAppController.php:101
 msgid "You need to login first"
 msgstr ""
 
-#: Controller/MeCmsAppController.php:113
+#: Controller/MeCmsAppController.php:116
 msgid "The theme %s was not found"
 msgstr ""
 
-#: Controller/PagesController.php:65;183
+#: Controller/PagesController.php:65;184
 #: View/Elements/frontend/topbar.ctp:46
 #: View/Elements/widgets/pages.ctp:36
 #: View/Helper/MenuHelper.php:97
@@ -271,11 +271,11 @@ msgstr ""
 msgid "The photo was not deleted"
 msgstr ""
 
-#: Controller/PhotosController.php:220
+#: Controller/PhotosController.php:221
 msgid "Photo"
 msgstr ""
 
-#: Controller/PostsCategoriesController.php:61;194
+#: Controller/PostsCategoriesController.php:61;195
 #: View/PostsCategories/admin_index.ctp:30
 #: View/PostsCategories/index.ctp:28
 msgid "Posts categories"
@@ -319,7 +319,7 @@ msgstr ""
 msgid "Before you delete this category, you have to delete its posts or assign them to another category"
 msgstr ""
 
-#: Controller/PostsController.php:75;291
+#: Controller/PostsController.php:75;293
 #: View/Helper/MenuHelper.php:146
 #: View/Layouts/frontend.ctp:41
 #: View/Posts/admin_index.ctp:30
@@ -333,85 +333,89 @@ msgstr ""
 msgid "Before you can add a post, you have to create at least a category"
 msgstr ""
 
-#: Controller/PostsController.php:100
+#: Controller/PostsController.php:103
 msgid "The post has been created"
 msgstr ""
 
-#: Controller/PostsController.php:104
+#: Controller/PostsController.php:107
 msgid "The post could not be created. Please, try again"
 msgstr ""
 
-#: Controller/PostsController.php:109
+#: Controller/PostsController.php:110
 #: View/Helper/MenuHelper.php:135
 #: View/Posts/admin_add.ctp:34;93
 msgid "Add post"
 msgstr ""
 
-#: Controller/PostsController.php:130
+#: Controller/PostsController.php:135
 msgid "The post has been edited"
 msgstr ""
 
-#: Controller/PostsController.php:134
+#: Controller/PostsController.php:139
 msgid "The post could not be edited. Please, try again"
 msgstr ""
 
-#: Controller/PostsController.php:144
+#: Controller/PostsController.php:147
 #: View/Posts/admin_edit.ctp:34;91
 msgid "Edit post"
 msgstr ""
 
-#: Controller/PostsController.php:162
+#: Controller/PostsController.php:163
 msgid "The post has been deleted"
 msgstr ""
 
-#: Controller/PostsController.php:164
+#: Controller/PostsController.php:165
 msgid "The post was not deleted"
 msgstr ""
 
-#: Controller/PostsController.php:340
+#: Controller/PostsController.php:354
 msgid "You have to search at least a word of %d characters"
 msgstr ""
 
-#: Controller/PostsController.php:344
-#: View/Elements/widgets/search.ctp:30
+#: Controller/PostsController.php:357
+#: View/Elements/widgets/search_posts.ctp:31
 #: View/Posts/search.ctp:28
 msgid "Search posts"
 msgstr ""
 
-#: Controller/SystemsController.php:61
+#: Controller/SystemsController.php:62
 msgid "%s is not present into %s"
 msgstr ""
 
-#: Controller/SystemsController.php:79
+#: Controller/SystemsController.php:68
+msgid "The directory %s is not readable or writable"
+msgstr ""
+
+#: Controller/SystemsController.php:97
 #: View/Helper/MenuHelper.php:201
 msgid "Media browser"
 msgstr ""
 
-#: Controller/SystemsController.php:92
+#: Controller/SystemsController.php:112
 #: View/Helper/MenuHelper.php:199
 #: View/Systems/admin_cache.ctp:30
 msgid "Cache and thumbs"
 msgstr ""
 
-#: Controller/SystemsController.php:142
+#: Controller/SystemsController.php:162
 #: View/Helper/MenuHelper.php:200
 #: View/Systems/admin_checkup.ctp:30
 msgid "System checkup"
 msgstr ""
 
-#: Controller/SystemsController.php:153
+#: Controller/SystemsController.php:173
 msgid "The cache has been cleared"
 msgstr ""
 
-#: Controller/SystemsController.php:155
+#: Controller/SystemsController.php:175
 msgid "The cache is not writable"
 msgstr ""
 
-#: Controller/SystemsController.php:168
+#: Controller/SystemsController.php:188
 msgid "Thumbnails have been deleted"
 msgstr ""
 
-#: Controller/SystemsController.php:170
+#: Controller/SystemsController.php:190
 msgid "Thumbnails have not been deleted"
 msgstr ""
 
@@ -560,6 +564,7 @@ msgid "Banner"
 msgstr ""
 
 #: View/Banners/admin_add.ctp:43
+#: View/Systems/admin_browser.ctp:52
 msgid "Select"
 msgstr ""
 
@@ -678,6 +683,16 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#: View/Elements/backend/footer.ctp:30
+#: View/Elements/frontend/footer.ctp:30
+msgid "Powered by %s. Copyright %s"
+msgstr ""
+
+#: View/Elements/backend/footer.ctp:31
+#: View/Elements/frontend/footer.ctp:31
+msgid "Developed by %s for %s"
+msgstr ""
+
 #: View/Elements/backend/topbar.ctp:34
 #: View/Elements/frontend/topbar.ctp:44
 msgid "Home"
@@ -685,14 +700,6 @@ msgstr ""
 
 #: View/Elements/backend/topbar.ctp:51
 msgid "Logout"
-msgstr ""
-
-#: View/Elements/frontend/footer.ctp:30
-msgid "Powered by %s. Copyright %s"
-msgstr ""
-
-#: View/Elements/frontend/footer.ctp:31
-msgid "Developed by %s for %s"
 msgstr ""
 
 #: View/Elements/frontend/topbar.ctp:33
@@ -731,7 +738,8 @@ msgstr ""
 msgid "Random photo"
 msgstr ""
 
-#: View/Elements/widgets/search.ctp:35
+#: View/Elements/widgets/search_posts.ctp:36
+#: View/Posts/search.ctp:34;36
 msgid "Search"
 msgstr ""
 
@@ -795,7 +803,7 @@ msgstr ""
 msgid "The %s method does not exist"
 msgstr ""
 
-#: View/Layouts/frontend.ctp:78
+#: View/Layouts/frontend.ctp:70
 msgid "Homepage"
 msgstr ""
 
@@ -988,8 +996,16 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: View/Posts/search.ctp:31
+#: View/Posts/search.ctp:42
 msgid "You have searched for: %s"
+msgstr ""
+
+#: View/Posts/search.ctp:45
+msgid "Number of results found: %d"
+msgstr ""
+
+#: View/Posts/search.ctp:47
+msgid "No results found"
 msgstr ""
 
 #: View/PostsCategories/admin_add.ctp:37
@@ -1004,6 +1020,10 @@ msgstr ""
 
 #: View/PostsCategories/admin_index.ctp:36
 msgid "Parent"
+msgstr ""
+
+#: View/Systems/admin_browser.ctp:46
+msgid "Type"
 msgstr ""
 
 #: View/Systems/admin_cache.ctp:32
@@ -1158,6 +1178,10 @@ msgstr ""
 
 #: View/Systems/admin_checkup.ctp:118
 msgid "The thumbnail directory is not readable or writable"
+msgstr ""
+
+#: View/Systems/offline.ctp:27
+msgid "The website is temporarily offline"
 msgstr ""
 
 #: View/Users/admin_add.ctp:38
