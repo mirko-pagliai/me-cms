@@ -26,7 +26,7 @@
 <?php $this->Html->scriptStart(); ?>
 	//Function to resize the iframe
 	function resizeKcfinder() {
-		var maxHeight = $(window).height() - $('#topbar').outerHeight(true) - 20;
+		var maxHeight = $(window).height() - $('#topbar').outerHeight(true) -$('#type-form').outerHeight(true) -$('#footer').outerHeight(true) - 20;
 		$('#kcfinder').height(maxHeight);
 	}
 	
@@ -39,11 +39,27 @@
 	});
 <?php $this->Html->scriptEnd(); ?>
 
-<?php
-	echo $this->Html->iframe(array(
-		'height'	=> '550',
-		'id'		=> 'kcfinder',
-		'src'		=> $kcfinder,
-		'width'		=> '100%'
-	));
-?>
+<div class="systems index">
+	<div id="type-form" class="well">
+		<?php 
+			echo $this->Form->createInline(FALSE, array('type' => 'get'));
+			echo $this->Form->label('type', __d('me_cms', 'Type'));
+			echo $this->Form->input('type', array(
+				'default'	=> empty($this->request->query['type']) ? NULL : $this->request->query['type'],
+				'onchange'	=> 'send_form(this)',
+				'type'		=> 'select'
+			));
+			echo $this->Form->end(__d('me_cms', 'Select'), array('div' => false));
+		?>
+	</div>
+	
+	<?php
+		if(!empty($kcfinder))
+			echo $this->Html->iframe(array(
+				'height'	=> '550',
+				'id'		=> 'kcfinder',
+				'src'		=> $kcfinder,
+				'width'		=> '100%'
+			));
+	?>
+</div>

@@ -25,6 +25,7 @@
  */
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
+App::uses('Folder', 'Utility');
 App::uses('BannerManager', 'MeCms.Utility');
 App::uses('PhotoManager', 'MeCms.Utility');
 App::uses('System', 'MeTools.Utility');
@@ -68,21 +69,34 @@ class SystemsController extends MeCmsAppController {
 			$this->redirect('/admin');
 		}
 		
-		//Sets the KCFinder session values
-		$this->Session->write('KCFINDER', array(
-			'denyExtensionRename'	=> TRUE,
-			'denyUpdateCheck'		=> TRUE,
-			'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
-			'disabled'				=> FALSE,
-			'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
-			'jpegQuality'			=> 100,
-			'uploadURL'				=> sprintf('%s/%s', $this->webroot.WEBROOT_DIR, 'files')
-		));
+		//Gets types
+		$types = $this->config['kcfinder']['types'];
 		
-		//Sets the KCFinder path
-		$kcfinder = sprintf('%s/%s/browse.php?lang=%s', $this->webroot.WEBROOT_DIR, 'kcfinder', Configure::read('Config.language'));
-				
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Media browser')), compact('kcfinder')));
+		if(!empty($this->request->query['type']) && array_key_exists($this->request->query['type'], $types)) {
+			//Sets the KCFinder session values
+			if(!$this->Session->check('KCFINDER'))
+				$this->Session->write('KCFINDER', array(
+					'denyExtensionRename'	=> TRUE,
+					'denyUpdateCheck'		=> TRUE,
+					'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
+					'disabled'				=> FALSE,
+					'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
+					'jpegQuality'			=> 100,
+					'uploadDir'				=> $path,
+					'uploadURL'				=> Router::url('/files', TRUE),
+					'types'					=> $types
+				));
+
+			//Sets the KCFinder path
+			$kcfinder = sprintf('/kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $this->request->query['type']);
+			
+			$this->set(compact('kcfinder'));
+		}
+		
+		$this->set(array(
+			'title_for_layout'	=> __d('me_cms', 'Media browser'),
+			'types'				=> array_combine(array_keys($types), array_keys($types))
+		));
 	}
 	
 	/**

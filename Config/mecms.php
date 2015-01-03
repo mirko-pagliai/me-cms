@@ -4,6 +4,11 @@ $config = array('MeCms' => array(
 	'backend' => array(
 		//ID of the default users group
 		'default_group' => 3,
+		//KCFinder
+		'kcfinder' => array(
+			//KCFinder types. See http://kcfinder.sunhater.com/install#_types
+			'types' => array('images' => '*img')
+		),
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos_for_page' => 12,
 		//Number of records to show per page
