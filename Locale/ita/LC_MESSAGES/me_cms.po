@@ -1,11 +1,12 @@
 # LANGUAGE translation of MeCms
-# Copyright 2014 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
+# Mirko Pagliai, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2014-12-08 18:05+0100\n"
-"PO-Revision-Date: 2014-12-08 18:07+0100\n"
-"Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
+"POT-Creation-Date: 2015-01-03 17:41+0100\n"
+"PO-Revision-Date: 2015-01-03 17:44+0100\n"
+"Last-Translator: Mirko Pagliai\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -46,11 +47,11 @@ msgstr "Aggiungi banner"
 
 #: Controller/BannersController.php:115;145;165;172
 #: Controller/BannersPositionsController.php:83;110
-#: Controller/PagesController.php:106;133;221
+#: Controller/PagesController.php:106;133;222
 #: Controller/PhotosAlbumsController.php:87;114;178
-#: Controller/PhotosController.php:56;133;166;210
+#: Controller/PhotosController.php:56;133;166;211
 #: Controller/PostsCategoriesController.php:92;122
-#: Controller/PostsController.php:122;157;315
+#: Controller/PostsController.php:121;158;317
 #: Controller/UsersController.php:88;127;162
 #: Controller/UsersGroupsController.php:84;112
 msgid "Invalid object"
@@ -124,15 +125,15 @@ msgstr ""
 "Prima di cancellare questa posizione, devi cancellare i suoi banner o "
 "assegnarli a un'altra posizione"
 
-#: Controller/MeCmsAppController.php:99
+#: Controller/MeCmsAppController.php:101
 msgid "You need to login first"
 msgstr "Devi prima fare il login"
 
-#: Controller/MeCmsAppController.php:113
+#: Controller/MeCmsAppController.php:116
 msgid "The theme %s was not found"
 msgstr "Il tema %s non è stato trovato"
 
-#: Controller/PagesController.php:65;183
+#: Controller/PagesController.php:65;184
 #: View/Elements/frontend/topbar.ctp:46
 #: View/Elements/widgets/pages.ctp:36
 #: View/Helper/MenuHelper.php:97
@@ -281,11 +282,11 @@ msgstr "La foto è stata cancellata"
 msgid "The photo was not deleted"
 msgstr "La foto non è stata cancellata"
 
-#: Controller/PhotosController.php:220
+#: Controller/PhotosController.php:221
 msgid "Photo"
 msgstr "Foto"
 
-#: Controller/PostsCategoriesController.php:61;194
+#: Controller/PostsCategoriesController.php:61;195
 #: View/PostsCategories/admin_index.ctp:30
 #: View/PostsCategories/index.ctp:28
 msgid "Posts categories"
@@ -333,7 +334,7 @@ msgstr ""
 "Prima di cancellare questa categoria, devi cancellare i suoi articoli o "
 "assegnarli a un'altra categoria"
 
-#: Controller/PostsController.php:75;291
+#: Controller/PostsController.php:75;293
 #: View/Helper/MenuHelper.php:146
 #: View/Layouts/frontend.ctp:41
 #: View/Posts/admin_index.ctp:30
@@ -347,85 +348,89 @@ msgstr "Articoli"
 msgid "Before you can add a post, you have to create at least a category"
 msgstr "Prima di aggiungere un articolo, devi creare almeno una categoria"
 
-#: Controller/PostsController.php:100
+#: Controller/PostsController.php:103
 msgid "The post has been created"
 msgstr "L'articolo è stato creato"
 
-#: Controller/PostsController.php:104
+#: Controller/PostsController.php:107
 msgid "The post could not be created. Please, try again"
 msgstr "L'articolo non può essere creato. Prova ancora"
 
-#: Controller/PostsController.php:109
+#: Controller/PostsController.php:110
 #: View/Helper/MenuHelper.php:135
 #: View/Posts/admin_add.ctp:34;93
 msgid "Add post"
 msgstr "Aggiungi articolo"
 
-#: Controller/PostsController.php:130
+#: Controller/PostsController.php:135
 msgid "The post has been edited"
 msgstr "L'articolo è stato modificato"
 
-#: Controller/PostsController.php:134
+#: Controller/PostsController.php:139
 msgid "The post could not be edited. Please, try again"
 msgstr "L'articolo non può essere modificato. Prova ancora"
 
-#: Controller/PostsController.php:144
+#: Controller/PostsController.php:147
 #: View/Posts/admin_edit.ctp:34;91
 msgid "Edit post"
 msgstr "Modifica articolo"
 
-#: Controller/PostsController.php:162
+#: Controller/PostsController.php:163
 msgid "The post has been deleted"
 msgstr "L'articolo è stato cancellato"
 
-#: Controller/PostsController.php:164
+#: Controller/PostsController.php:165
 msgid "The post was not deleted"
 msgstr "L'articolo non è stato cancellato"
 
-#: Controller/PostsController.php:340
+#: Controller/PostsController.php:354
 msgid "You have to search at least a word of %d characters"
 msgstr "Devi cercare un parola di almeno %d caratteri"
 
-#: Controller/PostsController.php:344
-#: View/Elements/widgets/search.ctp:30
+#: Controller/PostsController.php:357
+#: View/Elements/widgets/search_posts.ctp:31
 #: View/Posts/search.ctp:28
 msgid "Search posts"
 msgstr "Cerca articoli"
 
-#: Controller/SystemsController.php:61
+#: Controller/SystemsController.php:62
 msgid "%s is not present into %s"
 msgstr "%s non è presente in %s"
 
-#: Controller/SystemsController.php:79
+#: Controller/SystemsController.php:68
+msgid "The directory %s is not readable or writable"
+msgstr "La directory %s non è leggibile o scrivibile"
+
+#: Controller/SystemsController.php:97
 #: View/Helper/MenuHelper.php:201
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: Controller/SystemsController.php:92
+#: Controller/SystemsController.php:112
 #: View/Helper/MenuHelper.php:199
 #: View/Systems/admin_cache.ctp:30
 msgid "Cache and thumbs"
 msgstr "Cache e miniature"
 
-#: Controller/SystemsController.php:142
+#: Controller/SystemsController.php:162
 #: View/Helper/MenuHelper.php:200
 #: View/Systems/admin_checkup.ctp:30
 msgid "System checkup"
 msgstr "Checkup del sistema"
 
-#: Controller/SystemsController.php:153
+#: Controller/SystemsController.php:173
 msgid "The cache has been cleared"
 msgstr "La cache è stata svuotata"
 
-#: Controller/SystemsController.php:155
+#: Controller/SystemsController.php:175
 msgid "The cache is not writable"
 msgstr "La cache non è scrivibile"
 
-#: Controller/SystemsController.php:168
+#: Controller/SystemsController.php:188
 msgid "Thumbnails have been deleted"
 msgstr "Le miniature sono state cancellate"
 
-#: Controller/SystemsController.php:170
+#: Controller/SystemsController.php:190
 msgid "Thumbnails have not been deleted"
 msgstr "Le miniature non sono state cancellate"
 
@@ -583,6 +588,7 @@ msgid "Banner"
 msgstr "Banner"
 
 #: View/Banners/admin_add.ctp:43
+#: View/Systems/admin_browser.ctp:52
 msgid "Select"
 msgstr "Seleziona"
 
@@ -701,6 +707,16 @@ msgstr "Sei sicuro di volerlo cancellare?"
 msgid "Name"
 msgstr "Nome"
 
+#: View/Elements/backend/footer.ctp:30
+#: View/Elements/frontend/footer.ctp:30
+msgid "Powered by %s. Copyright %s"
+msgstr "Powered by %s. Copyright %s"
+
+#: View/Elements/backend/footer.ctp:31
+#: View/Elements/frontend/footer.ctp:31
+msgid "Developed by %s for %s"
+msgstr "Sviluppato da %s per %s"
+
 #: View/Elements/backend/topbar.ctp:34
 #: View/Elements/frontend/topbar.ctp:44
 msgid "Home"
@@ -709,14 +725,6 @@ msgstr "Home"
 #: View/Elements/backend/topbar.ctp:51
 msgid "Logout"
 msgstr "Logout"
-
-#: View/Elements/frontend/footer.ctp:30
-msgid "Powered by %s. Copyright %s"
-msgstr "Powered by %s. Copyright %s"
-
-#: View/Elements/frontend/footer.ctp:31
-msgid "Developed by %s for %s"
-msgstr "Sviluppato da %s per %s"
 
 #: View/Elements/frontend/topbar.ctp:33
 msgid "Toggle navigation"
@@ -754,7 +762,8 @@ msgstr "Ultimi articoli"
 msgid "Random photo"
 msgstr "Foto casuale"
 
-#: View/Elements/widgets/search.ctp:35
+#: View/Elements/widgets/search_posts.ctp:36
+#: View/Posts/search.ctp:34;36
 msgid "Search"
 msgstr "Cerca"
 
@@ -818,7 +827,7 @@ msgstr "Sistema"
 msgid "The %s method does not exist"
 msgstr "Il metodo %s non esiste"
 
-#: View/Layouts/frontend.ctp:78
+#: View/Layouts/frontend.ctp:70
 msgid "Homepage"
 msgstr "Homepage"
 
@@ -1015,9 +1024,17 @@ msgstr "Autore"
 msgid "Category"
 msgstr "Categoria"
 
-#: View/Posts/search.ctp:31
+#: View/Posts/search.ctp:42
 msgid "You have searched for: %s"
 msgstr "Hai cercato: %s"
+
+#: View/Posts/search.ctp:45
+msgid "Number of results found: %d"
+msgstr "Numero di risultati trovati: %d"
+
+#: View/Posts/search.ctp:47
+msgid "No results found"
+msgstr "Nessun risultato trovato"
 
 #: View/PostsCategories/admin_add.ctp:37
 #: View/PostsCategories/admin_edit.ctp:37
@@ -1032,6 +1049,10 @@ msgstr "Lasciare vuoto per creare una categoria genitore"
 #: View/PostsCategories/admin_index.ctp:36
 msgid "Parent"
 msgstr "Genitore"
+
+#: View/Systems/admin_browser.ctp:46
+msgid "Type"
+msgstr "Tipo"
 
 #: View/Systems/admin_cache.ctp:32
 msgid "Cache"
@@ -1198,6 +1219,10 @@ msgstr "La directory delle miniature è leggibile e scrivibile"
 #: View/Systems/admin_checkup.ctp:118
 msgid "The thumbnail directory is not readable or writable"
 msgstr "La directory delle miniature non è leggibile o scrivibile"
+
+#: View/Systems/offline.ctp:27
+msgid "The website is temporarily offline"
+msgstr "Il sito è temporaneamente offline"
 
 #: View/Users/admin_add.ctp:38
 msgid "If is not active, the user won't be able to login"
