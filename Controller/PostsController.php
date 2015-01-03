@@ -91,7 +91,7 @@ class PostsController extends MeCmsAppController {
 		}
 		
 		//Gets users
-		$users = $this->Video->User->find('list', array('fields' => array('id', 'full_name')));
+		$users = $this->Post->User->find('list', array('fields' => array('id', 'full_name')));
 		
 		if($this->request->is('post')) {
 			//Only admins and managers can add posts on behalf of other users
@@ -124,7 +124,7 @@ class PostsController extends MeCmsAppController {
 		$categories = $this->Post->Category->generateTreeList();
 		
 		//Gets users
-		$users = $this->Video->User->find('list', array('fields' => array('id', 'full_name')));
+		$users = $this->Post->User->find('list', array('fields' => array('id', 'full_name')));
 					
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Only admins and managers can edit posts on behalf of other users
