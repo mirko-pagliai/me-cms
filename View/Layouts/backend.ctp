@@ -45,6 +45,7 @@
 				'/MeTools/css/font-awesome.min'
 			), array(
 				'/MeTools/css/bootstrap.min',
+				'/MeTools/css/font-awesome.min',
 				'/MeTools/css/default',
 				'/MeTools/css/forms',
 				'/MeCms/css/backend/layout',
