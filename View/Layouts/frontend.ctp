@@ -41,8 +41,10 @@
 			echo $this->Html->meta(__d('me_cms', 'Posts'), '/rss', array('type' => 'rss'));
 			echo $this->fetch('meta');
 
-			echo $this->Layout->css('/MeCms/assets/frontend.min.css', array(
-				'/MeTools/css/font-awesome.min',
+			echo $this->Layout->css(array(
+				'/MeCms/assets/frontend.min.css',
+				'/MeTools/css/font-awesome.min'
+			), array(
 				'/MeTools/css/bootstrap.min',
 				'/MeTools/css/default',
 				'/MeTools/css/forms',

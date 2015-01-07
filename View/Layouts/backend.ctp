@@ -40,8 +40,10 @@
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
 			echo $this->fetch('meta');
 			
-			echo $this->Layout->css('/MeCms/assets/backend.min.css', array(
-				'/MeTools/css/font-awesome.min',
+			echo $this->Layout->css(array(
+				'/MeCms/assets/backend.min.css',
+				'/MeTools/css/font-awesome.min'
+			), array(
 				'/MeTools/css/bootstrap.min',
 				'/MeTools/css/default',
 				'/MeTools/css/forms',
