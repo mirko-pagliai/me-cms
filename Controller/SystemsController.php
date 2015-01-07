@@ -64,34 +64,17 @@ class SystemsController extends MeCmsAppController {
 		}
 		
 		//Checks for uploads directory (`APP/webroot/files`)
-		if(!is_writable($path = WWW_ROOT.'files')) {
-			$this->Session->flash(__d('me_cms', 'The directory %s is not readable or writable', $path), 'error');
+		if(!is_writable(WWW_ROOT.'files')) {
+			$this->Session->flash(__d('me_cms', 'The directory %s is not readable or writable', WWW_ROOT.'files'), 'error');
 			$this->redirect('/admin');
 		}
 		
 		//Gets types
 		$types = $this->config['kcfinder']['types'];
 		
-		if(!empty($this->request->query['type']) && array_key_exists($this->request->query['type'], $types)) {
-			//Sets the KCFinder session values
-			if(!$this->Session->check('KCFINDER'))
-				$this->Session->write('KCFINDER', array(
-					'denyExtensionRename'	=> TRUE,
-					'denyUpdateCheck'		=> TRUE,
-					'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
-					'disabled'				=> FALSE,
-					'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
-					'jpegQuality'			=> 100,
-					'uploadDir'				=> $path,
-					'uploadURL'				=> Router::url('/files', TRUE),
-					'types'					=> $types
-				));
-
-			//Sets the KCFinder path
-			$kcfinder = sprintf('/kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $this->request->query['type']);
-			
-			$this->set(compact('kcfinder'));
-		}
+		//Checks the type, then sets the KCFinder path
+		if(!empty($this->request->query['type']) && array_key_exists($this->request->query['type'], $types))
+			$this->set('kcfinder', sprintf('/kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $this->request->query['type']));
 		
 		$this->set(array(
 			'title_for_layout'	=> __d('me_cms', 'Media browser'),

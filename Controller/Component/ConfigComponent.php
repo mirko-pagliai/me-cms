@@ -31,6 +31,12 @@ App::uses('Component', 'Controller');
  */
 class ConfigComponent extends Component {
 	/**
+	 * Components
+	 * @var array
+	 */
+	public $components = array('Session' => array('className' => 'MeTools.MeSession'));
+	
+	/**
 	 * Controller
 	 * @var Object, controller 
 	 */
@@ -42,26 +48,6 @@ class ConfigComponent extends Component {
 	 */
 	protected function _debugForLocalhost() {
 		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.debug_on_localhost');
-	}
-	
-	/**
-	 * Turns a string of words separated by commas (and optional spaces) into an array.
-	 * 
-	 * For example:
-	 * <pre>'alfa, beta, gamma'</pre>
-	 * 
-	 * Becomes:
-	 * <code>array(
-	 *	(int) 0 => 'alfa',
-	 *	(int) 1 => 'beta',
-	 *	(int) 2 => 'gamma'
-	 * )
-	 * </code>
-	 * @param string $string String of words separated by commas (and optional spaces)
-	 * @return mixed Array of values
-	 */
-	protected function _turnsAsArray($string) {
-		return explode(',', preg_replace('/\s/', NULL, trim($string)));
 	}
 
 	/**
@@ -99,6 +85,44 @@ class ConfigComponent extends Component {
 		else
 			Configure::write('MeCms', am(Configure::read('MeCms.frontend'), Configure::read('MeCms.general')));
 	}
+	
+	/**
+	 * Sets the KCFinder session values
+	 * @return bool
+	 */
+	protected function _setKcfinder() {		
+		return $this->Session->write('KCFINDER', array(
+			'denyExtensionRename'	=> TRUE,
+			'denyUpdateCheck'		=> TRUE,
+			'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
+			'disabled'				=> FALSE,
+			'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
+			'jpegQuality'			=> 100,
+			'uploadDir'				=> WWW_ROOT.'files',
+			'uploadURL'				=> Router::url('/files', TRUE),
+			'types'					=> Configure::read('MeCms.kcfinder.types')
+		));
+	}
+	
+	/**
+	 * Turns a string of words separated by commas (and optional spaces) into an array.
+	 * 
+	 * For example:
+	 * <pre>'alfa, beta, gamma'</pre>
+	 * 
+	 * Becomes:
+	 * <code>array(
+	 *	(int) 0 => 'alfa',
+	 *	(int) 1 => 'beta',
+	 *	(int) 2 => 'gamma'
+	 * )
+	 * </code>
+	 * @param string $string String of words separated by commas (and optional spaces)
+	 * @return mixed Array of values
+	 */
+	protected function _turnsAsArray($string) {
+		return explode(',', preg_replace('/\s/', NULL, trim($string)));
+	}
 
 	/**
 	 * Is called after the controller executes the requested action's logic, 
@@ -117,6 +141,7 @@ class ConfigComponent extends Component {
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
 	 * @uses _debugForLocalhost()
 	 * @uses _setConfig()
+	 * @uses _setKcfinder()
 	 * @uses MeCmsAppController::config
 	 */
 	public function initialize(Controller $controller) {
@@ -136,6 +161,8 @@ class ConfigComponent extends Component {
 		Configure::write('Cache.disable', !Configure::read('MeCms.cache'));
 		//Sets the session timeout
 		Configure::write('Session.timeout', Configure::read('MeCms.timeout'));
+		//Sets the KCFinder session values
+		$this->_setKcfinder();
 		
 		//Sets the configuration so that the controller can read it
 		$controller->config = Configure::read('MeCms');
