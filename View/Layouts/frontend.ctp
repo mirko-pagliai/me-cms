@@ -35,6 +35,11 @@
 				echo $this->Html->title($config['title']);
 			else
 				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['title']));
+			
+			if(!empty($image_src)) {
+				echo $this->Html->meta(array('href' => $image_src, 'rel' => 'image_src'));
+				echo $this->Html->meta(array('content' => $image_src, 'property' => 'og:image'));
+			}
 
 			echo $this->Html->viewport();
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
