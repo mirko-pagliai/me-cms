@@ -25,4 +25,5 @@
 
 <?php
 	echo $this->Html->para(NULL, empty($config['offline_text']) ? __d('me_cms', 'The website is temporarily offline') : $config['offline_text']);
+	echo $this->Html->linkButton(__d('me_cms', 'Try again'), '/', array('class' => 'btn-primary', 'icon' => 'refresh'));
 ?>

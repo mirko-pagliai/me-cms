@@ -196,6 +196,10 @@ class SystemsController extends MeCmsAppController {
 	 * Offline page
 	 */
 	public function offline() {
+		//If the site has not been taken offline
+		if(!$this->config['offline'])
+			$this->redirect('/');
+		
 		//Sets the layout
 		$this->layout = 'MeCms.users';
 		

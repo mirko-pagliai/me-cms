@@ -42,6 +42,7 @@
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('/MeCms/assets/users.min.css', array(
+				'/MeTools/css/font-awesome.min',
 				'/MeTools/css/bootstrap.min',
 				'/MeTools/css/default',
 				'/MeTools/css/forms',
