@@ -114,6 +114,13 @@ class Banner extends MeCmsAppModel {
     }
 	
 	/**
+	 * Called after every deletion operation.
+	 */
+	public function afterDelete() {
+		Cache::clearGroup('banners', 'banners');
+	}
+	
+	/**
 	 * Called after each find operation. Can be used to modify any results returned by find().
 	 * @param mixed $results The results of the find operation
 	 * @param boolean $primary Whether this model is being queried directly

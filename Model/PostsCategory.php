@@ -132,6 +132,13 @@ class PostsCategory extends MeCmsAppModel {
 	);
 	
 	/**
+	 * Called after every deletion operation.
+	 */
+	public function afterDelete() {
+		Cache::clearGroup('posts', 'posts');
+	}
+	
+	/**
 	 * "Active" find method. It finds for active records.
 	 * @param string $state Either "before" or "after"
 	 * @param array $query

@@ -82,6 +82,13 @@ class BannersPosition extends MeCmsAppModel {
 	);
 	
 	/**
+	 * Called after every deletion operation.
+	 */
+	public function afterDelete() {
+		Cache::clearGroup('banners', 'banners');
+	}
+	
+	/**
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save()
