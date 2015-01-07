@@ -319,13 +319,13 @@ class PostsController extends MeCmsAppController {
 			//Gets the first image for the "image_src" tag
 			preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $post['Post']['text'], $matches);
 			if(!empty($matches[2]))
-				$post['Post']['thumbnail'] = Router::url($matches[2], TRUE);
+				$post['Post']['preview'] = Router::url($matches[2], TRUE);
 		
             Cache::write($cache, $post, 'posts');			
 		}
 		
 		$this->set(am(array(
-			'image_src'			=> $post['Post']['thumbnail'],
+			'image_src'			=> $post['Post']['preview'],
 			'title_for_layout'	=> $post['Post']['title']
 		), compact('post')));
 	}
