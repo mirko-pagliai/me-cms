@@ -62,6 +62,7 @@ class MenuHelper extends MeHtmlHelper {
 		
 		$menu = array(
 			$this->link(__d('me_cms', 'List banners'),		array('controller' => 'banners', 'action' => 'index', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Upload banner'),		array('controller' => 'banners', 'action' => 'upload', 'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'Add banner'),		array('controller' => 'banners', 'action' => 'add', 'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'List positions'),	array('controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'Add position'),		array('controller' => 'banners_positions', 'action' => 'add', 'plugin' => 'me_cms'))
