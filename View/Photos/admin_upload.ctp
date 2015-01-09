@@ -30,7 +30,7 @@
 
 <div class="photos form">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Upload photo'));
+		echo $this->Html->h2(__d('me_cms', 'Upload photos'));
 		echo $this->element('backend/uploader/form');
 	?>
 </div>

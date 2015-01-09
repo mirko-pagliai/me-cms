@@ -76,7 +76,7 @@ class BannersController extends MeCmsAppController {
 		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
 			$this->upload($this->request->params['form']['file'], $target);
 		
-		$this->set('title_for_layout', __d('me_cms', 'Upload banner'));
+		$this->set('title_for_layout', __d('me_cms', 'Upload banners'));
 	}
 	
 	/**
