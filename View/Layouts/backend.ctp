@@ -88,5 +88,6 @@
 				?>
 			<?php endif; ?>
 		</div>
+		<?php echo $this->fetch('script_bottom'); ?>
 	</body>
 </html>
