@@ -8,7 +8,7 @@
 	<title>File MeCmsAppController.php | MeCms</title>
 
 	<script type="text/javascript" src="resources/combined.js?117538352"></script>
-	<script type="text/javascript" src="elementlist.js?4244670446"></script>
+	<script type="text/javascript" src="elementlist.js?3434421879"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
@@ -330,7 +330,35 @@
 </span><span id="230" class="l"><a class="l" href="#230">230: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_isRequestAction" href="#_isRequestAction">isRequestAction</a>() {
 </span><span id="231" class="l"><a class="l" href="#231">231: </a>        <span class="php-keyword1">return</span> !<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'requested'</span>]);
 </span><span id="232" class="l"><a class="l" href="#232">232: </a>    }
-</span><span id="233" class="l"><a class="l" href="#233">233: </a></span>}</code></pre>
+</span><span id="233" class="l"><a class="l" href="#233">233: </a>    
+</span><span id="234" class="l"><a class="l" href="#234">234: </a>    <span class="php-comment">/**
+</span></span><span id="235" class="l"><a class="l" href="#235">235: </a><span class="php-comment">     * Uploads a file
+</span></span><span id="236" class="l"><a class="l" href="#236">236: </a><span class="php-comment">     * @param array $file File ($_FILE)
+</span></span><span id="237" class="l"><a class="l" href="#237">237: </a><span class="php-comment">     * @param string $target Target directory
+</span></span><span id="238" class="l"><a class="l" href="#238">238: </a><span class="php-comment">     */</span>
+</span><span id="239" class="l"><a class="l" href="#239">239: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> <a id="_upload" href="#_upload">upload</a>(<span class="php-var">$file</span>, <span class="php-var">$target</span>) {     
+</span><span id="240" class="l"><a class="l" href="#240">240: </a>        <span class="php-comment">//Checks if the file was successfully uploaded</span>
+</span><span id="241" class="l"><a class="l" href="#241">241: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$file</span>[<span class="php-quote">'error'</span>]) &amp;&amp; <span class="php-var">$file</span>[<span class="php-quote">'error'</span>] == UPLOAD_ERR_OK &amp;&amp; <span class="php-keyword2">is_uploaded_file</span>(<span class="php-var">$file</span>[<span class="php-quote">'tmp_name'</span>])) {
+</span><span id="242" class="l"><a class="l" href="#242">242: </a>            <span class="php-comment">//Updated the target, adding the file name</span>
+</span><span id="243" class="l"><a class="l" href="#243">243: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">file_exists</span>(<span class="php-var">$target</span>.DS.<span class="php-var">$file</span>[<span class="php-quote">'name'</span>]))
+</span><span id="244" class="l"><a class="l" href="#244">244: </a>                <span class="php-var">$target</span> = <span class="php-var">$target</span>.DS.<span class="php-var">$file</span>[<span class="php-quote">'name'</span>];
+</span><span id="245" class="l"><a class="l" href="#245">245: </a>            <span class="php-comment">//If the file already exists, adds the name of the temporary file to the file name</span>
+</span><span id="246" class="l"><a class="l" href="#246">246: </a>            <span class="php-keyword1">else</span>
+</span><span id="247" class="l"><a class="l" href="#247">247: </a>                <span class="php-var">$target</span> = <span class="php-var">$target</span>.DS.<span class="php-keyword2">pathinfo</span>(<span class="php-var">$file</span>[<span class="php-quote">'name'</span>], PATHINFO_FILENAME).<span class="php-quote">'_'</span>.<span class="php-keyword2">basename</span>(<span class="php-var">$file</span>[<span class="php-quote">'tmp_name'</span>]).<span class="php-quote">'.'</span>.<span class="php-keyword2">pathinfo</span>(<span class="php-var">$file</span>[<span class="php-quote">'name'</span>], PATHINFO_EXTENSION);
+</span><span id="248" class="l"><a class="l" href="#248">248: </a>
+</span><span id="249" class="l"><a class="l" href="#249">249: </a>            <span class="php-comment">//Checks if the file was successfully moved to the target directory</span>
+</span><span id="250" class="l"><a class="l" href="#250">250: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">move_uploaded_file</span>(<span class="php-var">$file</span>[<span class="php-quote">'tmp_name'</span>], <span class="php-var">$file</span>[<span class="php-quote">'target'</span>] = <span class="php-var">$target</span>))
+</span><span id="251" class="l"><a class="l" href="#251">251: </a>                <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'error'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The file was not successfully moved to the target directory'</span>));
+</span><span id="252" class="l"><a class="l" href="#252">252: </a>        }
+</span><span id="253" class="l"><a class="l" href="#253">253: </a>        <span class="php-keyword1">else</span>
+</span><span id="254" class="l"><a class="l" href="#254">254: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'error'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The file was not successfully uploaded'</span>));
+</span><span id="255" class="l"><a class="l" href="#255">255: </a>
+</span><span id="256" class="l"><a class="l" href="#256">256: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'file'</span>));
+</span><span id="257" class="l"><a class="l" href="#257">257: </a>
+</span><span id="258" class="l"><a class="l" href="#258">258: </a>        <span class="php-comment">//Renders</span>
+</span><span id="259" class="l"><a class="l" href="#259">259: </a>        <span class="php-var">$this</span>-&gt;render(<span class="php-quote">'Elements/backend/uploader/response'</span>, <span class="php-keyword1">FALSE</span>);
+</span><span id="260" class="l"><a class="l" href="#260">260: </a>    }
+</span><span id="261" class="l"><a class="l" href="#261">261: </a></span>}</code></pre>
 
 	<div id="footer">
 		MeCms API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
