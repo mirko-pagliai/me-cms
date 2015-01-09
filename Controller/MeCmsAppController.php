@@ -230,4 +230,32 @@ class MeCmsAppController extends AppController {
 	public function isRequestAction() {
 		return !empty($this->request->params['requested']);
 	}
+	
+	/**
+	 * Uploads a file
+	 * @param array $file File ($_FILE)
+	 * @param string $target Target directory
+	 */
+	protected function upload($file, $target) {		
+		//Checks if the file was successfully uploaded
+		if(isset($file['error']) && $file['error'] == UPLOAD_ERR_OK && is_uploaded_file($file['tmp_name'])) {
+			//Updated the target, adding the file name
+			if(!file_exists($target.DS.$file['name']))
+				$target = $target.DS.$file['name'];
+			//If the file already exists, adds the name of the temporary file to the file name
+			else
+				$target = $target.DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
+
+			//Checks if the file was successfully moved to the target directory
+			if(!move_uploaded_file($file['tmp_name'], $file['target'] = $target))
+				$this->set('error', __d('me_cms', 'The file was not successfully moved to the target directory'));
+		}
+		else
+			$this->set('error', __d('me_cms', 'The file was not successfully uploaded'));
+
+		$this->set(compact('file'));
+
+		//Renders
+		$this->render('Elements/backend/uploader/response', FALSE);
+	}
 }
