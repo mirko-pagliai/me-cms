@@ -68,6 +68,27 @@ class PhotosController extends MeCmsAppController {
 	}
 
 	/**
+	 * Upload photo
+	 * @throws InternalErrorException
+	 * @uses PhotoManager::getTmpPath()
+	 * @uses MeCmsAppController::upload()
+	 */
+	public function admin_upload() {
+		//Gets the target directory
+		$target = PhotoManager::getTmpPath();
+		
+		//Checks if the target directory is writable
+		if(!is_writable($target))
+			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
+		
+		//Uploads the file
+		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
+			$this->upload($this->request->params['form']['file'], $target);
+		
+		$this->set('title_for_layout', __d('me_cms', 'Upload photo'));
+	}
+
+	/**
 	 * Add photo from the tmp directory (`APP/tmp/uploads/photos`)
 	 * @uses PhotoManager::getTmp()
 	 * @uses PhotoManager::getTmpPath()
@@ -88,8 +109,8 @@ class PhotosController extends MeCmsAppController {
 		
 		//Checks for temporary files
 		if(empty($tmpFiles)) {
-			$this->Session->flash(__d('me_cms', 'There are no photos in the temporary directory %s', $tmpPath), 'error');
-			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
+			$this->Session->flash(__d('me_cms', 'Before you can add a photo, you have to upload a photo'), 'error');
+			$this->redirect(array('action' => 'upload'));
 		}
 		
 		if($this->request->is('post')) {

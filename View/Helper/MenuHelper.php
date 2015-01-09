@@ -110,9 +110,10 @@ class MenuHelper extends MeHtmlHelper {
 	 */
 	protected function _photos($type) {
 		$menu = array(
-			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add', 'plugin' => 'me_cms'))
+			$this->link(__d('me_cms', 'Upload photos'),	array('controller' => 'photos',			'action' => 'upload',	'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add photos'),	array('controller' => 'photos',			'action' => 'add',		'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'List albums'),	array('controller' => 'photos_albums',	'action' => 'index',	'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add album'),		array('controller' => 'photos_albums',	'action' => 'add',		'plugin' => 'me_cms'))
 		);
 		
 		if($type == 'dropdown')
