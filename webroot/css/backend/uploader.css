@@ -1,0 +1,38 @@
+/*!
+ * This file is part of MeCms.
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ */
+
+/* -------------------------------- */
+/*				Uploader			*/
+/* -------------------------------- */
+/* Uploader, upload area and upload info */
+#uploader .upload-area, 
+#uploader .upload-info {
+	margin-bottom: 20px;
+}
+
+/* Uploader, upload area */
+#uploader .upload-area {
+    background-color: #eee;
+    font-size: 20px;
+    margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+    text-align: center;
+}
+
+/* Uploader, upload area, icon */
+#uploader .upload-area .fa {
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+/* Hides the info wrapper, the progress bar and the error message */
+#uploader .upload-info,
+#uploader .progress,
+#uploader .upload-error {
+	display: none;
+}

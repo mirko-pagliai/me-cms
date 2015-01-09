@@ -59,6 +59,52 @@ class BannersController extends MeCmsAppController {
 	}
 
 	/**
+	 * Upload banner
+	 * @throws InternalErrorException
+	 */
+	public function admin_upload() {
+		//Gets the target directory
+		$target = BannerManager::getTmpPath();
+		
+		//Checks if the target directory is writable
+		if(!is_writable($target))
+			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
+		
+		$error = FALSE;
+		
+		if($this->request->is('post')) {
+			if(!empty($this->request->params['form']['file'])) {
+				$file = $this->request->params['form']['file'];
+				
+				//Checks if the file was successfully uploaded
+				if($file['error'] == UPLOAD_ERR_OK and is_uploaded_file($file['tmp_name'])) {
+					//Updated the target, adding the file name
+					if(!file_exists($target.DS.$file['name']))
+						$target = $target.DS.$file['name'];
+					//If the file already exists, adds the name of the temporary file to the file name
+					else
+						$target = $target.DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
+					
+					//Checks if the file was successfully moved to the target directory
+					if(!move_uploaded_file($file['tmp_name'], $file['target'] = $target))
+						$error = __d('me_cms', 'The file was not successfully moved to the target directory');
+				}
+				else
+					$error = __d('me_cms', 'The file was not successfully uploaded');
+				
+				$this->set(compact('file'));				
+			}
+			else
+				$error = __d('me_cms', 'An error occurred');
+			
+			$this->set(compact('error'));		
+			
+			//Renders
+			$this->render('Elements/backend/uploader/response', FALSE);
+		}
+	}
+	
+	/**
 	 * Add banner
 	 * @uses BannerManager::getTmp()
 	 * @uses BannerManager::getTmpPath()
@@ -74,8 +120,8 @@ class BannersController extends MeCmsAppController {
 		//Gets the temporary files and checks
 		$tmpFiles = BannerManager::getTmp();
 		if(empty($tmpFiles)) {
-			$this->Session->flash(__d('me_cms', 'There are no files in the temporary directory %s', BannerManager::getTmpPath()), 'error');
-			$this->redirect(array('action' => 'index'));
+			$this->Session->flash(__d('me_cms', 'Before you can add a banner, you have to upload a banner'), 'error');
+			$this->redirect(array('action' => 'upload'));
 		}
 		
 		//Sets values as keys

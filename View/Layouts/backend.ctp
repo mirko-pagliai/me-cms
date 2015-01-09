@@ -49,7 +49,8 @@
 				'/MeTools/css/default',
 				'/MeTools/css/forms',
 				'/MeCms/css/backend/layout',
-				'/MeCms/css/backend/photos'
+				'/MeCms/css/backend/photos',
+				'/MeCms/css/backend/uploader'
 			));
 			echo $this->fetch('css');
 			
