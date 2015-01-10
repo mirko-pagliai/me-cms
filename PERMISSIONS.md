@@ -8,8 +8,14 @@ Gli amministratori e i manager possono cancellare gli articoli.
 ### Categorie articoli
 Gli amministratori e i manager possono visualizzare, aggiungere, modificare e cancellare le categorie di articoli.
 
+### Banner
+Gli amministratori e i manager possono visualizzare, caricare, aggiungere, modificare ed eliminare i banner.
+
+### Posizione banner
+Gli amministratori possono visualizzare, aggiungere, modificare ed eliminare le posizioni dei banner.
+
 ### Foto
-Gli utenti possono visualizzare, aggiungere e modificare le foto.
+Gli utenti possono visualizzare, caricare, aggiungere e modificare le foto.
 Gli amministratori e i manager possono eliminare le foto.
 
 ### Album fotografici
