@@ -52,21 +52,26 @@ class MenuHelper extends MeHtmlHelper {
 	 * @return mixed Menu
 	 * @uses link()
 	 * @uses AuthHelper::isAdmin()
+	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
 	 */
 	protected function _banners($type) {
-		//Only admins can access these controllers
-		if(!$this->Auth->isAdmin())
+		//Only admins and managers can access these controllers
+		if(!$this->Auth->isManager())
 			return array();
 		
 		$menu = array(
-			$this->link(__d('me_cms', 'List banners'),		array('controller' => 'banners', 'action' => 'index', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Upload banner'),		array('controller' => 'banners', 'action' => 'upload', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Add banner'),		array('controller' => 'banners', 'action' => 'add', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'List positions'),	array('controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Add position'),		array('controller' => 'banners_positions', 'action' => 'add', 'plugin' => 'me_cms'))
+			$this->link(__d('me_cms', 'List banners'),	array('controller' => 'banners', 'action' => 'index',	'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Upload banner'),	array('controller' => 'banners', 'action' => 'upload',	'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Add banner'),	array('controller' => 'banners', 'action' => 'add',		'plugin' => 'me_cms'))
 		);
+		
+		//Only admin can access this controller
+		if($this->Auth->isAdmin()) {
+			$menu[] = $this->link(__d('me_cms', 'List positions'),	array('controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'me_cms'));
+			$menu[] = $this->link(__d('me_cms', 'Add position'),	array('controller' => 'banners_positions', 'action' => 'add',	'plugin' => 'me_cms'));
+		}
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Banners'), array('icon' => 'dollar')).PHP_EOL.$this->Dropdown->dropdown($menu);
