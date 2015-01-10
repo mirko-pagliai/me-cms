@@ -50,7 +50,6 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "banners" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
-	 * @uses link()
 	 * @uses AuthHelper::isAdmin()
 	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
@@ -83,7 +82,6 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "pages" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
-	 * @uses link()
 	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
@@ -109,7 +107,6 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "photos" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
-	 * @uses link()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
 	 */
@@ -131,7 +128,6 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "posts" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
-	 * @uses link()
 	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
@@ -139,14 +135,14 @@ class MenuHelper extends MeHtmlHelper {
 	protected function _posts($type) {
 		$menu = array(
 			$this->link(__d('me_cms', 'List posts'),	array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Add post'),		array('controller' => 'posts', 'action' => 'add', 'plugin' => 'me_cms'))
+			$this->link(__d('me_cms', 'Add post'),		array('controller' => 'posts', 'action' => 'add',	'plugin' => 'me_cms'))
 		);
 		
 		//Only admins and managers can access these actions
 		if($this->Auth->isManager())
 			$menu = am($menu, array(
-				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'posts_categories', 'action' => 'index', 'plugin' => 'me_cms')),
-				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'posts_categories', 'action' => 'add', 'plugin' => 'me_cms'))
+				$this->link(__d('me_cms', 'List categories'),	array('controller' => 'posts_categories', 'action' => 'index',	'plugin' => 'me_cms')),
+				$this->link(__d('me_cms', 'Add category'),		array('controller' => 'posts_categories', 'action' => 'add',	'plugin' => 'me_cms'))
 			));
 		
 		if($type == 'dropdown')
@@ -159,7 +155,6 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "users" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
-	 * @uses link()
 	 * @uses AuthHelper::isAdmin()
 	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
@@ -172,14 +167,14 @@ class MenuHelper extends MeHtmlHelper {
 		
 		$menu = array(
 			$this->link(__d('me_cms', 'List users'),	array('controller' => 'users', 'action' => 'index', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Add user'),		array('controller' => 'users', 'action' => 'add', 'plugin' => 'me_cms'))
+			$this->link(__d('me_cms', 'Add user'),		array('controller' => 'users', 'action' => 'add',	'plugin' => 'me_cms'))
 		);
 		
 		//Only admins can access these actions
 		if($this->Auth->isAdmin())
 			$menu = am($menu, array(
-				$this->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups', 'action' => 'index', 'plugin' => 'me_cms')),
-				$this->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups', 'action' => 'add', 'plugin' => 'me_cms'))
+				$this->link(__d('me_cms', 'List groups'),	array('controller' => 'users_groups', 'action' => 'index',	'plugin' => 'me_cms')),
+				$this->link(__d('me_cms', 'Add group'),		array('controller' => 'users_groups', 'action' => 'add',	'plugin' => 'me_cms'))
 			));
 		
 		if($type == 'dropdown')
@@ -192,7 +187,6 @@ class MenuHelper extends MeHtmlHelper {
 	 * Internal function to generate the menu for "systems" actions.
 	 * @param string $type Type of menu
 	 * @return mixed Menu
-	 * @uses link()
 	 * @uses AuthHelper::isAdmin()
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
@@ -203,7 +197,7 @@ class MenuHelper extends MeHtmlHelper {
 			return array();
 		
 		$menu = array(
-			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache', 'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache',	'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup', 'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'Media browser'),		array('controller' => 'systems', 'action' => 'browser', 'plugin' => 'me_cms'))
 		);
