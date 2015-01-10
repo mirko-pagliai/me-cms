@@ -37,7 +37,7 @@
 			else
 				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['title']));
 			
-			echo $this->Html->viewport();
+			echo $this->Layout->viewport();
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
 			echo $this->fetch('meta');
 			

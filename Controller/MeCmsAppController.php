@@ -68,7 +68,7 @@ class MeCmsAppController extends AppController {
 		'Dropdown'	=> array('className' => 'MeTools.Dropdown'),
 		'Form'		=> array('className' => 'MeTools.MeForm'),
 		'Html'		=> array('className' => 'MeTools.MeHtml'),
-		'Layout'	=> array('className' => 'MeCms.Layout'),
+		'Layout'	=> array('className' => 'MeTools.Layout'),
 		'Library'	=> array('className' => 'MeTools.Library'),
 		'Paginator'	=> array('className' => 'MeTools.MePaginator')
 	);
