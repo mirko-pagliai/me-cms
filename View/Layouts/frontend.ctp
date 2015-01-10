@@ -117,9 +117,11 @@
 				
 				if(!empty($config['analytics']))
 					echo $this->Library->analytics($config['analytics'], array('block' => 'script_bottom'));
-				
-				echo $this->fetch('script_bottom');
 			?>
 		</div>
+		<?php
+			echo $this->fetch('css_bottom');
+			echo $this->fetch('script_bottom');
+		?>
 	</body>
 </html>

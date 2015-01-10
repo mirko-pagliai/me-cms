@@ -73,6 +73,7 @@
 		</div>
 		<?php
 			echo $this->Html->div('container', $this->element('MeTools.sql_dump'));
+			echo $this->fetch('css_bottom');
 			echo $this->fetch('script_bottom');
 		?>
 	</body>
