@@ -154,7 +154,7 @@ AppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-Photo.html#30-162" title="Go to source code">Photo.php</a><br>
+		<b>Located at</b> <a href="source-class-Photo.html#30-167" title="Go to source code">Photo.php</a><br>
 	</div>
 
 
@@ -172,7 +172,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterDelete">#</a>
-		<code><a href="source-class-Photo.html#90-95" title="Go to source code">afterDelete</a>( )</code>
+		<code><a href="source-class-Photo.html#95-100" title="Go to source code">afterDelete</a>( )</code>
 
 		<div class="description short">
 			
@@ -205,7 +205,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterFind">#</a>
-		<code><a href="source-class-Photo.html#97-114" title="Go to source code">afterFind</a>( <span>mixed <var>$results</var></span>, <span>boolean <var>$primary</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Photo.html#102-119" title="Go to source code">afterFind</a>( <span>mixed <var>$results</var></span>, <span>boolean <var>$primary</var> = <span class="php-keyword1">FALSE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -255,7 +255,7 @@ by find().</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-Photo.html#116-128" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Photo.html#121-133" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -299,7 +299,7 @@ by find().</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeDelete">#</a>
-		<code><a href="source-class-Photo.html#130-145" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+		<code><a href="source-class-Photo.html#135-150" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -345,7 +345,7 @@ by find().</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-Photo.html#147-161" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Photo.html#152-166" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -443,7 +443,7 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Photo.html#40-76" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-Photo.html#40-81" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -460,6 +460,11 @@ to halt the save.</p>
 			<span class="php-quote">'last'</span>		=&gt; <span class="php-keyword1">FALSE</span>,
 			<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'This extension is invalid'</span>,
 			<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'extension'</span>, <span class="php-keyword1">array</span>(<span class="php-quote">'gif'</span>, <span class="php-quote">'jpg'</span>, <span class="php-quote">'jpeg'</span>, <span class="php-quote">'png'</span>))
+		),
+		<span class="php-quote">'maxLength'</span> =&gt; <span class="php-keyword1">array</span>(
+			<span class="php-quote">'last'</span>		=&gt; <span class="php-keyword1">FALSE</span>,
+			<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'Must be at most %d chars'</span>,
+			<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">255</span>)
 		),
 		<span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
 			<span class="php-quote">'last'</span>		=&gt; <span class="php-keyword1">FALSE</span>,
@@ -502,7 +507,7 @@ to halt the save.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Photo.html#78-88" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-Photo.html#83-93" title="Go to source code"><var>$belongsTo</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Album'</span> =&gt; <span class="php-keyword1">array</span>(

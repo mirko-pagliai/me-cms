@@ -154,7 +154,7 @@ AppModel
 				<b>Author:</b>
 				Mirko Pagliai &lt;<a
 href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a>&gt;<br>
-		<b>Located at</b> <a href="source-class-User.html#30-283" title="Go to source code">User.php</a><br>
+		<b>Located at</b> <a href="source-class-User.html#30-286" title="Go to source code">User.php</a><br>
 	</div>
 
 
@@ -172,7 +172,7 @@ href="mailto:mirko.pagliai&#64;gmail.com">mirko.pagliai&#64;<!-- -->gmail.com</a
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-User.html#206-221" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#209-224" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -218,7 +218,7 @@ to halt the save.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeValidate">#</a>
-		<code><a href="source-class-User.html#223-234" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#226-237" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -260,7 +260,7 @@ to halt the save.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_oldPasswordIsRight">#</a>
-		<code><a href="source-class-User.html#236-251" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#239-254" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
 
 		<div class="description short">
 			
@@ -309,7 +309,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordsMatch">#</a>
-		<code><a href="source-class-User.html#253-262" title="Go to source code">passwordsMatch</a>( )</code>
+		<code><a href="source-class-User.html#256-265" title="Go to source code">passwordsMatch</a>( )</code>
 
 		<div class="description short">
 			
@@ -346,7 +346,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordIsStrong">#</a>
-		<code><a href="source-class-User.html#264-282" title="Go to source code">passwordIsStrong</a>( )</code>
+		<code><a href="source-class-User.html#267-285" title="Go to source code">passwordIsStrong</a>( )</code>
 
 		<div class="description short">
 			
@@ -485,7 +485,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#52-180" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-User.html#52-183" title="Go to source code"><var>$validate</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -533,6 +533,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		<span class="php-comment">//On &quot;create&quot;, the field must be filled</span>
 		<span class="php-quote">'minLengthOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
 			<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">FALSE</span>,
+			<span class="php-quote">'last'</span>			=&gt; <span class="php-keyword1">FALSE</span>,
 			<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'Must be at least %d characters'</span>,
 			<span class="php-quote">'on'</span>			=&gt; <span class="php-quote">'create'</span>,
 			<span class="php-quote">'rule'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'minLength'</span>, <span class="php-num">8</span>)
@@ -540,6 +541,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		<span class="php-comment">//On &quot;update&quot;, the field can be left blank</span>
 		<span class="php-quote">'minLengthOnUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
 			<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">TRUE</span>,
+			<span class="php-quote">'last'</span>			=&gt; <span class="php-keyword1">FALSE</span>,
 			<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'Must be at least %d characters'</span>,
 			<span class="php-quote">'on'</span>			=&gt; <span class="php-quote">'update'</span>,
 			<span class="php-quote">'rule'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'minLength'</span>, <span class="php-num">8</span>)
@@ -604,8 +606,9 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'boolean'</span>)
 	),
 	<span class="php-quote">'created'</span> =&gt; <span class="php-keyword1">array</span>(
-		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'Must be a valid date'</span>,
-		<span class="php-quote">'rule'</span>		=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'datetime'</span>)
+		<span class="php-quote">'allowEmpty'</span>	=&gt; <span class="php-keyword1">TRUE</span>,
+		<span class="php-quote">'message'</span>		=&gt; <span class="php-quote">'Must be a valid date'</span>,
+		<span class="php-quote">'rule'</span>			=&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'datetime'</span>)
 	),
 	<span class="php-quote">'modified'</span> =&gt; <span class="php-keyword1">array</span>(
 		<span class="php-quote">'message'</span>	=&gt; <span class="php-quote">'Must be a valid date'</span>,
@@ -636,7 +639,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#182-192" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-User.html#185-195" title="Go to source code"><var>$belongsTo</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Group'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -669,7 +672,7 @@ href="http://stackoverflow.com/a/17252517/1480263">http://stackoverflow.com/a/17
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#194-204" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-User.html#197-207" title="Go to source code"><var>$hasMany</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
 	<span class="php-quote">'Post'</span> =&gt; <span class="php-keyword1">array</span>(
