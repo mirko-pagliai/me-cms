@@ -48,7 +48,7 @@ class BannersController extends MeCmsAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'contain'	=> 'Position.name',
-			'fields'	=> array('id', 'filename', 'target', 'description', 'active'),
+			'fields'	=> array('id', 'filename', 'target', 'description', 'active', 'click_count'),
 			'limit'		=> $this->config['records_for_page']
 		);
 		

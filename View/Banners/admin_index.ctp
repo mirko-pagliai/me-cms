@@ -36,6 +36,7 @@
 			<th class="text-center"><?php echo $this->Paginator->sort('position_id', __d('me_cms', 'Position')); ?></th>
 			<th class="text-center"><?php echo $this->Paginator->sort('target', __d('me_cms', 'Url')); ?></th>
 			<th><?php echo $this->Paginator->sort('description', __d('me_cms', 'Description')); ?></th>
+			<th class="text-center"><?php echo $this->Paginator->sort('click_count', __d('me_cms', 'Click')); ?></th>
 		</tr>
 		<?php foreach($banners as $banner): ?>
 			<tr>
@@ -63,6 +64,7 @@
 					?>
 				</td>
 				<td><?php echo $banner['Banner']['description']; ?></td>
+				<td class="text-center"><?php echo $banner['Banner']['click_count']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>
