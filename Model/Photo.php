@@ -57,6 +57,11 @@ class Photo extends MeCmsAppModel {
 				'message'	=> 'This extension is invalid',
 				'rule'		=> array('extension', array('gif', 'jpg', 'jpeg', 'png'))
 			),
+			'maxLength' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Must be at most %d chars',
+				'rule'		=> array('maxLength', 255)
+			),
 			'isUnique' => array(
 				'last'		=> FALSE,
 				'message'	=> 'This value is already used',

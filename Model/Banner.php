@@ -56,6 +56,11 @@ class Banner extends MeCmsAppModel {
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
 			),
+			'maxLength' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Must be at most %d chars',
+				'rule'		=> array('maxLength', 255)
+			),
 			'blank' => array(
 				//Blank on update
 				'on'	=> 'update',
@@ -63,9 +68,16 @@ class Banner extends MeCmsAppModel {
 			)
 		),
 		'target' => array(
-			'allowEmpty'	=> TRUE,
-			'message'		=> 'Must be a valid url',
-			'rule'			=> array('url', TRUE)
+			'maxLength' => array(
+				'allowEmpty'	=> TRUE,
+				'last'			=> FALSE,
+				'message'		=> 'Must be at most %d chars',
+				'rule'			=> array('maxLength', 255)
+			),
+			'url' => array(
+				'message'	=> 'Must be a valid url',
+				'rule'		=> array('url', TRUE)
+			)
 		),
 		'description' => array(
 			'allowEmpty'	=> TRUE,

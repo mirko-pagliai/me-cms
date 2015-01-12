@@ -99,6 +99,7 @@ class User extends MeCmsAppModel {
 			//On "create", the field must be filled
 			'minLengthOnCreate' => array(
 				'allowEmpty'	=> FALSE,
+				'last'			=> FALSE,
 				'message'		=> 'Must be at least %d characters',
 				'on'			=> 'create',
 				'rule'			=> array('minLength', 8)
@@ -106,6 +107,7 @@ class User extends MeCmsAppModel {
 			//On "update", the field can be left blank
 			'minLengthOnUpdate' => array(
 				'allowEmpty'	=> TRUE,
+				'last'			=> FALSE,
 				'message'		=> 'Must be at least %d characters',
 				'on'			=> 'update',
 				'rule'			=> array('minLength', 8)
@@ -170,8 +172,9 @@ class User extends MeCmsAppModel {
 			'rule'		=> array('boolean')
 		),
 		'created' => array(
-			'message'	=> 'Must be a valid date',
-			'rule'		=> array('datetime')
+			'allowEmpty'	=> TRUE,
+			'message'		=> 'Must be a valid date',
+			'rule'			=> array('datetime')
 		),
 		'modified' => array(
 			'message'	=> 'Must be a valid date',

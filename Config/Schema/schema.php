@@ -1,4 +1,29 @@
 <?php
+/**
+ * MeCmSchema
+ *
+ * This file is part of MeCms.
+ *
+ * MeCms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * MeCms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @package		MeCms\Config\Schema
+ */
+
 App::uses('ClassRegistry', 'Utility');
 App::uses('Page', 'MeCms.Model');
 App::uses('PostsCategory', 'MeCms.Model');
@@ -144,7 +169,7 @@ class MeCmSchema extends CakeSchema {
 		'user_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
 		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'subtitle' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'subtitle' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 150, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'text' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'priority' => array('type' => 'integer', 'null' => false, 'default' => '3', 'length' => 1, 'unsigned' => false),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'key' => 'index'),
