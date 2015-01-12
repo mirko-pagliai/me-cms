@@ -40,6 +40,7 @@
 		</div>
 		<fieldset>
 			<?php
+				echo $this->Html->para('strong', __d('me_cms', 'Preview'));
 				echo $this->Html->img($this->request->data['Banner']['url'], array('class' => 'img-thumbnail margin-15'));
 				
 				echo $this->Form->input('id');
