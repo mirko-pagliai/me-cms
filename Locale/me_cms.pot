@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-01-09 22:48+0100\n"
+"POT-Creation-Date: 2015-01-13 17:11+0100\n"
 "Last-Translator: Mirko Pagliai\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -14,7 +14,7 @@ msgstr ""
 #: Controller/BannersController.php:57
 #: View/Banners/admin_index.ctp:30
 #: View/BannersPositions/admin_index.ctp:37
-#: View/Helper/MenuHelper.php:72
+#: View/Helper/MenuHelper.php:76
 #: View/Systems/admin_checkup.ctp:73
 msgid "Banners"
 msgstr ""
@@ -73,7 +73,7 @@ msgid "The banner could not be edited. Please, try again"
 msgstr ""
 
 #: Controller/BannersController.php:154
-#: View/Banners/admin_edit.ctp:29;61
+#: View/Banners/admin_edit.ctp:29;62
 msgid "Edit banner"
 msgstr ""
 
@@ -147,7 +147,7 @@ msgstr ""
 #: Controller/PagesController.php:65;184
 #: View/Elements/frontend/topbar.ctp:46
 #: View/Elements/widgets/pages.ctp:36
-#: View/Helper/MenuHelper.php:98
+#: View/Helper/MenuHelper.php:101
 #: View/Pages/admin_index.ctp:30
 #: View/Pages/index.ctp:28
 msgid "Pages"
@@ -167,7 +167,7 @@ msgid "The page could not be created. Please, try again"
 msgstr ""
 
 #: Controller/PagesController.php:96
-#: View/Helper/MenuHelper.php:93
+#: View/Helper/MenuHelper.php:96
 #: View/Pages/admin_add.ctp:34;82
 msgid "Add page"
 msgstr ""
@@ -238,7 +238,7 @@ msgstr ""
 
 #: Controller/PhotosController.php:66
 #: View/Elements/frontend/topbar.ctp:47
-#: View/Helper/MenuHelper.php:120
+#: View/Helper/MenuHelper.php:122
 #: View/Photos/admin_index.ctp:29
 #: View/PhotosAlbums/admin_index.ctp:37
 #: View/PhotosAlbums/index.ctp:27
@@ -247,7 +247,7 @@ msgid "Photos"
 msgstr ""
 
 #: Controller/PhotosController.php:88
-#: View/Helper/MenuHelper.php:113
+#: View/Helper/MenuHelper.php:115
 #: View/Photos/admin_upload.ctp:33
 msgid "Upload photos"
 msgstr ""
@@ -269,7 +269,7 @@ msgid "The photos can not be saved. Please, try again"
 msgstr ""
 
 #: Controller/PhotosController.php:143
-#: View/Helper/MenuHelper.php:114
+#: View/Helper/MenuHelper.php:116
 #: View/Photos/admin_add.ctp:29;78
 msgid "Add photos"
 msgstr ""
@@ -344,8 +344,7 @@ msgid "Before you delete this category, you have to delete its posts or assign t
 msgstr ""
 
 #: Controller/PostsController.php:75;293
-#: View/Helper/MenuHelper.php:148
-#: View/Layouts/frontend.ctp:46
+#: View/Helper/MenuHelper.php:149
 #: View/Posts/admin_index.ctp:30
 #: View/PostsCategories/admin_index.ctp:37
 #: View/Users/admin_index.ctp:39
@@ -366,7 +365,7 @@ msgid "The post could not be created. Please, try again"
 msgstr ""
 
 #: Controller/PostsController.php:110
-#: View/Helper/MenuHelper.php:137
+#: View/Helper/MenuHelper.php:138
 #: View/Posts/admin_add.ctp:34;93
 msgid "Add post"
 msgstr ""
@@ -397,7 +396,7 @@ msgid "You have to search at least a word of %d characters"
 msgstr ""
 
 #: Controller/PostsController.php:365
-#: View/Elements/widgets/search_posts.ctp:31
+#: View/Elements/widgets/search_posts.ctp:36
 #: View/Posts/search.ctp:28
 msgid "Search posts"
 msgstr ""
@@ -407,18 +406,18 @@ msgid "%s is not present into %s"
 msgstr ""
 
 #: Controller/SystemsController.php:80
-#: View/Helper/MenuHelper.php:203
+#: View/Helper/MenuHelper.php:202
 msgid "Media browser"
 msgstr ""
 
 #: Controller/SystemsController.php:95
-#: View/Helper/MenuHelper.php:201
+#: View/Helper/MenuHelper.php:200
 #: View/Systems/admin_cache.ctp:30
 msgid "Cache and thumbs"
 msgstr ""
 
 #: Controller/SystemsController.php:145
-#: View/Helper/MenuHelper.php:202
+#: View/Helper/MenuHelper.php:201
 #: View/Systems/admin_checkup.ctp:30
 msgid "System checkup"
 msgstr ""
@@ -606,24 +605,24 @@ msgid "Published"
 msgstr ""
 
 #: View/Banners/admin_add.ctp:64
-#: View/Banners/admin_edit.ctp:48
+#: View/Banners/admin_edit.ctp:49
 #: View/Banners/admin_index.ctp:35
 #: View/Pages/admin_index_statics.ctp:32
 msgid "Filename"
 msgstr ""
 
 #: View/Banners/admin_add.ctp:69
-#: View/Banners/admin_edit.ctp:51
+#: View/Banners/admin_edit.ctp:52
 msgid "Web address"
 msgstr ""
 
 #: View/Banners/admin_add.ctp:70
-#: View/Banners/admin_edit.ctp:52
+#: View/Banners/admin_edit.ctp:53
 msgid "The address should begin with %s"
 msgstr ""
 
 #: View/Banners/admin_add.ctp:73
-#: View/Banners/admin_edit.ctp:55
+#: View/Banners/admin_edit.ctp:56
 #: View/Banners/admin_index.ctp:38
 #: View/BannersPositions/admin_add.ctp:34
 #: View/BannersPositions/admin_edit.ctp:35
@@ -633,6 +632,10 @@ msgstr ""
 #: View/PhotosAlbums/admin_add.ctp:54
 #: View/PhotosAlbums/admin_edit.ctp:54
 msgid "Description"
+msgstr ""
+
+#: View/Banners/admin_edit.ctp:43
+msgid "Preview"
 msgstr ""
 
 #: View/Banners/admin_index.ctp:31
@@ -650,12 +653,16 @@ msgstr ""
 msgid "Url"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:48
+#: View/Banners/admin_index.ctp:39
+msgid "Click"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:49
 #: View/PhotosAlbums/admin_index.ctp:48
 msgid "Not published"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:53
+#: View/Banners/admin_index.ctp:54
 #: View/BannersPositions/admin_index.ctp:47
 #: View/Pages/admin_index.ctp:55
 #: View/Photos/admin_index.ctp:38
@@ -668,7 +675,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:54
+#: View/Banners/admin_index.ctp:55
 #: View/BannersPositions/admin_index.ctp:48
 #: View/Pages/admin_index.ctp:61
 #: View/Photos/admin_index.ctp:42
@@ -681,7 +688,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:54
+#: View/Banners/admin_index.ctp:55
 #: View/BannersPositions/admin_index.ctp:48
 #: View/Pages/admin_index.ctp:61
 #: View/Photos/admin_index.ctp:42
@@ -770,6 +777,7 @@ msgid "Select a category"
 msgstr ""
 
 #: View/Elements/widgets/latest_posts.ctp:36
+#: View/Layouts/frontend.ctp:46
 #: View/Posts/rss/index.ctp:30;32
 msgid "Latest posts"
 msgstr ""
@@ -778,7 +786,7 @@ msgstr ""
 msgid "Random photo"
 msgstr ""
 
-#: View/Elements/widgets/search_posts.ctp:36
+#: View/Elements/widgets/search_posts.ctp:41
 #: View/Posts/search.ctp:34;36
 msgid "Search"
 msgstr ""
@@ -791,39 +799,39 @@ msgstr ""
 msgid "Upload banner"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:67
+#: View/Helper/MenuHelper.php:71
 msgid "List positions"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:68
+#: View/Helper/MenuHelper.php:72
 msgid "Add position"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:88
+#: View/Helper/MenuHelper.php:91
 msgid "List pages"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:95
+#: View/Helper/MenuHelper.php:98
 msgid "List static pages"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:115
+#: View/Helper/MenuHelper.php:117
 msgid "List albums"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:116
+#: View/Helper/MenuHelper.php:118
 msgid "Add album"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:136
+#: View/Helper/MenuHelper.php:137
 msgid "List posts"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:143
+#: View/Helper/MenuHelper.php:144
 msgid "List categories"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:144
+#: View/Helper/MenuHelper.php:145
 msgid "Add category"
 msgstr ""
 
@@ -839,11 +847,11 @@ msgstr ""
 msgid "Add group"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:207
+#: View/Helper/MenuHelper.php:206
 msgid "System"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:224
+#: View/Helper/MenuHelper.php:223
 msgid "The %s method does not exist"
 msgstr ""
 

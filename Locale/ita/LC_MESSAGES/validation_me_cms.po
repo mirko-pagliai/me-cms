@@ -4,13 +4,14 @@
 # Mirko Pagliai, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-01-03 17:42+0100\n"
+"POT-Creation-Date: 2015-01-13 17:11+0100\n"
 "Last-Translator: Mirko Pagliai\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"PO-Revision-Date: 2015-01-03 17:44+0100\n"
+"PO-Revision-Date: 2015-01-13 17:13+0100\n"
+"Language-Team: Italian <>\n"
 "Language: it\n"
 
 #: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field position_id;validation for field active
@@ -39,6 +40,17 @@ msgstr "Questa estensione non è valida"
 msgid "This value is already used"
 msgstr "Questo valore è già stato utilizzato"
 
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field filename;validation for field target;validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field subtitle
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename;validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field subtitle
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/UsersGroup.php:validation for field description
+msgid "Must be at most %d chars"
+msgstr "Deve essere al massimo %d caratteri"
+
 #: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field filename
 #: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename
 msgid "blank"
@@ -47,17 +59,6 @@ msgstr "vuoto"
 #: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field target
 msgid "Must be a valid url"
 msgstr "Deve essere un url valido"
-
-#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field description
-#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field description
-#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field subtitle
-#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field description
-#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field description
-#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field subtitle
-#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field description
-#: /home/mirko/Server/MeCms_Plugin/Model/UsersGroup.php:validation for field description
-msgid "Must be at most %d chars"
-msgstr "Deve essere al massimo %d caratteri"
 
 #: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field name
 #: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field slug
