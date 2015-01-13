@@ -224,7 +224,7 @@ class PostsController extends MeCmsAppController {
 	/**
 	 * List posts
 	 * @param string $category Category slug, optional
-	 * @return array List of latest post (only when requested as rss)
+	 * @return array List of latest posts (only when requested as rss)
 	 */
 	public function index($category = NULL) {
 		//If the posts were requested as rss
