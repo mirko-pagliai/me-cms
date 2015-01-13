@@ -43,7 +43,7 @@
 
 			echo $this->Layout->viewport();
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
-			echo $this->Html->meta(__d('me_cms', 'Posts'), '/rss', array('type' => 'rss'));
+			echo $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', array('type' => 'rss'));
 			echo $this->fetch('meta');
 
 			echo $this->Layout->css(array(
