@@ -1,6 +1,6 @@
 <?php
 /**
- * Search widget.
+ * Search post widget.
  *
  * This file is part of MeCms.
  *
