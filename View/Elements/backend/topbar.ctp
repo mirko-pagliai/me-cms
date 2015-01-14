@@ -47,8 +47,8 @@
 					<?php
 						echo $this->Dropdown->link($auth['full_name'], array('icon' => 'user'));
 						echo $this->Dropdown->dropdown(array(
-							$this->Html->link(__d('me_cms', 'Change password'), array('controller' => 'users', 'action' => 'change_password')),
-							$this->Html->link(__d('me_cms', 'Logout'), array('controller' => 'users', 'action' => 'logout', 'admin' => FALSE))
+							$this->Html->link(__d('me_cms', 'Change password'), array('controller' => 'users', 'action' => 'change_password',	'plugin' => 'me_cms',)),
+							$this->Html->link(__d('me_cms', 'Logout'),			array('controller' => 'users', 'action' => 'logout',			'plugin' => 'me_cms', 'admin' => FALSE))
 						));
 					?>
 				</li>
