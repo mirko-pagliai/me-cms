@@ -29,7 +29,7 @@
     max-width: 100%;
     text-decoration: none;
 	/* No wrap, text truncated with ellipses */
-	overflow-x: hidden;
+	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
