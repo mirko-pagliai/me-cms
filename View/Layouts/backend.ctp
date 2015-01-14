@@ -64,7 +64,7 @@
 		?>
 	</head>
 	<body>
-		<?php echo $this->element('MeCms.backend/topbar', array(), array('cache' => TRUE)); ?>
+		<?php echo $this->element('MeCms.backend/topbar'); ?>
 		<div class="container-fluid">
 			<?php if($sidebar = $this->fetch('sidebar')): ?>
 				<div class="row">
