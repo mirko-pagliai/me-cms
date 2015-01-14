@@ -109,9 +109,10 @@
 }
 
 /* Buttons, "read more" button */
-.content-buttons .readmore {
+.content-buttons .readmore {	
     background: #ddd;
-	border: 0;
+    border-color: #bbb;
+    border-width: 0 0 3px;
     color: #777;
     font-size: 14px;
 	font-weight: bold;
