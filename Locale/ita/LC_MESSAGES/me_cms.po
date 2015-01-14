@@ -927,7 +927,7 @@ msgstr "Priorità"
 #: View/Posts/admin_edit.ctp:58
 #: View/Posts/admin_index.ctp:75
 msgid "Very low"
-msgstr "Molto basso"
+msgstr "Molto bassa"
 
 #: View/Pages/admin_add.ctp:50
 #: View/Pages/admin_edit.ctp:50
@@ -936,7 +936,7 @@ msgstr "Molto basso"
 #: View/Posts/admin_edit.ctp:59
 #: View/Posts/admin_index.ctp:78
 msgid "Low"
-msgstr "Basso"
+msgstr "Bassa"
 
 #: View/Pages/admin_add.ctp:51
 #: View/Pages/admin_edit.ctp:51
@@ -954,7 +954,7 @@ msgstr "Normale"
 #: View/Posts/admin_edit.ctp:61
 #: View/Posts/admin_index.ctp:81
 msgid "High"
-msgstr "Alto"
+msgstr "Alta"
 
 #: View/Pages/admin_add.ctp:53
 #: View/Pages/admin_edit.ctp:53
@@ -963,7 +963,7 @@ msgstr "Alto"
 #: View/Posts/admin_edit.ctp:62
 #: View/Posts/admin_index.ctp:84
 msgid "Very high"
-msgstr "Molto alto"
+msgstr "Molto alta"
 
 #: View/Pages/admin_add.ctp:59
 #: View/Pages/admin_edit.ctp:58
