@@ -60,7 +60,7 @@ body {
 /* Content, first wrapper */
 #content > .index,
 #content > .view,
-#content > form {
+#content > .form {
 	overflow: hidden;
 }
 
