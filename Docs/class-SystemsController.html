@@ -176,7 +176,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-SystemsController.html#33-191" title="Go to source code">SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-SystemsController.html#37-187" title="Go to source code">SystemsController.php</a>
 		<br>
 	</div>
 
@@ -196,7 +196,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-SystemsController.html#37-46" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-SystemsController.html#41-50" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks if the provided user is authorized for the request.</p>
@@ -229,44 +229,6 @@ AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="_getVersion" id="__getVersion">
-
-		<td class="attributes"><code>
-			 private 
-
-			string
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__getVersion">#</a>
-		<code><a href="source-class-SystemsController.html#48-54" title="Go to source code">_getVersion</a>( )</code>
-
-		<div class="description short">
-			<p>Gets the MeCMS version number.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Gets the MeCMS version number.</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					string<br>MeCMS version number
-				</div>
-
-
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-SystemsController.html#_admin_checkup">SystemsController::admin_checkup()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="admin_browser" id="_admin_browser">
 
 		<td class="attributes"><code>
@@ -279,7 +241,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_browser">#</a>
-		<code><a href="source-class-SystemsController.html#56-83" title="Go to source code">admin_browser</a>( )</code>
+		<code><a href="source-class-SystemsController.html#52-79" title="Go to source code">admin_browser</a>( )</code>
 
 		<div class="description short">
 			<p>Media browser with KCFinder</p>
@@ -309,7 +271,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_cache">#</a>
-		<code><a href="source-class-SystemsController.html#85-98" title="Go to source code">admin_cache</a>( )</code>
+		<code><a href="source-class-SystemsController.html#81-94" title="Go to source code">admin_cache</a>( )</code>
 
 		<div class="description short">
 			<p>Manages cache and thumbnails.</p>
@@ -345,7 +307,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_checkup">#</a>
-		<code><a href="source-class-SystemsController.html#100-146" title="Go to source code">admin_checkup</a>( )</code>
+		<code><a href="source-class-SystemsController.html#96-142" title="Go to source code">admin_checkup</a>( )</code>
 
 		<div class="description short">
 			<p>System checkup.</p>
@@ -360,23 +322,23 @@ AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-SystemsController.html#__getVersion">SystemsController::_getVersion()</a></code><br>
+						Apache::checkMod()<br>
 						<code><a href="class-BannerManager.html#_getFolder">BannerManager::getFolder()</a></code><br>
 						<code><a href="class-BannerManager.html#_getTmpPath">BannerManager::getTmpPath()</a></code><br>
 						<code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code><br>
 						<code><a href="class-PhotoManager.html#_getTmpPath">PhotoManager::getTmpPath()</a></code><br>
-						System::checkApacheModule()<br>
+						Php::checkExt()<br>
+						Php::checkVersion()<br>
+						Plugin::getVersion()<br>
+						Plugin::getVersions()<br>
 						System::checkCache()<br>
 						System::checkCacheStatus()<br>
 						System::checkLogs()<br>
-						System::checkPhpExtension()<br>
-						System::checkPhpVersion()<br>
 						System::checkThumbs()<br>
 						System::checkTmp()<br>
 						System::dirIsWritable()<br>
 						System::getCakeVersion()<br>
-						System::getPluginsVersion()<br>
-						System::which()<br>
+						Unix::which()<br>
 				</div>
 
 
@@ -395,7 +357,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_clear_cache">#</a>
-		<code><a href="source-class-SystemsController.html#148-161" title="Go to source code">admin_clear_cache</a>( )</code>
+		<code><a href="source-class-SystemsController.html#144-157" title="Go to source code">admin_clear_cache</a>( )</code>
 
 		<div class="description short">
 			<p>Clears the cache.</p>
@@ -429,7 +391,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_clear_thumbs">#</a>
-		<code><a href="source-class-SystemsController.html#163-176" title="Go to source code">admin_clear_thumbs</a>( )</code>
+		<code><a href="source-class-SystemsController.html#159-172" title="Go to source code">admin_clear_thumbs</a>( )</code>
 
 		<div class="description short">
 			<p>Clears the thumbnails.</p>
@@ -463,7 +425,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_offline">#</a>
-		<code><a href="source-class-SystemsController.html#178-190" title="Go to source code">offline</a>( )</code>
+		<code><a href="source-class-SystemsController.html#174-186" title="Go to source code">offline</a>( )</code>
 
 		<div class="description short">
 			<p>Offline page</p>

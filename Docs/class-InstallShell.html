@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class InstallShell | MeCms API</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Packages</h3>
+			<ul>
+				<li class="main">
+					<a href="package-MeCms.html">
+						MeCms<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Console.html">
+						Console<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Console.Command.html">
+						Command					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="package-MeCms.Controller.html">
+						Controller<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Controller.Component.html">
+						Component					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="package-MeCms.Model.html">
+						Model					</a>
+
+						</li>
+				<li class="main">
+					<a href="package-MeCms.Utility.html">
+						Utility					</a>
+
+						</li>
+				<li class="main">
+					<a href="package-MeCms.View.html">
+						View<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.View.Helper.html">
+						Helper					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-InstallShell.html">InstallShell</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+<span>Package</span>			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="todo.html" title="Todo list"><span>Todo</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class InstallShell</h1>
+
+
+	<div class="description">
+	<p>Install shell.
+It installs MeCms, creating the database schema, the first administrator user and the folders.</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+MeToolsAppShell
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>InstallShell</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Console.html">Console</a>\<a href="package-MeCms.Console.Command.html">Command</a><br>
+
+				<b>Copyright:</b>
+				Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd<br>
+				<b>License:</b>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<b>Author:</b>
+				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
+			<b>Located at</b> <a href="source-class-InstallShell.html#31-164" title="Go to source code">Command/InstallShell.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="_create_folder" id="__create_folder">
+
+		<td class="attributes"><code>
+			 private 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__create_folder">#</a>
+		<code><a href="source-class-InstallShell.html#48-65" title="Go to source code">_create_folder</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Creates a folder.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Creates a folder.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>Folder path</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if the directory has been created or if it already existed, otherwise FALSE
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-InstallShell.html#__install_folders">InstallShell::_install_folders()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_install_database" id="__install_database">
+
+		<td class="attributes"><code>
+			 private 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__install_database">#</a>
+		<code><a href="source-class-InstallShell.html#67-98" title="Go to source code">_install_database</a>( )</code>
+
+		<div class="description short">
+			<p>Creates the database schema and the first administrator user.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Creates the database schema and the first administrator user.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						DatabaseTask::create()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-InstallShell.html#_main">InstallShell::main()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_install_folders" id="__install_folders">
+
+		<td class="attributes"><code>
+			 private 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__install_folders">#</a>
+		<code><a href="source-class-InstallShell.html#100-124" title="Go to source code">_install_folders</a>( )</code>
+
+		<div class="description short">
+			<p>Creates folders.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Creates folders.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-InstallShell.html#__create_folder">InstallShell::_create_folder()</a></code><br>
+						<code><a href="class-BannerManager.html#_getFolder">BannerManager::getFolder()</a></code><br>
+						<code><a href="class-BannerManager.html#_getTmpPath">BannerManager::getTmpPath()</a></code><br>
+						<code><a href="class-PhotoManager.html#_getFolder">PhotoManager::getFolder()</a></code><br>
+						<code><a href="class-PhotoManager.html#_getTmpPath">PhotoManager::getTmpPath()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-InstallShell.html#_main">InstallShell::main()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="main" id="_main">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_main">#</a>
+		<code><a href="source-class-InstallShell.html#126-153" title="Go to source code">main</a>( )</code>
+
+		<div class="description short">
+			<p>The main method.
+It installs MeCms, creating the database schema, adding the first administrator user and creating the folders.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>The main method.
+It installs MeCms, creating the database schema, adding the first administrator user and creating the folders.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-InstallShell.html#__install_database">InstallShell::_install_database()</a></code><br>
+						<code><a href="class-InstallShell.html#__install_folders">InstallShell::_install_folders()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="startup" id="_startup">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_startup">#</a>
+		<code><a href="source-class-InstallShell.html#155-163" title="Go to source code">startup</a>( )</code>
+
+		<div class="description short">
+			<p>Starts up the Shell and displays the welcome message.
+Allows for checking and configuring prior to command or main execution.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Starts up the Shell and displays the welcome message.
+Allows for checking and configuring prior to command or main execution.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						DatabaseTask::check()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="uses" id="$uses">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-InstallShell.html#36-40" title="Go to source code"><var>$uses</var></a>
+
+			<div class="description short">
+				<p>Models</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Models</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$uses" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'MeCms.User'</span>)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="tasks" id="$tasks">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-InstallShell.html#42-46" title="Go to source code"><var>$tasks</var></a>
+
+			<div class="description short">
+				<p>Tasks</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Tasks</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$tasks" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'MeTools.Database'</span>)</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
