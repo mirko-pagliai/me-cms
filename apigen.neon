@@ -1,10 +1,9 @@
-accessLevels: "public,protected,private"
-autocomplete: "classes,constants,functions,methods,properties,classconstants"
+accessLevels: [public, protected, private]
 destination: Docs
-download: yes
-exclude: {*.old, *.old.*} 
-source: {Controller, Model, Utility, View}
+download: false
+exclude: {*.old, *.old.*}
+source: {Console, Controller, Model, Utility, View}
 main: MeCms
-php: no
-title: "MeCms"
-todo: "yes"
+php: false
+title: MeCms API
+todo: true
