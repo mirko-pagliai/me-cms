@@ -24,6 +24,7 @@ $(function() {
 		//Sets the new progress values and updates the progress bar
 		var progress = Math.floor(progress * 100);
 		$('.progress-bar', progressBar).width(progress + '%').attr('aria-valuenow', progress);
+		$('.progress-bar span', progressBar).html(progress + '%');
 	}
 
 	//Handles drag over
@@ -46,6 +47,7 @@ $(function() {
 
 		//Resets the progress bar
 		$('.progress-bar', progressBar).width('0').attr('aria-valuenow', '0');
+		$('.progress-bar span', progressBar).html('');
 		progressBar.show();
 
 		//Shows the info area

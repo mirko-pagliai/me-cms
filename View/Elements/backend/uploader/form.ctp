@@ -34,7 +34,9 @@
 	</div>
 	<div class="upload-info">
 		<div class="progress">
-			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+			<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+				<span class="sr-only">60% Complete</span>
+			</div>
 		</div>
 		<div class="upload-result"></div>
 		<div class="upload-error bg-danger text-danger padding-10 margin-10">
