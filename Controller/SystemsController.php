@@ -26,9 +26,13 @@
 
 App::uses('MeCmsAppController', 'MeCms.Controller');
 App::uses('Folder', 'Utility');
+App::uses('Apache', 'MeTools.Utility');
 App::uses('BannerManager', 'MeCms.Utility');
 App::uses('PhotoManager', 'MeCms.Utility');
+App::uses('Php', 'MeTools.Utility');
+App::uses('Plugin', 'MeTools.Utility');
 App::uses('System', 'MeTools.Utility');
+App::uses('Unix', 'MeTools.Utility');
 
 /**
  * Systems Controller
@@ -43,14 +47,6 @@ class SystemsController extends MeCmsAppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins can access this controller
 		return $this->Auth->isAdmin();
-	}
-	
-	/**
-	 * Gets the MeCMS version number.
-	 * @return string MeCMS version number
-	 */
-	private function _getVersion() {
-		return file_get_contents(CakePlugin::path('MeCms').'version');
 	}
 	
 	/**
@@ -99,47 +95,47 @@ class SystemsController extends MeCmsAppController {
 	
 	/**
 	 * System checkup.
-	 * @uses _getVersion()
+	 * @uses Apache::checkMod()
 	 * @uses BannerManager::getFolder()
 	 * @uses BannerManager::getTmpPath()
 	 * @uses PhotoManager::getFolder()
 	 * @uses PhotoManager::getTmpPath()
-	 * @uses System::checkApacheModule()
+	 * @uses Php::checkExt()
+	 * @uses Php::checkVersion()
+	 * @uses Plugin::getVersion()
+	 * @uses Plugin::getVersions()
 	 * @uses System::checkCache()
 	 * @uses System::checkCacheStatus()
 	 * @uses System::checkLogs()
-	 * @uses System::checkPhpExtension()
-	 * @uses System::checkPhpVersion()
 	 * @uses System::checkThumbs()
 	 * @uses System::checkTmp()
 	 * @uses System::dirIsWritable()
 	 * @uses System::getCakeVersion()
-	 * @uses System::getPluginsVersion()
-	 * @uses System::which()
+	 * @uses Unix::which()
 	 */
 	public function admin_checkup() {
 		$phpRequired = '5.2.8';
 		
-		//Sets the results of the checks
+		//Sets results
 		$this->set(array(
 			'bannersWWW'		=> System::dirIsWritable(BannerManager::getFolder()),
 			'bannersTmp'		=> System::dirIsWritable(BannerManager::getTmpPath()),
 			'cache'				=> System::checkCache(),
 			'cacheStatus'		=> System::checkCacheStatus(),
 			'cakeVersion'		=> System::getCakeVersion(),
-			'expires'			=> System::checkApacheModule('mod_expires'),
-			'ffmpegthumbnailer'	=> System::which('ffmpegthumbnailer'),
-			'imagick'			=> System::checkPhpExtension('imagick'),
+			'expires'			=> Apache::checkMod('mod_expires'),
+			'ffmpegthumbnailer'	=> Unix::which('ffmpegthumbnailer'),
+			'imagick'			=> Php::checkExt('imagick'),
 			'logs'				=> System::checkLogs(),
 			'photosWWW'			=> System::dirIsWritable(PhotoManager::getFolder()),
 			'photosTmp'			=> System::dirIsWritable(PhotoManager::getTmpPath()),
 			'phpRequired'		=> $phpRequired,
-			'phpVersion'		=> System::checkPhpVersion($phpRequired),
-			'plugins'			=> System::getPluginsVersion('MeCms'),
-			'rewrite'			=> System::checkApacheModule('mod_rewrite'),
+			'phpVersion'		=> Php::checkVersion($phpRequired),
+			'plugins'			=> Plugin::getVersions('MeCms'),
+			'rewrite'			=> Apache::checkMod('mod_rewrite'),
 			'tmp'				=> System::checkTmp(),
 			'thumbs'			=> System::checkThumbs(),
-			'version'			=> self::_getVersion()
+			'version'			=> Plugin::getVersion('MeCms')
 		));
 		
 		$this->set('title_for_layout', __d('me_cms', 'System checkup'));
