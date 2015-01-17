@@ -166,34 +166,6 @@ class PostsController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_cms', 'Posts')
 		));
 	}
-	
-	/**
-	 * Gets the latest posts.
-	 * This method works only with `requestAction()`.
-	 * @param int $limit Number of latest posts
-	 * @return array Latest posts
-	 * @throws ForbiddenException
-	 */
-	public function request_latest($limit = 5) {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$posts = Cache::read($cache = sprintf('posts_request_latest_%d', $limit), 'posts');
-		
-		//If the data are not available from the cache
-        if(empty($posts)) {
-            $posts = $this->Post->find('active', am(array(
-				'contain'	=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
-				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created')
-			), compact('limit')));
-			
-            Cache::write($cache, $posts, 'posts');
-        }
-		
-		return $posts;
-	}
 
 	/**
 	 * List posts
