@@ -50,34 +50,6 @@ class PagesController extends MeCmsAppController {
 		
 		return TRUE;
 	}
-	
-	/**
-	 * List pages
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
-			'limit'		=> $this->config['records_for_page']
-		);
-		
-		$this->set(array(
-			'pages'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Pages')
-		));
-	}
-	
-	/**
-	 * List static pages.
-	 * 
-	 * Static pages must be located in `APP/View/StaticPages/`.
-	 * @uses StaticPage::getAll()
-	 */
-	public function admin_index_statics() {
-		$this->set(array(
-			'pages'				=> StaticPage::getAll(),
-			'title_for_layout'	=> __d('me_cms', 'Static pages')
-		));
-	}
 
 	/**
 	 * Add page
@@ -94,6 +66,26 @@ class PagesController extends MeCmsAppController {
 		}
 
 		$this->set('title_for_layout', __d('me_cms', 'Add page'));
+	}
+
+	/**
+	 * Delete page
+	 * @param string $id Page id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->Page->id = $id;
+		if(!$this->Page->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		if($this->Page->delete())
+			$this->Session->flash(__d('me_cms', 'The page has been deleted'));
+		else
+			$this->Session->flash(__d('me_cms', 'The page was not deleted'), 'error');
+			
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**
@@ -121,50 +113,33 @@ class PagesController extends MeCmsAppController {
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit page'));
 	}
-
+	
 	/**
-	 * Delete page
-	 * @param string $id Page id
-	 * @throws NotFoundException
+	 * List pages
 	 */
-	public function admin_delete($id = NULL) {
-		$this->Page->id = $id;
-		if(!$this->Page->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
+	public function admin_index() {
+		$this->paginate = array(
+			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
+			'limit'		=> $this->config['records_for_page']
+		);
 		
-		if($this->Page->delete())
-			$this->Session->flash(__d('me_cms', 'The page has been deleted'));
-		else
-			$this->Session->flash(__d('me_cms', 'The page was not deleted'), 'error');
-			
-		$this->redirect(array('action' => 'index'));
+		$this->set(array(
+			'pages'				=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Pages')
+		));
 	}
 	
 	/**
-	 * Gets the pages list, with the slug as key and the title as value.
-	 * This method works only with `requestAction()`.
-	 * @return array Pages list
-	 * @throws ForbiddenException
-	 * @uses isRequestAction()
+	 * List static pages.
+	 * 
+	 * Static pages must be located in `APP/View/StaticPages/`.
+	 * @uses StaticPage::getAll()
 	 */
-	public function request_list() {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$pages = Cache::read($cache = 'pages_request_list', 'pages');
-		
-		//If the data are not available from the cache
-        if(empty($pages)) {
-            $pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
-			
-            Cache::write($cache, $pages, 'pages');
-        }
-		
-		return $pages;
+	public function admin_index_statics() {
+		$this->set(array(
+			'pages'				=> StaticPage::getAll(),
+			'title_for_layout'	=> __d('me_cms', 'Static pages')
+		));
 	}
 	
 	/**
@@ -225,5 +200,30 @@ class PagesController extends MeCmsAppController {
         }
 		
 		$this->set(am(array('title_for_layout' => $page['Page']['title']), compact('page')));
+	}
+	
+	/**
+	 * Gets the pages list for widget.
+	 * This method works only with `requestAction()`.
+	 * @return array Pages list
+	 * @throws ForbiddenException
+	 * @uses isRequestAction()
+	 */
+	public function widget_list() {
+		//This method works only with "requestAction()"
+		if(!$this->isRequestAction())
+            throw new ForbiddenException();
+		
+		//Tries to get data from the cache
+		$pages = Cache::read($cache = 'pages_widget_list', 'pages');
+		
+		//If the data are not available from the cache
+        if(empty($pages)) {
+            $pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
+			
+            Cache::write($cache, $pages, 'pages');
+        }
+		
+		return $pages;
 	}
 }

@@ -27,7 +27,7 @@
 
 <?php				
 	//Gets the pages list
-	$pages = $this->requestAction(array('controller' => 'pages', 'action' => 'request_list', 'plugin' => 'me_cms'));
+	$pages = $this->requestAction(array('controller' => 'pages', 'action' => 'widget_list', 'plugin' => 'me_cms'));
 ?>
 
 <?php if(!empty($pages)): ?>

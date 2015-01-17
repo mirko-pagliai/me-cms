@@ -43,43 +43,6 @@ class BannersController extends MeCmsAppController {
 	}
 	
 	/**
-	 * List banners
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'contain'	=> 'Position.name',
-			'fields'	=> array('id', 'filename', 'target', 'description', 'active', 'click_count'),
-			'limit'		=> $this->config['records_for_page']
-		);
-		
-		$this->set(array(
-			'banners'			=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Banners')
-		));
-	}
-
-	/**
-	 * Upload banner
-	 * @throws InternalErrorException
-	 * @uses BannerManager::getTmpPath()
-	 * @uses MeCmsAppController::upload()
-	 */
-	public function admin_upload() {
-		//Gets the target directory
-		$target = BannerManager::getTmpPath();
-		
-		//Checks if the target directory is writable
-		if(!is_writable($target))
-			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
-		
-		//Uploads the file
-		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
-			$this->upload($this->request->params['form']['file'], $target);
-		
-		$this->set('title_for_layout', __d('me_cms', 'Upload banners'));
-	}
-	
-	/**
 	 * Add banner
 	 * @uses BannerManager::getTmp()
 	 * @uses BannerManager::getTmpPath()
@@ -127,6 +90,26 @@ class BannersController extends MeCmsAppController {
 	}
 
 	/**
+	 * Delete banner
+	 * @param string $id Banner ID
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->Banner->id = $id;
+		if(!$this->Banner->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		if($this->Banner->delete())
+			$this->Session->flash(__d('me_cms', 'The banner has been deleted'));
+		else
+			$this->Session->flash(__d('me_cms', 'The banner was not deleted'), 'error');
+			
+		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
 	 * Edit banner
 	 * @param string $id Banner ID
 	 * @throws NotFoundException
@@ -154,25 +137,42 @@ class BannersController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_cms', 'Edit banner')
 		));
 	}
+	
+	/**
+	 * List banners
+	 */
+	public function admin_index() {
+		$this->paginate = array(
+			'contain'	=> 'Position.name',
+			'fields'	=> array('id', 'filename', 'target', 'description', 'active', 'click_count'),
+			'limit'		=> $this->config['records_for_page']
+		);
+		
+		$this->set(array(
+			'banners'			=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Banners')
+		));
+	}
 
 	/**
-	 * Delete banner
-	 * @param string $id Banner ID
-	 * @throws NotFoundException
+	 * Upload banner
+	 * @throws InternalErrorException
+	 * @uses BannerManager::getTmpPath()
+	 * @uses MeCmsAppController::upload()
 	 */
-	public function admin_delete($id = NULL) {
-		$this->Banner->id = $id;
-		if(!$this->Banner->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
+	public function admin_upload() {
+		//Gets the target directory
+		$target = BannerManager::getTmpPath();
 		
-		if($this->Banner->delete())
-			$this->Session->flash(__d('me_cms', 'The banner has been deleted'));
-		else
-			$this->Session->flash(__d('me_cms', 'The banner was not deleted'), 'error');
-			
-		$this->redirect(array('action' => 'index'));
+		//Checks if the target directory is writable
+		if(!is_writable($target))
+			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
+		
+		//Uploads the file
+		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
+			$this->upload($this->request->params['form']['file'], $target);
+		
+		$this->set('title_for_layout', __d('me_cms', 'Upload banners'));
 	}
 	
 	/**

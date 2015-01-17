@@ -45,48 +45,6 @@ class PhotosController extends MeCmsAppController {
 		
 		return TRUE;
 	}
-	
-	/**
-	 * List photos
-	 * @param string $albumId Photos album id
-	 * @throws NotFoundException
-	 */
-	public function admin_index($albumId = NULL) {
-		if(!$this->Photo->Album->exists($albumId))
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-		
-		$this->paginate = array(
-			'conditions'	=> array('album_id' => $albumId),
-			'fields'		=> array('id', 'album_id', 'filename'),
-			'limit'			=> $this->config['photos_for_page']
-		);
-		
-		$this->set(array(
-			'photos'			=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Photos')
-		));
-	}
-
-	/**
-	 * Upload photo
-	 * @throws InternalErrorException
-	 * @uses PhotoManager::getTmpPath()
-	 * @uses MeCmsAppController::upload()
-	 */
-	public function admin_upload() {
-		//Gets the target directory
-		$target = PhotoManager::getTmpPath();
-		
-		//Checks if the target directory is writable
-		if(!is_writable($target))
-			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
-		
-		//Uploads the file
-		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
-			$this->upload($this->request->params['form']['file'], $target);
-		
-		$this->set('title_for_layout', __d('me_cms', 'Upload photos'));
-	}
 
 	/**
 	 * Add photo from the tmp directory (`APP/tmp/uploads/photos`)
@@ -145,6 +103,28 @@ class PhotosController extends MeCmsAppController {
 	}
 
 	/**
+	 * Delete photo
+	 * @param string $id Photo ID
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->Photo->id = $id;
+		if(!$this->Photo->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		$albumId = $this->Photo->field('album_id', array('id' => $id));
+		
+		if($this->Photo->delete())
+			$this->Session->flash(__d('me_cms', 'The photo has been deleted'));
+		else
+			$this->Session->flash(__d('me_cms', 'The photo was not deleted'), 'error');
+			
+		$this->redirect(array('action' => 'index', $albumId));
+	}
+
+	/**
 	 * Edit photo
 	 * @param string $id Photo ID
 	 * @throws NotFoundException
@@ -175,46 +155,47 @@ class PhotosController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_cms', 'Edit photo')
 		), compact('photo')));
 	}
-
-	/**
-	 * Delete photo
-	 * @param string $id Photo ID
-	 * @throws NotFoundException
-	 */
-	public function admin_delete($id = NULL) {
-		$this->Photo->id = $id;
-		if(!$this->Photo->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
-		
-		$albumId = $this->Photo->field('album_id', array('id' => $id));
-		
-		if($this->Photo->delete())
-			$this->Session->flash(__d('me_cms', 'The photo has been deleted'));
-		else
-			$this->Session->flash(__d('me_cms', 'The photo was not deleted'), 'error');
-			
-		$this->redirect(array('action' => 'index', $albumId));
-	}
 	
 	/**
-	 * Gets a random photo.
-	 * This method works only with `requestAction()`.
-	 * @return array Photo
-	 * @throws ForbiddenException
-	 * @uses isRequestAction()
+	 * List photos
+	 * @param string $albumId Photos album id
+	 * @throws NotFoundException
 	 */
-	public function request_random() {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
+	public function admin_index($albumId = NULL) {
+		if(!$this->Photo->Album->exists($albumId))
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
-		return $this->Photo->find('random', array(
-			'conditions'	=> array('Album.active' => TRUE),
-			'contain'		=> 'Album',
-			'fields'		=> array('album_id', 'filename')
+		$this->paginate = array(
+			'conditions'	=> array('album_id' => $albumId),
+			'fields'		=> array('id', 'album_id', 'filename'),
+			'limit'			=> $this->config['photos_for_page']
+		);
+		
+		$this->set(array(
+			'photos'			=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Photos')
 		));
+	}
+
+	/**
+	 * Upload photo
+	 * @throws InternalErrorException
+	 * @uses PhotoManager::getTmpPath()
+	 * @uses MeCmsAppController::upload()
+	 */
+	public function admin_upload() {
+		//Gets the target directory
+		$target = PhotoManager::getTmpPath();
+		
+		//Checks if the target directory is writable
+		if(!is_writable($target))
+			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
+		
+		//Uploads the file
+		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
+			$this->upload($this->request->params['form']['file'], $target);
+		
+		$this->set('title_for_layout', __d('me_cms', 'Upload photos'));
 	}
 	
 	/**
@@ -240,5 +221,24 @@ class PhotosController extends MeCmsAppController {
 		}
 		
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photo')), compact('photo')));
+	}
+	
+	/**
+	 * Gets a random photo for widget.
+	 * This method works only with `requestAction()`.
+	 * @return array Photo
+	 * @throws ForbiddenException
+	 * @uses isRequestAction()
+	 */
+	public function widget_random() {
+		//This method works only with "requestAction()"
+		if(!$this->isRequestAction())
+            throw new ForbiddenException();
+		
+		return $this->Photo->find('random', array(
+			'conditions'	=> array('Album.active' => TRUE),
+			'contain'		=> 'Album',
+			'fields'		=> array('album_id', 'filename')
+		));
 	}
 }

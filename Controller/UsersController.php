@@ -61,40 +61,6 @@ class UsersController extends MeCmsAppController {
 		
 		return $this->redirect($this->Auth->logout());
 	}
-	
-	/**
-	 * List users
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'contain'	=> 'Group.label',
-			'fields'	=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created'),
-			'limit'		=> $this->config['records_for_page']
-		);
-		
-		$this->set(array(
-			'users'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Users')
-		));
-	}
-
-	/**
-	 * View user
-	 * @param string $id User id
-	 * @throws NotFoundException
-	 */
-	public function admin_view($id = NULL) {
-		if(!$this->User->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-		
-		$user = $this->User->find('first', array(
-			'conditions'	=> array('User.id' => $id),
-			'contain'		=> 'Group.label',
-			'fields'		=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created')
-		));
-		
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'View user')), compact('user')));
-	}
 
 	/**
 	 * Add user
@@ -114,6 +80,52 @@ class UsersController extends MeCmsAppController {
 			'groups'			=> $this->User->Group->find('list'),
 			'title_for_layout'	=> __d('me_cms', 'Add user')
 		));
+	}
+	
+	/**
+	 * Change the user password
+	 */
+	public function admin_change_password() {
+		//Sets the user id
+		$this->request->data['User']['id'] = $this->Auth->user('id');
+		
+		if($this->request->is('post') || $this->request->is('put')) {
+			if($this->User->save($this->request->data)) {
+				$this->Session->flash(__d('me_cms', 'The password has been edited'));
+				$this->redirect('/admin');
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'The password has not been edited. Please, try again'), 'error');
+		}
+		
+		$this->set('title_for_layout', __d('me_cms', 'Change password'));
+	}
+
+	/**
+	 * Delete user
+	 * @param string $id User id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->User->id = $id;
+		if(!$this->User->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+				
+		//Before deleting, it checks if the user is a admin found or if the user has some posts
+		if($id > 1 && !$this->User->field('post_count')) {
+			if($this->User->delete())
+				$this->Session->flash(__d('me_cms', 'The user has been deleted'));
+			else
+				$this->Session->flash(__d('me_cms', 'The user was not deleted'), 'error');
+		}
+		elseif($id == 1)
+			$this->Session->flash(__d('me_cms', 'You cannot delete this user, because he\'s the admin founder'), 'error');
+		else
+			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
+		
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**
@@ -150,51 +162,39 @@ class UsersController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_cms', 'Edit user')
 		));
 	}
+	
+	/**
+	 * List users
+	 */
+	public function admin_index() {
+		$this->paginate = array(
+			'contain'	=> 'Group.label',
+			'fields'	=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created'),
+			'limit'		=> $this->config['records_for_page']
+		);
+		
+		$this->set(array(
+			'users'				=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Users')
+		));
+	}
 
 	/**
-	 * Delete user
+	 * View user
 	 * @param string $id User id
 	 * @throws NotFoundException
 	 */
-	public function admin_delete($id = NULL) {
-		$this->User->id = $id;
-		if(!$this->User->exists())
+	public function admin_view($id = NULL) {
+		if(!$this->User->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
-				
-		//Before deleting, it checks if the user is a admin found or if the user has some posts
-		if($id > 1 && !$this->User->field('post_count')) {
-			if($this->User->delete())
-				$this->Session->flash(__d('me_cms', 'The user has been deleted'));
-			else
-				$this->Session->flash(__d('me_cms', 'The user was not deleted'), 'error');
-		}
-		elseif($id == 1)
-			$this->Session->flash(__d('me_cms', 'You cannot delete this user, because he\'s the admin founder'), 'error');
-		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
 		
-		$this->redirect(array('action' => 'index'));
-	}
-	
-	/**
-	 * Change the user password
-	 */
-	public function admin_change_password() {
-		//Sets the user id
-		$this->request->data['User']['id'] = $this->Auth->user('id');
+		$user = $this->User->find('first', array(
+			'conditions'	=> array('User.id' => $id),
+			'contain'		=> 'Group.label',
+			'fields'		=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created')
+		));
 		
-		if($this->request->is('post') || $this->request->is('put')) {
-			if($this->User->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The password has been edited'));
-				$this->redirect('/admin');
-			}
-			else
-				$this->Session->flash(__d('me_cms', 'The password has not been edited. Please, try again'), 'error');
-		}
-		
-		$this->set('title_for_layout', __d('me_cms', 'Change password'));
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'View user')), compact('user')));
 	}
 	
 	/**

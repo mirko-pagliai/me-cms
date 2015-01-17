@@ -40,27 +40,6 @@ class PostsCategoriesController extends MeCmsAppController {
 		//Only admins and managers can access this controller
 		return $this->Auth->isManager();
 	}
-	
-	/**
-	 * List categories
-	 */
-	public function admin_index() {
-		//Gets the categories
-		$categories = $this->PostsCategory->find('all', array(
-			'contain'	=> 'Parent.title',
-			'fields'	=> array('id', 'slug', 'post_count')
-		));
-		
-		//Changes the category titles, replacing them with the titles of the tree list
-		array_walk($categories, function(&$v, $k, $treeList) {
-			$v['PostsCategory']['title'] = $treeList[$v['PostsCategory']['id']];
-		}, $this->PostsCategory->generateTreeList());
-		
-		$this->set(array(
-			'categories'		=> $categories,
-			'title_for_layout'	=> __d('me_cms', 'Posts categories'))
-		);
-	}
 
 	/**
 	 * Add category
@@ -80,6 +59,31 @@ class PostsCategoriesController extends MeCmsAppController {
 			'parents'			=> $this->PostsCategory->generateTreeList(),
 			'title_for_layout'	=> __d('me_cms', 'Add posts category')
 		));
+	}
+
+	/**
+	 * Delete category
+	 * @param string $id Category id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->PostsCategory->id = $id;
+		if(!$this->PostsCategory->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		//Before deleting, it checks if the category has some posts
+		if(!$this->PostsCategory->field('post_count')) {
+			if($this->PostsCategory->delete())
+				$this->Session->flash(__d('me_cms', 'The posts category has been deleted'));
+			else
+				$this->Session->flash(__d('me_cms', 'The posts category was not deleted'), 'error');
+		}
+		else
+			$this->Session->flash(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
+			
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**
@@ -110,46 +114,59 @@ class PostsCategoriesController extends MeCmsAppController {
 			'title_for_layout'	=> __d('me_cms', 'Edit posts category')
 		));
 	}
-
+	
 	/**
-	 * Delete category
-	 * @param string $id Category id
-	 * @throws NotFoundException
+	 * List categories
 	 */
-	public function admin_delete($id = NULL) {
-		$this->PostsCategory->id = $id;
-		if(!$this->PostsCategory->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
+	public function admin_index() {
+		//Gets the categories
+		$categories = $this->PostsCategory->find('all', array(
+			'contain'	=> 'Parent.title',
+			'fields'	=> array('id', 'slug', 'post_count')
+		));
 		
-		//Before deleting, it checks if the category has some posts
-		if(!$this->PostsCategory->field('post_count')) {
-			if($this->PostsCategory->delete())
-				$this->Session->flash(__d('me_cms', 'The posts category has been deleted'));
-			else
-				$this->Session->flash(__d('me_cms', 'The posts category was not deleted'), 'error');
-		}
-		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
-			
-		$this->redirect(array('action' => 'index'));
+		//Changes the category titles, replacing them with the titles of the tree list
+		array_walk($categories, function(&$v, $k, $treeList) {
+			$v['PostsCategory']['title'] = $treeList[$v['PostsCategory']['id']];
+		}, $this->PostsCategory->generateTreeList());
+		
+		$this->set(array(
+			'categories'		=> $categories,
+			'title_for_layout'	=> __d('me_cms', 'Posts categories'))
+		);
 	}
 	
 	/**
-	 * Gets the categories list, with the slug as key and the title as value.
+	 * List categories
+	 */
+	public function index() {
+		//Tries to get data from the cache
+		$categories = Cache::read($cache = 'posts_categories_index', 'posts');
+		
+		//If the data are not available from the cache
+        if(empty($categories)) {
+			$categories = $this->PostsCategory->find('active', array('fields' => array('title', 'slug')));
+			
+            Cache::write($cache, $categories, 'posts');
+        }
+		
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Posts categories')), compact('categories')));
+	}
+	
+	/**
+	 * Gets the categories list for widget.
 	 * This method works only with `requestAction()`.
 	 * @return array Categories list
 	 * @throws ForbiddenException
 	 * @uses isRequestAction()
 	 */
-	public function request_list() {
+	public function widget_list() {
 		//This method works only with "requestAction()"
 		if(!$this->isRequestAction())
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'posts_categories_request_list', 'posts');
+		$categories = Cache::read($cache = 'posts_categories_widget_list', 'posts');
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
@@ -176,22 +193,5 @@ class PostsCategoriesController extends MeCmsAppController {
         }
 		
 		return $categories;
-	}
-	
-	/**
-	 * List categories
-	 */
-	public function index() {
-		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'posts_categories_index', 'posts');
-		
-		//If the data are not available from the cache
-        if(empty($categories)) {
-			$categories = $this->PostsCategory->find('active', array('fields' => array('title', 'slug')));
-			
-            Cache::write($cache, $categories, 'posts');
-        }
-		
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Posts categories')), compact('categories')));
 	}
 }

@@ -59,22 +59,6 @@ class PostsController extends MeCmsAppController {
 		
 		return TRUE;
 	}
-	
-	/**
-	 * List posts
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
-			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
-			'limit'		=> $this->config['records_for_page']
-		);
-		
-		$this->set(array(
-			'posts'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Posts')
-		));
-	}
 
 	/**
 	 * Add post
@@ -108,6 +92,26 @@ class PostsController extends MeCmsAppController {
 		}
 
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Add post')), compact('categories', 'users')));
+	}
+
+	/**
+	 * Delete post
+	 * @param string $id Post id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->Post->id = $id;
+		if(!$this->Post->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		if($this->Post->delete())
+			$this->Session->flash(__d('me_cms', 'The post has been deleted'));
+		else
+			$this->Session->flash(__d('me_cms', 'The post was not deleted'), 'error');
+			
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**
@@ -146,25 +150,21 @@ class PostsController extends MeCmsAppController {
 
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Edit post')), compact('categories', 'users')));
 	}
-
+	
 	/**
-	 * Delete post
-	 * @param string $id Post id
-	 * @throws NotFoundException
+	 * List posts
 	 */
-	public function admin_delete($id = NULL) {
-		$this->Post->id = $id;
-		if(!$this->Post->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
+	public function admin_index() {
+		$this->paginate = array(
+			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
+			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
+			'limit'		=> $this->config['records_for_page']
+		);
 		
-		if($this->Post->delete())
-			$this->Session->flash(__d('me_cms', 'The post has been deleted'));
-		else
-			$this->Session->flash(__d('me_cms', 'The post was not deleted'), 'error');
-			
-		$this->redirect(array('action' => 'index'));
+		$this->set(array(
+			'posts'				=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Posts')
+		));
 	}
 	
 	/**
@@ -188,32 +188,6 @@ class PostsController extends MeCmsAppController {
 				'contain'	=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
 				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created')
 			), compact('limit')));
-			
-            Cache::write($cache, $posts, 'posts');
-        }
-		
-		return $posts;
-	}
-	
-	/**
-	 * Gets the latest posts as list.
-	 * This method works only with `requestAction()`.
-	 * @param int $limit Number of latest posts
-	 * @return array List of latest posts
-	 * @throws ForbiddenException
-	 * @uses isRequestAction()
-	 */
-	public function request_latest_list($limit = 10) {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$posts = Cache::read($cache = sprintf('posts_request_latest_%d_list', $limit), 'posts');
-		
-		//If the data are not available from the cache
-        if(empty($posts)) {
-            $posts = $this->Post->find('active', am(array('fields' => array('slug', 'title')), compact('limit')));
 			
             Cache::write($cache, $posts, 'posts');
         }
@@ -296,6 +270,41 @@ class PostsController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Search post
+	 */
+	public function search() {
+		$pattern = empty($this->request->query['p']) ? FALSE : trim($this->request->query['p']);
+		
+		if(!empty($pattern)) {
+			//Checks if the pattern is at least 4 characters long
+			if(strlen($pattern) >= 4) {
+				$this->paginate = array(
+					'conditions'	=> array('OR' => array(
+						'title LIKE'	=> sprintf('%%%s%%', $pattern),
+						'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+						'text LIKE'		=> sprintf('%%%s%%', $pattern)
+					)),
+					'fields'		=> array('title', 'slug', 'text', 'created'),
+					'findType'		=> 'active',
+					'limit'			=> 10
+				);
+
+				try {
+					$posts = $this->paginate();
+					$count = $this->request->params['paging']['Post']['count'];
+				}
+				catch(NotFoundException $e) {}
+
+				$this->set(compact('count', 'posts'));
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
+		}
+		
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Search posts')), compact('pattern')));
+	}
+	
+	/**
 	 * View post
 	 * @param string $slug Post slug
 	 * @throws NotFoundException
@@ -331,37 +340,28 @@ class PostsController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Search post
+	 * Gets the latest posts for widget.
+	 * This method works only with `requestAction()`.
+	 * @param int $limit Number of latest posts
+	 * @return array List of latest posts
+	 * @throws ForbiddenException
+	 * @uses isRequestAction()
 	 */
-	public function search() {
-		$pattern = empty($this->request->query['p']) ? FALSE : trim($this->request->query['p']);
+	public function widget_latest($limit = 10) {
+		//This method works only with "requestAction()"
+		if(!$this->isRequestAction())
+            throw new ForbiddenException();
 		
-		if(!empty($pattern)) {
-			//Checks if the pattern is at least 4 characters long
-			if(strlen($pattern) >= 4) {
-				$this->paginate = array(
-					'conditions'	=> array('OR' => array(
-						'title LIKE'	=> sprintf('%%%s%%', $pattern),
-						'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-						'text LIKE'		=> sprintf('%%%s%%', $pattern)
-					)),
-					'fields'		=> array('title', 'slug', 'text', 'created'),
-					'findType'		=> 'active',
-					'limit'			=> 10
-				);
-
-				try {
-					$posts = $this->paginate();
-					$count = $this->request->params['paging']['Post']['count'];
-				}
-				catch(NotFoundException $e) {}
-
-				$this->set(compact('count', 'posts'));
-			}
-			else
-				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
-		}
+		//Tries to get data from the cache
+		$posts = Cache::read($cache = sprintf('posts_widget_latest_%d', $limit), 'posts');
 		
-		$this->set(am(array('title_for_layout' => __d('me_cms', 'Search posts')), compact('pattern')));
+		//If the data are not available from the cache
+        if(empty($posts)) {
+            $posts = $this->Post->find('active', am(array('fields' => array('slug', 'title')), compact('limit')));
+			
+            Cache::write($cache, $posts, 'posts');
+        }
+		
+		return $posts;
 	}
 }

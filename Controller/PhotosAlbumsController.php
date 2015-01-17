@@ -44,21 +44,6 @@ class PhotosAlbumsController extends MeCmsAppController {
 		
 		return TRUE;
 	}
-	
-	/**
-	 * List albums
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'fields'	=> array('id', 'slug', 'title', 'photo_count', 'active'),
-			'limit'		=> $this->config['records_for_page']
-		);
-		
-		$this->set(array(
-			'albums'			=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Photos albums')
-		));
-	}
 
 	/**
 	 * Add album
@@ -75,6 +60,31 @@ class PhotosAlbumsController extends MeCmsAppController {
 		}
 
 		$this->set('title_for_layout', __d('me_cms', 'Add photos album'));
+	}
+
+	/**
+	 * Delete album
+	 * @param string $id Album id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id = NULL) {
+		$this->PhotosAlbum->id = $id;
+		if(!$this->PhotosAlbum->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		$this->request->onlyAllow('post', 'delete');
+		
+		//Before deleting, it checks if the album has some photos
+		if(!$this->PhotosAlbum->field('photo_count')) {
+			if($this->PhotosAlbum->delete())
+				$this->Session->flash(__d('me_cms', 'The photos album has been deleted'));
+			else
+				$this->Session->flash(__d('me_cms', 'The photos album was not deleted'), 'error');
+		}
+		else
+			$this->Session->flash(__d('me_cms', 'Before you delete this album, you have to delete its photos or assign them to another album'), 'error');
+					
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**
@@ -102,30 +112,20 @@ class PhotosAlbumsController extends MeCmsAppController {
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit photos album'));
 	}
-
+	
 	/**
-	 * Delete album
-	 * @param string $id Album id
-	 * @throws NotFoundException
+	 * List albums
 	 */
-	public function admin_delete($id = NULL) {
-		$this->PhotosAlbum->id = $id;
-		if(!$this->PhotosAlbum->exists())
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		$this->request->onlyAllow('post', 'delete');
+	public function admin_index() {
+		$this->paginate = array(
+			'fields'	=> array('id', 'slug', 'title', 'photo_count', 'active'),
+			'limit'		=> $this->config['records_for_page']
+		);
 		
-		//Before deleting, it checks if the album has some photos
-		if(!$this->PhotosAlbum->field('photo_count')) {
-			if($this->PhotosAlbum->delete())
-				$this->Session->flash(__d('me_cms', 'The photos album has been deleted'));
-			else
-				$this->Session->flash(__d('me_cms', 'The photos album was not deleted'), 'error');
-		}
-		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this album, you have to delete its photos or assign them to another album'), 'error');
-					
-		$this->redirect(array('action' => 'index'));
+		$this->set(array(
+			'albums'			=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Photos albums')
+		));
 	}
 	
 	/**

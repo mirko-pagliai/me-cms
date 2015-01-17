@@ -27,7 +27,7 @@
 
 <?php
 	//Gets the categories
-	$categories = $this->requestAction(array('controller' => 'posts_categories', 'action' => 'request_list', 'plugin' => 'me_cms'));
+	$categories = $this->requestAction(array('controller' => 'posts_categories', 'action' => 'widget_list', 'plugin' => 'me_cms'));
 ?>
 
 <?php if(!empty($categories)): ?>

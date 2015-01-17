@@ -40,21 +40,6 @@ class UsersGroupsController extends MeCmsAppController {
 		//Only admins can access this controller
 		return $this->Auth->isAdmin();
 	}
-	
-	/**
-	 * List groups
-	 */
-	public function admin_index() {
-		$this->paginate = array(
-			'fields'	=> array('id', 'name', 'label', 'user_count'),
-			'limit'		=> $this->config['records_for_page']
-		);
-		
-		$this->set(array(
-			'groups'			=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Users groups')
-		));
-	}
 
 	/**
 	 * Add group
@@ -71,33 +56,6 @@ class UsersGroupsController extends MeCmsAppController {
 		}
 
 		$this->set('title_for_layout', __d('me_cms', 'Add users group'));
-	}
-
-	/**
-	 * Edit group
-	 * @param string $id Group id
-	 * @throws NotFoundException
-	 */
-	public function admin_edit($id = NULL) {
-		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
-		if(!$this->UsersGroup->exists($id))
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-		if($this->request->is('post') || $this->request->is('put')) {
-			if($this->UsersGroup->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The users group has been edited'));
-				$this->redirect(array('action' => 'index'));
-			}
-			else
-				$this->Session->flash(__d('me_cms', 'The users group could not be edited. Please, try again'), 'error');
-		} 
-		else
-			$this->request->data = $this->UsersGroup->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'name', 'label', 'description')
-			));
-
-		$this->set('title_for_layout', __d('me_cms', 'Edit users group'));
 	}
 
 	/**
@@ -126,5 +84,47 @@ class UsersGroupsController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'Before you delete this users group, you have to delete its users or assign them to another group'), 'error');
 			
 		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
+	 * Edit group
+	 * @param string $id Group id
+	 * @throws NotFoundException
+	 */
+	public function admin_edit($id = NULL) {
+		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
+		if(!$this->UsersGroup->exists($id))
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			
+		if($this->request->is('post') || $this->request->is('put')) {
+			if($this->UsersGroup->save($this->request->data)) {
+				$this->Session->flash(__d('me_cms', 'The users group has been edited'));
+				$this->redirect(array('action' => 'index'));
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'The users group could not be edited. Please, try again'), 'error');
+		} 
+		else
+			$this->request->data = $this->UsersGroup->find('first', array(
+				'conditions'	=> array('id' => $id),
+				'fields'		=> array('id', 'name', 'label', 'description')
+			));
+
+		$this->set('title_for_layout', __d('me_cms', 'Edit users group'));
+	}
+	
+	/**
+	 * List groups
+	 */
+	public function admin_index() {
+		$this->paginate = array(
+			'fields'	=> array('id', 'name', 'label', 'user_count'),
+			'limit'		=> $this->config['records_for_page']
+		);
+		
+		$this->set(array(
+			'groups'			=> $this->paginate(),
+			'title_for_layout'	=> __d('me_cms', 'Users groups')
+		));
 	}
 }
