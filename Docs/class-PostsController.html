@@ -176,7 +176,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-PostsController.html#29-367" title="Go to source code">PostsController.php</a>
+			<b>Located at</b> <a href="source-class-PostsController.html#29-339" title="Go to source code">PostsController.php</a>
 		<br>
 	</div>
 
@@ -232,36 +232,6 @@ AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="admin_index" id="_admin_index">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-PostsController.html#63-77" title="Go to source code">admin_index</a>( )</code>
-
-		<div class="description short">
-			<p>List posts</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>List posts</p>
-
-
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="admin_add" id="_admin_add">
 
 		<td class="attributes"><code>
@@ -274,7 +244,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-PostsController.html#79-111" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-PostsController.html#63-95" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			<p>Add post</p>
@@ -286,49 +256,6 @@ AppController
 
 
 
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeAuthComponent.html#_isManager">MeAuthComponent::isManager()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="admin_edit" id="_admin_edit">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-PostsController.html#113-148" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
-
-		<div class="description short">
-			<p>Edit post</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Edit post</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd>Post id</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					NotFoundException
-				</div>
 
 				<h4>Uses</h4>
 				<div class="list">
@@ -351,7 +278,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-PostsController.html#150-168" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#97-115" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Delete post</p>
@@ -378,95 +305,74 @@ AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="request_latest" id="_request_latest">
+	<tr data-order="admin_edit" id="_admin_edit">
 
 		<td class="attributes"><code>
 			 public 
 
-			array
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_request_latest">#</a>
-		<code><a href="source-class-PostsController.html#170-196" title="Go to source code">request_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">5</span></span> )</code>
+		<a class="anchor" href="#_admin_edit">#</a>
+		<code><a href="source-class-PostsController.html#117-152" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
-			<p>Gets the latest posts.
-This method works only with <code>requestAction()</code>.</p>
+			<p>Edit post</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Gets the latest posts.
-This method works only with <code>requestAction()</code>.</p>
+			<p>Edit post</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$limit</var></dt>
-					<dd>Number of latest posts</dd>
+					<dt><var>$id</var></dt>
+					<dd>Post id</dd>
 				</dl></div>
 
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Latest posts
-				</div>
 
 				<h4>Throws</h4>
 				<div class="list">
-					ForbiddenException
+					NotFoundException
 				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeAuthComponent.html#_isManager">MeAuthComponent::isManager()</a></code><br>
+				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="request_latest_list" id="_request_latest_list">
+	<tr data-order="admin_index" id="_admin_index">
 
 		<td class="attributes"><code>
 			 public 
 
-			array
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_request_latest_list">#</a>
-		<code><a href="source-class-PostsController.html#198-222" title="Go to source code">request_latest_list</a>( <span>integer <var>$limit</var> = <span class="php-num">10</span></span> )</code>
+		<a class="anchor" href="#_admin_index">#</a>
+		<code><a href="source-class-PostsController.html#154-168" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
-			<p>Gets the latest posts as list.
-This method works only with <code>requestAction()</code>.</p>
+			<p>List posts</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Gets the latest posts as list.
-This method works only with <code>requestAction()</code>.</p>
+			<p>List posts</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$limit</var></dt>
-					<dd>Number of latest posts</dd>
-				</dl></div>
 
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>List of latest posts
-				</div>
 
-				<h4>Throws</h4>
-				<div class="list">
-					ForbiddenException
-				</div>
 
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeCmsAppController.html#_isRequestAction">MeCmsAppController::isRequestAction()</a></code><br>
-				</div>
 
 
 		</div>
@@ -484,7 +390,7 @@ This method works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-PostsController.html#224-296" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#170-242" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>List posts</p>
@@ -511,6 +417,36 @@ This method works only with <code>requestAction()</code>.</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="search" id="_search">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_search">#</a>
+		<code><a href="source-class-PostsController.html#244-277" title="Go to source code">search</a>( )</code>
+
+		<div class="description short">
+			<p>Search post</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Search post</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="view" id="_view">
 
 		<td class="attributes"><code>
@@ -523,7 +459,7 @@ This method works only with <code>requestAction()</code>.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-PostsController.html#298-331" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#279-312" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View post</p>
@@ -550,31 +486,50 @@ This method works only with <code>requestAction()</code>.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="search" id="_search">
+	<tr data-order="widget_latest" id="_widget_latest">
 
 		<td class="attributes"><code>
 			 public 
 
-			
+			array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-PostsController.html#333-366" title="Go to source code">search</a>( )</code>
+		<a class="anchor" href="#_widget_latest">#</a>
+		<code><a href="source-class-PostsController.html#314-338" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">10</span></span> )</code>
 
 		<div class="description short">
-			<p>Search post</p>
+			<p>Gets the latest posts for widget.
+This method works only with <code>requestAction()</code>.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Search post</p>
+			<p>Gets the latest posts for widget.
+This method works only with <code>requestAction()</code>.</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$limit</var></dt>
+					<dd>Number of latest posts</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>List of latest posts
+				</div>
 
+				<h4>Throws</h4>
+				<div class="list">
+					ForbiddenException
+				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_isRequestAction">MeCmsAppController::isRequestAction()</a></code><br>
+				</div>
 
 
 		</div>
