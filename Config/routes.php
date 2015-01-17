@@ -39,7 +39,7 @@ Router::connect('/postsCategories', array('controller' => 'posts_categories',	'a
 Router::connect('/postsCategory/*',	array('controller' => 'posts',				'action' => 'index', 'plugin' => 'me_cms'));
 
 //Posts controller
-Router::connect('/posts/rss',		array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms', 'ext' => 'rss'));
+Router::connect('/posts/rss',		array('controller' => 'posts', 'action' => 'rss',		'plugin' => 'me_cms', 'ext' => 'rss'));
 Router::connect('/posts/search/*',	array('controller' => 'posts', 'action' => 'search',	'plugin' => 'me_cms'));
 Router::connect('/posts/*',			array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms'));
 Router::connect('/post/*',			array('controller' => 'posts', 'action' => 'view',		'plugin' => 'me_cms'));

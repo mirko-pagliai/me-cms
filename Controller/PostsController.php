@@ -170,27 +170,8 @@ class PostsController extends MeCmsAppController {
 	/**
 	 * List posts
 	 * @param string $category Category slug, optional
-	 * @return array List of latest posts (only when requested as rss)
 	 */
 	public function index($category = NULL) {
-		//If the posts were requested as rss
-		if($this->RequestHandler->isRss()) {
-			//Tries to get data from the cache
-			$posts = Cache::read($cache = 'posts_rss', 'posts');
-
-			//If the data are not available from the cache
-			if(empty($posts)) {
-				$posts = $this->Post->find('active', array(
-					'fields'	=> array('title', 'slug', 'text', 'created'),
-					'limit'		=> 20
-				));
-
-				Cache::write($cache, $posts, 'posts');
-			}
-			
-			return $this->set(compact('posts'));
-		}
-
 		//Sets the initial cache name
 		$cache = 'posts_index';
 		//Sets the initial conditions query
@@ -239,6 +220,32 @@ class PostsController extends MeCmsAppController {
 			$title_for_layout = __d('me_cms', 'Posts');
 		
 		$this->set(compact('posts', 'title_for_layout'));
+	}
+	
+	/**
+	 * Lists posts as RSS.
+	 * @return array Posts
+	 * @throws ForbiddenException
+	 */
+	public function rss() {
+		//This method works only for RSS
+		if(!$this->RequestHandler->isRss())
+            throw new ForbiddenException();
+		
+		//Tries to get data from the cache
+		$posts = Cache::read($cache = 'posts_rss', 'posts');
+
+		//If the data are not available from the cache
+		if(empty($posts)) {
+			$posts = $this->Post->find('active', array(
+				'fields'	=> array('title', 'slug', 'text', 'created'),
+				'limit'		=> 20
+			));
+
+			Cache::write($cache, $posts, 'posts');
+		}
+
+		return $this->set(compact('posts'));
 	}
 	
 	/**
