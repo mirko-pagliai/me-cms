@@ -66,18 +66,18 @@ class ConfigComponent extends Component {
 		//This configuration will overwrite the one obtained by the plugin
 		if(is_readable(APP.'Config'.DS.'mecms.php'))
 			Configure::load('mecms');
-
+		
 		//Turns some values as array
 		foreach(array('MeCms.backend.topbar', 'MeCms.frontend.widgets', 'MeCms.frontend.widgets_homepage') as $key)
 			Configure::write($key, $this->_turnsAsArray(Configure::read($key)));
-
+		
 		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
 		if($this->controller->isAction(array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
 			Configure::write('MeCms.frontend.widgets', Configure::read('MeCms.frontend.widgets_homepage'));
-			
+				
 		//Deletes the homepage widgets key
 		Configure::delete('MeCms.frontend.widgets_homepage');
-
+		
 		//If it's an admin request
 		if($this->controller->isAdminRequest())
 			Configure::write('MeCms', am(Configure::read('MeCms.backend'), Configure::read('MeCms.general')));
@@ -120,8 +120,8 @@ class ConfigComponent extends Component {
 	 * @param string $string String of words separated by commas (and optional spaces)
 	 * @return mixed Array of values
 	 */
-	protected function _turnsAsArray($string) {
-		return explode(',', preg_replace('/\s/', NULL, trim($string)));
+	protected function _turnsAsArray($string) {		
+		return is_string($string) ? explode(',', preg_replace('/\s/', NULL, trim($string))) : $string;
 	}
 
 	/**
