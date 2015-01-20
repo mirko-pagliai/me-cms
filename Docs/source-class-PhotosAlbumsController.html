@@ -160,8 +160,8 @@
 </span></span><span id="34" class="l"><a href="#34"> 34: </a><span class="php-comment">     * Check if the provided user is authorized for the request.
 </span></span><span id="35" class="l"><a href="#35"> 35: </a><span class="php-comment">     * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 </span></span><span id="36" class="l"><a href="#36"> 36: </a><span class="php-comment">     * @return bool TRUE if $user is authorized, otherwise FALSE
-</span></span><span id="37" class="l"><a href="#37"> 37: </a><span class="php-comment">     * @uses isAction()
-</span></span><span id="38" class="l"><a href="#38"> 38: </a><span class="php-comment">     * @uses MeAuthComponenet::isManager()
+</span></span><span id="37" class="l"><a href="#37"> 37: </a><span class="php-comment">     * @uses MeAuthComponenet::isManager()
+</span></span><span id="38" class="l"><a href="#38"> 38: </a><span class="php-comment">     * @uses MeToolsAppController::isAction()
 </span></span><span id="39" class="l"><a href="#39"> 39: </a><span class="php-comment">     */</span>
 </span><span id="40" class="l"><a href="#40"> 40: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> isAuthorized(<span class="php-var">$user</span> = <span class="php-keyword1">NULL</span>) {
 </span><span id="41" class="l"><a href="#41"> 41: </a>        <span class="php-comment">//Only admins and managers can delete albums</span>

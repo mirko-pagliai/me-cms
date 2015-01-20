@@ -181,8 +181,8 @@
 </span></span><span id="55" class="l"><a href="#55"> 55: </a><span class="php-comment">     * @uses controller
 </span></span><span id="56" class="l"><a href="#56"> 56: </a><span class="php-comment">     * @uses _setWidgets()
 </span></span><span id="57" class="l"><a href="#57"> 57: </a><span class="php-comment">     * @uses _turnsAsArray()
-</span></span><span id="58" class="l"><a href="#58"> 58: </a><span class="php-comment">     * @uses MeCmsAppController::isAction()
-</span></span><span id="59" class="l"><a href="#59"> 59: </a><span class="php-comment">     * @uses MeCmsAppController::isAdminRequest()
+</span></span><span id="58" class="l"><a href="#58"> 58: </a><span class="php-comment">     * @uses MeToolsAppController::isAction()
+</span></span><span id="59" class="l"><a href="#59"> 59: </a><span class="php-comment">     * @uses MeToolsAppController::isAdminRequest()
 </span></span><span id="60" class="l"><a href="#60"> 60: </a><span class="php-comment">     */</span>
 </span><span id="61" class="l"><a href="#61"> 61: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _setConfig() {
 </span><span id="62" class="l"><a href="#62"> 62: </a>        <span class="php-comment">//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)</span>
@@ -192,18 +192,18 @@
 </span><span id="66" class="l"><a href="#66"> 66: </a>        <span class="php-comment">//This configuration will overwrite the one obtained by the plugin</span>
 </span><span id="67" class="l"><a href="#67"> 67: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">is_readable</span>(APP.<span class="php-quote">'Config'</span>.DS.<span class="php-quote">'mecms.php'</span>))
 </span><span id="68" class="l"><a href="#68"> 68: </a>            Configure::load(<span class="php-quote">'mecms'</span>);
-</span><span id="69" class="l"><a href="#69"> 69: </a>
+</span><span id="69" class="l"><a href="#69"> 69: </a>        
 </span><span id="70" class="l"><a href="#70"> 70: </a>        <span class="php-comment">//Turns some values as array</span>
 </span><span id="71" class="l"><a href="#71"> 71: </a>        <span class="php-keyword1">foreach</span>(<span class="php-keyword1">array</span>(<span class="php-quote">'MeCms.backend.topbar'</span>, <span class="php-quote">'MeCms.frontend.widgets'</span>, <span class="php-quote">'MeCms.frontend.widgets_homepage'</span>) <span class="php-keyword1">as</span> <span class="php-var">$key</span>)
 </span><span id="72" class="l"><a href="#72"> 72: </a>            Configure::write(<span class="php-var">$key</span>, <span class="php-var">$this</span>-&gt;_turnsAsArray(Configure::read(<span class="php-var">$key</span>)));
-</span><span id="73" class="l"><a href="#73"> 73: </a>
+</span><span id="73" class="l"><a href="#73"> 73: </a>        
 </span><span id="74" class="l"><a href="#74"> 74: </a>        <span class="php-comment">//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets</span>
 </span><span id="75" class="l"><a href="#75"> 75: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;controller-&gt;isAction(<span class="php-keyword1">array</span>(<span class="php-quote">'home'</span>, <span class="php-quote">'homepage'</span>, <span class="php-quote">'main'</span>)) &amp;&amp; Configure::read(<span class="php-quote">'MeCms.frontend.widgets_homepage'</span>))
 </span><span id="76" class="l"><a href="#76"> 76: </a>            Configure::write(<span class="php-quote">'MeCms.frontend.widgets'</span>, Configure::read(<span class="php-quote">'MeCms.frontend.widgets_homepage'</span>));
-</span><span id="77" class="l"><a href="#77"> 77: </a>            
+</span><span id="77" class="l"><a href="#77"> 77: </a>                
 </span><span id="78" class="l"><a href="#78"> 78: </a>        <span class="php-comment">//Deletes the homepage widgets key</span>
 </span><span id="79" class="l"><a href="#79"> 79: </a>        Configure::<span class="php-keyword2">delete</span>(<span class="php-quote">'MeCms.frontend.widgets_homepage'</span>);
-</span><span id="80" class="l"><a href="#80"> 80: </a>
+</span><span id="80" class="l"><a href="#80"> 80: </a>        
 </span><span id="81" class="l"><a href="#81"> 81: </a>        <span class="php-comment">//If it's an admin request</span>
 </span><span id="82" class="l"><a href="#82"> 82: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;controller-&gt;isAdminRequest())
 </span><span id="83" class="l"><a href="#83"> 83: </a>            Configure::write(<span class="php-quote">'MeCms'</span>, am(Configure::read(<span class="php-quote">'MeCms.backend'</span>), Configure::read(<span class="php-quote">'MeCms.general'</span>)));
@@ -246,8 +246,8 @@
 </span></span><span id="120" class="l"><a href="#120">120: </a><span class="php-comment">     * @param string $string String of words separated by commas (and optional spaces)
 </span></span><span id="121" class="l"><a href="#121">121: </a><span class="php-comment">     * @return mixed Array of values
 </span></span><span id="122" class="l"><a href="#122">122: </a><span class="php-comment">     */</span>
-</span><span id="123" class="l"><a href="#123">123: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _turnsAsArray(<span class="php-var">$string</span>) {
-</span><span id="124" class="l"><a href="#124">124: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">explode</span>(<span class="php-quote">','</span>, <span class="php-keyword2">preg_replace</span>(<span class="php-quote">'/\s/'</span>, <span class="php-keyword1">NULL</span>, <span class="php-keyword2">trim</span>(<span class="php-var">$string</span>)));
+</span><span id="123" class="l"><a href="#123">123: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _turnsAsArray(<span class="php-var">$string</span>) {     
+</span><span id="124" class="l"><a href="#124">124: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">is_string</span>(<span class="php-var">$string</span>) ? <span class="php-keyword2">explode</span>(<span class="php-quote">','</span>, <span class="php-keyword2">preg_replace</span>(<span class="php-quote">'/\s/'</span>, <span class="php-keyword1">NULL</span>, <span class="php-keyword2">trim</span>(<span class="php-var">$string</span>))) : <span class="php-var">$string</span>;
 </span><span id="125" class="l"><a href="#125">125: </a>    }
 </span><span id="126" class="l"><a href="#126">126: </a>
 </span><span id="127" class="l"><a href="#127">127: </a>    <span class="php-comment">/**

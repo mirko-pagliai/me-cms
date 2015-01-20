@@ -175,7 +175,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-MeCmsAppController.html#29-261" title="Go to source code">MeCmsAppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCmsAppController.html#29-205" title="Go to source code">MeCmsAppController.php</a>
 		<br>
 	</div>
 
@@ -250,8 +250,8 @@ It's used to perform logic before each controller action.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
+						MeToolsAppController::isAdminRequest()<br>
 						<code><a href="class-MeCmsAppController.html#__loadMenus">MeCmsAppController::_loadMenus()</a></code><br>
-						<code><a href="class-MeCmsAppController.html#_isAdminRequest">MeCmsAppController::isAdminRequest()</a></code><br>
 						<code><a href="class-MeCmsAppController.html#_isOffline">MeCmsAppController::isOffline()</a></code><br>
 				</div>
 
@@ -291,108 +291,6 @@ It's used to perform logic or set view variables that are required on every requ
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="isAction" id="_isAction">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_isAction">#</a>
-		<code><a href="source-class-MeCmsAppController.html#157-188" title="Go to source code">isAction</a>( <span>string|array <var>$action</var></span>, <span>string <var>$controller</var> = <span class="php-keyword1">NULL</span></span> )</code>
-
-		<div class="description short">
-			<p>Checks if the specified action is the current one. The action can be a string or an array of actions.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Checks if the specified action is the current one. The action can be a string or an array of actions.</p>
-
-<p>Optionally, it can also check the controller.</p>
-
-<p>Example:</p>
-
-<pre><span class="php-var">$this</span>-&gt;isAction(<span class="php-quote">'delete'</span>);</pre>
-
-<p>It returns TRUE if the current action is <code>delete</code>, otherwise FALSE.</p>
-
-<p>Example:</p>
-
-<pre><span class="php-var">$this</span>-&gt;isAction(<span class="php-keyword1">array</span>(<span class="php-quote">'edit'</span>, <span class="php-quote">'delete'</span>), <span class="php-quote">'users'</span>);</pre>
-
-<p>It returns TRUE if the current action is <code>edit</code> or <code>delete</code> and if the controller is <code>users</code>, otherwise FALSE.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$action</var></dt>
-					<dd>Action name</dd>
-					<dt><var>$controller</var></dt>
-					<dd>Controller name</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean<br>TRUE if it's the current one, otherwise FALSE
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeCmsAppController.html#_isController">MeCmsAppController::isController()</a></code><br>
-				</div>
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="isAdminRequest" id="_isAdminRequest">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_isAdminRequest">#</a>
-		<code><a href="source-class-MeCmsAppController.html#190-196" title="Go to source code">isAdminRequest</a>( )</code>
-
-		<div class="description short">
-			<p>Checks if this is an admin request</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Checks if this is an admin request</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean<br>TRUE if is an admin request, otherwise FALSE
-				</div>
-
-
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
-						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="isAuthorized" id="_isAuthorized">
 
 		<td class="attributes"><code>
@@ -405,7 +303,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCmsAppController.html#198-207" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#157-166" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request.</p>
@@ -436,49 +334,6 @@ It's used to perform logic or set view variables that are required on every requ
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="isController" id="_isController">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_isController">#</a>
-		<code><a href="source-class-MeCmsAppController.html#209-216" title="Go to source code">isController</a>( <span>string <var>$controller</var></span> )</code>
-
-		<div class="description short">
-			<p>Checks if the specified controller is the current one</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Checks if the specified controller is the current one</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$controller</var></dt>
-					<dd>Controller name</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean<br>TRUE if it's the current one, otherwise FALSE
-				</div>
-
-
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-MeCmsAppController.html#_isAction">MeCmsAppController::isAction()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="isOffline" id="_isOffline">
 
 		<td class="attributes"><code>
@@ -491,7 +346,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCmsAppController.html#218-224" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#168-176" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -508,44 +363,15 @@ It's used to perform logic or set view variables that are required on every requ
 				</div>
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						MeToolsAppController::isAction()<br>
+						MeToolsAppController::isRequestAction()<br>
+				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
 				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="isRequestAction" id="_isRequestAction">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_isRequestAction">#</a>
-		<code><a href="source-class-MeCmsAppController.html#226-232" title="Go to source code">isRequestAction</a>( )</code>
-
-		<div class="description short">
-			<p>Checks if the current action is a "request action"</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Checks if the current action is a "request action"</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean<br>TRUE if it's a "request action", otherwise FALSE
-				</div>
-
-
 
 
 		</div>
@@ -563,7 +389,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_upload">#</a>
-		<code><a href="source-class-MeCmsAppController.html#234-260" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#178-204" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
 
 		<div class="description short">
 			<p>Uploads a file</p>
