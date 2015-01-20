@@ -42,9 +42,9 @@ Invece, se nella tua applicazione devi creare nuovi controller, questi dovranno 
 
 	<?php
 
-	App::uses('MeCmsAppController', 'MeCms.Controller');
-
-	class StuffController extends MeCmsAppController {
+		App::uses('MeCmsAppController', 'MeCms.Controller');
+	
+		class StuffController extends MeCmsAppController {
 
 Opzionalmente, impostare un nuovo prefisso per i file della cache modificando la relativa riga nel file `Config/core.php`:
 
