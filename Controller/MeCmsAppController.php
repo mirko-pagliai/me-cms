@@ -91,8 +91,8 @@ class MeCmsAppController extends AppController {
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
+	 * @uses MeToolsAppController::isAdminRequest()
 	 * @uses _loadMenus()
-	 * @uses isAdminRequest()
 	 * @uses isOffline()
 	 */
 	public function beforeFilter() {		
@@ -155,47 +155,6 @@ class MeCmsAppController extends AppController {
 	}
 	
 	/**
-	 * Checks if the specified action is the current one. The action can be a string or an array of actions.
-	 * 
-	 * Optionally, it can also check the controller.
-	 * 
-	 * Example:
-	 * <code>
-	 * $this->isAction('delete');
-	 * </code>
-	 * It returns TRUE if the current action is `delete`, otherwise FALSE.
-	 * 
-	 * Example:
-	 * <code>
-	 * $this->isAction(array('edit', 'delete'), 'users');
-	 * </code>
-	 * It returns TRUE if the current action is `edit` or `delete` and if the controller is `users`, otherwise FALSE.
-	 * @param string|array $action Action name
-	 * @param string $controller Controller name
-	 * @return bool TRUE if it's the current one, otherwise FALSE
-	 * @uses isController()
-	 */
-	public function isAction($action, $controller = NULL) {
-		if(is_array($action))
-			$action = in_array($this->request->params['action'], $action);
-		else
-			$action = $this->request->params['action'] === $action;
-		
-		if(empty($controller))
-			return $action;
-		
-		return $action && $this->isController($controller);
-	}
-	
-	/**
-	 * Checks if this is an admin request
-	 * @return boolean TRUE if is an admin request, otherwise FALSE
-	 */
-	public function isAdminRequest() {
-		return !empty($this->request->params['admin']);
-	}
-	
-	/**
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
@@ -207,28 +166,13 @@ class MeCmsAppController extends AppController {
 	}
 	
 	/**
-	 * Checks if the specified controller is the current one
-	 * @param string $controller Controller name
-	 * @return bool TRUE if it's the current one, otherwise FALSE
-	 */
-	public function isController($controller) {
-		return $this->request->params['controller'] === $controller;
-	}
-	
-	/**
 	 * Checks if the site is offline
 	 * @return bool TRUE if the site is offline, otherwise FALSE
+	 * @uses MeToolsAppController::isAction()
+	 * @uses MeToolsAppController::isRequestAction()
 	 */
 	public function isOffline() {
 		return $this->config['offline'] && !$this->isAction(array('login', 'logout'), 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction();
-	}
-	
-	/**
-	 * Checks if the current action is a "request action"
-	 * @return bool TRUE if it's a "request action", otherwise FALSE
-	 */
-	public function isRequestAction() {
-		return !empty($this->request->params['requested']);
 	}
 	
 	/**

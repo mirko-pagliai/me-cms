@@ -35,9 +35,9 @@ class PagesController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses isAction()
 	 * @uses MeAuthComponenet::isAdmin()
 	 * @uses MeAuthComponenet::isManager()
+	 * @uses MeToolsAppController::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins and manager can add and edit pages
@@ -207,7 +207,7 @@ class PagesController extends MeCmsAppController {
 	 * This method works only with `requestAction()`.
 	 * @return array Pages list
 	 * @throws ForbiddenException
-	 * @uses isRequestAction()
+	 * @uses MeToolsAppController::isRequestAction()
 	 */
 	public function widget_list() {
 		//This method works only with "requestAction()"

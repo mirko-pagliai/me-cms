@@ -55,8 +55,8 @@ class ConfigComponent extends Component {
 	 * @uses controller
 	 * @uses _setWidgets()
 	 * @uses _turnsAsArray()
-	 * @uses MeCmsAppController::isAction()
-	 * @uses MeCmsAppController::isAdminRequest()
+	 * @uses MeToolsAppController::isAction()
+	 * @uses MeToolsAppController::isAdminRequest()
 	 */
 	protected function _setConfig() {
 		//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)

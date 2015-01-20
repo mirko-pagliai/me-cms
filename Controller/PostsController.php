@@ -40,9 +40,9 @@ class PostsController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses isAction()
 	 * @uses MeAuthComponenet::isManager()
 	 * @uses MeAuthComponenet::user()
+	 * @uses MeToolsAppController::isAction()
 	 * @uses Post::isOwnedBy()
 	 */
 	public function isAuthorized($user = NULL) {
@@ -318,7 +318,7 @@ class PostsController extends MeCmsAppController {
 	 * @param int $limit Number of latest posts
 	 * @return array List of latest posts
 	 * @throws ForbiddenException
-	 * @uses isRequestAction()
+	 * @uses MeToolsAppController::isRequestAction()
 	 */
 	public function widget_latest($limit = 10) {
 		//This method works only with "requestAction()"

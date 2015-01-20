@@ -158,7 +158,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	 * This method works only with `requestAction()`.
 	 * @return array Categories list
 	 * @throws ForbiddenException
-	 * @uses isRequestAction()
+	 * @uses MeToolsAppController::isRequestAction()
 	 */
 	public function widget_list() {
 		//This method works only with "requestAction()"
