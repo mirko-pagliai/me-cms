@@ -30,6 +30,22 @@ Modifica il file `Config/routes.php`, eliminando le rotte di default presenti. A
 		CakePlugin::routes();
 		require CAKE . 'Config' . DS . 'routes.php';
 
+La classe `AppController` presente in `APP/Controller` deve estendere `MeToolsAppController`:
+
+	<?php
+
+		App::uses('MeToolsAppController', 'MeTools.Controller');
+
+		class AppController extends MeToolsAppController {
+
+Invece, se nella tua applicazione devi creare nuovi controller, questi dovranno estendere `MeCmsAppController`. Ad esempio:
+
+	<?php
+
+	App::uses('MeCmsAppController', 'MeCms.Controller');
+
+	class StuffController extends MeCmsAppController {
+
 Opzionalmente, impostare un nuovo prefisso per i file della cache modificando la relativa riga nel file `Config/core.php`:
 
 	$prefix = 'myapp_';
