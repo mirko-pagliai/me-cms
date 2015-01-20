@@ -141,6 +141,27 @@ class Post extends MeCmsAppModel {
 	}
 	
 	/**
+	 * Called after each find operation. Can be used to modify any results returned by find().
+	 * @param mixed $results The results of the find operation
+	 * @param boolean $primary Whether this model is being queried directly
+	 * @return mixed Result of the find operation
+	 */
+	public function afterFind($results, $primary = FALSE) {
+		foreach($results as $k => $v) {
+			//If the text is not empty
+			if(!empty($v[$this->alias]['text'])) {
+				//Gets the first image
+				preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $v[$this->alias]['text'], $matches);
+				
+				if(!empty($matches[2]))
+					$results[$k][$this->alias]['preview'] = Router::url($matches[2], TRUE);
+			}
+		}
+		
+		return $results;
+	}
+	
+	/**
 	 * Called after each successful save operation.
 	 * @param boolean $created TRUE if this save created a new record
 	 * @param array $options Options passed from Model::save()

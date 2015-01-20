@@ -303,19 +303,13 @@ class PostsController extends MeCmsAppController {
 
 			if(empty($post))
 				throw new NotFoundException(__d('me_cms', 'Invalid object'));
-			
-			//Gets the first image for the "image_src" tag
-			preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $post['Post']['text'], $matches);
-			if(!empty($matches[2]))
-				$post['Post']['preview'] = Router::url($matches[2], TRUE);
 		
             Cache::write($cache, $post, 'posts');			
 		}
 		
-		$this->set(am(array(
-			'image_src'			=> $post['Post']['preview'],
-			'title_for_layout'	=> $post['Post']['title']
-		), compact('post')));
+		$image_src = empty($post['Post']['preview']) ? NULL : $post['Post']['preview'];
+		
+		$this->set(am(array('title_for_layout'	=> $post['Post']['title']), compact('image_src', 'post')));
 	}
 	
 	/**
