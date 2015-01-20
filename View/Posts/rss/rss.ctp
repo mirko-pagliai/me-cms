@@ -35,10 +35,17 @@
 	));
 
 	foreach($posts as $post) {
+		//Sets post link
 		$link = array('controller' => 'posts', 'action' => 'view', $post['Post']['slug'], 'plugin' => 'me_cms');
+		
+		//Sets post text
 		$text = $this->Text->truncate(strip_tags($post['Post']['text']), $config['truncate_to'], array(
 			'ending' => '...', 'exact' => FALSE, 'html' => TRUE
 		));
+		
+		//Adds the preview image to the text
+		if(!empty($post['Post']['preview']))
+			$text = $this->Html->thumb($post['Post']['preview'], array('width' => 200)).$text;
 
 		echo $this->Rss->item(array(), array(
 			'description'	=> $text,
