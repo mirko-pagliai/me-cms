@@ -11,7 +11,7 @@ mkdir -p build/MeCms
 
 # Copy in build/MeCms
 cp -a --parents Config/ Console/ Controller/ Locale/ita Model/ Utility/ \
-View/ webroot/ COPYNG PERMISSIONS.md README.md version build/MeCms
+View/ webroot/ COPYNG PERMISSIONS.md README_it.md version build/MeCms
 
 # Enter build/MeCms
 cd build/MeCms
@@ -21,6 +21,9 @@ find . -name ".directory" -type f -exec rm -rf {} \;
 
 # Remove old files
 find . -name "*.old.*" -type f -exec rm -rf {} \;
+
+# Delete some uncompressed files
+rm -f webroot/js/backend/uploader.js
 
 # Go back to build/
 cd ../
