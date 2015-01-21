@@ -156,8 +156,12 @@ class InstallShell extends MeToolsAppShell {
 	 * Starts up the Shell and displays the welcome message.
 	 * Allows for checking and configuring prior to command or main execution.
 	 * @uses DatabaseTask::check()
+	 * @uses MeToolsAppShell:is_root()
 	 */
 	public function startup() {
+		//Checks if the current user is the root user
+		$this->is_root();
+		
 		//Checks for database connection
 		$this->Database->check();
 	}
