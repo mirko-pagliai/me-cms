@@ -25,6 +25,7 @@
  */
 
 App::uses('AppController', 'Controller');
+App::uses('Plugin', 'MeTools.Utility');
 
 /**
  * Application level controller.
@@ -75,13 +76,15 @@ class MeCmsAppController extends AppController {
 	
 	/**
 	 * Loads all the plugin helpers for creating menus.
+	 * @uses Plugin::getAll()
+	 * @uses Plugin::getPath()
 	 */
 	protected function _loadMenus() {
 		//Loads the `MenuHelper`
 		$this->helpers['Menu'] = array('className' => 'MeCms.Menu');
 			
-		foreach(CakePlugin::loaded() as $plugin)
-			if(is_readable(CakePlugin::path($plugin).'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php')) {
+		foreach(Plugin::getAll() as $plugin)
+			if(is_readable(Plugin::getPath($plugin).'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php')) {
 				$helper = sprintf('%sMenu', $plugin);
 				$this->helpers[$helper] = array('className' => sprintf('%s.%s', $plugin, $helper));
 			}
