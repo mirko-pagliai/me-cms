@@ -94,6 +94,34 @@ class SystemsController extends MeCmsAppController {
     }
 	
 	/**
+	 * Changelogs viewer
+	 * @uses System::getChangelogs()
+	 */
+	public function admin_changelogs() {
+		//Gets changelogs files
+		$files = System::getChangelogs();
+		
+		//Re-indexes, starting to 1
+		$files = array_combine(range(1, count($files)), array_values($files));
+		
+		//If a changelog file has been specified
+		if(!empty($this->request->query['file']) && $this->request->is('get')) {
+			//Loads the Markdown helper
+			$this->helpers[] = 'MeTools.Markdown';
+			
+			$this->set('changelog', @file_get_contents($files[$this->request->query['file']]));
+		}
+		
+		//Removes the APP path
+		$files = array_map(function($v) {
+			return str_replace(APP, NULL, $v);
+		}, $files);
+		
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Changelogs')), compact('files')));
+	}
+
+
+	/**
 	 * System checkup.
 	 * @uses Apache::checkMod()
 	 * @uses BannerManager::getFolder()

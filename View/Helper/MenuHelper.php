@@ -200,6 +200,7 @@ class MenuHelper extends MeHtmlHelper {
 			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache',		'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup',		'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'Media browser'),		array('controller' => 'systems', 'action' => 'browser',		'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Changelogs'),		array('controller' => 'systems', 'action' => 'changelogs',	'plugin' => 'me_cms')),
 			$this->link(__d('me_cms', 'Log viewer'),		array('controller' => 'systems', 'action' => 'log_viewer',	'plugin' => 'me_cms'))
 		);
 		
