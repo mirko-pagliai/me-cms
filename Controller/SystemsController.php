@@ -172,6 +172,24 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Log viewer
+	 */
+	public function admin_log_viewer() {
+		//Gets log files
+		$dir = new Folder(LOGS);
+		$files = $dir->find('[^\.]+\.log(\.[^\-]+)?', TRUE);
+		
+		//Re-indexes, starting to 1
+		$files = array_combine(range(1, count($files)), array_values($files));
+		
+		//If a log file has been specified
+		if(!empty($this->request->query['file']) && $this->request->is('get'))
+			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query['file']]));
+		
+		$this->set(am(array('title_for_layout' => __d('me_cms', 'Log viewer')), compact('files')));
+	}
+	
+	/**
 	 * Offline page
 	 */
 	public function offline() {

@@ -197,9 +197,10 @@ class MenuHelper extends MeHtmlHelper {
 			return array();
 		
 		$menu = array(
-			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache',	'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup', 'plugin' => 'me_cms')),
-			$this->link(__d('me_cms', 'Media browser'),		array('controller' => 'systems', 'action' => 'browser', 'plugin' => 'me_cms'))
+			$this->link(__d('me_cms', 'Cache and thumbs'),	array('controller' => 'systems', 'action' => 'cache',		'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'System checkup'),	array('controller' => 'systems', 'action' => 'checkup',		'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Media browser'),		array('controller' => 'systems', 'action' => 'browser',		'plugin' => 'me_cms')),
+			$this->link(__d('me_cms', 'Log viewer'),		array('controller' => 'systems', 'action' => 'log_viewer',	'plugin' => 'me_cms'))
 		);
 		
 		if($type == 'dropdown')
