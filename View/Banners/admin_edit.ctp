@@ -46,7 +46,7 @@
 				echo $this->Form->input('id');
 				echo $this->Form->input('filename', array(
 					'disabled'	=> TRUE,
-					'label'	=> __d('me_cms', 'Filename')
+					'label'		=> __d('me_cms', 'Filename')
 				));
 				echo $this->Form->input('target', array(
 					'label' => __d('me_cms', 'Web address'),
