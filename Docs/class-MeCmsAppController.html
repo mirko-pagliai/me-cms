@@ -175,7 +175,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-MeCmsAppController.html#29-205" title="Go to source code">MeCmsAppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCmsAppController.html#30-208" title="Go to source code">MeCmsAppController.php</a>
 		<br>
 	</div>
 
@@ -195,7 +195,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#__loadMenus">#</a>
-		<code><a href="source-class-MeCmsAppController.html#76-88" title="Go to source code">_loadMenus</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#77-91" title="Go to source code">_loadMenus</a>( )</code>
 
 		<div class="description short">
 			<p>Loads all the plugin helpers for creating menus.</p>
@@ -208,6 +208,11 @@ AppController
 
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						Plugin::getAll()<br>
+						Plugin::getPath()<br>
+				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
@@ -229,7 +234,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCmsAppController.html#90-141" title="Go to source code">beforeFilter</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#93-144" title="Go to source code">beforeFilter</a>( )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -271,7 +276,7 @@ It's used to perform logic before each controller action.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCmsAppController.html#143-155" title="Go to source code">beforeRender</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#146-158" title="Go to source code">beforeRender</a>( )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -303,7 +308,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCmsAppController.html#157-166" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#160-169" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request.</p>
@@ -346,7 +351,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCmsAppController.html#168-176" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#171-179" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -389,7 +394,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_upload">#</a>
-		<code><a href="source-class-MeCmsAppController.html#178-204" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#181-207" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
 
 		<div class="description short">
 			<p>Uploads a file</p>
@@ -441,7 +446,7 @@ It's used to perform logic or set view variables that are required on every requ
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsAppController.html#33-53" title="Go to source code"><var>$components</var></a>
+				<a href="source-class-MeCmsAppController.html#34-54" title="Go to source code"><var>$components</var></a>
 
 			<div class="description short">
 				<p>Components</p>
@@ -482,7 +487,7 @@ It's used to perform logic or set view variables that are required on every requ
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsAppController.html#55-60" title="Go to source code"><var>$config</var></a>
+				<a href="source-class-MeCmsAppController.html#56-61" title="Go to source code"><var>$config</var></a>
 
 			<div class="description short">
 				<p>Configuration.
@@ -513,7 +518,7 @@ It will be set by <code>ConfigComponent</code>.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCmsAppController.html#62-74" title="Go to source code"><var>$helpers</var></a>
+				<a href="source-class-MeCmsAppController.html#63-75" title="Go to source code"><var>$helpers</var></a>
 
 			<div class="description short">
 				<p>Helpers</p>
