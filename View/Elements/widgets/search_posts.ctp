@@ -40,6 +40,6 @@
 			'default'		=> empty($pattern) ? NULL : $pattern,
 			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
 		));
-		echo $this->Form->end(NULL, array('class' => 'visible-lg-inline btn-primary', 'icon' => 'search'));
+		echo $this->Form->end(NULL, array('class' => 'btn-primary visible-lg-inline', 'icon' => 'search'));
 	?>
 </div>
