@@ -29,7 +29,11 @@
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit photo')); ?>
 	<?php echo $this->Form->create('Photo'); ?>
 		<div class="float-form">
-			<?php echo $this->Form->input('album_id', array('label' => __d('me_cms', 'Album'))); ?>
+			<?php 
+				echo $this->Form->input('album_id', array(
+					'label' => __d('me_cms', 'Album')
+				));
+			?>
 		</div>
 		<fieldset>
 			<div class="clearfix">
