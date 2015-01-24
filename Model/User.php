@@ -55,9 +55,10 @@ class User extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'group_id' => array(
 			'message'	=> 'You have to select a valid option',
@@ -79,8 +80,7 @@ class User extends MeCmsAppModel {
 				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
 				'rule'		=> array('custom', '/^[a-z0-9\-]+$/')
 			),
-			'blank' => array(
-				//Blank on update
+			'blankonUpdate' => array(
 				'on'	=> 'update',
 				'rule'	=> 'blank'
 			)

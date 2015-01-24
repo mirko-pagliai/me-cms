@@ -37,9 +37,10 @@ class Banner extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'position_id' => array(
 			'message'	=> 'You have to select a valid option',
@@ -61,8 +62,7 @@ class Banner extends MeCmsAppModel {
 				'message'	=> 'Must be at most %d chars',
 				'rule'		=> array('maxLength', 255)
 			),
-			'blank' => array(
-				//Blank on update
+			'blankonUpdate' => array(
 				'on'	=> 'update',
 				'rule'	=> 'blank'
 			)

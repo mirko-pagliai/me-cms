@@ -49,9 +49,10 @@ class Page extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'title' => array(
 			'between' => array(

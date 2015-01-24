@@ -49,9 +49,10 @@ class Post extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'category_id' => array(
 			'message'	=> 'You have to select an option',

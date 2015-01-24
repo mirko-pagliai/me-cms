@@ -54,9 +54,10 @@ class PostsCategory extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'parent_id' => array(
 			'allowEmpty'	=> TRUE,

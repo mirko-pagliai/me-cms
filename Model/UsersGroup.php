@@ -48,9 +48,10 @@ class UsersGroup extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'name' => array(
 			'between' => array(
@@ -63,8 +64,7 @@ class UsersGroup extends MeCmsAppModel {
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
 			),
-			'blank' => array(
-				//Blank on update
+			'blankonUpdate' => array(
 				'on'	=> 'update',
 				'rule'	=> 'blank'
 			)

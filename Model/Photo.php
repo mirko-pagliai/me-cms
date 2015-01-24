@@ -43,9 +43,10 @@ class Photo extends MeCmsAppModel {
 	 */
 	public $validate = array(
 		'id' => array(
-			//Blank on create
-			'on'	=> 'create',
-			'rule'	=> 'blank'
+			'blankOnCreate' => array(
+				'on'	=> 'create',
+				'rule'	=> 'blank'
+			)
 		),
 		'album_id' => array(
 			'message'	=> 'You have to select an option',
@@ -67,8 +68,7 @@ class Photo extends MeCmsAppModel {
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
 			),
-			'blank' => array(
-				//Blank on update
+			'blankonUpdate' => array(
 				'on'	=> 'update',
 				'rule'	=> 'blank'
 			)
