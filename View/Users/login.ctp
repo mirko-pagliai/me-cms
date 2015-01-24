@@ -42,5 +42,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-primary btn-lg btn-block')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 </div>
