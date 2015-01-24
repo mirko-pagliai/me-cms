@@ -40,8 +40,7 @@
 					'label'			=> FALSE,
 					'placeholder'	=> __d('me_cms', 'Password')
 				));
-				echo $this->Form->submit(__d('me_cms', 'Login'), array('class' => 'btn-primary btn-lg btn-block'));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-primary btn-lg btn-block')); ?>
 </div>
