@@ -69,8 +69,8 @@ class SystemsController extends MeCmsAppController {
 		$types = $this->config['kcfinder']['types'];
 		
 		//Checks the type, then sets the KCFinder path
-		if(!empty($this->request->query['type']) && array_key_exists($this->request->query['type'], $types))
-			$this->set('kcfinder', sprintf('/kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $this->request->query['type']));
+		if(!empty($this->request->query['type']) && array_key_exists($type = $this->request->query['type'], $types))
+			$this->set('kcfinder', Router::url('/', TRUE).sprintf('kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $type));
 		
 		$this->set(array(
 			'title_for_layout'	=> __d('me_cms', 'Media browser'),
