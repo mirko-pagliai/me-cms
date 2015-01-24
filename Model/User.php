@@ -75,9 +75,15 @@ class User extends MeCmsAppModel {
 				'rule'		=> 'isUnique'
 			),
 			'username' => array(
+				'last'		=> FALSE,
 				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
 				'rule'		=> array('custom', '/^[a-z0-9\-]+$/')
 			),
+			'blank' => array(
+				//Blank on update
+				'on'	=> 'update',
+				'rule'	=> 'blank'
+			)
 		),
 		'email' => array(
 			'between' => array(
@@ -234,6 +240,30 @@ class User extends MeCmsAppModel {
 			$this->validator()->getField('password_repeat')->getRule('passwordsMatchOnUpdate')->allowEmpty = FALSE;
 		
 		return TRUE;
+	}
+	
+	/**
+	 * Checks if an user is an admin
+	 * @param int $id User ID
+	 * @return bool TRUE if the user is an admin, otherwise FALSE
+	 */
+	public function isAdmin($id) {		
+		$user = $this->find('first', array(
+			'conditions'	=> array('User.id' => $id),
+			'contain'		=> 'Group.name',
+			'fields'		=> 'group_id'
+		));
+		
+		return (int) $user['User']['group_id'] === 1 || $user['Group']['name'] === 'admin';
+	}
+	
+	/**
+	 * Checks if an user is the admin founder
+	 * @param int $id User ID
+	 * @return bool TRUE if the user is the admin founder, otherwise FALSE
+	 */
+	public function isFounder($id) {
+		return (int) $id === 1;
 	}
 	
 	/**

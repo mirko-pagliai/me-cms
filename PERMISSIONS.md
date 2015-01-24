@@ -33,7 +33,10 @@ Gli amministratori possono accedere alla gestione del sistema.
 
 ### Utenti
 Gli amministratori e i manager possono visualizzare, aggiungere e modificare gli utenti.
+Solo l'amministratore fondatore può modificare gli altri amministratori.
 Gli amministratori possono cancellare gli utenti.
+Solo l'amministratore fondatore può cancellare gli altri amministratori.
+L'amministratore fondatore non può essere cancellato.
 
 ### Gruppi utenti
 Gli amministratori possono visualizzare, aggiungere e modificare i gruppi utenti.

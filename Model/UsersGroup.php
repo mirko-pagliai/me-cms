@@ -59,8 +59,14 @@ class UsersGroup extends MeCmsAppModel {
 				'rule'		=> array('between', 3, 100)
 			),
 			'isUnique' => array(
+				'last'		=> FALSE,
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
+			),
+			'blank' => array(
+				//Blank on update
+				'on'	=> 'update',
+				'rule'	=> 'blank'
 			)
 		),
 		'label' => array(

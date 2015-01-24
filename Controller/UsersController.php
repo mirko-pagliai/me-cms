@@ -112,18 +112,22 @@ class UsersController extends MeCmsAppController {
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
 		$this->request->onlyAllow('post', 'delete');
-				
-		//Before deleting, it checks if the user is a admin found or if the user has some posts
-		if($id > 1 && !$this->User->field('post_count')) {
+		
+		//You cannot delete the admin founder
+		if($this->User->isFounder($id))
+			$this->Session->flash(__d('me_cms', 'You cannot delete the admin founder'), 'error');
+		//Only the admin founder can delete others admin users
+		elseif($this->User->isAdmin($id) && !$this->Auth->isFounder())
+			$this->Session->flash(__d('me_cms', 'Only the founder admin can delete other admin users'), 'error');
+		//Before deleting, checks if the user has some posts
+		elseif($this->User->field('post_count'))
+			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
+		else {
 			if($this->User->delete())
 				$this->Session->flash(__d('me_cms', 'The user has been deleted'));
 			else
 				$this->Session->flash(__d('me_cms', 'The user was not deleted'), 'error');
 		}
-		elseif($id == 1)
-			$this->Session->flash(__d('me_cms', 'You cannot delete this user, because he\'s the admin founder'), 'error');
-		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
 		
 		$this->redirect(array('action' => 'index'));
 	}
@@ -134,9 +138,14 @@ class UsersController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
-		//TO-DO: verificare non si stia modificando utente con ID 1
 		if(!$this->User->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+
+		//Only the admin founder can edit others admin users
+		if($this->User->isAdmin($id) && !$this->Auth->isFounder()) {
+			$this->Session->flash(__d('me_cms', 'Only the founder admin can edit other admin users'), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
 			
 		if($this->request->is('post') || $this->request->is('put')) {
 			//This prevents a blank password is saved

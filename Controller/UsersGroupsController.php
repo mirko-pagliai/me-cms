@@ -64,13 +64,12 @@ class UsersGroupsController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function admin_delete($id = NULL) {
-		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
 		$this->UsersGroup->id = $id;
 		if(!$this->UsersGroup->exists())
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
-		$this->request->onlyAllow('post', 'delete');
-				
+		$this->request->onlyAllow('post', 'delete');			
+		
 		//Before deleting, it checks if the group is a necessary group or if the group has some users
 		if($id > 3 && !$this->UsersGroup->field('user_count')) {
 			if($this->UsersGroup->delete())
@@ -92,7 +91,6 @@ class UsersGroupsController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id = NULL) {
-		//TO-DO: verificare non si stia modificando gruppo con ID 1-2-3
 		if(!$this->UsersGroup->exists($id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 			
