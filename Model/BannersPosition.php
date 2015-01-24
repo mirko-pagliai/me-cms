@@ -48,15 +48,15 @@ class BannersPosition extends MeCmsAppModel {
 			)
 		),
 		'name' => array(
-			'name' => array(
-				'last'		=> FALSE,
-				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
-				'rule'		=> array('custom', '/^[a-z0-9\-]+$/')
-			),
 			'between' => array(
 				'last'		=> FALSE,
 				'message'	=> 'Must be between %d and %d chars',
-				'rule'		=> array('between', 3, 100)
+				'rule'		=> array('between', 6, 100)
+			),
+			'isValidSlug' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
+				'rule'		=> array('isValidSlug')
 			),
 			'isUnique' => array(
 				'message'	=> 'This value is already used',

@@ -68,17 +68,17 @@ class User extends MeCmsAppModel {
 			'between' => array(
 				'last'		=> FALSE,
 				'message'	=> 'Must be between %d and %d chars',
-				'rule'		=> array('between', 3, 40)
+				'rule'		=> array('between', 6, 40)
 			),
 			'isUnique' => array(
 				'last'		=> FALSE,
 				'message'	=> 'This value is already used',
 				'rule'		=> 'isUnique'
 			),
-			'username' => array(
+			'isValidSlug' => array(
 				'last'		=> FALSE,
 				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
-				'rule'		=> array('custom', '/^[a-z0-9\-]+$/')
+				'rule'		=> array('isValidSlug')
 			),
 			'blankonUpdate' => array(
 				'on'	=> 'update',

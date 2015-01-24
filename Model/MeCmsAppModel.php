@@ -124,4 +124,17 @@ class MeCmsAppModel extends AppModel {
 	public function isOwnedBy($id, $user_id) {
 		return $this->field('id', compact('id', 'user_id')) !== FALSE;
 	}
+	
+	/**
+	 * Validation method.
+	 * 
+	 * Checks if the slug is a valid slug.
+	 * @param array $check Data
+	 * @return bool TRUE if the slug is a valid slug, otherwise FALSE
+	 */
+	public function isValidSlug($check) {
+		//Lowercase letters, numbers, dash.
+		//It must contain at least one letter and must begin and end with a letter or a number.
+		return preg_match('/[a-z]/', $check['slug']) && preg_match('/^[a-z0-9][a-z0-9\-]+[a-z0-9]$/', $check['slug']);
+	}
 }
