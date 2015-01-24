@@ -42,7 +42,9 @@
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title', array('id' => 'title'));
+				echo $this->Form->input('title', array(
+					'id' => 'title'
+				));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
 					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
