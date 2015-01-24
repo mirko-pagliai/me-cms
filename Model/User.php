@@ -273,7 +273,7 @@ class User extends MeCmsAppModel {
 	 * @return boolean TRUE if the old password is right
 	 * @see http://stackoverflow.com/a/17252517/1480263
 	 */
-	function oldPasswordIsRight($check) {		
+	public function oldPasswordIsRight($check) {		
 		//Gets the hash of the old password from the database
 		$old_password = $this->field('password', array('User.id' => AuthComponent::user('id')));
 		
@@ -287,7 +287,7 @@ class User extends MeCmsAppModel {
 	 * Checks if the password has been correctly inserted
 	 * @return bool TRUE if they match
 	 */
-	function passwordsMatch() {
+	public function passwordsMatch() {
 		if(empty($this->data[$this->alias]['password']))
 			return FALSE;
 		
@@ -298,7 +298,7 @@ class User extends MeCmsAppModel {
 	 * Checks that the password contains letters, numbers and symbols.
 	 * @return bool TRUE if the password contains letters, numbers and symbols, otherwise FALSE
 	 */
-	function passwordIsStrong() {
+	public function passwordIsStrong() {
 		//Checks if the password contains at least one letter
 		if(!preg_match('/[a-z]+/i', $password = $this->data[$this->alias]['password']))
 			return FALSE;
