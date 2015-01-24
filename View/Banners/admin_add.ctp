@@ -40,7 +40,7 @@
 				'options'	=> $tmpFiles,
 				'type'		=> 'select'
 			));
-			echo $this->Form->end(__d('me_cms', 'Select'), array('div' => false));
+			echo $this->Form->end(__d('me_cms', 'Select'), array('div' => FALSE));
 		?>
 	</div>
 	
