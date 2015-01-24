@@ -31,8 +31,12 @@
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('name', array('label' => __d('me_cms', 'Name')));
-				echo $this->Form->input('description', array('label' => __d('me_cms', 'Description')));
+				echo $this->Form->input('name', array(
+					'label' => __d('me_cms', 'Name')
+				));
+				echo $this->Form->input('description', array(
+					'label' => __d('me_cms', 'Description')
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Edit banners position')); ?>
