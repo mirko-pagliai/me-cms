@@ -45,7 +45,7 @@
 				));
 				echo $this->Form->input('priority', array(
 					'label'		=> __d('me_cms', 'Priority'),
-					'options' => array(
+					'options'	=> array(
 						'1' => sprintf('1 - %s', __d('me_cms', 'Very low')),
 						'2' => sprintf('2 - %s', __d('me_cms', 'Low')),
 						'3' => sprintf('3 - %s', __d('me_cms', 'Normal')),
