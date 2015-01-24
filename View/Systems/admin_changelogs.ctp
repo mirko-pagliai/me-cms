@@ -39,7 +39,10 @@
 				'onchange'	=> 'send_form(this)',
 				'type'		=> 'select'
 			));
-			echo $this->Form->end(__d('me_cms', 'Select'), array('div' => FALSE));
+			echo $this->Form->end(__d('me_cms', 'Select'), array(
+				'class'	=> 'will-be-disabled',
+				'div'	=> FALSE
+			));
 		?>
 	</div>
 	

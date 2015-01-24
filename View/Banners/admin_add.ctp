@@ -40,7 +40,10 @@
 				'options'	=> $tmpFiles,
 				'type'		=> 'select'
 			));
-			echo $this->Form->end(__d('me_cms', 'Select'), array('div' => FALSE));
+			echo $this->Form->end(__d('me_cms', 'Select'), array(
+				'class'	=> 'will-be-disabled',
+				'div' => FALSE
+			));
 		?>
 	</div>
 	
@@ -76,6 +79,6 @@
 					));
 				?>
 			</fieldset>
-		<?php echo $this->Form->end(__d('me_cms', 'Add banner')); ?>
+		<?php echo $this->Form->end(__d('me_cms', 'Add banner'), array('class' => 'will-be-disabled')); ?>
 	<?php endif; ?>
 </div>

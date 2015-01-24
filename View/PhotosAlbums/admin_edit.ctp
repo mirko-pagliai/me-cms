@@ -55,5 +55,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Edit photos album')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Edit photos album'), array('class' => 'will-be-disabled')); ?>
 </div>

@@ -75,5 +75,5 @@
 				<?php endforeach; ?>
 			</div>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add photos')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Add photos'), array('class' => 'will-be-disabled')); ?>
 </div>

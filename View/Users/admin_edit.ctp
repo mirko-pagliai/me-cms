@@ -51,5 +51,5 @@
 				echo $this->Form->input('last_name');
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Edit user')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Edit user'), array('class' => 'will-be-disabled')); ?>
 </div>

@@ -90,5 +90,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add post')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Add post'), array('class' => 'will-be-disabled')); ?>
 </div>

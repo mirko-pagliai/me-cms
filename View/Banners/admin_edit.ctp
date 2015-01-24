@@ -59,5 +59,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Edit banner')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Edit banner'), array('class' => 'will-be-disabled')); ?>
 </div>

@@ -46,5 +46,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Change password')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Change password'), array('class' => 'will-be-disabled')); ?>
 </div>

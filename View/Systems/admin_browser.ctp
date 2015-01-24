@@ -50,7 +50,8 @@
 				'type'		=> 'select'
 			));
 			echo $this->Form->end(__d('me_cms', 'Select'), array(
-				'div' => FALSE
+				'class'	=> 'will-be-disabled',
+				'div'	=> FALSE
 			));
 		?>
 	</div>

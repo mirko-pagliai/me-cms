@@ -79,5 +79,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Add page')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Add page'), array('class' => 'will-be-disabled')); ?>
 </div>

@@ -33,7 +33,10 @@
 			'label'			=> FALSE,
 			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
 		));
-		echo $this->Form->end(__d('me_cms', 'Search'), array('class' => 'btn-primary visible-lg-inline', 'icon' => 'search'));
+		echo $this->Form->end(__d('me_cms', 'Search'), array(
+			'class' => 'btn-primary visible-lg-inline will-be-disabled',
+			'icon'	=> 'search'
+		));
 	?>
 	
 	<?php if(!empty($pattern)): ?>
