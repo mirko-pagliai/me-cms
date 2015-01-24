@@ -39,8 +39,8 @@
 		
 		$successClasses = 'bg-success text-success padding10';
 		$errorClasses = 'bg-danger text-danger padding10';
-		$successOptions = array('icon' => 'check-circle');
-		$errorOptions = array('icon' => 'times-circle');
+		$successOptions = array('icon' => 'check');
+		$errorOptions = array('icon' => 'times');
 
 		echo $this->Html->h4('Apache');
 		if($rewrite)
