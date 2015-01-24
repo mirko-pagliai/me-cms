@@ -267,8 +267,10 @@ class User extends MeCmsAppModel {
 	}
 	
 	/**
+	 * Validation method.
+	 * 
 	 * Checks if the old password is right.
-	 * This is only used when a user changes his password
+	 * This is used only when a user changes his password.
 	 * @param mixed $check Field to be checked
 	 * @return boolean TRUE if the old password is right
 	 * @see http://stackoverflow.com/a/17252517/1480263
@@ -284,7 +286,9 @@ class User extends MeCmsAppModel {
 	}
 	
 	/**
-	 * Checks if the password has been correctly inserted
+	 * Validation method.
+	 * 
+	 * Checks if the password has been correctly inserted.
 	 * @return bool TRUE if they match
 	 */
 	public function passwordsMatch() {
@@ -295,6 +299,8 @@ class User extends MeCmsAppModel {
 	}
 	
 	/**
+	 * Validation method.
+	 * 
 	 * Checks that the password contains letters, numbers and symbols.
 	 * @return bool TRUE if the password contains letters, numbers and symbols, otherwise FALSE
 	 */
