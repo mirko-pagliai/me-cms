@@ -31,10 +31,12 @@
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('group_id', array(
-					'default'	=> empty($this->request->data['User']['group_id']) ? $config['default_group'] : $this->request->data['User']['group_id']
+					'default'	=> empty($this->request->data['User']['group_id']) ? $config['default_group'] : $this->request->data['User']['group_id'],
+					'label'		=> __d('me_cms', 'User group')
 				));
 				echo $this->Form->input('active', array(
 					'checked'	=> TRUE,
+					'label'		=> sprintf('%s?', __d('me_cms', 'Active')),
 					'tip'		=> __d('me_cms', 'If is not active, the user won\'t be able to login')
 				));
 			?>
@@ -42,20 +44,29 @@
 		<fieldset>
 			<?php
 				echo $this->Form->input('username', array(
-					'autocomplete'	=> FALSE
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Username')
 				));
 				echo $this->Form->input('email', array(
-					'autocomplete'	=> FALSE
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Email')
 				));
 				echo $this->Form->input('password', array(
-					'autocomplete'	=> FALSE
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Password')
 				));
 				echo $this->Form->input('password_repeat', array(
 					'autocomplete'	=> FALSE,
 					'label'			=> __d('me_cms', 'Repeat password')
 				));
-				echo $this->Form->input('first_name');
-				echo $this->Form->input('last_name');
+				echo $this->Form->input('first_name', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'First name')
+				));
+				echo $this->Form->input('last_name', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Last name')
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Add user'), array('class' => 'will-be-disabled')); ?>

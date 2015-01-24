@@ -30,27 +30,39 @@
 	<?php echo $this->Form->create('User'); ?>
 		<div class='float-form'>
 			<?php
-				echo $this->Form->input('group_id');
+				echo $this->Form->input('group_id', array(
+					'label' => __d('me_cms', 'User group')
+				));
 			?>
 		</div>
 		<fieldset>
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('username', array(
-					'disabled' => TRUE
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Username')
 				));
-				echo $this->Form->input('email');
+				echo $this->Form->input('email', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Email')
+				));
 				echo $this->Form->input('password', array(
 					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Password'),
 					'tip'			=> __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty')
 				));
 				echo $this->Form->input('password_repeat', array(
 					'autocomplete'	=> FALSE,
 					'label'			=> __d('me_cms', 'Repeat password'),
-					'type'			=> 'password'
 				));
-				echo $this->Form->input('first_name');
-				echo $this->Form->input('last_name');
+				echo $this->Form->input('first_name', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'First name')
+				));
+				echo $this->Form->input('last_name', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Last name')
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Edit user'), array('class' => 'will-be-disabled')); ?>

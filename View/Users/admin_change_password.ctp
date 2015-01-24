@@ -37,6 +37,7 @@
 				));
 				echo $this->Form->input('password', array(
 					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Password'),
 					'tip'			=> __d('me_cms', 'Enter your new password')
 				));
 				echo $this->Form->input('password_repeat', array(

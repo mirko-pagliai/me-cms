@@ -30,11 +30,16 @@
 	<?php echo $this->Form->create('UsersGroup'); ?>
 		<fieldset>
 			<?php
-				echo $this->Form->input('name');
-				echo $this->Form->input('label');
+				echo $this->Form->input('name', array(
+					'label' => __d('me_cms', 'Name')
+				));
+				echo $this->Form->input('label', array(
+					'label' => __d('me_cms', 'Label')
+				));
 				echo $this->Form->input('description', array(
-					'rows' => 3,
-					'type' => 'textarea'
+					'label'	=> __d('me_cms', 'Description'),
+					'rows'	=> 3,
+					'type'	=> 'textarea'
 				));
 			?>
 		</fieldset>

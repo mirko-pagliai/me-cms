@@ -42,15 +42,18 @@
 		<fieldset>
 			<?php
 				echo $this->Form->input('title', array(
-					'id' => 'title'
+					'id'	=> 'title',
+					'label' => __d('me_cms', 'Title'),
 				));
 				echo $this->Form->input('slug', array(
 					'id'	=> 'slug',
+					'label' => __d('me_cms', 'Slug'),
 					'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 				));
 				echo $this->Form->input('description', array(
-					'rows' => 3,
-					'type' => 'textarea'
+					'label' => __d('me_cms', 'Description'),
+					'rows'	=> 3,
+					'type'	=> 'textarea'
 				));
 			?>
 		</fieldset>
