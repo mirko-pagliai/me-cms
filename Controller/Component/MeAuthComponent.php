@@ -75,7 +75,7 @@ class MeAuthComponent extends AuthComponent {
 		if(empty(self::$user['group_id']) && empty(self::$user['Group']['name']))
 			return FALSE;
 		
-		return self::$user['group_id'] === 1 || self::$user['Group']['name'] === 'admin';
+		return (int) self::$user['group_id'] === 1 || self::$user['Group']['name'] === 'admin';
 	}
 	
 	/**
@@ -84,10 +84,10 @@ class MeAuthComponent extends AuthComponent {
 	 * @uses $user
 	 */
 	static public function isFounder() {
-		if(empty($user['id']))
+		if(empty(self::$user['id']))
 			return FALSE;
 		
-		return $user['id'] === 1;
+		return (int) self::$user['id'] === 1;
 	}
 	
 	/**
@@ -96,7 +96,7 @@ class MeAuthComponent extends AuthComponent {
 	 * @uses $user
 	 */
 	static public function isLogged() {
-		return !empty($user['id']);
+		return !empty(self::$user['id']);
 	}
 	
 	/**
@@ -108,6 +108,6 @@ class MeAuthComponent extends AuthComponent {
 		if(empty(self::$user['group_id']) && empty(self::$user['Group']['name']))
 			return FALSE;
 		
-		return self::$user['group_id'] <= 2 || self::$user['Group']['name'] === 'admin' || self::$user['Group']['name'] === 'manager';
+		return (int) self::$user['group_id'] <= 2 || self::$user['Group']['name'] === 'admin' || self::$user['Group']['name'] === 'manager';
 	}
 }
