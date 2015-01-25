@@ -26,6 +26,20 @@
 ?>
 
 <?php
+	$params = $this->request->params;
+	
+	//Returns on photos album index
+	if($params['controller'] == 'photos_albums' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
+		return;
+	
+	//Returns on photos album view
+	if($params['controller'] == 'photos_albums' && $params['action'] == 'view' && $params['plugin'] == 'me_cms')
+		return;
+	
+	//Returns on photo view
+	if($params['controller'] == 'photos' && $params['action'] == 'view' && $params['plugin'] == 'me_cms')
+		return;
+	
 	//Gets a random photo
 	$photo = $this->requestAction(array('controller' => 'photos', 'action' => 'widget_random', 'plugin' => 'me_cms'));
 ?>

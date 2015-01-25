@@ -26,8 +26,10 @@
 ?>
 
 <?php
-	//Return, if the current view is the post search
-	if($this->request->params['controller'] === 'posts' && $this->request->params['action'] === 'search')
+	$params = $this->request->params;
+	
+	//Returns on posts search
+	if($params['controller'] == 'posts' && $params['action'] == 'search' && $params['plugin'] == 'me_cms')
 		return;
 ?>
 

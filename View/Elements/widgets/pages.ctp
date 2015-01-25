@@ -25,7 +25,13 @@
  */
 ?>
 
-<?php				
+<?php
+	$params = $this->request->params;
+	
+	//Returns on pages index
+	if($params['controller'] == 'pages' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
+		return;
+	
 	//Gets the pages list
 	$pages = $this->requestAction(array('controller' => 'pages', 'action' => 'widget_list', 'plugin' => 'me_cms'));
 ?>
