@@ -151,7 +151,9 @@ class MeCmsAppController extends AppController {
 		//Sets the user authentication data and the `isMobile` var
 		$this->set(array(
 			'auth'		=> empty($this->Auth) ? FALSE : $this->Auth->user(),
-			'isMobile'	=> $this->request->isMobile()
+			'isMobile'	=> $this->request->isMobile(),
+			'params'	=> $this->request->params,
+			'query'		=> $this->request->query
 		));
 		
 		parent::beforeRender();

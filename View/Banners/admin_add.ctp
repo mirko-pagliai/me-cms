@@ -33,7 +33,7 @@
 			echo $this->Form->createInline(FALSE, array('type' => 'get'));
 			echo $this->Form->label('filename', __d('me_cms', 'Banner'));
 			echo $this->Form->input('filename', array(
-				'default'	=> empty($this->request->query['file']) ? NULL : $this->request->query['file'],
+				'default'	=> empty($query['file']) ? NULL : $query['file'],
 				'label'		=> __d('me_cms', 'Banner'),
 				'name'		=> 'file',
 				'onchange'	=> 'send_form(this)',

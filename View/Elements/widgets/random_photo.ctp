@@ -26,8 +26,6 @@
 ?>
 
 <?php
-	$params = $this->request->params;
-	
 	//Returns on photos album index
 	if($params['controller'] == 'photos_albums' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
 		return;

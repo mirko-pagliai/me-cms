@@ -26,8 +26,6 @@
 ?>
 
 <?php
-	$params = $this->request->params;
-	
 	//Returns on pages index
 	if($params['controller'] == 'pages' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
 		return;

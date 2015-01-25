@@ -26,8 +26,6 @@
 ?>
 
 <?php
-	$params = $this->request->params;
-	
 	//Returns on the first page of posts index
 	if($params['controller'] == 'posts' && $params['action'] == 'index' && $params['plugin'] == 'me_cms'
 		&& !empty($params['paging']['Post']['page']) && $params['paging']['Post']['page'] == 1)

@@ -45,7 +45,7 @@
 			echo $this->Form->createInline(FALSE, array('type' => 'get'));
 			echo $this->Form->label('type', __d('me_cms', 'Type'));
 			echo $this->Form->input('type', array(
-				'default'	=> empty($this->request->query['type']) ? NULL : $this->request->query['type'],
+				'default'	=> empty($query['type']) ? NULL : $query['type'],
 				'onchange'	=> 'send_form(this)',
 				'type'		=> 'select'
 			));

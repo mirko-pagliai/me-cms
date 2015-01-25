@@ -26,8 +26,6 @@
 ?>
 
 <?php
-	$params = $this->request->params;
-	
 	//Returns on posts search
 	if($params['controller'] == 'posts' && $params['action'] == 'search' && $params['plugin'] == 'me_cms')
 		return;

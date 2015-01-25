@@ -33,13 +33,13 @@
 
 		if(!empty($page['Page']['title']))
 			$content_header .= $this->Html->h3($this->Html->link($page['Page']['title'],
-				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
+				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $params['pass'])),
 				array('class' => 'content-title')
 			);
 
 		if(!empty($page['Page']['subtitle']))
 			$content_header .= $this->Html->h4($this->Html->link($page['Page']['subtitle'],
-				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass'])),
+				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $params['pass'])),
 				array('class' => 'content-subtitle')
 			);
 
@@ -72,7 +72,7 @@
 		//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
 		if(!empty($truncate) && $truncate !== $page['Page']['text'])
 			$content_buttons .= $this->Html->button(__d('me_cms', 'Read more'),
-				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $this->request->params['pass']),
+				am(array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms'), $params['pass']),
 				array('class' => 'readmore')
 			);
 

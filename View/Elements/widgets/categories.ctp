@@ -26,8 +26,6 @@
 ?>
 
 <?php
-	$params = $this->request->params;
-	
 	//Returns on posts categories index
 	if($params['controller'] == 'posts_categories' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
 		return;
