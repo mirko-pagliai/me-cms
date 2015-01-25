@@ -88,5 +88,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Edit post'), array('class' => 'will-be-disabled')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Edit post')); ?>
 </div>

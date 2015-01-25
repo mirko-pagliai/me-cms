@@ -41,7 +41,6 @@
 				'type'		=> 'select'
 			));
 			echo $this->Form->end(__d('me_cms', 'Select'), array(
-				'class'	=> 'will-be-disabled',
 				'div' => FALSE
 			));
 		?>
@@ -79,6 +78,6 @@
 					));
 				?>
 			</fieldset>
-		<?php echo $this->Form->end(__d('me_cms', 'Add banner'), array('class' => 'will-be-disabled')); ?>
+		<?php echo $this->Form->end(__d('me_cms', 'Add banner')); ?>
 	<?php endif; ?>
 </div>

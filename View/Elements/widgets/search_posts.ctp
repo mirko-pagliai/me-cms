@@ -41,7 +41,7 @@
 			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
 		));
 		echo $this->Form->end(NULL, array(
-			'class' => 'btn-primary visible-lg-inline will-be-disabled',
+			'class' => 'btn-primary visible-lg-inline',
 			'icon'	=> 'search'
 		));
 	?>
