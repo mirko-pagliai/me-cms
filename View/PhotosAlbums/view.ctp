@@ -36,21 +36,20 @@
 		<?php foreach($album['Photo'] as $photo): ?>
 			<div class='col-sm-6 col-md-4'>
 				<?php
-					$thumb = $this->Html->thumb($photo['path'], array('side' => 270));
+					$text = $this->Html->thumb($photo['path'], array('side' => 270));
+					$text .= $this->Html->div('info-wrapper', $this->Html->div('info', $this->Html->div('small', $photo['description'])));
 					
-					$info = $this->Html->div('small', $photo['description']);
-					$info = $this->Html->div('info-wrapper', $this->Html->div('info', $info));
-
-					if($config['fancybox']) 
-						echo $this->Html->link($thumb.$info,
-							$this->Html->thumbUrl($photo['path'], array('height' => 1280)),
-							array('class' => 'fancybox thumbnail', 'rel' => 'group', 'title' => $photo['description'])
+					//If Fancybox is enabled, adds some link options
+					if($config['fancybox'])
+						$options = array(
+							'class'					=> 'fancybox thumbnail',
+							'data-fancybox-href'	=> $this->Html->thumbUrl($photo['path'], array('height' => 1280)),
+							'rel'					=> 'group'
 						);
-					else
-						echo $this->Html->link($thumb.$info,
-							array('controller' => 'photos', 'action' => 'view', $photo['id']),
-							array('class' => 'thumbnail', 'title' => $photo['description'])
-						);
+					
+					echo $this->Html->link($text, array('controller' => 'photos', 'action' => 'view', $photo['id']),
+						am(array('class' => 'thumbnail', 'title' => $photo['description']), empty($options) ? array() : $options)
+					);
 				?>
 			</div>
 		<?php endforeach; ?>
