@@ -24,10 +24,8 @@
 ?>
 
 <?php
-	if($config['fancybox']) {
-		$this->Html->css('/MeCms/fancybox/fancybox.min', array('block' => 'css_bottom'));
-		$this->Html->js('/MeCms/fancybox/fancybox.min.js', array('block' => 'script_bottom'));
-	}
+	if($config['fancybox'])
+		$this->Library->fancybox();
 ?>
 
 <div class="photosAlbums index">
