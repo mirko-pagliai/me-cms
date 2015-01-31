@@ -168,14 +168,14 @@ class MenuHelper extends MeHtmlHelper {
 			));
 		
 		if($type == 'dropdown')
-			return $this->Dropdown->link(__d('me_cms', 'Posts'), array('icon' => 'thumb-tack')).PHP_EOL.$this->Dropdown->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Posts'), array('icon' => 'file-text-o')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		elseif($type == 'collapse')
 			return $this->link(__d('me_cms', 'Posts'), '#collapse-posts', array(
 				'aria-controls'	=> 'collapse-posts',
 				'aria-expanded'	=> 'false',
 				'class'			=> 'collapsed',
 				'data-toggle'	=> 'collapse',
-				'icon'			=> 'thumb-tack'
+				'icon'			=> 'file-text-o'
 			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-posts'));
 		
 		return $menu;
