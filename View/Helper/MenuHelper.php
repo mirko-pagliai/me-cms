@@ -71,14 +71,14 @@ class MenuHelper extends MeHtmlHelper {
 		}
 		
 		if($type == 'dropdown')
-			return $this->Dropdown->link(__d('me_cms', 'Banners'), array('icon' => 'dollar')).PHP_EOL.$this->Dropdown->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Banners'), array('icon' => 'shopping-cart')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		elseif($type == 'collapse')
 			return $this->link(__d('me_cms', 'Banners'), '#collapse-banners', array(
 				'aria-controls'	=> 'collapse-banners',
 				'aria-expanded'	=> 'false',
 				'class'			=> 'collapsed',
 				'data-toggle'	=> 'collapse',
-				'icon'			=> 'dollar'
+				'icon'			=> 'shopping-cart'
 			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-banners'));
 			
 		return $menu;
@@ -133,14 +133,14 @@ class MenuHelper extends MeHtmlHelper {
 		);
 		
 		if($type == 'dropdown')
-			return $this->Dropdown->link(__d('me_cms', 'Photos'), array('icon' => 'image')).PHP_EOL.$this->Dropdown->dropdown($menu);
+			return $this->Dropdown->link(__d('me_cms', 'Photos'), array('icon' => 'camera-retro')).PHP_EOL.$this->Dropdown->dropdown($menu);
 		elseif($type == 'collapse')
 			return $this->link(__d('me_cms', 'Photos'), '#collapse-photos', array(
 				'aria-controls'	=> 'collapse-photos',
 				'aria-expanded'	=> 'false',
 				'class'			=> 'collapsed',
 				'data-toggle'	=> 'collapse',
-				'icon'			=> 'image'
+				'icon'			=> 'camera-retro'
 			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-photos'));
 		
 		return $menu;
