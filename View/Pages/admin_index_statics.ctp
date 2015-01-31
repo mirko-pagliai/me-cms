@@ -23,8 +23,6 @@
  */
 ?>
 	
-<?php $this->assign('sidebar', $this->Menu->get('pages', 'nav')); ?>
-	
 <div class="pages index">
 	<?php echo $this->Html->h2(__d('me_cms', 'Static pages')); ?>
 	<table class="table table-striped">

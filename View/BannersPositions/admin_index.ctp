@@ -23,8 +23,6 @@
  */
 ?>
 	
-<?php $this->assign('sidebar', $this->Menu->get('banners', 'nav')); ?>
-	
 <div class="bannersPositions index">
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Banners positions'));

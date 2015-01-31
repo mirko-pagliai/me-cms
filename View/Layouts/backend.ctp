@@ -58,6 +58,7 @@
 				'/MeTools/js/jquery.min',
 				'/MeTools/js/bootstrap.min',
 				'/MeTools/js/default',
+				'/MeCms/js/backend/layout',
 				'/MeCms/js/backend/photos'
 			));
 			echo $this->fetch('script');
@@ -66,28 +67,19 @@
 	<body>
 		<?php echo $this->element('MeCms.backend/topbar'); ?>
 		<div class="container-fluid">
-			<?php if($sidebar = $this->fetch('sidebar')): ?>
-				<div class="row">
-					<div id="sidebar" class="col-md-2 hidden-xs hidden-sm">
-						<?php echo $sidebar; ?>
-					</div>
-					<div id="content" class="col-md-10">
-						<?php 
-							echo $this->Session->flash();
-							echo $this->fetch('content');
-							echo $this->element('MeCms.backend/footer', array(), array('cache' => TRUE));
-							echo $this->element('MeTools.sql_dump');
-						?>
-					</div>
+			<div class="row">
+				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm">
+					<?php echo $this->element('MeCms.backend/sidebar', array(), array('cache' => TRUE)); ?>
 				</div>
-			<?php else: ?>
-				<?php 
-					echo $this->Session->flash();
-					echo $this->fetch('content');
-					echo $this->element('MeCms.backend/footer', array(), array('cache' => TRUE));
-					echo $this->element('MeTools.sql_dump');
-				?>
-			<?php endif; ?>
+				<div id="content" class="col-md-9 col-lg-10">
+					<?php 
+						echo $this->Session->flash();
+						echo $this->fetch('content');
+						echo $this->element('MeCms.backend/footer', array(), array('cache' => TRUE));
+						echo $this->element('MeTools.sql_dump');
+					?>
+				</div>
+			</div>
 		</div>
 		<?php
 			echo $this->fetch('css_bottom');

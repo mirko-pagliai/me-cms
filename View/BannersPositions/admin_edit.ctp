@@ -22,8 +22,6 @@
  * @package		MeCms\View\BannersPositions
  */
 ?>
-	
-<?php $this->assign('sidebar', $this->Menu->get('banners', 'nav')); ?>
 
 <div class="bannersPositions form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Edit banners position')); ?>

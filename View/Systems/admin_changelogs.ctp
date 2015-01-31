@@ -22,8 +22,6 @@
  * @package		MeCms\View\Systems
  */
 ?>
-	
-<?php $this->assign('sidebar', $this->Menu->get('systems', 'nav')); ?>
 
 <div class="systems index">
 	<?php echo $this->Html->h2(__d('me_cms', 'Changelogs')); ?>

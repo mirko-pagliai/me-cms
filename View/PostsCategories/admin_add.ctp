@@ -23,10 +23,7 @@
  */
 ?>
 
-<?php 
-	$this->assign('sidebar', $this->Menu->get('posts', 'nav'));
-	$this->Library->slugify();
-?>
+<?php $this->Library->slugify(); ?>
 
 <div class="postsCategories form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add posts category')); ?>

@@ -23,10 +23,7 @@
  */
 ?>
 	
-<?php
-	$this->assign('sidebar', $this->Menu->get('banners', 'nav'));
-	$this->Html->js('/MeCms/js/backend/uploader.min', array('block' => 'script_bottom'));
-?>
+<?php $this->Html->js('/MeCms/js/backend/uploader.min', array('block' => 'script_bottom')); ?>
 
 <div class="banners form">
 	<?php

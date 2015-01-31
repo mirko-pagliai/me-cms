@@ -23,8 +23,6 @@
  */
 ?>
 	
-<?php $this->assign('sidebar', $this->Menu->get('posts', 'nav')); ?>
-	
 <div class="posts index">
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Posts'));

@@ -23,8 +23,6 @@
  */
 ?>
 
-<?php $this->assign('sidebar', $this->Menu->get('users', 'nav')); ?>
-
 <div class="users view">
 	<?php 
 		echo $this->Html->h2(__d('me_cms', 'User'));

@@ -29,7 +29,8 @@ App::uses('MeHtmlHelper', 'MeTools.View/Helper');
 /**
  * Menu Helper.
  * 
- * It can be used to generate a menu for an action. It supports these types of menu: `ul`, `nav` and `dropdown`.
+ * It can be used to generate a menu for an action.  
+ * It supports these types of menu: `ul`, `collapse` and `dropdown`.
  * 
  * To generate a menu, you have to use the `get` method. For example:
  * <code>
@@ -41,14 +42,11 @@ class MenuHelper extends MeHtmlHelper {
      * Helpers
      * @var array
      */
-    public $helpers = array(
-		'Auth'		=> array('className' => 'MeCms.Auth'),
-		'Dropdown'	=> array('className' => 'MeTools.Dropdown')
-	);
+    public $helpers = array('MeCms.Auth', 'Dropdown' => array('className' => 'MeTools.Dropdown'));
 	
 	/**
 	 * Internal function to generate the menu for "banners" actions.
-	 * @param string $type Type of menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Menu
 	 * @uses AuthHelper::isAdmin()
 	 * @uses AuthHelper::isManager()
@@ -74,13 +72,21 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Banners'), array('icon' => 'dollar')).PHP_EOL.$this->Dropdown->dropdown($menu);
-		
+		elseif($type == 'collapse')
+			return $this->link(__d('me_cms', 'Banners'), '#collapse-banners', array(
+				'aria-controls'	=> 'collapse-banners',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'dollar'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-banners'));
+			
 		return $menu;
 	}
 	
 	/**
 	 * Internal function to generate the menu for "pages" actions.
-	 * @param string $type Type of menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Menu
 	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
@@ -99,13 +105,21 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Pages'), array('icon' => 'files-o')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		elseif($type == 'collapse')
+			return $this->link(__d('me_cms', 'Pages'), '#collapse-pages', array(
+				'aria-controls'	=> 'collapse-pages',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'files-o'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-pages'));
 		
 		return $menu;
 	}
 	
 	/**
 	 * Internal function to generate the menu for "photos" actions.
-	 * @param string $type Type of menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Menu
 	 * @uses DropdownHelper::dropdown()
 	 * @uses DropdownHelper::link()
@@ -120,13 +134,21 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Photos'), array('icon' => 'image')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		elseif($type == 'collapse')
+			return $this->link(__d('me_cms', 'Photos'), '#collapse-photos', array(
+				'aria-controls'	=> 'collapse-photos',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'image'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-photos'));
 		
 		return $menu;
 	}
 	
 	/**
 	 * Internal function to generate the menu for "posts" actions.
-	 * @param string $type Type of menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Menu
 	 * @uses AuthHelper::isManager()
 	 * @uses DropdownHelper::dropdown()
@@ -147,13 +169,21 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Posts'), array('icon' => 'thumb-tack')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		elseif($type == 'collapse')
+			return $this->link(__d('me_cms', 'Posts'), '#collapse-posts', array(
+				'aria-controls'	=> 'collapse-posts',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'thumb-tack'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-posts'));
 		
 		return $menu;
 	}
 	
 	/**
 	 * Internal function to generate the menu for "users" actions.
-	 * @param string $type Type of menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Menu
 	 * @uses AuthHelper::isAdmin()
 	 * @uses AuthHelper::isManager()
@@ -179,13 +209,21 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'Users'), array('icon' => 'users')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		elseif($type == 'collapse')
+			return $this->link(__d('me_cms', 'Users'), '#collapse-users', array(
+				'aria-controls'	=> 'collapse-users',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'users'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-users'));
 		
 		return $menu;
 	}
 	
 	/**
 	 * Internal function to generate the menu for "systems" actions.
-	 * @param string $type Type of menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Menu
 	 * @uses AuthHelper::isAdmin()
 	 * @uses DropdownHelper::dropdown()
@@ -206,6 +244,14 @@ class MenuHelper extends MeHtmlHelper {
 		
 		if($type == 'dropdown')
 			return $this->Dropdown->link(__d('me_cms', 'System'), array('icon' => 'wrench')).PHP_EOL.$this->Dropdown->dropdown($menu);
+		elseif($type == 'collapse')
+			return $this->link(__d('me_cms', 'System'), '#collapse-system', array(
+				'aria-controls'	=> 'collapse-system',
+				'aria-expanded'	=> 'false',
+				'class'			=> 'collapsed',
+				'data-toggle'	=> 'collapse',
+				'icon'			=> 'wrench'
+			)).PHP_EOL.$this->div('collapse', implode(PHP_EOL, $menu), array('id' => 'collapse-system'));
 		
 		return $menu;
 	}
@@ -213,8 +259,8 @@ class MenuHelper extends MeHtmlHelper {
 	/**
 	 * Generates and returns a menu for an action.
 	 * @param string $name Name of the action for which to generate the menu
-	 * @param string $type Type of menu (optional, `ul`, `nav` or `dropdown`)
-	 * @return mixed Menu
+	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * @return mixed Html
 	 */
 	public function get($name, $type = NULL) {
 		//Dynamic call to the method that generates the requested menu
@@ -225,14 +271,14 @@ class MenuHelper extends MeHtmlHelper {
 			throw new InternalErrorException(__d('me_cms', 'The %s method does not exist', sprintf('%s::%s()', $class, $name)));
 		
 		$menu = $class::$name($type);
-			
+		
 		//Switch the type of menu
 		switch($type) {
 			case 'ul':
 				$menu = $this->ul($menu);
 				break;
-			case 'nav':
-				$menu = $this->ul($menu, array('class' => 'nav'));
+			case 'collapse':
+				$menu = $this->div('panel', $menu);
 				break;
 		}
 		

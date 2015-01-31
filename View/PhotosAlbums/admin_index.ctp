@@ -23,8 +23,6 @@
  */
 ?>
 	
-<?php $this->assign('sidebar', $this->Menu->get('photos', 'nav')); ?>
-	
 <div class="photosAlbums index">
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Photos albums'));

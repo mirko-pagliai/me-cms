@@ -43,15 +43,40 @@ body {
 	padding: 20px 10px;
 }
 
-/* Sidebar, navigation links */
-#sidebar > .nav > li > a {
+/* Sidebar, links */
+#sidebar a {
+	display: block;
+	outline: none;
 	padding: 10px;
+	text-decoration: none;
 }
 
-/* Sidebar, navigation links on hover */
-#sidebar > .nav > li > a:hover {
-	background-color: #428bca;
-    color: #fff;
+ /* Sidebar, panel */
+#sidebar .panel {
+	margin-bottom: 10px;
+}
+
+ /* Sidebar, panel, last panel */
+#sidebar .panel:last-child {
+	margin-bottom: 0;
+}
+
+ /* Sidebar, panel, main links on hover and main links not collapsed */
+#sidebar .panel > a:hover, #sidebar .panel > a:not(.collapsed) {
+	background: #337ab7;
+	color: #fff;
+}
+
+ /* Sidebar, panel, main links, icon */
+#sidebar .panel > a i {
+    margin-right: 5px;
+    min-width: 16px;
+    text-align: right;
+}
+
+ /* Sidebar, panel, collapsed wrap, links on hover */
+#sidebar .panel > .collapse > a:hover {
+	background: #e9e9e9;
 }
 
 /* -------------------------------- */

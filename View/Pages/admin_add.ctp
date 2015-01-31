@@ -24,7 +24,6 @@
 ?>
 	
 <?php
-	$this->assign('sidebar', $this->Menu->get('pages', 'nav'));
 	$this->Library->slugify();
 	$this->Library->ckeditor();
 	$this->Library->datetimepicker();

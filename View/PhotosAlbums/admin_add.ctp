@@ -23,10 +23,7 @@
  */
 ?>
 
-<?php
-	$this->assign('sidebar', $this->Menu->get('photos', 'nav'));
-	$this->Library->slugify();
-?>
+<?php $this->Library->slugify(); ?>
 
 <div class="photosAlbums form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add photos album')); ?>

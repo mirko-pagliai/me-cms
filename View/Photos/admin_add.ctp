@@ -22,8 +22,6 @@
  * @package		MeCms\View\Photos
  */
 ?>
-	
-<?php $this->assign('sidebar', $this->Menu->get('photos', 'nav')); ?>
 
 <div class="photos form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add photos')); ?>

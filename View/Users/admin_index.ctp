@@ -22,8 +22,6 @@
  * @package		MeCms\View\Users
  */
 ?>
-
-<?php $this->assign('sidebar', $this->Menu->get('users', 'nav')); ?>
 	
 <div class="users index">
 	<?php 

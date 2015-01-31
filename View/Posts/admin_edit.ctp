@@ -23,8 +23,7 @@
  */
 ?>
 	
-<?php 
-	$this->assign('sidebar', $this->Menu->get('posts', 'nav'));
+<?php
 	$this->Library->slugify();
 	$this->Library->ckeditor();
 	$this->Library->datetimepicker();

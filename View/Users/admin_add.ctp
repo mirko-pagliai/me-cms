@@ -22,8 +22,6 @@
  * @package		MeCms\View\Users
  */
 ?>
-	
-<?php $this->assign('sidebar', $this->Menu->get('users', 'nav')); ?>
 
 <div class="users form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add user')); ?>

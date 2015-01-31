@@ -22,8 +22,6 @@
  * @package		MeCms\View\Banners
  */
 ?>
-	
-<?php $this->assign('sidebar', $this->Menu->get('banners', 'nav')); ?>
 
 <div class="banners form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Add banner')); ?>
