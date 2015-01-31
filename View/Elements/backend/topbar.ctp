@@ -39,9 +39,14 @@
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="backend-topbar-collapse">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav hidden-xs hidden-sm">
 				<?php
-					echo $this->Html->li($this->Html->link(NULL, '/admin', array('icon' => 'home', 'title' => __d('me_cms', 'Home'))));
+					echo $menu = $this->Html->li($this->Html->link(__d('me_cms', 'Home'), '/', array('icon' => 'home', 'target' => '_blank')));
+				?>
+			</ul>
+			<ul class="nav navbar-nav visible-xs visible-sm">
+				<?php
+					echo $menu;
 										
 					foreach($config['topbar'] as $name) {
 						list($plugin, $name) = pluginSplit($name);
@@ -50,19 +55,18 @@
 						
 						echo $this->Html->li($this->$helper->get($name, 'dropdown'), array('class' => 'dropdown'));
 					}
-				?>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<?php
-						echo $this->Dropdown->link($auth['full_name'], array('icon' => 'user'));
-						echo $this->Dropdown->dropdown(array(
+					
+					echo $menu = $this->Html->li(
+						$this->Dropdown->link($auth['full_name'], array('icon' => 'user')).PHP_EOL.
+						$this->Dropdown->dropdown(array(
 							$this->Html->link(__d('me_cms', 'Change password'), array('controller' => 'users', 'action' => 'change_password',	'plugin' => 'me_cms',)),
 							$this->Html->link(__d('me_cms', 'Logout'),			array('controller' => 'users', 'action' => 'logout',			'plugin' => 'me_cms', 'admin' => FALSE))
-						));
-					?>
-				</li>
+						)),
+						array('class' => 'dropdown')
+					);
+				?>
 			</ul>
+			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm"><?php echo $menu; ?></ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
