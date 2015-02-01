@@ -75,7 +75,6 @@
 					<?php 
 						echo $this->Session->flash();
 						echo $this->fetch('content');
-						echo $this->element('MeCms.backend/footer', array(), array('cache' => TRUE));
 						echo $this->element('MeTools.sql_dump');
 					?>
 				</div>

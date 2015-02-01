@@ -20,12 +20,17 @@
 /* Body */
 body {
     font-family: Roboto,sans-serif;
-	padding-top: 70px;
+	padding-top: 50px;
 }
 
 /* -------------------------------- */
 /*				Header				*/
 /* -------------------------------- */
+/* Topbar */
+#topbar {
+	margin-bottom: 0;
+}
+
 /* Topbar, navigation links */
 #topbar .navbar-nav > li > a {
     font-family: Arial,sans-serif;
@@ -39,8 +44,8 @@ body {
 /* Sidebar */
 #sidebar {
     background-color: #f5f5f5;
-    border-right: 2px solid #eee;
-	padding: 20px 10px;
+	box-shadow: -3px 0 6px -6px rgba(50, 50, 50, .75) inset;
+	padding: 30px 15px 20px;
 }
 
 /* Sidebar, links */
@@ -82,6 +87,11 @@ body {
 /* -------------------------------- */
 /*				Content				*/
 /* -------------------------------- */
+/* Content */
+#content {
+	padding-top: 10px;
+}
+
 /* Content, first wrapper */
 #content > .index,
 #content > .view,
@@ -119,6 +129,13 @@ body {
 /* Content, tables, links */
 #content table.table a {
 	text-decoration: none;
+}
+
+/* Content, well */
+#content .well {
+    border: 0 none;
+    box-shadow: none;
+    padding: 15px 20px;
 }
 
 /* -------------------------------- */
