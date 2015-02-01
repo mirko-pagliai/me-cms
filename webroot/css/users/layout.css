@@ -41,8 +41,7 @@ body {
 
 /* Content, logo */
 #content #logo {
-	margin-bottom: 20px;
-	max-width: 400px;
+	margin: 0 auto 20px;
 }
 
 /* Content, form, alert message */
@@ -79,5 +78,5 @@ body {
 /* -------------------------------- */
 /* Login wrapper */
 #login {
-	max-width: 400px;
+	width: 400px;
 }

@@ -65,7 +65,7 @@
 			<?php
 				//Check if the logo image exists
 				if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
-					echo $this->Html->img($config['logo'], array('id' => 'logo'));
+					echo $this->Html->thumb('img'.DS.$config['logo'], array('id' => 'logo', 'width' => 400));
 				
 				echo $this->Session->flash();
 				echo $this->fetch('content');
