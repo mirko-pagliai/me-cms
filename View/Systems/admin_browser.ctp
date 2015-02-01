@@ -40,6 +40,7 @@
 <?php $this->Html->scriptEnd(); ?>
 
 <div class="systems index">
+	<?php echo $this->Html->h2(__d('me_cms', 'Media browser')); ?>
 	<div id="type-form" class="well">
 		<?php 
 			echo $this->Form->createInline(FALSE, array('type' => 'get'));
