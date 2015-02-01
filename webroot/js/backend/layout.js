@@ -6,23 +6,56 @@
  */
 
 /**
- * Resizes the sidebar
+ * Gets the maximum height available
  */
-function resizeSidebar() {
-	//Gets the windows height
-	var windowHeight = $(window).height()-$('#topbar').innerHeight();
-	//Gets the content height
-	var contentHeight = $('#content').innerHeight();
-	
-	//The sidebar height will be the greater of the two heights
-	$('#sidebar').css('minHeight', windowHeight > contentHeight ? windowHeight : contentHeight);
+function getAvailableHeight() {
+	return $(window).height() - $('#topbar').outerHeight(true);
 }
 
-$(function() {
-	//Resize the sidebar on windows load and on window resize
-	$(window).on('load resize', function () {
-		resizeSidebar();
+/**
+ * Sets the height for the container (content and sidebar)
+ */
+function setContainerHeight() {
+	//Gets the maximum height available
+	var availableHeight = getAvailableHeight();
+	
+	//The content has the maximum height available
+	$('#content').css('min-height', availableHeight);
+	
+	//The sidebar height is the maximum available height or the content height, if this is greater
+	$('#sidebar').css('min-height', availableHeight > $('#content').height() ? availableHeight : $('#content').height());
+}
+
+/**
+ * Sets the height for KCFinder
+ */
+function setKcfinderHeight() {
+	if(!$('#kcfinder').length)
+		return;
+		
+	//For now, the maximum height is the maximum height available
+	var maxHeight = getAvailableHeight();
+	
+	//Subtracts content padding
+	maxHeight -= parseInt($('#content').css('padding-top')) + parseInt($('#content').css('padding-bottom'));
+	
+	//Subtracts the height of each child element of content
+	$('#content > * > *:not(#kcfinder)').each(function() {
+		maxHeight -= $(this).outerHeight(true);
 	});
+		
+	$('#kcfinder').height(maxHeight);
+}
+
+//On windows load and resize
+$(window).on('load resize', function() {
+	//Sets the height for the container (content and sidebar)
+	setContainerHeight();
+});
+
+$(function() {
+	//Sets the height for KCFinder
+	setKcfinderHeight();
 	
 	//Adds the "data-parent" attribute for collapsed sidebar
 	$('#sidebar a').attr('data-parent', '#sidebar');

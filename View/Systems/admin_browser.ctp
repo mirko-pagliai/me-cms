@@ -23,22 +23,6 @@
  */
 ?>
 
-<?php $this->Html->scriptStart(); ?>
-	//Function to resize the iframe
-	function resizeKcfinder() {
-		var maxHeight = $(window).height() - $('#topbar').outerHeight(true) -$('#type-form').outerHeight(true) -$('#footer').outerHeight(true) - 20;
-		$('#kcfinder').height(maxHeight);
-	}
-	
-	$(function() {
-		//Resizes the iframe on load
-		resizeKcfinder();
-		
-		//Resizes the iframe on window resize
-		$(window).resize(resizeKcfinder);
-	});
-<?php $this->Html->scriptEnd(); ?>
-
 <div class="systems index">
 	<?php echo $this->Html->h2(__d('me_cms', 'Media browser')); ?>
 	<div id="type-form" class="well">
@@ -59,10 +43,9 @@
 	<?php
 		if(!empty($kcfinder))
 			echo $this->Html->iframe(array(
-				'height'	=> '550',
-				'id'		=> 'kcfinder',
-				'src'		=> $kcfinder,
-				'width'		=> '100%'
+				'id'	=> 'kcfinder',
+				'src'	=> $kcfinder,
+				'width'	=> '100%'
 			));
 	?>
 </div>
