@@ -41,7 +41,7 @@
 		<div class="collapse navbar-collapse" id="backend-topbar-collapse">
 			<ul class="nav navbar-nav hidden-xs hidden-sm">
 				<?php
-					echo $menu = $this->Html->li($this->Html->link(__d('me_cms', 'Home'), '/', array('icon' => 'home', 'target' => '_blank')));
+					echo $menu = $this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), '/', array('icon' => 'home', 'target' => '_blank')));
 				?>
 			</ul>
 			<ul class="nav navbar-nav visible-xs visible-sm">
