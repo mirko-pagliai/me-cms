@@ -69,7 +69,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm">
-					<?php echo $this->element('MeCms.backend/sidebar', array(), array('cache' => TRUE)); ?>
+					<?php echo $this->element('MeCms.backend/sidebar'); ?>
 				</div>
 				<div id="content" class="col-md-9 col-lg-10">
 					<?php 
