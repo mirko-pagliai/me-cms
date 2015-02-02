@@ -24,13 +24,13 @@
  * @package		MeCms\Controller\Component
  */
 
-App::uses('AppController', 'Controller');
+App::uses('MeToolsAppController', 'MeTools.Controller');
 App::uses('Plugin', 'MeTools.Utility');
 
 /**
  * Application level controller.
  */
-class MeCmsAppController extends AppController {
+class MeCmsAppController extends MeToolsAppController {
 	/**
 	 * Components
 	 * @var array
@@ -168,6 +168,16 @@ class MeCmsAppController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can access every action
 		return $this->Auth->isManager();
+	}
+	
+	/**
+	 * Checks if the current layout is the frontend
+	 * @return boolean TRUE if it's the frontend, otherwise FALSE
+	 */
+	protected function isFrontend() {
+		list($plugin, $layout) = pluginSplit($this->layout);
+		
+		return in_array($layout, array('frontend', 'homepage'));
 	}
 	
 	/**
