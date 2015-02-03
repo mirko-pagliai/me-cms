@@ -41,7 +41,7 @@ class User extends MeCmsAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('User.username' => 'ASC');
+	public $order = array('username' => 'ASC');
 	
 	/**
 	 * Virtual fields

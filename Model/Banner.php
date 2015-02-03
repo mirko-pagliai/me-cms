@@ -32,6 +32,18 @@ App::uses('BannerManager', 'MeCms.Utility');
  */
 class Banner extends MeCmsAppModel {
 	/**
+	 * Display field
+	 * @var string
+	 */
+	public $displayField = 'filename';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('filename' => 'ASC');
+	
+	/**
 	 * Validation rules
 	 * @var array
 	 */

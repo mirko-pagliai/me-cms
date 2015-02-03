@@ -40,7 +40,7 @@ class UsersGroup extends MeCmsAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('UserGroup.name' => 'ASC');
+	public $order = array('name' => 'ASC');
 	
 	/**
 	 * Validation rules

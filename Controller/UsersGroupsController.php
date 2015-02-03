@@ -117,7 +117,8 @@ class UsersGroupsController extends MeCmsAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'fields'	=> array('id', 'name', 'label', 'user_count'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('name' => 'ASC')
 		);
 		
 		$this->set(array(

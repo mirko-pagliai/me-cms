@@ -120,7 +120,8 @@ class PagesController extends MeCmsAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('Page.title' => 'ASC')
 		);
 		
 		$this->set(array(

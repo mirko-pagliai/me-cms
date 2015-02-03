@@ -119,7 +119,8 @@ class PhotosAlbumsController extends MeCmsAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'fields'	=> array('id', 'slug', 'title', 'photo_count', 'active'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('PhotosAlbum.title' => 'ASC')
 		);
 		
 		$this->set(array(

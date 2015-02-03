@@ -115,7 +115,8 @@ class BannersPositionsController extends MeCmsAppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'fields'	=> array('id', 'name', 'description', 'banner_count'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('BannersPosition.name' => 'ASC')
 		);
 		
 		$this->set(array(

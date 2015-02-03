@@ -36,6 +36,12 @@ class Photo extends MeCmsAppModel {
 	 * @var string
 	 */
 	public $displayField = 'filename';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('filename' => 'ASC');
 
 	/**
 	 * Validation rules

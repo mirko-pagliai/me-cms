@@ -145,7 +145,8 @@ class BannersController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> 'Position.name',
 			'fields'	=> array('id', 'filename', 'target', 'description', 'active', 'click_count'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('Banner.filename' => 'ASC')
 		);
 		
 		$this->set(array(

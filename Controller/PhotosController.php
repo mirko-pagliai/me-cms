@@ -168,7 +168,8 @@ class PhotosController extends MeCmsAppController {
 		$this->paginate = array(
 			'conditions'	=> array('album_id' => $albumId),
 			'fields'		=> array('id', 'album_id', 'filename'),
-			'limit'			=> $this->config['photos_for_page']
+			'limit'			=> $this->config['photos_for_page'],
+			'order'			=> array('Photo.filename' => 'ASC')
 		);
 		
 		$this->set(array(

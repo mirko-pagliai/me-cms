@@ -37,6 +37,12 @@ class PhotosAlbum extends MeCmsAppModel {
 	 * @var string
 	 */
 	public $displayField = 'title';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('title' => 'ASC');	
 
 	/**
 	 * Validation rules

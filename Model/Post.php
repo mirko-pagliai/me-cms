@@ -41,7 +41,7 @@ class Post extends MeCmsAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('Post.created' => 'DESC');
+	public $order = array('created' => 'DESC');
 
 	/**
 	 * Validation rules

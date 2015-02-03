@@ -35,6 +35,12 @@ class BannersPosition extends MeCmsAppModel {
 	 * @var string
 	 */
 	public $displayField = 'name';
+	
+	/**
+	 * Order
+	 * @var array 
+	 */
+	public $order = array('name' => 'ASC');
 
 	/**
 	 * Validation rules
