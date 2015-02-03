@@ -62,14 +62,8 @@ $(function() {
 	
 	var sidebarPosition = $('#sidebar').position();
 	
+	//Sidebar affix
 	$('#sidebar').affix({
-		offset: {
-			top: sidebarPosition.top,
-//			bottom: function () {
-//				return (this.bottom = $('.footer').outerHeight(true))
-//			}
-		}
+		offset: { top: sidebarPosition.top }
 	})
-	
-	console.log(sidebarPosition.top);
 });
