@@ -62,8 +62,9 @@ Router::connect('/logout',	array('controller' => 'users', 'action' => 'logout',	
 
 //Each "admin" request will be directed to the plugin
 $controllers = array('banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts', 'systems', 'users', 'users_groups');
+$controllers = sprintf('(%s)', implode('|', $controllers));
 
-Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE), array('controller' => $controllers = sprintf('(%s)', implode('|', $controllers))));
+Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE), array('controller' => $controllers));
 Router::connect('/admin/:controller/:action/*',	array('plugin' => 'me_cms', 'admin' => TRUE), array('controller' => $controllers));
 
 //Enables the 'rss' extension
