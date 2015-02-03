@@ -46,7 +46,7 @@ class PostsCategory extends MeCmsAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('lft' => 'ASC');
+	public $order = array('PostsCategory.lft' => 'ASC');
 
 	/**
 	 * Validation rules
