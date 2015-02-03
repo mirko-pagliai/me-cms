@@ -15,7 +15,7 @@
 
 /* Body */
 body {
-	background: #e4e4e4;
+	background: #e2e2e2;
 	font-family: Roboto, sans-serif;
 	padding-top: 60px;
 }
@@ -28,10 +28,10 @@ body {
 	font-size: 16px;
     margin: auto;
     padding: 20px;
-	text-align: center;
-	width: -moz-min-content;
-	width: -webkit-min-content;
-	width: min-content;
+	/*text-align: center;*/
+	width: -moz-max-content;
+	width: -webkit-max-content;
+	width: max-content;
 }
 
 /* Content, last paragraph */
@@ -41,7 +41,7 @@ body {
 
 /* Content, logo */
 #content #logo {
-	margin: 0 auto 20px;
+	margin: auto auto 20px;
 }
 
 /* Content, form, alert message */
