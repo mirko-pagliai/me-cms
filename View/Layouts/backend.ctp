@@ -71,7 +71,7 @@
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm">
 					<?php echo $this->element('MeCms.backend/sidebar'); ?>
 				</div>
-				<div id="content" class="col-md-9 col-lg-10">
+				<div id="content" class="col-md-offset-3 col-lg-offset-2">
 					<?php 
 						echo $this->Session->flash();
 						echo $this->fetch('content');

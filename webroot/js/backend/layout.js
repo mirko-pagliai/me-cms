@@ -59,4 +59,17 @@ $(function() {
 	
 	//Adds the "data-parent" attribute for collapsed sidebar
 	$('#sidebar a').attr('data-parent', '#sidebar');
+	
+	var sidebarPosition = $('#sidebar').position();
+	
+	$('#sidebar').affix({
+		offset: {
+			top: sidebarPosition.top,
+//			bottom: function () {
+//				return (this.bottom = $('.footer').outerHeight(true))
+//			}
+		}
+	})
+	
+	console.log(sidebarPosition.top);
 });

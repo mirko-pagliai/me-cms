@@ -46,6 +46,7 @@ body {
     background-color: #f5f5f5;
 	box-shadow: -3px 0 6px -6px rgba(50, 50, 50, .75) inset;
 	padding: 30px 15px 20px;
+	position: fixed;
 }
 
 /* Sidebar, links */
