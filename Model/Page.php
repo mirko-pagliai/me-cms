@@ -41,7 +41,7 @@ class Page extends MeCmsAppModel {
 	 * Order
 	 * @var array 
 	 */
-	public $order = array('title' => 'ASC');
+	public $order = array('Page.title' => 'ASC');
 	
 	/**
 	 * Validation rules

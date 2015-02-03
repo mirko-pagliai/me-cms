@@ -158,7 +158,8 @@ class PostsController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
-			'limit'		=> $this->config['records_for_page']
+			'limit'		=> $this->config['records_for_page'],
+			'order'		=> array('Post.created' => 'DESC')
 		);
 		
 		$this->set(array(
@@ -203,7 +204,8 @@ class PostsController extends MeCmsAppController {
 				'contain'		=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
 				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'findType'		=> 'active',
-				'limit'			=> $this->config['records_for_page']
+				'limit'			=> $this->config['records_for_page'],
+				'order'			=> array('Post.created' => 'DESC')
 			);
 			
             Cache::write($cache, $posts = $this->paginate(), 'posts');
