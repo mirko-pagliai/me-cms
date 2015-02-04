@@ -30,7 +30,7 @@
 <?php elseif(!empty($file)): ?>
 	<div class="bg-success text-success padding-10 margin-10">
 		<?php
-			echo $this->Html->div(NULL, __d('me_cms', 'Successfully uploaded: %s', $this->Html->strong($file['target'])));
+			echo $this->Html->div(NULL, __d('me_cms', 'Uploaded: %s', $this->Html->strong($file['target'])));
 			echo $this->Html->div(NULL, __d('me_cms', 'Type: %s', $file['type']));
 			echo $this->Html->div(NULL, __d('me_cms', 'Size: %s', $this->Number->toReadableSize($file['size'])));
 		?>
