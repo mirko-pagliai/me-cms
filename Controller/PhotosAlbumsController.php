@@ -34,7 +34,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses MeAuthComponenet::isManager()
+	 * @uses MeAuthComponent::isManager()
 	 * @uses MeToolsAppController::isAction()
 	 */
 	public function isAuthorized($user = NULL) {

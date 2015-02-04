@@ -40,8 +40,8 @@ class PostsController extends MeCmsAppController {
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
-	 * @uses MeAuthComponenet::isManager()
-	 * @uses MeAuthComponenet::user()
+	 * @uses MeAuthComponent::isManager()
+	 * @uses MeAuthComponent::user()
 	 * @uses MeToolsAppController::isAction()
 	 * @uses Post::isOwnedBy()
 	 */
