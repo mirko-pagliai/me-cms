@@ -56,8 +56,11 @@ class UsersController extends MeCmsAppController {
 	 * @return boolean
 	 */
 	private function _logout() {
-		//Deletes all KCFinder keys
+		//Deletes the KCFinder session
 		$this->Session->delete('KCFINDER');
+		
+		//Deletes cookie
+		setcookie('sidebar-lastmenu', '', 1, '/');
 		
 		return $this->redirect($this->Auth->logout());
 	}
