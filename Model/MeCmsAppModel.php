@@ -135,6 +135,6 @@ class MeCmsAppModel extends AppModel {
 	public function isValidSlug($check) {
 		//Lowercase letters, numbers, dash.
 		//It must contain at least one letter and must begin and end with a letter or a number.
-		return preg_match('/[a-z]/', $check['slug']) && preg_match('/^[a-z0-9][a-z0-9\-]+[a-z0-9]$/', $check['slug']);
+		return preg_match('/[a-z]/', array_values($check)[0]) && preg_match('/^[a-z0-9][a-z0-9\-]+[a-z0-9]$/', array_values($check)[0]);
 	}
 }
