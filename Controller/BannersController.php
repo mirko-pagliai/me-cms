@@ -195,7 +195,7 @@ class BannersController extends MeCmsAppController {
 		
 		//Checks for target
 		if(empty($target))
-			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+			throw new NotFoundException(__d('me_cms', 'Invalid target'));
 		
 		//Increases the click count
 		$this->Banner->updateAll(array('click_count' => 'click_count+1'), array('Banner.id' => $id));
