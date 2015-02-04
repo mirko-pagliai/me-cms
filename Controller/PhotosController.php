@@ -155,15 +155,15 @@ class PhotosController extends MeCmsAppController {
 	
 	/**
 	 * List photos
-	 * @param string $albumId Photos album id
+	 * @param string $album_id Photos album id
 	 * @throws NotFoundException
 	 */
-	public function admin_index($albumId = NULL) {
-		if(!$this->Photo->Album->exists($albumId))
+	public function admin_index($album_id = NULL) {
+		if(!$this->Photo->Album->exists($album_id))
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		$this->paginate = array(
-			'conditions'	=> compact('albumId'),
+			'conditions'	=> compact('album_id'),
 			'fields'		=> array('id', 'album_id', 'filename'),
 			'limit'			=> $this->config['photos_for_page'],
 			'order'			=> array('Photo.filename' => 'ASC')
