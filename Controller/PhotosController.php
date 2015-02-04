@@ -57,7 +57,7 @@ class PhotosController extends MeCmsAppController {
 		
 		//Checks for albums
 		if(empty($albums)) {
-			$this->Session->flash(__d('me_cms', 'Before you can add photos, you have to create at least an album'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you can add photos, you have to create at least an album'), 'alert');
 			$this->redirect(array('controller' => 'photos_albums', 'action' => 'index'));
 		}
 		
@@ -67,7 +67,7 @@ class PhotosController extends MeCmsAppController {
 		
 		//Checks for temporary files
 		if(empty($tmpFiles)) {
-			$this->Session->flash(__d('me_cms', 'Before you can add a photo, you have to upload a photo'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you can add a photo, you have to upload a photo'), 'alert');
 			$this->redirect(array('action' => 'upload'));
 		}
 		

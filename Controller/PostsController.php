@@ -70,7 +70,7 @@ class PostsController extends MeCmsAppController {
 		
 		//Checks for categories
 		if(empty($categories)) {
-			$this->Session->flash(__d('me_cms', 'Before you can add a post, you have to create at least a category'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you can add a post, you have to create at least a category'), 'alert');
 			$this->redirect(array('controller' => 'posts_categories', 'action' => 'index'));
 		}
 		
@@ -279,7 +279,7 @@ class PostsController extends MeCmsAppController {
 				$this->set(compact('count', 'posts'));
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'error');
+				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'alert');
 		}
 		
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Search posts')), compact('pattern')));

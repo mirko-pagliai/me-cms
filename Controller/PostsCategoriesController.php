@@ -81,7 +81,7 @@ class PostsCategoriesController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The posts category was not deleted'), 'error');
 		}
 		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'), 'alert');
 			
 		$this->redirect(array('action' => 'index'));
 	}

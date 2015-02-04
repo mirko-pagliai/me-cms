@@ -78,7 +78,7 @@ class BannersPositionsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The banners position was not deleted'), 'error');
 		}
 		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this position, you have to delete its banners or assign them to another position'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you delete this position, you have to delete its banners or assign them to another position'), 'alert');
 		
 		$this->redirect(array('action' => 'index'));
 	}

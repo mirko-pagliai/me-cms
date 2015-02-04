@@ -78,9 +78,9 @@ class UsersGroupsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The users group was not deleted'), 'error');
 		}
 		elseif($id <= 3)
-			$this->Session->flash(__d('me_cms', 'You cannot delete this users group, because it\'s a necessary group'), 'error');
+			$this->Session->flash(__d('me_cms', 'You cannot delete this users group, because it\'s a necessary group'), 'alert');
 		else
-			$this->Session->flash(__d('me_cms', 'Before you delete this users group, you have to delete its users or assign them to another group'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you delete this users group, you have to delete its users or assign them to another group'), 'alert');
 			
 		$this->redirect(array('action' => 'index'));
 	}

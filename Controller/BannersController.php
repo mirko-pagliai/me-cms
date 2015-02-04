@@ -48,17 +48,21 @@ class BannersController extends MeCmsAppController {
 	 * @uses BannerManager::getTmpPath()
 	 */
 	public function admin_add() {
-		//Gets the positions and checks
+		//Gets the positions
 		$positions = $this->Banner->Position->find('list');
+		
+		//Checks for positions
 		if(empty($positions)) {
-			$this->Session->flash(__d('me_cms', 'Before you can add a banner, you have to create at least a banner position'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you can add a banner, you have to create at least a banner position'), 'alert');
 			$this->redirect(array('controller' => 'banners_positions', 'action' => 'index'));
 		}
 		
-		//Gets the temporary files and checks
+		//Gets the temporary files
 		$tmpFiles = BannerManager::getTmp();
+		
+		//Checks for temporary files
 		if(empty($tmpFiles)) {
-			$this->Session->flash(__d('me_cms', 'Before you can add a banner, you have to upload a banner'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you can add a banner, you have to upload a banner'), 'alert');
 			$this->redirect(array('action' => 'upload'));
 		}
 		

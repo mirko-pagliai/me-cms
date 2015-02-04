@@ -115,13 +115,13 @@ class UsersController extends MeCmsAppController {
 		
 		//You cannot delete the admin founder
 		if($this->User->isFounder($id))
-			$this->Session->flash(__d('me_cms', 'You cannot delete the admin founder'), 'error');
+			$this->Session->flash(__d('me_cms', 'You cannot delete the admin founder'), 'alert');
 		//Only the admin founder can delete others admin users
 		elseif($this->User->isAdmin($id) && !$this->Auth->isFounder())
-			$this->Session->flash(__d('me_cms', 'Only the founder admin can delete other admin users'), 'error');
+			$this->Session->flash(__d('me_cms', 'Only the founder admin can delete other admin users'), 'alert');
 		//Before deleting, checks if the user has some posts
 		elseif($this->User->field('post_count'))
-			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'error');
+			$this->Session->flash(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'), 'alert');
 		else {
 			if($this->User->delete())
 				$this->Session->flash(__d('me_cms', 'The user has been deleted'));
@@ -143,7 +143,7 @@ class UsersController extends MeCmsAppController {
 
 		//Only the admin founder can edit others admin users
 		if($this->User->isAdmin($id) && !$this->Auth->isFounder()) {
-			$this->Session->flash(__d('me_cms', 'Only the founder admin can edit other admin users'), 'error');
+			$this->Session->flash(__d('me_cms', 'Only the founder admin can edit other admin users'), 'alert');
 			$this->redirect(array('action' => 'index'));
 		}
 			
