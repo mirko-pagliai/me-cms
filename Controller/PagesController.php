@@ -50,6 +50,20 @@ class PagesController extends MeCmsAppController {
 		
 		return TRUE;
 	}
+	
+	/**
+	 * Called after the controller action is run, but before the view is rendered. 
+	 * It's used to perform logic or set view variables that are required on every request.
+	 * @uses ConfigComponent::kcfinder()
+	 * @uses MeToolsAppController::isAction()
+	 */
+	public function beforeRender() {
+		parent::beforeRender();
+		
+		//Configures KCFinder for some actions
+		if($this->isAction(array('admin_add', 'admin_edit')))
+			$this->Config->kcfinder();
+	}
 
 	/**
 	 * Add page

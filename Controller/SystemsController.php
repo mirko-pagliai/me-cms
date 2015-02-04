@@ -51,6 +51,7 @@ class SystemsController extends MeCmsAppController {
 	
 	/**
 	 * Media browser with KCFinder
+	 * @uses ConfigComponent::kcfinder()
 	 */
 	public function admin_browser() {
 		//Checks for KCFinder
@@ -64,6 +65,9 @@ class SystemsController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'The directory %s is not readable or writable', WWW_ROOT.'files'), 'error');
 			$this->redirect('/admin');
 		}
+		
+		//Configures KCFinder
+		$this->Config->kcfinder();
 		
 		//Gets types
 		$types = $this->config['kcfinder']['types'];
