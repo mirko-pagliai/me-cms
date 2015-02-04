@@ -6,14 +6,16 @@
  */
 
 /**
- * Gets the maximum height available
+ * Gets the maximum height available.
+ * The maximum available height is equal to the window height minus the topbar height.
  */
 function getAvailableHeight() {
 	return $(window).height() - $('#topbar').outerHeight(true);
 }
 
 /**
- * Sets the height for the container (content and sidebar)
+ * Sets the height for the container elements.
+ * Specifically, it sets the height of the content and of the sidebar.
  */
 function setContainerHeight() {
 	//Gets the maximum height available
@@ -27,7 +29,7 @@ function setContainerHeight() {
 }
 
 /**
- * Sets the height for KCFinder
+ * Sets the height for the KCFinder i frame.
  */
 function setKcfinderHeight() {
 	if(!$('#kcfinder').length)
@@ -49,17 +51,18 @@ function setKcfinderHeight() {
 
 //On windows load and resize
 $(window).on('load resize', function() {
-	//Sets the height for the container (content and sidebar)
+	//Sets the height for the container elements (content and sidebar)
 	setContainerHeight();
 });
 
 $(function() {
-	//Sets the height for KCFinder
+	//Sets the height for the KCFinder iframe
 	setKcfinderHeight();
 	
-	//Adds the "data-parent" attribute for collapsed sidebar
+	//Adds the "data-parent" attribute to the collapsed sidebar
 	$('#sidebar a').attr('data-parent', '#sidebar');
 	
+	//Gets the sidebar position
 	var sidebarPosition = $('#sidebar').position();
 	
 	//Sidebar affix
