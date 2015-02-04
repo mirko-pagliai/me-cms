@@ -152,9 +152,10 @@ class ConfigComponent extends Component {
 	 * Sets the configuration for KCFinder.
 	 * @param array $options Options
 	 * @return bool
+	 * @uses MeAuthComponent::isAdmin()
 	 */
-	public function kcfinder($options = array()) {		
-		return $this->Session->write('KCFINDER', am(array(
+	public function kcfinder($options = array()) {
+		$default = array(
 			'denyExtensionRename'	=> TRUE,
 			'denyUpdateCheck'		=> TRUE,
 			'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
@@ -164,6 +165,22 @@ class ConfigComponent extends Component {
 			'uploadDir'				=> WWW_ROOT.'files',
 			'uploadURL'				=> Router::url('/files', TRUE),
 			'types'					=> Configure::read('MeCms.kcfinder.types')
-		), $options));
+		);
+		
+		//If the user is not and admin
+		if(!$this->controller->Auth->isAdmin()) {
+			//Only admins can delete or rename directories
+			$default['access']['dirs'] = array('create' => TRUE, 'delete' => FALSE, 'rename' => FALSE);
+			//Only admins can delete, move or rename files
+			$default['access']['files'] = array(
+				'upload'	=> TRUE,
+				'delete'	=> FALSE,
+				'copy'		=> TRUE,
+				'move'		=> FALSE,
+				'rename'	=> FALSE
+			);
+		}
+
+		return $this->Session->write('KCFINDER', am($default, $options));
 	}
 }
