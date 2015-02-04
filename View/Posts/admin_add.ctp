@@ -42,7 +42,7 @@
 					));
 				
 				echo $this->Form->input('category_id', array(
-					'default'	=> count($categories) < 2 ? $categories[1] : NULL, //If there's only one category...
+					'default'	=> count($categories) < 2 ? array_values($categories)[0] : NULL, //If there's only one category...
 					'label'		=> __d('me_cms', 'Category')
 				));
 				echo $this->Form->datetimepicker('created', array(

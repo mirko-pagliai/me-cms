@@ -49,7 +49,8 @@
 			<div class='float-form'>
 				<?php
 					echo $this->Form->input('position_id', array(
-						'label' => __d('me_cms', 'Position')
+						'default'	=> count($positions) < 2 ? array_values($positions)[0] : NULL, //If there's only one position...
+						'label'		=> __d('me_cms', 'Position')
 					));
 					echo $this->Form->input('active', array(
 						'checked'	=> TRUE,
