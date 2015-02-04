@@ -76,6 +76,7 @@ class MeCmsAppController extends AppController {
 	
 	/**
 	 * Loads all the plugin helpers for creating menus.
+	 * @uses helpers
 	 * @uses Plugin::getAll()
 	 * @uses Plugin::getPath()
 	 */
@@ -94,6 +95,10 @@ class MeCmsAppController extends AppController {
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
+	 * @uses action
+	 * @uses config
+	 * @uses layout
+	 * @uses theme
 	 * @uses MeToolsAppController::isAdminRequest()
 	 * @uses _loadMenus()
 	 * @uses isOffline()
@@ -173,6 +178,7 @@ class MeCmsAppController extends AppController {
 	/**
 	 * Checks if the site is offline
 	 * @return bool TRUE if the site is offline, otherwise FALSE
+	 * @uses config
 	 * @uses MeToolsAppController::isAction()
 	 * @uses MeToolsAppController::isRequestAction()
 	 */
