@@ -92,6 +92,14 @@ class MeCmsAppController extends AppController {
 	}
 	
 	/**
+	 * Called after every controller action, and after rendering is complete.  
+	 * This is the last controller method to run.
+	 */
+	public function afterFilter() {
+		parent::afterFilter();
+	}
+	
+	/**
 	 * Called before the controller action. 
 	 * It's used to perform logic before each controller action.
 	 * @throws InternalErrorException
