@@ -59,7 +59,8 @@
 				'/MeTools/js/bootstrap.min',
 				'/MeTools/js/default',
 				'/MeCms/js/backend/layout',
-				'/MeCms/js/backend/photos'
+				'/MeCms/js/backend/photos',
+				'/MeCms/js/jquery.cookie'
 			));
 			echo $this->fetch('script');
 		?>

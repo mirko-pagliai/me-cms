@@ -66,4 +66,19 @@ $(function() {
 	$('#sidebar').affix({
 		offset: { top: sidebarPosition.top }
 	})
+	
+	//Checks if there is the cookie of the last open menu
+	if($.cookie('sidebar-lastmenu')) {
+		//Gets the element (menu) ID
+		var id = '#' + $.cookie('sidebar-lastmenu');
+		
+		//Opens the menu
+		$(id, '#sidebar').addClass('collapse in').attr('aria-expanded', 'true').prev('a').removeClass('collapsed').attr('aria-expanded', 'true');
+	}
+	
+	//On click on a sidebar menu
+	$('#sidebar a[data-toggle=collapse]').click(function() {		
+		//Saves the menu ID into a cookie
+		$.cookie('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
+	});
 });
