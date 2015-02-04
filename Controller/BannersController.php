@@ -158,17 +158,15 @@ class BannersController extends MeCmsAppController {
 
 	/**
 	 * Upload banner
-	 * @throws InternalErrorException
 	 * @uses BannerManager::getTmpPath()
 	 * @uses MeCmsAppController::upload()
 	 */
 	public function admin_upload() {
-		//Gets the target directory
-		$target = BannerManager::getTmpPath();
-		
 		//Checks if the target directory is writable
-		if(!is_writable($target))
-			throw new InternalErrorException(__d('me_cms', 'The directory %s is not readable or writable', $target));
+		if(!is_writable($target = BannerManager::getTmpPath())) {
+			$this->Session->flash(__d('me_cms', 'The directory %s is not readable or writable', $target), 'error');
+			$this->redirect('/admin');
+		}
 		
 		//Uploads the file
 		if($this->request->is('post') &&!empty($this->request->params['form']['file']))
