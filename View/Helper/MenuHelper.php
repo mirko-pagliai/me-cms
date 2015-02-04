@@ -272,6 +272,9 @@ class MenuHelper extends MeHtmlHelper {
 		
 		$menu = $class::$name($type);
 		
+		if(empty($menu))
+			return FALSE;
+		
 		//Switch the type of menu
 		switch($type) {
 			case 'ul':
