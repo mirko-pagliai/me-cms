@@ -105,10 +105,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The photos album could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->PhotosAlbum->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'title', 'slug', 'description', 'active')
-			));
+			$this->request->data = $this->PhotosAlbum->findById($id, array('id', 'title', 'slug', 'description', 'active'));
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit photos album'));
 	}
@@ -169,7 +166,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 		//If the data are not available from the cache
         if(empty($album)) {
 			$album = $this->PhotosAlbum->find('active', array(
-				'conditions'	=> array('slug' => $slug),
+				'conditions'	=> compact('slug'),
 				'contain'		=> array('Photo.id', 'Photo.filename', 'Photo.description'),
 				'fields'		=> 'title',
 				'limit'			=> 1

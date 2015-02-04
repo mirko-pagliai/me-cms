@@ -134,10 +134,7 @@ class PhotosController extends MeCmsAppController {
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		//Gets the photo
-		$photo = $this->Photo->find('first', array(
-			'conditions'	=> array('id' => $id),
-			'fields'		=> array('id', 'album_id', 'filename', 'description')
-		));
+		$photo = $this->Photo->findById($id, array('id', 'album_id', 'filename', 'description'));
 		
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Photo->save($this->request->data)) {
@@ -166,7 +163,7 @@ class PhotosController extends MeCmsAppController {
 			throw new NotFoundException(__d('me_cms', 'Invalid object'));
 		
 		$this->paginate = array(
-			'conditions'	=> array('album_id' => $albumId),
+			'conditions'	=> compact('albumId'),
 			'fields'		=> array('id', 'album_id', 'filename'),
 			'limit'			=> $this->config['photos_for_page'],
 			'order'			=> array('Photo.filename' => 'ASC')
@@ -213,10 +210,7 @@ class PhotosController extends MeCmsAppController {
 			if(!$this->Photo->exists($id))
 				throw new NotFoundException(__d('me_cms', 'Invalid object'));
 
-			$photo = $this->Photo->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('album_id', 'filename')
-			));
+			$photo = $this->Photo->findById($id, array('album_id', 'filename'));
 			
             Cache::write($cache, $photo, 'photos');
 		}

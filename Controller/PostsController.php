@@ -143,9 +143,8 @@ class PostsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The post could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->Post->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'category_id', 'user_id', 'title', 'subtitle', 'slug', 'text', 'created', 'priority', 'active')
+			$this->request->data = $this->Post->findById($id, array(
+				'id', 'category_id', 'user_id', 'title', 'subtitle', 'slug', 'text', 'created', 'priority', 'active'
 			));
 
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Edit post')), compact('categories', 'users')));
@@ -199,14 +198,13 @@ class PostsController extends MeCmsAppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
-			$this->paginate = array(
-				'conditions'	=> $conditions,
-				'contain'		=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
-				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
-				'findType'		=> 'active',
-				'limit'			=> $this->config['records_for_page'],
-				'order'			=> array('Post.created' => 'DESC')
-			);
+			$this->paginate = am(array(
+				'contain'	=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
+				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created'),
+				'findType'	=> 'active',
+				'limit'		=> $this->config['records_for_page'],
+				'order'		=> array('Post.created' => 'DESC')
+			), compact('conditions'));
 			
             Cache::write($cache, $posts = $this->paginate(), 'posts');
 			Cache::write(sprintf('%s_paging', $cache), $this->request->params['paging'], 'posts');

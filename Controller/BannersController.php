@@ -131,10 +131,7 @@ class BannersController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The banner could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->Banner->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'position_id', 'filename', 'target', 'description', 'active')
-			));
+			$this->request->data = $this->Banner->findById($id, array('id', 'position_id', 'filename', 'target', 'description', 'active'));
 
 		$this->set(array(
 			'positions'			=> $this->Banner->Position->find('list'),

@@ -104,10 +104,7 @@ class PostsCategoriesController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The posts category could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->PostsCategory->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'parent_id', 'title', 'slug', 'description')
-			));
+			$this->request->data = $this->PostsCategory->findById($id, array('id', 'parent_id', 'title', 'slug', 'description'));
 
 		$this->set(array(
 			'parents'			=> $this->PostsCategory->generateTreeList(),

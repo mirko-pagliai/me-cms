@@ -160,10 +160,7 @@ class UsersController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The user could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->User->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'group_id', 'username', 'email', 'first_name', 'last_name', 'active')
-			));
+			$this->request->data = $this->User->findById($id, array('id', 'group_id', 'username', 'email', 'first_name', 'last_name', 'active'));
 
 
 		$this->set(array(
@@ -223,10 +220,7 @@ class UsersController extends MeCmsAppController {
 		if($this->request->is('post')) {
 			if($this->Auth->login()) {
 				//Gets the user data ("active" and "banned" fields)
-				$user =	$this->User->find('first', array(
-					'conditions'	=> array('id' => $this->Auth->user('id')),
-					'fields'		=> array('active', 'banned')
-				));
+				$user =	$this->User->findById($this->Auth->user('id'), array('active', 'banned'));
 				
 				//Checks if the user is banned
 				if($user['User']['banned']) {

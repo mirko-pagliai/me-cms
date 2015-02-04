@@ -101,10 +101,7 @@ class BannersPositionsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The banners position could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->BannersPosition->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'name', 'description'))
-			);
+			$this->request->data = $this->BannersPosition->findById($id, array('id', 'name', 'description'));
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit banners position'));
 	}

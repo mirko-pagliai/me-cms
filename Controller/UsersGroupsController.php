@@ -103,10 +103,7 @@ class UsersGroupsController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The users group could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->UsersGroup->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'name', 'label', 'description')
-			));
+			$this->request->data = $this->UsersGroup->findById($id, array('id', 'name', 'label', 'description'));
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit users group'));
 	}

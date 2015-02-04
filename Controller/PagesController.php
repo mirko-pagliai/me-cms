@@ -106,10 +106,7 @@ class PagesController extends MeCmsAppController {
 				$this->Session->flash(__d('me_cms', 'The page could not be edited. Please, try again'), 'error');
 		} 
 		else
-			$this->request->data = $this->Page->find('first', array(
-				'conditions'	=> array('id' => $id),
-				'fields'		=> array('id', 'title', 'slug', 'text', 'priority', 'active', 'created')
-			));
+			$this->request->data = $this->Page->findById($id, array('id', 'title', 'slug', 'text', 'priority', 'active', 'created'));
 
 		$this->set('title_for_layout', __d('me_cms', 'Edit page'));
 	}
@@ -189,7 +186,7 @@ class PagesController extends MeCmsAppController {
 		//If the data are not available from the cache
         if(empty($page)) {
 			$page = $this->Page->find('active', array(
-				'conditions'	=> array('slug' => $slug),
+				'conditions'	=> compact('slug'),
 				'fields'		=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'limit'			=> 1
 			));
