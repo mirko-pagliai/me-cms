@@ -29,7 +29,7 @@ App::uses('Component', 'Controller');
 /**
  * It automatically handles the configuration
  */
-class ConfigComponent extends Component {
+class ConfigComponent extends Component {	
 	/**
 	 * Components
 	 * @var array
@@ -54,7 +54,7 @@ class ConfigComponent extends Component {
 	 * Loads and writes the configuration.
 	 * @uses controller
 	 * @uses _setWidgets()
-	 * @uses _turnsAsArray()
+	 * @uses _stringAsArray()
 	 * @uses MeToolsAppController::isAction()
 	 * @uses MeToolsAppController::isAdminRequest()
 	 */
@@ -69,7 +69,7 @@ class ConfigComponent extends Component {
 		
 		//Turns some values as array
 		foreach(array('MeCms.backend.topbar', 'MeCms.frontend.widgets', 'MeCms.frontend.widgets_homepage') as $key)
-			Configure::write($key, $this->_turnsAsArray(Configure::read($key)));
+			Configure::write($key, $this->_stringAsArray(Configure::read($key)));
 		
 		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
 		if($this->controller->isAction(array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
@@ -84,24 +84,6 @@ class ConfigComponent extends Component {
 		//Else, if it is not ad admin request
 		else
 			Configure::write('MeCms', am(Configure::read('MeCms.frontend'), Configure::read('MeCms.general')));
-	}
-	
-	/**
-	 * Sets the KCFinder session values
-	 * @return bool
-	 */
-	protected function _setKcfinder() {		
-		return $this->Session->write('KCFINDER', array(
-			'denyExtensionRename'	=> TRUE,
-			'denyUpdateCheck'		=> TRUE,
-			'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
-			'disabled'				=> FALSE,
-			'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
-			'jpegQuality'			=> 100,
-			'uploadDir'				=> WWW_ROOT.'files',
-			'uploadURL'				=> Router::url('/files', TRUE),
-			'types'					=> Configure::read('MeCms.kcfinder.types')
-		));
 	}
 	
 	/**
@@ -120,7 +102,7 @@ class ConfigComponent extends Component {
 	 * @param string $string String of words separated by commas (and optional spaces)
 	 * @return mixed Array of values
 	 */
-	protected function _turnsAsArray($string) {		
+	protected function _stringAsArray($string) {		
 		return is_string($string) ? explode(',', preg_replace('/\s/', NULL, trim($string))) : $string;
 	}
 
@@ -132,16 +114,16 @@ class ConfigComponent extends Component {
 	 */
 	public function beforeRender(Controller $controller) {
 		//Sets the configuration for the view
-		$controller->set('config', Configure::read('MeCms'));
+		$controller->set('config', $controller->config);
 	}
 	
 	/**
      * Called before the controller's beforeFilter method.
 	 * @param Controller $controller
      * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
+	 * @uses controller
 	 * @uses _debugForLocalhost()
 	 * @uses _setConfig()
-	 * @uses _setKcfinder()
 	 * @uses MeCmsAppController::config
 	 */
 	public function initialize(Controller $controller) {
@@ -161,10 +143,27 @@ class ConfigComponent extends Component {
 		Configure::write('Cache.disable', !Configure::read('MeCms.cache'));
 		//Sets the session timeout
 		Configure::write('Session.timeout', Configure::read('MeCms.timeout'));
-		//Sets the KCFinder session values
-		$this->_setKcfinder();
 		
 		//Sets the configuration so that the controller can read it
 		$controller->config = Configure::read('MeCms');
+	}
+	
+	/**
+	 * Sets the configuration for KCFinder.
+	 * @param array $options Options
+	 * @return bool
+	 */
+	public function kcfinder($options = array()) {		
+		return $this->Session->write('KCFINDER', am(array(
+			'denyExtensionRename'	=> TRUE,
+			'denyUpdateCheck'		=> TRUE,
+			'dirnameChangeChars'	=> array(' ' => '_', ':' => '_'),
+			'disabled'				=> FALSE,
+			'filenameChangeChars'	=> array(' ' => '_', ':' => '_'),
+			'jpegQuality'			=> 100,
+			'uploadDir'				=> WWW_ROOT.'files',
+			'uploadURL'				=> Router::url('/files', TRUE),
+			'types'					=> Configure::read('MeCms.kcfinder.types')
+		), $options));
 	}
 }
