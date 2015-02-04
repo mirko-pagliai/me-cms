@@ -75,6 +75,30 @@ class MeCmsAppController extends AppController {
 	);
 	
 	/**
+     * Checks if the latest search has been executed out of the minimum interval.
+	 * @uses config
+	 * @return bool
+	 */
+	protected function _checkLastSearch() {
+        $interval = $this->config['search_interval'];
+		
+        if(empty($interval))
+            return TRUE;
+
+        //Gets the last search timestamp from the session 
+        $last = $this->Session->read('lastSearch');
+
+        //If there was a previous search and if this was done before the minimum interval
+        if($last && ($last + $interval) > time())
+            return FALSE;
+
+        //In any other case, saves the timestamp of the current search and returns TRUE
+        $this->Session->write('lastSearch', time());
+        return TRUE;
+	}
+
+
+	/**
 	 * Loads all the plugin helpers for creating menus.
 	 * @uses helpers
 	 * @uses Plugin::getAll()

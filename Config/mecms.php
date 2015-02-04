@@ -32,6 +32,8 @@ $config = array('MeCms' => array(
 		'offline_text' => FALSE,
 		//Number of records to show per page
 		'records_for_page' => 10,
+		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
+		'search_interval' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text
