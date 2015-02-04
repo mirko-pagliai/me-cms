@@ -81,7 +81,7 @@ class BannersController extends MeCmsAppController {
 					$this->Session->flash(__d('me_cms', 'The banner could not be saved. Please, try again'), 'error');
 			}
 			
-			//Sets the filename e the full path for the temporary file
+			//Sets the filename and the full path for the temporary file
 			$tmpFile = array(
 				'filename'	=> $tmpFiles[$this->request->query['file']],
 				'path'		=> BannerManager::getTmpPath().DS.$tmpFiles[$this->request->query['file']]
