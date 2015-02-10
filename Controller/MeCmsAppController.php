@@ -85,11 +85,8 @@ class MeCmsAppController extends AppController {
         if(empty($interval))
             return TRUE;
 
-        //Gets the last search timestamp from the session 
-        $last = $this->Session->read('lastSearch');
-
         //If there was a previous search and if this was done before the minimum interval
-        if($last && ($last + $interval) > time())
+        if($this->Session->read('lastSearch') && ($this->Session->read('lastSearch') + $interval) > time())
             return FALSE;
 
         //In any other case, saves the timestamp of the current search and returns TRUE
@@ -135,7 +132,7 @@ class MeCmsAppController extends AppController {
 	 * @uses _loadMenus()
 	 * @uses isOffline()
 	 */
-	public function beforeFilter() {		
+	public function beforeFilter() {
 		if(!empty($this->Auth)) {
 			//Sets the authenticaton message error
 			$this->Auth->authError = __d('me_cms', 'You need to login first');
@@ -223,7 +220,7 @@ class MeCmsAppController extends AppController {
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
 	 */
-	protected function upload($file, $target) {		
+	protected function upload($file, $target) {	
 		//Checks if the file was successfully uploaded
 		if(isset($file['error']) && $file['error'] == UPLOAD_ERR_OK && is_uploaded_file($file['tmp_name'])) {
 			//Updated the target, adding the file name
