@@ -901,14 +901,14 @@ msgstr "Data"
 #: View/Posts/admin_add.ctp:52
 #: View/Posts/admin_edit.ctp:50
 msgid "If blank, the current date and time will be used"
-msgstr "Se vuoto, saranno usate la data e l'orario correnti"
+msgstr "Se vuoto, saranno usate data e orario correnti"
 
 #: View/Pages/admin_add.ctp:42
 #: View/Pages/admin_edit.ctp:42
 #: View/Posts/admin_add.ctp:53
 #: View/Posts/admin_edit.ctp:51
 msgid "You can delay the publication by entering a future date"
-msgstr "Puoi posticipare la pubblicazione inserendo una data futura"
+msgstr "Con una data futura la pubblicazione sarà posticipata"
 
 #: View/Pages/admin_add.ctp:47
 #: View/Pages/admin_edit.ctp:47
