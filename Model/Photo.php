@@ -50,8 +50,9 @@ class Photo extends MeCmsAppModel {
 	public $validate = array(
 		'id' => array(
 			'blankOnCreate' => array(
-				'on'	=> 'create',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'create',
+				'rule'		=> 'blank'
 			)
 		),
 		'album_id' => array(
@@ -75,8 +76,9 @@ class Photo extends MeCmsAppModel {
 				'rule'		=> 'isUnique'
 			),
 			'blankonUpdate' => array(
-				'on'	=> 'update',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'update',
+				'rule'		=> 'blank'
 			)
 		),
 		'description' => array(

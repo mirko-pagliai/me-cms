@@ -56,8 +56,9 @@ class User extends MeCmsAppModel {
 	public $validate = array(
 		'id' => array(
 			'blankOnCreate' => array(
-				'on'	=> 'create',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'create',
+				'rule'		=> 'blank'
 			)
 		),
 		'group_id' => array(
@@ -81,8 +82,9 @@ class User extends MeCmsAppModel {
 				'rule'		=> array('isValidSlug')
 			),
 			'blankonUpdate' => array(
-				'on'	=> 'update',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'update',
+				'rule'		=> 'blank'
 			)
 		),
 		'email' => array(

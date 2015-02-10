@@ -50,8 +50,9 @@ class Banner extends MeCmsAppModel {
 	public $validate = array(
 		'id' => array(
 			'blankOnCreate' => array(
-				'on'	=> 'create',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'create',
+				'rule'		=> 'blank'
 			)
 		),
 		'position_id' => array(
@@ -75,8 +76,9 @@ class Banner extends MeCmsAppModel {
 				'rule'		=> array('maxLength', 255)
 			),
 			'blankonUpdate' => array(
-				'on'	=> 'update',
-				'rule'	=> 'blank'
+				'message'	=> 'Can not be changed',
+				'on'		=> 'update',
+				'rule'		=> 'blank'
 			)
 		),
 		'target' => array(
