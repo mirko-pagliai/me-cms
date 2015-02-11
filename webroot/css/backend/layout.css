@@ -97,7 +97,7 @@ body {
 /* -------------------------------- */
 /* Content */
 #content {
-	padding: 10px 15px;
+	padding: 30px 15px;
 }
 
 /* Content, first wrapper */
@@ -113,6 +113,7 @@ body {
 #content > .form > h2 {
 	font-size: 24px;
 	display: inline-block;
+	margin: 0 0 20px;
 }
 
 /* Content, button after page title ("add new") */
