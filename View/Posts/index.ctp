@@ -26,7 +26,7 @@
 <div class="posts index">
 	<?php 
 		foreach($posts as $post)
-			echo $this->element('MeCms.view'.DS.'post', array('post' => $post, 'truncate' => TRUE));
+			echo $this->element('view'.DS.'post', array('post' => $post, 'truncate' => TRUE));
 	
 		echo $this->element('MeTools.paginator');
 	?>
