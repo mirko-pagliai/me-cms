@@ -36,7 +36,7 @@ $config = array('MeCms' => array(
 		'search_interval' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
-		//Number of characters to truncate a text
+		//Number of characters to truncate a text. `0` or `FALSE` to disable
 		'truncate_to' => 1000,
 		//Widgets. You can use the plugin notation (eg., `PluginName.widgetName`)
 		'widgets' => 'MeCms.search, MeCms.categories, MeCms.latest_posts, MeCms.random_photo, pages',

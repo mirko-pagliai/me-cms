@@ -72,7 +72,7 @@
 		
 		if(!empty($post['Post']['text'])) {
 			//If it was requested to truncate the text
-			if(!empty($truncate))
+			if($params['action'] !== 'view' && !empty($config['truncate_to']))
 				echo $this->Html->div('content-text', $truncate = $this->Text->truncate(
 					$post['Post']['text'], $config['truncate_to'], array('exact' => FALSE, 'html' => TRUE)
 				));
@@ -80,16 +80,11 @@
 				echo $this->Html->div('content-text', $post['Post']['text']);
 		}
 		
-		$content_buttons = NULL;
-
 		//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
 		if(!empty($truncate) && $truncate !== $post['Post']['text'])
-			$content_buttons .= $this->Html->button(__d('me_cms', 'Read more'),
+			echo $this->Html->button(__d('me_cms', 'Read more'),
 				array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
-				array('class' => 'readmore')
+				array('class' => 'pull-right readmore')
 			);
-
-		if(!empty($content_buttons))
-			echo $this->Html->div('content-buttons pull-right', $content_buttons);
 	?>
 </div>

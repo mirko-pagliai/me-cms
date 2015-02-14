@@ -103,13 +103,8 @@
 	}
 }
 
-/* Buttons */
-.content-buttons {
-	margin-top: 20px;
-}
-
-/* Buttons, "read more" button */
-.content-buttons .readmore {	
+/* "Read more" button */
+.readmore {	
     background: #ddd;
     border-color: #bbb;
     border-width: 0 0 3px;
@@ -117,6 +112,7 @@
     font-size: 14px;
 	font-weight: bold;
 	line-height: 1;
+	margin-top: 20px;
     padding: 10px;
 	/* Transition for "color" propriety */
 	transition: color .5s ease-in-out;
@@ -124,15 +120,15 @@
 	-webkit-transition: color .5s ease-in-out;
 }
 
-/* Buttons, "read more" button, icon */
-.content-buttons .readmore:after {
+/* "Read more" button, icon */
+.readmore:after {
 	content: "\f178";
 	font-family: FontAwesome;
 	font-size: 12px;
 	margin-left: 6px;
 }
 
-/* Buttons, "read more" button on hover */
-.content-buttons .readmore:hover {
+/* "Read more" button on hover */
+.readmore:hover {
 	color: #444;
 }
