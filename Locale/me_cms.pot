@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-02-10 13:15+0100\n"
+"POT-Creation-Date: 2015-02-14 19:47+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -43,7 +43,7 @@ msgstr ""
 #: Controller/PhotosController.php:113;134;163;209
 #: Controller/PostsCategoriesController.php:72;96
 #: Controller/PostsController.php:119;139;325
-#: Controller/UsersController.php:115;145;199
+#: Controller/UsersController.php:92;122;176
 #: Controller/UsersGroupsController.php:69;95
 msgid "Invalid object"
 msgstr ""
@@ -73,7 +73,7 @@ msgstr ""
 #: View/Banners/admin_index.ctp:28
 #: View/BannersPositions/admin_index.ctp:35
 #: View/Helper/MenuHelper.php:74;76
-#: View/Systems/admin_checkup.ctp:71
+#: View/Systems/admin_checkup.ctp:79
 msgid "Banners"
 msgstr ""
 
@@ -292,7 +292,7 @@ msgstr ""
 #: View/Photos/admin_index.ctp:27
 #: View/PhotosAlbums/admin_index.ctp:35
 #: View/PhotosAlbums/index.ctp:27
-#: View/Systems/admin_checkup.ctp:81
+#: View/Systems/admin_checkup.ctp:89
 msgid "Photos"
 msgstr ""
 
@@ -412,6 +412,20 @@ msgstr ""
 msgid "Search posts"
 msgstr ""
 
+#: Controller/ProfilesController.php:57
+msgid "The password has been edited"
+msgstr ""
+
+#: Controller/ProfilesController.php:61
+msgid "The password has not been edited. Please, try again"
+msgstr ""
+
+#: Controller/ProfilesController.php:64
+#: View/Elements/backend/topbar.ctp:62
+#: View/Profiles/admin_change_password.ctp:27;50
+msgid "Change password"
+msgstr ""
+
 #: Controller/SystemsController.php:59
 msgid "%s is not present into %s"
 msgstr ""
@@ -434,132 +448,118 @@ msgstr ""
 msgid "Changelogs"
 msgstr ""
 
-#: Controller/SystemsController.php:173
+#: Controller/SystemsController.php:177
 #: View/Helper/MenuHelper.php:239
 #: View/Systems/admin_checkup.ctp:28
 msgid "System checkup"
 msgstr ""
 
-#: Controller/SystemsController.php:184
+#: Controller/SystemsController.php:188
 msgid "The cache has been cleared"
 msgstr ""
 
-#: Controller/SystemsController.php:186
+#: Controller/SystemsController.php:190
 msgid "The cache is not writable"
 msgstr ""
 
-#: Controller/SystemsController.php:199
+#: Controller/SystemsController.php:203
 msgid "Thumbnails have been deleted"
 msgstr ""
 
-#: Controller/SystemsController.php:201
+#: Controller/SystemsController.php:205
 msgid "Thumbnails have not been deleted"
 msgstr ""
 
-#: Controller/SystemsController.php:221
+#: Controller/SystemsController.php:225
 #: View/Helper/MenuHelper.php:242
 #: View/Systems/admin_log_viewer.ctp:27
 msgid "Log viewer"
 msgstr ""
 
-#: Controller/UsersController.php:75
+#: Controller/UsersController.php:71
 msgid "The user has been created"
 msgstr ""
 
-#: Controller/UsersController.php:79
+#: Controller/UsersController.php:75
 msgid "The user could not be created. Please, try again"
 msgstr ""
 
-#: Controller/UsersController.php:84
+#: Controller/UsersController.php:80
 #: View/Helper/MenuHelper.php:200
 #: View/Users/admin_add.ctp:27;70
 msgid "Add user"
 msgstr ""
 
-#: Controller/UsersController.php:97
-msgid "The password has been edited"
-msgstr ""
-
-#: Controller/UsersController.php:101
-msgid "The password has not been edited. Please, try again"
-msgstr ""
-
-#: Controller/UsersController.php:104
-#: View/Elements/backend/topbar.ctp:62
-#: View/Users/admin_change_password.ctp:27;50
-msgid "Change password"
-msgstr ""
-
-#: Controller/UsersController.php:121
+#: Controller/UsersController.php:98
 msgid "You cannot delete the admin founder"
 msgstr ""
 
-#: Controller/UsersController.php:124
+#: Controller/UsersController.php:101
 msgid "Only the founder admin can delete other admin users"
 msgstr ""
 
-#: Controller/UsersController.php:127
+#: Controller/UsersController.php:104
 msgid "Before you delete this user, you have to delete his posts or assign them to another user"
 msgstr ""
 
-#: Controller/UsersController.php:130
+#: Controller/UsersController.php:107
 msgid "The user has been deleted"
 msgstr ""
 
-#: Controller/UsersController.php:132
+#: Controller/UsersController.php:109
 msgid "The user was not deleted"
 msgstr ""
 
-#: Controller/UsersController.php:149
+#: Controller/UsersController.php:126
 msgid "Only the founder admin can edit other admin users"
 msgstr ""
 
-#: Controller/UsersController.php:159
+#: Controller/UsersController.php:136
 msgid "The user has been edited"
 msgstr ""
 
-#: Controller/UsersController.php:163
+#: Controller/UsersController.php:140
 msgid "The user could not be edited. Please, try again"
 msgstr ""
 
-#: Controller/UsersController.php:171
+#: Controller/UsersController.php:148
 #: View/Users/admin_edit.ctp:27;66
 msgid "Edit user"
 msgstr ""
 
-#: Controller/UsersController.php:188
+#: Controller/UsersController.php:165
 #: View/Helper/MenuHelper.php:211;213
 #: View/Users/admin_index.ctp:28
 #: View/UsersGroups/admin_index.ctp:35
 msgid "Users"
 msgstr ""
 
-#: Controller/UsersController.php:207
+#: Controller/UsersController.php:184
 msgid "View user"
 msgstr ""
 
-#: Controller/UsersController.php:219
+#: Controller/UsersController.php:196
 msgid "You are already logged in"
 msgstr ""
 
-#: Controller/UsersController.php:230
+#: Controller/UsersController.php:207
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: Controller/UsersController.php:235
+#: Controller/UsersController.php:212
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: Controller/UsersController.php:243
+#: Controller/UsersController.php:220
 msgid "Invalid username or password"
 msgstr ""
 
-#: Controller/UsersController.php:246
+#: Controller/UsersController.php:223
 #: View/Users/login.ctp:45
 msgid "Login"
 msgstr ""
 
-#: Controller/UsersController.php:256
+#: Controller/UsersController.php:233
 msgid "You are successfully logged out"
 msgstr ""
 
@@ -802,8 +802,8 @@ msgstr ""
 msgid "Posted on %s"
 msgstr ""
 
-#: View/Elements/view/page.ctp:74
-#: View/Elements/view/post.ctp:87
+#: View/Elements/view/page.ctp:72
+#: View/Elements/view/post.ctp:85
 msgid "Read more"
 msgstr ""
 
@@ -1113,6 +1113,35 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
+#: View/Profiles/admin_change_password.ctp:34
+msgid "Old password"
+msgstr ""
+
+#: View/Profiles/admin_change_password.ctp:35
+msgid "Enter your old password"
+msgstr ""
+
+#: View/Profiles/admin_change_password.ctp:40
+#: View/Users/admin_add.ctp:54
+#: View/Users/admin_edit.ctp:49
+#: View/Users/login.ctp:41
+msgid "Password"
+msgstr ""
+
+#: View/Profiles/admin_change_password.ctp:41
+msgid "Enter your new password"
+msgstr ""
+
+#: View/Profiles/admin_change_password.ctp:45
+#: View/Users/admin_add.ctp:58
+#: View/Users/admin_edit.ctp:54
+msgid "Repeat password"
+msgstr ""
+
+#: View/Profiles/admin_change_password.ctp:46
+msgid "Repeat your new password"
+msgstr ""
+
 #: View/Systems/admin_browser.ctp:31
 msgid "Type"
 msgstr ""
@@ -1122,7 +1151,7 @@ msgid "Cache"
 msgstr ""
 
 #: View/Systems/admin_cache.ctp:33
-#: View/Systems/admin_checkup.ctp:101
+#: View/Systems/admin_checkup.ctp:109
 msgid "The cache is disabled or debugging is active"
 msgstr ""
 
@@ -1158,7 +1187,7 @@ msgstr ""
 msgid "Changelog"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:30;31
+#: View/Systems/admin_checkup.ctp:30;31;46;62
 msgid "%s version: %s"
 msgstr ""
 
@@ -1170,107 +1199,111 @@ msgstr ""
 msgid "%s plugin version: %s"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:45;50
+#: View/Systems/admin_checkup.ctp:48;55
 msgid "The %s module is enabled"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:47;52
+#: View/Systems/admin_checkup.ctp:50;57
 msgid "The %s module is not enabled"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:56
+#: View/Systems/admin_checkup.ctp:52;59
+msgid "The %s module cannot be checked"
+msgstr ""
+
+#: View/Systems/admin_checkup.ctp:64
 msgid "The %s version is at least %s"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:58
+#: View/Systems/admin_checkup.ctp:66
 msgid "The %s version is less than %s"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:61
+#: View/Systems/admin_checkup.ctp:69
 msgid "The %s extension is enabled"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:63
+#: View/Systems/admin_checkup.ctp:71
 msgid "The %s extension is not enabled"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:67
+#: View/Systems/admin_checkup.ctp:75
 msgid "%s is available"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:69
+#: View/Systems/admin_checkup.ctp:77
 msgid "%s is not available"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:73
+#: View/Systems/admin_checkup.ctp:81
 msgid "The webroot banners directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:75
+#: View/Systems/admin_checkup.ctp:83
 msgid "The webroot banners directory is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:77
+#: View/Systems/admin_checkup.ctp:85
 msgid "The temporary banners directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:79
+#: View/Systems/admin_checkup.ctp:87
 msgid "The temporary banners directory is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:83
+#: View/Systems/admin_checkup.ctp:91
 msgid "The webroot photos directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:85
+#: View/Systems/admin_checkup.ctp:93
 msgid "The webroot photos directory is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:87
+#: View/Systems/admin_checkup.ctp:95
 msgid "The temporary photos directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:89
+#: View/Systems/admin_checkup.ctp:97
 msgid "The temporary photos directory is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:92
+#: View/Systems/admin_checkup.ctp:100
 msgid "Temporary directories"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:94
+#: View/Systems/admin_checkup.ctp:102
 msgid "The temporary directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:96
+#: View/Systems/admin_checkup.ctp:104
 msgid "The temporary directory is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:99
+#: View/Systems/admin_checkup.ctp:107
 msgid "The cache is enabled"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:104
+#: View/Systems/admin_checkup.ctp:112
 msgid "The cache is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:106
+#: View/Systems/admin_checkup.ctp:114
 msgid "The cache is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:109
+#: View/Systems/admin_checkup.ctp:117
 msgid "The logs directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:111
+#: View/Systems/admin_checkup.ctp:119
 msgid "The logs directory is not readable or writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:114
+#: View/Systems/admin_checkup.ctp:122
 msgid "The thumbnail directory is readable and writable"
 msgstr ""
 
-#: View/Systems/admin_checkup.ctp:116
+#: View/Systems/admin_checkup.ctp:124
 msgid "The thumbnail directory is not readable or writable"
 msgstr ""
 
@@ -1311,19 +1344,6 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: View/Users/admin_add.ctp:54
-#: View/Users/admin_change_password.ctp:40
-#: View/Users/admin_edit.ctp:49
-#: View/Users/login.ctp:41
-msgid "Password"
-msgstr ""
-
-#: View/Users/admin_add.ctp:58
-#: View/Users/admin_change_password.ctp:45
-#: View/Users/admin_edit.ctp:54
-msgid "Repeat password"
-msgstr ""
-
 #: View/Users/admin_add.ctp:62
 #: View/Users/admin_edit.ctp:58
 msgid "First name"
@@ -1332,22 +1352,6 @@ msgstr ""
 #: View/Users/admin_add.ctp:66
 #: View/Users/admin_edit.ctp:62
 msgid "Last name"
-msgstr ""
-
-#: View/Users/admin_change_password.ctp:34
-msgid "Old password"
-msgstr ""
-
-#: View/Users/admin_change_password.ctp:35
-msgid "Enter your old password"
-msgstr ""
-
-#: View/Users/admin_change_password.ctp:41
-msgid "Enter your new password"
-msgstr ""
-
-#: View/Users/admin_change_password.ctp:46
-msgid "Repeat your new password"
 msgstr ""
 
 #: View/Users/admin_edit.ctp:50
