@@ -41,6 +41,7 @@
 		$errorOptions = array('icon' => 'times');
 
 		echo $this->Html->h4('Apache');
+		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '%s version: %s', $this->Html->strong('Apache'), $apacheVersion));
 		if($rewrite)
 			echo $this->Html->para($successClasses, __d('me_cms', 'The %s module is enabled', $this->Html->strong('Rewrite')), $successOptions);
 		else
@@ -52,7 +53,8 @@
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The %s module is not enabled', $this->Html->strong('Expires')), $errorOptions);
 		
 		echo $this->Html->h4('PHP');
-		if($phpVersion)
+		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '%s version: %s', $this->Html->strong('PHP'), $phpVersion));
+		if($phpCheckVersion)
 			echo $this->Html->para($successClasses, __d('me_cms', 'The %s version is at least %s', $this->Html->strong('PHP'), $this->Html->strong($phpRequired)), $successOptions);
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The %s version is less than %s', $this->Html->strong('PHP'), $this->Html->strong($phpRequired)), $errorOptions);

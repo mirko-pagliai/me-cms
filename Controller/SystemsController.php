@@ -128,12 +128,14 @@ class SystemsController extends MeCmsAppController {
 	/**
 	 * System checkup.
 	 * @uses Apache::checkMod()
+	 * @uses Apache::getVersion()
 	 * @uses BannerManager::getFolder()
 	 * @uses BannerManager::getTmpPath()
 	 * @uses PhotoManager::getFolder()
 	 * @uses PhotoManager::getTmpPath()
 	 * @uses Php::checkExt()
 	 * @uses Php::checkVersion()
+	 * @uses Php::getVersion()
 	 * @uses Plugin::getVersion()
 	 * @uses Plugin::getVersions()
 	 * @uses System::checkCache()
@@ -150,6 +152,7 @@ class SystemsController extends MeCmsAppController {
 		
 		//Sets results
 		$this->set(array(
+			'apacheVersion'		=> Apache::getVersion(),
 			'bannersWWW'		=> System::dirIsWritable(BannerManager::getFolder()),
 			'bannersTmp'		=> System::dirIsWritable(BannerManager::getTmpPath()),
 			'cache'				=> System::checkCache(),
@@ -162,7 +165,8 @@ class SystemsController extends MeCmsAppController {
 			'photosWWW'			=> System::dirIsWritable(PhotoManager::getFolder()),
 			'photosTmp'			=> System::dirIsWritable(PhotoManager::getTmpPath()),
 			'phpRequired'		=> $phpRequired,
-			'phpVersion'		=> Php::checkVersion($phpRequired),
+			'phpVersion'		=> Php::getVersion(),
+			'phpCheckVersion'	=> Php::checkVersion($phpRequired),
 			'plugins'			=> Plugin::getVersions('MeCms'),
 			'rewrite'			=> Apache::checkMod('mod_rewrite'),
 			'tmp'				=> System::checkTmp(),
