@@ -305,7 +305,7 @@ class PostsController extends MeCmsAppController {
 	
 	/**
 	 * View post
-	 * @param string $slug Post slug
+	 * @param string $slug Slug
 	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
