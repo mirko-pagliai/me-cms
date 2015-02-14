@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-UsersGroup.html#29-95" title="Go to source code">UsersGroup.php</a>
+			<b>Located at</b> <a href="source-class-UsersGroup.html#29-103" title="Go to source code">UsersGroup.php</a>
 		<br>
 	</div>
 
@@ -190,7 +190,8 @@ AppModel
 			<a href="class-MeCmsAppModel.html#__findActive">_findActive()</a>, 
 			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>, 
 			<a href="class-MeCmsAppModel.html#_beforeSave">beforeSave()</a>, 
-			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>
+			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>, 
+			<a href="class-MeCmsAppModel.html#_isValidSlug">isValidSlug()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -264,7 +265,7 @@ AppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-UsersGroup.html#45-82" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-UsersGroup.html#45-90" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -280,9 +281,11 @@ AppModel
 				<a href="#$validate" class="anchor">#</a>
 				<code><span class="php-keyword1">array</span>(
     <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-comment">//Blank on create</span>
-        <span class="php-quote">'on'</span>    =&gt; <span class="php-quote">'create'</span>,
-        <span class="php-quote">'rule'</span>  =&gt; <span class="php-quote">'blank'</span>
+        <span class="php-quote">'blankOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'create'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
+        )
     ),
     <span class="php-quote">'name'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -291,8 +294,14 @@ AppModel
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>)
         ),
         <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
+        ),
+        <span class="php-quote">'blankonUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'update'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
         )
     ),
     <span class="php-quote">'label'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -322,7 +331,7 @@ AppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-UsersGroup.html#84-94" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-UsersGroup.html#92-102" title="Go to source code"><var>$hasMany</var></a>
 
 			<div class="description short">
 				<p>hasMany associations</p>

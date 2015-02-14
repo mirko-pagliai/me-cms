@@ -176,7 +176,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-PostsController.html#29-340" title="Go to source code">PostsController.php</a>
+			<b>Located at</b> <a href="source-class-PostsController.html#29-360" title="Go to source code">PostsController.php</a>
 		<br>
 	</div>
 
@@ -220,14 +220,53 @@ AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeAuthComponenet::isManager()<br>
-						MeAuthComponenet::user()<br>
+						<code><a href="class-MeAuthComponent.html#_isManager">MeAuthComponent::isManager()</a></code><br>
+						<code><a href="class-MeAuthComponent.html#$user">MeAuthComponent::<var>$user</var></a></code><br>
 						MeToolsAppController::isAction()<br>
 						<code><a href="class-MeCmsAppModel.html#_isOwnedBy">MeCmsAppModel::isOwnedBy()</a></code><br>
 				</div>
 
 				<h4>Overrides</h4>
 				<div class="list"><code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeRender" id="_beforeRender">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeRender">#</a>
+		<code><a href="source-class-PostsController.html#63-75" title="Go to source code">beforeRender</a>( )</code>
+
+		<div class="description short">
+			<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every request.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every request.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-ConfigComponent.html#_kcfinder">ConfigComponent::kcfinder()</a></code><br>
+						MeToolsAppController::isAction()<br>
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_beforeRender">MeCmsAppController::beforeRender()</a></code></div>
 
 		</div>
 		</div></td>
@@ -244,7 +283,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-PostsController.html#63-95" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-PostsController.html#77-109" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			<p>Add post</p>
@@ -278,7 +317,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-PostsController.html#97-115" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#111-129" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Delete post</p>
@@ -317,7 +356,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-PostsController.html#117-152" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#131-165" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edit post</p>
@@ -360,7 +399,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-PostsController.html#154-168" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-PostsController.html#167-182" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			<p>List posts</p>
@@ -390,7 +429,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-PostsController.html#170-223" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#184-237" title="Go to source code">index</a>( <span>string <var>$category</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>List posts</p>
@@ -425,7 +464,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_rss">#</a>
-		<code><a href="source-class-PostsController.html#225-249" title="Go to source code">rss</a>( )</code>
+		<code><a href="source-class-PostsController.html#239-263" title="Go to source code">rss</a>( )</code>
 
 		<div class="description short">
 			<p>Lists posts as RSS.</p>
@@ -463,19 +502,23 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-PostsController.html#251-284" title="Go to source code">search</a>( )</code>
+		<code><a href="source-class-PostsController.html#265-304" title="Go to source code">search</a>( )</code>
 
 		<div class="description short">
-			<p>Search post</p>
+			<p>Search posts.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Search post</p>
+			<p>Search posts.</p>
 
 
 
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#__checkLastSearch">MeCmsAppController::_checkLastSearch()</a></code><br>
+				</div>
 
 
 		</div>
@@ -493,7 +536,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-PostsController.html#286-313" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PostsController.html#306-333" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View post</p>
@@ -532,7 +575,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_widget_latest">#</a>
-		<code><a href="source-class-PostsController.html#315-339" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">10</span></span> )</code>
+		<code><a href="source-class-PostsController.html#335-359" title="Go to source code">widget_latest</a>( <span>integer <var>$limit</var> = <span class="php-num">10</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets the latest posts for widget.
@@ -575,9 +618,10 @@ This method works only with <code>requestAction()</code>.</p>
 	<caption>Methods inherited from <a href="class-MeCmsAppController.html#methods">MeCmsAppController</a></caption>
 	<tr>
 		<td><code>
+			<a href="class-MeCmsAppController.html#__checkLastSearch">_checkLastSearch()</a>, 
 			<a href="class-MeCmsAppController.html#__loadMenus">_loadMenus()</a>, 
+			<a href="class-MeCmsAppController.html#_afterFilter">afterFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
-			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCmsAppController.html#_isOffline">isOffline()</a>, 
 			<a href="class-MeCmsAppController.html#_upload">upload()</a>
 		</code></td>

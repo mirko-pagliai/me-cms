@@ -162,7 +162,7 @@ Component
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-ConfigComponent.html#29-170" title="Go to source code">Component/ConfigComponent.php</a>
+			<b>Located at</b> <a href="source-class-ConfigComponent.html#29-186" title="Go to source code">Component/ConfigComponent.php</a>
 		<br>
 	</div>
 
@@ -237,7 +237,7 @@ Component
 				<div class="list">
 						<code><a href="class-ConfigComponent.html#$controller">ConfigComponent::<var>$controller</var></a></code><br>
 						_setWidgets()<br>
-						<code><a href="class-ConfigComponent.html#__turnsAsArray">ConfigComponent::_turnsAsArray()</a></code><br>
+						<code><a href="class-ConfigComponent.html#__stringAsArray">ConfigComponent::_stringAsArray()</a></code><br>
 						MeToolsAppController::isAction()<br>
 						MeToolsAppController::isAdminRequest()<br>
 				</div>
@@ -250,45 +250,7 @@ Component
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="_setKcfinder" id="__setKcfinder">
-
-		<td class="attributes"><code>
-			 protected 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__setKcfinder">#</a>
-		<code><a href="source-class-ConfigComponent.html#89-105" title="Go to source code">_setKcfinder</a>( )</code>
-
-		<div class="description short">
-			<p>Sets the KCFinder session values</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Sets the KCFinder session values</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean
-				</div>
-
-
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="_turnsAsArray" id="__turnsAsArray">
+	<tr data-order="_stringAsArray" id="__stringAsArray">
 
 		<td class="attributes"><code>
 			 protected 
@@ -299,8 +261,8 @@ Component
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#__turnsAsArray">#</a>
-		<code><a href="source-class-ConfigComponent.html#107-125" title="Go to source code">_turnsAsArray</a>( <span>string <var>$string</var></span> )</code>
+		<a class="anchor" href="#__stringAsArray">#</a>
+		<code><a href="source-class-ConfigComponent.html#89-107" title="Go to source code">_stringAsArray</a>( <span>string <var>$string</var></span> )</code>
 
 		<div class="description short">
 			<p>Turns a string of words separated by commas (and optional spaces) into an array.</p>
@@ -355,7 +317,7 @@ Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-ConfigComponent.html#127-136" title="Go to source code">beforeRender</a>( <span>Controller <var>$controller</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#109-118" title="Go to source code">beforeRender</a>( <span>Controller <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Is called after the controller executes the requested action's logic,
@@ -396,7 +358,7 @@ but before the controller's renders views and layout.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-ConfigComponent.html#138-169" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#120-149" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller's beforeFilter method.</p>
@@ -420,10 +382,59 @@ but before the controller's renders views and layout.</p>
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
+						<code><a href="class-ConfigComponent.html#$controller">ConfigComponent::<var>$controller</var></a></code><br>
 						<code><a href="class-ConfigComponent.html#__debugForLocalhost">ConfigComponent::_debugForLocalhost()</a></code><br>
 						<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
-						<code><a href="class-ConfigComponent.html#__setKcfinder">ConfigComponent::_setKcfinder()</a></code><br>
 						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="kcfinder" id="_kcfinder">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_kcfinder">#</a>
+		<code><a href="source-class-ConfigComponent.html#151-185" title="Go to source code">kcfinder</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Sets the configuration for KCFinder.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the configuration for KCFinder.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$options</var></dt>
+					<dd>Options</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeAuthComponent.html#_isAdmin">MeAuthComponent::isAdmin()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-PagesController.html#_beforeRender">PagesController::beforeRender()</a></code><br>
+						<code><a href="class-PostsController.html#_beforeRender">PostsController::beforeRender()</a></code><br>
+						<code><a href="class-SystemsController.html#_admin_browser">SystemsController::admin_browser()</a></code><br>
 				</div>
 
 
@@ -489,6 +500,7 @@ but before the controller's renders views and layout.</p>
 					<h4>Used by</h4>
 					<div class="list">
 							<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
+							<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
 					</div>
 			</div>
 		</td>

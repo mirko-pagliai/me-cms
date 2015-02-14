@@ -128,7 +128,8 @@
 	<div class="description">
 	<p>Menu Helper.</p>
 
-<p>It can be used to generate a menu for an action. It supports these types of menu: <code>ul</code>, <code>nav</code> and <code>dropdown</code>.</p>
+<p>It can be used to generate a menu for an action.
+It supports these types of menu: <code>ul</code>, <code>collapse</code> and <code>dropdown</code>.</p>
 
 <p>To generate a menu, you have to use the <code>get</code> method. For example:</p>
 
@@ -168,7 +169,7 @@ MeHtmlHelper
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-MenuHelper.html#29-241" title="Go to source code">Helper/MenuHelper.php</a>
+			<b>Located at</b> <a href="source-class-MenuHelper.html#29-290" title="Go to source code">Helper/MenuHelper.php</a>
 		<br>
 	</div>
 
@@ -188,7 +189,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__banners">#</a>
-		<code><a href="source-class-MenuHelper.html#49-79" title="Go to source code">_banners</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#47-85" title="Go to source code">_banners</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to generate the menu for "banners" actions.</p>
@@ -201,7 +202,7 @@ MeHtmlHelper
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -234,7 +235,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__pages">#</a>
-		<code><a href="source-class-MenuHelper.html#81-104" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#87-118" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to generate the menu for "pages" actions.</p>
@@ -247,7 +248,7 @@ MeHtmlHelper
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -279,7 +280,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__photos">#</a>
-		<code><a href="source-class-MenuHelper.html#106-125" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#120-147" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to generate the menu for "photos" actions.</p>
@@ -292,7 +293,7 @@ MeHtmlHelper
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -323,7 +324,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__posts">#</a>
-		<code><a href="source-class-MenuHelper.html#127-152" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#149-182" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to generate the menu for "posts" actions.</p>
@@ -336,7 +337,7 @@ MeHtmlHelper
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -368,7 +369,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__users">#</a>
-		<code><a href="source-class-MenuHelper.html#154-184" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#184-222" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to generate the menu for "users" actions.</p>
@@ -381,7 +382,7 @@ MeHtmlHelper
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -414,7 +415,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__systems">#</a>
-		<code><a href="source-class-MenuHelper.html#186-211" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MenuHelper.html#224-257" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to generate the menu for "systems" actions.</p>
@@ -427,7 +428,7 @@ MeHtmlHelper
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -459,7 +460,7 @@ MeHtmlHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get">#</a>
-		<code><a href="source-class-MenuHelper.html#213-240" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MenuHelper.html#259-289" title="Go to source code">get</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Generates and returns a menu for an action.</p>
@@ -474,12 +475,12 @@ MeHtmlHelper
 					<dt><var>$name</var></dt>
 					<dd>Name of the action for which to generate the menu</dd>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>nav</code> or <code>dropdown</code>)</dd>
+					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					mixed<br>Menu
+					mixed<br>Html
 				</div>
 
 
@@ -510,7 +511,7 @@ MeHtmlHelper
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MenuHelper.html#40-47" title="Go to source code"><var>$helpers</var></a>
+				<a href="source-class-MenuHelper.html#41-45" title="Go to source code"><var>$helpers</var></a>
 
 			<div class="description short">
 				<p>Helpers</p>
@@ -524,10 +525,7 @@ MeHtmlHelper
 		<td class="value">
 			<div>
 				<a href="#$helpers" class="anchor">#</a>
-				<code><span class="php-keyword1">array</span>(
-    <span class="php-quote">'Auth'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Auth'</span>),
-    <span class="php-quote">'Dropdown'</span>  =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Dropdown'</span>)
-)</code>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'MeCms.Auth'</span>, <span class="php-quote">'Dropdown'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Dropdown'</span>))</code>
 			</div>
 		</td>
 	</tr>

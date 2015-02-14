@@ -176,7 +176,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-PagesController.html#30-229" title="Go to source code">PagesController.php</a>
+			<b>Located at</b> <a href="source-class-PagesController.html#30-241" title="Go to source code">PagesController.php</a>
 		<br>
 	</div>
 
@@ -220,13 +220,52 @@ AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeAuthComponenet::isAdmin()<br>
-						MeAuthComponenet::isManager()<br>
+						<code><a href="class-MeAuthComponent.html#_isAdmin">MeAuthComponent::isAdmin()</a></code><br>
+						<code><a href="class-MeAuthComponent.html#_isManager">MeAuthComponent::isManager()</a></code><br>
 						MeToolsAppController::isAction()<br>
 				</div>
 
 				<h4>Overrides</h4>
 				<div class="list"><code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeRender" id="_beforeRender">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeRender">#</a>
+		<code><a href="source-class-PagesController.html#54-66" title="Go to source code">beforeRender</a>( )</code>
+
+		<div class="description short">
+			<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every request.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every request.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-ConfigComponent.html#_kcfinder">ConfigComponent::kcfinder()</a></code><br>
+						MeToolsAppController::isAction()<br>
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_beforeRender">MeCmsAppController::beforeRender()</a></code></div>
 
 		</div>
 		</div></td>
@@ -243,7 +282,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-PagesController.html#54-69" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-PagesController.html#68-83" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			<p>Add page</p>
@@ -273,7 +312,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-PagesController.html#71-89" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PagesController.html#85-103" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Delete page</p>
@@ -312,7 +351,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-PagesController.html#91-115" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PagesController.html#105-126" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edit page</p>
@@ -351,7 +390,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-PagesController.html#117-130" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-PagesController.html#128-142" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			<p>List pages</p>
@@ -381,7 +420,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index_statics">#</a>
-		<code><a href="source-class-PagesController.html#132-143" title="Go to source code">admin_index_statics</a>( )</code>
+		<code><a href="source-class-PagesController.html#144-155" title="Go to source code">admin_index_statics</a>( )</code>
 
 		<div class="description short">
 			<p>List static pages.</p>
@@ -417,7 +456,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-PagesController.html#145-160" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-PagesController.html#157-172" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			<p>List pages</p>
@@ -447,7 +486,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-PagesController.html#162-203" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PagesController.html#174-215" title="Go to source code">view</a>( <span>string <var>$slug</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View page.</p>
@@ -495,7 +534,7 @@ Otherwise, it looks for the page in the database, using the slug.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_widget_list">#</a>
-		<code><a href="source-class-PagesController.html#205-228" title="Go to source code">widget_list</a>( )</code>
+		<code><a href="source-class-PagesController.html#217-240" title="Go to source code">widget_list</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the pages list for widget.
@@ -533,9 +572,10 @@ This method works only with <code>requestAction()</code>.</p>
 	<caption>Methods inherited from <a href="class-MeCmsAppController.html#methods">MeCmsAppController</a></caption>
 	<tr>
 		<td><code>
+			<a href="class-MeCmsAppController.html#__checkLastSearch">_checkLastSearch()</a>, 
 			<a href="class-MeCmsAppController.html#__loadMenus">_loadMenus()</a>, 
+			<a href="class-MeCmsAppController.html#_afterFilter">afterFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
-			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCmsAppController.html#_isOffline">isOffline()</a>, 
 			<a href="class-MeCmsAppController.html#_upload">upload()</a>
 		</code></td>

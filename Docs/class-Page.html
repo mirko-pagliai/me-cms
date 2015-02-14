@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-Page.html#30-126" title="Go to source code">Page.php</a>
+			<b>Located at</b> <a href="source-class-Page.html#30-128" title="Go to source code">Page.php</a>
 		<br>
 	</div>
 
@@ -196,7 +196,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterDelete">#</a>
-		<code><a href="source-class-Page.html#111-116" title="Go to source code">afterDelete</a>( )</code>
+		<code><a href="source-class-Page.html#113-118" title="Go to source code">afterDelete</a>( )</code>
 
 		<div class="description short">
 			<p>Called after every deletion operation.</p>
@@ -226,7 +226,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-Page.html#118-125" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Page.html#120-127" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called after each successful save operation.</p>
@@ -260,7 +260,8 @@ AppModel
 			<a href="class-MeCmsAppModel.html#__findActive">_findActive()</a>, 
 			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>, 
 			<a href="class-MeCmsAppModel.html#_beforeSave">beforeSave()</a>, 
-			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>
+			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>, 
+			<a href="class-MeCmsAppModel.html#_isValidSlug">isValidSlug()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -334,7 +335,7 @@ AppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Page.html#46-109" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-Page.html#46-111" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -350,9 +351,11 @@ AppModel
 				<a href="#$validate" class="anchor">#</a>
 				<code><span class="php-keyword1">array</span>(
     <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-comment">//Blank on create</span>
-        <span class="php-quote">'on'</span>    =&gt; <span class="php-quote">'create'</span>,
-        <span class="php-quote">'rule'</span>  =&gt; <span class="php-quote">'blank'</span>
+        <span class="php-quote">'blankOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'create'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
+        )
     ),
     <span class="php-quote">'title'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -371,15 +374,15 @@ AppModel
         <span class="php-quote">'rule'</span>          =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">150</span>)
     ),
     <span class="php-quote">'slug'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-quote">'slug'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Allowed chars: lowercase letters, numbers, dash'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'custom'</span>, <span class="php-quote">'/^[a-z0-9\-]+$/'</span>)
-        ),
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be between %d and %d chars'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>)
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">6</span>, <span class="php-num">100</span>)
+        ),
+        <span class="php-quote">'isValidSlug'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Allowed chars: lowercase letters, numbers, dash'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'isValidSlug'</span>)
         ),
         <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,

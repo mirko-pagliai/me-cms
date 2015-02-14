@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-Photo.html#30-167" title="Go to source code">Photo.php</a>
+			<b>Located at</b> <a href="source-class-Photo.html#30-175" title="Go to source code">Photo.php</a>
 		<br>
 	</div>
 
@@ -196,7 +196,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterDelete">#</a>
-		<code><a href="source-class-Photo.html#95-100" title="Go to source code">afterDelete</a>( )</code>
+		<code><a href="source-class-Photo.html#103-108" title="Go to source code">afterDelete</a>( )</code>
 
 		<div class="description short">
 			<p>Called after every deletion operation.</p>
@@ -226,7 +226,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterFind">#</a>
-		<code><a href="source-class-Photo.html#102-119" title="Go to source code">afterFind</a>( <span>mixed <var>$results</var></span>, <span>boolean <var>$primary</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Photo.html#110-127" title="Go to source code">afterFind</a>( <span>mixed <var>$results</var></span>, <span>boolean <var>$primary</var> = <span class="php-keyword1">FALSE</span></span> )</code>
 
 		<div class="description short">
 			<p>Called after each find operation. Can be used to modify any results returned by find().</p>
@@ -271,7 +271,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-Photo.html#121-133" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Photo.html#129-141" title="Go to source code">afterSave</a>( <span>boolean <var>$created</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called after each successful save operation.</p>
@@ -312,7 +312,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeDelete">#</a>
-		<code><a href="source-class-Photo.html#135-150" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+		<code><a href="source-class-Photo.html#143-158" title="Go to source code">beforeDelete</a>( <span>boolean <var>$cascade</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			<p>Called before every deletion operation.</p>
@@ -355,7 +355,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-Photo.html#152-166" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Photo.html#160-174" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called before each save operation, after validation. Return a non-true result to halt the save.</p>
@@ -396,7 +396,8 @@ AppModel
 		<td><code>
 			<a href="class-MeCmsAppModel.html#__findActive">_findActive()</a>, 
 			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>, 
-			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>
+			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>, 
+			<a href="class-MeCmsAppModel.html#_isValidSlug">isValidSlug()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -438,6 +439,31 @@ AppModel
 			</div>
 		</td>
 	</tr>
+	<tr data-order="order" id="$order">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Photo.html#40-44" title="Go to source code"><var>$order</var></a>
+
+			<div class="description short">
+				<p>Order</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Order</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$order" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'filename'</span> =&gt; <span class="php-quote">'ASC'</span>)</code>
+			</div>
+		</td>
+	</tr>
 	<tr data-order="validate" id="$validate">
 		<td class="attributes"><code>
 			public  
@@ -445,7 +471,7 @@ AppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Photo.html#40-81" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-Photo.html#46-89" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -461,9 +487,11 @@ AppModel
 				<a href="#$validate" class="anchor">#</a>
 				<code><span class="php-keyword1">array</span>(
     <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-comment">//Blank on create</span>
-        <span class="php-quote">'on'</span>    =&gt; <span class="php-quote">'create'</span>,
-        <span class="php-quote">'rule'</span>  =&gt; <span class="php-quote">'blank'</span>
+        <span class="php-quote">'blankOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'create'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
+        )
     ),
     <span class="php-quote">'album_id'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'You have to select an option'</span>,
@@ -485,10 +513,10 @@ AppModel
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
         ),
-        <span class="php-quote">'blank'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-comment">//Blank on update</span>
-            <span class="php-quote">'on'</span>    =&gt; <span class="php-quote">'update'</span>,
-            <span class="php-quote">'rule'</span>  =&gt; <span class="php-quote">'blank'</span>
+        <span class="php-quote">'blankonUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'update'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
         )
     ),
     <span class="php-quote">'description'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -507,7 +535,7 @@ AppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Photo.html#83-93" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-Photo.html#91-101" title="Go to source code"><var>$belongsTo</var></a>
 
 			<div class="description short">
 				<p>belongsTo associations</p>

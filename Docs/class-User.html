@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-User.html#30-286" title="Go to source code">User.php</a>
+			<b>Located at</b> <a href="source-class-User.html#30-324" title="Go to source code">User.php</a>
 		<br>
 	</div>
 
@@ -196,7 +196,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-User.html#209-224" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#217-232" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called before each save operation, after validation. Return a non-true result to halt the save.</p>
@@ -237,7 +237,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeValidate">#</a>
-		<code><a href="source-class-User.html#226-237" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#234-245" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called during validation operations, before validation.</p>
@@ -264,6 +264,84 @@ AppModel
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="isAdmin" id="_isAdmin">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAdmin">#</a>
+		<code><a href="source-class-User.html#247-260" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Checks if an user is an admin</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks if an user is an admin</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>User ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if the user is an admin, otherwise FALSE
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isFounder" id="_isFounder">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isFounder">#</a>
+		<code><a href="source-class-User.html#262-269" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Checks if an user is the admin founder</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks if an user is the admin founder</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>User ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if the user is the admin founder, otherwise FALSE
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="oldPasswordIsRight" id="_oldPasswordIsRight">
 
 		<td class="attributes"><code>
@@ -276,16 +354,17 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_oldPasswordIsRight">#</a>
-		<code><a href="source-class-User.html#239-254" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#271-288" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
 
 		<div class="description short">
-			<p>Checks if the old password is right.
-This is only used when a user changes his password</p>
+			<p>Validation method.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Checks if the old password is right.
-This is only used when a user changes his password</p>
+			<p>Validation method.</p>
+
+<p>Checks if the old password is right.
+This is used only when a user changes his password.</p>
 
 
 				<h4>Parameters</h4>
@@ -321,14 +400,16 @@ This is only used when a user changes his password</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordsMatch">#</a>
-		<code><a href="source-class-User.html#256-265" title="Go to source code">passwordsMatch</a>( )</code>
+		<code><a href="source-class-User.html#290-301" title="Go to source code">passwordsMatch</a>( )</code>
 
 		<div class="description short">
-			<p>Checks if the password has been correctly inserted</p>
+			<p>Validation method.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Checks if the password has been correctly inserted</p>
+			<p>Validation method.</p>
+
+<p>Checks if the password has been correctly inserted.</p>
 
 
 
@@ -355,14 +436,16 @@ This is only used when a user changes his password</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordIsStrong">#</a>
-		<code><a href="source-class-User.html#267-285" title="Go to source code">passwordIsStrong</a>( )</code>
+		<code><a href="source-class-User.html#303-323" title="Go to source code">passwordIsStrong</a>( )</code>
 
 		<div class="description short">
-			<p>Checks that the password contains letters, numbers and symbols.</p>
+			<p>Validation method.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Checks that the password contains letters, numbers and symbols.</p>
+			<p>Validation method.</p>
+
+<p>Checks that the password contains letters, numbers and symbols.</p>
 
 
 
@@ -385,7 +468,8 @@ This is only used when a user changes his password</p>
 		<td><code>
 			<a href="class-MeCmsAppModel.html#__findActive">_findActive()</a>, 
 			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>, 
-			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>
+			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>, 
+			<a href="class-MeCmsAppModel.html#_isValidSlug">isValidSlug()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -484,7 +568,7 @@ This is only used when a user changes his password</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#52-183" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-User.html#52-191" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -500,9 +584,11 @@ This is only used when a user changes his password</p>
 				<a href="#$validate" class="anchor">#</a>
 				<code><span class="php-keyword1">array</span>(
     <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-comment">//Blank on create</span>
-        <span class="php-quote">'on'</span>    =&gt; <span class="php-quote">'create'</span>,
-        <span class="php-quote">'rule'</span>  =&gt; <span class="php-quote">'blank'</span>
+        <span class="php-quote">'blankOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'create'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
+        )
     ),
     <span class="php-quote">'group_id'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'You have to select a valid option'</span>,
@@ -512,17 +598,23 @@ This is only used when a user changes his password</p>
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be between %d and %d chars'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">3</span>, <span class="php-num">40</span>)
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">6</span>, <span class="php-num">40</span>)
         ),
         <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
         ),
-        <span class="php-quote">'username'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'isValidSlug'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Allowed chars: lowercase letters, numbers, dash'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'custom'</span>, <span class="php-quote">'/^[a-z0-9\-]+$/'</span>)
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'isValidSlug'</span>)
         ),
+        <span class="php-quote">'blankonUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
+            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'update'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
+        )
     ),
     <span class="php-quote">'email'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -636,7 +728,7 @@ This is only used when a user changes his password</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#185-195" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-User.html#193-203" title="Go to source code"><var>$belongsTo</var></a>
 
 			<div class="description short">
 				<p>belongsTo associations</p>
@@ -667,7 +759,7 @@ This is only used when a user changes his password</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#197-207" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-User.html#205-215" title="Go to source code"><var>$hasMany</var></a>
 
 			<div class="description short">
 				<p>hasMany associations</p>
