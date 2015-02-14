@@ -43,10 +43,15 @@ class SystemsController extends MeCmsAppController {
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
 	 * @uses MeAuthComponent::isAdmin()
+	 * @uses MeAuthComponent::isManager()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins can access this controller
-		return $this->Auth->isAdmin();
+		//Only admins can view logs
+		if($this->isAction(array('admin_log_viewer', 'admin_edit')))
+			return $this->Auth->isAdmin();
+		
+		//Only managers can access other actions
+		return $this->Auth->isManager();
 	}
 	
 	/**

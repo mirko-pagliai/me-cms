@@ -29,7 +29,8 @@ Gli amministratori e i manager possono aggiungere e modificare le pagine.
 Gli amministratori possono eliminare le pagine.
 
 ### Sistema
-Gli amministratori possono accedere alla gestione del sistema.
+Gli amministratori e i manager possono accedere alla gestione del sistema.
+Gli amministratori possono visualizzare i log.
 
 ### Utenti
 Gli amministratori e i manager possono visualizzare, aggiungere e modificare gli utenti.
