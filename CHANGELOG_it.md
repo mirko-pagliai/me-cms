@@ -1,6 +1,6 @@
 # 1.x ramo
-## 1.1 ramo
-### 1.1.1
+## 1.2 ramo
+### 1.2.0
 * aggiunto visualizzatore di log e il visualizzatore dei changelog;
 * risolto bug per la topbar del backend. La topbar viene interamente mostrata solo su dispositivi mobili. Aggiunta la sidebar;
 * i widget vengono nascosti sulle pagine che contengono le stesse informazioni o gli stessi dati;

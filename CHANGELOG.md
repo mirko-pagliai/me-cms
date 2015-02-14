@@ -1,6 +1,6 @@
 # 1.x branch
-## 1.1 branch
-### 1.1.1
+## 1.2 branch
+### 1.2.0
 * added the log viewer and the changelogs viewer;
 * fixed bug on the backend topbar. The topbar is entirely shown only on mobile devices. Added the sidebar;
 * widgets are hidden on the pages that contain the same information or the same data;
