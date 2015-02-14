@@ -11,7 +11,7 @@ mkdir -p build/MeCms
 
 # Copy in build/MeCms
 cp -a --parents Config/ Console/ Controller/ Locale/ita Model/ Utility/ \
-View/ webroot/ COPYNG PERMISSIONS.md README_it.md version build/MeCms
+View/ webroot/ CHANGELOG.md CHANGELOG_it.md COPYNG PERMISSIONS.md README_it.md version build/MeCms
 
 # Enter build/MeCms
 cd build/MeCms
