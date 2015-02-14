@@ -19,11 +19,11 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Users
+ * @package		MeCms\View\Profiles
  */
 ?>
 	
-<div class="users form">
+<div class="profiles form">
 	<?php echo $this->Html->h2(__d('me_cms', 'Change password')); ?>
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>

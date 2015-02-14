@@ -38,11 +38,7 @@ class UsersController extends MeCmsAppController {
 	 * @uses MeAuthComponent::isManager()
 	 * @uses MeToolsAppController::isAction()
 	 */
-	public function isAuthorized($user = NULL) {
-		//Everyone can change their own password
-		if($this->isAction('admin_change_password'))
-			return TRUE;
-		
+	public function isAuthorized($user = NULL) {		
 		//Only admins can delete users
 		if($this->isAction('admin_delete'))
 			return $this->Auth->isAdmin();
@@ -83,25 +79,6 @@ class UsersController extends MeCmsAppController {
 			'groups'			=> $this->User->Group->find('list'),
 			'title_for_layout'	=> __d('me_cms', 'Add user')
 		));
-	}
-	
-	/**
-	 * Change the user password
-	 */
-	public function admin_change_password() {
-		//Sets the user id
-		$this->request->data['User']['id'] = $this->Auth->user('id');
-		
-		if($this->request->is('post') || $this->request->is('put')) {
-			if($this->User->save($this->request->data)) {
-				$this->Session->flash(__d('me_cms', 'The password has been edited'));
-				$this->redirect('/admin');
-			}
-			else
-				$this->Session->flash(__d('me_cms', 'The password has not been edited. Please, try again'), 'error');
-		}
-		
-		$this->set('title_for_layout', __d('me_cms', 'Change password'));
 	}
 
 	/**
