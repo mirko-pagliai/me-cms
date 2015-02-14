@@ -61,7 +61,7 @@ Router::connect('/login',	array('controller' => 'users', 'action' => 'login',		'
 Router::connect('/logout',	array('controller' => 'users', 'action' => 'logout',	'plugin' => 'me_cms'));
 
 //Each "admin" request will be directed to the plugin
-$controllers = array('banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts', 'systems', 'users', 'users_groups');
+$controllers = array('banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts', 'profiles', 'systems', 'users', 'users_groups');
 $controllers = sprintf('(%s)', implode('|', $controllers));
 
 Router::connect('/admin/:controller',			array('plugin' => 'me_cms', 'admin' => TRUE), array('controller' => $controllers));
