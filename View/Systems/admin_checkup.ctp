@@ -37,20 +37,26 @@
 		
 		$successClasses = 'bg-success text-success padding10';
 		$errorClasses = 'bg-danger text-danger padding10';
+		$warningClasses = 'bg-warning text-warning padding10';
 		$successOptions = array('icon' => 'check');
 		$errorOptions = array('icon' => 'times');
+		$warningOptions = array('icon' => 'check');
 
 		echo $this->Html->h4('Apache');
 		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '%s version: %s', $this->Html->strong('Apache'), $apacheVersion));
-		if($rewrite)
+		if(is_bool($rewrite) && $rewrite)
 			echo $this->Html->para($successClasses, __d('me_cms', 'The %s module is enabled', $this->Html->strong('Rewrite')), $successOptions);
-		else
+		elseif(is_bool($rewrite))
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The %s module is not enabled', $this->Html->strong('Rewrite')), $errorOptions);
-
-		if($expires)
-			echo $this->Html->para($successClasses, __d('me_cms', 'The %s module is enabled', $this->Html->strong('Expires')), $successOptions);
 		else
+			echo $this->Html->para($warningClasses, __d('me_cms', 'The %s module cannot be checked', $this->Html->strong('Rewrite')), $warningOptions);
+
+		if(is_bool($expires) && $expires)
+			echo $this->Html->para($successClasses, __d('me_cms', 'The %s module is enabled', $this->Html->strong('Expires')), $successOptions);
+		elseif(is_bool($expires))
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The %s module is not enabled', $this->Html->strong('Expires')), $errorOptions);
+		else
+			echo $this->Html->para($warningClasses, __d('me_cms', 'The %s module cannot be checked', $this->Html->strong('Expires')), $warningOptions);
 		
 		echo $this->Html->h4('PHP');
 		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '%s version: %s', $this->Html->strong('PHP'), $phpVersion));
