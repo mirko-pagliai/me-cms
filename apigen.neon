@@ -1,5 +1,5 @@
 accessLevels: [public, protected, private]
-destination: Docs
+destination: API
 download: false
 exclude: {*.old, *.old.*}
 source: {Console, Controller, Model, Utility, View}
