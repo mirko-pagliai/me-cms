@@ -67,6 +67,24 @@ in `APP/Config`. È sufficiente impostare solo le opzioni che si desidera sovras
 MeCms caricherà prima il proprio file di configurazione, successivamente quello presente nell'applicazione, se esiste.
 I valori impostati nel file presente nell'applicazione sovrascriveranno quelli impostati nel file di MeCms.
 
+## Email
+Per permettere a MeCms di inviare email, è necessario configurare le email nel file `APP/Config/email.php`,
+come spiegato nella [documentazione di CakePHP](http://book.cakephp.org/2.0/en/core-utility-libraries/email.html#configuration).
+
+Esempio (utilizzando GMail):
+
+	<?php
+
+	class EmailConfig {
+		public $default = array(
+			'host' => 'ssl://smtp.gmail.com',
+			'port' => 465,
+			'username'	=> 'username@gmail.com',
+			'password'	=> 'yourpassword',
+			'transport' => 'Smtp'
+		);
+	}
+
 ## Temi
 Per utilizzare un tema, creare o installare il tema in `APP/View/Themed/`. Ad esempio, per utilizzare il tema 
 `AnotherTheme` e riscrivere il layout del frontend, bisognerà creare il file 
