@@ -75,14 +75,16 @@ class EmailComponent extends Component {
 	 * @uses $controller
 	 */
 	protected function autoConfig() {
-		$this->cakeEmail->config('default');
-		$this->cakeEmail->from($from = array($this->controller->config['email'] => $this->controller->config['title']));
+		$config = $this->controller->config;
+		
+		$this->cakeEmail->config($config['email_config']);
+		$this->cakeEmail->from($from = array($config['email_from'] => $config['title']));
 		$this->cakeEmail->sender($from);
 		$this->cakeEmail->template('default', 'MeCms.default');
 		$this->cakeEmail->emailFormat('html');
 		$this->cakeEmail->helpers(array('Html' => array('className' => 'MeTools.MeHtml')));
 		$this->cakeEmail->viewVars(array(
-			'config'		=> $this->controller->config,
+			'config'		=> $config,
 			'site_address'	=> Router::url('/', TRUE)
 		));
 	}
