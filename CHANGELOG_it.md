@@ -1,5 +1,8 @@
 # 1.x ramo
 ## 1.2 ramo
+### 1.2.1
+* viene inviata una email quando l'utente cambia la propria password.
+
 ### 1.2.0
 * aggiunto visualizzatore di log e il visualizzatore dei changelog;
 * risolto bug per la topbar del backend. La topbar viene interamente mostrata solo su dispositivi mobili. Aggiunta la sidebar;

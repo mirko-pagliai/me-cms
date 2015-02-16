@@ -55,15 +55,22 @@ class ProfilesController extends MeCmsAppController {
 	 * Change the user password
 	 */
 	public function admin_change_password() {
-		$this->Email->bcc('info@novatlantis.it');
-		$this->Email->subject(__d('me_cms', 'Your password has been changed'));
-		$this->Email->send('My message');;
 		
 		//Sets the user id
 		$this->request->data['User']['id'] = $this->Auth->user('id');
 		
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->User->save($this->request->data)) {
+				//Gets user data
+				$user = $this->User->findById($this->Auth->user('id'), array('email', 'full_name'));
+
+				//Sends email
+				$this->Email->to(array($user['User']['email'] => $user['User']['full_name']));
+				$this->Email->subject(__d('me_cms', 'Your password has been changed'));
+				$this->Email->template('change_password');
+				$this->Email->set('full_name', $user['User']['full_name']);
+				$this->Email->send();
+				
 				$this->Session->flash(__d('me_cms', 'The password has been edited'));
 				$this->redirect('/admin');
 			}

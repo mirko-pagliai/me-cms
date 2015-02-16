@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.1
+* an email is sent when the user changes his password.
+
 ### 1.2.0
 * added the log viewer and the changelogs viewer;
 * fixed bug on the backend topbar. The topbar is entirely shown only on mobile devices. Added the sidebar;
