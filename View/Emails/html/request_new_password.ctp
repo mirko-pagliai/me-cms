@@ -19,29 +19,15 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Users
+ * @package		MeCms\View\Emails\html
  */
 ?>
 	
-<div id="login" class="users form">
-	<?php
-		echo $this->Session->flash();
-		echo $this->Session->flash('auth');
-	?>
-	<?php echo $this->Form->create('User'); ?>
-		<fieldset>
-			<?php
-				echo $this->Form->input('username', array(
-					'autofocus'		=> TRUE,
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Username')
-				));
-				echo $this->Form->input('password', array(
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Password')
-				));
-			?>
-		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
-	<?php echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'request_new_password')); ?>
-</div>
+<?php echo __d('me_cms', 'Hello %s', $full_name); ?>,
+
+<?php echo __d('me_cms', 'you have requested to change your password on the site %s', $config['title']); ?>.
+<?php echo __d('me_cms', 'The request has been sent from the IP %s', $ip_address); ?>.
+
+<?php echo __d('me_cms', 'To reset your password, click %s', $this->Html->link(__d('me_cms', 'here'), $url)); ?>.
+
+<?php echo __d('me_cms', 'If you have not made this request, please contact an administrator'); ?>.

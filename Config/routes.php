@@ -53,6 +53,9 @@ Router::connect('/posts/search/*',	array('controller' => 'posts', 'action' => 's
 Router::connect('/posts/*',			array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms'));
 Router::connect('/post/*',			array('controller' => 'posts', 'action' => 'view',		'plugin' => 'me_cms'));
 
+//Profiles controller
+Router::connect('/newpassword/request', array('controller' => 'profiles', 'action' => 'request_new_password', 'plugin' => 'me_cms'));
+
 //System controller
 Router::connect('/offline', array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
 

@@ -19,29 +19,19 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Users
+ * @package		MeCms\View\Profiles
  */
 ?>
-	
-<div id="login" class="users form">
-	<?php
-		echo $this->Session->flash();
-		echo $this->Session->flash('auth');
-	?>
+
+<div class="profiles form">
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
-				echo $this->Form->input('username', array(
-					'autofocus'		=> TRUE,
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Username')
-				));
-				echo $this->Form->input('password', array(
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Password')
+				echo $this->Form->input('email', array(
+					'autofocus'	=> TRUE,
+					'label'		=> __d('me_cms', 'Email')
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
-	<?php echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'request_new_password')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Request new password'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 </div>
