@@ -35,6 +35,14 @@ Router::connect('/banner/*', array('controller' => 'banners', 'action' => 'open'
 Router::connect('/pages',	array('controller' => 'pages', 'action' => 'index', 'plugin' => 'me_cms'));
 Router::connect('/page/*',	array('controller' => 'pages', 'action' => 'view',	'plugin' => 'me_cms'));
 
+//Photos albums controller
+Router::connect('/albums',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/photos',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/album/*',	array('controller' => 'photos_albums', 'action' => 'view',	'plugin' => 'me_cms'));
+
+//Photos controller
+Router::connect('/photo/*',	array('controller' => 'photos', 'action' => 'view', 'plugin' => 'me_cms'));
+
 //Posts categories controller
 Router::connect('/posts/categories', array('controller' => 'posts_categories',	'action' => 'index', 'plugin' => 'me_cms'));
 Router::connect('/posts/category/*',	 array('controller' => 'posts',				'action' => 'index', 'plugin' => 'me_cms'));
@@ -44,14 +52,6 @@ Router::connect('/posts/rss',		array('controller' => 'posts', 'action' => 'rss',
 Router::connect('/posts/search/*',	array('controller' => 'posts', 'action' => 'search',	'plugin' => 'me_cms'));
 Router::connect('/posts/*',			array('controller' => 'posts', 'action' => 'index',		'plugin' => 'me_cms'));
 Router::connect('/post/*',			array('controller' => 'posts', 'action' => 'view',		'plugin' => 'me_cms'));
-
-//Photos albums controller
-Router::connect('/albums',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
-Router::connect('/photos',	array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'));
-Router::connect('/album/*',	array('controller' => 'photos_albums', 'action' => 'view',	'plugin' => 'me_cms'));
-
-//Photos controller
-Router::connect('/photo/*',	array('controller' => 'photos', 'action' => 'view', 'plugin' => 'me_cms'));
 
 //System controller
 Router::connect('/offline', array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
