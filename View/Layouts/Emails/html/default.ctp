@@ -30,7 +30,7 @@
 	</head>
 	<body>
 		<?php
-			foreach(explode("\n", $this->fetch('content')) as $line)
+			foreach(explode("\n", trim($this->fetch('content'))) as $line)
 				echo $line.'<br />'.PHP_EOL;
 			
 			echo '<br />';
