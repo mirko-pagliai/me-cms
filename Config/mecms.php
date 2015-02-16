@@ -65,7 +65,10 @@ $config = array('MeCms' => array(
 		'debug' => FALSE,
 		//It forces debugging for the localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,
-		'email' => 'email@example.com',
+		//Configuration to use for emails, located into `APP/Config/email.php`
+		'email_config' => 'default',
+		//Address from which to send emails
+		'email_from' => 'email@example.com',
 		//Session (login) timeout, in minutes
 		'timeout' => 30,
 		//Site title
