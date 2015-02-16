@@ -104,21 +104,10 @@ class User extends MeCmsAppModel {
 			)
 		),
 		'password' => array(
-			//On "create", the field must be filled
-			'minLengthOnCreate' => array(
-				'allowEmpty'	=> FALSE,
-				'last'			=> FALSE,
-				'message'		=> 'Must be at least %d characters',
-				'on'			=> 'create',
-				'rule'			=> array('minLength', 8)
-			),
-			//On "update", the field can be left blank
-			'minLengthOnUpdate' => array(
-				'allowEmpty'	=> TRUE,
-				'last'			=> FALSE,
-				'message'		=> 'Must be at least %d characters',
-				'on'			=> 'update',
-				'rule'			=> array('minLength', 8)
+			'minLength' => array(
+				'last'		=> FALSE,
+				'message'	=> 'Must be at least %d characters',
+				'rule'		=> array('minLength', 8)
 			),
 			'passwordIsStrong' => array(
 				'message'	=> 'The password should contain letters, numbers and symbols',
@@ -127,22 +116,8 @@ class User extends MeCmsAppModel {
 		),
 		//This is used to check that the password has been correctly inserted
 		'password_repeat' => array(
-			//On "create", the field must be filled
-			'passwordsMatchOnCreate' => array(
-				'allowEmpty'	=> FALSE,
-				'message'		=> 'Passwords don\'t match',
-				'on'			=> 'create',
-				'rule'			=> 'passwordsMatch'
-			),
-			//On "update", the field can be left blank.
-			//If the "password" field is not blank, then this field must also be filled out.
-			//This is set by the "beforeValidate()" callback method
-			'passwordsMatchOnUpdate' => array(
-				'allowEmpty'	=> TRUE,
-				'message'		=> 'Passwords don\'t match',
-				'on'			=> 'update',
-				'rule'			=> 'passwordsMatch'
-			)
+			'message'	=> 'Passwords don\'t match',
+			'rule'		=> 'passwordsMatch'
 		),
 		//This is only used when a user changes his password
 		'old_password' => array(

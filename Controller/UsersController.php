@@ -126,7 +126,11 @@ class UsersController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'Only the founder admin can edit other admin users'), 'alert');
 			$this->redirect(array('action' => 'index'));
 		}
-			
+		
+		//The password can be empty
+		$this->User->validate['password']['minLength']['allowEmpty'] = TRUE;
+		$this->User->validate['password_repeat']['allowEmpty'] = TRUE;
+		
 		if($this->request->is('post') || $this->request->is('put')) {
 			//This prevents a blank password is saved
 			if(empty($this->request->data['User']['password']))
