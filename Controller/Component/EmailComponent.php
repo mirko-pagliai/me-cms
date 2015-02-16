@@ -71,19 +71,19 @@ class EmailComponent extends Component {
 	
 	/**
 	 * Configures `CakeEmail` with some default settings.
-	 * @uses $cakeEmail
 	 * @uses $controller
+	 * @uses set()
 	 */
 	protected function autoConfig() {
 		$config = $this->controller->config;
 		
-		$this->cakeEmail->config($config['email_config']);
-		$this->cakeEmail->from($from = array($config['email_from'] => $config['title']));
-		$this->cakeEmail->sender($from);
-		$this->cakeEmail->template('default', 'MeCms.default');
-		$this->cakeEmail->emailFormat('html');
-		$this->cakeEmail->helpers(array('Html' => array('className' => 'MeTools.MeHtml')));
-		$this->cakeEmail->viewVars(array(
+		$this->config($config['email_config']);
+		$this->from($from = array($config['email_from'] => $config['title']));
+		$this->sender($from);
+		$this->template('default', 'MeCms.default');
+		$this->emailFormat('html');
+		$this->helpers(array('Html' => array('className' => 'MeTools.MeHtml')));
+		$this->set(array(
 			'config'		=> $config,
 			'ip_address'	=> $this->controller->request->clientIp(TRUE),
 			'site_address'	=> Router::url('/', TRUE)
@@ -100,12 +100,12 @@ class EmailComponent extends Component {
 	public function set($one, $two = NULL) {
 		if(is_array($one)) {
 			if(is_array($two))
-				return $this->cakeEmail->viewVars(array_combine($one, $two));
+				return $this->viewVars(array_combine($one, $two));
 			else
-				return $this->cakeEmail->viewVars($one);
+				return $this->viewVars($one);
 		}
 		else
-			return $this->cakeEmail->viewVars(array($one => $two));
+			return $this->viewVars(array($one => $two));
 	}
 
 	/**
