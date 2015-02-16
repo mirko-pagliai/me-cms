@@ -27,6 +27,7 @@ body {
     box-shadow: 0 3px 6px -6px #000;
 	font-size: 16px;
     margin: auto;
+	min-width: 400px;
     padding: 20px;
 	/*text-align: center;*/
 	width: -moz-max-content;
@@ -71,12 +72,4 @@ body {
 #content .form .form-group input:focus {
 	border-color: #66AFE9;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
-}
-
-/* -------------------------------- */
-/*			Login form				*/
-/* -------------------------------- */
-/* Login wrapper */
-#login {
-	width: 400px;
 }
