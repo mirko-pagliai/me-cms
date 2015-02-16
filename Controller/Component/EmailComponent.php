@@ -89,6 +89,24 @@ class EmailComponent extends Component {
 			'site_address'	=> Router::url('/', TRUE)
 		));
 	}
+	
+	/**
+	 * Wrapper for `CakeEmail::viewVars()` method.
+	 * @param string|array $one A string or an array of data.
+	 * @param string|array $two Value in case $one is a string (which then works as the key). 
+	 *	Unused if $one is an associative array, otherwise serves as the values to $one's keys.
+	 * @return void
+	 */
+	public function set($one, $two = NULL) {
+		if(is_array($one)) {
+			if(is_array($two))
+				return $this->cakeEmail->viewVars(array_combine($one, $two));
+			else
+				return $this->cakeEmail->viewVars($one);
+		}
+		else
+			return $this->cakeEmail->viewVars(array($one => $two));
+	}
 
 	/**
 	 * Is called after the controller's beforeFilter method but before the controller executes the current action handler.
