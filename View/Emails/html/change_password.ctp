@@ -1,7 +1,5 @@
 <?php
 /**
- * Default views for emails.
- *
  * This file is part of MeCms.
  *
  * MeCms is free software: you can redistribute it and/or modify
