@@ -43,7 +43,7 @@ class MeAuthComponent extends AuthComponent {
     /**
      * Called before the controller's beforeFilter method.
      * @param Controller $controller
-     * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
+     * @see http://api.cakephp.org/2.6/class-Component.html#_initialize CakePHP Api
 	 * @uses $user
      */	
 	public function initialize(Controller $controller) {

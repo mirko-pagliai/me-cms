@@ -31,6 +31,12 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
  */
 class ProfilesController extends MeCmsAppController {
 	/**
+	 * Components
+	 * @var array
+	 */
+	public $components = array('MeCms.Email');
+	
+	/**
 	 * Models
 	 * @var array
 	 */
@@ -49,6 +55,10 @@ class ProfilesController extends MeCmsAppController {
 	 * Change the user password
 	 */
 	public function admin_change_password() {
+		$this->Email->bcc('info@novatlantis.it');
+		$this->Email->subject(__d('me_cms', 'Your password has been changed'));
+		$this->Email->send('My message');;
+		
 		//Sets the user id
 		$this->request->data['User']['id'] = $this->Auth->user('id');
 		

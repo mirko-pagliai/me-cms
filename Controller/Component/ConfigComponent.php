@@ -110,7 +110,7 @@ class ConfigComponent extends Component {
 	 * Is called after the controller executes the requested action's logic, 
 	 * but before the controller's renders views and layout.
 	 * @param Controller $controller
-	 * @see http://api.cakephp.org/2.5/class-Component.html#_beforeRender CakePHP Api
+	 * @see http://api.cakephp.org/2.6/class-Component.html#_beforeRender CakePHP Api
 	 */
 	public function beforeRender(Controller $controller) {
 		//Sets the configuration for the view
@@ -120,7 +120,7 @@ class ConfigComponent extends Component {
 	/**
      * Called before the controller's beforeFilter method.
 	 * @param Controller $controller
-     * @see http://api.cakephp.org/2.5/class-Component.html#_initialize CakePHP Api
+     * @see http://api.cakephp.org/2.6/class-Component.html#_initialize CakePHP Api
 	 * @uses controller
 	 * @uses _debugForLocalhost()
 	 * @uses _setConfig()
