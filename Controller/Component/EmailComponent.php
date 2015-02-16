@@ -85,6 +85,7 @@ class EmailComponent extends Component {
 		$this->cakeEmail->helpers(array('Html' => array('className' => 'MeTools.MeHtml')));
 		$this->cakeEmail->viewVars(array(
 			'config'		=> $config,
+			'ip_address'	=> $this->controller->request->clientIp(TRUE),
 			'site_address'	=> Router::url('/', TRUE)
 		));
 	}
