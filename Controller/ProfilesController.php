@@ -82,8 +82,12 @@ class ProfilesController extends MeCmsAppController {
 	
 	/**
 	 * Request a new password
+	 * @uses redirectIfLogged()
 	 */
 	public function request_new_password() {
+		//Redirects if the user is already logged in
+		$this->redirectIfLogged();
+		
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Gets the user
 			$user = $this->User->findByEmail($email = $this->request->data['User']['email'], array('id', 'full_name'));

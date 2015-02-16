@@ -216,6 +216,17 @@ class MeCmsAppController extends AppController {
 	}
 	
 	/**
+	 * Redirects if the user is already logged in
+	 * @uses MeAuthComponent::isLogged()
+	 */
+	protected function redirectIfLogged() {
+		if($this->Auth->isLogged()) {
+			$this->Session->flash(__d('me_cms', 'You are already logged in'), 'alert');
+			return $this->redirect($this->Auth->redirect());
+		}
+	}
+
+	/**
 	 * Uploads a file
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
