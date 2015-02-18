@@ -116,8 +116,10 @@ class User extends MeCmsAppModel {
 		),
 		//This is used to check that the password has been correctly inserted
 		'password_repeat' => array(
-			'message'	=> 'Passwords don\'t match',
-			'rule'		=> 'passwordsMatch'
+			'passwordsMatch' => array(
+				'message'	=> 'Passwords don\'t match',
+				'rule'		=> 'passwordsMatch'
+			)
 		),
 		//This is only used when a user changes his password
 		'old_password' => array(
@@ -213,8 +215,8 @@ class User extends MeCmsAppModel {
 	 */
 	public function beforeValidate($options = array()) {
 		//If the "password" field is not blank, then the "password_field" field must also be filled out.
-		if(!empty($this->data[$this->alias]['password']) && isset($this->data[$this->alias]['password_repeat']))		
-			$this->validator()->getField('password_repeat')->getRule('passwordsMatchOnUpdate')->allowEmpty = FALSE;
+		if(!empty($this->data[$this->alias]['password']) && isset($this->data[$this->alias]['password_repeat']))
+			$this->validator()->getField('password_repeat')->getRule('passwordsMatch')->allowEmpty = FALSE;
 		
 		return TRUE;
 	}
@@ -224,7 +226,7 @@ class User extends MeCmsAppModel {
 	 * @param int $id User ID
 	 * @return bool TRUE if the user is an admin, otherwise FALSE
 	 */
-	public function isAdmin($id) {		
+	public function isAdmin($id) {
 		$user = $this->find('first', array(
 			'conditions'	=> array('User.id' => $id),
 			'contain'		=> 'Group.name',
@@ -252,7 +254,7 @@ class User extends MeCmsAppModel {
 	 * @return boolean TRUE if the old password is right
 	 * @see http://stackoverflow.com/a/17252517/1480263
 	 */
-	public function oldPasswordIsRight($check) {		
+	public function oldPasswordIsRight($check) {
 		//Gets the hash of the old password from the database
 		$old_password = $this->field('password', array('User.id' => AuthComponent::user('id')));
 		
@@ -293,7 +295,7 @@ class User extends MeCmsAppModel {
 		//Checks if the password contains at least one symbol
 		if(!preg_match('/[^a-z0-9]+/i', $password))
 			return FALSE;
-		
+
 		return TRUE;
 	}
 }
