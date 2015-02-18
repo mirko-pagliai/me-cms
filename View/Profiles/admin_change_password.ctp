@@ -28,7 +28,6 @@
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
-				echo $this->Form->input('id');
 				echo $this->Form->input('old_password', array(
 					'autocomplete'	=> FALSE,
 					'label'			=> __d('me_cms', 'Old password'),

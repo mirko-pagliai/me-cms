@@ -54,11 +54,10 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Change the user password
 	 */
-	public function admin_change_password() {
-		//Sets the user id
-		$this->request->data['User']['id'] = $this->Auth->user('id');
-		
+	public function admin_change_password() {		
 		if($this->request->is('post') || $this->request->is('put')) {
+			$this->User->id = $this->Auth->user('id');
+			
 			if($this->User->save($this->request->data)) {
 				//Gets the user
 				$user = $this->User->findById($this->Auth->user('id'), array('email', 'full_name'));
