@@ -81,8 +81,9 @@ class ProfilesController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Request a new password
+	 * Requests a new password.
 	 * @uses redirectIfLogged()
+	 * @uses TokenComponent::create()
 	 */
 	public function request_new_password() {
 		//Redirects if the user is already logged in
@@ -113,6 +114,46 @@ class ProfilesController extends MeCmsAppController {
 		}
 		
 		$this->set('title_for_layout', __d('me_cms', 'Request new password'));
+		$this->layout = 'MeCms.users';
+	}
+	
+	/**
+	 * Resets password.
+	 * @param string $id User ID
+	 * @param string $token Token
+	 * @throws NotFoundException
+	 * @uses redirectIfLogged()
+	 * @uses TokenComponent::check()
+	 * @uses TokenComponent::delete()
+	 */
+	public function reset_password($user_id = NULL, $token = NULL) {
+		//Redirects if the user is already logged in
+		$this->redirectIfLogged();
+		
+		if(empty($user_id) || empty($token))
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+		
+		//Checks if the tokens exists and if it'is valid
+		if(!$this->Token->check($token, am(array('type' => 'newpassword'), compact('user_id')))) {
+			$this->Session->flash(__d('me_cms', 'Invalid token'), 'error');
+			$this->redirect('/login');
+		}
+					
+		if($this->request->is('post') || $this->request->is('put')) {
+			$this->User->id = $user_id;
+			
+			if($this->User->save($this->request->data)) {
+				//Deletes the token
+				$this->Token->delete($token);
+				
+				$this->Session->flash(__d('me_cms', 'The password has been edited'));
+				$this->redirect('/login');
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'The password has not been edited. Please, try again'), 'error');
+		}
+		
+		$this->set('title_for_layout', __d('me_cms', 'Reset password'));
 		$this->layout = 'MeCms.users';
 	}
 }

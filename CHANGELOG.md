@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.1
+* users can reset their own password;
 * an email is sent when the user changes his password.
 
 ### 1.2.0
