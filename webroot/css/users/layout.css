@@ -34,15 +34,16 @@ body {
 
 /* Content, title */
 #content h2 {
-    background: #337ab7;
-	border-color: #2e6da4;
-	border-style: solid;
-	border-width: 1px 0;
-	box-shadow: 0 3px 6px -6px #000;
+    background: rgba(51, 122, 183, .8);
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 0 1px;
+    box-shadow: 0 2px 2px 0 #aaa;
     color: #fff;
     font-size: 24px;
-    margin: 30px -20px 20px;
+    margin: 30px -20px;
     padding: 12px 20px 14px;
+    text-align: center;
 }
 
 /* Content, last paragraph */
@@ -71,9 +72,25 @@ body {
 /* -------------------------------- */
 /*				Forms				*/
 /* -------------------------------- */
+/* Form, submit div after fieldset */
+form fieldset + .submit {
+	margin-top: 10px;
+}
+
+/* Form, error message */
+form .error-message {
+	font-size: 90%;
+    padding: 4px 6px;
+}
+
 /* Form, input div */
 form .form-group {
     margin-bottom: 10px;
+}
+
+/* Form, input div, help block */
+form .form-group .help-block {
+	margin-top: 0 !important;
 }
 
 /* Form, input div, input */
@@ -87,12 +104,6 @@ form .form-group input {
 form .form-group input:focus {
 	border-color: #66AFE9;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
-}
-
-/* Form, error message */
-form .error-message {
-	font-size: 90%;
-    padding: 4px 6px;
 }
 
 /* -------------------------------- */
