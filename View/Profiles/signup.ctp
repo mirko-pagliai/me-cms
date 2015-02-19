@@ -24,6 +24,7 @@
 ?>
 
 <div class="profiles form">
+	<?php echo $this->Html->h2(__d('me_cms', 'Sign up')); ?>
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
@@ -54,4 +55,9 @@
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Sign up'), array('class' => 'btn-block btn-lg btn-primary')); ?>
+	<?php
+		echo $this->Html->link(__d('me_cms', 'Login'), '/login');
+		echo $this->Html->br();
+		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_your_password'));
+	?>
 </div>

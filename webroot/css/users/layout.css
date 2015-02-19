@@ -27,12 +27,22 @@ body {
     box-shadow: 0 3px 6px -6px #000;
 	font-size: 16px;
     margin: auto;
-	min-width: 400px;
+	overflow: hidden;
     padding: 20px;
-	/*text-align: center;*/
-	width: -moz-max-content;
-	width: -webkit-max-content;
-	width: max-content;
+	width: 450px;
+}
+
+/* Content, title */
+#content h2 {
+    background: #337ab7;
+	border-color: #2e6da4;
+	border-style: solid;
+	border-width: 1px 0;
+	box-shadow: 0 3px 6px -6px #000;
+    color: #fff;
+    font-size: 24px;
+    margin: 30px -20px 20px;
+    padding: 12px 20px 14px;
 }
 
 /* Content, last paragraph */
@@ -61,6 +71,11 @@ body {
 /* -------------------------------- */
 /*				Forms				*/
 /* -------------------------------- */
+/* Form, input div */
+form .form-group {
+    margin-bottom: 10px;
+}
+
 /* Form, input div, input */
 form .form-group input {
     font-size: 16px;
@@ -78,4 +93,12 @@ form .form-group input:focus {
 form .error-message {
 	font-size: 90%;
     padding: 4px 6px;
+}
+
+/* -------------------------------- */
+/*			Login form				*/
+/* -------------------------------- */
+/* Login form, input div */
+#login form .form-group {
+    margin-bottom: 5px;
 }

@@ -23,7 +23,7 @@
  */
 ?>
 	
-<div class="users form">
+<div id="login" class="users form">
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
@@ -42,6 +42,6 @@
 	<?php
 		echo $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
 		echo $this->Html->br();
-		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'request_new_password'));
+		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_your_password'));
 	?>
 </div>

@@ -80,42 +80,6 @@ class ProfilesController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Requests a new password.
-	 * @uses redirectIfLogged()
-	 * @uses TokenComponent::create()
-	 */
-	public function request_new_password() {
-		//Redirects if the user is already logged in
-		$this->redirectIfLogged();
-		
-		if($this->request->is('post') || $this->request->is('put')) {
-			//Gets the user
-			$user = $this->User->findByEmail($email = $this->request->data['User']['email'], array('id', 'full_name'));
-			
-			if(!empty($user)) {
-				//Gets the token and the url to reset the password
-				$token = $this->Token->create($email, array('type' => 'newpassword', 'user_id' => $id = $user['User']['id']));
-				$url = Router::url(am(array('controller' => 'profiles', 'action' => 'reset_password'), compact('id', 'token')), TRUE);
-				
-				//Sends email
-				$this->Email->to(array($email => $full_name = $user['User']['full_name']));
-				$this->Email->subject(__d('me_cms', 'Reset your password'));
-				$this->Email->template('request_new_password');
-				$this->Email->set(compact('full_name', 'url'));
-				$this->Email->send();
-				
-				$this->Session->flash(__d('me_cms', 'We have sent you an email to reset your password'));
-				$this->redirect('/login');
-			}
-			else
-				$this->Session->flash(__d('me_cms', 'No account found'), 'error');
-		}
-		
-		$this->set('title_for_layout', __d('me_cms', 'Request new password'));
-		$this->layout = 'MeCms.users';
-	}
-	
-	/**
 	 * Activate account.
 	 * @param string $id User ID
 	 * @param string $token Token
@@ -146,6 +110,42 @@ class ProfilesController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'The account has not been activated. Please, try again'), 'error');
 		
 		$this->redirect('/login');
+	}
+	
+	/**
+	 * Requests a new password.
+	 * @uses redirectIfLogged()
+	 * @uses TokenComponent::create()
+	 */
+	public function forgot_your_password() {
+		//Redirects if the user is already logged in
+		$this->redirectIfLogged();
+		
+		if($this->request->is('post') || $this->request->is('put')) {
+			//Gets the user
+			$user = $this->User->findByEmail($email = $this->request->data['User']['email'], array('id', 'full_name'));
+			
+			if(!empty($user)) {
+				//Gets the token and the url to reset the password
+				$token = $this->Token->create($email, array('type' => 'newpassword', 'user_id' => $id = $user['User']['id']));
+				$url = Router::url(am(array('controller' => 'profiles', 'action' => 'reset_password'), compact('id', 'token')), TRUE);
+				
+				//Sends email
+				$this->Email->to(array($email => $full_name = $user['User']['full_name']));
+				$this->Email->subject(__d('me_cms', 'Reset your password'));
+				$this->Email->template('request_new_password');
+				$this->Email->set(compact('full_name', 'url'));
+				$this->Email->send();
+				
+				$this->Session->flash(__d('me_cms', 'We have sent you an email to reset your password'));
+				$this->redirect('/login');
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'No account found'), 'error');
+		}
+		
+		$this->set('title_for_layout', __d('me_cms', 'Forgot your password?'));
+		$this->layout = 'MeCms.users';
 	}
 	
 	/**
