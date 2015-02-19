@@ -54,6 +54,7 @@ Router::connect('/posts/*',			array('controller' => 'posts', 'action' => 'index'
 Router::connect('/post/*',			array('controller' => 'posts', 'action' => 'view',		'plugin' => 'me_cms'));
 
 //Profiles controller
+Router::connect('/activate/:id/:token',	array('controller' => 'profiles', 'action' => 'activate_account',		'plugin' => 'me_cms'), array('pass' => array('id', 'token')));
 Router::connect('/password/request',		array('controller' => 'profiles', 'action' => 'request_new_password',	'plugin' => 'me_cms'));
 Router::connect('/password/:id/:token',	array('controller' => 'profiles', 'action' => 'reset_password',			'plugin' => 'me_cms'), array('pass' => array('id', 'token')));
 Router::connect('/signup',				array('controller' => 'profiles', 'action' => 'signup',					'plugin' => 'me_cms'));

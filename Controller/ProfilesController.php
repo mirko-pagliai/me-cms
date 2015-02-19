@@ -116,6 +116,39 @@ class ProfilesController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Activate account.
+	 * @param string $id User ID
+	 * @param string $token Token
+	 * @throws NotFoundException
+	 */
+	public function activate_account($user_id = NULL, $token = NULL) {
+		//Redirects if the user is already logged in
+		$this->redirectIfLogged();
+		
+		if(empty($user_id) || empty($token))
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+		
+		//Checks if the tokens exists and if it'is valid
+		if(!$this->Token->check($token, am(array('type' => 'signup'), compact('user_id')))) {
+			$this->Session->flash(__d('me_cms', 'Invalid token'), 'error');
+			$this->redirect('/login');
+		}
+		
+		$this->User->id = $user_id;
+		
+		if($this->User->saveField('active', 1)) {
+			//Deletes the token
+			$this->Token->delete($token);
+
+			$this->Session->flash(__d('me_cms', 'The account has been activated. Now you can login'));
+		}
+		else
+			$this->Session->flash(__d('me_cms', 'The account has not been activated. Please, try again'), 'error');
+		
+		$this->redirect('/login');
+	}
+	
+	/**
 	 * Resets password.
 	 * @param string $id User ID
 	 * @param string $token Token
