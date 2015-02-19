@@ -45,31 +45,37 @@ body {
 	margin: auto auto 20px;
 }
 
-/* Content, form, alert message */
-#content .form .alert {
+/* Content, alert message */
+#content .alert {
+    font-size: 90%;
 	margin-bottom: 10px;
-	padding: 10px 8px;
+    padding: 8px;
 }
 
-/* Content, form, alert message, close button */
-#content .form .alert .close {
-	line-height: .9;
+/* Content, alert message, close button */
+#content .alert .close {
+    font-size: 18px;
+    line-height: 1.2;
 }
 
-/* Content, form, input div */
-#content .form .form-group {
-	margin-bottom: 5px;
-}
-
-/* Content, form, input div, input */
-#content .form .form-group input {
+/* -------------------------------- */
+/*				Forms				*/
+/* -------------------------------- */
+/* Form, input div, input */
+form .form-group input {
     font-size: 16px;
     height: auto;
     padding: 10px;
 }
 
-/* Content, form, input div, input on focus */
-#content .form .form-group input:focus {
+/* Form, input div, input on focus */
+form .form-group input:focus {
 	border-color: #66AFE9;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
+}
+
+/* Form, error message */
+form .error-message {
+	font-size: 90%;
+    padding: 4px 6px;
 }
