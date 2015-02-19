@@ -58,6 +58,6 @@
 	<?php
 		echo $this->Html->link(__d('me_cms', 'Login'), '/login');
 		echo $this->Html->br();
-		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_your_password'));
+		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
 	?>
 </div>

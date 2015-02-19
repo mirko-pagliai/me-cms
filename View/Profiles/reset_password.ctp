@@ -24,6 +24,7 @@
 ?>
 
 <div class="profiles form">
+	<?php echo $this->Html->h2(__d('me_cms', 'Reset password')); ?>
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php

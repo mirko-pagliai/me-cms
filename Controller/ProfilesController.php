@@ -117,7 +117,7 @@ class ProfilesController extends MeCmsAppController {
 	 * @uses redirectIfLogged()
 	 * @uses TokenComponent::create()
 	 */
-	public function forgot_your_password() {		
+	public function forgot_password() {		
 		//Redirects if the user is already logged in
 		$this->redirectIfLogged();
 		
@@ -133,7 +133,7 @@ class ProfilesController extends MeCmsAppController {
 				//Sends email
 				$this->Email->to(array($email => $full_name = $user['User']['full_name']));
 				$this->Email->subject(__d('me_cms', 'Reset your password'));
-				$this->Email->template('request_new_password');
+				$this->Email->template('forgot_password');
 				$this->Email->set(compact('full_name', 'url'));
 				$this->Email->send();
 				
