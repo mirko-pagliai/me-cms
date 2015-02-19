@@ -95,7 +95,7 @@ class ProfilesController extends MeCmsAppController {
 		//Checks if the tokens exists and if it'is valid
 		if(!$this->Token->check($token, am(array('type' => 'signup'), compact('user_id')))) {
 			$this->Session->flash(__d('me_cms', 'Invalid token'), 'error');
-			$this->redirect('/login');
+			$this->redirect($this->Auth->loginAction);
 		}
 		
 		$this->User->id = $user_id;
@@ -109,7 +109,7 @@ class ProfilesController extends MeCmsAppController {
 		else
 			$this->Session->flash(__d('me_cms', 'The account has not been activated. Please, try again'), 'error');
 		
-		$this->redirect('/login');
+		$this->redirect($this->Auth->loginAction);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ class ProfilesController extends MeCmsAppController {
 	 * @uses redirectIfLogged()
 	 * @uses TokenComponent::create()
 	 */
-	public function forgot_your_password() {
+	public function forgot_your_password() {		
 		//Redirects if the user is already logged in
 		$this->redirectIfLogged();
 		
@@ -138,7 +138,7 @@ class ProfilesController extends MeCmsAppController {
 				$this->Email->send();
 				
 				$this->Session->flash(__d('me_cms', 'We have sent you an email to reset your password'));
-				$this->redirect('/login');
+				$this->redirect($this->Auth->loginAction);
 			}
 			else
 				$this->Session->flash(__d('me_cms', 'No account found'), 'error');
@@ -167,7 +167,7 @@ class ProfilesController extends MeCmsAppController {
 		//Checks if the tokens exists and if it'is valid
 		if(!$this->Token->check($token, am(array('type' => 'newpassword'), compact('user_id')))) {
 			$this->Session->flash(__d('me_cms', 'Invalid token'), 'error');
-			$this->redirect('/login');
+			$this->redirect($this->Auth->loginAction);
 		}
 		
 		if($this->request->is('post') || $this->request->is('put')) {
@@ -178,7 +178,7 @@ class ProfilesController extends MeCmsAppController {
 				$this->Token->delete($token);
 				
 				$this->Session->flash(__d('me_cms', 'The password has been edited'));
-				$this->redirect('/login');
+				$this->redirect($this->Auth->loginAction);
 			}
 			else
 				$this->Session->flash(__d('me_cms', 'The password has not been edited. Please, try again'), 'error');
@@ -237,7 +237,7 @@ class ProfilesController extends MeCmsAppController {
 						break;
 				}
 				
-				$this->redirect('/login');
+				$this->redirect($this->Auth->loginAction);
 			}
 			else
 				$this->Session->flash(__d('me_cms', 'The account has not been created. Please, try again'), 'error');
