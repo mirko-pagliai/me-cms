@@ -177,7 +177,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-ProfilesController.html#29-66" title="Go to source code">ProfilesController.php</a>
+			<b>Located at</b> <a href="source-class-ProfilesController.html#29-249" title="Go to source code">ProfilesController.php</a>
 		<br>
 	</div>
 
@@ -197,7 +197,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-ProfilesController.html#39-46" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-ProfilesController.html#45-52" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request.</p>
@@ -238,7 +238,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_change_password">#</a>
-		<code><a href="source-class-ProfilesController.html#48-65" title="Go to source code">admin_change_password</a>( )</code>
+		<code><a href="source-class-ProfilesController.html#54-80" title="Go to source code">admin_change_password</a>( )</code>
 
 		<div class="description short">
 			<p>Change the user password</p>
@@ -256,6 +256,164 @@ AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="activate_account" id="_activate_account">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_activate_account">#</a>
+		<code><a href="source-class-ProfilesController.html#82-113" title="Go to source code">activate_account</a>( <span>string <var>$user_id</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$token</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Activate account.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Activate account.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user_id</var></dt>
+					<dd>$id User ID</dd>
+					<dt><var>$token</var></dt>
+					<dd>Token</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					NotFoundException
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="forgot_your_password" id="_forgot_your_password">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_forgot_your_password">#</a>
+		<code><a href="source-class-ProfilesController.html#115-149" title="Go to source code">forgot_your_password</a>( )</code>
+
+		<div class="description short">
+			<p>Requests a new password.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Requests a new password.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
+						TokenComponent::create()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="reset_password" id="_reset_password">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_reset_password">#</a>
+		<code><a href="source-class-ProfilesController.html#151-189" title="Go to source code">reset_password</a>( <span>string <var>$user_id</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$token</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Resets password.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Resets password.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user_id</var></dt>
+					<dd>$id User ID</dd>
+					<dt><var>$token</var></dt>
+					<dd>Token</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					NotFoundException
+				</div>
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
+						TokenComponent::check()<br>
+						TokenComponent::delete()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="signup" id="_signup">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_signup">#</a>
+		<code><a href="source-class-ProfilesController.html#191-248" title="Go to source code">signup</a>( )</code>
+
+		<div class="description short">
+			<p>Sign up.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sign up.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
+						TokenComponent::create()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	</table>
 
 	<table class="summary inherited">
@@ -268,6 +426,7 @@ AppController
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCmsAppController.html#_isOffline">isOffline()</a>, 
+			<a href="class-MeCmsAppController.html#_redirectIfLogged">redirectIfLogged()</a>, 
 			<a href="class-MeCmsAppController.html#_upload">upload()</a>
 		</code></td>
 	</tr>
@@ -285,6 +444,31 @@ AppController
 
 	<table class="summary properties" id="properties">
 	<caption>Properties summary</caption>
+	<tr data-order="components" id="$components">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-ProfilesController.html#33-37" title="Go to source code"><var>$components</var></a>
+
+			<div class="description short">
+				<p>Components</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Components</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$components" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'MeCms.Email'</span>, <span class="php-quote">'MeTools.Token'</span>)</code>
+			</div>
+		</td>
+	</tr>
 	<tr data-order="uses" id="$uses">
 		<td class="attributes"><code>
 			public  
@@ -292,7 +476,7 @@ AppController
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-ProfilesController.html#33-37" title="Go to source code"><var>$uses</var></a>
+				<a href="source-class-ProfilesController.html#39-43" title="Go to source code"><var>$uses</var></a>
 
 			<div class="description short">
 				<p>Models</p>
@@ -316,7 +500,6 @@ AppController
 	<caption>Properties inherited from <a href="class-MeCmsAppController.html#properties">MeCmsAppController</a></caption>
 	<tr>
 		<td><code>
-			<a href="class-MeCmsAppController.html#$components"><var>$components</var></a>, 
 			<a href="class-MeCmsAppController.html#$config"><var>$config</var></a>, 
 			<a href="class-MeCmsAppController.html#$helpers"><var>$helpers</var></a>
 		</code></td>

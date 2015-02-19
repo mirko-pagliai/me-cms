@@ -177,7 +177,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-UsersController.html#29-236" title="Go to source code">UsersController.php</a>
+			<b>Located at</b> <a href="source-class-UsersController.html#29-237" title="Go to source code">UsersController.php</a>
 		<br>
 	</div>
 
@@ -263,7 +263,7 @@ AppController
 
 				<h4>Used by</h4>
 				<div class="list">
-						<code><a href="class-UsersController.html#_login">UsersController::login()</a></code><br>to logout the user, if his account has not been activated or if he has been banned<br>
+						<code><a href="class-UsersController.html#_login">UsersController::login()</a></code><br>
 						<code><a href="class-UsersController.html#_logout">UsersController::logout()</a></code><br>to logout the user<br>
 				</div>
 
@@ -352,7 +352,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-UsersController.html#115-150" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#115-154" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edit user</p>
@@ -391,7 +391,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-UsersController.html#152-167" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-UsersController.html#156-171" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			<p>List users</p>
@@ -421,7 +421,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_view">#</a>
-		<code><a href="source-class-UsersController.html#169-185" title="Go to source code">admin_view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#173-189" title="Go to source code">admin_view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View user</p>
@@ -460,7 +460,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_login">#</a>
-		<code><a href="source-class-UsersController.html#187-225" title="Go to source code">login</a>( )</code>
+		<code><a href="source-class-UsersController.html#191-226" title="Go to source code">login</a>( )</code>
 
 		<div class="description short">
 			<p>Login</p>
@@ -479,8 +479,8 @@ AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code><br>to logout the user, if his account has not been activated or if he has been banned<br>
-						<code><a href="class-MeAuthComponent.html#_isLogged">MeAuthComponent::isLogged()</a></code><br>to checks if the user is already logged in<br>
+						<code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code><br>
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
 				</div>
 
 
@@ -499,7 +499,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logout">#</a>
-		<code><a href="source-class-UsersController.html#227-235" title="Go to source code">logout</a>( )</code>
+		<code><a href="source-class-UsersController.html#228-236" title="Go to source code">logout</a>( )</code>
 
 		<div class="description short">
 			<p>Logout</p>
@@ -537,6 +537,7 @@ AppController
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCmsAppController.html#_isOffline">isOffline()</a>, 
+			<a href="class-MeCmsAppController.html#_redirectIfLogged">redirectIfLogged()</a>, 
 			<a href="class-MeCmsAppController.html#_upload">upload()</a>
 		</code></td>
 	</tr>

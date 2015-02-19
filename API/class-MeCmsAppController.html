@@ -80,6 +80,7 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-ConfigComponent.html">ConfigComponent</a></li>
+				<li><a href="class-EmailComponent.html">EmailComponent</a></li>
 				<li><a href="class-MeAuthComponent.html">MeAuthComponent</a></li>
 				<li class="active"><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
 			</ul>
@@ -176,7 +177,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-MeCmsAppController.html#30-245" title="Go to source code">MeCmsAppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCmsAppController.html#30-256" title="Go to source code">MeCmsAppController.php</a>
 		<br>
 	</div>
 
@@ -463,6 +464,40 @@ It's used to perform logic or set view variables that are required on every requ
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="redirectIfLogged" id="_redirectIfLogged">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_redirectIfLogged">#</a>
+		<code><a href="source-class-MeCmsAppController.html#218-227" title="Go to source code">redirectIfLogged</a>( )</code>
+
+		<div class="description short">
+			<p>Redirects if the user is already logged in</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Redirects if the user is already logged in</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeAuthComponent.html#_isLogged">MeAuthComponent::isLogged()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="upload" id="_upload">
 
 		<td class="attributes"><code>
@@ -475,7 +510,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_upload">#</a>
-		<code><a href="source-class-MeCmsAppController.html#218-244" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#229-255" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
 
 		<div class="description short">
 			<p>Uploads a file</p>

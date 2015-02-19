@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-User.html#30-324" title="Go to source code">User.php</a>
+			<b>Located at</b> <a href="source-class-User.html#30-301" title="Go to source code">User.php</a>
 		<br>
 	</div>
 
@@ -196,7 +196,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-User.html#217-232" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#194-209" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called before each save operation, after validation. Return a non-true result to halt the save.</p>
@@ -237,7 +237,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeValidate">#</a>
-		<code><a href="source-class-User.html#234-245" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#211-222" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called during validation operations, before validation.</p>
@@ -276,7 +276,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAdmin">#</a>
-		<code><a href="source-class-User.html#247-260" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-User.html#224-237" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks if an user is an admin</p>
@@ -315,7 +315,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isFounder">#</a>
-		<code><a href="source-class-User.html#262-269" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-User.html#239-246" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks if an user is the admin founder</p>
@@ -354,7 +354,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_oldPasswordIsRight">#</a>
-		<code><a href="source-class-User.html#271-288" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#248-265" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -400,7 +400,7 @@ This is used only when a user changes his password.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordsMatch">#</a>
-		<code><a href="source-class-User.html#290-301" title="Go to source code">passwordsMatch</a>( )</code>
+		<code><a href="source-class-User.html#267-278" title="Go to source code">passwordsMatch</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -436,7 +436,7 @@ This is used only when a user changes his password.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordIsStrong">#</a>
-		<code><a href="source-class-User.html#303-323" title="Go to source code">passwordIsStrong</a>( )</code>
+		<code><a href="source-class-User.html#280-300" title="Go to source code">passwordIsStrong</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -568,7 +568,7 @@ This is used only when a user changes his password.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#52-191" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-User.html#52-168" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -633,21 +633,10 @@ This is used only when a user changes his password.</p>
         )
     ),
     <span class="php-quote">'password'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-comment">//On &quot;create&quot;, the field must be filled</span>
-        <span class="php-quote">'minLengthOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'allowEmpty'</span>    =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'last'</span>          =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'message'</span>       =&gt; <span class="php-quote">'Must be at least %d characters'</span>,
-            <span class="php-quote">'on'</span>            =&gt; <span class="php-quote">'create'</span>,
-            <span class="php-quote">'rule'</span>          =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'minLength'</span>, <span class="php-num">8</span>)
-        ),
-        <span class="php-comment">//On &quot;update&quot;, the field can be left blank</span>
-        <span class="php-quote">'minLengthOnUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'allowEmpty'</span>    =&gt; <span class="php-keyword1">TRUE</span>,
-            <span class="php-quote">'last'</span>          =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'message'</span>       =&gt; <span class="php-quote">'Must be at least %d characters'</span>,
-            <span class="php-quote">'on'</span>            =&gt; <span class="php-quote">'update'</span>,
-            <span class="php-quote">'rule'</span>          =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'minLength'</span>, <span class="php-num">8</span>)
+        <span class="php-quote">'minLength'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be at least %d characters'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'minLength'</span>, <span class="php-num">8</span>)
         ),
         <span class="php-quote">'passwordIsStrong'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'The password should contain letters, numbers and symbols'</span>,
@@ -656,21 +645,9 @@ This is used only when a user changes his password.</p>
     ),
     <span class="php-comment">//This is used to check that the password has been correctly inserted</span>
     <span class="php-quote">'password_repeat'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-comment">//On &quot;create&quot;, the field must be filled</span>
-        <span class="php-quote">'passwordsMatchOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'allowEmpty'</span>    =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'message'</span>       =&gt; <span class="php-quote">'Passwords don\'t match'</span>,
-            <span class="php-quote">'on'</span>            =&gt; <span class="php-quote">'create'</span>,
-            <span class="php-quote">'rule'</span>          =&gt; <span class="php-quote">'passwordsMatch'</span>
-        ),
-        <span class="php-comment">//On &quot;update&quot;, the field can be left blank.</span>
-        <span class="php-comment">//If the &quot;password&quot; field is not blank, then this field must also be filled out.</span>
-        <span class="php-comment">//This is set by the &quot;beforeValidate()&quot; callback method</span>
-        <span class="php-quote">'passwordsMatchOnUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'allowEmpty'</span>    =&gt; <span class="php-keyword1">TRUE</span>,
-            <span class="php-quote">'message'</span>       =&gt; <span class="php-quote">'Passwords don\'t match'</span>,
-            <span class="php-quote">'on'</span>            =&gt; <span class="php-quote">'update'</span>,
-            <span class="php-quote">'rule'</span>          =&gt; <span class="php-quote">'passwordsMatch'</span>
+        <span class="php-quote">'passwordsMatch'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Passwords don\'t match'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'passwordsMatch'</span>
         )
     ),
     <span class="php-comment">//This is only used when a user changes his password</span>
@@ -728,7 +705,7 @@ This is used only when a user changes his password.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#193-203" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-User.html#170-180" title="Go to source code"><var>$belongsTo</var></a>
 
 			<div class="description short">
 				<p>belongsTo associations</p>
@@ -759,7 +736,7 @@ This is used only when a user changes his password.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#205-215" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-User.html#182-192" title="Go to source code"><var>$hasMany</var></a>
 
 			<div class="description short">
 				<p>hasMany associations</p>
