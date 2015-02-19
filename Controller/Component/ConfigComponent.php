@@ -66,6 +66,9 @@ class ConfigComponent extends Component {
 		//This configuration will overwrite the one obtained by the plugin
 		if(is_readable(APP.'Config'.DS.'mecms.php'))
 			Configure::load('mecms');
+				
+		//Turns some values
+		Configure::write($key = 'MeCms.general.users_need_to_be_enabled', is_int($value = Configure::read($key)) && $value >= 0 && $value <= 2 ? $value : 1);
 		
 		//Turns some values as array
 		foreach(array('MeCms.backend.topbar', 'MeCms.frontend.widgets', 'MeCms.frontend.widgets_homepage') as $key)

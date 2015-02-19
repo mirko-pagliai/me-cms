@@ -19,29 +19,39 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Users
+ * @package		MeCms\View\Profiles
  */
 ?>
-	
-<div class="users form">
+
+<div class="profiles form">
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
 				echo $this->Form->input('username', array(
-					'autofocus'		=> TRUE,
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Username')
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Username')
+				));
+				echo $this->Form->input('email', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Email')
 				));
 				echo $this->Form->input('password', array(
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Password')
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Password')
+				));
+				echo $this->Form->input('password_repeat', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Repeat password')
+				));
+				echo $this->Form->input('first_name', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'First name')
+				));
+				echo $this->Form->input('last_name', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Last name')
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
-	<?php
-		echo $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
-		echo $this->Html->br();
-		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'request_new_password'));
-	?>
+	<?php echo $this->Form->end(__d('me_cms', 'Sign up'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 </div>

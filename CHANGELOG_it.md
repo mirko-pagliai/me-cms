@@ -1,6 +1,7 @@
 # 1.x ramo
 ## 1.2 ramo
 ### 1.2.1
+* gli utenti possono iscriversi. È possibile impostare come deve essere attivato un account;
 * gli utenti possono reimpostare la propria password;
 * viene inviata una email quando l'utente cambia la propria password.
 

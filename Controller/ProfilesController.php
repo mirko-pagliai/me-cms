@@ -93,9 +93,8 @@ class ProfilesController extends MeCmsAppController {
 			$user = $this->User->findByEmail($email = $this->request->data['User']['email'], array('id', 'full_name'));
 			
 			if(!empty($user)) {
-				//Gets the token
+				//Gets the token and the url to reset the password
 				$token = $this->Token->create($email, array('type' => 'newpassword', 'user_id' => $id = $user['User']['id']));
-				//Sets the url to reset the password
 				$url = Router::url(am(array('controller' => 'profiles', 'action' => 'reset_password'), compact('id', 'token')), TRUE);
 				
 				//Sends email
@@ -137,7 +136,7 @@ class ProfilesController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'Invalid token'), 'error');
 			$this->redirect('/login');
 		}
-					
+		
 		if($this->request->is('post') || $this->request->is('put')) {
 			$this->User->id = $user_id;
 			
@@ -153,6 +152,65 @@ class ProfilesController extends MeCmsAppController {
 		}
 		
 		$this->set('title_for_layout', __d('me_cms', 'Reset password'));
+		$this->layout = 'MeCms.users';
+	}
+	
+	/**
+	 * Sign up.
+	 * @uses redirectIfLogged()
+	 * @uses TokenComponent::create()
+	 */
+	public function signup() {
+		//Redirects if the user is already logged in
+		$this->redirectIfLogged();
+		
+		//Checks if the registrations are enabled
+		if(!$this->config['users_can_signup']) {
+			$this->Session->flash(__d('me_cms', 'Disabled'), 'error');
+			$this->redirect('/');
+		}
+				
+		if($this->request->is('post') || $this->request->is('put')) {
+			//Sets default values
+			$this->request->data['User'] = am(array(
+				'group_id'	=> $this->config['users_default_group'],
+				'active'	=> $this->config['users_need_to_be_enabled'] > 0 ? 0 : 1
+			), $this->request->data['User']);
+						
+			if($user = $this->User->save($this->request->data)) {
+				switch($this->config['users_need_to_be_enabled']) {
+					//The account will be enabled by an administrator
+					case 2:
+						$this->Session->flash(__d('me_cms', 'The account has been created, but it needs to be activated by an admin'));
+						break;
+					//The account will be enabled by the user via email (default)
+					case 1:
+						//Gets the token and the url to activate account
+						$token = $this->Token->create($email = $user['User']['email'], array('type' => 'signup', 'user_id' => $id = $user['User']['id']));
+						$url = Router::url(am(array('controller' => 'profiles', 'action' => 'activate_account'), compact('id', 'token')), TRUE);
+												
+						//Sends email
+						$this->Email->to(array($email => $full_name = sprintf('%s %s', $user['User']['first_name'], $user['User']['last_name'])));
+						$this->Email->subject(__d('me_cms', 'Activate your account'));
+						$this->Email->template('signup');
+						$this->Email->set(compact('full_name', 'url'));
+						$this->Email->send();
+						
+						$this->Session->flash(__d('me_cms', 'We send you an email to activate your account'));
+						break;
+					//No activation required, the account is immediately active
+					default:
+						$this->Session->flash(__d('me_cms', 'Account created. Now you can login'));
+						break;
+				}
+				
+				$this->redirect('/login');
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'The account has not been created. Please, try again'), 'error');
+		}
+		
+		$this->set('title_for_layout', __d('me_cms', 'Sign up'));
 		$this->layout = 'MeCms.users';
 	}
 }

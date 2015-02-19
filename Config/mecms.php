@@ -72,6 +72,15 @@ $config = array('MeCms' => array(
 		//Session (login) timeout, in minutes
 		'timeout' => 30,
 		//Site title
-		'title' => 'MeCms'
+		'title' => 'MeCms',
+		//Users can signup
+		'users_can_signup' => TRUE,
+		//Default users group (ID)
+		'users_default_group' => 3,
+		//How to activating accounts
+		//	`0` - No activation required, the account is immediately active
+		//	`1` - The account will be enabled by the user via email (default)
+		//	`2`	- The account will be enabled by an administrator
+		'users_need_to_be_enabled' => 1
 	)
 ));
