@@ -40,8 +40,9 @@
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 	<?php
-		echo $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
-		echo $this->Html->br();
-		echo $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
+		echo $this->Html->ul(array(
+			$this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup')),
+			$this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'))
+		), array('class' => 'list-unstyled'));
 	?>
 </div>
