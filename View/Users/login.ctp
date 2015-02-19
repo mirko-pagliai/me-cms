@@ -36,6 +36,11 @@
 					'label'			=> FALSE,
 					'placeholder'	=> __d('me_cms', 'Password')
 				));
+				echo $this->Form->input('remember_me', array(
+					'label'	=> __d('me_cms', 'Remember me'),
+					'tip'	=> __d('me_cms', 'Don\'t use on public computers'),
+					'type'	=> 'checkbox'
+				));
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>

@@ -52,10 +52,16 @@ class UsersController extends MeCmsAppController {
 	 * @return boolean
 	 */
 	private function _logout() {
+		//Loads the `Cookie` component
+		$this->Cookie = $this->Components->load('Cookie');
+		
+		//Deletes the login cookie
+		$this->Cookie->delete('User');
+		
 		//Deletes the KCFinder session
 		$this->Session->delete('KCFINDER');
 		
-		//Deletes cookie
+		//Deletes JS cookie
 		setcookie('sidebar-lastmenu', '', 1, '/');
 		
 		return $this->redirect($this->Auth->logout());
@@ -198,10 +204,13 @@ class UsersController extends MeCmsAppController {
 		//Redirects if the user is already logged in
 		$this->redirectIfLogged();
 		
+		//Loads the `Cookie` component
+		$this->Cookie = $this->Components->load('Cookie');
+		
 		if($this->request->is('post')) {
 			if($this->Auth->login()) {
-				//Gets the user data ("active" and "banned" fields)
-				$user =	$this->User->findById($this->Auth->user('id'), array('active', 'banned'));
+				//Gets the user
+				$user =	$this->User->findById($this->Auth->user('id'), array('password', 'active', 'banned'));
 				
 				//Checks if the user is banned
 				if($user['User']['banned']) {
@@ -213,6 +222,13 @@ class UsersController extends MeCmsAppController {
 					$this->Session->flash(__d('me_cms', 'Your account has not been activated yet'), 'error');
 					return $this->_logout();
 				}
+				
+				//Saves the login data in a cookie, if it was requested
+				if(!empty($this->request->data['User']['remember_me']))
+					$this->Cookie->write('User', array(
+						'username' => $this->request->data['User']['username'], 
+						'password' => $user['User']['password']
+					));
 				
 				//Login...
 				return $this->redirect($this->Auth->redirect());
@@ -232,6 +248,7 @@ class UsersController extends MeCmsAppController {
 	 */
 	public function logout() {
 		$this->Session->flash(__d('me_cms', 'You are successfully logged out'));
+		
 		return $this->_logout();
 	}
 }
