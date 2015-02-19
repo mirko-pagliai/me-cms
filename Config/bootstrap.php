@@ -27,6 +27,13 @@
 //Adds the admin routes prefix
 Configure::write('Routing.prefixes', array('admin'));
 
+//Sets the session
+Configure::write('Session', array(
+    'defaults'		=> 'php',
+    'cookieTimeout'	=> 0,
+    'checkAgent'	=> FALSE
+));
+
 /**
  * Default options (with File engine)
  */
