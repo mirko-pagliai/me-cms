@@ -40,5 +40,5 @@
 				));
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Set new password'), array('class' => 'btn-block btn-lg btn-primary')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Reset password'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 </div>
