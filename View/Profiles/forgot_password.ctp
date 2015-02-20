@@ -36,9 +36,14 @@
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Request new password'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 	<?php
-		echo $this->Html->ul(array(
-			$this->Html->link(__d('me_cms', 'Login'), '/login'),
-			$this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'))
-		), array('class' => 'list-unstyled'));
+		$menu = array();
+		
+		$menu[] = $this->Html->link(__d('me_cms', 'Login'), '/login');
+		
+		//If users can signup
+		if($config['users_can_signup'])
+			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
+	
+		echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
 	?>
 </div>

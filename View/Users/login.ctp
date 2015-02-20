@@ -45,9 +45,14 @@
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 	<?php
-		echo $this->Html->ul(array(
-			$this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup')),
-			$this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'))
-		), array('class' => 'list-unstyled'));
+		$menu = array();
+		
+		//If users can signup
+		if($config['users_can_signup'])
+			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
+		
+		$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
+		
+		echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
 	?>
 </div>
