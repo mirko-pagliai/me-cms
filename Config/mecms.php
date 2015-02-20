@@ -77,6 +77,8 @@ $config = array('MeCms' => array(
 		'users_can_signup' => TRUE,
 		//Default users group (ID)
 		'users_default_group' => 3,
+		//Login with cookies ("remember me" function)
+		'login_with_cookies' => TRUE,
 		//How to activating accounts
 		//	`0` - No activation required, the account is immediately active
 		//	`1` - The account will be enabled by the user via email (default)

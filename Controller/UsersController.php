@@ -31,6 +31,12 @@ App::uses('MeCmsAppController', 'MeCms.Controller');
  */
 class UsersController extends MeCmsAppController {
 	/**
+	 * Components
+	 * @var array
+	 */
+	public $components = array('Cookie');
+	
+	/**
 	 * Check if the provided user is authorized for the request.
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used.
 	 * @return bool TRUE if $user is authorized, otherwise FALSE
@@ -48,13 +54,44 @@ class UsersController extends MeCmsAppController {
 	}
 	
 	/**
-	 * Internal function to logout
-	 * @return boolean
+	 * Called before the controller action. 
+	 * It's used to perform logic before each controller action.
 	 */
-	private function _logout() {
-		//Loads the `Cookie` component
-		$this->Cookie = $this->Components->load('Cookie');
+	public function beforeFilter() {
+		parent::beforeFilter();
 		
+		//Sets the cookies expiration
+		$this->Cookie->time = '365 days';
+	}
+	
+	/**
+	 * Internal function to login with cookie
+	 * @return mixed
+	 * @uses _logout()
+	 */
+	private function _loginWithCookie() {
+		//Checks if the cookie exists
+		if(!$this->Cookie->check('User'))
+			return FALSE;
+		
+		//Gets the user data
+		$user = $this->User->find('active', array('conditions' => $this->Cookie->read('User'), 'limit' => 1));
+		
+		//Unsets the user password
+		unset($user['password']);
+		
+		//If the user data are wrong and the user cannot login
+		if(empty($user) || $this->Auth->login($user['User']))
+			return $this->_logout();
+			
+		return $this->redirect($this->Auth->redirect());
+	}
+	
+	/**
+	 * Internal function to logout.
+	 * @return mixed
+	 */
+	private function _logout() {		
 		//Deletes the login cookie
 		$this->Cookie->delete('User');
 		
@@ -197,6 +234,7 @@ class UsersController extends MeCmsAppController {
 	/**
 	 * Login
 	 * @return boolean
+	 * @uses _loginWithCookie()
 	 * @uses _logout()
 	 * @uses redirectIfLogged()
 	 */
@@ -204,8 +242,9 @@ class UsersController extends MeCmsAppController {
 		//Redirects if the user is already logged in
 		$this->redirectIfLogged();
 		
-		//Loads the `Cookie` component
-		$this->Cookie = $this->Components->load('Cookie');
+		//Tries to login with cookies, if the login with cookies is enabled
+		if($this->config['login_with_cookies'])
+			$this->_loginWithCookie();
 		
 		if($this->request->is('post')) {
 			if($this->Auth->login()) {
@@ -230,7 +269,6 @@ class UsersController extends MeCmsAppController {
 						'password' => $user['User']['password']
 					));
 				
-				//Login...
 				return $this->redirect($this->Auth->redirect());
 			}
 			else
