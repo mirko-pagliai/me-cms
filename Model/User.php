@@ -81,6 +81,11 @@ class User extends MeCmsAppModel {
 				'message'	=> 'Allowed chars: lowercase letters, numbers, dash',
 				'rule'		=> array('isValidSlug')
 			),
+			'notReserved' => array(
+				'last'		=> FALSE,
+				'message'	=> 'This value is reserved',
+				'rule'		=> array('notReserved')
+			),
 			'blankonUpdate' => array(
 				'message'	=> 'Can not be changed',
 				'on'		=> 'update',
@@ -243,6 +248,17 @@ class User extends MeCmsAppModel {
 	 */
 	public function isFounder($id) {
 		return (int) $id === 1;
+	}
+	
+	/**
+	 * Validation method.
+	 * 
+	 * Checks if the username is a reserved name.
+	 * @param array $check Data
+	 * @return bool TRUE if the username is not a reserved name, otherwise FALSE
+	 */
+	public function notReserved($check) {		
+		return !preg_match('/(admin|manager|root|supervisor|moderator)/i', array_values($check)[0]);
 	}
 	
 	/**
