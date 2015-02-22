@@ -177,7 +177,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-UsersController.html#29-237" title="Go to source code">UsersController.php</a>
+			<b>Located at</b> <a href="source-class-UsersController.html#29-292" title="Go to source code">UsersController.php</a>
 		<br>
 	</div>
 
@@ -197,7 +197,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-UsersController.html#33-48" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#39-54" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request.</p>
@@ -232,37 +232,118 @@ AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="beforeFilter" id="_beforeFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeFilter">#</a>
+		<code><a href="source-class-UsersController.html#56-65" title="Go to source code">beforeFilter</a>( )</code>
+
+		<div class="description short">
+			<p>Called before the controller action.
+It's used to perform logic before each controller action.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called before the controller action.
+It's used to perform logic before each controller action.</p>
+
+
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					InternalErrorException
+				</div>
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_loginWithCookie" id="__loginWithCookie">
+
+		<td class="attributes"><code>
+			 private 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__loginWithCookie">#</a>
+		<code><a href="source-class-UsersController.html#67-88" title="Go to source code">_loginWithCookie</a>( )</code>
+
+		<div class="description short">
+			<p>Internal function to login with cookie</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Internal function to login with cookie</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-UsersController.html#_login">UsersController::login()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_logout" id="__logout">
 
 		<td class="attributes"><code>
 			 private 
 
-			boolean
+			mixed
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__logout">#</a>
-		<code><a href="source-class-UsersController.html#50-62" title="Go to source code">_logout</a>( )</code>
+		<code><a href="source-class-UsersController.html#90-105" title="Go to source code">_logout</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to logout</p>
+			<p>Internal function to logout.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to logout</p>
+			<p>Internal function to logout.</p>
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					boolean
+					mixed
 				</div>
 
 
 				<h4>Used by</h4>
 				<div class="list">
+						<code><a href="class-UsersController.html#__loginWithCookie">UsersController::_loginWithCookie()</a></code><br>
 						<code><a href="class-UsersController.html#_login">UsersController::login()</a></code><br>
 						<code><a href="class-UsersController.html#_logout">UsersController::logout()</a></code><br>to logout the user<br>
 				</div>
@@ -283,7 +364,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_add">#</a>
-		<code><a href="source-class-UsersController.html#64-82" title="Go to source code">admin_add</a>( )</code>
+		<code><a href="source-class-UsersController.html#107-125" title="Go to source code">admin_add</a>( )</code>
 
 		<div class="description short">
 			<p>Add user</p>
@@ -313,7 +394,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_delete">#</a>
-		<code><a href="source-class-UsersController.html#84-113" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#127-156" title="Go to source code">admin_delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Delete user</p>
@@ -352,7 +433,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_edit">#</a>
-		<code><a href="source-class-UsersController.html#115-154" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#158-197" title="Go to source code">admin_edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edit user</p>
@@ -391,7 +472,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_index">#</a>
-		<code><a href="source-class-UsersController.html#156-171" title="Go to source code">admin_index</a>( )</code>
+		<code><a href="source-class-UsersController.html#199-214" title="Go to source code">admin_index</a>( )</code>
 
 		<div class="description short">
 			<p>List users</p>
@@ -421,7 +502,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_view">#</a>
-		<code><a href="source-class-UsersController.html#173-189" title="Go to source code">admin_view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-UsersController.html#216-232" title="Go to source code">admin_view</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>View user</p>
@@ -460,7 +541,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_login">#</a>
-		<code><a href="source-class-UsersController.html#191-226" title="Go to source code">login</a>( )</code>
+		<code><a href="source-class-UsersController.html#234-280" title="Go to source code">login</a>( )</code>
 
 		<div class="description short">
 			<p>Login</p>
@@ -479,6 +560,7 @@ AppController
 
 				<h4>Uses</h4>
 				<div class="list">
+						<code><a href="class-UsersController.html#__loginWithCookie">UsersController::_loginWithCookie()</a></code><br>
 						<code><a href="class-UsersController.html#__logout">UsersController::_logout()</a></code><br>
 						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
 				</div>
@@ -499,7 +581,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logout">#</a>
-		<code><a href="source-class-UsersController.html#228-236" title="Go to source code">logout</a>( )</code>
+		<code><a href="source-class-UsersController.html#282-291" title="Go to source code">logout</a>( )</code>
 
 		<div class="description short">
 			<p>Logout</p>
@@ -534,7 +616,6 @@ AppController
 			<a href="class-MeCmsAppController.html#__checkLastSearch">_checkLastSearch()</a>, 
 			<a href="class-MeCmsAppController.html#__loadMenus">_loadMenus()</a>, 
 			<a href="class-MeCmsAppController.html#_afterFilter">afterFilter()</a>, 
-			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCmsAppController.html#_isOffline">isOffline()</a>, 
 			<a href="class-MeCmsAppController.html#_redirectIfLogged">redirectIfLogged()</a>, 
@@ -553,12 +634,39 @@ AppController
 
 
 
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="components" id="$components">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-UsersController.html#33-37" title="Go to source code"><var>$components</var></a>
+
+			<div class="description short">
+				<p>Components</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Components</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$components" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'Cookie'</span>)</code>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 	<table class="summary inherited">
 	<caption>Properties inherited from <a href="class-MeCmsAppController.html#properties">MeCmsAppController</a></caption>
 	<tr>
 		<td><code>
-			<a href="class-MeCmsAppController.html#$components"><var>$components</var></a>, 
 			<a href="class-MeCmsAppController.html#$config"><var>$config</var></a>, 
 			<a href="class-MeCmsAppController.html#$helpers"><var>$helpers</var></a>
 		</code></td>

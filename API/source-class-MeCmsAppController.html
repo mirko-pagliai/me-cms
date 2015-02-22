@@ -206,7 +206,7 @@
 </span></span><span id="80" class="l"><a href="#80"> 80: </a><span class="php-comment">     * @return bool
 </span></span><span id="81" class="l"><a href="#81"> 81: </a><span class="php-comment">     */</span>
 </span><span id="82" class="l"><a href="#82"> 82: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _checkLastSearch() {
-</span><span id="83" class="l"><a href="#83"> 83: </a>        <span class="php-var">$interval</span> = <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'search_interval'</span>];
+</span><span id="83" class="l"><a href="#83"> 83: </a>        <span class="php-var">$interval</span> = <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'security'</span>][<span class="php-quote">'search_interval'</span>];
 </span><span id="84" class="l"><a href="#84"> 84: </a>        
 </span><span id="85" class="l"><a href="#85"> 85: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$interval</span>))
 </span><span id="86" class="l"><a href="#86"> 86: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
@@ -273,12 +273,12 @@
 </span><span id="147" class="l"><a href="#147">147: </a>            <span class="php-var">$this</span>-&gt;Auth-&gt;allow(<span class="php-var">$this</span>-&gt;action);
 </span><span id="148" class="l"><a href="#148">148: </a>        
 </span><span id="149" class="l"><a href="#149">149: </a>        <span class="php-comment">//Sets the theme</span>
-</span><span id="150" class="l"><a href="#150">150: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;config[<span class="php-quote">'theme'</span>])) {
+</span><span id="150" class="l"><a href="#150">150: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;config[<span class="php-quote">'frontend'</span>][<span class="php-quote">'theme'</span>])) {
 </span><span id="151" class="l"><a href="#151">151: </a>            <span class="php-comment">//Checks if the theme exists</span>
-</span><span id="152" class="l"><a href="#152">152: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(App::themePath(<span class="php-var">$this</span>-&gt;config[<span class="php-quote">'theme'</span>])))
-</span><span id="153" class="l"><a href="#153">153: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> InternalErrorException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The theme %s was not found'</span>, <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'theme'</span>]));
+</span><span id="152" class="l"><a href="#152">152: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(App::themePath(<span class="php-var">$theme</span> = <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'frontend'</span>][<span class="php-quote">'theme'</span>])))
+</span><span id="153" class="l"><a href="#153">153: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> InternalErrorException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The theme %s was not found'</span>, <span class="php-var">$theme</span>));
 </span><span id="154" class="l"><a href="#154">154: </a>
-</span><span id="155" class="l"><a href="#155">155: </a>            <span class="php-var">$this</span>-&gt;theme = <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'theme'</span>];
+</span><span id="155" class="l"><a href="#155">155: </a>            <span class="php-var">$this</span>-&gt;theme = <span class="php-var">$theme</span>;
 </span><span id="156" class="l"><a href="#156">156: </a>        }
 </span><span id="157" class="l"><a href="#157">157: </a>        
 </span><span id="158" class="l"><a href="#158">158: </a>        <span class="php-comment">//If this is an admin request</span>
@@ -338,7 +338,7 @@
 </span></span><span id="212" class="l"><a href="#212">212: </a><span class="php-comment">     * @uses MeToolsAppController::isRequestAction()
 </span></span><span id="213" class="l"><a href="#213">213: </a><span class="php-comment">     */</span>
 </span><span id="214" class="l"><a href="#214">214: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> isOffline() {
-</span><span id="215" class="l"><a href="#215">215: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'offline'</span>] &amp;&amp; !<span class="php-var">$this</span>-&gt;isAction(<span class="php-keyword1">array</span>(<span class="php-quote">'login'</span>, <span class="php-quote">'logout'</span>), <span class="php-quote">'users'</span>) &amp;&amp; !<span class="php-var">$this</span>-&gt;isAction(<span class="php-quote">'offline'</span>, <span class="php-quote">'systems'</span>) &amp;&amp; !<span class="php-var">$this</span>-&gt;isRequestAction();
+</span><span id="215" class="l"><a href="#215">215: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'frontend'</span>][<span class="php-quote">'offline'</span>] &amp;&amp; !<span class="php-var">$this</span>-&gt;isAction(<span class="php-keyword1">array</span>(<span class="php-quote">'login'</span>, <span class="php-quote">'logout'</span>), <span class="php-quote">'users'</span>) &amp;&amp; !<span class="php-var">$this</span>-&gt;isAction(<span class="php-quote">'offline'</span>, <span class="php-quote">'systems'</span>) &amp;&amp; !<span class="php-var">$this</span>-&gt;isRequestAction();
 </span><span id="216" class="l"><a href="#216">216: </a>    }
 </span><span id="217" class="l"><a href="#217">217: </a>    
 </span><span id="218" class="l"><a href="#218">218: </a>    <span class="php-comment">/**

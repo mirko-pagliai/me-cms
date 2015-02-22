@@ -163,7 +163,7 @@ Component
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-ConfigComponent.html#29-189" title="Go to source code">Component/ConfigComponent.php</a>
+			<b>Located at</b> <a href="source-class-ConfigComponent.html#29-201" title="Go to source code">Component/ConfigComponent.php</a>
 		<br>
 	</div>
 
@@ -186,11 +186,11 @@ Component
 		<code><a href="source-class-ConfigComponent.html#45-51" title="Go to source code">_debugForLocalhost</a>( )</code>
 
 		<div class="description short">
-			<p>Checks if debugging for localhost should be forced</p>
+			<p>Checks if debugging for localhost should be forced.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Checks if debugging for localhost should be forced</p>
+			<p>Checks if debugging for localhost should be forced.</p>
 
 
 
@@ -200,48 +200,6 @@ Component
 				</div>
 
 
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="_setConfig" id="__setConfig">
-
-		<td class="attributes"><code>
-			 protected 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__setConfig">#</a>
-		<code><a href="source-class-ConfigComponent.html#53-90" title="Go to source code">_setConfig</a>( )</code>
-
-		<div class="description short">
-			<p>Loads and writes the configuration.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Loads and writes the configuration.</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#$controller">ConfigComponent::<var>$controller</var></a></code><br>
-						_setWidgets()<br>
-						<code><a href="class-ConfigComponent.html#__stringAsArray">ConfigComponent::_stringAsArray()</a></code><br>
-						MeToolsAppController::isAction()<br>
-						MeToolsAppController::isAdminRequest()<br>
-				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
@@ -263,7 +221,7 @@ Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#__stringAsArray">#</a>
-		<code><a href="source-class-ConfigComponent.html#92-110" title="Go to source code">_stringAsArray</a>( <span>string <var>$string</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#53-76" title="Go to source code">_stringAsArray</a>( <span>string <var>$string</var></span> )</code>
 
 		<div class="description short">
 			<p>Turns a string of words separated by commas (and optional spaces) into an array.</p>
@@ -299,7 +257,93 @@ Component
 
 				<h4>Used by</h4>
 				<div class="list">
-						<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
+						<code><a href="class-ConfigComponent.html#__turnsValues">ConfigComponent::_turnsValues()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_turnsValues" id="__turnsValues">
+
+		<td class="attributes"><code>
+			 protected 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__turnsValues">#</a>
+		<code><a href="source-class-ConfigComponent.html#78-103" title="Go to source code">_turnsValues</a>( <span>array <var>$config</var></span> )</code>
+
+		<div class="description short">
+			<p>Turns some values.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Turns some values.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$config</var></dt>
+					<dd>Configuration</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Configuration
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-ConfigComponent.html#__stringAsArray">ConfigComponent::_stringAsArray()</a></code><br>
+						MeToolsAppController::isAction()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="load" id="_load">
+
+		<td class="attributes"><code>
+			 protected 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_load">#</a>
+		<code><a href="source-class-ConfigComponent.html#106-120" title="Go to source code">load</a>( )</code>
+
+		<div class="description short">
+			<p>Loads the configuration file.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Loads the configuration file.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Configuration
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
 				</div>
 
 
@@ -318,7 +362,7 @@ Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-ConfigComponent.html#112-121" title="Go to source code">beforeRender</a>( <span>Controller <var>$controller</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#122-131" title="Go to source code">beforeRender</a>( <span>Controller <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Is called after the controller executes the requested action's logic,
@@ -359,7 +403,7 @@ but before the controller's renders views and layout.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-ConfigComponent.html#123-152" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#133-164" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller's beforeFilter method.</p>
@@ -383,10 +427,11 @@ but before the controller's renders views and layout.</p>
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
+						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
 						<code><a href="class-ConfigComponent.html#$controller">ConfigComponent::<var>$controller</var></a></code><br>
 						<code><a href="class-ConfigComponent.html#__debugForLocalhost">ConfigComponent::_debugForLocalhost()</a></code><br>
-						<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
-						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
+						<code><a href="class-ConfigComponent.html#__turnsValues">ConfigComponent::_turnsValues()</a></code><br>
+						<code><a href="class-ConfigComponent.html#_load">ConfigComponent::load()</a></code><br>
 				</div>
 
 
@@ -405,7 +450,7 @@ but before the controller's renders views and layout.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_kcfinder">#</a>
-		<code><a href="source-class-ConfigComponent.html#154-188" title="Go to source code">kcfinder</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-ConfigComponent.html#166-200" title="Go to source code">kcfinder</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Sets the configuration for KCFinder.</p>
@@ -500,7 +545,6 @@ but before the controller's renders views and layout.</p>
 
 					<h4>Used by</h4>
 					<div class="list">
-							<code><a href="class-ConfigComponent.html#__setConfig">ConfigComponent::_setConfig()</a></code><br>
 							<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
 					</div>
 			</div>

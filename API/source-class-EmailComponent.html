@@ -203,8 +203,8 @@
 </span><span id="77" class="l"><a href="#77"> 77: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> autoConfig() {
 </span><span id="78" class="l"><a href="#78"> 78: </a>        <span class="php-var">$config</span> = <span class="php-var">$this</span>-&gt;controller-&gt;config;
 </span><span id="79" class="l"><a href="#79"> 79: </a>        
-</span><span id="80" class="l"><a href="#80"> 80: </a>        <span class="php-var">$this</span>-&gt;config(<span class="php-var">$config</span>[<span class="php-quote">'email_config'</span>]);
-</span><span id="81" class="l"><a href="#81"> 81: </a>        <span class="php-var">$this</span>-&gt;from(<span class="php-var">$from</span> = <span class="php-keyword1">array</span>(<span class="php-var">$config</span>[<span class="php-quote">'email_from'</span>] =&gt; <span class="php-var">$config</span>[<span class="php-quote">'title'</span>]));
+</span><span id="80" class="l"><a href="#80"> 80: </a>        <span class="php-var">$this</span>-&gt;config(<span class="php-var">$config</span>[<span class="php-quote">'email'</span>][<span class="php-quote">'config'</span>]);
+</span><span id="81" class="l"><a href="#81"> 81: </a>        <span class="php-var">$this</span>-&gt;from(<span class="php-var">$from</span> = <span class="php-keyword1">array</span>(<span class="php-var">$config</span>[<span class="php-quote">'email'</span>][<span class="php-quote">'from'</span>] =&gt; <span class="php-var">$config</span>[<span class="php-quote">'main'</span>][<span class="php-quote">'title'</span>]));
 </span><span id="82" class="l"><a href="#82"> 82: </a>        <span class="php-var">$this</span>-&gt;sender(<span class="php-var">$from</span>);
 </span><span id="83" class="l"><a href="#83"> 83: </a>        <span class="php-var">$this</span>-&gt;template(<span class="php-quote">'default'</span>, <span class="php-quote">'MeCms.default'</span>);
 </span><span id="84" class="l"><a href="#84"> 84: </a>        <span class="php-var">$this</span>-&gt;emailFormat(<span class="php-quote">'html'</span>);

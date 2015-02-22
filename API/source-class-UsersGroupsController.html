@@ -240,7 +240,7 @@
 </span><span id="114" class="l"><a href="#114">114: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> admin_index() {
 </span><span id="115" class="l"><a href="#115">115: </a>        <span class="php-var">$this</span>-&gt;paginate = <span class="php-keyword1">array</span>(
 </span><span id="116" class="l"><a href="#116">116: </a>            <span class="php-quote">'fields'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span>, <span class="php-quote">'name'</span>, <span class="php-quote">'label'</span>, <span class="php-quote">'user_count'</span>),
-</span><span id="117" class="l"><a href="#117">117: </a>            <span class="php-quote">'limit'</span>     =&gt; <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'records_for_page'</span>],
+</span><span id="117" class="l"><a href="#117">117: </a>            <span class="php-quote">'limit'</span>     =&gt; <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'backend'</span>][<span class="php-quote">'records'</span>],
 </span><span id="118" class="l"><a href="#118">118: </a>            <span class="php-quote">'order'</span>     =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'name'</span> =&gt; <span class="php-quote">'ASC'</span>)
 </span><span id="119" class="l"><a href="#119">119: </a>        );
 </span><span id="120" class="l"><a href="#120">120: </a>        
