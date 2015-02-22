@@ -31,11 +31,11 @@
 	<head>
 		<?php 
 			echo $this->Html->charset();
-
+			
 			if(empty($title_for_layout))
-				echo $this->Html->title($config['title']);
+				echo $this->Html->title($config['main']['title']);
 			else
-				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['title']));
+				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['main']['title']));
 			
 			echo $this->Layout->viewport();
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));
@@ -64,8 +64,8 @@
 		<div id="content" class="container">
 			<?php
 				//Check if the logo image exists
-				if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
-					echo $this->Html->thumb('img'.DS.$config['logo'], array('id' => 'logo', 'width' => 400));
+				if(is_readable(WWW_ROOT.'img'.DS.$config['frontend']['logo']))
+					echo $this->Html->thumb('img'.DS.$config['frontend']['logo'], array('id' => 'logo', 'width' => 400));
 				
 				echo $this->Session->flash();
 				echo $this->fetch('content');

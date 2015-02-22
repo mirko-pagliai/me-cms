@@ -25,7 +25,7 @@
 	
 <?php echo __d('me_cms', 'Hello %s', $full_name); ?>,
 
-<?php echo __d('me_cms', 'you have signed on the site %s', $config['title']); ?>.
+<?php echo __d('me_cms', 'you have signed on the site %s', $config['main']['title']); ?>.
 <?php echo __d('me_cms', 'The request has been sent from the IP %s', $ip_address); ?>.
 
 <?php echo __d('me_cms', 'To activate your account, click %s', $this->Html->link(__d('me_cms', 'here'), $url)); ?>.

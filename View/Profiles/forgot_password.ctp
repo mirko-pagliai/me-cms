@@ -41,7 +41,7 @@
 		$menu[] = $this->Html->link(__d('me_cms', 'Login'), '/login');
 		
 		//If users can signup
-		if($config['users_can_signup'])
+		if($config['users']['signup'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
 	
 		echo $this->Html->ul($menu, array('class' => 'list-unstyled'));

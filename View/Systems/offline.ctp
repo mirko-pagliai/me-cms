@@ -23,4 +23,4 @@
  */
 ?>
 
-<?php echo $this->Html->para(NULL, empty($config['offline_text']) ? __d('me_cms', 'The website is temporarily offline') : $config['offline_text']); ?>
+<?php echo $this->Html->para(NULL, empty($config['frontend']['offline_text']) ? __d('me_cms', 'The website is temporarily offline') : $config['frontend']['offline_text']); ?>

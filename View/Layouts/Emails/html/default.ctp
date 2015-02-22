@@ -26,7 +26,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<?php echo $this->Html->title($config['title']); ?>
+		<?php echo $this->Html->title($config['main']['title']); ?>
 	</head>
 	<body>
 		<?php
@@ -35,7 +35,7 @@
 			
 			echo '<br />';
 			
-			echo $this->Html->small(__d('me_cms', 'This email was sent automatically from %s', $this->Html->link($config['title'], $site_address))).'<br />';
+			echo $this->Html->small(__d('me_cms', 'This email was sent automatically from %s', $this->Html->link($config['main']['title'], $site_address))).'<br />';
 			echo $this->Html->small(__d('me_cms', 'Don\'t reply to this email'));
 		?>
 	</body>

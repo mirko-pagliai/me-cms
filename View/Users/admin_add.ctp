@@ -29,7 +29,7 @@
 		<div class='float-form'>
 			<?php
 				echo $this->Form->input('group_id', array(
-					'default'	=> empty($this->request->data['User']['group_id']) ? $config['default_group'] : $this->request->data['User']['group_id'],
+					'default'	=> empty($this->request->data['User']['group_id']) ? $config['users']['default_group'] : $this->request->data['User']['group_id'],
 					'label'		=> __d('me_cms', 'User group')
 				));
 				echo $this->Form->input('active', array(

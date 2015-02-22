@@ -24,7 +24,7 @@
 ?>
 
 <?php
-	if($config['fancybox'])
+	if($config['frontend']['fancybox'])
 		$this->Library->fancybox();
 ?>
 
@@ -38,7 +38,7 @@
 					$text .= $this->Html->div('info-wrapper', $this->Html->div('info', $this->Html->div('small', $photo['description'])));
 					
 					//If Fancybox is enabled, adds some link options
-					if($config['fancybox'])
+					if($config['frontend']['fancybox'])
 						$options = array(
 							'class'					=> 'fancybox thumbnail',
 							'data-fancybox-href'	=> $this->Html->thumbUrl($photo['path'], array('height' => 1280)),

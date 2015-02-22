@@ -171,7 +171,7 @@ class PostsController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
-			'limit'		=> $this->config['records_for_page'],
+			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('Post.created' => 'DESC')
 		);
 		
@@ -216,7 +216,7 @@ class PostsController extends MeCmsAppController {
 				'contain'	=> array('Category.title', 'Category.slug', 'User.first_name', 'User.last_name'),
 				'fields'	=> array('title', 'subtitle', 'slug', 'text', 'created'),
 				'findType'	=> 'active',
-				'limit'		=> $this->config['records_for_page'],
+				'limit'		=> $this->config['frontend']['records'],
 				'order'		=> array('Post.created' => 'DESC')
 			), compact('conditions'));
 			
@@ -294,7 +294,7 @@ class PostsController extends MeCmsAppController {
 					$this->set(compact('count', 'posts'));
 				}
 				else
-					$this->Session->flash(__d('me_cms', 'You have to wait %d seconds to perform a new search', $this->config['search_interval']), 'alert');
+					$this->Session->flash(__d('me_cms', 'You have to wait %d seconds to perform a new search', $this->config['security']['search_interval']), 'alert');
 			}
 			else
 				$this->Session->flash(__d('me_cms', 'You have to search at least a word of %d characters', 4), 'alert');

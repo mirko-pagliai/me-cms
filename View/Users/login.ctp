@@ -48,7 +48,7 @@
 		$menu = array();
 		
 		//If users can signup
-		if($config['users_can_signup'])
+		if($config['users']['signup'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
 		
 		$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));

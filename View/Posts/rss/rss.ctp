@@ -39,7 +39,7 @@
 		$link = array('controller' => 'posts', 'action' => 'view', $post['Post']['slug'], 'plugin' => 'me_cms');
 		
 		//Sets post text
-		$text = $this->Text->truncate(strip_tags($post['Post']['text']), $config['truncate_to'], array(
+		$text = $this->Text->truncate(strip_tags($post['Post']['text']), $config['frontend']['truncate_to'], array(
 			'ending' => '...', 'exact' => FALSE, 'html' => TRUE
 		));
 		

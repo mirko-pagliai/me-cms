@@ -232,10 +232,11 @@ class SystemsController extends MeCmsAppController {
 	
 	/**
 	 * Offline page
+	 * @uses config
 	 */
 	public function offline() {
 		//If the site has not been taken offline
-		if(!$this->config['offline'])
+		if(!$this->config['frontend']['offline'])
 			$this->redirect('/');
 		
 		//Sets the layout

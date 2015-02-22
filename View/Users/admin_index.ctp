@@ -77,7 +77,7 @@
 					<?php echo $user['User']['post_count']; ?>
 				</td>
 				<td class="min-width text-center">
-					<?php echo $this->Time->format($user['User']['created'], $config['datetime']['short']); ?>
+					<?php echo $this->Time->format($user['User']['created'], $config['main']['datetime']['short']); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

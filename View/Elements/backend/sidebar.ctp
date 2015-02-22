@@ -1,5 +1,5 @@
 <?php
-	foreach($config['topbar'] as $name) {
+	foreach($config['backend']['topbar'] as $name) {
 		list($plugin, $name) = pluginSplit($name);
 
 		$helper = empty($plugin) ? 'Menu' : sprintf('%sMenu', $plugin);

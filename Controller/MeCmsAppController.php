@@ -80,7 +80,7 @@ class MeCmsAppController extends AppController {
 	 * @return bool
 	 */
 	protected function _checkLastSearch() {
-        $interval = $this->config['search_interval'];
+        $interval = $this->config['security']['search_interval'];
 		
         if(empty($interval))
             return TRUE;
@@ -147,12 +147,12 @@ class MeCmsAppController extends AppController {
 			$this->Auth->allow($this->action);
 		
 		//Sets the theme
-		if(!empty($this->config['theme'])) {
+		if(!empty($this->config['frontend']['theme'])) {
 			//Checks if the theme exists
-			if(!is_readable(App::themePath($this->config['theme'])))
-				throw new InternalErrorException(__d('me_cms', 'The theme %s was not found', $this->config['theme']));
+			if(!is_readable(App::themePath($theme = $this->config['frontend']['theme'])))
+				throw new InternalErrorException(__d('me_cms', 'The theme %s was not found', $theme));
 
-			$this->theme = $this->config['theme'];
+			$this->theme = $theme;
 		}
 		
 		//If this is an admin request
@@ -212,7 +212,7 @@ class MeCmsAppController extends AppController {
 	 * @uses MeToolsAppController::isRequestAction()
 	 */
 	public function isOffline() {
-		return $this->config['offline'] && !$this->isAction(array('login', 'logout'), 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction();
+		return $this->config['frontend']['offline'] && !$this->isAction(array('login', 'logout'), 'users') && !$this->isAction('offline', 'systems') && !$this->isRequestAction();
 	}
 	
 	/**

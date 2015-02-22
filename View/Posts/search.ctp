@@ -58,7 +58,7 @@
 			foreach($posts as $post) {
 				$title = $this->Html->link($post['Post']['title'], array('action' => 'view', $post['Post']['slug']));
 				$list[] = $this->Html->div(NULL, 
-					sprintf('%s - %s', $title, $this->Time->format($post['Post']['created'], $config['datetime']['short'])).
+					sprintf('%s - %s', $title, $this->Time->format($post['Post']['created'], $config['main']['datetime']['short'])).
 					$this->Html->para('text-justify', $this->Text->truncate(strip_tags($post['Post']['text']), 350, array('exact' => FALSE, 'html' => TRUE)))
 				);
 			}

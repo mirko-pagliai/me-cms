@@ -198,7 +198,7 @@ class ProfilesController extends MeCmsAppController {
 		$this->redirectIfLogged();
 		
 		//Checks if the registrations are enabled
-		if(!$this->config['users_can_signup']) {
+		if(!$this->config['users']['signup']) {
 			$this->Session->flash(__d('me_cms', 'Disabled'), 'error');
 			$this->redirect('/');
 		}
@@ -206,12 +206,12 @@ class ProfilesController extends MeCmsAppController {
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Sets default values
 			$this->request->data['User'] = am(array(
-				'group_id'	=> $this->config['users_default_group'],
-				'active'	=> $this->config['users_need_to_be_enabled'] > 0 ? 0 : 1
+				'group_id'	=> $this->config['users']['default_group'],
+				'active'	=> $this->config['users']['activation'] > 0 ? 0 : 1
 			), $this->request->data['User']);
 						
 			if($user = $this->User->save($this->request->data)) {
-				switch($this->config['users_need_to_be_enabled']) {
+				switch($this->config['users']['activation']) {
 					//The account will be enabled by an administrator
 					case 2:
 						$this->Session->flash(__d('me_cms', 'The account has been created, but it needs to be activated by an admin'));

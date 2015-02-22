@@ -73,8 +73,8 @@
 			<?php
 				$logo = $this->Html->h1($config['title']);
 				//Check if the logo image exists
-				if(is_readable(WWW_ROOT.'img'.DS.$config['logo']))
-					$logo = $this->Html->img($config['logo']);
+				if(is_readable(WWW_ROOT.'img'.DS.$config['frontend']['logo']))
+					$logo = $this->Html->img($config['frontend']['logo']);
 				echo $this->Html->div('container', $this->Html->link($logo, '/', array('id' => 'logo', 'title' => __d('me_cms', 'Homepage'))));		
 
 				echo $this->element('MeCms.frontend/topbar', array(), array('cache' => TRUE));
@@ -103,7 +103,7 @@
 					</div>
 					<div id="sidebar" class="col-sm-4 col-md-3">
 						<?php
-							foreach($config['widgets'] as $widget) {
+							foreach($config['frontend']['widgets'] as $widget) {
 								if($this->elementExists($widget = sprintf('MeCms.widgets/%s', $widget)))
 									echo $this->element($widget);
 							}
@@ -117,7 +117,7 @@
 			?>
 		</div>
 		<?php
-			echo $this->Library->analytics($config['analytics']);
+			echo $this->Library->analytics($config['frontend']['analytics']);
 			echo $this->fetch('css_bottom');
 			echo $this->fetch('script_bottom');
 		?>

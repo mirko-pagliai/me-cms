@@ -203,7 +203,7 @@ class UsersController extends MeCmsAppController {
 		$this->paginate = array(
 			'contain'	=> 'Group.label',
 			'fields'	=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created'),
-			'limit'		=> $this->config['records_for_page'],
+			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('User.username' => 'ASC')
 		);
 		
@@ -243,7 +243,7 @@ class UsersController extends MeCmsAppController {
 		$this->redirectIfLogged();
 		
 		//Tries to login with cookies, if the login with cookies is enabled
-		if($this->config['login_with_cookies'])
+		if($this->config['users']['cookies_login'])
 			$this->_loginWithCookie();
 		
 		if($this->request->is('post')) {

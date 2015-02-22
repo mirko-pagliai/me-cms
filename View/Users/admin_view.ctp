@@ -65,7 +65,7 @@
 			}
 			
 			echo $this->Html->dt(__d('me_cms', 'Created'));
-			echo $this->Html->dd($this->Time->format($user['User']['created'], $config['datetime']['long']));
+			echo $this->Html->dd($this->Time->format($user['User']['created'], $config['main']['datetime']['long']));
 		?>
 	</dl>
 </div>

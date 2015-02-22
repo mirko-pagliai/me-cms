@@ -32,9 +32,9 @@
 			echo $this->Html->charset();
 
 			if(empty($title_for_layout))
-				echo $this->Html->title($config['title']);
+				echo $this->Html->title($config['main']['title']);
 			else
-				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['title']));
+				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['main']['title']));
 
 			echo $this->Layout->viewport();
 			echo $this->Html->meta('favicon.ico', '/favicon.ico', array('type' => 'icon'));

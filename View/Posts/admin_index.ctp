@@ -88,7 +88,7 @@
 					?>
 				</td>
 				<td class="min-width text-center">
-					<?php echo $this->Time->format($post['Post']['created'], $config['datetime']['short']); ?>
+					<?php echo $this->Time->format($post['Post']['created'], $config['main']['datetime']['short']); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

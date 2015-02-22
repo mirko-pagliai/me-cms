@@ -25,7 +25,7 @@
 	
 <?php echo __d('me_cms', 'Hello %s', $full_name); ?>,
 
-<?php echo __d('me_cms', 'you have recently changed your password on our site %s', $config['title']); ?>.
+<?php echo __d('me_cms', 'you have recently changed your password on our site %s', $config['main']['title']); ?>.
 <?php echo __d('me_cms', 'The request has been sent from the IP %s', $ip_address); ?>.
 
 <?php echo __d('me_cms', 'If you have not made this request, please contact an administrator'); ?>.

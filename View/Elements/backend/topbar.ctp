@@ -48,7 +48,7 @@
 				<?php
 					echo $menu;
 										
-					foreach($config['topbar'] as $name) {
+					foreach($config['frontend']['topbar'] as $name) {
 						list($plugin, $name) = pluginSplit($name);
 						
 						$helper = empty($plugin) ? 'Menu' : sprintf('%sMenu', $plugin);

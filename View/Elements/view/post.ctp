@@ -60,7 +60,7 @@
 
 		if(!empty($post['Post']['created']))
 			$content_info .= $this->Html->div('content-date',
-				__d('me_cms', 'Posted on %s', $this->Time->format($post['Post']['created'], $config['datetime']['long'])),
+				__d('me_cms', 'Posted on %s', $this->Time->format($post['Post']['created'], $config['main']['datetime']['long'])),
 				array('icon' => 'clock-o')
 			);
 
@@ -72,9 +72,9 @@
 		
 		if(!empty($post['Post']['text'])) {
 			//If it was requested to truncate the text
-			if($params['action'] !== 'view' && !empty($config['truncate_to']))
+			if($params['action'] !== 'view' && !empty($config['frontend']['truncate_to']))
 				echo $this->Html->div('content-text', $truncate = $this->Text->truncate(
-					$post['Post']['text'], $config['truncate_to'], array('exact' => FALSE, 'html' => TRUE)
+					$post['Post']['text'], $config['frontend']['truncate_to'], array('exact' => FALSE, 'html' => TRUE)
 				));
 			else
 				echo $this->Html->div('content-text', $post['Post']['text']);

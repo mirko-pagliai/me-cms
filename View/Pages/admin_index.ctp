@@ -83,7 +83,7 @@
 					?>
 				</td>
 				<td class="min-width text-center">
-					<?php echo $this->Time->format($page['Page']['created'], $config['datetime']['short']); ?>
+					<?php echo $this->Time->format($page['Page']['created'], $config['main']['datetime']['short']); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
