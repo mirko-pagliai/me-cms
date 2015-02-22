@@ -1,24 +1,17 @@
 <?php
 $config = array('MeCms' => array(
-	//Backend options
+	//Backend
 	'backend' => array(
-		//ID of the default users group
-		'default_group' => 3,
-		//KCFinder
-		'kcfinder' => array(
-			//KCFinder types. See http://kcfinder.sunhater.com/install#_types
-			'types' => array('images' => '*img')
-		),
 		//Number of photos to show per page. This must be a multiple of 4
-		'photos_for_page' => 12,
+		'photos' => 12,
 		//Number of records to show per page
-		'records_for_page' => 10,
+		'records' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Topbar menus
 		'topbar' => 'posts, pages, photos, banners, users, systems'
 	),
-	//Frontend options
+	//Frontend
 	'frontend' => array(
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
@@ -26,14 +19,12 @@ $config = array('MeCms' => array(
 		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`
 		'logo' => 'logo.png',
-		//Sets the site offline
+		//Site offline (enabled or disabled)
 		'offline' => FALSE,
 		//Text to display when the site is offline
 		'offline_text' => FALSE,
 		//Number of records to show per page
-		'records_for_page' => 10,
-		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
-		'search_interval' => 10,
+		'records' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
@@ -43,8 +34,8 @@ $config = array('MeCms' => array(
 		//Specific widgets for the homepage. If this is set to "FALSE", will be used the default widget
 		'widgets_homepage' => FALSE
 	),
-	//General options
-	'general' => array(
+	//Main
+	'main' => array(
 		//Cache (enabled or disabled)
 		'cache' => TRUE,
 		//Date formats
@@ -65,24 +56,38 @@ $config = array('MeCms' => array(
 		'debug' => FALSE,
 		//It forces debugging for the localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,
-		//Configuration to use for emails, located into `APP/Config/email.php`
-		'email_config' => 'default',
-		//Address from which to send emails
-		'email_from' => 'email@example.com',
-		//Session (login) timeout, in minutes
-		'timeout' => 30,
 		//Site title
 		'title' => 'MeCms',
-		//Users can signup
-		'users_can_signup' => TRUE,
-		//Default users group (ID)
-		'users_default_group' => 3,
-		//Login with cookies ("remember me" function)
-		'login_with_cookies' => TRUE,
+	),
+	//Email
+	'email' => array(
+		//Configuration, located into `APP/Config/email.php`
+		'config' => 'default',
+		//Address from which to send emails
+		'from' => 'email@example.com'
+	),
+	//KCFinder
+	'kcfinder' => array(
+		//KCFinder types. See http://kcfinder.sunhater.com/install#_types
+		'types' => array('images' => '*img')
+	),
+	//Security
+	'security' => array(
+		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
+		'search_interval' => 10,
+	),
+	//Users
+	'users' => array(
 		//How to activating accounts
 		//	`0` - No activation required, the account is immediately active
 		//	`1` - The account will be enabled by the user via email (default)
 		//	`2`	- The account will be enabled by an administrator
-		'users_need_to_be_enabled' => 1
+		'activation' => 1,
+		//Login with cookies ("remember me" function)
+		'cookies_login' => TRUE,
+		//Default users group (ID)
+		'default_group' => 3,
+		//Signup (enabled or disabled)
+		'signup' => TRUE
 	)
 ));

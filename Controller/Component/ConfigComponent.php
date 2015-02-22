@@ -29,7 +29,7 @@ App::uses('Component', 'Controller');
 /**
  * It automatically handles the configuration
  */
-class ConfigComponent extends Component {	
+class ConfigComponent extends Component {
 	/**
 	 * Components
 	 * @var array
@@ -43,50 +43,11 @@ class ConfigComponent extends Component {
 	protected $controller;
 	
 	/**
-	 * Checks if debugging for localhost should be forced
+	 * Checks if debugging for localhost should be forced.
 	 * @return bool TRUE if debugging should be forced, otherwise FALSE
 	 */
 	protected function _debugForLocalhost() {
-		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.debug_on_localhost');
-	}
-
-	/**
-	 * Loads and writes the configuration.
-	 * @uses controller
-	 * @uses _setWidgets()
-	 * @uses _stringAsArray()
-	 * @uses MeToolsAppController::isAction()
-	 * @uses MeToolsAppController::isAdminRequest()
-	 */
-	protected function _setConfig() {
-		//Loads the configuration from the plugin (`APP/Plugin/MeCms/Config/mecms.php`)
-		Configure::load('MeCms.mecms');
-
-		//Loads the configuration from the app, if exists (`APP/Config/mecms.php`).
-		//This configuration will overwrite the one obtained by the plugin
-		if(is_readable(APP.'Config'.DS.'mecms.php'))
-			Configure::load('mecms');
-				
-		//Turns some values
-		Configure::write($key = 'MeCms.general.users_need_to_be_enabled', is_int($value = Configure::read($key)) && $value >= 0 && $value <= 2 ? $value : 1);
-		
-		//Turns some values as array
-		foreach(array('MeCms.backend.topbar', 'MeCms.frontend.widgets', 'MeCms.frontend.widgets_homepage') as $key)
-			Configure::write($key, $this->_stringAsArray(Configure::read($key)));
-		
-		//If the current action is the homepage and the homepage widgets have been set, gets the homepage widgets
-		if($this->controller->isAction(array('home', 'homepage', 'main')) && Configure::read('MeCms.frontend.widgets_homepage'))
-			Configure::write('MeCms.frontend.widgets', Configure::read('MeCms.frontend.widgets_homepage'));
-				
-		//Deletes the homepage widgets key
-		Configure::delete('MeCms.frontend.widgets_homepage');
-		
-		//If it's an admin request
-		if($this->controller->isAdminRequest())
-			Configure::write('MeCms', am(Configure::read('MeCms.backend'), Configure::read('MeCms.general')));
-		//Else, if it is not ad admin request
-		else
-			Configure::write('MeCms', am(Configure::read('MeCms.frontend'), Configure::read('MeCms.general')));
+		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.main.debug_on_localhost');
 	}
 	
 	/**
@@ -105,8 +66,57 @@ class ConfigComponent extends Component {
 	 * @param string $string String of words separated by commas (and optional spaces)
 	 * @return mixed Array of values
 	 */
-	protected function _stringAsArray($string) {		
-		return is_string($string) ? explode(',', preg_replace('/\s/', NULL, trim($string))) : $string;
+	protected function _stringAsArray($string) {
+		if(!is_string($string))
+			return $string;
+		
+		$array = explode(',', preg_replace('/\s/', NULL, trim($string)));
+		
+		return empty($array) ? $string : $array;
+	}
+	
+	/**
+	 * Turns some values.
+	 * @param array $config Configuration
+	 * @return array Configuration
+	 * @uses _stringAsArray()
+	 * @uses MeToolsAppController::isAction()
+	 */
+	protected function _turnsValues($config) {
+		//Turns some values
+		$config['users']['activation'] = is_numeric($value = $config['users']['activation']) && $value >= 0 && $value <= 2 ? $value : 1;
+		$config['users']['default_group'] = is_numeric($value = $config['users']['default_group']) ? $config['users']['default_group'] : 3;
+
+		//Turns some values as array		
+		$config['backend']['topbar'] = $this->_stringAsArray($config['backend']['topbar']);
+		$config['frontend']['widgets'] = $this->_stringAsArray($config['frontend']['widgets']);
+		$config['frontend']['widgets_homepage'] = $this->_stringAsArray($config['frontend']['widgets_homepage']);
+		
+		//If the current action is the homepage, the widgets are the homepage widgets
+		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array($config['frontend']['widgets_homepage']))
+			$config['frontend']['widgets'] = $config['frontend']['widgets_homepage'];
+		
+		//Deletes useless values
+		unset($config['frontend']['widgets_homepage']);
+		
+		return $config;
+	}
+
+
+	/**
+	 * Loads the configuration file. 
+	 * @return array Configuration
+	 */
+	protected function load() {
+		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
+		Configure::load('MeCms.mecms');
+
+		//Loads from the app, if exists (`APP/Config/mecms.php`).
+		//This configuration will overwrite the one obtained by the plugin
+		if(is_readable(APP.'Config'.DS.'mecms.php'))
+			Configure::load('mecms');
+		
+		return Configure::read('MeCms');
 	}
 
 	/**
@@ -119,36 +129,38 @@ class ConfigComponent extends Component {
 		//Sets the configuration for the view
 		$controller->set('config', $controller->config);
 	}
-	
+
 	/**
      * Called before the controller's beforeFilter method.
 	 * @param Controller $controller
      * @see http://api.cakephp.org/2.6/class-Component.html#_initialize CakePHP Api
+	 * @uses MeCmsAppController::config
 	 * @uses controller
 	 * @uses _debugForLocalhost()
-	 * @uses _setConfig()
-	 * @uses MeCmsAppController::config
+	 * @uses _turnsValues()
+	 * @uses load()
 	 */
 	public function initialize(Controller $controller) {
 		//Sets the controller
 		$this->controller = $controller;
+				
+		//Loads the configuration values
+		$config = $this->load();
 		
-		//Sets the configuration
-		$this->_setConfig();
+		//Turns some values
+		$config = $this->_turnsValues($config);
+		
+		//Writes
+		Configure::write('MeCms', $config);
 		
 		//Sets debug
-		if(Configure::read('MeCms.debug') || $this->_debugForLocalhost())
-			Configure::write('debug', 2);
-		else
-			Configure::write('debug', 0);
-			
+		Configure::write('debug', $config['main']['debug'] || $this->_debugForLocalhost() ? 2 : 0);
+		
 		//Sets cache
-		Configure::write('Cache.disable', !Configure::read('MeCms.cache'));
-		//Sets the session timeout
-		Configure::write('Session.timeout', Configure::read('MeCms.timeout'));
+		Configure::write('Cache.disable', !$config['main']['cache']);
 		
 		//Sets the configuration so that the controller can read it
-		$controller->config = Configure::read('MeCms');
+		$controller->config = $config;
 	}
 	
 	/**
