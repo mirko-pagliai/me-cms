@@ -1417,7 +1417,7 @@ msgstr "Bannato"
 #: View/Users/admin_index.ctp:51
 #: View/Users/admin_view.ctp:57
 msgid "Pending"
-msgstr "In attivazione"
+msgstr "Non attivo"
 
 #: View/Users/admin_view.ctp:28
 msgid "User"
