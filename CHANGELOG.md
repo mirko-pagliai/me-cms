@@ -3,7 +3,8 @@
 ### 1.2.1
 * users can signup. You can set up as an account should be activated;
 * users can reset their own password;
-* an email is sent when the user changes his password.
+* an email is sent when the user changes his password;
+* the configuration has been improved.
 
 ### 1.2.0
 * added the log viewer and the changelogs viewer;

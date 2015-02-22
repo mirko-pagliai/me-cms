@@ -1,9 +1,10 @@
 # 1.x ramo
 ## 1.2 ramo
 ### 1.2.1
-* gli utenti possono iscriversi. È possibile impostare come deve essere attivato un account;
+* gli utenti possono iscriversi. È possibile impostare la modalità con cui deve essere attivato un account;
 * gli utenti possono reimpostare la propria password;
-* viene inviata una email quando l'utente cambia la propria password.
+* viene inviata una email quando l'utente cambia la propria password;
+* è stata migliorata l'organizzazione della configurazione.
 
 ### 1.2.0
 * aggiunto visualizzatore di log e il visualizzatore dei changelog;
