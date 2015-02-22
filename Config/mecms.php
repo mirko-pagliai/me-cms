@@ -11,6 +11,13 @@ $config = array('MeCms' => array(
 		//Topbar menus
 		'topbar' => 'posts, pages, photos, banners, users, systems'
 	),
+	//Email
+	'email' => array(
+		//Configuration, located into `APP/Config/email.php`
+		'config' => 'default',
+		//Address from which to send emails
+		'from' => 'email@example.com'
+	),
 	//Frontend
 	'frontend' => array(
 		//Google Analytics ID or FALSE
@@ -33,6 +40,11 @@ $config = array('MeCms' => array(
 		'widgets' => 'MeCms.search, MeCms.categories, MeCms.latest_posts, MeCms.random_photo, pages',
 		//Specific widgets for the homepage. If this is set to "FALSE", will be used the default widget
 		'widgets_homepage' => FALSE
+	),
+	//KCFinder
+	'kcfinder' => array(
+		//KCFinder types. See http://kcfinder.sunhater.com/install#_types
+		'types' => array('images' => '*img')
 	),
 	//Main
 	'main' => array(
@@ -58,18 +70,6 @@ $config = array('MeCms' => array(
 		'debug_on_localhost' => TRUE,
 		//Site title
 		'title' => 'MeCms',
-	),
-	//Email
-	'email' => array(
-		//Configuration, located into `APP/Config/email.php`
-		'config' => 'default',
-		//Address from which to send emails
-		'from' => 'email@example.com'
-	),
-	//KCFinder
-	'kcfinder' => array(
-		//KCFinder types. See http://kcfinder.sunhater.com/install#_types
-		'types' => array('images' => '*img')
 	),
 	//Security
 	'security' => array(
