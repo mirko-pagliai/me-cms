@@ -4,6 +4,7 @@
 * gli utenti possono iscriversi. È possibile impostare la modalità con cui deve essere attivato un account;
 * gli utenti possono reimpostare la propria password;
 * viene inviata una email quando l'utente cambia la propria password;
+* gli amministratori possono attivare manualmente gli account;
 * è stata migliorata l'organizzazione della configurazione.
 
 ### 1.2.0

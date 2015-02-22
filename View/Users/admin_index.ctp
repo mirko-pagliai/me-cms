@@ -57,10 +57,15 @@
 							$this->Html->link(__d('me_cms', 'Edit'), array('action' => 'edit', $id), array('icon' => 'pencil'))
 						);
 						
-						//Only admins can delete users
-						if($this->Auth->isAdmin())
+						//Only admins can activate accounts and delete users
+						if($this->Auth->isAdmin()) {
+							//If the user is not active (pending)
+							if(!$user['User']['active'])
+								$actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), array('action' => 'activate_account', $id), array('icon' => 'user-plus'), __d('me_cms', 'Are you sure you want to activate this account?'));
+							
 							$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), array('action' => 'delete', $id), array('class' => 'text-danger', 'icon' => 'trash-o'), __d('me_cms', 'Are you sure you want to delete this?'));
-						
+						}
+							
 						echo $this->Html->ul($actions, array('class' => 'actions'));
 					?>
 				</td>

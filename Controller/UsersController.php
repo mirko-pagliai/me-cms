@@ -45,8 +45,8 @@ class UsersController extends MeCmsAppController {
 	 * @uses MeToolsAppController::isAction()
 	 */
 	public function isAuthorized($user = NULL) {		
-		//Only admins can delete users
-		if($this->isAction('admin_delete'))
+		//Only admins can activate account and delete users
+		if($this->isAction(array('admin_activate_account', 'admin_delete')))
 			return $this->Auth->isAdmin();
 		
 		//Only admins and managers can access every action
@@ -102,6 +102,24 @@ class UsersController extends MeCmsAppController {
 		setcookie('sidebar-lastmenu', '', 1, '/');
 		
 		return $this->redirect($this->Auth->logout());
+	}
+	
+	/**
+	 * Activate account.
+	 * @param string $id User ID
+	 * @throws NotFoundException
+	 */
+	public function admin_activate_account($id = NULL) {
+		$this->User->id = $id;
+		if(!$this->User->exists())
+			throw new NotFoundException(__d('me_cms', 'Invalid object'));
+		
+		if($this->User->saveField('active', 1))
+			$this->Session->flash(__d('me_cms', 'The account has been activated'));
+		else
+			$this->Session->flash(__d('me_cms', 'The account has not been activated. Please, try again'), 'error');
+		
+		$this->redirect(array('action' => 'index'));
 	}
 
 	/**

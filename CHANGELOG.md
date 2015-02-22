@@ -4,6 +4,7 @@
 * users can signup. You can set up as an account should be activated;
 * users can reset their own password;
 * an email is sent when the user changes his password;
+* administrators can manually activate accounts;
 * the configuration has been improved.
 
 ### 1.2.0

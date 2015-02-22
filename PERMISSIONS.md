@@ -35,7 +35,7 @@ Gli amministratori possono visualizzare i log.
 ### Utenti
 Gli amministratori e i manager possono visualizzare, aggiungere e modificare gli utenti.
 Solo l'amministratore fondatore può modificare gli altri amministratori.
-Gli amministratori possono cancellare gli utenti.
+Gli amministratori possono attivare gli account e cancellare gli utenti.
 Solo l'amministratore fondatore può cancellare gli altri amministratori.
 L'amministratore fondatore non può essere cancellato.
 
