@@ -219,6 +219,8 @@ class User extends MeCmsAppModel {
 	 * @return boolean TRUE if validate operation should continue, FALSE to abort
 	 */
 	public function beforeValidate($options = array()) {
+		parent::beforeValidate($options);
+		
 		//If the "password" field is not blank, then the "password_field" field must also be filled out.
 		if(!empty($this->data[$this->alias]['password']) && isset($this->data[$this->alias]['password_repeat']))
 			$this->validator()->getField('password_repeat')->getRule('passwordsMatch')->allowEmpty = FALSE;
