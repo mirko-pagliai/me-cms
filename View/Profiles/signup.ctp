@@ -67,9 +67,15 @@
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Sign up'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 	<?php
-		echo $this->Html->ul(array(
-			$this->Html->link(__d('me_cms', 'Login'), '/login'),
-			$this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'))
-		), array('class' => 'list-unstyled'));
+		$menu = array();
+		
+		$menu[] = $this->Html->link(__d('me_cms', 'Login'), '/login');
+		
+		//If reset password is enabled
+		if($config['users']['reset_password'])
+			$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
+		
+		if(!empty($menu))
+			echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
 	?>
 </div>

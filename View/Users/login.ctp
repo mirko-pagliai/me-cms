@@ -47,12 +47,15 @@
 	<?php
 		$menu = array();
 		
-		//If users can signup
+		//If signup is enabled
 		if($config['users']['signup'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
 		
-		$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
+		//If reset password is enabled
+		if($config['users']['reset_password'])
+			$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
 		
-		echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
+		if(!empty($menu))
+			echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
 	?>
 </div>

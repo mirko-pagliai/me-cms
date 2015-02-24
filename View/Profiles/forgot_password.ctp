@@ -49,7 +49,7 @@
 		
 		$menu[] = $this->Html->link(__d('me_cms', 'Login'), '/login');
 		
-		//If users can signup
+		//If signup is enabled
 		if($config['users']['signup'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
 	
