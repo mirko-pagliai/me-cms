@@ -32,6 +32,9 @@
 					'autofocus'	=> TRUE,
 					'label'		=> __d('me_cms', 'Email')
 				));
+				
+				if($config['security']['recaptcha'])
+					echo $this->Recaptcha->recaptcha();
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Request new password'), array('class' => 'btn-block btn-lg btn-primary')); ?>

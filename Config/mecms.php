@@ -73,6 +73,9 @@ $config = array('MeCms' => array(
 	),
 	//Security
 	'security' => array(
+		//reCAPTCHA (enabled or disabled).
+		//It will be used for some actions, such as signup or reset the password
+		'recaptcha' => TRUE,
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
 		'search_interval' => 10,
 	),

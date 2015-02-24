@@ -114,7 +114,10 @@ class ProfilesController extends MeCmsAppController {
 	
 	/**
 	 * Requests a new password.
+	 * @uses config
+	 * @uses RecaptchaComponent::error
 	 * @uses redirectIfLogged()
+	 * @uses RecaptchaComponent::check()
 	 * @uses TokenComponent::create()
 	 */
 	public function forgot_password() {		
@@ -125,7 +128,11 @@ class ProfilesController extends MeCmsAppController {
 			//Gets the user
 			$user = $this->User->findByEmail($email = $this->request->data['User']['email'], array('id', 'full_name'));
 			
-			if(!empty($user)) {
+			//Checks for reCAPTCHA, if requested
+			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
+				$this->Session->flash($this->Recaptcha->error, 'error');
+			}
+			elseif(!empty($user)) {
 				//Gets the token and the url to reset the password
 				$token = $this->Token->create($email, array('type' => 'newpassword', 'user_id' => $id = $user['User']['id']));
 				$url = Router::url(am(array('controller' => 'profiles', 'action' => 'reset_password'), compact('id', 'token')), TRUE);
@@ -190,7 +197,10 @@ class ProfilesController extends MeCmsAppController {
 	
 	/**
 	 * Sign up.
+	 * @uses config
+	 * @uses RecaptchaComponent::error
 	 * @uses redirectIfLogged()
+	 * @uses RecaptchaComponent::check()
 	 * @uses TokenComponent::create()
 	 */
 	public function signup() {
@@ -202,15 +212,19 @@ class ProfilesController extends MeCmsAppController {
 			$this->Session->flash(__d('me_cms', 'Disabled'), 'error');
 			$this->redirect('/');
 		}
-				
+		
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Sets default values
 			$this->request->data['User'] = am(array(
 				'group_id'	=> $this->config['users']['default_group'],
 				'active'	=> $this->config['users']['activation'] > 0 ? 0 : 1
 			), $this->request->data['User']);
-						
-			if($user = $this->User->save($this->request->data)) {
+			
+			//Checks for reCAPTCHA, if requested
+			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
+				$this->Session->flash($this->Recaptcha->error, 'error');
+			}
+			elseif($user = $this->User->save($this->request->data)) {
 				switch($this->config['users']['activation']) {
 					//The account will be enabled by an administrator
 					case 2:

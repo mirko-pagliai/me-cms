@@ -1,6 +1,7 @@
 # 1.x ramo
 ## 1.2 ramo
 ### 1.2.1
+* supporto completo per reCAPTCHA. Viene utilizzato per la registrazione e per reimpostare la password;
 * gli utenti possono iscriversi. È possibile impostare la modalità con cui deve essere attivato un account;
 * gli utenti possono reimpostare la propria password;
 * viene inviata una email quando l'utente cambia la propria password;

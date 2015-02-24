@@ -52,6 +52,9 @@
 					'autocomplete'	=> FALSE,
 					'label'			=> __d('me_cms', 'Last name')
 				));
+				
+				if($config['security']['recaptcha'])
+					echo $this->Recaptcha->recaptcha();
 			?>
 		</fieldset>
 	<?php echo $this->Form->end(__d('me_cms', 'Sign up'), array('class' => 'btn-block btn-lg btn-primary')); ?>

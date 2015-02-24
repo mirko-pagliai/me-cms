@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.1
+* full support for reCAPTCHA. It's used for signup and to reset passwords;
 * users can signup. You can set up as an account should be activated;
 * users can reset their own password;
 * an email is sent when the user changes his password;

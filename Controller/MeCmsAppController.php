@@ -126,6 +126,7 @@ class MeCmsAppController extends AppController {
 	 * @throws InternalErrorException
 	 * @uses action
 	 * @uses config
+	 * @uses helpers
 	 * @uses layout
 	 * @uses theme
 	 * @uses MeToolsAppController::isAdminRequest()
@@ -153,6 +154,12 @@ class MeCmsAppController extends AppController {
 				throw new InternalErrorException(__d('me_cms', 'The theme %s was not found', $theme));
 
 			$this->theme = $theme;
+		}
+		
+		//Loads reCAPTCHA component and helper, if requested
+		if($this->config['security']['recaptcha']) {
+			$this->Recaptcha = $this->Components->load('MeTools.Recaptcha');
+			$this->helpers['Recaptcha']	= array('className' => 'MeTools.Recaptcha');
 		}
 		
 		//If this is an admin request
