@@ -91,7 +91,7 @@ $config = array('MeCms' => array(
 		//Default users group (ID)
 		'default_group' => 3,
 		//Reset password (enabled or disabled)
-		'reset_password' => false,
+		'reset_password' => TRUE,
 		//Signup (enabled or disabled)
 		'signup' => TRUE
 	)
