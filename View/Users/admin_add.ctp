@@ -51,7 +51,7 @@
 				));
 				echo $this->Form->input('email_repeat', array(
 					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Email')
+					'label'			=> __d('me_cms', 'Repeat email')
 				));
 				echo $this->Form->input('password', array(
 					'autocomplete'	=> FALSE,
