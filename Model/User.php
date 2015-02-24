@@ -108,6 +108,13 @@ class User extends MeCmsAppModel {
 				'rule'		=> 'isUnique'
 			)
 		),
+		//This is used to check that the email has been correctly inserted
+		'email_repeat' => array(
+			'emailsMatch' => array(
+				'message'	=> 'Emails don\'t match',
+				'rule'		=> 'emailsMatch'
+			)
+		),
 		'password' => array(
 			'minLength' => array(
 				'last'		=> FALSE,
@@ -251,6 +258,19 @@ class User extends MeCmsAppModel {
 			$this->validator()->getField('password_repeat')->getRule('passwordsMatch')->allowEmpty = FALSE;
 		
 		return TRUE;
+	}
+	
+	/**
+	 * Validation method.
+	 * 
+	 * Checks if the email has been correctly inserted.
+	 * @return bool TRUE if they match
+	 */
+	public function emailsMatch() {
+		if(empty($this->data[$this->alias]['email']))
+			return FALSE;
+		
+		return strcmp($this->data[$this->alias]['email'], $this->data[$this->alias]['email_repeat']) == 0;
 	}
 	
 	/**

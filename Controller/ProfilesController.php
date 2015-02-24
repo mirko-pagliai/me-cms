@@ -125,34 +125,43 @@ class ProfilesController extends MeCmsAppController {
 		$this->redirectIfLogged();
 		
 		if($this->request->is('post') || $this->request->is('put')) {
-			//Gets the user
-			$user = $this->User->find('active', array(
-				'conditions'	=> array('email' => $email = $this->request->data['User']['email']),
-				'fields'		=> array('id', 'full_name'),
-				'limit'			=> 1
-			));
+			//Sets data
+			$this->User->set($this->request->data);
+			//Email should not be unique, no change required
+			unset($this->User->validate['email']['isUnique']);
 			
 			//Checks for reCAPTCHA, if requested
 			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
 				$this->Session->flash($this->Recaptcha->error, 'error');
 			}
-			elseif(!empty($user)) {
-				//Gets the token and the url to reset the password
-				$token = $this->Token->create($email, array('type' => 'newpassword', 'user_id' => $id = $user['User']['id']));
-				$url = Router::url(am(array('controller' => 'profiles', 'action' => 'reset_password'), compact('id', 'token')), TRUE);
-				
-				//Sends email
-				$this->Email->to(array($email => $full_name = $user['User']['full_name']));
-				$this->Email->subject(__d('me_cms', 'Reset your password'));
-				$this->Email->template('forgot_password');
-				$this->Email->set(compact('full_name', 'url'));
-				$this->Email->send();
-				
-				$this->Session->flash(__d('me_cms', 'We have sent you an email to reset your password'));
-				$this->redirect($this->Auth->loginAction);
+			elseif($this->User->validates()) {
+				//Gets the user
+				$user = $this->User->find('active', array(
+					'conditions'	=> array('email' => $email = $this->request->data['User']['email']),
+					'fields'		=> array('id', 'full_name'),
+					'limit'			=> 1
+				));
+			
+				if(!empty($user)) {
+					//Gets the token and the url to reset the password
+					$token = $this->Token->create($email, array('type' => 'newpassword', 'user_id' => $id = $user['User']['id']));
+					$url = Router::url(am(array('controller' => 'profiles', 'action' => 'reset_password'), compact('id', 'token')), TRUE);
+
+					//Sends email
+					$this->Email->to(array($email => $full_name = $user['User']['full_name']));
+					$this->Email->subject(__d('me_cms', 'Reset your password'));
+					$this->Email->template('forgot_password');
+					$this->Email->set(compact('full_name', 'url'));
+					$this->Email->send();
+
+					$this->Session->flash(__d('me_cms', 'We have sent you an email to reset your password'));
+					$this->redirect($this->Auth->loginAction);
+				}
+				else
+					$this->Session->flash(__d('me_cms', 'No account found'), 'error');
 			}
 			else
-				$this->Session->flash(__d('me_cms', 'No account found'), 'error');
+				$this->Session->flash(__d('me_cms', 'The form has not been filled in correctly, try again'), 'error');
 		}
 		
 		$this->set('title_for_layout', __d('me_cms', 'Forgot your password?'));

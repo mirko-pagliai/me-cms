@@ -29,8 +29,14 @@
 		<fieldset>
 			<?php
 				echo $this->Form->input('email', array(
-					'autofocus'	=> TRUE,
-					'label'		=> __d('me_cms', 'Email')
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Email'),
+					'tip'			=> __d('me_cms', 'Enter your email')
+				));
+				echo $this->Form->input('email_repeat', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Repeat email'),
+					'tip'			=> __d('me_cms', 'Repeat your email')
 				));
 				
 				if($config['security']['recaptcha'])

@@ -34,15 +34,23 @@
 				));
 				echo $this->Form->input('email', array(
 					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Email')
+					'label'			=> __d('me_cms', 'Email'),
+					'tip'			=> __d('me_cms', 'Enter your email')
+				));
+				echo $this->Form->input('email_repeat', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Repeat email'),
+					'tip'			=> __d('me_cms', 'Repeat your email')
 				));
 				echo $this->Form->input('password', array(
 					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Password')
+					'label'			=> __d('me_cms', 'Password'),
+					'tip'			=> __d('me_cms', 'Enter your password')
 				));
 				echo $this->Form->input('password_repeat', array(
 					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Repeat password')
+					'label'			=> __d('me_cms', 'Repeat password'),
+					'tip'			=> __d('me_cms', 'Repeat your password')
 				));
 				echo $this->Form->input('first_name', array(
 					'autocomplete'	=> FALSE,
