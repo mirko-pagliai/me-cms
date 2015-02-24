@@ -3,8 +3,7 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-02-14 19:47+0100\n"
-"PO-Revision-Date: 2015-02-14 19:48+0100\n"
+"PO-Revision-Date: 2015-02-24 15:57+0100\n"
 "Last-Translator: Mirko Pagliai\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +44,8 @@ msgstr "Aggiungi banner"
 #: Controller/PhotosController.php:113;134;163;209
 #: Controller/PostsCategoriesController.php:72;96
 #: Controller/PostsController.php:119;139;325
-#: Controller/UsersController.php:92;122;176
+#: Controller/ProfilesController.php:93;191
+#: Controller/UsersController.php:115;153;183;241
 #: Controller/UsersGroupsController.php:69;95
 msgid "Invalid object"
 msgstr "Oggetto non valido"
@@ -81,7 +81,7 @@ msgstr "Banner"
 
 #: Controller/BannersController.php:167
 #: Controller/PhotosController.php:186
-#: Controller/SystemsController.php:65
+#: Controller/SystemsController.php:70
 msgid "The directory %s is not readable or writable"
 msgstr "La directory %s non è leggibile o scrivibile"
 
@@ -141,20 +141,24 @@ msgstr "Modifica posizione dei banner"
 msgid "Banners positions"
 msgstr "Posizioni dei banner"
 
-#: Controller/MeCmsAppController.php:138
+#: Controller/MeCmsAppController.php:139
 msgid "You need to login first"
 msgstr "Devi prima fare il login"
 
-#: Controller/MeCmsAppController.php:153
+#: Controller/MeCmsAppController.php:154
 msgid "The theme %s was not found"
 msgstr "Il tema %s non è stato trovato"
 
-#: Controller/MeCmsAppController.php:235
+#: Controller/MeCmsAppController.php:231
+msgid "You are already logged in"
+msgstr "Sei già loggato"
+
+#: Controller/MeCmsAppController.php:253
 msgid "The file was not successfully moved to the target directory"
 msgstr ""
 "Il file non è stato correttamente spostato nella directory di destinazione"
 
-#: Controller/MeCmsAppController.php:238
+#: Controller/MeCmsAppController.php:256
 msgid "The file was not successfully uploaded"
 msgstr "Il file non è stato correttamente caricato"
 
@@ -427,94 +431,174 @@ msgstr "Devi cercare un parola di almeno %d caratteri"
 msgid "Search posts"
 msgstr "Cerca articoli"
 
-#: Controller/ProfilesController.php:57
+#: Controller/ProfilesController.php:67
+msgid "Your password has been changed"
+msgstr "La tua password è stata modificata"
+
+#: Controller/ProfilesController.php:72;206
 msgid "The password has been edited"
 msgstr "La password è stata modificata"
 
-#: Controller/ProfilesController.php:61
+#: Controller/ProfilesController.php:76;210
 msgid "The password has not been edited. Please, try again"
 msgstr "La password non è stata modificata. Prova ancora"
 
-#: Controller/ProfilesController.php:64
+#: Controller/ProfilesController.php:79
 #: View/Elements/backend/topbar.ctp:62
-#: View/Profiles/admin_change_password.ctp:27;50
+#: View/Profiles/admin_change_password.ctp:27;49
 msgid "Change password"
 msgstr "Cambia password"
 
-#: Controller/SystemsController.php:59
+#: Controller/ProfilesController.php:97;195
+msgid "Invalid token"
+msgstr "Token non valido"
+
+#: Controller/ProfilesController.php:107
+msgid "The account has been activated. Now you can login"
+msgstr "Il tuo account è stato attivato. Puoi fare il login"
+
+#: Controller/ProfilesController.php:110
+#: Controller/UsersController.php:120
+msgid "The account has not been activated. Please, try again"
+msgstr "Il tuo account non è stato attivato. Prova ancora"
+
+#: Controller/ProfilesController.php:129;231
+msgid "Disabled"
+msgstr "Disabilitato"
+
+#: Controller/ProfilesController.php:158
+msgid "Reset your password"
+msgstr "Reimposta la tua password"
+
+#: Controller/ProfilesController.php:163
+msgid "We have sent you an email to reset your password"
+msgstr "Ti abbiamo inviato un'email per reimpostare la tua password"
+
+#: Controller/ProfilesController.php:167
+msgid "No account found"
+msgstr "Nessun account trovato"
+
+#: Controller/ProfilesController.php:170
+msgid "The form has not been filled in correctly, try again"
+msgstr "Il form non è stato compilato correttamente, prova ancora"
+
+#: Controller/ProfilesController.php:173
+#: View/Profiles/forgot_password.ctp:27
+#: View/Profiles/signup.ctp:76
+#: View/Users/login.ctp:56
+msgid "Forgot your password?"
+msgstr "Password dimenticata?"
+
+#: Controller/ProfilesController.php:213
+#: View/Profiles/reset_password.ctp:27;43
+msgid "Reset password"
+msgstr "Reimposta password"
+
+#: Controller/ProfilesController.php:250
+msgid "The account has been created, but it needs to be activated by an admin"
+msgstr "L'account è stato creato, ma deve essere attivato da un amministratore"
+
+#: Controller/ProfilesController.php:260
+msgid "Activate your account"
+msgstr "Attiva il tuo account"
+
+#: Controller/ProfilesController.php:265
+msgid "We send you an email to activate your account"
+msgstr "Ti abbiamo inviato un'email per attivare il tuo account"
+
+#: Controller/ProfilesController.php:269
+msgid "Account created. Now you can login"
+msgstr "Account creato. Puoi fare il login"
+
+#: Controller/ProfilesController.php:276
+msgid "The account has not been created. Please, try again"
+msgstr "Il tuo account non è stato creato. Prova ancora"
+
+#: Controller/ProfilesController.php:279
+#: View/Profiles/forgot_password.ctp:54
+#: View/Profiles/signup.ctp:27;68
+#: View/Users/login.ctp:52
+msgid "Sign up"
+msgstr "Registrati"
+
+#: Controller/SystemsController.php:64
 msgid "%s is not present into %s"
 msgstr "%s non è presente in %s"
 
-#: Controller/SystemsController.php:80
+#: Controller/SystemsController.php:85
 #: View/Helper/MenuHelper.php:240
 #: View/Systems/admin_browser.ctp:27
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: Controller/SystemsController.php:95
+#: Controller/SystemsController.php:100
 #: View/Helper/MenuHelper.php:238
 #: View/Systems/admin_cache.ctp:28
 msgid "Cache and thumbs"
 msgstr "Cache e miniature"
 
-#: Controller/SystemsController.php:124
+#: Controller/SystemsController.php:129
 #: View/Helper/MenuHelper.php:241
 #: View/Systems/admin_changelogs.ctp:27
 msgid "Changelogs"
 msgstr "Changelog"
 
-#: Controller/SystemsController.php:177
+#: Controller/SystemsController.php:182
 #: View/Helper/MenuHelper.php:239
 #: View/Systems/admin_checkup.ctp:28
 msgid "System checkup"
 msgstr "Checkup del sistema"
 
-#: Controller/SystemsController.php:188
+#: Controller/SystemsController.php:193
 msgid "The cache has been cleared"
 msgstr "La cache è stata svuotata"
 
-#: Controller/SystemsController.php:190
+#: Controller/SystemsController.php:195
 msgid "The cache is not writable"
 msgstr "La cache non è scrivibile"
 
-#: Controller/SystemsController.php:203
+#: Controller/SystemsController.php:208
 msgid "Thumbnails have been deleted"
 msgstr "Le miniature sono state cancellate"
 
-#: Controller/SystemsController.php:205
+#: Controller/SystemsController.php:210
 msgid "Thumbnails have not been deleted"
 msgstr "Le miniature non sono state cancellate"
 
-#: Controller/SystemsController.php:225
+#: Controller/SystemsController.php:230
 #: View/Helper/MenuHelper.php:242
 #: View/Systems/admin_log_viewer.ctp:27
 msgid "Log viewer"
 msgstr "Visualizzatore log"
 
-#: Controller/UsersController.php:71
+#: Controller/UsersController.php:118
+msgid "The account has been activated"
+msgstr "Il tuo account è stato attivato"
+
+#: Controller/UsersController.php:132
 msgid "The user has been created"
 msgstr "L'utente è stato creato"
 
-#: Controller/UsersController.php:75
+#: Controller/UsersController.php:136
 msgid "The user could not be created. Please, try again"
 msgstr "L'utente non può essere creato. Prova ancora"
 
-#: Controller/UsersController.php:80
+#: Controller/UsersController.php:141
 #: View/Helper/MenuHelper.php:200
 #: View/Users/admin_add.ctp:27;70
 msgid "Add user"
 msgstr "Aggiungi utente"
 
-#: Controller/UsersController.php:98
+#: Controller/UsersController.php:159
 msgid "You cannot delete the admin founder"
 msgstr "Non è possibile cancellare l'amministratore fondatore"
 
-#: Controller/UsersController.php:101
+#: Controller/UsersController.php:162
 msgid "Only the founder admin can delete other admin users"
 msgstr ""
 "Solo l'amministratore fondatore può cancellare gli altri amministratori"
 
-#: Controller/UsersController.php:104
+#: Controller/UsersController.php:165
 msgid ""
 "Before you delete this user, you have to delete his posts or assign them to "
 "another user"
@@ -522,65 +606,63 @@ msgstr ""
 "Prima di cancellare questo utente, devi cancellare i suoi articoli o "
 "assegnarli a un altro utente"
 
-#: Controller/UsersController.php:107
+#: Controller/UsersController.php:168
 msgid "The user has been deleted"
 msgstr "L'utente è stato cancellato"
 
-#: Controller/UsersController.php:109
+#: Controller/UsersController.php:170
 msgid "The user was not deleted"
 msgstr "L'utente non è stato cancellato"
 
-#: Controller/UsersController.php:126
+#: Controller/UsersController.php:187
 msgid "Only the founder admin can edit other admin users"
 msgstr ""
 "Solo l'amministratore fondatore può modificare gli altri amministratori"
 
-#: Controller/UsersController.php:136
+#: Controller/UsersController.php:201
 msgid "The user has been edited"
 msgstr "L'utente è stato modificato"
 
-#: Controller/UsersController.php:140
+#: Controller/UsersController.php:205
 msgid "The user could not be edited. Please, try again"
 msgstr "L'utente non può essere modificato. Prova ancora"
 
-#: Controller/UsersController.php:148
+#: Controller/UsersController.php:213
 #: View/Users/admin_edit.ctp:27;66
 msgid "Edit user"
 msgstr "Modifica utente"
 
-#: Controller/UsersController.php:165
+#: Controller/UsersController.php:230
 #: View/Helper/MenuHelper.php:211;213
 #: View/Users/admin_index.ctp:28
 #: View/UsersGroups/admin_index.ctp:35
 msgid "Users"
 msgstr "Utenti"
 
-#: Controller/UsersController.php:184
+#: Controller/UsersController.php:249
 msgid "View user"
 msgstr "Vedi utente"
 
-#: Controller/UsersController.php:196
-msgid "You are already logged in"
-msgstr "Sei già loggato"
-
-#: Controller/UsersController.php:207
+#: Controller/UsersController.php:274
 msgid "Your account has been banned by an admin"
 msgstr "Il tuo account è stato bannato da un amministratore"
 
-#: Controller/UsersController.php:212
+#: Controller/UsersController.php:279
 msgid "Your account has not been activated yet"
 msgstr "Il tuo account non è stato ancora attivato"
 
-#: Controller/UsersController.php:220
+#: Controller/UsersController.php:293
 msgid "Invalid username or password"
 msgstr "Username o password non validi"
 
-#: Controller/UsersController.php:223
-#: View/Users/login.ctp:45
+#: Controller/UsersController.php:296
+#: View/Profiles/forgot_password.ctp:50
+#: View/Profiles/signup.ctp:72
+#: View/Users/login.ctp:46
 msgid "Login"
 msgstr "Login"
 
-#: Controller/UsersController.php:233
+#: Controller/UsersController.php:306
 msgid "You are successfully logged out"
 msgstr "Ti sei disconnesso correttamente"
 
@@ -746,7 +828,7 @@ msgstr "Modifica"
 #: View/PhotosAlbums/admin_index.ctp:57
 #: View/Posts/admin_index.ctp:60
 #: View/PostsCategories/admin_index.ctp:46
-#: View/Users/admin_index.ctp:62
+#: View/Users/admin_index.ctp:66
 #: View/Users/admin_view.ctp:32;99
 #: View/UsersGroups/admin_index.ctp:46
 msgid "Delete"
@@ -759,7 +841,7 @@ msgstr "Cancella"
 #: View/PhotosAlbums/admin_index.ctp:57
 #: View/Posts/admin_index.ctp:60
 #: View/PostsCategories/admin_index.ctp:46
-#: View/Users/admin_index.ctp:62
+#: View/Users/admin_index.ctp:66
 #: View/Users/admin_view.ctp:32;99
 #: View/UsersGroups/admin_index.ctp:46
 msgid "Are you sure you want to delete this?"
@@ -856,6 +938,51 @@ msgstr "Foto casuale"
 msgid "Search"
 msgstr "Cerca"
 
+#: View/Emails/html/change_password.ctp:26
+#: View/Emails/html/forgot_password.ctp:26
+#: View/Emails/html/signup.ctp:26
+msgid "Hello %s"
+msgstr "Ciao %s"
+
+#: View/Emails/html/change_password.ctp:28
+msgid "you have recently changed your password on our site %s"
+msgstr "di recente hai cambiato la tua password sul sito %s"
+
+#: View/Emails/html/change_password.ctp:29
+#: View/Emails/html/forgot_password.ctp:29
+#: View/Emails/html/signup.ctp:29
+msgid "The request has been sent from the IP %s"
+msgstr "La richiesta è stata inviata dall'IP %s"
+
+#: View/Emails/html/change_password.ctp:31
+#: View/Emails/html/forgot_password.ctp:33
+#: View/Emails/html/signup.ctp:33
+msgid "If you have not made this request, please contact an administrator"
+msgstr ""
+"se non hai effettuato tu questa richiesta, per favore contatta un "
+"amministratore"
+
+#: View/Emails/html/forgot_password.ctp:28
+msgid "you have requested to change your password on the site %s"
+msgstr "hai richiesto di cambiare la tua password sul sito %s"
+
+#: View/Emails/html/forgot_password.ctp:31
+msgid "To reset your password, click %s"
+msgstr "Per reimpostare la password, clicca %s"
+
+#: View/Emails/html/forgot_password.ctp:31
+#: View/Emails/html/signup.ctp:31
+msgid "here"
+msgstr "qui"
+
+#: View/Emails/html/signup.ctp:28
+msgid "you have signed on the site %s"
+msgstr "ti sei registrato sul sito %s"
+
+#: View/Emails/html/signup.ctp:31
+msgid "To activate your account, click %s"
+msgstr "Per attivare il tuo account, clicca %s"
+
 #: View/Helper/MenuHelper.php:62
 msgid "List banners"
 msgstr "Elenca banner"
@@ -919,6 +1046,14 @@ msgstr "Sistema"
 #: View/Helper/MenuHelper.php:271
 msgid "The %s method does not exist"
 msgstr "Il metodo %s non esiste"
+
+#: View/Layouts/Emails/html/default.ctp:38
+msgid "This email was sent automatically from %s"
+msgstr "Questa email è stata inviata automaticamente da %s"
+
+#: View/Layouts/Emails/html/default.ctp:39
+msgid "Don't reply to this email"
+msgstr "Non rispondere a questa email"
 
 #: View/Pages/admin_add.ctp:38
 #: View/Pages/admin_edit.ctp:38
@@ -1143,34 +1278,97 @@ msgstr "Lasciare vuoto per creare una categoria genitore"
 msgid "Parent"
 msgstr "Genitore"
 
-#: View/Profiles/admin_change_password.ctp:34
+#: View/Profiles/admin_change_password.ctp:33
 msgid "Old password"
 msgstr "Vecchia password"
 
-#: View/Profiles/admin_change_password.ctp:35
+#: View/Profiles/admin_change_password.ctp:34
 msgid "Enter your old password"
 msgstr "Inserisci la tua vecchia password"
 
-#: View/Profiles/admin_change_password.ctp:40
+#: View/Profiles/admin_change_password.ctp:39
+#: View/Profiles/reset_password.ctp:33
+#: View/Profiles/signup.ctp:47
 #: View/Users/admin_add.ctp:54
 #: View/Users/admin_edit.ctp:49
-#: View/Users/login.ctp:41
+#: View/Users/login.ctp:37
 msgid "Password"
 msgstr "Password"
 
-#: View/Profiles/admin_change_password.ctp:41
+#: View/Profiles/admin_change_password.ctp:40
+#: View/Profiles/reset_password.ctp:34
 msgid "Enter your new password"
 msgstr "Inserisci la tua nuova password"
 
-#: View/Profiles/admin_change_password.ctp:45
+#: View/Profiles/admin_change_password.ctp:44
+#: View/Profiles/reset_password.ctp:38
+#: View/Profiles/signup.ctp:52
 #: View/Users/admin_add.ctp:58
 #: View/Users/admin_edit.ctp:54
 msgid "Repeat password"
 msgstr "Ripeti password"
 
-#: View/Profiles/admin_change_password.ctp:46
+#: View/Profiles/admin_change_password.ctp:45
+#: View/Profiles/reset_password.ctp:39
 msgid "Repeat your new password"
 msgstr "Ripeti la tua nuova password"
+
+#: View/Profiles/forgot_password.ctp:33
+#: View/Profiles/signup.ctp:37
+#: View/Users/admin_add.ctp:50
+#: View/Users/admin_edit.ctp:45
+#: View/Users/admin_index.ctp:35
+#: View/Users/admin_view.ctp:41
+msgid "Email"
+msgstr "Email"
+
+#: View/Profiles/forgot_password.ctp:34
+#: View/Profiles/signup.ctp:38
+msgid "Enter your email"
+msgstr "Inserisci la tua email"
+
+#: View/Profiles/forgot_password.ctp:38
+#: View/Profiles/signup.ctp:42
+msgid "Repeat email"
+msgstr "Ripeti email"
+
+#: View/Profiles/forgot_password.ctp:39
+#: View/Profiles/signup.ctp:43
+msgid "Repeat your email"
+msgstr "Ripeti la tua email"
+
+#: View/Profiles/forgot_password.ctp:46
+msgid "Request new password"
+msgstr "Richiedi una nuova password"
+
+#: View/Profiles/signup.ctp:33
+#: View/Users/admin_add.ctp:46
+#: View/Users/admin_edit.ctp:41
+#: View/Users/admin_index.ctp:33
+#: View/Users/admin_view.ctp:38
+#: View/Users/login.ctp:33
+msgid "Username"
+msgstr "Username"
+
+#: View/Profiles/signup.ctp:48
+msgid "Enter your password"
+msgstr "Inserisci la tua password"
+
+#: View/Profiles/signup.ctp:53
+msgid "Repeat your password"
+msgstr "Ripeti la tua password"
+
+#: View/Profiles/signup.ctp:57
+#: View/Users/admin_add.ctp:62
+#: View/Users/admin_edit.ctp:58
+msgid "First name"
+msgstr "Nome"
+
+#: View/Profiles/signup.ctp:61
+#: View/Users/admin_add.ctp:66
+#: View/Users/admin_edit.ctp:62
+msgid "Last name"
+msgstr "Cognome"
 
 #: View/Systems/admin_browser.ctp:31
 msgid "Type"
@@ -1371,31 +1569,6 @@ msgstr "Attivo"
 msgid "If is not active, the user won't be able to login"
 msgstr "Se non è attivo, l'utente non potrà loggarsi"
 
-#: View/Users/admin_add.ctp:46
-#: View/Users/admin_edit.ctp:41
-#: View/Users/admin_index.ctp:33
-#: View/Users/admin_view.ctp:38
-#: View/Users/login.ctp:37
-msgid "Username"
-msgstr "Username"
-
-#: View/Users/admin_add.ctp:50
-#: View/Users/admin_edit.ctp:45
-#: View/Users/admin_index.ctp:35
-#: View/Users/admin_view.ctp:41
-msgid "Email"
-msgstr "Email"
-
-#: View/Users/admin_add.ctp:62
-#: View/Users/admin_edit.ctp:58
-msgid "First name"
-msgstr "Nome"
-
-#: View/Users/admin_add.ctp:66
-#: View/Users/admin_edit.ctp:62
-msgid "Last name"
-msgstr "Cognome"
-
 #: View/Users/admin_edit.ctp:50
 msgid ""
 "If you want to change the password just type a new one. Otherwise, leave the "
@@ -1418,6 +1591,14 @@ msgstr "Bannato"
 #: View/Users/admin_view.ctp:57
 msgid "Pending"
 msgstr "Non attivo"
+
+#: View/Users/admin_index.ctp:64
+msgid "Activate"
+msgstr "Attiva"
+
+#: View/Users/admin_index.ctp:64
+msgid "Are you sure you want to activate this account?"
+msgstr "Sei sicuro di voler attivare questo account?"
 
 #: View/Users/admin_view.ctp:28
 msgid "User"
@@ -1454,6 +1635,14 @@ msgstr "Id utente"
 #: View/Users/admin_view.ctp:92
 msgid "Modified"
 msgstr "Modificato"
+
+#: View/Users/login.ctp:40
+msgid "Remember me"
+msgstr "Ricordami"
+
+#: View/Users/login.ctp:41
+msgid "Don't use on public computers"
+msgstr "Non usare su computer pubblici"
 
 #: View/UsersGroups/admin_add.ctp:35
 #: View/UsersGroups/admin_edit.ctp:37

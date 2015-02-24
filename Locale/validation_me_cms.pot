@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-02-14 19:47+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -101,8 +100,16 @@ msgstr ""
 msgid "You have to select an option"
 msgstr ""
 
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username
+msgid "This value is reserved"
+msgstr ""
+
 #: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email
 msgid "You have to enter a valid value"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email_repeat
+msgid "Emails don't match"
 msgstr ""
 
 #: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field password
