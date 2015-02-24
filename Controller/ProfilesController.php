@@ -126,7 +126,11 @@ class ProfilesController extends MeCmsAppController {
 		
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Gets the user
-			$user = $this->User->findByEmail($email = $this->request->data['User']['email'], array('id', 'full_name'));
+			$user = $this->User->find('active', array(
+				'conditions'	=> array('email' => $email = $this->request->data['User']['email']),
+				'fields'		=> array('id', 'full_name'),
+				'limit'			=> 1
+			));
 			
 			//Checks for reCAPTCHA, if requested
 			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {

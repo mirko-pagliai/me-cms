@@ -197,6 +197,31 @@ class User extends MeCmsAppModel {
 	);
 
 	/**
+	 * "Active" find method. It finds for active records.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findActive($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only active items
+			$query['conditions'][$this->alias.'.active'] = TRUE;
+			//Only items published in the past
+			$query['conditions'][$this->alias.'.banned'] = FALSE;
+			
+            return $query;
+        }
+		
+		if($query['limit'] === 1 && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
+	
+	/**
 	 * Called before each save operation, after validation. Return a non-true result to halt the save.
 	 * @param array $options Options passed from Model::save()
 	 * @return boolean TRUE if the operation should continue, FALSE if it should abort
