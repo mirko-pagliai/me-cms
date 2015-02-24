@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-User.html#30-319" title="Go to source code">User.php</a>
+			<b>Located at</b> <a href="source-class-User.html#30-364" title="Go to source code">User.php</a>
 		<br>
 	</div>
 
@@ -184,6 +184,51 @@ AppModel
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="_findActive" id="__findActive">
+
+		<td class="attributes"><code>
+			 protected 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__findActive">#</a>
+		<code><a href="source-class-User.html#206-229" title="Go to source code">_findActive</a>( <span>string <var>$state</var></span>, <span>array <var>$query</var></span>, <span>array <var>$results</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>"Active" find method. It finds for active records.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>"Active" find method. It finds for active records.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$state</var></dt>
+					<dd>Either "before" or "after"</dd>
+					<dt><var>$query</var></dt>
+					<dd></dd>
+					<dt><var>$results</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>Query or results
+				</div>
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppModel.html#__findActive">MeCmsAppModel::_findActive()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="beforeSave" id="_beforeSave">
 
 		<td class="attributes"><code>
@@ -196,7 +241,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeSave">#</a>
-		<code><a href="source-class-User.html#199-214" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#231-246" title="Go to source code">beforeSave</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called before each save operation, after validation. Return a non-true result to halt the save.</p>
@@ -237,7 +282,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeValidate">#</a>
-		<code><a href="source-class-User.html#216-229" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-User.html#248-261" title="Go to source code">beforeValidate</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Called during validation operations, before validation.</p>
@@ -264,6 +309,42 @@ AppModel
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="emailsMatch" id="_emailsMatch">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_emailsMatch">#</a>
+		<code><a href="source-class-User.html#263-274" title="Go to source code">emailsMatch</a>( )</code>
+
+		<div class="description short">
+			<p>Validation method.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Validation method.</p>
+
+<p>Checks if the email has been correctly inserted.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if they match
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="isAdmin" id="_isAdmin">
 
 		<td class="attributes"><code>
@@ -276,7 +357,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAdmin">#</a>
-		<code><a href="source-class-User.html#231-244" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-User.html#276-289" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks if an user is an admin</p>
@@ -315,7 +396,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isFounder">#</a>
-		<code><a href="source-class-User.html#246-253" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-User.html#291-298" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks if an user is the admin founder</p>
@@ -354,7 +435,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_notReserved">#</a>
-		<code><a href="source-class-User.html#255-264" title="Go to source code">notReserved</a>( <span>array <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#300-309" title="Go to source code">notReserved</a>( <span>array <var>$check</var></span> )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -395,7 +476,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_oldPasswordIsRight">#</a>
-		<code><a href="source-class-User.html#266-283" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#311-328" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -441,7 +522,7 @@ This is used only when a user changes his password.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordsMatch">#</a>
-		<code><a href="source-class-User.html#285-296" title="Go to source code">passwordsMatch</a>( )</code>
+		<code><a href="source-class-User.html#330-341" title="Go to source code">passwordsMatch</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -477,7 +558,7 @@ This is used only when a user changes his password.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordIsStrong">#</a>
-		<code><a href="source-class-User.html#298-318" title="Go to source code">passwordIsStrong</a>( )</code>
+		<code><a href="source-class-User.html#343-363" title="Go to source code">passwordIsStrong</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -507,7 +588,6 @@ This is used only when a user changes his password.</p>
 	<caption>Methods inherited from <a href="class-MeCmsAppModel.html#methods">MeCmsAppModel</a></caption>
 	<tr>
 		<td><code>
-			<a href="class-MeCmsAppModel.html#__findActive">_findActive()</a>, 
 			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>, 
 			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>, 
 			<a href="class-MeCmsAppModel.html#_isValidSlug">isValidSlug()</a>
@@ -609,7 +689,7 @@ This is used only when a user changes his password.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#52-173" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-User.html#52-180" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -676,6 +756,13 @@ This is used only when a user changes his password.</p>
         <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
+        )
+    ),
+    <span class="php-comment">//This is used to check that the email has been correctly inserted</span>
+    <span class="php-quote">'email_repeat'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'emailsMatch'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Emails don\'t match'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'emailsMatch'</span>
         )
     ),
     <span class="php-quote">'password'</span> =&gt; <span class="php-keyword1">array</span>(
@@ -751,7 +838,7 @@ This is used only when a user changes his password.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#175-185" title="Go to source code"><var>$belongsTo</var></a>
+				<a href="source-class-User.html#182-192" title="Go to source code"><var>$belongsTo</var></a>
 
 			<div class="description short">
 				<p>belongsTo associations</p>
@@ -782,7 +869,7 @@ This is used only when a user changes his password.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-User.html#187-197" title="Go to source code"><var>$hasMany</var></a>
+				<a href="source-class-User.html#194-204" title="Go to source code"><var>$hasMany</var></a>
 
 			<div class="description short">
 				<p>hasMany associations</p>
