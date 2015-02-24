@@ -90,6 +90,8 @@ $config = array('MeCms' => array(
 		'cookies_login' => TRUE,
 		//Default users group (ID)
 		'default_group' => 3,
+		//Reset password (enabled or disabled)
+		'reset_password' => false,
 		//Signup (enabled or disabled)
 		'signup' => TRUE
 	)

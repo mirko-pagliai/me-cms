@@ -124,6 +124,12 @@ class ProfilesController extends MeCmsAppController {
 		//Redirects if the user is already logged in
 		$this->redirectIfLogged();
 		
+		//Checks if reset password is enabled
+		if(!$this->config['users']['reset_password']) {
+			$this->Session->flash(__d('me_cms', 'Disabled'), 'error');
+			$this->redirect($this->Auth->loginAction);
+		}
+		
 		if($this->request->is('post') || $this->request->is('put')) {
 			//Sets data
 			$this->User->set($this->request->data);
@@ -220,10 +226,10 @@ class ProfilesController extends MeCmsAppController {
 		//Redirects if the user is already logged in
 		$this->redirectIfLogged();
 		
-		//Checks if the registrations are enabled
+		//Checks if signup is enabled
 		if(!$this->config['users']['signup']) {
 			$this->Session->flash(__d('me_cms', 'Disabled'), 'error');
-			$this->redirect('/');
+			$this->redirect($this->Auth->loginAction);
 		}
 		
 		if($this->request->is('post') || $this->request->is('put')) {
