@@ -119,7 +119,8 @@ class PostsCategoriesController extends MeCmsAppController {
 		//Gets the categories
 		$categories = $this->PostsCategory->find('all', array(
 			'contain'	=> 'Parent.title',
-			'fields'	=> array('id', 'slug', 'post_count')
+			'fields'	=> array('id', 'slug', 'post_count'),
+			'order'		=> array('PostsCategory.lft' => 'ASC')
 		));
 		
 		//Changes the category titles, replacing them with the titles of the tree list
