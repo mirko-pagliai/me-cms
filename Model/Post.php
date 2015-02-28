@@ -194,13 +194,20 @@ class Post extends MeCmsAppModel {
 			);
 		}
 		
-		$conditions = am(array(
+		if(!empty($query['status'])) {
+			if($query['status'] === 'active')
+				$conditions['Post.active'] = TRUE;
+			elseif($query['status'] === 'draft')
+				$conditions['Post.active'] = FALSE;
+		}
+		
+		$conditions = am(array_filter(array(
 			'Post.title LIKE'	=> empty($query['title']) ? NULL : sprintf('%%%s%%', $query['title']),
 			'user_id'			=> empty($query['user']) ? NULL : $query['user'],
 			'category_id'		=> empty($query['category']) ? NULL : $query['category'],
 			'priority'			=> empty($query['priority']) ? NULL : $query['priority']
-		), $conditions);
+		)), $conditions);
 		
-		return array_filter($conditions);
+		return $conditions;
 	}
 }
