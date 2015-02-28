@@ -233,8 +233,11 @@ form.filter-form legend {
 .priority-normal,
 .priority-high,
 .priority-veryhigh {
-	font-size: 13px;
-    padding: 4px 7px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 24px;
+    padding: 0;
+    width: 24px;
 }
 
 /* Priority badge, very low */
@@ -260,4 +263,16 @@ form.filter-form legend {
 /* Priority badge, very high */
 .priority-veryhigh {
 	background: #366b36;
+}
+
+/* -------------------------------- */
+/*			Check badge				*/
+/* -------------------------------- */
+.check-badge {
+    background: #5cb85c;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 24px;
+    padding: 0;
+    width: 24px;
 }
