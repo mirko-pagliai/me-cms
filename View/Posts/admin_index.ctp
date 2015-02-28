@@ -37,7 +37,8 @@
 				echo $this->Form->legend(__d('me_cms', 'Filter'));
 				echo $this->Form->input('title', array(
 					'default'		=> @$this->request->query['title'],
-					'placeholder'	=> __d('me_cms', 'title')
+					'placeholder'	=> __d('me_cms', 'title'),
+					'size'			=> 16
 				));
 				echo $this->Form->input('user', array(
 					'default'	=> @$this->request->query['user'],
@@ -66,7 +67,8 @@
 				echo $this->Form->datepicker('created', array(
 					'data-date-format'	=> 'YYYY-MM',
 					'default'			=> @$this->request->query['created'],
-					'placeholder'		=> __d('me_cms', 'year and month')
+					'placeholder'		=> __d('me_cms', 'month'),
+					'size'				=> 5
 				));
 				echo $this->Form->submit(NULL, array('icon' => 'search'));
 			?>
