@@ -166,18 +166,24 @@ class PostsController extends MeCmsAppController {
 	
 	/**
 	 * List posts
+	 * @uses Post::conditionsFromFilter()
 	 */
 	public function admin_index() {
-		$this->paginate = array(
+		//Sets conditions from the filter form
+		$conditions = empty($this->request->query) ? array() : $this->Post->conditionsFromFilter($this->request->query);
+		
+		$this->paginate = am(array(
 			'contain'	=> array('Category.title', 'User.first_name', 'User.last_name'),
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
 			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('Post.created' => 'DESC')
-		);
-		
+		), compact('conditions'));
+				
 		$this->set(array(
+			'categories'		=> $this->Post->Category->find('list', array('fields' => array('id', 'title'))),
 			'posts'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Posts')
+			'title_for_layout'	=> __d('me_cms', 'Posts'),
+			'users'				=> $this->Post->User->find('list')
 		));
 	}
 

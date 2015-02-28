@@ -171,4 +171,36 @@ class Post extends MeCmsAppModel {
 	public function afterSave($created, $options = array()) {
 		Cache::clearGroup('posts', 'posts');
 	}
+	
+	/**
+	 * Gets conditions from a filter form
+	 * @param array $query Query (`$this->request->query`)
+	 * @return array Conditions
+	 */
+	public function conditionsFromFilter($query = NULL) {
+		$conditions = array();
+		
+		if(!empty($query['created'])) {
+			$created = explode('-', $query['created']);
+			
+			//Sets the start and end dates
+			//For the end date, see http://stackoverflow.com/a/1686742/1480263
+			$start = sprintf('%d-%d-1', $created[0], $created[1]);
+			$end = date('Y-m-t', strtotime(sprintf('%d-%d-1', $created[0], $created[1])));
+						
+			$conditions = array(
+				'Post.created >=' => CakeTime::format($start, '%Y-%m-%d %H:%M'),
+				'Post.created <=' => CakeTime::format($end, '%Y-%m-%d %H:%M')
+			);
+		}
+		
+		$conditions = am(array(
+			'Post.title LIKE'	=> empty($query['title']) ? NULL : sprintf('%%%s%%', $query['title']),
+			'user_id'			=> empty($query['user']) ? NULL : $query['user'],
+			'category_id'		=> empty($query['category']) ? NULL : $query['category'],
+			'priority'			=> empty($query['priority']) ? NULL : $query['priority']
+		), $conditions);
+		
+		return array_filter($conditions);
+	}
 }

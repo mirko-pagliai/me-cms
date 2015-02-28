@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.2
+* added a filter form for posts.
+
 ### 1.2.1
 * full support for reCAPTCHA. It's used for signup and to reset passwords;
 * users can signup. You can set up as an account should be activated;
