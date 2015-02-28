@@ -49,13 +49,11 @@
 				echo $this->Form->input('user', array(
 					'default'	=> @$this->request->query['user'],
 					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users')),
-					'options'	=> $users,
 					'type'		=> 'select'
 				));
 				echo $this->Form->input('category', array(
 					'default'	=> @$this->request->query['category'],
 					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories')),
-					'options'	=> $categories,
 					'type'		=> 'select'
 				));
 				echo $this->Form->input('priority', array(
