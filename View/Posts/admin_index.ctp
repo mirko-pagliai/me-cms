@@ -40,10 +40,10 @@
 					'placeholder'	=> __d('me_cms', 'title'),
 					'size'			=> 16
 				));
-				echo $this->Form->input('status', array(
-					'default'	=> @$this->request->query['status'],
+				echo $this->Form->input('active', array(
+					'default'	=> @$this->request->query['active'],
 					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-					'options'	=> array('active' => __d('me_cms', 'Only published'), 'draft' => __d('me_cms', 'Only draft')),
+					'options'	=> array('yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only draft')),
 					'type'		=> 'select'
 				));
 				echo $this->Form->input('user', array(

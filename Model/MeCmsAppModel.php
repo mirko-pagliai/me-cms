@@ -137,10 +137,10 @@ class MeCmsAppModel extends AppModel {
 			);
 		}
 		
-		if(!empty($query['status'])) {
-			if($query['status'] === 'active')
+		if(!empty($query['active'])) {
+			if($query['active'] === 'yes')
 				$conditions[$this->alias.'.active'] = TRUE;
-			elseif($query['status'] === 'draft')
+			elseif($query['active'] === 'no')
 				$conditions[$this->alias.'.active'] = FALSE;
 		}
 		
