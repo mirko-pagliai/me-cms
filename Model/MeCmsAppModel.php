@@ -116,6 +116,45 @@ class MeCmsAppModel extends AppModel {
 	}
 	
 	/**
+	 * Gets conditions from a filter form
+	 * @param array $query Query (`$this->request->query`)
+	 * @return array Conditions
+	 */
+	public function conditionsFromFilter($query = NULL) {
+		$conditions = array();
+		
+		if(!empty($query['created'])) {
+			$created = explode('-', $query['created']);
+			
+			//Sets the start and end dates
+			//For the end date, see http://stackoverflow.com/a/1686742/1480263
+			$start = sprintf('%d-%d-1', $created[0], $created[1]);
+			$end = date('Y-m-t', strtotime(sprintf('%d-%d-1', $created[0], $created[1])));
+						
+			$conditions = array(
+				$this->alias.'.created >=' => CakeTime::format($start, '%Y-%m-%d %H:%M'),
+				$this->alias.'.created <=' => CakeTime::format($end, '%Y-%m-%d %H:%M')
+			);
+		}
+		
+		if(!empty($query['status'])) {
+			if($query['status'] === 'active')
+				$conditions[$this->alias.'.active'] = TRUE;
+			elseif($query['status'] === 'draft')
+				$conditions[$this->alias.'.active'] = FALSE;
+		}
+		
+		$conditions = am(array_filter(array(
+			$this->alias.'.title LIKE'		=> empty($query['title']) ? NULL : sprintf('%%%s%%', $query['title']),
+			'user_id'						=> empty($query['user']) ? NULL : $query['user'],
+			$this->alias.'.category_id'		=> empty($query['category']) ? NULL : $query['category'],
+			'priority'						=> empty($query['priority']) ? NULL : $query['priority']
+		)), $conditions);
+		
+		return $conditions;
+	}
+	
+	/**
 	 * Checks whether an object belongs to a user.
 	 * @param int $id Object id
 	 * @param int $user_id User id
