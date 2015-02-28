@@ -166,7 +166,7 @@ class PostsController extends MeCmsAppController {
 	
 	/**
 	 * List posts
-	 * @uses Post::conditionsFromFilter()
+	 * @uses MeCmsAppModel::conditionsFromFilter()
 	 */
 	public function admin_index() {
 		//Sets conditions from the filter form
