@@ -22,12 +22,50 @@
  * @package		MeCms\View\Users
  */
 ?>
+
+<?php $this->Library->datepicker('#created', array('format' => 'MM/YYYY', 'viewMode' => 'years')); ?>
 	
 <div class="users index">
 	<?php 
 		echo $this->Html->h2(__d('me_cms', 'Users'));
 		echo $this->Html->button(__d('me_cms', 'Add'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
+	
+	<?php echo $this->Form->createInline(FALSE, array('class' => 'filter-form', 'type' => 'get')); ?>
+		<fieldset>
+			<?php
+				echo $this->Form->legend(__d('me_cms', 'Filter'));
+				echo $this->Form->input('username', array(
+					'default'		=> @$this->request->query['username'],
+					'placeholder'	=> __d('me_cms', 'username'),
+					'size'			=> 16
+				));
+				echo $this->Form->input('status', array(
+					'default'	=> @$this->request->query['status'],
+					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
+					'options'	=> array(
+						'active'	=> __d('me_cms', 'Only active'),
+						'pending'	=> __d('me_cms', 'Only pending'),
+						'banned'	=> __d('me_cms', 'Only banned')
+					),
+					'type'		=> 'select'
+				));
+				echo $this->Form->input('group', array(
+					'default'	=> @$this->request->query['group'],
+					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all groups')),
+					'type'		=> 'select'
+				));
+				echo $this->Form->datepicker('created', array(
+					'data-date-format'	=> 'YYYY-MM',
+					'default'			=> @$this->request->query['created'],
+					'placeholder'		=> __d('me_cms', 'month'),
+					'size'				=> 5
+				));
+				echo $this->Form->submit(NULL, array('icon' => 'search'));
+			?>
+		</fieldset>
+	<?php echo $this->Form->end(); ?>
+	
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('username', __d('me_cms', 'Username')); ?></th>

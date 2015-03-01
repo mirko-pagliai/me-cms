@@ -127,13 +127,17 @@ class PagesController extends MeCmsAppController {
 	
 	/**
 	 * List pages
+	 * @uses MeCmsAppModel::conditionsFromFilter()
 	 */
 	public function admin_index() {
-		$this->paginate = array(
+		//Sets conditions from the filter form
+		$conditions = empty($this->request->query) ? array() : $this->Page->conditionsFromFilter($this->request->query);
+		
+		$this->paginate = am(array(
 			'fields'	=> array('id', 'title', 'slug', 'priority', 'active', 'created'),
 			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('Page.title' => 'ASC')
-		);
+		), compact('conditions'));
 		
 		$this->set(array(
 			'pages'				=> $this->paginate(),

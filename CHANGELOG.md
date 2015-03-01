@@ -1,7 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.2
-* added a filter form for posts.
+* added a filter form for banners, pages, posts and users.
 
 ### 1.2.1
 * full support for reCAPTCHA. It's used for signup and to reset passwords;

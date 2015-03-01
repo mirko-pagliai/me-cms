@@ -22,12 +22,53 @@
  * @package		MeCms\View\Pages
  */
 ?>
+
+<?php $this->Library->datepicker('#created', array('format' => 'MM/YYYY', 'viewMode' => 'years')); ?>
 	
 <div class="pages index">
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Pages'));
 		echo $this->Html->button(__d('me_cms', 'Add'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
+	
+	<?php echo $this->Form->createInline(FALSE, array('class' => 'filter-form', 'type' => 'get')); ?>
+		<fieldset>
+			<?php
+				echo $this->Form->legend(__d('me_cms', 'Filter'));
+				echo $this->Form->input('title', array(
+					'default'		=> @$this->request->query['title'],
+					'placeholder'	=> __d('me_cms', 'title'),
+					'size'			=> 16
+				));
+				echo $this->Form->input('active', array(
+					'default'	=> @$this->request->query['active'],
+					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
+					'options'	=> array('yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only draft')),
+					'type'		=> 'select'
+				));
+				echo $this->Form->input('priority', array(
+					'default'	=> @$this->request->query['priority'],
+					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities')),
+					'options'	=> array(
+						'1' => sprintf('1 - %s', __d('me_cms', 'Very low')),
+						'2' => sprintf('2 - %s', __d('me_cms', 'Low')),
+						'3' => sprintf('3 - %s', __d('me_cms', 'Normal')),
+						'4' => sprintf('4 - %s', __d('me_cms', 'High')),
+						'5' => sprintf('5 - %s', __d('me_cms', 'Very high')),
+					),
+					'type'		=> 'select'
+				));
+				echo $this->Form->datepicker('created', array(
+					'data-date-format'	=> 'YYYY-MM',
+					'default'			=> @$this->request->query['created'],
+					'placeholder'		=> __d('me_cms', 'month'),
+					'size'				=> 5
+				));
+				echo $this->Form->submit(NULL, array('icon' => 'search'));
+			?>
+		</fieldset>
+	<?php echo $this->Form->end(); ?>
+	
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('title', __d('me_cms', 'Title')); ?></th>

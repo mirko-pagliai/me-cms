@@ -141,17 +141,22 @@ class BannersController extends MeCmsAppController {
 	
 	/**
 	 * List banners
+	 * @uses Banner::conditionsFromFilter()
 	 */
 	public function admin_index() {
-		$this->paginate = array(
+		//Sets conditions from the filter form
+		$conditions = empty($this->request->query) ? array() : $this->Banner->conditionsFromFilter($this->request->query);
+		
+		$this->paginate = am(array(
 			'contain'	=> 'Position.name',
 			'fields'	=> array('id', 'filename', 'target', 'description', 'active', 'click_count'),
 			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('Banner.filename' => 'ASC')
-		);
+		), compact('conditions'));
 		
 		$this->set(array(
 			'banners'			=> $this->paginate(),
+			'positions'			=> $this->Banner->Position->find('list'),
 			'title_for_layout'	=> __d('me_cms', 'Banners')
 		));
 	}

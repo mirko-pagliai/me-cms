@@ -216,16 +216,21 @@ class UsersController extends MeCmsAppController {
 	
 	/**
 	 * List users
+	 * @uses User::conditionsFromFilter()
 	 */
 	public function admin_index() {
-		$this->paginate = array(
+		//Sets conditions from the filter form
+		$conditions = empty($this->request->query) ? array() : $this->User->conditionsFromFilter($this->request->query);
+		
+		$this->paginate = am(array(
 			'contain'	=> 'Group.label',
 			'fields'	=> array('id', 'username', 'email', 'full_name', 'active', 'banned', 'post_count', 'created'),
 			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('User.username' => 'ASC')
-		);
+		), compact('conditions'));
 		
 		$this->set(array(
+			'groups'			=> $this->User->Group->find('list'),
 			'users'				=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Users')
 		));

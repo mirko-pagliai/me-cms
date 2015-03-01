@@ -261,6 +261,36 @@ class User extends MeCmsAppModel {
 	}
 	
 	/**
+	 * Gets conditions from a filter form
+	 * @param array $query Query (`$this->request->query`)
+	 * @return array Conditions
+	 * @uses MeCmsAppModel::conditionsFromFilter()
+	 */
+	public function conditionsFromFilter($query = NULL) {
+		$conditions = parent::conditionsFromFilter($query);
+		
+		if(!empty($query['username']))
+			$conditions['username LIKE'] = sprintf('%%%s%%', $query['username']);
+		
+		if(!empty($query['status'])) {
+			switch($query['status']) {
+				case 'active':
+					$conditions['active'] = TRUE;
+					$conditions['banned'] = FALSE;
+					break;
+				case 'pending':
+					$conditions['active'] = FALSE;
+					break;
+				case 'banned':
+					$conditions['banned'] = TRUE;
+					break;
+			}
+		}
+		
+		return $conditions;
+	}
+	
+	/**
 	 * Validation method.
 	 * 
 	 * Checks if the email has been correctly inserted.

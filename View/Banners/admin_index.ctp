@@ -28,6 +28,32 @@
 		echo $this->Html->h2(__d('me_cms', 'Banners'));
 		echo $this->Html->button(__d('me_cms', 'Add'), array('action' => 'add'), array('class' => 'btn-success', 'icon' => 'plus'));
 	?>
+	
+	<?php echo $this->Form->createInline(FALSE, array('class' => 'filter-form', 'type' => 'get')); ?>
+		<fieldset>
+			<?php
+				echo $this->Form->legend(__d('me_cms', 'Filter'));
+				echo $this->Form->input('filename', array(
+					'default'		=> @$this->request->query['filename'],
+					'placeholder'	=> __d('me_cms', 'filename'),
+					'size'			=> 16
+				));
+				echo $this->Form->input('active', array(
+					'default'	=> @$this->request->query['active'],
+					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
+					'options'	=> array('yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')),
+					'type'		=> 'select'
+				));
+				echo $this->Form->input('position', array(
+					'default'	=> @$this->request->query['position'],
+					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all positions')),
+					'type'		=> 'select'
+				));
+				echo $this->Form->submit(NULL, array('icon' => 'search'));
+			?>
+		</fieldset>
+	<?php echo $this->Form->end(); ?>
+	
 	<table class="table table-striped">
 		<tr>
 			<th><?php echo $this->Paginator->sort('filename', __d('me_cms', 'Filename')); ?></th>

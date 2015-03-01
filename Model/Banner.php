@@ -213,4 +213,21 @@ class Banner extends MeCmsAppModel {
 		//Checks if the folder is writeable
 		return BannerManager::folderIsWritable();
 	}
+	
+	/**
+	 * Gets conditions from a filter form
+	 * @param array $query Query (`$this->request->query`)
+	 * @return array Conditions
+	 * @uses MeCmsAppModel::conditionsFromFilter()
+	 */
+	public function conditionsFromFilter($query = NULL) {
+		$conditions = parent::conditionsFromFilter($query);
+		
+		$conditions = am(array_filter(array(
+			$this->alias.'.filename LIKE'	=> empty($query['filename']) ? NULL : sprintf('%%%s%%', $query['filename']),
+			'position_id'					=> empty($query['position']) ? NULL : $query['position'],
+		)), $conditions);
+		
+		return $conditions;
+	}
 }
