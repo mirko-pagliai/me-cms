@@ -201,7 +201,7 @@ class PhotosController extends MeCmsAppController {
 	 */
 	public function view($id = NULL) {
 		//Tries to get data from the cache
-		$photo = Cache::read($cache = sprintf('photos_view_%s', $id), 'photos');
+		$photo = Cache::read($cache = sprintf('view_%s', $id), 'photos');
 		
 		//If the data are not available from the cache
         if(empty($photo)) {

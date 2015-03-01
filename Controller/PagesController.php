@@ -163,7 +163,7 @@ class PagesController extends MeCmsAppController {
 	 */
 	public function index() {
 		//Tries to get data from the cache
-		$pages = Cache::read($cache = 'pages_index', 'pages');
+		$pages = Cache::read($cache = 'index', 'pages');
 		
 		//If the data are not available from the cache
         if(empty($pages)) {
@@ -199,7 +199,7 @@ class PagesController extends MeCmsAppController {
 		}
 		
 		//Tries to get data from the cache
-		$page = Cache::read($cache = sprintf('pages_view_%s', $slug), 'pages');
+		$page = Cache::read($cache = sprintf('view_%s', $slug), 'pages');
 		
 		//If the data are not available from the cache
         if(empty($page)) {
@@ -231,7 +231,7 @@ class PagesController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$pages = Cache::read($cache = 'pages_widget_list', 'pages');
+		$pages = Cache::read($cache = 'widget_list', 'pages');
 		
 		//If the data are not available from the cache
         if(empty($pages)) {

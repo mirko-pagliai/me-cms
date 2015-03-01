@@ -193,7 +193,7 @@ class PostsController extends MeCmsAppController {
 	 */
 	public function index($category = NULL) {
 		//Sets the initial cache name
-		$cache = 'posts_index';
+		$cache = 'index';
 		//Sets the initial conditions query
 		$conditions = array();
 		
@@ -253,7 +253,7 @@ class PostsController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$posts = Cache::read($cache = 'posts_rss', 'posts');
+		$posts = Cache::read($cache = 'rss', 'posts');
 
 		//If the data are not available from the cache
 		if(empty($posts)) {
@@ -316,7 +316,7 @@ class PostsController extends MeCmsAppController {
 	 */
 	public function view($slug = NULL) {
 		//Tries to get data from the cache
-		$post = Cache::read($cache = sprintf('posts_view_%s', $slug), 'posts');
+		$post = Cache::read($cache = sprintf('view_%s', $slug), 'posts');
 		
 		//If the data are not available from the cache
 		if(empty($post)) {
@@ -352,7 +352,7 @@ class PostsController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$posts = Cache::read($cache = sprintf('posts_widget_latest_%d', $limit), 'posts');
+		$posts = Cache::read($cache = sprintf('widget_latest_%d', $limit), 'posts');
 		
 		//If the data are not available from the cache
         if(empty($posts)) {

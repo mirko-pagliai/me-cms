@@ -139,7 +139,7 @@ class PostsCategoriesController extends MeCmsAppController {
 	 */
 	public function index() {
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'posts_categories_index', 'posts');
+		$categories = Cache::read($cache = 'categories_index', 'posts');
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
@@ -164,7 +164,7 @@ class PostsCategoriesController extends MeCmsAppController {
             throw new ForbiddenException();
 		
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'posts_categories_widget_list', 'posts');
+		$categories = Cache::read($cache = 'categories_widget_list', 'posts');
 		
 		//If the data are not available from the cache
         if(empty($categories)) {

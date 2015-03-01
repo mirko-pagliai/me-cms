@@ -131,7 +131,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 */
 	public function index() {
 		//Tries to get data from the cache
-		$albums = Cache::read($cache = 'photos_albums_index', 'photos');
+		$albums = Cache::read($cache = 'albums_index', 'photos');
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
@@ -161,7 +161,7 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 */
 	public function view($slug = NULL) {
 		//Tries to get data from the cache
-		$album = Cache::read($cache = sprintf('photos_albums_view_%s', $slug), 'photos');
+		$album = Cache::read($cache = sprintf('albums_view_%s', $slug), 'photos');
 		
 		//If the data are not available from the cache
         if(empty($album)) {
