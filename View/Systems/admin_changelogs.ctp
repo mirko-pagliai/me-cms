@@ -45,6 +45,6 @@
 	
 	<?php 
 		if(!empty($changelog))
-			echo $this->Markdown->toHtml($changelog);
+			echo $this->Html->div(NULL, $this->Markdown->toHtml($changelog), array('id' => 'changelog'));
 	?>
 </div>
