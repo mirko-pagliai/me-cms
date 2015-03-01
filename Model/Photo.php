@@ -70,10 +70,10 @@ class Photo extends MeCmsAppModel {
 				'message'	=> 'Must be at most %d chars',
 				'rule'		=> array('maxLength', 255)
 			),
-			'isUnique' => array(
+			'noDuplicate' => array(
 				'last'		=> FALSE,
-				'message'	=> 'This value is already used',
-				'rule'		=> 'isUnique'
+				'message'	=> 'A photo with this name already exists',
+				'rule'		=> array('noDuplicate')
 			),
 			'blankonUpdate' => array(
 				'message'	=> 'Can not be changed',
@@ -171,5 +171,21 @@ class Photo extends MeCmsAppModel {
 			return PhotoManager::folderIsWritable($this->data[$this->alias]['album_id']);
 		
 		return TRUE;
+	}
+	
+	/**
+	 * Validation method.
+	 * 
+	 * Checks if it already exists a picture with the same name in the same album.
+	 * @param array $check Data
+	 * @return bool
+	 */
+	public function noDuplicate($check) {
+		$conditions = array('filename' => ($filename = array_values($check)[0]));
+		
+		if(!empty($this->data[$this->alias]['album_id']))
+			$conditions['album_id'] = $this->data[$this->alias]['album_id'];
+		
+		return !$this->find('first', compact('conditions'));
 	}
 }
