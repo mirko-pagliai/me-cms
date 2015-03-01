@@ -246,6 +246,7 @@ class PostsController extends MeCmsAppController {
 	 * Lists posts as RSS.
 	 * @return array Posts
 	 * @throws ForbiddenException
+	 * @uses config
 	 */
 	public function rss() {
 		//This method works only for RSS
