@@ -154,11 +154,17 @@ class BannersController extends MeCmsAppController {
 			'order'		=> array('Banner.filename' => 'ASC')
 		), compact('conditions'));
 		
-		$this->set(array(
+		//Tries to get data from the cache
+		$positions = Cache::read($cache = 'admin_positions_list', 'banners');
+		
+		//If the data are not available from the cache
+        if(empty($positions))
+            Cache::write($cache, $positions = $this->Banner->Position->find('list'), 'banners');
+		
+		$this->set(am(array(
 			'banners'			=> $this->paginate(),
-			'positions'			=> $this->Banner->Position->find('list'),
 			'title_for_layout'	=> __d('me_cms', 'Banners')
-		));
+		), compact('positions')));
 	}
 
 	/**

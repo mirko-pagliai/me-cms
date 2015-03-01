@@ -229,11 +229,17 @@ class UsersController extends MeCmsAppController {
 			'order'		=> array('User.username' => 'ASC')
 		), compact('conditions'));
 		
-		$this->set(array(
-			'groups'			=> $this->User->Group->find('list'),
+		//Tries to get data from the cache
+		$groups = Cache::read($cache = 'admin_groups_list', 'users');
+		
+		//If the data are not available from the cache
+        if(empty($groups))
+            Cache::write($cache, $groups = $this->User->Group->find('list'), 'users');
+		
+		$this->set(am(array(
 			'users'				=> $this->paginate(),
 			'title_for_layout'	=> __d('me_cms', 'Users')
-		));
+		), compact('groups')));
 	}
 
 	/**

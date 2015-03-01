@@ -178,13 +178,25 @@ class PostsController extends MeCmsAppController {
 			'limit'		=> $this->config['backend']['records'],
 			'order'		=> array('Post.created' => 'DESC')
 		), compact('conditions'));
-				
-		$this->set(array(
-			'categories'		=> $this->Post->Category->find('list', array('fields' => array('id', 'title'))),
+		
+		//Tries to get data from the cache
+		$categories = Cache::read($cache = 'admin_categories_list', 'posts');
+		
+		//If the data are not available from the cache
+        if(empty($categories))
+            Cache::write($cache, $categories = $this->Post->Category->find('list', array('fields' => array('id', 'title'))), 'posts');
+		
+		//Tries to get data from the cache
+		$users = Cache::read($cache = 'admin_users_list', 'posts');
+		
+		//If the data are not available from the cache
+        if(empty($users))
+            Cache::write($cache, $users = $this->Post->User->find('list'), 'posts');
+		
+		$this->set(am(array(
 			'posts'				=> $this->paginate(),
-			'title_for_layout'	=> __d('me_cms', 'Posts'),
-			'users'				=> $this->Post->User->find('list')
-		));
+			'title_for_layout'	=> __d('me_cms', 'Posts')
+		), compact('categories', 'users')));
 	}
 
 	/**
