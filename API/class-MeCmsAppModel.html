@@ -181,7 +181,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-MeCmsAppModel.html#29-140" title="Go to source code">MeCmsAppModel.php</a>
+			<b>Located at</b> <a href="source-class-MeCmsAppModel.html#29-179" title="Go to source code">MeCmsAppModel.php</a>
 		<br>
 	</div>
 
@@ -314,6 +314,52 @@ AppModel
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="conditionsFromFilter" id="_conditionsFromFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_conditionsFromFilter">#</a>
+		<code><a href="source-class-MeCmsAppModel.html#118-155" title="Go to source code">conditionsFromFilter</a>( <span>array <var>$query</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Gets conditions from a filter form</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets conditions from a filter form</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$query</var></dt>
+					<dd>Query (<code>$this-&gt;request-&gt;query</code>)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Conditions
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Banner.html#_conditionsFromFilter">Banner::conditionsFromFilter()</a></code><br>
+						<code><a href="class-PagesController.html#_admin_index">PagesController::admin_index()</a></code><br>
+						<code><a href="class-PostsController.html#_admin_index">PostsController::admin_index()</a></code><br>
+						<code><a href="class-User.html#_conditionsFromFilter">User::conditionsFromFilter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="isOwnedBy" id="_isOwnedBy">
 
 		<td class="attributes"><code>
@@ -326,7 +372,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOwnedBy">#</a>
-		<code><a href="source-class-MeCmsAppModel.html#118-126" title="Go to source code">isOwnedBy</a>( <span>integer <var>$id</var></span>, <span>integer <var>$user_id</var></span> )</code>
+		<code><a href="source-class-MeCmsAppModel.html#157-165" title="Go to source code">isOwnedBy</a>( <span>integer <var>$id</var></span>, <span>integer <var>$user_id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks whether an object belongs to a user.</p>
@@ -367,7 +413,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isValidSlug">#</a>
-		<code><a href="source-class-MeCmsAppModel.html#128-139" title="Go to source code">isValidSlug</a>( <span>array <var>$check</var></span> )</code>
+		<code><a href="source-class-MeCmsAppModel.html#167-178" title="Go to source code">isValidSlug</a>( <span>array <var>$check</var></span> )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>

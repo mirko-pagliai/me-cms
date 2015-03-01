@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-User.html#30-364" title="Go to source code">User.php</a>
+			<b>Located at</b> <a href="source-class-User.html#30-394" title="Go to source code">User.php</a>
 		<br>
 	</div>
 
@@ -309,6 +309,55 @@ AppModel
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="conditionsFromFilter" id="_conditionsFromFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_conditionsFromFilter">#</a>
+		<code><a href="source-class-User.html#263-291" title="Go to source code">conditionsFromFilter</a>( <span>array <var>$query</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Gets conditions from a filter form</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets conditions from a filter form</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$query</var></dt>
+					<dd>Query (<code>$this-&gt;request-&gt;query</code>)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Conditions
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppModel.html#_conditionsFromFilter">MeCmsAppModel::conditionsFromFilter()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-UsersController.html#_admin_index">UsersController::admin_index()</a></code><br>
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCmsAppModel.html#_conditionsFromFilter">MeCmsAppModel::conditionsFromFilter()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="emailsMatch" id="_emailsMatch">
 
 		<td class="attributes"><code>
@@ -321,7 +370,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_emailsMatch">#</a>
-		<code><a href="source-class-User.html#263-274" title="Go to source code">emailsMatch</a>( )</code>
+		<code><a href="source-class-User.html#293-304" title="Go to source code">emailsMatch</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -357,7 +406,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAdmin">#</a>
-		<code><a href="source-class-User.html#276-289" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-User.html#306-319" title="Go to source code">isAdmin</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks if an user is an admin</p>
@@ -396,7 +445,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isFounder">#</a>
-		<code><a href="source-class-User.html#291-298" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-User.html#321-328" title="Go to source code">isFounder</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			<p>Checks if an user is the admin founder</p>
@@ -435,7 +484,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_notReserved">#</a>
-		<code><a href="source-class-User.html#300-309" title="Go to source code">notReserved</a>( <span>array <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#330-339" title="Go to source code">notReserved</a>( <span>array <var>$check</var></span> )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -476,7 +525,7 @@ AppModel
 
 		<td class="name"><div>
 		<a class="anchor" href="#_oldPasswordIsRight">#</a>
-		<code><a href="source-class-User.html#311-328" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
+		<code><a href="source-class-User.html#341-358" title="Go to source code">oldPasswordIsRight</a>( <span>mixed <var>$check</var></span> )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -522,7 +571,7 @@ This is used only when a user changes his password.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordsMatch">#</a>
-		<code><a href="source-class-User.html#330-341" title="Go to source code">passwordsMatch</a>( )</code>
+		<code><a href="source-class-User.html#360-371" title="Go to source code">passwordsMatch</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>
@@ -558,7 +607,7 @@ This is used only when a user changes his password.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_passwordIsStrong">#</a>
-		<code><a href="source-class-User.html#343-363" title="Go to source code">passwordIsStrong</a>( )</code>
+		<code><a href="source-class-User.html#373-393" title="Go to source code">passwordIsStrong</a>( )</code>
 
 		<div class="description short">
 			<p>Validation method.</p>

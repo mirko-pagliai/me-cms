@@ -257,7 +257,7 @@
 </span></span><span id="131" class="l"><a href="#131">131: </a><span class="php-comment">     */</span>
 </span><span id="132" class="l"><a href="#132">132: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> index() {
 </span><span id="133" class="l"><a href="#133">133: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="134" class="l"><a href="#134">134: </a>        <span class="php-var">$albums</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-quote">'photos_albums_index'</span>, <span class="php-quote">'photos'</span>);
+</span><span id="134" class="l"><a href="#134">134: </a>        <span class="php-var">$albums</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-quote">'albums_index'</span>, <span class="php-quote">'photos'</span>);
 </span><span id="135" class="l"><a href="#135">135: </a>        
 </span><span id="136" class="l"><a href="#136">136: </a>        <span class="php-comment">//If the data are not available from the cache</span>
 </span><span id="137" class="l"><a href="#137">137: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$albums</span>)) {
@@ -287,7 +287,7 @@
 </span></span><span id="161" class="l"><a href="#161">161: </a><span class="php-comment">     */</span>
 </span><span id="162" class="l"><a href="#162">162: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$slug</span> = <span class="php-keyword1">NULL</span>) {
 </span><span id="163" class="l"><a href="#163">163: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="164" class="l"><a href="#164">164: </a>        <span class="php-var">$album</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'photos_albums_view_%s'</span>, <span class="php-var">$slug</span>), <span class="php-quote">'photos'</span>);
+</span><span id="164" class="l"><a href="#164">164: </a>        <span class="php-var">$album</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'albums_view_%s'</span>, <span class="php-var">$slug</span>), <span class="php-quote">'photos'</span>);
 </span><span id="165" class="l"><a href="#165">165: </a>        
 </span><span id="166" class="l"><a href="#166">166: </a>        <span class="php-comment">//If the data are not available from the cache</span>
 </span><span id="167" class="l"><a href="#167">167: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$album</span>)) {

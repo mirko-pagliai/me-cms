@@ -196,10 +196,10 @@
 </span><span id="70" class="l"><a href="#70"> 70: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be at most %d chars'</span>,
 </span><span id="71" class="l"><a href="#71"> 71: </a>                <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">255</span>)
 </span><span id="72" class="l"><a href="#72"> 72: </a>            ),
-</span><span id="73" class="l"><a href="#73"> 73: </a>            <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
+</span><span id="73" class="l"><a href="#73"> 73: </a>            <span class="php-quote">'noDuplicate'</span> =&gt; <span class="php-keyword1">array</span>(
 </span><span id="74" class="l"><a href="#74"> 74: </a>                <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
-</span><span id="75" class="l"><a href="#75"> 75: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
-</span><span id="76" class="l"><a href="#76"> 76: </a>                <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
+</span><span id="75" class="l"><a href="#75"> 75: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'A photo with this name already exists'</span>,
+</span><span id="76" class="l"><a href="#76"> 76: </a>                <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'noDuplicate'</span>)
 </span><span id="77" class="l"><a href="#77"> 77: </a>            ),
 </span><span id="78" class="l"><a href="#78"> 78: </a>            <span class="php-quote">'blankonUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
 </span><span id="79" class="l"><a href="#79"> 79: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
@@ -298,7 +298,23 @@
 </span><span id="172" class="l"><a href="#172">172: </a>        
 </span><span id="173" class="l"><a href="#173">173: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
 </span><span id="174" class="l"><a href="#174">174: </a>    }
-</span><span id="175" class="l"><a href="#175">175: </a>}</span></code></pre>
+</span><span id="175" class="l"><a href="#175">175: </a>    
+</span><span id="176" class="l"><a href="#176">176: </a>    <span class="php-comment">/**
+</span></span><span id="177" class="l"><a href="#177">177: </a><span class="php-comment">     * Validation method.
+</span></span><span id="178" class="l"><a href="#178">178: </a><span class="php-comment">     * 
+</span></span><span id="179" class="l"><a href="#179">179: </a><span class="php-comment">     * Checks if it already exists a picture with the same name in the same album.
+</span></span><span id="180" class="l"><a href="#180">180: </a><span class="php-comment">     * @param array $check Data
+</span></span><span id="181" class="l"><a href="#181">181: </a><span class="php-comment">     * @return bool
+</span></span><span id="182" class="l"><a href="#182">182: </a><span class="php-comment">     */</span>
+</span><span id="183" class="l"><a href="#183">183: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> noDuplicate(<span class="php-var">$check</span>) {
+</span><span id="184" class="l"><a href="#184">184: </a>        <span class="php-var">$conditions</span> = <span class="php-keyword1">array</span>(<span class="php-quote">'filename'</span> =&gt; (<span class="php-var">$filename</span> = <span class="php-keyword2">array_values</span>(<span class="php-var">$check</span>)[<span class="php-num">0</span>]));
+</span><span id="185" class="l"><a href="#185">185: </a>        
+</span><span id="186" class="l"><a href="#186">186: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'album_id'</span>]))
+</span><span id="187" class="l"><a href="#187">187: </a>            <span class="php-var">$conditions</span>[<span class="php-quote">'album_id'</span>] = <span class="php-var">$this</span>-&gt;data[<span class="php-var">$this</span>-&gt;alias][<span class="php-quote">'album_id'</span>];
+</span><span id="188" class="l"><a href="#188">188: </a>        
+</span><span id="189" class="l"><a href="#189">189: </a>        <span class="php-keyword1">return</span> !<span class="php-var">$this</span>-&gt;find(<span class="php-quote">'first'</span>, <span class="php-keyword2">compact</span>(<span class="php-quote">'conditions'</span>));
+</span><span id="190" class="l"><a href="#190">190: </a>    }
+</span><span id="191" class="l"><a href="#191">191: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>

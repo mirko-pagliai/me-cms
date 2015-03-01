@@ -176,7 +176,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-Photo.html#30-175" title="Go to source code">Photo.php</a>
+			<b>Located at</b> <a href="source-class-Photo.html#30-191" title="Go to source code">Photo.php</a>
 		<br>
 	</div>
 
@@ -388,6 +388,47 @@ AppModel
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="noDuplicate" id="_noDuplicate">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_noDuplicate">#</a>
+		<code><a href="source-class-Photo.html#176-190" title="Go to source code">noDuplicate</a>( <span>array <var>$check</var></span> )</code>
+
+		<div class="description short">
+			<p>Validation method.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Validation method.</p>
+
+<p>Checks if it already exists a picture with the same name in the same album.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$check</var></dt>
+					<dd>Data</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	</table>
 
 	<table class="summary inherited">
@@ -396,6 +437,7 @@ AppModel
 		<td><code>
 			<a href="class-MeCmsAppModel.html#__findActive">_findActive()</a>, 
 			<a href="class-MeCmsAppModel.html#__findRandom">_findRandom()</a>, 
+			<a href="class-MeCmsAppModel.html#_conditionsFromFilter">conditionsFromFilter()</a>, 
 			<a href="class-MeCmsAppModel.html#_isOwnedBy">isOwnedBy()</a>, 
 			<a href="class-MeCmsAppModel.html#_isValidSlug">isValidSlug()</a>
 		</code></td>
@@ -508,10 +550,10 @@ AppModel
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be at most %d chars'</span>,
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">255</span>)
         ),
-        <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'noDuplicate'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'A photo with this name already exists'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'noDuplicate'</span>)
         ),
         <span class="php-quote">'blankonUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,

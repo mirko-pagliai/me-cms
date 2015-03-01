@@ -327,7 +327,7 @@
 </span></span><span id="201" class="l"><a href="#201">201: </a><span class="php-comment">     */</span>
 </span><span id="202" class="l"><a href="#202">202: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$id</span> = <span class="php-keyword1">NULL</span>) {
 </span><span id="203" class="l"><a href="#203">203: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="204" class="l"><a href="#204">204: </a>        <span class="php-var">$photo</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'photos_view_%s'</span>, <span class="php-var">$id</span>), <span class="php-quote">'photos'</span>);
+</span><span id="204" class="l"><a href="#204">204: </a>        <span class="php-var">$photo</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-var">$id</span>), <span class="php-quote">'photos'</span>);
 </span><span id="205" class="l"><a href="#205">205: </a>        
 </span><span id="206" class="l"><a href="#206">206: </a>        <span class="php-comment">//If the data are not available from the cache</span>
 </span><span id="207" class="l"><a href="#207">207: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$photo</span>)) {
