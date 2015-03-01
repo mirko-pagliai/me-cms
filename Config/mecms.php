@@ -32,6 +32,8 @@ $config = array('MeCms' => array(
 		'offline_text' => FALSE,
 		//Number of records to show per page
 		'records' => 10,
+		//Number of records to show on RSS
+		'records_for_rss' => 20,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable

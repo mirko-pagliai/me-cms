@@ -259,7 +259,7 @@ class PostsController extends MeCmsAppController {
 		if(empty($posts)) {
 			$posts = $this->Post->find('active', array(
 				'fields'	=> array('title', 'slug', 'text', 'created'),
-				'limit'		=> 20
+				'limit'		=> $this->config['frontend']['records_for_rss']
 			));
 
 			Cache::write($cache, $posts, 'posts');
