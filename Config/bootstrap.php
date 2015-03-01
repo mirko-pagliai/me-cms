@@ -57,10 +57,11 @@ $options = array(
 //MeCms cache configuration
 Cache::config('me_cms', $options);
 
-Cache::config('banners', am($options, array('groups' => array('banners'))));
-Cache::config('pages', am($options, array('groups' => array('pages'))));
-Cache::config('photos', am($options, array('groups' => array('photos'))));
-Cache::config('posts', am($options, array('groups' => array('posts'))));
+Cache::config('banners',	am($options, array('groups' => array('banners'))));
+Cache::config('pages',		am($options, array('groups' => array('pages'))));
+Cache::config('photos',		am($options, array('groups' => array('photos'))));
+Cache::config('posts',		am($options, array('groups' => array('posts'))));
+Cache::config('users',		am($options, array('groups' => array('users'))));
 
 //Default cache configuration
 Cache::config('default', am($options, array('path' => CACHE)));
