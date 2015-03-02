@@ -35,22 +35,31 @@
 		return;
 	
 	//Gets the list of latest posts
-	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'widget_latest', 'plugin' => 'me_cms', empty($options['posts']) ? 10 : $options['posts']));
+	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'widget_latest', 'plugin' => 'me_cms', $howMany = empty($options['posts']) ? 10 : $options['posts']));
 ?>
 
 <?php if(!empty($posts)): ?>
 	<div class="widget sidebar-widget">
-		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Latest %d posts', empty($options['posts']) ? 10 : $options['posts']));
-	
-			$list = array();
-			foreach($posts as $post)
-				$list[] = $this->Html->link($post['Post']['title'],
-					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
+		<?php
+			if($howMany > 1) {
+				echo $this->Html->h4(__d('me_cms', 'Latest %d posts', $howMany));
+				
+				$list = array();
+				foreach($posts as $post)
+					$list[] = $this->Html->link($post['Post']['title'],
+						array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
+						array('class' => 'block no-wrap')
+					);
+
+				echo $this->Html->ul($list, array('icon' => 'caret-right'));
+			}
+			else {
+				echo $this->Html->h4(__d('me_cms', 'Latest post', $howMany));
+				echo $this->Html->link($posts[0]['Post']['title'],
+					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $posts[0]['Post']['slug']),
 					array('class' => 'block no-wrap')
 				);
-
-			echo $this->Html->ul($list, array('icon' => 'caret-right'));
+			}
 		?>
 	</div>
 <?php endif; ?>
