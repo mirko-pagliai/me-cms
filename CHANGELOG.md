@@ -2,7 +2,8 @@
 ## 1.2 branch
 ### 1.2.2
 * added a filter form for banners, pages, posts and users;
-* you can pass options to widgets.
+* you can pass options to widgets;
+* some widgets accept the `limit` option, which indicates the number of records to show.
 
 ### 1.2.1
 * full support for reCAPTCHA. It's used for signup and to reset passwords;

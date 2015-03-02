@@ -2,7 +2,8 @@
 ## 1.2 ramo
 ### 1.2.2
 * aggiunto un form per filtrare i banner, le pagine, gli articoli e gli utenti;
-* è possibile passare opzioni ai widget.
+* è possibile passare opzioni ai widget;
+* alcuni widget accettano l'opzione `limit`, che indica il numero di record da mostrare.
 
 ### 1.2.1
 * supporto completo per reCAPTCHA. Viene utilizzato per la registrazione e per reimpostare la password;

@@ -1,6 +1,9 @@
 <?php
 /**
- * Random photo widget.
+ * Random photos widget.
+ * 
+ * This widget accepts the `limit` options, which allows you to set the 
+ * number of photos to display.
  *
  * This file is part of MeCms.
  *
@@ -37,17 +40,23 @@
 	//Returns on photo view
 	if($params['controller'] == 'photos' && $params['action'] == 'view' && $params['plugin'] == 'me_cms')
 		return;
-	
+		
 	//Gets a random photo
-	$photo = $this->requestAction(array('controller' => 'photos', 'action' => 'widget_random', 'plugin' => 'me_cms'));
+	$photos = $this->requestAction(array('controller' => 'photos', 'action' => 'widget_random', 'plugin' => 'me_cms', $limit = empty($options['limit']) ? 1 : $options['limit']));
 ?>
 
-<?php if(!empty($photo)): ?>
+<?php if(!empty($photos)): ?>
 	<div class="widget sidebar-widget">
-		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Random photo'));
-			$thumb = $this->Html->thumb($photo['Photo']['path'], array('side' => 263));
-			echo $this->Html->link($thumb, array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'), array('class' => 'thumbnail'));
+		<?php
+			if($limit > 1)
+				echo $this->Html->h4(__d('me_cms', 'Random %d photos', $limit));
+			else
+				echo $this->Html->h4(__d('me_cms', 'Random photo', $limit));
+			
+			foreach($photos as $photo) {
+				$thumb = $this->Html->thumb($photo['Photo']['path'], array('side' => 263));
+				echo $this->Html->link($thumb, array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'), array('class' => 'thumbnail'));
+			}
 		?>
 	</div>
 <?php endif; ?>
