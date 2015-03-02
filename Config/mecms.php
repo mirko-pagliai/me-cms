@@ -8,8 +8,9 @@ $config = array('MeCms' => array(
 		'records' => 10,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
-		//Topbar menus
-		'topbar' => 'posts, pages, photos, banners, users, systems'
+		//Topbar menus.
+		//They may to be indicated as an array or as a string (separated by commas)
+		'topbar' => array('posts', 'pages', 'photos', 'banners', 'users', 'systems')
 	),
 	//Email
 	'email' => array(
