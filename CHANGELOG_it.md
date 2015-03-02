@@ -1,7 +1,8 @@
 # 1.x ramo
 ## 1.2 ramo
 ### 1.2.2
-* aggiunto un form per filtrare i banner, le pagine, gli articoli e gli utenti.
+* aggiunto un form per filtrare i banner, le pagine, gli articoli e gli utenti;
+* è possibile passare opzioni ai widget.
 
 ### 1.2.1
 * supporto completo per reCAPTCHA. Viene utilizzato per la registrazione e per reimpostare la password;

@@ -67,6 +67,8 @@ in `APP/Config`. È sufficiente impostare solo le opzioni che si desidera sovras
 MeCms caricherà prima il proprio file di configurazione, successivamente quello presente nell'applicazione, se esiste.
 I valori impostati nel file presente nell'applicazione sovrascriveranno quelli impostati nel file di MeCms.
 
+Per configurare i widget, fai riferimento alla [pagina sul nostro wiki](//github.com/mirko-pagliai/MeCms/wiki/Widgets).
+
 ## Email
 Per permettere a MeCms di inviare email, è necessario configurare le email nel file `APP/Config/email.php`,
 come spiegato nella [documentazione di CakePHP](http://book.cakephp.org/2.0/en/core-utility-libraries/email.html#configuration).
