@@ -43,6 +43,10 @@ class WidgetHelper extends AppHelper {
 		list($plugin, $name) = pluginSplit($widget['name']);
 			
 		$element = empty($plugin) ? sprintf('widgets/%s', $name) : sprintf('%s.widgets/%s', $plugin, $name);
+		
+		//Checks if the widget exists
+		if(!$this->_View->elementExists($element))
+			throw new InternalErrorException(__d('me_cms', 'The widget %s doesn\'t exist', $name));
 			
 		return $this->_View->element($element, array('options' => empty($widget['options']) ? array() : $widget['options']));
 	}
