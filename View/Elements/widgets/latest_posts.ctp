@@ -1,6 +1,9 @@
 <?php
 /**
  * Latest posts widget.
+ * 
+ * This widget accepts the `posts` options, which allows you to set the 
+ * number of latest posts to display.
  *
  * This file is part of MeCms.
  *
@@ -30,9 +33,9 @@
 	if($params['controller'] == 'posts' && $params['action'] == 'index' && $params['plugin'] == 'me_cms'
 		&& !empty($params['paging']['Post']['page']) && $params['paging']['Post']['page'] == 1)
 		return;
-
+	
 	//Gets the list of latest posts
-	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'widget_latest', 'plugin' => 'me_cms', 10));
+	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'widget_latest', 'plugin' => 'me_cms', empty($options['posts']) ? 10 : $options['posts']));
 ?>
 
 <?php if(!empty($posts)): ?>

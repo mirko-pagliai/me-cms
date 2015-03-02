@@ -103,10 +103,8 @@
 					</div>
 					<div id="sidebar" class="col-sm-4 col-md-3">
 						<?php
-							foreach($config['frontend']['widgets'] as $widget) {
-								if($this->elementExists($widget = sprintf('MeCms.widgets/%s', $widget)))
-									echo $this->element($widget);
-							}
+							foreach($config['frontend']['widgets'] as $widget)
+								echo $this->Widget->render($widget);
 						?>
 					</div>
 				</div>
