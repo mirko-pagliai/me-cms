@@ -79,6 +79,31 @@ class ConfigComponent extends Component {
 		return $widgetsTmp;
 	}
 
+	/**
+	 * Loads the configuration file. 
+	 * @return array Configuration
+	 */
+	protected function _load() {
+		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
+		Configure::load('MeCms.mecms');
+		
+		//Loads from the app, if exists (`APP/Config/mecms.php`).
+		//This configuration will overwrite the one obtained by the plugin
+		if(is_readable(APP.'Config'.DS.'mecms.php')) {
+			$config = Configure::read('MeCms');
+		
+			Configure::load('mecms', 'default', false);
+			
+			foreach($config as $key => $value) {
+				if(!empty(Configure::read($key = sprintf('MeCms.%s', $key))))
+					$value = am($value, Configure::read($key));
+				
+				Configure::write($key, $value);
+			}
+		}
+		
+		return Configure::read('MeCms');
+	}
 
 	/**
 	 * Turns a string of words separated by commas (and optional spaces) into an array.
@@ -126,33 +151,6 @@ class ConfigComponent extends Component {
 		return $config;
 	}
 
-
-	/**
-	 * Loads the configuration file. 
-	 * @return array Configuration
-	 */
-	protected function load() {
-		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
-		Configure::load('MeCms.mecms');
-		
-		//Loads from the app, if exists (`APP/Config/mecms.php`).
-		//This configuration will overwrite the one obtained by the plugin
-		if(is_readable(APP.'Config'.DS.'mecms.php')) {
-			$config = Configure::read('MeCms');
-		
-			Configure::load('mecms', 'default', false);
-			
-			foreach($config as $key => $value) {
-				if(!empty(Configure::read($key = sprintf('MeCms.%s', $key))))
-					$value = am($value, Configure::read($key));
-				
-				Configure::write($key, $value);
-			}
-		}
-		
-		return Configure::read('MeCms');
-	}
-
 	/**
 	 * Is called after the controller executes the requested action's logic, 
 	 * but before the controller's renders views and layout.
@@ -171,15 +169,16 @@ class ConfigComponent extends Component {
 	 * @uses MeCmsAppController::config
 	 * @uses controller
 	 * @uses _debugForLocalhost()
+	 * @uses _getWidgets()
+	 * @uses _load()
 	 * @uses _turnsValues()
-	 * @uses load()
 	 */
 	public function initialize(Controller $controller) {
 		//Sets the controller
 		$this->controller = $controller;
 				
 		//Loads the configuration values
-		$config = $this->load();
+		$config = $this->_load();
 		
 		$config['frontend']['widgets'] = $this->_getWidgets($config);
 		
@@ -206,6 +205,9 @@ class ConfigComponent extends Component {
 	 * @uses MeAuthComponent::isAdmin()
 	 */
 	public function kcfinder($options = array()) {
+		if($this->Session->check('KCFINDER'))
+			return TRUE;
+		
 		$default = array(
 			'denyExtensionRename'	=> TRUE,
 			'denyUpdateCheck'		=> TRUE,
