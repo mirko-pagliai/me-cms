@@ -64,7 +64,7 @@ class ConfigComponent extends Component {
 			$widgets = $config['frontend']['widgets_homepage'];
 		
 		//Turns it into array, if it's a string
-		$widgets = is_string($widgets) ? $this->_stringAsArray($widgets) : $widgets;
+		$widgets = $this->_stringAsArray($widgets);
 		
 		$widgetsTmp = array();
 		
@@ -134,11 +134,21 @@ class ConfigComponent extends Component {
 	protected function load() {
 		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
 		Configure::load('MeCms.mecms');
-
+		
 		//Loads from the app, if exists (`APP/Config/mecms.php`).
 		//This configuration will overwrite the one obtained by the plugin
-		if(is_readable(APP.'Config'.DS.'mecms.php'))
-			Configure::load('mecms');
+		if(is_readable(APP.'Config'.DS.'mecms.php')) {
+			$config = Configure::read('MeCms');
+		
+			Configure::load('mecms', 'default', false);
+			
+			foreach($config as $key => $value) {
+				if(!empty(Configure::read($key = sprintf('MeCms.%s', $key))))
+					$value = am($value, Configure::read($key));
+				
+				Configure::write($key, $value);
+			}
+		}
 		
 		return Configure::read('MeCms');
 	}
