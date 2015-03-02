@@ -41,7 +41,7 @@
 <?php if(!empty($posts)): ?>
 	<div class="widget sidebar-widget">
 		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Latest posts'));
+			echo $this->Html->h4(__d('me_cms', 'Latest %d posts', empty($options['posts']) ? 10 : $options['posts']));
 	
 			$list = array();
 			foreach($posts as $post)
