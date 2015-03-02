@@ -30,11 +30,11 @@
 	<head>
 		<?php 
 			echo $this->Html->charset();
-
+			
 			if(empty($title_for_layout))
-				echo $this->Html->title($config['title']);
+				echo $this->Html->title($config['main']['title']);
 			else
-				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['title']));
+				echo $this->Html->title(sprintf('%s - %s', $title_for_layout, $config['main']['title']));
 			
 			if(!empty($image_src)) {
 				echo $this->Html->meta(array('href' => $image_src, 'rel' => 'image_src'));
@@ -71,7 +71,7 @@
 	<body>
 		<div id="header">
 			<?php
-				$logo = $this->Html->h1($config['title']);
+				$logo = $this->Html->h1($config['main']['title']);
 				//Check if the logo image exists
 				if(is_readable(WWW_ROOT.'img'.DS.$config['frontend']['logo']))
 					$logo = $this->Html->img($config['frontend']['logo']);
