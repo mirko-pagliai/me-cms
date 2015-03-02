@@ -39,7 +39,7 @@ $config = array('MeCms' => array(
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
 		'truncate_to' => 1000,
 		//Widgets. You can use the plugin notation (eg., `PluginName.widgetName`)
-		'widgets' => 'MeCms.search, MeCms.categories, MeCms.latest_posts, MeCms.random_photo, pages',
+		'widgets' => 'MeCms.search_posts, MeCms.categories, MeCms.latest_posts, MeCms.random_photo, pages',
 		//Specific widgets for the homepage. If this is set to "FALSE", will be used the default widget
 		'widgets_homepage' => FALSE
 	),
