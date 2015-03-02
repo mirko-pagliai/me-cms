@@ -164,7 +164,7 @@ AppHelper
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-WidgetHelper.html#27-45" title="Go to source code">Helper/WidgetHelper.php</a>
+			<b>Located at</b> <a href="source-class-WidgetHelper.html#27-53" title="Go to source code">Helper/WidgetHelper.php</a>
 		<br>
 	</div>
 
@@ -184,20 +184,20 @@ AppHelper
 
 		<td class="name"><div>
 		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-WidgetHelper.html#33-44" title="Go to source code">render</a>( <span>string <var>$widget</var></span> )</code>
+		<code><a href="source-class-WidgetHelper.html#33-52" title="Go to source code">render</a>( <span>array <var>$widget</var></span> )</code>
 
 		<div class="description short">
-			<p>Render a widget.</p>
+			<p>Renders a widget.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Render a widget.</p>
+			<p>Renders a widget.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$widget</var></dt>
-					<dd>Widget name</dd>
+					<dd>Widget, as array with <code>name</code> and (optional) <code>options</code> keys</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -205,6 +205,10 @@ AppHelper
 					string<br>Html, element
 				</div>
 
+				<h4>Throws</h4>
+				<div class="list">
+					InternalErrorException
+				</div>
 
 
 
