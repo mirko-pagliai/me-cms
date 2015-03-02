@@ -51,6 +51,36 @@ class ConfigComponent extends Component {
 	}
 	
 	/**
+	 * Gets widgets.
+	 * @param array $config Configuration
+	 * @return array Configuration
+	 * @uses _stringAsArray()
+	 */
+	protected function _getWidgets($config) {
+		$widgets = $config['frontend']['widgets'];
+		
+		//If the current action is the homepage, the widgets are the homepage widgets
+		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array($config['frontend']['widgets_homepage']))
+			$widgets = $config['frontend']['widgets_homepage'];
+		
+		//Turns it into array, if it's a string
+		$widgets = is_string($widgets) ? $this->_stringAsArray($widgets) : $widgets;
+		
+		$widgetsTmp = array();
+		
+		foreach($widgets as $k => $widget) {
+			//If the widget is an array, then the key element is the widget name and the value element is the widget options
+			if(is_array($widget))
+				$widgetsTmp[] = array('name' => $k, 'options' => $widget);
+			else
+				$widgetsTmp[] = array('name' => $widget);
+		}
+		
+		return $widgetsTmp;
+	}
+
+
+	/**
 	 * Turns a string of words separated by commas (and optional spaces) into an array.
 	 * 
 	 * For example:
@@ -89,12 +119,6 @@ class ConfigComponent extends Component {
 
 		//Turns some values as array		
 		$config['backend']['topbar'] = $this->_stringAsArray($config['backend']['topbar']);
-		$config['frontend']['widgets'] = $this->_stringAsArray($config['frontend']['widgets']);
-		$config['frontend']['widgets_homepage'] = $this->_stringAsArray($config['frontend']['widgets_homepage']);
-		
-		//If the current action is the homepage, the widgets are the homepage widgets
-		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array($config['frontend']['widgets_homepage']))
-			$config['frontend']['widgets'] = $config['frontend']['widgets_homepage'];
 		
 		//Deletes useless values
 		unset($config['frontend']['widgets_homepage']);
@@ -146,6 +170,8 @@ class ConfigComponent extends Component {
 				
 		//Loads the configuration values
 		$config = $this->load();
+		
+		$config['frontend']['widgets'] = $this->_getWidgets($config);
 		
 		//Turns some values
 		$config = $this->_turnsValues($config);

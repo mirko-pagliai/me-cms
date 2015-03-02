@@ -31,15 +31,19 @@
  */
 class WidgetHelper extends AppHelper {
 	/**
-	 * Render a widget.
-	 * @param string $widget Widget name
+	 * Renders a widget.
+	 * @param array $widget Widget, as array with `name` and (optional) `options` keys
 	 * @return string Html, element
+	 * @throws InternalErrorException
 	 */
 	public function render($widget) {
-		list($plugin, $name) = pluginSplit($widget);
+		if(empty($widget['name']))
+			throw new InternalErrorException(__d('me_cms', 'Invalid widget name'));
+		
+		list($plugin, $name) = pluginSplit($widget['name']);
 			
-		$widget = empty($plugin) ? sprintf('widgets/%s', $name) : sprintf('%s.widgets/%s', $plugin, $name);
+		$element = empty($plugin) ? sprintf('widgets/%s', $name) : sprintf('%s.widgets/%s', $plugin, $name);
 			
-		return $this->_View->element($widget);
+		return $this->_View->element($element, array('options' => empty($widget['options']) ? array() : $widget['options']));
 	}
 }
