@@ -52,6 +52,26 @@ class ProfilesController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Internal function to send the activation mail
+	 * @param int $id User ID
+	 * @param string $email User email
+	 * @param string $full_name User full name
+	 * @uses TokenComponent::create()
+	 */
+	protected function _send_activation_mail($id, $email, $full_name) {
+		//Gets the token and the url to activate account
+		$token = $this->Token->create($email, array('type' => 'signup', 'user_id' => $id));
+		$url = Router::url(am(array('controller' => 'profiles', 'action' => 'activate_account'), compact('id', 'token')), TRUE);
+
+		//Sends email
+		$this->Email->to(array($email => $full_name));
+		$this->Email->subject(__d('me_cms', 'Activate your account'));
+		$this->Email->template('signup');
+		$this->Email->set(compact('full_name', 'url'));
+		$this->Email->send();
+	}
+
+	/**
 	 * Change the user password
 	 */
 	public function admin_change_password() {		
@@ -177,10 +197,10 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Resends the activation mail.
 	 * @uses config
+	 * @uses _send_activation_mail()
 	 * @uses redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
 	 * @uses RecaptchaComponent::getError()
-	 * @uses TokenComponent::create()
 	 */
 	public function resend_activation() {
 		//Redirects if the user is already logged in
@@ -206,21 +226,13 @@ class ProfilesController extends MeCmsAppController {
 				//Gets the user
 				$user = $this->User->find('pending', array(
 					'conditions'	=> array('email' => $email = $this->request->data['User']['email']),
-					'fields'		=> array('id', 'email', 'full_name'),
+					'fields'		=> array('id', 'full_name'),
 					'limit'			=> 1
 				));
 			
 				if(!empty($user)) {
-					//Gets the token and the url to activate account
-					$token = $this->Token->create($email = $user['User']['email'], array('type' => 'signup', 'user_id' => $id = $user['User']['id']));
-					$url = Router::url(am(array('controller' => 'profiles', 'action' => 'activate_account'), compact('id', 'token')), TRUE);
-
-					//Sends email
-					$this->Email->to(array($email => $full_name = $user['User']['full_name']));
-					$this->Email->subject(__d('me_cms', 'Activate your account'));
-					$this->Email->template('signup');
-					$this->Email->set(compact('full_name', 'url'));
-					$this->Email->send();
+					//Sends the activation mail
+					$this->_send_activation_mail($user['User']['id'], $email, $user['User']['full_name']);
 
 					$this->Session->flash(__d('me_cms', 'We send you an email to activate your account'));
 					$this->redirect($this->Auth->loginAction);
@@ -279,10 +291,10 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Sign up.
 	 * @uses config
+	 * @uses _send_activation_mail()
 	 * @uses redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
 	 * @uses RecaptchaComponent::getError()
-	 * @uses TokenComponent::create()
 	 */
 	public function signup() {
 		//Redirects if the user is already logged in
@@ -313,16 +325,8 @@ class ProfilesController extends MeCmsAppController {
 						break;
 					//The account will be enabled by the user via email (default)
 					case 1:
-						//Gets the token and the url to activate account
-						$token = $this->Token->create($email = $user['User']['email'], array('type' => 'signup', 'user_id' => $id = $user['User']['id']));
-						$url = Router::url(am(array('controller' => 'profiles', 'action' => 'activate_account'), compact('id', 'token')), TRUE);
-												
-						//Sends email
-						$this->Email->to(array($email => $full_name = sprintf('%s %s', $user['User']['first_name'], $user['User']['last_name'])));
-						$this->Email->subject(__d('me_cms', 'Activate your account'));
-						$this->Email->template('signup');
-						$this->Email->set(compact('full_name', 'url'));
-						$this->Email->send();
+						//Sends the activation mail
+						$this->_send_activation_mail($user['User']['id'], $user['User']['email'], sprintf('%s %s', $user['User']['first_name'], $user['User']['last_name']));
 						
 						$this->Session->flash(__d('me_cms', 'We send you an email to activate your account'));
 						break;
