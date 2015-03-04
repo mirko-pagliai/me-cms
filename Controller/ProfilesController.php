@@ -115,9 +115,9 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Requests a new password.
 	 * @uses config
-	 * @uses RecaptchaComponent::error
 	 * @uses redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
+	 * @uses RecaptchaComponent::getError()
 	 * @uses TokenComponent::create()
 	 */
 	public function forgot_password() {
@@ -138,7 +138,7 @@ class ProfilesController extends MeCmsAppController {
 			
 			//Checks for reCAPTCHA, if requested
 			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
-				$this->Session->flash($this->Recaptcha->error, 'error');
+				$this->Session->flash($this->Recaptcha->getError(), 'error');
 			}
 			elseif($this->User->validates()) {
 				//Gets the user
@@ -177,9 +177,9 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Resends the activation mail.
 	 * @uses config
-	 * @uses RecaptchaComponent::error
 	 * @uses redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
+	 * @uses RecaptchaComponent::getError()
 	 * @uses TokenComponent::create()
 	 */
 	public function resend_activation() {
@@ -200,7 +200,7 @@ class ProfilesController extends MeCmsAppController {
 			
 			//Checks for reCAPTCHA, if requested
 			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
-				$this->Session->flash($this->Recaptcha->error, 'error');
+				$this->Session->flash($this->Recaptcha->getError(), 'error');
 			}
 			elseif($this->User->validates()) {
 				//Gets the user
@@ -279,9 +279,9 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Sign up.
 	 * @uses config
-	 * @uses RecaptchaComponent::error
 	 * @uses redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
+	 * @uses RecaptchaComponent::getError()
 	 * @uses TokenComponent::create()
 	 */
 	public function signup() {
@@ -303,7 +303,7 @@ class ProfilesController extends MeCmsAppController {
 			
 			//Checks for reCAPTCHA, if requested
 			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
-				$this->Session->flash($this->Recaptcha->error, 'error');
+				$this->Session->flash($this->Recaptcha->getError(), 'error');
 			}
 			elseif($user = $this->User->save($this->request->data)) {
 				switch($this->config['users']['activation']) {
