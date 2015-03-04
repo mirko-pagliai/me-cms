@@ -265,7 +265,7 @@ class UsersController extends MeCmsAppController {
 	 * @return boolean
 	 * @uses _loginWithCookie()
 	 * @uses _logout()
-	 * @uses redirectIfLogged()
+	 * @uses MeCmsAppController::redirectIfLogged()
 	 */
 	public function login() {
 		//Redirects if the user is already logged in

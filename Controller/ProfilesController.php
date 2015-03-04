@@ -104,6 +104,7 @@ class ProfilesController extends MeCmsAppController {
 	 * @param string $id User ID
 	 * @param string $token Token
 	 * @throws NotFoundException
+	 * @uses MeCmsAppController::redirectIfLogged()
 	 */
 	public function activate_account($user_id = NULL, $token = NULL) {
 		//Redirects if the user is already logged in
@@ -135,7 +136,7 @@ class ProfilesController extends MeCmsAppController {
 	/**
 	 * Requests a new password.
 	 * @uses config
-	 * @uses redirectIfLogged()
+	 * @uses MeCmsAppController::redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
 	 * @uses RecaptchaComponent::getError()
 	 * @uses TokenComponent::create()
@@ -198,7 +199,7 @@ class ProfilesController extends MeCmsAppController {
 	 * Resends the activation mail.
 	 * @uses config
 	 * @uses _send_activation_mail()
-	 * @uses redirectIfLogged()
+	 * @uses MeCmsAppController::redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
 	 * @uses RecaptchaComponent::getError()
 	 */
@@ -253,7 +254,7 @@ class ProfilesController extends MeCmsAppController {
 	 * @param string $id User ID
 	 * @param string $token Token
 	 * @throws NotFoundException
-	 * @uses redirectIfLogged()
+	 * @uses MeCmsAppController::redirectIfLogged()
 	 * @uses TokenComponent::check()
 	 * @uses TokenComponent::delete()
 	 */
@@ -292,7 +293,7 @@ class ProfilesController extends MeCmsAppController {
 	 * Sign up.
 	 * @uses config
 	 * @uses _send_activation_mail()
-	 * @uses redirectIfLogged()
+	 * @uses MeCmsAppController::redirectIfLogged()
 	 * @uses RecaptchaComponent::check()
 	 * @uses RecaptchaComponent::getError()
 	 */
