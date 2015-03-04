@@ -38,6 +38,12 @@ class User extends MeCmsAppModel {
 	public $displayField = 'username';
 	
 	/**
+	 * Find methods
+	 * @var array
+	 */
+    public $findMethods = array('active' => TRUE, 'banned' => TRUE, 'pending' => TRUE, 'random' =>  TRUE);
+	
+	/**
 	 * Order
 	 * @var array 
 	 */
@@ -204,7 +210,7 @@ class User extends MeCmsAppModel {
 	);
 
 	/**
-	 * "Active" find method. It finds for active records.
+	 * "Active" find method. It finds for active users.
 	 * @param string $state Either "before" or "after"
 	 * @param array $query
 	 * @param array $results
@@ -214,9 +220,57 @@ class User extends MeCmsAppModel {
         if($state === 'before') {			
 			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
 			
-			//Only active items
+			//Only active users
 			$query['conditions'][$this->alias.'.active'] = TRUE;
-			//Only items published in the past
+			//Only not banned users
+			$query['conditions'][$this->alias.'.banned'] = FALSE;
+			
+            return $query;
+        }
+		
+		if($query['limit'] === 1 && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
+
+	/**
+	 * "Banned" find method. It finds for banned users.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findBanned($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only banned users
+			$query['conditions'][$this->alias.'.banned'] = FALSE;
+			
+            return $query;
+        }
+		
+		if($query['limit'] === 1 && !empty($results[0]))
+			return $results[0];
+		
+        return $results;
+    }
+
+	/**
+	 * "Pending" find method. It finds for pending users.
+	 * @param string $state Either "before" or "after"
+	 * @param array $query
+	 * @param array $results
+	 * @return mixed Query or results
+	 */
+	protected function _findPending($state, $query, $results = array()) {
+        if($state === 'before') {			
+			$query['conditions'] = empty($query['conditions']) ? array() : $query['conditions'];
+			
+			//Only pending users
+			$query['conditions'][$this->alias.'.active'] = FALSE;
+			//Only not banned users
 			$query['conditions'][$this->alias.'.banned'] = FALSE;
 			
             return $query;
