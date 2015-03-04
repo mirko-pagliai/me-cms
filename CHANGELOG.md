@@ -2,6 +2,7 @@
 ## 1.2 branch
 ### 1.2.2
 * added a filter form for banners, pages, posts and users;
+* pending users may require the activation email is sent again;
 * you can pass options to widgets;
 * some widgets accept the `limit` option, which indicates the number of records to show.
 

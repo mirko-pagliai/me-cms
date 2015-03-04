@@ -19,47 +19,44 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Users
+ * @package		MeCms\View\Profiles
  */
 ?>
-	
-<div id="login" class="users form">
+
+<div class="profiles form">
+	<?php echo $this->Html->h2(__d('me_cms', 'Resend activation email')); ?>
 	<?php echo $this->Form->create('User'); ?>
 		<fieldset>
 			<?php
-				echo $this->Form->input('username', array(
-					'autofocus'		=> TRUE,
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Username')
+				echo $this->Form->input('email', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Email'),
+					'tip'			=> __d('me_cms', 'Enter your email')
 				));
-				echo $this->Form->input('password', array(
-					'label'			=> FALSE,
-					'placeholder'	=> __d('me_cms', 'Password')
+				echo $this->Form->input('email_repeat', array(
+					'autocomplete'	=> FALSE,
+					'label'			=> __d('me_cms', 'Repeat email'),
+					'tip'			=> __d('me_cms', 'Repeat your email')
 				));
-				echo $this->Form->input('remember_me', array(
-					'label'	=> __d('me_cms', 'Remember me'),
-					'tip'	=> __d('me_cms', 'Don\'t use on public computers'),
-					'type'	=> 'checkbox'
-				));
+				
+				if($config['security']['recaptcha'])
+					echo $this->Recaptcha->recaptcha();
 			?>
 		</fieldset>
-	<?php echo $this->Form->end(__d('me_cms', 'Login'), array('class' => 'btn-block btn-lg btn-primary')); ?>
+	<?php echo $this->Form->end(__d('me_cms', 'Resend activation email'), array('class' => 'btn-block btn-lg btn-primary')); ?>
 	<?php
 		$menu = array();
+		
+		$menu[] = $this->Html->link(__d('me_cms', 'Login'), '/login');
 		
 		//If signup is enabled
 		if($config['users']['signup'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
 		
-		//If signup is enabled and if accounts will be enabled by the user via email
-		if($config['users']['signup'] && $config['users']['activation'] === 1)
-			$menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), array('controller' => 'profiles', 'action' => 'resend_activation'));
-		
 		//If reset password is enabled
 		if($config['users']['reset_password'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));
-		
-		if(!empty($menu))
-			echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
+	
+		echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
 	?>
 </div>

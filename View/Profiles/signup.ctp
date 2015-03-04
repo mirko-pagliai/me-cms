@@ -71,6 +71,10 @@
 		
 		$menu[] = $this->Html->link(__d('me_cms', 'Login'), '/login');
 		
+		//If signup is enabled and if accounts will be enabled by the user via email
+		if($config['users']['signup'] && $config['users']['activation'] === 1)
+			$menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), array('controller' => 'profiles', 'action' => 'resend_activation'));
+		
 		//If reset password is enabled
 		if($config['users']['reset_password'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), array('controller' => 'profiles', 'action' => 'forgot_password'));

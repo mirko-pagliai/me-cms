@@ -52,6 +52,10 @@
 		//If signup is enabled
 		if($config['users']['signup'])
 			$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), array('controller' => 'profiles', 'action' => 'signup'));
+		
+		//If signup is enabled and if accounts will be enabled by the user via email
+		if($config['users']['signup'] && $config['users']['activation'] === 1)
+			$menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), array('controller' => 'profiles', 'action' => 'resend_activation'));
 	
 		echo $this->Html->ul($menu, array('class' => 'list-unstyled'));
 	?>
