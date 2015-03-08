@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class UsersGroup | MeCms API</title>
+	<title>Class Contact | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -81,7 +81,7 @@
 			<ul>
 				<li><a href="class-Banner.html">Banner</a></li>
 				<li><a href="class-BannersPosition.html">BannersPosition</a></li>
-				<li><a href="class-Contact.html">Contact</a></li>
+				<li class="active"><a href="class-Contact.html">Contact</a></li>
 				<li><a href="class-MeCmsAppModel.html">MeCmsAppModel</a></li>
 				<li><a href="class-Page.html">Page</a></li>
 				<li><a href="class-Photo.html">Photo</a></li>
@@ -89,7 +89,7 @@
 				<li><a href="class-Post.html">Post</a></li>
 				<li><a href="class-PostsCategory.html">PostsCategory</a></li>
 				<li><a href="class-User.html">User</a></li>
-				<li class="active"><a href="class-UsersGroup.html">UsersGroup</a></li>
+				<li><a href="class-UsersGroup.html">UsersGroup</a></li>
 			</ul>
 
 
@@ -130,11 +130,13 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class UsersGroup</h1>
+	<h1>Class Contact</h1>
 
 
 	<div class="description">
-	<p>UsersGroup Model</p>
+	<p>Contact Model.</p>
+
+<p>This is not a real model, it's just to have some validation rules for contact forms.</p>
 	</div>
 
 	<dl class="tree">
@@ -152,7 +154,7 @@ AppModel
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>UsersGroup</span></b>			
+<b><span>Contact</span></b>			
 			
 			
 		</dd>
@@ -177,7 +179,7 @@ AppModel
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-UsersGroup.html#29-103" title="Go to source code">UsersGroup.php</a>
+			<b>Located at</b> <a href="source-class-Contact.html#29-85" title="Go to source code">Contact.php</a>
 		<br>
 	</div>
 
@@ -210,53 +212,28 @@ AppModel
 
 	<table class="summary properties" id="properties">
 	<caption>Properties summary</caption>
-	<tr data-order="displayField" id="$displayField">
+	<tr data-order="useTable" id="$useTable">
 		<td class="attributes"><code>
 			public  
-			string
+			boolean
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-UsersGroup.html#33-37" title="Go to source code"><var>$displayField</var></a>
+				<a href="source-class-Contact.html#35-39" title="Go to source code"><var>$useTable</var></a>
 
 			<div class="description short">
-				<p>Display field</p>
+				<p>This model does not use a database table</p>
 			</div>
 
 			<div class="description detailed hidden">
-				<p>Display field</p>
+				<p>This model does not use a database table</p>
 
 			</div>
 		</td>
 		<td class="value">
 			<div>
-				<a href="#$displayField" class="anchor">#</a>
-				<code><span class="php-quote">'label'</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="order" id="$order">
-		<td class="attributes"><code>
-			public  
-			array
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-UsersGroup.html#39-43" title="Go to source code"><var>$order</var></a>
-
-			<div class="description short">
-				<p>Order</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>Order</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#$order" class="anchor">#</a>
-				<code><span class="php-keyword1">array</span>(<span class="php-quote">'name'</span> =&gt; <span class="php-quote">'ASC'</span>)</code>
+				<a href="#$useTable" class="anchor">#</a>
+				<code><span class="php-keyword1">FALSE</span></code>
 			</div>
 		</td>
 	</tr>
@@ -267,7 +244,7 @@ AppModel
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-UsersGroup.html#45-90" title="Go to source code"><var>$validate</var></a>
+				<a href="source-class-Contact.html#41-84" title="Go to source code"><var>$validate</var></a>
 
 			<div class="description short">
 				<p>Validation rules</p>
@@ -282,76 +259,43 @@ AppModel
 			<div>
 				<a href="#$validate" class="anchor">#</a>
 				<code><span class="php-keyword1">array</span>(
-    <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-quote">'blankOnCreate'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
-            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'create'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
-        )
-    ),
-    <span class="php-quote">'name'</span> =&gt; <span class="php-keyword1">array</span>(
+    <span class="php-quote">'email'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be between %d and %d chars'</span>,
             <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>)
         ),
-        <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'email'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
-            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
-        ),
-        <span class="php-quote">'blankonUpdate'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Can not be changed'</span>,
-            <span class="php-quote">'on'</span>        =&gt; <span class="php-quote">'update'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'blank'</span>
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'email'</span>,
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'You have to enter a valid value'</span>,
         )
     ),
-    <span class="php-quote">'label'</span> =&gt; <span class="php-keyword1">array</span>(
+    <span class="php-quote">'first_name'</span> =&gt; <span class="php-keyword1">array</span>(
         <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
             <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
             <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be between %d and %d chars'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>)
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">2</span>, <span class="php-num">40</span>)
         ),
-        <span class="php-quote">'isUnique'</span> =&gt; <span class="php-keyword1">array</span>(
-            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'This value is already used'</span>,
-            <span class="php-quote">'rule'</span>      =&gt; <span class="php-quote">'isUnique'</span>
+        <span class="php-quote">'first_name'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Allowed chars: letters, apostrophe, space'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'custom'</span>, <span class="php-quote">'/^[A-z\'\ ]+$/'</span>)
         )
     ),
-    <span class="php-quote">'description'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-quote">'allowEmpty'</span>    =&gt; <span class="php-keyword1">TRUE</span>,
-        <span class="php-quote">'message'</span>       =&gt; <span class="php-quote">'Must be at most %d chars'</span>,
-        <span class="php-quote">'rule'</span>          =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'maxLength'</span>, <span class="php-num">255</span>)
-    )
-)</code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="hasMany" id="$hasMany">
-		<td class="attributes"><code>
-			public  
-			array
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-UsersGroup.html#92-102" title="Go to source code"><var>$hasMany</var></a>
-
-			<div class="description short">
-				<p>hasMany associations</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>hasMany associations</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#$hasMany" class="anchor">#</a>
-				<code><span class="php-keyword1">array</span>(
-    <span class="php-quote">'User'</span> =&gt; <span class="php-keyword1">array</span>(
-        <span class="php-quote">'className'</span>     =&gt; <span class="php-quote">'MeCms.User'</span>,
-        <span class="php-quote">'foreignKey'</span>    =&gt; <span class="php-quote">'group_id'</span>,
-        <span class="php-quote">'dependent'</span>     =&gt; <span class="php-keyword1">FALSE</span>
+    <span class="php-quote">'last_name'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'between'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'last'</span>      =&gt; <span class="php-keyword1">FALSE</span>,
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be between %d and %d chars'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">2</span>, <span class="php-num">40</span>)
+        ),
+        <span class="php-quote">'last_name'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Allowed chars: letters, apostrophe, space'</span>,
+            <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'custom'</span>, <span class="php-quote">'/^[A-z\'\ ]+$/'</span>)
+        )
+    ),
+    <span class="php-quote">'message'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'message'</span>   =&gt; <span class="php-quote">'Must be between %d and %d chars'</span>,
+        <span class="php-quote">'rule'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'between'</span>, <span class="php-num">10</span>, <span class="php-num">1000</span>)
     )
 )</code>
 			</div>

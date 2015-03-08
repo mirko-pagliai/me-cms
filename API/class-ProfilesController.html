@@ -177,7 +177,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-ProfilesController.html#29-282" title="Go to source code">ProfilesController.php</a>
+			<b>Located at</b> <a href="source-class-ProfilesController.html#29-349" title="Go to source code">ProfilesController.php</a>
 		<br>
 	</div>
 
@@ -226,6 +226,54 @@ AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="_send_activation_mail" id="__send_activation_mail">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__send_activation_mail">#</a>
+		<code><a href="source-class-ProfilesController.html#54-72" title="Go to source code">_send_activation_mail</a>( <span>integer <var>$id</var></span>, <span>string <var>$email</var></span>, <span>string <var>$full_name</var></span> )</code>
+
+		<div class="description short">
+			<p>Internal function to send the activation mail</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Internal function to send the activation mail</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>User ID</dd>
+					<dt><var>$email</var></dt>
+					<dd>User email</dd>
+					<dt><var>$full_name</var></dt>
+					<dd>User full name</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						TokenComponent::create()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-ProfilesController.html#_resend_activation">ProfilesController::resend_activation()</a></code><br>
+						<code><a href="class-ProfilesController.html#_signup">ProfilesController::signup()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="admin_change_password" id="_admin_change_password">
 
 		<td class="attributes"><code>
@@ -238,7 +286,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_admin_change_password">#</a>
-		<code><a href="source-class-ProfilesController.html#54-80" title="Go to source code">admin_change_password</a>( )</code>
+		<code><a href="source-class-ProfilesController.html#74-100" title="Go to source code">admin_change_password</a>( )</code>
 
 		<div class="description short">
 			<p>Change the user password</p>
@@ -268,7 +316,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_activate_account">#</a>
-		<code><a href="source-class-ProfilesController.html#82-113" title="Go to source code">activate_account</a>( <span>string <var>$user_id</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$token</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-ProfilesController.html#102-134" title="Go to source code">activate_account</a>( <span>string <var>$user_id</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$token</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Activate account.</p>
@@ -292,6 +340,10 @@ AppController
 					NotFoundException
 				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
+				</div>
 
 
 		</div>
@@ -309,7 +361,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_forgot_password">#</a>
-		<code><a href="source-class-ProfilesController.html#115-175" title="Go to source code">forgot_password</a>( )</code>
+		<code><a href="source-class-ProfilesController.html#136-196" title="Go to source code">forgot_password</a>( )</code>
 
 		<div class="description short">
 			<p>Requests a new password.</p>
@@ -325,10 +377,48 @@ AppController
 				<h4>Uses</h4>
 				<div class="list">
 						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
-						RecaptchaComponent::error<br>
 						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
 						RecaptchaComponent::check()<br>
+						RecaptchaComponent::getError()<br>
 						TokenComponent::create()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resend_activation" id="_resend_activation">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resend_activation">#</a>
+		<code><a href="source-class-ProfilesController.html#198-250" title="Go to source code">resend_activation</a>( )</code>
+
+		<div class="description short">
+			<p>Resends the activation mail.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Resends the activation mail.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
+						<code><a href="class-ProfilesController.html#__send_activation_mail">ProfilesController::_send_activation_mail()</a></code><br>
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
+						RecaptchaComponent::check()<br>
+						RecaptchaComponent::getError()<br>
 				</div>
 
 
@@ -347,7 +437,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_reset_password">#</a>
-		<code><a href="source-class-ProfilesController.html#177-215" title="Go to source code">reset_password</a>( <span>string <var>$user_id</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$token</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-ProfilesController.html#252-290" title="Go to source code">reset_password</a>( <span>string <var>$user_id</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$token</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Resets password.</p>
@@ -394,7 +484,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_signup">#</a>
-		<code><a href="source-class-ProfilesController.html#217-281" title="Go to source code">signup</a>( )</code>
+		<code><a href="source-class-ProfilesController.html#292-348" title="Go to source code">signup</a>( )</code>
 
 		<div class="description short">
 			<p>Sign up.</p>
@@ -410,10 +500,10 @@ AppController
 				<h4>Uses</h4>
 				<div class="list">
 						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
-						RecaptchaComponent::error<br>
+						<code><a href="class-ProfilesController.html#__send_activation_mail">ProfilesController::_send_activation_mail()</a></code><br>
 						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
 						RecaptchaComponent::check()<br>
-						TokenComponent::create()<br>
+						RecaptchaComponent::getError()<br>
 				</div>
 
 
