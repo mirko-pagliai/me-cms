@@ -35,15 +35,15 @@ msgstr ""
 msgid "Add banner"
 msgstr ""
 
-#: Controller/BannersController.php:104;123;186
+#: Controller/BannersController.php:104;123;197
 #: Controller/BannersPositionsController.php:69;93
-#: Controller/PagesController.php:93;112;209
+#: Controller/PagesController.php:93;112;213
 #: Controller/PhotosAlbumsController.php:73;97;176
 #: Controller/PhotosController.php:113;134;163;209
 #: Controller/PostsCategoriesController.php:72;96
-#: Controller/PostsController.php:119;139;325
-#: Controller/ProfilesController.php:93;191
-#: Controller/UsersController.php:115;153;183;241
+#: Controller/PostsController.php:119;139;344
+#: Controller/ProfilesController.php:114;266
+#: Controller/UsersController.php:115;153;183;252
 #: Controller/UsersGroupsController.php:69;95
 msgid "Invalid object"
 msgstr ""
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Edit banner"
 msgstr ""
 
-#: Controller/BannersController.php:155
+#: Controller/BannersController.php:166
 #: View/Banners/admin_index.ctp:28
 #: View/BannersPositions/admin_index.ctp:35
 #: View/Helper/MenuHelper.php:74;76
@@ -77,18 +77,18 @@ msgstr ""
 msgid "Banners"
 msgstr ""
 
-#: Controller/BannersController.php:167
+#: Controller/BannersController.php:178
 #: Controller/PhotosController.php:186
 #: Controller/SystemsController.php:70
 msgid "The directory %s is not readable or writable"
 msgstr ""
 
-#: Controller/BannersController.php:175
+#: Controller/BannersController.php:186
 #: View/Banners/admin_upload.ctp:30
 msgid "Upload banners"
 msgstr ""
 
-#: Controller/BannersController.php:193
+#: Controller/BannersController.php:204
 msgid "Invalid target"
 msgstr ""
 
@@ -190,16 +190,16 @@ msgstr ""
 msgid "Edit page"
 msgstr ""
 
-#: Controller/PagesController.php:140;171
+#: Controller/PagesController.php:144;175
 #: View/Elements/frontend/topbar.ctp:46
 #: View/Elements/widgets/pages.ctp:40
 #: View/Helper/MenuHelper.php:107;109
-#: View/Pages/admin_index.ctp:28
+#: View/Pages/admin_index.ctp:30
 #: View/Pages/index.ctp:28
 msgid "Pages"
 msgstr ""
 
-#: Controller/PagesController.php:153
+#: Controller/PagesController.php:157
 #: View/Pages/admin_index_statics.ctp:27
 msgid "Static pages"
 msgstr ""
@@ -348,7 +348,7 @@ msgstr ""
 msgid "Edit posts category"
 msgstr ""
 
-#: Controller/PostsCategoriesController.php:132;150
+#: Controller/PostsCategoriesController.php:133;151
 #: View/PostsCategories/admin_index.ctp:28
 #: View/PostsCategories/index.ctp:28
 msgid "Posts categories"
@@ -393,114 +393,125 @@ msgstr ""
 msgid "Edit post"
 msgstr ""
 
-#: Controller/PostsController.php:180;234
+#: Controller/PostsController.php:198;252
 #: View/Helper/MenuHelper.php:171;173
-#: View/Posts/admin_index.ctp:28
+#: View/Posts/admin_index.ctp:30
 #: View/PostsCategories/admin_index.ctp:35
-#: View/Users/admin_index.ctp:37
+#: View/Users/admin_index.ctp:75
 #: View/Users/admin_view.ctp:63
 msgid "Posts"
 msgstr ""
 
-#: Controller/PostsController.php:297
+#: Controller/PostsController.php:316
 msgid "You have to wait %d seconds to perform a new search"
 msgstr ""
 
-#: Controller/PostsController.php:300
+#: Controller/PostsController.php:319
 msgid "You have to search at least a word of %d characters"
 msgstr ""
 
-#: Controller/PostsController.php:303
+#: Controller/PostsController.php:322
 #: View/Elements/widgets/search_posts.ctp:36
 #: View/Posts/search.ctp:28
 msgid "Search posts"
 msgstr ""
 
-#: Controller/ProfilesController.php:67
+#: Controller/ProfilesController.php:68
+msgid "Activate your account"
+msgstr ""
+
+#: Controller/ProfilesController.php:87
 msgid "Your password has been changed"
 msgstr ""
 
-#: Controller/ProfilesController.php:72;206
+#: Controller/ProfilesController.php:92;281
 msgid "The password has been edited"
 msgstr ""
 
-#: Controller/ProfilesController.php:76;210
+#: Controller/ProfilesController.php:96;285
 msgid "The password has not been edited. Please, try again"
 msgstr ""
 
-#: Controller/ProfilesController.php:79
+#: Controller/ProfilesController.php:99
 #: View/Elements/backend/topbar.ctp:62
 #: View/Profiles/admin_change_password.ctp:27;49
 msgid "Change password"
 msgstr ""
 
-#: Controller/ProfilesController.php:97;195
+#: Controller/ProfilesController.php:118;270
 msgid "Invalid token"
 msgstr ""
 
-#: Controller/ProfilesController.php:107
+#: Controller/ProfilesController.php:128
 msgid "The account has been activated. Now you can login"
 msgstr ""
 
-#: Controller/ProfilesController.php:110
+#: Controller/ProfilesController.php:131
 #: Controller/UsersController.php:120
 msgid "The account has not been activated. Please, try again"
 msgstr ""
 
-#: Controller/ProfilesController.php:129;231
+#: Controller/ProfilesController.php:150;212;306
+#: Controller/SystemsController.php:242
 msgid "Disabled"
 msgstr ""
 
-#: Controller/ProfilesController.php:158
+#: Controller/ProfilesController.php:179
 msgid "Reset your password"
 msgstr ""
 
-#: Controller/ProfilesController.php:163
+#: Controller/ProfilesController.php:184
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: Controller/ProfilesController.php:167
+#: Controller/ProfilesController.php:188;242
 msgid "No account found"
 msgstr ""
 
-#: Controller/ProfilesController.php:170
+#: Controller/ProfilesController.php:191;245
 msgid "The form has not been filled in correctly, try again"
 msgstr ""
 
-#: Controller/ProfilesController.php:173
+#: Controller/ProfilesController.php:194
 #: View/Profiles/forgot_password.ctp:27
-#: View/Profiles/signup.ctp:76
-#: View/Users/login.ctp:56
+#: View/Profiles/resend_activation.ctp:58
+#: View/Profiles/signup.ctp:80
+#: View/Users/login.ctp:60
 msgid "Forgot your password?"
 msgstr ""
 
-#: Controller/ProfilesController.php:213
+#: Controller/ProfilesController.php:238;332
+msgid "We send you an email to activate your account"
+msgstr ""
+
+#: Controller/ProfilesController.php:248
+#: View/Profiles/forgot_password.ctp:58
+#: View/Profiles/resend_activation.ctp:27;46
+#: View/Profiles/signup.ctp:76
+#: View/Users/login.ctp:56
+msgid "Resend activation email"
+msgstr ""
+
+#: Controller/ProfilesController.php:288
 #: View/Profiles/reset_password.ctp:27;43
 msgid "Reset password"
 msgstr ""
 
-#: Controller/ProfilesController.php:250
+#: Controller/ProfilesController.php:325
 msgid "The account has been created, but it needs to be activated by an admin"
 msgstr ""
 
-#: Controller/ProfilesController.php:260
-msgid "Activate your account"
-msgstr ""
-
-#: Controller/ProfilesController.php:265
-msgid "We send you an email to activate your account"
-msgstr ""
-
-#: Controller/ProfilesController.php:269
+#: Controller/ProfilesController.php:336
 msgid "Account created. Now you can login"
 msgstr ""
 
-#: Controller/ProfilesController.php:276
+#: Controller/ProfilesController.php:343
 msgid "The account has not been created. Please, try again"
 msgstr ""
 
-#: Controller/ProfilesController.php:279
+#: Controller/ProfilesController.php:346
 #: View/Profiles/forgot_password.ctp:54
+#: View/Profiles/resend_activation.ctp:54
 #: View/Profiles/signup.ctp:27;68
 #: View/Users/login.ctp:52
 msgid "Sign up"
@@ -556,6 +567,24 @@ msgstr ""
 msgid "Log viewer"
 msgstr ""
 
+#: Controller/SystemsController.php:266
+#: View/Emails/html/contact_form.ctp:26
+msgid "Email from %s"
+msgstr ""
+
+#: Controller/SystemsController.php:271
+msgid "The email has been sent"
+msgstr ""
+
+#: Controller/SystemsController.php:275
+msgid "The email was not sent, try again"
+msgstr ""
+
+#: Controller/SystemsController.php:278
+#: View/Systems/contact_form.ctp:27
+msgid "Contact us"
+msgstr ""
+
 #: Controller/UsersController.php:118
 msgid "The account has been activated"
 msgstr ""
@@ -570,7 +599,7 @@ msgstr ""
 
 #: Controller/UsersController.php:141
 #: View/Helper/MenuHelper.php:200
-#: View/Users/admin_add.ctp:27;70
+#: View/Users/admin_add.ctp:27;74
 msgid "Add user"
 msgstr ""
 
@@ -611,37 +640,38 @@ msgstr ""
 msgid "Edit user"
 msgstr ""
 
-#: Controller/UsersController.php:230
+#: Controller/UsersController.php:241
 #: View/Helper/MenuHelper.php:211;213
-#: View/Users/admin_index.ctp:28
+#: View/Users/admin_index.ctp:30
 #: View/UsersGroups/admin_index.ctp:35
 msgid "Users"
 msgstr ""
 
-#: Controller/UsersController.php:249
+#: Controller/UsersController.php:260
 msgid "View user"
 msgstr ""
 
-#: Controller/UsersController.php:274
+#: Controller/UsersController.php:285
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: Controller/UsersController.php:279
+#: Controller/UsersController.php:290
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: Controller/UsersController.php:293
+#: Controller/UsersController.php:304
 msgid "Invalid username or password"
 msgstr ""
 
-#: Controller/UsersController.php:296
+#: Controller/UsersController.php:307
 #: View/Profiles/forgot_password.ctp:50
+#: View/Profiles/resend_activation.ctp:50
 #: View/Profiles/signup.ctp:72
 #: View/Users/login.ctp:46
 msgid "Login"
 msgstr ""
 
-#: Controller/UsersController.php:306
+#: Controller/UsersController.php:317
 msgid "You are successfully logged out"
 msgstr ""
 
@@ -705,7 +735,7 @@ msgstr ""
 
 #: View/Banners/admin_add.ctp:53
 #: View/Banners/admin_edit.ctp:32
-#: View/Banners/admin_index.ctp:34
+#: View/Banners/admin_index.ctp:60
 msgid "Position"
 msgstr ""
 
@@ -722,7 +752,7 @@ msgstr ""
 
 #: View/Banners/admin_add.ctp:65
 #: View/Banners/admin_edit.ctp:47
-#: View/Banners/admin_index.ctp:33
+#: View/Banners/admin_index.ctp:59
 #: View/Pages/admin_index_statics.ctp:30
 msgid "Filename"
 msgstr ""
@@ -739,7 +769,7 @@ msgstr ""
 
 #: View/Banners/admin_add.ctp:74
 #: View/Banners/admin_edit.ctp:54
-#: View/Banners/admin_index.ctp:36
+#: View/Banners/admin_index.ctp:62
 #: View/BannersPositions/admin_add.ctp:35
 #: View/BannersPositions/admin_edit.ctp:36
 #: View/BannersPositions/admin_index.ctp:34
@@ -760,62 +790,94 @@ msgstr ""
 
 #: View/Banners/admin_index.ctp:29
 #: View/BannersPositions/admin_index.ctp:29
-#: View/Pages/admin_index.ctp:29
+#: View/Pages/admin_index.ctp:31
 #: View/PhotosAlbums/admin_index.ctp:29
-#: View/Posts/admin_index.ctp:29
+#: View/Posts/admin_index.ctp:31
 #: View/PostsCategories/admin_index.ctp:29
-#: View/Users/admin_index.ctp:29
+#: View/Users/admin_index.ctp:31
 #: View/UsersGroups/admin_index.ctp:29
 msgid "Add"
 msgstr ""
 
 #: View/Banners/admin_index.ctp:35
+#: View/Pages/admin_index.ctp:37
+#: View/Posts/admin_index.ctp:37
+#: View/Users/admin_index.ctp:37
+msgid "Filter"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:38
+msgid "filename"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:43
+#: View/Pages/admin_index.ctp:45
+#: View/Posts/admin_index.ctp:45
+#: View/Users/admin_index.ctp:45
+msgid "all status"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:44
+#: View/Pages/admin_index.ctp:46
+#: View/Posts/admin_index.ctp:46
+msgid "Only published"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:44
+msgid "Only not published"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:49
+msgid "all positions"
+msgstr ""
+
+#: View/Banners/admin_index.ctp:61
 msgid "Url"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:37
+#: View/Banners/admin_index.ctp:63
 msgid "Click"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:47
+#: View/Banners/admin_index.ctp:73
 #: View/PhotosAlbums/admin_index.ctp:46
 msgid "Not published"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:52
+#: View/Banners/admin_index.ctp:78
 #: View/BannersPositions/admin_index.ctp:45
-#: View/Pages/admin_index.ctp:53
+#: View/Pages/admin_index.ctp:94
 #: View/Photos/admin_index.ctp:36
 #: View/PhotosAlbums/admin_index.ctp:52
-#: View/Posts/admin_index.ctp:56
+#: View/Posts/admin_index.ctp:107
 #: View/PostsCategories/admin_index.ctp:45
-#: View/Users/admin_index.ctp:57
+#: View/Users/admin_index.ctp:95
 #: View/Users/admin_view.ctp:31;98
 #: View/UsersGroups/admin_index.ctp:45
 msgid "Edit"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:53
+#: View/Banners/admin_index.ctp:79
 #: View/BannersPositions/admin_index.ctp:46
-#: View/Pages/admin_index.ctp:59
+#: View/Pages/admin_index.ctp:100
 #: View/Photos/admin_index.ctp:40
 #: View/PhotosAlbums/admin_index.ctp:57
-#: View/Posts/admin_index.ctp:60
+#: View/Posts/admin_index.ctp:111
 #: View/PostsCategories/admin_index.ctp:46
-#: View/Users/admin_index.ctp:66
+#: View/Users/admin_index.ctp:104
 #: View/Users/admin_view.ctp:32;99
 #: View/UsersGroups/admin_index.ctp:46
 msgid "Delete"
 msgstr ""
 
-#: View/Banners/admin_index.ctp:53
+#: View/Banners/admin_index.ctp:79
 #: View/BannersPositions/admin_index.ctp:46
-#: View/Pages/admin_index.ctp:59
+#: View/Pages/admin_index.ctp:100
 #: View/Photos/admin_index.ctp:40
 #: View/PhotosAlbums/admin_index.ctp:57
-#: View/Posts/admin_index.ctp:60
+#: View/Posts/admin_index.ctp:111
 #: View/PostsCategories/admin_index.ctp:46
-#: View/Users/admin_index.ctp:66
+#: View/Users/admin_index.ctp:104
 #: View/Users/admin_view.ctp:32;99
 #: View/UsersGroups/admin_index.ctp:46
 msgid "Are you sure you want to delete this?"
@@ -824,7 +886,7 @@ msgstr ""
 #: View/BannersPositions/admin_add.ctp:32
 #: View/BannersPositions/admin_edit.ctp:33
 #: View/BannersPositions/admin_index.ctp:33
-#: View/Users/admin_index.ctp:34
+#: View/Users/admin_index.ctp:72
 #: View/Users/admin_view.ctp:44
 #: View/UsersGroups/admin_add.ctp:32
 #: View/UsersGroups/admin_edit.ctp:34
@@ -897,13 +959,19 @@ msgstr ""
 msgid "Select a category"
 msgstr ""
 
-#: View/Elements/widgets/latest_posts.ctp:41
-#: View/Layouts/frontend.ctp:46
-#: View/Posts/rss/rss.ctp:30;32
-msgid "Latest posts"
+#: View/Elements/widgets/latest_posts.ctp:45
+msgid "Latest %d posts"
 msgstr ""
 
-#: View/Elements/widgets/random_photo.ctp:48
+#: View/Elements/widgets/latest_posts.ctp:57
+msgid "Latest post"
+msgstr ""
+
+#: View/Elements/widgets/random_photo.ctp:52
+msgid "Random %d photos"
+msgstr ""
+
+#: View/Elements/widgets/random_photo.ctp:54
 msgid "Random photo"
 msgstr ""
 
@@ -923,6 +991,7 @@ msgid "you have recently changed your password on our site %s"
 msgstr ""
 
 #: View/Emails/html/change_password.ctp:29
+#: View/Emails/html/contact_form.ctp:27
 #: View/Emails/html/forgot_password.ctp:29
 #: View/Emails/html/signup.ctp:29
 msgid "The request has been sent from the IP %s"
@@ -1019,6 +1088,19 @@ msgstr ""
 msgid "The %s method does not exist"
 msgstr ""
 
+#: View/Helper/WidgetHelper.php:41
+msgid "Invalid widget name"
+msgstr ""
+
+#: View/Helper/WidgetHelper.php:49
+msgid "The widget %s doesn't exist"
+msgstr ""
+
+#: View/Layouts/frontend.ctp:46
+#: View/Posts/rss/rss.ctp:30;32
+msgid "Latest posts"
+msgstr ""
+
 #: View/Layouts/Emails/html/default.ctp:38
 msgid "This email was sent automatically from %s"
 msgstr ""
@@ -1029,11 +1111,11 @@ msgstr ""
 
 #: View/Pages/admin_add.ctp:38
 #: View/Pages/admin_edit.ctp:38
-#: View/Pages/admin_index.ctp:35
+#: View/Pages/admin_index.ctp:76
 #: View/Posts/admin_add.ctp:49
 #: View/Posts/admin_edit.ctp:47
-#: View/Posts/admin_index.ctp:37
-#: View/Users/admin_index.ctp:38
+#: View/Posts/admin_index.ctp:88
+#: View/Users/admin_index.ctp:76
 msgid "Date"
 msgstr ""
 
@@ -1053,56 +1135,56 @@ msgstr ""
 
 #: View/Pages/admin_add.ctp:46
 #: View/Pages/admin_edit.ctp:46
-#: View/Pages/admin_index.ctp:34
+#: View/Pages/admin_index.ctp:75
 #: View/Posts/admin_add.ctp:57
 #: View/Posts/admin_edit.ctp:55
-#: View/Posts/admin_index.ctp:36
+#: View/Posts/admin_index.ctp:87
 #: View/Users/admin_view.ctp:89
 msgid "Priority"
 msgstr ""
 
 #: View/Pages/admin_add.ctp:48
 #: View/Pages/admin_edit.ctp:48
-#: View/Pages/admin_index.ctp:68
+#: View/Pages/admin_index.ctp:53;109
 #: View/Posts/admin_add.ctp:59
 #: View/Posts/admin_edit.ctp:57
-#: View/Posts/admin_index.ctp:73
+#: View/Posts/admin_index.ctp:63;124
 msgid "Very low"
 msgstr ""
 
 #: View/Pages/admin_add.ctp:49
 #: View/Pages/admin_edit.ctp:49
-#: View/Pages/admin_index.ctp:71
+#: View/Pages/admin_index.ctp:54;112
 #: View/Posts/admin_add.ctp:60
 #: View/Posts/admin_edit.ctp:58
-#: View/Posts/admin_index.ctp:76
+#: View/Posts/admin_index.ctp:64;127
 msgid "Low"
 msgstr ""
 
 #: View/Pages/admin_add.ctp:50
 #: View/Pages/admin_edit.ctp:50
-#: View/Pages/admin_index.ctp:80
+#: View/Pages/admin_index.ctp:55;121
 #: View/Posts/admin_add.ctp:61
 #: View/Posts/admin_edit.ctp:59
-#: View/Posts/admin_index.ctp:85
+#: View/Posts/admin_index.ctp:65;136
 msgid "Normal"
 msgstr ""
 
 #: View/Pages/admin_add.ctp:51
 #: View/Pages/admin_edit.ctp:51
-#: View/Pages/admin_index.ctp:74
+#: View/Pages/admin_index.ctp:56;115
 #: View/Posts/admin_add.ctp:62
 #: View/Posts/admin_edit.ctp:60
-#: View/Posts/admin_index.ctp:79
+#: View/Posts/admin_index.ctp:66;130
 msgid "High"
 msgstr ""
 
 #: View/Pages/admin_add.ctp:52
 #: View/Pages/admin_edit.ctp:52
-#: View/Pages/admin_index.ctp:77
+#: View/Pages/admin_index.ctp:57;118
 #: View/Posts/admin_add.ctp:63
 #: View/Posts/admin_edit.ctp:61
-#: View/Posts/admin_index.ctp:82
+#: View/Posts/admin_index.ctp:67;133
 msgid "Very high"
 msgstr ""
 
@@ -1115,13 +1197,13 @@ msgstr ""
 
 #: View/Pages/admin_add.ctp:66
 #: View/Pages/admin_edit.ctp:66
-#: View/Pages/admin_index.ctp:33
+#: View/Pages/admin_index.ctp:74
 #: View/Pages/admin_index_statics.ctp:31
 #: View/PhotosAlbums/admin_add.ctp:43
 #: View/PhotosAlbums/admin_edit.ctp:43
 #: View/Posts/admin_add.ctp:77
 #: View/Posts/admin_edit.ctp:75
-#: View/Posts/admin_index.ctp:33
+#: View/Posts/admin_index.ctp:84
 #: View/PostsCategories/admin_add.ctp:43
 #: View/PostsCategories/admin_edit.ctp:44
 #: View/PostsCategories/admin_index.ctp:33
@@ -1167,16 +1249,37 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: View/Pages/admin_index.ctp:45
-#: View/Posts/admin_index.ctp:47
+#: View/Pages/admin_index.ctp:40
+#: View/Posts/admin_index.ctp:40
+msgid "title"
+msgstr ""
+
+#: View/Pages/admin_index.ctp:46
+#: View/Posts/admin_index.ctp:46
+msgid "Only draft"
+msgstr ""
+
+#: View/Pages/admin_index.ctp:51
+#: View/Posts/admin_index.ctp:61
+msgid "all priorities"
+msgstr ""
+
+#: View/Pages/admin_index.ctp:64
+#: View/Posts/admin_index.ctp:74
+#: View/Users/admin_index.ctp:61
+msgid "month"
+msgstr ""
+
+#: View/Pages/admin_index.ctp:86
+#: View/Posts/admin_index.ctp:98
 msgid "Draft"
 msgstr ""
 
-#: View/Pages/admin_index.ctp:55
+#: View/Pages/admin_index.ctp:96
 #: View/Pages/admin_index_statics.ctp:43
 #: View/Photos/admin_index.ctp:42
 #: View/PhotosAlbums/admin_index.ctp:59
-#: View/Posts/admin_index.ctp:62
+#: View/Posts/admin_index.ctp:113
 #: View/PostsCategories/admin_index.ctp:47
 msgid "Open"
 msgstr ""
@@ -1199,7 +1302,7 @@ msgid "Uncheck all"
 msgstr ""
 
 #: View/PhotosAlbums/admin_index.ctp:51
-#: View/Users/admin_index.ctp:56
+#: View/Users/admin_index.ctp:94
 #: View/Users/admin_view.ctp:97
 msgid "View"
 msgstr ""
@@ -1210,14 +1313,22 @@ msgstr ""
 
 #: View/Posts/admin_add.ctp:41
 #: View/Posts/admin_edit.ctp:40
-#: View/Posts/admin_index.ctp:34
+#: View/Posts/admin_index.ctp:85
 msgid "Author"
 msgstr ""
 
 #: View/Posts/admin_add.ctp:46
 #: View/Posts/admin_edit.ctp:44
-#: View/Posts/admin_index.ctp:35
+#: View/Posts/admin_index.ctp:86
 msgid "Category"
+msgstr ""
+
+#: View/Posts/admin_index.ctp:51
+msgid "all users"
+msgstr ""
+
+#: View/Posts/admin_index.ctp:56
+msgid "all categories"
 msgstr ""
 
 #: View/Posts/search.ctp:45
@@ -1257,7 +1368,7 @@ msgstr ""
 #: View/Profiles/admin_change_password.ctp:39
 #: View/Profiles/reset_password.ctp:33
 #: View/Profiles/signup.ctp:47
-#: View/Users/admin_add.ctp:54
+#: View/Users/admin_add.ctp:58
 #: View/Users/admin_edit.ctp:49
 #: View/Users/login.ctp:37
 msgid "Password"
@@ -1271,7 +1382,7 @@ msgstr ""
 #: View/Profiles/admin_change_password.ctp:44
 #: View/Profiles/reset_password.ctp:38
 #: View/Profiles/signup.ctp:52
-#: View/Users/admin_add.ctp:58
+#: View/Users/admin_add.ctp:62
 #: View/Users/admin_edit.ctp:54
 msgid "Repeat password"
 msgstr ""
@@ -1282,25 +1393,32 @@ msgid "Repeat your new password"
 msgstr ""
 
 #: View/Profiles/forgot_password.ctp:33
+#: View/Profiles/resend_activation.ctp:33
 #: View/Profiles/signup.ctp:37
+#: View/Systems/contact_form.ctp:39
 #: View/Users/admin_add.ctp:50
 #: View/Users/admin_edit.ctp:45
-#: View/Users/admin_index.ctp:35
+#: View/Users/admin_index.ctp:73
 #: View/Users/admin_view.ctp:41
 msgid "Email"
 msgstr ""
 
 #: View/Profiles/forgot_password.ctp:34
+#: View/Profiles/resend_activation.ctp:34
 #: View/Profiles/signup.ctp:38
+#: View/Systems/contact_form.ctp:40
 msgid "Enter your email"
 msgstr ""
 
 #: View/Profiles/forgot_password.ctp:38
+#: View/Profiles/resend_activation.ctp:38
 #: View/Profiles/signup.ctp:42
+#: View/Users/admin_add.ctp:54
 msgid "Repeat email"
 msgstr ""
 
 #: View/Profiles/forgot_password.ctp:39
+#: View/Profiles/resend_activation.ctp:39
 #: View/Profiles/signup.ctp:43
 msgid "Repeat your email"
 msgstr ""
@@ -1312,7 +1430,7 @@ msgstr ""
 #: View/Profiles/signup.ctp:33
 #: View/Users/admin_add.ctp:46
 #: View/Users/admin_edit.ctp:41
-#: View/Users/admin_index.ctp:33
+#: View/Users/admin_index.ctp:71
 #: View/Users/admin_view.ctp:38
 #: View/Users/login.ctp:33
 msgid "Username"
@@ -1327,13 +1445,15 @@ msgid "Repeat your password"
 msgstr ""
 
 #: View/Profiles/signup.ctp:57
-#: View/Users/admin_add.ctp:62
+#: View/Systems/contact_form.ctp:32
+#: View/Users/admin_add.ctp:66
 #: View/Users/admin_edit.ctp:58
 msgid "First name"
 msgstr ""
 
 #: View/Profiles/signup.ctp:61
-#: View/Users/admin_add.ctp:66
+#: View/Systems/contact_form.ctp:35
+#: View/Users/admin_add.ctp:70
 #: View/Users/admin_edit.ctp:62
 msgid "Last name"
 msgstr ""
@@ -1507,7 +1627,15 @@ msgstr ""
 msgid "Log file"
 msgstr ""
 
-#: View/Systems/offline.ctp:26
+#: View/Systems/contact_form.ctp:43
+msgid "Message"
+msgstr ""
+
+#: View/Systems/contact_form.ctp:52
+msgid "Send"
+msgstr ""
+
+#: View/Systems/offline.ctp:27
 msgid "The website is temporarily offline"
 msgstr ""
 
@@ -1529,26 +1657,46 @@ msgstr ""
 msgid "If you want to change the password just type a new one. Otherwise, leave the field empty"
 msgstr ""
 
-#: View/Users/admin_index.ctp:36
+#: View/Users/admin_index.ctp:40
+msgid "username"
+msgstr ""
+
+#: View/Users/admin_index.ctp:47
+msgid "Only active"
+msgstr ""
+
+#: View/Users/admin_index.ctp:48
+msgid "Only pending"
+msgstr ""
+
+#: View/Users/admin_index.ctp:49
+msgid "Only banned"
+msgstr ""
+
+#: View/Users/admin_index.ctp:55
+msgid "all groups"
+msgstr ""
+
+#: View/Users/admin_index.ctp:74
 #: View/Users/admin_view.ctp:47
 msgid "Group"
 msgstr ""
 
-#: View/Users/admin_index.ctp:48
+#: View/Users/admin_index.ctp:86
 #: View/Users/admin_view.ctp:54
 msgid "Banned"
 msgstr ""
 
-#: View/Users/admin_index.ctp:51
+#: View/Users/admin_index.ctp:89
 #: View/Users/admin_view.ctp:57
 msgid "Pending"
 msgstr ""
 
-#: View/Users/admin_index.ctp:64
+#: View/Users/admin_index.ctp:102
 msgid "Activate"
 msgstr ""
 
-#: View/Users/admin_index.ctp:64
+#: View/Users/admin_index.ctp:102
 msgid "Are you sure you want to activate this account?"
 msgstr ""
 

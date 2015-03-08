@@ -42,7 +42,6 @@ msgstr ""
 #: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field filename
 #: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field name
 #: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field title;validation for field slug
-#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename
 #: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field title;validation for field slug
 #: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field title;validation for field slug
 #: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field title;validation for field slug
@@ -67,6 +66,7 @@ msgid "Must be a valid url"
 msgstr ""
 
 #: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field name
+#: /home/mirko/Server/MeCms_Plugin/Model/Contact.php:validation for field email;validation for field first_name;validation for field last_name;validation for field message
 #: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field title;validation for field slug
 #: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field title;validation for field slug
 #: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field title;validation for field slug
@@ -85,6 +85,16 @@ msgstr ""
 msgid "Allowed chars: lowercase letters, numbers, dash"
 msgstr ""
 
+#: /home/mirko/Server/MeCms_Plugin/Model/Contact.php:validation for field email
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email
+msgid "You have to enter a valid value"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Contact.php:validation for field first_name;validation for field last_name
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field first_name;validation for field last_name
+msgid "Allowed chars: letters, apostrophe, space"
+msgstr ""
+
 #: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field text
 #: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field text
 msgid "This field can not be empty"
@@ -100,12 +110,12 @@ msgstr ""
 msgid "You have to select an option"
 msgstr ""
 
-#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username
-msgid "This value is reserved"
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename
+msgid "A photo with this name already exists"
 msgstr ""
 
-#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email
-msgid "You have to enter a valid value"
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username
+msgid "This value is reserved"
 msgstr ""
 
 #: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email_repeat
@@ -126,10 +136,6 @@ msgstr ""
 
 #: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field old_password
 msgid "The old password is wrong"
-msgstr ""
-
-#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field first_name;validation for field last_name
-msgid "Allowed chars: letters, apostrophe, space"
 msgstr ""
 
 #: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field created;validation for field modified
