@@ -61,7 +61,8 @@ Router::connect('/resend',				array('controller' => 'profiles', 'action' => 'res
 Router::connect('/signup',				array('controller' => 'profiles', 'action' => 'signup',					'plugin' => 'me_cms'));
 
 //System controller
-Router::connect('/offline', array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
+Router::connect('/contact/form',		array('controller' => 'systems', 'action' => 'contact_form',	'plugin' => 'me_cms'));
+Router::connect('/offline',			array('controller' => 'systems', 'action' => 'offline',			'plugin' => 'me_cms'));
 
 //Login and logout
 Router::connect('/login',	array('controller' => 'users', 'action' => 'login',		'plugin' => 'me_cms'));

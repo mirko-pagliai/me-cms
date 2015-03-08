@@ -2,6 +2,7 @@
 ## 1.2 ramo
 ### 1.2.2
 * aggiunto un form per filtrare i banner, le pagine, gli articoli e gli utenti;
+* aggiunto un form di contatto;
 * gli utenti in attivazione possono richiedere il rinvio della email di attivazione;
 * è possibile passare opzioni ai widget;
 * alcuni widget accettano l'opzione `limit`, che indica il numero di record da mostrare.

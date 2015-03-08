@@ -231,6 +231,48 @@ class SystemsController extends MeCmsAppController {
 	}
 	
 	/**
+	 * Contact form
+	 * @uses config
+	 * @uses RecaptchaComponent::check()
+	 * @uses RecaptchaComponent::getError()
+	 */
+	public function contact_form() {
+		//Loads the `Contact` model
+		$this->loadModel('MeCms.Contact');
+			
+		if($this->request->is('post') || $this->request->is('put')) {
+			$this->Contact->set($data = $this->request->data);
+			
+			//Checks for reCAPTCHA, if requested
+			if($this->config['security']['recaptcha'] && !$this->Recaptcha->check()) {
+				$this->Session->flash($this->Recaptcha->getError(), 'error');
+			}
+			elseif($this->Contact->validates()) {
+				//Loads the `Email` component				
+				$this->Email = $this->Components->load('MeCms.Email');
+				$this->Email->startup($this);
+				
+				//Sends email
+				$this->Email->from(array(
+					$data['Contact']['email'] => $full_name = sprintf('%s %s', $data['Contact']['first_name'], $data['Contact']['last_name'])
+				));
+				$this->Email->to($this->config['email']['from']);
+				$this->Email->subject(__d('me_cms', 'Email from %s', $this->config['main']['title']));
+				$this->Email->template('contact_form');
+				$this->Email->set(am(array('email' => $data['Contact']['email'], 'message' => $data['Contact']['message']), compact('full_name')));
+				$this->Email->send();
+				
+				$this->Session->flash(__d('me_cms', 'The email has been sent'));
+				$this->redirect('/');
+			}
+			else
+				$this->Session->flash(__d('me_cms', 'The email was not sent, try again'), 'error');
+		}
+		
+		$this->set(array('title_for_layout' => __d('me_cms', 'Contact us')));
+	}
+	
+	/**
 	 * Offline page
 	 * @uses config
 	 */
