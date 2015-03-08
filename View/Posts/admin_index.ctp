@@ -43,7 +43,7 @@
 				echo $this->Form->input('active', array(
 					'default'	=> @$this->request->query['active'],
 					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-					'options'	=> array('yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only draft')),
+					'options'	=> array('yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')),
 					'type'		=> 'select'
 				));
 				echo $this->Form->input('user', array(
