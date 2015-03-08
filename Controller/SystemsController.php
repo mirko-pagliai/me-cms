@@ -262,7 +262,7 @@ class SystemsController extends MeCmsAppController {
 				$this->Email->from(array(
 					$data['Contact']['email'] => $full_name = sprintf('%s %s', $data['Contact']['first_name'], $data['Contact']['last_name'])
 				));
-				$this->Email->to($this->config['email']['from']);
+				$this->Email->to($this->config['email']['webmaster']);
 				$this->Email->subject(__d('me_cms', 'Email from %s', $this->config['main']['title']));
 				$this->Email->template('contact_form');
 				$this->Email->set(am(array('email' => $data['Contact']['email'], 'message' => $data['Contact']['message']), compact('full_name')));

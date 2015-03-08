@@ -16,8 +16,9 @@ $config = array('MeCms' => array(
 	'email' => array(
 		//Configuration, located into `APP/Config/email.php`
 		'config' => 'default',
-		//Address from which to send emails
-		'from' => 'email@example.com'
+		//Address used as the sender for emails sent to users and as a 
+		//recipient for the email sent by users
+		'webmaster' => 'email@example.com'
 	),
 	//Frontend
 	'frontend' => array(

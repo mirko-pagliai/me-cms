@@ -78,7 +78,7 @@ class EmailComponent extends Component {
 		$config = $this->controller->config;
 		
 		$this->config($config['email']['config']);
-		$this->from($from = array($config['email']['from'] => $config['main']['title']));
+		$this->from($from = array($config['email']['webmaster'] => $config['main']['title']));
 		$this->sender($from);
 		$this->template('default', 'MeCms.default');
 		$this->emailFormat('html');
