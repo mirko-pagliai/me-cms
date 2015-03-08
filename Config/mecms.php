@@ -23,6 +23,8 @@ $config = array('MeCms' => array(
 	'frontend' => array(
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
+		//Contact form (enabled or disabled).
+		'contact_form' => TRUE,
 		//Fancybox for photos
 		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`

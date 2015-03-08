@@ -237,6 +237,12 @@ class SystemsController extends MeCmsAppController {
 	 * @uses RecaptchaComponent::getError()
 	 */
 	public function contact_form() {
+		//Checks if the contact form is enabled
+		if(!$this->config['frontend']['contact_form']) {
+			$this->Session->flash(__d('me_cms', 'Disabled'), 'error');
+			$this->redirect('/');
+		}
+		
 		//Loads the `Contact` model
 		$this->loadModel('MeCms.Contact');
 			
