@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"PO-Revision-Date: 2015-03-08 18:44+0100\n"
+"PO-Revision-Date: 2015-03-08 18:46+0100\n"
 "Last-Translator: Mirko Pagliai\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it\n"
-"X-Generator: Lokalize 1.5\n"
 
 #: Controller/BannersController.php:56
 msgid ""
@@ -1290,7 +1289,7 @@ msgstr "titolo"
 
 #: View/Pages/admin_index.ctp:46
 #: View/Posts/admin_index.ctp:46
-msgid "Only draft"
+msgid "Only drafts"
 msgstr "Solo bozze"
 
 #: View/Pages/admin_index.ctp:51

@@ -1256,7 +1256,7 @@ msgstr ""
 
 #: View/Pages/admin_index.ctp:46
 #: View/Posts/admin_index.ctp:46
-msgid "Only draft"
+msgid "Only drafts"
 msgstr ""
 
 #: View/Pages/admin_index.ctp:51
