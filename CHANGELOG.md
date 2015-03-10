@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.3
+* improved the system checkup, now it displays the directories path.
+
 ### 1.2.2
 * added a filter form for banners, pages, posts and users;
 * added a contact form;

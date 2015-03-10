@@ -1,5 +1,8 @@
 # 1.x ramo
 ## 1.2 ramo
+### 1.2.3
+* migliorato il checkup del sistema, ora vengono visualizzate le path delle directory.
+
 ### 1.2.2
 * aggiunto un form per filtrare i banner, le pagine, gli articoli e gli utenti;
 * aggiunto un form di contatto;
