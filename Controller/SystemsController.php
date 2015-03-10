@@ -92,14 +92,14 @@ class SystemsController extends MeCmsAppController {
 	 * Manages cache and thumbnails.
 	 * @uses System::checkCacheStatus()
 	 * @uses System::getCacheSize()
-	 * @uses System::getThumbsSize()
+	 * @uses Thumbs::getSize()
 	 */
 	public function admin_cache() {
         $this->set(array(
-			'cacheStatus'		=> System::checkCacheStatus(),
-			'cacheSize'			=> System::getCacheSize(),
+			'cache_status'		=> System::checkCacheStatus(),
+			'cache_size'		=> System::getCacheSize(),
 			'title_for_layout'	=> __d('me_cms', 'Cache and thumbs'),
-			'thumbsSize'		=> System::getThumbsSize()
+			'thumbs_size'		=> Thumbs::getSize()
         ));
     }
 	
@@ -227,12 +227,12 @@ class SystemsController extends MeCmsAppController {
 	
 	/**
 	 * Clears the thumbnails.
-	 * @uses System::clearThumbs()
+	 * @uses Thumbs::clear()
 	 */
 	public function admin_clear_thumbs() {
 		$this->request->onlyAllow('post', 'delete');
 		
-		if(System::clearThumbs())
+		if(Thumbs::clear())
 			$this->Session->flash(__d('me_cms', 'Thumbnails have been deleted'), 'success');
 		else
 			$this->Session->flash(__d('me_cms', 'Thumbnails have not been deleted'), 'error');
