@@ -37,6 +37,12 @@ class ConfigComponent extends Component {
 	public $components = array('Session' => array('className' => 'MeTools.MeSession'));
 
 	/**
+	 * Configuration
+	 * @var array
+	 */
+	protected $config;
+
+	/**
 	 * Controller
 	 * @var Object, controller 
 	 */
@@ -49,39 +55,10 @@ class ConfigComponent extends Component {
 	protected function _debugForLocalhost() {
 		return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')) && Configure::read('MeCms.main.debug_on_localhost');
 	}
-	
-	/**
-	 * Gets widgets.
-	 * @param array $config Configuration
-	 * @return array Configuration
-	 * @uses _stringAsArray()
-	 */
-	protected function _getWidgets($config) {
-		$widgets = $config['frontend']['widgets'];
-		
-		//If the current action is the homepage, the widgets are the homepage widgets
-		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array($config['frontend']['widgets_homepage']))
-			$widgets = $config['frontend']['widgets_homepage'];
-		
-		//Turns it into array, if it's a string
-		$widgets = $this->_stringAsArray($widgets);
-		
-		$widgetsTmp = array();
-		
-		foreach($widgets as $k => $widget) {
-			//If the widget is an array, then the key element is the widget name and the value element is the widget options
-			if(is_array($widget))
-				$widgetsTmp[$k] = array('name' => $k, 'options' => $widget);
-			else
-				$widgetsTmp[$widget] = array('name' => $widget);
-		}
-		
-		return $widgetsTmp;
-	}
 
 	/**
-	 * Loads the main configuration file and returns the configuration.
-	 * @return array Configuration
+	 * Loads and sets the configuration
+	 * @uses config
 	 */
 	protected function _loadConfig() {
 		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
@@ -102,7 +79,34 @@ class ConfigComponent extends Component {
 			}
 		}
 		
-		return Configure::read('MeCms');
+		$this->config = Configure::read('MeCms');
+	}
+	
+	/**
+	 * Sets widgets
+	 * @uses config
+	 * @uses _stringAsArray()
+	 */
+	protected function _setWidgets() {
+		//If the current action is the homepage, the widgets are the homepage widgets
+		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array($this->config['frontend']['widgets_homepage']))
+			$widgets = $this->config['frontend']['widgets_homepage'];
+		else
+			$widgets = $this->config['frontend']['widgets'];
+		
+		//Turns it into array, if it's a string
+		$widgets = $this->_stringAsArray($widgets);
+		
+		//Resets widgets
+		$this->config['frontend']['widgets'] = array();
+		
+		foreach($widgets as $k => $widget) {
+			//If the widget is an array, then the key element is the widget name and the value element is the widget options
+			if(is_array($widget))
+				$this->config['frontend']['widgets'][$k] = array('name' => $k, 'options' => $widget);
+			else
+				$this->config['frontend']['widgets'][$widget] = array('name' => $widget);
+		}
 	}
 
 	/**
@@ -132,23 +136,20 @@ class ConfigComponent extends Component {
 	
 	/**
 	 * Turns some values.
-	 * @param array $config Configuration
-	 * @return array Configuration
+	 * @uses config
 	 * @uses _stringAsArray()
 	 * @uses MeToolsAppController::isAction()
 	 */
-	protected function _turnsValues($config) {
+	protected function _turnsValues() {
 		//Turns some values
-		$config['users']['activation'] = is_numeric($value = $config['users']['activation']) && $value >= 0 && $value <= 2 ? $value : 1;
-		$config['users']['default_group'] = is_numeric($value = $config['users']['default_group']) ? $config['users']['default_group'] : 3;
+		$this->config['users']['activation'] = is_numeric($value = $this->config['users']['activation']) && $value >= 0 && $value <= 2 ? $value : 1;
+		$this->config['users']['default_group'] = is_numeric($value = $this->config['users']['default_group']) ? $this->config['users']['default_group'] : 3;
 
 		//Turns some values as array		
-		$config['backend']['topbar'] = $this->_stringAsArray($config['backend']['topbar']);
+		$this->config['backend']['topbar'] = $this->_stringAsArray($this->config['backend']['topbar']);
 		
 		//Deletes useless values
-		unset($config['frontend']['widgets_homepage']);
-		
-		return $config;
+		unset($this->config['frontend']['widgets_homepage']);
 	}
 
 	/**
@@ -156,20 +157,22 @@ class ConfigComponent extends Component {
 	 * but before the controller's renders views and layout.
 	 * @param Controller $controller
 	 * @see http://api.cakephp.org/2.6/class-Component.html#_beforeRender CakePHP Api
+	 * @uses config
 	 */
 	public function beforeRender(Controller $controller) {
 		//Sets the configuration for the view
-		$controller->set('config', $controller->config);
+		$controller->set('config', $this->config);
 	}
 
 	/**
      * Called before the controller's beforeFilter method.
 	 * @param Controller $controller
      * @see http://api.cakephp.org/2.6/class-Component.html#_initialize CakePHP Api
-	 * @uses MeCmsAppController::config
+	 * @uses config
 	 * @uses controller
+	 * @uses MeCmsAppController::config
 	 * @uses _debugForLocalhost()
-	 * @uses _getWidgets()
+	 * @uses _setWidgets()
 	 * @uses _loadConfig()
 	 * @uses _turnsValues()
 	 */
@@ -177,25 +180,26 @@ class ConfigComponent extends Component {
 		//Sets the controller
 		$this->controller = $controller;
 				
-		//Loads the configuration values
-		$config = $this->_loadConfig();
+		//Loads and sets the configuration
+		$this->_loadConfig();
 		
-		$config['frontend']['widgets'] = $this->_getWidgets($config);
+		//Sets widgets
+		$this->_setWidgets();
 		
 		//Turns some values
-		$config = $this->_turnsValues($config);
+		$this->_turnsValues();
 		
 		//Writes
-		Configure::write('MeCms', $config);
+		Configure::write('MeCms', $this->config);
 		
 		//Sets debug
-		Configure::write('debug', $config['main']['debug'] || $this->_debugForLocalhost() ? 2 : 0);
+		Configure::write('debug', $this->config['main']['debug'] || $this->_debugForLocalhost() ? 2 : 0);
 		
 		//Sets cache
-		Configure::write('Cache.disable', !$config['main']['cache']);
+		Configure::write('Cache.disable', !$this->config['main']['cache']);
 		
 		//Sets the configuration so that the controller can read it
-		$controller->config = $config;
+		$controller->config = $this->config;
 	}
 	
 	/**
