@@ -95,9 +95,11 @@ class ConfigComponent extends Component {
 		foreach($map = Configure::read('WidgetsMap') as $name => $method) {
 			//Removes, if the widget was not required
 			if(array_key_exists($name, Configure::read('MeCms.frontend.widgets'))) {
-				list($component, $method) = explode('::', $method);
+				list($class, $method) = explode('::', $method);
 				
-				$map[$name] = compact('component', 'method');
+				$component = array_values(pluginSplit($class))[1];
+				
+				$map[$name] = compact('class', 'component', 'method');
 			}
 			else
 				unset($map[$name]);
