@@ -55,7 +55,7 @@ class MeCmsAppController extends AppController {
 	
 	/**
 	 * Configuration.
-	 * It will be set by `ConfigComponent`.
+	 * It will be set by the `ConfigComponent`.
 	 * @var array
 	 */
 	protected $config = array();
