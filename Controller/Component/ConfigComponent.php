@@ -35,7 +35,7 @@ class ConfigComponent extends Component {
 	 * @var array
 	 */
 	public $components = array('Session' => array('className' => 'MeTools.MeSession'));
-	
+
 	/**
 	 * Controller
 	 * @var Object, controller 
@@ -71,19 +71,19 @@ class ConfigComponent extends Component {
 		foreach($widgets as $k => $widget) {
 			//If the widget is an array, then the key element is the widget name and the value element is the widget options
 			if(is_array($widget))
-				$widgetsTmp[] = array('name' => $k, 'options' => $widget);
+				$widgetsTmp[$k] = array('name' => $k, 'options' => $widget);
 			else
-				$widgetsTmp[] = array('name' => $widget);
+				$widgetsTmp[$widget] = array('name' => $widget);
 		}
 		
 		return $widgetsTmp;
 	}
 
 	/**
-	 * Loads the configuration file. 
+	 * Loads the main configuration file and returns the configuration.
 	 * @return array Configuration
 	 */
-	protected function _load() {
+	protected function _loadConfig() {
 		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
 		Configure::load('MeCms.mecms');
 		
@@ -170,7 +170,7 @@ class ConfigComponent extends Component {
 	 * @uses controller
 	 * @uses _debugForLocalhost()
 	 * @uses _getWidgets()
-	 * @uses _load()
+	 * @uses _loadConfig()
 	 * @uses _turnsValues()
 	 */
 	public function initialize(Controller $controller) {
@@ -178,7 +178,7 @@ class ConfigComponent extends Component {
 		$this->controller = $controller;
 				
 		//Loads the configuration values
-		$config = $this->_load();
+		$config = $this->_loadConfig();
 		
 		$config['frontend']['widgets'] = $this->_getWidgets($config);
 		
