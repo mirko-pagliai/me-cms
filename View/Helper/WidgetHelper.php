@@ -46,7 +46,7 @@ class WidgetHelper extends AppHelper {
 		
 		//Checks if the widget exists
 		if(!$this->_View->elementExists($element))
-			throw new InternalErrorException(__d('me_cms', 'The widget %s doesn\'t exist', $name));
+			throw new InternalErrorException(__d('me_cms', 'The widget %s doesn\'t exist', $widget['name']));
 			
 		return $this->_View->element($element, array('options' => empty($widget['options']) ? array() : $widget['options']));
 	}
