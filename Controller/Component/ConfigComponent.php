@@ -85,6 +85,28 @@ class ConfigComponent extends Component {
 	}
 	
 	/**
+	 * Loads and sets the widget map configuration
+	 * @uses widgetsMap
+	 */
+	protected function _loadWidgetsMap() {
+		//Loads from plugin (`APP/Plugin/MeCms/Config/widgets_map.php`)
+		Configure::load('MeCms.widgets_map');
+		
+		foreach($map = Configure::read('WidgetsMap') as $name => $method) {
+			//Removes, if the widget was not required
+			if(array_key_exists($name, Configure::read('MeCms.frontend.widgets'))) {
+				list($component, $method) = explode('::', $method);
+				
+				$map[$name] = compact('component', 'method');
+			}
+			else
+				unset($map[$name]);
+		}
+		
+		Configure::write('WidgetsMap', $map);
+	}
+	
+	/**
 	 * Sets widgets
 	 * @uses controller
 	 * @uses _stringAsArray()
@@ -158,8 +180,9 @@ class ConfigComponent extends Component {
 	 * @uses controller
 	 * @uses MeCmsAppController::config
 	 * @uses _debugForLocalhost()
-	 * @uses _setWidgets()
 	 * @uses _loadConfig()
+	 * @uses _loadWidgetsMap()
+	 * @uses _setWidgets()
 	 * @uses _turnsValues()
 	 */
 	public function initialize(Controller $controller) {
@@ -172,6 +195,9 @@ class ConfigComponent extends Component {
 		//Sets widgets
 		$this->_setWidgets();
 		
+		//Loads and sets the widgets map
+		$this->_loadWidgetsMap();
+		
 		//Sets debug		
 		Configure::write('debug', Configure::read('MeCms.main.debug') || $this->_debugForLocalhost() ? 2 : 0);
 		
@@ -180,6 +206,7 @@ class ConfigComponent extends Component {
 				
 		//Sets the configuration so that the controller can read it
 		$controller->config = Configure::read('MeCms');
+		$controller->widgetsMap = Configure::read('WidgetsMap');
 	}
 	
 	/**

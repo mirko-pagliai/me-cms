@@ -75,6 +75,13 @@ class MeCmsAppController extends AppController {
 	);
 	
 	/**
+	 * Widgets map.
+	 * It will be set by the `ConfigComponent`.
+	 * @var array
+	 */
+	protected $widgetsMap = array();
+
+	/**
      * Checks if the latest search has been executed out of the minimum interval.
 	 * @uses config
 	 * @return bool
