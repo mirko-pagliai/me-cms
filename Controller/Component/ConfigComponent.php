@@ -86,23 +86,17 @@ class ConfigComponent extends Component {
 	
 	/**
 	 * Loads and sets the widget map configuration
-	 * @uses widgetsMap
 	 */
 	protected function _loadWidgetsMap() {
 		//Loads from plugin (`APP/Plugin/MeCms/Config/widgets_map.php`)
 		Configure::load('MeCms.widgets_map');
 		
 		foreach($map = Configure::read('WidgetsMap') as $name => $method) {
-			//Removes, if the widget was not required
-			if(array_key_exists($name, Configure::read('MeCms.frontend.widgets'))) {
-				list($class, $method) = explode('::', $method);
-				
-				$component = array_values(pluginSplit($class))[1];
-				
-				$map[$name] = compact('class', 'component', 'method');
-			}
-			else
-				unset($map[$name]);
+			list($class, $method) = explode('::', $method);
+
+			$component = array_values(pluginSplit($class))[1];
+
+			$map[$name] = compact('class', 'component', 'method');
 		}
 		
 		Configure::write('WidgetsMap', $map);
