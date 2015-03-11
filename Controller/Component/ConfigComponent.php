@@ -37,17 +37,11 @@ class ConfigComponent extends Component {
 	public $components = array('Session' => array('className' => 'MeTools.MeSession'));
 
 	/**
-	 * Configuration
-	 * @var array
-	 */
-	protected $config;
-
-	/**
 	 * Controller
 	 * @var Object, controller 
 	 */
 	protected $controller;
-	
+
 	/**
 	 * Checks if debugging for localhost should be forced.
 	 * @return bool TRUE if debugging should be forced, otherwise FALSE
@@ -58,7 +52,6 @@ class ConfigComponent extends Component {
 
 	/**
 	 * Loads and sets the configuration
-	 * @uses config
 	 */
 	protected function _loadConfig() {
 		//Loads from plugin (`APP/Plugin/MeCms/Config/mecms.php`)
@@ -79,34 +72,47 @@ class ConfigComponent extends Component {
 			}
 		}
 		
-		$this->config = Configure::read('MeCms');
+		//Turns value
+		if(!is_numeric(Configure::read($key = 'MeCms.users.activation')) || Configure::read($key) > 2)
+			Configure::write($key, 1);
+		
+		//Turns value
+		if(!is_numeric(Configure::read($key = 'MeCms.users.default_group')))
+			Configure::write($key, 3);
+			
+		//Turns value as array		
+		Configure::write($key = 'MeCms.backend.topbar', $this->_stringAsArray(Configure::read($key)));
 	}
 	
 	/**
 	 * Sets widgets
-	 * @uses config
+	 * @uses controller
 	 * @uses _stringAsArray()
 	 */
 	protected function _setWidgets() {
 		//If the current action is the homepage, the widgets are the homepage widgets
-		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array($this->config['frontend']['widgets_homepage']))
-			$widgets = $this->config['frontend']['widgets_homepage'];
+		if($this->controller->isAction(array('home', 'homepage', 'main')) && is_array(Configure::read('MeCms.frontend.widgets_homepage')))
+			$widgets = Configure::read('MeCms.frontend.widgets_homepage');
 		else
-			$widgets = $this->config['frontend']['widgets'];
+			$widgets = Configure::read('MeCms.frontend.widgets');
+		
+		//Deletes useless values
+		Configure::delete('MeCms.frontend.widgets_homepage');
 		
 		//Turns it into array, if it's a string
 		$widgets = $this->_stringAsArray($widgets);
 		
-		//Resets widgets
-		$this->config['frontend']['widgets'] = array();
-		
+		$widgetsTmp = array();
+
 		foreach($widgets as $k => $widget) {
 			//If the widget is an array, then the key element is the widget name and the value element is the widget options
 			if(is_array($widget))
-				$this->config['frontend']['widgets'][$k] = array('name' => $k, 'options' => $widget);
+				$widgetsTmp[$k] = array('name' => $k, 'options' => $widget);
 			else
-				$this->config['frontend']['widgets'][$widget] = array('name' => $widget);
+				$widgetsTmp[$widget] = array('name' => $widget);
 		}
+		
+		Configure::write('MeCms.frontend.widgets', $widgetsTmp);
 	}
 
 	/**
@@ -133,42 +139,22 @@ class ConfigComponent extends Component {
 		
 		return empty($array) ? $string : $array;
 	}
-	
-	/**
-	 * Turns some values.
-	 * @uses config
-	 * @uses _stringAsArray()
-	 * @uses MeToolsAppController::isAction()
-	 */
-	protected function _turnsValues() {
-		//Turns some values
-		$this->config['users']['activation'] = is_numeric($value = $this->config['users']['activation']) && $value >= 0 && $value <= 2 ? $value : 1;
-		$this->config['users']['default_group'] = is_numeric($value = $this->config['users']['default_group']) ? $this->config['users']['default_group'] : 3;
-
-		//Turns some values as array		
-		$this->config['backend']['topbar'] = $this->_stringAsArray($this->config['backend']['topbar']);
-		
-		//Deletes useless values
-		unset($this->config['frontend']['widgets_homepage']);
-	}
 
 	/**
 	 * Is called after the controller executes the requested action's logic, 
 	 * but before the controller's renders views and layout.
 	 * @param Controller $controller
 	 * @see http://api.cakephp.org/2.6/class-Component.html#_beforeRender CakePHP Api
-	 * @uses config
 	 */
 	public function beforeRender(Controller $controller) {
 		//Sets the configuration for the view
-		$controller->set('config', $this->config);
+		$controller->set('config', Configure::read('MeCms'));
 	}
 
 	/**
      * Called before the controller's beforeFilter method.
 	 * @param Controller $controller
      * @see http://api.cakephp.org/2.6/class-Component.html#_initialize CakePHP Api
-	 * @uses config
 	 * @uses controller
 	 * @uses MeCmsAppController::config
 	 * @uses _debugForLocalhost()
@@ -177,7 +163,7 @@ class ConfigComponent extends Component {
 	 * @uses _turnsValues()
 	 */
 	public function initialize(Controller $controller) {
-		//Sets the controller
+		//Sets the controller instance
 		$this->controller = $controller;
 				
 		//Loads and sets the configuration
@@ -186,20 +172,14 @@ class ConfigComponent extends Component {
 		//Sets widgets
 		$this->_setWidgets();
 		
-		//Turns some values
-		$this->_turnsValues();
-		
-		//Writes
-		Configure::write('MeCms', $this->config);
-		
-		//Sets debug
-		Configure::write('debug', $this->config['main']['debug'] || $this->_debugForLocalhost() ? 2 : 0);
+		//Sets debug		
+		Configure::write('debug', Configure::read('MeCms.main.debug') || $this->_debugForLocalhost() ? 2 : 0);
 		
 		//Sets cache
-		Configure::write('Cache.disable', !$this->config['main']['cache']);
-		
+		Configure::write('Cache.disable', !Configure::read('MeCms.main.cache'));
+				
 		//Sets the configuration so that the controller can read it
-		$controller->config = $this->config;
+		$controller->config = Configure::read('MeCms');
 	}
 	
 	/**
