@@ -70,7 +70,7 @@ class PostsWidgetComponent extends Component {
 	
 	/**
 	 * Latest posts widget
-	 * @return array List of latest posts
+	 * @return array Latest posts
 	 */
 	public function latest() {
 		$options = array_values(func_get_args())[0];
