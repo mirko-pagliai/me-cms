@@ -23,4 +23,8 @@
  */
 ?>
 
-<?php echo $this->Html->div('pages view', $this->element('view'.DS.'page', compact('page'))); ?>
+<div class="pages view">
+	<?php
+		echo $this->element('view'.DS.'page', array('page' => $page[0]));
+	?>
+</div>

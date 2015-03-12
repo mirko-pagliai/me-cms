@@ -215,6 +215,6 @@ class PagesController extends MeCmsAppController {
             Cache::write($cache, $page, 'pages');
         }
 		
-		$this->set(am(array('title_for_layout' => $page['Page']['title']), compact('page')));
+		$this->set(am(array('title_for_layout' => $page[0]['Page']['title']), compact('page')));
 	}
 }
