@@ -177,7 +177,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-PhotosController.html#30-238" title="Go to source code">PhotosController.php</a>
+			<b>Located at</b> <a href="source-class-PhotosController.html#30-218" title="Go to source code">PhotosController.php</a>
 		<br>
 	</div>
 
@@ -457,55 +457,6 @@ AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="widget_random" id="_widget_random">
-
-		<td class="attributes"><code>
-			 public 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_widget_random">#</a>
-		<code><a href="source-class-PhotosController.html#219-237" title="Go to source code">widget_random</a>( <span>integer <var>$limit</var> = <span class="php-num">1</span></span> )</code>
-
-		<div class="description short">
-			<p>Gets a random photo for widget.
-This method works only with <code>requestAction()</code>.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Gets a random photo for widget.
-This method works only with <code>requestAction()</code>.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$limit</var></dt>
-					<dd>Number of random photos</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Photo
-				</div>
-
-				<h4>Throws</h4>
-				<div class="list">
-					ForbiddenException
-				</div>
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeToolsAppController::isRequestAction()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	</table>
 
 	<table class="summary inherited">
@@ -513,6 +464,7 @@ This method works only with <code>requestAction()</code>.</p>
 	<tr>
 		<td><code>
 			<a href="class-MeCmsAppController.html#__checkLastSearch">_checkLastSearch()</a>, 
+			<a href="class-MeCmsAppController.html#__execWidgets">_execWidgets()</a>, 
 			<a href="class-MeCmsAppController.html#__loadMenus">_loadMenus()</a>, 
 			<a href="class-MeCmsAppController.html#_afterFilter">afterFilter()</a>, 
 			<a href="class-MeCmsAppController.html#_beforeFilter">beforeFilter()</a>, 
@@ -541,7 +493,8 @@ This method works only with <code>requestAction()</code>.</p>
 		<td><code>
 			<a href="class-MeCmsAppController.html#$components"><var>$components</var></a>, 
 			<a href="class-MeCmsAppController.html#$config"><var>$config</var></a>, 
-			<a href="class-MeCmsAppController.html#$helpers"><var>$helpers</var></a>
+			<a href="class-MeCmsAppController.html#$helpers"><var>$helpers</var></a>, 
+			<a href="class-MeCmsAppController.html#$widgetsMap"><var>$widgetsMap</var></a>
 		</code></td>
 	</tr>
 	</table>

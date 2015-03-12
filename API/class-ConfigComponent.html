@@ -83,6 +83,9 @@
 				<li><a href="class-EmailComponent.html">EmailComponent</a></li>
 				<li><a href="class-MeAuthComponent.html">MeAuthComponent</a></li>
 				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
+				<li><a href="class-PagesWidgetComponent.html">PagesWidgetComponent</a></li>
+				<li><a href="class-PhotosWidgetComponent.html">PhotosWidgetComponent</a></li>
+				<li><a href="class-PostsWidgetComponent.html">PostsWidgetComponent</a></li>
 			</ul>
 
 
@@ -163,7 +166,7 @@ Component
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-ConfigComponent.html#29-239" title="Go to source code">Component/ConfigComponent.php</a>
+			<b>Located at</b> <a href="source-class-ConfigComponent.html#30-251" title="Go to source code">Component/ConfigComponent.php</a>
 		<br>
 	</div>
 
@@ -183,7 +186,7 @@ Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#__debugForLocalhost">#</a>
-		<code><a href="source-class-ConfigComponent.html#45-51" title="Go to source code">_debugForLocalhost</a>( )</code>
+		<code><a href="source-class-ConfigComponent.html#46-52" title="Go to source code">_debugForLocalhost</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if debugging for localhost should be forced.</p>
@@ -209,43 +212,69 @@ Component
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="_getWidgets" id="__getWidgets">
+	<tr data-order="_loadConfig" id="__loadConfig">
 
 		<td class="attributes"><code>
 			 protected 
 
-			array
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#__getWidgets">#</a>
-		<code><a href="source-class-ConfigComponent.html#53-80" title="Go to source code">_getWidgets</a>( <span>array <var>$config</var></span> )</code>
+		<a class="anchor" href="#__loadConfig">#</a>
+		<code><a href="source-class-ConfigComponent.html#54-86" title="Go to source code">_loadConfig</a>( )</code>
 
 		<div class="description short">
-			<p>Gets widgets.</p>
+			<p>Loads and sets the configuration</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Gets widgets.</p>
+			<p>Loads and sets the configuration</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$config</var></dt>
-					<dd>Configuration</dd>
-				</dl></div>
 
-				<h4>Returns</h4>
+
+
+				<h4>Used by</h4>
 				<div class="list">
-					array<br>Configuration
+						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
 				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_loadWidgetsMap" id="__loadWidgetsMap">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__loadWidgetsMap">#</a>
+		<code><a href="source-class-ConfigComponent.html#88-108" title="Go to source code">_loadWidgetsMap</a>( )</code>
+
+		<div class="description short">
+			<p>Loads and sets the widget map configuration</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Loads and sets the widget map configuration</p>
+
+
+
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-ConfigComponent.html#__stringAsArray">ConfigComponent::_stringAsArray()</a></code><br>
+						Plugin::getAll()<br>
+						Plugin::getPath()<br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -256,35 +285,36 @@ Component
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="_load" id="__load">
+	<tr data-order="_setWidgets" id="__setWidgets">
 
 		<td class="attributes"><code>
 			 protected 
 
-			array
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#__load">#</a>
-		<code><a href="source-class-ConfigComponent.html#82-106" title="Go to source code">_load</a>( )</code>
+		<a class="anchor" href="#__setWidgets">#</a>
+		<code><a href="source-class-ConfigComponent.html#110-139" title="Go to source code">_setWidgets</a>( )</code>
 
 		<div class="description short">
-			<p>Loads the configuration file.</p>
+			<p>Sets widgets</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Loads the configuration file.</p>
+			<p>Sets widgets</p>
 
 
 
-				<h4>Returns</h4>
+
+
+				<h4>Uses</h4>
 				<div class="list">
-					array<br>Configuration
+						<code><a href="class-ConfigComponent.html#$controller">ConfigComponent::<var>$controller</var></a></code><br>
+						<code><a href="class-ConfigComponent.html#__stringAsArray">ConfigComponent::_stringAsArray()</a></code><br>
 				</div>
-
-
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
@@ -306,7 +336,7 @@ Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#__stringAsArray">#</a>
-		<code><a href="source-class-ConfigComponent.html#108-131" title="Go to source code">_stringAsArray</a>( <span>string <var>$string</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#141-164" title="Go to source code">_stringAsArray</a>( <span>string <var>$string</var></span> )</code>
 
 		<div class="description short">
 			<p>Turns a string of words separated by commas (and optional spaces) into an array.</p>
@@ -342,56 +372,7 @@ Component
 
 				<h4>Used by</h4>
 				<div class="list">
-						<code><a href="class-ConfigComponent.html#__getWidgets">ConfigComponent::_getWidgets()</a></code><br>
-						<code><a href="class-ConfigComponent.html#__turnsValues">ConfigComponent::_turnsValues()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="_turnsValues" id="__turnsValues">
-
-		<td class="attributes"><code>
-			 protected 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__turnsValues">#</a>
-		<code><a href="source-class-ConfigComponent.html#133-152" title="Go to source code">_turnsValues</a>( <span>array <var>$config</var></span> )</code>
-
-		<div class="description short">
-			<p>Turns some values.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Turns some values.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$config</var></dt>
-					<dd>Configuration</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Configuration
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#__stringAsArray">ConfigComponent::_stringAsArray()</a></code><br>
-						MeToolsAppController::isAction()<br>
-				</div>
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
+						<code><a href="class-ConfigComponent.html#__setWidgets">ConfigComponent::_setWidgets()</a></code><br>
 				</div>
 
 
@@ -410,7 +391,7 @@ Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-ConfigComponent.html#154-163" title="Go to source code">beforeRender</a>( <span>Controller <var>$controller</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#166-175" title="Go to source code">beforeRender</a>( <span>Controller <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Is called after the controller executes the requested action's logic,
@@ -451,7 +432,7 @@ but before the controller's renders views and layout.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-ConfigComponent.html#165-199" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
+		<code><a href="source-class-ConfigComponent.html#177-211" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller's beforeFilter method.</p>
@@ -475,12 +456,13 @@ but before the controller's renders views and layout.</p>
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
 						<code><a href="class-ConfigComponent.html#$controller">ConfigComponent::<var>$controller</var></a></code><br>
+						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
 						<code><a href="class-ConfigComponent.html#__debugForLocalhost">ConfigComponent::_debugForLocalhost()</a></code><br>
-						<code><a href="class-ConfigComponent.html#__getWidgets">ConfigComponent::_getWidgets()</a></code><br>
-						<code><a href="class-ConfigComponent.html#__load">ConfigComponent::_load()</a></code><br>
-						<code><a href="class-ConfigComponent.html#__turnsValues">ConfigComponent::_turnsValues()</a></code><br>
+						<code><a href="class-ConfigComponent.html#__loadConfig">ConfigComponent::_loadConfig()</a></code><br>
+						<code><a href="class-ConfigComponent.html#__loadWidgetsMap">ConfigComponent::_loadWidgetsMap()</a></code><br>
+						<code><a href="class-ConfigComponent.html#__setWidgets">ConfigComponent::_setWidgets()</a></code><br>
+						_turnsValues()<br>
 				</div>
 
 
@@ -499,7 +481,7 @@ but before the controller's renders views and layout.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_kcfinder">#</a>
-		<code><a href="source-class-ConfigComponent.html#201-238" title="Go to source code">kcfinder</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-ConfigComponent.html#213-250" title="Go to source code">kcfinder</a>( <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Sets the configuration for KCFinder.</p>
@@ -558,7 +540,7 @@ but before the controller's renders views and layout.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-ConfigComponent.html#33-37" title="Go to source code"><var>$components</var></a>
+				<a href="source-class-ConfigComponent.html#34-38" title="Go to source code"><var>$components</var></a>
 
 			<div class="description short">
 				<p>Components</p>
@@ -583,7 +565,7 @@ but before the controller's renders views and layout.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-ConfigComponent.html#39-43" title="Go to source code"><var>$controller</var></a>
+				<a href="source-class-ConfigComponent.html#40-44" title="Go to source code"><var>$controller</var></a>
 
 			<div class="description short">
 				<p>Controller</p>
@@ -594,6 +576,7 @@ but before the controller's renders views and layout.</p>
 
 					<h4>Used by</h4>
 					<div class="list">
+							<code><a href="class-ConfigComponent.html#__setWidgets">ConfigComponent::_setWidgets()</a></code><br>
 							<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
 					</div>
 			</div>

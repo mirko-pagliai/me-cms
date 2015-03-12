@@ -83,6 +83,9 @@
 				<li><a href="class-EmailComponent.html">EmailComponent</a></li>
 				<li><a href="class-MeAuthComponent.html">MeAuthComponent</a></li>
 				<li class="active"><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
+				<li><a href="class-PagesWidgetComponent.html">PagesWidgetComponent</a></li>
+				<li><a href="class-PhotosWidgetComponent.html">PhotosWidgetComponent</a></li>
+				<li><a href="class-PostsWidgetComponent.html">PostsWidgetComponent</a></li>
 			</ul>
 
 
@@ -177,7 +180,7 @@ AppController
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-MeCmsAppController.html#30-263" title="Go to source code">MeCmsAppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCmsAppController.html#30-297" title="Go to source code">MeCmsAppController.php</a>
 		<br>
 	</div>
 
@@ -197,7 +200,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#__checkLastSearch">#</a>
-		<code><a href="source-class-MeCmsAppController.html#77-95" title="Go to source code">_checkLastSearch</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#84-102" title="Go to source code">_checkLastSearch</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the latest search has been executed out of the minimum interval.</p>
@@ -227,6 +230,40 @@ AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="_execWidgets" id="__execWidgets">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__execWidgets">#</a>
+		<code><a href="source-class-MeCmsAppController.html#104-125" title="Go to source code">_execWidgets</a>( )</code>
+
+		<div class="description short">
+			<p>Executes the widgets components</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes the widgets components</p>
+
+
+
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_loadMenus" id="__loadMenus">
 
 		<td class="attributes"><code>
@@ -239,7 +276,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#__loadMenus">#</a>
-		<code><a href="source-class-MeCmsAppController.html#98-113" title="Go to source code">_loadMenus</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#127-142" title="Go to source code">_loadMenus</a>( )</code>
 
 		<div class="description short">
 			<p>Loads all the plugin helpers for creating menus.</p>
@@ -279,7 +316,7 @@ AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterFilter">#</a>
-		<code><a href="source-class-MeCmsAppController.html#115-121" title="Go to source code">afterFilter</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#144-150" title="Go to source code">afterFilter</a>( )</code>
 
 		<div class="description short">
 			<p>Called after every controller action, and after rendering is complete.
@@ -311,7 +348,7 @@ This is the last controller method to run.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCmsAppController.html#123-185" title="Go to source code">beforeFilter</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#152-219" title="Go to source code">beforeFilter</a>( )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -338,6 +375,7 @@ It's used to perform logic before each controller action.</p>
 						layout<br>
 						theme<br>
 						MeToolsAppController::isAdminRequest()<br>
+						<code><a href="class-MeCmsAppController.html#__execWidgets">MeCmsAppController::_execWidgets()</a></code><br>
 						<code><a href="class-MeCmsAppController.html#__loadMenus">MeCmsAppController::_loadMenus()</a></code><br>
 						<code><a href="class-MeCmsAppController.html#_isOffline">MeCmsAppController::isOffline()</a></code><br>
 				</div>
@@ -358,7 +396,7 @@ It's used to perform logic before each controller action.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCmsAppController.html#187-201" title="Go to source code">beforeRender</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#221-235" title="Go to source code">beforeRender</a>( )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -390,7 +428,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCmsAppController.html#203-212" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#237-246" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request.</p>
@@ -433,7 +471,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCmsAppController.html#214-223" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#248-257" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -477,7 +515,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_redirectIfLogged">#</a>
-		<code><a href="source-class-MeCmsAppController.html#225-234" title="Go to source code">redirectIfLogged</a>( )</code>
+		<code><a href="source-class-MeCmsAppController.html#259-268" title="Go to source code">redirectIfLogged</a>( )</code>
 
 		<div class="description short">
 			<p>Redirects if the user is already logged in</p>
@@ -520,7 +558,7 @@ It's used to perform logic or set view variables that are required on every requ
 
 		<td class="name"><div>
 		<a class="anchor" href="#_upload">#</a>
-		<code><a href="source-class-MeCmsAppController.html#236-262" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+		<code><a href="source-class-MeCmsAppController.html#270-296" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
 
 		<div class="description short">
 			<p>Uploads a file</p>
@@ -617,12 +655,12 @@ It's used to perform logic or set view variables that are required on every requ
 
 			<div class="description short">
 				<p>Configuration.
-It will be set by <code>ConfigComponent</code>.</p>
+It will be set by the <code>ConfigComponent</code>.</p>
 			</div>
 
 			<div class="description detailed hidden">
 				<p>Configuration.
-It will be set by <code>ConfigComponent</code>.</p>
+It will be set by the <code>ConfigComponent</code>.</p>
 
 					<h4>Used by</h4>
 					<div class="list">
@@ -675,6 +713,33 @@ It will be set by <code>ConfigComponent</code>.</p>
     <span class="php-quote">'Library'</span>   =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Library'</span>),
     <span class="php-quote">'Paginator'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MePaginator'</span>)
 )</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="widgetsMap" id="$widgetsMap">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#77-82" title="Go to source code"><var>$widgetsMap</var></a>
+
+			<div class="description short">
+				<p>Widgets map.
+It will be set by the <code>ConfigComponent</code>.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Widgets map.
+It will be set by the <code>ConfigComponent</code>.</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$widgetsMap" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>()</code>
 			</div>
 		</td>
 	</tr>

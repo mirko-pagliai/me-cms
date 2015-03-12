@@ -472,37 +472,11 @@
 </span><span id="346" class="l"><a href="#346">346: </a>            Cache::write(<span class="php-var">$cache</span>, <span class="php-var">$post</span>, <span class="php-quote">'posts'</span>);           
 </span><span id="347" class="l"><a href="#347">347: </a>        }
 </span><span id="348" class="l"><a href="#348">348: </a>        
-</span><span id="349" class="l"><a href="#349">349: </a>        <span class="php-var">$image_src</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$post</span>[<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>]) ? <span class="php-keyword1">NULL</span> : <span class="php-var">$post</span>[<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>];
+</span><span id="349" class="l"><a href="#349">349: </a>        <span class="php-var">$image_src</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>]) ? <span class="php-keyword1">NULL</span> : <span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>];
 </span><span id="350" class="l"><a href="#350">350: </a>        
-</span><span id="351" class="l"><a href="#351">351: </a>        <span class="php-var">$this</span>-&gt;set(am(<span class="php-keyword1">array</span>(<span class="php-quote">'title_for_layout'</span>  =&gt; <span class="php-var">$post</span>[<span class="php-quote">'Post'</span>][<span class="php-quote">'title'</span>]), <span class="php-keyword2">compact</span>(<span class="php-quote">'image_src'</span>, <span class="php-quote">'post'</span>)));
+</span><span id="351" class="l"><a href="#351">351: </a>        <span class="php-var">$this</span>-&gt;set(am(<span class="php-keyword1">array</span>(<span class="php-quote">'title_for_layout'</span>  =&gt; <span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'title'</span>]), <span class="php-keyword2">compact</span>(<span class="php-quote">'image_src'</span>, <span class="php-quote">'post'</span>)));
 </span><span id="352" class="l"><a href="#352">352: </a>    }
-</span><span id="353" class="l"><a href="#353">353: </a>    
-</span><span id="354" class="l"><a href="#354">354: </a>    <span class="php-comment">/**
-</span></span><span id="355" class="l"><a href="#355">355: </a><span class="php-comment">     * Gets the latest posts for widget.
-</span></span><span id="356" class="l"><a href="#356">356: </a><span class="php-comment">     * This method works only with `requestAction()`.
-</span></span><span id="357" class="l"><a href="#357">357: </a><span class="php-comment">     * @param int $limit Number of latest posts
-</span></span><span id="358" class="l"><a href="#358">358: </a><span class="php-comment">     * @return array List of latest posts
-</span></span><span id="359" class="l"><a href="#359">359: </a><span class="php-comment">     * @throws ForbiddenException
-</span></span><span id="360" class="l"><a href="#360">360: </a><span class="php-comment">     * @uses MeToolsAppController::isRequestAction()
-</span></span><span id="361" class="l"><a href="#361">361: </a><span class="php-comment">     */</span>
-</span><span id="362" class="l"><a href="#362">362: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> widget_latest(<span class="php-var">$limit</span> = <span class="php-num">10</span>) {
-</span><span id="363" class="l"><a href="#363">363: </a>        <span class="php-comment">//This method works only with &quot;requestAction()&quot;</span>
-</span><span id="364" class="l"><a href="#364">364: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;isRequestAction())
-</span><span id="365" class="l"><a href="#365">365: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ForbiddenException();
-</span><span id="366" class="l"><a href="#366">366: </a>        
-</span><span id="367" class="l"><a href="#367">367: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="368" class="l"><a href="#368">368: </a>        <span class="php-var">$posts</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'widget_latest_%d'</span>, <span class="php-var">$limit</span>), <span class="php-quote">'posts'</span>);
-</span><span id="369" class="l"><a href="#369">369: </a>        
-</span><span id="370" class="l"><a href="#370">370: </a>        <span class="php-comment">//If the data are not available from the cache</span>
-</span><span id="371" class="l"><a href="#371">371: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$posts</span>)) {
-</span><span id="372" class="l"><a href="#372">372: </a>            <span class="php-var">$posts</span> = <span class="php-var">$this</span>-&gt;Post-&gt;find(<span class="php-quote">'active'</span>, am(<span class="php-keyword1">array</span>(<span class="php-quote">'fields'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'slug'</span>, <span class="php-quote">'title'</span>)), <span class="php-keyword2">compact</span>(<span class="php-quote">'limit'</span>)));
-</span><span id="373" class="l"><a href="#373">373: </a>            
-</span><span id="374" class="l"><a href="#374">374: </a>            Cache::write(<span class="php-var">$cache</span>, <span class="php-var">$posts</span>, <span class="php-quote">'posts'</span>);
-</span><span id="375" class="l"><a href="#375">375: </a>        }
-</span><span id="376" class="l"><a href="#376">376: </a>        
-</span><span id="377" class="l"><a href="#377">377: </a>        <span class="php-keyword1">return</span> <span class="php-var">$posts</span>;
-</span><span id="378" class="l"><a href="#378">378: </a>    }
-</span><span id="379" class="l"><a href="#379">379: </a>}</span></code></pre>
+</span><span id="353" class="l"><a href="#353">353: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -510,6 +484,6 @@
 </div>
 </div>
 <script src="resources/combined.js?44e93de8fc3b749f55d0fae2da59a38c45b15f0b"></script>
-<script src="elementlist.js?5819e8d919a5b059fb23dd7d1f076e0b2c694a40"></script>
+<script src="elementlist.js?4a4d2bcf60e3b16d7212bce5176afa613a4b0820"></script>
 </body>
 </html>
