@@ -22,6 +22,7 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  * @package		MeCms\Controller\Component
+ * @see			AuthComponent
  */
 
 App::uses('AuthComponent', 'Controller/Component');
@@ -33,7 +34,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * 
  * Rewrites `AuthComponent` provided by CakePHP.
  */
-class MeAuthComponent extends AuthComponent {	
+class MeAuthComponent extends AuthComponent {
 	/**
 	 * User data
 	 * @var array 
