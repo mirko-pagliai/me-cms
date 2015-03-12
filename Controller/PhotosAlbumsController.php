@@ -178,6 +178,6 @@ class PhotosAlbumsController extends MeCmsAppController {
             Cache::write($cache, $album, 'photos');
 		}
 		
-		$this->set(am(array('title_for_layout' => $album['PhotosAlbum']['title']), compact('album')));
+		$this->set(am(array('title_for_layout' => $album[0]['PhotosAlbum']['title']), compact('album')));
 	}
 }

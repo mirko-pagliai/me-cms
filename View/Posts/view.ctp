@@ -23,4 +23,6 @@
  */
 ?>
 
-<?php echo $this->Html->div('posts view', $this->element('view'.DS.'post', compact($post))); ?>
+<div class="posts view">
+	<?php echo $this->element('view'.DS.'post', array('post' => $post[0])); ?>
+</div>

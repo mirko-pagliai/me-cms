@@ -346,8 +346,8 @@ class PostsController extends MeCmsAppController {
             Cache::write($cache, $post, 'posts');			
 		}
 		
-		$image_src = empty($post['Post']['preview']) ? NULL : $post['Post']['preview'];
+		$image_src = empty($post[0]['Post']['preview']) ? NULL : $post[0]['Post']['preview'];
 		
-		$this->set(am(array('title_for_layout'	=> $post['Post']['title']), compact('image_src', 'post')));
+		$this->set(am(array('title_for_layout'	=> $post[0]['Post']['title']), compact('image_src', 'post')));
 	}
 }

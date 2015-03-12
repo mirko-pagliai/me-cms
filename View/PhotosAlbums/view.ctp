@@ -29,9 +29,9 @@
 ?>
 
 <div class="photosAlbums index">
-	<?php echo $this->Html->h2($album['PhotosAlbum']['title']); ?>
+	<?php echo $this->Html->h2($album[0]['PhotosAlbum']['title']); ?>
 	<div class='clearfix'>
-		<?php foreach($album['Photo'] as $photo): ?>
+		<?php foreach($album[0]['Photo'] as $photo): ?>
 			<div class='col-sm-6 col-md-4'>
 				<?php
 					$text = $this->Html->thumb($photo['path'], array('side' => 270));

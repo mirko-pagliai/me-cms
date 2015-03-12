@@ -133,9 +133,6 @@ class Banner extends MeCmsAppModel {
             return $query;
         }
 		
-		if($query['limit'] === 1 && !empty($results[0]))
-			return $results[0];
-		
         return $results;
     }
 	

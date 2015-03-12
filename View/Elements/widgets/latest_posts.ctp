@@ -38,25 +38,19 @@
 <?php if(!empty($widgetsData['MeCms.latest_posts'])): ?>
 	<div class="widget sidebar-widget">
 		<?php
-			if(($count = count($widgetsData['MeCms.latest_posts'])) > 1) {
+			if(($count = count($widgetsData['MeCms.latest_posts'])) > 1)
 				echo $this->Html->h4(__d('me_cms', 'Latest %d posts', $count));
-				
-				$list = array();
-				foreach($widgetsData['MeCms.latest_posts'] as $post)
-					$list[] = $this->Html->link($post['Post']['title'],
-						array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
-						array('class' => 'block no-wrap')
-					);
-
-				echo $this->Html->ul($list, array('icon' => 'caret-right'));
-			}
-			else {
+			else
 				echo $this->Html->h4(__d('me_cms', 'Latest post'));
-				echo $this->Html->link($posts[0]['Post']['title'],
-					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $posts[0]['Post']['slug']),
+				
+			$list = array();
+			foreach($widgetsData['MeCms.latest_posts'] as $post)
+				$list[] = $this->Html->link($post['Post']['title'],
+					array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
 					array('class' => 'block no-wrap')
 				);
-			}
+
+			echo $this->Html->ul($list, array('icon' => 'caret-right'));
 		?>
 	</div>
 <?php endif; ?>
