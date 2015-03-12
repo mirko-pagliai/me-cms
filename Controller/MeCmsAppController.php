@@ -97,6 +97,11 @@ class MeCmsAppController extends AppController {
 				
 				//Loads the component
 				$this->{$component['component']} = $this->Components->load($component['class']);
+				
+				//Checks if method exists
+				if(!method_exists($this->{$component['component']}, $component['method']))
+					throw new InternalErrorException(__d('me_cms', 'Method %s:%s() doesn\'t exist', $component['class'], $component['method']));
+				
 				$data[$widget['name']] = call_user_func_array(array($this->{$component['component']}, $component['method']), compact('options'));
 			}
 		}
