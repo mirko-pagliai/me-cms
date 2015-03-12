@@ -44,9 +44,9 @@ class PostsWidgetComponent extends Component {
 			$this->PostsCategory = ClassRegistry::init('MeCms.PostsCategory');
 			
 			//Gets the categories
-			$catsTmp = $this->PostsCategory->find('active', array('fields' => array('id', 'slug', 'post_count')));
+			$categoriesTmp = $this->PostsCategory->find('active', array('fields' => array('id', 'slug', 'post_count')));
 			
-			if(empty($catsTmp))
+			if(empty($categoriesTmp))
 				return array();
 
 			//Gets the tree list
@@ -54,7 +54,7 @@ class PostsWidgetComponent extends Component {
 			
 			$categories = array();
 			
-			foreach($catsTmp as $category) {
+			foreach($categoriesTmp as $category) {
 				//Changes the category titles, replacing them with the titles of the tree list and adding the "post_count" value
 				$category['PostsCategory']['title'] = sprintf('%s (%s)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
 
