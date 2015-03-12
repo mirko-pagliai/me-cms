@@ -283,7 +283,7 @@ class PostsController extends MeCmsAppController {
 	
 	/**
 	 * Search posts.
-	 * @uses MeCmsAppController::_checkLastSearch()
+	 * @uses MeSecurityComponent::checkLastSearch()
 	 */
 	public function search() {
 		$pattern = empty($this->request->query['p']) ? FALSE : trim($this->request->query['p']);
@@ -291,8 +291,11 @@ class PostsController extends MeCmsAppController {
 		if(!empty($pattern)) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
+				//Load the `MeSecurity` component
+				$this->Security = $this->Components->load('MeCms.MeSecurity');
+				
 				//Checks if the latest search has been executed out of the minimum interval
-				if($this->_checkLastSearch()) {
+				if($this->Security->checkLastSearch()) {
 					$this->paginate = array(
 						'conditions'	=> array('OR' => array(
 							'title LIKE'	=> sprintf('%%%s%%', $pattern),

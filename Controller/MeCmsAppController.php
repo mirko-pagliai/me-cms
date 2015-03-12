@@ -82,26 +82,6 @@ class MeCmsAppController extends AppController {
 	protected $widgetsMap = array();
 
 	/**
-     * Checks if the latest search has been executed out of the minimum interval.
-	 * @uses config
-	 * @return bool
-	 */
-	protected function _checkLastSearch() {
-        $interval = $this->config['security']['search_interval'];
-		
-        if(empty($interval))
-            return TRUE;
-
-        //If there was a previous search and if this was done before the minimum interval
-        if($this->Session->read('lastSearch') && ($this->Session->read('lastSearch') + $interval) > time())
-            return FALSE;
-
-        //In any other case, saves the timestamp of the current search and returns TRUE
-        $this->Session->write('lastSearch', time());
-        return TRUE;
-	}
-
-	/**
 	 * Executes the widgets components
 	 */
 	protected function _execWidgets() {
