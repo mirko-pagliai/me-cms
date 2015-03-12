@@ -25,6 +25,7 @@
  */
 
 App::uses('Component', 'Controller');
+App::uses('Plugin', 'MeTools.Utility');
 
 /**
  * It automatically handles the configuration
@@ -86,10 +87,14 @@ class ConfigComponent extends Component {
 	
 	/**
 	 * Loads and sets the widget map configuration
+	 * @uses Plugin::getAll()
+	 * @uses Plugin::getPath()
 	 */
 	protected function _loadWidgetsMap() {
-		//Loads from plugin (`APP/Plugin/MeCms/Config/widgets_map.php`)
-		Configure::load('MeCms.widgets_map');
+		//Loads from all plugins
+		foreach(Plugin::getAll() as $plugin)
+			if(is_readable(Plugin::getPath($plugin).'Config'.DS.'widgets_map.php'))
+				Configure::load(sprintf('%s.widgets_map', $plugin));
 		
 		foreach($map = Configure::read('WidgetsMap') as $name => $method) {
 			list($class, $method) = explode('::', $method);
