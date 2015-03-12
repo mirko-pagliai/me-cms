@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class PhotosWidgetComponent | MeCms API</title>
+	<title>Class MeSecurityComponent | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -83,9 +83,9 @@
 				<li><a href="class-EmailComponent.html">EmailComponent</a></li>
 				<li><a href="class-MeAuthComponent.html">MeAuthComponent</a></li>
 				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
-				<li><a href="class-MeSecurityComponent.html">MeSecurityComponent</a></li>
+				<li class="active"><a href="class-MeSecurityComponent.html">MeSecurityComponent</a></li>
 				<li><a href="class-PagesWidgetComponent.html">PagesWidgetComponent</a></li>
-				<li class="active"><a href="class-PhotosWidgetComponent.html">PhotosWidgetComponent</a></li>
+				<li><a href="class-PhotosWidgetComponent.html">PhotosWidgetComponent</a></li>
 				<li><a href="class-PostsWidgetComponent.html">PostsWidgetComponent</a></li>
 			</ul>
 
@@ -127,22 +127,24 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class PhotosWidgetComponent</h1>
+	<h1>Class MeSecurityComponent</h1>
 
 
 	<div class="description">
-	<p>Photos widgets</p>
+	<p>Creates an easy way to integrate tighter security in your application.</p>
+
+<p>Rewrites <code>SecurityComponent</code> provided by CakePHP.</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-Component
+SecurityComponent
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>PhotosWidgetComponent</span></b>			
+<b><span>MeSecurityComponent</span></b>			
 			
 			
 		</dd>
@@ -167,7 +169,7 @@ Component
 				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
 				<b>Author:</b>
 				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
-			<b>Located at</b> <a href="source-class-PhotosWidgetComponent.html#29-51" title="Go to source code">Component/PhotosWidgetComponent.php</a>
+			<b>Located at</b> <a href="source-class-MeSecurityComponent.html#30-60" title="Go to source code">Component/MeSecurityComponent.php</a>
 		<br>
 	</div>
 
@@ -175,35 +177,39 @@ Component
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="random" id="_random">
+	<tr data-order="checkLastSearch" id="_checkLastSearch">
 
 		<td class="attributes"><code>
 			 public 
 
-			array
+			boolean
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_random">#</a>
-		<code><a href="source-class-PhotosWidgetComponent.html#33-50" title="Go to source code">random</a>( )</code>
+		<a class="anchor" href="#_checkLastSearch">#</a>
+		<code><a href="source-class-MeSecurityComponent.html#42-59" title="Go to source code">checkLastSearch</a>( )</code>
 
 		<div class="description short">
-			<p>Random photo widget</p>
+			<p>Checks if the latest search has been executed out of the minimum interval</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Random photo widget</p>
+			<p>Checks if the latest search has been executed out of the minimum interval</p>
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					array<br>Photos
+					boolean
 				</div>
 
 
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-PostsController.html#_search">PostsController::search()</a></code><br>
+				</div>
 
 
 		</div>
@@ -222,6 +228,34 @@ Component
 
 
 
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="components" id="$components">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeSecurityComponent.html#36-40" title="Go to source code"><var>$components</var></a>
+
+			<div class="description short">
+				<p>Components</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Components</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$components" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'Session'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeSession'</span>))</code>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 

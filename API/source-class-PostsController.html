@@ -409,7 +409,7 @@
 </span><span id="283" class="l"><a href="#283">283: </a>    
 </span><span id="284" class="l"><a href="#284">284: </a>    <span class="php-comment">/**
 </span></span><span id="285" class="l"><a href="#285">285: </a><span class="php-comment">     * Search posts.
-</span></span><span id="286" class="l"><a href="#286">286: </a><span class="php-comment">     * @uses MeCmsAppController::_checkLastSearch()
+</span></span><span id="286" class="l"><a href="#286">286: </a><span class="php-comment">     * @uses MeSecurityComponent::checkLastSearch()
 </span></span><span id="287" class="l"><a href="#287">287: </a><span class="php-comment">     */</span>
 </span><span id="288" class="l"><a href="#288">288: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> search() {
 </span><span id="289" class="l"><a href="#289">289: </a>        <span class="php-var">$pattern</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'p'</span>]) ? <span class="php-keyword1">FALSE</span> : <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'p'</span>]);
@@ -417,66 +417,69 @@
 </span><span id="291" class="l"><a href="#291">291: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$pattern</span>)) {
 </span><span id="292" class="l"><a href="#292">292: </a>            <span class="php-comment">//Checks if the pattern is at least 4 characters long</span>
 </span><span id="293" class="l"><a href="#293">293: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword2">strlen</span>(<span class="php-var">$pattern</span>) &gt;= <span class="php-num">4</span>) {
-</span><span id="294" class="l"><a href="#294">294: </a>                <span class="php-comment">//Checks if the latest search has been executed out of the minimum interval</span>
-</span><span id="295" class="l"><a href="#295">295: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;_checkLastSearch()) {
-</span><span id="296" class="l"><a href="#296">296: </a>                    <span class="php-var">$this</span>-&gt;paginate = <span class="php-keyword1">array</span>(
-</span><span id="297" class="l"><a href="#297">297: </a>                        <span class="php-quote">'conditions'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'OR'</span> =&gt; <span class="php-keyword1">array</span>(
-</span><span id="298" class="l"><a href="#298">298: </a>                            <span class="php-quote">'title LIKE'</span>    =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%%%s%%'</span>, <span class="php-var">$pattern</span>),
-</span><span id="299" class="l"><a href="#299">299: </a>                            <span class="php-quote">'subtitle LIKE'</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%%%s%%'</span>, <span class="php-var">$pattern</span>),
-</span><span id="300" class="l"><a href="#300">300: </a>                            <span class="php-quote">'text LIKE'</span>     =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%%%s%%'</span>, <span class="php-var">$pattern</span>)
-</span><span id="301" class="l"><a href="#301">301: </a>                        )),
-</span><span id="302" class="l"><a href="#302">302: </a>                        <span class="php-quote">'fields'</span>        =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>),
-</span><span id="303" class="l"><a href="#303">303: </a>                        <span class="php-quote">'findType'</span>      =&gt; <span class="php-quote">'active'</span>,
-</span><span id="304" class="l"><a href="#304">304: </a>                        <span class="php-quote">'limit'</span>         =&gt; <span class="php-num">10</span>
-</span><span id="305" class="l"><a href="#305">305: </a>                    );
-</span><span id="306" class="l"><a href="#306">306: </a>
-</span><span id="307" class="l"><a href="#307">307: </a>                    <span class="php-keyword1">try</span> {
-</span><span id="308" class="l"><a href="#308">308: </a>                        <span class="php-var">$posts</span> = <span class="php-var">$this</span>-&gt;paginate();
-</span><span id="309" class="l"><a href="#309">309: </a>                        <span class="php-var">$count</span> = <span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'paging'</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'count'</span>];
-</span><span id="310" class="l"><a href="#310">310: </a>                    }
-</span><span id="311" class="l"><a href="#311">311: </a>                    <span class="php-keyword1">catch</span>(NotFoundException <span class="php-var">$e</span>) {}
-</span><span id="312" class="l"><a href="#312">312: </a>
-</span><span id="313" class="l"><a href="#313">313: </a>                    <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'count'</span>, <span class="php-quote">'posts'</span>));
-</span><span id="314" class="l"><a href="#314">314: </a>                }
-</span><span id="315" class="l"><a href="#315">315: </a>                <span class="php-keyword1">else</span>
-</span><span id="316" class="l"><a href="#316">316: </a>                    <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'You have to wait %d seconds to perform a new search'</span>, <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'security'</span>][<span class="php-quote">'search_interval'</span>]), <span class="php-quote">'alert'</span>);
-</span><span id="317" class="l"><a href="#317">317: </a>            }
-</span><span id="318" class="l"><a href="#318">318: </a>            <span class="php-keyword1">else</span>
-</span><span id="319" class="l"><a href="#319">319: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'You have to search at least a word of %d characters'</span>, <span class="php-num">4</span>), <span class="php-quote">'alert'</span>);
-</span><span id="320" class="l"><a href="#320">320: </a>        }
-</span><span id="321" class="l"><a href="#321">321: </a>        
-</span><span id="322" class="l"><a href="#322">322: </a>        <span class="php-var">$this</span>-&gt;set(am(<span class="php-keyword1">array</span>(<span class="php-quote">'title_for_layout'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Search posts'</span>)), <span class="php-keyword2">compact</span>(<span class="php-quote">'pattern'</span>)));
-</span><span id="323" class="l"><a href="#323">323: </a>    }
-</span><span id="324" class="l"><a href="#324">324: </a>    
-</span><span id="325" class="l"><a href="#325">325: </a>    <span class="php-comment">/**
-</span></span><span id="326" class="l"><a href="#326">326: </a><span class="php-comment">     * View post
-</span></span><span id="327" class="l"><a href="#327">327: </a><span class="php-comment">     * @param string $slug Slug
-</span></span><span id="328" class="l"><a href="#328">328: </a><span class="php-comment">     * @throws NotFoundException
-</span></span><span id="329" class="l"><a href="#329">329: </a><span class="php-comment">     */</span>
-</span><span id="330" class="l"><a href="#330">330: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$slug</span> = <span class="php-keyword1">NULL</span>) {
-</span><span id="331" class="l"><a href="#331">331: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="332" class="l"><a href="#332">332: </a>        <span class="php-var">$post</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-var">$slug</span>), <span class="php-quote">'posts'</span>);
-</span><span id="333" class="l"><a href="#333">333: </a>        
-</span><span id="334" class="l"><a href="#334">334: </a>        <span class="php-comment">//If the data are not available from the cache</span>
-</span><span id="335" class="l"><a href="#335">335: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$post</span>)) {
-</span><span id="336" class="l"><a href="#336">336: </a>            <span class="php-var">$post</span> = <span class="php-var">$this</span>-&gt;Post-&gt;find(<span class="php-quote">'active'</span>, <span class="php-keyword1">array</span>(
-</span><span id="337" class="l"><a href="#337">337: </a>                <span class="php-quote">'conditions'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Post.slug'</span> =&gt; <span class="php-var">$slug</span>),
-</span><span id="338" class="l"><a href="#338">338: </a>                <span class="php-quote">'contain'</span>       =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Category.title'</span>, <span class="php-quote">'Category.slug'</span>, <span class="php-quote">'User.first_name'</span>, <span class="php-quote">'User.last_name'</span>),
-</span><span id="339" class="l"><a href="#339">339: </a>                <span class="php-quote">'fields'</span>        =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>),
-</span><span id="340" class="l"><a href="#340">340: </a>                <span class="php-quote">'limit'</span>         =&gt; <span class="php-num">1</span>
-</span><span id="341" class="l"><a href="#341">341: </a>            ));
-</span><span id="342" class="l"><a href="#342">342: </a>
-</span><span id="343" class="l"><a href="#343">343: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$post</span>))
-</span><span id="344" class="l"><a href="#344">344: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid object'</span>));
-</span><span id="345" class="l"><a href="#345">345: </a>        
-</span><span id="346" class="l"><a href="#346">346: </a>            Cache::write(<span class="php-var">$cache</span>, <span class="php-var">$post</span>, <span class="php-quote">'posts'</span>);           
-</span><span id="347" class="l"><a href="#347">347: </a>        }
+</span><span id="294" class="l"><a href="#294">294: </a>                <span class="php-comment">//Load the `MeSecurity` component</span>
+</span><span id="295" class="l"><a href="#295">295: </a>                <span class="php-var">$this</span>-&gt;Security = <span class="php-var">$this</span>-&gt;Components-&gt;load(<span class="php-quote">'MeCms.MeSecurity'</span>);
+</span><span id="296" class="l"><a href="#296">296: </a>                
+</span><span id="297" class="l"><a href="#297">297: </a>                <span class="php-comment">//Checks if the latest search has been executed out of the minimum interval</span>
+</span><span id="298" class="l"><a href="#298">298: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Security-&gt;checkLastSearch()) {
+</span><span id="299" class="l"><a href="#299">299: </a>                    <span class="php-var">$this</span>-&gt;paginate = <span class="php-keyword1">array</span>(
+</span><span id="300" class="l"><a href="#300">300: </a>                        <span class="php-quote">'conditions'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'OR'</span> =&gt; <span class="php-keyword1">array</span>(
+</span><span id="301" class="l"><a href="#301">301: </a>                            <span class="php-quote">'title LIKE'</span>    =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%%%s%%'</span>, <span class="php-var">$pattern</span>),
+</span><span id="302" class="l"><a href="#302">302: </a>                            <span class="php-quote">'subtitle LIKE'</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%%%s%%'</span>, <span class="php-var">$pattern</span>),
+</span><span id="303" class="l"><a href="#303">303: </a>                            <span class="php-quote">'text LIKE'</span>     =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%%%s%%'</span>, <span class="php-var">$pattern</span>)
+</span><span id="304" class="l"><a href="#304">304: </a>                        )),
+</span><span id="305" class="l"><a href="#305">305: </a>                        <span class="php-quote">'fields'</span>        =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>),
+</span><span id="306" class="l"><a href="#306">306: </a>                        <span class="php-quote">'findType'</span>      =&gt; <span class="php-quote">'active'</span>,
+</span><span id="307" class="l"><a href="#307">307: </a>                        <span class="php-quote">'limit'</span>         =&gt; <span class="php-num">10</span>
+</span><span id="308" class="l"><a href="#308">308: </a>                    );
+</span><span id="309" class="l"><a href="#309">309: </a>
+</span><span id="310" class="l"><a href="#310">310: </a>                    <span class="php-keyword1">try</span> {
+</span><span id="311" class="l"><a href="#311">311: </a>                        <span class="php-var">$posts</span> = <span class="php-var">$this</span>-&gt;paginate();
+</span><span id="312" class="l"><a href="#312">312: </a>                        <span class="php-var">$count</span> = <span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'paging'</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'count'</span>];
+</span><span id="313" class="l"><a href="#313">313: </a>                    }
+</span><span id="314" class="l"><a href="#314">314: </a>                    <span class="php-keyword1">catch</span>(NotFoundException <span class="php-var">$e</span>) {}
+</span><span id="315" class="l"><a href="#315">315: </a>
+</span><span id="316" class="l"><a href="#316">316: </a>                    <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'count'</span>, <span class="php-quote">'posts'</span>));
+</span><span id="317" class="l"><a href="#317">317: </a>                }
+</span><span id="318" class="l"><a href="#318">318: </a>                <span class="php-keyword1">else</span>
+</span><span id="319" class="l"><a href="#319">319: </a>                    <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'You have to wait %d seconds to perform a new search'</span>, <span class="php-var">$this</span>-&gt;config[<span class="php-quote">'security'</span>][<span class="php-quote">'search_interval'</span>]), <span class="php-quote">'alert'</span>);
+</span><span id="320" class="l"><a href="#320">320: </a>            }
+</span><span id="321" class="l"><a href="#321">321: </a>            <span class="php-keyword1">else</span>
+</span><span id="322" class="l"><a href="#322">322: </a>                <span class="php-var">$this</span>-&gt;Session-&gt;flash(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'You have to search at least a word of %d characters'</span>, <span class="php-num">4</span>), <span class="php-quote">'alert'</span>);
+</span><span id="323" class="l"><a href="#323">323: </a>        }
+</span><span id="324" class="l"><a href="#324">324: </a>        
+</span><span id="325" class="l"><a href="#325">325: </a>        <span class="php-var">$this</span>-&gt;set(am(<span class="php-keyword1">array</span>(<span class="php-quote">'title_for_layout'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Search posts'</span>)), <span class="php-keyword2">compact</span>(<span class="php-quote">'pattern'</span>)));
+</span><span id="326" class="l"><a href="#326">326: </a>    }
+</span><span id="327" class="l"><a href="#327">327: </a>    
+</span><span id="328" class="l"><a href="#328">328: </a>    <span class="php-comment">/**
+</span></span><span id="329" class="l"><a href="#329">329: </a><span class="php-comment">     * View post
+</span></span><span id="330" class="l"><a href="#330">330: </a><span class="php-comment">     * @param string $slug Slug
+</span></span><span id="331" class="l"><a href="#331">331: </a><span class="php-comment">     * @throws NotFoundException
+</span></span><span id="332" class="l"><a href="#332">332: </a><span class="php-comment">     */</span>
+</span><span id="333" class="l"><a href="#333">333: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$slug</span> = <span class="php-keyword1">NULL</span>) {
+</span><span id="334" class="l"><a href="#334">334: </a>        <span class="php-comment">//Tries to get data from the cache</span>
+</span><span id="335" class="l"><a href="#335">335: </a>        <span class="php-var">$post</span> = Cache::read(<span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-var">$slug</span>), <span class="php-quote">'posts'</span>);
+</span><span id="336" class="l"><a href="#336">336: </a>        
+</span><span id="337" class="l"><a href="#337">337: </a>        <span class="php-comment">//If the data are not available from the cache</span>
+</span><span id="338" class="l"><a href="#338">338: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$post</span>)) {
+</span><span id="339" class="l"><a href="#339">339: </a>            <span class="php-var">$post</span> = <span class="php-var">$this</span>-&gt;Post-&gt;find(<span class="php-quote">'active'</span>, <span class="php-keyword1">array</span>(
+</span><span id="340" class="l"><a href="#340">340: </a>                <span class="php-quote">'conditions'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Post.slug'</span> =&gt; <span class="php-var">$slug</span>),
+</span><span id="341" class="l"><a href="#341">341: </a>                <span class="php-quote">'contain'</span>       =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Category.title'</span>, <span class="php-quote">'Category.slug'</span>, <span class="php-quote">'User.first_name'</span>, <span class="php-quote">'User.last_name'</span>),
+</span><span id="342" class="l"><a href="#342">342: </a>                <span class="php-quote">'fields'</span>        =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>),
+</span><span id="343" class="l"><a href="#343">343: </a>                <span class="php-quote">'limit'</span>         =&gt; <span class="php-num">1</span>
+</span><span id="344" class="l"><a href="#344">344: </a>            ));
+</span><span id="345" class="l"><a href="#345">345: </a>
+</span><span id="346" class="l"><a href="#346">346: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$post</span>))
+</span><span id="347" class="l"><a href="#347">347: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid object'</span>));
 </span><span id="348" class="l"><a href="#348">348: </a>        
-</span><span id="349" class="l"><a href="#349">349: </a>        <span class="php-var">$image_src</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>]) ? <span class="php-keyword1">NULL</span> : <span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>];
-</span><span id="350" class="l"><a href="#350">350: </a>        
-</span><span id="351" class="l"><a href="#351">351: </a>        <span class="php-var">$this</span>-&gt;set(am(<span class="php-keyword1">array</span>(<span class="php-quote">'title_for_layout'</span>  =&gt; <span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'title'</span>]), <span class="php-keyword2">compact</span>(<span class="php-quote">'image_src'</span>, <span class="php-quote">'post'</span>)));
-</span><span id="352" class="l"><a href="#352">352: </a>    }
-</span><span id="353" class="l"><a href="#353">353: </a>}</span></code></pre>
+</span><span id="349" class="l"><a href="#349">349: </a>            Cache::write(<span class="php-var">$cache</span>, <span class="php-var">$post</span>, <span class="php-quote">'posts'</span>);           
+</span><span id="350" class="l"><a href="#350">350: </a>        }
+</span><span id="351" class="l"><a href="#351">351: </a>        
+</span><span id="352" class="l"><a href="#352">352: </a>        <span class="php-var">$image_src</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>]) ? <span class="php-keyword1">NULL</span> : <span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'preview'</span>];
+</span><span id="353" class="l"><a href="#353">353: </a>        
+</span><span id="354" class="l"><a href="#354">354: </a>        <span class="php-var">$this</span>-&gt;set(am(<span class="php-keyword1">array</span>(<span class="php-quote">'title_for_layout'</span>  =&gt; <span class="php-var">$post</span>[<span class="php-num">0</span>][<span class="php-quote">'Post'</span>][<span class="php-quote">'title'</span>]), <span class="php-keyword2">compact</span>(<span class="php-quote">'image_src'</span>, <span class="php-quote">'post'</span>)));
+</span><span id="355" class="l"><a href="#355">355: </a>    }
+</span><span id="356" class="l"><a href="#356">356: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -484,6 +487,6 @@
 </div>
 </div>
 <script src="resources/combined.js?44e93de8fc3b749f55d0fae2da59a38c45b15f0b"></script>
-<script src="elementlist.js?4a4d2bcf60e3b16d7212bce5176afa613a4b0820"></script>
+<script src="elementlist.js?7d7762ccd4f42b8b5a7fbfc9a17e3e0635a9d4e4"></script>
 </body>
 </html>
