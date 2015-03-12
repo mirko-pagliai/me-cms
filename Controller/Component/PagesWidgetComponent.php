@@ -1,6 +1,6 @@
 <?php
 /**
- * Categories widget.
+ * PagesWidgetComponent
  *
  * This file is part of MeCms.
  *
@@ -21,28 +21,33 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Elements\widgets
+ * @package		MeCms\Controller\Component
  */
-?>
 
-<?php
-	//Returns on posts categories index
-	if($params['controller'] == 'posts_categories' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
-		return;
-?>
+App::uses('Component', 'Controller');
 
-<?php if(!empty($widgetsData['MeCms.categories'])): ?>
-	<div class="widget sidebar-widget">
-		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Categories'));
-			echo $this->Form->create(FALSE, array('type' => 'get', 'url' => array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms')));
-			echo $this->Form->input('category', array(
-				'empty'		=> __d('me_cms', 'Select a category'),
-				'label'		=> FALSE,
-				'onchange'	=> 'send_form(this)',
-				'options'	=> $widgetsData['MeCms.categories']
-			));
-			echo $this->Form->end();
-		?>
-	</div>
-<?php endif; ?>
+/**
+ * Pages widgets
+ */
+class PagesWidgetComponent extends Component {	
+	/**
+	 * Pages list widget
+	 * @return array Pages list
+	 */
+	public function pages() {
+		//Tries to get data from the cache
+		$pages = Cache::read($cache = 'widget_list', 'pages');
+		
+		//If the data are not available from the cache
+        if(empty($pages)) {
+			//Loads the `Page` model
+			$this->Page = ClassRegistry::init('MeCms.Page');
+			
+            $pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
+			
+            Cache::write($cache, $pages, 'pages');
+        }
+		
+		return $pages;
+	}
+}

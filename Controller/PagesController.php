@@ -217,29 +217,4 @@ class PagesController extends MeCmsAppController {
 		
 		$this->set(am(array('title_for_layout' => $page['Page']['title']), compact('page')));
 	}
-	
-	/**
-	 * Gets the pages list for widget.
-	 * This method works only with `requestAction()`.
-	 * @return array Pages list
-	 * @throws ForbiddenException
-	 * @uses MeToolsAppController::isRequestAction()
-	 */
-	public function widget_list() {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$pages = Cache::read($cache = 'widget_list', 'pages');
-		
-		//If the data are not available from the cache
-        if(empty($pages)) {
-            $pages = $this->Page->find('active', array('fields' => array('title', 'slug')));
-			
-            Cache::write($cache, $pages, 'pages');
-        }
-		
-		return $pages;
-	}
 }

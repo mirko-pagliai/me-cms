@@ -40,23 +40,22 @@
 	//Returns on photo view
 	if($params['controller'] == 'photos' && $params['action'] == 'view' && $params['plugin'] == 'me_cms')
 		return;
-		
-	//Gets a random photo
-	$photos = $this->requestAction(array('controller' => 'photos', 'action' => 'widget_random', 'plugin' => 'me_cms', $limit = empty($options['limit']) ? 1 : $options['limit']));
 ?>
 
-<?php if(!empty($photos)): ?>
+<?php if(!empty($widgetsData['MeCms.random_photo'])): ?>
 	<div class="widget sidebar-widget">
 		<?php
-			if($limit > 1)
-				echo $this->Html->h4(__d('me_cms', 'Random %d photos', $limit));
+			if(($count = count($widgetsData['MeCms.random_photo'])) > 1)
+				echo $this->Html->h4(__d('me_cms', 'Random %d photos', $count));
 			else
-				echo $this->Html->h4(__d('me_cms', 'Random photo', $limit));
+				echo $this->Html->h4(__d('me_cms', 'Random photo', $count));
 			
-			foreach($photos as $photo) {
-				$thumb = $this->Html->thumb($photo['Photo']['path'], array('side' => 263));
-				echo $this->Html->link($thumb, array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'), array('class' => 'thumbnail'));
-			}
+			foreach($widgetsData['MeCms.random_photo'] as $photo)
+				echo $this->Html->link(
+					$this->Html->thumb($photo['Photo']['path'], array('side' => 263)), 
+					array('controller' => 'photos_albums', 'action' => 'index', 'plugin' => 'me_cms'),
+					array('class' => 'thumbnail')
+				);
 		?>
 	</div>
 <?php endif; ?>

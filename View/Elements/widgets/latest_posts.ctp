@@ -33,19 +33,16 @@
 	if($params['controller'] == 'posts' && $params['action'] == 'index' && $params['plugin'] == 'me_cms'
 		&& !empty($params['paging']['Post']['page']) && $params['paging']['Post']['page'] == 1)
 		return;
-	
-	//Gets the list of latest posts
-	$posts = $this->requestAction(array('controller' => 'posts', 'action' => 'widget_latest', 'plugin' => 'me_cms', $limit = empty($options['limit']) ? 10 : $options['limit']));
 ?>
 
-<?php if(!empty($posts)): ?>
+<?php if(!empty($widgetsData['MeCms.latest_posts'])): ?>
 	<div class="widget sidebar-widget">
 		<?php
-			if($limit > 1) {
-				echo $this->Html->h4(__d('me_cms', 'Latest %d posts', $limit));
+			if(($count = count($widgetsData['MeCms.latest_posts'])) > 1) {
+				echo $this->Html->h4(__d('me_cms', 'Latest %d posts', $count));
 				
 				$list = array();
-				foreach($posts as $post)
+				foreach($widgetsData['MeCms.latest_posts'] as $post)
 					$list[] = $this->Html->link($post['Post']['title'],
 						array('controller' => 'posts', 'action' => 'view', 'plugin' => 'me_cms', $post['Post']['slug']),
 						array('class' => 'block no-wrap')

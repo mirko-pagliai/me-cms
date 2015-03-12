@@ -350,30 +350,4 @@ class PostsController extends MeCmsAppController {
 		
 		$this->set(am(array('title_for_layout'	=> $post['Post']['title']), compact('image_src', 'post')));
 	}
-	
-	/**
-	 * Gets the latest posts for widget.
-	 * This method works only with `requestAction()`.
-	 * @param int $limit Number of latest posts
-	 * @return array List of latest posts
-	 * @throws ForbiddenException
-	 * @uses MeToolsAppController::isRequestAction()
-	 */
-	public function widget_latest($limit = 10) {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$posts = Cache::read($cache = sprintf('widget_latest_%d', $limit), 'posts');
-		
-		//If the data are not available from the cache
-        if(empty($posts)) {
-            $posts = $this->Post->find('active', am(array('fields' => array('slug', 'title')), compact('limit')));
-			
-            Cache::write($cache, $posts, 'posts');
-        }
-		
-		return $posts;
-	}
 }

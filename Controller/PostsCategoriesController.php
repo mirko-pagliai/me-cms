@@ -150,46 +150,4 @@ class PostsCategoriesController extends MeCmsAppController {
 		
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Posts categories')), compact('categories')));
 	}
-	
-	/**
-	 * Gets the categories list for widget.
-	 * This method works only with `requestAction()`.
-	 * @return array Categories list
-	 * @throws ForbiddenException
-	 * @uses MeToolsAppController::isRequestAction()
-	 */
-	public function widget_list() {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'categories_widget_list', 'posts');
-		
-		//If the data are not available from the cache
-        if(empty($categories)) {
-			//Gets the categories
-			$catsTmp = $this->PostsCategory->find('active', array('fields' => array('id', 'slug', 'post_count')));
-			
-			if(empty($catsTmp))
-				return array();
-
-			//Gets the tree list
-			$treeList = $this->PostsCategory->generateTreeList();
-			
-			$categories = array();
-			
-			foreach($catsTmp as $category) {
-				//Changes the category titles, replacing them with the titles of the tree list and adding the "post_count" value
-				$category['PostsCategory']['title'] = sprintf('%s (%s)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
-
-				//The new array has the slug as key and the title as value
-				$categories[$category['PostsCategory']['slug']] = $category['PostsCategory']['title'];
-			}
-			
-            Cache::write($cache, $categories, 'posts');
-        }
-		
-		return $categories;
-	}
 }

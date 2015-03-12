@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.3
+* improved the code for widgets. Widgets call some methods to retrieve data;
 * improved the system checkup, now it displays the directories path.
 
 ### 1.2.2

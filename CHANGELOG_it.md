@@ -1,6 +1,7 @@
 # 1.x ramo
 ## 1.2 ramo
 ### 1.2.3
+* migliorato il codice dei widget. I widget chiamano alcuni metodi per recuperare i dati;
 * migliorato il checkup del sistema, ora vengono visualizzate le path delle directory.
 
 ### 1.2.2

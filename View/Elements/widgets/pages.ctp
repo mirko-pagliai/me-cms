@@ -29,18 +29,15 @@
 	//Returns on pages index
 	if($params['controller'] == 'pages' && $params['action'] == 'index' && $params['plugin'] == 'me_cms')
 		return;
-	
-	//Gets the pages list
-	$pages = $this->requestAction(array('controller' => 'pages', 'action' => 'widget_list', 'plugin' => 'me_cms'));
 ?>
 
-<?php if(!empty($pages)): ?>
+<?php if(!empty($widgetsData['MeCms.pages'])): ?>
 	<div class="widget sidebar-widget">
 		<?php 
 			echo $this->Html->h4(__d('me_cms', 'Pages'));
 	
 			$list = array();
-			foreach($pages as $page)
+			foreach($widgetsData['MeCms.pages'] as $page)
 				$list[] = $this->Html->link($page['Page']['title'],
 					array('controller' => 'pages', 'action' => 'view', 'plugin' => 'me_cms', $page['Page']['slug']),
 					array('class' => 'block no-wrap')

@@ -101,6 +101,28 @@ class MeCmsAppController extends AppController {
         return TRUE;
 	}
 
+	/**
+	 * Executes the widgets components
+	 */
+	protected function _execWidgets() {
+		$data = array();
+		
+		foreach($this->config['frontend']['widgets'] as $widget) {
+			//Checks if the widgets map has a method for this widget
+			if(!empty($this->widgetsMap[$widget['name']])) {
+				$component = $this->widgetsMap[$widget['name']];
+				
+				//Gets the widgets options
+				$options = empty($widget['options']) ? array() : $widget['options'];
+				
+				//Loads the component
+				$this->{$component['component']} = $this->Components->load($component['class']);
+				$data[$widget['name']] = call_user_func_array(array($this->{$component['component']}, $component['method']), compact('options'));
+			}
+		}
+		
+		$this->set(array('widgetsData' => $data));
+	}
 
 	/**
 	 * Loads all the plugin helpers for creating menus.
@@ -118,7 +140,7 @@ class MeCmsAppController extends AppController {
 				$this->helpers[$helper] = array('className' => sprintf('%s.%s', $plugin, $helper));
 			}
 	}
-	
+
 	/**
 	 * Called after every controller action, and after rendering is complete.  
 	 * This is the last controller method to run.
@@ -137,6 +159,7 @@ class MeCmsAppController extends AppController {
 	 * @uses layout
 	 * @uses theme
 	 * @uses MeToolsAppController::isAdminRequest()
+	 * @uses _execWidgets()
 	 * @uses _loadMenus()
 	 * @uses isOffline()
 	 */
@@ -181,6 +204,10 @@ class MeCmsAppController extends AppController {
 			$this->redirect(array('controller' => 'systems', 'action' => 'offline', 'plugin' => 'me_cms'));
 		//Else, if this is not an admin request and the site is online
 		else {
+			//Executes the widgets components
+			if(!$this->isRequestAction())
+				$this->_execWidgets();
+			
 			//Loads the `WidgetHelper`
 			$this->helpers['Widget'] = array('className' => 'MeCms.Widget');
 			

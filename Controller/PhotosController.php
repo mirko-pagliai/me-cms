@@ -215,24 +215,4 @@ class PhotosController extends MeCmsAppController {
 		
 		$this->set(am(array('title_for_layout' => __d('me_cms', 'Photo')), compact('photo')));
 	}
-	
-	/**
-	 * Gets a random photo for widget.
-	 * This method works only with `requestAction()`.
-	 * @param int $limit Number of random photos
-	 * @return array Photo
-	 * @throws ForbiddenException
-	 * @uses MeToolsAppController::isRequestAction()
-	 */
-	public function widget_random($limit = 1) {
-		//This method works only with "requestAction()"
-		if(!$this->isRequestAction())
-            throw new ForbiddenException();
-		
-		return $this->Photo->find('random', am(array(
-			'conditions'	=> array('Album.active' => TRUE),
-			'contain'		=> 'Album',
-			'fields'		=> array('album_id', 'filename')
-		), compact('limit')));
-	}
 }
