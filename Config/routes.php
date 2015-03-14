@@ -24,10 +24,6 @@
  * @package		MeCms\Config
  */
 
-//Home page
-Router::connect('/',			array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
-Router::connect('/admin',	array('controller' => 'posts', 'action'	=> 'index', 'plugin' => 'me_cms', 'admin' => TRUE));
-
 //Banner controller
 Router::connect('/banner/*', array('controller' => 'banners', 'action' => 'open', 'plugin' => 'me_cms'));
 
@@ -67,6 +63,10 @@ Router::connect('/offline',			array('controller' => 'systems', 'action' => 'offl
 //Login and logout
 Router::connect('/login',	array('controller' => 'users', 'action' => 'login',		'plugin' => 'me_cms'));
 Router::connect('/logout',	array('controller' => 'users', 'action' => 'logout',	'plugin' => 'me_cms'));
+
+//Home page
+Router::connect('/',			array('controller' => 'posts', 'action' => 'index', 'plugin' => 'me_cms'));
+Router::connect('/admin',	array('controller' => 'posts', 'action'	=> 'index', 'plugin' => 'me_cms', 'admin' => TRUE));
 
 //Each "admin" request will be directed to the plugin
 $controllers = array('banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts', 'profiles', 'systems', 'users', 'users_groups');
