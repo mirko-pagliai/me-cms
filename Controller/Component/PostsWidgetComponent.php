@@ -56,7 +56,7 @@ class PostsWidgetComponent extends Component {
 			
 			foreach($categoriesTmp as $category) {
 				//Changes the title, replacing it with the titles of the tree list and adding the "post_count" value
-				$category['PostsCategory']['title'] = sprintf('%s (%s)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
+				$category['PostsCategory']['title'] = sprintf('%s (%d)', $treeList[$category['PostsCategory']['id']], $category['PostsCategory']['post_count']);
 
 				//The new array has the slug as key and the title as value
 				$categories[$category['PostsCategory']['slug']] = $category['PostsCategory']['title'];
