@@ -160,6 +160,10 @@ class PhotosAlbumsController extends MeCmsAppController {
 	 * @throws NotFoundException
 	 */
 	public function view($slug = NULL) {
+		//The slug can be passed as query string, from a widget
+		if(!empty($this->request->query['q']))
+			$slug = $this->request->query['q'];
+		
 		//Tries to get data from the cache
 		$album = Cache::read($cache = sprintf('albums_view_%s', $slug), 'photos');
 		

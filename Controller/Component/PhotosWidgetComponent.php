@@ -31,6 +31,31 @@ App::uses('Component', 'Controller');
  */
 class PhotosWidgetComponent extends Component {
 	/**
+	 * Albums widgets
+	 * @return array Albums
+	 */
+	public function albums() {
+		//Tries to get data from the cache
+		$albums = Cache::read($cache = 'widget_albums', 'photos');
+		
+		//If the data are not available from the cache
+        if(empty($albums)) {
+			//Loads the `PhotosAlbums` model
+			$this->PhotosAlbum = ClassRegistry::init('MeCms.PhotosAlbum');
+						
+			$albums = array();
+			
+			//Changes the title, adding the "photo_count" value
+			foreach($this->PhotosAlbum->find('active', array('fields' => array('title', 'slug', 'photo_count'))) as $album)
+				$albums[$album['PhotosAlbum']['slug']] = sprintf('%s (%d)', $album['PhotosAlbum']['title'], $album['PhotosAlbum']['photo_count']);
+						
+            Cache::write($cache, $albums, 'photos');
+		}
+		
+		return $albums;
+	}
+	
+	/**
 	 * Random photo widget
 	 * @return array Photos
 	 */

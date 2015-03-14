@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.3
+* added the "albums" widget;
 * improved the code for widgets. Widgets call some methods to retrieve data;
 * improved the system checkup, now it displays the directories path.
 
