@@ -1,6 +1,6 @@
 <?php
 /**
- * Categories widget.
+ * Posts categories widget.
  *
  * This file is part of MeCms.
  *
@@ -31,7 +31,7 @@
 		return;
 ?>
 
-<?php if(!empty($widgetsData['MeCms.categories'])): ?>
+<?php if(!empty($widgetsData['MeCms.posts_categories'])): ?>
 	<div class="widget sidebar-widget">
 		<?php 
 			echo $this->Html->h4(__d('me_cms', 'Categories'));
@@ -40,7 +40,7 @@
 				'empty'		=> __d('me_cms', 'Select a category'),
 				'label'		=> FALSE,
 				'onchange'	=> 'send_form(this)',
-				'options'	=> $widgetsData['MeCms.categories']
+				'options'	=> $widgetsData['MeCms.posts_categories']
 			));
 			echo $this->Form->end();
 		?>
