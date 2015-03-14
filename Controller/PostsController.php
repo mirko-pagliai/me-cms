@@ -209,11 +209,12 @@ class PostsController extends MeCmsAppController {
 		//Sets the initial conditions query
 		$conditions = array();
 		
+		//The category can be passed as query string, from a widget
+		if(!empty($this->request->query['q']))
+			$category = $this->request->query['q'];
+		
 		//Checks if has been specified a category
-		if(!empty($category) || !empty($this->request->query['category'])) {
-			//The category can also be passed as query
-			$category = empty($category) ? $this->request->query['category'] : $category;
-			
+		if(!empty($category)) {
 			//Adds the category to the conditions, if it has been specified
 			$conditions['Category.slug'] = $category;
 			
@@ -223,7 +224,7 @@ class PostsController extends MeCmsAppController {
 		
 		//Updates the cache name with the number of the page
 		$cache = sprintf('%s_page_%s', $cache, empty($this->request->named['page']) ? '1' : $this->request->named['page']);
-						
+				
 		//Tries to get data from the cache
 		$posts = Cache::read($cache, 'posts');
 		$paging = Cache::read(sprintf('%s_paging', $cache), 'posts');
