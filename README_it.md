@@ -147,5 +147,5 @@ ultime linee e modificando la posizione di KCFinder:
 MeCms utilizza le librerie e gli script inclusi con [MeTools](//github.com/mirko-pagliai/MeTools#libraries-and-script).  
 Oltre questi, MeCms include:
 
-- jQuery cookie ([sito](http://github.com/carhartl/jquery-cookie));
-- Roboto font ([sito](http://google.com/fonts#UsePlace:use/Collection:Roboto)).
+- jQuery cookie 1.4.1 ([sito](http://github.com/carhartl/jquery-cookie));
+- font Roboto ([sito](http://google.com/fonts#UsePlace:use/Collection:Roboto)).
