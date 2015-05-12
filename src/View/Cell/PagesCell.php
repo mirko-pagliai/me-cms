@@ -56,7 +56,6 @@ class PagesCell extends Cell {
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
 			->cache(sprintf('widget_list'), 'pages')
-			->toArray()
 		);
 	}
 }

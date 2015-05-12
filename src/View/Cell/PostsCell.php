@@ -85,7 +85,6 @@ class PostsCell extends Cell {
 			->limit($limit = empty($limit) ? 10 : $limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), 'posts')
-			->toArray()
 		);
     }
 	
