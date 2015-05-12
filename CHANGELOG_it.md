@@ -1,3 +1,14 @@
+# 2.x ramo
+## 2.0 ramo
+### 2.0.0-alpha
+* tutto il codice è stato interamente riscritto per CakePHP 3.x. Sono state applicate svariate ottimizzazioni;
+* il caricamento/aggiunta di file (ad esempio, banner e foto) è stato fortemente semplificato e ottimizzato;
+* l'applicazione può ora riscrivere la configurazione della cache;
+* il sistema e la configurazione dei widget sono stati semplificati;
+* il plugin accede più facilmente alla configurazione;
+* ogni layout dispone di una copia ottimizzata di Bootstrap;
+* il backend fa un uso maggiore delle cache.
+
 # 1.x ramo
 ## 1.2 ramo
 ### 1.2.3

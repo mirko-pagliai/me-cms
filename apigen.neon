@@ -1,8 +1,8 @@
 accessLevels: [public, protected, private]
 destination: API
 download: false
-exclude: {*.old, *.old.*}
-source: {Console, Controller, Model, Utility, View}
+exclude: {*_old, *.old, *.old.*} 
+source: {src/Controller, src/Model, src/Form, src/Network, src/Template, src/Utility, src/View}
 main: MeCms
 php: false
 title: MeCms API

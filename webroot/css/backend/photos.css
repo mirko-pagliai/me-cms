@@ -12,77 +12,58 @@
 .photo-box {
 	background: #e8e8e8;
     margin-bottom: 10px;
-	max-width: 400px;
+	/*max-width: 400px;*/
     padding: 10px;
 }
 
 /* Photo box, title */
-.photo-box .title {
+.photo-box .photo-title {
 	background: #fff;
-    font-family: Arial,sans-serif;
-    font-size: 12px;
-	font-weight: bold;
-	margin: 0;
-	padding: 6px;
+    font-size: 13px;
+    font-weight: bold;
+	margin-bottom: 5px;
+	padding: 4px;
 	text-align: center;
-	/* Text truncated */
+	/* No wrap, text truncated with ellipses */
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-/* Photo box, thumbnail */
-.photo-box img.thumb {
-	margin: 0 auto;
-	max-width: 100%;
+/* Photo box, images wrapper */
+.photo-box .photo-image {
+	background: #fff;
 }
 
-/* -------------------------------- */
-/*		Photo boxes on indexes		*/
-/* -------------------------------- */
+/* Photo box, images wrapper, thumb */
+.photo-box .photo-image .thumb {
+	margin: 0 auto;
+}
+
 /* Photo box, actions */
-.index .photo-box .actions {
+.photo-box .actions {
     background: #fff;
-	margin: 0;
-	padding: 6px !important;
+	margin: 5px 0 0;
+	padding: 6px;
     text-align: center;
 }
 
 /* Photo box, actions, element list */
-.index .photo-box .actions li {
+.photo-box .actions li {
     border-right: 1px solid #bbb;
     display: inline-block;
+	margin-right: 6px;
     padding-right: 6px;
 }
 
 /* Photo box, actions, last element list */
-.index .photo-box .actions li:last-child {
+.photo-box .actions li:last-child {
 	border: 0;
+	margin: 0;
 	padding: 0;
 }
 
-/* Photo box, actions, links */
-.index .photo-box .actions a {
+/* Photo box, actions, link */
+.photo-box .actions a {
     text-decoration: none;
-}
-
-/* -------------------------------- */
-/*		Photo boxes on forms		*/
-/* -------------------------------- */
-/* Photo box, title, label */
-form .photo-box .title label {
-	display: block;
-	/* Text truncated */
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-/* Photo box, title, label, checkbox icon */
-form .photo-box .title label:before {
-	font-size: 14px;
-}
-
-/* Photo box, input div (except for "title") */
-form .photo-box div.input:not(.title) {
-	margin: 5px 0 0;
 }

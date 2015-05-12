@@ -1,0 +1,102 @@
+/*!
+ * This file is part of MeTools.
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ */
+
+/* -------------------------------- */
+/*				Fonts				*/
+/* -------------------------------- */
+/* "Roboto" font */
+@font-face {
+    font-family: 'Roboto';
+    src: url(../../fonts/Roboto-Regular.ttf);
+}
+
+/* -------------------------------- */
+/*				HTML				*/
+/* -------------------------------- */
+/* Body */
+body {
+	background: #e2e2e2;
+	font-family: Roboto, sans-serif;
+	padding: 60px 0 40px;
+}
+
+/* -------------------------------- */
+/*				Content				*/
+/* -------------------------------- */
+/* Content */
+#content {
+	background: #fff;
+	border-radius: 8px;
+    box-shadow: 0 3px 6px -6px #000;
+	font-size: 16px;
+    margin: auto;
+	overflow: hidden;
+    padding: 20px;
+	width: 450px;
+}
+
+/* Content, logo */
+#content > #logo {
+	margin: auto auto 20px;
+}
+
+/* Content, title */
+#content > div > h2 {
+    background: rgba(51, 122, 183, .8);
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 0 1px;
+    box-shadow: 0 2px 2px 0 #aaa;
+    color: #fff;
+    font-size: 24px;
+    margin: 10px -20px 20px;
+    padding: 12px 20px 14px;
+    text-align: center;
+}
+
+#content > div > .actions {
+    font-size: 90%;
+    list-style: none;
+    padding-left: 10px;
+}
+
+/* -------------------------------- */
+/*				Alerts				*/
+/* -------------------------------- */
+/* Alert */
+#content .alert {
+    border: 0;
+    border-radius: 0;
+    font-size: 90%;
+    margin: 0 -10px 10px;
+    padding: 12px 8px;
+}
+
+/* Alert, close button */
+#content .alert button.close {
+	display: none;
+}
+
+/* -------------------------------- */
+/*				Forms				*/
+/* -------------------------------- */
+form .error-message {
+	font-size: 80%;
+    padding: 4px 6px;
+}
+
+/* Form, input div */
+form .form-group {
+    margin-bottom: 10px;
+}
+
+/* Form, input div, input */
+form .form-group input {
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}

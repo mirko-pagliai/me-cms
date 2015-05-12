@@ -1,5 +1,5 @@
 /*!
- * This file is part of MeCms.
+ * This file is part of MeTools.
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
@@ -20,27 +20,22 @@
 /* Body */
 body {
     font-family: Roboto,sans-serif;
+	padding-bottom: 60px;
 }
 
 /* -------------------------------- */
 /*				Header				*/
 /* -------------------------------- */
-/* Header */
-#header {
+/* Header element */
+header {
 	background: #f9f9f9;
     box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .3);
-	margin-bottom: 35px;
-}
-
-/* Header, container */
-#header > .container {
-	padding-bottom: 30px;
-    padding-top: 30px;
 }
 
 /* Site logo */
 #logo {
     display: inline-block;
+	max-width: 100%;
     text-decoration: none;
 }
 
@@ -48,8 +43,7 @@ body {
 #logo h1 {
     color: #555;
     font-size: 50px;
-    margin: 40px 0 30px;
-    padding: 0 15px;
+    padding: 70px 10px 60px;
 }
 
 /* Logo (as text) on hover */
@@ -57,11 +51,27 @@ body {
 	color: #333;
 }
 
+/* Logo (as image) */
+#logo img {
+	padding: 40px 0;
+}
+
 /* Topbar */
 #topbar {
     background: #eee;
     border: 0;
 	border-radius: 0;
+}
+
+/* Topbar, links */
+#topbar .navbar-collapse a {
+	font-weight: bold;
+}
+
+/* Topbar, links on hover */
+#topbar .navbar-collapse a:hover {
+	background: #d1d1d1;
+	color: #444;
 }
 
 /* Navbar NOT collapsed */
@@ -74,18 +84,24 @@ body {
 	/* Topbar, links */
 	#topbar .navbar-collapse a {
 		font-size: 16px;
-		font-weight: bold;
 		/* Transition for "background" and "color" proprieties */
 		transition: background .25s ease-in-out, color .25s ease-in-out;
 		-moz-transition: background .25s ease-in-out, color .25s ease-in-out;
 		-webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
 	}
+}
 
-	/* Topbar, links on hover */
-	#topbar .navbar-collapse a:hover {
-		background: #d1d1d1;
-		color: #444;
-	}
+/* -------------------------------- */
+/*				Content				*/
+/* -------------------------------- */
+/* Content, index and view actions, title */
+#content .index > h2,
+#content .view > h2 {
+	border-left: 4px solid #777;
+	color: #555;
+	font-size: 24px;    
+	margin: 0 0 10px;
+    padding: 5px 0 8px 10px;
 }
 
 /* -------------------------------- */
@@ -96,73 +112,21 @@ body {
 	margin-bottom: 20px;
 }
 
-/* -------------------------------- */
-/*				Banners				*/
-/* -------------------------------- */
-/* Right banner */
-.banner.banner-right {
-	margin-bottom: 20px;
-    text-align: center;
-}
-
-/* -------------------------------- */
-/*				Content				*/
-/* -------------------------------- */
-/* Content, index and view actions, title */
-#content .index > h2,
-#content .view > h2 {
-	border-left: 4px solid #777;
-	font-size: 24px;    
-	margin: 0 0 10px;
-    padding: 5px 0 8px 10px;
-}
-
-/* -------------------------------- */
-/*				Pagination			*/
-/* -------------------------------- */
-/* Navbar collapsed */
-@media (max-width: 767px) {
-	.pagination {
-		background: #f2f2f2;
-		border-radius: 0;
-		display: block;
-		margin: 20px -15px;
-		padding: 0 10px;
-	}
-
-	.pagination > li {
-		display: inline-block;
-	}
-
-	.pagination > li > a, .pagination > li > span {
-		background: transparent;
-		border: 0;
-		border-radius: 0 !important;
-		display: block;
-		float: none;
-		padding: 12px;
-	}
-
-	.pagination > li > a > .fa {
-		padding: 0 8px;
-	}
-
-	.pagination > li > a:hover, .pagination > li > a:focus {
-		background: #ddd;
-	}
-
-	.pagination > li > span:hover, .pagination > li > span:focus {
-		background: inherit;
-	}
+/* Widget, list, element list, link */
+.widget.sidebar-widget > ul li a {
+	display: block;
+	/* No wrap, text truncated with ellipses */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* -------------------------------- */
 /*				Footer				*/
 /* -------------------------------- */
-/* Footer */
-#footer {
+/* Footer element */
+footer {
     background: #f2f2f2;
-    border-radius: 10px;
     color: #888;
 	margin-top: 20px;
     padding: 10px;
@@ -170,14 +134,19 @@ body {
 }
 
 /* Footer, links */
-#footer a {
+footer a {
 	border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
 }
 
+/* Footer, links on hover */
+footer a:hover {
+    text-decoration: none;
+}
+
 /* Footer, paragraphs */
-#footer p {
+footer p {
     font-family: Arial,sans-serif;
     font-size: 12px;
     margin: 0;

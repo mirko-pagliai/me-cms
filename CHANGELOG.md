@@ -1,3 +1,14 @@
+# 2.x branch
+## 2.0 branch
+### 2.0.0-alpha
+* all the code has been completely rewritten for CakePHP 3.x. Several optimizations have been applied;
+* uploading/adding files (for example, banners and photos) is much simplified and is optimized;
+* the application can now rewrite the cache configuration;
+* engine and configuration for widgets have been simplified;
+* the plugin accesses easier configuration;
+* every layout has an optimized copy of Bootstrap;
+* the backend makes greater use of cache.
+
 # 1.x branch
 ## 1.2 branch
 ### 1.2.3

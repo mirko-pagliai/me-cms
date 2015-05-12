@@ -6,25 +6,23 @@
  */
 
 /* -------------------------------- */
-/*				Uploader			*/
+/*			Uploader form			*/
 /* -------------------------------- */
-/* Uploader, upload area and upload info */
+/* Upload area and upload info */
 #uploader .upload-area, 
 #uploader .upload-info {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
-/* Uploader, upload area */
+/* Upload area */
 #uploader .upload-area {
     background-color: #eee;
     font-size: 20px;
-    margin-left: auto;
-	margin-right: auto;
 	padding: 20px;
     text-align: center;
 }
 
-/* Uploader, upload area, icon */
+/* Upload area, icon */
 #uploader .upload-area .fa {
     font-size: 50px;
     margin-top: 20px;
@@ -35,4 +33,35 @@
 #uploader .progress,
 #uploader .upload-error {
 	display: none;
+}
+
+/* -------------------------------- */
+/*			Uploader response		*/
+/* -------------------------------- */
+/* Result, wrappers */
+#uploader .upload-result > div {
+	height: 120px;
+	margin-bottom: 10px;
+}
+
+/* Result, wrappers */
+#uploader .upload-result > div > div {
+	height: 100%;
+	overflow: hidden;
+	padding: 10px 0;	
+}
+
+/* Result, thumb */
+#uploader .upload-result img.thumb {
+	margin: auto;
+	opacity: .8;
+}
+
+/* Result, paragraphs */
+#uploader p {
+	margin: 0;
+	/* No wrap, text truncated with ellipses */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

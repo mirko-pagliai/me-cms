@@ -59,16 +59,14 @@ $(function() {
 	//Sets the height for the KCFinder iframe
 	setKcfinderHeight();
 	
-	//Adds the "data-parent" attribute to the collapsed sidebar
+	//Adds the "data-parent" attribute to all links of the sidebar
 	$('#sidebar a').attr('data-parent', '#sidebar');
 	
 	//Gets the sidebar position
 	var sidebarPosition = $('#sidebar').position();
 	
 	//Sidebar affix
-	$('#sidebar').affix({
-		offset: { top: sidebarPosition.top }
-	})
+	$('#sidebar').affix({ offset: { top: sidebarPosition.top }});
 	
 	//Checks if there is the cookie of the last open menu
 	if($.cookie('sidebar-lastmenu')) {
