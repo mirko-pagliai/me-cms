@@ -47,8 +47,8 @@
 		<div id="content" class="container">
 			<?php
 				//Check if the logo image exists
-				if(is_readable(WWW_ROOT.($logo = 'img'.DS.config('frontend.logo'))))
-					echo $this->Thumb->img($logo, array('id' => 'logo', 'width' => 400));
+				if(is_readable(WWW_ROOT.'img'.DS.config('frontend.logo')))
+					echo $this->Html->img(config('frontend.logo'), ['id' => 'logo']);
 				
 				echo $this->Flash->render();
 				echo $this->Flash->render('auth');
