@@ -84,6 +84,7 @@ class PhotosCell extends Cell {
 			->select(['album_id', 'filename'])
 			->limit($limit = empty($limit) ? 1 : $limit)
 			->order('rand()')
+			->toArray()
 		);
 	}
 }
