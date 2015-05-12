@@ -46,4 +46,5 @@
 	</fieldset>
 	<?= $this->Form->submit(__d('me_cms', 'Resend activation email'), ['class' => 'btn-block btn-lg btn-primary']) ?>
 	<?= $this->Form->end() ?>
+	<?= $this->element('login/menu'); ?>
 </div>
