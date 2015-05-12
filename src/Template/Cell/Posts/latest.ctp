@@ -28,7 +28,7 @@
 		return;
 ?>
 
-<?php if(!empty($posts)): ?>
+<?php if($posts->count()): ?>
 	<div class="widget sidebar-widget">
 		<?php
 			echo $this->Html->h4($posts->count() > 1 ? __d('me_cms', 'Latest {0} posts', $posts->count()) : __d('me_cms', 'Latest post'));

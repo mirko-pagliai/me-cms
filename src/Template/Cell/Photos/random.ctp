@@ -28,7 +28,7 @@
 		return;
 ?>
 
-<?php if(!empty($photos)): ?>
+<?php if($photos->count()): ?>
 	<div class="widget sidebar-widget">
 		<?php			
 			echo $this->Html->h4($photos->count() > 1 ? __d('me_cms', 'Random {0} photos', $photos->count()) : __d('me_cms', 'Random photo'));
