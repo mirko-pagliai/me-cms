@@ -28,10 +28,10 @@
 		return;
 ?>
 
-<?php if($photos->count()): ?>
+<?php if(!empty($photos)): ?>
 	<div class="widget sidebar-widget">
 		<?php			
-			echo $this->Html->h4($photos->count() > 1 ? __d('me_cms', 'Random {0} photos', $photos->count()) : __d('me_cms', 'Random photo'));
+			echo $this->Html->h4(count($photos) > 1 ? __d('me_cms', 'Random {0} photos', count($photos)) : __d('me_cms', 'Random photo'));
 			
 			foreach($photos as $photo)
 				echo $this->Html->link(

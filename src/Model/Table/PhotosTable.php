@@ -78,10 +78,7 @@ class PhotosTable extends AppTable {
 	 */
 	public function findActive(Query $query, array $options) {
 		$query->matching('Albums', function ($q) {
-			return $q->where([
-				'active'		=> TRUE,
-				'photo_count >'	=> 0
-			]);
+			return $q->where(['active' => TRUE]);
 		});
 		
         return $query;
