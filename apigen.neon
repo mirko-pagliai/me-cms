@@ -1,0 +1,9 @@
+accessLevels: [public, protected, private]
+destination: API
+download: false
+exclude: {*.old, *.old.*}
+source: {Console, Controller, Model, Utility, View}
+main: MeCms
+php: false
+title: MeCms API
+todo: true

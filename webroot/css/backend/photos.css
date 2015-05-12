@@ -1,0 +1,88 @@
+/*!
+ * This file is part of MeCms.
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ */
+
+/* -------------------------------- */
+/*			Photo boxes				*/
+/* -------------------------------- */
+/* Photo box */
+.photo-box {
+	background: #e8e8e8;
+    margin-bottom: 10px;
+	max-width: 400px;
+    padding: 10px;
+}
+
+/* Photo box, title */
+.photo-box .title {
+	background: #fff;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+	font-weight: bold;
+	margin: 0;
+	padding: 6px;
+	text-align: center;
+	/* Text truncated */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Photo box, thumbnail */
+.photo-box img.thumb {
+	margin: 0 auto;
+	max-width: 100%;
+}
+
+/* -------------------------------- */
+/*		Photo boxes on indexes		*/
+/* -------------------------------- */
+/* Photo box, actions */
+.index .photo-box .actions {
+    background: #fff;
+	margin: 0;
+	padding: 6px !important;
+    text-align: center;
+}
+
+/* Photo box, actions, element list */
+.index .photo-box .actions li {
+    border-right: 1px solid #bbb;
+    display: inline-block;
+    padding-right: 6px;
+}
+
+/* Photo box, actions, last element list */
+.index .photo-box .actions li:last-child {
+	border: 0;
+	padding: 0;
+}
+
+/* Photo box, actions, links */
+.index .photo-box .actions a {
+    text-decoration: none;
+}
+
+/* -------------------------------- */
+/*		Photo boxes on forms		*/
+/* -------------------------------- */
+/* Photo box, title, label */
+form .photo-box .title label {
+	display: block;
+	/* Text truncated */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* Photo box, title, label, checkbox icon */
+form .photo-box .title label:before {
+	font-size: 14px;
+}
+
+/* Photo box, input div (except for "title") */
+form .photo-box div.input:not(.title) {
+	margin: 5px 0 0;
+}

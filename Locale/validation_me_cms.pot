@@ -1,0 +1,144 @@
+# LANGUAGE translation of MeCms
+# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field id;validation for field filename
+#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field id
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field id
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field id;validation for field filename
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field id
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field id
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field id
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field id;validation for field username
+#: /home/mirko/Server/MeCms_Plugin/Model/UsersGroup.php:validation for field id;validation for field name
+msgid "Can not be changed"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field position_id;validation for field active
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field priority;validation for field active
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field active
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field priority;validation for field active
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field parent_id
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field group_id;validation for field active;validation for field banned
+msgid "You have to select a valid option"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field filename
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename
+msgid "This extension is invalid"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field filename
+#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field name
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username;validation for field email
+#: /home/mirko/Server/MeCms_Plugin/Model/UsersGroup.php:validation for field name;validation for field label
+msgid "This value is already used"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field filename;validation for field target;validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field subtitle
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename;validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field subtitle
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field description
+#: /home/mirko/Server/MeCms_Plugin/Model/UsersGroup.php:validation for field description
+msgid "Must be at most %d chars"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Banner.php:validation for field target
+msgid "Must be a valid url"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field name
+#: /home/mirko/Server/MeCms_Plugin/Model/Contact.php:validation for field email;validation for field first_name;validation for field last_name;validation for field message
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field title;validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username;validation for field email;validation for field first_name;validation for field last_name
+#: /home/mirko/Server/MeCms_Plugin/Model/UsersGroup.php:validation for field name;validation for field label
+msgid "Must be between %d and %d chars"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/BannersPosition.php:validation for field name
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/PhotosAlbum.php:validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/PostsCategory.php:validation for field slug
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username
+msgid "Allowed chars: lowercase letters, numbers, dash"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Contact.php:validation for field email
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email
+msgid "You have to enter a valid value"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Contact.php:validation for field first_name;validation for field last_name
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field first_name;validation for field last_name
+msgid "Allowed chars: letters, apostrophe, space"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field text
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field text
+msgid "This field can not be empty"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Page.php:validation for field created;validation for field modified
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field created;validation for field modified
+msgid "Must be a valid datetime"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field album_id
+#: /home/mirko/Server/MeCms_Plugin/Model/Post.php:validation for field category_id;validation for field user_id
+msgid "You have to select an option"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/Photo.php:validation for field filename
+msgid "A photo with this name already exists"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field username
+msgid "This value is reserved"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field email_repeat
+msgid "Emails don't match"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field password
+msgid "Must be at least %d characters"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field password
+msgid "The password should contain letters, numbers and symbols"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field password_repeat
+msgid "Passwords don't match"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field old_password
+msgid "The old password is wrong"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/Model/User.php:validation for field created;validation for field modified
+msgid "Must be a valid date"
+msgstr ""
+

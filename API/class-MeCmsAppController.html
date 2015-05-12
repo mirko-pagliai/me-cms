@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class MeCmsAppController | MeCms API</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Packages</h3>
+			<ul>
+				<li class="main">
+					<a href="package-MeCms.html">
+						MeCms<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Console.html">
+						Console<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Console.Command.html">
+						Command					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="package-MeCms.Controller.html">
+						Controller<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Controller.Component.html">
+						Component					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="package-MeCms.Model.html">
+						Model					</a>
+
+						</li>
+				<li class="main">
+					<a href="package-MeCms.Utility.html">
+						Utility					</a>
+
+						</li>
+				<li class="main">
+					<a href="package-MeCms.View.html">
+						View<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.View.Helper.html">
+						Helper					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-ConfigComponent.html">ConfigComponent</a></li>
+				<li><a href="class-EmailComponent.html">EmailComponent</a></li>
+				<li><a href="class-MeAuthComponent.html">MeAuthComponent</a></li>
+				<li class="active"><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
+				<li><a href="class-MeSecurityComponent.html">MeSecurityComponent</a></li>
+				<li><a href="class-PagesWidgetComponent.html">PagesWidgetComponent</a></li>
+				<li><a href="class-PhotosWidgetComponent.html">PhotosWidgetComponent</a></li>
+				<li><a href="class-PostsWidgetComponent.html">PostsWidgetComponent</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+<span>Package</span>			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="todo.html" title="Todo list"><span>Todo</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class MeCmsAppController</h1>
+
+
+	<div class="description">
+	<p>Application level controller.</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+AppController
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MeCmsAppController</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-BannersController.html">BannersController</a>, 
+			<a href="class-BannersPositionsController.html">BannersPositionsController</a>, 
+			<a href="class-UsersGroupsController.html">UsersGroupsController</a>, 
+			<a href="class-PagesController.html">PagesController</a>, 
+			<a href="class-PhotosAlbumsController.html">PhotosAlbumsController</a>, 
+			<a href="class-PhotosController.html">PhotosController</a>, 
+			<a href="class-PostsCategoriesController.html">PostsCategoriesController</a>, 
+			<a href="class-PostsController.html">PostsController</a>, 
+			<a href="class-ProfilesController.html">ProfilesController</a>, 
+			<a href="class-SystemsController.html">SystemsController</a>, 
+			<a href="class-UsersController.html">UsersController</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Controller.html">Controller</a>\<a href="package-MeCms.Controller.Component.html">Component</a><br>
+
+				<b>Copyright:</b>
+				Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd<br>
+				<b>License:</b>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<b>Author:</b>
+				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
+			<b>Located at</b> <a href="source-class-MeCmsAppController.html#30-282" title="Go to source code">MeCmsAppController.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="_execWidgets" id="__execWidgets">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__execWidgets">#</a>
+		<code><a href="source-class-MeCmsAppController.html#84-110" title="Go to source code">_execWidgets</a>( )</code>
+
+		<div class="description short">
+			<p>Executes the widgets components</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes the widgets components</p>
+
+
+
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_loadMenus" id="__loadMenus">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__loadMenus">#</a>
+		<code><a href="source-class-MeCmsAppController.html#112-127" title="Go to source code">_loadMenus</a>( )</code>
+
+		<div class="description short">
+			<p>Loads all the plugin helpers for creating menus.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Loads all the plugin helpers for creating menus.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#$helpers">MeCmsAppController::<var>$helpers</var></a></code><br>
+						Plugin::getAll()<br>
+						Plugin::getPath()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="afterFilter" id="_afterFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterFilter">#</a>
+		<code><a href="source-class-MeCmsAppController.html#129-135" title="Go to source code">afterFilter</a>( )</code>
+
+		<div class="description short">
+			<p>Called after every controller action, and after rendering is complete.
+This is the last controller method to run.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after every controller action, and after rendering is complete.
+This is the last controller method to run.</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeFilter" id="_beforeFilter">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeFilter">#</a>
+		<code><a href="source-class-MeCmsAppController.html#137-204" title="Go to source code">beforeFilter</a>( )</code>
+
+		<div class="description short">
+			<p>Called before the controller action.
+It's used to perform logic before each controller action.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called before the controller action.
+It's used to perform logic before each controller action.</p>
+
+
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					InternalErrorException
+				</div>
+
+				<h4>Uses</h4>
+				<div class="list">
+						action<br>
+						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
+						<code><a href="class-MeCmsAppController.html#$helpers">MeCmsAppController::<var>$helpers</var></a></code><br>
+						layout<br>
+						theme<br>
+						MeToolsAppController::isAdminRequest()<br>
+						<code><a href="class-MeCmsAppController.html#__execWidgets">MeCmsAppController::_execWidgets()</a></code><br>
+						<code><a href="class-MeCmsAppController.html#__loadMenus">MeCmsAppController::_loadMenus()</a></code><br>
+						<code><a href="class-MeCmsAppController.html#_isOffline">MeCmsAppController::isOffline()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeRender" id="_beforeRender">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beforeRender">#</a>
+		<code><a href="source-class-MeCmsAppController.html#206-220" title="Go to source code">beforeRender</a>( )</code>
+
+		<div class="description short">
+			<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every request.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after the controller action is run, but before the view is rendered.
+It's used to perform logic or set view variables that are required on every request.</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-MeCmsAppController.html#222-231" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Check if the provided user is authorized for the request.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Check if the provided user is authorized for the request.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd>The user to check the authorization of. If empty the user in the session will be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if $user is authorized, otherwise FALSE
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeAuthComponent.html#_isManager">MeAuthComponent::isManager()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isOffline" id="_isOffline">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isOffline">#</a>
+		<code><a href="source-class-MeCmsAppController.html#233-242" title="Go to source code">isOffline</a>( )</code>
+
+		<div class="description short">
+			<p>Checks if the site is offline</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks if the site is offline</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if the site is offline, otherwise FALSE
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#$config">MeCmsAppController::<var>$config</var></a></code><br>
+						MeToolsAppController::isAction()<br>
+						MeToolsAppController::isRequestAction()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="redirectIfLogged" id="_redirectIfLogged">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_redirectIfLogged">#</a>
+		<code><a href="source-class-MeCmsAppController.html#244-253" title="Go to source code">redirectIfLogged</a>( )</code>
+
+		<div class="description short">
+			<p>Redirects if the user is already logged in</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Redirects if the user is already logged in</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeAuthComponent.html#_isLogged">MeAuthComponent::isLogged()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-ProfilesController.html#_activate_account">ProfilesController::activate_account()</a></code><br>
+						<code><a href="class-ProfilesController.html#_forgot_password">ProfilesController::forgot_password()</a></code><br>
+						<code><a href="class-ProfilesController.html#_resend_activation">ProfilesController::resend_activation()</a></code><br>
+						<code><a href="class-ProfilesController.html#_reset_password">ProfilesController::reset_password()</a></code><br>
+						<code><a href="class-ProfilesController.html#_signup">ProfilesController::signup()</a></code><br>
+						<code><a href="class-UsersController.html#_login">UsersController::login()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="upload" id="_upload">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_upload">#</a>
+		<code><a href="source-class-MeCmsAppController.html#255-281" title="Go to source code">upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+
+		<div class="description short">
+			<p>Uploads a file</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Uploads a file</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$file</var></dt>
+					<dd>File ($_FILE)</dd>
+					<dt><var>$target</var></dt>
+					<dd>Target directory</dd>
+				</dl></div>
+
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-BannersController.html#_admin_upload">BannersController::admin_upload()</a></code><br>
+						<code><a href="class-PhotosController.html#_admin_upload">PhotosController::admin_upload()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="components" id="$components">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#34-54" title="Go to source code"><var>$components</var></a>
+
+			<div class="description short">
+				<p>Components</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Components</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$components" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+    <span class="php-quote">'Auth'</span> =&gt; <span class="php-keyword1">array</span>(
+        <span class="php-quote">'authenticate'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Form'</span> =&gt; <span class="php-keyword1">array</span>(
+            <span class="php-quote">'contain'</span>           =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Group'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'id'</span>, <span class="php-quote">'name'</span>)),
+            <span class="php-quote">'passwordHasher'</span>    =&gt; <span class="php-quote">'Blowfish'</span>,
+            <span class="php-quote">'userModel'</span>         =&gt; <span class="php-quote">'MeCms.User'</span>
+        )),
+        <span class="php-quote">'authorize'</span>         =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'Controller'</span>),
+        <span class="php-quote">'className'</span>         =&gt; <span class="php-quote">'MeCms.MeAuth'</span>,
+        <span class="php-quote">'loginAction'</span>       =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'users'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'login'</span>, <span class="php-quote">'admin'</span> =&gt; <span class="php-keyword1">FALSE</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'me_cms'</span>),
+        <span class="php-quote">'loginRedirect'</span>     =&gt; <span class="php-quote">'/admin'</span>,
+        <span class="php-quote">'logoutRedirect'</span>    =&gt; <span class="php-quote">'/login'</span>
+    ),
+    <span class="php-quote">'Config'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Config'</span>),
+    <span class="php-quote">'RequestHandler'</span>,
+    <span class="php-quote">'Session'</span>   =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeSession'</span>)
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="config" id="$config">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#56-61" title="Go to source code"><var>$config</var></a>
+
+			<div class="description short">
+				<p>Configuration.
+It will be set by the <code>ConfigComponent</code>.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Configuration.
+It will be set by the <code>ConfigComponent</code>.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-ConfigComponent.html#_initialize">ConfigComponent::initialize()</a></code><br>
+							<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
+							<code><a href="class-MeCmsAppController.html#_isOffline">MeCmsAppController::isOffline()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$config" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>()</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="helpers" id="$helpers">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#63-75" title="Go to source code"><var>$helpers</var></a>
+
+			<div class="description short">
+				<p>Helpers</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Helpers</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-MeCmsAppController.html#__loadMenus">MeCmsAppController::_loadMenus()</a></code><br>
+							<code><a href="class-MeCmsAppController.html#_beforeFilter">MeCmsAppController::beforeFilter()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$helpers" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+    <span class="php-quote">'Auth'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeCms.Auth'</span>),
+    <span class="php-quote">'Dropdown'</span>  =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Dropdown'</span>),
+    <span class="php-quote">'Form'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeForm'</span>),
+    <span class="php-quote">'Html'</span>      =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MeHtml'</span>),
+    <span class="php-quote">'Layout'</span>    =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Layout'</span>),
+    <span class="php-quote">'Library'</span>   =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Library'</span>),
+    <span class="php-quote">'Paginator'</span> =&gt; <span class="php-keyword1">array</span>(<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.MePaginator'</span>)
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="widgetsMap" id="$widgetsMap">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCmsAppController.html#77-82" title="Go to source code"><var>$widgetsMap</var></a>
+
+			<div class="description short">
+				<p>Widgets map.
+It will be set by the <code>ConfigComponent</code>.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Widgets map.
+It will be set by the <code>ConfigComponent</code>.</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$widgetsMap" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>()</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

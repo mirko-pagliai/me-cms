@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class MeAuthComponent | MeCms API</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Packages</h3>
+			<ul>
+				<li class="main">
+					<a href="package-MeCms.html">
+						MeCms<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Console.html">
+						Console<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Console.Command.html">
+						Command					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="package-MeCms.Controller.html">
+						Controller<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.Controller.Component.html">
+						Component					</a>
+
+						</li>
+							</ul></li>
+				<li class="main">
+					<a href="package-MeCms.Model.html">
+						Model					</a>
+
+						</li>
+				<li class="main">
+					<a href="package-MeCms.Utility.html">
+						Utility					</a>
+
+						</li>
+				<li class="main">
+					<a href="package-MeCms.View.html">
+						View<span></span>
+					</a>
+
+						<ul>
+				<li class="main">
+					<a href="package-MeCms.View.Helper.html">
+						Helper					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-ConfigComponent.html">ConfigComponent</a></li>
+				<li><a href="class-EmailComponent.html">EmailComponent</a></li>
+				<li class="active"><a href="class-MeAuthComponent.html">MeAuthComponent</a></li>
+				<li><a href="class-MeCmsAppController.html">MeCmsAppController</a></li>
+				<li><a href="class-MeSecurityComponent.html">MeSecurityComponent</a></li>
+				<li><a href="class-PagesWidgetComponent.html">PagesWidgetComponent</a></li>
+				<li><a href="class-PhotosWidgetComponent.html">PhotosWidgetComponent</a></li>
+				<li><a href="class-PostsWidgetComponent.html">PostsWidgetComponent</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+<span>Package</span>			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="todo.html" title="Todo list"><span>Todo</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class MeAuthComponent</h1>
+
+
+	<div class="description">
+	<p>Authentication control component class.</p>
+
+<p>Binds access control with user authentication and session management.</p>
+
+<p>Rewrites <code>AuthComponent</code> provided by CakePHP.</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+AuthComponent
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MeAuthComponent</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> <a href="package-MeCms.html">MeCms</a>\<a href="package-MeCms.Controller.html">Controller</a>\<a href="package-MeCms.Controller.Component.html">Component</a><br>
+
+				<b>Copyright:</b>
+				Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd<br>
+				<b>License:</b>
+				<a href="http://www.gnu.org/licenses/agpl.txt">AGPL License</a><br>
+				<b>Author:</b>
+				Mirko Pagliai <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x6d;&#105;&#114;&#x6b;&#x6f;&#46;&#112;&#x61;&#x67;l&#105;&#x61;&#x69;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a><br>
+			<b>Located at</b> <a href="source-class-MeAuthComponent.html#30-114" title="Go to source code">Component/MeAuthComponent.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="initialize" id="_initialize">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initialize">#</a>
+		<code><a href="source-class-MeAuthComponent.html#44-55" title="Go to source code">initialize</a>( <span>Controller <var>$controller</var></span> )</code>
+
+		<div class="description short">
+			<p>Called before the controller's beforeFilter method.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called before the controller's beforeFilter method.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$controller</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						http://api.cakephp.org/2.6/class-Component.html#_initialize CakePHP Api<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hasId" id="_hasId">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_hasId">#</a>
+		<code><a href="source-class-MeAuthComponent.html#57-68" title="Go to source code">hasId</a>( <span>type <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Checks whether the user has a specific id</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks whether the user has a specific id</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isAdmin" id="_isAdmin">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAdmin">#</a>
+		<code><a href="source-class-MeAuthComponent.html#70-80" title="Go to source code">isAdmin</a>( )</code>
+
+		<div class="description short">
+			<p>Checks whether the user is an administrator</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks whether the user is an administrator</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-BannersPositionsController.html#_isAuthorized">BannersPositionsController::isAuthorized()</a></code><br>
+						<code><a href="class-ConfigComponent.html#_kcfinder">ConfigComponent::kcfinder()</a></code><br>
+						<code><a href="class-PagesController.html#_isAuthorized">PagesController::isAuthorized()</a></code><br>
+						<code><a href="class-SystemsController.html#_isAuthorized">SystemsController::isAuthorized()</a></code><br>
+						<code><a href="class-UsersController.html#_isAuthorized">UsersController::isAuthorized()</a></code><br>
+						<code><a href="class-UsersGroupsController.html#_isAuthorized">UsersGroupsController::isAuthorized()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isFounder" id="_isFounder">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isFounder">#</a>
+		<code><a href="source-class-MeAuthComponent.html#82-92" title="Go to source code">isFounder</a>( )</code>
+
+		<div class="description short">
+			<p>Checks whether the user is the admin founder</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks whether the user is the admin founder</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isLogged" id="_isLogged">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isLogged">#</a>
+		<code><a href="source-class-MeAuthComponent.html#94-101" title="Go to source code">isLogged</a>( )</code>
+
+		<div class="description short">
+			<p>Checks whether the user is logged</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks whether the user is logged</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCmsAppController.html#_redirectIfLogged">MeCmsAppController::redirectIfLogged()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isManager" id="_isManager">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isManager">#</a>
+		<code><a href="source-class-MeAuthComponent.html#103-113" title="Go to source code">isManager</a>( )</code>
+
+		<div class="description short">
+			<p>Checks whether the user is a manager (manager or administrator)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks whether the user is a manager (manager or administrator)</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-BannersController.html#_isAuthorized">BannersController::isAuthorized()</a></code><br>
+						<code><a href="class-MeCmsAppController.html#_isAuthorized">MeCmsAppController::isAuthorized()</a></code><br>
+						<code><a href="class-PagesController.html#_isAuthorized">PagesController::isAuthorized()</a></code><br>
+						<code><a href="class-PhotosAlbumsController.html#_isAuthorized">PhotosAlbumsController::isAuthorized()</a></code><br>
+						<code><a href="class-PhotosController.html#_isAuthorized">PhotosController::isAuthorized()</a></code><br>
+						<code><a href="class-PostsCategoriesController.html#_isAuthorized">PostsCategoriesController::isAuthorized()</a></code><br>
+						<code><a href="class-PostsController.html#_isAuthorized">PostsController::isAuthorized()</a></code><br>
+						<code><a href="class-PostsController.html#_admin_add">PostsController::admin_add()</a></code><br>
+						<code><a href="class-PostsController.html#_admin_edit">PostsController::admin_edit()</a></code><br>
+						<code><a href="class-SystemsController.html#_isAuthorized">SystemsController::isAuthorized()</a></code><br>
+						<code><a href="class-UsersController.html#_isAuthorized">UsersController::isAuthorized()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="user" id="$user">
+		<td class="attributes"><code>
+			private static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeAuthComponent.html#38-42" title="Go to source code"><var>$user</var></a>
+
+			<div class="description short">
+				<p>User data</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>User data</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-MeAuthComponent.html#_initialize">MeAuthComponent::initialize()</a></code><br>
+							<code><a href="class-MeAuthComponent.html#_hasId">MeAuthComponent::hasId()</a></code><br>
+							<code><a href="class-MeAuthComponent.html#_isAdmin">MeAuthComponent::isAdmin()</a></code><br>
+							<code><a href="class-MeAuthComponent.html#_isFounder">MeAuthComponent::isFounder()</a></code><br>
+							<code><a href="class-MeAuthComponent.html#_isLogged">MeAuthComponent::isLogged()</a></code><br>
+							<code><a href="class-MeAuthComponent.html#_isManager">MeAuthComponent::isManager()</a></code><br>
+							<code><a href="class-PostsController.html#_isAuthorized">PostsController::isAuthorized()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$user" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

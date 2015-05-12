@@ -1,0 +1,115 @@
+/*!
+ * This file is part of MeCms.
+ * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ */
+/* -------------------------------- */
+/*				Fonts				*/
+/* -------------------------------- */
+/* "Roboto" font */
+@font-face {
+    font-family: 'Roboto';
+    src: url(../../fonts/Roboto-Regular.ttf);
+}
+
+/* Body */
+body {
+	background: #e2e2e2;
+	font-family: Roboto, sans-serif;
+	padding-top: 60px;
+}
+
+/* Content */
+#content {
+	background: #fff;
+	border-radius: 8px;
+    box-shadow: 0 3px 6px -6px #000;
+	font-size: 16px;
+    margin: auto;
+	overflow: hidden;
+    padding: 20px;
+	width: 450px;
+}
+
+/* Content, title */
+#content h2 {
+    background: rgba(51, 122, 183, .8);
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 0 1px;
+    box-shadow: 0 2px 2px 0 #aaa;
+    color: #fff;
+    font-size: 24px;
+    margin: 10px -20px 30px;
+    padding: 12px 20px 14px;
+    text-align: center;
+}
+
+/* Content, last paragraph */
+#content > p:last-child {
+	margin: 0;
+}
+
+/* Content, logo */
+#content #logo {
+	margin: auto auto 20px;
+}
+
+/* Content, alert message */
+#content .alert {
+    font-size: 90%;
+	margin-bottom: 10px;
+    padding: 8px;
+}
+
+/* Content, alert message, close button */
+#content .alert .close {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+/* -------------------------------- */
+/*				Forms				*/
+/* -------------------------------- */
+/* Form, submit div after fieldset */
+form fieldset + .submit {
+	margin-top: 10px;
+}
+
+/* Form, error message */
+form .error-message {
+	font-size: 90%;
+    padding: 4px 6px;
+}
+
+/* Form, input div */
+form .form-group {
+    margin-bottom: 10px;
+}
+
+/* Form, input div, help block */
+form .form-group .help-block {
+	margin-top: 0 !important;
+}
+
+/* Form, input div, input */
+form .form-group input {
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}
+
+/* Form, input div, input on focus */
+form .form-group input:focus {
+	border-color: #66AFE9;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
+}
+
+/* -------------------------------- */
+/*			Login form				*/
+/* -------------------------------- */
+/* Login form, input div */
+#login form .form-group {
+    margin-bottom: 5px;
+}
