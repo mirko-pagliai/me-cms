@@ -28,7 +28,7 @@
 		return;
 ?>
 
-<?php if(!empty($albums)): ?>
+<?php if(!empty($albums) && count($albums) > 1): ?>
 	<div class="widget sidebar-widget">
 		<?php 
 			echo $this->Html->h4(__d('me_cms', 'Albums'));
