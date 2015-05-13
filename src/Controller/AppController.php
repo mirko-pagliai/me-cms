@@ -87,8 +87,8 @@ class AppController extends BaseController {
 		if(!$this->request->hasPrefix())
 			$this->Auth->allow($this->request->action);
 		
-		if($this->Auth->user())
-			$this->Auth->config('authError', __d('me_cms', 'You are not authorized for this action'));
+		if(!$this->Auth->user())
+			$this->Auth->config('authError', FALSE);
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
@@ -115,7 +115,9 @@ class AppController extends BaseController {
 	 */
 	public function initialize() {
 		//Loads components
-		$this->loadComponent('MeCms.Auth');
+		$this->loadComponent('MeCms.Auth', [
+			'authError' => __d('me_cms', 'You are not authorized for this action')
+		]);
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
 		
