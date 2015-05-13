@@ -22,12 +22,12 @@
  */
 namespace MeCms\View\View;
 
-use Cake\View\View;
+use App\View\AppView as BaseView;
 
 /**
  * Application view class
  */
-class AppView extends View {
+class AppView extends BaseView {
 	/**
 	 * Gets the title for layou
 	 * @return string Title
