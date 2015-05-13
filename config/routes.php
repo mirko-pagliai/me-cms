@@ -94,7 +94,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 * Systems controller
 	 */
 	Router::connect('/offline', ['controller' => 'Systems', 'action' => 'offline', 'plugin' => MECMS], ['_name' => 'offline']);
-	Router::connect('/contact/form',	 ['controller' => 'Systems', 'action' => 'contact_form', 'plugin' => MECMS], ['_name' => 'contact']);
+	Router::connect('/contact/form',	 ['controller' => 'Systems', 'action' => 'contact_form', 'plugin' => MECMS], ['_name' => 'contact_form']);
 	
 	/**
 	 * Users controller
