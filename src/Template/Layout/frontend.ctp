@@ -83,9 +83,7 @@
 				</div>
 			</div>
 		</div>
-		<footer class="navbar-fixed-bottom">
-			<?= $this->element('frontend/footer', [], ['cache' => TRUE]) ?>
-		</footer>
+		<?= $this->element('frontend/footer', [], ['cache' => TRUE]) ?>
 		<?= $this->Library->analytics(config('frontend.analytics')) ?>
 		<?= $this->fetch('css_bottom') ?>
 		<?= $this->fetch('script_bottom') ?>

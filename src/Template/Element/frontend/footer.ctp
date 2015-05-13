@@ -22,5 +22,7 @@
  */
 ?>
 
-<p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCMS', date('Y')) ?></p>
-<p><?= __d('me_cms', 'Developed by {0} for {1}', 'Mirko Pagliai', $this->Html->link('Nova Atlantis LTD', 'http://novatlantis.it', ['target' => '_blank'])) ?></p>
+<footer class="navbar-fixed-bottom">
+	<p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCMS', date('Y')) ?></p>
+	<p><?= __d('me_cms', 'Developed by {0} for {1}', 'Mirko Pagliai', $this->Html->link('Nova Atlantis LTD', 'http://novatlantis.it', ['target' => '_blank'])) ?></p>
+</footer>
