@@ -53,7 +53,7 @@ Configure::load('MeCms.cache');
 
 //Loads the cache from the application, if exists
 if(is_readable(CONFIG.'cache.php'))
-	Configure::load('cache');
+	Configure::load('cache', 'default', FALSE);
 
 //Adds all cache configurations
 foreach(Configure::read('Cache') as $key => $config) {
@@ -75,7 +75,7 @@ Configure::load('MeCms.widgets');
 
 //Loads the widgets from the application, if exists
 if(is_readable(CONFIG.'widgets.php'))
-	Configure::load('widgets');
+	Configure::load('widgets', 'default', FALSE);
 
 //Adds the widgets configuration to the MeCms configuration
 Configure::write('MeCms.frontend.widgets', Configure::read('Widgets'));
