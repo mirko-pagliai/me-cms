@@ -53,23 +53,19 @@
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.backend/topbar') ?>
+		<?= $this->element('backend/topbar') ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
 					<?= $this->element('backend/sidebar') ?>
 				</div>
 				<div id="content" class="col-md-offset-3 col-lg-offset-2">
-					<?php
-						echo $this->Flash->render();
-						echo $this->fetch('content');
-					?>
+					<?= $this->Flash->render() ?>
+					<?=	$this->fetch('content') ?>
 				</div>
 			</div>
 		</div>
-		<?php
-			echo $this->fetch('css_bottom');
-			echo $this->fetch('script_bottom');
-		?>
+		<?= $this->fetch('css_bottom') ?>
+		<?=	$this->fetch('script_bottom') ?>
 	</body>
 </html>

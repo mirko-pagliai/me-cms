@@ -49,6 +49,10 @@
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default'
 			]);
+			
+			if(is_readable(WWW_ROOT.'js'.DS.'frontend'.DS.'layout.js'))
+				echo $this->Html->js('frontend/layout');
+			
 			echo $this->fetch('script');
 		?>
 	</head>
@@ -65,18 +69,13 @@
 					echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);		
 				?>
 			</div>
-			<?=
-				//TO-DO: cache!
-				$this->element('MeCms.frontend/topbar')
-			?>
+			<?= $this->element('frontend/topbar', [], ['cache' => TRUE]) ?>
 		</header>
 		<div class="container">
 			<div class="row">
 				<div id="content" class="col-sm-8 col-md-9">
-					<?php
-						echo $this->Flash->render();
-						echo $this->fetch('content');
-					?>
+					<?= $this->Flash->render() ?>
+					<?= $this->fetch('content') ?>
 				</div>
 				<div id="sidebar" class="col-sm-4 col-md-3">
 					<?= $this->fetch('sidebar') ?>
@@ -85,15 +84,10 @@
 			</div>
 		</div>
 		<footer class="navbar-fixed-bottom">
-			<?=
-				//TO-DO: cache!
-				$this->element('MeCms.frontend/footer')
-			?>
+			<?= $this->element('frontend/footer', [], ['cache' => TRUE]) ?>
 		</footer>
-		<?php
-			echo $this->Library->analytics(config('frontend.analytics'));
-			echo $this->fetch('css_bottom');
-			echo $this->fetch('script_bottom');
-		?>
+		<?= $this->Library->analytics(config('frontend.analytics')) ?>
+		<?= $this->fetch('css_bottom') ?>
+		<?= $this->fetch('script_bottom') ?>
 	</body>
 </html>

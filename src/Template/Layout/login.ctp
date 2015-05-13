@@ -55,9 +55,7 @@
 				echo $this->fetch('content');
 			?>
 		</div>
-		<?php
-			echo $this->fetch('css_bottom');
-			echo $this->fetch('script_bottom');
-		?>
+		<?= $this->fetch('css_bottom') ?>
+		<?=	$this->fetch('script_bottom') ?>
 	</body>
 </html>
