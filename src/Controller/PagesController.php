@@ -55,7 +55,11 @@ class PagesController extends AppController {
     public function view($slug = NULL) {
 		//Checks if there exists a static page, using all the passed arguments
 		if(StaticPage::exists($args = func_get_args())) {
-			$this->set('title', StaticPage::title($args));
+			$page = new \stdClass();
+			$page->slug = $slug;
+			$page->title = StaticPage::title($args);
+			
+			$this->set(compact('page'));
 			
 			return $this->render('StaticPages'.DS.implode(DS, $args));			
 		}

@@ -50,7 +50,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	);
 	Router::connect('/page/:slug',
 		['controller' => 'Pages', 'action' => 'view', 'plugin' => MECMS],
-		['_name' => 'page', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+		['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
 	);
 
 	/**
