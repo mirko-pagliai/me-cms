@@ -49,6 +49,10 @@ if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.
 if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug'))
 	Configure::write('debug', TRUE);
 
+//Loads the theme
+if(Configure::read('MeCms.frontend.theme'))
+	\MeTools\Utility\Plugin::load(Configure::read('MeCms.frontend.theme'));
+
 /**
  * Cache configuration
  */
