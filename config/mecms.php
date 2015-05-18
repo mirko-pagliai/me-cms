@@ -72,7 +72,7 @@ return ['MeCms' => [
 	],
 	//Security
 	'security' => [
-		//Key used to crypt datas
+		//Key used to crypt
 		'crypt_key' => 'at1UsdACWJFTXGgf4oZoiLwQGrLgf2SA',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
