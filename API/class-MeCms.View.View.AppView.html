@@ -175,7 +175,7 @@
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-Cake\View\View
+App\View\AppView
 			
 			
 		</dd>
@@ -204,7 +204,7 @@ Cake\View\View
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.View.html">View</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.View.AppView.html#27-131" title="Go to source code">View/AppView.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.View.View.AppView.html#27-149" title="Go to source code">View/AppView.php</a>
 		<br>
 	</div>
 
@@ -262,7 +262,7 @@ Cake\View\View
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.View.View.AppView.html#53-70" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.View.View.AppView.html#53-71" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -296,7 +296,7 @@ Cake\View\View
 
 		<td class="name"><div>
 		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-MeCms.View.View.AppView.html#72-85" title="Go to source code">render</a>( <span>string|null <var>$view</var> = <span class="php-keyword1">NULL</span></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.View.View.AppView.html#73-102" title="Go to source code">render</a>( <span>string|null <var>$view</var> = <span class="php-keyword1">NULL</span></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Renders view for given view file and layout</p>
@@ -328,6 +328,16 @@ Cake\View\View
 				<div class="list">
 						http://api.cakephp.org/3.0/class-Cake.View.View.html#_render<br>
 				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Utility\Plugin::path()<br>
+						layout<br>
+						theme<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.View.View.AdminView.html#_render">MeCms\View\View\AdminView::render()</a></code><br>
+				</div>
 
 
 		</div>
@@ -345,7 +355,7 @@ Cake\View\View
 
 		<td class="name"><div>
 		<a class="anchor" href="#_renderLayout">#</a>
-		<code><a href="source-class-MeCms.View.View.AppView.html#87-101" title="Go to source code">renderLayout</a>( <span>string <var>$content</var></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.View.View.AppView.html#104-118" title="Go to source code">renderLayout</a>( <span>string <var>$content</var></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout</p>
@@ -398,7 +408,7 @@ Cake\View\View
 
 		<td class="name"><div>
 		<a class="anchor" href="#_allWidgets">#</a>
-		<code><a href="source-class-MeCms.View.View.AppView.html#103-118" title="Go to source code">allWidgets</a>( )</code>
+		<code><a href="source-class-MeCms.View.View.AppView.html#120-136" title="Go to source code">allWidgets</a>( )</code>
 
 		<div class="description short">
 			<p>Returns all widgets, reading from configuration</p>
@@ -417,6 +427,7 @@ Cake\View\View
 
 				<h4>Uses</h4>
 				<div class="list">
+						MeTools\Network\Request::isCurrent()<br>
 						<code><a href="class-MeCms.View.View.AppView.html#_widget">MeCms\View\View\AppView::widget()</a></code><br>
 				</div>
 
@@ -436,7 +447,7 @@ Cake\View\View
 
 		<td class="name"><div>
 		<a class="anchor" href="#_widget">#</a>
-		<code><a href="source-class-MeCms.View.View.AppView.html#120-130" title="Go to source code">widget</a>( <span>string <var>$name</var></span>, <span>array <var>$arguments</var> = []</span>, <span>array <var>$options</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.View.View.AppView.html#138-148" title="Go to source code">widget</a>( <span>string <var>$name</var></span>, <span>array <var>$arguments</var> = []</span>, <span>array <var>$options</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Returns a widget</p>

@@ -289,7 +289,7 @@
 </span><span id="59" class="l"><a href="#59"> 59: </a>        <span class="php-keyword1">list</span>(<span class="php-var">$posts</span>, <span class="php-var">$paging</span>) = <span class="php-keyword2">array_values</span>(Cache::readMany([<span class="php-var">$cache</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>)], <span class="php-quote">'posts'</span>));
 </span><span id="60" class="l"><a href="#60"> 60: </a>        
 </span><span id="61" class="l"><a href="#61"> 61: </a>        <span class="php-comment">//If the data are not available from the cache</span>
-</span><span id="62" class="l"><a href="#62"> 62: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$posts</span>) || <span class="php-keyword1">empty</span>(<span class="php-var">$paging</span>)) {           
+</span><span id="62" class="l"><a href="#62"> 62: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$posts</span>) || <span class="php-keyword1">empty</span>(<span class="php-var">$paging</span>)) {
 </span><span id="63" class="l"><a href="#63"> 63: </a>            <span class="php-comment">//Gets and paginates posts</span>
 </span><span id="64" class="l"><a href="#64"> 64: </a>            <span class="php-var">$posts</span> = <span class="php-var">$this</span>-&gt;paginate(
 </span><span id="65" class="l"><a href="#65"> 65: </a>                <span class="php-var">$this</span>-&gt;Posts-&gt;find(<span class="php-quote">'active'</span>)
