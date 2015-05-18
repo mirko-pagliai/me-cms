@@ -33,56 +33,57 @@ header {
 }
 
 /* Site logo */
-#logo {
+header #logo {
     display: inline-block;
 	max-width: 100%;
     text-decoration: none;
 }
 
-/* Logo (as text) */
-#logo h1 {
+/* Header, logo (as text) */
+header #logo h1 {
     color: #555;
     font-size: 50px;
     padding: 70px 10px 60px;
 }
 
-/* Logo (as text) on hover */
-#logo:hover h1 {
+/* Header, logo (as text) on hover */
+header #logo:hover h1 {
 	color: #333;
 }
 
-/* Logo (as image) */
-#logo img {
+/* Header, logo (as image) */
+header #logo img {
 	padding: 40px 0;
 }
 
-/* Topbar */
-#topbar {
+/* Header, topbar */
+header #topbar {
     background: #eee;
     border: 0;
 	border-radius: 0;
+	margin-bottom: 30px;
 }
 
-/* Topbar, links */
-#topbar .navbar-collapse a {
+/* Header, topbar, links */
+header #topbar .navbar-collapse a {
 	font-weight: bold;
 }
 
-/* Topbar, links on hover */
-#topbar .navbar-collapse a:hover {
+/* Header, topbar, links on hover */
+header #topbar .navbar-collapse a:hover {
 	background: #d1d1d1;
 	color: #444;
 }
 
 /* Navbar NOT collapsed */
 @media (min-width: 768px) {
-	/* Topbar, navbar element */
-	#topbar .navbar-collapse {
+	/* Header, topbar, navbar element */
+	header #topbar .navbar-collapse {
 		padding: 0;
 	}
 
-	/* Topbar, links */
-	#topbar .navbar-collapse a {
+	/* Header, topbar, links */
+	header #topbar .navbar-collapse a {
 		font-size: 16px;
 		/* Transition for "background" and "color" proprieties */
 		transition: background .25s ease-in-out, color .25s ease-in-out;
