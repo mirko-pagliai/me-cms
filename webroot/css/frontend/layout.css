@@ -106,6 +106,27 @@ header #topbar .navbar-collapse a:hover {
 }
 
 /* -------------------------------- */
+/*			Pagination				*/
+/* -------------------------------- */
+/* Pagination, links and texts */
+.pagination > li > a, .pagination > li > span {
+	color: #666;
+}
+
+/* Pagination, links and texts on hover */
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+	background: #ddd;
+	color: #666;
+}
+
+/* Pagination, active links and texts */
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+	background: #888;
+	border-color: #888;
+	color: #ddd;
+}
+
+/* -------------------------------- */
 /*			Sidebar widgets			*/
 /* -------------------------------- */
 /* Widget */
