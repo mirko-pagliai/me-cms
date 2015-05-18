@@ -69,7 +69,7 @@
 					echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);		
 				?>
 			</div>
-			<?= $this->element('frontend/topbar', [], ['cache' => TRUE]) ?>
+			<?= $this->element('MeCms.frontend/topbar', [], ['cache' => TRUE]) ?>
 		</header>
 		<div class="container">
 			<div class="row">
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 		</div>
-		<?= $this->element('frontend/footer', [], ['cache' => TRUE]) ?>
+		<?= $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]) ?>
 		<?= $this->Library->analytics(config('frontend.analytics')) ?>
 		<?= $this->fetch('css_bottom') ?>
 		<?= $this->fetch('script_bottom') ?>
