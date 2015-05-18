@@ -35,10 +35,13 @@ class AdminView extends AppView {
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
 	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_render
      * @throws Cake\Core\Exception\Exception
+	 * @uses MeCms\View\View\AppView::render()
+	 * @uses layout
+	 * @uses viewVars
 	 */
 	public function render($view = NULL, $layout = NULL) {		
 		//Sets the admin layout
-		$this->layout = 'backend';
+		$this->layout = 'MeCms.backend';
 		
 		//Sets some view vars
 		$this->viewVars['priorities'] = [

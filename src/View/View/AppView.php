@@ -77,10 +77,26 @@ class AppView extends BaseView {
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
 	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_render
      * @throws Cake\Core\Exception\Exception
+	 * @uses MeTools\Utility\Plugin::path()
+	 * @uses layout
+	 * @uses theme
 	 */
 	public function render($view = NULL, $layout = NULL) {
-		if($this->layout === 'default')
-			$this->layout = 'frontend';
+		//Enables the theme
+		if(config('frontend.theme') && !$this->theme && is_readable(\MeTools\Utility\Plugin::path(config('frontend.theme'))))
+			$this->theme = config('frontend.theme');
+				
+		if($this->layout === 'default') {
+			//It first tries to get the layout from the theme
+			if($this->theme && is_readable(\MeTools\Utility\Plugin::path($this->theme, 'src'.DS.'Template'.DS.'Layout'.DS.'frontend.ctp')))
+				$this->layout = sprintf('%s.frontend', $this->theme);
+			//Otherwise, it tries to get the layout from the application
+			elseif(is_readable(APP.'Template'.DS.'Layout'.DS.'frontend.ctp'))
+				$this->layout = 'frontend';
+			//Otherwise, it gets the layout from the plugin
+			else
+				$this->layout = 'MeCms.frontend';
+		}
 		
 		return parent::render($view, $layout);
 	}
@@ -104,6 +120,7 @@ class AppView extends BaseView {
 	/**
 	 * Returns all widgets, reading from configuration
 	 * @return string Html code
+	 * @uses MeTools\Network\Request::isCurrent()
 	 * @uses widget()
 	 */
 	public function allWidgets() {
