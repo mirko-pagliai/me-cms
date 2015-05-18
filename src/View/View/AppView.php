@@ -83,7 +83,7 @@ class AppView extends BaseView {
 	 */
 	public function render($view = NULL, $layout = NULL) {
 		//Enables the theme
-		if(config('frontend.theme') && !$this->theme && is_readable(\MeTools\Utility\Plugin::path(config('frontend.theme'))))
+		if(config('frontend.theme') && !$this->theme)
 			$this->theme = config('frontend.theme');
 				
 		if($this->layout === 'default') {
