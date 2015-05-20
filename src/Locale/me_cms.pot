@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-20 15:22+0000\n"
+"POT-Creation-Date: 2015-05-20 15:28+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -898,6 +898,7 @@ msgid "Edit album"
 msgstr ""
 
 #: Template/Admin/PhotosAlbums/index.ctp:25;28
+#: Template/PhotosAlbums/index.ctp:25;28
 msgid "Photos albums"
 msgstr ""
 
@@ -1500,10 +1501,6 @@ msgstr ""
 
 #: Template/Layout/Email/html/default.ctp:43
 msgid "Please, don't reply to this email"
-msgstr ""
-
-#: Template/PhotosAlbums/index.ctp:25;28
-msgid "List photos albums"
 msgstr ""
 
 #: Template/PhotosAlbums/index.ctp:39
