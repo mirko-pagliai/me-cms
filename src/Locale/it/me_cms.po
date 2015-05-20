@@ -32,7 +32,7 @@ msgstr "Il target del banner non è presente"
 
 #: Controller/PostsController.php:154
 msgid "You have to wait {0} seconds to perform a new search"
-msgstr "Puoi effettuare una nuova ricerca fra 0s secondi"
+msgstr "Puoi effettuare una nuova ricerca fra {0}secondi"
 
 #: Controller/PostsController.php:157
 msgid "You have to search at least a word of {0} characters"
@@ -133,7 +133,7 @@ msgstr "Il tuo account non è stato creato"
 #: Controller/Admin/SystemsController.php:78
 #: Template/Admin/Systems/checkup.ctp:105;112;119;124;129;151
 msgid "The directory {0} is not readable or writable"
-msgstr "La directory 0s non è leggibile o scrivibile"
+msgstr "La directory {0}non è leggibile o scrivibile"
 
 #: Controller/Admin/BannersController.php:58
 msgid ""
@@ -529,7 +529,7 @@ msgstr "Indirizzo web"
 #: Template/Admin/Banners/add.ctp:69
 #: Template/Admin/Banners/edit.ctp:51
 msgid "The address should begin with {0}"
-msgstr "L'indirizzo deve cominciare con %s0}"
+msgstr "L'indirizzo deve cominciare con {0}"
 
 #: Template/Admin/Banners/add.ctp:72
 #: Template/Admin/Banners/edit.ctp:54
@@ -1097,15 +1097,15 @@ msgstr "Versione del plugin {0}: {1}"
 
 #: Template/Admin/Systems/checkup.ctp:56;63
 msgid "The {0} module is enabled"
-msgstr "Il modulo 0s è abilitato"
+msgstr "Il modulo {0}è abilitato"
 
 #: Template/Admin/Systems/checkup.ctp:58;65
 msgid "The {0} module is not enabled"
-msgstr "Il modulo 0s non è abilitato"
+msgstr "Il modulo {0}non è abilitato"
 
 #: Template/Admin/Systems/checkup.ctp:60;67
 msgid "The {0} module cannot be checked"
-msgstr "Il modulo 0s non può essere verificato"
+msgstr "Il modulo {0}non può essere verificato"
 
 #: Template/Admin/Systems/checkup.ctp:74
 msgid "The {0} version is at least {1}"
@@ -1117,11 +1117,11 @@ msgstr "La versione di {0} è inferiore a {1}"
 
 #: Template/Admin/Systems/checkup.ctp:79;84;89
 msgid "The {0} extension is enabled"
-msgstr "L'estensione 0s è abilitata"
+msgstr "L'estensione {0} è abilitata"
 
 #: Template/Admin/Systems/checkup.ctp:81;86;91
 msgid "The {0} extension is not enabled"
-msgstr "L'estensione 0s non è abilitata"
+msgstr "L'estensione {0} non è abilitata"
 
 #: Template/Admin/Systems/checkup.ctp:96
 msgid "{0} is available"
@@ -1432,7 +1432,7 @@ msgstr "Trascina qui i file da caricare"
 
 #: Template/Element/backend/uploader/form.ctp:45
 msgid "The file {0} exceeds the maximum limit"
-msgstr "Il file 0s supera la dimensione massima"
+msgstr "Il file {0}supera la dimensione massima"
 
 #: Template/Element/backend/uploader/response.ctp:36
 msgid "Directory: {0}"
@@ -1461,7 +1461,7 @@ msgstr "Home"
 #: Template/Element/frontend/views/page.ctp:37
 #: Template/Element/frontend/views/post.ctp:53
 msgid "Posted on {0}"
-msgstr "Pubblicato il %s0}"
+msgstr "Pubblicato il {0}"
 
 #: Template/Element/frontend/views/page.ctp:56
 #: Template/Element/frontend/views/post.ctp:72
@@ -1470,7 +1470,7 @@ msgstr "Leggi tutto"
 
 #: Template/Element/frontend/views/post.ctp:47
 msgid "Posted by {0}"
-msgstr "Pubblicato da %s0}"
+msgstr "Pubblicato da {0}"
 
 #: Template/Element/login/menu.ctp:27
 #: Template/Users/login.ctp:25;47
@@ -1496,15 +1496,15 @@ msgstr "Password dimenticata?"
 #: Template/Email/html/Users/change_password.ctp:25
 #: Template/Email/html/Users/forgot_password.ctp:25
 msgid "Hello {0}"
-msgstr "Ciao %s0}"
+msgstr "Ciao {0}"
 
 #: Template/Email/html/Users/activate_account.ctp:27
 msgid "you have signed on the site {0}"
-msgstr "ti sei registrato sul sito %s0}"
+msgstr "ti sei registrato sul sito {0}"
 
 #: Template/Email/html/Users/activate_account.ctp:29
 msgid "To activate your account, click {0}"
-msgstr "Per attivare il tuo account, clicca %s0}"
+msgstr "Per attivare il tuo account, clicca {0}"
 
 #: Template/Email/html/Users/activate_account.ctp:29
 #: Template/Email/html/Users/forgot_password.ctp:29
@@ -1521,15 +1521,15 @@ msgstr ""
 
 #: Template/Email/html/Users/change_password.ctp:27
 msgid "you have recently changed your password on our site {0}"
-msgstr "di recente hai cambiato la tua password sul sito %s0}"
+msgstr "di recente hai cambiato la tua password sul sito {0}"
 
 #: Template/Email/html/Users/forgot_password.ctp:27
 msgid "you have requested to change your password on the site {0}"
-msgstr "hai richiesto di cambiare la tua password sul sito %s0}"
+msgstr "hai richiesto di cambiare la tua password sul sito {0}"
 
 #: Template/Email/html/Users/forgot_password.ctp:29
 msgid "To reset your password, click {0}"
-msgstr "Per reimpostare la password, clicca %s0}"
+msgstr "Per reimpostare la password, clicca {0}"
 
 #: Template/Layout/frontend.ctp:33
 #: Template/Posts/rss/rss.ctp:30;32
@@ -1538,11 +1538,11 @@ msgstr "Ultimi articoli"
 
 #: Template/Layout/Email/html/default.ctp:38
 msgid "This email was sent automatically from {0}"
-msgstr "Questa email è stata inviata automaticamente da %s0}"
+msgstr "Questa email è stata inviata automaticamente da {0}"
 
 #: Template/Layout/Email/html/default.ctp:42
 msgid "The request has been sent from the IP {0}"
-msgstr "La richiesta è stata inviata dall'IP %s0}"
+msgstr "La richiesta è stata inviata dall'IP {0}"
 
 #: Template/Layout/Email/html/default.ctp:43
 msgid "Please, don't reply to this email"
@@ -1554,7 +1554,7 @@ msgstr "{0} foto"
 
 #: Template/Posts/search.ctp:44
 msgid "You have searched for: {0}"
-msgstr "Hai cercato: %s0}"
+msgstr "Hai cercato: {0}"
 
 #: Template/Systems/contact_form.ctp:25;28
 msgid "Contact us"
