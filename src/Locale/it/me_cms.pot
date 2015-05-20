@@ -1,0 +1,1713 @@
+# LANGUAGE translation of MeCms
+# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
+#
+# Mirko Pagliai, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-05-18 20:03+0000\n"
+"PO-Revision-Date: 2015-05-18 22:11+0200\n"
+"Last-Translator: Mirko Pagliai\n"
+"Language-Team: Italian <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: Controller/AppController.php:52
+msgid "The file was not successfully moved to the target directory"
+msgstr ""
+"Il file non è stato correttamente spostato nella directory di destinazione"
+
+#: Controller/AppController.php:55
+msgid "The file was not successfully uploaded"
+msgstr "Il file non è stato correttamente caricato"
+
+#: Controller/AppController.php:119
+msgid "You are not authorized for this action"
+msgstr "Non sei autorizzato per questa azione"
+
+#: Controller/BannersController.php:46
+msgid "The banner target is missing"
+msgstr "Il target del banner non è presente"
+
+#: Controller/PostsController.php:154
+msgid "You have to wait {0} seconds to perform a new search"
+msgstr "Puoi effettuare una nuova ricerca fra 0s secondi"
+
+#: Controller/PostsController.php:157
+msgid "You have to search at least a word of {0} characters"
+msgstr "Devi cercare un parola di almeno 0d caratteri"
+
+#: Controller/SystemsController.php:41
+#: Controller/UsersController.php:147;258;369
+msgid "Disabled"
+msgstr "Disabilitato"
+
+#: Controller/SystemsController.php:55
+msgid "The email has been sent"
+msgstr "L'email è stata inviata"
+
+#: Controller/SystemsController.php:59
+msgid "The email was not sent"
+msgstr "L'email non è stata inviata"
+
+#: Controller/UsersController.php:111;307
+msgid "Invalid token"
+msgstr "Token non valido"
+
+#: Controller/UsersController.php:123;182;283;317
+msgid "No account found"
+msgstr "Nessun account trovato"
+
+#: Controller/UsersController.php:129
+#: Controller/Admin/UsersController.php:192
+msgid "The account has been activated"
+msgstr "Il tuo account è stato attivato"
+
+#: Controller/UsersController.php:132
+#: Controller/Admin/UsersController.php:194
+msgid "The account has not been activated"
+msgstr "Il tuo account non è stato attivato"
+
+#: Controller/UsersController.php:170
+msgid "Reset your password"
+msgstr "Reimposta la tua password"
+
+#: Controller/UsersController.php:178
+msgid "We have sent you an email to reset your password"
+msgstr "Ti abbiamo inviato un'email per reimpostare la tua password"
+
+#: Controller/UsersController.php:185;286
+msgid "The form has not been filled in correctly"
+msgstr "Il form non è stato compilato correttamente"
+
+#: Controller/UsersController.php:212
+msgid "Your account has been banned by an admin"
+msgstr "Il tuo account è stato bannato da un amministratore"
+
+#: Controller/UsersController.php:214
+msgid "Your account has not been activated yet"
+msgstr "Il tuo account non è stato ancora attivato"
+
+#: Controller/UsersController.php:232
+msgid "Invalid username or password"
+msgstr "Username o password non validi"
+
+#: Controller/UsersController.php:244
+msgid "You are successfully logged out"
+msgstr "Ti sei disconnesso correttamente"
+
+#: Controller/UsersController.php:279;398
+msgid "We send you an email to activate your account"
+msgstr "Ti abbiamo inviato un'email per attivare il tuo account"
+
+#: Controller/UsersController.php:326
+#: Controller/Admin/UsersController.php:221
+msgid "The password has been edited"
+msgstr "La password è stata modificata"
+
+#: Controller/UsersController.php:330
+msgid "The password has not been edited"
+msgstr "La password non è stata modificata"
+
+#: Controller/UsersController.php:351
+msgid "Activate your account"
+msgstr "Attiva il tuo account"
+
+#: Controller/UsersController.php:391
+msgid "The account has been created, but it needs to be activated by an admin"
+msgstr "L'account è stato creato, ma deve essere attivato da un amministratore"
+
+#: Controller/UsersController.php:402
+msgid "Account created. Now you can login"
+msgstr "Account creato. Puoi fare il login"
+
+#: Controller/UsersController.php:409
+msgid "The account has not been created"
+msgstr "Il tuo account non è stato creato"
+
+#: Controller/Admin/BannersController.php:48
+#: Controller/Admin/PhotosAlbumsController.php:46
+#: Controller/Admin/PhotosController.php:48
+#: Controller/Admin/SystemsController.php:78
+#: Template/Admin/Systems/checkup.ctp:105;112;119;124;129;151
+msgid "The directory {0} is not readable or writable"
+msgstr "La directory 0s non è leggibile o scrivibile"
+
+#: Controller/Admin/BannersController.php:58
+msgid ""
+"Before you can manage banners, you have to create at least a banner position"
+msgstr ""
+"Prima di poter gestire i banner, devi creare almeno una posizione per i banner"
+
+#: Controller/Admin/BannersController.php:111
+msgid "The banner has been saved"
+msgstr "Il banner è stato salvato"
+
+#: Controller/Admin/BannersController.php:115
+msgid "The banner could not be saved"
+msgstr "Il banner non è stato salvato"
+
+#: Controller/Admin/BannersController.php:131
+msgid "The banner has been deleted"
+msgstr "Il banner è stato eliminato"
+
+#: Controller/Admin/BannersController.php:133
+msgid "The banner could not be deleted"
+msgstr "Il banner non può essere eliminato"
+
+#: Controller/Admin/BannersPositionsController.php:64;86
+msgid "The banners position has been saved"
+msgstr "La posizione dei banner è stata salvata"
+
+#: Controller/Admin/BannersPositionsController.php:68;90
+msgid "The banners position could not be saved"
+msgstr "La posizione dei banner non può essere salvata"
+
+#: Controller/Admin/BannersPositionsController.php:108
+msgid "The banners position has been deleted"
+msgstr "La posizione dei banner è stata cancellata"
+
+#: Controller/Admin/BannersPositionsController.php:110
+msgid "The banners position could not be deleted"
+msgstr "La posizione dei banner non può essere cancellata"
+
+#: Controller/Admin/BannersPositionsController.php:113
+msgid ""
+"Before you delete this position, you have to delete its banners or assign "
+"them to another position"
+msgstr ""
+"Prima di cancellare questa posizione, devi cancellare i suoi banner o "
+"assegnarli a un'altra posizione"
+
+#: Controller/Admin/PagesController.php:99;121
+msgid "The page has been saved"
+msgstr "La pagina è stata salvata"
+
+#: Controller/Admin/PagesController.php:103;125
+msgid "The page could not be saved"
+msgstr "La pagina non può essere salvata"
+
+#: Controller/Admin/PagesController.php:141
+msgid "The page has been deleted"
+msgstr "La pagina è stata cancellata"
+
+#: Controller/Admin/PagesController.php:143
+msgid "The page could not be deleted"
+msgstr "La pagina non è stata cancellata"
+
+#: Controller/Admin/PhotosAlbumsController.php:88;110
+msgid "The photos album has been saved"
+msgstr "L'album fotografico è stato salvato"
+
+#: Controller/Admin/PhotosAlbumsController.php:92;114
+msgid "The photos album could not be saved"
+msgstr "L'album fotografico non può essere salvato"
+
+#: Controller/Admin/PhotosAlbumsController.php:132
+msgid "The photos album has been deleted"
+msgstr "L'album è stato cancellato"
+
+#: Controller/Admin/PhotosAlbumsController.php:134
+msgid "The photos album could not be deleted"
+msgstr "L'album fotografico non può essere cancellato"
+
+#: Controller/Admin/PhotosAlbumsController.php:137
+msgid ""
+"Before you delete this album, you have to delete its photos or assign them to "
+"another album"
+msgstr ""
+"Prima di cancellare questo album, devi cancellare le sue foto o assegnarle a "
+"un altro album"
+
+#: Controller/Admin/PhotosController.php:58
+msgid "Before you can manage photos, you have to create at least an album"
+msgstr "Prima di gestire le foto, devi creare almeno un album"
+
+#: Controller/Admin/PhotosController.php:87
+msgid "The album ID is missing"
+msgstr "L'ID dell'album non è presente"
+
+#: Controller/Admin/PhotosController.php:132
+msgid "The photo has been saved"
+msgstr "La foto è stata salvata"
+
+#: Controller/Admin/PhotosController.php:136
+msgid "The photo could not be saved"
+msgstr "La foto non può essere salvata"
+
+#: Controller/Admin/PhotosController.php:153
+msgid "The photo has been deleted"
+msgstr "La foto è stata cancellata"
+
+#: Controller/Admin/PhotosController.php:155
+msgid "The photo could not be deleted"
+msgstr "La foto non può essere cancellata"
+
+#: Controller/Admin/PostsCategoriesController.php:78;100
+msgid "The posts category has been saved"
+msgstr "La categoria articoli è stata salvata"
+
+#: Controller/Admin/PostsCategoriesController.php:82;104
+msgid "The posts category could not be saved"
+msgstr "La categoria articoli non può essere salvata"
+
+#: Controller/Admin/PostsCategoriesController.php:122
+msgid "The posts category has been deleted"
+msgstr "La categoria è stata cancellata"
+
+#: Controller/Admin/PostsCategoriesController.php:124
+msgid "The posts category could not be deleted"
+msgstr "La categoria articoli non può essere cancellata"
+
+#: Controller/Admin/PostsCategoriesController.php:127
+msgid ""
+"Before you delete this category, you have to delete its posts or assign them "
+"to another category"
+msgstr ""
+"Prima di cancellare questa categoria, devi cancellare i suoi articoli o "
+"assegnarli a un'altra categoria"
+
+#: Controller/Admin/PostsController.php:57
+msgid "Before you can manage posts, you have to create at least a category"
+msgstr "Prima di gestire gli articolo, devi creare almeno una categoria"
+
+#: Controller/Admin/PostsController.php:134;161
+msgid "The post has been saved"
+msgstr "L'articolo è stato salvato"
+
+#: Controller/Admin/PostsController.php:138;165
+msgid "The post could not be saved"
+msgstr "L'articolo non può essere salvato"
+
+#: Controller/Admin/PostsController.php:181
+msgid "The post has been deleted"
+msgstr "L'articolo è stato cancellato"
+
+#: Controller/Admin/PostsController.php:183
+msgid "The post could not be deleted"
+msgstr "L'articolo non può essere cancellato"
+
+#: Controller/Admin/SystemsController.php:72
+msgid "{0} is not present into {1}"
+msgstr "{0} non è presente in {1}"
+
+#: Controller/Admin/SystemsController.php:213
+msgid "The cache has been cleared"
+msgstr "La cache è stata svuotata"
+
+#: Controller/Admin/SystemsController.php:215
+msgid "The cache is not writable"
+msgstr "La cache non è scrivibile"
+
+#: Controller/Admin/SystemsController.php:228
+msgid "Thumbnails have been deleted"
+msgstr "Le miniature sono state cancellate"
+
+#: Controller/Admin/SystemsController.php:230
+msgid "Thumbnails have not been deleted"
+msgstr "Le miniature non sono state cancellate"
+
+#: Controller/Admin/UsersController.php:105;141
+msgid "The user has been saved"
+msgstr ""
+
+#: Controller/Admin/UsersController.php:109;145
+msgid "The user could not be saved"
+msgstr ""
+
+#: Controller/Admin/UsersController.php:129;169
+msgid "Only the admin founder can edit other admin users"
+msgstr ""
+
+#: Controller/Admin/UsersController.php:166
+msgid "You cannot delete the admin founder"
+msgstr "Non è possibile cancellare l'amministratore fondatore"
+
+#: Controller/Admin/UsersController.php:171
+msgid ""
+"Before you delete this user, you have to delete his posts or assign them to "
+"another user"
+msgstr ""
+"Prima di cancellare questo utente, devi cancellare i suoi articoli o "
+"assegnarli a un altro utente"
+
+#: Controller/Admin/UsersController.php:174
+msgid "The user has been deleted"
+msgstr "L'utente è stato cancellato"
+
+#: Controller/Admin/UsersController.php:176
+msgid "The user could not be deleted"
+msgstr ""
+
+#: Controller/Admin/UsersController.php:216
+msgid "Your password has been changed"
+msgstr "La tua password è stata modificata"
+
+#: Controller/Admin/UsersController.php:225
+msgid "The password has not been edited. Please, try again"
+msgstr "La password non è stata modificata. Prova ancora"
+
+#: Controller/Admin/UsersGroupsController.php:65;87
+msgid "The users group has been saved"
+msgstr ""
+
+#: Controller/Admin/UsersGroupsController.php:69;91
+msgid "The users group could not be saved"
+msgstr ""
+
+#: Controller/Admin/UsersGroupsController.php:109
+msgid "The users group has been deleted"
+msgstr "Il gruppo utenti è stato cancellato"
+
+#: Controller/Admin/UsersGroupsController.php:111
+msgid "The users group could not be deleted"
+msgstr ""
+
+#: Controller/Admin/UsersGroupsController.php:114
+msgid "You cannot delete this users group, because it's a necessary group"
+msgstr ""
+"Non puoi cancellare questo gruppo utenti, perché è un gruppo necessario"
+
+#: Controller/Admin/UsersGroupsController.php:116
+msgid ""
+"Before you delete this users group, you have to delete its users or assign "
+"them to another group"
+msgstr ""
+"Prima di cancellare questo gruppo utenti, devi cancellare i suoi utenti o "
+"assegnarli a un altro gruppo"
+
+#: Form/ContactForm.php:55
+#: Model/Validation/AppValidator.php:67;75;87;99;129;136
+#: Model/Validation/BannersPositionValidator.php:40
+#: Model/Validation/UserValidator.php:54
+#: Model/Validation/UsersGroupValidator.php:45;62
+msgid "Must be between {0} and {1} chars"
+msgstr ""
+
+#: Form/ContactForm.php:71
+#: Template/Email/html/Systems/contact_form.ctp:25
+msgid "Email from {0}"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:56;155;167
+#: Model/Validation/BannerValidator.php:45
+#: Model/Validation/PhotoValidator.php:45
+#: Model/Validation/PostValidator.php:39
+#: Model/Validation/UserValidator.php:42;136
+msgid "You have to select a valid option"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:63;173
+msgid "You have to enter a valid value"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:79;91
+msgid ""
+"Allowed chars: letters, apostrophe, space. Has to begin with a capital letter"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:103;121;144
+#: Model/Validation/BannersPositionValidator.php:48
+#: Model/Validation/UserValidator.php:62;77
+#: Model/Validation/UsersGroupValidator.php:49;66
+msgid "This value is already used"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:112
+#: Model/Validation/UserValidator.php:49
+#: Model/Validation/UsersGroupValidator.php:40
+msgid "Can not be changed"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:117;161
+#: Model/Validation/BannerValidator.php:52
+msgid "Must be at most {0} chars"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:140
+#: Model/Validation/BannersPositionValidator.php:44
+#: Model/Validation/UserValidator.php:58
+msgid "Allowed chars: lowercase letters, numbers, dash"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:151
+msgid "This field can not be empty"
+msgstr ""
+
+#: Model/Validation/BannerValidator.php:39
+#: Model/Validation/PhotoValidator.php:39
+msgid "Valid extensions: gif, jpg, jpeg, png"
+msgstr ""
+
+#: Model/Validation/BannerValidator.php:56
+msgid "Must be a valid url"
+msgstr ""
+
+#: Model/Validation/UserValidator.php:67
+msgid "This username is reserved"
+msgstr ""
+
+#: Model/Validation/UserValidator.php:86
+msgid "Email addresses don't match"
+msgstr ""
+
+#: Model/Validation/UserValidator.php:94
+msgid "Must be at least {0} chars"
+msgstr ""
+
+#: Model/Validation/UserValidator.php:98
+msgid "The password should contain letters, numbers and symbols"
+msgstr ""
+
+#: Model/Validation/UserValidator.php:107
+msgid "Passwords don't match"
+msgstr ""
+
+#: Model/Validation/UserValidator.php:114
+msgid "The old password is wrong"
+msgstr ""
+
+#: Model/Validation/UsersGroupValidator.php:54
+msgid "Allowed chars: lowercase letters"
+msgstr ""
+
+#: Template/Admin/Banners/add.ctp:25
+msgid "Add banner"
+msgstr "Aggiungi banner"
+
+#: Template/Admin/Banners/add.ctp:28;78
+msgid "Add Banner"
+msgstr ""
+
+#: Template/Admin/Banners/add.ctp:33;36
+msgid "Banner"
+msgstr "Banner"
+
+#: Template/Admin/Banners/add.ctp:40
+#: Template/Admin/Banners/upload.ctp:40
+#: Template/Admin/Photos/upload.ctp:40
+#: Template/Admin/Systems/browser.ctp:37
+#: Template/Admin/Systems/changelogs.ctp:41
+#: Template/Admin/Systems/logs.ctp:42
+msgid "Select"
+msgstr "Seleziona"
+
+#: Template/Admin/Banners/add.ctp:51
+#: Template/Admin/Banners/edit.ctp:33
+#: Template/Admin/Banners/index.ctp:58
+msgid "Position"
+msgstr "Posizione"
+
+#: Template/Admin/Banners/add.ctp:55
+#: Template/Admin/Banners/edit.ctp:36
+#: Template/Admin/Pages/add.ctp:50
+#: Template/Admin/Pages/edit.ctp:49
+#: Template/Admin/PhotosAlbums/add.ctp:37
+#: Template/Admin/PhotosAlbums/edit.ctp:36
+#: Template/Admin/Posts/add.ctp:61
+#: Template/Admin/Posts/edit.ctp:60
+msgid "Published"
+msgstr "Pubblicato"
+
+#: Template/Admin/Banners/add.ctp:63
+#: Template/Admin/Banners/edit.ctp:47
+#: Template/Admin/Banners/index.ctp:57
+#: Template/Admin/Pages/statics.ctp:31
+#: Template/Admin/Photos/edit.ctp:44
+msgid "Filename"
+msgstr "Filename"
+
+#: Template/Admin/Banners/add.ctp:68
+#: Template/Admin/Banners/edit.ctp:50
+msgid "Web address"
+msgstr "Indirizzo web"
+
+#: Template/Admin/Banners/add.ctp:69
+#: Template/Admin/Banners/edit.ctp:51
+msgid "The address should begin with {0}"
+msgstr ""
+
+#: Template/Admin/Banners/add.ctp:72
+#: Template/Admin/Banners/edit.ctp:54
+#: Template/Admin/Banners/index.ctp:60
+#: Template/Admin/BannersPositions/index.ctp:35
+#: Template/Admin/Photos/edit.ctp:47
+#: Template/Admin/PhotosAlbums/add.ctp:53
+#: Template/Admin/PhotosAlbums/edit.ctp:52
+#: Template/Admin/PhotosAlbums/index.ctp:35
+#: Template/Admin/PostsCategories/add.ctp:55
+#: Template/Admin/PostsCategories/edit.ctp:56
+#: Template/Admin/UsersGroups/add.ctp:39
+#: Template/Admin/UsersGroups/edit.ctp:40
+msgid "Description"
+msgstr "Descrizione"
+
+#: Template/Admin/Banners/edit.ctp:25
+msgid "Edit banner"
+msgstr "Modifica banner"
+
+#: Template/Admin/Banners/edit.ctp:28;60
+msgid "Edit Banner"
+msgstr ""
+
+#: Template/Admin/Banners/edit.ctp:42
+#: Template/Admin/Photos/edit.ctp:39
+msgid "Preview"
+msgstr "Anteprima"
+
+#: Template/Admin/Banners/index.ctp:25;28
+#: View/Helper/MenuHelper.php:53
+msgid "List banners"
+msgstr "Elenca banner"
+
+#: Template/Admin/Banners/index.ctp:29
+#: Template/Admin/BannersPositions/index.ctp:29
+#: Template/Admin/Pages/index.ctp:32
+#: Template/Admin/PhotosAlbums/index.ctp:29
+#: Template/Admin/Posts/index.ctp:32
+#: Template/Admin/PostsCategories/index.ctp:29
+#: Template/Admin/Users/index.ctp:32
+#: Template/Admin/UsersGroups/index.ctp:29
+msgid "Add"
+msgstr "Aggiungi"
+
+#: Template/Admin/Banners/index.ctp:34
+#: Template/Admin/Pages/index.ctp:37
+#: Template/Admin/Posts/index.ctp:37
+#: Template/Admin/Users/index.ctp:37
+msgid "Filter"
+msgstr "Filtro"
+
+#: Template/Admin/Banners/index.ctp:37
+msgid "filename"
+msgstr "filename"
+
+#: Template/Admin/Banners/index.ctp:42
+#: Template/Admin/Pages/index.ctp:45
+#: Template/Admin/Posts/index.ctp:45
+#: Template/Admin/Users/index.ctp:45
+msgid "all status"
+msgstr "tutti gli status"
+
+#: Template/Admin/Banners/index.ctp:43
+#: Template/Admin/Pages/index.ctp:46
+#: Template/Admin/Posts/index.ctp:46
+msgid "Only published"
+msgstr "Solo pubblicati"
+
+#: Template/Admin/Banners/index.ctp:43
+msgid "Only not published"
+msgstr "Solo non pubblicati"
+
+#: Template/Admin/Banners/index.ctp:47
+msgid "all positions"
+msgstr "tutte le posizioni"
+
+#: Template/Admin/Banners/index.ctp:59
+msgid "Url"
+msgstr "Url"
+
+#: Template/Admin/Banners/index.ctp:61
+msgid "Click"
+msgstr "Click"
+
+#: Template/Admin/Banners/index.ctp:73
+#: Template/Admin/PhotosAlbums/index.ctp:49
+msgid "Not published"
+msgstr "Non pubblicato"
+
+#: Template/Admin/Banners/index.ctp:78
+#: Template/Admin/BannersPositions/index.ctp:48
+#: Template/Admin/Pages/index.ctp:88
+#: Template/Admin/Photos/index.ctp:38
+#: Template/Admin/PhotosAlbums/index.ctp:55
+#: Template/Admin/Posts/index.ctp:98
+#: Template/Admin/PostsCategories/index.ctp:48
+#: Template/Admin/Users/index.ctp:96
+#: Template/Admin/Users/view.ctp:32
+#: Template/Admin/UsersGroups/index.ctp:48
+msgid "Edit"
+msgstr "Modifica"
+
+#: Template/Admin/Banners/index.ctp:79
+#: Template/Admin/BannersPositions/index.ctp:49
+#: Template/Admin/Pages/index.ctp:96
+#: Template/Admin/Photos/index.ctp:43
+#: Template/Admin/PhotosAlbums/index.ctp:60
+#: Template/Admin/Posts/index.ctp:102
+#: Template/Admin/PostsCategories/index.ctp:49
+#: Template/Admin/Users/index.ctp:105
+#: Template/Admin/Users/view.ctp:41
+#: Template/Admin/UsersGroups/index.ctp:49
+msgid "Delete"
+msgstr "Cancella"
+
+#: Template/Admin/Banners/index.ctp:79
+#: Template/Admin/BannersPositions/index.ctp:49
+#: Template/Admin/Pages/index.ctp:96
+#: Template/Admin/Photos/index.ctp:43
+#: Template/Admin/PhotosAlbums/index.ctp:60
+#: Template/Admin/Posts/index.ctp:102
+#: Template/Admin/PostsCategories/index.ctp:49
+#: Template/Admin/Users/index.ctp:105
+#: Template/Admin/Users/view.ctp:41
+#: Template/Admin/UsersGroups/index.ctp:49
+msgid "Are you sure you want to delete this?"
+msgstr "Sei sicuro di volerlo cancellare?"
+
+#: Template/Admin/Banners/upload.ctp:25;28
+#: View/Helper/MenuHelper.php:54
+msgid "Upload banners"
+msgstr "Carica banner"
+
+#: Template/Admin/Banners/upload.ctp:33;36
+msgid "Position to upload photos"
+msgstr ""
+
+#: Template/Admin/BannersPositions/add.ctp:25
+msgid "Add banners position"
+msgstr "Aggiungi posizione dei banner"
+
+#: Template/Admin/BannersPositions/add.ctp:28;36
+msgid "Add Banners Position"
+msgstr ""
+
+#: Template/Admin/BannersPositions/edit.ctp:25
+msgid "Edit banners position"
+msgstr "Modifica posizione dei banner"
+
+#: Template/Admin/BannersPositions/edit.ctp:28;36
+msgid "Edit Banners Position"
+msgstr ""
+
+#: Template/Admin/BannersPositions/index.ctp:25;28
+msgid "List banners positions"
+msgstr ""
+
+#: Template/Admin/BannersPositions/index.ctp:34
+#: Template/Admin/Users/index.ctp:71
+#: Template/Admin/Users/view.ctp:55
+#: Template/Admin/UsersGroups/add.ctp:33
+#: Template/Admin/UsersGroups/edit.ctp:34
+#: Template/Admin/UsersGroups/index.ctp:34
+msgid "Name"
+msgstr "Nome"
+
+#: Template/Admin/BannersPositions/index.ctp:36
+#: Template/Admin/Systems/checkup.ctp:100
+#: View/Helper/MenuHelper.php:64
+msgid "Banners"
+msgstr "Banner"
+
+#: Template/Admin/Pages/add.ctp:26
+#: View/Helper/MenuHelper.php:81
+msgid "Add page"
+msgstr "Aggiungi pagina"
+
+#: Template/Admin/Pages/add.ctp:33;73
+msgid "Add Page"
+msgstr ""
+
+#: Template/Admin/Pages/add.ctp:38
+#: Template/Admin/Pages/edit.ctp:38
+#: Template/Admin/Pages/index.ctp:68
+#: Template/Admin/Posts/add.ctp:49
+#: Template/Admin/Posts/edit.ctp:49
+#: Template/Admin/Posts/index.ctp:78
+#: Template/Admin/Users/index.ctp:75
+msgid "Date"
+msgstr "Data"
+
+#: Template/Admin/Pages/add.ctp:40
+#: Template/Admin/Pages/edit.ctp:40
+#: Template/Admin/Posts/add.ctp:51
+#: Template/Admin/Posts/edit.ctp:51
+msgid "If blank, the current date and time will be used"
+msgstr "Se vuoto, saranno usate data e orario correnti"
+
+#: Template/Admin/Pages/add.ctp:41
+#: Template/Admin/Pages/edit.ctp:41
+#: Template/Admin/Posts/add.ctp:52
+#: Template/Admin/Posts/edit.ctp:52
+msgid "You can delay the publication by entering a future date"
+msgstr "Con una data futura la pubblicazione sarà posticipata"
+
+#: Template/Admin/Pages/add.ctp:46
+#: Template/Admin/Pages/edit.ctp:46
+#: Template/Admin/Pages/index.ctp:67
+#: Template/Admin/Posts/add.ctp:57
+#: Template/Admin/Posts/edit.ctp:57
+#: Template/Admin/Posts/index.ctp:77
+msgid "Priority"
+msgstr "Priorità"
+
+#: Template/Admin/Pages/add.ctp:51
+#: Template/Admin/Pages/edit.ctp:50
+#: Template/Admin/Posts/add.ctp:62
+#: Template/Admin/Posts/edit.ctp:61
+msgid "Disable this option to save as a draft"
+msgstr "Disabilita questa opzione per salvare come bozza"
+
+#: Template/Admin/Pages/add.ctp:59
+#: Template/Admin/Pages/edit.ctp:58
+#: Template/Admin/Pages/index.ctp:66
+#: Template/Admin/Pages/statics.ctp:32
+#: Template/Admin/PhotosAlbums/add.ctp:45
+#: Template/Admin/PhotosAlbums/edit.ctp:44
+#: Template/Admin/PhotosAlbums/index.ctp:34
+#: Template/Admin/Posts/add.ctp:70
+#: Template/Admin/Posts/edit.ctp:69
+#: Template/Admin/Posts/index.ctp:74
+#: Template/Admin/PostsCategories/add.ctp:47
+#: Template/Admin/PostsCategories/edit.ctp:48
+#: Template/Admin/PostsCategories/index.ctp:34
+msgid "Title"
+msgstr "Titolo"
+
+#: Template/Admin/Pages/add.ctp:61
+#: Template/Admin/Pages/edit.ctp:61
+#: Template/Admin/Posts/add.ctp:72
+#: Template/Admin/Posts/edit.ctp:71
+msgid "Subtitle"
+msgstr "Sottotitolo"
+
+#: Template/Admin/Pages/add.ctp:64
+#: Template/Admin/Pages/edit.ctp:65
+#: Template/Admin/PhotosAlbums/add.ctp:49
+#: Template/Admin/PhotosAlbums/edit.ctp:48
+#: Template/Admin/Posts/add.ctp:75
+#: Template/Admin/Posts/edit.ctp:74
+#: Template/Admin/PostsCategories/add.ctp:51
+#: Template/Admin/PostsCategories/edit.ctp:52
+msgid "Slug"
+msgstr "Slug"
+
+#: Template/Admin/Pages/add.ctp:65
+#: Template/Admin/Pages/edit.ctp:66
+#: Template/Admin/PhotosAlbums/add.ctp:50
+#: Template/Admin/PhotosAlbums/edit.ctp:49
+#: Template/Admin/Posts/add.ctp:76
+#: Template/Admin/Posts/edit.ctp:75
+#: Template/Admin/PostsCategories/add.ctp:52
+#: Template/Admin/PostsCategories/edit.ctp:53
+msgid ""
+"The slug is a string identifying a resource. If you do not have special "
+"needs, let it be generated automatically"
+msgstr ""
+"Lo slug è una stringa che identifica una risorsa. Se non hai particolari "
+"necessità, lascia che sia generato automaticamente"
+
+#: Template/Admin/Pages/add.ctp:68
+#: Template/Admin/Pages/edit.ctp:69
+#: Template/Admin/Posts/add.ctp:79
+#: Template/Admin/Posts/edit.ctp:78
+msgid "Text"
+msgstr "Testo"
+
+#: Template/Admin/Pages/edit.ctp:26;73
+msgid "Edit page"
+msgstr "Modifica pagina"
+
+#: Template/Admin/Pages/edit.ctp:33
+msgid "Edit Page"
+msgstr ""
+
+#: Template/Admin/Pages/index.ctp:26;31
+#: Template/Cell/Pages/pages.ctp:34
+#: Template/Element/frontend/topbar.ctp:43
+#: Template/Pages/index.ctp:25;29
+#: View/Helper/MenuHelper.php:85
+msgid "Pages"
+msgstr "Pagine"
+
+#: Template/Admin/Pages/index.ctp:40
+#: Template/Admin/Posts/index.ctp:40
+msgid "title"
+msgstr "titolo"
+
+#: Template/Admin/Pages/index.ctp:46
+#: Template/Admin/Posts/index.ctp:46
+msgid "Only drafts"
+msgstr "Solo bozze"
+
+#: Template/Admin/Pages/index.ctp:50
+#: Template/Admin/Posts/index.ctp:58
+msgid "all priorities"
+msgstr "tutte le priorità"
+
+#: Template/Admin/Pages/index.ctp:55
+#: Template/Admin/Posts/index.ctp:63
+#: Template/Admin/Users/index.ctp:59
+msgid "month"
+msgstr "mese"
+
+#: Template/Admin/Pages/index.ctp:80
+#: Template/Admin/Posts/index.ctp:90
+msgid "Draft"
+msgstr "Bozza"
+
+#: Template/Admin/Pages/index.ctp:92
+#: Template/Admin/Pages/statics.ctp:44
+#: Template/Admin/Photos/index.ctp:46
+#: Template/Admin/PhotosAlbums/index.ctp:63
+#: Template/Admin/Posts/index.ctp:106
+#: Template/Admin/PostsCategories/index.ctp:53
+msgid "Open"
+msgstr "Apri"
+
+#: Template/Admin/Pages/index.ctp:105
+#: Template/Admin/Posts/index.ctp:117
+#: View/View/AdminView.php:48
+msgid "Very low"
+msgstr "Molto bassa"
+
+#: Template/Admin/Pages/index.ctp:108
+#: Template/Admin/Posts/index.ctp:120
+#: View/View/AdminView.php:49
+msgid "Low"
+msgstr "Bassa"
+
+#: Template/Admin/Pages/index.ctp:111
+#: Template/Admin/Posts/index.ctp:123
+#: View/View/AdminView.php:51
+msgid "High"
+msgstr "Alta"
+
+#: Template/Admin/Pages/index.ctp:114
+#: Template/Admin/Posts/index.ctp:126
+#: View/View/AdminView.php:52
+msgid "Very high"
+msgstr "Molto alta"
+
+#: Template/Admin/Pages/index.ctp:117
+#: Template/Admin/Posts/index.ctp:129
+#: View/View/AdminView.php:50
+msgid "Normal"
+msgstr "Normale"
+
+#: Template/Admin/Pages/statics.ctp:25;28
+msgid "Static Pages"
+msgstr ""
+
+#: Template/Admin/Pages/statics.ctp:33
+msgid "Path"
+msgstr "Percorso"
+
+#: Template/Admin/Photos/edit.ctp:25
+msgid "Edit photo"
+msgstr "Modifica foto"
+
+#: Template/Admin/Photos/edit.ctp:28;53
+msgid "Edit Photo"
+msgstr ""
+
+#: Template/Admin/Photos/edit.ctp:33
+msgid "Album"
+msgstr "Album"
+
+#: Template/Admin/Photos/index.ctp:25;28
+msgid "List photos"
+msgstr ""
+
+#: Template/Admin/Photos/upload.ctp:25;28
+#: View/Helper/MenuHelper.php:96
+msgid "Upload photos"
+msgstr "Carica foto"
+
+#: Template/Admin/Photos/upload.ctp:33;36
+msgid "Album to upload photos"
+msgstr ""
+
+#: Template/Admin/PhotosAlbums/add.ctp:26
+msgid "Add photos album"
+msgstr "Aggiungi album"
+
+#: Template/Admin/PhotosAlbums/add.ctp:31;57
+msgid "Add Photos Album"
+msgstr ""
+
+#: Template/Admin/PhotosAlbums/edit.ctp:26
+msgid "Edit photos album"
+msgstr "Modifica album"
+
+#: Template/Admin/PhotosAlbums/edit.ctp:31;56
+msgid "Edit Photos Album"
+msgstr ""
+
+#: Template/Admin/PhotosAlbums/index.ctp:25;28
+#: Template/PhotosAlbums/index.ctp:25;28
+msgid "List photos albums"
+msgstr ""
+
+#: Template/Admin/PhotosAlbums/index.ctp:36
+#: Template/Admin/Systems/checkup.ctp:107
+#: Template/Element/frontend/topbar.ctp:44
+#: View/Helper/MenuHelper.php:101
+msgid "Photos"
+msgstr "Foto"
+
+#: Template/Admin/PhotosAlbums/index.ctp:54
+#: Template/Admin/Users/index.ctp:95
+msgid "View"
+msgstr "Vedi"
+
+#: Template/Admin/Posts/add.ctp:26
+#: View/Helper/MenuHelper.php:114
+msgid "Add post"
+msgstr "Aggiungi articolo"
+
+#: Template/Admin/Posts/add.ctp:33;84
+msgid "Add Post"
+msgstr ""
+
+#: Template/Admin/Posts/add.ctp:41
+#: Template/Admin/Posts/edit.ctp:41
+#: Template/Admin/Posts/index.ctp:76
+msgid "Author"
+msgstr "Autore"
+
+#: Template/Admin/Posts/add.ctp:46
+#: Template/Admin/Posts/edit.ctp:46
+#: Template/Admin/Posts/index.ctp:75
+msgid "Category"
+msgstr "Categoria"
+
+#: Template/Admin/Posts/edit.ctp:26
+msgid "Edit post"
+msgstr "Modifica articolo"
+
+#: Template/Admin/Posts/edit.ctp:33;83
+msgid "Edit Post"
+msgstr ""
+
+#: Template/Admin/Posts/index.ctp:26;31
+#: Template/Admin/PostsCategories/index.ctp:36
+#: Template/Admin/Users/index.ctp:74
+#: Template/Admin/Users/view.ctp:74
+#: Template/Posts/index.ctp:25
+#: View/Helper/MenuHelper.php:124
+msgid "Posts"
+msgstr "Articoli"
+
+#: Template/Admin/Posts/index.ctp:50
+msgid "all users"
+msgstr "tutti gli utenti"
+
+#: Template/Admin/Posts/index.ctp:54
+msgid "all categories"
+msgstr "tutte le categorie"
+
+#: Template/Admin/PostsCategories/add.ctp:26
+msgid "Add posts category"
+msgstr "Aggiungi categoria"
+
+#: Template/Admin/PostsCategories/add.ctp:31;60
+msgid "Add Posts Category"
+msgstr ""
+
+#: Template/Admin/PostsCategories/add.ctp:37
+#: Template/Admin/PostsCategories/edit.ctp:38
+msgid "Parent category"
+msgstr "Categoria genitore"
+
+#: Template/Admin/PostsCategories/add.ctp:39
+#: Template/Admin/PostsCategories/edit.ctp:40
+msgid "Leave blank to create a parent category"
+msgstr "Lasciare vuoto per creare una categoria genitore"
+
+#: Template/Admin/PostsCategories/edit.ctp:26
+msgid "Edit posts category"
+msgstr "Modifica categoria"
+
+#: Template/Admin/PostsCategories/edit.ctp:31;61
+msgid "Edit Posts Category"
+msgstr ""
+
+#: Template/Admin/PostsCategories/index.ctp:25;28
+msgid "List posts categories"
+msgstr ""
+
+#: Template/Admin/PostsCategories/index.ctp:35
+msgid "Parent"
+msgstr "Genitore"
+
+#: Template/Admin/Systems/browser.ctp:25;28
+#: View/Helper/MenuHelper.php:169
+msgid "Media browser"
+msgstr "Browser multimediale"
+
+#: Template/Admin/Systems/browser.ctp:32
+msgid "Type"
+msgstr "Tipo"
+
+#: Template/Admin/Systems/cache.ctp:25;29
+#: View/Helper/MenuHelper.php:167
+msgid "Cache and thumbs"
+msgstr "Cache e miniature"
+
+#: Template/Admin/Systems/cache.ctp:31
+msgid "Cache"
+msgstr "Cache"
+
+#: Template/Admin/Systems/cache.ctp:33
+#: Template/Admin/Systems/checkup.ctp:141
+msgid "The cache is disabled or debugging is active"
+msgstr "La cache è disabilitata o il debug è attivo"
+
+#: Template/Admin/Systems/cache.ctp:35
+msgid "Cache size: {0}"
+msgstr ""
+
+#: Template/Admin/Systems/cache.ctp:36
+msgid ""
+"Note: you should not need to clear the cache, unless you have not edited the "
+"configuration or after an upgrade"
+msgstr ""
+"Nota: non dovresti aver bisogno di svuotare la cache, a meno che tu non abbia "
+"modificato la configurazione o dopo un aggiornamento"
+
+#: Template/Admin/Systems/cache.ctp:37
+msgid "Clear cache"
+msgstr ""
+
+#: Template/Admin/Systems/cache.ctp:39
+#: Template/Admin/Systems/checkup.ctp:114
+msgid "Thumbs"
+msgstr "Miniature"
+
+#: Template/Admin/Systems/cache.ctp:40
+msgid "Thumbs size: {0}"
+msgstr ""
+
+#: Template/Admin/Systems/cache.ctp:43
+msgid ""
+"Note: you should not need to clear the thumbnails and that this will slow "
+"down the images loading the first time that are displayed. You should clear "
+"thumbnails only when they have reached a large size or when many images are "
+"no longer used"
+msgstr ""
+"Nota: non dovresti aver bisogno di svuotare le miniature e questo rallenterà "
+"il caricamento delle immagini la prima volta che saranno visualizzate. "
+"Dovresti cancellare le miniature solo se queste hanno raggiunto una grossa "
+"dimensione o quando molte immagini non sono più utilizzate"
+
+#: Template/Admin/Systems/cache.ctp:44
+msgid "Clear thumbs"
+msgstr "Svuota le miniature"
+
+#: Template/Admin/Systems/changelogs.ctp:25;28
+#: View/Helper/MenuHelper.php:170
+msgid "Changelogs"
+msgstr "Changelog"
+
+#: Template/Admin/Systems/changelogs.ctp:34;37
+msgid "Changelog"
+msgstr "Changelog"
+
+#: Template/Admin/Systems/checkup.ctp:26;39
+#: View/Helper/MenuHelper.php:168
+msgid "System checkup"
+msgstr "Checkup del sistema"
+
+#: Template/Admin/Systems/checkup.ctp:42;44;53;71
+msgid "{0} version: {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:46
+msgid "Plugins"
+msgstr "Plugin"
+
+#: Template/Admin/Systems/checkup.ctp:49
+msgid "{0} plugin version: {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:56;63
+msgid "The {0} module is enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:58;65
+msgid "The {0} module is not enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:60;67
+msgid "The {0} module cannot be checked"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:74
+msgid "The {0} version is at least {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:76
+msgid "The {0} version is less than {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:79;84;89
+msgid "The {0} extension is enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:81;86;91
+msgid "The {0} extension is not enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:96
+msgid "{0} is available"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:98
+msgid "{0} is not available"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:103;110;117;122;127;149
+msgid "The directory {0} is readable and writable"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:131
+msgid "Temporary directories"
+msgstr "Directory temporanee"
+
+#: Template/Admin/Systems/checkup.ctp:134
+msgid "The temporary directory is readable and writable"
+msgstr "La directory temporanea è leggibile e scrivibile"
+
+#: Template/Admin/Systems/checkup.ctp:136
+msgid "The temporary directory is not readable or writable"
+msgstr "La directory temporanea non è leggibile o scrivibile"
+
+#: Template/Admin/Systems/checkup.ctp:139
+msgid "The cache is enabled"
+msgstr "La cache è abilitata"
+
+#: Template/Admin/Systems/checkup.ctp:144
+msgid "The cache is readable and writable"
+msgstr "La cache è leggibile e scrivibile"
+
+#: Template/Admin/Systems/checkup.ctp:146
+msgid "The cache is not readable or writable"
+msgstr "La cache non è leggibile o scrivibile"
+
+#: Template/Admin/Systems/logs.ctp:25;28
+#: View/Helper/MenuHelper.php:171
+msgid "Log viewer"
+msgstr "Visualizzatore log"
+
+#: Template/Admin/Systems/logs.ctp:35;38
+msgid "Log file"
+msgstr "File di log"
+
+#: Template/Admin/Users/add.ctp:25
+#: View/Helper/MenuHelper.php:141
+msgid "Add user"
+msgstr "Aggiungi utente"
+
+#: Template/Admin/Users/add.ctp:28;75
+msgid "Add User"
+msgstr ""
+
+#: Template/Admin/Users/add.ctp:34
+#: Template/Admin/Users/edit.ctp:33
+msgid "User group"
+msgstr "Gruppo utente"
+
+#: Template/Admin/Users/add.ctp:38
+#: Template/Admin/Users/view.ctp:71
+msgid "Active"
+msgstr "Attivo"
+
+#: Template/Admin/Users/add.ctp:39
+msgid "If is not active, the user won't be able to login"
+msgstr "Se non è attivo, l'utente non potrà loggarsi"
+
+#: Template/Admin/Users/add.ctp:47
+#: Template/Admin/Users/edit.ctp:41
+#: Template/Admin/Users/index.ctp:70
+#: Template/Admin/Users/view.ctp:49
+#: Template/Users/login.ctp:34
+#: Template/Users/signup.ctp:35
+msgid "Username"
+msgstr "Username"
+
+#: Template/Admin/Users/add.ctp:51
+#: Template/Admin/Users/edit.ctp:45
+#: Template/Admin/Users/index.ctp:72
+#: Template/Admin/Users/view.ctp:52
+#: Template/Systems/contact_form.ctp:40
+#: Template/Users/forgot_password.ctp:35
+#: Template/Users/resend_activation.ctp:34
+#: Template/Users/signup.ctp:39
+msgid "Email"
+msgstr "Email"
+
+#: Template/Admin/Users/add.ctp:55
+#: Template/Users/forgot_password.ctp:40
+#: Template/Users/resend_activation.ctp:39
+#: Template/Users/signup.ctp:44
+msgid "Repeat email"
+msgstr "Ripeti email"
+
+#: Template/Admin/Users/add.ctp:59
+#: Template/Admin/Users/change_password.ctp:40
+#: Template/Admin/Users/edit.ctp:49
+#: Template/Users/login.ctp:38
+#: Template/Users/reset_password.ctp:35
+#: Template/Users/signup.ctp:49
+msgid "Password"
+msgstr "Password"
+
+#: Template/Admin/Users/add.ctp:63
+#: Template/Admin/Users/change_password.ctp:45
+#: Template/Admin/Users/edit.ctp:55
+#: Template/Users/reset_password.ctp:40
+#: Template/Users/signup.ctp:54
+msgid "Repeat password"
+msgstr "Ripeti password"
+
+#: Template/Admin/Users/add.ctp:67
+#: Template/Admin/Users/edit.ctp:61
+#: Template/Systems/contact_form.ctp:33
+#: Template/Users/signup.ctp:59
+msgid "First name"
+msgstr "Nome"
+
+#: Template/Admin/Users/add.ctp:71
+#: Template/Admin/Users/edit.ctp:65
+#: Template/Systems/contact_form.ctp:36
+#: Template/Users/signup.ctp:63
+msgid "Last name"
+msgstr "Cognome"
+
+#: Template/Admin/Users/change_password.ctp:25;28;50
+msgid "Change your password"
+msgstr ""
+
+#: Template/Admin/Users/change_password.ctp:34
+msgid "Old password"
+msgstr "Vecchia password"
+
+#: Template/Admin/Users/change_password.ctp:35
+msgid "Enter your old password"
+msgstr "Inserisci la tua vecchia password"
+
+#: Template/Admin/Users/change_password.ctp:41
+#: Template/Users/reset_password.ctp:36
+msgid "Enter your new password"
+msgstr "Inserisci la tua nuova password"
+
+#: Template/Admin/Users/change_password.ctp:46
+#: Template/Users/reset_password.ctp:41
+msgid "Repeat your new password"
+msgstr "Ripeti la tua nuova password"
+
+#: Template/Admin/Users/edit.ctp:25
+msgid "Edit user"
+msgstr "Modifica utente"
+
+#: Template/Admin/Users/edit.ctp:28;69
+msgid "Edit User"
+msgstr ""
+
+#: Template/Admin/Users/edit.ctp:51;57
+msgid ""
+"If you want to change the password just type a new one. Otherwise, leave the "
+"field empty"
+msgstr ""
+"Se vuoi cambiare la password inseriscine una nuova. Altrimenti, lascia questo "
+"campo vuoto"
+
+#: Template/Admin/Users/index.ctp:26;31
+#: View/Helper/MenuHelper.php:140
+msgid "List users"
+msgstr "Elenca utenti"
+
+#: Template/Admin/Users/index.ctp:40
+msgid "username"
+msgstr "nome utente"
+
+#: Template/Admin/Users/index.ctp:47
+msgid "Only active"
+msgstr "Solo attivi"
+
+#: Template/Admin/Users/index.ctp:48
+msgid "Only pending"
+msgstr "Solo in attivazione"
+
+#: Template/Admin/Users/index.ctp:49
+msgid "Only banned"
+msgstr "Solo bannati"
+
+#: Template/Admin/Users/index.ctp:54
+msgid "all groups"
+msgstr "tutti i gruppi"
+
+#: Template/Admin/Users/index.ctp:73
+#: Template/Admin/Users/view.ctp:58
+msgid "Group"
+msgstr "Gruppo"
+
+#: Template/Admin/Users/index.ctp:87
+#: Template/Admin/Users/view.ctp:65
+msgid "Banned"
+msgstr "Bannato"
+
+#: Template/Admin/Users/index.ctp:90
+#: Template/Admin/Users/view.ctp:68
+msgid "Pending"
+msgstr "Non attivo"
+
+#: Template/Admin/Users/index.ctp:103
+#: Template/Admin/Users/view.ctp:39
+msgid "Activate"
+msgstr "Attiva"
+
+#: Template/Admin/Users/index.ctp:103
+#: Template/Admin/Users/view.ctp:39
+msgid "Are you sure you want to activate this account?"
+msgstr "Sei sicuro di voler attivare questo account?"
+
+#: Template/Admin/Users/view.ctp:29
+msgid "User"
+msgstr "Utente"
+
+#: Template/Admin/Users/view.ctp:61
+msgid "Status"
+msgstr "Stato"
+
+#: Template/Admin/Users/view.ctp:78
+msgid "Created"
+msgstr "Creato"
+
+#: Template/Admin/UsersGroups/add.ctp:25
+msgid "Add users group"
+msgstr "Aggiungi gruppo utenti"
+
+#: Template/Admin/UsersGroups/add.ctp:28;45
+msgid "Add Users Group"
+msgstr ""
+
+#: Template/Admin/UsersGroups/add.ctp:36
+#: Template/Admin/UsersGroups/edit.ctp:37
+#: Template/Admin/UsersGroups/index.ctp:35
+msgid "Label"
+msgstr "Etichetta"
+
+#: Template/Admin/UsersGroups/edit.ctp:25
+msgid "Edit users group"
+msgstr "Modifica gruppo utenti"
+
+#: Template/Admin/UsersGroups/edit.ctp:28;46
+msgid "Edit Users Group"
+msgstr ""
+
+#: Template/Admin/UsersGroups/index.ctp:25;28
+msgid "List users groups"
+msgstr ""
+
+#: Template/Admin/UsersGroups/index.ctp:36
+#: View/Helper/MenuHelper.php:151
+msgid "Users"
+msgstr "Utenti"
+
+#: Template/Cell/Photos/albums.ctp:34
+msgid "Albums"
+msgstr ""
+
+#: Template/Cell/Photos/albums.ctp:40
+msgid "Select an album"
+msgstr ""
+
+#: Template/Cell/Photos/random.ctp:34
+msgid "Random {0} photos"
+msgstr ""
+
+#: Template/Cell/Photos/random.ctp:34
+msgid "Random photo"
+msgstr "Foto casuale"
+
+#: Template/Cell/Posts/categories.ctp:34
+#: Template/Element/frontend/topbar.ctp:42
+msgid "Categories"
+msgstr "Categorie"
+
+#: Template/Cell/Posts/categories.ctp:37
+msgid "Select a category"
+msgstr "Seleziona una categoria"
+
+#: Template/Cell/Posts/latest.ctp:34
+msgid "Latest {0} posts"
+msgstr ""
+
+#: Template/Cell/Posts/latest.ctp:34
+msgid "Latest post"
+msgstr "Ultimo articolo"
+
+#: Template/Cell/Posts/search.ctp:33
+#: Template/Posts/search.ctp:25;29
+msgid "Search posts"
+msgstr "Cerca articoli"
+
+#: Template/Cell/Posts/search.ctp:37
+#: Template/Posts/search.ctp:35;37
+msgid "Search"
+msgstr "Cerca"
+
+#: Template/Element/backend/topbar.ctp:30
+#: Template/Element/frontend/topbar.ctp:30
+msgid "Toggle navigation"
+msgstr "Cambia navigazione"
+
+#: Template/Element/backend/topbar.ctp:40
+#: Template/Layout/frontend.ctp:69
+msgid "Homepage"
+msgstr "Homepage"
+
+#: Template/Element/backend/topbar.ctp:61
+msgid "Change password"
+msgstr "Cambia password"
+
+#: Template/Element/backend/topbar.ctp:62
+msgid "Logout"
+msgstr "Logout"
+
+#: Template/Element/backend/uploader/form.ctp:33
+msgid "Drag here files to upload"
+msgstr "Trascina qui i file da caricare"
+
+#: Template/Element/backend/uploader/form.ctp:45
+msgid "The file {0} exceeds the maximum limit"
+msgstr ""
+
+#: Template/Element/backend/uploader/response.ctp:36
+msgid "Directory: {0}"
+msgstr ""
+
+#: Template/Element/backend/uploader/response.ctp:37
+msgid "Type: {0}"
+msgstr ""
+
+#: Template/Element/backend/uploader/response.ctp:38
+msgid "Size: {0}"
+msgstr ""
+
+#: Template/Element/frontend/footer.ctp:26
+msgid "Powered by {0}. Copyright {1}"
+msgstr ""
+
+#: Template/Element/frontend/footer.ctp:27
+msgid "Developed by {0} for {1}"
+msgstr ""
+
+#: Template/Element/frontend/topbar.ctp:41
+msgid "Home"
+msgstr "Home"
+
+#: Template/Element/frontend/views/page.ctp:37
+#: Template/Element/frontend/views/post.ctp:53
+msgid "Posted on {0}"
+msgstr ""
+
+#: Template/Element/frontend/views/page.ctp:56
+#: Template/Element/frontend/views/post.ctp:72
+msgid "Read more"
+msgstr "Leggi tutto"
+
+#: Template/Element/frontend/views/post.ctp:47
+msgid "Posted by {0}"
+msgstr ""
+
+#: Template/Element/login/menu.ctp:27
+#: Template/Users/login.ctp:25;47
+msgid "Login"
+msgstr "Login"
+
+#: Template/Element/login/menu.ctp:31
+#: Template/Users/signup.ctp:26;29;70
+msgid "Sign up"
+msgstr "Registrati"
+
+#: Template/Element/login/menu.ctp:35
+#: Template/Users/resend_activation.ctp:25;28;47
+msgid "Resend activation email"
+msgstr "Rinvia email di attivazione"
+
+#: Template/Element/login/menu.ctp:39
+#: Template/Users/forgot_password.ctp:26;29
+msgid "Forgot your password?"
+msgstr "Password dimenticata?"
+
+#: Template/Email/html/Users/activate_account.ctp:25
+#: Template/Email/html/Users/change_password.ctp:25
+#: Template/Email/html/Users/forgot_password.ctp:25
+msgid "Hello {0}"
+msgstr ""
+
+#: Template/Email/html/Users/activate_account.ctp:27
+msgid "you have signed on the site {0}"
+msgstr ""
+
+#: Template/Email/html/Users/activate_account.ctp:29
+msgid "To activate your account, click {0}"
+msgstr ""
+
+#: Template/Email/html/Users/activate_account.ctp:29
+#: Template/Email/html/Users/forgot_password.ctp:29
+msgid "here"
+msgstr "qui"
+
+#: Template/Email/html/Users/activate_account.ctp:31
+#: Template/Email/html/Users/change_password.ctp:28
+#: Template/Email/html/Users/forgot_password.ctp:31
+msgid "If you have not made this request, please contact an administrator"
+msgstr ""
+"se non hai effettuato tu questa richiesta, per favore contatta un "
+"amministratore"
+
+#: Template/Email/html/Users/change_password.ctp:27
+msgid "you have recently changed your password on our site {0}"
+msgstr ""
+
+#: Template/Email/html/Users/forgot_password.ctp:27
+msgid "you have requested to change your password on the site {0}"
+msgstr ""
+
+#: Template/Email/html/Users/forgot_password.ctp:29
+msgid "To reset your password, click {0}"
+msgstr ""
+
+#: Template/Layout/frontend.ctp:33
+#: Template/Posts/rss/rss.ctp:30;32
+msgid "Latest posts"
+msgstr "Ultimi articoli"
+
+#: Template/Layout/Email/html/default.ctp:38
+msgid "This email was sent automatically from {0}"
+msgstr ""
+
+#: Template/Layout/Email/html/default.ctp:42
+msgid "The request has been sent from the IP {0}"
+msgstr ""
+
+#: Template/Layout/Email/html/default.ctp:43
+msgid "Please, don't reply to this email"
+msgstr ""
+
+#: Template/PhotosAlbums/index.ctp:39
+msgid "{0} photos"
+msgstr ""
+
+#: Template/Posts/search.ctp:44
+msgid "You have searched for: {0}"
+msgstr ""
+
+#: Template/PostsCategories/index.ctp:25;29
+msgid "Posts categories"
+msgstr "Categorie"
+
+#: Template/Systems/contact_form.ctp:25;28
+msgid "Contact us"
+msgstr "Contattaci"
+
+#: Template/Systems/contact_form.ctp:41
+#: Template/Users/forgot_password.ctp:36
+#: Template/Users/resend_activation.ctp:35
+#: Template/Users/signup.ctp:40
+msgid "Enter your email"
+msgstr "Inserisci la tua email"
+
+#: Template/Systems/contact_form.ctp:44
+msgid "Message"
+msgstr "Messaggio"
+
+#: Template/Systems/contact_form.ctp:53
+msgid "Send"
+msgstr "Invia"
+
+#: Template/Systems/offline.ctp:28
+msgid "The website is temporarily offline"
+msgstr "Il sito è temporaneamente offline"
+
+#: Template/Users/forgot_password.ctp:41
+#: Template/Users/resend_activation.ctp:40
+#: Template/Users/signup.ctp:45
+msgid "Repeat your email"
+msgstr "Ripeti la tua email"
+
+#: Template/Users/forgot_password.ctp:48
+msgid "Request new password"
+msgstr "Richiedi una nuova password"
+
+#: Template/Users/login.ctp:41
+msgid "Remember me"
+msgstr "Ricordami"
+
+#: Template/Users/login.ctp:42
+msgid "Don't use on public computers"
+msgstr "Non usare su computer pubblici"
+
+#: Template/Users/reset_password.ctp:26;29;45
+msgid "Reset password"
+msgstr "Reimposta password"
+
+#: Template/Users/signup.ctp:50
+msgid "Enter your password"
+msgstr "Inserisci la tua password"
+
+#: Template/Users/signup.ctp:55
+msgid "Repeat your password"
+msgstr "Ripeti la tua password"
+
+#: View/Helper/BaseMenuHelper.php:86
+msgid "The {0} method does not exist"
+msgstr ""
+
+#: View/Helper/MenuHelper.php:60
+msgid "List positions"
+msgstr "Elenca posizioni"
+
+#: View/Helper/MenuHelper.php:61
+msgid "Add position"
+msgstr "Aggiungi posizioni"
+
+#: View/Helper/MenuHelper.php:76
+msgid "List pages"
+msgstr "Elenca pagine"
+
+#: View/Helper/MenuHelper.php:83
+msgid "List static pages"
+msgstr "Elenca pagine statiche"
+
+#: View/Helper/MenuHelper.php:97
+msgid "List albums"
+msgstr "Elenca album"
+
+#: View/Helper/MenuHelper.php:98
+msgid "Add album"
+msgstr "Aggiungi album"
+
+#: View/Helper/MenuHelper.php:113
+msgid "List posts"
+msgstr "Elenca articoli"
+
+#: View/Helper/MenuHelper.php:120
+msgid "List categories"
+msgstr "Elenca categorie"
+
+#: View/Helper/MenuHelper.php:121
+msgid "Add category"
+msgstr "Aggiungi categoria"
+
+#: View/Helper/MenuHelper.php:147
+msgid "List groups"
+msgstr "Elenca gruppi"
+
+#: View/Helper/MenuHelper.php:148
+msgid "Add group"
+msgstr "Aggiungi gruppo"
+
+#: View/Helper/MenuHelper.php:174
+msgid "System"
+msgstr "Sistema"
+
+

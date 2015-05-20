@@ -55,7 +55,7 @@ class UserValidator extends AppValidator {
 				'rule'		=> ['lengthBetween', 4, 40]
 			],
 			'slug' => [
-				'message'	=> __d('me_cms', 'Allowed chars: lowercase letters, numbers, dash'),
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
 				'rule'		=> [$this, 'slug']
 			],
 			'unique' => [

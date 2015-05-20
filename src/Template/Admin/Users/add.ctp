@@ -22,10 +22,10 @@
  */
 ?>
 
-<?php $this->assign('title', __('Add user')); ?>
+<?php $this->assign('title', __d('me_cms', 'Add user')); ?>
 
 <div class="users form">
-	<?= $this->Html->h2(__('Add User')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Add User')) ?>
     <?= $this->Form->create($user); ?>
 	<div class='float-form'>
 		<?php
@@ -72,6 +72,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__('Add User')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Add User')) ?>
     <?= $this->Form->end() ?>
 </div>

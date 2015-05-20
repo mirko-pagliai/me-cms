@@ -23,12 +23,12 @@
 ?>
 
 <?php
-	$this->assign('title', __('List users'));
+	$this->assign('title', __d('me_cms', 'List users'));
 	$this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'years']);
 ?>
 
 <div class="users index">
-	<?= $this->Html->h2(__('List users')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'List users')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>

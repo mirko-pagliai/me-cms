@@ -76,7 +76,7 @@ class AppValidator extends Validator {
 				'rule'		=> ['lengthBetween', 3, 40]
 			],
 			'personName' => [
-				'message'	=> __d('me_cms', 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'),
+				'message'	=> sprintf('%s: %s. %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'letters, apostrophe, space'), __d('me_cms', 'Has to begin with a capital letter')),
 				'rule'		=> [$this, 'personName']
 			]
 		]);
@@ -88,7 +88,7 @@ class AppValidator extends Validator {
 				'rule'		=> ['lengthBetween', 3, 40]
 			],
 			'personName' => [
-				'message'	=> __d('me_cms', 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'),
+				'message'	=> sprintf('%s: %s. %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'letters, apostrophe, space'), __d('me_cms', 'Has to begin with a capital letter')),
 				'rule'		=> [$this, 'personName']
 			]
 		]);	
@@ -137,7 +137,7 @@ class AppValidator extends Validator {
 				'rule'		=> ['lengthBetween', 6, 100]
 			],
 			'slug' => [
-				'message'	=> __d('me_cms', 'Allowed chars: lowercase letters, numbers, dash'),
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
 				'rule'		=> [$this, 'slug']
 			],
 			'validateUnique' => [

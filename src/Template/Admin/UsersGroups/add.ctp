@@ -22,10 +22,10 @@
  */
 ?>
 	
-<?php $this->assign('title', __('Add users group')); ?>
+<?php $this->assign('title', __d('me_cms', 'Add users group')); ?>
 
 <div class="usersGroups form">
-	<?= $this->Html->h2(__('Add Users Group')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Add Users Group')) ?>
     <?= $this->Form->create($group); ?>
     <fieldset>
         <?php
@@ -42,6 +42,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__('Add Users Group')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Add Users Group')) ?>
     <?= $this->Form->end() ?>
 </div>

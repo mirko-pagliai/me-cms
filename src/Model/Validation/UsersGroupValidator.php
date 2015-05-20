@@ -51,7 +51,7 @@ class UsersGroupValidator extends AppValidator {
 				'rule'		=> 'validateUnique'
 			],
 			'valid' => [
-				'message'	=> __d('me_cms', 'Allowed chars: lowercase letters'),
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters')),
 				'rule'		=> [$this, 'lowercaseLetters']
 			]
 		])->requirePresence('name', 'create');
