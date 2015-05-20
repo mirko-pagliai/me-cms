@@ -222,7 +222,7 @@ class UsersController extends AppController {
 				return $this->redirect(['_name' => 'dashboard']);
 			}
 			else
-				$this->Flash->error(__d('me_cms', 'The password has not been edited. Please, try again'));
+				$this->Flash->error(__d('me_cms', 'The password has not been edited'));
 		}
 
 		$this->set(compact('user'));

@@ -30,7 +30,7 @@
 ?>
 
 <div class="pages form">
-	<?= $this->Html->h2(__d('me_cms', 'Add Page')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Add page')) ?>
     <?= $this->Form->create($page); ?>
 	<div class='float-form'>
 		<?php
@@ -70,6 +70,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add Page')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Add page')) ?>
     <?= $this->Form->end() ?>
 </div>

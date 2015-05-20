@@ -25,7 +25,7 @@
 <?php $this->assign('title', __d('me_cms', 'Edit banners position')); ?>
 
 <div class="bannersPositions form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Banners Position')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit banners position')) ?>
     <?= $this->Form->create($position); ?>
     <fieldset>
         <?php
@@ -33,6 +33,6 @@
             echo $this->Form->input('description');
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Banners Position')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit position')) ?>
     <?= $this->Form->end() ?>
 </div>

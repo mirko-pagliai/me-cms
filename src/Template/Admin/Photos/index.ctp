@@ -22,10 +22,10 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'List photos')); ?>
+<?php $this->assign('title', __d('me_cms', 'Photos')); ?>
 
 <div class="photos index">
-	<?= $this->Html->h2(__d('me_cms', 'List photos')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Photos')) ?>
 	<div class='clearfix'>
 		<?php foreach($photos as $photo): ?>
 			<div class="col-sm-6 col-md-4 col-lg-3">

@@ -25,7 +25,7 @@
 <?php $this->assign('title', __d('me_cms', 'Edit banner')); ?>
 
 <div class="banners form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Banner')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit banner')) ?>
     <?= $this->Form->create($banner); ?>
 	<div class='float-form'>
 		<?php
@@ -57,6 +57,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Banner')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit banner')) ?>
     <?= $this->Form->end() ?>
 </div>

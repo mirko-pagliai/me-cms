@@ -28,7 +28,7 @@
 ?>
 
 <div class="postsCategories form">
-	<?= $this->Html->h2(__d('me_cms', 'Add Posts Category')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Add posts category')) ?>
     <?= $this->Form->create($category); ?>
 	<div class='float-form'>
 		<?php
@@ -57,6 +57,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add Posts Category')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Add category')) ?>
     <?= $this->Form->end() ?>
 </div>

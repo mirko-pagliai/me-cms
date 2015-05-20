@@ -26,7 +26,7 @@
 
 <div class="users view">
 	<?php 
-		echo $this->Html->h2(__d('me_cms', 'User'));
+		echo $this->Html->h2($user->full_name);
 	
 		$actions = [
 			$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['icon' => 'pencil'])

@@ -25,7 +25,7 @@
 <?php $this->assign('title', __d('me_cms', 'Edit photo')); ?>
 
 <div class="photos form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Photo')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit photo')) ?>
     <?= $this->Form->create($photo); ?>
 	<div class='float-form'>
 		<?php
@@ -50,6 +50,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Photo')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit photo')) ?>
     <?= $this->Form->end() ?>
 </div>

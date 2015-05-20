@@ -30,7 +30,7 @@
 ?>
 
 <div class="pages form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Page')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit page')) ?>
     <?= $this->Form->create($page); ?>
 	<div class='float-form'>
 		<?php

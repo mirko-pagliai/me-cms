@@ -22,10 +22,10 @@
  */
 ?>
 	
-<?php $this->assign('title', __d('me_cms', 'List users groups')); ?>
+<?php $this->assign('title', __d('me_cms', 'Users groups')); ?>
 
 <div class="usersGroups index">
-	<?= $this->Html->h2(__d('me_cms', 'List users groups')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Users groups')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">

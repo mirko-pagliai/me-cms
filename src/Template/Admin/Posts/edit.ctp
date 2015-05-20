@@ -30,7 +30,7 @@
 ?>
 
 <div class="posts form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Post')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit post')) ?>
     <?= $this->Form->create($post); ?>
 	<div class='float-form'>
 		<?php
@@ -80,6 +80,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Post')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit post')) ?>
     <?= $this->Form->end() ?>
 </div>

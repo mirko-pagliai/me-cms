@@ -22,10 +22,10 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Static Pages')); ?>
+<?php $this->assign('title', __d('me_cms', 'Static pages')); ?>
 
 <div class="pages index">
-	<?= $this->Html->h2(__d('me_cms', 'Static Pages')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Static pages')) ?>
 	<table class="table table-striped">
 		<tr>
 			<th><?= __d('me_cms', 'Filename') ?></th>

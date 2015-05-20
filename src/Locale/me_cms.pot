@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-20 14:59+0000\n"
+"POT-Creation-Date: 2015-05-20 15:17+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -107,6 +107,7 @@ msgid "The password has been edited"
 msgstr ""
 
 #: Controller/UsersController.php:330
+#: Controller/Admin/UsersController.php:225
 msgid "The password has not been edited"
 msgstr ""
 
@@ -326,10 +327,6 @@ msgstr ""
 msgid "Your password has been changed"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:225
-msgid "The password has not been edited. Please, try again"
-msgstr ""
-
 #: Controller/Admin/UsersGroupsController.php:65;87
 msgid "The users group has been saved"
 msgstr ""
@@ -459,12 +456,8 @@ msgstr ""
 msgid "lowercase letters"
 msgstr ""
 
-#: Template/Admin/Banners/add.ctp:25
+#: Template/Admin/Banners/add.ctp:25;28;78
 msgid "Add banner"
-msgstr ""
-
-#: Template/Admin/Banners/add.ctp:28;78
-msgid "Add Banner"
 msgstr ""
 
 #: Template/Admin/Banners/add.ctp:33;36
@@ -530,12 +523,8 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: Template/Admin/Banners/edit.ctp:25
+#: Template/Admin/Banners/edit.ctp:25;28;60
 msgid "Edit banner"
-msgstr ""
-
-#: Template/Admin/Banners/edit.ctp:28;60
-msgid "Edit Banner"
 msgstr ""
 
 #: Template/Admin/Banners/edit.ctp:42
@@ -544,8 +533,10 @@ msgid "Preview"
 msgstr ""
 
 #: Template/Admin/Banners/index.ctp:25;28
-#: View/Helper/MenuHelper.php:53
-msgid "List banners"
+#: Template/Admin/BannersPositions/index.ctp:36
+#: Template/Admin/Systems/checkup.ctp:100
+#: View/Helper/MenuHelper.php:64
+msgid "Banners"
 msgstr ""
 
 #: Template/Admin/Banners/index.ctp:29
@@ -652,24 +643,25 @@ msgstr ""
 msgid "Position to upload photos"
 msgstr ""
 
-#: Template/Admin/BannersPositions/add.ctp:25
+#: Template/Admin/BannersPositions/add.ctp:25;28
 msgid "Add banners position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/add.ctp:28;36
-msgid "Add Banners Position"
+#: Template/Admin/BannersPositions/add.ctp:36
+#: View/Helper/MenuHelper.php:61
+msgid "Add position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/edit.ctp:25
+#: Template/Admin/BannersPositions/edit.ctp:25;28
 msgid "Edit banners position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/edit.ctp:28;36
-msgid "Edit Banners Position"
+#: Template/Admin/BannersPositions/edit.ctp:36
+msgid "Edit position"
 msgstr ""
 
 #: Template/Admin/BannersPositions/index.ctp:25;28
-msgid "List banners positions"
+msgid "Banners positions"
 msgstr ""
 
 #: Template/Admin/BannersPositions/index.ctp:34
@@ -681,19 +673,9 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: Template/Admin/BannersPositions/index.ctp:36
-#: Template/Admin/Systems/checkup.ctp:100
-#: View/Helper/MenuHelper.php:64
-msgid "Banners"
-msgstr ""
-
-#: Template/Admin/Pages/add.ctp:26
+#: Template/Admin/Pages/add.ctp:26;33;73
 #: View/Helper/MenuHelper.php:81
 msgid "Add page"
-msgstr ""
-
-#: Template/Admin/Pages/add.ctp:33;73
-msgid "Add Page"
 msgstr ""
 
 #: Template/Admin/Pages/add.ctp:38
@@ -788,12 +770,8 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: Template/Admin/Pages/edit.ctp:26;73
+#: Template/Admin/Pages/edit.ctp:26;33;73
 msgid "Edit page"
-msgstr ""
-
-#: Template/Admin/Pages/edit.ctp:33
-msgid "Edit Page"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:26;31
@@ -870,19 +848,15 @@ msgid "Normal"
 msgstr ""
 
 #: Template/Admin/Pages/statics.ctp:25;28
-msgid "Static Pages"
+msgid "Static pages"
 msgstr ""
 
 #: Template/Admin/Pages/statics.ctp:33
 msgid "Path"
 msgstr ""
 
-#: Template/Admin/Photos/edit.ctp:25
+#: Template/Admin/Photos/edit.ctp:25;28;53
 msgid "Edit photo"
-msgstr ""
-
-#: Template/Admin/Photos/edit.ctp:28;53
-msgid "Edit Photo"
 msgstr ""
 
 #: Template/Admin/Photos/edit.ctp:33
@@ -890,7 +864,11 @@ msgid "Album"
 msgstr ""
 
 #: Template/Admin/Photos/index.ctp:25;28
-msgid "List photos"
+#: Template/Admin/PhotosAlbums/index.ctp:36
+#: Template/Admin/Systems/checkup.ctp:107
+#: Template/Element/frontend/topbar.ctp:44
+#: View/Helper/MenuHelper.php:101
+msgid "Photos"
 msgstr ""
 
 #: Template/Admin/Photos/upload.ctp:25;28
@@ -910,24 +888,21 @@ msgstr ""
 msgid "Add Photos Album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/edit.ctp:26
+#: Template/Admin/PhotosAlbums/edit.ctp:26;31
 msgid "Edit photos album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/edit.ctp:31;56
-msgid "Edit Photos Album"
+#: Template/Admin/PhotosAlbums/edit.ctp:56
+msgid "Edit album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/index.ctp:25;28
+#: Template/Admin/PhotosAlbums/index.ctp:25
+msgid "Photos albums"
+msgstr ""
+
+#: Template/Admin/PhotosAlbums/index.ctp:28
 #: Template/PhotosAlbums/index.ctp:25;28
 msgid "List photos albums"
-msgstr ""
-
-#: Template/Admin/PhotosAlbums/index.ctp:36
-#: Template/Admin/Systems/checkup.ctp:107
-#: Template/Element/frontend/topbar.ctp:44
-#: View/Helper/MenuHelper.php:101
-msgid "Photos"
 msgstr ""
 
 #: Template/Admin/PhotosAlbums/index.ctp:54
@@ -935,13 +910,9 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:26
+#: Template/Admin/Posts/add.ctp:26;33;84
 #: View/Helper/MenuHelper.php:114
 msgid "Add post"
-msgstr ""
-
-#: Template/Admin/Posts/add.ctp:33;84
-msgid "Add Post"
 msgstr ""
 
 #: Template/Admin/Posts/add.ctp:41
@@ -956,12 +927,8 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: Template/Admin/Posts/edit.ctp:26
+#: Template/Admin/Posts/edit.ctp:26;33;83
 msgid "Edit post"
-msgstr ""
-
-#: Template/Admin/Posts/edit.ctp:33;83
-msgid "Edit Post"
 msgstr ""
 
 #: Template/Admin/Posts/index.ctp:26;31
@@ -981,12 +948,8 @@ msgstr ""
 msgid "all categories"
 msgstr ""
 
-#: Template/Admin/PostsCategories/add.ctp:26
+#: Template/Admin/PostsCategories/add.ctp:26;31
 msgid "Add posts category"
-msgstr ""
-
-#: Template/Admin/PostsCategories/add.ctp:31;60
-msgid "Add Posts Category"
 msgstr ""
 
 #: Template/Admin/PostsCategories/add.ctp:37
@@ -999,16 +962,22 @@ msgstr ""
 msgid "Leave blank to create a parent category"
 msgstr ""
 
-#: Template/Admin/PostsCategories/edit.ctp:26
+#: Template/Admin/PostsCategories/add.ctp:60
+#: View/Helper/MenuHelper.php:121
+msgid "Add category"
+msgstr ""
+
+#: Template/Admin/PostsCategories/edit.ctp:26;31
 msgid "Edit posts category"
 msgstr ""
 
-#: Template/Admin/PostsCategories/edit.ctp:31;61
-msgid "Edit Posts Category"
+#: Template/Admin/PostsCategories/edit.ctp:61
+msgid "Edit category"
 msgstr ""
 
 #: Template/Admin/PostsCategories/index.ctp:25;28
-msgid "List posts categories"
+#: Template/PostsCategories/index.ctp:25;29
+msgid "Posts categories"
 msgstr ""
 
 #: Template/Admin/PostsCategories/index.ctp:35
@@ -1279,8 +1248,9 @@ msgid "If you want to change the password just type a new one. Otherwise, leave 
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:26;31
-#: View/Helper/MenuHelper.php:140
-msgid "List users"
+#: Template/Admin/UsersGroups/index.ctp:36
+#: View/Helper/MenuHelper.php:151
+msgid "Users"
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:40
@@ -1328,10 +1298,6 @@ msgstr ""
 msgid "Are you sure you want to activate this account?"
 msgstr ""
 
-#: Template/Admin/Users/view.ctp:29
-msgid "User"
-msgstr ""
-
 #: Template/Admin/Users/view.ctp:61
 msgid "Status"
 msgstr ""
@@ -1340,12 +1306,8 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: Template/Admin/UsersGroups/add.ctp:25
+#: Template/Admin/UsersGroups/add.ctp:25;28
 msgid "Add users group"
-msgstr ""
-
-#: Template/Admin/UsersGroups/add.ctp:28;45
-msgid "Add Users Group"
 msgstr ""
 
 #: Template/Admin/UsersGroups/add.ctp:36
@@ -1354,21 +1316,21 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: Template/Admin/UsersGroups/edit.ctp:25
+#: Template/Admin/UsersGroups/add.ctp:45
+#: View/Helper/MenuHelper.php:148
+msgid "Add group"
+msgstr ""
+
+#: Template/Admin/UsersGroups/edit.ctp:25;28
 msgid "Edit users group"
 msgstr ""
 
-#: Template/Admin/UsersGroups/edit.ctp:28;46
-msgid "Edit Users Group"
+#: Template/Admin/UsersGroups/edit.ctp:46
+msgid "Edit groups"
 msgstr ""
 
 #: Template/Admin/UsersGroups/index.ctp:25;28
-msgid "List users groups"
-msgstr ""
-
-#: Template/Admin/UsersGroups/index.ctp:36
-#: View/Helper/MenuHelper.php:151
-msgid "Users"
+msgid "Users groups"
 msgstr ""
 
 #: Template/Cell/Photos/albums.ctp:34
@@ -1560,10 +1522,6 @@ msgstr ""
 msgid "You have searched for: {0}"
 msgstr ""
 
-#: Template/PostsCategories/index.ctp:25;29
-msgid "Posts categories"
-msgstr ""
-
 #: Template/Systems/contact_form.ctp:25;28
 msgid "Contact us"
 msgstr ""
@@ -1621,12 +1579,12 @@ msgstr ""
 msgid "The {0} method does not exist"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:60
-msgid "List positions"
+#: View/Helper/MenuHelper.php:53
+msgid "List banners"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:61
-msgid "Add position"
+#: View/Helper/MenuHelper.php:60
+msgid "List positions"
 msgstr ""
 
 #: View/Helper/MenuHelper.php:76
@@ -1653,16 +1611,12 @@ msgstr ""
 msgid "List categories"
 msgstr ""
 
-#: View/Helper/MenuHelper.php:121
-msgid "Add category"
+#: View/Helper/MenuHelper.php:140
+msgid "List users"
 msgstr ""
 
 #: View/Helper/MenuHelper.php:147
 msgid "List groups"
-msgstr ""
-
-#: View/Helper/MenuHelper.php:148
-msgid "Add group"
 msgstr ""
 
 #: View/Helper/MenuHelper.php:174

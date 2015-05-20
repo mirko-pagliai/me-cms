@@ -22,10 +22,10 @@
  */
 ?>
 	
-<?php $this->assign('title', __d('me_cms', 'List banners')); ?>
+<?php $this->assign('title', __d('me_cms', 'Banners')); ?>
 
 <div class="banners index">
-	<?= $this->Html->h2(__d('me_cms', 'List banners')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Banners')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>

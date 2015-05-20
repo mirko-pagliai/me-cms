@@ -28,7 +28,7 @@
 ?>
 
 <div class="photosAlbums form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Photos Album')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit photos album')) ?>
     <?= $this->Form->create($album); ?>
 	<div class='float-form'>
 		<?php
@@ -53,6 +53,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Photos Album')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit album')) ?>
     <?= $this->Form->end() ?>
 </div>

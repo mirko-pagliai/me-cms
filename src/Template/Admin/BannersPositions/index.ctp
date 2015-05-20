@@ -22,10 +22,10 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'List banners positions')); ?>
+<?php $this->assign('title', __d('me_cms', 'Banners positions')); ?>
 
 <div class="bannersPositions index">
-	<?= $this->Html->h2(__d('me_cms', 'List banners positions')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Banners positions')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">

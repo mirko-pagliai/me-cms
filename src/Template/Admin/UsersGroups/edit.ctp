@@ -25,7 +25,7 @@
 <?php $this->assign('title', __d('me_cms', 'Edit users group')); ?>
 
 <div class="usersGroups form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit Users Group')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Edit users group')) ?>
     <?= $this->Form->create($group); ?>
     <fieldset>
         <?php
@@ -43,6 +43,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit Users Group')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit groups')) ?>
     <?= $this->Form->end() ?>
 </div>
