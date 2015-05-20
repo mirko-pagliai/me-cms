@@ -271,7 +271,7 @@
 </span><span id="41" class="l"><a href="#41">41: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">6</span>, <span class="php-num">100</span>]
 </span><span id="42" class="l"><a href="#42">42: </a>            ],
 </span><span id="43" class="l"><a href="#43">43: </a>            <span class="php-quote">'slug'</span> =&gt; [
-</span><span id="44" class="l"><a href="#44">44: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars: lowercase letters, numbers, dash'</span>),
+</span><span id="44" class="l"><a href="#44">44: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers, dash'</span>)),
 </span><span id="45" class="l"><a href="#45">45: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-var">$this</span>, <span class="php-quote">'slug'</span>]
 </span><span id="46" class="l"><a href="#46">46: </a>            ],
 </span><span id="47" class="l"><a href="#47">47: </a>            <span class="php-quote">'unique'</span> =&gt; [
