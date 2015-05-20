@@ -22,11 +22,11 @@
  */
 ?>
 	
-<?php $this->assign('title', __d('me_cms', 'Cache and thumbs')); ?>
+<?php $this->assign('title', sprintf('%s/%s', __d('me_cms', 'Cache'), __d('me_cms', 'Thumbs'))); ?>
 
 <div class="systems index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Cache and thumbs'));
+		echo $this->Html->h2(sprintf('%s/%s', __d('me_cms', 'Cache'), __d('me_cms', 'Thumbs')));
 
 		echo $this->Html->h4(__d('me_cms', 'Cache'));
 		if(!$cache_status)

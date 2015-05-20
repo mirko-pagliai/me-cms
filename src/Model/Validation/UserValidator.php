@@ -64,7 +64,7 @@ class UserValidator extends AppValidator {
 				'rule'		=> 'validateUnique'
 			],
 			'usernameNotReserved' => [
-				'message'	=> __d('me_cms', 'This username is reserved'),
+				'message'	=> __d('me_cms', 'This value is reserved'),
 				'rule' => function($value, $context) {
 					return (bool) !preg_match('/(admin|manager|root|supervisor|moderator)/i', $value);
 				}

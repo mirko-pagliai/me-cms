@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-18 20:03+0000\n"
+"POT-Creation-Date: 2015-05-20 14:59+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -379,8 +379,19 @@ msgstr ""
 msgid "You have to enter a valid value"
 msgstr ""
 
+#: Model/Validation/AppValidator.php:79;91;140
+#: Model/Validation/BannersPositionValidator.php:44
+#: Model/Validation/UserValidator.php:58
+#: Model/Validation/UsersGroupValidator.php:54
+msgid "Allowed chars"
+msgstr ""
+
 #: Model/Validation/AppValidator.php:79;91
-msgid "Allowed chars: letters, apostrophe, space. Has to begin with a capital letter"
+msgid "letters, apostrophe, space"
+msgstr ""
+
+#: Model/Validation/AppValidator.php:79;91
+msgid "Has to begin with a capital letter"
 msgstr ""
 
 #: Model/Validation/AppValidator.php:103;121;144
@@ -404,7 +415,7 @@ msgstr ""
 #: Model/Validation/AppValidator.php:140
 #: Model/Validation/BannersPositionValidator.php:44
 #: Model/Validation/UserValidator.php:58
-msgid "Allowed chars: lowercase letters, numbers, dash"
+msgid "lowercase letters, numbers, dash"
 msgstr ""
 
 #: Model/Validation/AppValidator.php:151
@@ -413,7 +424,7 @@ msgstr ""
 
 #: Model/Validation/BannerValidator.php:39
 #: Model/Validation/PhotoValidator.php:39
-msgid "Valid extensions: gif, jpg, jpeg, png"
+msgid "Valid extensions"
 msgstr ""
 
 #: Model/Validation/BannerValidator.php:56
@@ -421,7 +432,7 @@ msgid "Must be a valid url"
 msgstr ""
 
 #: Model/Validation/UserValidator.php:67
-msgid "This username is reserved"
+msgid "This value is reserved"
 msgstr ""
 
 #: Model/Validation/UserValidator.php:86
@@ -445,7 +456,7 @@ msgid "The old password is wrong"
 msgstr ""
 
 #: Model/Validation/UsersGroupValidator.php:54
-msgid "Allowed chars: lowercase letters"
+msgid "lowercase letters"
 msgstr ""
 
 #: Template/Admin/Banners/add.ctp:25
@@ -1013,13 +1024,15 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: Template/Admin/Systems/cache.ctp:25;29
+#: Template/Admin/Systems/cache.ctp:25;29;31
 #: View/Helper/MenuHelper.php:167
-msgid "Cache and thumbs"
+msgid "Cache"
 msgstr ""
 
-#: Template/Admin/Systems/cache.ctp:31
-msgid "Cache"
+#: Template/Admin/Systems/cache.ctp:25;29;39
+#: Template/Admin/Systems/checkup.ctp:114
+#: View/Helper/MenuHelper.php:167
+msgid "Thumbs"
 msgstr ""
 
 #: Template/Admin/Systems/cache.ctp:33
@@ -1037,11 +1050,6 @@ msgstr ""
 
 #: Template/Admin/Systems/cache.ctp:37
 msgid "Clear cache"
-msgstr ""
-
-#: Template/Admin/Systems/cache.ctp:39
-#: Template/Admin/Systems/checkup.ctp:114
-msgid "Thumbs"
 msgstr ""
 
 #: Template/Admin/Systems/cache.ctp:40

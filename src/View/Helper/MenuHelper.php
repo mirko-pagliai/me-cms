@@ -164,7 +164,7 @@ class MenuHelper extends BaseMenuHelper {
 			return [];
 		
 		$menu = [
-			$this->Html->link(__d('me_cms', 'Cache and thumbs'), ['controller' => 'Systems', 'action' => 'cache', 'plugin' => 'MeCms']),
+			$this->Html->link(sprintf('%s/%s', __d('me_cms', 'Cache'), __d('me_cms', 'Thumbs')), ['controller' => 'Systems', 'action' => 'cache', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'System checkup'), ['controller' => 'Systems', 'action' => 'checkup', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Media browser'), ['controller' => 'Systems', 'action' => 'browser', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms']),
