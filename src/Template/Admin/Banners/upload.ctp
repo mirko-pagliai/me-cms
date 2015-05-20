@@ -30,10 +30,10 @@
 	<div class="well">
 		<?php
 			echo $this->Form->createInline(NULL, ['type' => 'get']);
-			echo $this->Form->label('position', __d('me_cms', 'Position to upload photos'));
+			echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
 			echo $this->Form->input('position', [
 				'default'	=> $this->request->query('position'),
-				'label'		=> __d('me_cms', 'Position to upload photos'),
+				'label'		=> __d('me_cms', 'Position to upload banners'),
 				'onchange'	=> 'send_form(this)',
 				'options'	=> $positions
 			]);

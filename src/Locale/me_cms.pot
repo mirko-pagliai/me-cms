@@ -1,11 +1,11 @@
-# LANGUAGE translation of MeCms
-# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-20 15:17+0000\n"
+"POT-Creation-Date: 2015-05-20 15:22+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -640,7 +640,7 @@ msgid "Upload banners"
 msgstr ""
 
 #: Template/Admin/Banners/upload.ctp:33;36
-msgid "Position to upload photos"
+msgid "Position to upload banners"
 msgstr ""
 
 #: Template/Admin/BannersPositions/add.ctp:25;28
@@ -880,12 +880,13 @@ msgstr ""
 msgid "Album to upload photos"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/add.ctp:26
+#: Template/Admin/PhotosAlbums/add.ctp:26;31
 msgid "Add photos album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/add.ctp:31;57
-msgid "Add Photos Album"
+#: Template/Admin/PhotosAlbums/add.ctp:57
+#: View/Helper/MenuHelper.php:98
+msgid "Add album"
 msgstr ""
 
 #: Template/Admin/PhotosAlbums/edit.ctp:26;31
@@ -896,13 +897,8 @@ msgstr ""
 msgid "Edit album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/index.ctp:25
+#: Template/Admin/PhotosAlbums/index.ctp:25;28
 msgid "Photos albums"
-msgstr ""
-
-#: Template/Admin/PhotosAlbums/index.ctp:28
-#: Template/PhotosAlbums/index.ctp:25;28
-msgid "List photos albums"
 msgstr ""
 
 #: Template/Admin/PhotosAlbums/index.ctp:54
@@ -1132,13 +1128,9 @@ msgstr ""
 msgid "Log file"
 msgstr ""
 
-#: Template/Admin/Users/add.ctp:25
+#: Template/Admin/Users/add.ctp:25;28;75
 #: View/Helper/MenuHelper.php:141
 msgid "Add user"
-msgstr ""
-
-#: Template/Admin/Users/add.ctp:28;75
-msgid "Add User"
 msgstr ""
 
 #: Template/Admin/Users/add.ctp:34
@@ -1235,12 +1227,8 @@ msgstr ""
 msgid "Repeat your new password"
 msgstr ""
 
-#: Template/Admin/Users/edit.ctp:25
+#: Template/Admin/Users/edit.ctp:25;28;69
 msgid "Edit user"
-msgstr ""
-
-#: Template/Admin/Users/edit.ctp:28;69
-msgid "Edit User"
 msgstr ""
 
 #: Template/Admin/Users/edit.ctp:51;57
@@ -1326,7 +1314,7 @@ msgid "Edit users group"
 msgstr ""
 
 #: Template/Admin/UsersGroups/edit.ctp:46
-msgid "Edit groups"
+msgid "Edit group"
 msgstr ""
 
 #: Template/Admin/UsersGroups/index.ctp:25;28
@@ -1514,6 +1502,10 @@ msgstr ""
 msgid "Please, don't reply to this email"
 msgstr ""
 
+#: Template/PhotosAlbums/index.ctp:25;28
+msgid "List photos albums"
+msgstr ""
+
 #: Template/PhotosAlbums/index.ctp:39
 msgid "{0} photos"
 msgstr ""
@@ -1597,10 +1589,6 @@ msgstr ""
 
 #: View/Helper/MenuHelper.php:97
 msgid "List albums"
-msgstr ""
-
-#: View/Helper/MenuHelper.php:98
-msgid "Add album"
 msgstr ""
 
 #: View/Helper/MenuHelper.php:113

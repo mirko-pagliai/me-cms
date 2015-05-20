@@ -43,6 +43,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit groups')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit group')) ?>
     <?= $this->Form->end() ?>
 </div>
