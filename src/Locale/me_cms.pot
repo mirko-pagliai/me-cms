@@ -1,5 +1,5 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
+# LANGUAGE translation of MeCms
+# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
