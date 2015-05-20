@@ -59,8 +59,7 @@
 							if($this->Auth->isGroup(['admin', 'manager']))
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $album->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 
-							//TO-DO: usare "_name"
-							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['action' => 'view', $album->slug, 'prefix' => FALSE], ['icon' => 'external-link', 'target' => '_blank']);
+							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
