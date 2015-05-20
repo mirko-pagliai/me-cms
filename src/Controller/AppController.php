@@ -74,14 +74,14 @@ class AppController extends BaseController {
 	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeTools\Network\Request::hasPrefix()
 	 * @uses isOffline()
+	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		//Checks if the site has been taken offline
 		if($this->isOffline())
 			$this->redirect(['_name' => 'offline']);
 		
-		//TO-DO: fix
-		Configure::write('Config.language', 'it');
+		$this->setLanguage();
 		
 		//If the current request has no prefix, it authorizes the current action
 		if(!$this->request->hasPrefix())
@@ -143,5 +143,35 @@ class AppController extends BaseController {
 	 */
 	public function isOffline() {
 		return config('frontend.offline') && !$this->request->isAction('offline', 'Systems');
+	}
+	
+	/**
+	 * Sets the language
+	 * @return mixed Language code or FALSE
+	 * @throws \Cake\Network\Exception\InternalErrorException
+	 * @uses Cake\I18n\I18n::locale()
+	 * @uses MeTools\Utility\Plugin::path()
+	 */
+	public function setLanguage() {
+		$path = \MeTools\Utility\Plugin::path('MeCms', 'src'.DS.'Locale');
+		
+		if(config('main.language') === 'auto') {
+			if(is_readable($path.DS.substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 5).DS.'me_cms.po'))
+				$language = substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 5);
+			elseif(is_readable($path.DS.substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 2).DS.'me_cms.po'))
+				$language = substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+		}
+		elseif(config('main.language')) {
+			if(!is_readable($file = $path.DS.config('main.language').DS.'me_cms.po'))
+				throw new \Cake\Network\Exception\InternalErrorException(__d('me_cms', 'The file {0} doesn\'t exist or is not readable', $file));
+			
+			$language = config('main.language');
+		}
+		
+		if(empty($language))
+			return FALSE;
+			
+		\Cake\I18n\I18n::locale($language);
+		return $language;
 	}
 }

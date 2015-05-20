@@ -67,6 +67,9 @@ return ['MeCms' => [
 		],
 		//Forces debug on localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,
+		//Interface language.
+		//With "auto" value, it will try to use the browser language
+		'language' => 'auto',
 		//Site title
 		'title' => 'MeCms',
 	],
