@@ -28,7 +28,7 @@ use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
 use MeTools\Utility\Apache;
-use MeTools\Utility\Plugin;
+use MeTools\Core\Plugin;
 use MeTools\Utility\Php;
 use MeTools\Utility\System;
 use MeTools\Utility\Thumbs;
@@ -133,8 +133,8 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Plugin::version()
-	 * @uses MeTools\Utility\Plugin::versions()
+	 * @uses MeTools\Core\Plugin::version()
+	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Utility\Php::checkVersion()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()

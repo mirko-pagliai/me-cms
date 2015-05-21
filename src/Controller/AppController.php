@@ -150,10 +150,10 @@ class AppController extends BaseController {
 	 * @return mixed Language code or FALSE
 	 * @throws \Cake\Network\Exception\InternalErrorException
 	 * @uses Cake\I18n\I18n::locale()
-	 * @uses MeTools\Utility\Plugin::path()
+	 * @uses MeTools\Core\Plugin::path()
 	 */
 	public function setLanguage() {
-		$path = \MeTools\Utility\Plugin::path('MeCms', 'src'.DS.'Locale');
+		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
 		
 		if(config('main.language') === 'auto') {
 			if(is_readable($path.DS.substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 5).DS.'me_cms.po'))
