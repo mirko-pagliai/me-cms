@@ -64,16 +64,13 @@ if(is_readable(CONFIG.'cache.php'))
 	Configure::load('cache', 'default', FALSE);
 
 //Adds all cache configurations
-foreach(Configure::read('Cache') as $key => $config) {
+foreach(Configure::consume('Cache') as $key => $config) {
 	//Drops the default cache
 	if($key === 'default')
 		Cache::drop('default');
 	
 	Cache::config($key, $config);
 }
-
-//Deletes the cache configuration
-Configure::delete('Cache');
 
 /**
  * Widgets configuration
@@ -86,4 +83,4 @@ if(is_readable(CONFIG.'widgets.php'))
 	Configure::load('widgets', 'default', FALSE);
 
 //Adds the widgets configuration to the MeCms configuration
-Configure::write('MeCms.frontend.widgets', Configure::read('Widgets'));
+Configure::write('MeCms.frontend.widgets', Configure::consume('Widgets'));
