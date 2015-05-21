@@ -31,7 +31,7 @@
 			echo $this->Html->meta('icon');
 			echo $this->fetch('meta');
 			
-			echo $this->Html->css([
+			echo $this->Layout->css('MeCms./assets/login.min', [
 				'MeTools.font-awesome.min',
 				'MeCms.login/bootstrap.min',
 				'MeTools.default',

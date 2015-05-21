@@ -33,7 +33,7 @@
 			echo $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 			echo $this->fetch('meta');
 			
-			echo $this->Html->css([
+			echo $this->Layout->css('MeCms./assets/frontend.min', [
 				'MeTools.font-awesome.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default',
@@ -44,7 +44,7 @@
 			]);
 			echo $this->fetch('css');
 			
-			echo $this->Html->js([
+			echo $this->Layout->js('MeCms./assets/frontend.min', [
 				'MeTools.jquery.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default'

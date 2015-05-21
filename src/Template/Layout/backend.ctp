@@ -32,7 +32,7 @@
 			echo $this->Html->meta('icon');
 			echo $this->fetch('meta');
 			
-			echo $this->Html->css([
+			echo $this->Layout->css('MeCms./assets/backend.min', [
 				'MeTools.font-awesome.min',
 				'MeCms.backend/bootstrap.min',
 				'MeTools.default',
@@ -42,7 +42,7 @@
 			]);
 			echo $this->fetch('css');
 			
-			echo $this->Html->js([
+			echo $this->Layout->js('MeCms./assets/backend.min', [
 				'MeTools.jquery.min',
 				'MeCms.backend/bootstrap.min',
 				'MeCms.jquery.cookie',
