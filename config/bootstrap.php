@@ -24,6 +24,9 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 
+//Loads the MeTools plugin
+\Cake\Core\Plugin::load('MeTools', ['bootstrap' => true, 'routes' => true]);
+
 require_once 'constants.php';
 require_once 'global_functions.php';
 
