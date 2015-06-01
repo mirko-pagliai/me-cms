@@ -1,5 +1,20 @@
 {
-    "name": "mirko-pagliai/MeCms",
+    "name": "mirko-pagliai/me_cms",
     "description": "MeCms plugin for CakePHP",
-    "type": "cakephp-plugin"
+    "homepage": "https://github.com/mirko-pagliai/me_cms",
+    "type": "cakephp-plugin",
+    "license": "AGPL",
+	"authors": [{
+            "name": "Mirko Pagliai",
+            "email": "mirko.pagliai@gmail.com"
+    }],
+	"version": "2.0.0-beta", 
+	"require": {
+        "mirko-pagliai/me_tools": "*"
+    },
+    "autoload": {
+		"psr-4": {
+			"MeCms\\": "src"
+		}
+	}
 }
