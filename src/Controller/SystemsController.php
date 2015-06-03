@@ -64,6 +64,13 @@ class SystemsController extends AppController {
 	}
 	
 	/**
+	 * "Ip not allowed" page
+	 */
+	public function ip_not_allowed() {
+		$this->layout = 'login';
+	}
+	
+	/**
 	 * Offline page
 	 */
 	public function offline() {
@@ -71,6 +78,6 @@ class SystemsController extends AppController {
 		if(!config('frontend.offline'))
 			$this->redirect(['_name' => 'homepage']);
 		
-		$this->layout = 'users';
+		$this->layout = 'login';
 	}
 }

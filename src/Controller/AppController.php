@@ -73,6 +73,7 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeTools\Network\Request::hasPrefix()
+	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
@@ -80,6 +81,10 @@ class AppController extends BaseController {
 		//Checks if the site has been taken offline
 		if($this->isOffline())
 			$this->redirect(['_name' => 'offline']);
+		
+		//Checks if the user's IP address is banned
+		if($this->isBanned())
+			$this->redirect(['_name' => 'ip_not_allowed']);
 		
 		$this->setLanguage();
 		
@@ -120,6 +125,7 @@ class AppController extends BaseController {
 		]);
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
+		$this->loadComponent('MeTools.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
@@ -137,8 +143,23 @@ class AppController extends BaseController {
 	}
 	
 	/**
+	 * Checks if the user's IP address is banned
+	 * @return bool
+	 * @uses MeTools\Controller\Component\SecurityComponent::isBanned()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function isBanned() {
+		if(empty(config('security.banned_ip')))
+			return FALSE;
+		
+		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
+		
+		return $this->Security->isBanned($banned_ip) && !$this->request->isAction('ip_not_allowed', 'Systems');
+	}
+	
+	/**
 	 * Checks if the site is offline
-	 * @return bool TRUE if the site is offline, otherwise FALSE
+	 * @return bool
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isOffline() {
