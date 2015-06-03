@@ -8,10 +8,13 @@
             "name": "Mirko Pagliai",
             "email": "mirko.pagliai@gmail.com"
     }],
-	"version": "2.0.0-beta", 
+	"version": "2.0.0-beta",
 	"require": {
-        "mirko-pagliai/me_tools": "dev-develop"
+        "mirko-pagliai/me_tools": "dev-master"
     },
+    "require-dev": {
+        "mirko-pagliai/me_tools": "dev-develop"
+	},
     "autoload": {
 		"psr-4": {
 			"MeCms\\": "src"
