@@ -1,25 +1,28 @@
 <?php
+
+use MeTools\Core\Plugin;
+
 return ['Assets' => [
 	'backend-css' => [
 		'input' => [
-			'plugins/MeTools/webroot/css/font-awesome.min',
-			'plugins/MeCms/webroot/css/backend/bootstrap.min',
-			'plugins/MeTools/webroot/css/default',
-			'plugins/MeTools/webroot/css/forms',
-			'plugins/MeCms/webroot/css/backend/layout',
-			'plugins/MeCms/webroot/css/backend/photos'
+			Plugin::path('MeTools').'webroot/css/font-awesome.min',
+			Plugin::path('MeCms').'webroot/css/backend/bootstrap.min',
+			Plugin::path('MeTools').'webroot/css/default',
+			Plugin::path('MeTools').'webroot/css/forms',
+			Plugin::path('MeCms').'webroot/css/backend/layout',
+			Plugin::path('MeCms').'webroot/css/backend/photos'
 		],
-		'output' => 'plugins/MeCms/webroot/assets/backend.min',
+		'output' => Plugin::path('MeCms').'webroot/assets/backend.min',
 		'type' => 'css'
 	],
 	'backend-js' => [
 		'input' => [
-			'plugins/MeTools/webroot/js/jquery.min',
-			'plugins/MeCms/webroot/js/backend/bootstrap.min',
-			'plugins/MeCms/webroot/js/jquery.cookie',
-			'plugins/MeCms/webroot/js/backend/layout'
+			Plugin::path('MeTools').'webroot/js/jquery.min',
+			Plugin::path('MeCms').'webroot/js/backend/bootstrap.min',
+			Plugin::path('MeCms').'webroot/js/jquery.cookie',
+			Plugin::path('MeCms').'webroot/js/backend/layout'
 		],
-		'output' => 'plugins/MeCms/webroot/assets/backend.min',
+		'output' => Plugin::path('MeCms').'webroot/assets/backend.min',
 		'type' => 'js'		
 	]
 ]];

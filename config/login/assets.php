@@ -1,14 +1,17 @@
 <?php
+
+use MeTools\Core\Plugin;
+
 return ['Assets' => [
 	'login-css' => [
 		'input' => [
-			'plugins/MeTools/webroot/css/font-awesome.min',
-			'plugins/MeCms/webroot/css/login/bootstrap.min',
-			'plugins/MeTools/webroot/css/default',
-			'plugins/MeTools/webroot/css/forms',
-			'plugins/MeCms/webroot/css/login/layout'
+			Plugin::path('MeTools').'webroot/css/font-awesome.min',
+			Plugin::path('MeCms').'webroot/css/login/bootstrap.min',
+			Plugin::path('MeTools').'webroot/css/default',
+			Plugin::path('MeTools').'webroot/css/forms',
+			Plugin::path('MeCms').'webroot/css/login/layout'
 		],
-		'output' => 'plugins/MeCms/webroot/assets/login.min',
+		'output' => Plugin::path('MeCms').'webroot/assets/login.min',
 		'type' => 'css'
 	]
 ]];

@@ -1,25 +1,28 @@
 <?php
+
+use MeTools\Core\Plugin;
+
 return ['Assets' => [
 	'frontend-css' => [
 		'input' => [
-			'plugins/MeTools/webroot/css/font-awesome.min',
-			'plugins/MeCms/webroot/css/frontend/bootstrap.min',
-			'plugins/MeTools/webroot/css/default',
-			'plugins/MeTools/webroot/css/forms',
-			'plugins/MeCms/webroot/css/frontend/layout',
-			'plugins/MeCms/webroot/css/frontend/contents',
-			'plugins/MeCms/webroot/css/frontend/photos'
+			Plugin::path('MeTools').'webroot/css/font-awesome.min',
+			Plugin::path('MeCms').'webroot/css/frontend/bootstrap.min',
+			Plugin::path('MeTools').'webroot/css/default',
+			Plugin::path('MeTools').'webroot/css/forms',
+			Plugin::path('MeCms').'webroot/css/frontend/layout',
+			Plugin::path('MeCms').'webroot/css/frontend/contents',
+			Plugin::path('MeCms').'webroot/css/frontend/photos'
 		],
-		'output' => 'plugins/MeCms/webroot/assets/frontend.min',
+		'output' => Plugin::path('MeCms').'webroot/assets/frontend.min',
 		'type' => 'css'
 	],
 	'frontend-js' => [
 		'input' => [
-			'plugins/MeTools/webroot/js/jquery.min',
-			'plugins/MeCms/webroot/js/frontend/bootstrap.min',
-			'plugins/MeTools/webroot/js/default'
+			Plugin::path('MeTools').'webroot/js/jquery.min',
+			Plugin::path('MeCms').'webroot/js/frontend/bootstrap.min',
+			Plugin::path('MeTools').'webroot/js/default'
 		],
-		'output' => 'plugins/MeCms/webroot/assets/frontend.min',
+		'output' => Plugin::path('MeCms').'webroot/assets/frontend.min',
 		'type' => 'js'		
 	]
 ]];

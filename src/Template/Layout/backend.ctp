@@ -39,7 +39,7 @@
 				'MeTools.forms',
 				'MeCms.backend/layout',
 				'MeCms.backend/photos'
-			]);
+			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
 			echo $this->Layout->js('MeCms./assets/backend.min', [
@@ -48,7 +48,7 @@
 				'MeCms.jquery.cookie',
 				'MeTools.default',
 				'MeCms.backend/layout'
-			]);
+			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
