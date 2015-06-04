@@ -228,7 +228,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#28-198" title="Go to source code">AppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#28-197" title="Go to source code">AppController.php</a>
 		<br>
 	</div>
 
@@ -291,7 +291,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#70-101" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#70-102" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -318,6 +318,7 @@ You can use this method to perform logic that needs to happen before each contro
 				<h4>Uses</h4>
 				<div class="list">
 						MeTools\Network\Request::hasPrefix()<br>
+						MeTools\Network\Request::isAction()<br>
 						<code><a href="class-MeCms.Controller.AppController.html#_isBanned">MeCms\Controller\AppController::isBanned()</a></code><br>
 						<code><a href="class-MeCms.Controller.AppController.html#_isOffline">MeCms\Controller\AppController::isOffline()</a></code><br>
 						<code><a href="class-MeCms.Controller.AppController.html#_setLanguage">MeCms\Controller\AppController::setLanguage()</a></code><br>
@@ -349,7 +350,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#103-116" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#104-117" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -399,7 +400,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#118-132" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#119-133" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -429,7 +430,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#134-143" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#135-144" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks if the provided user is authorized for the request</p>
@@ -473,7 +474,7 @@ You can use this method to perform logic or set view variables that are required
 	<tr data-order="isBanned" id="_isBanned">
 
 		<td class="attributes"><code>
-			 public 
+			 protected 
 
 			boolean
 			
@@ -482,7 +483,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isBanned">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#145-158" title="Go to source code">isBanned</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#146-158" title="Go to source code">isBanned</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the user's IP address is banned</p>
@@ -502,11 +503,11 @@ You can use this method to perform logic or set view variables that are required
 				<h4>Uses</h4>
 				<div class="list">
 						MeTools\Controller\Component\SecurityComponent::isBanned()<br>
-						MeTools\Network\Request::isAction()<br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeCms.Controller.AppController.html#_beforeFilter">MeCms\Controller\AppController::beforeFilter()</a></code><br>
+						<code><a href="class-MeCms.Controller.SystemsController.html#_ip_not_allowed">MeCms\Controller\SystemsController::ip_not_allowed()</a></code><br>
 				</div>
 
 
@@ -516,7 +517,7 @@ You can use this method to perform logic or set view variables that are required
 	<tr data-order="isOffline" id="_isOffline">
 
 		<td class="attributes"><code>
-			 public 
+			 protected 
 
 			boolean
 			
@@ -525,7 +526,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#160-167" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#160-166" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -542,13 +543,10 @@ You can use this method to perform logic or set view variables that are required
 				</div>
 
 
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Network\Request::isAction()<br>
-				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeCms.Controller.AppController.html#_beforeFilter">MeCms\Controller\AppController::beforeFilter()</a></code><br>
+						<code><a href="class-MeCms.Controller.SystemsController.html#_offline">MeCms\Controller\SystemsController::offline()</a></code><br>
 				</div>
 
 
@@ -558,7 +556,7 @@ You can use this method to perform logic or set view variables that are required
 	<tr data-order="setLanguage" id="_setLanguage">
 
 		<td class="attributes"><code>
-			 public 
+			 protected 
 
 			mixed
 			
@@ -567,7 +565,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setLanguage">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#169-197" title="Go to source code">setLanguage</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#168-196" title="Go to source code">setLanguage</a>( )</code>
 
 		<div class="description short">
 			<p>Sets the language</p>
