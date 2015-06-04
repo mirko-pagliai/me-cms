@@ -83,7 +83,7 @@ return ['MeCms' => [
 		'crypt_key' => 'at1UsdACWJFTXGgf4oZoiLwQGrLgf2SA',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
-		'recaptcha' => TRUE,
+		'recaptcha' => FALSE,
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
 		'search_interval' => 10,
 	],
