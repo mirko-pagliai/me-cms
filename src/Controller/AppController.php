@@ -148,7 +148,7 @@ class AppController extends BaseController {
 	 * @return bool
 	 * @uses MeTools\Controller\Component\SecurityComponent::isBanned()
 	 */
-	public function isBanned() {
+	protected function isBanned() {
 		if(empty(config('security.banned_ip')))
 			return FALSE;
 		
@@ -161,7 +161,7 @@ class AppController extends BaseController {
 	 * Checks if the site is offline
 	 * @return bool
 	 */
-	public function isOffline() {
+	protected function isOffline() {
 		return !empty(config('frontend.offline'));
 	}
 	
@@ -172,7 +172,7 @@ class AppController extends BaseController {
 	 * @uses Cake\I18n\I18n::locale()
 	 * @uses MeTools\Core\Plugin::path()
 	 */
-	public function setLanguage() {
+	protected function setLanguage() {
 		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
 		
 		if(config('main.language') === 'auto') {
