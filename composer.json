@@ -10,7 +10,7 @@
     }],
 	"version": "2.0.0-beta",
 	"require": {
-        "mirko-pagliai/me_tools": "dev-develop"
+        "mirko-pagliai/me_tools": "dev-master"
     },
     "autoload": {
 		"psr-4": {
