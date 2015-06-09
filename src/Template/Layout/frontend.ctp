@@ -41,14 +41,14 @@
 				'MeCms.frontend/layout',
 				'MeCms.frontend/contents',
 				'MeCms.frontend/photos'
-			]);
+			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
 			echo $this->Layout->js('MeCms./assets/frontend.min', [
 				'MeTools.jquery.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default'
-			]);
+			], ['block' => TRUE]);
 			
 			if(is_readable(WWW_ROOT.'js'.DS.'frontend'.DS.'layout.js'))
 				echo $this->Html->js('frontend/layout');

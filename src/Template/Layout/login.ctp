@@ -37,7 +37,7 @@
 				'MeTools.default',
 				'MeTools.forms',
 				'MeCms.login/layout'
-			]);
+			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
 			echo $this->fetch('script');

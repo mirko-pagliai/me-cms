@@ -64,13 +64,26 @@ class SystemsController extends AppController {
 	}
 	
 	/**
+	 * "Ip not allowed" page
+	 * @uses MeCms\Controller\AppController::isBanned()
+	 */
+	public function ip_not_allowed() {
+		//If the user's IP address is not banned
+		if(!$this->isBanned())
+			$this->redirect(['_name' => 'homepage']);
+		
+		$this->layout = 'login';
+	}
+	
+	/**
 	 * Offline page
+	 * @uses MeCms\Controller\AppController::isOffline()
 	 */
 	public function offline() {
 		//If the site has not been taken offline
-		if(!config('frontend.offline'))
+		if(!$this->isOffline())
 			$this->redirect(['_name' => 'homepage']);
 		
-		$this->layout = 'users';
+		$this->layout = 'login';
 	}
 }

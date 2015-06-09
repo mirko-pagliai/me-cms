@@ -75,11 +75,15 @@ return ['MeCms' => [
 	],
 	//Security
 	'security' => [
+		//Array of banned IP addresses.
+		//You can use the asterisk (*) as a wildcard.
+		//With "false" or an empty value, access is granted to any ip addresses (no limitation).
+		'banned_ip' => [],
 		//Key used to crypt
 		'crypt_key' => 'at1UsdACWJFTXGgf4oZoiLwQGrLgf2SA',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
-		'recaptcha' => TRUE,
+		'recaptcha' => FALSE,
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
 		'search_interval' => 10,
 	],

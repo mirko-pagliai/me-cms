@@ -73,13 +73,19 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeTools\Network\Request::hasPrefix()
+	 * @uses MeTools\Network\Request::isAction()
+	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		//Checks if the site has been taken offline
-		if($this->isOffline())
+		if(!$this->request->isAction('offline', 'Systems') && $this->isOffline())
 			$this->redirect(['_name' => 'offline']);
+		
+		//Checks if the user's IP address is banned
+		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
+			$this->redirect(['_name' => 'ip_not_allowed']);
 		
 		$this->setLanguage();
 		
@@ -120,6 +126,7 @@ class AppController extends BaseController {
 		]);
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
+		$this->loadComponent('MeTools.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
@@ -137,12 +144,25 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Checks if the site is offline
-	 * @return bool TRUE if the site is offline, otherwise FALSE
-	 * @uses MeTools\Network\Request::isAction()
+	 * Checks if the user's IP address is banned
+	 * @return bool
+	 * @uses MeTools\Controller\Component\SecurityComponent::isBanned()
 	 */
-	public function isOffline() {
-		return config('frontend.offline') && !$this->request->isAction('offline', 'Systems');
+	protected function isBanned() {
+		if(empty(config('security.banned_ip')))
+			return FALSE;
+		
+		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
+		
+		return $this->Security->isBanned($banned_ip);
+	}
+	
+	/**
+	 * Checks if the site is offline
+	 * @return bool
+	 */
+	protected function isOffline() {
+		return !empty(config('frontend.offline'));
 	}
 	
 	/**
@@ -152,7 +172,7 @@ class AppController extends BaseController {
 	 * @uses Cake\I18n\I18n::locale()
 	 * @uses MeTools\Core\Plugin::path()
 	 */
-	public function setLanguage() {
+	protected function setLanguage() {
 		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
 		
 		if(config('main.language') === 'auto') {
