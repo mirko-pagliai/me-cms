@@ -18,5 +18,8 @@
 		"psr-4": {
 			"MeCms\\": "src"
 		}
-	}
+	},
+    "scripts": {
+        "post-package-install": "MeTools\\Console\\Installer::postInstall"
+    }
 }
