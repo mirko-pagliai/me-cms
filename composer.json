@@ -20,6 +20,6 @@
 		}
 	},
     "scripts": {
-        "post-package-install": "MeCms\\Console\\Installer::postInstall"
+        "post-install-cmd": "MeCms\\Console\\Installer::postInstall"
     }
 }
