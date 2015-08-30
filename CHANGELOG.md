@@ -7,7 +7,8 @@
 * engine and configuration for widgets have been simplified;
 * the plugin accesses easier configuration;
 * every layout has an optimized copy of Bootstrap;
-* the backend makes greater use of cache.
+* the backend makes greater use of cache;
+* updated Bootstrap to 3.3.5.
 
 # 1.x branch
 ## 1.2 branch
