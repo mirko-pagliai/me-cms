@@ -20,6 +20,7 @@ return ['Assets' => [
 			Plugin::path('MeTools').'webroot/js/jquery.min',
 			Plugin::path('MeCms').'webroot/js/backend/bootstrap.min',
 			Plugin::path('MeCms').'webroot/js/jquery.cookie',
+			Plugin::path('MeTools').'webroot/js/default',
 			Plugin::path('MeCms').'webroot/js/backend/layout'
 		],
 		'output' => Plugin::path('MeCms').'webroot/assets/backend.min',
