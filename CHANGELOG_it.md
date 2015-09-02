@@ -7,7 +7,8 @@
 * il sistema e la configurazione dei widget sono stati semplificati;
 * il plugin accede più facilmente alla configurazione;
 * ogni layout dispone di una copia ottimizzata di Bootstrap;
-* il backend fa un uso maggiore delle cache.
+* il backend fa un uso maggiore delle cache;
+* aggiornato Bootstrap alla versione 3.3.5.
 
 # 1.x ramo
 ## 1.2 ramo

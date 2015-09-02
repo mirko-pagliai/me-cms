@@ -35,7 +35,6 @@ use Cake\Filesystem\Folder;
  * </code>
  */
 class BannerFile {
-	
     /**
      * Alias for `checkFolder()` method
      * @see checkFolder()
@@ -77,7 +76,7 @@ class BannerFile {
 	 * @return string Folder path
 	 */
 	public static function getFolder() {
-		return WWW_ROOT.'img'.DS.'banners';
+		return WWW_ROOT.'img'.DS.'banners'.DS;
 	}
 	
 	/**

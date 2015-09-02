@@ -8,8 +8,8 @@
             "name": "Mirko Pagliai",
             "email": "mirko.pagliai@gmail.com"
     }],
-	"version": "2.0.0-beta",
 	"require": {
+        "cakephp/cakephp": "~3.0",
 		"ext-imagick": "*",
 		"ext-mcrypt": "*",
         "mirko-pagliai/me-tools": "*"
@@ -20,6 +20,6 @@
 		}
 	},
     "scripts": {
-        "post-install-cmd": "MeCms\\Console\\Installer::postInstall"
+        "post-package-install": "MeCms\\Console\\Installer::postInstall"
     }
 }
