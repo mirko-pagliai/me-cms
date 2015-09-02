@@ -133,7 +133,7 @@ msgstr "Il tuo account non è stato creato"
 #: Controller/Admin/SystemsController.php:78
 #: Template/Admin/Systems/checkup.ctp:105;112;119;124;129;151
 msgid "The directory {0} is not readable or writable"
-msgstr "La directory {0}non è leggibile o scrivibile"
+msgstr "La directory {0} non è leggibile o scrivibile"
 
 #: Controller/Admin/BannersController.php:58
 msgid ""
@@ -1097,15 +1097,15 @@ msgstr "Versione del plugin {0}: {1}"
 
 #: Template/Admin/Systems/checkup.ctp:56;63
 msgid "The {0} module is enabled"
-msgstr "Il modulo {0}è abilitato"
+msgstr "Il modulo {0} è abilitato"
 
 #: Template/Admin/Systems/checkup.ctp:58;65
 msgid "The {0} module is not enabled"
-msgstr "Il modulo {0}non è abilitato"
+msgstr "Il modulo {0} non è abilitato"
 
 #: Template/Admin/Systems/checkup.ctp:60;67
 msgid "The {0} module cannot be checked"
-msgstr "Il modulo {0}non può essere verificato"
+msgstr "Il modulo {0} non può essere verificato"
 
 #: Template/Admin/Systems/checkup.ctp:74
 msgid "The {0} version is at least {1}"
@@ -1125,7 +1125,7 @@ msgstr "L'estensione {0} non è abilitata"
 
 #: Template/Admin/Systems/checkup.ctp:96
 msgid "{0} is available"
-msgstr "0} s è disponibile"
+msgstr "{0} è disponibile"
 
 #: Template/Admin/Systems/checkup.ctp:98
 msgid "{0} is not available"
