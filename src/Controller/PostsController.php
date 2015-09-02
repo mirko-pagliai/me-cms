@@ -111,9 +111,6 @@ class PostsController extends AppController {
 		if($pattern = $this->request->query('p')) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
-				//Load the MeCms.Security component
-				$this->loadComponent('MeCms.Security');
-				
 				if($this->Security->checkLastSearch($pattern)) {
 					$this->paginate['limit'] = config('frontend.records_for_searches');
 

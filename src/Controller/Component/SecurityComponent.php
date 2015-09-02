@@ -19,18 +19,15 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @see			http://api.cakephp.org/3.0/class-Cake.Controller.Component.AuthComponent.html
  */
 namespace MeCms\Controller\Component;
 
-use Cake\Controller\Component\SecurityComponent as CakeSecurityComponent;
+use MeTools\Controller\Component\SecurityComponent as BaseSecurityComponent;
 
 /**
  * The Security Component creates an easy way to integrate tighter security in your application.
- * 
- * Rewrites {@link http://api.cakephp.org/3.0/class-Cake.Controller.Component.SecurityComponent.html SecurityComponent}.
  */
-class SecurityComponent extends CakeSecurityComponent {
+class SecurityComponent extends BaseSecurityComponent {
 	/**
      * Checks if the latest search has been executed out of the minimum interval
 	 * @return bool

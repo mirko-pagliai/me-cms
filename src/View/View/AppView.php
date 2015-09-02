@@ -44,7 +44,7 @@ class AppView extends BaseView {
 		if(!empty($this->viewVars['title']))
 			$title = sprintf('%s - %s', $this->viewVars['title'], $title);
 		//Else, if exists, it adds the title assigned by the current view
-		elseif(!empty($this->fetch('title')))
+		elseif($this->fetch('title'))
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
 		
 		return $title;
@@ -126,7 +126,7 @@ class AppView extends BaseView {
 	public function allWidgets() {
 		$widgets = config('frontend.widgets.general');
 		
-		if($this->request->isCurrent(['_name' => 'homepage']) && !empty(config('frontend.widgets.homepage')))
+		if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
 			$widgets = config('frontend.widgets.homepage');
 		
 		foreach($widgets as $name => $args)

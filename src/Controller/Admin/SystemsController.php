@@ -115,7 +115,7 @@ class SystemsController extends AppController {
 		$files = System::changelogs();
 		
 		//If a changelog file has been specified
-		if(!empty($this->request->query('file')) && $this->request->is('get')) {
+		if($this->request->query('file') && $this->request->is('get')) {
 			//Loads the Markdown helper
 			$this->helpers[] = 'MeTools.Markdown';
 			

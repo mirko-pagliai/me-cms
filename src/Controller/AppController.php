@@ -126,7 +126,7 @@ class AppController extends BaseController {
 		]);
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
-		$this->loadComponent('MeTools.Security');
+		$this->loadComponent('MeCms.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
@@ -146,10 +146,10 @@ class AppController extends BaseController {
 	/**
 	 * Checks if the user's IP address is banned
 	 * @return bool
-	 * @uses MeTools\Controller\Component\SecurityComponent::isBanned()
+	 * @uses MeCms\Controller\Component\SecurityComponent::isBanned()
 	 */
 	protected function isBanned() {
-		if(empty(config('security.banned_ip')))
+		if(!config('security.banned_ip'))
 			return FALSE;
 		
 		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
@@ -162,7 +162,7 @@ class AppController extends BaseController {
 	 * @return bool
 	 */
 	protected function isOffline() {
-		return !empty(config('frontend.offline'));
+		return config('frontend.offline');
 	}
 	
 	/**
