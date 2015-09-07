@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.0 branch
+### 2.0.1-beta
+* fixed a bug with the posts date.
+
 ### 2.0.0-alpha
 * all the code has been completely rewritten for CakePHP 3.x. Several optimizations have been applied;
 * uploading/adding files (for example, banners and photos) is much simplified and is optimized;

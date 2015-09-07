@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.0 ramo
+### 2.0.1-beta
+* sistemato un bug con la data degli articoli.
+
 ### 2.0.0-alpha
 * tutto il codice è stato interamente riscritto per CakePHP 3.x. Sono state applicate svariate ottimizzazioni;
 * il caricamento/aggiunta di file (ad esempio, banner e foto) è stato fortemente semplificato e ottimizzato;

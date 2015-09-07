@@ -61,9 +61,9 @@ return ['MeCms' => [
 		//See; http://php.net/manual/it/datetime.formats.php
 		'datetime' => [
 			//Long format
-			'long'	=> 'YYYY/MM/dd, HH:MM',
+			'long'	=> 'YYYY/MM/dd, HH:mm',
 			//Short format
-			'short'	=> 'yy/MM/dd, HH:MM'
+			'short'	=> 'yy/MM/dd, HH:mm'
 		],
 		//Forces debug on localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,

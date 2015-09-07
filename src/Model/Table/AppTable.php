@@ -41,7 +41,7 @@ class AppTable extends Table {
 	public function findActive(Query $query, array $options) {
         $query->where([
             sprintf('%s.active', $this->alias())		=> TRUE,
-			sprintf('%s.created <=', $this->alias())	=> (new Time())->i18nFormat(FORMAT_FOR_MYSQL)
+			sprintf('%s.created <=', $this->alias())	=> new Time()
         ]);
 		
         return $query;
@@ -74,15 +74,15 @@ class AppTable extends Table {
 		if(empty($query))
 			return [];
 		
+		$conditions = [];
+		
 		//"Title" field
-		if(!empty($query['title'])) {
+		if(!empty($query['title']))
 			$conditions[sprintf('%s.title LIKE', $this->alias())] = sprintf('%%%s%%', $query['title']);
-		}
 		
 		//"Filename" field
-		if(!empty($query['filename'])) {
+		if(!empty($query['filename']))
 			$conditions[sprintf('%s.filename LIKE', $this->alias())] = sprintf('%%%s%%', $query['filename']);
-		}
 		
 		//"Active" field
 		if(!empty($query['active'])) {
@@ -93,21 +93,17 @@ class AppTable extends Table {
 		}
 		
 		//"Priority" field
-		if(!empty($query['priority'])) {
+		if(!empty($query['priority']))
 			$conditions[sprintf('priority', $this->alias())] = $query['priority'];
-		}
 		
 		//"Created" field
-		if(!empty($query['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $query['created'])) {			
-			//Sets the start date
-			$start = new Time(sprintf('%s-1 00:00:00', $query['created']));
-			$conditions[sprintf('created >=', $this->alias())] = $start->i18nFormat(FORMAT_FOR_MYSQL);
-			
-			//Sets the end date
-			$conditions[sprintf('created <', $this->alias())] = $start->addMonth(1)->i18nFormat(FORMAT_FOR_MYSQL);
-		}
+		if(!empty($query['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $query['created']))
+			$conditions = am($conditions, [
+				sprintf('%s.created >=', $this->alias())	=> new Time($created = sprintf('%s-01', $query['created'])),
+				sprintf('%s.created <', $this->alias())		=> (new Time($created))->addMonth(1)
+			]);
 		
-		return empty($conditions) ? [] : $conditions;
+		return $conditions;
 	}
 	
 	/**
