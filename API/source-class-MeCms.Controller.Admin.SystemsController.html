@@ -345,7 +345,7 @@
 </span><span id="115" class="l"><a href="#115">115: </a>        <span class="php-var">$files</span> = <span class="php-keyword2">System</span>::changelogs();
 </span><span id="116" class="l"><a href="#116">116: </a>        
 </span><span id="117" class="l"><a href="#117">117: </a>        <span class="php-comment">//If a changelog file has been specified</span>
-</span><span id="118" class="l"><a href="#118">118: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>)) &amp;&amp; <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'get'</span>)) {
+</span><span id="118" class="l"><a href="#118">118: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>) &amp;&amp; <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'get'</span>)) {
 </span><span id="119" class="l"><a href="#119">119: </a>            <span class="php-comment">//Loads the Markdown helper</span>
 </span><span id="120" class="l"><a href="#120">120: </a>            <span class="php-var">$this</span>-&gt;helpers[] = <span class="php-quote">'MeTools.Markdown'</span>;
 </span><span id="121" class="l"><a href="#121">121: </a>            
