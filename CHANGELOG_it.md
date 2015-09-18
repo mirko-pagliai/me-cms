@@ -1,6 +1,7 @@
 # 2.x ramo
 ## 2.0 ramo
 ### 2.0.1-beta
+* risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
 * sistemato un bug con la data degli articoli.
 
 ### 2.0.0-alpha

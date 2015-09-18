@@ -33,11 +33,23 @@ class PostsController extends AppController {
 	/**
      * Lists posts
 	 * @param string $category Category slug, optional
+	 * @uses MeCms\Model\Table\PostsTable::setNextToBePublished()
 	 */
     public function index($category = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q'))
 			$this->redirect([$this->request->query('q')]);
+					
+		//Gets the next post to be published
+		$next = Cache::read('nextToBePublished', 'posts');
+		
+		//Checks if the cache is valid
+		if(!empty($next) && (new \Cake\I18n\Time())->toUnixString() >= $next) {
+			Cache::clear(FALSE, 'posts');
+		
+			//Sets the next post to be published
+			$this->Posts->setNextToBePublished();
+		}
 		
 		//Sets the initial cache name
 		$cache = 'index';

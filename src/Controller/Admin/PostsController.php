@@ -121,7 +121,7 @@ class PostsController extends AppController {
      * Adds post
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function add() {		
+    public function add() {
         $post = $this->Posts->newEntity();
 		
         if($this->request->is('post')) {
