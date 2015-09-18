@@ -2,6 +2,7 @@
 ## 2.0 branch
 ### 2.0.1-beta
 * fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
+* now you can set the timezone using the configuration file;
 * fixed bug with the posts date.
 
 ### 2.0.0-alpha

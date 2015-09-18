@@ -70,6 +70,9 @@ return ['MeCms' => [
 		//Interface language.
 		//With "auto" value, it will try to use the browser language
 		'language' => 'auto',
+		//Timezone. See the list of supported timezones:
+		//http://php.net/manual/en/timezones.php
+		'timezone' => 'UTC',
 		//Site title
 		'title' => 'MeCms',
 	],
