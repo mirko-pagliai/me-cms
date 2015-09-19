@@ -125,23 +125,4 @@ class AppTable extends Table {
 		
 		return (bool) $this->find('all')->where(compact('id', 'user_id'))->count();
 	}
-	
-	/**
-	 * Sets in cache the timestamp of the next post to be published.
-	 * This value can be used to check if the cache is valid
-	 * @uses Cake\I18n\Time::toUnixString()
-	 */
-	public function setNextToBePublished() {
-		$post = $this->find()
-			->select('created')
-			->where([
-				sprintf('%s.active', $this->alias())	=> TRUE,
-				sprintf('%s.created >', $this->alias()) => new Time()
-			])
-			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-			->first();
-		
-		if(!empty($post) && !empty($post->created))
-			Cache::write('nextToBePublished', $post->created->toUnixString(), 'posts');
-	}
 }
