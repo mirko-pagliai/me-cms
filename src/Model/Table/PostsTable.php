@@ -106,14 +106,12 @@ class PostsTable extends AppTable {
 		$conditions = parent::fromFilter($query);
 		
 		//"User" (author) field
-		if(!empty($query['user'])) {
+		if(!empty($query['user']))
 			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		}
 		
 		//"Category" field
-		if(!empty($query['category'])) {
+		if(!empty($query['category']))
 			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		}
 		
 		return empty($conditions) ? [] : $conditions;
 	}

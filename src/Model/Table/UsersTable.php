@@ -122,12 +122,11 @@ class UsersTable extends AppTable {
 		$conditions = parent::fromFilter($query);
 		
 		//"Username" field
-		if(!empty($query['username'])) {
+		if(!empty($query['username']))
 			$conditions[sprintf('%s.username LIKE', $this->alias())] = sprintf('%%%s%%', $query['username']);
-		}
 		
 		//"Status" field
-		if(!empty($query['status'])) {
+		if(!empty($query['status']))
 			switch($query['status']) {
 				case 'active':
 					$conditions[sprintf('%s.active', $this->alias())] = TRUE;
@@ -140,7 +139,6 @@ class UsersTable extends AppTable {
 					$conditions[sprintf('%s.banned', $this->alias())] = TRUE;
 					break;
 			}
-		}
 		
 		return empty($conditions) ? [] : $conditions;
 	}

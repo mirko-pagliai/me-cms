@@ -95,9 +95,8 @@ class BannersTable extends AppTable {
 		$conditions = parent::fromFilter($query);
 		
 		//"Position" field
-		if(!empty($query['position'])) {
+		if(!empty($query['position']))
 			$conditions[sprintf('%s.position_id', $this->alias())] = $query['position'];
-		}
 		
 		return empty($conditions) ? [] : $conditions;
 	}
