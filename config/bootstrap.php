@@ -36,10 +36,15 @@ require_once 'global_functions.php';
 //Loads the configuration from the plugin
 Configure::load('MeCms.mecms');
 
-//Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'mecms.php'))
-	Configure::load('mecms');
+$config = Configure::read('MeCms');
 
+//Loads the configuration from the application, if exists
+if(is_readable(CONFIG.'mecms.php')) {
+	Configure::load('mecms', 'default', FALSE);
+	
+	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::read('MeCms'), $config));
+}
+	
 //Checks the crypt key
 if(strlen(Configure::read('MeCms.security.crypt_key')) < 32)
 	throw new \Cake\Network\Exception\InternalErrorException(__d('me_cms', 'The key used to crypt must be {0} characters long', '32'));

@@ -28,12 +28,12 @@
 		list($plugin, $menu) = pluginSplit($menu);
 		
 		//Loads the menu helper
-		$this->Menu = $this->helpers()->load($helper = sprintf('%s.Menu', $plugin));
-		
+		$this->Menu = $this->helpers()->load('Menu', ['className' => sprintf('%s.Menu', $plugin)]);
+				
 		//Gets the menu
 		echo $this->Menu->get($menu, 'collapse');
 		
 		//Unloads the helper
-		$this->helpers()->unload($helper);
+		$this->helpers()->unload('Menu');
 	}							
 ?>
