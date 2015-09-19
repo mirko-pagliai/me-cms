@@ -23,7 +23,6 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
@@ -39,7 +38,7 @@ class PostsTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses Cake\Cache\Cache::clear()
-	 * @uses setNextToBePublished()
+	 * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		Cache::clear(FALSE, 'posts');	
@@ -54,7 +53,7 @@ class PostsTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses Cake\Cache\Cache::clear()
-	 * @uses setNextToBePublished()
+	 * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		Cache::clear(FALSE, 'posts');
@@ -116,25 +115,6 @@ class PostsTable extends AppTable {
             'className' => 'MeCms.Users'
         ]);
     }
-	
-	/**
-	 * Sets in cache the timestamp of the next post to be published.
-	 * This value can be used to check if the cache is valid
-	 * @uses Cake\I18n\Time::toUnixString()
-	 */
-	public function setNextToBePublished() {
-		$post = $this->find()
-			->select('created')
-			->where([
-				sprintf('%s.active', $this->alias())	=> TRUE,
-				sprintf('%s.created >', $this->alias()) => new Time()
-			])
-			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-			->first();
-		
-		if(!empty($post) && !empty($post->created))
-			Cache::write('nextToBePublished', $post->created->toUnixString(), 'posts');
-	}
 
     /**
      * Default validation rules
