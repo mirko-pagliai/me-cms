@@ -34,7 +34,6 @@
 		<?php
 			if(!empty($categories))
 				echo $this->Form->input('parent_id', [
-					'empty'		=> FALSE,
 					'label'		=> __d('me_cms', 'Parent category'),
 					'options'	=> $categories,
 					'tip'		=> __d('me_cms', 'Leave blank to create a parent category')
