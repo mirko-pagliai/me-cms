@@ -92,7 +92,8 @@ class PostsController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins and managers can edit all posts. Users can edit only their own posts
+		//Only admins and managers can edit all posts.
+		//Users can edit only their own posts
 		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager']))
 			return $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
 				
