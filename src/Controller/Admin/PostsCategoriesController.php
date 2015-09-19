@@ -87,7 +87,7 @@ class PostsCategoriesController extends AppController {
 
     /**
      * Edits posts category
-     * @param string $id Posts Category ID
+     * @param string $id Posts category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
@@ -108,7 +108,7 @@ class PostsCategoriesController extends AppController {
     }
     /**
      * Deletes posts category
-     * @param string $id Posts Category ID
+     * @param string $id Posts category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
