@@ -55,7 +55,7 @@ return ['MeCms' => [
 			//Long format
 			'long'	=> 'YYYY/MM/dd',
 			//Short format
-			'short'	=> 'yy/MM/dd',
+			'short'	=> 'yy/MM/dd'
 		],
 		//Datetime formats
 		//See; http://php.net/manual/it/datetime.formats.php
@@ -74,7 +74,7 @@ return ['MeCms' => [
 		//http://php.net/manual/en/timezones.php
 		'timezone' => 'UTC',
 		//Site title
-		'title' => 'MeCms',
+		'title' => 'MeCms'
 	],
 	//Security
 	'security' => [
@@ -88,7 +88,7 @@ return ['MeCms' => [
 		//It will be used for some actions, such as signup or reset the password
 		'recaptcha' => FALSE,
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
-		'search_interval' => 10,
+		'search_interval' => 10
 	],
 	//Users
 	'users' => [
