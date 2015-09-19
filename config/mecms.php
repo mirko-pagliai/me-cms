@@ -76,6 +76,18 @@ return ['MeCms' => [
 		//Site title
 		'title' => 'MeCms'
 	],
+	//Post
+	'post' => [
+		//"Show" options
+		'show' => [
+			//Displays the post author
+			'author' => TRUE,
+			//Displays the post category
+			'category' => TRUE,
+			//Displays the post created datetime
+			'created' => TRUE
+		]
+	],
 	//Security
 	'security' => [
 		//Array of banned IP addresses.
