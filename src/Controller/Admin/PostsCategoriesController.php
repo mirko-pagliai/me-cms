@@ -47,7 +47,7 @@ class PostsCategoriesController extends AppController {
 	}
 	
 	/**
-     * Lists postsCategories
+     * Lists posts categories
 	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
     public function index() {		
