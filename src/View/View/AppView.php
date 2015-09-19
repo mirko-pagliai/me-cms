@@ -64,6 +64,7 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Library');
 		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
+		$this->loadHelper('MeCms.Auth');
 		
 		//Loads the Recaptcha helper
 		if(config('security.recaptcha'))
