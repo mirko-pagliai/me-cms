@@ -37,7 +37,7 @@ class BannersPositionsController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can access this controller
-		return $this->Auth->isGroup(['admin']);
+		return $this->Auth->isGroup('admin');
 	}
 	
 	/**

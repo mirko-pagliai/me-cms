@@ -47,7 +47,7 @@ class MenuHelper extends BaseMenuHelper {
 	protected function _banners($type) {
 		//Only admins and managers can access these controllers
 		if(!$this->Auth->isGroup(['admin', 'manager']))
-			return [];
+			return;
 		
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List banners'), ['controller' => 'banners', 'action' => 'index', 'plugin' => 'MeCms']),
@@ -134,7 +134,7 @@ class MenuHelper extends BaseMenuHelper {
 	protected function _users($type) {
 		//Only admins and managers can access this controller
 		if(!$this->Auth->isGroup(['admin', 'manager']))
-			return [];
+			return;
 		
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List users'), ['controller' => 'Users', 'action' => 'index', 'plugin' => 'MeCms']),
@@ -161,15 +161,20 @@ class MenuHelper extends BaseMenuHelper {
 	protected function _systems($type) {
 		//Only admins can access this controller
 		if(!$this->Auth->isGroup('admin'))
-			return [];
+			return;
 		
 		$menu = [
 			$this->Html->link(sprintf('%s/%s', __d('me_cms', 'Cache'), __d('me_cms', 'Thumbs')), ['controller' => 'Systems', 'action' => 'cache', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'System checkup'), ['controller' => 'Systems', 'action' => 'checkup', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Media browser'), ['controller' => 'Systems', 'action' => 'browser', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Log viewer'), ['controller' => 'Systems', 'action' => 'logs', 'plugin' => 'MeCms'])
+			$this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms'])
 		];
+		
+		//Only admins can see logs
+		if($this->Auth->isGroup('admin'))
+			array_push($menu,
+				$this->Html->link(__d('me_cms', 'Log viewer'), ['controller' => 'Systems', 'action' => 'logs', 'plugin' => 'MeCms'])
+			);
 		
 		return [$menu, __d('me_cms', 'System'), ['icon' => 'wrench']];
 	}

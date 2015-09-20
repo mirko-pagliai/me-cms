@@ -39,8 +39,9 @@ class UsersController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Every user can change his password
-		if($this->request->isAction('password'))
+		if($this->request->isAction('change_password'))
 			return TRUE;
+		
 		//Only admins can activate account and delete users
 		if($this->request->isAction(['activate', 'delete']))
 			return $this->Auth->isGroup('admin');

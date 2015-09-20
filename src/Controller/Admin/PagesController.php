@@ -55,6 +55,10 @@ class PagesController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
+		//Everyone can list pages and static pages
+		if($this->request->isAction(['index', 'statics']))
+			return TRUE;
+		
 		//Only admins can delete pages
 		if($this->request->isAction('delete'))
 			return $this->Auth->isGroup('admin');

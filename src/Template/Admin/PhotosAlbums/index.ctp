@@ -55,8 +55,8 @@
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $album->id], ['icon' => 'pencil'])
 							];
 
-							//Only admins and managers can delete albums
-							if($this->Auth->isGroup(['admin', 'manager']))
+							//Only admins  can delete albums
+							if($this->Auth->isGroup('admin'))
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $album->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 
 							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);

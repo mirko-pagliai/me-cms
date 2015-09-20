@@ -62,6 +62,23 @@ class BannersController extends AppController {
 	}
 	
 	/**
+	 * Check if the provided user is authorized for the request
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @return bool TRUE if the user is authorized, otherwise FALSE
+	 * @uses MeCms\Controller\AppController::isAuthorized()
+	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins can delete banners
+		if($this->request->isAction('delete'))
+			return $this->Auth->isGroup('admin');
+		
+		//Admins and managers can access other actions
+		return parent::isAuthorized($user);
+	}
+	
+	/**
      * Lists banners
 	 * @uses MeCms\Model\Table\Banners::fromFilter()
      */

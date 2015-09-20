@@ -2,6 +2,7 @@
 ## 2.0 ramo
 ### 2.0.1-beta
 * risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
+* permessi sistemati;
 * ora è possibile scegliere quali dettagli degli articoli mostri usando il file di configurazione;
 * ora è possibile impostare la timezone usando il file di configurazione;
 * sistemato un bug con la data degli articoli.

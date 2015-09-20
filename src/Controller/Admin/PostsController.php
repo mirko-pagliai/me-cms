@@ -94,11 +94,10 @@ class PostsController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all posts.
 		//Users can edit only their own posts
-		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager']))
-			return $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+		if($this->request->isAction('edit'))
+			return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
 				
-		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		return TRUE;
 	}
 	
 	/**
