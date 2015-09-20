@@ -393,6 +393,7 @@
     "pagination.less",
     "thumbnails.less",
     "alerts.less",
+    "responsive-embed.less",
     "close.less",
     "component-animations.less",
     "dropdowns.less"
@@ -402,5 +403,5 @@
     "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=86222ac7c5107690fc7a"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=59abfffa9a6422779c97"
 }
