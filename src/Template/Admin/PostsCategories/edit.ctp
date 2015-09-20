@@ -57,6 +57,6 @@
 			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit category')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Edit posts category')) ?>
     <?= $this->Form->end() ?>
 </div>

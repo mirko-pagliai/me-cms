@@ -974,7 +974,7 @@ msgstr "tutte le categorie"
 
 #: Template/Admin/PostsCategories/add.ctp:26;31
 msgid "Add posts category"
-msgstr "Aggiungi categoria"
+msgstr "Aggiungi categoria articoli"
 
 #: Template/Admin/PostsCategories/add.ctp:37
 #: Template/Admin/PostsCategories/edit.ctp:38
@@ -993,7 +993,7 @@ msgstr "Aggiungi categoria"
 
 #: Template/Admin/PostsCategories/edit.ctp:26;31
 msgid "Edit posts category"
-msgstr "Modifica categoria"
+msgstr "Modifica categoria articoli"
 
 #: Template/Admin/PostsCategories/edit.ctp:61
 msgid "Edit category"
@@ -1002,7 +1002,7 @@ msgstr "Modifica categoria"
 #: Template/Admin/PostsCategories/index.ctp:25;28
 #: Template/PostsCategories/index.ctp:25;29
 msgid "Posts categories"
-msgstr "Categorie"
+msgstr "Categorie articoli"
 
 #: Template/Admin/PostsCategories/index.ctp:35
 msgid "Parent"
