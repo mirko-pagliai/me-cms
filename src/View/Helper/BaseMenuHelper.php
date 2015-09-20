@@ -86,10 +86,12 @@ class BaseMenuHelper extends Helper {
 			throw new InternalErrorException(__d('me_cms', 'The {0} method does not exist', sprintf('%s::%s()', $class, $method)));
 		
 		//Dynamic call to the method that generates the requested menu
-		list($menu, $title, $options) = $class::{$method}($type);
+		$output = $class::{$method}($type);
 		
-		if(empty($menu))
+		if(empty($output[0]) || empty($output[1]))
 			return FALSE;
+		
+		list($menu, $title, $options) = [$output[0], $output[1], empty($output[2]) ? [] : $output[2]];
 		
 		//Switch the type of menu
 		switch($type) {
