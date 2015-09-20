@@ -80,7 +80,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 */
 	$routes->connect('/posts/category/:slug',
 		['controller' => 'Posts', 'action' => 'index'],
-		['_name' => 'post_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+		['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
 	$routes->connect('/post/:slug',
 		['controller' => 'Posts', 'action' => 'view'],
