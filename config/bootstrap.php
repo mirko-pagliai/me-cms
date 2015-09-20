@@ -42,7 +42,7 @@ $config = Configure::read('MeCms');
 if(is_readable(CONFIG.'mecms.php')) {
 	Configure::load('mecms', 'default', FALSE);
 	
-	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::read('MeCms'), $config));
+	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::consume('MeCms'), $config));
 }
 	
 //Checks the crypt key
