@@ -24,7 +24,7 @@
 
 <?php
 	//Returns on categories index
-	if($this->request->isCurrent(['_name' => 'post_categories']))
+	if($this->request->isCurrent(['_name' => 'posts_categories']))
 		return;
 ?>
 

@@ -73,7 +73,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * PostsCategories controller
 	 */
-	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'post_categories']);
+	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'posts_categories']);
 	
 	/**
 	 * Posts controller

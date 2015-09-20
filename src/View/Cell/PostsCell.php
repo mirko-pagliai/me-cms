@@ -50,7 +50,7 @@ class PostsCell extends Cell {
 	 */
 	public function categories() {
 		//Returns on categories index
-		if($this->request->isCurrent(['_name' => 'post_categories']))
+		if($this->request->isCurrent(['_name' => 'posts_categories']))
 			return;
 		
 		//Tries to get data from the cache
