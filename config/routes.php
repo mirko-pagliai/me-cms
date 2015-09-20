@@ -73,12 +73,12 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * PostsCategories controller
 	 */
-	$routes->connect('/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'categories']);
+	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'categories']);
 	
 	/**
 	 * Posts controller
 	 */
-	$routes->connect('/category/:slug',
+	$routes->connect('/posts/category/:slug',
 		['controller' => 'Posts', 'action' => 'index'],
 		['_name' => 'category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
