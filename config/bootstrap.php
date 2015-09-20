@@ -34,13 +34,13 @@ require_once 'global_functions.php';
  * MeCms configuration
  */
 //Loads the configuration from the plugin
-Configure::load('MeCms.mecms');
+Configure::load('MeCms.me_cms');
 
 $config = Configure::read('MeCms');
 
 //Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'mecms.php')) {
-	Configure::load('mecms', 'default', FALSE);
+if(is_readable(CONFIG.'me_cms.php')) {
+	Configure::load('me_cms', 'default', FALSE);
 	
 	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::consume('MeCms'), $config));
 }
