@@ -88,7 +88,7 @@ class PostsController extends AppController {
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeCms\Model\Table\PostsTable::isOwnedBy()
+	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
