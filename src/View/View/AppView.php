@@ -52,7 +52,6 @@ class AppView extends BaseView {
 
 	/**
      * Initialization hook method
-     * @return void
 	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_initialize
 	 */
     public function initialize() {
@@ -65,10 +64,7 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('MeCms.Auth');
-		
-		//Loads the Recaptcha helper
-		if(config('security.recaptcha'))
-			$this->loadHelper('MeTools.Recaptcha');
+		$this->loadHelper('MeTools.Recaptcha');
     }
 	
 	/**
