@@ -76,7 +76,7 @@ return ['MeCms' => [
 		//Site title
 		'title' => 'MeCms'
 	],
-	//Post
+	//Posts
 	'post' => [
 		//"Show" options
 		'show' => [
