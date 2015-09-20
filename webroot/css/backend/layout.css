@@ -138,6 +138,29 @@ form.filter-form {
     padding: 12px;
 }
 
+/* Filter form, checkboxes wrapper */
+form.filter-form .checkbox {
+	background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset;
+}
+
+/* Filter form, checkboxes wrapper, label */
+form.filter-form .checkbox label {
+	color: #555;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 31px;
+    margin: 0 8px;
+}
+
+/* Filter form, checkboxes wrapper, label, icon */
+form.filter-form .checkbox label::before {
+	color: #888;
+	font-size: 17px;
+}
+
 /* Filter form, legend */
 form.filter-form legend {
     border: 0;
