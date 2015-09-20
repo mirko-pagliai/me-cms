@@ -32,7 +32,7 @@
 <div class="post-container content-container">
 	<div class="content-header">
 		<?php
-			if(!empty(config('post.show.category')) && !empty($post->category->title) && !empty($post->category->slug))
+			if(config('post.show.category') && !empty($post->category->title) && !empty($post->category->slug))
 				echo $this->Html->h5($this->Html->link($post->category->title, ['_name' => 'posts_category', $post->category->slug]), ['class' => 'content-category']);
 
 			echo $this->Html->h3($this->Html->link($post->title, ['_name' => 'post', $post->slug]), ['class' => 'content-title']);
@@ -42,13 +42,13 @@
 		?>
 		<div class="content-info">
 			<?php
-				if(!empty(config('post.show.author')) && !empty($post->user->full_name))
+				if(config('post.show.author') && !empty($post->user->full_name))
 					echo $this->Html->div('content-author',
 						__d('me_cms', 'Posted by {0}', $post->user->full_name),
 						['icon' => 'user']
 					);
 
-				if(!empty(config('post.show.created')) && !empty($post->created))
+				if(config('post.show.created') && !empty($post->created))
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $post->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
