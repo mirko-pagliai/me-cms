@@ -39,7 +39,7 @@
 			<?= 
 				$this->Html->ul([
 					$this->Html->link(__d('me_cms', 'Home'),		['_name' => 'homepage'], ['icon' => 'home']),
-					$this->Html->link(__d('me_cms', 'Categories'),	['_name' => 'categories']),
+					$this->Html->link(__d('me_cms', 'Categories'),	['_name' => 'post_categories']),
 					$this->Html->link(__d('me_cms', 'Pages'),		['_name' => 'pages']),
 					$this->Html->link(__d('me_cms', 'Photos'),		['_name' => 'albums'])
 				], ['class' => 'nav navbar-nav'])

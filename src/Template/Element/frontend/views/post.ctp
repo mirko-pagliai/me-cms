@@ -33,7 +33,7 @@
 	<div class="content-header">
 		<?php
 			if(!empty(config('post.show.category')) && !empty($post->category->title) && !empty($post->category->slug))
-				echo $this->Html->h5($this->Html->link($post->category->title, ['_name' => 'category', $post->category->slug]), ['class' => 'content-category']);
+				echo $this->Html->h5($this->Html->link($post->category->title, ['_name' => 'post_category', $post->category->slug]), ['class' => 'content-category']);
 
 			echo $this->Html->h3($this->Html->link($post->title, ['_name' => 'post', $post->slug]), ['class' => 'content-title']);
 
