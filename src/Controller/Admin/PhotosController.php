@@ -88,12 +88,14 @@ class PhotosController extends AppController {
 		
 		$this->paginate['limit'] = config('backend.photos');
 		
-		$this->set('photos', $this->paginate(
+		$photos = $this->paginate(
 			$this->Photos->find()
 				->select(['id', 'album_id', 'filename'])
 				->where(compact('album_id'))
 				->order(['Photos.filename' => 'ASC'])
-		));
+		);
+		
+		$this->set(compact('album_id', 'photos'));
     }
 	
 	/**

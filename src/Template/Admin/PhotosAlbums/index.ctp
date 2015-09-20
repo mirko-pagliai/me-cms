@@ -22,10 +22,10 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Photos albums')); ?>
+<?php $this->assign('title', __d('me_cms', 'Albums')); ?>
 
 <div class="photosAlbums index">
-	<?= $this->Html->h2(__d('me_cms', 'Photos albums')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Albums')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">
