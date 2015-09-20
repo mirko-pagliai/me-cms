@@ -27,8 +27,10 @@ if(!function_exists('config')) {
 	 * @param string $key Configuration key
 	 * @return mixed Configuration value
 	 */
-	function config($key) {
-		return \Cake\Core\Configure::read(is_string($key) ? sprintf('MeCms.%s', $key) : 'MeCms');
+	function config($key = NULL) {
+		$key = empty($key) || !is_string($key) ? 'MeCms' : sprintf('MeCms.%s', $key);
+		
+		return \Cake\Core\Configure::read($key);
 	}
 }
 
