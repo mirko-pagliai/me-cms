@@ -28,10 +28,10 @@
 		return;
 ?>
 
-<?php if($posts->count()): ?>
+<?php if(count($posts)): ?>
 	<div class="widget sidebar-widget">
 		<?php
-			echo $this->Html->h4($posts->count() > 1 ? __d('me_cms', 'Latest {0} posts', $posts->count()) : __d('me_cms', 'Latest post'));
+			echo $this->Html->h4(count($posts) > 1 ? __d('me_cms', 'Latest {0} posts', count($posts)) : __d('me_cms', 'Latest post'));
 
 			foreach($posts as $post)
 				$list[] = $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
