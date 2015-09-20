@@ -1436,15 +1436,15 @@ msgstr "Il file {0}supera la dimensione massima"
 
 #: Template/Element/backend/uploader/response.ctp:36
 msgid "Directory: {0}"
-msgstr "Cartella: 0}"
+msgstr "Cartella: {0}"
 
 #: Template/Element/backend/uploader/response.ctp:37
 msgid "Type: {0}"
-msgstr "Tipo: 0}"
+msgstr "Tipo: {0}"
 
 #: Template/Element/backend/uploader/response.ctp:38
 msgid "Size: {0}"
-msgstr "Dimensione: 0}"
+msgstr "Dimensione: {0}"
 
 #: Template/Element/frontend/footer.ctp:26
 msgid "Powered by {0}. Copyright {1}"
