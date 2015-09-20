@@ -74,6 +74,7 @@ class AppController extends BaseController {
 	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeTools\Network\Request::hasPrefix()
 	 * @uses MeTools\Network\Request::isAction()
+	 * @uses MeTools\Network\Request::isAdmin()
 	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
@@ -97,6 +98,10 @@ class AppController extends BaseController {
 		
 		if(!$this->Auth->user())
 			$this->Auth->config('authError', FALSE);
+		
+		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
+		if($this->request->isAdmin())
+			$this->Security->config('unlockedActions', 'upload');
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
