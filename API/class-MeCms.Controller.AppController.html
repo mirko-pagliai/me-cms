@@ -228,7 +228,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#28-199" title="Go to source code">AppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#28-204" title="Go to source code">AppController.php</a>
 		<br>
 	</div>
 
@@ -291,7 +291,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#70-104" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#70-109" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -319,6 +319,7 @@ You can use this method to perform logic that needs to happen before each contro
 				<div class="list">
 						MeTools\Network\Request::hasPrefix()<br>
 						MeTools\Network\Request::isAction()<br>
+						MeTools\Network\Request::isAdmin()<br>
 						<code><a href="class-MeCms.Controller.AppController.html#_isBanned">MeCms\Controller\AppController::isBanned()</a></code><br>
 						<code><a href="class-MeCms.Controller.AppController.html#_isOffline">MeCms\Controller\AppController::isOffline()</a></code><br>
 						<code><a href="class-MeCms.Controller.AppController.html#_setLanguage">MeCms\Controller\AppController::setLanguage()</a></code><br>
@@ -350,7 +351,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#106-119" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#111-124" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -400,7 +401,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#121-135" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#126-140" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -430,7 +431,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#137-146" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#142-151" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks if the provided user is authorized for the request</p>
@@ -458,9 +459,11 @@ You can use this method to perform logic or set view variables that are required
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.BannersController.html#_isAuthorized">MeCms\Controller\Admin\BannersController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.PagesController.html#_isAuthorized">MeCms\Controller\Admin\PagesController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.PhotosAlbumsController.html#_isAuthorized">MeCms\Controller\Admin\PhotosAlbumsController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.PhotosController.html#_isAuthorized">MeCms\Controller\Admin\PhotosController::isAuthorized()</a></code><br>
+						<code><a href="class-MeCms.Controller.Admin.PostsCategoriesController.html#_isAuthorized">MeCms\Controller\Admin\PostsCategoriesController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.PostsController.html#_isAuthorized">MeCms\Controller\Admin\PostsController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_isAuthorized">MeCms\Controller\Admin\SystemsController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.UsersController.html#_isAuthorized">MeCms\Controller\Admin\UsersController::isAuthorized()</a></code><br>
@@ -483,7 +486,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isBanned">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#148-160" title="Go to source code">isBanned</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#153-165" title="Go to source code">isBanned</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the user's IP address is banned</p>
@@ -526,7 +529,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#162-168" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#167-173" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -565,7 +568,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setLanguage">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#170-198" title="Go to source code">setLanguage</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#175-203" title="Go to source code">setLanguage</a>( )</code>
 
 		<div class="description short">
 			<p>Sets the language</p>

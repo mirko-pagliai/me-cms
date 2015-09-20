@@ -215,7 +215,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.BannersController.html#28-137" title="Go to source code">Admin/BannersController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.BannersController.html#28-154" title="Go to source code">Admin/BannersController.php</a>
 		<br>
 	</div>
 
@@ -270,6 +270,53 @@ You can use this method to perform logic that needs to happen before each contro
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#64-79" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Check if the provided user is authorized for the request</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Check if the provided user is authorized for the request</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd>The user to check the authorization of. If empty the user in the session will be used</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if the user is authorized, otherwise FALSE
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.AppController.html#_isAuthorized">MeCms\Controller\AppController::isAuthorized()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.AuthComponent.html#_isGroup">MeCms\Controller\Component\AuthComponent::isGroup()</a></code><br>
+						MeTools\Network\Request::isAction()<br>
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCms.Controller.AppController.html#_isAuthorized">MeCms\Controller\AppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="index" id="_index">
 
 		<td class="attributes"><code>
@@ -282,7 +329,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#64-76" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#81-93" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			<p>Lists banners</p>
@@ -316,7 +363,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_upload">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#78-97" title="Go to source code">upload</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#95-114" title="Go to source code">upload</a>( )</code>
 
 		<div class="description short">
 			<p>Uploads banners</p>
@@ -351,7 +398,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_edit">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#99-119" title="Go to source code">edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#116-136" title="Go to source code">edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edits banner</p>
@@ -390,7 +437,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_delete">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#120-136" title="Go to source code">delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BannersController.html#137-153" title="Go to source code">delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Deletes banner</p>
@@ -426,7 +473,6 @@ You can use this method to perform logic that needs to happen before each contro
 			<a href="class-MeCms.Controller.AppController.html#__upload">_upload()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_initialize">initialize()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_isAuthorized">isAuthorized()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_isBanned">isBanned()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_isOffline">isOffline()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_setLanguage">setLanguage()</a>
