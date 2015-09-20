@@ -24,7 +24,7 @@
 if(!function_exists('config')) {
 	/**
 	 * Gets config values stored in configuration of MeCms
-	 * @param string $key Configuration key
+	 * @param string|NULL $key Configuration key
 	 * @return mixed Configuration value
 	 */
 	function config($key = NULL) {
