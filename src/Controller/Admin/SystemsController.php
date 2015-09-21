@@ -207,7 +207,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\System::clearCache()
 	 */
 	public function clear_cache() {
-		$this->request->allowMethod(['post', 'delete']);
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
 		
 		if(System::clearCache())
 			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
