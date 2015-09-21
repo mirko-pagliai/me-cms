@@ -81,14 +81,14 @@ class PostsTable extends AppTable {
 	 * @uses setNextToBePublished()
 	 */
 	public function checkIfCacheIsValid() {
-		//Gets from cache the timestamp of the next video to be published
+		//Gets from cache the timestamp of the next record to be published
 		$next = $this->getNextToBePublished();
 		
 		//If the cache is not valid, it empties the cache
 		if($next && time() >= $next) {
 			Cache::clear(FALSE, 'posts');
 		
-			//Sets the next post to be published
+			//Sets the next record to be published
 			$this->setNextToBePublished();
 		}
 	}
@@ -117,7 +117,7 @@ class PostsTable extends AppTable {
 	}
 	
 	/**
-	 * Gets from cache the timestamp of the next video to be published.
+	 * Gets from cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
 	 * @see checkIfCacheIsValid()
@@ -147,13 +147,13 @@ class PostsTable extends AppTable {
     }
 	
 	/**
-	 * Sets to cache the timestamp of the next post to be published.
+	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @see checkIfCacheIsValid()
 	 * @uses Cake\I18n\Time::toUnixString()
 	 */
 	public function setNextToBePublished() {		
-		$post = $this->find()
+		$next = $this->find()
 			->select('created')
 			->where([
 				sprintf('%s.active', $this->alias())	=> TRUE,
@@ -162,8 +162,7 @@ class PostsTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		if($post->created)
-			Cache::write('next_to_be_published', $post->created->toUnixString(), 'posts');
+		Cache::write('next_to_be_published', $next->created ? $next->created->toUnixString() : FALSE, 'posts');
 	}
 
     /**
