@@ -49,7 +49,7 @@ class PhotosCell extends Cell {
 	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function albums() {
-		//Returns on Photos or PhotosAlbums controller
+		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
@@ -71,12 +71,12 @@ class PhotosCell extends Cell {
 	}
 	
 	/**
-	 * Random photos widget
+	 * Random widget
 	 * @param string $limit Limit
 	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function random($limit = NULL) {
-		//Returns on Photos or PhotosAlbums controller
+		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		

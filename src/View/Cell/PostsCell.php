@@ -71,12 +71,12 @@ class PostsCell extends Cell {
 	}
 	
 	/**
-	 * Latest posts widget
+	 * Latest widget
 	 * @param string $limit Limit
 	 * @uses MeTools\Network\Request::isAction()
 	 */
     public function latest($limit = NULL) {
-		//Returns on posts index, except for category
+		//Returns on index, except for category
 		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 			return;
 
