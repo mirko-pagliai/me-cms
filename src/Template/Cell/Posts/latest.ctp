@@ -23,7 +23,7 @@
 ?>
 
 <?php
-	//Returns on posts index, except for category
+	//Returns on index, except for category
 	if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 		return;
 ?>
