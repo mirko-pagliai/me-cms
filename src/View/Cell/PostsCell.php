@@ -30,7 +30,7 @@ use Cake\View\Cell;
  */
 class PostsCell extends Cell {
 	/**
-	 * Constructor
+	 * Constructor. It loads the model
 	 * @param \MeTools\Network\Request $request The request to use in the cell
 	 * @param \Cake\Network\Response $response The request to use in the cell
 	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
