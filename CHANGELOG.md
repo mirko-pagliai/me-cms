@@ -3,6 +3,7 @@
 ### 2.0.1-beta
 * fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
 * fixed permissions;
+* it automatically adds the meta tag for RSS resources;
 * now you can choise which post details display using the configuration file;
 * now you can set the timezone using the configuration file;
 * fixed bug with the posts date.

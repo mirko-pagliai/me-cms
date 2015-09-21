@@ -30,7 +30,6 @@
 			echo $this->Layout->viewport();
 			echo $this->Html->title($this->fetch('title'));
 			echo $this->Html->meta('icon');
-			echo $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('MeCms./assets/frontend.min', [

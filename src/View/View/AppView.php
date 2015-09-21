@@ -108,11 +108,16 @@ class AppView extends BaseView {
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.0/source-class-Cake.View.View.html#477-513
      * @throws Cake\Core\Exception\Exception
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
+		
+		//Automatically adds the meta tag for RSS posts
+		if(config('frontend.rss_meta'))
+			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 				
 		return parent::renderLayout($content, $layout);
 	}

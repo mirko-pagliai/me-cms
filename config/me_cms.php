@@ -37,6 +37,8 @@ return ['MeCms' => [
 		'records_for_rss' => 20,
 		//Number of records to show for searches
 		'records_for_searches' => 20,
+		//Automatically adds the meta tag for RSS resources
+		'rss_meta' => TRUE,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
