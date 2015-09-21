@@ -40,8 +40,8 @@ class AppTable extends Table {
 	 */
 	public function findActive(Query $query, array $options) {
         $query->where([
-            sprintf('%s.active', $this->alias())		=> TRUE,
-			sprintf('%s.created <=', $this->alias())	=> new Time()
+            sprintf('%s.active', $this->alias()) => TRUE,
+			sprintf('%s.created <=', $this->alias()) => new Time()
         ]);
 		
         return $query;
