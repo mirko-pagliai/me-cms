@@ -26,6 +26,10 @@
 	//Returns on index, except for category
 	if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 		return;
+	
+	//Returns on the last record view
+	if(count($posts) < 2 && $this->request->isAction('view', 'Posts') && $this->request->param('slug') && $posts[0]->slug && $this->request->param('slug') === $posts[0]->slug)
+		return;
 ?>
 
 <?php if(count($posts)): ?>
