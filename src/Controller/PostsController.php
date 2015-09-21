@@ -32,24 +32,16 @@ use MeCms\Controller\AppController;
 class PostsController extends AppController {
 	/**
      * Lists posts
-	 * @param string $category Category slug, optional
-	 * @uses MeCms\Model\Table\PostsTable::setNextToBePublished()
+	 * @param string $category Category slug (optional)
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
     public function index($category = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q'))
 			$this->redirect([$this->request->query('q')]);
-					
-		//Gets the next post to be published
-		$next = Cache::read('nextToBePublished', 'posts');
 		
 		//Checks if the cache is valid
-		if(!empty($next) && (new \Cake\I18n\Time())->toUnixString() >= $next) {
-			Cache::clear(FALSE, 'posts');
-		
-			//Sets the next post to be published
-			$this->Posts->setNextToBePublished();
-		}
+		$this->Posts->checkIfCacheIsValid();
 		
 		//Sets the initial cache name
 		$cache = 'index';
@@ -101,11 +93,15 @@ class PostsController extends AppController {
 	 * Lists posts as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
 	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-	public function rss() {		
+	public function rss() {
 		//This method works only for RSS
 		if(!$this->RequestHandler->isRss())
             throw new \Cake\Network\Exception\ForbiddenException();
+		
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
 		
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug', 'text', 'created'])
@@ -117,6 +113,7 @@ class PostsController extends AppController {
 	/**
 	 * Search posts
 	 * @uses MeCms\Controller\Component\SecurityComponent::checkLastSearch()
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function search() {
 		if($pattern = $this->request->query('p')) {
@@ -124,7 +121,10 @@ class PostsController extends AppController {
 			if(strlen($pattern) >= 4) {
 				if($this->Security->checkLastSearch($pattern)) {
 					$this->paginate['limit'] = config('frontend.records_for_searches');
-
+					
+					//Checks if the cache is valid
+					$this->Posts->checkIfCacheIsValid();
+					
 					//Sets the initial cache name
 					$cache = sprintf('search_%s', md5($pattern));
 

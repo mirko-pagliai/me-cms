@@ -75,6 +75,25 @@ class PostsTable extends AppTable {
     }
 	
 	/**
+	 * Checks if the cache is valid.
+	 * If the cache is not valid, it empties the cache.
+	 * @uses getNextToBePublished()
+	 * @uses setNextToBePublished()
+	 */
+	public function checkIfCacheIsValid() {
+		//Gets from cache the timestamp of the next video to be published
+		$next = $this->getNextToBePublished();
+		
+		//If the cache is not valid, it empties the cache
+		if($next && time() >= $next) {
+			Cache::clear(FALSE, 'posts');
+		
+			//Sets the next post to be published
+			$this->setNextToBePublished();
+		}
+	}
+	
+	/**
 	 * Gets conditions from a filter form
 	 * @param array $query Query (`$this->request->query`)
 	 * @return array Conditions
@@ -95,6 +114,16 @@ class PostsTable extends AppTable {
 			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
 		
 		return empty($conditions) ? [] : $conditions;
+	}
+	
+	/**
+	 * Gets from cache the timestamp of the next video to be published.
+	 * This value can be used to check if the cache is valid
+	 * @return int Timestamp
+	 * @see checkIfCacheIsValid()
+	 */
+	public function getNextToBePublished() {
+		return Cache::read('next_to_be_published', 'posts');
 	}
 	
     /**
@@ -118,11 +147,12 @@ class PostsTable extends AppTable {
     }
 	
 	/**
-	 * Sets in cache the timestamp of the next post to be published.
+	 * Sets to cache the timestamp of the next post to be published.
 	 * This value can be used to check if the cache is valid
+	 * @see checkIfCacheIsValid()
 	 * @uses Cake\I18n\Time::toUnixString()
 	 */
-	public function setNextToBePublished() {
+	public function setNextToBePublished() {		
 		$post = $this->find()
 			->select('created')
 			->where([
@@ -132,8 +162,8 @@ class PostsTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		if(!empty($post) && !empty($post->created))
-			Cache::write('nextToBePublished', $post->created->toUnixString(), 'posts');
+		if($post->created)
+			Cache::write('next_to_be_published', $post->created->toUnixString(), 'posts');
 	}
 
     /**
