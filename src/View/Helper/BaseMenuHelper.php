@@ -95,14 +95,14 @@ class BaseMenuHelper extends Helper {
 		
 		//Switch the type of menu
 		switch($type) {
-			case 'ul':
-				return $this->ul($menu);
-				break;
 			case 'dropdown':
 				return $this->Dropdown->menu($title, $options, $menu);
 				break;
 			case 'collapse':
 				return $this->Html->div('panel', $this->__collapseMenu($title, $options, $menu));
+				break;
+			default:
+				return $this->ul($menu);
 				break;
 		}
 	}
