@@ -82,13 +82,16 @@ class AppView extends BaseView {
 		//Enables the theme
 		if(config('frontend.theme') && !$this->theme)
 			$this->theme = config('frontend.theme');
-				
+		
 		if($this->layout === 'default') {
+			//Sets the layout relative path
+			$path = 'Template'.DS.'Layout'.($this->request->param('_ext') ? DS.$this->request->param('_ext').DS : DS).'frontend.ctp';
+		
 			//It first tries to get the layout from the theme
-			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.'Template'.DS.'Layout'.DS.'frontend.ctp')))
+			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.$path)))
 				$this->layout = sprintf('%s.frontend', $this->theme);
 			//Otherwise, it tries to get the layout from the application
-			elseif(is_readable(APP.'Template'.DS.'Layout'.DS.'frontend.ctp'))
+			elseif(is_readable(APP.$path))
 				$this->layout = 'frontend';
 			//Otherwise, it gets the layout from the plugin
 			else
