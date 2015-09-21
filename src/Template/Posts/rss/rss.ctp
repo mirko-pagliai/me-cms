@@ -39,9 +39,11 @@
 		$link = ['_name' => 'post', $post->slug];
 		
 		//Sets text
-		$text = $this->Text->truncate(strip_tags($post->text), config('frontend.truncate_to'), [
-			'ending' => '...', 'exact' => FALSE, 'html' => TRUE
-		]);
+		$text = $this->Text->truncate(
+			strip_tags($post->text),
+			config('frontend.truncate_to'),
+			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
+		);
 		
 		//Adds the preview image
 		if(!empty($post['Post']['preview']))
