@@ -136,8 +136,7 @@ class PostsController extends AppController {
 					list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
 
 					//If the data are not available from the cache
-					if(empty($posts) || empty($paging)) {					
-						//Gets and paginates posts
+					if(empty($posts) || empty($paging)) {
 						$posts = $this->paginate(
 							$this->Posts->find('active')
 								->select(['title', 'slug', 'text', 'created'])
