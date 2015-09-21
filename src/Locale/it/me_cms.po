@@ -276,7 +276,7 @@ msgstr ""
 
 #: Controller/Admin/PostsController.php:58
 msgid "Before you can manage posts, you have to create at least a category"
-msgstr "Prima di gestire gli articolo, devi creare almeno una categoria"
+msgstr "Prima di gestire gli articoli, devi creare almeno una categoria"
 
 #: Controller/Admin/PostsController.php:141;170
 msgid "The post has been saved"
