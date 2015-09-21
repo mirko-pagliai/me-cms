@@ -40,9 +40,8 @@
 				<?=	$homeLink = $this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank'])) ?>
 			</ul>
 			<ul class="nav navbar-nav visible-xs visible-sm">
-				<?php
-					echo $homeLink;
-					
+				<?= $homeLink ?>
+				<?php					
 					foreach(config('backend.menu') as $menu) {
 						//Gets the plugin name
 						list($plugin, $menu) = pluginSplit($menu);
