@@ -68,7 +68,7 @@ class BaseMenuHelper extends Helper {
 	/**
 	 * Generates and returns a menu for an action
 	 * @param string $name Name of the action for which to generate the menu
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * @param string $type Type of menu (optional, default `ul`, otherwise `collapse` or `dropdown`)
 	 * @return mixed Html or FALSE
 	 * @throws InternalErrorException
 	 * @uses DropdownHelper::menu()
