@@ -72,7 +72,7 @@ class PostsController extends AppController {
 					])
 					->select(['title', 'subtitle', 'slug', 'text', 'created'])
 					->where(empty($conditions) ? [] : $conditions)
-					->order(['Posts.created' => 'DESC'])
+					->order([sprintf('%s.created', $this->alias()) => 'DESC'])
 			)->toArray();
 						
 			//Writes on cache
@@ -106,7 +106,7 @@ class PostsController extends AppController {
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug', 'text', 'created'])
 			->limit(config('frontend.records_for_rss'))
-			->order(['Posts.created' => 'DESC'])
+			->order([sprintf('%s.created', $this->alias()) => 'DESC'])
 			->cache('rss', 'posts'));
 	}
 	
@@ -146,7 +146,7 @@ class PostsController extends AppController {
 									'subtitle LIKE' => sprintf('%%%s%%', $pattern),
 									'text LIKE'		=> sprintf('%%%s%%', $pattern)
 								]])
-								->order(['Posts.created' => 'DESC'])
+								->order([sprintf('%s.created', $this->alias()) => 'DESC'])
 						)->toArray();
 
 						//Writes on cache
@@ -178,7 +178,7 @@ class PostsController extends AppController {
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
 			->select(['title', 'subtitle', 'slug', 'text', 'created'])
-			->where(['Posts.slug' => $slug])
+			->where([sprintf('%s.slug', $this->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), 'posts')
 			->first());
     }
