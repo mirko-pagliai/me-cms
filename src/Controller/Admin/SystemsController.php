@@ -223,7 +223,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Thumbs::clear()
 	 */
 	public function clear_thumbs() {
-		$this->request->allowMethod(['post', 'delete']);
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
 		
 		if(Thumbs::clear())
 			$this->Flash->success(__d('me_cms', 'Thumbnails have been deleted'));
