@@ -190,7 +190,7 @@ class UsersController extends AppController {
 		
 		$this->set('user', $entity);
 
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 
 	/**
@@ -232,7 +232,7 @@ class UsersController extends AppController {
 				$this->Flash->error(__d('me_cms', 'Invalid username or password'));
 		}
 		
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 
 	/**
@@ -290,7 +290,7 @@ class UsersController extends AppController {
 		
 		$this->set('user', $entity);
 		
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 	
 	/**
@@ -332,7 +332,7 @@ class UsersController extends AppController {
 		
 		$this->set(compact('user'));
 		
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 	
 	/**
@@ -411,6 +411,6 @@ class UsersController extends AppController {
 
         $this->set(compact('user'));
 		
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 }

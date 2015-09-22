@@ -72,7 +72,7 @@ class SystemsController extends AppController {
 		if(!$this->isBanned())
 			$this->redirect(['_name' => 'homepage']);
 		
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 	
 	/**
@@ -84,6 +84,6 @@ class SystemsController extends AppController {
 		if(!$this->isOffline())
 			$this->redirect(['_name' => 'homepage']);
 		
-		$this->layout = 'login';
+		$this->viewBuilder()->layout('login');
 	}
 }
