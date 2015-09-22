@@ -128,9 +128,7 @@ class AppController extends BaseController {
 	 */
 	public function initialize() {
 		//Loads components
-		$this->loadComponent('MeCms.Auth', [
-			'authError' => __d('me_cms', 'You are not authorized for this action')
-		]);
+		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
 		$this->loadComponent('MeCms.Security');
