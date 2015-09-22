@@ -38,30 +38,26 @@ use MeCms\View\Helper\BaseMenuHelper;
  */
 class MenuHelper extends BaseMenuHelper {
 	/**
-	 * Internal function to generate the menu for "banners" actions.
+	 * Internal function to generate the menu for "posts" actions.
 	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _banners($type) {
-		//Only admins and managers can access these controllers
-		if(!$this->Auth->isGroup(['admin', 'manager']))
-			return;
-		
+	protected function _posts($type) {
 		$menu = [
-			$this->Html->link(__d('me_cms', 'List banners'), ['controller' => 'banners', 'action' => 'index', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Upload banners'), ['controller' => 'banners', 'action' => 'upload', 'plugin' => 'MeCms'])
+			$this->Html->link(__d('me_cms', 'List posts'), ['controller' => 'Posts', 'action' => 'index', 'plugin' => 'MeCms']),
+			$this->Html->link(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add', 'plugin' => 'MeCms'])
 		];
 		
-		//Only admin can access this controller
-		if($this->Auth->isGroup('admin'))
+		//Only admins and managers can access these actions
+		if($this->Auth->isGroup(['admin', 'manager']))
 			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List positions'), ['controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'MeCms']),
-				$this->Html->link(__d('me_cms', 'Add position'), ['controller' => 'banners_positions', 'action' => 'add', 'plugin' => 'MeCms'])
+				$this->Html->link(__d('me_cms', 'List categories'),	['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => 'MeCms']),
+				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms'])
 			);
 		
-		return [$menu, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart']];
+		return [$menu, __d('me_cms', 'Posts'), ['icon' => 'file-text-o']];
 	}
 	
 	/**
@@ -99,29 +95,33 @@ class MenuHelper extends BaseMenuHelper {
 		];
 		
 		return [$menu, __d('me_cms', 'Photos'), ['icon' => 'camera-retro']];
-	}
+	}	
 	
 	/**
-	 * Internal function to generate the menu for "posts" actions.
+	 * Internal function to generate the menu for "banners" actions.
 	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _posts($type) {
+	protected function _banners($type) {
+		//Only admins and managers can access these controllers
+		if(!$this->Auth->isGroup(['admin', 'manager']))
+			return;
+		
 		$menu = [
-			$this->Html->link(__d('me_cms', 'List posts'), ['controller' => 'Posts', 'action' => 'index', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add', 'plugin' => 'MeCms'])
+			$this->Html->link(__d('me_cms', 'List banners'), ['controller' => 'banners', 'action' => 'index', 'plugin' => 'MeCms']),
+			$this->Html->link(__d('me_cms', 'Upload banners'), ['controller' => 'banners', 'action' => 'upload', 'plugin' => 'MeCms'])
 		];
 		
-		//Only admins and managers can access these actions
-		if($this->Auth->isGroup(['admin', 'manager']))
+		//Only admin can access this controller
+		if($this->Auth->isGroup('admin'))
 			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List categories'),	['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => 'MeCms']),
-				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms'])
+				$this->Html->link(__d('me_cms', 'List positions'), ['controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'MeCms']),
+				$this->Html->link(__d('me_cms', 'Add position'), ['controller' => 'banners_positions', 'action' => 'add', 'plugin' => 'MeCms'])
 			);
 		
-		return [$menu, __d('me_cms', 'Posts'), ['icon' => 'file-text-o']];
+		return [$menu, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart']];
 	}
 	
 	/**
