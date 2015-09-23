@@ -24,12 +24,14 @@
 
 <div class="banner <?= $banner->position->name ? sprintf('banner-%s', $banner->position->name) : NULL ?>">
 	<?php
+		$image = $this->Thumb->img($banner->path);
+		
 		if($banner->target)
-			echo $this->Html->link($this->Thumb->img($banner->path), ['_name' => 'banner', $banner->id], [
+			echo $this->Html->link($image, ['_name' => 'banner', $banner->id], [
 				'target'	=> '_blank',
 				'title'		=> $banner->description ? $banner->description : NULL
 			]);
 		else
-			echo $this->Thumb->img($banner->path);
+			echo $image;
 	?>
 </div>
