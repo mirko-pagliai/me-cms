@@ -183,8 +183,8 @@
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">MeCms\View\Helper\AuthHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.BaseMenuHelper.html">MeCms\View\Helper\BaseMenuHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.MenuHelper.html">MeCms\View\Helper\MenuHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MeCms\View\Helper\MenuBuilderHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.MenuDefaultHelper.html">MeCms\View\Helper\MenuDefaultHelper</a></li>
 				<li><a href="class-MeCms.View.View.AdminView.html">MeCms\View\View\AdminView</a></li>
 				<li><a href="class-MeCms.View.View.AppView.html">MeCms\View\View\AppView</a></li>
 			</ul>
@@ -302,7 +302,7 @@
 </span><span id="72" class="l"><a href="#72">72: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;isBanned())
 </span><span id="73" class="l"><a href="#73">73: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
 </span><span id="74" class="l"><a href="#74">74: </a>        
-</span><span id="75" class="l"><a href="#75">75: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="75" class="l"><a href="#75">75: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="76" class="l"><a href="#76">76: </a>    }
 </span><span id="77" class="l"><a href="#77">77: </a>    
 </span><span id="78" class="l"><a href="#78">78: </a>    <span class="php-comment">/**
@@ -314,7 +314,7 @@
 </span><span id="84" class="l"><a href="#84">84: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;isOffline())
 </span><span id="85" class="l"><a href="#85">85: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
 </span><span id="86" class="l"><a href="#86">86: </a>        
-</span><span id="87" class="l"><a href="#87">87: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="87" class="l"><a href="#87">87: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="88" class="l"><a href="#88">88: </a>    }
 </span><span id="89" class="l"><a href="#89">89: </a>}</span></code></pre>
 
@@ -324,6 +324,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?f67043d47433052cfaf761c03f35ded849f207a3"></script>
+<script src="elementlist.js?9bf0edb9aee250bdd3b91fc48fe765cdb5d1360c"></script>
 </body>
 </html>

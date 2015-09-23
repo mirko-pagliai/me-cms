@@ -183,8 +183,8 @@
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">MeCms\View\Helper\AuthHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.BaseMenuHelper.html">MeCms\View\Helper\BaseMenuHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.MenuHelper.html">MeCms\View\Helper\MenuHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MeCms\View\Helper\MenuBuilderHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.MenuDefaultHelper.html">MeCms\View\Helper\MenuDefaultHelper</a></li>
 				<li><a href="class-MeCms.View.View.AdminView.html">MeCms\View\View\AdminView</a></li>
 				<li><a href="class-MeCms.View.View.AppView.html">MeCms\View\View\AppView</a></li>
 			</ul>
@@ -420,7 +420,7 @@
 </span><span id="190" class="l"><a href="#190">190: </a>        
 </span><span id="191" class="l"><a href="#191">191: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'user'</span>, <span class="php-var">$entity</span>);
 </span><span id="192" class="l"><a href="#192">192: </a>
-</span><span id="193" class="l"><a href="#193">193: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="193" class="l"><a href="#193">193: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="194" class="l"><a href="#194">194: </a>    }
 </span><span id="195" class="l"><a href="#195">195: </a>
 </span><span id="196" class="l"><a href="#196">196: </a>    <span class="php-comment">/**
@@ -462,7 +462,7 @@
 </span><span id="232" class="l"><a href="#232">232: </a>                <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid username or password'</span>));
 </span><span id="233" class="l"><a href="#233">233: </a>        }
 </span><span id="234" class="l"><a href="#234">234: </a>        
-</span><span id="235" class="l"><a href="#235">235: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="235" class="l"><a href="#235">235: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="236" class="l"><a href="#236">236: </a>    }
 </span><span id="237" class="l"><a href="#237">237: </a>
 </span><span id="238" class="l"><a href="#238">238: </a>    <span class="php-comment">/**
@@ -520,7 +520,7 @@
 </span><span id="290" class="l"><a href="#290">290: </a>        
 </span><span id="291" class="l"><a href="#291">291: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'user'</span>, <span class="php-var">$entity</span>);
 </span><span id="292" class="l"><a href="#292">292: </a>        
-</span><span id="293" class="l"><a href="#293">293: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="293" class="l"><a href="#293">293: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="294" class="l"><a href="#294">294: </a>    }
 </span><span id="295" class="l"><a href="#295">295: </a>    
 </span><span id="296" class="l"><a href="#296">296: </a>    <span class="php-comment">/**
@@ -562,7 +562,7 @@
 </span><span id="332" class="l"><a href="#332">332: </a>        
 </span><span id="333" class="l"><a href="#333">333: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'user'</span>));
 </span><span id="334" class="l"><a href="#334">334: </a>        
-</span><span id="335" class="l"><a href="#335">335: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="335" class="l"><a href="#335">335: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="336" class="l"><a href="#336">336: </a>    }
 </span><span id="337" class="l"><a href="#337">337: </a>    
 </span><span id="338" class="l"><a href="#338">338: </a>    <span class="php-comment">/**
@@ -641,7 +641,7 @@
 </span><span id="411" class="l"><a href="#411">411: </a>
 </span><span id="412" class="l"><a href="#412">412: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'user'</span>));
 </span><span id="413" class="l"><a href="#413">413: </a>        
-</span><span id="414" class="l"><a href="#414">414: </a>        <span class="php-var">$this</span>-&gt;layout = <span class="php-quote">'login'</span>;
+</span><span id="414" class="l"><a href="#414">414: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="415" class="l"><a href="#415">415: </a>    }
 </span><span id="416" class="l"><a href="#416">416: </a>}</span></code></pre>
 
@@ -651,6 +651,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?f67043d47433052cfaf761c03f35ded849f207a3"></script>
+<script src="elementlist.js?9bf0edb9aee250bdd3b91fc48fe765cdb5d1360c"></script>
 </body>
 </html>
