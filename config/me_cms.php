@@ -2,8 +2,6 @@
 return ['MeCms' => [
 	//Backend
 	'backend' => [
-		//Menus. You can use the plugin notation (eg., `PluginName.widgetName`)
-		'menu' => ['MeCms.posts', 'MeCms.pages', 'MeCms.photos', 'MeCms.banners', 'MeCms.users', 'MeCms.systems'],
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
 		//Number of records to show per page

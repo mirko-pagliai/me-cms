@@ -40,21 +40,15 @@
 				<?=	$homeLink = $this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank'])) ?>
 			</ul>
 			<ul class="nav navbar-nav visible-xs visible-sm">
-				<?= $homeLink ?>
-				<?php					
-					foreach(config('backend.menu') as $menu) {
-						//Gets the plugin name
-						list($plugin, $menu) = pluginSplit($menu);
+				<?php
+					echo $homeLink;
+					
+					foreach($mecms_menu as $menu)
+						echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
 
-						//Loads the menu helper
-						$this->Menu = $this->helpers()->load('Menu', ['className' => sprintf('%s.Menu', $plugin)]);
-
-						//Gets the menu
-						echo $this->Html->li($this->Menu->get($menu, 'dropdown'), ['class' => 'dropdown']);
-						
-						//Unloads the helper
-						$this->helpers()->unload('Menu');
-					}
+					if(!empty($plugins_menu))
+						foreach($plugins_menu as $menu)
+							echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
 					
 					echo $menu = $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
 						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),

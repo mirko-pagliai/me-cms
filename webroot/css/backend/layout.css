@@ -63,6 +63,15 @@ body {
 	text-decoration: none;
 }
 
+/* Sidebar, h6 elements */
+#sidebar h6 {
+	color: #555;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 20px 0 10px 15px;
+    text-transform: uppercase;
+}
+
 /* Sidebar, panel */
 #sidebar .panel {
 	border-radius: 0;

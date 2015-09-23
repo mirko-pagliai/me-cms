@@ -23,17 +23,13 @@
 ?>
 	
 <?php
-	foreach(config('backend.menu') as $menu) {
-		//Gets the plugin name
-		list($plugin, $menu) = pluginSplit($menu);
+	foreach($mecms_menu as $menu)
+		echo $this->MenuBuilder->render($menu, 'collapse');
+	
+	if(!empty($plugins_menu)) {
+		echo $this->Html->h6(__d('me_cms', 'Plugins'));
 		
-		//Loads the menu helper
-		$this->Menu = $this->helpers()->load('Menu', ['className' => sprintf('%s.Menu', $plugin)]);
-				
-		//Gets the menu
-		echo $this->Menu->get($menu, 'collapse');
-		
-		//Unloads the helper
-		$this->helpers()->unload('Menu');
-	}							
+		foreach($plugins_menu as $menu)
+			echo $this->MenuBuilder->render($menu, 'collapse');
+	}
 ?>

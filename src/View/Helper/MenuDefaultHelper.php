@@ -22,29 +22,29 @@
  */
 namespace MeCms\View\Helper;
 
+use Cake\View\Helper;
 use MeCms\View\Helper\AuthHelper;
-use MeCms\View\Helper\BaseMenuHelper;
 
 /**
- * Menu Helper
+ * MenuDefault Helper.
  * 
- * It contains methods to generate menus for this plugin.
- * It supports these types of menu: `ul`, `collapse` and `dropdown`.
- * 
- * To generate a menu, you have to use the `get()` method. For example:
- * <code>
- * $this->Menu->get('photos', 'dropdown')
- * </code>
+ * This helper contains methods that will be called automatically to generate the menu of the backend.
+ * You do not need to call these methods manually.
  */
-class MenuHelper extends BaseMenuHelper {
+class MenuDefaultHelper extends Helper {
 	/**
-	 * Internal function to generate the menu for "posts" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Helpers
+	 * @var array
+	 */
+	public $helpers = ['MeCms.Auth', 'Html' => ['className' => 'MeTools.Html']];
+	
+	/**
+	 * Internal function to generate the menu for "posts" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _posts($type) {
+	public function _posts() {
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List posts'), ['controller' => 'Posts', 'action' => 'index', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add', 'plugin' => 'MeCms'])
@@ -61,13 +61,12 @@ class MenuHelper extends BaseMenuHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "pages" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Internal function to generate the menu for "pages" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _pages($type) {
+	public function _pages() {
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List pages'), ['controller' => 'Pages', 'action' => 'index', 'plugin' => 'MeCms'])
 		];
@@ -82,12 +81,11 @@ class MenuHelper extends BaseMenuHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "photos" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Internal function to generate the menu for "photos" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _photos($type) {
+	public function _photos() {
 		$menu = [
 			$this->Html->link(__d('me_cms', 'Upload photos'), ['controller' => 'Photos', 'action' => 'upload', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'List albums'), ['controller' => 'PhotosAlbums', 'action' => 'index', 'plugin' => 'MeCms']),
@@ -98,13 +96,12 @@ class MenuHelper extends BaseMenuHelper {
 	}	
 	
 	/**
-	 * Internal function to generate the menu for "banners" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Internal function to generate the menu for "banners" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _banners($type) {
+	public function _banners() {
 		//Only admins and managers can access these controllers
 		if(!$this->Auth->isGroup(['admin', 'manager']))
 			return;
@@ -125,13 +122,12 @@ class MenuHelper extends BaseMenuHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "users" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Internal function to generate the menu for "users" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _users($type) {
+	public function _users() {
 		//Only admins and managers can access this controller
 		if(!$this->Auth->isGroup(['admin', 'manager']))
 			return;
@@ -152,13 +148,12 @@ class MenuHelper extends BaseMenuHelper {
 	}
 	
 	/**
-	 * Internal function to generate the menu for "systems" actions.
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
+	 * Internal function to generate the menu for "systems" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _systems($type) {
+	public function _systems() {
 		//Only admins can access this controller
 		if(!$this->Auth->isGroup('admin'))
 			return;

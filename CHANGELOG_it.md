@@ -4,6 +4,7 @@
 * risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
 * permessi sistemati;
 * aggiunge automaticamente i meta tag per le risorse RSS;
+* i menu del backend vengono generati in maniera totalmente automaticamente. Non è più necessaria nessuna configurazione;
 * ora è possibile scegliere quali dettagli degli articoli mostri usando il file di configurazione;
 * ora è possibile impostare la timezone usando il file di configurazione;
 * sistemato un bug con la data degli articoli.
