@@ -106,6 +106,8 @@ class AppController extends BaseController {
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isPrefix('admin') ? config('backend.records') : config('frontend.records');
+		
+		parent::beforeFilter($event);
 	}
 	
 	/**
@@ -121,6 +123,8 @@ class AppController extends BaseController {
 		
 		//Sets auth data for views
 		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
+		
+		parent::beforeRender($event);
 	}
 	
 	/**
@@ -135,6 +139,8 @@ class AppController extends BaseController {
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
+		
+		parent::initialize();
     }
 	
 	/**

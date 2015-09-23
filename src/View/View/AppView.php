@@ -65,6 +65,8 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeTools.Recaptcha');
+		
+		parent::initialize();
     }
 	
 	/**
