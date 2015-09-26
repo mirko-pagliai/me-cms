@@ -80,11 +80,21 @@ class PhotosCell extends Cell {
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
-		$this->set('photos', $this->Photos->find('active')
+		//Returns, if there are no photos available
+		if(Cache::read($cache = 'no_photos', 'photos'))
+			return;
+		
+		//Gets photos
+		$photos = $this->Photos->find('active')
 			->select(['album_id', 'filename'])
 			->limit($limit = empty($limit) ? 1 : $limit)
 			->order('rand()')
-			->toArray()
-		);
+			->toArray();
+		
+		//Writes on cache, if there are no photos available
+		if(empty($photos))
+			Cache::write($cache, TRUE, 'photos');
+		
+		$this->set(compact('photos'));
 	}
 }
