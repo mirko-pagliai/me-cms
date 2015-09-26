@@ -39,6 +39,8 @@ class PostsCell extends Cell {
 	 */
 	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
+		
+		$this->loadModel('MeCms.Posts');
 	}
 	
 	/**
