@@ -27,6 +27,9 @@ Router::defaultRouteClass('InflectedRoute');
 
 Router::extensions('rss');
 
+/**
+ * MeCms routes
+ */
 Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Home page
