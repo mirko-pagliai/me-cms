@@ -2,6 +2,7 @@
 ## 2.0 branch
 ### 2.0.1-beta
 * fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
+* fixed bug on login with cookie;
 * fixed permissions;
 * it automatically adds the meta tag for RSS resources;
 * the backend menus are generated fully automatically. You no longer need any configuration;

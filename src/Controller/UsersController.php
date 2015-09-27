@@ -56,24 +56,20 @@ class UsersController extends AppController {
 	/**
 	 * Internal function to login with cookie
 	 * @return mixed
-	 * @uses Cake\Utility\Security::decrypt()
 	 * @uses _logout()
 	 */
 	private function _loginWithCookie() {
 		//Checks if the cookie exists
-		if(!$this->Cookie->check('login'))
+		if(empty($this->Cookie->read('login')))
 			return FALSE;
 		
-		//Decrypts and unserializes the login datas
-		$this->request->data = json_decode(Security::decrypt($this->Cookie->read('login'), config('security.crypt_key')), TRUE);
+		$this->request->data = $this->Cookie->read('login');
 				
 		//Tries to login...
 		if(($user = $this->Auth->identify()) && $user['active'] && !$user['banned']) {
 			$this->Auth->setUser($user);
 			return $this->redirect($this->Auth->redirectUrl());
 		}
-		
-		return $this->_logout();
 	}
 	
 	/**
@@ -197,7 +193,6 @@ class UsersController extends AppController {
 	/**
 	 * Login
 	 * @return boolean
-	 * @uses Cake\Utility\Security::encrypt()
 	 * @uses _loginWithCookie()
 	 */
 	public function login() {
@@ -218,13 +213,9 @@ class UsersController extends AppController {
 				}
 				
 				//Saves the login data in a cookie, if it was requested
-				if($this->request->data('remember_me')) {						
-					$this->Cookie->config(['expires' => '+365 days']);
-					$this->Cookie->write('login', Security::encrypt(json_encode([
-						'username' => $this->request->data('username'), 
-						'password' => $this->request->data('password')
-					]), config('security.crypt_key')));
-				}
+				if($this->request->data('remember_me'))
+					$this->Cookie->config(['expires' => '+365 days'])
+						->write('login', ['username' => $this->request->data('username'), 'password' => $this->request->data('password')]);
 				
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());

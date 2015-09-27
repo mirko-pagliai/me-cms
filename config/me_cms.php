@@ -94,8 +94,6 @@ return ['MeCms' => [
 		//You can use the asterisk (*) as a wildcard.
 		//With "false" or an empty value, access is granted to any ip addresses (no limitation).
 		'banned_ip' => [],
-		//Key used to crypt
-		'crypt_key' => 'at1UsdACWJFTXGgf4oZoiLwQGrLgf2SA',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
 		'recaptcha' => FALSE,
@@ -110,7 +108,6 @@ return ['MeCms' => [
 		//	`2`	- The account will be enabled by an administrator
 		'activation' => 1,
 		//Login with cookies ("remember me" function)
-		//Before using it, you should change the value of "security.crypt_key"
 		'cookies_login' => TRUE,
 		//Default users group (ID)
 		'default_group' => 3,

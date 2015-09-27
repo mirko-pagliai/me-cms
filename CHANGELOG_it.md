@@ -2,6 +2,7 @@
 ## 2.0 ramo
 ### 2.0.1-beta
 * risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
+* risolto bug nel login con i cookie;
 * permessi sistemati;
 * aggiunge automaticamente i meta tag per le risorse RSS;
 * i menu del backend vengono generati in maniera totalmente automaticamente. Non è più necessaria nessuna configurazione;

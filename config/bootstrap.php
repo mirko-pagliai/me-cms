@@ -44,10 +44,6 @@ if(is_readable(CONFIG.'me_cms.php')) {
 	
 	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::consume('MeCms'), $config));
 }
-	
-//Checks the crypt key
-if(strlen(Configure::read('MeCms.security.crypt_key')) < 32)
-	throw new \Cake\Network\Exception\InternalErrorException(__d('me_cms', 'The key used to crypt must be {0} characters long', '32'));
 
 //Fixes value
 if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.users.activation') > 2)
