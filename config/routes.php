@@ -47,13 +47,13 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Pages controller
 	 */
-	$routes->connect('/pages',
-		['controller' => 'Pages', 'action' => 'index'],
-		['_name' => 'pages']
-	);
 	$routes->connect('/page/:slug',
 		['controller' => 'Pages', 'action' => 'view'],
 		['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+	);
+	$routes->connect('/pages',
+		['controller' => 'Pages', 'action' => 'index'],
+		['_name' => 'pages']
 	);
 
 	/**
