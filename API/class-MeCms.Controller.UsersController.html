@@ -47,6 +47,11 @@
 
 						</li>
 				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Model.html">
 						Model<span></span>
 					</a>
@@ -70,18 +75,6 @@
 				<li class="main">
 					<a href="namespace-MeCms.Model.Validation.html">
 						Validation					</a>
-
-						</li>
-							</ul></li>
-				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
 
 						</li>
 							</ul></li>
@@ -197,6 +190,9 @@ App\Controller\AppController
 			<img src="resources/inherit.png" alt="Extended by">
 <b><span>MeCms\Controller\UsersController</span></b>			
 			
+			 uses 
+					Cake\Mailer\MailerAwareTrait (not available)
+
 			
 		</dd>
 	</dl>
@@ -214,7 +210,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.UsersController.html#29-416" title="Go to source code">UsersController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.UsersController.html#30-413" title="Go to source code">UsersController.php</a>
 		<br>
 	</div>
 
@@ -234,7 +230,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#34-48" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#37-54" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -278,7 +274,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#__loginWithCookie">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#50-71" title="Go to source code">_loginWithCookie</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#56-77" title="Go to source code">_loginWithCookie</a>( )</code>
 
 		<div class="description short">
 			<p>Internal function to login with cookie</p>
@@ -321,7 +317,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#__logout">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#73-88" title="Go to source code">_logout</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#79-94" title="Go to source code">_logout</a>( )</code>
 
 		<div class="description short">
 			<p>Internal function to logout</p>
@@ -360,7 +356,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#90-98" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#96-104" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -392,7 +388,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_activate_account">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#100-135" title="Go to source code">activate_account</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#106-141" title="Go to source code">activate_account</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
 
 		<div class="description short">
 			<p>Activates account</p>
@@ -438,7 +434,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_forgot_password">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#137-194" title="Go to source code">forgot_password</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#143-195" title="Go to source code">forgot_password</a>( )</code>
 
 		<div class="description short">
 			<p>Requests a new password</p>
@@ -453,7 +449,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Network.Email.Email.html">MeCms\Network\Email\Email</a></code><br>
+						<code><a href="class-MeCms.Mailer.UserMailer.html#_forgot_password">MeCms\Mailer\UserMailer::forgot_password()</a></code><br>
 						MeTools\Controller\Component\Recaptcha::check()<br>
 						MeTools\Controller\Component\Recaptcha::getError()<br>
 						MeTools\Controller\Component\Token::create()<br>
@@ -475,7 +471,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_login">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#196-236" title="Go to source code">login</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#197-237" title="Go to source code">login</a>( )</code>
 
 		<div class="description short">
 			<p>Login</p>
@@ -514,7 +510,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logout">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#238-247" title="Go to source code">logout</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#239-248" title="Go to source code">logout</a>( )</code>
 
 		<div class="description short">
 			<p>Logout</p>
@@ -552,7 +548,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_resend_activation">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#249-294" title="Go to source code">resend_activation</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#250-295" title="Go to source code">resend_activation</a>( )</code>
 
 		<div class="description short">
 			<p>Resends the activation mail</p>
@@ -588,7 +584,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_reset_password">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#296-336" title="Go to source code">reset_password</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#297-337" title="Go to source code">reset_password</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
 
 		<div class="description short">
 			<p>Resets password</p>
@@ -634,7 +630,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#__send_activation_mail">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#338-358" title="Go to source code">_send_activation_mail</a>( <span>object <var>$user</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#339-355" title="Go to source code">_send_activation_mail</a>( <span>object <var>$user</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to send the activation mail</p>
@@ -658,7 +654,8 @@ You can use this method to perform logic that needs to happen before each contro
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Network.Email.Email.html">MeCms\Network\Email\Email</a></code><br>
+						<code><a href="class-MeCms.Mailer.UserMailer.html#_activation_mail">MeCms\Mailer\UserMailer::activation_mail()</a></code><br>
+						MeCms\Network\Email\Email<br>
 						MeTools\Controller\Component\Token::create()<br>
 				</div>
 				<h4>Used by</h4>
@@ -683,7 +680,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_signup">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#360-415" title="Go to source code">signup</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#357-412" title="Go to source code">signup</a>( )</code>
 
 		<div class="description short">
 			<p>Sign up</p>
@@ -745,7 +742,7 @@ You can use this method to perform logic that needs to happen before each contro
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Controller.UsersController.html#31" title="Go to source code"><var>$Users</var></a>
+				<a href="source-class-MeCms.Controller.UsersController.html#32" title="Go to source code"><var>$Users</var></a>
 
 			<div class="description short">
 				

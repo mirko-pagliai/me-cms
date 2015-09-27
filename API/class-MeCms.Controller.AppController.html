@@ -47,6 +47,11 @@
 
 						</li>
 				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Model.html">
 						Model<span></span>
 					</a>
@@ -70,18 +75,6 @@
 				<li class="main">
 					<a href="namespace-MeCms.Model.Validation.html">
 						Validation					</a>
-
-						</li>
-							</ul></li>
-				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
 
 						</li>
 							</ul></li>
@@ -228,7 +221,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#28-208" title="Go to source code">AppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#28-207" title="Go to source code">AppController.php</a>
 		<br>
 	</div>
 
@@ -291,7 +284,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#70-111" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#70-108" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -317,6 +310,7 @@ You can use this method to perform logic that needs to happen before each contro
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
+						App\Controller\AppController::beforeFilter()<br>
 						MeTools\Network\Request::hasPrefix()<br>
 						MeTools\Network\Request::isAction()<br>
 						MeTools\Network\Request::isAdmin()<br>
@@ -351,7 +345,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#113-128" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#110-126" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -377,6 +371,7 @@ You can use this method to perform logic or set view variables that are required
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
+						App\Controller\AppController::beforeRender()<br>
 						MeTools\Network\Request::isAdmin()<br>
 				</div>
 				<h4>Used by</h4>
@@ -401,7 +396,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#130-144" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#128-143" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -414,6 +409,10 @@ You can use this method to perform logic or set view variables that are required
 
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						App\Controller\AppController::initialize()<br>
+				</div>
 
 
 		</div>
@@ -431,7 +430,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#146-155" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#145-154" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks if the provided user is authorized for the request</p>
@@ -486,7 +485,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isBanned">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#157-169" title="Go to source code">isBanned</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#156-168" title="Go to source code">isBanned</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the user's IP address is banned</p>
@@ -529,7 +528,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#171-177" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#170-176" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -568,7 +567,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setLanguage">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#179-207" title="Go to source code">setLanguage</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#178-206" title="Go to source code">setLanguage</a>( )</code>
 
 		<div class="description short">
 			<p>Sets the language</p>

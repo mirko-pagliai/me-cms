@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\Controller\SystemsController | MeCms API</title>
+	<title>Class MeCms\Mailer\UserMailer | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -24,7 +24,7 @@
 					</a>
 
 						<ul>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeCms.Controller.html">
 						Controller<span></span>
 					</a>
@@ -46,7 +46,7 @@
 						Form					</a>
 
 						</li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeCms.Mailer.html">
 						Mailer					</a>
 
@@ -114,15 +114,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCms.Controller.AppController.html">AppController</a></li>
-				<li><a href="class-MeCms.Controller.BannersController.html">BannersController</a></li>
-				<li><a href="class-MeCms.Controller.PagesController.html">PagesController</a></li>
-				<li><a href="class-MeCms.Controller.PhotosAlbumsController.html">PhotosAlbumsController</a></li>
-				<li><a href="class-MeCms.Controller.PhotosController.html">PhotosController</a></li>
-				<li><a href="class-MeCms.Controller.PostsCategoriesController.html">PostsCategoriesController</a></li>
-				<li><a href="class-MeCms.Controller.PostsController.html">PostsController</a></li>
-				<li class="active"><a href="class-MeCms.Controller.SystemsController.html">SystemsController</a></li>
-				<li><a href="class-MeCms.Controller.UsersController.html">UsersController</a></li>
+				<li><a href="class-MeCms.Mailer.Mailer.html">Mailer</a></li>
+				<li class="active"><a href="class-MeCms.Mailer.UserMailer.html">UserMailer</a></li>
 			</ul>
 
 
@@ -149,7 +142,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeCms.Controller.html" title="Summary of MeCms\Controller"><span>Namespace</span></a>
+				<a href="namespace-MeCms.Mailer.html" title="Summary of MeCms\Mailer"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -166,29 +159,29 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class SystemsController</h1>
+	<h1>Class UserMailer</h1>
 
 
 	<div class="description">
-	<p>Systems controller</p>
+	<p>UserMailer class</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-App\Controller\AppController
+Cake\Mailer\Mailer
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCms.Controller.AppController.html"><span>MeCms\Controller\AppController</span></a>
+			<a href="class-MeCms.Mailer.Mailer.html"><span>MeCms\Mailer\Mailer</span></a>
 			
 			
 			
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\Controller\SystemsController</span></b>			
+<b><span>MeCms\Mailer\UserMailer</span></b>			
 			
 			
 		</dd>
@@ -204,10 +197,10 @@ App\Controller\AppController
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
+		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Mailer.html">Mailer</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.SystemsController.html#27-89" title="Go to source code">SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Mailer.UserMailer.html#27-67" title="Go to source code">UserMailer.php</a>
 		<br>
 	</div>
 
@@ -215,7 +208,7 @@ App\Controller\AppController
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="contact_form" id="_contact_form">
+	<tr data-order="activation_mail" id="_activation_mail">
 
 		<td class="attributes"><code>
 			 public 
@@ -226,36 +219,40 @@ App\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_contact_form">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#31-64" title="Go to source code">contact_form</a>( )</code>
+		<a class="anchor" href="#_activation_mail">#</a>
+		<code><a href="source-class-MeCms.Mailer.UserMailer.html#31-42" title="Go to source code">activation_mail</a>( <span>array <var>$user</var></span> )</code>
 
 		<div class="description short">
-			<p>Contact form</p>
+			<p>Sends activation mail (signup and resend activation)</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Contact form</p>
+			<p>Sends activation mail (signup and resend activation)</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd>User data</dd>
+				</dl></div>
 
 
 
 				<h4>See</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></code><br>
+						MeCms\Controller\Admin\UsersController::resend_activation()<br>
+						MeCms\Controller\Admin\UsersController::signup()<br>
 				</div>
-				<h4>Uses</h4>
+				<h4>Used by</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Form.ContactForm.html#__execute">MeCms\Form\ContactForm::_execute()</a></code><br>
-						MeTools\Controller\Component\Recaptcha::check()<br>
-						MeTools\Controller\Component\Recaptcha::getError()<br>
+						<code><a href="class-MeCms.Controller.UsersController.html#__send_activation_mail">MeCms\Controller\UsersController::_send_activation_mail()</a></code><br>
 				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="ip_not_allowed" id="_ip_not_allowed">
+	<tr data-order="change_password" id="_change_password">
 
 		<td class="attributes"><code>
 			 public 
@@ -266,30 +263,39 @@ App\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_ip_not_allowed">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#66-76" title="Go to source code">ip_not_allowed</a>( )</code>
+		<a class="anchor" href="#_change_password">#</a>
+		<code><a href="source-class-MeCms.Mailer.UserMailer.html#44-54" title="Go to source code">change_password</a>( <span>array <var>$user</var></span> )</code>
 
 		<div class="description short">
-			<p>"Ip not allowed" page</p>
+			<p>Changes the user's password</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>"Ip not allowed" page</p>
+			<p>Changes the user's password</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd>User data</dd>
+				</dl></div>
 
 
 
-
-
-				<h4>Uses</h4>
+				<h4>See</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.AppController.html#_isBanned">MeCms\Controller\AppController::isBanned()</a></code><br>
+						<code><a href="class-MeCms.Controller.Admin.UsersController.html#_change_password">MeCms\Controller\Admin\UsersController::change_password()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.UsersController.html#_change_password">MeCms\Controller\Admin\UsersController::change_password()</a></code><br>
 				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="offline" id="_offline">
+	<tr data-order="forgot_password" id="_forgot_password">
 
 		<td class="attributes"><code>
 			 public 
@@ -300,23 +306,32 @@ App\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_offline">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#78-88" title="Go to source code">offline</a>( )</code>
+		<a class="anchor" href="#_forgot_password">#</a>
+		<code><a href="source-class-MeCms.Mailer.UserMailer.html#56-66" title="Go to source code">forgot_password</a>( <span>array <var>$user</var></span> )</code>
 
 		<div class="description short">
-			<p>Offline page</p>
+			<p>Requests a new password</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Offline page</p>
+			<p>Requests a new password</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd>User data</dd>
+				</dl></div>
 
 
 
-
-
-				<h4>Uses</h4>
+				<h4>See</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.AppController.html#_isOffline">MeCms\Controller\AppController::isOffline()</a></code><br>
+						<code><a href="class-MeCms.Controller.UsersController.html#_forgot_password">MeCms\Controller\UsersController::forgot_password()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.UsersController.html#_forgot_password">MeCms\Controller\UsersController::forgot_password()</a></code><br>
 				</div>
 
 
@@ -326,17 +341,10 @@ App\Controller\AppController
 	</table>
 
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-MeCms.Controller.AppController.html#methods">MeCms\Controller\AppController</a></caption>
+	<caption>Methods inherited from <a href="class-MeCms.Mailer.Mailer.html#methods">MeCms\Mailer\Mailer</a></caption>
 	<tr>
 		<td><code>
-			<a href="class-MeCms.Controller.AppController.html#__upload">_upload()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_beforeFilter">beforeFilter()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_beforeRender">beforeRender()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_initialize">initialize()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_isAuthorized">isAuthorized()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_isBanned">isBanned()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_isOffline">isOffline()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_setLanguage">setLanguage()</a>
+			<a href="class-MeCms.Mailer.Mailer.html#___construct">__construct()</a>
 		</code></td>
 	</tr>
 	</table>
