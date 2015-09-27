@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
 use MeCms\Controller\AppController;
@@ -31,6 +32,8 @@ use MeCms\Controller\AppController;
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController {
+	use MailerAwareTrait;
+	
 	/**
 	 * Called before the controller action. 
 	 * You can use this method to perform logic that needs to happen before each controller action.
@@ -45,6 +48,9 @@ class UsersController extends AppController {
 		if($this->request->isAction(['activate_account', 'forgot_password', 'login', 'resend_activation', 'reset_password', 'signup']))
 			if($this->Auth->isLogged())
 				$this->redirect(['_name' => 'dashboard']);
+		
+		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
+		$this->Security->config('unlockedActions', ['forgot_password', 'resend_activation', 'signup']);
 	}
 	
 	/**
@@ -60,7 +66,7 @@ class UsersController extends AppController {
 		
 		//Decrypts and unserializes the login datas
 		$this->request->data = json_decode(Security::decrypt($this->Cookie->read('login'), config('security.crypt_key')), TRUE);
-		
+				
 		//Tries to login...
 		if(($user = $this->Auth->identify()) && $user['active'] && !$user['banned']) {
 			$this->Auth->setUser($user);
@@ -136,7 +142,7 @@ class UsersController extends AppController {
 	
 	/**
 	 * Requests a new password
-	 * @uses MeCms\Network\Email\Email
+	 * @uses MeCms\Mailer\UserMailer::forgot_password()
 	 * @uses MeTools\Controller\Component\Recaptcha::check()
 	 * @uses MeTools\Controller\Component\Recaptcha::getError()
 	 * @uses MeTools\Controller\Component\Token::create()
@@ -155,7 +161,7 @@ class UsersController extends AppController {
 			if(config('security.recaptcha') && !$this->Recaptcha->check()) {
 				$this->Flash->error($this->Recaptcha->getError());
 			}
-			elseif(!$entity->errors()) {
+			if(!$entity->errors()) {
 				$user = $this->Users->find('active')
 					->select(['id', 'email', 'first_name', 'last_name'])
 					->where(['email' => $this->request->data('email')])
@@ -164,16 +170,11 @@ class UsersController extends AppController {
 				if(!empty($user)) {
 					//Gets the token
 					$token = $this->Token->create($user->email, ['type' => 'forgot_password', 'user_id' => $user->id]);
-
+					
 					//Sends email
-					(new \MeCms\Network\Email\Email)->to([$user->email => $user->full_name])
-						->subject(__d('me_cms', 'Reset your password'))
-						->template('MeCms.Users/forgot_password')
-						->set([
-							'full_name' => $user->full_name,
-							'url'		=> Router::url(['_name' => 'reset_password', $user->id, $token], TRUE)
-						])
-						->send();
+					$this->getMailer('MeCms.User')
+						->set('url', Router::url(['_name' => 'reset_password', $user->id, $token], TRUE))
+						->send('forgot_password', [$user]);
 
 					$this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 					$this->redirect(['_name' => 'login']);
@@ -339,6 +340,7 @@ class UsersController extends AppController {
 	 * Internal function to send the activation mail
 	 * @param object $user Users entity
 	 * @return boolean
+	 * @uses MeCms\Mailer\UserMailer::activation_mail()
 	 * @uses MeCms\Network\Email\Email
 	 * @uses MeTools\Controller\Component\Token::create()
 	 */
@@ -347,14 +349,9 @@ class UsersController extends AppController {
 		$token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 		
 		//Sends email
-		return (new \MeCms\Network\Email\Email)->to([$user->email => $user->full_name])
-			->subject(__d('me_cms', 'Activate your account'))
-			->template('MeCms.Users/activate_account')
-			->set([
-				'full_name' => $user->full_name,
-				'url'		=> Router::url(['_name' => 'activate_account', $user->id, $token], TRUE)
-			])
-			->send();
+		return $this->getMailer('MeCms.User')
+			->set('url', Router::url(['_name' => 'activate_account', $user->id, $token], TRUE))
+			->send('activation_mail', [$user]);
 	}
 	
 	/**
