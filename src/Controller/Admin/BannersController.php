@@ -59,6 +59,9 @@ class BannersController extends AppController {
 				$this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
 			}
 		}
+		
+		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
+		$this->Security->config('unlockedActions', 'upload');
 	}
 	
 	/**

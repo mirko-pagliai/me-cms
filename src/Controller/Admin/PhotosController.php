@@ -49,7 +49,7 @@ class PhotosController extends AppController {
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		
-		if($this->request->isAction(['edit', 'upload'])) {
+		if($this->request->isAction(['index', 'edit', 'upload'])) {
 			//Gets and sets albums
 			$this->set('albums', $albums = $this->Photos->Albums->getList());
 			
@@ -59,6 +59,9 @@ class PhotosController extends AppController {
 				$this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
 			}
 		}
+		
+		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
+		$this->Security->config('unlockedActions', 'upload');
 	}
 	
 	/**
