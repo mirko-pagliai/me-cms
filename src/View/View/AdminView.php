@@ -23,7 +23,7 @@
 namespace MeCms\View\View;
 
 use MeCms\View\View\AppView;
-use MeTools\Utility\Plugin;
+use MeTools\Core\Plugin;
 
 /**
  * Application view class for admin views
@@ -32,8 +32,8 @@ class AdminView extends AppView {
 	/**
 	 * Gets the menus for the backend
 	 * @return array Menus
-	 * @uses MeTools\Utility\Plugin::getAll()
-	 * @uses MeTools\Utility\Plugin::path()
+	 * @uses MeTools\Core\Plugin::getAll()
+	 * @uses MeTools\Core\Plugin::path()
 	 */
 	protected function getMenus() {
 		$menus = [];
