@@ -83,6 +83,6 @@ class Email extends MeToolsEmail {
 	 * @uses $_layout
 	 */
 	public function template($template = FALSE, $layout = FALSE) {
-		return parent::template($template, empty($layout) ? $this->_layout : $layout);
+		return parent::template($template, empty($layout) ? $this->viewBuilder()->layout() : $layout);
 	}
 }
