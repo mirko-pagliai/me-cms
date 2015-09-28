@@ -30,7 +30,7 @@
 		
 		$list = array();
 		foreach($categories as $category)
-			$list[] = $this->Html->link($category->title, ['_name' => 'category', $category->slug]);
+			$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
 
 		echo $this->Html->ul($list, ['icon' => 'caret-right']);
 	?>

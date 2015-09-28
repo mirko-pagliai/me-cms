@@ -26,81 +26,66 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Helper;
 
 /**
- * BaseMenu Helper
+ * MenuBuilder Helper
  * 
  * It contains methods to generate menus.
  */
-class BaseMenuHelper extends Helper {
-	/**
-	 * Collapse name. Used for "collapse" menus
-	 * @var string 
-	 */
-	protected $collapseName;
-	
+class MenuBuilderHelper extends Helper {
 	/**
 	 * Helpers
 	 * @var array
 	 */
-	public $helpers = ['MeCms.Auth', 'MeTools.Dropdown', 'Html' => ['className' => 'MeTools.Html']];
+	public $helpers = ['MeTools.Dropdown', 'Html' => ['className' => 'MeTools.Html']];
 	
 	/**
-	 * Internal function to create a collapse menu
+	 * Internal function to render a collapsed menu
 	 * @param string $title The content to be wrapped by <a> tags
 	 * @param array $options Array of options and HTML attributes
 	 * @param array $menu Menu
 	 * @return string Html code
 	 * @uses MeTools\View\Helper\HtmlHelper::div()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
-	 * @uses collapseName
 	 */
 	protected function __collapseMenu($title, array $options = [], $menu) {
+		//Sets the collapse name
+		$collapseName = sprintf('collapse-%s', strtolower($title));
+		
 		return implode(PHP_EOL, [
-			$this->Html->link($title, sprintf('#%s', $this->collapseName), am($options, [
-				'aria-controls'	=> $this->collapseName,
+			$this->Html->link($title, sprintf('#%s', $collapseName), am($options, [
+				'aria-controls'	=> $collapseName,
 				'aria-expanded'	=> 'false',
 				'class'			=> 'collapsed',
 				'data-toggle'	=> 'collapse',
 			])),
-			$this->Html->div('collapse', implode(PHP_EOL, $menu), ['id' => $this->collapseName])
+			$this->Html->div('collapse', implode(PHP_EOL, $menu), ['id' => $collapseName])
 		]);
 	}
-
+	
 	/**
-	 * Generates and returns a menu for an action
-	 * @param string $name Name of the action for which to generate the menu
-	 * @param string $type Type of menu (optional, `ul`, `collapse` or `dropdown`)
-	 * @return mixed Html or FALSE
-	 * @throws InternalErrorException
-	 * @uses DropdownHelper::menu()
+	 * Generates and returns a menu
+	 * @param array $menu Menu data (menu code, title and options)
+	 * @param string $type Type of menu (optional, `ul` by default, `collapse` or `dropdown`)
+	 * @return string Html code
+	 * @uses MeTools\View\Helper\DropdownHelper::menu()
 	 * @uses MeTools\View\Helper\HtmlHelper::div()
 	 * @uses MeTools\View\Helper\HtmlHelper::ul()
-	 * @uses __collapseMenu()
-	 * @uses collapseName
 	 */
-	public function get($method, $type = NULL) {
-		//Sets the collapse name
-		$this->collapseName = sprintf('collapse-%s', strtolower($method));
-		
-		//Checks if the method exists
-		if(!method_exists($class = get_called_class(), $method = sprintf('_%s', $method)))
-			throw new InternalErrorException(__d('me_cms', 'The {0} method does not exist', sprintf('%s::%s()', $class, $method)));
-		
-		//Dynamic call to the method that generates the requested menu
-		list($menu, $title, $options) = $class::{$method}($type);
-		
-		if(empty($menu))
-			return FALSE;
-		
+	public function render($menu, $type = NULL) {
+		if(empty($menu[0]) || empty($menu[1]))
+			return;
+
+		list($menu, $title, $options) = [$menu[0], $menu[1], empty($menu[2]) ? [] : $menu[2]];
+				
 		//Switch the type of menu
 		switch($type) {
-			case 'ul':
-				return $this->ul($menu);
-				break;
 			case 'dropdown':
 				return $this->Dropdown->menu($title, $options, $menu);
 				break;
 			case 'collapse':
 				return $this->Html->div('panel', $this->__collapseMenu($title, $options, $menu));
+				break;
+			default:
+				return $this->Html->ul($menu);
 				break;
 		}
 	}

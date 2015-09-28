@@ -30,7 +30,7 @@ use Cake\View\Cell;
  */
 class PostsCell extends Cell {
 	/**
-	 * Constructor
+	 * Constructor. It loads the model
 	 * @param \MeTools\Network\Request $request The request to use in the cell
 	 * @param \Cake\Network\Response $response The request to use in the cell
 	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
@@ -40,18 +40,21 @@ class PostsCell extends Cell {
 	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
 		
-		//Loads the Posts model
 		$this->loadModel('MeCms.Posts');
 	}
 	
 	/**
 	 * Categories widget
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isCurrent()
 	 */
 	public function categories() {
 		//Returns on categories index
-		if($this->request->isCurrent(['_name' => 'categories']))
+		if($this->request->isCurrent(['_name' => 'posts_categories']))
 			return;
+		
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
 		$categories = Cache::read($cache = 'widget_categories', 'posts');
@@ -71,20 +74,25 @@ class PostsCell extends Cell {
 	}
 	
 	/**
-	 * Latest posts widget
+	 * Latest widget
 	 * @param string $limit Limit
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
     public function latest($limit = NULL) {
-		//Returns on posts index, except for category
+		//Returns on index, except for category
 		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 			return;
+		
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
 
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug'])
 			->limit($limit = empty($limit) ? 10 : $limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), 'posts')
+			->toArray()
 		);
     }
 	

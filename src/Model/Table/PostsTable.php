@@ -23,6 +23,7 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
@@ -38,9 +39,13 @@ class PostsTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses Cake\Cache\Cache::clear()
+	 * @uses setNextToBePublished()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');		
+		Cache::clear(FALSE, 'posts');	
+		
+		//Sets the next post to be published
+		$this->setNextToBePublished();	
 	}
 	
 	/**
@@ -49,9 +54,13 @@ class PostsTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses Cake\Cache\Cache::clear()
+	 * @uses setNextToBePublished()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		Cache::clear(FALSE, 'posts');
+		
+		//Sets the next post to be published
+		$this->setNextToBePublished();
 	}
 
     /**
@@ -66,6 +75,25 @@ class PostsTable extends AppTable {
     }
 	
 	/**
+	 * Checks if the cache is valid.
+	 * If the cache is not valid, it empties the cache.
+	 * @uses getNextToBePublished()
+	 * @uses setNextToBePublished()
+	 */
+	public function checkIfCacheIsValid() {
+		//Gets from cache the timestamp of the next record to be published
+		$next = $this->getNextToBePublished();
+		
+		//If the cache is not valid, it empties the cache
+		if($next && time() >= $next) {
+			Cache::clear(FALSE, 'posts');
+		
+			//Sets the next record to be published
+			$this->setNextToBePublished();
+		}
+	}
+	
+	/**
 	 * Gets conditions from a filter form
 	 * @param array $query Query (`$this->request->query`)
 	 * @return array Conditions
@@ -78,16 +106,24 @@ class PostsTable extends AppTable {
 		$conditions = parent::fromFilter($query);
 		
 		//"User" (author) field
-		if(!empty($query['user'])) {
+		if(!empty($query['user']))
 			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		}
 		
 		//"Category" field
-		if(!empty($query['category'])) {
+		if(!empty($query['category']))
 			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		}
 		
 		return empty($conditions) ? [] : $conditions;
+	}
+	
+	/**
+	 * Gets from cache the timestamp of the next record to be published.
+	 * This value can be used to check if the cache is valid
+	 * @return int Timestamp
+	 * @see checkIfCacheIsValid()
+	 */
+	public function getNextToBePublished() {
+		return Cache::read('next_to_be_published', 'posts');
 	}
 	
     /**
@@ -109,6 +145,25 @@ class PostsTable extends AppTable {
             'className' => 'MeCms.Users'
         ]);
     }
+	
+	/**
+	 * Sets to cache the timestamp of the next record to be published.
+	 * This value can be used to check if the cache is valid
+	 * @see checkIfCacheIsValid()
+	 * @uses Cake\I18n\Time::toUnixString()
+	 */
+	public function setNextToBePublished() {		
+		$next = $this->find()
+			->select('created')
+			->where([
+				sprintf('%s.active', $this->alias())	=> TRUE,
+				sprintf('%s.created >', $this->alias()) => new Time()
+			])
+			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
+			->first();
+		
+		Cache::write('next_to_be_published', $next->created ? $next->created->toUnixString() : FALSE, 'posts');
+	}
 
     /**
      * Default validation rules

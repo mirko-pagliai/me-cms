@@ -9,10 +9,12 @@
             "email": "mirko.pagliai@gmail.com"
     }],
 	"require": {
-        "cakephp/cakephp": "~3.0",
+        "cakephp/cakephp": "3.1.*",
 		"ext-imagick": "*",
 		"ext-mcrypt": "*",
-        "mirko-pagliai/me-tools": "*"
+        "mirko-pagliai/me-tools": "*",
+        "cakephp/debug_kit": "3.2.*",
+        "cakephp/bake": "1.1.*"
     },
     "autoload": {
 		"psr-4": {

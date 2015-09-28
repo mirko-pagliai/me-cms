@@ -49,7 +49,7 @@ class PhotosCell extends Cell {
 	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function albums() {
-		//Returns on Photos or PhotosAlbums controller
+		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
@@ -71,20 +71,30 @@ class PhotosCell extends Cell {
 	}
 	
 	/**
-	 * Random photos widget
+	 * Random widget
 	 * @param string $limit Limit
 	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function random($limit = NULL) {
-		//Returns on Photos or PhotosAlbums controller
+		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
-		$this->set('photos', $this->Photos->find('active')
+		//Returns, if there are no photos available
+		if(Cache::read($cache = 'no_photos', 'photos'))
+			return;
+		
+		//Gets photos
+		$photos = $this->Photos->find('active')
 			->select(['album_id', 'filename'])
 			->limit($limit = empty($limit) ? 1 : $limit)
 			->order('rand()')
-			->toArray()
-		);
+			->toArray();
+		
+		//Writes on cache, if there are no photos available
+		if(empty($photos))
+			Cache::write($cache, TRUE, 'photos');
+		
+		$this->set(compact('photos'));
 	}
 }

@@ -1,5 +1,15 @@
 # 2.x ramo
 ## 2.0 ramo
+### 2.0.1-RC1
+* risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
+* risolto bug nel login con i cookie;
+* permessi sistemati;
+* aggiunge automaticamente i meta tag per le risorse RSS;
+* i menu del backend vengono generati in maniera totalmente automaticamente. Non è più necessaria nessuna configurazione;
+* ora è possibile scegliere quali dettagli degli articoli mostri usando il file di configurazione;
+* ora è possibile impostare la timezone usando il file di configurazione;
+* sistemato un bug con la data degli articoli.
+
 ### 2.0.0-alpha
 * tutto il codice è stato interamente riscritto per CakePHP 3.x. Sono state applicate svariate ottimizzazioni;
 * il caricamento/aggiunta di file (ad esempio, banner e foto) è stato fortemente semplificato e ottimizzato;

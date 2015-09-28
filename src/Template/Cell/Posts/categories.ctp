@@ -24,14 +24,14 @@
 
 <?php
 	//Returns on categories index
-	if($this->request->isCurrent(['_name' => 'categories']))
+	if($this->request->isCurrent(['_name' => 'posts_categories']))
 		return;
 ?>
 
 <?php if(!empty($categories) && count($categories) > 1): ?>
 	<div class="widget sidebar-widget">
 		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Categories'));
+			echo $this->Html->h4(__d('me_cms', 'Posts categories'));
 			echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts']]);
 			echo $this->Form->input('q', [
 				'empty'		=> __d('me_cms', 'Select a category'),

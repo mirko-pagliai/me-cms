@@ -43,6 +43,7 @@ class Post extends Entity {
         'active' => TRUE,
         'category' => TRUE,
         'user' => TRUE,
+		'created' => TRUE
     ];
 	
 	/**

@@ -2,8 +2,6 @@
 return ['MeCms' => [
 	//Backend
 	'backend' => [
-		//Menus. You can use the plugin notation (eg., `PluginName.widgetName`)
-		'menu' => ['MeCms.posts', 'MeCms.pages', 'MeCms.photos', 'MeCms.banners', 'MeCms.users', 'MeCms.systems'],
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
 		//Number of records to show per page
@@ -37,6 +35,8 @@ return ['MeCms' => [
 		'records_for_rss' => 20,
 		//Number of records to show for searches
 		'records_for_searches' => 20,
+		//Automatically adds the meta tag for RSS resources
+		'rss_meta' => TRUE,
 		//Theme. Must be located in `APP/View/Themed/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
@@ -55,23 +55,38 @@ return ['MeCms' => [
 			//Long format
 			'long'	=> 'YYYY/MM/dd',
 			//Short format
-			'short'	=> 'yy/MM/dd',
+			'short'	=> 'yy/MM/dd'
 		],
 		//Datetime formats
 		//See; http://php.net/manual/it/datetime.formats.php
 		'datetime' => [
 			//Long format
-			'long'	=> 'YYYY/MM/dd, HH:MM',
+			'long'	=> 'YYYY/MM/dd, HH:mm',
 			//Short format
-			'short'	=> 'yy/MM/dd, HH:MM'
+			'short'	=> 'yy/MM/dd, HH:mm'
 		],
 		//Forces debug on localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,
 		//Interface language.
 		//With "auto" value, it will try to use the browser language
 		'language' => 'auto',
+		//Timezone. See the list of supported timezones:
+		//http://php.net/manual/en/timezones.php
+		'timezone' => 'UTC',
 		//Site title
-		'title' => 'MeCms',
+		'title' => 'MeCms'
+	],
+	//Posts
+	'post' => [
+		//"Show" options
+		'show' => [
+			//Displays the post author
+			'author' => TRUE,
+			//Displays the post category
+			'category' => TRUE,
+			//Displays the post created datetime
+			'created' => TRUE
+		]
 	],
 	//Security
 	'security' => [
@@ -79,13 +94,11 @@ return ['MeCms' => [
 		//You can use the asterisk (*) as a wildcard.
 		//With "false" or an empty value, access is granted to any ip addresses (no limitation).
 		'banned_ip' => [],
-		//Key used to crypt
-		'crypt_key' => 'at1UsdACWJFTXGgf4oZoiLwQGrLgf2SA',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
 		'recaptcha' => FALSE,
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
-		'search_interval' => 10,
+		'search_interval' => 10
 	],
 	//Users
 	'users' => [
@@ -95,7 +108,6 @@ return ['MeCms' => [
 		//	`2`	- The account will be enabled by an administrator
 		'activation' => 1,
 		//Login with cookies ("remember me" function)
-		//Before using it, you should change the value of "security.crypt_key"
 		'cookies_login' => TRUE,
 		//Default users group (ID)
 		'default_group' => 3,

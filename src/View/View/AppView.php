@@ -44,7 +44,7 @@ class AppView extends BaseView {
 		if(!empty($this->viewVars['title']))
 			$title = sprintf('%s - %s', $this->viewVars['title'], $title);
 		//Else, if exists, it adds the title assigned by the current view
-		elseif(!empty($this->fetch('title')))
+		elseif($this->fetch('title'))
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
 		
 		return $title;
@@ -52,7 +52,6 @@ class AppView extends BaseView {
 
 	/**
      * Initialization hook method
-     * @return void
 	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_initialize
 	 */
     public function initialize() {
@@ -64,10 +63,10 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Library');
 		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
+		$this->loadHelper('MeCms.Auth');
+		$this->loadHelper('MeTools.Recaptcha');
 		
-		//Loads the Recaptcha helper
-		if(config('security.recaptcha'))
-			$this->loadHelper('MeTools.Recaptcha');
+		parent::initialize();
     }
 	
 	/**
@@ -85,13 +84,16 @@ class AppView extends BaseView {
 		//Enables the theme
 		if(config('frontend.theme') && !$this->theme)
 			$this->theme = config('frontend.theme');
-				
+		
 		if($this->layout === 'default') {
+			//Sets the layout relative path
+			$path = 'Template'.DS.'Layout'.($this->request->param('_ext') ? DS.$this->request->param('_ext').DS : DS).'frontend.ctp';
+		
 			//It first tries to get the layout from the theme
-			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.'Template'.DS.'Layout'.DS.'frontend.ctp')))
+			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.$path)))
 				$this->layout = sprintf('%s.frontend', $this->theme);
 			//Otherwise, it tries to get the layout from the application
-			elseif(is_readable(APP.'Template'.DS.'Layout'.DS.'frontend.ctp'))
+			elseif(is_readable(APP.$path))
 				$this->layout = 'frontend';
 			//Otherwise, it gets the layout from the plugin
 			else
@@ -108,11 +110,16 @@ class AppView extends BaseView {
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.0/source-class-Cake.View.View.html#477-513
      * @throws Cake\Core\Exception\Exception
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
+		
+		//Automatically adds the meta tag for RSS posts
+		if(config('frontend.rss_meta'))
+			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 				
 		return parent::renderLayout($content, $layout);
 	}
@@ -126,7 +133,7 @@ class AppView extends BaseView {
 	public function allWidgets() {
 		$widgets = config('frontend.widgets.general');
 		
-		if($this->request->isCurrent(['_name' => 'homepage']) && !empty(config('frontend.widgets.homepage')))
+		if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
 			$widgets = config('frontend.widgets.homepage');
 		
 		foreach($widgets as $name => $args)

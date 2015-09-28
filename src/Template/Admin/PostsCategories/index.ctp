@@ -45,10 +45,13 @@
 							echo $this->Html->strong($title);
 
 							$actions = [
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil']),
-								$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]),					
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil'])
 							];
 							
+							//Only admins can delete posts categories
+							if($this->Auth->isGroup('admin'))
+								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+								
 							if($category->post_count)
 								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['controller' => 'posts', 'action' => 'index', $category->slug, 'prefix' => FALSE], ['icon' => 'external-link', 'target' => '_blank']);
 

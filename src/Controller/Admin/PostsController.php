@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -87,16 +88,20 @@ class PostsController extends AppController {
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeCms\Model\Table\PostsTable::isOwnedBy()
+	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins and managers can edit all posts. Users can edit only their own posts
-		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager']))
-			return $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
-				
-		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		//Only admins and managers can edit all posts.
+		//Users can edit only their own posts
+		if($this->request->isAction('edit'))
+			return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+		
+		//Only admins and managers can delete posts
+		if($this->request->isAction('delete'))
+			return $this->Auth->isGroup(['admin', 'manager']);
+		
+		return TRUE;
 	}
 	
 	/**
@@ -120,13 +125,15 @@ class PostsController extends AppController {
      * Adds post
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function add() {		
+    public function add() {
         $post = $this->Posts->newEntity();
 		
         if($this->request->is('post')) {
 			//Only admins and managers can add posts on behalf of other users
 			if(!$this->Auth->isGroup(['admin', 'manager']))
 				$this->request->data('user_id', $this->Auth->user('id'));
+			
+			$this->request->data['created'] = new Time($this->request->data('created'));
 			
             $post = $this->Posts->patchEntity($post, $this->request->data);
 			
@@ -154,6 +161,8 @@ class PostsController extends AppController {
 			//Only admins and managers can edit posts on behalf of other users
 			if(!$this->Auth->isGroup(['admin', 'manager']))
 				$this->request->data('user_id', $this->Auth->user('id'));
+			
+			$this->request->data['created'] = new Time($this->request->data('created'));
 			
             $post = $this->Posts->patchEntity($post, $this->request->data);
 			

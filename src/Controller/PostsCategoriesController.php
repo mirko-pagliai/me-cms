@@ -30,7 +30,7 @@ use MeCms\Controller\AppController;
  */
 class PostsCategoriesController extends AppController {
 	/**
-     * Lists categories
+     * Lists posts categories
      */
     public function index() {
 		$this->set('categories', $this->PostsCategories->find('active')

@@ -46,6 +46,11 @@
 						Form					</a>
 
 						</li>
+				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
+
+						</li>
 				<li class="active main">
 					<a href="namespace-MeCms.Model.html">
 						Model<span></span>
@@ -70,18 +75,6 @@
 				<li class="main">
 					<a href="namespace-MeCms.Model.Validation.html">
 						Validation					</a>
-
-						</li>
-							</ul></li>
-				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
 
 						</li>
 							</ul></li>
@@ -215,7 +208,7 @@ Cake\ORM\Table
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsTable.html#31-121" title="Go to source code">Table/PostsTable.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsTable.html#32-176" title="Go to source code">Table/PostsTable.php</a>
 		<br>
 	</div>
 
@@ -235,7 +228,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterDelete">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#35-44" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#36-49" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after an entity has been deleted</p>
@@ -260,6 +253,7 @@ Cake\ORM\Table
 				<h4>Uses</h4>
 				<div class="list">
 						Cake\Cache\Cache::clear()<br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_setNextToBePublished">MeCms\Model\Table\PostsTable::setNextToBePublished()</a></code><br>
 				</div>
 
 
@@ -278,7 +272,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#46-55" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#51-64" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after an entity is saved.</p>
@@ -303,6 +297,7 @@ Cake\ORM\Table
 				<h4>Uses</h4>
 				<div class="list">
 						Cake\Cache\Cache::clear()<br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_setNextToBePublished">MeCms\Model\Table\PostsTable::setNextToBePublished()</a></code><br>
 				</div>
 
 
@@ -321,7 +316,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_buildRules">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#57-66" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#66-75" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns a rules checker object that will be used for validating application integrity</p>
@@ -348,6 +343,51 @@ Cake\ORM\Table
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="checkIfCacheIsValid" id="_checkIfCacheIsValid">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_checkIfCacheIsValid">#</a>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#77-94" title="Go to source code">checkIfCacheIsValid</a>( )</code>
+
+		<div class="description short">
+			<p>Checks if the cache is valid.
+If the cache is not valid, it empties the cache.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Checks if the cache is valid.
+If the cache is not valid, it empties the cache.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_getNextToBePublished">MeCms\Model\Table\PostsTable::getNextToBePublished()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_setNextToBePublished">MeCms\Model\Table\PostsTable::setNextToBePublished()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.PostsController.html#_index">MeCms\Controller\PostsController::index()</a></code><br>
+						<code><a href="class-MeCms.Controller.PostsController.html#_rss">MeCms\Controller\PostsController::rss()</a></code><br>
+						<code><a href="class-MeCms.Controller.PostsController.html#_search">MeCms\Controller\PostsController::search()</a></code><br>
+						<code><a href="class-MeCms.View.Cell.PostsCell.html#_categories">MeCms\View\Cell\PostsCell::categories()</a></code><br>
+						<code><a href="class-MeCms.View.Cell.PostsCell.html#_latest">MeCms\View\Cell\PostsCell::latest()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="fromFilter" id="_fromFilter">
 
 		<td class="attributes"><code>
@@ -360,7 +400,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_fromFilter">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#68-91" title="Go to source code">fromFilter</a>( <span>array <var>$query</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#96-117" title="Go to source code">fromFilter</a>( <span>array <var>$query</var></span> )</code>
 
 		<div class="description short">
 			<p>Gets conditions from a filter form</p>
@@ -397,6 +437,50 @@ Cake\ORM\Table
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="getNextToBePublished" id="_getNextToBePublished">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getNextToBePublished">#</a>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#119-127" title="Go to source code">getNextToBePublished</a>( )</code>
+
+		<div class="description short">
+			<p>Gets from cache the timestamp of the next record to be published.
+This value can be used to check if the cache is valid</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets from cache the timestamp of the next record to be published.
+This value can be used to check if the cache is valid</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer<br>Timestamp
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="initialize" id="_initialize">
 
 		<td class="attributes"><code>
@@ -409,7 +493,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#93-111" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#129-147" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -432,6 +516,52 @@ Cake\ORM\Table
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="setNextToBePublished" id="_setNextToBePublished">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setNextToBePublished">#</a>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#149-166" title="Go to source code">setNextToBePublished</a>( )</code>
+
+		<div class="description short">
+			<p>Sets to cache the timestamp of the next record to be published.
+This value can be used to check if the cache is valid</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets to cache the timestamp of the next record to be published.
+This value can be used to check if the cache is valid</p>
+
+
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						Cake\I18n\Time::toUnixString()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_afterDelete">MeCms\Model\Table\PostsTable::afterDelete()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_afterSave">MeCms\Model\Table\PostsTable::afterSave()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="validationDefault" id="_validationDefault">
 
 		<td class="attributes"><code>
@@ -444,7 +574,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#113-120" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#168-175" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>

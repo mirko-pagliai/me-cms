@@ -57,9 +57,9 @@ class PhotosAlbumsController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {		
-		//Only admins and managers can delete albums
+		//Only admins can delete albums
 		if($this->request->isAction('delete'))
-			$this->Auth->isGroup(['admin', 'manager']);
+			$this->Auth->isGroup('admin');
 				
 		return TRUE;
 	}

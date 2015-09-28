@@ -28,7 +28,7 @@
 		return;
 ?>
 
-<?php if($pages->count()): ?>
+<?php if(count($pages)): ?>
 	<div class="widget sidebar-widget">
 		<?php
 			echo $this->Html->h4(__d('me_cms', 'Pages'));

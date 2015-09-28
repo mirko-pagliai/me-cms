@@ -47,6 +47,11 @@
 
 						</li>
 				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Model.html">
 						Model<span></span>
 					</a>
@@ -70,18 +75,6 @@
 				<li class="main">
 					<a href="namespace-MeCms.Model.Validation.html">
 						Validation					</a>
-
-						</li>
-							</ul></li>
-				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
 
 						</li>
 							</ul></li>
@@ -201,7 +194,7 @@ Cake\View\Cell
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.Cell.html">Cell</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.Cell.PostsCell.html#28-95" title="Go to source code">Cell/PostsCell.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.View.Cell.PostsCell.html#28-103" title="Go to source code">Cell/PostsCell.php</a>
 		<br>
 	</div>
 
@@ -221,14 +214,14 @@ Cake\View\Cell
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#32-45" title="Go to source code">__construct</a>( <span>MeTools\Network\Request <var>$request</var> = <span class="php-keyword1">NULL</span></span>, <span>Cake\Network\Response <var>$response</var> = <span class="php-keyword1">NULL</span></span>, <span>Cake\Event\EventManager <var>$eventManager</var> = <span class="php-keyword1">NULL</span></span>, <span>array <var>$cellOptions</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#32-44" title="Go to source code">__construct</a>( <span>MeTools\Network\Request <var>$request</var> = <span class="php-keyword1">NULL</span></span>, <span>Cake\Network\Response <var>$response</var> = <span class="php-keyword1">NULL</span></span>, <span>Cake\Event\EventManager <var>$eventManager</var> = <span class="php-keyword1">NULL</span></span>, <span>array <var>$cellOptions</var> = []</span> )</code>
 
 		<div class="description short">
-			<p>Constructor</p>
+			<p>Constructor. It loads the model</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Constructor</p>
+			<p>Constructor. It loads the model</p>
 
 
 				<h4>Parameters</h4>
@@ -266,7 +259,7 @@ Cake\View\Cell
 
 		<td class="name"><div>
 		<a class="anchor" href="#_categories">#</a>
-		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#47-71" title="Go to source code">categories</a>( )</code>
+		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#46-74" title="Go to source code">categories</a>( )</code>
 
 		<div class="description short">
 			<p>Categories widget</p>
@@ -281,6 +274,7 @@ Cake\View\Cell
 
 				<h4>Uses</h4>
 				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
 						MeTools\Network\Request::isCurrent()<br>
 				</div>
 
@@ -300,14 +294,14 @@ Cake\View\Cell
 
 		<td class="name"><div>
 		<a class="anchor" href="#_latest">#</a>
-		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#73-89" title="Go to source code">latest</a>( <span>string <var>$limit</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#76-97" title="Go to source code">latest</a>( <span>string <var>$limit</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
-			<p>Latest posts widget</p>
+			<p>Latest widget</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Latest posts widget</p>
+			<p>Latest widget</p>
 
 
 				<h4>Parameters</h4>
@@ -320,6 +314,7 @@ Cake\View\Cell
 
 				<h4>Uses</h4>
 				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
 						MeTools\Network\Request::isAction()<br>
 				</div>
 
@@ -339,7 +334,7 @@ Cake\View\Cell
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#91-94" title="Go to source code">search</a>( )</code>
+		<code><a href="source-class-MeCms.View.Cell.PostsCell.html#99-102" title="Go to source code">search</a>( )</code>
 
 		<div class="description short">
 			<p>Search widget</p>

@@ -396,6 +396,7 @@
     "badges.less",
     "alerts.less",
     "panels.less",
+    "responsive-embed.less",
     "wells.less",
     "close.less",
     "component-animations.less",
@@ -409,5 +410,5 @@
     "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=301490bbc038677d215f"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=987d3b8144f15267fb9f"
 }

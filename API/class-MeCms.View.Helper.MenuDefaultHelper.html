@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\View\Helper\MenuHelper | MeCms API</title>
+	<title>Class MeCms\View\Helper\MenuDefaultHelper | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -47,6 +47,11 @@
 
 						</li>
 				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Model.html">
 						Model<span></span>
 					</a>
@@ -70,18 +75,6 @@
 				<li class="main">
 					<a href="namespace-MeCms.Model.Validation.html">
 						Validation					</a>
-
-						</li>
-							</ul></li>
-				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
 
 						</li>
 							</ul></li>
@@ -122,8 +115,8 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">AuthHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.BaseMenuHelper.html">BaseMenuHelper</a></li>
-				<li class="active"><a href="class-MeCms.View.Helper.MenuHelper.html">MenuHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MenuBuilderHelper</a></li>
+				<li class="active"><a href="class-MeCms.View.Helper.MenuDefaultHelper.html">MenuDefaultHelper</a></li>
 			</ul>
 
 
@@ -167,18 +160,14 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class MenuHelper</h1>
+	<h1>Class MenuDefaultHelper</h1>
 
 
 	<div class="description">
-	<p>Menu Helper</p>
+	<p>MenuDefault Helper.</p>
 
-<p>It contains methods to generate menus for this plugin.
-It supports these types of menu: <code>ul</code>, <code>collapse</code> and <code>dropdown</code>.</p>
-
-<p>To generate a menu, you have to use the <code>get()</code> method. For example:</p>
-
-<pre><span class="php-var">$this</span>-&gt;Menu-&gt;get(<span class="php-quote">'photos'</span>, <span class="php-quote">'dropdown'</span>)</pre>
+<p>This helper contains methods that will be called automatically to generate the menu of the backend.
+You do not need to call these methods manually.</p>
 	</div>
 
 	<dl class="tree">
@@ -189,14 +178,7 @@ Cake\View\Helper
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCms.View.Helper.BaseMenuHelper.html"><span>MeCms\View\Helper\BaseMenuHelper</span></a>
-			
-			
-			
-		</dd>
-		<dd style="padding-left:60px">
-			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\View\Helper\MenuHelper</span></b>			
+<b><span>MeCms\View\Helper\MenuDefaultHelper</span></b>			
 			
 			
 		</dd>
@@ -215,7 +197,7 @@ Cake\View\Helper
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.Helper.html">Helper</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.Helper.MenuHelper.html#28-176" title="Go to source code">Helper/MenuHelper.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#28-176" title="Go to source code">Helper/MenuDefaultHelper.php</a>
 		<br>
 	</div>
 
@@ -223,10 +205,10 @@ Cake\View\Helper
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="_banners" id="__banners">
+	<tr data-order="_posts" id="__posts">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
 			mixed
 			
@@ -234,22 +216,17 @@ Cake\View\Helper
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#__banners">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuHelper.html#40-65" title="Go to source code">_banners</a>( <span>string <var>$type</var></span> )</code>
+		<a class="anchor" href="#__posts">#</a>
+		<code><a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#41-61" title="Go to source code">_posts</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to generate the menu for "banners" actions.</p>
+			<p>Internal function to generate the menu for "posts" actions</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to generate the menu for "banners" actions.</p>
+			<p>Internal function to generate the menu for "posts" actions</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -270,7 +247,7 @@ Cake\View\Helper
 	<tr data-order="_pages" id="__pages">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
 			mixed
 			
@@ -279,21 +256,16 @@ Cake\View\Helper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__pages">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuHelper.html#67-86" title="Go to source code">_pages</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#63-81" title="Go to source code">_pages</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to generate the menu for "pages" actions.</p>
+			<p>Internal function to generate the menu for "pages" actions</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to generate the menu for "pages" actions.</p>
+			<p>Internal function to generate the menu for "pages" actions</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -314,7 +286,7 @@ Cake\View\Helper
 	<tr data-order="_photos" id="__photos">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
 			mixed
 			
@@ -323,21 +295,16 @@ Cake\View\Helper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__photos">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuHelper.html#88-102" title="Go to source code">_photos</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#83-96" title="Go to source code">_photos</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to generate the menu for "photos" actions.</p>
+			<p>Internal function to generate the menu for "photos" actions</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to generate the menu for "photos" actions.</p>
+			<p>Internal function to generate the menu for "photos" actions</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -354,10 +321,10 @@ Cake\View\Helper
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="_posts" id="__posts">
+	<tr data-order="_banners" id="__banners">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
 			mixed
 			
@@ -365,22 +332,17 @@ Cake\View\Helper
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#__posts">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuHelper.html#104-125" title="Go to source code">_posts</a>( <span>string <var>$type</var></span> )</code>
+		<a class="anchor" href="#__banners">#</a>
+		<code><a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#98-122" title="Go to source code">_banners</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to generate the menu for "posts" actions.</p>
+			<p>Internal function to generate the menu for "banners" actions</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to generate the menu for "posts" actions.</p>
+			<p>Internal function to generate the menu for "banners" actions</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -401,7 +363,7 @@ Cake\View\Helper
 	<tr data-order="_users" id="__users">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
 			mixed
 			
@@ -410,21 +372,16 @@ Cake\View\Helper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__users">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuHelper.html#127-152" title="Go to source code">_users</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#124-148" title="Go to source code">_users</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to generate the menu for "users" actions.</p>
+			<p>Internal function to generate the menu for "users" actions</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to generate the menu for "users" actions.</p>
+			<p>Internal function to generate the menu for "users" actions</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -445,7 +402,7 @@ Cake\View\Helper
 	<tr data-order="_systems" id="__systems">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
 			mixed
 			
@@ -454,21 +411,16 @@ Cake\View\Helper
 
 		<td class="name"><div>
 		<a class="anchor" href="#__systems">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuHelper.html#154-175" title="Go to source code">_systems</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#150-175" title="Go to source code">_systems</a>( )</code>
 
 		<div class="description short">
-			<p>Internal function to generate the menu for "systems" actions.</p>
+			<p>Internal function to generate the menu for "systems" actions</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to generate the menu for "systems" actions.</p>
+			<p>Internal function to generate the menu for "systems" actions</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code>, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -488,36 +440,46 @@ Cake\View\Helper
 	</tr>
 	</table>
 
-	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-MeCms.View.Helper.BaseMenuHelper.html#methods">MeCms\View\Helper\BaseMenuHelper</a></caption>
-	<tr>
-		<td><code>
-			<a href="class-MeCms.View.Helper.BaseMenuHelper.html#___collapseMenu">__collapseMenu()</a>, 
-			<a href="class-MeCms.View.Helper.BaseMenuHelper.html#_get">get()</a>
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="helpers" id="$helpers">
+		<td class="attributes"><code>
+			public  
+			array
 		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.View.Helper.MenuDefaultHelper.html#35-39" title="Go to source code"><var>$helpers</var></a>
+
+			<div class="description short">
+				<p>Helpers</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Helpers</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$helpers" class="anchor">#</a>
+				<code>[<span class="php-quote">'MeCms.Auth'</span>, <span class="php-quote">'Html'</span> =&gt; [<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Html'</span>]]</code>
+			</div>
+		</td>
 	</tr>
 	</table>
 
-
-
-
-
-
-
-
-
-
-
-
-	<table class="summary inherited">
-	<caption>Properties inherited from <a href="class-MeCms.View.Helper.BaseMenuHelper.html#properties">MeCms\View\Helper\BaseMenuHelper</a></caption>
-	<tr>
-		<td><code>
-			<a href="class-MeCms.View.Helper.BaseMenuHelper.html#$collapseName"><var>$collapseName</var></a>, 
-			<a href="class-MeCms.View.Helper.BaseMenuHelper.html#$helpers"><var>$helpers</var></a>
-		</code></td>
-	</tr>
-	</table>
 
 
 

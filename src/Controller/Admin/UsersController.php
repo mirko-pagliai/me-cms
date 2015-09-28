@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\AppController;
 
 /**
@@ -29,6 +30,8 @@ use MeCms\Controller\AppController;
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController {
+	use MailerAwareTrait;
+	
 	/**
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
@@ -39,8 +42,9 @@ class UsersController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Every user can change his password
-		if($this->request->isAction('password'))
+		if($this->request->isAction('change_password'))
 			return TRUE;
+		
 		//Only admins can activate account and delete users
 		if($this->request->isAction(['activate', 'delete']))
 			return $this->Auth->isGroup('admin');
@@ -198,7 +202,7 @@ class UsersController extends AppController {
 	
 	/**
 	 * Changes the user's password
-	 * @uses MeCms\Network\Email\Email
+	 * @uses MeCms\Mailer\UserMailer::change_password()
 	 */
 	public function change_password() {
 		$user = $this->Users->find()
@@ -211,12 +215,8 @@ class UsersController extends AppController {
 			
 			if($this->Users->save($user)) {
 				//Sends email
-				$email = new \MeCms\Network\Email\Email();
-				$email->to([$user->email => $user->full_name])
-					->subject(__d('me_cms', 'Your password has been changed'))
-					->template('MeCms.Users/change_password')
-					->set(['full_name' => $user->full_name])
-					->send();
+				$this->getMailer('MeCms.User')
+					->send('change_password', [$user]);
 				
 				$this->Flash->success(__d('me_cms', 'The password has been edited'));
 				return $this->redirect(['_name' => 'dashboard']);

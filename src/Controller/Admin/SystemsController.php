@@ -115,7 +115,7 @@ class SystemsController extends AppController {
 		$files = System::changelogs();
 		
 		//If a changelog file has been specified
-		if(!empty($this->request->query('file')) && $this->request->is('get')) {
+		if($this->request->query('file') && $this->request->is('get')) {
 			//Loads the Markdown helper
 			$this->helpers[] = 'MeTools.Markdown';
 			
@@ -207,7 +207,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\System::clearCache()
 	 */
 	public function clear_cache() {
-		$this->request->allowMethod(['post', 'delete']);
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
 		
 		if(System::clearCache())
 			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
@@ -222,7 +223,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Thumbs::clear()
 	 */
 	public function clear_thumbs() {
-		$this->request->allowMethod(['post', 'delete']);
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
 		
 		if(Thumbs::clear())
 			$this->Flash->success(__d('me_cms', 'Thumbnails have been deleted'));

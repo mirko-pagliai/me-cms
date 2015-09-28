@@ -27,92 +27,95 @@ Router::defaultRouteClass('InflectedRoute');
 
 Router::extensions('rss');
 
+/**
+ * MeCms routes
+ */
 Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Home page
 	 */
-	Router::connect('/', ['controller' => 'Posts', 'action' => 'index', 'plugin' => MECMS], ['_name' => 'homepage']);
+	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
 	
 	/**
 	 * Banners controller
 	 */
-	Router::connect('/banner/:id',
-		['controller' => 'Banners', 'action' => 'open', 'plugin' => MECMS],
+	$routes->connect('/banner/:id',
+		['controller' => 'Banners', 'action' => 'open'],
 		['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
 	);
 	
 	/**
 	 * Pages controller
 	 */
-	Router::connect('/pages',
-		['controller' => 'Pages', 'action' => 'index', 'plugin' => MECMS],
-		['_name' => 'pages']
-	);
-	Router::connect('/page/:slug',
-		['controller' => 'Pages', 'action' => 'view', 'plugin' => MECMS],
+	$routes->connect('/page/:slug',
+		['controller' => 'Pages', 'action' => 'view'],
 		['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+	);
+	$routes->connect('/pages',
+		['controller' => 'Pages', 'action' => 'index'],
+		['_name' => 'pages']
 	);
 
 	/**
 	 * PhotosAlbums controller
 	 */
-	Router::connect('/albums', ['controller' => 'PhotosAlbums', 'action' => 'index', 'plugin' => MECMS], ['_name' => 'albums']);
-	Router::connect('/album/:slug',
-		['controller' => 'PhotosAlbums', 'action' => 'view', 'plugin' => MECMS],
+	$routes->connect('/albums', ['controller' => 'PhotosAlbums', 'action' => 'index'], ['_name' => 'albums']);
+	$routes->connect('/album/:slug',
+		['controller' => 'PhotosAlbums', 'action' => 'view'],
 		['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
 
 	/**
 	 * Photos controller
 	 */
-	Router::connect('/photo/:id',
-		['controller' => 'Photos', 'action' => 'view', 'plugin' => MECMS],
+	$routes->connect('/photo/:id',
+		['controller' => 'Photos', 'action' => 'view'],
 		['_name' => 'photo', 'id' => '\d+', 'pass' => ['id']]
 	);
 	
 	/**
 	 * PostsCategories controller
 	 */
-	Router::connect('/categories', ['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => MECMS], ['_name' => 'categories']);
+	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'posts_categories']);
 	
 	/**
 	 * Posts controller
 	 */
-	Router::connect('/category/:slug',
-		['controller' => 'Posts', 'action' => 'index', 'plugin' => MECMS],
-		['_name' => 'category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-	);
-	Router::connect('/post/:slug',
-		['controller' => 'Posts', 'action' => 'view', 'plugin' => MECMS],
+	$routes->connect('/post/:slug',
+		['controller' => 'Posts', 'action' => 'view'],
 		['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
-	Router::connect('/posts', ['controller' => 'Posts', 'action' => 'index', 'plugin' => MECMS], ['_name' => 'posts']);
-	Router::connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', 'plugin' => MECMS, '_ext' => 'rss']);
-	Router::connect('/posts/search',	 ['controller' => 'Posts', 'action' => 'search', 'plugin' => MECMS], ['_name' => 'search_posts']);
+	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
+	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
+	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'search_posts']);
+	$routes->connect('/posts/:slug',
+		['controller' => 'Posts', 'action' => 'index'],
+		['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
 	
 	/**
 	 * Systems controller
 	 */
-	Router::connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed', 'plugin' => MECMS], ['_name' => 'ip_not_allowed']);
-	Router::connect('/offline', ['controller' => 'Systems', 'action' => 'offline', 'plugin' => MECMS], ['_name' => 'offline']);
-	Router::connect('/contact/form',	 ['controller' => 'Systems', 'action' => 'contact_form', 'plugin' => MECMS], ['_name' => 'contact_form']);
+	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
+	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
+	$routes->connect('/contact/form',	 ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
 	
 	/**
 	 * Users controller
 	 */
-	Router::connect('/activation/resend', ['controller' => 'Users', 'action' => 'resend_activation', 'plugin' => MECMS], ['_name' => 'resend_activation']);
-	Router::connect('/activation/:id/:token',
-		['controller' => 'Users', 'action' => 'activate_account', 'plugin' => MECMS],
+	$routes->connect('/activation/resend', ['controller' => 'Users', 'action' => 'resend_activation'], ['_name' => 'resend_activation']);
+	$routes->connect('/activation/:id/:token',
+		['controller' => 'Users', 'action' => 'activate_account'],
 		['_name' => 'activate_account', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
-	Router::connect('/login', ['controller' => 'Users', 'action' => 'login', 'plugin' => MECMS], ['_name' => 'login']);
-	Router::connect('/logout', ['controller' => 'Users', 'action' => 'logout', 'plugin' => MECMS], ['_name' => 'logout']);
-	Router::connect('/password/forgot', ['controller' => 'Users', 'action' => 'forgot_password', 'plugin' => MECMS], ['_name' => 'forgot_password']);
-	Router::connect(	'/password/reset/:id/:token',
-		['controller' => 'Users', 'action' => 'reset_password', 'plugin' => MECMS],
+	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
+	$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
+	$routes->connect('/password/forgot', ['controller' => 'Users', 'action' => 'forgot_password'], ['_name' => 'forgot_password']);
+	$routes->connect(	'/password/reset/:id/:token',
+		['controller' => 'Users', 'action' => 'reset_password'],
 		['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
-	Router::connect('/signup', ['controller' => 'Users', 'action' => 'signup', 'plugin' => MECMS], ['_name' => 'signup']);
+	$routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup'], ['_name' => 'signup']);
 	
 	/**
 	 * Admin routes
@@ -121,9 +124,16 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		/**
 		 * Admin home page
 		 */
-        $routes->connect('/', ['controller' => 'Posts', 'action' => 'index', 'prefix' => ADMIN, 'plugin' => MECMS], ['_name' => 'dashboard']);
+        $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
 		
-        $routes->fallbacks();
+		/**
+		 * Other admin routes
+		 */
+		$controllers = ['banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts', 'systems', 'users', 'users_groups'];
+		$controllers = sprintf('(%s)', implode('|', $controllers));
+		
+		$routes->connect('/:controller', [], ['controller' => $controllers]);
+		$routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
     });
 	
     $routes->fallbacks();

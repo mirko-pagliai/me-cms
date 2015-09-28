@@ -33,9 +33,7 @@
 		echo $this->Html->h4(__d('me_cms', 'Search posts'));
 
 		echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'search_posts']]);
-		echo $this->Form->input('p', [
-			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
-		]);
+		echo $this->Form->input('p', ['placeholder' => sprintf('%s...', __d('me_cms', 'Search'))]);
 		echo $this->Form->submit(NULL, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
 		echo $this->Form->end();
 	?>

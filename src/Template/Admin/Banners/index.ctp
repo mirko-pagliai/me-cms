@@ -26,7 +26,7 @@
 
 <div class="banners index">
 	<?= $this->Html->h2(__d('me_cms', 'Banners')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>
 		<fieldset>
@@ -73,11 +73,16 @@
 								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'text-warning']));
 
 							echo $this->Html->strong($title);
-
-							echo $this->Html->ul([
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
-								$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
-							], ['class' => 'actions']);
+			
+							$actions = [
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
+							];
+							
+							//Only admins can delete banners
+							if($this->Auth->isGroup('admin'))
+								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+															
+							echo $this->Html->ul($actions, ['class' => 'actions']);								
 						?>
 					</td>
 					<td class="text-center"><?= $banner->position->name ?></td>

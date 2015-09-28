@@ -32,12 +32,16 @@ use MeCms\Controller\AppController;
 class PostsController extends AppController {
 	/**
      * Lists posts
-	 * @param string $category Category slug, optional
+	 * @param string $category Category slug (optional)
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
     public function index($category = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q'))
 			$this->redirect([$this->request->query('q')]);
+		
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
 		
 		//Sets the initial cache name
 		$cache = 'index';
@@ -60,7 +64,6 @@ class PostsController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
-			//Gets and paginates posts
 			$posts = $this->paginate(
 				$this->Posts->find('active')
 					->contain([
@@ -69,7 +72,7 @@ class PostsController extends AppController {
 					])
 					->select(['title', 'subtitle', 'slug', 'text', 'created'])
 					->where(empty($conditions) ? [] : $conditions)
-					->order(['Posts.created' => 'DESC'])
+					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			)->toArray();
 						
 			//Writes on cache
@@ -90,33 +93,38 @@ class PostsController extends AppController {
 	 * Lists posts as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
 	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-	public function rss() {		
+	public function rss() {
 		//This method works only for RSS
 		if(!$this->RequestHandler->isRss())
             throw new \Cake\Network\Exception\ForbiddenException();
 		
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
+		
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug', 'text', 'created'])
 			->limit(config('frontend.records_for_rss'))
-			->order(['Posts.created' => 'DESC'])
+			->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			->cache('rss', 'posts'));
 	}
 	
 	/**
 	 * Search posts
 	 * @uses MeCms\Controller\Component\SecurityComponent::checkLastSearch()
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function search() {
 		if($pattern = $this->request->query('p')) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
-				//Load the MeCms.Security component
-				$this->loadComponent('MeCms.Security');
-				
 				if($this->Security->checkLastSearch($pattern)) {
 					$this->paginate['limit'] = config('frontend.records_for_searches');
-
+					
+					//Checks if the cache is valid
+					$this->Posts->checkIfCacheIsValid();
+					
 					//Sets the initial cache name
 					$cache = sprintf('search_%s', md5($pattern));
 
@@ -128,8 +136,7 @@ class PostsController extends AppController {
 					list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
 
 					//If the data are not available from the cache
-					if(empty($posts) || empty($paging)) {					
-						//Gets and paginates posts
+					if(empty($posts) || empty($paging)) {
 						$posts = $this->paginate(
 							$this->Posts->find('active')
 								->select(['title', 'slug', 'text', 'created'])
@@ -138,7 +145,7 @@ class PostsController extends AppController {
 									'subtitle LIKE' => sprintf('%%%s%%', $pattern),
 									'text LIKE'		=> sprintf('%%%s%%', $pattern)
 								]])
-								->order(['Posts.created' => 'DESC'])
+								->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 						)->toArray();
 
 						//Writes on cache
@@ -170,7 +177,7 @@ class PostsController extends AppController {
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
 			->select(['title', 'subtitle', 'slug', 'text', 'created'])
-			->where(['Posts.slug' => $slug])
+			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), 'posts')
 			->first());
     }

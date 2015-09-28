@@ -21,6 +21,5 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-define('ADMIN', 'admin');
-DEFINE('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
+define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
 define('MECMS', 'MeCms');

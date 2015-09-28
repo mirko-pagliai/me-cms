@@ -24,11 +24,13 @@
 if(!function_exists('config')) {
 	/**
 	 * Gets config values stored in configuration of MeCms
-	 * @param string $key Configuration key
+	 * @param string|NULL $key Configuration key
 	 * @return mixed Configuration value
 	 */
-	function config($key) {
-		return \Cake\Core\Configure::read(is_string($key) ? sprintf('MeCms.%s', $key) : 'MeCms');
+	function config($key = NULL) {
+		$key = empty($key) || !is_string($key) ? 'MeCms' : sprintf('MeCms.%s', $key);
+		
+		return \Cake\Core\Configure::read($key);
 	}
 }
 

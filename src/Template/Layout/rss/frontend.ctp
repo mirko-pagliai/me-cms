@@ -22,7 +22,6 @@
  */
 ?>
 
-
 <?php
 	if(!isset($documentData))
 		$documentData = [];

@@ -43,19 +43,12 @@
 				<?php
 					echo $homeLink;
 					
-					foreach(config('backend.menu') as $menu) {
-						//Gets the plugin name
-						list($plugin, $menu) = pluginSplit($menu);
+					foreach($mecms_menu as $menu)
+						echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
 
-						//Loads the menu helper
-						$this->Menu = $this->helpers()->load($helper = sprintf('%s.Menu', $plugin));
-
-						//Gets the menu
-						echo $this->Html->li($this->Menu->get($menu, 'dropdown'), ['class' => 'dropdown']);
-						
-						//Unloads the helper
-						$this->helpers()->unload($helper);
-					}
+					if(!empty($plugins_menu))
+						foreach($plugins_menu as $menu)
+							echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
 					
 					echo $menu = $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
 						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),

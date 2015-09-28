@@ -48,7 +48,7 @@ class PagesCell extends Cell {
 	 * Pages list widget
 	 */
 	public function pages() {
-		//Returns on pages index
+		//Returns on index
 		if($this->request->isCurrent(['_name' => 'pages']))
 			return;
 
@@ -56,6 +56,7 @@ class PagesCell extends Cell {
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
 			->cache(sprintf('widget_list'), 'pages')
+			->toArray()
 		);
 	}
 }

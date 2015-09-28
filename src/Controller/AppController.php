@@ -72,13 +72,17 @@ class AppController extends BaseController {
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses MeTools\Network\Request::hasPrefix()
 	 * @uses MeTools\Network\Request::isAction()
+	 * @uses MeTools\Network\Request::isAdmin()
 	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
+		date_default_timezone_set(config('main.timezone'));
+		
 		//Checks if the site has been taken offline
 		if(!$this->request->isAction('offline', 'Systems') && $this->isOffline())
 			$this->redirect(['_name' => 'offline']);
@@ -99,6 +103,8 @@ class AppController extends BaseController {
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isPrefix('admin') ? config('backend.records') : config('frontend.records');
+		
+		parent::beforeFilter($event);
 	}
 	
 	/**
@@ -106,30 +112,34 @@ class AppController extends BaseController {
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+	 * @uses App\Controller\AppController::beforeRender()
 	 * @uses MeTools\Network\Request::isAdmin()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
-		//Uses a custom View class (`AppView` or `AdminView`)
-		$this->viewClass = $this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App';
+		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
+		$this->viewClass = !$this->request->isAdmin() ? 'MeCms.View/App' : 'MeCms.View/Admin';
 		
 		//Sets auth data for views
 		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
+		
+		parent::beforeRender($event);
 	}
 	
 	/**
 	 * Initialization hook method
+	 * @uses App\Controller\AppController::initialize()
 	 */
 	public function initialize() {
 		//Loads components
-		$this->loadComponent('MeCms.Auth', [
-			'authError' => __d('me_cms', 'You are not authorized for this action')
-		]);
+		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
-		$this->loadComponent('MeTools.Security');
+		$this->loadComponent('MeCms.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
+		
+		parent::initialize();
     }
 	
 	/**
@@ -146,10 +156,10 @@ class AppController extends BaseController {
 	/**
 	 * Checks if the user's IP address is banned
 	 * @return bool
-	 * @uses MeTools\Controller\Component\SecurityComponent::isBanned()
+	 * @uses MeCms\Controller\Component\SecurityComponent::isBanned()
 	 */
 	protected function isBanned() {
-		if(empty(config('security.banned_ip')))
+		if(!config('security.banned_ip'))
 			return FALSE;
 		
 		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
@@ -162,7 +172,7 @@ class AppController extends BaseController {
 	 * @return bool
 	 */
 	protected function isOffline() {
-		return !empty(config('frontend.offline'));
+		return config('frontend.offline');
 	}
 	
 	/**

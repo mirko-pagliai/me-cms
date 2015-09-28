@@ -1,5 +1,15 @@
 # 2.x branch
 ## 2.0 branch
+### 2.0.1-RC1
+* fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
+* fixed bug on login with cookie;
+* fixed permissions;
+* it automatically adds the meta tag for RSS resources;
+* the backend menus are generated fully automatically. You no longer need any configuration;
+* now you can choise which post details display using the configuration file;
+* now you can set the timezone using the configuration file;
+* fixed bug with the posts date.
+
 ### 2.0.0-alpha
 * all the code has been completely rewritten for CakePHP 3.x. Several optimizations have been applied;
 * uploading/adding files (for example, banners and photos) is much simplified and is optimized;

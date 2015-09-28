@@ -23,9 +23,10 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 //Loads the MeTools plugin
-\Cake\Core\Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
+Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
 
 require_once 'constants.php';
 require_once 'global_functions.php';
@@ -34,23 +35,27 @@ require_once 'global_functions.php';
  * MeCms configuration
  */
 //Loads the configuration from the plugin
-Configure::load('MeCms.mecms');
+Configure::load('MeCms.me_cms');
+
+$config = Configure::read('MeCms');
 
 //Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'mecms.php'))
-	Configure::load('mecms');
-
-//Checks the crypt key
-if(strlen(Configure::read('MeCms.security.crypt_key')) < 32)
-	throw new \Cake\Network\Exception\InternalErrorException(__d('me_cms', 'The key used to crypt must be {0} characters long', '32'));
+if(is_readable(CONFIG.'me_cms.php')) {
+	Configure::load('me_cms', 'default', FALSE);
+	
+	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::consume('MeCms'), $config));
+}
 
 //Fixes value
 if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.users.activation') > 2)
 	Configure::write('MeCms.users.activation', 1);
 
-//Forces debug on localhost, if required
-if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug'))
+//Forces debug and loads DebugKit on localhost, if required
+if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug')) {
 	Configure::write('debug', TRUE);
+	
+	Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+}
 
 //Loads the theme
 if(Configure::read('MeCms.frontend.theme'))

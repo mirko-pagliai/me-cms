@@ -35,15 +35,17 @@
 	]);
 	
 	foreach($posts as $post) {
-		//Sets post link
+		//Sets link
 		$link = ['_name' => 'post', $post->slug];
 		
-		//Sets post text
-		$text = $this->Text->truncate(strip_tags($post->text), config('frontend.truncate_to'), [
-			'ending' => '...', 'exact' => FALSE, 'html' => TRUE
-		]);
+		//Sets text
+		$text = $this->Text->truncate(
+			strip_tags($post->text),
+			config('frontend.truncate_to'),
+			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
+		);
 		
-		//Adds the preview image to the text
+		//Adds the preview image
 		if(!empty($post['Post']['preview']))
 			$text = sprintf('%s%s', $this->Thumb->img($post['Post']['preview'], ['width' => 200]), $text);
 
