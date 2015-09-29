@@ -60,7 +60,7 @@ class UsersController extends AppController {
 	 */
 	private function _loginWithCookie() {
 		//Checks if the cookie exists
-		if(empty($this->Cookie->read('login')))
+		if(!$this->Cookie->read('login'))
 			return;
 		
 		$this->request->data = $this->Cookie->read('login');
