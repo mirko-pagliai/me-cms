@@ -23,10 +23,9 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 
 //Loads the MeTools plugin
-Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
+\Cake\Core\Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
 
 require_once 'constants.php';
 require_once 'global_functions.php';
@@ -59,7 +58,7 @@ if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Config
 
 //Loads the theme
 if(Configure::read('MeCms.frontend.theme'))
-	\MeTools\Core\Plugin::load(Configure::read('MeCms.frontend.theme'));
+	\Cake\Core\Plugin::load(Configure::read('MeCms.frontend.theme'));
 
 /**
  * Cache configuration
