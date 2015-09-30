@@ -53,7 +53,7 @@ if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.
 if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug')) {
 	Configure::write('debug', TRUE);
 	
-	Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+	\Cake\Core\Plugin::load('DebugKit', ['bootstrap' => TRUE]);
 }
 
 //Loads the theme
