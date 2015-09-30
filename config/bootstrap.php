@@ -24,6 +24,10 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 
+/**
+ * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
+ */
+
 //Loads the MeTools plugin
 \Cake\Core\Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
 
