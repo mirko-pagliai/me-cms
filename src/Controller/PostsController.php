@@ -68,9 +68,10 @@ class PostsController extends AppController {
 				$this->Posts->find('active')
 					->contain([
 						'Categories'	=> ['fields' => ['title', 'slug']],
+						'Tags',
 						'Users'			=> ['fields' => ['first_name', 'last_name']]
 					])
-					->select(['title', 'subtitle', 'slug', 'text', 'created'])
+					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 					->where(empty($conditions) ? [] : $conditions)
 					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			)->toArray();
