@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
@@ -139,6 +139,12 @@ class PostsTable extends AppTable {
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'className' => 'MeCms.PostsCategories'
+        ]);
+        $this->belongsToMany('Tags', [
+            'foreignKey' => 'post_id',
+            'targetForeignKey' => 'tag_id',
+            'joinTable' => 'posts_tags',
+            'className' => 'MeCms.Tags'
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',

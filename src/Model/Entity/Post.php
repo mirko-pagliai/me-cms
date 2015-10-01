@@ -41,9 +41,10 @@ class Post extends Entity {
         'text' => TRUE,
         'priority' => TRUE,
         'active' => TRUE,
+		'created' => TRUE,
         'category' => TRUE,
         'user' => TRUE,
-		'created' => TRUE
+		'tag' => TRUE
     ];
 	
 	/**
