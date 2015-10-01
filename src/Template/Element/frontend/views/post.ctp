@@ -53,6 +53,14 @@
 						__d('me_cms', 'Posted on {0}', $post->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
 					);
+				
+				if(config('post.show.tags') && !empty($post->tags))
+					echo $this->Html->div('content-tags',
+						implode(', ', array_map(function($tag) { 
+							return $tag->tag;
+						}, $post->tags)),
+						['icon' => 'tags']
+					);
 			?>
 		</div>
 	</div>

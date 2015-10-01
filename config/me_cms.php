@@ -85,7 +85,9 @@ return ['MeCms' => [
 			//Displays the post category
 			'category' => TRUE,
 			//Displays the post created datetime
-			'created' => TRUE
+			'created' => TRUE,
+			//Displays the post tags
+			'tags' => TRUE
 		]
 	],
 	//Security

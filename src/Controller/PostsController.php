@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
@@ -174,9 +174,10 @@ class PostsController extends AppController {
 		$this->set('post', $this->Posts->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
+				'Tags',
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['title', 'subtitle', 'slug', 'text', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), 'posts')
 			->first());
