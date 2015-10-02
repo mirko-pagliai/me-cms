@@ -44,14 +44,14 @@ class Post extends Entity {
 		'created' => TRUE,
         'category' => TRUE,
         'user' => TRUE,
-		'tag' => TRUE
+		'tags' => TRUE
     ];
 	
 	/**
 	 * Virtual fields that should be exposed
 	 * @var array
 	 */
-    protected $_virtual = ['preview'];
+    protected $_virtual = ['preview', 'tags_as_string'];
 	
 	/**
 	 * Gets the post preview (virtual field)
@@ -69,4 +69,14 @@ class Post extends Entity {
 		
 		return \Cake\Routing\Router::url($matches[2], TRUE);
     }
+	
+	/**
+	 * Gets tags as string, separated by a comma and a space (virtual field)
+	 * @return string Tags
+	 */
+	protected function _getTagsAsString() {
+		return implode(', ', array_map(function($tag) {
+			return $tag['tag'];
+		}, $this->_properties['tags']));
+	}
 }
