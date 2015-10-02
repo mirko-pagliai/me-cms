@@ -57,9 +57,6 @@ class User extends Entity {
 	 * @return string|NULL Full name
 	 */
 	protected function _getFullName() {
-		if(empty($this->_properties['first_name']) || empty($this->_properties['last_name']))
-			return;
-		
 		return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
     }
 	

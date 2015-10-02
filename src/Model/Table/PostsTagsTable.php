@@ -30,6 +30,7 @@ class PostsTagsTable extends Table {
         $this->table('posts_tags');
         $this->displayField('id');
         $this->primaryKey('id');
+        $this->addBehavior('CounterCache', ['Tags' => ['post_count']]);
         $this->belongsTo('Tags', [
             'foreignKey' => 'tag_id',
             'className' => 'MeCms.Tags'

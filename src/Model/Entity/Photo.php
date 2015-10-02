@@ -52,9 +52,6 @@ class Photo extends Entity {
 	 * @uses MeCms\Utility\PhotoFile::path()
 	 */
 	protected function _getPath() {
-		if(empty($this->_properties['filename']) || empty($this->_properties['album_id']))
-			return NULL;
-		else
-			return PhotoFile::path($this->_properties['filename'], $this->_properties['album_id']);
+		return PhotoFile::path($this->_properties['filename'], $this->_properties['album_id']);
     }
 }

@@ -58,14 +58,11 @@ class Post extends Entity {
 	 * @return string Url to preview
 	 */
 	protected function _getPreview() {
-		if(empty($this->_properties['text']))
-			return NULL;
-		
 		//Gets the first image
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
 		
 		if(empty($matches[2]))
-			return NULL;
+			return;
 		
 		return \Cake\Routing\Router::url($matches[2], TRUE);
     }
