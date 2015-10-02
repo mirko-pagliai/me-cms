@@ -58,10 +58,7 @@ class TagsTable extends Table {
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create')
             ->requirePresence('tag', 'create')
-            ->notEmpty('tag')
-            ->add('post_count', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('post_count', 'create')
-            ->notEmpty('post_count');
+            ->notEmpty('tag');
 
         return $validator;
     }
