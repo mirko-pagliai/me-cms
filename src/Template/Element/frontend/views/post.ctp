@@ -54,13 +54,8 @@
 						['icon' => 'clock-o']
 					);
 				
-				if(config('post.show.tags') && !empty($post->tags))
-					echo $this->Html->div('content-tags',
-						implode(', ', array_map(function($tag) { 
-							return $tag->tag;
-						}, $post->tags)),
-						['icon' => 'tags']
-					);
+				if(config('post.show.tags') && !empty($post->tags_as_string))
+					echo $this->Html->div('content-tags', $post->tags_as_string, ['icon' => 'tags']);
 			?>
 		</div>
 	</div>
