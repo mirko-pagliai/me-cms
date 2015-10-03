@@ -54,9 +54,9 @@ class TagsTable extends Table {
 	 * @return array Tags
 	 */
 	public function tagsAsArray($tags) {
-		return array_map(function($tag) {
-			return compact('tag');
-		}, preg_split('/[\s,]+/', $tags));
+		return array_filter(array_map(function($tag) {
+			return empty(trim($tag)) ? NULL : compact('tag');
+		}, preg_split('/[\s]+/', $tags)));
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class TagsTable extends Table {
 	 * @return string Tags
 	 */
 	public function tagsAsString(array $tags) {
-		return implode(', ', array_map(function($tag) {
+		return implode(' ', array_map(function($tag) {
 			return $tag['tag'];
 		}, $tags));
 	}
