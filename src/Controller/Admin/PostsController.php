@@ -113,6 +113,7 @@ class PostsController extends AppController {
 			$this->Posts->find()
 				->contain([
 					'Categories'	=> ['fields' => ['title']],
+					'Tags',
 					'Users'			=> ['fields' => ['first_name', 'last_name']]
 				])
 				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])

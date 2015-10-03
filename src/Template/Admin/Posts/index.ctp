@@ -90,6 +90,9 @@
 								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
 							
 							echo $this->Html->strong($title);
+							
+							if($post->tags_as_string)
+								echo $this->Html->div('text-muted small', $post->tags_as_string, ['icon' => 'tags']);
 														
 							$actions = [];
 							
