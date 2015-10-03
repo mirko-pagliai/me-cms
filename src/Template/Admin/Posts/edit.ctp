@@ -68,15 +68,24 @@
 				'id'	=> 'title',
 				'label'	=> __d('me_cms', 'Title')
 			]);
-			echo $this->Form->input('subtitle', ['label' => __d('me_cms', 'Subtitle')]);
+			echo $this->Form->input('subtitle', [
+				'label' => __d('me_cms', 'Subtitle')
+			]);
 			echo $this->Form->input('slug', [
 				'id'	=> 'slug',
 				'label'	=> __d('me_cms', 'Slug'),
 				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 			]);
-			echo $this->Form->input('tags_as_string', [
+			echo $this->Form->input('tags', [
 				'label'	=> __d('me_cms', 'Tags'),
-				'rows'	=> 2
+				'rows'	=> 2,
+				'tip'	=> __d('me_cms', 'Tags must be at least three chars and separated by a space'),
+				'value'	=> $post->tags_as_string
+			]);
+			echo $this->Form->input('add_tags', [
+				'button'	=> $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus']),
+				'label'		=> __d('me_cms', 'Add tags'),
+				'tip'	=> __d('me_cms', 'Tags must be at least three chars and separated by a space')
 			]);
 			echo $this->Form->ckeditor('text', [
 				'label' => __d('me_cms', 'Text'),

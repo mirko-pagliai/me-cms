@@ -164,12 +164,12 @@ class PostsController extends AppController {
 				$this->request->data('user_id', $this->Auth->user('id'));
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
-						
+			
 			//Sets tags
-			$data = am($this->request->data, ['tags' => $this->Posts->Tags->tagsAsArray($this->request->data('tags_as_string'))]);
+			$data = am($this->request->data, ['tags' => $this->Posts->Tags->tagsAsArray($this->request->data('tags'))]);
 			
             $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags']]);
-			
+						
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
                 return $this->redirect(['action' => 'index']);

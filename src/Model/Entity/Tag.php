@@ -7,5 +7,5 @@ use Cake\ORM\Entity;
  * Tag entity
  */
 class Tag extends Entity {
-
+	
 }
