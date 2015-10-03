@@ -152,6 +152,7 @@ class PostsController extends AppController {
      * Edits post
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\TagsTable::tagsAsArray()
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
@@ -163,9 +164,9 @@ class PostsController extends AppController {
 				$this->request->data('user_id', $this->Auth->user('id'));
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
-			
+						
 			//Sets tags
-			$data = am($this->request->data, ['tags' => array_map(function($tag) { return compact('tag'); }, preg_split('/[\s,]+/', $this->request->data('tags_as_string')))]);
+			$data = am($this->request->data, ['tags' => $this->Posts->Tags->tagsAsArray($this->request->data('tags_as_string'))]);
 			
             $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags']]);
 			

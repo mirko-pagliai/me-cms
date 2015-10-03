@@ -47,6 +47,28 @@ class TagsTable extends Table {
             'className' => 'MeCms.Posts'
         ]);
     }
+	
+	/**
+	 * Changes tags from string to array
+	 * @param string $tags Tags
+	 * @return array Tags
+	 */
+	public function tagsAsArray($tags) {
+		return array_map(function($tag) {
+			return compact('tag');
+		}, preg_split('/[\s,]+/', $tags));
+	}
+	
+	/**
+	 * Changes tags from array to string
+	 * @param array $tags Tags
+	 * @return string Tags
+	 */
+	public function tagsAsString(array $tags) {
+		return implode(', ', array_map(function($tag) {
+			return $tag['tag'];
+		}, $tags));
+	}
 
     /**
      * Default validation rules

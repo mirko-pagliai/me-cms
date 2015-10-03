@@ -70,10 +70,9 @@ class Post extends Entity {
 	/**
 	 * Gets tags as string, separated by a comma and a space (virtual field)
 	 * @return string Tags
+	 * @uses MeCms\Model\Table\TagsTable::tagsAsString()
 	 */
 	protected function _getTagsAsString() {
-		return implode(', ', array_map(function($tag) {
-			return $tag['tag'];
-		}, $this->_properties['tags']));
+		return \Cake\ORM\TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
 	}
 }
