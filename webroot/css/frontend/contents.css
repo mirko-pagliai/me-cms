@@ -62,13 +62,14 @@
 /* Header, info (author, date, etc) */
 .content-header .content-info {
     color: #666;
-	font-size: 15px;
+	font-size: 14px;
 	margin-top: 4px;
 }
 
 /* Header, info (author, date, etc), icons */
 .content-header .content-info .fa {
 	margin-right: 4px;
+	width: 14px;
 }
 
 /* Extra small and small devices */
