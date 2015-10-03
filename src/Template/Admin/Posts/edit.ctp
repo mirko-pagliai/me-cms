@@ -74,6 +74,10 @@
 				'label'	=> __d('me_cms', 'Slug'),
 				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 			]);
+			echo $this->Form->input('tags_as_string', [
+				'label'	=> __d('me_cms', 'Tags'),
+				'rows'	=> 2
+			]);
 			echo $this->Form->ckeditor('text', [
 				'label' => __d('me_cms', 'Text'),
 				'rows'	=> 10

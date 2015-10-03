@@ -155,7 +155,7 @@ class PostsController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-        $post = $this->Posts->get($id);
+		$post = $this->Posts->findById($id)->contain('Tags')->first();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
@@ -164,7 +164,10 @@ class PostsController extends AppController {
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+			//Sets tags
+			$data = am($this->request->data, ['tags' => array_map(function($tag) { return compact('tag'); }, preg_split('/[\s,]+/', $this->request->data('tags_as_string')))]);
+			
+            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags']]);
 			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
