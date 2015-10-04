@@ -52,6 +52,50 @@ class PostValidator extends AppValidator {
 		//Text
         $this->requirePresence('text', 'create');
 		
+		//Tag
+        $this->add('tags', [
+			'validTagsLength' => [
+				'message'	=> __d('me_cms', 'Tags must be between {0} and {1} chars', 3, 20),
+				'rule'		=> [$this, 'validTagsLength']
+			],
+			'validTagsChars' => [
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers')),
+				'rule'		=> [$this, 'validTagsChars']
+			]
+		]);
+		
         return $this;
+	}
+	
+	/**
+	 * Tags validation method (length).
+	 * Checks for each tag.
+	 * @param string $value Field value
+	 * @param array $context Field context
+	 * @return bool TRUE if is valid, otherwise FALSE
+	 */
+	public function validTagsLength($value, $context) {
+		//Between 3 and 20 chars
+		foreach($value as $tag)
+			if(strlen($tag['tag']) < 3 || strlen($tag['tag'] > 20))
+				return FALSE;
+		
+		return TRUE;
+	}
+	
+	/**
+	 * Tags validation method (chars).
+	 * Checks for each tag.
+	 * @param string $value Field value
+	 * @param array $context Field context
+	 * @return bool TRUE if is valid, otherwise FALSE
+	 */
+	public function validTagsChars($value, $context) {
+		//Lowercase letters, numbers
+		foreach($value as $tag)
+			if(!(bool) preg_match('/^[a-z0-9]+$/', $tag['tag']))
+				return FALSE;
+		
+		return TRUE;
 	}
 }
