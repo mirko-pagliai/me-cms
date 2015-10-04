@@ -202,7 +202,7 @@ class AppValidator extends Validator {
 	 * Checks if the slug is a valid slug.
 	 * @param string $value Field value
 	 * @param array $context Field context
-	 * @return bool TRUE if the slug is a valid slug, otherwise FALSE
+	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function slug($value, $context) {
 		//Lowercase letters, numbers, dash.
