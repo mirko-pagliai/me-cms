@@ -180,7 +180,7 @@ class AppValidator extends Validator {
 	 * Checks if a field contains only lowercase letters.
 	 * @param string $value Field value
 	 * @param array $context Field context
-	 * @return bool TRUE if the field contains only lowecase letters, otherwise FALSE
+	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function lowercaseLetters($value, $context) {
 		return (bool) preg_match('/^[a-z]+$', $value);
@@ -191,7 +191,7 @@ class AppValidator extends Validator {
 	 * Checks if the name is a valid person name, so contains letters, apostrophe and/or space.
 	 * @param string $value Field value
 	 * @param array $context Field context
-	 * @return bool TRUE if the name is a valid person, otherwise FALSE
+	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function personName($value, $context) {
 		return (bool) preg_match('/^[A-Z][A-z\'\ ]+$/', $value);
