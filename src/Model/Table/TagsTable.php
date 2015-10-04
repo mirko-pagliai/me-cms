@@ -73,15 +73,9 @@ class TagsTable extends Table {
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \Cake\Validation\Validator
+	 * @return \MeCms\Model\Validation\TagValidator
      */
     public function validationDefault(Validator $validator) {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->requirePresence('tag', 'create')
-            ->notEmpty('tag');
-
-        return $validator;
+		return new \MeCms\Model\Validation\TagValidator;
     }
 }
