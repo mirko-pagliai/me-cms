@@ -40,9 +40,9 @@ class TagValidator extends AppValidator {
 				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 20),
 				'rule'		=> ['lengthBetween', 3, 20]
 			],
-			'tag' => [
-				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
-				'rule'		=> [$this, 'tag']
+			'validTag' => [
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers')),
+				'rule'		=> [$this, 'validTag']
 			]
 		]);
 		
@@ -56,8 +56,8 @@ class TagValidator extends AppValidator {
 	 * @param array $context Field context
 	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
-	public function tag($value, $context) {
+	public function validTag($value, $context) {
 		//Lowercase letters, numbers
-		return preg_match('/^[a-z0-9]+$/', $value);
+		return (bool) preg_match('/^[a-z0-9]+$/', $value);
 	}
 }
