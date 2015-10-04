@@ -262,7 +262,8 @@ ul.actions > li:last-child {
 /* -------------------------------- */
 /* Preview */
 #tags-preview {
-	margin-bottom: 15px;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 /* Preview, tags */
@@ -272,9 +273,8 @@ ul.actions > li:last-child {
     color: #444;
     display: inline-block;
     font-size: 12px;
-    font-weight: bold;
     line-height: 15px;
-    margin-right: 6px;
+    margin: 0 0 6px 6px;
     padding: 4px 6px 4px 8px;
 }
 
