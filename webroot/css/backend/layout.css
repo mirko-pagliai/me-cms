@@ -258,6 +258,43 @@ ul.actions > li:last-child {
 }
 
 /* -------------------------------- */
+/*				Tags				*/
+/* -------------------------------- */
+/* Preview */
+#tags-preview {
+	margin-bottom: 15px;
+}
+
+/* Preview, tags */
+#tags-preview > div {
+    background: #ddd;
+    border-radius: 4px;
+    color: #444;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
+    margin-right: 6px;
+    padding: 4px 6px 4px 8px;
+}
+
+/* Preview, tags, remove button */
+#tags-preview > div .tag-remove {
+    background: #aaa;
+	border: 0;
+    border-radius: 10px;
+    color: #eee;
+    font-size: 14px;
+    margin-left: 6px;
+    padding: 0 3px 1px 4px;
+}
+
+/* Preview, tags, remove button on hover */
+#tags-preview > div .tag-remove:hover {
+	background: #888;
+}
+
+/* -------------------------------- */
 /*			Changelogs page			*/
 /* -------------------------------- */
 /* Changelog, h1 */
