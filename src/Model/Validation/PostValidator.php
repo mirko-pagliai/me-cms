@@ -55,7 +55,7 @@ class PostValidator extends AppValidator {
 		//Tag
         $this->add('tags', [
 			'validTagsLength' => [
-				'message'	=> __d('me_cms', 'Tags must be between {0} and {1} chars', 3, 20),
+				'message'	=> __d('me_cms', 'Each tag must be between {0} and {1} chars', 3, 20),
 				'rule'		=> [$this, 'validTagsLength']
 			],
 			'validTagsChars' => [
