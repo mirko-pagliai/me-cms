@@ -35,7 +35,7 @@ class PostsTagsController extends AppController {
 	 * @param string $tag Tag
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function index($tag) {		
+    public function view($tag) {		
 		$this->Posts = $this->PostsTags->Posts;
 		
 		//Checks if the cache is valid
