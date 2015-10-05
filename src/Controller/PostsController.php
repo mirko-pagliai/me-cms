@@ -32,28 +32,14 @@ use MeCms\Controller\AppController;
 class PostsController extends AppController {
 	/**
      * Lists posts
-	 * @param string $category Category slug (optional)
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function index($category = NULL) {
-		//The category can be passed as query string, from a widget
-		if($this->request->query('q'))
-			$this->redirect([$this->request->query('q')]);
-		
+    public function index() {		
 		//Checks if the cache is valid
 		$this->Posts->checkIfCacheIsValid();
 		
 		//Sets the initial cache name
 		$cache = 'index';
-		
-		//Checks if has been specified a category
-		if(!empty($category)) {
-			//Adds the category to the conditions, if it has been specified
-			$conditions['Categories.slug'] = $category;
-			
-			//Updates the cache name, adding the category name
-			$cache = sprintf('%s_%s', $cache, md5($category));
-		}
 		
 		//Updates the cache name with the query limit and the number of the page
 		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
@@ -72,7 +58,6 @@ class PostsController extends AppController {
 						'Users'			=> ['fields' => ['first_name', 'last_name']]
 					])
 					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->where(empty($conditions) ? [] : $conditions)
 					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			)->toArray();
 						
@@ -82,10 +67,6 @@ class PostsController extends AppController {
 		//Else, sets the paging parameter
 		else
 			$this->request->params['paging'] = $paging;
-				
-		//Sets the category title as title, if has been specified a category
-		if(!empty($category) && !empty($posts[0]->category->title))
-			$this->set('title', $posts[0]->category->title);
 		
         $this->set(compact('posts'));
     }
