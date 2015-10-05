@@ -69,32 +69,42 @@ class PostValidator extends AppValidator {
 	
 	/**
 	 * Tags validation method (length).
-	 * Checks for each tag.
+	 * For each tag, it checks if the tag has between 3 and 20 chars
 	 * @param string $value Field value
 	 * @param array $context Field context
 	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function validTagsLength($value, $context) {
-		//Between 3 and 20 chars
-		foreach($value as $tag)
-			if(strlen($tag['tag']) < 3 || strlen($tag['tag'] > 20))
+		foreach($value as $tag) {
+			//Continues, if the tag has the ID
+			if(!empty($tag['id']))
+				continue;
+			
+			//Checks if the tag has between 3 and 20 chars
+			if(empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag'] > 20))
 				return FALSE;
+		}
 		
 		return TRUE;
 	}
 	
 	/**
 	 * Tags validation method (chars).
-	 * Checks for each tag.
+	 * For each tag, it checks if the tag has only lowercase letters and numbers
 	 * @param string $value Field value
 	 * @param array $context Field context
 	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function validTagsChars($value, $context) {
-		//Lowercase letters, numbers
-		foreach($value as $tag)
-			if(!(bool) preg_match('/^[a-z0-9]+$/', $tag['tag']))
+		foreach($value as $tag) {
+			//Continues, if the tag has the ID
+			if(!empty($tag['id']))
+				continue;
+			
+			//Checks if the tag has only lowercase letters and numbers
+			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9]+$/', $tag['tag']))
 				return FALSE;
+		}
 		
 		return TRUE;
 	}
