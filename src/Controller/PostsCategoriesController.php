@@ -52,7 +52,7 @@ class PostsCategoriesController extends AppController {
 			$this->redirect([$this->request->query('q')]);
 		
 		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
+		$this->PostsCategories->Posts->checkIfCacheIsValid();
 		
 		//Sets the initial cache name
 		$cache = sprintf('index_category_%s', md5($category));

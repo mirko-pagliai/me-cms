@@ -37,7 +37,7 @@ class PostsTagsController extends AppController {
 	 */
     public function view($tag) {		
 		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
+		$this->PostsTags->Posts->checkIfCacheIsValid();
 		
 		//Sets the initial cache name
 		$cache = sprintf('index_tag_%s', md5($tag));
