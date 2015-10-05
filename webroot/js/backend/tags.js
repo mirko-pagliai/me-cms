@@ -136,4 +136,20 @@ $(function() {
 		//Removes the tag
 		remove_tag($(this).attr('data-tag'));
 	});
+	
+	//On focus on the input text
+	$(inputText).on('focusin', function() {
+		$(this).off('keydown').keydown(function(event) {
+			//On press the "enter" button
+			if(event.keyCode == 13) {
+				//Prevent default event
+				event.preventDefault();
+				
+				//Clicks on input button
+				inputButton.click();
+				
+				return false;
+			}
+		});
+	});
 });
