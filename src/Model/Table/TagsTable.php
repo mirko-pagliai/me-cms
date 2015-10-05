@@ -44,7 +44,8 @@ class TagsTable extends Table {
             'foreignKey' => 'tag_id',
             'targetForeignKey' => 'post_id',
             'joinTable' => 'posts_tags',
-            'className' => 'MeCms.Posts'
+            'className' => 'MeCms.Posts',
+			'through' => 'MeCms.PostsTags'
         ]);
     }
 	

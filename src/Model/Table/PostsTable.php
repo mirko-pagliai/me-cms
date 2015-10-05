@@ -169,7 +169,8 @@ class PostsTable extends AppTable {
             'foreignKey' => 'post_id',
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'posts_tags',
-            'className' => 'MeCms.Tags'
+            'className' => 'MeCms.Tags',
+			'through' => 'MeCms.PostsTags'
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
