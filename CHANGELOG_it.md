@@ -1,7 +1,9 @@
 # 2.x ramo
-## 2.0 ramo
-### 2.0.2-RC1
-* aggiunto layout e template per gli errori.
+## 2.1 ramo
+### 2.1.0-RC2
+* è possibile aggiungere tag agli articoli;
+* aggiunto layout e template per gli errori;
+* sistemati piccoli bug.
 
 ### 2.0.1-RC1
 * risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;

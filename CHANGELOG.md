@@ -1,7 +1,9 @@
 # 2.x branch
-## 2.0 branch
-### 2.0.2-RC1
-* added error layout and templates.
+## 2.1 branch
+### 2.1.0-RC2
+* now you can add tags to posts;
+* added error layout and templates;
+* fixed small bugs.
 
 ### 2.0.1-RC1
 * fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
