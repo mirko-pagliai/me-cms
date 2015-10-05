@@ -125,7 +125,7 @@ class PostsController extends AppController {
     /**
      * Adds post
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeCms\Model\Table\PostsTable::buildTagsForEntity()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      */
     public function add() {
         $post = $this->Posts->newEntity();
@@ -137,9 +137,9 @@ class PostsController extends AppController {
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
-			//Sets tags
-			$data = am($this->request->data, ['tags' => $this->Posts->buildTagsForEntity($this->request->data('tags'))]);
-						
+			//Sets the request data with tags
+			$data = $this->Posts->buildTagsForRequestData($this->request->data);
+			
             $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			
             if($this->Posts->save($post)) {
@@ -157,7 +157,7 @@ class PostsController extends AppController {
      * Edits post
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeCms\Model\Table\PostsTable::buildTagsForEntity()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
@@ -170,8 +170,8 @@ class PostsController extends AppController {
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
-			//Sets tags
-			$data = am($this->request->data, ['tags' => $this->Posts->buildTagsForEntity($this->request->data('tags'))]);
+			//Sets the request data with tags
+			$data = $this->Posts->buildTagsForRequestData($this->request->data);
 						
             $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			

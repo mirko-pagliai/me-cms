@@ -75,18 +75,17 @@ class PostsTable extends AppTable {
     }
 	
 	/**
-	 * Builds tags for entity.
+	 * Builds tags for the request data.
 	 * For each tag, it searches if the tag already exists in the database.
 	 * If a tag exists in the database, it sets that tag as ID
-	 * @param string|array $tags Tags as string or array
-	 * @return array Tags (ready for entity)
+	 * @param array $requestData Request data from form (`$this->request->data`)
+	 * @return array Request data
 	 * @uses MeCms\Model\Table\TagsTable::getList()
 	 * @uses MeCms\Model\Table\TagsTable::tagsAsArray()
 	 */
-	public function buildTagsForEntity($tags) {
-		//If tags are string, changes into array
-		$tags = is_string($tags) ? $this->Tags->tagsAsArray($tags) : $tags;
-		
+	public function buildTagsForRequestData($requestData) {
+		$tags = $this->Tags->tagsAsArray($requestData['tags']);
+
 		//Gets tags from database
 		$tagsFromDb = $this->Tags->getList();
 		
@@ -96,7 +95,7 @@ class PostsTable extends AppTable {
 			if(is_int($id = array_search($tag['tag'], $tagsFromDb)))
 				$tags[$k] = compact('id');
 		
-		return $tags;
+		return am($requestData, compact('tags'));
 	}
 	
 	/**
