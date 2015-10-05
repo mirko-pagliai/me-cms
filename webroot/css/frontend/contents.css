@@ -66,6 +66,12 @@
 	margin-top: 4px;
 }
 
+/* Header, info (author, date, etc), link */
+.content-header .content-info a {
+	border-bottom: 1px dashed #888;
+	display: inline;
+}
+
 /* Header, info (author, date, etc), icons */
 .content-header .content-info .fa {
 	margin-right: 4px;

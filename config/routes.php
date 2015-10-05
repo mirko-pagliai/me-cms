@@ -79,6 +79,14 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'posts_categories']);
 	
 	/**
+	 * PostsTags controller
+	 */
+	$routes->connect('/posts/tag/:tag',
+		['controller' => 'PostsTags', 'action' => 'index'],
+		['_name' => 'posts_tag', 'tag' => '[a-z0-9]+', 'pass' => ['tag']]
+	);
+	
+	/**
 	 * Posts controller
 	 */
 	$routes->connect('/post/:slug',
