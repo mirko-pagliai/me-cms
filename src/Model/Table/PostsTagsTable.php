@@ -47,10 +47,6 @@ class PostsTagsTable extends Table {
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator) {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-
         return $validator;
     }
 }
