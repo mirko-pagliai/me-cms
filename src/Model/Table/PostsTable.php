@@ -75,6 +75,31 @@ class PostsTable extends AppTable {
     }
 	
 	/**
+	 * Builds tags for entity.
+	 * For each tag, it searches if the tag already exists in the database.
+	 * If a tag exists in the database, it sets that tag as ID
+	 * @param string|array $tags Tags as string or array
+	 * @return array Tags (ready for entity)
+	 * @uses MeCms\Model\Table\TagsTable::getList()
+	 * @uses MeCms\Model\Table\TagsTable::tagsAsArray()
+	 */
+	public function buildTagsForEntity($tags) {
+		//If tags are string, changes into array
+		$tags = is_string($tags) ? $this->Tags->tagsAsArray($tags) : $tags;
+		
+		//Gets tags from database
+		$tagsFromDb = $this->Tags->getList();
+		
+		//For each tag, it searches if the tag already exists in the database.
+		//If a tag exists in the database, it sets that tag as ID
+		foreach($tags as $k => $tag)
+			if(is_int($id = array_search($tag['tag'], $tagsFromDb)))
+				$tags[$k] = compact('id');
+		
+		return $tags;
+	}
+	
+	/**
 	 * Checks if the cache is valid.
 	 * If the cache is not valid, it empties the cache.
 	 * @uses getNextToBePublished()

@@ -27,6 +27,7 @@
 	$this->Library->ckeditor();
 	$this->Library->datetimepicker();
 	$this->Library->slugify();
+	$this->Html->js('MeCms.backend/tags', ['block' => 'script_bottom']);
 ?>
 
 <div class="posts form">
@@ -76,17 +77,34 @@
 				'label'	=> __d('me_cms', 'Slug'),
 				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 			]);
-			echo $this->Form->input('tags', [
-				'label'	=> __d('me_cms', 'Tags'),
-				'rows'	=> 2,
-				'tip'	=> __d('me_cms', 'Tags must be at least three chars and separated by a space'),
-				'value'	=> $post->tags_as_string
-			]);
-			echo $this->Form->input('add_tags', [
-				'button'	=> $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus']),
-				'label'		=> __d('me_cms', 'Add tags'),
-				'tip'	=> __d('me_cms', 'Tags must be at least three chars and separated by a space')
-			]);
+		?>
+		<div class="form-group to-be-hidden">
+			<?php
+				echo $this->Form->input('tags', [
+					'id'	=> 'tags-output-text',
+					'label'	=> __d('me_cms', 'Tags'),
+					'rows'	=> 2,
+					'tip'	=> __d('me_cms', 'Tags must be at least 3 chars and separated by a space. Only lowercase letters and numbers'),
+					'value'	=> $this->request->data('tags') ? $this->request->data('tags') : $post->tags_as_string
+				]);
+			?>
+		</div>
+		<div class="form-group hidden to-be-shown">
+			<?php
+				echo $this->Html->div(NULL, sprintf('%s:', __d('me_cms', 'Tags')), ['id' => 'tags-preview']);
+				echo $this->Form->input('add_tags', [
+					'button'	=> $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus', 'id' => 'tags-input-button']),
+					'id'		=> 'tags-input-text',
+					'label'		=> FALSE,
+					'tip'		=> __d('me_cms', 'Tags must be at least 3 chars and separated by a space. Only lowercase letters and numbers')
+				]);
+				
+				//Tags error
+				if($this->Form->isFieldError('tags'))
+					echo $this->Form->error('tags');
+			?>
+		</div>
+		<?php
 			echo $this->Form->ckeditor('text', [
 				'label' => __d('me_cms', 'Text'),
 				'rows'	=> 10

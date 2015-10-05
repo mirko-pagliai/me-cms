@@ -153,6 +153,7 @@ class PostsController extends AppController {
      * Edits post
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForEntity()
 	 * @uses MeCms\Model\Table\TagsTable::tagsAsArray()
      * @throws \Cake\Network\Exception\NotFoundException
      */
@@ -167,10 +168,10 @@ class PostsController extends AppController {
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
 			//Sets tags
-			$data = am($this->request->data, ['tags' => $this->Posts->Tags->tagsAsArray($this->request->data('tags'))]);
-			
-            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags']]);
+			$data = am($this->request->data, ['tags' => $this->Posts->buildTagsForEntity($this->request->data('tags'))]);
 						
+            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
+			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
                 return $this->redirect(['action' => 'index']);
