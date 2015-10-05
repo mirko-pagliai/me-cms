@@ -121,6 +121,8 @@
 				<li><a href="class-MeCms.Model.Entity.PhotosAlbum.html">PhotosAlbum</a></li>
 				<li class="active"><a href="class-MeCms.Model.Entity.Post.html">Post</a></li>
 				<li><a href="class-MeCms.Model.Entity.PostsCategory.html">PostsCategory</a></li>
+				<li><a href="class-MeCms.Model.Entity.PostsTag.html">PostsTag</a></li>
+				<li><a href="class-MeCms.Model.Entity.Tag.html">Tag</a></li>
 				<li><a href="class-MeCms.Model.Entity.User.html">User</a></li>
 				<li><a href="class-MeCms.Model.Entity.UsersGroup.html">UsersGroup</a></li>
 			</ul>
@@ -200,7 +202,7 @@ Cake\ORM\Entity
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Entity.html">Entity</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Entity.Post.html#27-71" title="Go to source code">Entity/Post.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Entity.Post.html#27-78" title="Go to source code">Entity/Post.php</a>
 		<br>
 	</div>
 
@@ -220,7 +222,7 @@ Cake\ORM\Entity
 
 		<td class="name"><div>
 		<a class="anchor" href="#__getPreview">#</a>
-		<code><a href="source-class-MeCms.Model.Entity.Post.html#55-70" title="Go to source code">_getPreview</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Entity.Post.html#56-68" title="Go to source code">_getPreview</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the post preview (virtual field)</p>
@@ -237,6 +239,44 @@ Cake\ORM\Entity
 				</div>
 
 
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_getTagsAsString" id="__getTagsAsString">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__getTagsAsString">#</a>
+		<code><a href="source-class-MeCms.Model.Entity.Post.html#70-77" title="Go to source code">_getTagsAsString</a>( )</code>
+
+		<div class="description short">
+			<p>Gets tags as string, separated by a comma and a space (virtual field)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets tags as string, separated by a comma and a space (virtual field)</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Tags
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.TagsTable.html#_tagsAsString">MeCms\Model\Table\TagsTable::tagsAsString()</a></code><br>
+				</div>
 
 
 		</div>
@@ -264,7 +304,7 @@ Cake\ORM\Entity
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Model.Entity.Post.html#31-47" title="Go to source code"><var>$_accessible</var></a>
+				<a href="source-class-MeCms.Model.Entity.Post.html#31-48" title="Go to source code"><var>$_accessible</var></a>
 
 			<div class="description short">
 				<p>Fields that can be mass assigned using newEntity() or patchEntity()</p>
@@ -287,9 +327,10 @@ Cake\ORM\Entity
     <span class="php-quote">'text'</span> =&gt; <span class="php-keyword1">TRUE</span>,
     <span class="php-quote">'priority'</span> =&gt; <span class="php-keyword1">TRUE</span>,
     <span class="php-quote">'active'</span> =&gt; <span class="php-keyword1">TRUE</span>,
+    <span class="php-quote">'created'</span> =&gt; <span class="php-keyword1">TRUE</span>,
     <span class="php-quote">'category'</span> =&gt; <span class="php-keyword1">TRUE</span>,
     <span class="php-quote">'user'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'created'</span> =&gt; <span class="php-keyword1">TRUE</span>
+    <span class="php-quote">'tags'</span> =&gt; <span class="php-keyword1">TRUE</span>
 ]</code>
 			</div>
 		</td>
@@ -301,7 +342,7 @@ Cake\ORM\Entity
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Model.Entity.Post.html#49-53" title="Go to source code"><var>$_virtual</var></a>
+				<a href="source-class-MeCms.Model.Entity.Post.html#50-54" title="Go to source code"><var>$_virtual</var></a>
 
 			<div class="description short">
 				<p>Virtual fields that should be exposed</p>
@@ -315,7 +356,7 @@ Cake\ORM\Entity
 		<td class="value">
 			<div>
 				<a href="#$_virtual" class="anchor">#</a>
-				<code>[<span class="php-quote">'preview'</span>]</code>
+				<code>[<span class="php-quote">'preview'</span>, <span class="php-quote">'tags_as_string'</span>]</code>
 			</div>
 		</td>
 	</tr>

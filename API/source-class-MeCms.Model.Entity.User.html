@@ -148,6 +148,8 @@
 				<li><a href="class-MeCms.Model.Entity.PhotosAlbum.html">MeCms\Model\Entity\PhotosAlbum</a></li>
 				<li><a href="class-MeCms.Model.Entity.Post.html">MeCms\Model\Entity\Post</a></li>
 				<li><a href="class-MeCms.Model.Entity.PostsCategory.html">MeCms\Model\Entity\PostsCategory</a></li>
+				<li><a href="class-MeCms.Model.Entity.PostsTag.html">MeCms\Model\Entity\PostsTag</a></li>
+				<li><a href="class-MeCms.Model.Entity.Tag.html">MeCms\Model\Entity\Tag</a></li>
 				<li><a href="class-MeCms.Model.Entity.User.html">MeCms\Model\Entity\User</a></li>
 				<li><a href="class-MeCms.Model.Entity.UsersGroup.html">MeCms\Model\Entity\UsersGroup</a></li>
 				<li><a href="class-MeCms.Model.Table.AppTable.html">MeCms\Model\Table\AppTable</a></li>
@@ -158,6 +160,8 @@
 				<li><a href="class-MeCms.Model.Table.PhotosTable.html">MeCms\Model\Table\PhotosTable</a></li>
 				<li><a href="class-MeCms.Model.Table.PostsCategoriesTable.html">MeCms\Model\Table\PostsCategoriesTable</a></li>
 				<li><a href="class-MeCms.Model.Table.PostsTable.html">MeCms\Model\Table\PostsTable</a></li>
+				<li><a href="class-MeCms.Model.Table.PostsTagsTable.html">MeCms\Model\Table\PostsTagsTable</a></li>
+				<li><a href="class-MeCms.Model.Table.TagsTable.html">MeCms\Model\Table\TagsTable</a></li>
 				<li><a href="class-MeCms.Model.Table.UsersGroupsTable.html">MeCms\Model\Table\UsersGroupsTable</a></li>
 				<li><a href="class-MeCms.Model.Table.UsersTable.html">MeCms\Model\Table\UsersTable</a></li>
 				<li><a href="class-MeCms.Model.Validation.AppValidator.html">MeCms\Model\Validation\AppValidator</a></li>
@@ -168,6 +172,7 @@
 				<li><a href="class-MeCms.Model.Validation.PhotoValidator.html">MeCms\Model\Validation\PhotoValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.PostsCategoryValidator.html">MeCms\Model\Validation\PostsCategoryValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.PostValidator.html">MeCms\Model\Validation\PostValidator</a></li>
+				<li><a href="class-MeCms.Model.Validation.TagValidator.html">MeCms\Model\Validation\TagValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
@@ -281,22 +286,19 @@
 </span></span><span id="57" class="l"><a href="#57">57: </a><span class="php-comment">     * @return string|NULL Full name
 </span></span><span id="58" class="l"><a href="#58">58: </a><span class="php-comment">     */</span>
 </span><span id="59" class="l"><a href="#59">59: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _getFullName() {
-</span><span id="60" class="l"><a href="#60">60: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'first_name'</span>]) || <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'last_name'</span>]))
-</span><span id="61" class="l"><a href="#61">61: </a>            <span class="php-keyword1">return</span>;
-</span><span id="62" class="l"><a href="#62">62: </a>        
-</span><span id="63" class="l"><a href="#63">63: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s %s'</span>, <span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'first_name'</span>], <span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'last_name'</span>]);
-</span><span id="64" class="l"><a href="#64">64: </a>    }
-</span><span id="65" class="l"><a href="#65">65: </a>    
-</span><span id="66" class="l"><a href="#66">66: </a>    <span class="php-comment">/**
-</span></span><span id="67" class="l"><a href="#67">67: </a><span class="php-comment">     * Sets the password
-</span></span><span id="68" class="l"><a href="#68">68: </a><span class="php-comment">     * @param string $password Password
-</span></span><span id="69" class="l"><a href="#69">69: </a><span class="php-comment">     * @return string Hash
-</span></span><span id="70" class="l"><a href="#70">70: </a><span class="php-comment">     * @uses Cake\Auth\DefaultPasswordHasher::hash()
-</span></span><span id="71" class="l"><a href="#71">71: </a><span class="php-comment">     */</span>
-</span><span id="72" class="l"><a href="#72">72: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _setPassword(<span class="php-var">$password</span>) {
-</span><span id="73" class="l"><a href="#73">73: </a>        <span class="php-keyword1">return</span> (<span class="php-keyword1">new</span> \Cake\Auth\DefaultPasswordHasher)-&gt;<span class="php-keyword2">hash</span>(<span class="php-var">$password</span>);
-</span><span id="74" class="l"><a href="#74">74: </a>    }
-</span><span id="75" class="l"><a href="#75">75: </a>}</span></code></pre>
+</span><span id="60" class="l"><a href="#60">60: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s %s'</span>, <span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'first_name'</span>], <span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'last_name'</span>]);
+</span><span id="61" class="l"><a href="#61">61: </a>    }
+</span><span id="62" class="l"><a href="#62">62: </a>    
+</span><span id="63" class="l"><a href="#63">63: </a>    <span class="php-comment">/**
+</span></span><span id="64" class="l"><a href="#64">64: </a><span class="php-comment">     * Sets the password
+</span></span><span id="65" class="l"><a href="#65">65: </a><span class="php-comment">     * @param string $password Password
+</span></span><span id="66" class="l"><a href="#66">66: </a><span class="php-comment">     * @return string Hash
+</span></span><span id="67" class="l"><a href="#67">67: </a><span class="php-comment">     * @uses Cake\Auth\DefaultPasswordHasher::hash()
+</span></span><span id="68" class="l"><a href="#68">68: </a><span class="php-comment">     */</span>
+</span><span id="69" class="l"><a href="#69">69: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _setPassword(<span class="php-var">$password</span>) {
+</span><span id="70" class="l"><a href="#70">70: </a>        <span class="php-keyword1">return</span> (<span class="php-keyword1">new</span> \Cake\Auth\DefaultPasswordHasher)-&gt;<span class="php-keyword2">hash</span>(<span class="php-var">$password</span>);
+</span><span id="71" class="l"><a href="#71">71: </a>    }
+</span><span id="72" class="l"><a href="#72">72: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -304,6 +306,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?b1f94664fbec5c8a97136025519a9300721be885"></script>
+<script src="elementlist.js?a3b595254739696c8da963b807c11e26c6ea1684"></script>
 </body>
 </html>
