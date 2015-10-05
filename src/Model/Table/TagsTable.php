@@ -38,7 +38,7 @@ class TagsTable extends Table {
      */
     public function initialize(array $config) {
         $this->table('tags');
-        $this->displayField('id');
+        $this->displayField('tag');
         $this->primaryKey('id');
         $this->belongsToMany('Posts', [
             'foreignKey' => 'tag_id',
@@ -47,6 +47,16 @@ class TagsTable extends Table {
             'className' => 'MeCms.Posts'
         ]);
     }
+	
+	/**
+	 * Gets the tags list
+	 * @return array List
+	 */
+	public function getList() {
+		return $this->find('list')
+			->cache('tags_list', 'posts')
+			->toArray();
+	}
 	
 	/**
 	 * Changes tags from string to array
