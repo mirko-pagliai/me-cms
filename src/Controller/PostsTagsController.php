@@ -35,9 +35,7 @@ class PostsTagsController extends AppController {
 	 * @param string $tag Tag name
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function view($tag) {
-		$this->Posts = $this->PostsTags->Posts;
-		
+    public function view($tag) {		
 		//Checks if the cache is valid
 		$this->Posts->checkIfCacheIsValid();
 		
@@ -54,7 +52,7 @@ class PostsTagsController extends AppController {
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
 			$posts = $this->paginate(
-				$this->Posts->find('active')
+				$this->PostsTags->Posts->find('active')
 					->contain([
 						'Categories'	=> ['fields' => ['title', 'slug']],
 						'Tags',
@@ -64,7 +62,7 @@ class PostsTagsController extends AppController {
 						return $q->where(['Tags.tag' => $tag]);
 					})
 					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+					->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC'])
 			)->toArray();
 						
 			//Writes on cache
