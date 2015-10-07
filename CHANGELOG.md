@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.0-RC2
 * now you can add tags to posts;
+* added support for Shareaholic;
 * added error layout and templates;
 * fixed small bugs.
 

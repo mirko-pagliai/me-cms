@@ -82,9 +82,17 @@
 				</div>
 			</div>
 		</div>
-		<?= $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]) ?>
-		<?= $this->Library->analytics(config('frontend.analytics')) ?>
-		<?= $this->fetch('css_bottom') ?>
-		<?= $this->fetch('script_bottom') ?>
+		<?php
+			echo $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]);
+			
+			if(!empty(config('frontend.analytics')))
+				echo $this->Library->analytics(config('frontend.analytics'));
+			
+			if(!empty(config('shareaholic.site_id')));
+				echo $this->Library->shareaholic(config('shareaholic.site_id'));
+						
+			echo $this->fetch('css_bottom');
+			echo $this->fetch('script_bottom');
+		?>
 	</body>
 </html>

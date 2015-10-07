@@ -2,6 +2,7 @@
 ## 2.1 ramo
 ### 2.1.0-RC2
 * è possibile aggiungere tag agli articoli;
+* aggiunto il supporto per Shareaholic;
 * aggiunto layout e template per gli errori;
 * sistemati piccoli bug.
 

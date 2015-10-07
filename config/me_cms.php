@@ -102,6 +102,15 @@ return ['MeCms' => [
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
 		'search_interval' => 10
 	],
+	//Shareaholic
+	'shareaholic' => [
+		//App ID. Used for render the "share buttons" of Shareaholic
+		//You can found it on the "Sharing: Edit Share Button Location"
+		'app_id' => '',
+		//Site ID. Used for render the "setup code" of Shareaholic.
+		//You can found it on the "Site Tools Dashboard"
+		'site_id' => ''
+	],
 	//Users
 	'users' => [
 		//How to activating accounts

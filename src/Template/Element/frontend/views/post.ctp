@@ -80,4 +80,8 @@
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
 		?>
 	</div>
+	<?php
+		if($this->request->isAction('view') && !$this->request->isAjax())
+			echo $this->Html->shareaholic('15510235');
+	?>
 </div>
