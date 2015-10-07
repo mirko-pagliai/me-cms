@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Namespace MeCms\Controller | MeCms API</title>
+	<title>Class MeCms\Controller\PostsTagsController | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -121,7 +121,7 @@
 				<li><a href="class-MeCms.Controller.PhotosController.html">PhotosController</a></li>
 				<li><a href="class-MeCms.Controller.PostsCategoriesController.html">PostsCategoriesController</a></li>
 				<li><a href="class-MeCms.Controller.PostsController.html">PostsController</a></li>
-				<li><a href="class-MeCms.Controller.PostsTagsController.html">PostsTagsController</a></li>
+				<li class="active"><a href="class-MeCms.Controller.PostsTagsController.html">PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">UsersController</a></li>
 			</ul>
@@ -149,9 +149,10 @@
 			<li>
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
-			<li class="active">
-<span>Namespace</span>			</li>
 			<li>
+				<a href="namespace-MeCms.Controller.html" title="Summary of MeCms\Controller"><span>Namespace</span></a>
+			</li>
+			<li class="active">
 <span>Class</span>			</li>
 		</ul>
 		<ul>
@@ -165,65 +166,148 @@
 		</ul>
 	</div>
 
-<div id="content" class="namespace">
-	<h1>Namespace <a href="namespace-MeCms.html">MeCms</a>\Controller</h1>
+<div id="content" class="class">
+	<h1>Class PostsTagsController</h1>
 
-	<table class="summary" id="namespaces">
-	<caption>Namespaces summary</caption>
-	<tr>
-		<td class="name"><a href="namespace-MeCms.Controller.Admin.html">MeCms\Controller\Admin</a></td>
+
+	<div class="description">
+	<p>PostsTags controller</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+App\Controller\AppController
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+			<a href="class-MeCms.Controller.AppController.html"><span>MeCms\Controller\AppController</span></a>
+			
+			
+			
+		</dd>
+		<dd style="padding-left:60px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>MeCms\Controller\PostsTagsController</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-MeCms.Controller.PostsTagsController.html#28-80" title="Go to source code">PostsTagsController.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="view" id="_view">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_view">#</a>
+		<code><a href="source-class-MeCms.Controller.PostsTagsController.html#33-79" title="Go to source code">view</a>( <span>string <var>$tag</var></span> )</code>
+
+		<div class="description short">
+			<p>Lists posts for a tag</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Lists posts for a tag</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$tag</var></dt>
+					<dd>Tag name</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_checkIfCacheIsValid">MeCms\Model\Table\PostsTable::checkIfCacheIsValid()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
 	</tr>
+	</table>
+
+	<table class="summary inherited">
+	<caption>Methods inherited from <a href="class-MeCms.Controller.AppController.html#methods">MeCms\Controller\AppController</a></caption>
 	<tr>
-		<td class="name"><a href="namespace-MeCms.Controller.Component.html">MeCms\Controller\Component</a></td>
+		<td><code>
+			<a href="class-MeCms.Controller.AppController.html#__upload">_upload()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_beforeFilter">beforeFilter()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_beforeRender">beforeRender()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_initialize">initialize()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_isAuthorized">isAuthorized()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_isBanned">isBanned()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_isOffline">isOffline()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_setLanguage">setLanguage()</a>
+		</code></td>
 	</tr>
 	</table>
 
 
-<table class="summary" id="classes">
-<caption>Classes summary</caption>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.AppController.html">AppController</a></td>
-	<td>Application controller class</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.BannersController.html">BannersController</a></td>
-	<td>Banners controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.PagesController.html">PagesController</a></td>
-	<td>Pages controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.PhotosAlbumsController.html">PhotosAlbumsController</a></td>
-	<td>PhotosAlbums controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.PhotosController.html">PhotosController</a></td>
-	<td>Photos controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.PostsCategoriesController.html">PostsCategoriesController</a></td>
-	<td>PostsCategories controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.PostsController.html">PostsController</a></td>
-	<td>Posts controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.PostsTagsController.html">PostsTagsController</a></td>
-	<td>PostsTags controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.SystemsController.html">SystemsController</a></td>
-	<td>Systems controller</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Controller.UsersController.html">UsersController</a></td>
-	<td>Users controller</td>
-</tr>
-</table>
 
 
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="magicProperties">
+	<caption>Magic properties summary</caption>
+	<tr data-order="PostsTags" id="m$PostsTags">
+		<td class="attributes"><code>
+			public  
+			<code><a href="class-MeCms.Model.Table.PostsTagsTable.html">MeCms\Model\Table\PostsTagsTable</a></code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Controller.PostsTagsController.html#30" title="Go to source code"><var>$PostsTags</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 
@@ -234,7 +318,7 @@
 	</div>
 </div>
 </div>
-<script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?3e612ed03f080f97460d55e4917536c0f0ba4e2c"></script>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
 </body>
 </html>
