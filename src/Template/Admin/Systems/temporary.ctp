@@ -40,15 +40,17 @@
 		?>
 	</div>
 	
-	<div class="margin-20">
-		<?php
-			echo $this->Html->h4(__d('me_cms', 'Logs'));
-			echo $this->Html->para(NULL, __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)));
+	<?php if($this->Auth->isGroup('admin')): //Only admins can clear logs ?>
+		<div class="margin-20">
+			<?php
+				echo $this->Html->h4(__d('me_cms', 'Logs'));
+				echo $this->Html->para(NULL, __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)));
 
-			if($logs_size)
-				echo $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'clear_logs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
-		?>
-	</div>
+				if($logs_size)
+					echo $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'clear_logs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+			?>
+		</div>
+	<?php endif; ?>
 	
 	<div class="margin-20">
 		<?php

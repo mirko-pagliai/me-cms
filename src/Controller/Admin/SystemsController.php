@@ -47,8 +47,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins can view logs
-		if($this->request->isAction('logs'))
+		//Only admins can view logs and clear logs
+		if($this->request->isAction(['clear_logs', 'logs']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
@@ -93,21 +93,6 @@ class SystemsController extends AppController {
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}
 	
-	/**
-	 * Manages cache and thumbnails
-	 * @uses MeTools\Utility\System::cacheSize()
-	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\System::logsSize()
-	 * @uses MeTools\Utility\Thumbs::size()
-	 */
-	public function temporary() {
-        $this->set([
-			'cache_size'	=> System::cacheSize(),
-			'cache_status'	=> System::cacheStatus(),
-			'logs_size'		=> System::logsSize(),
-			'thumbs_size'	=> Thumbs::size()
-        ]);
-	}
 	/**
 	 * Changelogs viewer
 	 * @uses MeTools\Utility\System::changelogs()
@@ -265,5 +250,21 @@ class SystemsController extends AppController {
 			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query('file')]));
 		
 		$this->set(compact('files'));
+	}
+	
+	/**
+	 * Manages cache and thumbnails
+	 * @uses MeTools\Utility\System::cacheSize()
+	 * @uses MeTools\Utility\System::cacheStatus()
+	 * @uses MeTools\Utility\System::logsSize()
+	 * @uses MeTools\Utility\Thumbs::size()
+	 */
+	public function temporary() {
+        $this->set([
+			'cache_size'	=> System::cacheSize(),
+			'cache_status'	=> System::cacheStatus(),
+			'logs_size'		=> System::logsSize(),
+			'thumbs_size'	=> Thumbs::size()
+        ]);
 	}
 }
