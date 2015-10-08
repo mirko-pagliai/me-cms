@@ -22,7 +22,7 @@
  */
 ?>
 	
-<?php $this->assign('title', sprintf('%s/%s', __d('me_cms', 'Cache'), __d('me_cms', 'Thumbs'))); ?>
+<?php $this->assign('title', __d('me_cms', 'Temporary files')); ?>
 
 <div class="systems index">
 	<?= $this->Html->h2(__d('me_cms', 'Temporary files')) ?>
