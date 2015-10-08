@@ -100,7 +100,7 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\System::logsSize()
 	 * @uses MeTools\Utility\Thumbs::size()
 	 */
-	public function cache() {
+	public function temporary() {
         $this->set([
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
