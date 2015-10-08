@@ -200,7 +200,7 @@ class SystemsController extends AppController {
 		if(System::clearCache())
 			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
 		else
-			$this->Flash->error(__d('me_cms', 'The cache is not writable'));
+			$this->Flash->error(__d('me_cms', 'The cache has not been cleared'));
 		
 		return $this->redirect(['action' => 'cache']);
 	}
@@ -230,9 +230,9 @@ class SystemsController extends AppController {
 			return $this->redirect(['action' => 'cache']);
 		
 		if(Thumbs::clear())
-			$this->Flash->success(__d('me_cms', 'Thumbnails have been deleted'));
+			$this->Flash->success(__d('me_cms', 'The thumbnails have been deleted'));
 		else
-			$this->Flash->error(__d('me_cms', 'Thumbnails have not been deleted'));
+			$this->Flash->error(__d('me_cms', 'The thumbnails have not been deleted'));
 		
 		return $this->redirect(['action' => 'cache']);
 	}
