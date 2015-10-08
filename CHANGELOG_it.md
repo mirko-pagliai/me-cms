@@ -3,6 +3,7 @@
 ### 2.1.0-RC2
 * è possibile aggiungere tag agli articoli;
 * aggiunto il supporto per Shareaholic;
+* migliorata la gestione dei file di log;
 * aggiunto layout e template per gli errori;
 * sistemati piccoli bug.
 
