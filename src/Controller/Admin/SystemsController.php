@@ -97,12 +97,14 @@ class SystemsController extends AppController {
 	 * Manages cache and thumbnails
 	 * @uses MeTools\Utility\System::cacheSize()
 	 * @uses MeTools\Utility\System::cacheStatus()
+	 * @uses MeTools\Utility\System::logsSize()
 	 * @uses MeTools\Utility\Thumbs::size()
 	 */
 	public function cache() {
         $this->set([
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
+			'logs_size'		=> System::logsSize(),
 			'thumbs_size'	=> Thumbs::size()
         ]);
 	}
@@ -214,6 +216,22 @@ class SystemsController extends AppController {
 			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
 		else
 			$this->Flash->error(__d('me_cms', 'The cache is not writable'));
+		
+		return $this->redirect(['action' => 'cache']);
+	}
+	
+	/**
+	 * Clears logs
+	 * @uses MeTools\Utility\System::clearLogs()
+	 */
+	public function clear_logs() {
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
+		
+		if(System::clearLogs())
+			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
+		else
+			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
 		
 		return $this->redirect(['action' => 'cache']);
 	}
