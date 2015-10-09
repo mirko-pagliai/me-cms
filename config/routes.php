@@ -30,12 +30,7 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
-	/**
-	 * Home page
-	 */
-	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
-	
+Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {	
 	/**
 	 * Banners controller
 	 */
@@ -124,6 +119,12 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
 	$routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup'], ['_name' => 'signup']);
+	
+	/**
+	 * Default home page
+	 * For not create incompatibility with `/posts`, this route has to be at the bottom
+	 */
+	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
 	
 	/**
 	 * Admin routes
