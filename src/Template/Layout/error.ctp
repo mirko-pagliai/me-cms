@@ -37,7 +37,7 @@
 			
 			
 			echo $this->Html->css([
-				'MeTools.font-awesome.min',
+				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.login/bootstrap.min',
 				'MeTools.default',
 				'MeCms.login/layout'
