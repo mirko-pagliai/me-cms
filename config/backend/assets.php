@@ -19,7 +19,7 @@ return ['Assets' => [
 		'input' => [
 			'webroot/vendor/jquery/jquery.min',
 			Plugin::path('MeCms').'webroot/js/backend/bootstrap.min',
-			Plugin::path('MeCms').'webroot/js/jquery.cookie',
+			'webroot/vendor/jquery-cookie/jquery.cookie',
 			Plugin::path('MeTools').'webroot/js/default',
 			Plugin::path('MeCms').'webroot/js/backend/layout'
 		],

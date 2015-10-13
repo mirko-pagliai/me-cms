@@ -9,14 +9,16 @@
             "email": "mirko.pagliai@gmail.com"
     }],
 	"require": {
-        "mirko-pagliai/me-tools": "2.1.*"
+        "mirko-pagliai/me-tools": "*",
+		"newerton/fancy-box": "*",
+		"components/jquery-cookie": "1.4.*"
+    },
+	"config": {
+        "component-dir": "vendor/components"
     },
     "autoload": {
 		"psr-4": {
 			"MeCms\\": "src"
 		}
-	},
-    "scripts": {
-        "post-package-install": "MeCms\\Console\\Installer::postInstall"
-    }
+	}
 }
