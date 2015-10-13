@@ -3,7 +3,7 @@
 ### 2.1.0-RC2
 * now you can add tags to posts;
 * added support for Shareaholic;
-* jQuery-cookie and Fancybox are installed via Composer;
+* jQuery-cookie, Fancybox and KCFinder are installed via Composer;
 * improved the logs management;
 * added error layout and templates;
 * fixed small bugs.

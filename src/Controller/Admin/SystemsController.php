@@ -87,8 +87,8 @@ class SystemsController extends AppController {
 		$types = config('kcfinder.types');
 		
 		//Checks the type, then sets the KCFinder path
-		if(!empty($type) && array_key_exists($type, $types))
-			$this->set('kcfinder', Router::url('/', TRUE).sprintf('kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $type));
+		if($type && array_key_exists($type, $types))
+			$this->set('kcfinder', Router::url('/vendor/', TRUE).sprintf('kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $type));
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}

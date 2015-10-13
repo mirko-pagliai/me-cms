@@ -11,7 +11,8 @@
 	"require": {
         "mirko-pagliai/me-tools": "*",
 		"newerton/fancy-box": "*",
-		"components/jquery-cookie": "1.4.*"
+		"components/jquery-cookie": "1.4.*",
+		"sunhater/kcfinder": "*"
     },
     "autoload": {
 		"psr-4": {

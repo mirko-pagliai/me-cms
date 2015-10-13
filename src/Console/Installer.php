@@ -38,8 +38,26 @@ class Installer extends BaseInstaller {
 	 */
 	protected static $linksToAssets = [
 		'components/jquery-cookie'	=> 'jquery-cookie',
-		'newerton/fancy-box/source'	=> 'fancybox'
+		'newerton/fancy-box/source'	=> 'fancybox',
+		'sunhater/kcfinder'			=> 'kcfinder'
 	];
+	
+	/**
+	 * Fixes Kcfinder.
+	 * Creates the file `vendor/kcfinder/.htaccess`
+	 * @see http://kcfinder.sunhater.com/integrate
+	 */
+	public static function fixKcfinder() {
+		if(!file_exists($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
+			(new \Cake\Filesystem\File($file, TRUE))
+				->append('<IfModule mod_php5.c>
+						php_value session.cache_limiter must-revalidate
+						php_value session.cookie_httponly On
+						php_value session.cookie_lifetime 14400
+						php_value session.gc_maxlifetime 14400
+						php_value session.name CAKEPHP
+					</IfModule>');
+	}
 	
 	/**
 	 * Occurs after the autoloader has been dumped, either during install/update, or via the dump-autoload command.
@@ -53,5 +71,8 @@ class Installer extends BaseInstaller {
 		parent::$linksToAssets = array_merge(parent::$linksToAssets, self::$linksToAssets);
 		
 		parent::postAutoloadDump($event);
+		
+		//Fixes Kcfinder
+		self::fixKcfinder();
 	}
 }
