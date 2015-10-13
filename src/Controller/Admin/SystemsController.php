@@ -154,6 +154,10 @@ class SystemsController extends AppController {
 			'ffmpegthumbnailer' => [
 				'check' => Unix::which('ffmpegthumbnailer')
 			],
+			'files' => [
+				'check' => folder_is_writable(WWW_ROOT.'files'),
+				'path'	=> rtr(WWW_ROOT.'files')
+			],
 			'php' => [
 				'current_version'	=> Php::version(),
 				'check_version'		=> Php::checkVersion($phpRequired),
