@@ -296,7 +296,7 @@
 </span></span><span id="66" class="l"><a href="#66">66: </a><span class="php-comment">     */</span>
 </span><span id="67" class="l"><a href="#67">67: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> tagsAsArray(<span class="php-var">$tags</span>) {
 </span><span id="68" class="l"><a href="#68">68: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">array_filter</span>(<span class="php-keyword2">array_map</span>(<span class="php-keyword1">function</span>(<span class="php-var">$tag</span>) {
-</span><span id="69" class="l"><a href="#69">69: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">empty</span>(<span class="php-keyword2">trim</span>(<span class="php-var">$tag</span>)) ? <span class="php-keyword1">NULL</span> : <span class="php-keyword2">compact</span>(<span class="php-quote">'tag'</span>);
+</span><span id="69" class="l"><a href="#69">69: </a>            <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$tag</span>) ? <span class="php-keyword2">compact</span>(<span class="php-quote">'tag'</span>) : <span class="php-keyword1">NULL</span>;
 </span><span id="70" class="l"><a href="#70">70: </a>        }, <span class="php-keyword2">preg_split</span>(<span class="php-quote">'/[\s]+/'</span>, <span class="php-var">$tags</span>)));
 </span><span id="71" class="l"><a href="#71">71: </a>    }
 </span><span id="72" class="l"><a href="#72">72: </a>    

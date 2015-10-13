@@ -317,8 +317,8 @@
 </span><span id="87" class="l"><a href="#87"> 87: </a>        <span class="php-var">$types</span> = config(<span class="php-quote">'kcfinder.types'</span>);
 </span><span id="88" class="l"><a href="#88"> 88: </a>        
 </span><span id="89" class="l"><a href="#89"> 89: </a>        <span class="php-comment">//Checks the type, then sets the KCFinder path</span>
-</span><span id="90" class="l"><a href="#90"> 90: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$type</span>) &amp;&amp; <span class="php-keyword2">array_key_exists</span>(<span class="php-var">$type</span>, <span class="php-var">$types</span>))
-</span><span id="91" class="l"><a href="#91"> 91: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'kcfinder'</span>, Router::url(<span class="php-quote">'/'</span>, <span class="php-keyword1">TRUE</span>).<span class="php-keyword2">sprintf</span>(<span class="php-quote">'kcfinder/browse.php?lang=%s&amp;type=%s'</span>, Configure::read(<span class="php-quote">'Config.language'</span>), <span class="php-var">$type</span>));
+</span><span id="90" class="l"><a href="#90"> 90: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$type</span> &amp;&amp; <span class="php-keyword2">array_key_exists</span>(<span class="php-var">$type</span>, <span class="php-var">$types</span>))
+</span><span id="91" class="l"><a href="#91"> 91: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'kcfinder'</span>, Router::url(<span class="php-quote">'/vendor/'</span>, <span class="php-keyword1">TRUE</span>).<span class="php-keyword2">sprintf</span>(<span class="php-quote">'kcfinder/browse.php?lang=%s&amp;type=%s'</span>, Configure::read(<span class="php-quote">'Config.language'</span>), <span class="php-var">$type</span>));
 </span><span id="92" class="l"><a href="#92"> 92: </a>        
 </span><span id="93" class="l"><a href="#93"> 93: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'types'</span>, <span class="php-keyword2">array_combine</span>(<span class="php-keyword2">array_keys</span>(<span class="php-var">$types</span>), <span class="php-keyword2">array_keys</span>(<span class="php-var">$types</span>)));
 </span><span id="94" class="l"><a href="#94"> 94: </a>    }
@@ -384,120 +384,124 @@
 </span><span id="154" class="l"><a href="#154">154: </a>            <span class="php-quote">'ffmpegthumbnailer'</span> =&gt; [
 </span><span id="155" class="l"><a href="#155">155: </a>                <span class="php-quote">'check'</span> =&gt; Unix::which(<span class="php-quote">'ffmpegthumbnailer'</span>)
 </span><span id="156" class="l"><a href="#156">156: </a>            ],
-</span><span id="157" class="l"><a href="#157">157: </a>            <span class="php-quote">'php'</span> =&gt; [
-</span><span id="158" class="l"><a href="#158">158: </a>                <span class="php-quote">'current_version'</span>   =&gt; Php::version(),
-</span><span id="159" class="l"><a href="#159">159: </a>                <span class="php-quote">'check_version'</span>     =&gt; Php::checkVersion(<span class="php-var">$phpRequired</span>),
-</span><span id="160" class="l"><a href="#160">160: </a>                <span class="php-quote">'imagick'</span>           =&gt; Php::extension(<span class="php-quote">'imagick'</span>),
-</span><span id="161" class="l"><a href="#161">161: </a>                <span class="php-quote">'mbstring'</span>          =&gt; Php::extension(<span class="php-quote">'mbstring'</span>),
-</span><span id="162" class="l"><a href="#162">162: </a>                <span class="php-quote">'mcrypt'</span>            =&gt; Php::extension(<span class="php-quote">'mcrypt'</span>),
-</span><span id="163" class="l"><a href="#163">163: </a>                <span class="php-quote">'required_version'</span>  =&gt; <span class="php-var">$phpRequired</span>
-</span><span id="164" class="l"><a href="#164">164: </a>            ],
-</span><span id="165" class="l"><a href="#165">165: </a>            <span class="php-quote">'photos'</span> =&gt; [
-</span><span id="166" class="l"><a href="#166">166: </a>                <span class="php-quote">'check'</span> =&gt; PhotoFile::check(),
-</span><span id="167" class="l"><a href="#167">167: </a>                <span class="php-quote">'path'</span>  =&gt; rtr(PhotoFile::folder())
+</span><span id="157" class="l"><a href="#157">157: </a>            <span class="php-quote">'files'</span> =&gt; [
+</span><span id="158" class="l"><a href="#158">158: </a>                <span class="php-quote">'check'</span> =&gt; folder_is_writable(WWW_ROOT.<span class="php-quote">'files'</span>),
+</span><span id="159" class="l"><a href="#159">159: </a>                <span class="php-quote">'path'</span>  =&gt; rtr(WWW_ROOT.<span class="php-quote">'files'</span>)
+</span><span id="160" class="l"><a href="#160">160: </a>            ],
+</span><span id="161" class="l"><a href="#161">161: </a>            <span class="php-quote">'php'</span> =&gt; [
+</span><span id="162" class="l"><a href="#162">162: </a>                <span class="php-quote">'current_version'</span>   =&gt; Php::version(),
+</span><span id="163" class="l"><a href="#163">163: </a>                <span class="php-quote">'check_version'</span>     =&gt; Php::checkVersion(<span class="php-var">$phpRequired</span>),
+</span><span id="164" class="l"><a href="#164">164: </a>                <span class="php-quote">'imagick'</span>           =&gt; Php::extension(<span class="php-quote">'imagick'</span>),
+</span><span id="165" class="l"><a href="#165">165: </a>                <span class="php-quote">'mbstring'</span>          =&gt; Php::extension(<span class="php-quote">'mbstring'</span>),
+</span><span id="166" class="l"><a href="#166">166: </a>                <span class="php-quote">'mcrypt'</span>            =&gt; Php::extension(<span class="php-quote">'mcrypt'</span>),
+</span><span id="167" class="l"><a href="#167">167: </a>                <span class="php-quote">'required_version'</span>  =&gt; <span class="php-var">$phpRequired</span>
 </span><span id="168" class="l"><a href="#168">168: </a>            ],
-</span><span id="169" class="l"><a href="#169">169: </a>            <span class="php-quote">'plugins'</span> =&gt; [
-</span><span id="170" class="l"><a href="#170">170: </a>                <span class="php-quote">'cakephp_version'</span>   =&gt; <span class="php-keyword2">System</span>::cakeVersion(),
-</span><span id="171" class="l"><a href="#171">171: </a>                <span class="php-quote">'plugins_version'</span>   =&gt; Plugin::versions(<span class="php-quote">'MeCms'</span>),
-</span><span id="172" class="l"><a href="#172">172: </a>                <span class="php-quote">'mecms_version'</span>     =&gt; Plugin::version(<span class="php-quote">'MeCms'</span>)
-</span><span id="173" class="l"><a href="#173">173: </a>            ],
-</span><span id="174" class="l"><a href="#174">174: </a>            <span class="php-quote">'thumbs'</span> =&gt; [
-</span><span id="175" class="l"><a href="#175">175: </a>                <span class="php-quote">'photos_path'</span>       =&gt; rtr(Thumbs::photo()),
-</span><span id="176" class="l"><a href="#176">176: </a>                <span class="php-quote">'photos_writable'</span>   =&gt; Thumbs::checkPhotos(),
-</span><span id="177" class="l"><a href="#177">177: </a>                <span class="php-quote">'remotes_path'</span>      =&gt; rtr(Thumbs::remote()),
-</span><span id="178" class="l"><a href="#178">178: </a>                <span class="php-quote">'remotes_writable'</span>  =&gt; Thumbs::checkRemotes(),
-</span><span id="179" class="l"><a href="#179">179: </a>                <span class="php-quote">'videos_path'</span>       =&gt; rtr(Thumbs::video()),
-</span><span id="180" class="l"><a href="#180">180: </a>                <span class="php-quote">'videos_writable'</span>   =&gt; Thumbs::checkVideos()
-</span><span id="181" class="l"><a href="#181">181: </a>            ],
-</span><span id="182" class="l"><a href="#182">182: </a>            <span class="php-quote">'tmp'</span> =&gt; [
-</span><span id="183" class="l"><a href="#183">183: </a>                <span class="php-quote">'cache_status'</span>      =&gt; <span class="php-keyword2">System</span>::cacheStatus(),
-</span><span id="184" class="l"><a href="#184">184: </a>                <span class="php-quote">'cache_writable'</span>    =&gt; <span class="php-keyword2">System</span>::checkCache(),
-</span><span id="185" class="l"><a href="#185">185: </a>                <span class="php-quote">'logs_path'</span>         =&gt; rtr(LOGS),
-</span><span id="186" class="l"><a href="#186">186: </a>                <span class="php-quote">'logs_writable'</span>     =&gt; <span class="php-keyword2">System</span>::checkLogs(),
-</span><span id="187" class="l"><a href="#187">187: </a>                <span class="php-quote">'tmp_writable'</span>      =&gt; <span class="php-keyword2">System</span>::checkTmp()
-</span><span id="188" class="l"><a href="#188">188: </a>            ]
-</span><span id="189" class="l"><a href="#189">189: </a>        ]);
-</span><span id="190" class="l"><a href="#190">190: </a>    }
-</span><span id="191" class="l"><a href="#191">191: </a>        
-</span><span id="192" class="l"><a href="#192">192: </a>    <span class="php-comment">/**
-</span></span><span id="193" class="l"><a href="#193">193: </a><span class="php-comment">     * Clears the cache.
-</span></span><span id="194" class="l"><a href="#194">194: </a><span class="php-comment">     * @uses MeTools\Utility\System::clearCache()
-</span></span><span id="195" class="l"><a href="#195">195: </a><span class="php-comment">     */</span>
-</span><span id="196" class="l"><a href="#196">196: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clear_cache() {
-</span><span id="197" class="l"><a href="#197">197: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>]))
-</span><span id="198" class="l"><a href="#198">198: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
-</span><span id="199" class="l"><a href="#199">199: </a>        
-</span><span id="200" class="l"><a href="#200">200: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearCache())
-</span><span id="201" class="l"><a href="#201">201: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The cache has been cleared'</span>));
-</span><span id="202" class="l"><a href="#202">202: </a>        <span class="php-keyword1">else</span>
-</span><span id="203" class="l"><a href="#203">203: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The cache has not been cleared'</span>));
-</span><span id="204" class="l"><a href="#204">204: </a>        
-</span><span id="205" class="l"><a href="#205">205: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
-</span><span id="206" class="l"><a href="#206">206: </a>    }
-</span><span id="207" class="l"><a href="#207">207: </a>    
-</span><span id="208" class="l"><a href="#208">208: </a>    <span class="php-comment">/**
-</span></span><span id="209" class="l"><a href="#209">209: </a><span class="php-comment">     * Clears logs
-</span></span><span id="210" class="l"><a href="#210">210: </a><span class="php-comment">     * @uses MeTools\Utility\System::clearLogs()
-</span></span><span id="211" class="l"><a href="#211">211: </a><span class="php-comment">     */</span>
-</span><span id="212" class="l"><a href="#212">212: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clear_logs() {
-</span><span id="213" class="l"><a href="#213">213: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>]))
-</span><span id="214" class="l"><a href="#214">214: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
-</span><span id="215" class="l"><a href="#215">215: </a>        
-</span><span id="216" class="l"><a href="#216">216: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearLogs())
-</span><span id="217" class="l"><a href="#217">217: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The logs have been cleared'</span>));
-</span><span id="218" class="l"><a href="#218">218: </a>        <span class="php-keyword1">else</span>
-</span><span id="219" class="l"><a href="#219">219: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The logs have not been deleted'</span>));
-</span><span id="220" class="l"><a href="#220">220: </a>        
-</span><span id="221" class="l"><a href="#221">221: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
-</span><span id="222" class="l"><a href="#222">222: </a>    }
-</span><span id="223" class="l"><a href="#223">223: </a>    
-</span><span id="224" class="l"><a href="#224">224: </a>    <span class="php-comment">/**
-</span></span><span id="225" class="l"><a href="#225">225: </a><span class="php-comment">     * Clears the thumbnails.
-</span></span><span id="226" class="l"><a href="#226">226: </a><span class="php-comment">     * @uses MeTools\Utility\Thumbs::clear()
-</span></span><span id="227" class="l"><a href="#227">227: </a><span class="php-comment">     */</span>
-</span><span id="228" class="l"><a href="#228">228: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clear_thumbs() {
-</span><span id="229" class="l"><a href="#229">229: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>]))
-</span><span id="230" class="l"><a href="#230">230: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
-</span><span id="231" class="l"><a href="#231">231: </a>        
-</span><span id="232" class="l"><a href="#232">232: </a>        <span class="php-keyword1">if</span>(Thumbs::clear())
-</span><span id="233" class="l"><a href="#233">233: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The thumbnails have been deleted'</span>));
-</span><span id="234" class="l"><a href="#234">234: </a>        <span class="php-keyword1">else</span>
-</span><span id="235" class="l"><a href="#235">235: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The thumbnails have not been deleted'</span>));
-</span><span id="236" class="l"><a href="#236">236: </a>        
-</span><span id="237" class="l"><a href="#237">237: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
-</span><span id="238" class="l"><a href="#238">238: </a>    }
-</span><span id="239" class="l"><a href="#239">239: </a>    
-</span><span id="240" class="l"><a href="#240">240: </a>    <span class="php-comment">/**
-</span></span><span id="241" class="l"><a href="#241">241: </a><span class="php-comment">     * Log viewer
-</span></span><span id="242" class="l"><a href="#242">242: </a><span class="php-comment">     * @uses MeTools\Utility\System::logs()
-</span></span><span id="243" class="l"><a href="#243">243: </a><span class="php-comment">     */</span>
-</span><span id="244" class="l"><a href="#244">244: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> logs() {
-</span><span id="245" class="l"><a href="#245">245: </a>        <span class="php-comment">//Gets log files</span>
-</span><span id="246" class="l"><a href="#246">246: </a>        <span class="php-var">$files</span> = <span class="php-keyword2">System</span>::logs();
-</span><span id="247" class="l"><a href="#247">247: </a>        
-</span><span id="248" class="l"><a href="#248">248: </a>        <span class="php-comment">//If a log file has been specified</span>
-</span><span id="249" class="l"><a href="#249">249: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'file'</span>]) &amp;&amp; <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'get'</span>))
-</span><span id="250" class="l"><a href="#250">250: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'log'</span>, @<span class="php-keyword2">file_get_contents</span>(LOGS.<span class="php-var">$files</span>[<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>)]));
+</span><span id="169" class="l"><a href="#169">169: </a>            <span class="php-quote">'photos'</span> =&gt; [
+</span><span id="170" class="l"><a href="#170">170: </a>                <span class="php-quote">'check'</span> =&gt; PhotoFile::check(),
+</span><span id="171" class="l"><a href="#171">171: </a>                <span class="php-quote">'path'</span>  =&gt; rtr(PhotoFile::folder())
+</span><span id="172" class="l"><a href="#172">172: </a>            ],
+</span><span id="173" class="l"><a href="#173">173: </a>            <span class="php-quote">'plugins'</span> =&gt; [
+</span><span id="174" class="l"><a href="#174">174: </a>                <span class="php-quote">'cakephp_version'</span>   =&gt; <span class="php-keyword2">System</span>::cakeVersion(),
+</span><span id="175" class="l"><a href="#175">175: </a>                <span class="php-quote">'plugins_version'</span>   =&gt; Plugin::versions(<span class="php-quote">'MeCms'</span>),
+</span><span id="176" class="l"><a href="#176">176: </a>                <span class="php-quote">'mecms_version'</span>     =&gt; Plugin::version(<span class="php-quote">'MeCms'</span>)
+</span><span id="177" class="l"><a href="#177">177: </a>            ],
+</span><span id="178" class="l"><a href="#178">178: </a>            <span class="php-quote">'thumbs'</span> =&gt; [
+</span><span id="179" class="l"><a href="#179">179: </a>                <span class="php-quote">'photos_path'</span>       =&gt; rtr(Thumbs::photo()),
+</span><span id="180" class="l"><a href="#180">180: </a>                <span class="php-quote">'photos_writable'</span>   =&gt; Thumbs::checkPhotos(),
+</span><span id="181" class="l"><a href="#181">181: </a>                <span class="php-quote">'remotes_path'</span>      =&gt; rtr(Thumbs::remote()),
+</span><span id="182" class="l"><a href="#182">182: </a>                <span class="php-quote">'remotes_writable'</span>  =&gt; Thumbs::checkRemotes(),
+</span><span id="183" class="l"><a href="#183">183: </a>                <span class="php-quote">'videos_path'</span>       =&gt; rtr(Thumbs::video()),
+</span><span id="184" class="l"><a href="#184">184: </a>                <span class="php-quote">'videos_writable'</span>   =&gt; Thumbs::checkVideos()
+</span><span id="185" class="l"><a href="#185">185: </a>            ],
+</span><span id="186" class="l"><a href="#186">186: </a>            <span class="php-quote">'tmp'</span> =&gt; [
+</span><span id="187" class="l"><a href="#187">187: </a>                <span class="php-quote">'cache_status'</span>      =&gt; <span class="php-keyword2">System</span>::cacheStatus(),
+</span><span id="188" class="l"><a href="#188">188: </a>                <span class="php-quote">'cache_writable'</span>    =&gt; <span class="php-keyword2">System</span>::checkCache(),
+</span><span id="189" class="l"><a href="#189">189: </a>                <span class="php-quote">'logs_path'</span>         =&gt; rtr(LOGS),
+</span><span id="190" class="l"><a href="#190">190: </a>                <span class="php-quote">'logs_writable'</span>     =&gt; <span class="php-keyword2">System</span>::checkLogs(),
+</span><span id="191" class="l"><a href="#191">191: </a>                <span class="php-quote">'tmp_writable'</span>      =&gt; <span class="php-keyword2">System</span>::checkTmp()
+</span><span id="192" class="l"><a href="#192">192: </a>            ]
+</span><span id="193" class="l"><a href="#193">193: </a>        ]);
+</span><span id="194" class="l"><a href="#194">194: </a>    }
+</span><span id="195" class="l"><a href="#195">195: </a>        
+</span><span id="196" class="l"><a href="#196">196: </a>    <span class="php-comment">/**
+</span></span><span id="197" class="l"><a href="#197">197: </a><span class="php-comment">     * Clears the cache.
+</span></span><span id="198" class="l"><a href="#198">198: </a><span class="php-comment">     * @uses MeTools\Utility\System::clearCache()
+</span></span><span id="199" class="l"><a href="#199">199: </a><span class="php-comment">     */</span>
+</span><span id="200" class="l"><a href="#200">200: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clear_cache() {
+</span><span id="201" class="l"><a href="#201">201: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>]))
+</span><span id="202" class="l"><a href="#202">202: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
+</span><span id="203" class="l"><a href="#203">203: </a>        
+</span><span id="204" class="l"><a href="#204">204: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearCache())
+</span><span id="205" class="l"><a href="#205">205: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The cache has been cleared'</span>));
+</span><span id="206" class="l"><a href="#206">206: </a>        <span class="php-keyword1">else</span>
+</span><span id="207" class="l"><a href="#207">207: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The cache has not been cleared'</span>));
+</span><span id="208" class="l"><a href="#208">208: </a>        
+</span><span id="209" class="l"><a href="#209">209: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
+</span><span id="210" class="l"><a href="#210">210: </a>    }
+</span><span id="211" class="l"><a href="#211">211: </a>    
+</span><span id="212" class="l"><a href="#212">212: </a>    <span class="php-comment">/**
+</span></span><span id="213" class="l"><a href="#213">213: </a><span class="php-comment">     * Clears logs
+</span></span><span id="214" class="l"><a href="#214">214: </a><span class="php-comment">     * @uses MeTools\Utility\System::clearLogs()
+</span></span><span id="215" class="l"><a href="#215">215: </a><span class="php-comment">     */</span>
+</span><span id="216" class="l"><a href="#216">216: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clear_logs() {
+</span><span id="217" class="l"><a href="#217">217: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>]))
+</span><span id="218" class="l"><a href="#218">218: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
+</span><span id="219" class="l"><a href="#219">219: </a>        
+</span><span id="220" class="l"><a href="#220">220: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">System</span>::clearLogs())
+</span><span id="221" class="l"><a href="#221">221: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The logs have been cleared'</span>));
+</span><span id="222" class="l"><a href="#222">222: </a>        <span class="php-keyword1">else</span>
+</span><span id="223" class="l"><a href="#223">223: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The logs have not been deleted'</span>));
+</span><span id="224" class="l"><a href="#224">224: </a>        
+</span><span id="225" class="l"><a href="#225">225: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
+</span><span id="226" class="l"><a href="#226">226: </a>    }
+</span><span id="227" class="l"><a href="#227">227: </a>    
+</span><span id="228" class="l"><a href="#228">228: </a>    <span class="php-comment">/**
+</span></span><span id="229" class="l"><a href="#229">229: </a><span class="php-comment">     * Clears the thumbnails.
+</span></span><span id="230" class="l"><a href="#230">230: </a><span class="php-comment">     * @uses MeTools\Utility\Thumbs::clear()
+</span></span><span id="231" class="l"><a href="#231">231: </a><span class="php-comment">     */</span>
+</span><span id="232" class="l"><a href="#232">232: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clear_thumbs() {
+</span><span id="233" class="l"><a href="#233">233: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'post'</span>, <span class="php-quote">'delete'</span>]))
+</span><span id="234" class="l"><a href="#234">234: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
+</span><span id="235" class="l"><a href="#235">235: </a>        
+</span><span id="236" class="l"><a href="#236">236: </a>        <span class="php-keyword1">if</span>(Thumbs::clear())
+</span><span id="237" class="l"><a href="#237">237: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The thumbnails have been deleted'</span>));
+</span><span id="238" class="l"><a href="#238">238: </a>        <span class="php-keyword1">else</span>
+</span><span id="239" class="l"><a href="#239">239: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The thumbnails have not been deleted'</span>));
+</span><span id="240" class="l"><a href="#240">240: </a>        
+</span><span id="241" class="l"><a href="#241">241: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'cache'</span>]);
+</span><span id="242" class="l"><a href="#242">242: </a>    }
+</span><span id="243" class="l"><a href="#243">243: </a>    
+</span><span id="244" class="l"><a href="#244">244: </a>    <span class="php-comment">/**
+</span></span><span id="245" class="l"><a href="#245">245: </a><span class="php-comment">     * Log viewer
+</span></span><span id="246" class="l"><a href="#246">246: </a><span class="php-comment">     * @uses MeTools\Utility\System::logs()
+</span></span><span id="247" class="l"><a href="#247">247: </a><span class="php-comment">     */</span>
+</span><span id="248" class="l"><a href="#248">248: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> logs() {
+</span><span id="249" class="l"><a href="#249">249: </a>        <span class="php-comment">//Gets log files</span>
+</span><span id="250" class="l"><a href="#250">250: </a>        <span class="php-var">$files</span> = <span class="php-keyword2">System</span>::logs();
 </span><span id="251" class="l"><a href="#251">251: </a>        
-</span><span id="252" class="l"><a href="#252">252: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'files'</span>));
-</span><span id="253" class="l"><a href="#253">253: </a>    }
-</span><span id="254" class="l"><a href="#254">254: </a>    
-</span><span id="255" class="l"><a href="#255">255: </a>    <span class="php-comment">/**
-</span></span><span id="256" class="l"><a href="#256">256: </a><span class="php-comment">     * Manages cache and thumbnails
-</span></span><span id="257" class="l"><a href="#257">257: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheSize()
-</span></span><span id="258" class="l"><a href="#258">258: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheStatus()
-</span></span><span id="259" class="l"><a href="#259">259: </a><span class="php-comment">     * @uses MeTools\Utility\System::logsSize()
-</span></span><span id="260" class="l"><a href="#260">260: </a><span class="php-comment">     * @uses MeTools\Utility\Thumbs::size()
-</span></span><span id="261" class="l"><a href="#261">261: </a><span class="php-comment">     */</span>
-</span><span id="262" class="l"><a href="#262">262: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> temporary() {
-</span><span id="263" class="l"><a href="#263">263: </a>        <span class="php-var">$this</span>-&gt;set([
-</span><span id="264" class="l"><a href="#264">264: </a>            <span class="php-quote">'cache_size'</span>    =&gt; <span class="php-keyword2">System</span>::cacheSize(),
-</span><span id="265" class="l"><a href="#265">265: </a>            <span class="php-quote">'cache_status'</span>  =&gt; <span class="php-keyword2">System</span>::cacheStatus(),
-</span><span id="266" class="l"><a href="#266">266: </a>            <span class="php-quote">'logs_size'</span>     =&gt; <span class="php-keyword2">System</span>::logsSize(),
-</span><span id="267" class="l"><a href="#267">267: </a>            <span class="php-quote">'thumbs_size'</span>   =&gt; Thumbs::size()
-</span><span id="268" class="l"><a href="#268">268: </a>        ]);
-</span><span id="269" class="l"><a href="#269">269: </a>    }
-</span><span id="270" class="l"><a href="#270">270: </a>}</span></code></pre>
+</span><span id="252" class="l"><a href="#252">252: </a>        <span class="php-comment">//If a log file has been specified</span>
+</span><span id="253" class="l"><a href="#253">253: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'file'</span>]) &amp;&amp; <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'get'</span>))
+</span><span id="254" class="l"><a href="#254">254: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'log'</span>, @<span class="php-keyword2">file_get_contents</span>(LOGS.<span class="php-var">$files</span>[<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>)]));
+</span><span id="255" class="l"><a href="#255">255: </a>        
+</span><span id="256" class="l"><a href="#256">256: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'files'</span>));
+</span><span id="257" class="l"><a href="#257">257: </a>    }
+</span><span id="258" class="l"><a href="#258">258: </a>    
+</span><span id="259" class="l"><a href="#259">259: </a>    <span class="php-comment">/**
+</span></span><span id="260" class="l"><a href="#260">260: </a><span class="php-comment">     * Manages cache and thumbnails
+</span></span><span id="261" class="l"><a href="#261">261: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheSize()
+</span></span><span id="262" class="l"><a href="#262">262: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheStatus()
+</span></span><span id="263" class="l"><a href="#263">263: </a><span class="php-comment">     * @uses MeTools\Utility\System::logsSize()
+</span></span><span id="264" class="l"><a href="#264">264: </a><span class="php-comment">     * @uses MeTools\Utility\Thumbs::size()
+</span></span><span id="265" class="l"><a href="#265">265: </a><span class="php-comment">     */</span>
+</span><span id="266" class="l"><a href="#266">266: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> temporary() {
+</span><span id="267" class="l"><a href="#267">267: </a>        <span class="php-var">$this</span>-&gt;set([
+</span><span id="268" class="l"><a href="#268">268: </a>            <span class="php-quote">'cache_size'</span>    =&gt; <span class="php-keyword2">System</span>::cacheSize(),
+</span><span id="269" class="l"><a href="#269">269: </a>            <span class="php-quote">'cache_status'</span>  =&gt; <span class="php-keyword2">System</span>::cacheStatus(),
+</span><span id="270" class="l"><a href="#270">270: </a>            <span class="php-quote">'logs_size'</span>     =&gt; <span class="php-keyword2">System</span>::logsSize(),
+</span><span id="271" class="l"><a href="#271">271: </a>            <span class="php-quote">'thumbs_size'</span>   =&gt; Thumbs::size()
+</span><span id="272" class="l"><a href="#272">272: </a>        ]);
+</span><span id="273" class="l"><a href="#273">273: </a>    }
+</span><span id="274" class="l"><a href="#274">274: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
