@@ -66,7 +66,7 @@ class TagsTable extends Table {
 	 */
 	public function tagsAsArray($tags) {
 		return array_filter(array_map(function($tag) {
-			return empty(trim($tag)) ? NULL : compact('tag');
+			return trim($tag) ? compact('tag') : NULL;
 		}, preg_split('/[\s]+/', $tags)));
 	}
 	
