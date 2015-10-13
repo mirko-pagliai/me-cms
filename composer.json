@@ -13,9 +13,6 @@
 		"newerton/fancy-box": "*",
 		"components/jquery-cookie": "1.4.*"
     },
-	"config": {
-        "component-dir": "vendor/components"
-    },
     "autoload": {
 		"psr-4": {
 			"MeCms\\": "src"
