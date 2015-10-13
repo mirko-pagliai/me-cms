@@ -81,7 +81,7 @@
 		?>
 	</div>
 	<?php
-		if(!empty(config('post.show.shareaholic')) && !empty(config('shareaholic.app_id')))
+		if(config('post.show.shareaholic') && config('shareaholic.app_id'))
 			if($this->request->isAction('view') && !$this->request->isAjax())
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>
