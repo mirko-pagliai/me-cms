@@ -9,7 +9,7 @@
             "email": "mirko.pagliai@gmail.com"
     }],
 	"require": {
-        "mirko-pagliai/me-tools": "*",
+        "mirko-pagliai/me-tools": "2.1.*",
 		"newerton/fancy-box": "*",
 		"components/jquery-cookie": "1.4.*",
 		"sunhater/kcfinder": "*"
