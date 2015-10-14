@@ -83,8 +83,8 @@ class AppController extends BaseController {
 	public function beforeFilter(\Cake\Event\Event $event) {
 		date_default_timezone_set(config('main.timezone'));
 		
-		//Checks if the site has been taken offline
-		if(!$this->request->isAction('offline', 'Systems') && $this->isOffline())
+		//Checks if the site is offline
+		if($this->isOffline())
 			$this->redirect(['_name' => 'offline']);
 		
 		//Checks if the user's IP address is banned
@@ -102,7 +102,7 @@ class AppController extends BaseController {
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isPrefix('admin') ? config('backend.records') : config('frontend.records');
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isAdmin() ? config('backend.records') : config('frontend.records');
 		
 		parent::beforeFilter($event);
 	}
@@ -170,9 +170,22 @@ class AppController extends BaseController {
 	/**
 	 * Checks if the site is offline
 	 * @return bool
+	 * @uses MeTools\Network\Request::isAction()
+	 * @uses MeTools\Network\Request::isAdmin()
 	 */
 	protected function isOffline() {
-		return config('frontend.offline');
+		if(!config('frontend.offline'))
+			return FALSE;
+		
+		//Always online for these actions
+		if($this->request->isAction(['offline', 'login', 'logout']))
+			return FALSE;
+		
+		//Always online for admin requests
+		if($this->request->isAdmin())
+			return FALSE;
+		
+		return TRUE;
 	}
 	
 	/**

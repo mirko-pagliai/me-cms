@@ -77,11 +77,10 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Offline page
-	 * @uses MeCms\Controller\AppController::isOffline()
 	 */
 	public function offline() {
 		//If the site has not been taken offline
-		if(!$this->isOffline())
+		if(!config('frontend.offline'))
 			$this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
