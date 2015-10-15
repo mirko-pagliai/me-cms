@@ -38,12 +38,8 @@ class PostsController extends AppController {
 		//Checks if the cache is valid
 		$this->Posts->checkIfCacheIsValid();
 		
-		//Sets the initial cache name
-		$cache = 'index';
-		
-		//Updates the cache name with the query limit and the number of the page
-		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+		//Sets the cache name
+		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
