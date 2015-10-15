@@ -53,8 +53,11 @@ class AppView extends BaseView {
 	/**
      * Initialization hook method
 	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_initialize
+	 * @uses App\View\AppView::initialize()
 	 */
     public function initialize() {
+		parent::initialize();
+		
 		//Loads helpers
 		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
 		$this->loadHelper('MeTools.Dropdown');
@@ -65,8 +68,6 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeTools.Recaptcha');
-		
-		parent::initialize();
     }
 	
 	/**
