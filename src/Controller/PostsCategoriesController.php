@@ -54,12 +54,8 @@ class PostsCategoriesController extends AppController {
 		//Checks if the cache is valid
 		$this->PostsCategories->Posts->checkIfCacheIsValid();
 		
-		//Sets the initial cache name
-		$cache = sprintf('index_category_%s', md5($category));
-				
-		//Updates the cache name with the query limit and the number of the page
-		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+		//Sets the cache name
+		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
