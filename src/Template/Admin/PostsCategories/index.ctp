@@ -53,7 +53,7 @@
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $category->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 								
 							if($category->post_count)
-								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['controller' => 'posts', 'action' => 'index', $category->slug, 'prefix' => FALSE], ['icon' => 'external-link', 'target' => '_blank']);
+								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_category', $category->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
