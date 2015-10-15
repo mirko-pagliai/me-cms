@@ -46,19 +46,25 @@ class ExceptionRenderer extends BaseExceptionRenderer {
 		//Sets template from MeCms
 		if(empty($plugin))
 			$template = sprintf('MeCms.%s', $template);
-		
+				
 		return parent::_outputMessage($template);
 	}
 	
-//	protected function _outputMessageSafe($template) {
-//		list($plugin, $template) = pluginSplit($template);
-//		
-//		//Sets template from MeCms
-//		if(empty($plugin))
-//			$template = sprintf('MeCms.%s', $template);
-//		
-//		return parent::_outputMessageSafe($template);
-//	}
+	/**
+	 * A safer way to render error messages, replaces all helpers, with basics and doesn't call component methods
+	 * @param string $template The template to render
+	 * @return Cake\Network\Response A response object that can be sent
+	 * @uses Cake\Error\ExceptionRenderer::_outputMessageSafe()
+	 */
+	protected function _outputMessageSafe($template) {
+		list($plugin, $template) = pluginSplit($template);
+		
+		//Sets template from MeCms
+		if(empty($plugin))
+			$template = sprintf('MeCms.%s', $template);
+		
+		return parent::_outputMessageSafe($template);
+	}
 	
 	/**
 	 * Renders the response for the exception
