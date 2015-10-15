@@ -451,7 +451,7 @@ msgstr "Non può essere modificato"
 #: Model/Validation/AppValidator.php:117;161
 #: Model/Validation/BannerValidator.php:52
 msgid "Must be at most {0} chars"
-msgstr "Deve essere lungo almeno {0} caratteri"
+msgstr "Deve essere lungo al massimo {0} caratteri"
 
 #: Model/Validation/AppValidator.php:140
 #: Model/Validation/BannersPositionValidator.php:44
