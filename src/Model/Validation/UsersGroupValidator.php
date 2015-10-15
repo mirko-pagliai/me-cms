@@ -42,8 +42,8 @@ class UsersGroupValidator extends AppValidator {
 				'rule'		=> 'blank',
 			],
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 100),
-				'rule'		=> ['lengthBetween', 6, 100]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			],
 			'unique' => [
 				'message'	=> __d('me_cms', 'This value is already used'),
@@ -59,8 +59,8 @@ class UsersGroupValidator extends AppValidator {
 		//Label
 		$this->add('label', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 100),
-				'rule'		=> ['lengthBetween', 6, 100]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			],
 			'unique' => [
 				'message'	=> __d('me_cms', 'This value is already used'),

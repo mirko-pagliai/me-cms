@@ -96,8 +96,8 @@ class AppValidator extends Validator {
 		//Title
 		$this->add('title', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 100),
-				'rule'		=> ['lengthBetween', 6, 100]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			],
 			'validateUnique' => [
 				'message'	=> __d('me_cms', 'This value is already used'),
@@ -126,8 +126,8 @@ class AppValidator extends Validator {
 		
 		//Subtitle
         $this->add('subtitle', ['lengthBetween' => [
-			'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 150),
-			'rule'		=> ['lengthBetween', 6, 150]
+			'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 150),
+			'rule'		=> ['lengthBetween', 3, 150]
 		]])->allowEmpty('subtitle');
 		
 		//Slug
