@@ -326,8 +326,8 @@
 </span><span id="96" class="l"><a href="#96"> 96: </a>        <span class="php-comment">//Title</span>
 </span><span id="97" class="l"><a href="#97"> 97: </a>        <span class="php-var">$this</span>-&gt;add(<span class="php-quote">'title'</span>, [
 </span><span id="98" class="l"><a href="#98"> 98: </a>            <span class="php-quote">'lengthBetween'</span> =&gt; [
-</span><span id="99" class="l"><a href="#99"> 99: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Must be between {0} and {1} chars'</span>, <span class="php-num">6</span>, <span class="php-num">100</span>),
-</span><span id="100" class="l"><a href="#100">100: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">6</span>, <span class="php-num">100</span>]
+</span><span id="99" class="l"><a href="#99"> 99: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Must be between {0} and {1} chars'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>),
+</span><span id="100" class="l"><a href="#100">100: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>]
 </span><span id="101" class="l"><a href="#101">101: </a>            ],
 </span><span id="102" class="l"><a href="#102">102: </a>            <span class="php-quote">'validateUnique'</span> =&gt; [
 </span><span id="103" class="l"><a href="#103">103: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'This value is already used'</span>),
@@ -356,15 +356,15 @@
 </span><span id="126" class="l"><a href="#126">126: </a>        
 </span><span id="127" class="l"><a href="#127">127: </a>        <span class="php-comment">//Subtitle</span>
 </span><span id="128" class="l"><a href="#128">128: </a>        <span class="php-var">$this</span>-&gt;add(<span class="php-quote">'subtitle'</span>, [<span class="php-quote">'lengthBetween'</span> =&gt; [
-</span><span id="129" class="l"><a href="#129">129: </a>            <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Must be between {0} and {1} chars'</span>, <span class="php-num">6</span>, <span class="php-num">150</span>),
-</span><span id="130" class="l"><a href="#130">130: </a>            <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">6</span>, <span class="php-num">150</span>]
+</span><span id="129" class="l"><a href="#129">129: </a>            <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Must be between {0} and {1} chars'</span>, <span class="php-num">3</span>, <span class="php-num">150</span>),
+</span><span id="130" class="l"><a href="#130">130: </a>            <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">3</span>, <span class="php-num">150</span>]
 </span><span id="131" class="l"><a href="#131">131: </a>        ]])-&gt;allowEmpty(<span class="php-quote">'subtitle'</span>);
 </span><span id="132" class="l"><a href="#132">132: </a>        
 </span><span id="133" class="l"><a href="#133">133: </a>        <span class="php-comment">//Slug</span>
 </span><span id="134" class="l"><a href="#134">134: </a>        <span class="php-var">$this</span>-&gt;add(<span class="php-quote">'slug'</span>, [
 </span><span id="135" class="l"><a href="#135">135: </a>            <span class="php-quote">'lengthBetween'</span> =&gt; [
-</span><span id="136" class="l"><a href="#136">136: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Must be between {0} and {1} chars'</span>, <span class="php-num">6</span>, <span class="php-num">100</span>),
-</span><span id="137" class="l"><a href="#137">137: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">6</span>, <span class="php-num">100</span>]
+</span><span id="136" class="l"><a href="#136">136: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Must be between {0} and {1} chars'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>),
+</span><span id="137" class="l"><a href="#137">137: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">3</span>, <span class="php-num">100</span>]
 </span><span id="138" class="l"><a href="#138">138: </a>            ],
 </span><span id="139" class="l"><a href="#139">139: </a>            <span class="php-quote">'slug'</span> =&gt; [
 </span><span id="140" class="l"><a href="#140">140: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers, dash'</span>)),
