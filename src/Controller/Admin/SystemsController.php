@@ -206,7 +206,7 @@ class SystemsController extends AppController {
 		else
 			$this->Flash->error(__d('me_cms', 'The cache has not been cleared'));
 		
-		return $this->redirect(['action' => 'cache']);
+		return $this->redirect(['action' => 'temporary']);
 	}
 	
 	/**
@@ -222,7 +222,7 @@ class SystemsController extends AppController {
 		else
 			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
 		
-		return $this->redirect(['action' => 'cache']);
+		return $this->redirect(['action' => 'temporary']);
 	}
 	
 	/**
@@ -238,7 +238,7 @@ class SystemsController extends AppController {
 		else
 			$this->Flash->error(__d('me_cms', 'The thumbnails have not been deleted'));
 		
-		return $this->redirect(['action' => 'cache']);
+		return $this->redirect(['action' => 'temporary']);
 	}
 	
 	/**
