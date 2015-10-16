@@ -67,7 +67,7 @@
 	<div class="content-text">
 		<?php
 			//If it was requested to truncate the text
-			if(!$this->request->isAction('view') && config('frontend.truncate_to'))
+			if(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to'))
 				echo $truncate = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
 			else
 				echo $post->text;
@@ -82,7 +82,7 @@
 	</div>
 	<?php
 		if(config('post.show.shareaholic') && config('shareaholic.app_id'))
-			if($this->request->isAction('view') && !$this->request->isAjax())
+			if($this->request->isAction('view', 'Posts') && !$this->request->isAjax())
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>
 </div>
