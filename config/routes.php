@@ -95,6 +95,16 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
 	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'search_posts']);
+	$routes->connect('/posts/:year/:month/:day',
+		['controller' => 'Posts', 'action' => 'index_by_date'],
+		[
+			'_name'	=> 'posts_by_date',
+			'year'	=> '[12][0-9]{3}',
+			'month'	=> '0[1-9]|1[012]',
+			'day'	=> '0[1-9]|[12][0-9]|3[01]',
+			'pass'	=> ['year', 'month', 'day']
+		]
+	);
 	
 	/**
 	 * Systems controller

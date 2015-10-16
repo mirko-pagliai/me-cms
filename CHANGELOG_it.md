@@ -2,6 +2,7 @@
 ## 2.1 ramo
 ### 2.1.0-RC2
 * è possibile aggiungere tag agli articoli;
+* è possibile elencare gli articoli per data;
 * aggiunto il supporto per Shareaholic;
 * jQuery-cookie, Fancybox e KCFinder sono installati tramite Composer;
 * migliorata la gestione dei file di log;

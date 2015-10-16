@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -34,7 +35,7 @@ class PostsController extends AppController {
      * Lists posts
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function index() {		
+    public function index() {
 		//Checks if the cache is valid
 		$this->Posts->checkIfCacheIsValid();
 		
@@ -66,6 +67,52 @@ class PostsController extends AppController {
 		
         $this->set(compact('posts'));
     }
+	
+	/**
+	 * List posts by a date
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 */
+	public function index_by_date($year, $month, $day) {
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
+		
+		//Sets the cache name
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		
+		//Tries to get data from the cache
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+		
+		//If the data are not available from the cache
+		if(empty($posts) || empty($paging)) {		
+			$posts = $this->paginate(
+				$this->Posts->find('active')
+					->contain([
+						'Categories'	=> ['fields' => ['title', 'slug']],
+						'Tags',
+						'Users'			=> ['fields' => ['first_name', 'last_name']]
+					])
+					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+					->where([
+						sprintf('%s.created >=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
+						sprintf('%s.created <=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL)
+					])
+					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+			)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+		}
+		//Else, sets the paging parameter
+		else
+			$this->request->params['paging'] = $paging;
+		
+        $this->set(compact('posts'));
+		
+		$this->render('Posts/index');
+	}
 	
 	/**
 	 * Lists posts as RSS

@@ -25,10 +25,12 @@
 <?php $this->assign('title', __d('me_cms', 'Posts')); ?>
 
 <div class="posts index">
-	<?php 
-		foreach($posts as $post)
-			echo $this->element('frontend'.DS.'views'.DS.'post', compact('post'));
-	
-		echo $this->element('MeTools.paginator');
+	<?php
+		if(!empty($posts)) {
+			foreach($posts as $post)
+				echo $this->element('frontend'.DS.'views'.DS.'post', compact('post'));
+
+			echo $this->element('MeTools.paginator');
+		}
 	?>
 </div>
