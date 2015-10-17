@@ -135,6 +135,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 * For not create incompatibility with `/posts`, this route has to be at the bottom
 	 */
 	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
+	$routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 	
 	/**
 	 * Admin routes
