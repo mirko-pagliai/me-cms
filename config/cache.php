@@ -33,11 +33,6 @@ $options = [
 ];
 
 return ['Cache' => [
-	/**
-	 * Default configuration
-	 */
-	//MeCms default configuration
-	'mecms'		=> $options,
 	//App default configuration
 	'default'	=> array_merge($options, ['path' => CACHE]),
 	
