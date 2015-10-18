@@ -47,8 +47,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins can view logs
-		if($this->request->isAction('logs'))
+		//Only admins can view logs and clear logs
+		if($this->request->isAction(['clear_logs', 'logs']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
@@ -87,25 +87,12 @@ class SystemsController extends AppController {
 		$types = config('kcfinder.types');
 		
 		//Checks the type, then sets the KCFinder path
-		if(!empty($type) && array_key_exists($type, $types))
-			$this->set('kcfinder', Router::url('/', TRUE).sprintf('kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $type));
+		if($type && array_key_exists($type, $types))
+			$this->set('kcfinder', Router::url('/vendor/', TRUE).sprintf('kcfinder/browse.php?lang=%s&type=%s', Configure::read('Config.language'), $type));
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}
 	
-	/**
-	 * Manages cache and thumbnails
-	 * @uses MeTools\Utility\System::cacheSize()
-	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\Thumbs::size()
-	 */
-	public function cache() {
-        $this->set([
-			'cache_size'	=> System::cacheSize(),
-			'cache_status'	=> System::cacheStatus(),
-			'thumbs_size'	=> Thumbs::size()
-        ]);
-	}
 	/**
 	 * Changelogs viewer
 	 * @uses MeTools\Utility\System::changelogs()
@@ -167,6 +154,10 @@ class SystemsController extends AppController {
 			'ffmpegthumbnailer' => [
 				'check' => Unix::which('ffmpegthumbnailer')
 			],
+			'files' => [
+				'check' => folder_is_writable(WWW_ROOT.'files'),
+				'path'	=> rtr(WWW_ROOT.'files')
+			],
 			'php' => [
 				'current_version'	=> Php::version(),
 				'check_version'		=> Php::checkVersion($phpRequired),
@@ -213,9 +204,25 @@ class SystemsController extends AppController {
 		if(System::clearCache())
 			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
 		else
-			$this->Flash->error(__d('me_cms', 'The cache is not writable'));
+			$this->Flash->error(__d('me_cms', 'The cache has not been cleared'));
 		
-		return $this->redirect(['action' => 'cache']);
+		return $this->redirect(['action' => 'temporary']);
+	}
+	
+	/**
+	 * Clears logs
+	 * @uses MeTools\Utility\System::clearLogs()
+	 */
+	public function clear_logs() {
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
+		
+		if(System::clearLogs())
+			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
+		else
+			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
+		
+		return $this->redirect(['action' => 'temporary']);
 	}
 	
 	/**
@@ -227,11 +234,11 @@ class SystemsController extends AppController {
 			return $this->redirect(['action' => 'cache']);
 		
 		if(Thumbs::clear())
-			$this->Flash->success(__d('me_cms', 'Thumbnails have been deleted'));
+			$this->Flash->success(__d('me_cms', 'The thumbnails have been deleted'));
 		else
-			$this->Flash->error(__d('me_cms', 'Thumbnails have not been deleted'));
+			$this->Flash->error(__d('me_cms', 'The thumbnails have not been deleted'));
 		
-		return $this->redirect(['action' => 'cache']);
+		return $this->redirect(['action' => 'temporary']);
 	}
 	
 	/**
@@ -247,5 +254,21 @@ class SystemsController extends AppController {
 			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query('file')]));
 		
 		$this->set(compact('files'));
+	}
+	
+	/**
+	 * Manages cache and thumbnails
+	 * @uses MeTools\Utility\System::cacheSize()
+	 * @uses MeTools\Utility\System::cacheStatus()
+	 * @uses MeTools\Utility\System::logsSize()
+	 * @uses MeTools\Utility\Thumbs::size()
+	 */
+	public function temporary() {
+        $this->set([
+			'cache_size'	=> System::cacheSize(),
+			'cache_status'	=> System::cacheStatus(),
+			'logs_size'		=> System::logsSize(),
+			'thumbs_size'	=> Thumbs::size()
+        ]);
 	}
 }

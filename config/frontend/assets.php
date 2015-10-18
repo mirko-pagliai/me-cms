@@ -5,7 +5,7 @@ use MeTools\Core\Plugin;
 return ['Assets' => [
 	'frontend-css' => [
 		'input' => [
-			Plugin::path('MeTools').'webroot/css/font-awesome.min',
+			'webroot/vendor/font-awesome/css/font-awesome.min',
 			Plugin::path('MeCms').'webroot/css/frontend/bootstrap.min',
 			Plugin::path('MeTools').'webroot/css/default',
 			Plugin::path('MeTools').'webroot/css/forms',
@@ -18,7 +18,7 @@ return ['Assets' => [
 	],
 	'frontend-js' => [
 		'input' => [
-			Plugin::path('MeTools').'webroot/js/jquery.min',
+			'webroot/vendor/jquery/jquery.min',
 			Plugin::path('MeCms').'webroot/js/frontend/bootstrap.min',
 			Plugin::path('MeTools').'webroot/js/default'
 		],

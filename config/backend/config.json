@@ -390,6 +390,7 @@
     "buttons.less",
     "responsive-utilities.less",
     "button-groups.less",
+    "input-groups.less",
     "navs.less",
     "navbar.less",
     "pagination.less",
@@ -410,5 +411,5 @@
     "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=987d3b8144f15267fb9f"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=b00540d59883d978634f"
 }

@@ -41,31 +41,38 @@ class Post extends Entity {
         'text' => TRUE,
         'priority' => TRUE,
         'active' => TRUE,
+		'created' => TRUE,
         'category' => TRUE,
         'user' => TRUE,
-		'created' => TRUE
+		'tags' => TRUE
     ];
 	
 	/**
 	 * Virtual fields that should be exposed
 	 * @var array
 	 */
-    protected $_virtual = ['preview'];
+    protected $_virtual = ['preview', 'tags_as_string'];
 	
 	/**
 	 * Gets the post preview (virtual field)
 	 * @return string Url to preview
 	 */
 	protected function _getPreview() {
-		if(empty($this->_properties['text']))
-			return NULL;
-		
 		//Gets the first image
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
 		
 		if(empty($matches[2]))
-			return NULL;
+			return;
 		
 		return \Cake\Routing\Router::url($matches[2], TRUE);
     }
+	
+	/**
+	 * Gets tags as string, separated by a comma and a space (virtual field)
+	 * @return string Tags
+	 * @uses MeCms\Model\Table\TagsTable::tagsAsString()
+	 */
+	protected function _getTagsAsString() {
+		return \Cake\ORM\TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
+	}
 }

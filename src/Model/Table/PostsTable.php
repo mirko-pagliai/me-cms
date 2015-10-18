@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
@@ -73,6 +73,30 @@ class PostsTable extends AppTable {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         return $rules;
     }
+	
+	/**
+	 * Builds tags for the request data.
+	 * For each tag, it searches if the tag already exists in the database.
+	 * If a tag exists in the database, it sets that tag as ID
+	 * @param array $requestData Request data from form (`$this->request->data`)
+	 * @return array Request data
+	 * @uses MeCms\Model\Table\TagsTable::getList()
+	 * @uses MeCms\Model\Table\TagsTable::tagsAsArray()
+	 */
+	public function buildTagsForRequestData($requestData) {
+		$tags = $this->Tags->tagsAsArray($requestData['tags']);
+
+		//Gets tags from database
+		$tagsFromDb = $this->Tags->getList();
+		
+		//For each tag, it searches if the tag already exists in the database.
+		//If a tag exists in the database, it sets that tag as ID
+		foreach($tags as $k => $tag)
+			if(is_int($id = array_search($tag['tag'], $tagsFromDb)))
+				$tags[$k] = compact('id');
+		
+		return am($requestData, compact('tags'));
+	}
 	
 	/**
 	 * Checks if the cache is valid.
@@ -140,6 +164,13 @@ class PostsTable extends AppTable {
             'foreignKey' => 'category_id',
             'className' => 'MeCms.PostsCategories'
         ]);
+        $this->belongsToMany('Tags', [
+            'foreignKey' => 'post_id',
+            'targetForeignKey' => 'tag_id',
+            'joinTable' => 'posts_tags',
+            'className' => 'MeCms.Tags',
+			'through' => 'MeCms.PostsTags'
+        ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'className' => 'MeCms.Users'
@@ -162,7 +193,7 @@ class PostsTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', $next->created ? $next->created->toUnixString() : FALSE, 'posts');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'posts');
 	}
 
     /**

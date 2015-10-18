@@ -60,6 +60,18 @@ class AdminView extends AppView {
 		
 		return $menus;
 	}
+
+	/**
+     * Initialization hook method
+	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_initialize
+	 * @uses MeCms\View\View::initialize()
+	 */
+    public function initialize() {
+		parent::initialize();
+		
+		//Loads helpers
+		$this->loadHelper('MeCms.MenuBuilder');
+	}
 	
 	/**
 	 * Renders view for given view file and layout

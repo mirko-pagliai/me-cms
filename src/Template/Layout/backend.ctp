@@ -33,7 +33,7 @@
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('MeCms./assets/backend.min', [
-				'MeTools.font-awesome.min',
+				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.backend/bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
@@ -43,9 +43,9 @@
 			echo $this->fetch('css');
 			
 			echo $this->Layout->js('MeCms./assets/backend.min', [
-				'MeTools.jquery.min',
+				'/vendor/jquery/jquery.min',
 				'MeCms.backend/bootstrap.min',
-				'MeCms.jquery.cookie',
+				'/vendor/jquery-cookie/jquery.cookie',
 				'MeTools.default',
 				'MeCms.backend/layout'
 			], ['block' => TRUE]);

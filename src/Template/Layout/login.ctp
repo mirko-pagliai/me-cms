@@ -32,7 +32,7 @@
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('MeCms./assets/login.min', [
-				'MeTools.font-awesome.min',
+				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.login/bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',

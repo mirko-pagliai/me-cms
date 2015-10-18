@@ -33,7 +33,7 @@
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('MeCms./assets/frontend.min', [
-				'MeTools.font-awesome.min',
+				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
@@ -44,7 +44,7 @@
 			echo $this->fetch('css');
 			
 			echo $this->Layout->js('MeCms./assets/frontend.min', [
-				'MeTools.jquery.min',
+				'/vendor/jquery/jquery.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default'
 			], ['block' => TRUE]);
@@ -82,9 +82,17 @@
 				</div>
 			</div>
 		</div>
-		<?= $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]) ?>
-		<?= $this->Library->analytics(config('frontend.analytics')) ?>
-		<?= $this->fetch('css_bottom') ?>
-		<?= $this->fetch('script_bottom') ?>
+		<?php
+			echo $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]);
+			
+			if(config('frontend.analytics'))
+				echo $this->Library->analytics(config('frontend.analytics'));
+			
+			if(config('shareaholic.site_id'));
+				echo $this->Library->shareaholic(config('shareaholic.site_id'));
+						
+			echo $this->fetch('css_bottom');
+			echo $this->fetch('script_bottom');
+		?>
 	</body>
 </html>

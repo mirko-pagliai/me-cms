@@ -55,6 +55,6 @@ class Banner extends Entity {
 	 * @uses MeCms\Utility\BannerFile::path()
 	 */
 	protected function _getPath() {
-        return empty($this->_properties['filename']) ? NULL : BannerFile::path($this->_properties['filename']);
+        return BannerFile::path($this->_properties['filename']);
     }
 }

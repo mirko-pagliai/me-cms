@@ -23,10 +23,13 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
+
+/**
+ * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
+ */
 
 //Loads the MeTools plugin
-Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
+\Cake\Core\Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
 
 require_once 'constants.php';
 require_once 'global_functions.php';
@@ -54,12 +57,12 @@ if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.
 if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug')) {
 	Configure::write('debug', TRUE);
 	
-	Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+	\Cake\Core\Plugin::load('DebugKit', ['bootstrap' => TRUE]);
 }
 
 //Loads the theme
 if(Configure::read('MeCms.frontend.theme'))
-	\MeTools\Core\Plugin::load(Configure::read('MeCms.frontend.theme'));
+	\Cake\Core\Plugin::load(Configure::read('MeCms.frontend.theme'));
 
 /**
  * Cache configuration

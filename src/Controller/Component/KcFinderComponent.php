@@ -114,7 +114,7 @@ class KcFinderComponent extends Component {
 	 * @return string Path
 	 */
 	public function getPath() {
-		return WWW_ROOT.'kcfinder';
+		return WWW_ROOT.'vendor'.DS.'kcfinder';
 	}
 	
     /**

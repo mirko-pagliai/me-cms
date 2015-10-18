@@ -135,6 +135,7 @@
 				<li><a href="class-MeCms.Controller.PhotosController.html">MeCms\Controller\PhotosController</a></li>
 				<li><a href="class-MeCms.Controller.PostsCategoriesController.html">MeCms\Controller\PostsCategoriesController</a></li>
 				<li><a href="class-MeCms.Controller.PostsController.html">MeCms\Controller\PostsController</a></li>
+				<li><a href="class-MeCms.Controller.PostsTagsController.html">MeCms\Controller\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">MeCms\Controller\SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">MeCms\Controller\UsersController</a></li>
 				<li><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></li>
@@ -148,6 +149,8 @@
 				<li><a href="class-MeCms.Model.Entity.PhotosAlbum.html">MeCms\Model\Entity\PhotosAlbum</a></li>
 				<li><a href="class-MeCms.Model.Entity.Post.html">MeCms\Model\Entity\Post</a></li>
 				<li><a href="class-MeCms.Model.Entity.PostsCategory.html">MeCms\Model\Entity\PostsCategory</a></li>
+				<li><a href="class-MeCms.Model.Entity.PostsTag.html">MeCms\Model\Entity\PostsTag</a></li>
+				<li><a href="class-MeCms.Model.Entity.Tag.html">MeCms\Model\Entity\Tag</a></li>
 				<li><a href="class-MeCms.Model.Entity.User.html">MeCms\Model\Entity\User</a></li>
 				<li><a href="class-MeCms.Model.Entity.UsersGroup.html">MeCms\Model\Entity\UsersGroup</a></li>
 				<li><a href="class-MeCms.Model.Table.AppTable.html">MeCms\Model\Table\AppTable</a></li>
@@ -158,6 +161,8 @@
 				<li><a href="class-MeCms.Model.Table.PhotosTable.html">MeCms\Model\Table\PhotosTable</a></li>
 				<li><a href="class-MeCms.Model.Table.PostsCategoriesTable.html">MeCms\Model\Table\PostsCategoriesTable</a></li>
 				<li><a href="class-MeCms.Model.Table.PostsTable.html">MeCms\Model\Table\PostsTable</a></li>
+				<li><a href="class-MeCms.Model.Table.PostsTagsTable.html">MeCms\Model\Table\PostsTagsTable</a></li>
+				<li><a href="class-MeCms.Model.Table.TagsTable.html">MeCms\Model\Table\TagsTable</a></li>
 				<li><a href="class-MeCms.Model.Table.UsersGroupsTable.html">MeCms\Model\Table\UsersGroupsTable</a></li>
 				<li><a href="class-MeCms.Model.Table.UsersTable.html">MeCms\Model\Table\UsersTable</a></li>
 				<li><a href="class-MeCms.Model.Validation.AppValidator.html">MeCms\Model\Validation\AppValidator</a></li>
@@ -168,6 +173,7 @@
 				<li><a href="class-MeCms.Model.Validation.PhotoValidator.html">MeCms\Model\Validation\PhotoValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.PostsCategoryValidator.html">MeCms\Model\Validation\PostsCategoryValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.PostValidator.html">MeCms\Model\Validation\PostValidator</a></li>
+				<li><a href="class-MeCms.Model.Validation.TagValidator.html">MeCms\Model\Validation\TagValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
@@ -307,8 +313,8 @@
 </span><span id="83" class="l"><a href="#83"> 83: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> beforeFilter(\Cake\Event\Event <span class="php-var">$event</span>) {
 </span><span id="84" class="l"><a href="#84"> 84: </a>        <span class="php-keyword2">date_default_timezone_set</span>(config(<span class="php-quote">'main.timezone'</span>));
 </span><span id="85" class="l"><a href="#85"> 85: </a>        
-</span><span id="86" class="l"><a href="#86"> 86: </a>        <span class="php-comment">//Checks if the site has been taken offline</span>
-</span><span id="87" class="l"><a href="#87"> 87: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;isAction(<span class="php-quote">'offline'</span>, <span class="php-quote">'Systems'</span>) &amp;&amp; <span class="php-var">$this</span>-&gt;isOffline())
+</span><span id="86" class="l"><a href="#86"> 86: </a>        <span class="php-comment">//Checks if the site is offline</span>
+</span><span id="87" class="l"><a href="#87"> 87: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;isOffline())
 </span><span id="88" class="l"><a href="#88"> 88: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'offline'</span>]);
 </span><span id="89" class="l"><a href="#89"> 89: </a>        
 </span><span id="90" class="l"><a href="#90"> 90: </a>        <span class="php-comment">//Checks if the user's IP address is banned</span>
@@ -326,7 +332,7 @@
 </span><span id="102" class="l"><a href="#102">102: </a>        
 </span><span id="103" class="l"><a href="#103">103: </a>        <span class="php-comment">//Sets the paginate limit and the maximum paginate limit</span>
 </span><span id="104" class="l"><a href="#104">104: </a>        <span class="php-comment">//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched</span>
-</span><span id="105" class="l"><a href="#105">105: </a>        <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'limit'</span>] = <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'maxLimit'</span>] = <span class="php-var">$this</span>-&gt;request-&gt;isPrefix(<span class="php-quote">'admin'</span>) ? config(<span class="php-quote">'backend.records'</span>) : config(<span class="php-quote">'frontend.records'</span>);
+</span><span id="105" class="l"><a href="#105">105: </a>        <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'limit'</span>] = <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'maxLimit'</span>] = <span class="php-var">$this</span>-&gt;request-&gt;isAdmin() ? config(<span class="php-quote">'backend.records'</span>) : config(<span class="php-quote">'frontend.records'</span>);
 </span><span id="106" class="l"><a href="#106">106: </a>        
 </span><span id="107" class="l"><a href="#107">107: </a>        parent::beforeFilter(<span class="php-var">$event</span>);
 </span><span id="108" class="l"><a href="#108">108: </a>    }
@@ -394,41 +400,54 @@
 </span><span id="170" class="l"><a href="#170">170: </a>    <span class="php-comment">/**
 </span></span><span id="171" class="l"><a href="#171">171: </a><span class="php-comment">     * Checks if the site is offline
 </span></span><span id="172" class="l"><a href="#172">172: </a><span class="php-comment">     * @return bool
-</span></span><span id="173" class="l"><a href="#173">173: </a><span class="php-comment">     */</span>
-</span><span id="174" class="l"><a href="#174">174: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> isOffline() {
-</span><span id="175" class="l"><a href="#175">175: </a>        <span class="php-keyword1">return</span> config(<span class="php-quote">'frontend.offline'</span>);
-</span><span id="176" class="l"><a href="#176">176: </a>    }
-</span><span id="177" class="l"><a href="#177">177: </a>    
-</span><span id="178" class="l"><a href="#178">178: </a>    <span class="php-comment">/**
-</span></span><span id="179" class="l"><a href="#179">179: </a><span class="php-comment">     * Sets the language
-</span></span><span id="180" class="l"><a href="#180">180: </a><span class="php-comment">     * @return mixed Language code or FALSE
-</span></span><span id="181" class="l"><a href="#181">181: </a><span class="php-comment">     * @throws \Cake\Network\Exception\InternalErrorException
-</span></span><span id="182" class="l"><a href="#182">182: </a><span class="php-comment">     * @uses Cake\I18n\I18n::locale()
-</span></span><span id="183" class="l"><a href="#183">183: </a><span class="php-comment">     * @uses MeTools\Core\Plugin::path()
-</span></span><span id="184" class="l"><a href="#184">184: </a><span class="php-comment">     */</span>
-</span><span id="185" class="l"><a href="#185">185: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> setLanguage() {
-</span><span id="186" class="l"><a href="#186">186: </a>        <span class="php-var">$path</span> = \MeTools\Core\Plugin::path(<span class="php-quote">'MeCms'</span>, <span class="php-quote">'src'</span>.DS.<span class="php-quote">'Locale'</span>);
+</span></span><span id="173" class="l"><a href="#173">173: </a><span class="php-comment">     * @uses MeTools\Network\Request::isAction()
+</span></span><span id="174" class="l"><a href="#174">174: </a><span class="php-comment">     * @uses MeTools\Network\Request::isAdmin()
+</span></span><span id="175" class="l"><a href="#175">175: </a><span class="php-comment">     */</span>
+</span><span id="176" class="l"><a href="#176">176: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> isOffline() {
+</span><span id="177" class="l"><a href="#177">177: </a>        <span class="php-keyword1">if</span>(!config(<span class="php-quote">'frontend.offline'</span>))
+</span><span id="178" class="l"><a href="#178">178: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="179" class="l"><a href="#179">179: </a>        
+</span><span id="180" class="l"><a href="#180">180: </a>        <span class="php-comment">//Always online for these actions</span>
+</span><span id="181" class="l"><a href="#181">181: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;isAction([<span class="php-quote">'offline'</span>, <span class="php-quote">'login'</span>, <span class="php-quote">'logout'</span>]))
+</span><span id="182" class="l"><a href="#182">182: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="183" class="l"><a href="#183">183: </a>        
+</span><span id="184" class="l"><a href="#184">184: </a>        <span class="php-comment">//Always online for admin requests</span>
+</span><span id="185" class="l"><a href="#185">185: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;isAdmin())
+</span><span id="186" class="l"><a href="#186">186: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
 </span><span id="187" class="l"><a href="#187">187: </a>        
-</span><span id="188" class="l"><a href="#188">188: </a>        <span class="php-keyword1">if</span>(config(<span class="php-quote">'main.language'</span>) === <span class="php-quote">'auto'</span>) {
-</span><span id="189" class="l"><a href="#189">189: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword2">is_readable</span>(<span class="php-var">$path</span>.DS.<span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">5</span>).DS.<span class="php-quote">'me_cms.po'</span>))
-</span><span id="190" class="l"><a href="#190">190: </a>                <span class="php-var">$language</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">5</span>);
-</span><span id="191" class="l"><a href="#191">191: </a>            <span class="php-keyword1">elseif</span>(<span class="php-keyword2">is_readable</span>(<span class="php-var">$path</span>.DS.<span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">2</span>).DS.<span class="php-quote">'me_cms.po'</span>))
-</span><span id="192" class="l"><a href="#192">192: </a>                <span class="php-var">$language</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">2</span>);
-</span><span id="193" class="l"><a href="#193">193: </a>        }
-</span><span id="194" class="l"><a href="#194">194: </a>        <span class="php-keyword1">elseif</span>(config(<span class="php-quote">'main.language'</span>)) {
-</span><span id="195" class="l"><a href="#195">195: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(<span class="php-var">$file</span> = <span class="php-var">$path</span>.DS.config(<span class="php-quote">'main.language'</span>).DS.<span class="php-quote">'me_cms.po'</span>))
-</span><span id="196" class="l"><a href="#196">196: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Cake\Network\Exception\InternalErrorException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The file {0} doesn\'t exist or is not readable'</span>, <span class="php-var">$file</span>));
-</span><span id="197" class="l"><a href="#197">197: </a>            
-</span><span id="198" class="l"><a href="#198">198: </a>            <span class="php-var">$language</span> = config(<span class="php-quote">'main.language'</span>);
-</span><span id="199" class="l"><a href="#199">199: </a>        }
+</span><span id="188" class="l"><a href="#188">188: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
+</span><span id="189" class="l"><a href="#189">189: </a>    }
+</span><span id="190" class="l"><a href="#190">190: </a>    
+</span><span id="191" class="l"><a href="#191">191: </a>    <span class="php-comment">/**
+</span></span><span id="192" class="l"><a href="#192">192: </a><span class="php-comment">     * Sets the language
+</span></span><span id="193" class="l"><a href="#193">193: </a><span class="php-comment">     * @return mixed Language code or FALSE
+</span></span><span id="194" class="l"><a href="#194">194: </a><span class="php-comment">     * @throws \Cake\Network\Exception\InternalErrorException
+</span></span><span id="195" class="l"><a href="#195">195: </a><span class="php-comment">     * @uses Cake\I18n\I18n::locale()
+</span></span><span id="196" class="l"><a href="#196">196: </a><span class="php-comment">     * @uses MeTools\Core\Plugin::path()
+</span></span><span id="197" class="l"><a href="#197">197: </a><span class="php-comment">     */</span>
+</span><span id="198" class="l"><a href="#198">198: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> setLanguage() {
+</span><span id="199" class="l"><a href="#199">199: </a>        <span class="php-var">$path</span> = \MeTools\Core\Plugin::path(<span class="php-quote">'MeCms'</span>, <span class="php-quote">'src'</span>.DS.<span class="php-quote">'Locale'</span>);
 </span><span id="200" class="l"><a href="#200">200: </a>        
-</span><span id="201" class="l"><a href="#201">201: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$language</span>))
-</span><span id="202" class="l"><a href="#202">202: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="203" class="l"><a href="#203">203: </a>            
-</span><span id="204" class="l"><a href="#204">204: </a>        \Cake\I18n\I18n::locale(<span class="php-var">$language</span>);
-</span><span id="205" class="l"><a href="#205">205: </a>        <span class="php-keyword1">return</span> <span class="php-var">$language</span>;
-</span><span id="206" class="l"><a href="#206">206: </a>    }
-</span><span id="207" class="l"><a href="#207">207: </a>}</span></code></pre>
+</span><span id="201" class="l"><a href="#201">201: </a>        <span class="php-keyword1">if</span>(config(<span class="php-quote">'main.language'</span>) === <span class="php-quote">'auto'</span>) {
+</span><span id="202" class="l"><a href="#202">202: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword2">is_readable</span>(<span class="php-var">$path</span>.DS.<span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">5</span>).DS.<span class="php-quote">'me_cms.po'</span>))
+</span><span id="203" class="l"><a href="#203">203: </a>                <span class="php-var">$language</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">5</span>);
+</span><span id="204" class="l"><a href="#204">204: </a>            <span class="php-keyword1">elseif</span>(<span class="php-keyword2">is_readable</span>(<span class="php-var">$path</span>.DS.<span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">2</span>).DS.<span class="php-quote">'me_cms.po'</span>))
+</span><span id="205" class="l"><a href="#205">205: </a>                <span class="php-var">$language</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$this</span>-&gt;request-&gt;env(<span class="php-quote">'HTTP_ACCEPT_LANGUAGE'</span>), <span class="php-num">0</span>, <span class="php-num">2</span>);
+</span><span id="206" class="l"><a href="#206">206: </a>        }
+</span><span id="207" class="l"><a href="#207">207: </a>        <span class="php-keyword1">elseif</span>(config(<span class="php-quote">'main.language'</span>)) {
+</span><span id="208" class="l"><a href="#208">208: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(<span class="php-var">$file</span> = <span class="php-var">$path</span>.DS.config(<span class="php-quote">'main.language'</span>).DS.<span class="php-quote">'me_cms.po'</span>))
+</span><span id="209" class="l"><a href="#209">209: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Cake\Network\Exception\InternalErrorException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The file {0} doesn\'t exist or is not readable'</span>, <span class="php-var">$file</span>));
+</span><span id="210" class="l"><a href="#210">210: </a>            
+</span><span id="211" class="l"><a href="#211">211: </a>            <span class="php-var">$language</span> = config(<span class="php-quote">'main.language'</span>);
+</span><span id="212" class="l"><a href="#212">212: </a>        }
+</span><span id="213" class="l"><a href="#213">213: </a>        
+</span><span id="214" class="l"><a href="#214">214: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$language</span>))
+</span><span id="215" class="l"><a href="#215">215: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="216" class="l"><a href="#216">216: </a>            
+</span><span id="217" class="l"><a href="#217">217: </a>        \Cake\I18n\I18n::locale(<span class="php-var">$language</span>);
+</span><span id="218" class="l"><a href="#218">218: </a>        <span class="php-keyword1">return</span> <span class="php-var">$language</span>;
+</span><span id="219" class="l"><a href="#219">219: </a>    }
+</span><span id="220" class="l"><a href="#220">220: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -436,6 +455,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?b1f94664fbec5c8a97136025519a9300721be885"></script>
+<script src="elementlist.js?3e612ed03f080f97460d55e4917536c0f0ba4e2c"></script>
 </body>
 </html>

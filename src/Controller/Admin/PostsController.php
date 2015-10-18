@@ -113,6 +113,7 @@ class PostsController extends AppController {
 			$this->Posts->find()
 				->contain([
 					'Categories'	=> ['fields' => ['title']],
+					'Tags',
 					'Users'			=> ['fields' => ['first_name', 'last_name']]
 				])
 				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
@@ -124,6 +125,7 @@ class PostsController extends AppController {
     /**
      * Adds post
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      */
     public function add() {
         $post = $this->Posts->newEntity();
@@ -135,7 +137,10 @@ class PostsController extends AppController {
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+			//Sets the request data with tags
+			$data = $this->Posts->buildTagsForRequestData($this->request->data);
+			
+            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
@@ -152,10 +157,11 @@ class PostsController extends AppController {
      * Edits post
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-        $post = $this->Posts->get($id);
+		$post = $this->Posts->findById($id)->contain('Tags')->first();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
@@ -164,7 +170,10 @@ class PostsController extends AppController {
 			
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+			//Sets the request data with tags
+			$data = $this->Posts->buildTagsForRequestData($this->request->data);
+						
+            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));

@@ -43,7 +43,7 @@
 	<div class="content-text">
 		<?php
 			//If it was requested to truncate the text
-			if(!$this->request->isAction('view') && config('frontend.truncate_to'))
+			if(!$this->request->isAction('view', 'Pages') && config('frontend.truncate_to'))
 				echo $truncate = $this->Text->truncate($page->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
 			else
 				echo $page->text;

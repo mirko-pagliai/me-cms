@@ -97,14 +97,19 @@
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', '{0} is not available', $this->Html->strong('ffmpegthumbnailer')), $errorOptions);
 		
-		echo $this->Html->h4(__d('me_cms', 'Banners'));
+		
+		echo $this->Html->h4(__d('me_cms', 'Webroot'));
 		//Banners directory is writable
 		if($banners['check'])
 			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($banners['path'])), $successOptions);
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($banners['path'])), $errorOptions);
-		
-		echo $this->Html->h4(__d('me_cms', 'Photos'));
+		//Files directory is writable
+		if($files['check'])
+			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($files['path'])), $successOptions);
+		else
+			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($files['path'])), $errorOptions);
+			
 		//Photos directory is writable
 		if($photos['check'])
 			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($photos['path'])), $successOptions);

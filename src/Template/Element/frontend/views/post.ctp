@@ -53,13 +53,21 @@
 						__d('me_cms', 'Posted on {0}', $post->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
 					);
+				
+				if(config('post.show.tags') && !empty($tag->tag)) {
+					echo $this->Html->div('content-tags',
+						implode(', ', array_map(function($tag) {
+							return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->tag]);
+						}, $post->tags)),
+					['icon' => 'tags']);
+				}
 			?>
 		</div>
 	</div>
 	<div class="content-text">
 		<?php
 			//If it was requested to truncate the text
-			if(!$this->request->isAction('view') && config('frontend.truncate_to'))
+			if(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to'))
 				echo $truncate = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
 			else
 				echo $post->text;
@@ -72,4 +80,9 @@
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
 		?>
 	</div>
+	<?php
+		if(config('post.show.shareaholic') && config('shareaholic.app_id'))
+			if($this->request->isAction('view', 'Posts') && !$this->request->isAjax())
+				echo $this->Html->shareaholic(config('shareaholic.app_id'));
+	?>
 </div>

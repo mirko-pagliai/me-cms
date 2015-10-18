@@ -23,8 +23,8 @@
 ?>
 
 <?php
-	$this->Html->css('MeCms.backend/uploader', ['block' => 'css_bottom']);
-	$this->Html->js('MeCms.backend/uploader', ['block' => 'script_bottom']);
+	$this->Html->css('MeCms.backend/uploader.min', ['block' => 'css_bottom']);
+	$this->Html->js('MeCms.backend/uploader.min', ['block' => 'script_bottom']);
 ?>
 
 <div id="uploader">

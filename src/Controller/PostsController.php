@@ -17,12 +17,13 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -32,32 +33,14 @@ use MeCms\Controller\AppController;
 class PostsController extends AppController {
 	/**
      * Lists posts
-	 * @param string $category Category slug (optional)
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function index($category = NULL) {
-		//The category can be passed as query string, from a widget
-		if($this->request->query('q'))
-			$this->redirect([$this->request->query('q')]);
-		
+    public function index() {
 		//Checks if the cache is valid
 		$this->Posts->checkIfCacheIsValid();
 		
-		//Sets the initial cache name
-		$cache = 'index';
-		
-		//Checks if has been specified a category
-		if(!empty($category)) {
-			//Adds the category to the conditions, if it has been specified
-			$conditions['Categories.slug'] = $category;
-			
-			//Updates the cache name, adding the category name
-			$cache = sprintf('%s_%s', $cache, md5($category));
-		}
-		
-		//Updates the cache name with the query limit and the number of the page
-		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+		//Sets the cache name
+		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
@@ -68,10 +51,10 @@ class PostsController extends AppController {
 				$this->Posts->find('active')
 					->contain([
 						'Categories'	=> ['fields' => ['title', 'slug']],
+						'Tags',
 						'Users'			=> ['fields' => ['first_name', 'last_name']]
 					])
-					->select(['title', 'subtitle', 'slug', 'text', 'created'])
-					->where(empty($conditions) ? [] : $conditions)
+					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			)->toArray();
 						
@@ -81,13 +64,55 @@ class PostsController extends AppController {
 		//Else, sets the paging parameter
 		else
 			$this->request->params['paging'] = $paging;
-				
-		//Sets the category title as title, if has been specified a category
-		if(!empty($category) && !empty($posts[0]->category->title))
-			$this->set('title', $posts[0]->category->title);
 		
         $this->set(compact('posts'));
     }
+	
+	/**
+	 * List posts by a date
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 */
+	public function index_by_date($year, $month, $day) {
+		//Checks if the cache is valid
+		$this->Posts->checkIfCacheIsValid();
+		
+		//Sets the cache name
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		
+		//Tries to get data from the cache
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+		
+		//If the data are not available from the cache
+		if(empty($posts) || empty($paging)) {		
+			$posts = $this->paginate(
+				$this->Posts->find('active')
+					->contain([
+						'Categories'	=> ['fields' => ['title', 'slug']],
+						'Tags',
+						'Users'			=> ['fields' => ['first_name', 'last_name']]
+					])
+					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+					->where([
+						sprintf('%s.created >=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
+						sprintf('%s.created <=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL)
+					])
+					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+			)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+		}
+		//Else, sets the paging parameter
+		else
+			$this->request->params['paging'] = $paging;
+		
+        $this->set(compact('posts'));
+		
+		$this->render('Posts/index');
+	}
 	
 	/**
 	 * Lists posts as RSS
@@ -174,9 +199,10 @@ class PostsController extends AppController {
 		$this->set('post', $this->Posts->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
+				'Tags',
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['title', 'subtitle', 'slug', 'text', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), 'posts')
 			->first());

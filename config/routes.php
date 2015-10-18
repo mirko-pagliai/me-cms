@@ -30,12 +30,7 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
-	/**
-	 * Home page
-	 */
-	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
-	
+Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {	
 	/**
 	 * Banners controller
 	 */
@@ -77,6 +72,18 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 * PostsCategories controller
 	 */
 	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'posts_categories']);
+	$routes->connect('/posts/category/:slug',
+		['controller' => 'PostsCategories', 'action' => 'view'],
+		['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
+	
+	/**
+	 * PostsTags controller
+	 */
+	$routes->connect('/posts/tag/:tag',
+		['controller' => 'PostsTags', 'action' => 'view'],
+		['_name' => 'posts_tag', 'tag' => '[a-z0-9]+', 'pass' => ['tag']]
+	);
 	
 	/**
 	 * Posts controller
@@ -88,9 +95,15 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
 	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'search_posts']);
-	$routes->connect('/posts/:slug',
-		['controller' => 'Posts', 'action' => 'index'],
-		['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	$routes->connect('/posts/:year/:month/:day',
+		['controller' => 'Posts', 'action' => 'index_by_date'],
+		[
+			'_name'	=> 'posts_by_date',
+			'year'	=> '[12][0-9]{3}',
+			'month'	=> '0[1-9]|1[012]',
+			'day'	=> '0[1-9]|[12][0-9]|3[01]',
+			'pass'	=> ['year', 'month', 'day']
+		]
 	);
 	
 	/**
@@ -116,6 +129,13 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
 	$routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup'], ['_name' => 'signup']);
+	
+	/**
+	 * Default home page
+	 * For not create incompatibility with `/posts`, this route has to be at the bottom
+	 */
+	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
+	$routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 	
 	/**
 	 * Admin routes

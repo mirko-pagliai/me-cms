@@ -60,23 +60,27 @@ class UsersController extends AppController {
 	 */
 	private function _loginWithCookie() {
 		//Checks if the cookie exists
-		if(empty($this->Cookie->read('login')))
-			return FALSE;
+		if(!$this->Cookie->read('login'))
+			return;
 		
 		$this->request->data = $this->Cookie->read('login');
-				
+		
 		//Tries to login...
-		if(($user = $this->Auth->identify()) && $user['active'] && !$user['banned']) {
-			$this->Auth->setUser($user);
-			return $this->redirect($this->Auth->redirectUrl());
-		}
+		if(!empty($this->request->data['username']) && !empty($this->request->data['password']))
+			if(($user = $this->Auth->identify()) && $user['active'] && !$user['banned']) {
+				$this->Auth->setUser($user);
+				return $this->redirect($this->Auth->redirectUrl());
+			}
+		
+		//Internal function to logout
+		$this->_logout();
 	}
 	
 	/**
 	 * Internal function to logout
 	 * @return mixed
 	 */
-	private function _logout() {		
+	private function _logout() {
 		//Deletes the login cookie
 		$this->Cookie->delete('login');
 		
