@@ -30,6 +30,12 @@
 			echo $this->Layout->viewport();
 			echo $this->Html->title($this->fetch('title'));
 			echo $this->Html->meta('icon');
+			
+			if(!empty($image_src)) {
+				echo $this->Html->meta(['href' => $image_src, 'rel' => 'image_src']);
+				echo $this->Html->meta(['content' => $image_src, 'property' => 'og:image']);
+			}
+			
 			echo $this->fetch('meta');
 			
 			echo $this->Layout->css('MeCms./assets/frontend.min', [
