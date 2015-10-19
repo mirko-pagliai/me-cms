@@ -34,7 +34,7 @@ class PagesController extends AppController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses MeCms\Controller\AppController::beforeRender()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::configure()
 	 */
