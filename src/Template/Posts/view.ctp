@@ -24,8 +24,11 @@
 
 <?php
 	$this->assign('title', $post->title);
-	$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-	$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+	
+	if(!empty($post->preview)) {
+		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
+		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+	}
 ?>
 
 <div class="posts view">
