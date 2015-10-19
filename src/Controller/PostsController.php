@@ -196,7 +196,7 @@ class PostsController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException
 	 */
     public function view($slug = NULL) {
-		$post = $this->Posts->find('active')
+		$this->set('post', $this->Posts->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Tags',
@@ -205,8 +205,6 @@ class PostsController extends AppController {
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), 'posts')
-			->first();
-		
-		$this->set(am(['image_src' => $post->preview], compact('post')));
+			->first());
     }
 }
