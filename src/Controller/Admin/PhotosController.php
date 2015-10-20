@@ -54,7 +54,7 @@ class PhotosController extends AppController {
 			$this->set('albums', $albums = $this->Photos->Albums->getList());
 			
 			//Checks for albums
-			if(empty($albums)) {
+			if(empty($albums) && !$this->request->isAction('index')) {
 				$this->Flash->alert(__d('me_cms', 'Before you can manage photos, you have to create at least an album'));
 				$this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
 			}

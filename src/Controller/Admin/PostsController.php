@@ -54,7 +54,7 @@ class PostsController extends AppController {
 		}
 		
 		//Checks for categories
-		if(isset($categories) && empty($categories)) {
+		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
 			$this->Flash->alert(__d('me_cms', 'Before you can manage posts, you have to create at least a category'));
 			$this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
