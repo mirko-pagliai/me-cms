@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.1-RC3
+* improved the installer console.
+
 ### 2.1.0-RC2
 * now you can add tags to posts;
 * now you can list posts by date;

@@ -31,48 +31,100 @@ use Composer\Script\Event;
  */
 class Installer extends BaseInstaller {
 	/**
-	 * Assets for which create symbolic links.
-	 * The key must be relative to `vendor/`, the value must be relative to `webroot/vendor/`
-	 * @see MeTools\Console\Installer::createSymbolicLinkToVendor()
-	 * @var array
+	 * Creates the `robots.txt` file
+     * @param \Composer\IO\IOInterface $io IO interface to write to console
 	 */
-	protected static $linksToAssets = [
-		'components/jquery-cookie'	=> 'jquery-cookie',
-		'newerton/fancy-box/source'	=> 'fancybox',
-		'sunhater/kcfinder'			=> 'kcfinder'
-	];
+	public static function createRobots($io) {
+		if(file_exists($file = WWW_ROOT.'robots.txt'))
+			return;
+		
+		if((new \Cake\Filesystem\File($file, TRUE))
+			->write('User-agent: *
+				Disallow: /admin/
+				Disallow: /ckeditor/
+				Disallow: /css/
+				Disallow: /js/
+				Disallow: /vendor/'))
+			$io->write(sprintf('Created `%s` file', str_replace(ROOT.DS, NULL, $file)));
+		else
+			$io->write(sprintf('<error>Failed to create `%s` file</error>', str_replace(ROOT.DS, NULL, $file)));
+	}
 	
 	/**
-	 * Fixes Kcfinder.
+	 * Fixes KCFinder.
 	 * Creates the file `vendor/kcfinder/.htaccess`
+     * @param \Composer\IO\IOInterface $io IO interface to write to console
 	 * @see http://kcfinder.sunhater.com/integrate
 	 */
-	public static function fixKcfinder() {
-		if(!file_exists($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
-			(new \Cake\Filesystem\File($file, TRUE))
-				->append('<IfModule mod_php5.c>
-						php_value session.cache_limiter must-revalidate
-						php_value session.cookie_httponly On
-						php_value session.cookie_lifetime 14400
-						php_value session.gc_maxlifetime 14400
-						php_value session.name CAKEPHP
-					</IfModule>');
+	public static function fixKcfinder($io) {
+		//Returns, if the file already exists
+		if(file_exists($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
+			return;
+		
+		if((new \Cake\Filesystem\File($file, TRUE))
+			->write('<IfModule mod_php5.c>
+					php_value session.cache_limiter must-revalidate
+					php_value session.cookie_httponly On
+					php_value session.cookie_lifetime 14400
+					php_value session.gc_maxlifetime 14400
+					php_value session.name CAKEPHP
+				</IfModule>'))
+			$io->write(sprintf('Created `%s` file', str_replace(ROOT.DS, NULL, $file)));
+		else
+			$io->write(sprintf('<error>Failed to create `%s` file</error>', str_replace(ROOT.DS, NULL, $file)));
 	}
 	
 	/**
 	 * Occurs after the autoloader has been dumped, either during install/update, or via the dump-autoload command.
      * @param \Composer\Script\Event $event The composer event object
-	 * @uses linksToAssets
-	 * @uses MeTools\Console\Installer::linksToAssets
 	 * @uses MeTools\Console\Installer::postAutoloadDump()
+	 * @uses createRobots()
+	 * @uses fixKcfinder()
+	 * @uses MeTools\Console\Installer::$links
+	 * @uses MeTools\Console\Installer::$paths
 	 */
 	public static function postAutoloadDump(Event $event) {
-		//Merges
-		parent::$linksToAssets = array_merge(parent::$linksToAssets, self::$linksToAssets);
+		//Merges assets for which create symbolic links
+		parent::$links = array_merge(parent::$links, [
+			'components/jquery-cookie'	=> 'jquery-cookie',
+			'newerton/fancy-box/source'	=> 'fancybox',
+			'sunhater/kcfinder'			=> 'kcfinder'
+		]);
+		
+		//Merges paths to be created and made writable
+		parent::$paths = array_merge(parent::$paths, [
+			WWW_ROOT.'img'.DS.'banners',
+			WWW_ROOT.'img'.DS.'photos'
+		]);
 		
 		parent::postAutoloadDump($event);
 		
-		//Fixes Kcfinder
-		self::fixKcfinder();
+        $io = $event->getIO();
+		
+		//If the shell is interactive
+        if($io->isInteractive()) {
+            $validator = function($arg) {
+                if(in_array($arg, ['Y', 'y', 'N', 'n']))
+                    return $arg;
+				
+                throw new Exception('This is not a valid answer. Please choose Y or n.');
+            };
+			
+			//Asks if the `robots.txt` file should be created
+            $ask = $io->askAndValidate('<info>Create `robots.txt` file? (Default to Y)</info> [<comment>Y, n</comment>]? ', $validator, 10, 'Y');
+
+            if(in_array($ask, ['Y', 'y']))
+				self::createRobots($io);
+			
+			//Asks if KCFinder shuold be fixed
+			$ask = $io->askAndValidate('<info>Fix KCFinder? (Default to Y)</info> [<comment>Y, n</comment>]? ', $validator, 10, 'Y');
+			
+            if(in_array($ask, ['Y', 'y']))
+				self::fixKcfinder($io);
+        }
+		else {
+			self::createRobots($io);
+			self::fixKcfinder($io);
+		}
 	}
 }
