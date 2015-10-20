@@ -284,7 +284,7 @@
 </span><span id="54" class="l"><a href="#54"> 54: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'albums'</span>, <span class="php-var">$albums</span> = <span class="php-var">$this</span>-&gt;Photos-&gt;Albums-&gt;getList());
 </span><span id="55" class="l"><a href="#55"> 55: </a>            
 </span><span id="56" class="l"><a href="#56"> 56: </a>            <span class="php-comment">//Checks for albums</span>
-</span><span id="57" class="l"><a href="#57"> 57: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$albums</span>)) {
+</span><span id="57" class="l"><a href="#57"> 57: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$albums</span>) &amp;&amp; !<span class="php-var">$this</span>-&gt;request-&gt;isAction(<span class="php-quote">'index'</span>)) {
 </span><span id="58" class="l"><a href="#58"> 58: </a>                <span class="php-var">$this</span>-&gt;Flash-&gt;alert(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Before you can manage photos, you have to create at least an album'</span>));
 </span><span id="59" class="l"><a href="#59"> 59: </a>                <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'PhotosAlbums'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>]);
 </span><span id="60" class="l"><a href="#60"> 60: </a>            }
