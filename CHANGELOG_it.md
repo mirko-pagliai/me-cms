@@ -1,7 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
 ### 2.1.1-RC3
-* migliorata la console d'installazione.
+* migliorata la console d'installazione;
+* corretto il titolo di alcune azioni.
 
 ### 2.1.0-RC2
 * è possibile aggiungere tag agli articoli;
