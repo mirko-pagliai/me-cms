@@ -88,7 +88,7 @@ class BannersController extends AppController {
     public function index() {
 		$this->set('banners', $this->paginate(
 			$this->Banners->find()
-				->contain(['Positions' => ['fields' => ['name']]])
+				->contain(['Positions' => ['fields' => ['id', 'name']]])
 				->select(['id', 'filename', 'target', 'description', 'active', 'click_count'])
 				->where($this->Banners->fromFilter($this->request->query))
 				->order(['Banners.filename' => 'ASC'])

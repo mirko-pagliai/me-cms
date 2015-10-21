@@ -85,7 +85,9 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);								
 						?>
 					</td>
-					<td class="text-center"><?= $banner->position->name ?></td>
+					<td class="text-center">
+						<?= $this->Html->link($banner->position->name, ['?' => ['position' => $banner->position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+					</td>
 					<td class="text-center">
 						<?= empty($banner->target) ? NULL : $this->Html->link($banner->target, $banner->target, ['target' => '_blank']) ?>
 					</td>

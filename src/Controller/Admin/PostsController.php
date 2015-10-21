@@ -112,9 +112,9 @@ class PostsController extends AppController {
 		$this->set('posts', $this->paginate(
 			$this->Posts->find()
 				->contain([
-					'Categories'	=> ['fields' => ['title']],
+					'Categories'	=> ['fields' => ['id', 'title']],
 					'Tags',
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
+					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 				])
 				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
 				->where($this->Posts->fromFilter($this->request->query))

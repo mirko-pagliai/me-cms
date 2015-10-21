@@ -65,7 +65,14 @@
 						?>
 					</td>
 					<td class="text-center"><?= $album->description ?></td>
-					<td class="min-width text-center"><?= $album->photo_count ?></td>
+					<td class="min-width text-center">
+						<?php
+							if($album->photo_count) 
+								echo $this->Html->link($album->photo_count, ['controller' => 'Photos', $album->id], ['title' => __d('me_cms', 'View items that belong to this category')]);
+							else
+								echo $album->photo_count;
+						?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
