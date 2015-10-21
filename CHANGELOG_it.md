@@ -2,7 +2,8 @@
 ## 2.1 ramo
 ### 2.1.1-RC3
 * migliorata la console d'installazione;
-* corretto il titolo di alcune azioni.
+* corretto il titolo di alcune azioni;
+* risolto bug filtrando gli utenti per gruppo.
 
 ### 2.1.0-RC2
 * è possibile aggiungere tag agli articoli;

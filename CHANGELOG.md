@@ -2,7 +2,8 @@
 ## 2.1 branch
 ### 2.1.1-RC3
 * improved the installer console;
-* fixed the title of some actions.
+* fixed the title of some actions;
+* fixed bug filtering users by group.
 
 ### 2.1.0-RC2
 * now you can add tags to posts;

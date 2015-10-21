@@ -125,6 +125,10 @@ class UsersTable extends AppTable {
 		if(!empty($query['username']))
 			$conditions[sprintf('%s.username LIKE', $this->alias())] = sprintf('%%%s%%', $query['username']);
 		
+		//"Group" field
+		if(!empty($query['group']))
+			$conditions[sprintf('%s.group_id', $this->alias())] = $query['group'];
+		
 		//"Status" field
 		if(!empty($query['status']))
 			switch($query['status']) {
