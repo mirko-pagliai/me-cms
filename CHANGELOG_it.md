@@ -2,6 +2,7 @@
 ## 2.1 ramo
 ### 2.1.1-RC3
 * migliorata la console d'installazione;
+* risolto bug nella visualizzazione dei tag nel frontend;
 * corretto il titolo di alcune azioni;
 * risolto bug filtrando gli utenti per gruppo.
 
