@@ -289,7 +289,7 @@
 </span><span id="59" class="l"><a href="#59"> 59: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-var">$this</span>, <span class="php-quote">'validTagsLength'</span>]
 </span><span id="60" class="l"><a href="#60"> 60: </a>            ],
 </span><span id="61" class="l"><a href="#61"> 61: </a>            <span class="php-quote">'validTagsChars'</span> =&gt; [
-</span><span id="62" class="l"><a href="#62"> 62: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers'</span>)),
+</span><span id="62" class="l"><a href="#62"> 62: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers, dash'</span>)),
 </span><span id="63" class="l"><a href="#63"> 63: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-var">$this</span>, <span class="php-quote">'validTagsChars'</span>]
 </span><span id="64" class="l"><a href="#64"> 64: </a>            ]
 </span><span id="65" class="l"><a href="#65"> 65: </a>        ]);
@@ -299,7 +299,7 @@
 </span><span id="69" class="l"><a href="#69"> 69: </a>    
 </span><span id="70" class="l"><a href="#70"> 70: </a>    <span class="php-comment">/**
 </span></span><span id="71" class="l"><a href="#71"> 71: </a><span class="php-comment">     * Tags validation method (length).
-</span></span><span id="72" class="l"><a href="#72"> 72: </a><span class="php-comment">     * For each tag, it checks if the tag has between 3 and 20 chars
+</span></span><span id="72" class="l"><a href="#72"> 72: </a><span class="php-comment">     * For each tag, it checks if the tag has a valid lenght
 </span></span><span id="73" class="l"><a href="#73"> 73: </a><span class="php-comment">     * @param string $value Field value
 </span></span><span id="74" class="l"><a href="#74"> 74: </a><span class="php-comment">     * @param array $context Field context
 </span></span><span id="75" class="l"><a href="#75"> 75: </a><span class="php-comment">     * @return bool TRUE if is valid, otherwise FALSE
@@ -319,8 +319,8 @@
 </span><span id="89" class="l"><a href="#89"> 89: </a>    }
 </span><span id="90" class="l"><a href="#90"> 90: </a>    
 </span><span id="91" class="l"><a href="#91"> 91: </a>    <span class="php-comment">/**
-</span></span><span id="92" class="l"><a href="#92"> 92: </a><span class="php-comment">     * Tags validation method (chars).
-</span></span><span id="93" class="l"><a href="#93"> 93: </a><span class="php-comment">     * For each tag, it checks if the tag has only lowercase letters and numbers
+</span></span><span id="92" class="l"><a href="#92"> 92: </a><span class="php-comment">     * Tags validation method (syntax).
+</span></span><span id="93" class="l"><a href="#93"> 93: </a><span class="php-comment">     * For each tag, it checks if the tag has a valid syntax
 </span></span><span id="94" class="l"><a href="#94"> 94: </a><span class="php-comment">     * @param string $value Field value
 </span></span><span id="95" class="l"><a href="#95"> 95: </a><span class="php-comment">     * @param array $context Field context
 </span></span><span id="96" class="l"><a href="#96"> 96: </a><span class="php-comment">     * @return bool TRUE if is valid, otherwise FALSE
@@ -331,8 +331,8 @@
 </span><span id="101" class="l"><a href="#101">101: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'id'</span>]))
 </span><span id="102" class="l"><a href="#102">102: </a>                <span class="php-keyword1">continue</span>;
 </span><span id="103" class="l"><a href="#103">103: </a>            
-</span><span id="104" class="l"><a href="#104">104: </a>            <span class="php-comment">//Checks if the tag has only lowercase letters and numbers</span>
-</span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]) || !(bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9]+$/'</span>, <span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]))
+</span><span id="104" class="l"><a href="#104">104: </a>            <span class="php-comment">//Checks if the tag has only lowercase letters, numbers, dash</span>
+</span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]) || !(bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\-]+$/'</span>, <span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]))
 </span><span id="106" class="l"><a href="#106">106: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
 </span><span id="107" class="l"><a href="#107">107: </a>        }
 </span><span id="108" class="l"><a href="#108">108: </a>        
