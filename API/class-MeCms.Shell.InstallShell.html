@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\View\Helper\MenuBuilderHelper | MeCms API</title>
+	<title>Class MeCms\Shell\InstallShell | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -83,7 +83,7 @@
 
 						</li>
 							</ul></li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeCms.Shell.html">
 						Shell					</a>
 
@@ -93,7 +93,7 @@
 						Utility					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeCms.View.html">
 						View<span></span>
 					</a>
@@ -104,7 +104,7 @@
 						Cell					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeCms.View.Helper.html">
 						Helper					</a>
 
@@ -124,9 +124,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCms.View.Helper.AuthHelper.html">AuthHelper</a></li>
-				<li class="active"><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MenuBuilderHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.MenuDefaultHelper.html">MenuDefaultHelper</a></li>
+				<li class="active"><a href="class-MeCms.Shell.InstallShell.html">InstallShell</a></li>
 			</ul>
 
 
@@ -153,7 +151,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeCms.View.Helper.html" title="Summary of MeCms\View\Helper"><span>Namespace</span></a>
+				<a href="namespace-MeCms.Shell.html" title="Summary of MeCms\Shell"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -170,24 +168,22 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class MenuBuilderHelper</h1>
+	<h1>Class InstallShell</h1>
 
 
 	<div class="description">
-	<p>MenuBuilder Helper</p>
-
-<p>It contains methods to generate menus.</p>
+	<p>Executes some tasks to make the system ready to work</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-Cake\View\Helper
+MeTools\Shell\InstallShell
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\View\Helper\MenuBuilderHelper</span></b>			
+<b><span>MeCms\Shell\InstallShell</span></b>			
 			
 			
 		</dd>
@@ -203,10 +199,10 @@ Cake\View\Helper
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.Helper.html">Helper</a><br>
+		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Shell.html">Shell</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#28-92" title="Go to source code">Helper/MenuBuilderHelper.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Shell.InstallShell.html#28-138" title="Go to source code">InstallShell.php</a>
 		<br>
 	</div>
 
@@ -214,95 +210,184 @@ Cake\View\Helper
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__collapseMenu" id="___collapseMenu">
-
-		<td class="attributes"><code>
-			 protected 
-
-			string
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#___collapseMenu">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#40-62" title="Go to source code">__collapseMenu</a>( <span>string <var>$title</var></span>, <span>array <var>$options</var></span>, <span>array <var>$menu</var></span> )</code>
-
-		<div class="description short">
-			<p>Internal function to render a collapsed menu</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Internal function to render a collapsed menu</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$title</var></dt>
-					<dd>The content to be wrapped by <a> tags</dd>
-					<dt><var>$options</var></dt>
-					<dd>Array of options and HTML attributes</dd>
-					<dt><var>$menu</var></dt>
-					<dd>Menu</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					string<br>Html code
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\View\Helper\HtmlHelper::div()<br>
-						MeTools\View\Helper\HtmlHelper::link()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="render" id="_render">
+	<tr data-order="__construct" id="___construct">
 
 		<td class="attributes"><code>
 			 public 
 
-			string
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#64-91" title="Go to source code">render</a>( <span>array <var>$menu</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#32-56" title="Go to source code">__construct</a>( )</code>
 
 		<div class="description short">
-			<p>Generates and returns a menu</p>
+			<p>Construct.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Generates and returns a menu</p>
+			<p>Construct.</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$menu</var></dt>
-					<dd>Menu data (menu code, title and options)</dd>
-					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code> by default, <code>collapse</code> or <code>dropdown</code>)</dd>
-				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						$links<br>
+						$packages<br>
+						$paths<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="all" id="_all">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_all">#</a>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#58-81" title="Go to source code">all</a>( )</code>
+
+		<div class="description short">
+			<p>Executes all available tasks</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes all available tasks</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Shell\InstallShell::all()<br>
+						<code><a href="class-MeCms.Shell.InstallShell.html#_copyConfig">MeCms\Shell\InstallShell::copyConfig()</a></code><br>
+						<code><a href="class-MeCms.Shell.InstallShell.html#_fixKcfinder">MeCms\Shell\InstallShell::fixKcfinder()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="copyConfig" id="_copyConfig">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_copyConfig">#</a>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#83-102" title="Go to source code">copyConfig</a>( )</code>
+
+		<div class="description short">
+			<p>Copies the configuration files</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Copies the configuration files</p>
+
+
+
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Shell.InstallShell.html#_all">MeCms\Shell\InstallShell::all()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="fixKcfinder" id="_fixKcfinder">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_fixKcfinder">#</a>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#104-123" title="Go to source code">fixKcfinder</a>( )</code>
+
+		<div class="description short">
+			<p>Fixes KCFinder.
+Creates the file <code>vendor/kcfinder/.htaccess</code></p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Fixes KCFinder.
+Creates the file <code>vendor/kcfinder/.htaccess</code></p>
+
+
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						http://kcfinder.sunhater.com/integrate<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Shell.InstallShell.html#_all">MeCms\Shell\InstallShell::all()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOptionParser" id="_getOptionParser">
+
+		<td class="attributes"><code>
+			 public 
+
+			ConsoleOptionParser
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOptionParser">#</a>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#125-137" title="Go to source code">getOptionParser</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the option parser instance and configures it.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the option parser instance and configures it.</p>
+
+
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br>Html code
+					ConsoleOptionParser
 				</div>
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeTools\View\Helper\DropdownHelper::menu()<br>
-						MeTools\View\Helper\HtmlHelper::div()<br>
-						MeTools\View\Helper\HtmlHelper::ul()<br>
+						MeTools\Shell\InstallShell::getOptionParser()<br>
 				</div>
 
 
@@ -322,34 +407,6 @@ Cake\View\Helper
 
 
 
-	<table class="summary properties" id="properties">
-	<caption>Properties summary</caption>
-	<tr data-order="helpers" id="$helpers">
-		<td class="attributes"><code>
-			public  
-			array
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#34-38" title="Go to source code"><var>$helpers</var></a>
-
-			<div class="description short">
-				<p>Helpers</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>Helpers</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#$helpers" class="anchor">#</a>
-				<code>[<span class="php-quote">'MeTools.Dropdown'</span>, <span class="php-quote">'Html'</span> =&gt; [<span class="php-quote">'className'</span> =&gt; <span class="php-quote">'MeTools.Html'</span>]]</code>
-			</div>
-		</td>
-	</tr>
-	</table>
 
 
 
