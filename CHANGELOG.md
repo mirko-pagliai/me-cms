@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.1-RC3
 * in the admin panel, some views have been linked together;
+* tags can contain the dash;
 * improved the installer console;
 * fixed bug in the display of tags in the frontend;
 * fixed the title of some actions;
