@@ -3,7 +3,7 @@
 ### 2.1.1-RC3
 * nel pannello di amministrazione, alcune viste sono state collegate tra loro;
 * i tag possono contenere il trattino;
-* migliorata la console d'installazione;
+* aggiunta la console d'installazione;
 * risolto bug nella visualizzazione dei tag nel frontend;
 * corretto il titolo di alcune azioni;
 * risolto bug filtrando gli utenti per gruppo.
