@@ -85,7 +85,7 @@ return ['MeCms' => [
 		//"Show" options
 		'show' => [
 			//Displays the page created datetime
-			'created' => TRUE,
+			'created' => FALSE,
 			//Displays the Shareaholic social buttons
 			//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
 			'shareaholic' => FALSE			
