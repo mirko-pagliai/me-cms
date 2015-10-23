@@ -5,6 +5,7 @@
 * i tag possono contenere il trattino;
 * aumentato il limite per l'upload delle immagini a 10MB;
 * aggiunta la console d'installazione;
+* ora è possibile utilizzare layout dall'applicazione o layout con nomi differenti;
 * risolto bug nella visualizzazione dei tag nel frontend;
 * corretto il titolo di alcune azioni;
 * risolto bug filtrando gli utenti per gruppo.

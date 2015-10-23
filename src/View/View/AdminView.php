@@ -84,9 +84,10 @@ class AdminView extends AppView {
 	 * @uses layout
 	 * @uses viewVars
 	 */
-	public function render($view = NULL, $layout = NULL) {		
-		//Sets the admin layout
-		$this->layout = 'MeCms.backend';
+	public function render($view = NULL, $layout = NULL) {
+		//Sets the layout
+		if($this->layout === 'default')
+			$this->layout = config('backend.layout');
 		
 		//Sets some view vars
 		$this->viewVars['priorities'] = [

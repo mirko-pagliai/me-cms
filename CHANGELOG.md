@@ -5,6 +5,7 @@
 * tags can contain the dash;
 * increased the limit for uploading images to 10MB;
 * added the installer console;
+* now you can use layouts from application or layouts with different names;
 * fixed bug in the display of tags in the frontend;
 * fixed the title of some actions;
 * fixed bug filtering users by group.

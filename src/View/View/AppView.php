@@ -77,29 +77,17 @@ class AppView extends BaseView {
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
 	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
      * @throws Cake\Core\Exception\Exception
-	 * @uses MeTools\Core\Plugin::path()
 	 * @uses layout
 	 * @uses theme
 	 */
 	public function render($view = NULL, $layout = NULL) {
-		//Enables the theme
+		//Sets the theme
 		if(config('frontend.theme') && !$this->theme)
 			$this->theme = config('frontend.theme');
 		
-		if($this->layout === 'default') {
-			//Sets the layout relative path
-			$path = 'Template'.DS.'Layout'.($this->request->param('_ext') ? DS.$this->request->param('_ext').DS : DS).'frontend.ctp';
-		
-			//It first tries to get the layout from the theme
-			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.$path)))
-				$this->layout = sprintf('%s.frontend', $this->theme);
-			//Otherwise, it tries to get the layout from the application
-			elseif(is_readable(APP.$path))
-				$this->layout = 'frontend';
-			//Otherwise, it gets the layout from the plugin
-			else
-				$this->layout = 'MeCms.frontend';
-		}
+		//Sets the layout
+		if($this->layout === 'default')
+			$this->layout = config('frontend.layout');
 		
 		return parent::render($view, $layout);
 	}
