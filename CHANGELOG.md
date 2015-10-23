@@ -3,6 +3,7 @@
 ### 2.1.1-RC3
 * in the admin panel, some views have been linked together;
 * tags can contain the dash;
+* added page options, including Shareaholic;
 * increased the limit for uploading images to 10MB;
 * added the installer console;
 * now you can use layouts from application or layouts with different names;
