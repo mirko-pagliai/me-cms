@@ -79,7 +79,7 @@
 				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 			]);
 		?>	
-			<div class="form-group to-be-hidden">
+		<div class="form-group to-be-hidden">
 			<?php
 				echo $this->Form->input('tags', [
 					'id'	=> 'tags-output-text',
