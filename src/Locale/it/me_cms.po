@@ -1481,7 +1481,7 @@ msgstr "Trascina qui i file da caricare"
 
 #: Template/Element/backend/uploader/form.ctp:45
 msgid "The file {0} exceeds the maximum limit"
-msgstr "Il file {0}supera la dimensione massima"
+msgstr "Il file {0} supera la dimensione massima"
 
 #: Template/Element/backend/uploader/response.ctp:33
 msgid "Directory: {0}"
