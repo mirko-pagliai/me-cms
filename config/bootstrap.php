@@ -61,8 +61,8 @@ if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Config
 }
 
 //Loads the theme
-if(Configure::read('MeCms.frontend.theme'))
-	\Cake\Core\Plugin::load(Configure::read('MeCms.frontend.theme'));
+if(($theme = Configure::read('MeCms.frontend.theme')) && !\Cake\Core\Plugin::loaded($theme))
+	\Cake\Core\Plugin::load($theme);
 
 /**
  * Cache configuration
