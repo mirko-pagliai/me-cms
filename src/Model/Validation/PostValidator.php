@@ -52,7 +52,7 @@ class PostValidator extends AppValidator {
 		//Text
         $this->requirePresence('text', 'create');
 		
-		//Tag
+		//Tags
         $this->add('tags', [
 			'validTagsLength' => [
 				'message'	=> __d('me_cms', 'Each tag must be between {0} and {1} chars', 3, 20),
