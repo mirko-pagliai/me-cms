@@ -13,7 +13,7 @@ $(function() {
 	var progressBar = $('#uploader .progress');
 	var error = $('#uploader .upload-error');
 	var resultArea = $('#uploader .upload-result');
-	var maxSize = 2097152; //2MB
+	var maxSize = 10485760; //10MB
 
 	var list = [];
 	var totalSize = 0;
