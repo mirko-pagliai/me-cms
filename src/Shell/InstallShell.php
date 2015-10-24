@@ -96,8 +96,7 @@ class InstallShell extends BaseShell {
 			if(@copy(Plugin::path('MeCms', 'config'.DS.$file), $target))
 				$this->success(__d('me_tools', 'The file `{0}` has been copied', rtr($target)));
 			else
-				$this->error(__d('me_tools', 'The file `{0}` has not been copied', rtr($target)));
-				
+				$this->err(__d('me_tools', 'The file `{0}` has not been copied', rtr($target)));
 		}
 	}
 	
@@ -119,7 +118,7 @@ class InstallShell extends BaseShell {
 		</IfModule>'))
 			$this->success(__d('me_tools', 'The file `{0}` has been created', $file));
 		else
-			$this->error(__d('me_tools', 'The file `{0}` has not been created', $file));
+			$this->err(__d('me_tools', 'The file `{0}` has not been created', $file));
 	}
 	
 	/**
