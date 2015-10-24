@@ -64,7 +64,7 @@ class InstallShell extends BaseShell {
 	public function all() {
 		parent::all();
 		
-		if(!empty($this->params['force'])) {
+		if($this->param('force')) {
 			$this->copyConfig();
 			$this->fixKcfinder();
 			
