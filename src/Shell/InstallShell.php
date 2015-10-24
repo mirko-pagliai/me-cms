@@ -90,11 +90,13 @@ class InstallShell extends BaseShell {
 		];
 		
 		foreach($files as $file) {
-			if(file_exists($target = ROOT.DS.'config'.DS.$file))
+			if(file_exists($target = ROOT.DS.'config'.DS.$file)) {
+				$this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
 				continue;
+			}
 						
 			if(@copy(Plugin::path('MeCms', 'config'.DS.$file), $target))
-				$this->success(__d('me_tools', 'The file `{0}` has been copied', rtr($target)));
+				$this->verbose(__d('me_tools', 'The file `{0}` has been copied', rtr($target)));
 			else
 				$this->err(__d('me_tools', 'The file `{0}` has not been copied', rtr($target)));
 		}
@@ -107,7 +109,7 @@ class InstallShell extends BaseShell {
 	 */
 	public function fixKcfinder() {
 		if(file_exists($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
-			return;
+			return $this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
 		
 		if($this->createFile($file, '<IfModule mod_php5.c>
 			php_value session.cache_limiter must-revalidate
@@ -116,9 +118,9 @@ class InstallShell extends BaseShell {
 			php_value session.gc_maxlifetime 14400
 			php_value session.name CAKEPHP
 		</IfModule>'))
-			$this->success(__d('me_tools', 'The file `{0}` has been created', $file));
+			$this->verbose(__d('me_tools', 'The file `{0}` has been created', rtr($file)));
 		else
-			$this->err(__d('me_tools', 'The file `{0}` has not been created', $file));
+			$this->err(__d('me_tools', 'The file `{0}` has not been created', rtr($file)));
 	}
 	
 	/**
