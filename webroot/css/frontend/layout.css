@@ -27,36 +27,36 @@ body {
 /*				Header				*/
 /* -------------------------------- */
 /* Header element */
-header {
+body > header {
     box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .3);
 }
 
 /* Site logo */
-header #logo {
+body > header #logo {
     display: inline-block;
 	max-width: 100%;
     text-decoration: none;
 }
 
 /* Header, logo (as text) */
-header #logo h1 {
+body > header #logo h1 {
     color: #555;
     font-size: 50px;
     padding: 70px 10px 60px;
 }
 
 /* Header, logo (as text) on hover */
-header #logo:hover h1 {
+body > header #logo:hover h1 {
 	color: #333;
 }
 
 /* Header, logo (as image) */
-header #logo img {
+body > header #logo img {
 	padding: 40px 0;
 }
 
 /* Header, topbar */
-header #topbar {
+body > header #topbar {
     background: #eee;
     border: 0;
 	border-radius: 0;
@@ -64,18 +64,18 @@ header #topbar {
 }
 
 /* Header, topbar, links */
-header #topbar .navbar-collapse a {
+body > header #topbar .navbar-collapse a {
 	font-weight: bold;
 }
 
 /* Header, topbar, links on hover */
-header #topbar .navbar-collapse a:hover {
+body > header #topbar .navbar-collapse a:hover {
 	background: #d1d1d1;
 	color: #444;
 }
 	
 /* Header, topbar, links on open elements */
-header #topbar .navbar-collapse li.open > a {
+body > header #topbar .navbar-collapse li.open > a {
 	color: #333;
 	background: #e7e7e7;
 }
@@ -83,12 +83,12 @@ header #topbar .navbar-collapse li.open > a {
 /* Navbar NOT collapsed */
 @media (min-width: 768px) {
 	/* Header, topbar, navbar element */
-	header #topbar .navbar-collapse {
+	body > header #topbar .navbar-collapse {
 		padding: 0;
 	}
 
 	/* Header, topbar, links */
-	header #topbar .navbar-collapse a {
+	body > header #topbar .navbar-collapse a {
 		font-size: 16px;
 		/* Transition for "background" and "color" proprieties */
 		transition: background .25s ease-in-out, color .25s ease-in-out;
@@ -97,13 +97,13 @@ header #topbar .navbar-collapse li.open > a {
 	}
 	
 	/* Header, topbar, dropdown, links */
-	header #topbar .navbar-collapse .dropdown-menu a {
+	body > header #topbar .navbar-collapse .dropdown-menu a {
 		color: #777;
 		padding: 6px 20px;
 	}
 	
 	/* Header, topbar, dropdown, links on hover */
-	header #topbar .navbar-collapse .dropdown-menu a:hover {
+	body > header #topbar .navbar-collapse .dropdown-menu a:hover {
 		background: #d1d1d1;
 		color: #444;
 	}
@@ -164,7 +164,7 @@ header #topbar .navbar-collapse li.open > a {
 /*				Footer				*/
 /* -------------------------------- */
 /* Footer element */
-footer {
+body > footer {
     background: #f2f2f2;
     color: #888;
 	margin-top: 20px;
@@ -173,19 +173,19 @@ footer {
 }
 
 /* Footer, links */
-footer a {
+body > footer a {
 	border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
 }
 
 /* Footer, links on hover */
-footer a:hover {
+body > footer a:hover {
     text-decoration: none;
 }
 
 /* Footer, paragraphs */
-footer p {
+body > footer p {
     font-family: Arial,sans-serif;
     font-size: 12px;
     margin: 0;
