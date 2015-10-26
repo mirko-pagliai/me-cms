@@ -50,9 +50,6 @@
 				'MeTools.default'
 			], ['block' => TRUE]);
 			
-			if(is_readable(WWW_ROOT.'js'.DS.'frontend'.DS.'layout.js'))
-				echo $this->Html->js('frontend/layout');
-			
 			echo $this->fetch('script');
 		?>
 	</head>
