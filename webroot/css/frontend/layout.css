@@ -63,18 +63,18 @@ body > header #topbar {
 	margin-bottom: 30px;
 }
 
-/* Header, topbar, links */
+/* Header, topbar, all links */
 body > header #topbar .navbar-collapse a {
 	font-weight: bold;
 }
 
-/* Header, topbar, links on hover */
+/* Header, topbar, all links on hover */
 body > header #topbar .navbar-collapse a:hover {
 	background: #d1d1d1;
 	color: #444;
 }
 	
-/* Header, topbar, links on open elements */
+/* Header, topbar, open elements, link */
 body > header #topbar .navbar-collapse li.open > a {
 	color: #333;
 	background: #e7e7e7;
@@ -87,7 +87,7 @@ body > header #topbar .navbar-collapse li.open > a {
 		padding: 0;
 	}
 
-	/* Header, topbar, links */
+	/* Header, topbar, all links */
 	body > header #topbar .navbar-collapse a {
 		font-size: 16px;
 		/* Transition for "background" and "color" proprieties */
@@ -96,13 +96,13 @@ body > header #topbar .navbar-collapse li.open > a {
 		-webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
 	}
 	
-	/* Header, topbar, dropdown, links */
+	/* Header, topbar, dropdown menu, links */
 	body > header #topbar .navbar-collapse .dropdown-menu a {
 		color: #777;
 		padding: 6px 20px;
 	}
 	
-	/* Header, topbar, dropdown, links on hover */
+	/* Header, topbar, dropdown menu, links on hover */
 	body > header #topbar .navbar-collapse .dropdown-menu a:hover {
 		background: #d1d1d1;
 		color: #444;
@@ -126,18 +126,21 @@ body > header #topbar .navbar-collapse li.open > a {
 /*			Pagination				*/
 /* -------------------------------- */
 /* Pagination, links and texts */
-.pagination > li > a, .pagination > li > span {
+.pagination > li > a,
+.pagination > li > span {
 	color: #666;
 }
 
 /* Pagination, links and texts on hover */
-.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+.pagination > li > a:hover, .pagination > li > a:focus,
+.pagination > li > span:hover, .pagination > li > span:focus {
 	background: #ddd;
 	color: #666;
 }
 
 /* Pagination, active links and texts */
-.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
+.pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
 	background: #888;
 	border-color: #888;
 	color: #ddd;
