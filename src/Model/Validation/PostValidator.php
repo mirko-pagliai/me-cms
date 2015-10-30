@@ -52,24 +52,24 @@ class PostValidator extends AppValidator {
 		//Text
         $this->requirePresence('text', 'create');
 		
-		//Tag
+		//Tags
         $this->add('tags', [
 			'validTagsLength' => [
 				'message'	=> __d('me_cms', 'Each tag must be between {0} and {1} chars', 3, 20),
 				'rule'		=> [$this, 'validTagsLength']
 			],
 			'validTagsChars' => [
-				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers')),
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
 				'rule'		=> [$this, 'validTagsChars']
 			]
-		]);
+		])->allowEmpty('tags');
 		
         return $this;
 	}
 	
 	/**
 	 * Tags validation method (length).
-	 * For each tag, it checks if the tag has between 3 and 20 chars
+	 * For each tag, it checks if the tag has a valid lenght
 	 * @param string $value Field value
 	 * @param array $context Field context
 	 * @return bool TRUE if is valid, otherwise FALSE
@@ -89,8 +89,8 @@ class PostValidator extends AppValidator {
 	}
 	
 	/**
-	 * Tags validation method (chars).
-	 * For each tag, it checks if the tag has only lowercase letters and numbers
+	 * Tags validation method (syntax).
+	 * For each tag, it checks if the tag has a valid syntax
 	 * @param string $value Field value
 	 * @param array $context Field context
 	 * @return bool TRUE if is valid, otherwise FALSE
@@ -101,8 +101,8 @@ class PostValidator extends AppValidator {
 			if(!empty($tag['id']))
 				continue;
 			
-			//Checks if the tag has only lowercase letters and numbers
-			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9]+$/', $tag['tag']))
+			//Checks if the tag has only lowercase letters, numbers, dash
+			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\-]+$/', $tag['tag']))
 				return FALSE;
 		}
 		

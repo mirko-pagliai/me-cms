@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-10-14 12:09+0000\n"
+"POT-Creation-Date: 2015-10-30 18:55+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "The file was not successfully uploaded"
 msgstr ""
 
-#: Controller/AppController.php:196
+#: Controller/AppController.php:209
 msgid "The file {0} doesn't exist or is not readable"
 msgstr ""
 
@@ -30,16 +30,12 @@ msgstr ""
 msgid "The banner target is missing"
 msgstr ""
 
-#: Controller/PostsController.php:143
+#: Controller/PostsController.php:186
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
-#: Controller/PostsController.php:146
+#: Controller/PostsController.php:189
 msgid "You have to search at least a word of {0} characters"
-msgstr ""
-
-#: Controller/PostsTagsController.php:75
-msgid "Tag {0}"
 msgstr ""
 
 #: Controller/SystemsController.php:41
@@ -275,27 +271,27 @@ msgstr ""
 msgid "{0} is not present into {1}"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:205
+#: Controller/Admin/SystemsController.php:207
 msgid "The cache has been cleared"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:207
+#: Controller/Admin/SystemsController.php:209
 msgid "The cache has not been cleared"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:221
+#: Controller/Admin/SystemsController.php:223
 msgid "The logs have been cleared"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:223
+#: Controller/Admin/SystemsController.php:225
 msgid "The logs have not been deleted"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:237
+#: Controller/Admin/SystemsController.php:239
 msgid "The thumbnails have been deleted"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:239
+#: Controller/Admin/SystemsController.php:241
 msgid "The thumbnails have not been deleted"
 msgstr ""
 
@@ -430,6 +426,8 @@ msgstr ""
 
 #: Model/Validation/AppValidator.php:140
 #: Model/Validation/BannersPositionValidator.php:44
+#: Model/Validation/PostValidator.php:62
+#: Model/Validation/TagValidator.php:44
 #: Model/Validation/UserValidator.php:58
 msgid "lowercase letters, numbers, dash"
 msgstr ""
@@ -449,11 +447,6 @@ msgstr ""
 
 #: Model/Validation/PostValidator.php:58
 msgid "Each tag must be between {0} and {1} chars"
-msgstr ""
-
-#: Model/Validation/PostValidator.php:62
-#: Model/Validation/TagValidator.php:44
-msgid "lowercase letters, numbers"
 msgstr ""
 
 #: Model/Validation/UserValidator.php:67
@@ -482,6 +475,14 @@ msgstr ""
 
 #: Model/Validation/UsersGroupValidator.php:54
 msgid "lowercase letters"
+msgstr ""
+
+#: Shell/InstallShell.php:74
+msgid "Copy configuration files?"
+msgstr ""
+
+#: Shell/InstallShell.php:139
+msgid "it copies the configuration files"
 msgstr ""
 
 #: Template/Admin/Banners/add.ctp:25;28;78
@@ -653,6 +654,16 @@ msgstr ""
 #: Template/Admin/Users/view.ctp:41
 #: Template/Admin/UsersGroups/index.ctp:49
 msgid "Are you sure you want to delete this?"
+msgstr ""
+
+#: Template/Admin/Banners/index.ctp:89
+#: Template/Admin/BannersPositions/index.ctp:57
+#: Template/Admin/PhotosAlbums/index.ctp:71
+#: Template/Admin/Posts/index.ctp:115
+#: Template/Admin/PostsCategories/index.ctp:65
+#: Template/Admin/Users/index.ctp:114
+#: Template/Admin/UsersGroups/index.ctp:57
+msgid "View items that belong to this category"
 msgstr ""
 
 #: Template/Admin/Banners/upload.ctp:25;28
@@ -849,32 +860,32 @@ msgid "Open"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:105
-#: Template/Admin/Posts/index.ctp:120
-#: View/View/AdminView.php:81
+#: Template/Admin/Posts/index.ctp:124
+#: View/View/AdminView.php:94
 msgid "Very low"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:108
-#: Template/Admin/Posts/index.ctp:123
-#: View/View/AdminView.php:82
+#: Template/Admin/Posts/index.ctp:127
+#: View/View/AdminView.php:95
 msgid "Low"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:111
-#: Template/Admin/Posts/index.ctp:126
-#: View/View/AdminView.php:84
+#: Template/Admin/Posts/index.ctp:130
+#: View/View/AdminView.php:97
 msgid "High"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:114
-#: Template/Admin/Posts/index.ctp:129
-#: View/View/AdminView.php:85
+#: Template/Admin/Posts/index.ctp:133
+#: View/View/AdminView.php:98
 msgid "Very high"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:117
-#: Template/Admin/Posts/index.ctp:132
-#: View/View/AdminView.php:83
+#: Template/Admin/Posts/index.ctp:136
+#: View/View/AdminView.php:96
 msgid "Normal"
 msgstr ""
 
@@ -959,9 +970,14 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:88;99
-#: Template/Admin/Posts/edit.ctp:87;99
+#: Template/Admin/Posts/add.ctp:88
+#: Template/Admin/Posts/edit.ctp:87
 msgid "Tags must be at least 3 chars and separated by a space. Only lowercase letters and numbers"
+msgstr ""
+
+#: Template/Admin/Posts/add.ctp:99
+#: Template/Admin/Posts/edit.ctp:99
+msgid "Tags must be at least 3 chars and separated by a space. Only lowercase letters, numbers, dash"
 msgstr ""
 
 #: Template/Admin/Posts/edit.ctp:26;34;114
@@ -972,7 +988,7 @@ msgstr ""
 #: Template/Admin/PostsCategories/index.ctp:36
 #: Template/Admin/Users/index.ctp:74
 #: Template/Admin/Users/view.ctp:74
-#: Template/Posts/index.ctp:25
+#: Template/Posts/index.ctp:50
 #: View/Helper/MenuDefaultHelper.php:60
 msgid "Posts"
 msgstr ""
@@ -983,6 +999,11 @@ msgstr ""
 
 #: Template/Admin/Posts/index.ctp:54
 msgid "all categories"
+msgstr ""
+
+#: Template/Admin/Posts/index.ctp:118
+#: Template/Admin/Users/index.ctp:119
+msgid "View items that belong to this user"
 msgstr ""
 
 #: Template/Admin/PostsCategories/add.ctp:26;31;60
@@ -1403,7 +1424,7 @@ msgstr ""
 msgid "Search posts"
 msgstr ""
 
-#: Template/Cell/Posts/search.ctp:36
+#: Template/Cell/Posts/search.ctp:38
 #: Template/Posts/search.ctp:35;37
 msgid "Search"
 msgstr ""
@@ -1414,7 +1435,7 @@ msgid "Toggle navigation"
 msgstr ""
 
 #: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:68
+#: Template/Layout/frontend.ctp:66
 msgid "Homepage"
 msgstr ""
 
@@ -1468,7 +1489,7 @@ msgid "Posted on {0}"
 msgstr ""
 
 #: Template/Element/frontend/views/page.ctp:56
-#: Template/Element/frontend/views/post.ctp:80
+#: Template/Element/frontend/views/post.ctp:81
 msgid "Read more"
 msgstr ""
 
@@ -1566,12 +1587,28 @@ msgstr ""
 msgid "{0} photos"
 msgstr ""
 
+#: Template/Posts/index.ctp:34
+msgid "Tag {0}"
+msgstr ""
+
+#: Template/Posts/index.ctp:40
+msgid "Posts of today"
+msgstr ""
+
+#: Template/Posts/index.ctp:42
+msgid "Posts of yesterday"
+msgstr ""
+
+#: Template/Posts/index.ctp:44
+msgid "Posts of {0}"
+msgstr ""
+
 #: Template/Posts/search.ctp:44
 msgid "You have searched for: {0}"
 msgstr ""
 
 #: Template/Posts/rss/rss.ctp:30;32
-#: View/View/AppView.php:122
+#: View/View/AppView.php:111
 msgid "Latest posts"
 msgstr ""
 

@@ -31,8 +31,8 @@
 				echo $this->Html->h4($this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]), ['class' => 'content-subtitle']);
 		?>
 		<div class="content-info">
-			<?php
-				if(!empty($page->created))
+			<?php				
+				if(config('page.show.created') && !empty($page->created))
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $page->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
@@ -56,4 +56,9 @@
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $page->slug], ['class' => ' readmore']);
 		?>
 	</div>
+	<?php
+		if(config('page.show.shareaholic') && config('shareaholic.app_id'))
+			if($this->request->isAction('view', 'Pges') && !$this->request->isAjax())
+				echo $this->Html->shareaholic(config('shareaholic.app_id'));
+	?>
 </div>

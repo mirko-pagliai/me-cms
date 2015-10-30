@@ -43,6 +43,11 @@
 						</li>
 							</ul></li>
 				<li class="main">
+					<a href="namespace-MeCms.Error.html">
+						Error					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
 
@@ -79,6 +84,11 @@
 
 						</li>
 							</ul></li>
+				<li class="main">
+					<a href="namespace-MeCms.Shell.html">
+						Shell					</a>
+
+						</li>
 				<li class="main">
 					<a href="namespace-MeCms.Utility.html">
 						Utility					</a>
@@ -138,6 +148,7 @@
 				<li><a href="class-MeCms.Controller.PostsTagsController.html">MeCms\Controller\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">MeCms\Controller\SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">MeCms\Controller\UsersController</a></li>
+				<li><a href="class-MeCms.Error.ExceptionRenderer.html">MeCms\Error\ExceptionRenderer</a></li>
 				<li><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></li>
 				<li><a href="class-MeCms.Mailer.Mailer.html">MeCms\Mailer\Mailer</a></li>
 				<li><a href="class-MeCms.Mailer.UserMailer.html">MeCms\Mailer\UserMailer</a></li>
@@ -176,6 +187,7 @@
 				<li><a href="class-MeCms.Model.Validation.TagValidator.html">MeCms\Model\Validation\TagValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
+				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
@@ -305,7 +317,7 @@
 </span><span id="75" class="l"><a href="#75"> 75: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> index() {
 </span><span id="76" class="l"><a href="#76"> 76: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'users'</span>, <span class="php-var">$this</span>-&gt;paginate(
 </span><span id="77" class="l"><a href="#77"> 77: </a>            <span class="php-var">$this</span>-&gt;Users-&gt;find()
-</span><span id="78" class="l"><a href="#78"> 78: </a>                -&gt;contain([<span class="php-quote">'Groups'</span> =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'label'</span>]]])
+</span><span id="78" class="l"><a href="#78"> 78: </a>                -&gt;contain([<span class="php-quote">'Groups'</span> =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'label'</span>]]])
 </span><span id="79" class="l"><a href="#79"> 79: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'username'</span>, <span class="php-quote">'email'</span>, <span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>, <span class="php-quote">'active'</span>, <span class="php-quote">'banned'</span>, <span class="php-quote">'post_count'</span>, <span class="php-quote">'created'</span>])
 </span><span id="80" class="l"><a href="#80"> 80: </a>                -&gt;where(<span class="php-var">$this</span>-&gt;Users-&gt;fromFilter(<span class="php-var">$this</span>-&gt;request-&gt;query))
 </span><span id="81" class="l"><a href="#81"> 81: </a>                -&gt;order([<span class="php-quote">'Users.username'</span> =&gt; <span class="php-quote">'ASC'</span>])
@@ -465,6 +477,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?3e612ed03f080f97460d55e4917536c0f0ba4e2c"></script>
+<script src="elementlist.js?eac6e9793984669b018d8eaab427de8d58af640d"></script>
 </body>
 </html>

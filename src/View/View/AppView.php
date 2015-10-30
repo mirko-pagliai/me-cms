@@ -52,7 +52,7 @@ class AppView extends BaseView {
 
 	/**
      * Initialization hook method
-	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_initialize
+	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_initialize
 	 * @uses App\View\AppView::initialize()
 	 */
     public function initialize() {
@@ -75,31 +75,19 @@ class AppView extends BaseView {
 	 * @param string|NULL $view Name of view file to use
 	 * @param string|NULL $layout Layout to use
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
-	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_render
+	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
      * @throws Cake\Core\Exception\Exception
-	 * @uses MeTools\Core\Plugin::path()
 	 * @uses layout
 	 * @uses theme
 	 */
 	public function render($view = NULL, $layout = NULL) {
-		//Enables the theme
+		//Sets the theme
 		if(config('frontend.theme') && !$this->theme)
 			$this->theme = config('frontend.theme');
 		
-		if($this->layout === 'default') {
-			//Sets the layout relative path
-			$path = 'Template'.DS.'Layout'.($this->request->param('_ext') ? DS.$this->request->param('_ext').DS : DS).'frontend.ctp';
-		
-			//It first tries to get the layout from the theme
-			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.$path)))
-				$this->layout = sprintf('%s.frontend', $this->theme);
-			//Otherwise, it tries to get the layout from the application
-			elseif(is_readable(APP.$path))
-				$this->layout = 'frontend';
-			//Otherwise, it gets the layout from the plugin
-			else
-				$this->layout = 'MeCms.frontend';
-		}
+		//Sets the layout
+		if($this->layout === 'default')
+			$this->layout = config('frontend.layout');
 		
 		return parent::render($view, $layout);
 	}
@@ -109,7 +97,7 @@ class AppView extends BaseView {
 	 * @param string $content Content to render in a view, wrapped by the surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.0/source-class-Cake.View.View.html#477-513
+	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
      * @throws Cake\Core\Exception\Exception
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses _getTitleForLayout()

@@ -19,7 +19,7 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @see			http://api.cakephp.org/3.0/class-Cake.Mailer.Mailer.html Mailer
+ * @see			http://api.cakephp.org/3.1/class-Cake.Mailer.Mailer.html Mailer
  */
 namespace MeCms\Mailer;
 
@@ -28,7 +28,7 @@ use Cake\Mailer\Mailer as BaseMailer;
 /**
  * Mailer classes let you encapsulate related Email logic into a reusable.
  * 
- * Rewrites {@link http://api.cakephp.org/3.0/class-Cake.Mailer.Mailer.html Mailer}.
+ * Rewrites {@link http://api.cakephp.org/3.1/class-Cake.Mailer.Mailer.html Mailer}.
  */
 class Mailer extends BaseMailer {
 	/**

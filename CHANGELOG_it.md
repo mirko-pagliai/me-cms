@@ -1,5 +1,16 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.1-RC3
+* nel pannello di amministrazione, alcune viste sono state collegate tra loro;
+* i tag possono contenere il trattino;
+* aggiunte le opzioni per le pagine, incluso Shareaholic;
+* aumentato il limite per l'upload delle immagini a 10MB;
+* aggiunta la console d'installazione;
+* ora è possibile utilizzare layout dall'applicazione o layout con nomi differenti;
+* risolto bug nella visualizzazione dei tag nel frontend;
+* corretto il titolo di alcune azioni;
+* risolto bug filtrando gli utenti per gruppo.
+
 ### 2.1.0-RC2
 * è possibile aggiungere tag agli articoli;
 * è possibile elencare gli articoli per data;

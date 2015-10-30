@@ -75,7 +75,7 @@ class UsersController extends AppController {
     public function index() {
 		$this->set('users', $this->paginate(
 			$this->Users->find()
-				->contain(['Groups' => ['fields' => ['label']]])
+				->contain(['Groups' => ['fields' => ['id', 'label']]])
 				->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
 				->where($this->Users->fromFilter($this->request->query))
 				->order(['Users.username' => 'ASC'])

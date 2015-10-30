@@ -54,7 +54,7 @@ class BannersController extends AppController {
 			$this->set('positions', $positions = $this->Banners->Positions->getList());
 		
 			//Checks for positions
-			if(empty($positions)) {
+			if(empty($positions) && !$this->request->isAction('index')) {
 				$this->Flash->alert(__d('me_cms', 'Before you can manage banners, you have to create at least a banner position'));
 				$this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
 			}
@@ -88,7 +88,7 @@ class BannersController extends AppController {
     public function index() {
 		$this->set('banners', $this->paginate(
 			$this->Banners->find()
-				->contain(['Positions' => ['fields' => ['name']]])
+				->contain(['Positions' => ['fields' => ['id', 'name']]])
 				->select(['id', 'filename', 'target', 'description', 'active', 'click_count'])
 				->where($this->Banners->fromFilter($this->request->query))
 				->order(['Banners.filename' => 'ASC'])

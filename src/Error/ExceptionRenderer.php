@@ -19,7 +19,7 @@
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @see			http://api.cakephp.org/3.0/class-Cake.Error.ExceptionRenderer.html ExceptionRenderer
+ * @see			http://api.cakephp.org/3.1/class-Cake.Error.ExceptionRenderer.html ExceptionRenderer
  */
 namespace MeCms\Error;
 
@@ -31,7 +31,7 @@ use Cake\Error\ExceptionRenderer as BaseExceptionRenderer;
  * When debug is false a CakeException will render 404 or 500 errors. 
  * If an uncaught exception is thrown and it is a type that ExceptionHandler does not know about it will be treated as a 500 error.
  * 
- * Rewrites {@link http://api.cakephp.org/3.0/class-Cake.Error.ExceptionRenderer.html ExceptionRenderer}.
+ * Rewrites {@link http://api.cakephp.org/3.1/class-Cake.Error.ExceptionRenderer.html ExceptionRenderer}.
  */
 class ExceptionRenderer extends BaseExceptionRenderer {
 	/**

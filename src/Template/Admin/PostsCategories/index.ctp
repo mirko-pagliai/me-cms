@@ -59,7 +59,14 @@
 						?>
 					</td>
 					<td class="text-center"><?= empty($category->parent->title) ? NULL : $category->parent->title ?></td>
-					<td class="text-center"><?= $category->post_count ?></td>
+					<td class="min-width text-center">
+						<?php
+							if($category->post_count) 
+								echo $this->Html->link($category->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['category' => $category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]);
+							else
+								echo $category->post_count;
+						?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

@@ -72,7 +72,7 @@ class PostsTagsController extends AppController {
 		else
 			$this->request->params['paging'] = $paging;
 		
-		$this->set(am(['title' => __d('me_cms', 'Tag {0}', $tag)], compact('posts')));
+		$this->set(compact('posts'));
 		
 		//Renders on a different view
 		$this->render('Posts/index');

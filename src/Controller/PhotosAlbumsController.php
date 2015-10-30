@@ -43,10 +43,10 @@ class PhotosAlbumsController extends AppController {
 			->order(['title' => 'ASC'])
 			->cache('albums_index', 'photos')
 			->all()
-		);	
+		);
 		
 		//If there is only one album, redirects to that album
-		if($albums->count() < 2)
+		if($albums->count() && $albums->count() < 2)
 			$this->redirect(['_name' => 'album', $albums->toArray()[0]->slug]);
     }
 	

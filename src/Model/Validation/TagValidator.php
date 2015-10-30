@@ -41,7 +41,7 @@ class TagValidator extends AppValidator {
 				'rule'		=> ['lengthBetween', 3, 20]
 			],
 			'validTag' => [
-				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers')),
+				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
 				'rule'		=> [$this, 'validTag']
 			]
 		]);
@@ -51,13 +51,13 @@ class TagValidator extends AppValidator {
 	
 	/**
 	 * Tag validation method.
-	 * Checks if the tag is a valid tag.
+	 * Checks if the tag is a valid syntax.
 	 * @param string $value Field value
 	 * @param array $context Field context
 	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function validTag($value, $context) {
-		//Lowercase letters, numbers
-		return (bool) preg_match('/^[a-z0-9]+$/', $value);
+		//Lowercase letters, numbers, dash
+		return (bool) preg_match('/^[a-z0-9\-]+$/', $value);
 	}
 }

@@ -110,8 +110,17 @@
 					</td>
 					<td class="text-center"><?= $user->full_name ?></td>
 					<td class="text-center"><?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?></td>
-					<td class="text-center"><?= $user->group->label ?></td>
-					<td class="min-width text-center"><?= $user->post_count ?></td>
+					<td class="text-center">
+						<?= $this->Html->link($user->group->label, ['?' => ['group' => $user->group->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+					</td>
+					<td class="min-width text-center">
+						<?php
+							if($user->post_count) 
+								echo $this->Html->link($user->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]);
+							else
+								echo $user->post_count;
+						?>
+					</td>
 					<td class="min-width text-center"><?= $user->created->i18nFormat(config('main.datetime.long')) ?></td>
 				</tr>
 			<?php endforeach; ?>

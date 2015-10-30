@@ -69,7 +69,7 @@ class PostsController extends AppController {
     }
 	
 	/**
-	 * List posts by a date
+	 * Lists posts by a date
 	 * @param int $year Year
 	 * @param int $month Month
 	 * @param int $day Day

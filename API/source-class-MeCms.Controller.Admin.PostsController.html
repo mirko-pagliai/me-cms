@@ -43,6 +43,11 @@
 						</li>
 							</ul></li>
 				<li class="main">
+					<a href="namespace-MeCms.Error.html">
+						Error					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
 
@@ -79,6 +84,11 @@
 
 						</li>
 							</ul></li>
+				<li class="main">
+					<a href="namespace-MeCms.Shell.html">
+						Shell					</a>
+
+						</li>
 				<li class="main">
 					<a href="namespace-MeCms.Utility.html">
 						Utility					</a>
@@ -138,6 +148,7 @@
 				<li><a href="class-MeCms.Controller.PostsTagsController.html">MeCms\Controller\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">MeCms\Controller\SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">MeCms\Controller\UsersController</a></li>
+				<li><a href="class-MeCms.Error.ExceptionRenderer.html">MeCms\Error\ExceptionRenderer</a></li>
 				<li><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></li>
 				<li><a href="class-MeCms.Mailer.Mailer.html">MeCms\Mailer\Mailer</a></li>
 				<li><a href="class-MeCms.Mailer.UserMailer.html">MeCms\Mailer\UserMailer</a></li>
@@ -176,6 +187,7 @@
 				<li><a href="class-MeCms.Model.Validation.TagValidator.html">MeCms\Model\Validation\TagValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
+				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
@@ -284,7 +296,7 @@
 </span><span id="54" class="l"><a href="#54"> 54: </a>        }
 </span><span id="55" class="l"><a href="#55"> 55: </a>        
 </span><span id="56" class="l"><a href="#56"> 56: </a>        <span class="php-comment">//Checks for categories</span>
-</span><span id="57" class="l"><a href="#57"> 57: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$categories</span>) &amp;&amp; <span class="php-keyword1">empty</span>(<span class="php-var">$categories</span>)) {
+</span><span id="57" class="l"><a href="#57"> 57: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$categories</span>) &amp;&amp; <span class="php-keyword1">empty</span>(<span class="php-var">$categories</span>) &amp;&amp; !<span class="php-var">$this</span>-&gt;request-&gt;isAction(<span class="php-quote">'index'</span>)) {
 </span><span id="58" class="l"><a href="#58"> 58: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;alert(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Before you can manage posts, you have to create at least a category'</span>));
 </span><span id="59" class="l"><a href="#59"> 59: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'PostsCategories'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>]);
 </span><span id="60" class="l"><a href="#60"> 60: </a>        }
@@ -300,7 +312,7 @@
 </span></span><span id="70" class="l"><a href="#70"> 70: </a><span class="php-comment">     * Called after the controller action is run, but before the view is rendered.
 </span></span><span id="71" class="l"><a href="#71"> 71: </a><span class="php-comment">     * You can use this method to perform logic or set view variables that are required on every request.
 </span></span><span id="72" class="l"><a href="#72"> 72: </a><span class="php-comment">     * @param \Cake\Event\Event $event An Event instance
-</span></span><span id="73" class="l"><a href="#73"> 73: </a><span class="php-comment">     * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+</span></span><span id="73" class="l"><a href="#73"> 73: </a><span class="php-comment">     * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
 </span></span><span id="74" class="l"><a href="#74"> 74: </a><span class="php-comment">     * @uses MeCms\Controller\AppController::beforeRender()
 </span></span><span id="75" class="l"><a href="#75"> 75: </a><span class="php-comment">     * @uses MeCms\Controller\Component\KcFinderComponent::configure()
 </span></span><span id="76" class="l"><a href="#76"> 76: </a><span class="php-comment">     */</span>
@@ -342,9 +354,9 @@
 </span><span id="112" class="l"><a href="#112">112: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'posts'</span>, <span class="php-var">$this</span>-&gt;paginate(
 </span><span id="113" class="l"><a href="#113">113: </a>            <span class="php-var">$this</span>-&gt;Posts-&gt;find()
 </span><span id="114" class="l"><a href="#114">114: </a>                -&gt;contain([
-</span><span id="115" class="l"><a href="#115">115: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'title'</span>]],
+</span><span id="115" class="l"><a href="#115">115: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>]],
 </span><span id="116" class="l"><a href="#116">116: </a>                    <span class="php-quote">'Tags'</span>,
-</span><span id="117" class="l"><a href="#117">117: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
+</span><span id="117" class="l"><a href="#117">117: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'id'</span>, <span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
 </span><span id="118" class="l"><a href="#118">118: </a>                ])
 </span><span id="119" class="l"><a href="#119">119: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'priority'</span>, <span class="php-quote">'active'</span>, <span class="php-quote">'created'</span>])
 </span><span id="120" class="l"><a href="#120">120: </a>                -&gt;where(<span class="php-var">$this</span>-&gt;Posts-&gt;fromFilter(<span class="php-var">$this</span>-&gt;request-&gt;query))
@@ -440,6 +452,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?3e612ed03f080f97460d55e4917536c0f0ba4e2c"></script>
+<script src="elementlist.js?eac6e9793984669b018d8eaab427de8d58af640d"></script>
 </body>
 </html>

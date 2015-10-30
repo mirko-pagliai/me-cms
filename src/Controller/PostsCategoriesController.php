@@ -81,9 +81,7 @@ class PostsCategoriesController extends AppController {
 		else
 			$this->request->params['paging'] = $paging;
 		
-		$this->set(am([
-			'title' => empty($posts[0]->category->title) ? NULL : $posts[0]->category->title
-		], compact('posts')));
+		$this->set(compact('posts'));
 		
 		//Renders on a different view
 		$this->render('Posts/index');

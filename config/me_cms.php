@@ -2,6 +2,7 @@
 return ['MeCms' => [
 	//Backend
 	'backend' => [
+		'layout' => 'MeCms.backend',
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
 		//Number of records to show per page
@@ -19,6 +20,9 @@ return ['MeCms' => [
 	'frontend' => [
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
+		//Layout you want to use for the backend
+		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
+		'layout' => 'MeCms.frontend',
 		//Contact form (enabled or disabled).
 		'contact_form' => TRUE,
 		//Fancybox for photos
@@ -37,7 +41,7 @@ return ['MeCms' => [
 		'records_for_searches' => 20,
 		//Automatically adds the meta tag for RSS resources
 		'rss_meta' => TRUE,
-		//Theme. Must be located in `APP/View/Themed/`
+		//Theme. Must be located in `APP/plugins/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
 		'truncate_to' => 1000
@@ -75,6 +79,17 @@ return ['MeCms' => [
 		'timezone' => 'UTC',
 		//Site title
 		'title' => 'MeCms'
+	],
+	//Pages
+	'page' => [
+		//"Show" options
+		'show' => [
+			//Displays the page created datetime
+			'created' => FALSE,
+			//Displays the Shareaholic social buttons
+			//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
+			'shareaholic' => FALSE			
+		]
 	],
 	//Posts
 	'post' => [

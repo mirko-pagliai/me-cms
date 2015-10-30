@@ -79,7 +79,7 @@
 				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
 			]);
 		?>	
-			<div class="form-group to-be-hidden">
+		<div class="form-group to-be-hidden">
 			<?php
 				echo $this->Form->input('tags', [
 					'id'	=> 'tags-output-text',
@@ -96,7 +96,7 @@
 					'button'	=> $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus', 'id' => 'tags-input-button']),
 					'id'		=> 'tags-input-text',
 					'label'		=> FALSE,
-					'tip'		=> __d('me_cms', 'Tags must be at least 3 chars and separated by a space. Only lowercase letters and numbers')
+					'tip'		=> __d('me_cms', 'Tags must be at least 3 chars and separated by a space. Only lowercase letters, numbers, dash')
 				]);
 				
 				//Tags error

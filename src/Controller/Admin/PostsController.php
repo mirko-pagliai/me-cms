@@ -54,7 +54,7 @@ class PostsController extends AppController {
 		}
 		
 		//Checks for categories
-		if(isset($categories) && empty($categories)) {
+		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
 			$this->Flash->alert(__d('me_cms', 'Before you can manage posts, you have to create at least a category'));
 			$this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
@@ -70,7 +70,7 @@ class PostsController extends AppController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses MeCms\Controller\AppController::beforeRender()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::configure()
 	 */
@@ -112,9 +112,9 @@ class PostsController extends AppController {
 		$this->set('posts', $this->paginate(
 			$this->Posts->find()
 				->contain([
-					'Categories'	=> ['fields' => ['title']],
+					'Categories'	=> ['fields' => ['id', 'title']],
 					'Tags',
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
+					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 				])
 				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
 				->where($this->Posts->fromFilter($this->request->query))

@@ -59,7 +59,7 @@ $(function() {
 			for (var i=0, l=from.length ; i<l ; i++)
 				tag = tag.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		
-			tag = tag.replace(/[^a-z0-9]/g, '')	//Removes invalid chars
+			tag = tag.replace(/[^a-z0-9\-]/g, '')	//Removes invalid chars
 		
 			//Pushes the tag on the list of tags
 			listOfTags.push({key:counter, value:tag});

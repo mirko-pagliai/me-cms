@@ -111,8 +111,12 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $post->category->title ?></td>
-					<td class="text-center"><?= $post->user->full_name ?></td>
+					<td class="text-center">
+						<?= $this->Html->link($post->category->title, ['?' => ['category' => $post->category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+					</td>
+					<td class="text-center">
+						<?= $this->Html->link($post->user->full_name, ['?' => ['user' => $post->user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]) ?>
+					</td>
 					<td class="min-width text-center">
 						<?php
 							switch($post->priority) {
