@@ -136,8 +136,8 @@ class InstallShell extends BaseShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-			'copyConfig'	=> ['help' => __d('me_cms', 'it copies the configuration file')],
-			'fixKcfinder'	=> ['help' => __d('me_cms', 'it fixes {0}', 'KCFinder')]
+			'copyConfig'	=> ['help' => __d('me_cms', 'it copies the configuration files')],
+			'fixKcfinder'	=> ['help' => __d('me_tools', 'it fixes `{0}`', 'KCFinder')]
 		]);
 	}
 }
