@@ -75,7 +75,7 @@ class InstallShell extends BaseShell {
 		if(in_array($ask, ['Y', 'y']))
 			$this->copyConfig();
 		
-		$ask = $this->in(__d('me_cms', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
+		$ask = $this->in(__d('me_tools', 'Fix `{0}`?', 'KCFinder'), ['Y', 'n'], 'Y');
 		if(in_array($ask, ['Y', 'y']))
 			$this->fixKcfinder();
 	}
