@@ -110,7 +110,7 @@ class InstallShell extends BaseShell {
 	public function fixKcfinder() {
 		//Checks for KCFinder
 		if(!is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'))
-			return $this->err(__d('me_tools', 'I can\'t find {0}', 'KCFinder'));
+			return $this->err(__d('me_tools', 'I can\'t find `{0}`', 'KCFinder'));
 		
 		if(is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
 			return $this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
