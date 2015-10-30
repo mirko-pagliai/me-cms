@@ -5,8 +5,8 @@
     "type": "cakephp-plugin",
     "license": "AGPL",
 	"authors": [{
-            "name": "Mirko Pagliai",
-            "email": "mirko.pagliai@gmail.com"
+		"name": "Mirko Pagliai",
+		"email": "mirko.pagliai@gmail.com"
     }],
 	"require": {
         "mirko-pagliai/me-tools": "2.1.1-RC3",
