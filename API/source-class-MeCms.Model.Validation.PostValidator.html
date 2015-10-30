@@ -294,7 +294,7 @@
 </span><span id="52" class="l"><a href="#52"> 52: </a>        <span class="php-comment">//Text</span>
 </span><span id="53" class="l"><a href="#53"> 53: </a>        <span class="php-var">$this</span>-&gt;requirePresence(<span class="php-quote">'text'</span>, <span class="php-quote">'create'</span>);
 </span><span id="54" class="l"><a href="#54"> 54: </a>        
-</span><span id="55" class="l"><a href="#55"> 55: </a>        <span class="php-comment">//Tag</span>
+</span><span id="55" class="l"><a href="#55"> 55: </a>        <span class="php-comment">//Tags</span>
 </span><span id="56" class="l"><a href="#56"> 56: </a>        <span class="php-var">$this</span>-&gt;add(<span class="php-quote">'tags'</span>, [
 </span><span id="57" class="l"><a href="#57"> 57: </a>            <span class="php-quote">'validTagsLength'</span> =&gt; [
 </span><span id="58" class="l"><a href="#58"> 58: </a>                <span class="php-quote">'message'</span>   =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Each tag must be between {0} and {1} chars'</span>, <span class="php-num">3</span>, <span class="php-num">20</span>),
@@ -304,7 +304,7 @@
 </span><span id="62" class="l"><a href="#62"> 62: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers, dash'</span>)),
 </span><span id="63" class="l"><a href="#63"> 63: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-var">$this</span>, <span class="php-quote">'validTagsChars'</span>]
 </span><span id="64" class="l"><a href="#64"> 64: </a>            ]
-</span><span id="65" class="l"><a href="#65"> 65: </a>        ]);
+</span><span id="65" class="l"><a href="#65"> 65: </a>        ])-&gt;allowEmpty(<span class="php-quote">'tags'</span>);
 </span><span id="66" class="l"><a href="#66"> 66: </a>        
 </span><span id="67" class="l"><a href="#67"> 67: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
 </span><span id="68" class="l"><a href="#68"> 68: </a>    }
