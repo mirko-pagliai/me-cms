@@ -32,7 +32,7 @@
 		?>
 		<div class="content-info">
 			<?php				
-				if(config('page.show.created') && !empty($page->created))
+				if(config('page.created') && !empty($page->created))
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $page->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
@@ -57,7 +57,7 @@
 		?>
 	</div>
 	<?php
-		if(config('page.show.shareaholic') && config('shareaholic.app_id'))
+		if(config('page.shareaholic') && config('shareaholic.app_id'))
 			if($this->request->isAction('view', 'Pges') && !$this->request->isAjax())
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>
