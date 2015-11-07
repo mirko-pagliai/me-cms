@@ -73,7 +73,7 @@ class KcFinderComponent extends Component {
 			'jpegQuality'			=> 100,
 			'uploadDir'				=> WWW_ROOT.'files',
 			'uploadURL'				=> Router::url('/files', TRUE),
-			'types'					=> Configure::read('MeCms.kcfinder.types')
+			'types'					=> config('kcfinder.types')
 		];
 		
 		//If the user is not and admin
