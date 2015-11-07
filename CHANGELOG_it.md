@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.2
+* migliorata l'integrazione con KCFinder. Ora tutte le directory vengono lette automaticamente.
+
 ### 2.1.1-RC3
 * nel pannello di amministrazione, alcune viste sono state collegate tra loro;
 * i tag possono contenere il trattino;

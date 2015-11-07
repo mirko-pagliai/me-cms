@@ -57,40 +57,37 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Media browser with KCFinder
-	 * @uses MeCms\Controller\Component\KcFinderComponent::check()
+	 * @uses MeCms\Controller\Component\KcFinderComponent::checkKcfinder()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::checkFiles()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::configure()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::filesPath()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::path()
+	 * @uses MeCms\Controller\Component\KcFinderComponent::getFilesPath()
+	 * @uses MeCms\Controller\Component\KcFinderComponent::getKcfinderPath()
+	 * @uses MeCms\Controller\Component\KcFinderComponent::getTypes()
 	 */
 	public function browser() {
 		//Loads the KcFinder component
 		$this->loadComponent('MeCms.KcFinder');
 		
 		//Checks for KCFinder
-		if(!$this->KcFinder->check()) {
-			$this->Flash->error(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->path())));
+		if(!$this->KcFinder->checkKcfinder()) {
+			$this->Flash->error(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		
 		//Checks for the files directory (`APP/webroot/files`)
 		if(!$this->KcFinder->checkFiles()) {
-			$this->Flash->error(__d('me_cms', 'The directory {0} is not readable or writable', rtr($this->KcFinder->filesPath())));
+			$this->Flash->error(__d('me_cms', 'The directory {0} is not readable or writable', rtr($this->KcFinder->getFilesPath())));
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		
-		//Configures KCFinder
-		$this->KcFinder->configure();
-		
 		//Gets the type from the query and the types from configuration
 		$type = $this->request->query('type');
-		$types = config('kcfinder.types');
+		$types = $this->KcFinder->getTypes();
 		
 		$locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
 		
 		//Checks the type, then sets the KCFinder path
 		if($type && array_key_exists($type, $types))
-			$this->set('kcfinder', Router::url('/vendor/', TRUE).sprintf('kcfinder/browse.php?lang=%s&type=%s', empty($locale) ? 'en' : $locale, $type));
+			$this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', TRUE), empty($locale) ? 'en' : $locale, $type));
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}

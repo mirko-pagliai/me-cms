@@ -48,8 +48,8 @@ return ['MeCms' => [
 	],
 	//KCFinder
 	'kcfinder' => [
-		//KCFinder types. See http://kcfinder.sunhater.com/install#_types
-		'types' => ['images' => '*img']
+		//Here you can rewrite the configuration for KCFinder.
+		//See http://kcfinder.sunhater.com/install#_types
 	],
 	//Main
 	'main' => [
