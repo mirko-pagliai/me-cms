@@ -14,21 +14,6 @@ function getAvailableHeight() {
 }
 
 /**
- * Sets the height for the container elements.
- * Specifically, it sets the height of the content and of the sidebar.
- */
-function setContainerHeight() {
-	//Gets the maximum height available
-	var availableHeight = getAvailableHeight();
-	
-	//The content has the maximum height available
-	$('#content').css('min-height', availableHeight);
-	
-	//The sidebar height is the maximum available height or the content height, if this is greater
-	$('#sidebar').css('min-height', availableHeight > $('#content').height() ? availableHeight : $('#content').height());
-}
-
-/**
  * Sets the height for the KCFinder i frame.
  */
 function setKcfinderHeight() {
@@ -51,22 +36,19 @@ function setKcfinderHeight() {
 
 //On windows load and resize
 $(window).on('load resize', function() {
-	//Sets the height for the container elements (content and sidebar)
-	setContainerHeight();
+	//Set the maximum height available for the content
+	$('#content').css('min-height', getAvailableHeight());
+	
+	//Sets the height for the KCFinder iframe
+	setKcfinderHeight();
 });
 
 $(function() {
-	//Sets the height for the KCFinder iframe
-	setKcfinderHeight();
-	
 	//Adds the "data-parent" attribute to all links of the sidebar
 	$('#sidebar a').attr('data-parent', '#sidebar');
-	
-	//Gets the sidebar position
-	var sidebarPosition = $('#sidebar').position();
-	
+		
 	//Sidebar affix
-	$('#sidebar').affix({ offset: { top: sidebarPosition.top }});
+	$('#sidebar').affix({ offset: { top: $('#sidebar').position().top }});
 	
 	//Checks if there is the cookie of the last open menu
 	if($.cookie('sidebar-lastmenu')) {
