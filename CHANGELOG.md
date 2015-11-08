@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.2
+* fixed a serious bug when trying to re-sort the results of paginated records;
 * filter forms are automatically hidden;
 * the integration with KCFinder has been improved. Now all directories are read automatically.
 

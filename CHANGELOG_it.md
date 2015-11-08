@@ -1,6 +1,7 @@
 # 2.x ramo
 ## 2.1 ramo
 ### 2.1.2
+* risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * i form filtro sono automaticamente nascosti;
 * migliorata l'integrazione con KCFinder. Ora tutte le directory vengono lette automaticamente.
 

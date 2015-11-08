@@ -44,11 +44,12 @@ class UsersGroupsController extends AppController {
 	/**
      * Lists usersGroups
      */
-    public function index() {		
+    public function index() {
+		$this->paginate['order'] = ['UsersGroups.name' => 'ASC'];
+		
 		$this->set('groups', $this->paginate(
 			$this->UsersGroups->find()
 				->select(['id', 'name', 'label', 'user_count'])
-				->order(['UsersGroups.name' => 'ASC'])
 		));
     }
 

@@ -73,12 +73,13 @@ class UsersController extends AppController {
 	 * @uses MeCms\Model\Table\UsersTable::fromFilter()
      */
     public function index() {
+		$this->paginate['order'] = ['Users.username' => 'ASC'];
+		
 		$this->set('users', $this->paginate(
 			$this->Users->find()
 				->contain(['Groups' => ['fields' => ['id', 'label']]])
 				->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
 				->where($this->Users->fromFilter($this->request->query))
-				->order(['Users.username' => 'ASC'])
 		));
     }
 	

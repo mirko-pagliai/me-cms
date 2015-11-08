@@ -44,10 +44,11 @@ class BannersPositionsController extends AppController {
      * Lists positions
      */
     public function index() {
+		$this->paginate['order'] = ['BannersPositions.name' => 'ASC'];
+		
 		$this->set('positions', $this->paginate(
 			$this->BannersPositions->find()
 				->select(['id', 'name', 'description', 'banner_count'])
-				->order(['BannersPositions.name' => 'ASC'])
 		));
     }
 
