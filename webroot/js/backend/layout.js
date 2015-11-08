@@ -13,33 +13,9 @@ function getAvailableHeight() {
 	return $(window).height() - $('#topbar').outerHeight(true);
 }
 
-/**
- * Sets the height for the KCFinder i frame.
- */
-function setKcfinderHeight() {
-	if(!$('#kcfinder').length)
-		return;
-		
-	//For now, the maximum height is the maximum height available
-	var maxHeight = getAvailableHeight();
-	
-	//Subtracts content padding
-	maxHeight -= parseInt($('#content').css('padding-top')) + parseInt($('#content').css('padding-bottom'));
-	
-	//Subtracts the height of each child element of content
-	$('#content > * > *:not(#kcfinder)').each(function() {
-		maxHeight -= $(this).outerHeight(true);
-	});
-		
-	$('#kcfinder').height(maxHeight);
-}
-
-//On windows load and resize
+//On windows load and resize, it sets the maximum height available for the content
 $(window).on('load resize', function() {
-	//Set the maximum height available for the content
 	$('#content').css('min-height', getAvailableHeight());
-	
-	//Sets the height for the KCFinder iframe
 	setKcfinderHeight();
 });
 
