@@ -39,4 +39,18 @@ $(function() {
 		//Saves the menu ID into a cookie
 		$.cookie('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
 	});
+	
+	//On click on legend of a filter form
+	$('.filter-form legend').click(function() {
+		$('.fa', this).toggleClass('fa-eye fa-eye-slash');
+		
+		if(window.location.search)
+			$('+ div', this).toggle();
+		else
+			$('+ div', this).slideToggle();
+	});
+	
+	//If there's a query string, it shows filters form
+	if(window.location.search)
+		$('.filter-form legend').trigger('click');
 });

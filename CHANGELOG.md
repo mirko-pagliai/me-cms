@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.2
+* filter forms are automatically hidden;
 * the integration with KCFinder has been improved. Now all directories are read automatically.
 
 ### 2.1.1-RC3

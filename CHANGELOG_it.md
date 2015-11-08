@@ -1,6 +1,7 @@
 # 2.x ramo
 ## 2.1 ramo
 ### 2.1.2
+* i form filtro sono automaticamente nascosti;
 * migliorata l'integrazione con KCFinder. Ora tutte le directory vengono lette automaticamente.
 
 ### 2.1.1-RC3

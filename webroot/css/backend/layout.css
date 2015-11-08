@@ -174,10 +174,31 @@ form.filter-form .checkbox label::before {
 /* Filter form, legend */
 form.filter-form legend {
     border: 0;
-    font-size: 12px;
+	color: #666;
+	cursor: pointer;
+	font-family: Arial;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 10px;
+	margin: 0;
+	padding: 0 2px;
     text-transform: uppercase;
+}
+
+/* Filter form, legend */
+form.filter-form legend:hover {
+	color: #444;
+}
+
+/* Filter form, legend, next wrapper */
+form.filter-form legend + div {
+	display: none;
+	margin-top: 10px;
+}
+
+/* Filter form, legend, icon */
+form.filter-form legend .fa {
+	font-size: 16px;
+    margin-left: 6px;
 }
 
 /* -------------------------------- */
