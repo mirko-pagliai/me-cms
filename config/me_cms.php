@@ -74,6 +74,14 @@ return ['MeCms' => [
 		//Interface language.
 		//With "auto" value, it will try to use the browser language
 		'language' => 'auto',
+		//Time formats
+		//See; http://php.net/manual/it/datetime.formats.php
+		'time' => [
+			//Long format
+			'long'	=> 'HH:mm',
+			//Short format
+			'short'	=> 'HH:mm'
+		],
 		//Timezone. See the list of supported timezones:
 		//http://php.net/manual/en/timezones.php
 		'timezone' => 'UTC',
