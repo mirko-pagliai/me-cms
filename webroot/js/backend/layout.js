@@ -16,7 +16,6 @@ function getAvailableHeight() {
 //On windows load and resize, it sets the maximum height available for the content
 $(window).on('load resize', function() {
 	$('#content').css('min-height', getAvailableHeight());
-	setKcfinderHeight();
 });
 
 $(function() {
