@@ -37,6 +37,7 @@
 				'MeCms./assets/frontend.min',
 				'/vendor/font-awesome/css/font-awesome.min'
 			], [
+				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
