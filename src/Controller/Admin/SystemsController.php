@@ -79,9 +79,15 @@ class SystemsController extends AppController {
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		
+		//Gets the supperted types from configuration
+		$types = $this->KcFinder->getTypes();
+		
+		//If there's only one type, it automatically sets the query value
+		if(!$this->request->query('type') && count($types) < 2)
+			$this->request->query['type'] = fk($types);
+		
 		//Gets the type from the query and the types from configuration
 		$type = $this->request->query('type');
-		$types = $this->KcFinder->getTypes();
 		
 		$locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
 		
