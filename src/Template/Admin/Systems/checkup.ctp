@@ -74,6 +74,11 @@
 			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $successOptions);
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $errorOptions);
+		//exif extension
+		if($php['exif'])
+			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('exif')), $successOptions);
+		else
+			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('exif')), $errorOptions);
 		//imagick extension
 		if($php['imagick'])
 			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('imagick')), $successOptions);
@@ -89,6 +94,11 @@
 			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('mcrypt')), $successOptions);
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('mcrypt')), $errorOptions);
+		//zip extension
+		if($php['zip'])
+			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('zip')), $successOptions);
+		else
+			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('zip')), $errorOptions);
 		
 		
 		echo $this->Html->h4('ffmpegthumbnailer');

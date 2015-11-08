@@ -160,10 +160,12 @@ class SystemsController extends AppController {
 			'php' => [
 				'current_version'	=> Php::version(),
 				'check_version'		=> Php::checkVersion($phpRequired),
+				'exif'				=> Php::extension('exif'),
 				'imagick'			=> Php::extension('imagick'),
 				'mbstring'			=> Php::extension('mbstring'),
 				'mcrypt'			=> Php::extension('mcrypt'),
-				'required_version'	=> $phpRequired
+				'required_version'	=> $phpRequired,
+				'zip'				=> Php::extension('zip'),
 			],
 			'photos' => [
 				'check'	=> PhotoFile::check(),
