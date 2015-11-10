@@ -3,6 +3,7 @@
 ### 2.1.2
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * i form filtro sono automaticamente nascosti;
+* risolto un bug riguardante i form su Firefox;
 * migliorata l'integrazione con KCFinder. Ora tutte le directory vengono lette automaticamente.
 
 ### 2.1.1-RC3

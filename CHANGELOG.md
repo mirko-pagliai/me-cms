@@ -3,6 +3,7 @@
 ### 2.1.2
 * fixed a serious bug when trying to re-sort the results of paginated records;
 * filter forms are automatically hidden;
+* fixed a bug with forms on Firefox;
 * the integration with KCFinder has been improved. Now all directories are read automatically.
 
 ### 2.1.1-RC3
