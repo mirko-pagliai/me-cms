@@ -343,3 +343,36 @@ ul.actions > li:last-child {
     list-style: decimal outside none;
 	margin: 0 0 15px 20px;
 }
+
+/* -------------------------------- */
+/*			CKeditor content		*/
+/* -------------------------------- */
+/* CKeditor content */
+.cke_wysiwyg_div {
+    line-height: 1.6;
+}
+
+/* CKeditor content, last paragraph */
+.cke_wysiwyg_div p:last-child {
+	margin-bottom: 0;
+}
+
+/* CKeditor content, images */
+.cke_wysiwyg_div img {
+	display: block;
+	margin-bottom: 16px;
+}
+
+/* CKeditor content, images pulled on left */
+.cke_wysiwyg_div img.pull-left,
+.cke_wysiwyg_div img[style~="float:left"],
+.cke_wysiwyg_div .pull-left img {
+	margin: 2px 16px 8px 0;
+}
+
+/* CKeditor content, images pulled on right */
+.cke_wysiwyg_div img.pull-right,
+.cke_wysiwyg_div img[style~="float:right"],
+.cke_wysiwyg_div .pull-right img {
+	margin: 2px 0 8px 16px;
+}
