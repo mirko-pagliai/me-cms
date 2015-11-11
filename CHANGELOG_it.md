@@ -4,7 +4,8 @@
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * i form filtro sono automaticamente nascosti;
 * risolto un bug riguardante i form su Firefox;
-* migliorata l'integrazione con KCFinder. Ora tutte le directory vengono lette automaticamente.
+* migliorata l'integrazione con KCFinder. Ora tutte le directory vengono lette automaticamente;
+* piccoli miglioramenti per la visualizzazione su dispositivi mobili.
 
 ### 2.1.1-RC3
 * nel pannello di amministrazione, alcune viste sono state collegate tra loro;

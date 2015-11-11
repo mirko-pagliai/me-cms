@@ -4,7 +4,8 @@
 * fixed a serious bug when trying to re-sort the results of paginated records;
 * filter forms are automatically hidden;
 * fixed a bug with forms on Firefox;
-* the integration with KCFinder has been improved. Now all directories are read automatically.
+* the integration with KCFinder has been improved. Now all directories are read automatically;
+* small improvements for display on mobile devices.
 
 ### 2.1.1-RC3
 * in the admin panel, some views have been linked together;
