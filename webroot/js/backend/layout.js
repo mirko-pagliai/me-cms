@@ -20,13 +20,17 @@ $(window).on('load resize', function() {
 
 $(function() {
 	//Adds the "data-parent" attribute to all links of the sidebar
-	$('#sidebar a').attr('data-parent', '#sidebar');
+	$('#sidebar:visible a').attr('data-parent', '#sidebar');
 		
 	//Sidebar affix
-	$('#sidebar').affix({ offset: { top: $('#sidebar').position().top }});
+	$('#sidebar:visible').affix({
+		offset: {
+			top: $('#sidebar').position().top
+		}
+	});
 	
 	//Checks if there is the cookie of the last open menu
-	if($.cookie('sidebar-lastmenu')) {
+	if($.cookie('sidebar-lastmenu') && $('#sidebar').is(':visible')) {
 		//Gets the element (menu) ID
 		var id = '#' + $.cookie('sidebar-lastmenu');
 		
@@ -51,6 +55,6 @@ $(function() {
 	});
 	
 	//If there's a query string, it shows filters form
-	if(window.location.search)
+	if(window.location.search && $('.filter-form legend').length)
 		$('.filter-form legend').trigger('click');
 });
