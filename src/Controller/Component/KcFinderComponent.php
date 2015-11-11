@@ -94,8 +94,11 @@ class KcFinderComponent extends Component {
 			];
 		}
 		
+		//Gets values from configuration
+		$config = config('kcfinder');
+		
 		//Merges options from the configuration
-		$options = am($default, empty(config('kcfinder')) ? [] : config('kcfinder'));
+		$options = am($default, empty($config) ? [] : $config);
 
 		return $this->request->session()->write('KCFINDER', $options);
 	}
