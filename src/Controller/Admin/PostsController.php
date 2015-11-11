@@ -108,7 +108,9 @@ class PostsController extends AppController {
      * Lists posts
 	 * @uses MeCms\Model\Table\PostsTable::fromFilter()
      */
-    public function index() {		
+    public function index() {
+		$this->paginate['order'] = ['Posts.created' => 'DESC'];
+		
 		$this->set('posts', $this->paginate(
 			$this->Posts->find()
 				->contain([
@@ -118,7 +120,6 @@ class PostsController extends AppController {
 				])
 				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
 				->where($this->Posts->fromFilter($this->request->query))
-				->order(['Posts.created' => 'DESC'])
 		));
     }
 

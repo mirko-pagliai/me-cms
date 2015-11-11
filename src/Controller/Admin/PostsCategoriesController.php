@@ -67,7 +67,7 @@ class PostsCategoriesController extends AppController {
      * Lists posts categories
 	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
-    public function index() {		
+    public function index() {
 		$categories = $this->PostsCategories->find('all')
 			->contain(['Parents' => ['fields' => ['title']]])
 			->order(['PostsCategories.lft' => 'ASC'])

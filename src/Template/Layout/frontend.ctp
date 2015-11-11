@@ -33,7 +33,10 @@
 						
 			echo $this->fetch('meta');
 			
-			echo $this->Layout->css('MeCms./assets/frontend.min', [
+			echo $this->Layout->css([
+				'MeCms./assets/frontend.min',
+				'/vendor/font-awesome/css/font-awesome.min'
+			], [
 				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default',

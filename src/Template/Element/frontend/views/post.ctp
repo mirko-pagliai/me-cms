@@ -32,7 +32,7 @@
 <div class="post-container content-container">
 	<div class="content-header">
 		<?php
-			if(config('post.show.category') && !empty($post->category->title) && !empty($post->category->slug))
+			if(config('post.category') && !empty($post->category->title) && !empty($post->category->slug))
 				echo $this->Html->h5($this->Html->link($post->category->title, ['_name' => 'posts_category', $post->category->slug]), ['class' => 'content-category']);
 
 			echo $this->Html->h3($this->Html->link($post->title, ['_name' => 'post', $post->slug]), ['class' => 'content-title']);
@@ -42,19 +42,19 @@
 		?>
 		<div class="content-info">
 			<?php
-				if(config('post.show.author') && !empty($post->user->full_name))
+				if(config('post.author') && !empty($post->user->full_name))
 					echo $this->Html->div('content-author',
 						__d('me_cms', 'Posted by {0}', $post->user->full_name),
 						['icon' => 'user']
 					);
 
-				if(config('post.show.created') && !empty($post->created))
+				if(config('post.created') && !empty($post->created))
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $post->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
 					);
 				
-				if(config('post.show.tags') && !empty($post->tags)) {
+				if(config('post.tags') && !empty($post->tags)) {
 					echo $this->Html->div('content-tags',
 						implode(', ', array_map(function($tag) {
 							return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->tag]);
@@ -82,7 +82,7 @@
 		?>
 	</div>
 	<?php
-		if(config('post.show.shareaholic') && config('shareaholic.app_id'))
+		if(config('post.shareaholic') && config('shareaholic.app_id'))
 			if($this->request->isAction('view', 'Posts') && !$this->request->isAjax())
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>

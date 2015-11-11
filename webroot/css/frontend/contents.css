@@ -115,6 +115,12 @@
 	margin-bottom: 0;
 }
 
+/* Content text, images */
+.content-text img {
+	display: block;
+	margin-bottom: 16px;
+}
+
 /* Content text, images pulled on left */
 .content-text img.pull-left,
 .content-text img[style~="float:left"] {

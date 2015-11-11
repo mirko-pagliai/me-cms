@@ -40,6 +40,7 @@
 		
 		//MeCms version
 		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms_version']));
+		
 		//CakePHP version
 		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp_version']));
 		
@@ -51,21 +52,17 @@
 		echo $this->Html->h4('Apache');
 		//Current version
 		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['current_version']));
-		//Rewrite
-		if(is_bool($apache['rewrite']) && $apache['rewrite'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} module is enabled', $this->Html->strong('Rewrite')), $successOptions);
-		elseif(is_bool($apache['rewrite']) && !$apache['rewrite'])
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} module is not enabled', $this->Html->strong('Rewrite')), $errorOptions);
-		else
-			echo $this->Html->para($warningClasses, __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong('Rewrite')), $warningOptions);
-		//Expires
-		if(is_bool($apache['expires']) && $apache['expires'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} module is enabled', $this->Html->strong('Expires')), $successOptions);
-		elseif(is_bool($apache['expires']) && !$apache['expires'])
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} module is not enabled', $this->Html->strong('Expires')), $errorOptions);
-		else
-			echo $this->Html->para($warningClasses, __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong('Expires')), $warningOptions);
-				
+		
+		//Checks for Apache's modules
+		foreach(['rewrite', 'expires'] as $mod) {
+			if(is_bool($apache[$mod]) && $apache[$mod])
+				echo $this->Html->para($successClasses, __d('me_cms', 'The {0} module is enabled', $this->Html->strong($mod)), $successOptions);
+			elseif(is_bool($apache[$mod]) && !$apache[$mod])
+				echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} module is not enabled', $this->Html->strong($mod)), $errorOptions);
+			else
+				echo $this->Html->para($warningClasses, __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong($mod)), $warningOptions);
+		}
+		
 		echo $this->Html->h4('PHP');
 		//Current version
 		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['current_version']));
@@ -74,29 +71,20 @@
 			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $successOptions);
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $errorOptions);
-		//imagick extension
-		if($php['imagick'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('imagick')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('imagick')), $errorOptions);
-		//mbstring extension
-		if($php['mbstring'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('mbstring')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('mbstring')), $errorOptions);
-		//mcrypt extension
-		if($php['mcrypt'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('mcrypt')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('mcrypt')), $errorOptions);
 		
+		//Checks for PHP's extensions
+		foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $ext) {
+			if($php[$ext])
+				echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($ext)), $successOptions);
+			else
+				echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($ext)), $errorOptions);
+		}
 		
 		echo $this->Html->h4('ffmpegthumbnailer');
 		if($ffmpegthumbnailer['check'])
 			echo $this->Html->para($successClasses, __d('me_cms', '{0} is available', $this->Html->strong('ffmpegthumbnailer')), $successOptions);
 		else
 			echo $this->Html->para($errorClasses, __d('me_cms', '{0} is not available', $this->Html->strong('ffmpegthumbnailer')), $errorOptions);
-		
 		
 		echo $this->Html->h4(__d('me_cms', 'Webroot'));
 		//Banners directory is writable

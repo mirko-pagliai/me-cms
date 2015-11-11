@@ -21,16 +21,20 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+use Cake\Core\Configure;
+
 if(!function_exists('config')) {
 	/**
-	 * Gets config values stored in configuration of MeCms
+	 * Gets config values stored in the configuration.
+	 * It will first look in the MeCms configuration, then in the application configuration
 	 * @param string|NULL $key Configuration key
 	 * @return mixed Configuration value
 	 */
-	function config($key = NULL) {
-		$key = empty($key) || !is_string($key) ? 'MeCms' : sprintf('MeCms.%s', $key);
+	function config($key = NULL) {		
+		if($key !== NULL && Configure::check(sprintf('MeCms.%s', $key)))
+			return Configure::read(sprintf('MeCms.%s', $key));
 		
-		return \Cake\Core\Configure::read($key);
+		return Configure::read($key);
 	}
 }
 

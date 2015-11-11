@@ -13,63 +13,24 @@ function getAvailableHeight() {
 	return $(window).height() - $('#topbar').outerHeight(true);
 }
 
-/**
- * Sets the height for the container elements.
- * Specifically, it sets the height of the content and of the sidebar.
- */
-function setContainerHeight() {
-	//Gets the maximum height available
-	var availableHeight = getAvailableHeight();
-	
-	//The content has the maximum height available
-	$('#content').css('min-height', availableHeight);
-	
-	//The sidebar height is the maximum available height or the content height, if this is greater
-	$('#sidebar').css('min-height', availableHeight > $('#content').height() ? availableHeight : $('#content').height());
-}
-
-/**
- * Sets the height for the KCFinder i frame.
- */
-function setKcfinderHeight() {
-	if(!$('#kcfinder').length)
-		return;
-		
-	//For now, the maximum height is the maximum height available
-	var maxHeight = getAvailableHeight();
-	
-	//Subtracts content padding
-	maxHeight -= parseInt($('#content').css('padding-top')) + parseInt($('#content').css('padding-bottom'));
-	
-	//Subtracts the height of each child element of content
-	$('#content > * > *:not(#kcfinder)').each(function() {
-		maxHeight -= $(this).outerHeight(true);
-	});
-		
-	$('#kcfinder').height(maxHeight);
-}
-
-//On windows load and resize
+//On windows load and resize, it sets the maximum height available for the content
 $(window).on('load resize', function() {
-	//Sets the height for the container elements (content and sidebar)
-	setContainerHeight();
+	$('#content').css('min-height', getAvailableHeight());
 });
 
 $(function() {
-	//Sets the height for the KCFinder iframe
-	setKcfinderHeight();
-	
 	//Adds the "data-parent" attribute to all links of the sidebar
-	$('#sidebar a').attr('data-parent', '#sidebar');
-	
-	//Gets the sidebar position
-	var sidebarPosition = $('#sidebar').position();
-	
+	$('#sidebar:visible a').attr('data-parent', '#sidebar');
+		
 	//Sidebar affix
-	$('#sidebar').affix({ offset: { top: sidebarPosition.top }});
+	$('#sidebar:visible').affix({
+		offset: {
+			top: $('#sidebar').position().top
+		}
+	});
 	
 	//Checks if there is the cookie of the last open menu
-	if($.cookie('sidebar-lastmenu')) {
+	if($.cookie('sidebar-lastmenu') && $('#sidebar').is(':visible')) {
 		//Gets the element (menu) ID
 		var id = '#' + $.cookie('sidebar-lastmenu');
 		
@@ -82,4 +43,18 @@ $(function() {
 		//Saves the menu ID into a cookie
 		$.cookie('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
 	});
+	
+	//On click on legend of a filter form
+	$('.filter-form legend').click(function() {
+		$('.fa', this).toggleClass('fa-eye fa-eye-slash');
+		
+		if(window.location.search)
+			$('+ div', this).toggle();
+		else
+			$('+ div', this).slideToggle();
+	});
+	
+	//If there's a query string, it shows filters form
+	if(window.location.search && $('.filter-form legend').length)
+		$('.filter-form legend').trigger('click');
 });

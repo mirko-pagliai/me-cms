@@ -22,7 +22,10 @@
  */
 ?>
 	
-<?php $this->assign('title', __d('me_cms', 'Media browser')); ?>
+<?php
+	$this->assign('title', __d('me_cms', 'Media browser'));
+	$this->Html->js('MeCms.backend/kcfinder.min', ['block' => 'script_bottom'])
+?>
 
 <div class="systems index">
 	<?= $this->Html->h2(__d('me_cms', 'Media browser')) ?>

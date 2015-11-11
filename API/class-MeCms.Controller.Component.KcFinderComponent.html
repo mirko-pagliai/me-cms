@@ -204,7 +204,7 @@ Cake\Controller\Component
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Component.html">Component</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#29-127" title="Go to source code">Component/KcFinderComponent.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#29-154" title="Go to source code">Component/KcFinderComponent.php</a>
 		<br>
 	</div>
 
@@ -212,7 +212,7 @@ Cake\Controller\Component
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="check" id="_check">
+	<tr data-order="checkKcfinder" id="_checkKcfinder">
 
 		<td class="attributes"><code>
 			 public 
@@ -223,8 +223,8 @@ Cake\Controller\Component
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_check">#</a>
-		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#39-46" title="Go to source code">check</a>( )</code>
+		<a class="anchor" href="#_checkKcfinder">#</a>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#39-46" title="Go to source code">checkKcfinder</a>( )</code>
 
 		<div class="description short">
 			<p>Checks for KCFinder</p>
@@ -243,7 +243,7 @@ Cake\Controller\Component
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_path">MeCms\Controller\Component\KcFinderComponent::path()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getKcfinderPath">MeCms\Controller\Component\KcFinderComponent::getKcfinderPath()</a></code><br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -285,7 +285,7 @@ Cake\Controller\Component
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_filesPath">MeCms\Controller\Component\KcFinderComponent::filesPath()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getFilesPath">MeCms\Controller\Component\KcFinderComponent::getFilesPath()</a></code><br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -308,21 +308,18 @@ Cake\Controller\Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#_configure">#</a>
-		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#57-94" title="Go to source code">configure</a>( <span>array <var>$options</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#57-101" title="Go to source code">configure</a>( )</code>
 
 		<div class="description short">
-			<p>Sets the configuration for KCFinder</p>
+			<p>Sets the configuration for KCFinder.
+It's automatically called by <code>beforeRender()</code> when the component is loaded.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Sets the configuration for KCFinder</p>
+			<p>Sets the configuration for KCFinder.
+It's automatically called by <code>beforeRender()</code> when the component is loaded.</p>
 
 
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$options</var></dt>
-					<dd>Options</dd>
-				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -330,54 +327,21 @@ Cake\Controller\Component
 				</div>
 
 
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_beforeRender">MeCms\Controller\Component\KcFinderComponent::beforeRender()</a></code><br>
+				</div>
 				<h4>Uses</h4>
 				<div class="list">
 						<code><a href="class-MeCms.Controller.Component.AuthComponent.html#_isGroup">MeCms\Controller\Component\AuthComponent::isGroup()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getFilesPath">MeCms\Controller\Component\KcFinderComponent::getFilesPath()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getTypes">MeCms\Controller\Component\KcFinderComponent::getTypes()</a></code><br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
 						<code><a href="class-MeCms.Controller.Admin.PagesController.html#_beforeRender">MeCms\Controller\Admin\PagesController::beforeRender()</a></code><br>
 						<code><a href="class-MeCms.Controller.Admin.PostsController.html#_beforeRender">MeCms\Controller\Admin\PostsController::beforeRender()</a></code><br>
-						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_browser">MeCms\Controller\Admin\SystemsController::browser()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="filesPath" id="_filesPath">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_filesPath">#</a>
-		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#96-102" title="Go to source code">filesPath</a>( )</code>
-
-		<div class="description short">
-			<p>Alias for <code>getFilesPath()</code> method.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Alias for <code>getFilesPath()</code> method.</p>
-
-
-
-
-
-				<h4>See</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getFilesPath">MeCms\Controller\Component\KcFinderComponent::getFilesPath()</a></code><br>
-				</div>
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_browser">MeCms\Controller\Admin\SystemsController::browser()</a></code><br>
-						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_checkFiles">MeCms\Controller\Component\KcFinderComponent::checkFiles()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_beforeRender">MeCms\Controller\Component\KcFinderComponent::beforeRender()</a></code><br>
 				</div>
 
 
@@ -396,7 +360,7 @@ Cake\Controller\Component
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getFilesPath">#</a>
-		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#104-110" title="Go to source code">getFilesPath</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#103-109" title="Go to source code">getFilesPath</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the files path</p>
@@ -409,16 +373,65 @@ Cake\Controller\Component
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br>Path
+					string
 				</div>
 
 
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_browser">MeCms\Controller\Admin\SystemsController::browser()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_checkFiles">MeCms\Controller\Component\KcFinderComponent::checkFiles()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_configure">MeCms\Controller\Component\KcFinderComponent::configure()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getFolders">MeCms\Controller\Component\KcFinderComponent::getFolders()</a></code><br>
+				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="getPath" id="_getPath">
+	<tr data-order="getFolders" id="_getFolders">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getFolders">#</a>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#111-118" title="Go to source code">getFolders</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the folders list</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the folders list</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getFilesPath">MeCms\Controller\Component\KcFinderComponent::getFilesPath()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getTypes">MeCms\Controller\Component\KcFinderComponent::getTypes()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getKcfinderPath" id="_getKcfinderPath">
 
 		<td class="attributes"><code>
 			 public 
@@ -429,8 +442,8 @@ Cake\Controller\Component
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_getPath">#</a>
-		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#112-118" title="Go to source code">getPath</a>( )</code>
+		<a class="anchor" href="#_getKcfinderPath">#</a>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#120-126" title="Go to source code">getKcfinderPath</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the KCFinder path</p>
@@ -443,16 +456,64 @@ Cake\Controller\Component
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br>Path
+					string
 				</div>
 
 
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_browser">MeCms\Controller\Admin\SystemsController::browser()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_checkKcfinder">MeCms\Controller\Component\KcFinderComponent::checkKcfinder()</a></code><br>
+				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="path" id="_path">
+	<tr data-order="getTypes" id="_getTypes">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTypes">#</a>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#128-142" title="Go to source code">getTypes</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the file types supported by KCFinder</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the file types supported by KCFinder</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getFolders">MeCms\Controller\Component\KcFinderComponent::getFolders()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_browser">MeCms\Controller\Admin\SystemsController::browser()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_configure">MeCms\Controller\Component\KcFinderComponent::configure()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beforeRender" id="_beforeRender">
 
 		<td class="attributes"><code>
 			 public 
@@ -463,28 +524,30 @@ Cake\Controller\Component
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_path">#</a>
-		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#120-126" title="Go to source code">path</a>( )</code>
+		<a class="anchor" href="#_beforeRender">#</a>
+		<code><a href="source-class-MeCms.Controller.Component.KcFinderComponent.html#144-153" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
-			<p>Alias for <code>getPath()</code> method.</p>
+			<p>Called after the controller action is run, but before the view is rendered.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Alias for <code>getPath()</code> method.</p>
+			<p>Called after the controller action is run, but before the view is rendered.</p>
+
+<p>Configures KCFinder.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$event</var></dt>
+					<dd>An Event instance</dd>
+				</dl></div>
 
 
 
-
-
-				<h4>See</h4>
+				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_getPath">MeCms\Controller\Component\KcFinderComponent::getPath()</a></code><br>
-				</div>
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_browser">MeCms\Controller\Admin\SystemsController::browser()</a></code><br>
-						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_check">MeCms\Controller\Component\KcFinderComponent::check()</a></code><br>
+						<code><a href="class-MeCms.Controller.Component.KcFinderComponent.html#_configure">MeCms\Controller\Component\KcFinderComponent::configure()</a></code><br>
 				</div>
 
 

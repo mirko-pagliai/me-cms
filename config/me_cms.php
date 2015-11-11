@@ -48,8 +48,8 @@ return ['MeCms' => [
 	],
 	//KCFinder
 	'kcfinder' => [
-		//KCFinder types. See http://kcfinder.sunhater.com/install#_types
-		'types' => ['images' => '*img']
+		//Here you can rewrite the configuration for KCFinder.
+		//See http://kcfinder.sunhater.com/install#_types
 	],
 	//Main
 	'main' => [
@@ -74,6 +74,14 @@ return ['MeCms' => [
 		//Interface language.
 		//With "auto" value, it will try to use the browser language
 		'language' => 'auto',
+		//Time formats
+		//See; http://php.net/manual/it/datetime.formats.php
+		'time' => [
+			//Long format
+			'long'	=> 'HH:mm',
+			//Short format
+			'short'	=> 'HH:mm'
+		],
 		//Timezone. See the list of supported timezones:
 		//http://php.net/manual/en/timezones.php
 		'timezone' => 'UTC',
@@ -82,31 +90,25 @@ return ['MeCms' => [
 	],
 	//Pages
 	'page' => [
-		//"Show" options
-		'show' => [
-			//Displays the page created datetime
-			'created' => FALSE,
-			//Displays the Shareaholic social buttons
-			//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
-			'shareaholic' => FALSE			
-		]
+		//Displays the page created datetime
+		'created' => FALSE,
+		//Displays the Shareaholic social buttons
+		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
+		'shareaholic' => FALSE	
 	],
 	//Posts
 	'post' => [
-		//"Show" options
-		'show' => [
-			//Displays the post author
-			'author' => TRUE,
-			//Displays the post category
-			'category' => TRUE,
-			//Displays the post created datetime
-			'created' => TRUE,
-			//Displays the Shareaholic social buttons
-			//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
-			'shareaholic' => FALSE,
-			//Displays the post tags
-			'tags' => TRUE
-		]
+		//Displays the post author
+		'author' => TRUE,
+		//Displays the post category
+		'category' => TRUE,
+		//Displays the post created datetime
+		'created' => TRUE,
+		//Displays the Shareaholic social buttons
+		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
+		'shareaholic' => FALSE,
+		//Displays the post tags
+		'tags' => TRUE
 	],
 	//Security
 	'security' => [

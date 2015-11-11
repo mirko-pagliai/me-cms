@@ -17,6 +17,11 @@
 /* -------------------------------- */
 /*				HTML				*/
 /* -------------------------------- */
+/* Links on hover and on focus */
+a:hover, a:focus {
+	text-decoration: none;
+}
+
 /* Body */
 body {
     font-family: Roboto,sans-serif;
@@ -37,6 +42,7 @@ body {
     font-family: Arial,sans-serif;
     font-size: 110%;
     font-weight: bold;
+	padding: 15px 10px;
 }
 
 /* Topbar, dropdown, links on hover */
@@ -50,8 +56,9 @@ body {
 /* Sidebar */
 #sidebar {
     background: none repeat scroll 0 0 #f5f5f5;
-    box-shadow: -3px 0 6px -6px rgba(50, 50, 50, 0.75) inset;
-    padding: 30px 15px 20px;
+    box-shadow: -3px 0 6px -6px rgba(50, 50, 50, .75) inset;
+	min-height: 100%;
+    padding: 20px 12px;
     position: fixed;
 }
 
@@ -75,7 +82,7 @@ body {
 /* Sidebar, panel */
 #sidebar .panel {
 	border-radius: 0;
-	margin-bottom: 10px;
+	margin-bottom: 6px;
 }
 
 /* Sidebar, panel, last panel */
@@ -173,10 +180,31 @@ form.filter-form .checkbox label::before {
 /* Filter form, legend */
 form.filter-form legend {
     border: 0;
-    font-size: 12px;
+	color: #666;
+	cursor: pointer;
+	font-family: Arial;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 10px;
+	margin: 0;
+	padding: 0 2px;
     text-transform: uppercase;
+}
+
+/* Filter form, legend */
+form.filter-form legend:hover {
+	color: #444;
+}
+
+/* Filter form, legend, next wrapper */
+form.filter-form legend + div {
+	display: none;
+	margin-top: 10px;
+}
+
+/* Filter form, legend, icon */
+form.filter-form legend .fa {
+	font-size: 16px;
+    margin-left: 6px;
 }
 
 /* -------------------------------- */
@@ -189,11 +217,6 @@ form.filter-form legend {
 	border-style: solid !important;
 	border-color: #ddd !important;
 	color: #444;
-}
-
-/* Tables, links */
-.table a {
-	text-decoration: none;
 }
 
 /* -------------------------------- */
@@ -319,4 +342,37 @@ ul.actions > li:last-child {
 #changelog > ul {
     list-style: decimal outside none;
 	margin: 0 0 15px 20px;
+}
+
+/* -------------------------------- */
+/*			CKeditor content		*/
+/* -------------------------------- */
+/* CKeditor content */
+.cke_wysiwyg_div {
+    line-height: 1.6;
+}
+
+/* CKeditor content, last paragraph */
+.cke_wysiwyg_div p:last-child {
+	margin-bottom: 0;
+}
+
+/* CKeditor content, images */
+.cke_wysiwyg_div img {
+	display: block;
+	margin-bottom: 16px;
+}
+
+/* CKeditor content, images pulled on left */
+.cke_wysiwyg_div img.pull-left,
+.cke_wysiwyg_div img[style~="float:left"],
+.cke_wysiwyg_div .pull-left img {
+	margin: 2px 16px 8px 0;
+}
+
+/* CKeditor content, images pulled on right */
+.cke_wysiwyg_div img.pull-right,
+.cke_wysiwyg_div img[style~="float:right"],
+.cke_wysiwyg_div .pull-right img {
+	margin: 2px 0 8px 16px;
 }
