@@ -17,6 +17,11 @@
 /* -------------------------------- */
 /*				HTML				*/
 /* -------------------------------- */
+/* Links on hover and on focus */
+a:hover, a:focus {
+	text-decoration: none;
+}
+
 /* Body */
 body {
     font-family: Roboto,sans-serif;
@@ -212,11 +217,6 @@ form.filter-form legend .fa {
 	border-style: solid !important;
 	border-color: #ddd !important;
 	color: #444;
-}
-
-/* Tables, links */
-.table a {
-	text-decoration: none;
 }
 
 /* -------------------------------- */
