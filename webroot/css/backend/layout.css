@@ -37,6 +37,7 @@ body {
     font-family: Arial,sans-serif;
     font-size: 110%;
     font-weight: bold;
+	padding: 15px 10px;
 }
 
 /* Topbar, dropdown, links on hover */
