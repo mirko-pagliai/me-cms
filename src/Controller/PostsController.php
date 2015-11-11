@@ -133,6 +133,8 @@ class PostsController extends AppController {
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			->cache('rss', 'posts'));
+		
+		$this->viewBuilder()->layout('frontend');
 	}
 	
 	/**
