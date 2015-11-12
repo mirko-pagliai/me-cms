@@ -43,4 +43,25 @@ class PostsTagsController extends AppController {
 				->where(['post_count >' => 0])
 		));
 	}
+	
+	/**
+     * Edits tag
+     * @param string $id Tag ID
+	 */
+    public function edit($id = NULL)  {
+        $tag = $this->PostsTags->Tags->get($id);
+		
+        if($this->request->is(['patch', 'post', 'put'])) {
+            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->request->data);
+			
+            if($this->PostsTags->Tags->save($tag)) {
+                $this->Flash->success(__d('me_cms', 'The tag has been saved'));
+                return $this->redirect(['action' => 'index']);
+            } 
+			else
+                $this->Flash->error(__d('me_cms', 'The tag could not be saved'));
+        }
+
+        $this->set(compact('tag'));
+	}
 }
