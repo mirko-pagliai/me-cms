@@ -76,6 +76,7 @@ class PagesController extends AppController {
 			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
 		$this->paginate['order'] = ['Pages.title' => 'ASC'];
+		
 		$this->set('pages', $this->paginate($this->Pages->queryFromFilter($query, $this->request->query)));
     }
 		

@@ -89,16 +89,18 @@ class PhotosController extends AppController {
 		if(empty($album_id))
 			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The album ID is missing'));
 		
-		$this->paginate['limit'] = config('backend.photos');
-		$this->paginate['order'] = ['Photos.filename' => 'ASC'];
+		$this->paginate = [
+			'limit' => config('backend.photos'),
+			'order'	=> ['Photos.filename' => 'ASC']
+		];
 		
-		$photos = $this->paginate(
+		$this->set('photos', $this->paginate(
 			$this->Photos->find()
 				->select(['id', 'album_id', 'filename'])
 				->where(compact('album_id'))
-		);
+		));
 		
-		$this->set(compact('album_id', 'photos'));
+		$this->set(compact('album_id'));
     }
 	
 	/**

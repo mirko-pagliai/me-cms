@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.3
+* fixed bug for sorting some tables;
 * improved queries for filters;
 * fixed some bugs.
 
