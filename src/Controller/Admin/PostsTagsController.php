@@ -33,7 +33,7 @@ class PostsTagsController extends AppController {
      * Lists tags
 	 */
 	public function index() {
-		$this->paginate['order'] = ['Tags.tag' => 'ASC'];
+		$this->paginate['order'] = ['tag' => 'ASC'];
 		
 		//Limit X6
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 6;

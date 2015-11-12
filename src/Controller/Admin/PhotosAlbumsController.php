@@ -68,7 +68,7 @@ class PhotosAlbumsController extends AppController {
      * Lists albums
      */
     public function index() {
-		$this->paginate['order'] = ['PhotosAlbums.title' => 'ASC'];
+		$this->paginate['order'] = ['title' => 'ASC'];
 		
 		$this->set('albums', $this->paginate(
 			$this->PhotosAlbums->find()

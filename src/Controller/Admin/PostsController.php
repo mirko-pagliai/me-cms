@@ -117,7 +117,7 @@ class PostsController extends AppController {
 			])
 			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
-		$this->paginate['order'] = ['Posts.created' => 'DESC'];
+		$this->paginate['order'] = ['created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'created'];
 		
 		$this->set('posts', $this->paginate($this->Posts->queryFromFilter($query, $this->request->query)));
