@@ -64,6 +64,11 @@
 						'placeholder'		=> __d('me_cms', 'month'),
 						'size'				=> 5
 					]);
+					echo $this->Form->input('tag', [
+						'default'		=> $this->request->query('tag'),
+						'placeholder'	=> __d('me_cms', 'tag'),
+						'size'			=> 10
+					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
 			</div>

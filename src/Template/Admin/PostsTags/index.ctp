@@ -31,8 +31,10 @@
 		<?php foreach($tags as $tag): ?>
 			<div class="col-sm-3 margin-15">
 				<?php
-					$title = $this->Html->link($tag->tag, ['action' => 'edit', $tag->id]);
-					echo sprintf('%s (%s)', $this->Html->strong($title), $tag->post_count);
+					echo sprintf('%s (%s)',
+						$this->Html->link($this->Html->strong($tag->tag), ['action' => 'edit', $tag->id]),
+						$this->Html->link($tag->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')])
+					);
 
 					$actions = [];
 

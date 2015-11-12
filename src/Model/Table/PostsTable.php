@@ -155,6 +155,25 @@ class PostsTable extends AppTable {
     }
 	
 	/**
+	 * Build query from filter data
+	 * @param \Cake\ORM\Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return \Cake\ORM\Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter($query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Tag" field
+		if(!empty($data['tag']) && strlen($data['tag']) > 2)
+			$query->matching('Tags', function($q) use ($data) {
+				return $q->where([sprintf('%s.tag', $this->Tags->alias()) => $data['tag']]);
+			});
+		
+		return $query;
+	}
+	
+	/**
 	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @see checkIfCacheIsValid()

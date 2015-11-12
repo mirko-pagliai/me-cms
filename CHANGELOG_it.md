@@ -1,6 +1,7 @@
 # 2.x ramo
 ## 2.1 ramo
 ### 2.1.3
+* ora è possibile elencare e modificare il tag e elencare gli articoli in base al tag;
 * sistemato bug nell'ordinamento di alcune tabelle;
 * migliorate le query per i filtri;
 * sistemati alcuni bug.
