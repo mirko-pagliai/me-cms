@@ -168,8 +168,8 @@ class UsersTable extends AppTable {
 			$query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
 		
 		//"Status" field
-		if(!empty($query['status']) && in_array($query['status'], ['active', 'pending', 'banned']))
-			switch($query['status']) {
+		if(!empty($data['status']) && in_array($data['status'], ['active', 'pending', 'banned']))
+			switch($data['status']) {
 				case 'active':
 					$query->where([
 						sprintf('%s.active', $this->alias()) => TRUE,
