@@ -57,6 +57,8 @@ class MenuDefaultHelper extends Helper {
 				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms'])
 			);
 		
+		array_push($menu, $this->Html->link(__d('me_cms', 'List tags'), ['controller' => 'PostsTags', 'action' => 'index', 'plugin' => 'MeCms']));
+		
 		return [$menu, __d('me_cms', 'Posts'), ['icon' => 'file-text-o']];
 	}
 	
