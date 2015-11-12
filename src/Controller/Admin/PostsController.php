@@ -106,21 +106,19 @@ class PostsController extends AppController {
 	
 	/**
      * Lists posts
-	 * @uses MeCms\Model\Table\PostsTable::fromFilter()
+	 * @uses MeCms\Model\Table\PostsTable::queryFromFilter()
      */
     public function index() {
-		$this->paginate['order'] = ['Posts.created' => 'DESC'];
+		$query = $this->Posts->find()
+			->contain([
+				'Categories'	=> ['fields' => ['id', 'title']],
+				'Tags',
+				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
+			])
+			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
-		$this->set('posts', $this->paginate(
-			$this->Posts->find()
-				->contain([
-					'Categories'	=> ['fields' => ['id', 'title']],
-					'Tags',
-					'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
-				])
-				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
-				->where($this->Posts->fromFilter($this->request->query))
-		));
+		$this->paginate['order'] = ['Posts.created' => 'DESC'];
+		$this->set('posts', $this->paginate($this->Posts->queryFromFilter($query, $this->request->query)));
     }
 
     /**

@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.3
+* migliorate le query per i filtri.
+
 ### 2.1.2
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * i form filtro sono automaticamente nascosti;

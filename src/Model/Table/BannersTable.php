@@ -82,25 +82,6 @@ class BannersTable extends AppTable {
         return $query;
     }
 	
-	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"Position" field
-		if(!empty($query['position']))
-			$conditions[sprintf('%s.position_id', $this->alias())] = $query['position'];
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
     /**
      * Initialize method
      * @param array $config The table configuration
@@ -115,6 +96,23 @@ class BannersTable extends AppTable {
             'className' => 'MeCms.BannersPositions'
         ]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param \Cake\ORM\Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return \Cake\ORM\Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter($query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Position" field
+		if(!empty($data['position']) && preg_match('/^[1-9]\d*$/', $data['position']))
+			$query->where([sprintf('%s.position_id', $this->alias()) => $data['position']]);
+		
+		return $query;
+	}
 
     /**
      * Default validation rules

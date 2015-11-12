@@ -108,45 +108,6 @@ class UsersTable extends AppTable {
         return $query;
     }
 	
-
-	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"Username" field
-		if(!empty($query['username']))
-			$conditions[sprintf('%s.username LIKE', $this->alias())] = sprintf('%%%s%%', $query['username']);
-		
-		//"Group" field
-		if(!empty($query['group']))
-			$conditions[sprintf('%s.group_id', $this->alias())] = $query['group'];
-		
-		//"Status" field
-		if(!empty($query['status']))
-			switch($query['status']) {
-				case 'active':
-					$conditions[sprintf('%s.active', $this->alias())] = TRUE;
-					$conditions[sprintf('%s.banned', $this->alias())] = FALSE;
-					break;
-				case 'pending':
-					$conditions[sprintf('%s.active', $this->alias())] = FALSE;
-					break;
-				case 'banned':
-					$conditions[sprintf('%s.banned', $this->alias())] = TRUE;
-					break;
-			}
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
 	/**
 	 * Gets the active users list
 	 * @return array List
@@ -187,6 +148,44 @@ class UsersTable extends AppTable {
             'className' => 'MeCms.Posts'
         ]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param \Cake\ORM\Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return \Cake\ORM\Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter($query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Username" field
+		if(!empty($data['username']) && strlen($data['username']) > 2)
+			$query->where([sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username'])]);
+		
+		//"Group" field
+		if(!empty($data['group']) && preg_match('/^[1-9]\d*$/', $data['group']))
+			$query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
+		
+		//"Status" field
+		if(!empty($query['status']) && in_array($query['status'], ['active', 'pending', 'banned']))
+			switch($query['status']) {
+				case 'active':
+					$query->where([
+						sprintf('%s.active', $this->alias()) => TRUE,
+						sprintf('%s.banned', $this->alias()) => FALSE
+					]);
+					break;
+				case 'pending':
+					$query->where([sprintf('%s.active', $this->alias()) => FALSE]);					
+					break;
+				case 'banned':
+					$query->where([sprintf('%s.banned', $this->alias()) => TRUE]);		
+					break;
+			}
+		
+		return $query;
+	}
 
     /**
      * Default validation rules

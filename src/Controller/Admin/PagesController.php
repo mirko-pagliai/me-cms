@@ -69,16 +69,14 @@ class PagesController extends AppController {
 	
 	/**
      * Lists pages
-	 * @uses MeCms\Model\Table\PagesTable::fromFilter()
+	 * @uses MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index() {
-		$this->paginate['order'] = ['Pages.title' => 'ASC'];
+		$query = $this->Pages->find()
+			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
-		$this->set('pages', $this->paginate(
-			$this->Pages->find()
-				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
-				->where($this->Pages->fromFilter($this->request->query))
-		));
+		$this->paginate['order'] = ['Pages.title' => 'ASC'];
+		$this->set('pages', $this->paginate($this->Pages->queryFromFilter($query, $this->request->query)));
     }
 		
 	/**

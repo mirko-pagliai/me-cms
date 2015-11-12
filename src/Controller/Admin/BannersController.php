@@ -83,17 +83,15 @@ class BannersController extends AppController {
 	
 	/**
      * Lists banners
-	 * @uses MeCms\Model\Table\Banners::fromFilter()
+	 * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
      */
     public function index() {
-		$this->paginate['order'] = ['Banners.filename' => 'ASC'];
+		$query = $this->Banners->find()
+			->contain(['Positions' => ['fields' => ['id', 'name']]])
+			->select(['id', 'filename', 'target', 'description', 'active', 'click_count']);
 		
-		$this->set('banners', $this->paginate(
-			$this->Banners->find()
-				->contain(['Positions' => ['fields' => ['id', 'name']]])
-				->select(['id', 'filename', 'target', 'description', 'active', 'click_count'])
-				->where($this->Banners->fromFilter($this->request->query))
-		));
+		$this->paginate['order'] = ['Banners.filename' => 'ASC'];
+		$this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
     }
 	
 	/**

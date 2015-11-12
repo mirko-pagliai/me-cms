@@ -118,29 +118,6 @@ class PostsTable extends AppTable {
 	}
 	
 	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"User" (author) field
-		if(!empty($query['user']))
-			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		
-		//"Category" field
-		if(!empty($query['category']))
-			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
-	/**
 	 * Gets from cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
