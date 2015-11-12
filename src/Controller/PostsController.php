@@ -134,7 +134,7 @@ class PostsController extends AppController {
 			->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			->cache('rss', 'posts'));
 		
-		$this->viewBuilder()->layout('frontend');
+		$this->viewBuilder()->layout('MeCms.frontend');
 	}
 	
 	/**
