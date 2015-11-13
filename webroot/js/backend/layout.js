@@ -54,7 +54,22 @@ $(function() {
 			$('+ div', this).slideToggle();
 	});
 	
-	//If there's a query string, it shows filters form
-	if(window.location.search && $('.filter-form legend').length)
+	//Gets query string as objects, removing empty values and pagination values
+	var queryString = $.map(document.location.search.replace(/(^\?)/, '').split('&'), function(value, key) {
+		value = value.split('=');
+		
+		if(value[0] == 'direction' || value[0] == 'page' || value[0] == 'sort')
+			return null;
+		
+		if(value[1] == "" || value[1] == null || value[1] == undefined)
+			return null;
+		
+		var obj = {};
+		obj[value[0]] = value[1];
+		return obj;
+	});	
+	
+	//If there are query string values, shows the filters form
+	if(Object.keys(queryString).length && $('.filter-form legend').length)
 		$('.filter-form legend').trigger('click');
 });
