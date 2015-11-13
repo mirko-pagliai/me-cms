@@ -149,7 +149,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		/**
 		 * Other admin routes
 		 */
-		$controllers = ['banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts_tags', 'posts', 'systems', 'users', 'users_groups'];
+		$controllers = ['banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts_tags', 'posts', 'systems', 'tags', 'users', 'users_groups'];
 		$controllers = sprintf('(%s)', implode('|', $controllers));
 		
 		$routes->connect('/:controller', [], ['controller' => $controllers]);

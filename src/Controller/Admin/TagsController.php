@@ -25,22 +25,28 @@ namespace MeCms\Controller\Admin;
 use MeCms\Controller\AppController;
 
 /**
- * PostsTags controller
- * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
+ * Tags controller
+ * @property \MeCms\Model\Table\TagsTable $Tags
  */
-class PostsTagsController extends AppController {
+class TagsController extends AppController {
 	/**
-     * Lists tags
+     * Edits tag
+     * @param string $id Tag ID
 	 */
-	public function index() {
-		$this->paginate['order'] = ['tag' => 'ASC'];
+    public function edit($id = NULL)  {
+        $tag = $this->Tags->get($id);
 		
-		//Limit X6
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 6;
-		
-		$this->set('tags', $this->paginate(
-			$this->PostsTags->Tags->find()
-				->where(['post_count >' => 0])
-		));
+        if($this->request->is(['patch', 'post', 'put'])) {
+            $tag = $this->Tags->patchEntity($tag, $this->request->data);
+			
+            if($this->Tags->save($tag)) {
+                $this->Flash->success(__d('me_cms', 'The tag has been saved'));
+                return $this->redirect(['action' => 'index']);
+            } 
+			else
+                $this->Flash->error(__d('me_cms', 'The tag could not be saved'));
+        }
+
+        $this->set(compact('tag'));
 	}
 }
