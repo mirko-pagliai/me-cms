@@ -35,8 +35,8 @@ class PostsTagsController extends AppController {
 	public function index() {
 		$this->paginate['order'] = ['tag' => 'ASC'];
 		
-		//Limit X6
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 6;
+		//Limit X4
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 		
 		$this->set('tags', $this->paginate(
 			$this->PostsTags->Tags->find()

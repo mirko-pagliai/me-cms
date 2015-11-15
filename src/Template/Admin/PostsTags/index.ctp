@@ -22,30 +22,47 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Tags')); ?>
+<?= $this->assign('title', __d('me_cms', 'Tags')) ?>
+
+<?= $this->Html->cssStart() ?>
+	<style type="text/css">
+		.index > div > div {
+			margin-bottom: -10px;
+			padding: 10px 5px;
+		}
+
+		.index > div > div > div {
+			background-color: #f9f9f9;
+			border-bottom: 1px solid #ddd;
+			padding: 15px 15px;
+		}
+	</style>
+<?= $this->Html->cssEnd() ?>
 
 <div class="postsTags index">
 	<?= $this->Html->h2(__d('me_cms', 'Tags')) ?>
 	
-	<div>
+	<div class="div-striped">
 		<?php foreach($tags as $tag): ?>
-			<div class="col-sm-3 margin-15">
-				<?php
-					echo sprintf('%s (%s)',
-						$this->Html->link($this->Html->strong($tag->tag), ['action' => 'edit', $tag->id]),
-						$this->Html->link($tag->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')])
-					);
+			<div class="col-sm-3">
+				<div>
+					<?php
+						echo sprintf('%s (%s)',
+							$this->Html->link($this->Html->strong($tag->tag), ['action' => 'edit', $tag->id]),
+							$this->Html->link($tag->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')])
+						);
 
-					$actions = [];
+						$actions = [];
 
-					//Only admins and managers can edit tags
-					if($this->Auth->isGroup(['admin', 'manager']))
-						$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['controller' => 'Tags', 'action' => 'edit', $tag->id], ['icon' => 'pencil']);
+						//Only admins and managers can edit tags
+						if($this->Auth->isGroup(['admin', 'manager']))
+							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['controller' => 'Tags', 'action' => 'edit', $tag->id], ['icon' => 'pencil']);
 
-					$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_tag', $tag->tag], ['icon' => 'external-link', 'target' => '_blank']);
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_tag', $tag->tag], ['icon' => 'external-link', 'target' => '_blank']);
 
-					echo $this->Html->ul($actions, ['class' => 'actions']);
-				?>
+						echo $this->Html->ul($actions, ['class' => 'actions']);
+					?>
+				</div>
 			</div>
 		<?php endforeach; ?>
 	</div>
