@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
@@ -31,6 +31,9 @@ use MeCms\Model\Table\AppTable;
 
 /**
  * Posts model
+ * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsToMany $Tags
  */
 class PostsTable extends AppTable {
 	/**
@@ -129,17 +132,24 @@ class PostsTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('posts');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Categories' => ['post_count'], 'Users' => ['post_count']]);
+		
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.PostsCategories'
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+            'className' => 'MeCms.Users'
         ]);
         $this->belongsToMany('Tags', [
             'foreignKey' => 'post_id',
@@ -148,10 +158,9 @@ class PostsTable extends AppTable {
             'className' => 'MeCms.Tags',
 			'through' => 'MeCms.PostsTags'
         ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'className' => 'MeCms.Users'
-        ]);
+
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', ['Categories' => ['post_count'], 'Users' => ['post_count']]);
     }
 	
 	/**

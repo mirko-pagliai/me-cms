@@ -66,12 +66,15 @@ class UsersGroupsTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('users_groups');
         $this->displayField('label');
         $this->primaryKey('id');
+		
         $this->hasMany('Users', [
             'foreignKey' => 'group_id',
             'className' => 'MeCms.Users'

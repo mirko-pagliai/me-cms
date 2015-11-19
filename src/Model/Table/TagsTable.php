@@ -30,16 +30,20 @@ use MeCms\Model\Entity\Tag;
 
 /**
  * Tags model
+ * @property \Cake\ORM\Association\BelongsToMany $Posts
  */
 class TagsTable extends Table {
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('tags');
         $this->displayField('tag');
         $this->primaryKey('id');
+
         $this->belongsToMany('Posts', [
             'foreignKey' => 'tag_id',
             'targetForeignKey' => 'post_id',

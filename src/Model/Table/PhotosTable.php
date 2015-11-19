@@ -31,6 +31,7 @@ use MeCms\Utility\PhotoFile;
 
 /**
  * Photos model
+ * @property \Cake\ORM\Association\BelongsTo $Albums
  */
 class PhotosTable extends AppTable {
 	/**
@@ -86,17 +87,22 @@ class PhotosTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('photos');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
+		
         $this->belongsTo('Albums', [
             'foreignKey' => 'album_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.PhotosAlbums'
         ]);
+		
+        $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
     }
 
     /**

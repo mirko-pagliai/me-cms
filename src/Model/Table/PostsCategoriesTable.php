@@ -30,30 +30,10 @@ use MeCms\Model\Table\AppTable;
 
 /**
  * PostsCategories model
+ * @property \Cake\ORM\Association\BelongsTo $Parents
+ * @property \Cake\ORM\Association\HasMany $Childs
  */
-class PostsCategoriesTable extends AppTable {
-	/**
-	 * Called after an entity has been deleted
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');		
-	}
-	
-	/**
-	 * Called after an entity is saved.
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');
-	}
-
+class PostsCategoriesTable extends Table {
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -98,13 +78,15 @@ class PostsCategoriesTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('posts_categories');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('MeCms.Tree');
+		
 		$this->belongsTo('Parents', [
             'className' => 'MeCms.PostsCategories',
             'foreignKey' => 'parent_id'
@@ -117,6 +99,8 @@ class PostsCategoriesTable extends AppTable {
             'className' => 'MeCms.Posts',
             'foreignKey' => 'category_id'
         ]);
+		
+        $this->addBehavior('MeCms.Tree');
     }
 
     /**

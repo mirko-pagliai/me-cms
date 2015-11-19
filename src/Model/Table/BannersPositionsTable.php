@@ -66,12 +66,15 @@ class BannersPositionsTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('banners_positions');
         $this->displayField('name');
         $this->primaryKey('id');
+		
         $this->hasMany('Banners', [
             'foreignKey' => 'position_id',
             'className' => 'MeCms.Banners'

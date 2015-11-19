@@ -56,12 +56,15 @@ class PagesTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('pages');
         $this->displayField('title');
         $this->primaryKey('id');
+
         $this->addBehavior('Timestamp');
     }
 

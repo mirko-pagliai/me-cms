@@ -31,6 +31,7 @@ use MeCms\Utility\BannerFile;
 
 /**
  * Banners model
+ * @property \Cake\ORM\Association\BelongsTo $Positions
  */
 class BannersTable extends AppTable {	
 	/**
@@ -84,17 +85,22 @@ class BannersTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('banners');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
+		
         $this->belongsTo('Positions', [
             'foreignKey' => 'position_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.BannersPositions'
         ]);
+		
+        $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
     }
 	
 	/**

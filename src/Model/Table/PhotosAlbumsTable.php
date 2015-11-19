@@ -91,12 +91,15 @@ class PhotosAlbumsTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('photos_albums');
         $this->displayField('title');
         $this->primaryKey('id');
+		
         $this->hasMany('Photos', [
             'foreignKey' => 'album_id',
             'className' => 'MeCms.Photos'

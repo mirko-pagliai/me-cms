@@ -30,6 +30,10 @@ use MeCms\Model\Table\AppTable;
 
 /**
  * Users model
+ * @property \Cake\ORM\Association\BelongsTo $Groups
+ * @property \Cake\ORM\Association\HasMany $Posts
+ * @property \Cake\ORM\Association\HasMany $Tokens
+ * @property \Cake\ORM\Association\HasMany $YoutubeVideos
  */
 class UsersTable extends AppTable {
 	/**
@@ -131,22 +135,27 @@ class UsersTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('users');
         $this->displayField('full_name');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
+		
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.UsersGroups'
         ]);
         $this->hasMany('Posts', [
             'foreignKey' => 'user_id',
             'className' => 'MeCms.Posts'
         ]);
+
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
     }
 	
 	/**

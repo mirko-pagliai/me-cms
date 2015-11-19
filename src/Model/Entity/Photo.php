@@ -27,6 +27,11 @@ use MeCms\Utility\PhotoFile;
 
 /**
  * Photo entity
+ * @property int $id
+ * @property int $album_id
+ * @property \MeCms\Model\Entity\Album $album
+ * @property string $filename
+ * @property string $description
  */
 class Photo extends Entity {
     /**
@@ -34,10 +39,8 @@ class Photo extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'album_id' => TRUE,
-        'filename' => TRUE,
-        'description' => TRUE,
-        'album' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE
     ];
 	
 	/**
