@@ -268,15 +268,15 @@
 </span><span id="24" class="l"><a href="#24">24: </a>
 </span><span id="25" class="l"><a href="#25">25: </a><span class="php-keyword1">use</span> Cake\ORM\Query;
 </span><span id="26" class="l"><a href="#26">26: </a><span class="php-keyword1">use</span> Cake\ORM\RulesChecker;
-</span><span id="27" class="l"><a href="#27">27: </a><span class="php-keyword1">use</span> Cake\ORM\Table;
-</span><span id="28" class="l"><a href="#28">28: </a><span class="php-keyword1">use</span> Cake\Validation\Validator;
-</span><span id="29" class="l"><a href="#29">29: </a><span class="php-keyword1">use</span> MeCms\Model\Entity\Tag;
+</span><span id="27" class="l"><a href="#27">27: </a><span class="php-keyword1">use</span> Cake\Validation\Validator;
+</span><span id="28" class="l"><a href="#28">28: </a><span class="php-keyword1">use</span> MeCms\Model\Entity\Tag;
+</span><span id="29" class="l"><a href="#29">29: </a><span class="php-keyword1">use</span> MeCms\Model\Table\AppTable;
 </span><span id="30" class="l"><a href="#30">30: </a>
 </span><span id="31" class="l"><a href="#31">31: </a><span class="php-comment">/**
 </span></span><span id="32" class="l"><a href="#32">32: </a><span class="php-comment"> * Tags model
 </span></span><span id="33" class="l"><a href="#33">33: </a><span class="php-comment"> * @property \Cake\ORM\Association\BelongsToMany $Posts
 </span></span><span id="34" class="l"><a href="#34">34: </a><span class="php-comment"> */</span>
-</span><span id="35" class="l"><a href="#35">35: </a><span class="php-keyword1">class</span> TagsTable <span class="php-keyword1">extends</span> Table {
+</span><span id="35" class="l"><a href="#35">35: </a><span class="php-keyword1">class</span> TagsTable <span class="php-keyword1">extends</span> AppTable {
 </span><span id="36" class="l"><a href="#36">36: </a>    <span class="php-comment">/**
 </span></span><span id="37" class="l"><a href="#37">37: </a><span class="php-comment">     * Initialize method
 </span></span><span id="38" class="l"><a href="#38">38: </a><span class="php-comment">     * @param array $config The configuration for the table
