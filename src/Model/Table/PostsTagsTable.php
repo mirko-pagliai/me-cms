@@ -24,16 +24,16 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use MeCms\Model\Entity\PostsTag;
+use MeCms\Model\Table\AppTable;
 
 /**
  * PostsTags model
  * @property \Cake\ORM\Association\BelongsTo $Tags
  * @property \Cake\ORM\Association\BelongsTo $Posts
  */
-class PostsTagsTable extends Table {
+class PostsTagsTable extends AppTable {
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified

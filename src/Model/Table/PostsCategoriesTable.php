@@ -33,7 +33,7 @@ use MeCms\Model\Table\AppTable;
  * @property \Cake\ORM\Association\BelongsTo $Parents
  * @property \Cake\ORM\Association\HasMany $Childs
  */
-class PostsCategoriesTable extends Table {
+class PostsCategoriesTable extends AppTable {
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified

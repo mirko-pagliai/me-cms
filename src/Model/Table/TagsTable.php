@@ -24,15 +24,15 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use MeCms\Model\Entity\Tag;
+use MeCms\Model\Table\AppTable;
 
 /**
  * Tags model
  * @property \Cake\ORM\Association\BelongsToMany $Posts
  */
-class TagsTable extends Table {
+class TagsTable extends AppTable {
     /**
      * Initialize method
      * @param array $config The configuration for the table
