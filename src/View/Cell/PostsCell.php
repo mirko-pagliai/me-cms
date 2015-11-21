@@ -57,7 +57,7 @@ class PostsCell extends Cell {
 		$this->Posts->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'widget_categories', 'posts');
+		$categories = Cache::read($cache = 'widget_categories', $this->Posts->cache);
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
@@ -67,7 +67,7 @@ class PostsCell extends Cell {
 					->toArray() as $k => $category)
 				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->post_count);
 			
-            Cache::write($cache, $categories, 'posts');
+            Cache::write($cache, $categories, $this->Posts->cache);
 		}
 		
 		$this->set(compact('categories'));
@@ -91,7 +91,7 @@ class PostsCell extends Cell {
 			->select(['title', 'slug'])
 			->limit($limit = empty($limit) ? 10 : $limit)
 			->order(['created' => 'DESC'])
-			->cache(sprintf('widget_latest_%d', $limit), 'posts')
+			->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
 			->toArray()
 		);
     }

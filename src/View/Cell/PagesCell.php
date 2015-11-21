@@ -55,7 +55,7 @@ class PagesCell extends Cell {
 		$this->set('pages', $this->Pages->find('active')
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
-			->cache(sprintf('widget_list'), 'pages')
+			->cache(sprintf('widget_list'), $this->Pages->cache)
 			->toArray()
 		);
 	}

@@ -40,10 +40,11 @@ class UsersGroupsTable extends AppTable {
 	/**
 	 * Gets the groups list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('groups_list', 'users')
+			->cache('groups_list', $this->cache)
 			->toArray();
 	}
 	

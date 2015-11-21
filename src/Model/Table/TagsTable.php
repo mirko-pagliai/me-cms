@@ -62,10 +62,11 @@ class TagsTable extends AppTable {
 	/**
 	 * Gets the tags list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('tags_list', 'posts')
+			->cache('tags_list', $this->cache)
 			->toArray();
 	}
 	

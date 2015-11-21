@@ -131,9 +131,10 @@ class PostsTable extends AppTable {
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
 	 * @see checkIfCacheIsValid()
+	 * @uses $cache
 	 */
 	public function getNextToBePublished() {
-		return Cache::read('next_to_be_published', 'posts');
+		return Cache::read('next_to_be_published', $this->cache);
 	}
 	
     /**
@@ -193,6 +194,7 @@ class PostsTable extends AppTable {
 	 * This value can be used to check if the cache is valid
 	 * @see checkIfCacheIsValid()
 	 * @uses Cake\I18n\Time::toUnixString()
+	 * @uses $cache
 	 */
 	public function setNextToBePublished() {		
 		$next = $this->find()
@@ -204,7 +206,7 @@ class PostsTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'posts');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
 	}
 
     /**

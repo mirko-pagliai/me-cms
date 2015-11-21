@@ -40,10 +40,11 @@ class BannersPositionsTable extends AppTable {
 	/**
 	 * Gets the positions list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('positions_list', 'banners')
+			->cache('positions_list', $this->cache)
 			->toArray();
 	}
 	

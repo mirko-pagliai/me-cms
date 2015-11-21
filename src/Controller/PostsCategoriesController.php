@@ -37,7 +37,7 @@ class PostsCategoriesController extends AppController {
 		$this->set('categories', $this->PostsCategories->find('active')
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
-			->cache('categories_index', 'posts')
+			->cache('categories_index', $this->PostsCategories->cache)
 			->all());
     }
 	
@@ -58,7 +58,7 @@ class PostsCategoriesController extends AppController {
 		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->PostsCategories->cache));
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
@@ -75,7 +75,7 @@ class PostsCategoriesController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsCategories->cache);
 		}
 		//Else, sets the paging parameter
 		else

@@ -54,7 +54,7 @@ class PhotosCell extends Cell {
 			return;
 		
 		//Tries to get data from the cache
-		$albums = Cache::read($cache = 'widget_albums', 'photos');
+		$albums = Cache::read($cache = 'widget_albums', $this->Photos->cache);
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
@@ -64,7 +64,7 @@ class PhotosCell extends Cell {
 						->toArray() as $k => $album)
 					$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
 			
-            Cache::write($cache, $albums, 'photos');
+            Cache::write($cache, $albums, $this->Photos->cache);
 		}
 		
 		$this->set(compact('albums'));
@@ -81,7 +81,7 @@ class PhotosCell extends Cell {
 			return;
 		
 		//Returns, if there are no photos available
-		if(Cache::read($cache = 'no_photos', 'photos'))
+		if(Cache::read($cache = 'no_photos', $this->Photos->cache))
 			return;
 		
 		//Gets photos
@@ -93,7 +93,7 @@ class PhotosCell extends Cell {
 		
 		//Writes on cache, if there are no photos available
 		if(empty($photos))
-			Cache::write($cache, TRUE, 'photos');
+			Cache::write($cache, TRUE, $this->Photos->cache);
 		
 		$this->set(compact('photos'));
 	}

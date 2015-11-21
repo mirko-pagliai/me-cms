@@ -87,10 +87,11 @@ class PhotosAlbumsTable extends AppTable {
 	/**
 	 * Gets the albums list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('albums_list', 'photos')
+			->cache('albums_list', $this->cache)
 			->toArray();
 	}
 	

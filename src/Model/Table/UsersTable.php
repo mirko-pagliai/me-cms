@@ -98,21 +98,23 @@ class UsersTable extends AppTable {
 	/**
 	 * Gets the active users list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getActiveList() {
 		return $this->find('list')
 			->where(['active' => TRUE])
-			->cache('active_users_list', 'users')
+			->cache('active_users_list', $this->cache)
 			->toArray();
 	}
 	
 	/**
 	 * Gets the users list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('users_list', 'users')
+			->cache('users_list', $this->cache)
 			->toArray();
 	}
 	

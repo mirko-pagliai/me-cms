@@ -47,7 +47,7 @@ class PostsTagsController extends AppController {
 		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->PostsTags->cache));
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
@@ -66,7 +66,7 @@ class PostsTagsController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsTags->cache);
 		}
 		//Else, sets the paging parameter
 		else
