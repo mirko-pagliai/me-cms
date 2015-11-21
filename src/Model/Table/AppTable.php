@@ -22,6 +22,7 @@
  */
 namespace MeCms\Model\Table;
 
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
