@@ -281,7 +281,7 @@
 </span><span id="37" class="l"><a href="#37">37: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'categories'</span>, <span class="php-var">$this</span>-&gt;PostsCategories-&gt;find(<span class="php-quote">'active'</span>)
 </span><span id="38" class="l"><a href="#38">38: </a>            -&gt;select([<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>])
 </span><span id="39" class="l"><a href="#39">39: </a>            -&gt;order([<span class="php-quote">'title'</span> =&gt; <span class="php-quote">'ASC'</span>])
-</span><span id="40" class="l"><a href="#40">40: </a>            -&gt;cache(<span class="php-quote">'categories_index'</span>, <span class="php-quote">'posts'</span>)
+</span><span id="40" class="l"><a href="#40">40: </a>            -&gt;cache(<span class="php-quote">'categories_index'</span>, <span class="php-var">$this</span>-&gt;PostsCategories-&gt;cache)
 </span><span id="41" class="l"><a href="#41">41: </a>            -&gt;all());
 </span><span id="42" class="l"><a href="#42">42: </a>    }
 </span><span id="43" class="l"><a href="#43">43: </a>    
@@ -302,7 +302,7 @@
 </span><span id="58" class="l"><a href="#58">58: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'index_category_%s_limit_%s_page_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$category</span>), <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'limit'</span>], <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'page'</span>) ? <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'page'</span>) : <span class="php-num">1</span>);
 </span><span id="59" class="l"><a href="#59">59: </a>        
 </span><span id="60" class="l"><a href="#60">60: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">list</span>(<span class="php-var">$posts</span>, <span class="php-var">$paging</span>) = <span class="php-keyword2">array_values</span>(Cache::readMany([<span class="php-var">$cache</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>)], <span class="php-quote">'posts'</span>));
+</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">list</span>(<span class="php-var">$posts</span>, <span class="php-var">$paging</span>) = <span class="php-keyword2">array_values</span>(Cache::readMany([<span class="php-var">$cache</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>)], <span class="php-var">$this</span>-&gt;PostsCategories-&gt;cache));
 </span><span id="62" class="l"><a href="#62">62: </a>        
 </span><span id="63" class="l"><a href="#63">63: </a>        <span class="php-comment">//If the data are not available from the cache</span>
 </span><span id="64" class="l"><a href="#64">64: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$posts</span>) || <span class="php-keyword1">empty</span>(<span class="php-var">$paging</span>)) {
@@ -319,7 +319,7 @@
 </span><span id="75" class="l"><a href="#75">75: </a>            )-&gt;toArray();
 </span><span id="76" class="l"><a href="#76">76: </a>                        
 </span><span id="77" class="l"><a href="#77">77: </a>            <span class="php-comment">//Writes on cache</span>
-</span><span id="78" class="l"><a href="#78">78: </a>            Cache::writeMany([<span class="php-var">$cache</span> =&gt; <span class="php-var">$posts</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>) =&gt; <span class="php-var">$this</span>-&gt;request-&gt;param(<span class="php-quote">'paging'</span>)], <span class="php-quote">'posts'</span>);
+</span><span id="78" class="l"><a href="#78">78: </a>            Cache::writeMany([<span class="php-var">$cache</span> =&gt; <span class="php-var">$posts</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>) =&gt; <span class="php-var">$this</span>-&gt;request-&gt;param(<span class="php-quote">'paging'</span>)], <span class="php-var">$this</span>-&gt;PostsCategories-&gt;cache);
 </span><span id="79" class="l"><a href="#79">79: </a>        }
 </span><span id="80" class="l"><a href="#80">80: </a>        <span class="php-comment">//Else, sets the paging parameter</span>
 </span><span id="81" class="l"><a href="#81">81: </a>        <span class="php-keyword1">else</span>
