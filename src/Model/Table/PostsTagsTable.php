@@ -34,6 +34,12 @@ use MeCms\Model\Table\AppTable;
  * @property \Cake\ORM\Association\BelongsTo $Posts
  */
 class PostsTagsTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'posts';
+	
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified

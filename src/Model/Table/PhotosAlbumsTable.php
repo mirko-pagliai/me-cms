@@ -34,18 +34,24 @@ use MeCms\Utility\PhotoFile;
  */
 class PhotosAlbumsTable extends AppTable {
 	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'photos';
+	
+	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses MeCms\Utility\PhotoFile::deleteFolder()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the folder
 		PhotoFile::deleteFolder($entity->id);
 		
-		Cache::clear(FALSE, 'photos');		
+		parent::afterDelete($event, $entity, $options);
 	}
 	
 	/**
@@ -53,7 +59,7 @@ class PhotosAlbumsTable extends AppTable {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterSave()
 	 * @uses MeCms\Utility\PhotoFile::createFolder()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
@@ -61,7 +67,7 @@ class PhotosAlbumsTable extends AppTable {
 		if($entity->isNew())
 			PhotoFile::createFolder($entity->id);
 		
-		Cache::clear(FALSE, 'photos');
+		parent::afterSave($event, $entity, $options);
 	}
 	
 	/**
@@ -72,7 +78,7 @@ class PhotosAlbumsTable extends AppTable {
 	 */
 	public function findActive(Query $query, array $options) {
         $query->where([
-			sprintf('%s.active', $this->alias())		=> TRUE,
+			sprintf('%s.active', $this->alias()) => TRUE,
 			sprintf('%s.photo_count >', $this->alias())	=> 0
 		]);
 		

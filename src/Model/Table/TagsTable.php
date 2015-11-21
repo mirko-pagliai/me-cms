@@ -33,6 +33,12 @@ use MeCms\Model\Table\AppTable;
  * @property \Cake\ORM\Association\BelongsToMany $Posts
  */
 class TagsTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'posts';
+	
     /**
      * Initialize method
      * @param array $config The configuration for the table

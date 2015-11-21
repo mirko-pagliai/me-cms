@@ -33,32 +33,26 @@ use MeCms\Utility\BannerFile;
  * Banners model
  * @property \Cake\ORM\Association\BelongsTo $Positions
  */
-class BannersTable extends AppTable {	
+class BannersTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'banners';
+	
 	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses MeCms\Utility\BannerFile::delete()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the file
 		BannerFile::delete($entity->filename);
 		
-		Cache::clear(FALSE, 'banners');		
-	}
-	
-	/**
-	 * Called after an entity is saved
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 * @uses MeCms\Utility\BannerFile::save()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'banners');
+		parent::afterDelete($event, $entity, $options);
 	}
 
     /**

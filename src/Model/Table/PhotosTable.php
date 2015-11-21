@@ -35,29 +35,24 @@ use MeCms\Utility\PhotoFile;
  */
 class PhotosTable extends AppTable {
 	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'photos';
+	
+	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses MeCms\Utility\PhotoFile::delete()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the file
 		PhotoFile::delete($entity->filename, $entity->album_id);
 		
-		Cache::clear(FALSE, 'photos');
-	}
-	
-	/**
-	 * Called after an entity is saved
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'photos');
+		parent::afterDelete($event, $entity, $options);
 	}
 
     /**

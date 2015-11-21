@@ -32,6 +32,41 @@ use Cake\ORM\Table;
  */
 class AppTable extends Table {
 	/**
+	 * Called after an entity has been deleted
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses clearCache()
+	 */
+	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		if(!empty($this->cache))
+			$this->clearCache($this->cache);
+	}
+	
+	/**
+	 * Called after an entity is saved
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses clearCache()
+	 */
+	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		if(!empty($this->cache))
+			$this->clearCache($this->cache);
+	}
+	
+	/**
+	 * Clears the cache
+	 * @param string|array $config Name of the configuration to clear
+	 * @uses Cake\Cache\Cache::clear()
+	 */
+	public function clearCache($config) {
+		array_walk(is_array($config) ? $config : [$config], function($config) {
+			Cache::clear(FALSE, $config);		
+		});
+	}
+	
+	/**
 	 * "Active" find method
 	 * @param Query $query Query object
 	 * @param array $options Options
