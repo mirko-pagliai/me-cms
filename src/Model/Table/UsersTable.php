@@ -160,12 +160,12 @@ class UsersTable extends AppTable {
 	
 	/**
 	 * Build query from filter data
-	 * @param \Cake\ORM\Query $query Query object
+	 * @param Query $query Query object
 	 * @param array $data Filter data ($this->request->query)
-	 * @return \Cake\ORM\Query $query Query object
+	 * @return Query $query Query object
 	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
 	 */
-	public function queryFromFilter($query, array $data = []) {
+	public function queryFromFilter(Query $query, array $data = []) {
 		$query = parent::queryFromFilter($query, $data);
 		
 		//"Username" field
