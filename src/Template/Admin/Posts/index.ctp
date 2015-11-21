@@ -98,9 +98,14 @@
 							
 							echo $this->Html->strong($title);
 							
-							if($post->tags_as_string)
-								echo $this->Html->div('text-muted small', $post->tags_as_string, ['icon' => 'tags']);
-														
+							$tags = [];
+							
+							foreach($post->tags as $tag)
+								$tags[] = $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this category')]);
+							
+							if(!empty($tags))
+								echo $this->Html->div('text-primary small', implode(PHP_EOL, $tags), ['icon' => 'tags']);
+							
 							$actions = [];
 							
 							//Only admins and managers can edit all posts. Users can edit only their own posts
