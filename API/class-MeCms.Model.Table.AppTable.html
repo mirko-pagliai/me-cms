@@ -227,7 +227,7 @@ Cake\ORM\Table
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Table.AppTable.html#30-129" title="Go to source code">Table/AppTable.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Table.AppTable.html#30-164" title="Go to source code">Table/AppTable.php</a>
 		<br>
 	</div>
 
@@ -235,6 +235,148 @@ Cake\ORM\Table
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="afterDelete" id="_afterDelete">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterDelete">#</a>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#34-44" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+
+		<div class="description short">
+			<p>Called after an entity has been deleted</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after an entity has been deleted</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$event</var></dt>
+					<dd>Event object</dd>
+					<dt><var>$entity</var></dt>
+					<dd>Entity object</dd>
+					<dt><var>$options</var></dt>
+					<dd>Options</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.AppTable.html#_clearCache">MeCms\Model\Table\AppTable::clearCache()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.BannersTable.html#_afterDelete">MeCms\Model\Table\BannersTable::afterDelete()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PhotosAlbumsTable.html#_afterDelete">MeCms\Model\Table\PhotosAlbumsTable::afterDelete()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PhotosTable.html#_afterDelete">MeCms\Model\Table\PhotosTable::afterDelete()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_afterDelete">MeCms\Model\Table\PostsTable::afterDelete()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="afterSave" id="_afterSave">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_afterSave">#</a>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#46-56" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+
+		<div class="description short">
+			<p>Called after an entity is saved</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Called after an entity is saved</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$event</var></dt>
+					<dd>Event object</dd>
+					<dt><var>$entity</var></dt>
+					<dd>Entity object</dd>
+					<dt><var>$options</var></dt>
+					<dd>Options</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.AppTable.html#_clearCache">MeCms\Model\Table\AppTable::clearCache()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.PhotosAlbumsTable.html#_afterSave">MeCms\Model\Table\PhotosAlbumsTable::afterSave()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_afterSave">MeCms\Model\Table\PostsTable::afterSave()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearCache" id="_clearCache">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearCache">#</a>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#58-67" title="Go to source code">clearCache</a>( <span>string|array <var>$config</var></span> )</code>
+
+		<div class="description short">
+			<p>Clears the cache</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Clears the cache</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$config</var></dt>
+					<dd>Name of the configuration to clear</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						Cake\Cache\Cache::clear()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Table.AppTable.html#_afterDelete">MeCms\Model\Table\AppTable::afterDelete()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.AppTable.html#_afterSave">MeCms\Model\Table\AppTable::afterSave()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="findActive" id="_findActive">
 
 		<td class="attributes"><code>
@@ -247,7 +389,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_findActive">#</a>
-		<code><a href="source-class-MeCms.Model.Table.AppTable.html#34-48" title="Go to source code">findActive</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#69-83" title="Go to source code">findActive</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>"Active" find method</p>
@@ -292,7 +434,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_findRandom">#</a>
-		<code><a href="source-class-MeCms.Model.Table.AppTable.html#50-64" title="Go to source code">findRandom</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#85-99" title="Go to source code">findRandom</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>"Random" find method</p>
@@ -337,7 +479,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOwnedBy">#</a>
-		<code><a href="source-class-MeCms.Model.Table.AppTable.html#66-84" title="Go to source code">isOwnedBy</a>( <span>integer <var>$id</var></span>, <span>integer <var>$user_id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#101-119" title="Go to source code">isOwnedBy</a>( <span>integer <var>$id</var></span>, <span>integer <var>$user_id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks whether an object (a record) belongs to an user.</p>
@@ -389,7 +531,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_queryFromFilter">#</a>
-		<code><a href="source-class-MeCms.Model.Table.AppTable.html#86-128" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.AppTable.html#121-163" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Build query from filter data</p>

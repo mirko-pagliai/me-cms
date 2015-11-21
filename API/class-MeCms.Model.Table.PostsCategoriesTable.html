@@ -220,7 +220,7 @@ Cake\ORM\Table
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#31-114" title="Go to source code">Table/PostsCategoriesTable.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#31-120" title="Go to source code">Table/PostsCategoriesTable.php</a>
 		<br>
 	</div>
 
@@ -240,7 +240,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_buildRules">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#37-45" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#43-51" title="Go to source code">buildRules</a>( <span>Cake\ORM\RulesChecker <var>$rules</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns a rules checker object that will be used for validating application integrity</p>
@@ -279,7 +279,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_findActive">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#47-57" title="Go to source code">findActive</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#53-63" title="Go to source code">findActive</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>"Active" find method</p>
@@ -322,7 +322,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getList">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#59-67" title="Go to source code">getList</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#65-73" title="Go to source code">getList</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the categories list</p>
@@ -360,7 +360,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getTreeList">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#69-77" title="Go to source code">getTreeList</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#75-83" title="Go to source code">getTreeList</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the categories tree list</p>
@@ -400,7 +400,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#79-104" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#85-110" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -435,7 +435,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#106-113" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#112-119" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>
@@ -468,6 +468,9 @@ Cake\ORM\Table
 	<caption>Methods inherited from <a href="class-MeCms.Model.Table.AppTable.html#methods">MeCms\Model\Table\AppTable</a></caption>
 	<tr>
 		<td><code>
+			<a href="class-MeCms.Model.Table.AppTable.html#_afterDelete">afterDelete()</a>, 
+			<a href="class-MeCms.Model.Table.AppTable.html#_afterSave">afterSave()</a>, 
+			<a href="class-MeCms.Model.Table.AppTable.html#_clearCache">clearCache()</a>, 
 			<a href="class-MeCms.Model.Table.AppTable.html#_findRandom">findRandom()</a>, 
 			<a href="class-MeCms.Model.Table.AppTable.html#_isOwnedBy">isOwnedBy()</a>, 
 			<a href="class-MeCms.Model.Table.AppTable.html#_queryFromFilter">queryFromFilter()</a>
@@ -485,6 +488,34 @@ Cake\ORM\Table
 
 
 
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="cache" id="$cache">
+		<td class="attributes"><code>
+			public  
+			string|array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Table.PostsCategoriesTable.html#37-41" title="Go to source code"><var>$cache</var></a>
+
+			<div class="description short">
+				<p>Name of the configuration to use for this table</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Name of the configuration to use for this table</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$cache" class="anchor">#</a>
+				<code><span class="php-quote">'posts'</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 
