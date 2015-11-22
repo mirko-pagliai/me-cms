@@ -66,16 +66,22 @@
 	margin-top: 4px;
 }
 
-/* Header, info (author, date, etc), link */
-.content-header .content-info a {
-	border-bottom: 1px dashed #888;
-	display: inline;
-}
-
 /* Header, info (author, date, etc), icons */
 .content-header .content-info .fa {
 	margin-right: 4px;
 	width: 14px;
+}
+
+/* Header, info (author, date, etc), tags, tag */
+.content-header .content-info .content-tags > a {
+	display: inline-block;
+	margin-right: 6px;
+	margin-top: 4px;
+}
+
+/* Header, info (author, date, etc), tags, tag, icon */
+.content-header .content-info .content-tags > a > .fa {
+	margin-right: 2px;
 }
 
 /* Extra small and small devices */
