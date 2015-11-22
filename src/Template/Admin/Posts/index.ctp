@@ -98,13 +98,10 @@
 							
 							echo $this->Html->strong($title);
 							
-							$tags = [];
-							
-							foreach($post->tags as $tag)
-								$tags[] = $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this category')]);
-							
-							if(!empty($tags))
-								echo $this->Html->div('text-primary small', implode(PHP_EOL, $tags), ['icon' => 'tags']);
+							if(!empty($post->tags))
+								echo $this->Html->div('small', implode(PHP_EOL, array_map(function($tag) {
+									return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
+								}, $post->tags)));
 							
 							$actions = [];
 							
