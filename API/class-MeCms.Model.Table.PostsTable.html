@@ -220,7 +220,7 @@ Cake\ORM\Table
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsTable.html#32-220" title="Go to source code">Table/PostsTable.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsTable.html#32-270" title="Go to source code">Table/PostsTable.php</a>
 		<br>
 	</div>
 
@@ -508,6 +508,51 @@ This value can be used to check if the cache is valid</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="getRelated" id="_getRelated">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getRelated">#</a>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#140-188" title="Go to source code">getRelated</a>( <span><code><a href="class-MeCms.Model.Entity.Post.html">MeCms\Model\Entity\Post</a></code> <var>$post</var></span>, <span>integer <var>$limit</var> = <span class="php-num">5</span></span> )</code>
+
+		<div class="description short">
+			<p>Gets the related posts for a post</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the related posts for a post</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$post</var></dt>
+					<dd>Post entity. It must contain <code>Tags</code></dd>
+					<dt><var>$limit</var></dt>
+					<dd>Limit of related posts</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>Related posts, array of entities
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.PostsController.html#_view">MeCms\Controller\PostsController::view()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="initialize" id="_initialize">
 
 		<td class="attributes"><code>
@@ -520,7 +565,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#140-171" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#190-221" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -555,7 +600,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_queryFromFilter">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#173-190" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#223-240" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Build query from filter data</p>
@@ -606,7 +651,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setNextToBePublished">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#192-210" title="Go to source code">setNextToBePublished</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#242-260" title="Go to source code">setNextToBePublished</a>( )</code>
 
 		<div class="description short">
 			<p>Sets to cache the timestamp of the next record to be published.
@@ -653,7 +698,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#212-219" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#262-269" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>

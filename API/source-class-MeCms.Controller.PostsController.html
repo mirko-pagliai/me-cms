@@ -440,20 +440,25 @@
 </span></span><span id="196" class="l"><a href="#196">196: </a><span class="php-comment">     * Views post
 </span></span><span id="197" class="l"><a href="#197">197: </a><span class="php-comment">     * @param string $slug Post slug
 </span></span><span id="198" class="l"><a href="#198">198: </a><span class="php-comment">     * @throws \Cake\Network\Exception\NotFoundException
-</span></span><span id="199" class="l"><a href="#199">199: </a><span class="php-comment">     */</span>
-</span><span id="200" class="l"><a href="#200">200: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$slug</span> = <span class="php-keyword1">NULL</span>) {
-</span><span id="201" class="l"><a href="#201">201: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'post'</span>, <span class="php-var">$this</span>-&gt;Posts-&gt;find(<span class="php-quote">'active'</span>)
-</span><span id="202" class="l"><a href="#202">202: </a>            -&gt;contain([
-</span><span id="203" class="l"><a href="#203">203: </a>                <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>]],
-</span><span id="204" class="l"><a href="#204">204: </a>                <span class="php-quote">'Tags'</span>,
-</span><span id="205" class="l"><a href="#205">205: </a>                <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
-</span><span id="206" class="l"><a href="#206">206: </a>            ])
-</span><span id="207" class="l"><a href="#207">207: </a>            -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>])
-</span><span id="208" class="l"><a href="#208">208: </a>            -&gt;where([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.slug'</span>, <span class="php-var">$this</span>-&gt;Posts-&gt;alias()) =&gt; <span class="php-var">$slug</span>])
-</span><span id="209" class="l"><a href="#209">209: </a>            -&gt;cache(<span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$slug</span>)), <span class="php-var">$this</span>-&gt;Posts-&gt;cache)
-</span><span id="210" class="l"><a href="#210">210: </a>            -&gt;first());
-</span><span id="211" class="l"><a href="#211">211: </a>    }
-</span><span id="212" class="l"><a href="#212">212: </a>}</span></code></pre>
+</span></span><span id="199" class="l"><a href="#199">199: </a><span class="php-comment">     * @uses MeCms\Model\Table\PostsTable::getRelated()
+</span></span><span id="200" class="l"><a href="#200">200: </a><span class="php-comment">     */</span>
+</span><span id="201" class="l"><a href="#201">201: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$slug</span> = <span class="php-keyword1">NULL</span>) {
+</span><span id="202" class="l"><a href="#202">202: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'post'</span>, <span class="php-var">$post</span> = <span class="php-var">$this</span>-&gt;Posts-&gt;find(<span class="php-quote">'active'</span>)
+</span><span id="203" class="l"><a href="#203">203: </a>            -&gt;contain([
+</span><span id="204" class="l"><a href="#204">204: </a>                <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>]],
+</span><span id="205" class="l"><a href="#205">205: </a>                <span class="php-quote">'Tags'</span>,
+</span><span id="206" class="l"><a href="#206">206: </a>                <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
+</span><span id="207" class="l"><a href="#207">207: </a>            ])
+</span><span id="208" class="l"><a href="#208">208: </a>            -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>])
+</span><span id="209" class="l"><a href="#209">209: </a>            -&gt;where([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.slug'</span>, <span class="php-var">$this</span>-&gt;Posts-&gt;alias()) =&gt; <span class="php-var">$slug</span>])
+</span><span id="210" class="l"><a href="#210">210: </a>            -&gt;cache(<span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$slug</span>)), <span class="php-var">$this</span>-&gt;Posts-&gt;cache)
+</span><span id="211" class="l"><a href="#211">211: </a>            -&gt;first());
+</span><span id="212" class="l"><a href="#212">212: </a>        
+</span><span id="213" class="l"><a href="#213">213: </a>        <span class="php-comment">//Gets related posts</span>
+</span><span id="214" class="l"><a href="#214">214: </a>        <span class="php-keyword1">if</span>(config(<span class="php-quote">'post.related'</span>))
+</span><span id="215" class="l"><a href="#215">215: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'related'</span>, <span class="php-var">$this</span>-&gt;Posts-&gt;getRelated(<span class="php-var">$post</span>, config(<span class="php-quote">'post.related'</span>)));
+</span><span id="216" class="l"><a href="#216">216: </a>    }
+</span><span id="217" class="l"><a href="#217">217: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
