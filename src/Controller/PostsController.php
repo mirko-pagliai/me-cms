@@ -196,9 +196,10 @@ class PostsController extends AppController {
      * Views post
 	 * @param string $slug Post slug
      * @throws \Cake\Network\Exception\NotFoundException
+	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
-		$this->set('post', $this->Posts->find('active')
+		$this->set('post', $post = $this->Posts->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Tags',
@@ -208,5 +209,9 @@ class PostsController extends AppController {
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
 			->first());
-    }
+		
+		//Gets related posts
+		if(config('post.related'))
+			$this->set('related', $this->Posts->getRelated($post, config('post.related')));
+	}
 }

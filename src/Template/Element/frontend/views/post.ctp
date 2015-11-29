@@ -83,3 +83,15 @@
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>
 </div>
+
+<?php if(!empty($related)): ?>
+	<div class="related-posts">
+		<h4><?= __d('me_cms', 'Related posts') ?></h4>
+		<ul>
+			<?php
+				foreach($related as $post)
+					echo $this->Html->li($this->Html->link($post->title, ['_name' => 'post', $post->slug]));
+			?>
+		</ul>
+	</div>
+<?php endif; ?>

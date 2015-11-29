@@ -137,6 +137,56 @@ class PostsTable extends AppTable {
 		return Cache::read('next_to_be_published', $this->cache);
 	}
 	
+	/**
+	 * Gets the related posts for a post
+	 * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `Tags`
+	 * @param int $limit Limit of related posts
+	 * @return array Related posts, array of entities
+	 */
+	public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5) {
+		if(empty($post->tags))
+			return;
+		
+		//Tries to gets related posts from cache
+		$related = Cache::read($cache = sprintf('related_%s_posts_for_%s', $limit, $post->id), $this->cache);
+				
+		if(empty($related) && !is_null($related)) {
+			$tags = $post->tags;
+
+			//Re-orders tags, using the "post_count" field, then based on the popularity of tags
+			usort($tags, function($a, $b) { return $b['post_count'] - $a['post_count']; });
+
+			//Limits tags
+			if(count($tags) > $limit)
+				$tags = array_slice($tags, 0 , $limit);
+
+			//This array will be contain the ID to be excluded
+			$exclude = [$post->id];
+
+			//Gets a related post for each tag
+			//Reveres the tags order, because the tags less popular have less chance to find a related post
+			foreach(array_reverse($tags) as $tag) {
+				$post = $this->find('active')
+					->select(['id', 'title', 'slug'])
+					->matching('Tags', function($q) use($tag) {
+						return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
+					})
+					->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude])
+					->first();
+
+				//Adds the post to the related posts and its ID to the IDs to be excluded for the next query
+				if(!empty($post)) {
+					$related[] = $post;
+					$exclude[] = $post->id;
+				}
+			}
+			
+			Cache::write($cache, $related ? $related : NULL, $this->cache);
+		}
+		
+		return $related;
+	}
+	
     /**
      * Initialize method
      * @param array $config The configuration for the table
