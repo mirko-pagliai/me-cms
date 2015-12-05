@@ -9,10 +9,7 @@
 /*				Fonts				*/
 /* -------------------------------- */
 /* "Roboto" font */
-@font-face {
-    font-family: 'Roboto';
-    src: url(../../fonts/Roboto-Regular.ttf);
-}
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
 /* -------------------------------- */
 /*	Common elements and classes		*/

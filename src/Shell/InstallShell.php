@@ -31,18 +31,12 @@ use MeTools\Shell\InstallShell as BaseShell;
 class InstallShell extends BaseShell {
 	/**
 	 * Construct
-	 * @uses $fonts
 	 * @uses $links
 	 * @uses $packages
 	 * @uses $paths
 	 */
 	public function __construct() {
 		parent::__construct();
-		
-		//Merges fonts for which create symbolic links (full path)
-		$this->fonts = am($this->fonts, [
-			\MeTools\Core\Plugin::path('MeCms', 'webroot'.DS.'fonts'.DS.'Roboto-Regular.ttf')
-		]);
 		
 		//Merges assets for which create symbolic links
 		$this->links = am($this->links, [
