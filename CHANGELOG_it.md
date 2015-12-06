@@ -35,6 +35,7 @@
 * aggiunto layout e template per gli errori;
 * sistemati piccoli bug.
 
+## 2.0 ramo
 ### 2.0.1-RC1
 * risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
 * risolto bug nel login con i cookie;

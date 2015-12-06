@@ -35,6 +35,7 @@
 * added error layout and templates;
 * fixed small bugs.
 
+## 2.0 branch
 ### 2.0.1-RC1
 * fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
 * fixed bug on login with cookie;
