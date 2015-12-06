@@ -77,9 +77,11 @@
 							echo $this->Html->strong($title);
 			
 							$actions = [
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
-								$this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank'])
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
 							];
+							
+							if(!empty($banner->target))
+								$actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
 							
 							//Only admins can delete banners
 							if($this->Auth->isGroup('admin'))
