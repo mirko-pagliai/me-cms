@@ -27,15 +27,13 @@
 	<head>
 		<?php
 			echo $this->Html->charset();
-			echo $this->Layout->viewport();
+			echo $this->Html->viewport();
 			echo $this->Html->title($this->fetch('title'));
 			echo $this->Html->meta('icon');
 			echo $this->fetch('meta');
 			
-			echo $this->Layout->css([
-				'MeCms./assets/backend.min',
-				'/vendor/font-awesome/css/font-awesome.min'
-			], [
+			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
+			echo $this->Asset->css([
 				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.backend/bootstrap.min',
 				'MeTools.default',
@@ -45,7 +43,7 @@
 			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
-			echo $this->Layout->js('MeCms./assets/backend.min', [
+			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
 				'MeCms.backend/bootstrap.min',
 				'/vendor/jquery-cookie/jquery.cookie',
