@@ -3,6 +3,7 @@
 ### 2.1.3
 * added related posts for each post;
 * now you can list and edit tags and lists posts by tags;
+* now assets are automatically generated when required;
 * fixed bug for sorting some tables;
 * improved queries for filters;
 * fixed some bugs.

@@ -1,8 +1,0 @@
-/*!
- * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @see			http://www.script-tutorials.com/html5-drag-and-drop-multiple-file-uploader
- */
-#uploader .upload-area,#uploader .upload-info{margin-bottom:10px}#uploader .upload-area{background-color:#eee;font-size:20px;padding:20px;text-align:center}#uploader .upload-area .fa{font-size:50px;margin-top:20px}#uploader .progress,#uploader .upload-error,#uploader .upload-info{display:none}#uploader .upload-result>div{height:120px;margin-bottom:10px}#uploader .upload-result>div>div{height:100%;overflow:hidden;padding:10px 0}#uploader .upload-result img.thumb{margin:auto;opacity:.8}#uploader p{margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

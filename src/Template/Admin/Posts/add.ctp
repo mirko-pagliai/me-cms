@@ -27,7 +27,7 @@
 	$this->Library->ckeditor();
 	$this->Library->datetimepicker();
 	$this->Library->slugify();
-	$this->Html->js('MeCms.backend/tags.min', ['block' => 'script_bottom']);
+	$this->Asset->js('MeCms.backend/tags', ['block' => 'script_bottom']);
 ?>
 
 <div class="posts form">
