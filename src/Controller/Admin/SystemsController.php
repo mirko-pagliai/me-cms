@@ -152,16 +152,11 @@ class SystemsController extends AppController {
 				'expires'			=> Apache::module('mod_expires'),
 				'rewrite'			=> Apache::module('mod_rewrite'),
 			],
-			'banners' => [
-				'check'	=> BannerFile::check(),
-				'path'	=> rtr(BannerFile::folder())
+			'cache' => [
+				'status' => System::cacheStatus()
 			],
 			'ffmpegthumbnailer' => [
 				'check' => Unix::which('ffmpegthumbnailer')
-			],
-			'files' => [
-				'check' => folder_is_writable(WWW_ROOT.'files'),
-				'path'	=> rtr(WWW_ROOT.'files')
 			],
 			'php' => [
 				'current_version'	=> Php::version(),
@@ -173,29 +168,25 @@ class SystemsController extends AppController {
 				'required_version'	=> $phpRequired,
 				'zip'				=> Php::extension('zip'),
 			],
-			'photos' => [
-				'check'	=> PhotoFile::check(),
-				'path'	=> rtr(PhotoFile::folder())
-			],
 			'plugins' => [
 				'cakephp_version'	=> System::cakeVersion(),
 				'plugins_version'	=> Plugin::versions('MeCms'),
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
-			'thumbs' => [
-				'photos_path'		=> rtr(Thumbs::photo()),
-				'photos_writable'	=> Thumbs::checkPhotos(),
-				'remotes_path'		=> rtr(Thumbs::remote()),
-				'remotes_writable'	=> Thumbs::checkRemotes(),
-				'videos_path'		=> rtr(Thumbs::video()),
-				'videos_writable'	=> Thumbs::checkVideos()
+			'temporary' => [
+				['path' => rtr(LOGS), 'writeable' => System::checkLogs()],
+				['path' => rtr(TMP), 'writeable' => System::checkTmp()],
+				['path' => rtr(CACHE), 'writeable' => System::checkCache()],
+				['path' => rtr(Thumbs::photo()), 'writeable' => Thumbs::checkPhotos()],
+				['path' => rtr(Thumbs::remote()), 'writeable' => Thumbs::checkRemotes()],
+				['path' => rtr(Thumbs::video()), 'writeable' => Thumbs::checkVideos()],
 			],
-			'tmp' => [
-				'cache_status'		=> System::cacheStatus(),
-				'cache_writable'	=> System::checkCache(),
-				'logs_path'			=> rtr(LOGS),
-				'logs_writable'		=> System::checkLogs(),
-				'tmp_writable'		=> System::checkTmp()
+			'webroot' => [
+				['path' => rtr(WWW_ROOT.'assets'), 'writeable' => folder_is_writable(WWW_ROOT.'assets')],
+				['path' => rtr(WWW_ROOT.'files'), 'writeable' => folder_is_writable(WWW_ROOT.'files')],
+				['path' => rtr(WWW_ROOT.'fonts'), 'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
+				['path' => rtr(BannerFile::folder()), 'writeable' => BannerFile::check()],
+				['path' => rtr(PhotoFile::folder()), 'writeable' => PhotoFile::check()]
 			]
 		]);
 	}
