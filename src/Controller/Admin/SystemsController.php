@@ -30,6 +30,7 @@ use MeCms\Utility\PhotoFile;
 use MeTools\Core\Plugin;
 use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
+use MeTools\Utility\Asset;
 use MeTools\Utility\Php;
 use MeTools\Utility\System;
 use MeTools\Utility\Thumbs;
@@ -124,11 +125,13 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
-	 * @uses MeTools\Utility\Apache::module()
-	 * @uses MeTools\Utility\Apache::version()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Log\Engine\FileLog::check()
+	 * @uses MeTools\Utility\Apache::module()
+	 * @uses MeTools\Utility\Apache::version()
+	 * @uses MeTools\Utility\Asset::check()
+	 * @uses MeTools\Utility\Asset::folder()
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
@@ -183,7 +186,7 @@ class SystemsController extends AppController {
 				['path' => rtr(Thumbs::video()), 'writeable' => Thumbs::checkVideos()],
 			],
 			'webroot' => [
-				['path' => rtr(WWW_ROOT.'assets'), 'writeable' => folder_is_writable(WWW_ROOT.'assets')],
+				['path' => rtr(Asset::folder()), 'writeable' => Asset::check()],
 				['path' => rtr(WWW_ROOT.'files'), 'writeable' => folder_is_writable(WWW_ROOT.'files')],
 				['path' => rtr(WWW_ROOT.'fonts'), 'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
 				['path' => rtr(BannerFile::folder()), 'writeable' => BannerFile::check()],
