@@ -34,21 +34,13 @@ use Cake\Filesystem\Folder;
  * use MeCms\Utility\BannerFile;
  * </code>
  */
-class BannerFile {
-    /**
-     * Alias for `checkFolder()` method
-     * @see checkFolder()
-     */
-    public static function check() {
-        return call_user_func_array([get_class(), 'checkFolder'], func_get_args());
-    }
-	
+class BannerFile {	
 	/**
 	 * Checks if the folder is writable
 	 * @return boolean
 	 * @uses folder()
 	 */
-	public static function checkFolder() {
+	public static function check() {
 		return folder_is_writable(self::folder());
 	}
 	
@@ -63,19 +55,11 @@ class BannerFile {
 		return $file->delete();
 	}
 	
-    /**
-     * Alias for `getFolder()` method
-     * @see getFolder()
-     */
-    public static function folder() {
-        return call_user_func_array([get_class(), 'getFolder'], func_get_args());
-    }
-	
 	/**
 	 * Gets the main folder path
 	 * @return string Folder path
 	 */
-	public static function getFolder() {
+	public static function folder() {
 		return WWW_ROOT.'img'.DS.'banners'.DS;
 	}
 	
@@ -85,15 +69,7 @@ class BannerFile {
 	 * @return string Path
 	 * @uses folder()
 	 */
-	public static function getPath($filename) {
+	public static function path($filename) {
 		return self::folder().DS.$filename;
 	}
-	
-    /**
-     * Alias for `getPath()` method
-     * @see getPath()
-     */
-    public static function path() {
-        return call_user_func_array([get_class(), 'getPath'], func_get_args());
-    }
 }

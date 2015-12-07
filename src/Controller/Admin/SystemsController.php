@@ -27,8 +27,9 @@ use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
-use MeTools\Utility\Apache;
 use MeTools\Core\Plugin;
+use MeTools\Log\Engine\FileLog;
+use MeTools\Utility\Apache;
 use MeTools\Utility\Php;
 use MeTools\Utility\System;
 use MeTools\Utility\Thumbs;
@@ -127,13 +128,13 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Apache::version()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
-	 * @uses MeTools\Utility\Php::checkVersion()
+	 * @uses MeTools\Log\Engine\FileLog::check()
+	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
 	 * @uses MeTools\Utility\System::cacheStatus()
 	 * @uses MeTools\Utility\System::cakeVersion()
 	 * @uses MeTools\Utility\System::checkCache()
-	 * @uses MeTools\Utility\System::checkLogs()
 	 * @uses MeTools\Utility\System::checkTmp()
 	 * @uses MeTools\Utility\Thumbs::checkPhotos()
 	 * @uses MeTools\Utility\Thumbs::checkRemotes()
@@ -160,7 +161,7 @@ class SystemsController extends AppController {
 			],
 			'php' => [
 				'current_version'	=> Php::version(),
-				'check_version'		=> Php::checkVersion($phpRequired),
+				'check_version'		=> Php::check($phpRequired),
 				'exif'				=> Php::extension('exif'),
 				'imagick'			=> Php::extension('imagick'),
 				'mbstring'			=> Php::extension('mbstring'),
@@ -174,7 +175,7 @@ class SystemsController extends AppController {
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
 			'temporary' => [
-				['path' => rtr(LOGS), 'writeable' => System::checkLogs()],
+				['path' => rtr(LOGS), 'writeable' => FileLog::check()],
 				['path' => rtr(TMP), 'writeable' => System::checkTmp()],
 				['path' => rtr(CACHE), 'writeable' => System::checkCache()],
 				['path' => rtr(Thumbs::photo()), 'writeable' => Thumbs::checkPhotos()],
@@ -209,13 +210,13 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Clears logs
-	 * @uses MeTools\Utility\System::clearLogs()
+	 * @uses MeTools\Log\Engine\FileLog::clear()
 	 */
 	public function clear_logs() {
 		if(!$this->request->is(['post', 'delete']))
 			return $this->redirect(['action' => 'cache']);
 		
-		if(System::clearLogs())
+		if(FileLog::clear())
 			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
 		else
 			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
@@ -241,11 +242,11 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Log viewer
-	 * @uses MeTools\Utility\System::logs()
+	 * @uses MeTools\Log\Engine\FileLog::all()
 	 */
 	public function logs() {
 		//Gets log files
-		$files = System::logs();
+		$files = FileLog::all();
 		
 		//If a log file has been specified
 		if(!empty($this->request->query['file']) && $this->request->is('get'))
@@ -255,17 +256,17 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Manages cache and thumbnails
+	 * Manages cache, logs and thumbnails
+	 * @uses MeTools\Log\Engine\FileLog::size()
 	 * @uses MeTools\Utility\System::cacheSize()
 	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\System::logsSize()
 	 * @uses MeTools\Utility\Thumbs::size()
 	 */
 	public function temporary() {
         $this->set([
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
-			'logs_size'		=> System::logsSize(),
+			'logs_size'		=> FileLog::size(),
 			'thumbs_size'	=> Thumbs::size()
         ]);
 	}
