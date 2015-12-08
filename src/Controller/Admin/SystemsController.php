@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Core\Configure;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
@@ -194,9 +193,25 @@ class SystemsController extends AppController {
 			]
 		]);
 	}
+	
+	/**
+	 * Clears asset files
+	 * @uses MeTools\Utility\Asset::clear()
+	 */
+	public function clear_assets() {
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
+		
+		if(Asset::clear())
+			$this->Flash->success(__d('me_cms', 'Assets have been cleared'));
+		else
+			$this->Flash->error(__d('me_cms', 'Assets have not been cleared'));
+		
+		return $this->redirect(['action' => 'temporary']);
+	}	
 		
 	/**
-	 * Clears the cache.
+	 * Clears the cache
 	 * @uses MeTools\Utility\System::clearCache()
 	 */
 	public function clear_cache() {
@@ -228,7 +243,7 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Clears the thumbnails.
+	 * Clears the thumbnails
 	 * @uses MeTools\Utility\Thumbs::clear()
 	 */
 	public function clear_thumbs() {
@@ -261,6 +276,7 @@ class SystemsController extends AppController {
 	/**
 	 * Manages cache, logs and thumbnails
 	 * @uses MeTools\Log\Engine\FileLog::size()
+	 * @uses MeTools\Utility\Asset::size()
 	 * @uses MeTools\Utility\System::cacheSize()
 	 * @uses MeTools\Utility\System::cacheStatus()
 	 * @uses MeTools\Utility\Thumbs::size()
@@ -269,6 +285,7 @@ class SystemsController extends AppController {
         $this->set([
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
+			'assets_size'	=> Asset::size(),
 			'logs_size'		=> FileLog::size(),
 			'thumbs_size'	=> Thumbs::size()
         ]);
