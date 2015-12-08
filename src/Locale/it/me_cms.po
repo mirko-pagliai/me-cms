@@ -4,8 +4,8 @@
 # Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-11-29 12:59+0000\n"
-"PO-Revision-Date: 2015-11-29 14:02+0100\n"
+"POT-Creation-Date: 2015-12-08 10:57+0000\n"
+"PO-Revision-Date: 2015-12-08 12:02+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -123,8 +123,8 @@ msgstr "Il tuo account non è stato creato"
 #: Controller/Admin/BannersController.php:48
 #: Controller/Admin/PhotosAlbumsController.php:46
 #: Controller/Admin/PhotosController.php:48
-#: Controller/Admin/SystemsController.php:78
-#: Template/Admin/Systems/checkup.ctp:94;99;105;112;117;122;144
+#: Controller/Admin/SystemsController.php:79
+#: Template/Admin/Systems/checkup.ctp:152;168
 msgid "The directory {0} is not readable or writable"
 msgstr "La directory {0} non è leggibile o scrivibile"
 
@@ -282,31 +282,39 @@ msgstr "L'articolo è stato cancellato"
 msgid "The post could not be deleted"
 msgstr "L'articolo non può essere cancellato"
 
-#: Controller/Admin/SystemsController.php:72
+#: Controller/Admin/SystemsController.php:73
 msgid "{0} is not present into {1}"
 msgstr "{0} non è presente in {1}"
 
-#: Controller/Admin/SystemsController.php:212
+#: Controller/Admin/SystemsController.php:206
+msgid "Assets have been cleared"
+msgstr "Gli asset sono stati cancellati"
+
+#: Controller/Admin/SystemsController.php:208
+msgid "Assets have not been cleared"
+msgstr "Gli asset sono stati cancellati"
+
+#: Controller/Admin/SystemsController.php:222
 msgid "The cache has been cleared"
 msgstr "La cache è stata svuotata"
 
-#: Controller/Admin/SystemsController.php:214
+#: Controller/Admin/SystemsController.php:224
 msgid "The cache has not been cleared"
 msgstr "La cache non è stata svuotata"
 
-#: Controller/Admin/SystemsController.php:228
+#: Controller/Admin/SystemsController.php:238
 msgid "The logs have been cleared"
 msgstr "I log sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:230
+#: Controller/Admin/SystemsController.php:240
 msgid "The logs have not been deleted"
 msgstr "I log non sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:244
+#: Controller/Admin/SystemsController.php:254
 msgid "The thumbnails have been deleted"
 msgstr "Le miniature sono state cancellate"
 
-#: Controller/Admin/SystemsController.php:246
+#: Controller/Admin/SystemsController.php:256
 msgid "The thumbnails have not been deleted"
 msgstr "Le miniature non sono state cancellate"
 
@@ -663,7 +671,7 @@ msgstr "Non pubblicato"
 msgid "Edit"
 msgstr "Modifica"
 
-#: Template/Admin/Banners/index.ctp:81
+#: Template/Admin/Banners/index.ctp:84
 #: Template/Admin/Pages/index.ctp:94
 #: Template/Admin/Pages/statics.ctp:44
 #: Template/Admin/Photos/index.ctp:47
@@ -674,7 +682,7 @@ msgstr "Modifica"
 msgid "Open"
 msgstr "Apri"
 
-#: Template/Admin/Banners/index.ctp:86
+#: Template/Admin/Banners/index.ctp:88
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:45
@@ -687,7 +695,7 @@ msgstr "Apri"
 msgid "Delete"
 msgstr "Cancella"
 
-#: Template/Admin/Banners/index.ctp:86
+#: Template/Admin/Banners/index.ctp:88
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:45
@@ -700,7 +708,7 @@ msgstr "Cancella"
 msgid "Are you sure you want to delete this?"
 msgstr "Sei sicuro di volerlo cancellare?"
 
-#: Template/Admin/Banners/index.ctp:92
+#: Template/Admin/Banners/index.ctp:94
 #: Template/Admin/BannersPositions/index.ctp:57
 #: Template/Admin/PhotosAlbums/index.ctp:71
 #: Template/Admin/Posts/index.ctp:103;124
@@ -1113,96 +1121,75 @@ msgstr "Changelog"
 msgid "System checkup"
 msgstr "Checkup del sistema"
 
-#: Template/Admin/Systems/checkup.ctp:42;45;54;68
+#: Template/Admin/Systems/checkup.ctp:44;52;86;108
 msgid "{0} version: {1}"
 msgstr "Versione di {0}: {1}"
 
-#: Template/Admin/Systems/checkup.ctp:47
-#: Template/Element/backend/sidebar.ctp:30
-msgid "Plugins"
-msgstr "Plugin"
-
-#: Template/Admin/Systems/checkup.ctp:50
-msgid "{0} plugin version: {1}"
-msgstr "Versione del plugin {0}: {1}"
-
-#: Template/Admin/Systems/checkup.ctp:59
-msgid "The {0} module is enabled"
-msgstr "Il modulo {0} è abilitato"
-
 #: Template/Admin/Systems/checkup.ctp:61
-msgid "The {0} module is not enabled"
-msgstr "Il modulo {0} non è abilitato"
-
-#: Template/Admin/Systems/checkup.ctp:63
-msgid "The {0} module cannot be checked"
-msgstr "Il modulo {0} non può essere verificato"
-
-#: Template/Admin/Systems/checkup.ctp:71
-msgid "The {0} version is at least {1}"
-msgstr "La versione di {0} è almeno {1}"
-
-#: Template/Admin/Systems/checkup.ctp:73
-msgid "The {0} version is less than {1}"
-msgstr "La versione di {0} è inferiore a {1}"
-
-#: Template/Admin/Systems/checkup.ctp:78
-msgid "The {0} extension is enabled"
-msgstr "L'estensione {0} è abilitata"
-
-#: Template/Admin/Systems/checkup.ctp:80
-msgid "The {0} extension is not enabled"
-msgstr "L'estensione {0} non è abilitata"
-
-#: Template/Admin/Systems/checkup.ctp:85
-msgid "{0} is available"
-msgstr "{0} è disponibile"
-
-#: Template/Admin/Systems/checkup.ctp:87
-msgid "{0} is not available"
-msgstr "{0} non è disponibile"
-
-#: Template/Admin/Systems/checkup.ctp:89
-msgid "Webroot"
-msgstr "Webroot"
-
-#: Template/Admin/Systems/checkup.ctp:92;97;103;110;115;120;142
-msgid "The directory {0} is readable and writable"
-msgstr "La directory {0} è leggibile e scrivibile"
-
-#: Template/Admin/Systems/checkup.ctp:107
-#: Template/Admin/Systems/temporary.ctp:57
-msgid "Thumbs"
-msgstr "Miniature"
-
-#: Template/Admin/Systems/checkup.ctp:124
-msgid "Temporary directories"
-msgstr "Directory temporanee"
-
-#: Template/Admin/Systems/checkup.ctp:127
-msgid "The temporary directory is readable and writable"
-msgstr "La directory temporanea è leggibile e scrivibile"
-
-#: Template/Admin/Systems/checkup.ctp:129
-msgid "The temporary directory is not readable or writable"
-msgstr "La directory temporanea non è leggibile o scrivibile"
-
-#: Template/Admin/Systems/checkup.ctp:132
 msgid "The cache is enabled"
 msgstr "La cache è abilitata"
 
-#: Template/Admin/Systems/checkup.ctp:134
+#: Template/Admin/Systems/checkup.ctp:63
 #: Template/Admin/Systems/temporary.ctp:35
 msgid "The cache is disabled or debugging is active"
 msgstr "La cache è disabilitata o il debug è attivo"
 
-#: Template/Admin/Systems/checkup.ctp:137
-msgid "The cache is readable and writable"
-msgstr "La cache è leggibile e scrivibile"
+#: Template/Admin/Systems/checkup.ctp:71
+#: Template/Element/backend/sidebar.ctp:30
+msgid "Plugins"
+msgstr "Plugin"
 
-#: Template/Admin/Systems/checkup.ctp:139
-msgid "The cache is not readable or writable"
-msgstr "La cache non è leggibile o scrivibile"
+#: Template/Admin/Systems/checkup.ctp:75
+msgid "{0} plugin version: {1}"
+msgstr "Versione del plugin {0}: {1}"
+
+#: Template/Admin/Systems/checkup.ctp:92
+msgid "The {0} module is enabled"
+msgstr "Il modulo {0} è abilitato"
+
+#: Template/Admin/Systems/checkup.ctp:94
+msgid "The {0} module is not enabled"
+msgstr "Il modulo {0} non è abilitato"
+
+#: Template/Admin/Systems/checkup.ctp:96
+msgid "The {0} module cannot be checked"
+msgstr "Il modulo {0} non può essere verificato"
+
+#: Template/Admin/Systems/checkup.ctp:113
+msgid "The {0} version is at least {1}"
+msgstr "La versione di {0} è almeno {1}"
+
+#: Template/Admin/Systems/checkup.ctp:115
+msgid "The {0} version is less than {1}"
+msgstr "La versione di {0} è inferiore a {1}"
+
+#: Template/Admin/Systems/checkup.ctp:121
+msgid "The {0} extension is enabled"
+msgstr "L'estensione {0} è abilitata"
+
+#: Template/Admin/Systems/checkup.ctp:123
+msgid "The {0} extension is not enabled"
+msgstr "L'estensione {0} non è abilitata"
+
+#: Template/Admin/Systems/checkup.ctp:135
+msgid "{0} is available"
+msgstr "{0} è disponibile"
+
+#: Template/Admin/Systems/checkup.ctp:137
+msgid "{0} is not available"
+msgstr "{0} non è disponibile"
+
+#: Template/Admin/Systems/checkup.ctp:145
+msgid "Webroot"
+msgstr "Webroot"
+
+#: Template/Admin/Systems/checkup.ctp:150;166
+msgid "The directory {0} is readable and writable"
+msgstr "La directory {0} è leggibile e scrivibile"
+
+#: Template/Admin/Systems/checkup.ctp:161
+msgid "Temporary directories"
+msgstr "Directory temporanee"
 
 #: Template/Admin/Systems/logs.ctp:25;28
 #: View/Helper/MenuDefaultHelper.php:173
@@ -1238,23 +1225,39 @@ msgstr ""
 msgid "Clear cache"
 msgstr "Svuota la cache"
 
+#: Template/Admin/Systems/temporary.ctp:45
+msgid "Assets"
+msgstr "Asset"
+
 #: Template/Admin/Systems/temporary.ctp:46
+msgid "Assets size: {0}"
+msgstr "Dimensione asset: {0}"
+
+#: Template/Admin/Systems/temporary.ctp:49
+msgid "Clear assets"
+msgstr "Cancella asset"
+
+#: Template/Admin/Systems/temporary.ctp:56
 msgid "Logs"
 msgstr "Log"
 
-#: Template/Admin/Systems/temporary.ctp:47
+#: Template/Admin/Systems/temporary.ctp:57
 msgid "Logs size: {0}"
 msgstr "Dimensione log: {0}"
 
-#: Template/Admin/Systems/temporary.ctp:50
+#: Template/Admin/Systems/temporary.ctp:60
 msgid "Clear logs"
 msgstr "Cancella log"
 
-#: Template/Admin/Systems/temporary.ctp:58
+#: Template/Admin/Systems/temporary.ctp:67
+msgid "Thumbs"
+msgstr "Miniature"
+
+#: Template/Admin/Systems/temporary.ctp:68
 msgid "Thumbs size: {0}"
 msgstr "Dimensione miniature: {0}"
 
-#: Template/Admin/Systems/temporary.ctp:61
+#: Template/Admin/Systems/temporary.ctp:71
 msgid ""
 "Note: you should not need to clear the thumbnails and that this will slow "
 "down the images loading the first time that are displayed. You should clear "
@@ -1266,7 +1269,7 @@ msgstr ""
 "Dovresti cancellare le miniature solo se queste hanno raggiunto una grossa "
 "dimensione o quando molte immagini non sono più utilizzate"
 
-#: Template/Admin/Systems/temporary.ctp:62
+#: Template/Admin/Systems/temporary.ctp:72
 msgid "Clear thumbs"
 msgstr "Svuota le miniature"
 
@@ -1515,7 +1518,7 @@ msgid "Toggle navigation"
 msgstr "Cambia navigazione"
 
 #: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:69
+#: Template/Layout/frontend.ctp:65
 msgid "Homepage"
 msgstr "Homepage"
 
