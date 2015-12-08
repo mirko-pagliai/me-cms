@@ -276,13 +276,13 @@
 </span><span id="32" class="l"><a href="#32"> 32: </a>    <span class="php-comment">/**
 </span></span><span id="33" class="l"><a href="#33"> 33: </a><span class="php-comment">     * Gets the menus for the backend
 </span></span><span id="34" class="l"><a href="#34"> 34: </a><span class="php-comment">     * @return array Menus
-</span></span><span id="35" class="l"><a href="#35"> 35: </a><span class="php-comment">     * @uses MeTools\Core\Plugin::getAll()
+</span></span><span id="35" class="l"><a href="#35"> 35: </a><span class="php-comment">     * @uses MeTools\Core\Plugin::all()
 </span></span><span id="36" class="l"><a href="#36"> 36: </a><span class="php-comment">     * @uses MeTools\Core\Plugin::path()
 </span></span><span id="37" class="l"><a href="#37"> 37: </a><span class="php-comment">     */</span>
 </span><span id="38" class="l"><a href="#38"> 38: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getMenus() {
 </span><span id="39" class="l"><a href="#39"> 39: </a>        <span class="php-var">$menus</span> = [];
 </span><span id="40" class="l"><a href="#40"> 40: </a>        
-</span><span id="41" class="l"><a href="#41"> 41: </a>        <span class="php-keyword1">foreach</span>(Plugin::getAll([<span class="php-quote">'DebugKit'</span>, <span class="php-quote">'MeTools'</span>, <span class="php-quote">'Migrations'</span>]) <span class="php-keyword1">as</span> <span class="php-var">$plugin</span>) {
+</span><span id="41" class="l"><a href="#41"> 41: </a>        <span class="php-keyword1">foreach</span>(Plugin::all([<span class="php-quote">'DebugKit'</span>, <span class="php-quote">'MeTools'</span>, <span class="php-quote">'Migrations'</span>]) <span class="php-keyword1">as</span> <span class="php-var">$plugin</span>) {
 </span><span id="42" class="l"><a href="#42"> 42: </a>            <span class="php-comment">//Checks if the file is readable</span>
 </span><span id="43" class="l"><a href="#43"> 43: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(<span class="php-var">$file</span> = Plugin::path(<span class="php-var">$plugin</span>, <span class="php-quote">'src'</span>.DS.<span class="php-quote">'View'</span>.DS.<span class="php-quote">'Helper'</span>.DS.<span class="php-quote">'MenuDefaultHelper.php'</span>)))
 </span><span id="44" class="l"><a href="#44"> 44: </a>                <span class="php-keyword1">continue</span>;
