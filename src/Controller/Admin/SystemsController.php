@@ -171,7 +171,7 @@ class SystemsController extends AppController {
 				'mbstring'			=> Php::extension('mbstring'),
 				'mcrypt'			=> Php::extension('mcrypt'),
 				'required_version'	=> $phpRequired,
-				'zip'				=> Php::extension('zip'),
+				'zip'				=> Php::extension('zip')
 			],
 			'plugins' => [
 				'cakephp_version'	=> System::cakeVersion(),
@@ -179,19 +179,19 @@ class SystemsController extends AppController {
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
 			'temporary' => [
-				['path' => rtr(LOGS), 'writeable' => FileLog::check()],
-				['path' => rtr(TMP), 'writeable' => System::checkTmp()],
-				['path' => rtr(CACHE), 'writeable' => System::checkCache()],
-				['path' => rtr(Thumbs::photo()), 'writeable' => Thumbs::checkPhotos()],
-				['path' => rtr(Thumbs::remote()), 'writeable' => Thumbs::checkRemotes()],
-				['path' => rtr(Thumbs::video()), 'writeable' => Thumbs::checkVideos()],
+				['path' => rtr(LOGS),				'writeable' => FileLog::check()],
+				['path' => rtr(TMP),				'writeable' => System::checkTmp()],
+				['path' => rtr(CACHE),				'writeable' => System::checkCache()],
+				['path' => rtr(Thumbs::photo()),	'writeable' => Thumbs::checkPhotos()],
+				['path' => rtr(Thumbs::remote()),	'writeable' => Thumbs::checkRemotes()],
+				['path' => rtr(Thumbs::video()),	'writeable' => Thumbs::checkVideos()]
 			],
 			'webroot' => [
-				['path' => rtr(Asset::folder()), 'writeable' => Asset::check()],
-				['path' => rtr(WWW_ROOT.'files'), 'writeable' => folder_is_writable(WWW_ROOT.'files')],
-				['path' => rtr(WWW_ROOT.'fonts'), 'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
-				['path' => rtr(BannerFile::folder()), 'writeable' => BannerFile::check()],
-				['path' => rtr(PhotoFile::folder()), 'writeable' => PhotoFile::check()]
+				['path' => rtr(Asset::folder()),			'writeable' => Asset::check()],
+				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
+				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
+				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
+				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
 			]
 		]);
 	}
