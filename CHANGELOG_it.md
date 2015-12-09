@@ -3,6 +3,7 @@
 ### 2.1.3
 * aggiunti gli articoli correlati per ogni articolo;
 * ora è possibile elencare e modificare il tag e elencare gli articoli in base al tag;
+* migliorato il checkup del sistema;
 * ora gli asset vengono generati automaticamente quando richiesti;
 * sistemato bug nell'ordinamento di alcune tabelle;
 * migliorate le query per i filtri;
