@@ -128,14 +128,17 @@
 		echo $this->Html->div('clearfix');
 		
 		/* -------------------------------- */
-		/*		ffmpegthumbnailer			*/
+		/*			Executables				*/
 		/* -------------------------------- */
-		echo $this->Html->h4('ffmpegthumbnailer');
-		if($ffmpegthumbnailer['check'])
-			$text = $this->Html->para($successClasses, __d('me_cms', '{0} is available', $this->Html->strong('ffmpegthumbnailer')), $successOptions);
-		else
-			$text = $this->Html->para($errorClasses, __d('me_cms', '{0} is not available', $this->Html->strong('ffmpegthumbnailer')), $errorOptions);
-		echo $this->Html->div('col-sm-12', $text);
+		echo $this->Html->h4(__d('me_cms', 'Executables'));
+		
+		foreach($executables as $name => $exists) {
+			if($exists)
+				$text = $this->Html->para($successClasses, __d('me_cms', '{0} is available', $this->Html->strong($name)), $successOptions);
+			else
+				$text = $this->Html->para($errorClasses, __d('me_cms', '{0} is not available', $this->Html->strong($name)), $errorOptions);
+			echo $this->Html->div('col-sm-6', $text);
+		}
 			
 		echo $this->Html->div('clearfix');
 		

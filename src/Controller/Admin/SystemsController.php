@@ -158,8 +158,10 @@ class SystemsController extends AppController {
 			'cache' => [
 				'status' => System::cacheStatus()
 			],
-			'ffmpegthumbnailer' => [
-				'check' => Unix::which('ffmpegthumbnailer')
+			'executables' => [
+				'clean-css'			=> Unix::which('cleancss'),
+				'ffmpegthumbnailer'	=> Unix::which('ffmpegthumbnailer'),
+				'UglifyJS 2'		=> Unix::which('uglifyjs')
 			],
 			'php' => [
 				'current_version'	=> Php::version(),
