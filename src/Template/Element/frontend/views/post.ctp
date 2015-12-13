@@ -86,12 +86,11 @@
 
 <?php if(!empty($related)): ?>
 	<div class="related-posts">
-		<h4><?= __d('me_cms', 'Related posts') ?></h4>
-		<ul>
-			<?php
-				foreach($related as $post)
-					echo $this->Html->li($this->Html->link($post->title, ['_name' => 'post', $post->slug]));
-			?>
-		</ul>
+		<?php
+			echo $this->Html->h4(__d('me_cms', 'Related posts'));
+			echo $this->Html->ul(array_map(function($post) {
+				return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+			}, $related), ['icon' => 'caret-right']);
+		?>
 	</div>
 <?php endif; ?>
