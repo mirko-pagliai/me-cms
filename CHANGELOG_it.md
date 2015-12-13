@@ -1,5 +1,14 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.3
+* aggiunti gli articoli correlati per ogni articolo;
+* ora è possibile elencare e modificare il tag e elencare gli articoli in base al tag;
+* migliorato il checkup del sistema;
+* ora gli asset vengono generati automaticamente quando richiesti;
+* sistemato bug nell'ordinamento di alcune tabelle;
+* migliorate le query per i filtri;
+* sistemati alcuni bug.
+
 ### 2.1.2
 * risolto un grave bug quando si cercare di ordinare i risultati di record impaginati;
 * i form filtro sono automaticamente nascosti;
@@ -27,6 +36,7 @@
 * aggiunto layout e template per gli errori;
 * sistemati piccoli bug.
 
+## 2.0 ramo
 ### 2.0.1-RC1
 * risolto bug, ora la cache viene svuotata automaticamente, se c'è un articolo post-datato da pubblicare;
 * risolto bug nel login con i cookie;

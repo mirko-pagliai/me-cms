@@ -1,5 +1,14 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.3
+* added related posts for each post;
+* now you can list and edit tags and lists posts by tags;
+* improved the system checkup;
+* now assets are automatically generated when required;
+* fixed bug for sorting some tables;
+* improved queries for filters;
+* fixed some bugs.
+
 ### 2.1.2
 * fixed a serious bug when trying to re-sort the results of paginated records;
 * filter forms are automatically hidden;
@@ -27,6 +36,7 @@
 * added error layout and templates;
 * fixed small bugs.
 
+## 2.0 branch
 ### 2.0.1-RC1
 * fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
 * fixed bug on login with cookie;

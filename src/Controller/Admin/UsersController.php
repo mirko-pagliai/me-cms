@@ -36,7 +36,6 @@ class UsersController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
@@ -50,7 +49,7 @@ class UsersController extends AppController {
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		return $this->Auth->isGroup(['admin', 'manager']);
 	}
 	
 	/**
@@ -70,17 +69,17 @@ class UsersController extends AppController {
 	
 	/**
      * Lists users
-	 * @uses MeCms\Model\Table\UsersTable::fromFilter()
+	 * @uses MeCms\Model\Table\UsersTable::queryFromFilter()
      */
     public function index() {
-		$this->paginate['order'] = ['Users.username' => 'ASC'];
+		$query = $this->Users->find()
+			->contain(['Groups' => ['fields' => ['id', 'label']]])
+			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created']);
 		
-		$this->set('users', $this->paginate(
-			$this->Users->find()
-				->contain(['Groups' => ['fields' => ['id', 'label']]])
-				->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-				->where($this->Users->fromFilter($this->request->query))
-		));
+		$this->paginate['order'] = ['Users.username' => 'ASC'];
+		$this->paginate['sortWhitelist'] = ['Users.username', 'first_name', 'email', 'Groups.label', 'post_count', 'created'];
+		
+		$this->set('users', $this->paginate($this->Users->queryFromFilter($query, $this->request->query)));
     }
 	
     /**

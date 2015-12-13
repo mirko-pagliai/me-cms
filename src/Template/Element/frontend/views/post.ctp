@@ -54,14 +54,10 @@
 						['icon' => 'clock-o']
 					);
 				
-				if(config('post.tags') && !empty($post->tags)) {
-					echo $this->Html->div('content-tags',
-						implode(', ', array_map(function($tag) {
-							return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->tag]);
-						}, $post->tags)),
-						['icon' => 'tags']
-					);
-				}
+				if(config('post.tags') && !empty($post->tags))
+					echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
+						return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->tag], ['icon' => 'tags']);
+					}, $post->tags)));
 			?>
 		</div>
 	</div>
@@ -87,3 +83,15 @@
 				echo $this->Html->shareaholic(config('shareaholic.app_id'));
 	?>
 </div>
+
+<?php if(!empty($related)): ?>
+	<div class="related-posts">
+		<h4><?= __d('me_cms', 'Related posts') ?></h4>
+		<ul>
+			<?php
+				foreach($related as $post)
+					echo $this->Html->li($this->Html->link($post->title, ['_name' => 'post', $post->slug]));
+			?>
+		</ul>
+	</div>
+<?php endif; ?>

@@ -26,6 +26,10 @@ use Cake\ORM\Entity;
 
 /**
  * BannersPosition entity
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property int $banner_count
  */
 class BannersPosition extends Entity {
     /**
@@ -33,9 +37,8 @@ class BannersPosition extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'name' => TRUE,
-        'description' => TRUE,
-        'banner_count' => TRUE,
-        'banners' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+        'banner_count' => FALSE
     ];
 }

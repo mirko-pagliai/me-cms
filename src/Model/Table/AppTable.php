@@ -22,6 +22,7 @@
  */
 namespace MeCms\Model\Table;
 
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -31,6 +32,41 @@ use Cake\ORM\Table;
  * Application table class
  */
 class AppTable extends Table {
+	/**
+	 * Called after an entity has been deleted
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses clearCache()
+	 */
+	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		if(!empty($this->cache))
+			$this->clearCache($this->cache);
+	}
+	
+	/**
+	 * Called after an entity is saved
+	 * @param \Cake\Event\Event $event Event object
+	 * @param \Cake\ORM\Entity $entity Entity object
+	 * @param \ArrayObject $options Options
+	 * @uses clearCache()
+	 */
+	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
+		if(!empty($this->cache))
+			$this->clearCache($this->cache);
+	}
+	
+	/**
+	 * Clears the cache
+	 * @param string|array $config Name of the configuration to clear
+	 * @uses Cake\Cache\Cache::clear()
+	 */
+	public function clearCache($config) {
+		array_walk(is_array($config) ? $config : [$config], function($config) {
+			Cache::clear(FALSE, $config);		
+		});
+	}
+	
 	/**
 	 * "Active" find method
 	 * @param Query $query Query object
@@ -64,49 +100,6 @@ class AppTable extends Table {
     }
 	
 	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses Cake\I18n\Time::addMonth()
-	 * @uses Cake\I18n\Time::i18nFormat()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = [];
-		
-		//"Title" field
-		if(!empty($query['title']))
-			$conditions[sprintf('%s.title LIKE', $this->alias())] = sprintf('%%%s%%', $query['title']);
-		
-		//"Filename" field
-		if(!empty($query['filename']))
-			$conditions[sprintf('%s.filename LIKE', $this->alias())] = sprintf('%%%s%%', $query['filename']);
-		
-		//"Active" field
-		if(!empty($query['active'])) {
-			if($query['active'] === 'yes')
-				$conditions[sprintf('%s.active', $this->alias())] = TRUE;
-			elseif($query['active'] === 'no')
-				$conditions[sprintf('%s.active', $this->alias())] = FALSE;
-		}
-		
-		//"Priority" field
-		if(!empty($query['priority']))
-			$conditions[sprintf('priority', $this->alias())] = $query['priority'];
-		
-		//"Created" field
-		if(!empty($query['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $query['created']))
-			$conditions = am($conditions, [
-				sprintf('%s.created >=', $this->alias())	=> new Time($created = sprintf('%s-01', $query['created'])),
-				sprintf('%s.created <', $this->alias())		=> (new Time($created))->addMonth(1)
-			]);
-		
-		return $conditions;
-	}
-	
-	/**
 	 * Checks whether an object (a record) belongs to an user.
 	 * 
 	 * For example:
@@ -124,5 +117,49 @@ class AppTable extends Table {
 			return FALSE;
 		
 		return (bool) $this->find('all')->where(compact('id', 'user_id'))->count();
+	}
+	
+	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		//"Title" field
+		if(!empty($data['title']) && strlen($data['title']) > 2)
+			$query->where([sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title'])]);
+		
+		//"Filename" field
+		if(!empty($data['filename']) && strlen($data['filename']) > 2)
+			$query->where([sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename'])]);
+		
+		//"User" (author) field
+		if(!empty($data['user']) && preg_match('/^[1-9]\d*$/', $data['user']))
+			$query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
+		
+		//"Category" field
+		if(!empty($data['category']) && preg_match('/^[1-9]\d*$/', $data['category']))
+			$query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
+		
+		//"Active" field
+		if(!empty($data['active']))
+			if($data['active'] === 'yes')
+				$query->where([sprintf('%s.active', $this->alias()) => TRUE]);
+			elseif($data['active'] === 'no')
+				$query->where([sprintf('%s.active', $this->alias()) => FALSE]);
+		
+		//"Priority" field
+		if(!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority']))
+			$query->where([sprintf('%s.priority', $this->alias()) => $data['priority']]);
+		
+		//"Created" field
+		if(!empty($data['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $data['created']))
+			$query->where([
+				sprintf('%s.created >=', $this->alias()) => new Time($created = sprintf('%s-01', $data['created'])),
+				sprintf('%s.created <', $this->alias()) => (new Time($created))->addMonth(1)
+			]);
+		
+		return $query;
 	}
 }

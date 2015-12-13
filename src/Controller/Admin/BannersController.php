@@ -68,7 +68,6 @@ class BannersController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
@@ -78,22 +77,22 @@ class BannersController extends AppController {
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		return $this->Auth->isGroup(['admin', 'manager']);
 	}
 	
 	/**
      * Lists banners
-	 * @uses MeCms\Model\Table\Banners::fromFilter()
+	 * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
      */
     public function index() {
-		$this->paginate['order'] = ['Banners.filename' => 'ASC'];
+		$query = $this->Banners->find()
+			->contain(['Positions' => ['fields' => ['id', 'name']]])
+			->select(['id', 'filename', 'target', 'description', 'active', 'click_count']);
 		
-		$this->set('banners', $this->paginate(
-			$this->Banners->find()
-				->contain(['Positions' => ['fields' => ['id', 'name']]])
-				->select(['id', 'filename', 'target', 'description', 'active', 'click_count'])
-				->where($this->Banners->fromFilter($this->request->query))
-		));
+		$this->paginate['order'] = ['Banners.filename' => 'ASC'];
+		$this->paginate['sortWhitelist'] = ['Banners.filename', 'Positions.name', 'description', 'click_count'];
+		
+		$this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
     }
 	
 	/**

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-11-11 12:37+0000\n"
+"POT-Creation-Date: 2015-12-13 11:11+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -30,11 +30,11 @@ msgstr ""
 msgid "The banner target is missing"
 msgstr ""
 
-#: Controller/PostsController.php:186
+#: Controller/PostsController.php:188
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
-#: Controller/PostsController.php:189
+#: Controller/PostsController.php:191
 msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
@@ -60,12 +60,12 @@ msgid "No account found"
 msgstr ""
 
 #: Controller/UsersController.php:135
-#: Controller/Admin/UsersController.php:197
+#: Controller/Admin/UsersController.php:196
 msgid "The account has been activated"
 msgstr ""
 
 #: Controller/UsersController.php:138
-#: Controller/Admin/UsersController.php:199
+#: Controller/Admin/UsersController.php:198
 msgid "The account has not been activated"
 msgstr ""
 
@@ -98,12 +98,12 @@ msgid "We send you an email to activate your account"
 msgstr ""
 
 #: Controller/UsersController.php:322
-#: Controller/Admin/UsersController.php:222
+#: Controller/Admin/UsersController.php:221
 msgid "The password has been edited"
 msgstr ""
 
 #: Controller/UsersController.php:326
-#: Controller/Admin/UsersController.php:226
+#: Controller/Admin/UsersController.php:225
 msgid "The password has not been edited"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr ""
 #: Controller/Admin/PhotosAlbumsController.php:46
 #: Controller/Admin/PhotosController.php:48
 #: Controller/Admin/SystemsController.php:78
-#: Template/Admin/Systems/checkup.ctp:94;99;105;112;117;122;144
+#: Template/Admin/Systems/checkup.ctp:155;171
 msgid "The directory {0} is not readable or writable"
 msgstr ""
 
@@ -131,19 +131,19 @@ msgstr ""
 msgid "Before you can manage banners, you have to create at least a banner position"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:132
+#: Controller/Admin/BannersController.php:131
 msgid "The banner has been saved"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:136
+#: Controller/Admin/BannersController.php:135
 msgid "The banner could not be saved"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:152
+#: Controller/Admin/BannersController.php:151
 msgid "The banner has been deleted"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:154
+#: Controller/Admin/BannersController.php:153
 msgid "The banner could not be deleted"
 msgstr ""
 
@@ -167,39 +167,39 @@ msgstr ""
 msgid "Before you delete this position, you have to delete its banners or assign them to another position"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:104;126
+#: Controller/Admin/PagesController.php:102;124
 msgid "The page has been saved"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:108;130
+#: Controller/Admin/PagesController.php:106;128
 msgid "The page could not be saved"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:146
+#: Controller/Admin/PagesController.php:144
 msgid "The page has been deleted"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:148
+#: Controller/Admin/PagesController.php:146
 msgid "The page could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:89;111
+#: Controller/Admin/PhotosAlbumsController.php:88;110
 msgid "The photos album has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:93;115
+#: Controller/Admin/PhotosAlbumsController.php:92;114
 msgid "The photos album could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:133
+#: Controller/Admin/PhotosAlbumsController.php:132
 msgid "The photos album has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:135
+#: Controller/Admin/PhotosAlbumsController.php:134
 msgid "The photos album could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:138
+#: Controller/Admin/PhotosAlbumsController.php:137
 msgid "Before you delete this album, you have to delete its photos or assign them to another album"
 msgstr ""
 
@@ -207,43 +207,43 @@ msgstr ""
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:90
+#: Controller/Admin/PhotosController.php:89
 msgid "The album ID is missing"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:137
+#: Controller/Admin/PhotosController.php:136
 msgid "The photo has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:141
+#: Controller/Admin/PhotosController.php:140
 msgid "The photo could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:158
+#: Controller/Admin/PhotosController.php:157
 msgid "The photo has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:160
+#: Controller/Admin/PhotosController.php:159
 msgid "The photo could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:95;117
+#: Controller/Admin/PostsCategoriesController.php:94;116
 msgid "The posts category has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:99;121
+#: Controller/Admin/PostsCategoriesController.php:98;120
 msgid "The posts category could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:139
+#: Controller/Admin/PostsCategoriesController.php:138
 msgid "The posts category has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:141
+#: Controller/Admin/PostsCategoriesController.php:140
 msgid "The posts category could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:144
+#: Controller/Admin/PostsCategoriesController.php:143
 msgid "Before you delete this category, you have to delete its posts or assign them to another category"
 msgstr ""
 
@@ -251,19 +251,19 @@ msgstr ""
 msgid "Before you can manage posts, you have to create at least a category"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:147;180
+#: Controller/Admin/PostsController.php:146;179
 msgid "The post has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:151;184
+#: Controller/Admin/PostsController.php:150;183
 msgid "The post could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:200
+#: Controller/Admin/PostsController.php:199
 msgid "The post has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:202
+#: Controller/Admin/PostsController.php:201
 msgid "The post could not be deleted"
 msgstr ""
 
@@ -271,79 +271,95 @@ msgstr ""
 msgid "{0} is not present into {1}"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:212
+#: Controller/Admin/SystemsController.php:207
+msgid "Assets have been cleared"
+msgstr ""
+
+#: Controller/Admin/SystemsController.php:209
+msgid "Assets have not been cleared"
+msgstr ""
+
+#: Controller/Admin/SystemsController.php:223
 msgid "The cache has been cleared"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:214
+#: Controller/Admin/SystemsController.php:225
 msgid "The cache has not been cleared"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:228
+#: Controller/Admin/SystemsController.php:239
 msgid "The logs have been cleared"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:230
+#: Controller/Admin/SystemsController.php:241
 msgid "The logs have not been deleted"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:244
+#: Controller/Admin/SystemsController.php:255
 msgid "The thumbnails have been deleted"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:246
+#: Controller/Admin/SystemsController.php:257
 msgid "The thumbnails have not been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:110;146
+#: Controller/Admin/TagsController.php:58
+msgid "The tag has been saved"
+msgstr ""
+
+#: Controller/Admin/TagsController.php:62
+msgid "The tag could not be saved"
+msgstr ""
+
+#: Controller/Admin/UsersController.php:109;145
 msgid "The user has been saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:114;150
+#: Controller/Admin/UsersController.php:113;149
 msgid "The user could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:134;174
+#: Controller/Admin/UsersController.php:133;173
 msgid "Only the admin founder can edit other admin users"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:171
+#: Controller/Admin/UsersController.php:170
 msgid "You cannot delete the admin founder"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:176
+#: Controller/Admin/UsersController.php:175
 msgid "Before you delete this user, you have to delete his posts or assign them to another user"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:179
+#: Controller/Admin/UsersController.php:178
 msgid "The user has been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:181
+#: Controller/Admin/UsersController.php:180
 msgid "The user could not be deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:66;88
+#: Controller/Admin/UsersGroupsController.php:65;87
 msgid "The users group has been saved"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:70;92
+#: Controller/Admin/UsersGroupsController.php:69;91
 msgid "The users group could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:110
+#: Controller/Admin/UsersGroupsController.php:109
 msgid "The users group has been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:112
+#: Controller/Admin/UsersGroupsController.php:111
 msgid "The users group could not be deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:115
+#: Controller/Admin/UsersGroupsController.php:114
 msgid "You cannot delete this users group, because it's a necessary group"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:117
+#: Controller/Admin/UsersGroupsController.php:116
 msgid "Before you delete this users group, you have to delete its users or assign them to another group"
 msgstr ""
 
@@ -563,7 +579,7 @@ msgstr ""
 
 #: Template/Admin/Banners/index.ctp:25;28
 #: Template/Admin/BannersPositions/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:121
+#: View/Helper/MenuDefaultHelper.php:123
 msgid "Banners"
 msgstr ""
 
@@ -622,30 +638,32 @@ msgstr ""
 #: Template/Admin/Pages/index.ctp:90
 #: Template/Admin/Photos/index.ctp:40
 #: Template/Admin/PhotosAlbums/index.ctp:55
-#: Template/Admin/Posts/index.ctp:103
+#: Template/Admin/Posts/index.ctp:110
 #: Template/Admin/PostsCategories/index.ctp:48
+#: Template/Admin/PostsTags/index.ctp:59
 #: Template/Admin/Users/index.ctp:98
 #: Template/Admin/Users/view.ctp:32
 #: Template/Admin/UsersGroups/index.ctp:48
 msgid "Edit"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:81
+#: Template/Admin/Banners/index.ctp:84
 #: Template/Admin/Pages/index.ctp:94
 #: Template/Admin/Pages/statics.ctp:44
 #: Template/Admin/Photos/index.ctp:47
 #: Template/Admin/PhotosAlbums/index.ctp:62
-#: Template/Admin/Posts/index.ctp:111
+#: Template/Admin/Posts/index.ctp:118
 #: Template/Admin/PostsCategories/index.ctp:56
+#: Template/Admin/PostsTags/index.ctp:61
 msgid "Open"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:86
+#: Template/Admin/Banners/index.ctp:88
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:45
 #: Template/Admin/PhotosAlbums/index.ctp:60
-#: Template/Admin/Posts/index.ctp:107
+#: Template/Admin/Posts/index.ctp:114
 #: Template/Admin/PostsCategories/index.ctp:53
 #: Template/Admin/Users/index.ctp:107
 #: Template/Admin/Users/view.ctp:41
@@ -653,12 +671,12 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:86
+#: Template/Admin/Banners/index.ctp:88
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:45
 #: Template/Admin/PhotosAlbums/index.ctp:60
-#: Template/Admin/Posts/index.ctp:107
+#: Template/Admin/Posts/index.ctp:114
 #: Template/Admin/PostsCategories/index.ctp:53
 #: Template/Admin/Users/index.ctp:107
 #: Template/Admin/Users/view.ctp:41
@@ -666,10 +684,10 @@ msgstr ""
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:92
+#: Template/Admin/Banners/index.ctp:94
 #: Template/Admin/BannersPositions/index.ctp:57
 #: Template/Admin/PhotosAlbums/index.ctp:71
-#: Template/Admin/Posts/index.ctp:117
+#: Template/Admin/Posts/index.ctp:103;124
 #: Template/Admin/PostsCategories/index.ctp:65
 #: Template/Admin/Users/index.ctp:116
 #: Template/Admin/UsersGroups/index.ctp:57
@@ -677,7 +695,7 @@ msgid "View items that belong to this category"
 msgstr ""
 
 #: Template/Admin/Banners/upload.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:111
+#: View/Helper/MenuDefaultHelper.php:113
 msgid "Upload banners"
 msgstr ""
 
@@ -690,7 +708,7 @@ msgid "Add banners position"
 msgstr ""
 
 #: Template/Admin/BannersPositions/add.ctp:36
-#: View/Helper/MenuDefaultHelper.php:118
+#: View/Helper/MenuDefaultHelper.php:120
 msgid "Add position"
 msgstr ""
 
@@ -726,7 +744,7 @@ msgid "Name"
 msgstr ""
 
 #: Template/Admin/Pages/add.ctp:26;33;73
-#: View/Helper/MenuDefaultHelper.php:76
+#: View/Helper/MenuDefaultHelper.php:78
 msgid "Add page"
 msgstr ""
 
@@ -735,7 +753,7 @@ msgstr ""
 #: Template/Admin/Pages/index.ctp:70
 #: Template/Admin/Posts/add.ctp:50
 #: Template/Admin/Posts/edit.ctp:50
-#: Template/Admin/Posts/index.ctp:80
+#: Template/Admin/Posts/index.ctp:85
 #: Template/Admin/Users/index.ctp:77
 msgid "Date"
 msgstr ""
@@ -759,7 +777,7 @@ msgstr ""
 #: Template/Admin/Pages/index.ctp:69
 #: Template/Admin/Posts/add.ctp:58
 #: Template/Admin/Posts/edit.ctp:58
-#: Template/Admin/Posts/index.ctp:79
+#: Template/Admin/Posts/index.ctp:84
 msgid "Priority"
 msgstr ""
 
@@ -779,7 +797,7 @@ msgstr ""
 #: Template/Admin/PhotosAlbums/index.ctp:34
 #: Template/Admin/Posts/add.ctp:71
 #: Template/Admin/Posts/edit.ctp:70
-#: Template/Admin/Posts/index.ctp:76
+#: Template/Admin/Posts/index.ctp:81
 #: Template/Admin/PostsCategories/add.ctp:47
 #: Template/Admin/PostsCategories/edit.ctp:47
 #: Template/Admin/PostsCategories/index.ctp:34
@@ -830,7 +848,7 @@ msgstr ""
 #: Template/Cell/Pages/pages.ctp:34
 #: Template/Element/frontend/topbar.ctp:43
 #: Template/Pages/index.ctp:25;29
-#: View/Helper/MenuDefaultHelper.php:80
+#: View/Helper/MenuDefaultHelper.php:82
 msgid "Pages"
 msgstr ""
 
@@ -856,36 +874,36 @@ msgid "month"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:82
-#: Template/Admin/Posts/index.ctp:92
+#: Template/Admin/Posts/index.ctp:97
 msgid "Draft"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:107
-#: Template/Admin/Posts/index.ctp:126
+#: Template/Admin/Posts/index.ctp:133
 #: View/View/AdminView.php:94
 msgid "Very low"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:110
-#: Template/Admin/Posts/index.ctp:129
+#: Template/Admin/Posts/index.ctp:136
 #: View/View/AdminView.php:95
 msgid "Low"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:113
-#: Template/Admin/Posts/index.ctp:132
+#: Template/Admin/Posts/index.ctp:139
 #: View/View/AdminView.php:97
 msgid "High"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:116
-#: Template/Admin/Posts/index.ctp:135
+#: Template/Admin/Posts/index.ctp:142
 #: View/View/AdminView.php:98
 msgid "Very high"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:119
-#: Template/Admin/Posts/index.ctp:138
+#: Template/Admin/Posts/index.ctp:145
 #: View/View/AdminView.php:96
 msgid "Normal"
 msgstr ""
@@ -908,7 +926,7 @@ msgid "Album"
 msgstr ""
 
 #: Template/Admin/Photos/upload.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:90
+#: View/Helper/MenuDefaultHelper.php:92
 msgid "Upload photos"
 msgstr ""
 
@@ -921,7 +939,7 @@ msgid "Add photos album"
 msgstr ""
 
 #: Template/Admin/PhotosAlbums/add.ctp:57
-#: View/Helper/MenuDefaultHelper.php:92
+#: View/Helper/MenuDefaultHelper.php:94
 msgid "Add album"
 msgstr ""
 
@@ -940,7 +958,7 @@ msgstr ""
 
 #: Template/Admin/PhotosAlbums/index.ctp:36
 #: Template/Element/frontend/topbar.ctp:44
-#: View/Helper/MenuDefaultHelper.php:95
+#: View/Helper/MenuDefaultHelper.php:97
 msgid "Photos"
 msgstr ""
 
@@ -956,18 +974,19 @@ msgstr ""
 
 #: Template/Admin/Posts/add.ctp:42
 #: Template/Admin/Posts/edit.ctp:42
-#: Template/Admin/Posts/index.ctp:78
+#: Template/Admin/Posts/index.ctp:83
 msgid "Author"
 msgstr ""
 
 #: Template/Admin/Posts/add.ctp:47
 #: Template/Admin/Posts/edit.ctp:47
-#: Template/Admin/Posts/index.ctp:77
+#: Template/Admin/Posts/index.ctp:82
 msgid "Category"
 msgstr ""
 
 #: Template/Admin/Posts/add.ctp:86;94
 #: Template/Admin/Posts/edit.ctp:85;94
+#: Template/Admin/PostsTags/index.ctp:25;43
 msgid "Tags"
 msgstr ""
 
@@ -990,7 +1009,7 @@ msgstr ""
 #: Template/Admin/Users/index.ctp:76
 #: Template/Admin/Users/view.ctp:74
 #: Template/Posts/index.ctp:50
-#: View/Helper/MenuDefaultHelper.php:60
+#: View/Helper/MenuDefaultHelper.php:62
 msgid "Posts"
 msgstr ""
 
@@ -1002,7 +1021,11 @@ msgstr ""
 msgid "all categories"
 msgstr ""
 
-#: Template/Admin/Posts/index.ctp:120
+#: Template/Admin/Posts/index.ctp:69
+msgid "tag"
+msgstr ""
+
+#: Template/Admin/Posts/index.ctp:127
 #: Template/Admin/Users/index.ctp:121
 msgid "View items that belong to this user"
 msgstr ""
@@ -1035,8 +1058,12 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
+#: Template/Admin/PostsTags/index.ctp:52
+msgid "View items that belong to this element"
+msgstr ""
+
 #: Template/Admin/Systems/browser.ctp:26;31
-#: View/Helper/MenuDefaultHelper.php:164
+#: View/Helper/MenuDefaultHelper.php:166
 msgid "Media browser"
 msgstr ""
 
@@ -1045,7 +1072,7 @@ msgid "Type"
 msgstr ""
 
 #: Template/Admin/Systems/changelogs.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:165
+#: View/Helper/MenuDefaultHelper.php:167
 msgid "Changelogs"
 msgstr ""
 
@@ -1054,103 +1081,86 @@ msgid "Changelog"
 msgstr ""
 
 #: Template/Admin/Systems/checkup.ctp:26;39
-#: View/Helper/MenuDefaultHelper.php:163
+#: View/Helper/MenuDefaultHelper.php:165
 msgid "System checkup"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:42;45;54;68
+#: Template/Admin/Systems/checkup.ctp:44;52;86;108
 msgid "{0} version: {1}"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:47
-#: Template/Element/backend/sidebar.ctp:30
-msgid "Plugins"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:50
-msgid "{0} plugin version: {1}"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:59
-msgid "The {0} module is enabled"
-msgstr ""
-
 #: Template/Admin/Systems/checkup.ctp:61
-msgid "The {0} module is not enabled"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:63
-msgid "The {0} module cannot be checked"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:71
-msgid "The {0} version is at least {1}"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:73
-msgid "The {0} version is less than {1}"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:78
-msgid "The {0} extension is enabled"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:80
-msgid "The {0} extension is not enabled"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:85
-msgid "{0} is available"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:87
-msgid "{0} is not available"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:89
-msgid "Webroot"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:92;97;103;110;115;120;142
-msgid "The directory {0} is readable and writable"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:107
-#: Template/Admin/Systems/temporary.ctp:57
-msgid "Thumbs"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:124
-msgid "Temporary directories"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:127
-msgid "The temporary directory is readable and writable"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:129
-msgid "The temporary directory is not readable or writable"
-msgstr ""
-
-#: Template/Admin/Systems/checkup.ctp:132
 msgid "The cache is enabled"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:134
+#: Template/Admin/Systems/checkup.ctp:63
 #: Template/Admin/Systems/temporary.ctp:35
 msgid "The cache is disabled or debugging is active"
 msgstr ""
 
+#: Template/Admin/Systems/checkup.ctp:71
+#: Template/Element/backend/sidebar.ctp:30
+msgid "Plugins"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:75
+msgid "{0} plugin version: {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:92
+msgid "The {0} module is enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:94
+msgid "The {0} module is not enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:96
+msgid "The {0} module cannot be checked"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:113
+msgid "The {0} version is at least {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:115
+msgid "The {0} version is less than {1}"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:121
+msgid "The {0} extension is enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:123
+msgid "The {0} extension is not enabled"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:133
+msgid "Executables"
+msgstr ""
+
 #: Template/Admin/Systems/checkup.ctp:137
-msgid "The cache is readable and writable"
+msgid "{0} is available"
 msgstr ""
 
 #: Template/Admin/Systems/checkup.ctp:139
-msgid "The cache is not readable or writable"
+msgid "{0} is not available"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:148
+msgid "Webroot"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:153;169
+msgid "The directory {0} is readable and writable"
+msgstr ""
+
+#: Template/Admin/Systems/checkup.ctp:164
+msgid "Temporary directories"
 msgstr ""
 
 #: Template/Admin/Systems/logs.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:171
+#: View/Helper/MenuDefaultHelper.php:173
 msgid "Log viewer"
 msgstr ""
 
@@ -1159,7 +1169,7 @@ msgid "Log file"
 msgstr ""
 
 #: Template/Admin/Systems/temporary.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:162
+#: View/Helper/MenuDefaultHelper.php:164
 msgid "Temporary files"
 msgstr ""
 
@@ -1179,32 +1189,56 @@ msgstr ""
 msgid "Clear cache"
 msgstr ""
 
+#: Template/Admin/Systems/temporary.ctp:45
+msgid "Assets"
+msgstr ""
+
 #: Template/Admin/Systems/temporary.ctp:46
+msgid "Assets size: {0}"
+msgstr ""
+
+#: Template/Admin/Systems/temporary.ctp:49
+msgid "Clear assets"
+msgstr ""
+
+#: Template/Admin/Systems/temporary.ctp:56
 msgid "Logs"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:47
+#: Template/Admin/Systems/temporary.ctp:57
 msgid "Logs size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:50
+#: Template/Admin/Systems/temporary.ctp:60
 msgid "Clear logs"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:58
+#: Template/Admin/Systems/temporary.ctp:67
+msgid "Thumbs"
+msgstr ""
+
+#: Template/Admin/Systems/temporary.ctp:68
 msgid "Thumbs size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:61
+#: Template/Admin/Systems/temporary.ctp:71
 msgid "Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:62
+#: Template/Admin/Systems/temporary.ctp:72
 msgid "Clear thumbs"
 msgstr ""
 
+#: Template/Admin/Tags/edit.ctp:25;28;37
+msgid "Edit tag"
+msgstr ""
+
+#: Template/Admin/Tags/edit.ctp:33
+msgid "Tag"
+msgstr ""
+
 #: Template/Admin/Users/add.ctp:25;28;75
-#: View/Helper/MenuDefaultHelper.php:137
+#: View/Helper/MenuDefaultHelper.php:139
 msgid "Add user"
 msgstr ""
 
@@ -1312,7 +1346,7 @@ msgstr ""
 
 #: Template/Admin/Users/index.ctp:26;31
 #: Template/Admin/UsersGroups/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:147
+#: View/Helper/MenuDefaultHelper.php:149
 msgid "Users"
 msgstr ""
 
@@ -1380,7 +1414,7 @@ msgid "Label"
 msgstr ""
 
 #: Template/Admin/UsersGroups/add.ctp:45
-#: View/Helper/MenuDefaultHelper.php:144
+#: View/Helper/MenuDefaultHelper.php:146
 msgid "Add group"
 msgstr ""
 
@@ -1436,7 +1470,7 @@ msgid "Toggle navigation"
 msgstr ""
 
 #: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:69
+#: Template/Layout/frontend.ctp:65
 msgid "Homepage"
 msgstr ""
 
@@ -1490,12 +1524,16 @@ msgid "Posted on {0}"
 msgstr ""
 
 #: Template/Element/frontend/views/page.ctp:56
-#: Template/Element/frontend/views/post.ctp:81
+#: Template/Element/frontend/views/post.ctp:77
 msgid "Read more"
 msgstr ""
 
 #: Template/Element/frontend/views/post.ctp:47
 msgid "Posted by {0}"
+msgstr ""
+
+#: Template/Element/frontend/views/post.ctp:89
+msgid "Related posts"
 msgstr ""
 
 #: Template/Element/login/menu.ctp:27
@@ -1682,35 +1720,39 @@ msgstr ""
 msgid "Add category"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:71
+#: View/Helper/MenuDefaultHelper.php:60
+msgid "List tags"
+msgstr ""
+
+#: View/Helper/MenuDefaultHelper.php:73
 msgid "List pages"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:78
+#: View/Helper/MenuDefaultHelper.php:80
 msgid "List static pages"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:91
+#: View/Helper/MenuDefaultHelper.php:93
 msgid "List albums"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:110
+#: View/Helper/MenuDefaultHelper.php:112
 msgid "List banners"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:117
+#: View/Helper/MenuDefaultHelper.php:119
 msgid "List positions"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:136
+#: View/Helper/MenuDefaultHelper.php:138
 msgid "List users"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:143
+#: View/Helper/MenuDefaultHelper.php:145
 msgid "List groups"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:174
+#: View/Helper/MenuDefaultHelper.php:176
 msgid "System"
 msgstr ""
 

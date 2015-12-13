@@ -26,6 +26,15 @@ use Cake\ORM\Entity;
 
 /**
  * Page entity
+ * @property int $id
+ * @property string $title
+ * @property string $subtitle
+ * @property string $slug
+ * @property string $text
+ * @property int $priority
+ * @property bool $active
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class Page extends Entity {
     /**
@@ -33,11 +42,8 @@ class Page extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'title' => TRUE,
-        'subtitle' => TRUE,
-        'slug' => TRUE,
-        'text' => TRUE,
-        'priority' => TRUE,
-        'active' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 }

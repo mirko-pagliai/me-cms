@@ -378,6 +378,7 @@
     "@blockquote-border-color": "@gray-lighter",
     "@page-header-border-color": "@gray-lighter",
     "@dl-horizontal-offset": "@component-offset-horizontal",
+    "@dl-horizontal-breakpoint": "@grid-float-breakpoint",
     "@hr-border": "@gray-lighter"
   },
   "css": [
@@ -389,27 +390,21 @@
     "forms.less",
     "buttons.less",
     "responsive-utilities.less",
-    "button-groups.less",
     "input-groups.less",
     "navs.less",
     "navbar.less",
     "pagination.less",
-    "badges.less",
+    "thumbnails.less",
     "alerts.less",
-    "panels.less",
     "responsive-embed.less",
-    "wells.less",
     "close.less",
     "component-animations.less",
-    "dropdowns.less",
-    "tooltip.less"
+    "dropdowns.less"
   ],
   "js": [
     "dropdown.js",
-    "tooltip.js",
-    "affix.js",
     "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=b00540d59883d978634f"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=920272f2a4e45f4fafd3"
 }

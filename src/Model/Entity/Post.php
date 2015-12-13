@@ -26,6 +26,20 @@ use Cake\ORM\Entity;
 
 /**
  * Post entity
+ * @property int $id
+ * @property int $category_id
+ * @property \MeCms\Model\Entity\Category $category
+ * @property int $user_id
+ * @property \MeCms\Model\Entity\User $user
+ * @property string $title
+ * @property string $slug
+ * @property string $subtitle
+ * @property string $text
+ * @property int $priority
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
+ * @property bool $active
+ * @property \MeCms\Model\Entity\Tag[] $tags
  */
 class Post extends Entity {
     /**
@@ -33,18 +47,9 @@ class Post extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'category_id' => TRUE,
-        'user_id' => TRUE,
-        'title' => TRUE,
-        'subtitle' => TRUE,
-        'slug' => TRUE,
-        'text' => TRUE,
-        'priority' => TRUE,
-        'active' => TRUE,
-		'created' => TRUE,
-        'category' => TRUE,
-        'user' => TRUE,
-		'tags' => TRUE
+        '*' => TRUE,
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 	
 	/**

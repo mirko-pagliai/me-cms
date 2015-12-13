@@ -39,7 +39,7 @@ class BannersController extends AppController {
 			->select(['id', 'target'])
 			->where(compact('id'))
 			->limit(1)
-			->cache(sprintf('view_%s', md5($id)), 'banners')
+			->cache(sprintf('view_%s', md5($id)), $this->Banners->cache)
 			->first();
 		
 		if(empty($banner) || empty($banner->target))

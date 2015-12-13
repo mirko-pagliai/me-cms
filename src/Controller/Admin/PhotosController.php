@@ -68,7 +68,6 @@ class PhotosController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
@@ -89,16 +88,16 @@ class PhotosController extends AppController {
 		if(empty($album_id))
 			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The album ID is missing'));
 		
-		$this->paginate['limit'] = config('backend.photos');
-		$this->paginate['order'] = ['Photos.filename' => 'ASC'];
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
+		$this->paginate['order'] = ['filename' => 'ASC'];
 		
-		$photos = $this->paginate(
+		$this->set('photos', $this->paginate(
 			$this->Photos->find()
 				->select(['id', 'album_id', 'filename'])
 				->where(compact('album_id'))
-		);
+		));
 		
-		$this->set(compact('album_id', 'photos'));
+		$this->set(compact('album_id'));
     }
 	
 	/**

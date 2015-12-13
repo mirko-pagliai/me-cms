@@ -70,9 +70,9 @@
 		<thead>
 			<tr>				
 				<th><?php echo $this->Paginator->sort('username', __d('me_cms', 'Username')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('full_name', __d('me_cms', 'Name')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('first_name', __d('me_cms', 'Name')) ?></th>
 				<th class="text-center hidden-xs"><?= $this->Paginator->sort('email', __d('me_cms', 'Email')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('group_id', __d('me_cms', 'Group')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Groups.label', __d('me_cms', 'Group')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('post_count', __d('me_cms', 'Posts')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>

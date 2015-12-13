@@ -64,6 +64,11 @@
 						'placeholder'		=> __d('me_cms', 'month'),
 						'size'				=> 5
 					]);
+					echo $this->Form->input('tag', [
+						'default'		=> $this->request->query('tag'),
+						'placeholder'	=> __d('me_cms', 'tag'),
+						'size'			=> 10
+					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
 			</div>
@@ -74,8 +79,8 @@
 		<thead>
 			<tr>
 				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('category_id', __d('me_cms', 'Category')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('User.full_name', __d('me_cms', 'Author')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
@@ -93,9 +98,11 @@
 							
 							echo $this->Html->strong($title);
 							
-							if($post->tags_as_string)
-								echo $this->Html->div('text-muted small', $post->tags_as_string, ['icon' => 'tags']);
-														
+							if(!empty($post->tags))
+								echo $this->Html->div('small', implode(PHP_EOL, array_map(function($tag) {
+									return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
+								}, $post->tags)));
+							
 							$actions = [];
 							
 							//Only admins and managers can edit all posts. Users can edit only their own posts

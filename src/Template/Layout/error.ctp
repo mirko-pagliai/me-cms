@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
@@ -34,7 +34,6 @@
 			echo $this->Html->tag('title', $this->fetch('title'));
 			echo $this->Html->meta('icon');
 			echo $this->fetch('meta');
-			
 			
 			echo $this->Html->css([
 				'/vendor/font-awesome/css/font-awesome.min',

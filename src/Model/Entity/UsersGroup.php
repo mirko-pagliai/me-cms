@@ -26,6 +26,11 @@ use Cake\ORM\Entity;
 
 /**
  * UsersGroup entity
+ * @property int $id
+ * @property string $name
+ * @property string $label
+ * @property string $description
+ * @property int $user_count
  */
 class UsersGroup extends Entity {
     /**
@@ -33,10 +38,8 @@ class UsersGroup extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'name' => TRUE,
-        'label' => TRUE,
-        'description' => TRUE,
-        'user_count' => TRUE,
-        'users' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'user_count' => FALSE
     ];
 }

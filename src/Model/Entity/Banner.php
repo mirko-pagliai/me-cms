@@ -27,6 +27,14 @@ use MeCms\Utility\BannerFile;
 
 /**
  * Banner entity
+ * @property int $id
+ * @property int $position_id
+ * @property \MeCms\Model\Entity\Position $position
+ * @property string $filename
+ * @property string $target
+ * @property string $description
+ * @property bool $active
+ * @property int $click_count
  */
 class Banner extends Entity {
     /**
@@ -34,13 +42,8 @@ class Banner extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'position_id' => TRUE,
-        'filename' => TRUE,
-        'target' => TRUE,
-        'description' => TRUE,
-        'active' => TRUE,
-        'click_count' => TRUE,
-        'position' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE
     ];
 	
 	/**

@@ -41,7 +41,7 @@ class PhotosAlbumsController extends AppController {
 					->order('rand()');
 			}])
 			->order(['title' => 'ASC'])
-			->cache('albums_index', 'photos')
+			->cache('albums_index', $this->PhotosAlbums->cache)
 			->all()
 		);
 		
@@ -65,7 +65,7 @@ class PhotosAlbumsController extends AppController {
 			]])
 			->select(['id', 'title'])
 			->where(compact('slug'))
-			->cache(sprintf('albums_view_%s', md5($slug)), 'photos')
+			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
 			->first()
 		);
 	}

@@ -82,7 +82,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 */
 	$routes->connect('/posts/tag/:tag',
 		['controller' => 'PostsTags', 'action' => 'view'],
-		['_name' => 'posts_tag', 'tag' => '[a-z0-9]+', 'pass' => ['tag']]
+		['_name' => 'posts_tag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
 	);
 	
 	/**
@@ -149,7 +149,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		/**
 		 * Other admin routes
 		 */
-		$controllers = ['banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts', 'systems', 'users', 'users_groups'];
+		$controllers = ['banners', 'banners_positions', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts_tags', 'posts', 'systems', 'tags', 'users', 'users_groups'];
 		$controllers = sprintf('(%s)', implode('|', $controllers));
 		
 		$routes->connect('/:controller', [], ['controller' => $controllers]);

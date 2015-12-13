@@ -24,22 +24,32 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use MeCms\Model\Entity\Tag;
+use MeCms\Model\Table\AppTable;
 
 /**
  * Tags model
+ * @property \Cake\ORM\Association\BelongsToMany $Posts
  */
-class TagsTable extends Table {
+class TagsTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'posts';
+	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('tags');
         $this->displayField('tag');
         $this->primaryKey('id');
+
         $this->belongsToMany('Posts', [
             'foreignKey' => 'tag_id',
             'targetForeignKey' => 'post_id',
@@ -52,10 +62,11 @@ class TagsTable extends Table {
 	/**
 	 * Gets the tags list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('tags_list', 'posts')
+			->cache('tags_list', $this->cache)
 			->toArray();
 	}
 	

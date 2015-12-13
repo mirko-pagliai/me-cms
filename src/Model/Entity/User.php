@@ -26,6 +26,22 @@ use Cake\ORM\Entity;
 
 /**
  * User entity
+ * @property int $id
+ * @property int $group_id
+ * @property \MeCms\Model\Entity\Group $group
+ * @property string $username
+ * @property string $email
+ * @property string $password
+ * @property string $first_name
+ * @property string $last_name
+ * @property bool $active
+ * @property bool $banned
+ * @property int $post_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
+ * @property \MeCms\Model\Entity\Post[] $posts
+ * @property \MeCms\Model\Entity\Token[] $tokens
+ * @property \MeCms\Model\Entity\YoutubeVideo[] $youtube_videos
  */
 class User extends Entity {
     /**
@@ -33,17 +49,10 @@ class User extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'group_id' => TRUE,
-        'username' => TRUE,
-        'email' => TRUE,
-        'password' => TRUE,
-        'first_name' => TRUE,
-        'last_name' => TRUE,
-        'active' => TRUE,
-        'banned' => TRUE,
-        'post_count' => TRUE,
-        'group' => TRUE,
-        'posts' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'modified' => FALSE,
+		'post_count' => FALSE
     ];
 	
 	/**

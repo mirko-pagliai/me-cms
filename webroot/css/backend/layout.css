@@ -1,18 +1,9 @@
 /*!
- * This file is part of MeTools.
+ * This file is part of MeCms.
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  */
-
-/* -------------------------------- */
-/*				Fonts				*/
-/* -------------------------------- */
-/* "Roboto" font */
-@font-face {
-    font-family: 'Roboto';
-    src: url(../../fonts/Roboto-Regular.ttf);
-}
 
 /* -------------------------------- */
 /*				HTML				*/

@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of MeTools.
+ * This file is part of MeCms.
  *
- * MeTools is free software: you can redistribute it and/or modify
+ * MeCms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * MeTools is distributed in the hope that it will be useful,
+ * MeCms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with MeTools.  If not, see <http://www.gnu.org/licenses/>.
+ * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
@@ -34,21 +34,13 @@ use Cake\Filesystem\Folder;
  * use MeCms\Utility\PhotoFile;
  * </code>
  */
-class PhotoFile {
-    /**
-     * Alias for `checkFolder()` method
-     * @see checkFolder()
-     */
-    public static function check() {
-        return call_user_func_array([get_class(), 'checkFolder'], func_get_args());
-    }
-	
+class PhotoFile {	
 	/**
 	 * Checks if the folder is writable
 	 * @return boolean
 	 * @uses folder()
 	 */
-	public static function checkFolder() {
+	public static function check() {
 		return folder_is_writable(self::folder());
 	}
 	
@@ -86,14 +78,6 @@ class PhotoFile {
 		return $folder->delete();
 	}
 	
-    /**
-     * Alias for `getFolder()` method
-     * @see getFolder()
-     */
-    public static function folder() {
-        return call_user_func_array([get_class(), 'getFolder'], func_get_args());
-    }
-	
 	/**
 	 * Gets the main folder path.
 	 * 
@@ -101,7 +85,7 @@ class PhotoFile {
 	 * @param type $album_id Album ID (optional)
 	 * @return string Folder path
 	 */
-	public static function getFolder($album_id = NULL) {
+	public static function folder($album_id = NULL) {
 		$path = WWW_ROOT.'img'.DS.'photos'.DS;
 		
 		return empty($album_id) ? $path : $path.$album_id;
@@ -114,15 +98,7 @@ class PhotoFile {
 	 * @return string Path
 	 * @uses folder()
 	 */
-	public static function getPath($filename, $album_id) {
+	public static function path($filename, $album_id) {
 		return self::folder($album_id).DS.$filename;
 	}
-	
-    /**
-     * Alias for `getPath()` method
-     * @see getPath()
-     */
-    public static function path() {
-        return call_user_func_array([get_class(), 'getPath'], func_get_args());
-    }
 }

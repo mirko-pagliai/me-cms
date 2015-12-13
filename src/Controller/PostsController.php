@@ -43,7 +43,7 @@ class PostsController extends AppController {
 		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
@@ -59,7 +59,7 @@ class PostsController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
 		}
 		//Else, sets the paging parameter
 		else
@@ -83,7 +83,7 @@ class PostsController extends AppController {
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
-		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {		
@@ -103,7 +103,7 @@ class PostsController extends AppController {
 			)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
 		}
 		//Else, sets the paging parameter
 		else
@@ -132,7 +132,9 @@ class PostsController extends AppController {
 			->select(['title', 'slug', 'text', 'created'])
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
-			->cache('rss', 'posts'));
+			->cache('rss', $this->Posts->cache));
+		
+		$this->viewBuilder()->layout('MeCms.frontend');
 	}
 	
 	/**
@@ -158,7 +160,7 @@ class PostsController extends AppController {
 					$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
 
 					//Tries to get data from the cache
-					list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], 'posts'));
+					list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
 
 					//If the data are not available from the cache
 					if(empty($posts) || empty($paging)) {
@@ -174,7 +176,7 @@ class PostsController extends AppController {
 						)->toArray();
 
 						//Writes on cache
-						Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], 'posts');
+						Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
 					}
 					//Else, sets the paging parameter
 					else
@@ -194,9 +196,10 @@ class PostsController extends AppController {
      * Views post
 	 * @param string $slug Post slug
      * @throws \Cake\Network\Exception\NotFoundException
+	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
-		$this->set('post', $this->Posts->find('active')
+		$this->set('post', $post = $this->Posts->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Tags',
@@ -204,7 +207,11 @@ class PostsController extends AppController {
 			])
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
-			->cache(sprintf('view_%s', md5($slug)), 'posts')
+			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
 			->first());
-    }
+		
+		//Gets related posts
+		if(config('post.related'))
+			$this->set('related', $this->Posts->getRelated($post, config('post.related')));
+	}
 }

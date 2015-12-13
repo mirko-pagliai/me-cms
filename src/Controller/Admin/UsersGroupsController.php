@@ -33,7 +33,6 @@ class UsersGroupsController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 */
 	public function isAuthorized($user = NULL) {
@@ -45,7 +44,7 @@ class UsersGroupsController extends AppController {
      * Lists usersGroups
      */
     public function index() {
-		$this->paginate['order'] = ['UsersGroups.name' => 'ASC'];
+		$this->paginate['order'] = ['name' => 'ASC'];
 		
 		$this->set('groups', $this->paginate(
 			$this->UsersGroups->find()

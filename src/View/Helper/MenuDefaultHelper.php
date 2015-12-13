@@ -57,6 +57,8 @@ class MenuDefaultHelper extends Helper {
 				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms'])
 			);
 		
+		array_push($menu, $this->Html->link(__d('me_cms', 'List tags'), ['controller' => 'PostsTags', 'action' => 'index', 'plugin' => 'MeCms']));
+		
 		return [$menu, __d('me_cms', 'Posts'), ['icon' => 'file-text-o']];
 	}
 	
@@ -107,15 +109,15 @@ class MenuDefaultHelper extends Helper {
 			return;
 		
 		$menu = [
-			$this->Html->link(__d('me_cms', 'List banners'), ['controller' => 'banners', 'action' => 'index', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Upload banners'), ['controller' => 'banners', 'action' => 'upload', 'plugin' => 'MeCms'])
+			$this->Html->link(__d('me_cms', 'List banners'), ['controller' => 'Banners', 'action' => 'index', 'plugin' => 'MeCms']),
+			$this->Html->link(__d('me_cms', 'Upload banners'), ['controller' => 'Banners', 'action' => 'upload', 'plugin' => 'MeCms'])
 		];
 		
 		//Only admin can access this controller
 		if($this->Auth->isGroup('admin'))
 			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List positions'), ['controller' => 'banners_positions', 'action' => 'index', 'plugin' => 'MeCms']),
-				$this->Html->link(__d('me_cms', 'Add position'), ['controller' => 'banners_positions', 'action' => 'add', 'plugin' => 'MeCms'])
+				$this->Html->link(__d('me_cms', 'List positions'), ['controller' => 'BannersPositions', 'action' => 'index', 'plugin' => 'MeCms']),
+				$this->Html->link(__d('me_cms', 'Add position'), ['controller' => 'BannersPositions', 'action' => 'add', 'plugin' => 'MeCms'])
 			);
 		
 		return [$menu, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart']];

@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
@@ -31,18 +31,27 @@ use MeCms\Model\Table\AppTable;
 
 /**
  * Posts model
+ * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsToMany $Tags
  */
 class PostsTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'posts';
+	
 	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses setNextToBePublished()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');	
+		parent::afterDelete($event, $entity, $options);
 		
 		//Sets the next post to be published
 		$this->setNextToBePublished();	
@@ -53,11 +62,11 @@ class PostsTable extends AppTable {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterSave()
 	 * @uses setNextToBePublished()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');
+		parent::afterSave($event, $entity, $options);
 		
 		//Sets the next post to be published
 		$this->setNextToBePublished();
@@ -118,51 +127,86 @@ class PostsTable extends AppTable {
 	}
 	
 	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"User" (author) field
-		if(!empty($query['user']))
-			$conditions[sprintf('%s.user_id', $this->alias())] = $query['user'];
-		
-		//"Category" field
-		if(!empty($query['category']))
-			$conditions[sprintf('%s.category_id', $this->alias())] = $query['category'];
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
-	/**
 	 * Gets from cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @return int Timestamp
 	 * @see checkIfCacheIsValid()
+	 * @uses $cache
 	 */
 	public function getNextToBePublished() {
-		return Cache::read('next_to_be_published', 'posts');
+		return Cache::read('next_to_be_published', $this->cache);
+	}
+	
+	/**
+	 * Gets the related posts for a post
+	 * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `Tags`
+	 * @param int $limit Limit of related posts
+	 * @return array Related posts, array of entities
+	 */
+	public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5) {
+		if(empty($post->tags))
+			return;
+		
+		//Tries to gets related posts from cache
+		$related = Cache::read($cache = sprintf('related_%s_posts_for_%s', $limit, $post->id), $this->cache);
+				
+		if(empty($related) && !is_null($related)) {
+			$tags = $post->tags;
+
+			//Re-orders tags, using the "post_count" field, then based on the popularity of tags
+			usort($tags, function($a, $b) { return $b['post_count'] - $a['post_count']; });
+
+			//Limits tags
+			if(count($tags) > $limit)
+				$tags = array_slice($tags, 0 , $limit);
+
+			//This array will be contain the ID to be excluded
+			$exclude = [$post->id];
+
+			//Gets a related post for each tag
+			//Reveres the tags order, because the tags less popular have less chance to find a related post
+			foreach(array_reverse($tags) as $tag) {
+				$post = $this->find('active')
+					->select(['id', 'title', 'slug'])
+					->matching('Tags', function($q) use($tag) {
+						return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
+					})
+					->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude])
+					->first();
+
+				//Adds the post to the related posts and its ID to the IDs to be excluded for the next query
+				if(!empty($post)) {
+					$related[] = $post;
+					$exclude[] = $post->id;
+				}
+			}
+			
+			Cache::write($cache, $related ? $related : NULL, $this->cache);
+		}
+		
+		return $related;
 	}
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('posts');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Categories' => ['post_count'], 'Users' => ['post_count']]);
+		
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.PostsCategories'
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+            'className' => 'MeCms.Users'
         ]);
         $this->belongsToMany('Tags', [
             'foreignKey' => 'post_id',
@@ -171,17 +215,36 @@ class PostsTable extends AppTable {
             'className' => 'MeCms.Tags',
 			'through' => 'MeCms.PostsTags'
         ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'className' => 'MeCms.Users'
-        ]);
+
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', ['Categories' => ['post_count'], 'Users' => ['post_count']]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Tag" field
+		if(!empty($data['tag']) && strlen($data['tag']) > 2)
+			$query->matching('Tags', function($q) use ($data) {
+				return $q->where([sprintf('%s.tag', $this->Tags->alias()) => $data['tag']]);
+			});
+		
+		return $query;
+	}
 	
 	/**
 	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
 	 * @see checkIfCacheIsValid()
 	 * @uses Cake\I18n\Time::toUnixString()
+	 * @uses $cache
 	 */
 	public function setNextToBePublished() {		
 		$next = $this->find()
@@ -193,7 +256,7 @@ class PostsTable extends AppTable {
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), 'posts');
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
 	}
 
     /**

@@ -32,13 +32,13 @@ class AdminView extends AppView {
 	/**
 	 * Gets the menus for the backend
 	 * @return array Menus
-	 * @uses MeTools\Core\Plugin::getAll()
+	 * @uses MeTools\Core\Plugin::all()
 	 * @uses MeTools\Core\Plugin::path()
 	 */
 	protected function getMenus() {
 		$menus = [];
 		
-		foreach(Plugin::getAll(['DebugKit', 'MeTools', 'Migrations']) as $plugin) {
+		foreach(Plugin::all(['DebugKit', 'MeTools', 'Migrations']) as $plugin) {
 			//Checks if the file is readable
 			if(!is_readable($file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.'MenuDefaultHelper.php')))
 				continue;

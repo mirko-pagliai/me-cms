@@ -104,6 +104,8 @@ return ['MeCms' => [
 		'category' => TRUE,
 		//Displays the post created datetime
 		'created' => TRUE,
+		//Max number of related posts to get for each post. Use `0` to disable
+		'related' => 5,
 		//Displays the Shareaholic social buttons
 		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
 		'shareaholic' => FALSE,

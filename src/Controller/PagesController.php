@@ -36,7 +36,7 @@ class PagesController extends AppController {
     public function index() {
 		$this->set('pages', $this->Pages->find('active')
 			->select(['title', 'slug'])
-			->cache('index', 'pages')
+			->cache('index', $this->Pages->cache)
 			->all());
     }
 	
@@ -67,7 +67,7 @@ class PagesController extends AppController {
 		$this->set('page', $this->Pages->find('active')
 			->select(['title', 'subtitle', 'slug', 'text', 'created'])
 			->where(compact('slug'))
-			->cache(sprintf('view_%s', md5($slug)), 'pages')
+			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
 			->first());
     }
 }

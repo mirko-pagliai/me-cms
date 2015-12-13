@@ -22,13 +22,14 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Core\Configure;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
-use MeTools\Utility\Apache;
 use MeTools\Core\Plugin;
+use MeTools\Log\Engine\FileLog;
+use MeTools\Utility\Apache;
+use MeTools\Utility\Asset;
 use MeTools\Utility\Php;
 use MeTools\Utility\System;
 use MeTools\Utility\Thumbs;
@@ -42,7 +43,6 @@ class SystemsController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
@@ -52,7 +52,7 @@ class SystemsController extends AppController {
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		return $this->Auth->isGroup(['admin', 'manager']);
 	}
 	
 	/**
@@ -123,17 +123,19 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
-	 * @uses MeTools\Utility\Apache::module()
-	 * @uses MeTools\Utility\Apache::version()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
-	 * @uses MeTools\Utility\Php::checkVersion()
+	 * @uses MeTools\Log\Engine\FileLog::check()
+	 * @uses MeTools\Utility\Apache::module()
+	 * @uses MeTools\Utility\Apache::version()
+	 * @uses MeTools\Utility\Asset::check()
+	 * @uses MeTools\Utility\Asset::folder()
+	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
 	 * @uses MeTools\Utility\System::cacheStatus()
 	 * @uses MeTools\Utility\System::cakeVersion()
 	 * @uses MeTools\Utility\System::checkCache()
-	 * @uses MeTools\Utility\System::checkLogs()
 	 * @uses MeTools\Utility\System::checkTmp()
 	 * @uses MeTools\Utility\Thumbs::checkPhotos()
 	 * @uses MeTools\Utility\Thumbs::checkRemotes()
@@ -152,56 +154,65 @@ class SystemsController extends AppController {
 				'expires'			=> Apache::module('mod_expires'),
 				'rewrite'			=> Apache::module('mod_rewrite'),
 			],
-			'banners' => [
-				'check'	=> BannerFile::check(),
-				'path'	=> rtr(BannerFile::folder())
+			'cache' => [
+				'status' => System::cacheStatus()
 			],
-			'ffmpegthumbnailer' => [
-				'check' => Unix::which('ffmpegthumbnailer')
-			],
-			'files' => [
-				'check' => folder_is_writable(WWW_ROOT.'files'),
-				'path'	=> rtr(WWW_ROOT.'files')
+			'executables' => [
+				'clean-css'			=> Unix::which('cleancss'),
+				'ffmpegthumbnailer'	=> Unix::which('ffmpegthumbnailer'),
+				'UglifyJS 2'		=> Unix::which('uglifyjs')
 			],
 			'php' => [
 				'current_version'	=> Php::version(),
-				'check_version'		=> Php::checkVersion($phpRequired),
+				'check_version'		=> Php::check($phpRequired),
 				'exif'				=> Php::extension('exif'),
 				'imagick'			=> Php::extension('imagick'),
 				'mbstring'			=> Php::extension('mbstring'),
 				'mcrypt'			=> Php::extension('mcrypt'),
 				'required_version'	=> $phpRequired,
-				'zip'				=> Php::extension('zip'),
-			],
-			'photos' => [
-				'check'	=> PhotoFile::check(),
-				'path'	=> rtr(PhotoFile::folder())
+				'zip'				=> Php::extension('zip')
 			],
 			'plugins' => [
 				'cakephp_version'	=> System::cakeVersion(),
 				'plugins_version'	=> Plugin::versions('MeCms'),
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
-			'thumbs' => [
-				'photos_path'		=> rtr(Thumbs::photo()),
-				'photos_writable'	=> Thumbs::checkPhotos(),
-				'remotes_path'		=> rtr(Thumbs::remote()),
-				'remotes_writable'	=> Thumbs::checkRemotes(),
-				'videos_path'		=> rtr(Thumbs::video()),
-				'videos_writable'	=> Thumbs::checkVideos()
+			'temporary' => [
+				['path' => rtr(LOGS),				'writeable' => FileLog::check()],
+				['path' => rtr(TMP),				'writeable' => System::checkTmp()],
+				['path' => rtr(CACHE),				'writeable' => System::checkCache()],
+				['path' => rtr(Thumbs::photo()),	'writeable' => Thumbs::checkPhotos()],
+				['path' => rtr(Thumbs::remote()),	'writeable' => Thumbs::checkRemotes()],
+				['path' => rtr(Thumbs::video()),	'writeable' => Thumbs::checkVideos()]
 			],
-			'tmp' => [
-				'cache_status'		=> System::cacheStatus(),
-				'cache_writable'	=> System::checkCache(),
-				'logs_path'			=> rtr(LOGS),
-				'logs_writable'		=> System::checkLogs(),
-				'tmp_writable'		=> System::checkTmp()
+			'webroot' => [
+				['path' => rtr(Asset::folder()),			'writeable' => Asset::check()],
+				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
+				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
+				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
+				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
 			]
 		]);
 	}
+	
+	/**
+	 * Clears asset files
+	 * @uses MeTools\Utility\Asset::clear()
+	 */
+	public function clear_assets() {
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
+		
+		if(Asset::clear())
+			$this->Flash->success(__d('me_cms', 'Assets have been cleared'));
+		else
+			$this->Flash->error(__d('me_cms', 'Assets have not been cleared'));
+		
+		return $this->redirect(['action' => 'temporary']);
+	}	
 		
 	/**
-	 * Clears the cache.
+	 * Clears the cache
 	 * @uses MeTools\Utility\System::clearCache()
 	 */
 	public function clear_cache() {
@@ -218,13 +229,13 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Clears logs
-	 * @uses MeTools\Utility\System::clearLogs()
+	 * @uses MeTools\Log\Engine\FileLog::clear()
 	 */
 	public function clear_logs() {
 		if(!$this->request->is(['post', 'delete']))
 			return $this->redirect(['action' => 'cache']);
 		
-		if(System::clearLogs())
+		if(FileLog::clear())
 			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
 		else
 			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
@@ -233,7 +244,7 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Clears the thumbnails.
+	 * Clears the thumbnails
 	 * @uses MeTools\Utility\Thumbs::clear()
 	 */
 	public function clear_thumbs() {
@@ -250,11 +261,11 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Log viewer
-	 * @uses MeTools\Utility\System::logs()
+	 * @uses MeTools\Log\Engine\FileLog::all()
 	 */
 	public function logs() {
 		//Gets log files
-		$files = System::logs();
+		$files = FileLog::all();
 		
 		//If a log file has been specified
 		if(!empty($this->request->query['file']) && $this->request->is('get'))
@@ -264,17 +275,19 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Manages cache and thumbnails
+	 * Manages cache, logs and thumbnails
+	 * @uses MeTools\Log\Engine\FileLog::size()
+	 * @uses MeTools\Utility\Asset::size()
 	 * @uses MeTools\Utility\System::cacheSize()
 	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\System::logsSize()
 	 * @uses MeTools\Utility\Thumbs::size()
 	 */
 	public function temporary() {
         $this->set([
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
-			'logs_size'		=> System::logsSize(),
+			'assets_size'	=> Asset::size(),
+			'logs_size'		=> FileLog::size(),
 			'thumbs_size'	=> Thumbs::size()
         ]);
 	}
