@@ -4,8 +4,8 @@
 # Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-12-08 10:57+0000\n"
-"PO-Revision-Date: 2015-12-08 12:02+0100\n"
+"POT-Creation-Date: 2015-12-13 11:11+0000\n"
+"PO-Revision-Date: 2015-12-13 12:12+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -61,12 +61,12 @@ msgid "No account found"
 msgstr "Nessun account trovato"
 
 #: Controller/UsersController.php:135
-#: Controller/Admin/UsersController.php:197
+#: Controller/Admin/UsersController.php:196
 msgid "The account has been activated"
 msgstr "Il tuo account è stato attivato"
 
 #: Controller/UsersController.php:138
-#: Controller/Admin/UsersController.php:199
+#: Controller/Admin/UsersController.php:198
 msgid "The account has not been activated"
 msgstr "Il tuo account non è stato attivato"
 
@@ -99,12 +99,12 @@ msgid "We send you an email to activate your account"
 msgstr "Ti abbiamo inviato un'email per attivare il tuo account"
 
 #: Controller/UsersController.php:322
-#: Controller/Admin/UsersController.php:222
+#: Controller/Admin/UsersController.php:221
 msgid "The password has been edited"
 msgstr "La password è stata modificata"
 
 #: Controller/UsersController.php:326
-#: Controller/Admin/UsersController.php:226
+#: Controller/Admin/UsersController.php:225
 msgid "The password has not been edited"
 msgstr "La password non è stata modificata"
 
@@ -123,8 +123,8 @@ msgstr "Il tuo account non è stato creato"
 #: Controller/Admin/BannersController.php:48
 #: Controller/Admin/PhotosAlbumsController.php:46
 #: Controller/Admin/PhotosController.php:48
-#: Controller/Admin/SystemsController.php:79
-#: Template/Admin/Systems/checkup.ctp:152;168
+#: Controller/Admin/SystemsController.php:78
+#: Template/Admin/Systems/checkup.ctp:155;171
 msgid "The directory {0} is not readable or writable"
 msgstr "La directory {0} non è leggibile o scrivibile"
 
@@ -134,19 +134,19 @@ msgid ""
 msgstr ""
 "Prima di poter gestire i banner, devi creare almeno una posizione per i banner"
 
-#: Controller/Admin/BannersController.php:132
+#: Controller/Admin/BannersController.php:131
 msgid "The banner has been saved"
 msgstr "Il banner è stato salvato"
 
-#: Controller/Admin/BannersController.php:136
+#: Controller/Admin/BannersController.php:135
 msgid "The banner could not be saved"
 msgstr "Il banner non è stato salvato"
 
-#: Controller/Admin/BannersController.php:152
+#: Controller/Admin/BannersController.php:151
 msgid "The banner has been deleted"
 msgstr "Il banner è stato eliminato"
 
-#: Controller/Admin/BannersController.php:154
+#: Controller/Admin/BannersController.php:153
 msgid "The banner could not be deleted"
 msgstr "Il banner non può essere eliminato"
 
@@ -174,19 +174,19 @@ msgstr ""
 "Prima di cancellare questa posizione, devi cancellare i suoi banner o "
 "assegnarli a un'altra posizione"
 
-#: Controller/Admin/PagesController.php:103;125
+#: Controller/Admin/PagesController.php:102;124
 msgid "The page has been saved"
 msgstr "La pagina è stata salvata"
 
-#: Controller/Admin/PagesController.php:107;129
+#: Controller/Admin/PagesController.php:106;128
 msgid "The page could not be saved"
 msgstr "La pagina non può essere salvata"
 
-#: Controller/Admin/PagesController.php:145
+#: Controller/Admin/PagesController.php:144
 msgid "The page has been deleted"
 msgstr "La pagina è stata cancellata"
 
-#: Controller/Admin/PagesController.php:147
+#: Controller/Admin/PagesController.php:146
 msgid "The page could not be deleted"
 msgstr "La pagina non è stata cancellata"
 
@@ -238,23 +238,23 @@ msgstr "La foto è stata cancellata"
 msgid "The photo could not be deleted"
 msgstr "La foto non può essere cancellata"
 
-#: Controller/Admin/PostsCategoriesController.php:95;117
+#: Controller/Admin/PostsCategoriesController.php:94;116
 msgid "The posts category has been saved"
 msgstr "La categoria articoli è stata salvata"
 
-#: Controller/Admin/PostsCategoriesController.php:99;121
+#: Controller/Admin/PostsCategoriesController.php:98;120
 msgid "The posts category could not be saved"
 msgstr "La categoria articoli non può essere salvata"
 
-#: Controller/Admin/PostsCategoriesController.php:139
+#: Controller/Admin/PostsCategoriesController.php:138
 msgid "The posts category has been deleted"
 msgstr "La categoria è stata cancellata"
 
-#: Controller/Admin/PostsCategoriesController.php:141
+#: Controller/Admin/PostsCategoriesController.php:140
 msgid "The posts category could not be deleted"
 msgstr "La categoria articoli non può essere cancellata"
 
-#: Controller/Admin/PostsCategoriesController.php:144
+#: Controller/Admin/PostsCategoriesController.php:143
 msgid ""
 "Before you delete this category, you have to delete its posts or assign them "
 "to another category"
@@ -282,39 +282,39 @@ msgstr "L'articolo è stato cancellato"
 msgid "The post could not be deleted"
 msgstr "L'articolo non può essere cancellato"
 
-#: Controller/Admin/SystemsController.php:73
+#: Controller/Admin/SystemsController.php:72
 msgid "{0} is not present into {1}"
 msgstr "{0} non è presente in {1}"
 
-#: Controller/Admin/SystemsController.php:206
+#: Controller/Admin/SystemsController.php:207
 msgid "Assets have been cleared"
 msgstr "Gli asset sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:208
+#: Controller/Admin/SystemsController.php:209
 msgid "Assets have not been cleared"
 msgstr "Gli asset sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:222
+#: Controller/Admin/SystemsController.php:223
 msgid "The cache has been cleared"
 msgstr "La cache è stata svuotata"
 
-#: Controller/Admin/SystemsController.php:224
+#: Controller/Admin/SystemsController.php:225
 msgid "The cache has not been cleared"
 msgstr "La cache non è stata svuotata"
 
-#: Controller/Admin/SystemsController.php:238
+#: Controller/Admin/SystemsController.php:239
 msgid "The logs have been cleared"
 msgstr "I log sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:240
+#: Controller/Admin/SystemsController.php:241
 msgid "The logs have not been deleted"
 msgstr "I log non sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:254
+#: Controller/Admin/SystemsController.php:255
 msgid "The thumbnails have been deleted"
 msgstr "Le miniature sono state cancellate"
 
-#: Controller/Admin/SystemsController.php:256
+#: Controller/Admin/SystemsController.php:257
 msgid "The thumbnails have not been deleted"
 msgstr "Le miniature non sono state cancellate"
 
@@ -326,23 +326,23 @@ msgstr "Il tag è stato salvato"
 msgid "The tag could not be saved"
 msgstr "Il tag non può essere salvato"
 
-#: Controller/Admin/UsersController.php:110;146
+#: Controller/Admin/UsersController.php:109;145
 msgid "The user has been saved"
 msgstr "L'utente è stato salvato"
 
-#: Controller/Admin/UsersController.php:114;150
+#: Controller/Admin/UsersController.php:113;149
 msgid "The user could not be saved"
 msgstr "L'utente non può essere salvato"
 
-#: Controller/Admin/UsersController.php:134;174
+#: Controller/Admin/UsersController.php:133;173
 msgid "Only the admin founder can edit other admin users"
 msgstr "Solo il fondatore può modificare gli altri amministratori"
 
-#: Controller/Admin/UsersController.php:171
+#: Controller/Admin/UsersController.php:170
 msgid "You cannot delete the admin founder"
 msgstr "Non è possibile cancellare l'amministratore fondatore"
 
-#: Controller/Admin/UsersController.php:176
+#: Controller/Admin/UsersController.php:175
 msgid ""
 "Before you delete this user, you have to delete his posts or assign them to "
 "another user"
@@ -350,11 +350,11 @@ msgstr ""
 "Prima di cancellare questo utente, devi cancellare i suoi articoli o "
 "assegnarli a un altro utente"
 
-#: Controller/Admin/UsersController.php:179
+#: Controller/Admin/UsersController.php:178
 msgid "The user has been deleted"
 msgstr "L'utente è stato cancellato"
 
-#: Controller/Admin/UsersController.php:181
+#: Controller/Admin/UsersController.php:180
 msgid "The user could not be deleted"
 msgstr "L'utente non può essere cancellato"
 
@@ -1171,23 +1171,27 @@ msgstr "L'estensione {0} è abilitata"
 msgid "The {0} extension is not enabled"
 msgstr "L'estensione {0} non è abilitata"
 
-#: Template/Admin/Systems/checkup.ctp:135
+#: Template/Admin/Systems/checkup.ctp:133
+msgid "Executables"
+msgstr "Eseguibili"
+
+#: Template/Admin/Systems/checkup.ctp:137
 msgid "{0} is available"
 msgstr "{0} è disponibile"
 
-#: Template/Admin/Systems/checkup.ctp:137
+#: Template/Admin/Systems/checkup.ctp:139
 msgid "{0} is not available"
 msgstr "{0} non è disponibile"
 
-#: Template/Admin/Systems/checkup.ctp:145
+#: Template/Admin/Systems/checkup.ctp:148
 msgid "Webroot"
 msgstr "Webroot"
 
-#: Template/Admin/Systems/checkup.ctp:150;166
+#: Template/Admin/Systems/checkup.ctp:153;169
 msgid "The directory {0} is readable and writable"
 msgstr "La directory {0} è leggibile e scrivibile"
 
-#: Template/Admin/Systems/checkup.ctp:161
+#: Template/Admin/Systems/checkup.ctp:164
 msgid "Temporary directories"
 msgstr "Directory temporanee"
 
