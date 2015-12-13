@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.4
+* fixed a serious bug for static pages.
+
 ### 2.1.3
 * added related posts for each post;
 * now you can list and edit tags and lists posts by tags;
