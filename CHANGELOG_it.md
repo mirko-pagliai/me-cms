@@ -1,6 +1,7 @@
 # 2.x ramo
 ## 2.1 ramo
 ### 2.1.4
+* aggiunta retro-compatibilità per i vecchi url;
 * sistemato un grave bug per le pagine statiche.
 
 ### 2.1.3

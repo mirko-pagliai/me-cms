@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.4
+* added backward compatibility for old URLs;
 * fixed a serious bug for static pages.
 
 ### 2.1.3
