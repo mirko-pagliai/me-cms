@@ -209,7 +209,7 @@
 
 /* Content preview, link, main wrapper */
 .content-preview > a > div {
-	background: rgba(51, 122, 183, .66);
+	background: rgba(44, 90, 160, .66);
 	height: 100%;
 	opacity: 0;
 	padding: 10px;
