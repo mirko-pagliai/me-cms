@@ -141,9 +141,10 @@ class PostsTable extends AppTable {
 	 * Gets the related posts for a post
 	 * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `Tags`
 	 * @param int $limit Limit of related posts
+	 * @param bool $images If TRUE, gets only posts with images
 	 * @return array Related posts, array of entities
 	 */
-	public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5) {
+	public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5, $images = TRUE) {
 		if(empty($post->tags))
 			return;
 		
@@ -167,15 +168,19 @@ class PostsTable extends AppTable {
 			//Reveres the tags order, because the tags less popular have less chance to find a related post
 			foreach(array_reverse($tags) as $tag) {
 				$post = $this->find('active')
-					->select(['id', 'title', 'slug'])
+					->select(['id', 'title', 'slug', 'text'])
 					->matching('Tags', function($q) use($tag) {
 						return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
 					})
-					->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude])
-					->first();
+					->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
+
+				if($images)			
+					$post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);		
+					
+				$post = $post->first();
 
 				//Adds the post to the related posts and its ID to the IDs to be excluded for the next query
-				if(!empty($post)) {
+				if(!empty($post->id)) {
 					$related[] = $post;
 					$exclude[] = $post->id;
 				}

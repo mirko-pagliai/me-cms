@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.4
+* improved related posts. Now you can also show images;
 * added backward compatibility for old URLs;
 * fixed a serious bug for static pages.
 

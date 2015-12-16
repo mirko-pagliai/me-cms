@@ -85,12 +85,26 @@
 </div>
 
 <?php if(!empty($related)): ?>
-	<div class="related-posts">
-		<?php
-			echo $this->Html->h4(__d('me_cms', 'Related posts'));
-			echo $this->Html->ul(array_map(function($post) {
-				return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-			}, $related), ['icon' => 'caret-right']);
-		?>
+	<div class="related-contents">
+		<?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
+		<?php if(empty(config('post.related.images'))): ?>
+			<?= $this->Html->ul(array_map(function($post) {
+					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+				}, $related), ['icon' => 'caret-right']) ?>
+		<?php else: ?>
+			<div class="visible-xs">
+				<?= $this->Html->ul(array_map(function($post) {
+					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+				}, $related), ['icon' => 'caret-right']) ?>
+			</div>
+		
+			<div class="hidden-xs">
+				<?php foreach($related as $post): ?>
+					<div class="col-sm-6 col-md-3 margin-10">
+						<?= $this->element('frontend/views/post-preview', compact('post')) ?>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 	</div>
 <?php endif; ?>

@@ -223,7 +223,7 @@ class PostsController extends AppController {
 			->first());
 		
 		//Gets related posts
-		if(config('post.related'))
-			$this->set('related', $this->Posts->getRelated($post, config('post.related')));
+		if(config('post.related.limit'))
+			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
 	}
 }
