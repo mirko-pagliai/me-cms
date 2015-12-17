@@ -194,6 +194,11 @@
 /* -------------------------------- */
 /*			Content preview			*/
 /* -------------------------------- */
+/* Content preview */
+.content-preview {
+	margin-bottom: 10px;
+}
+
 /* Content preview, link */
 .content-preview > a {
 	color: #fff;

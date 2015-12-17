@@ -100,7 +100,7 @@
 		
 			<div class="hidden-xs">
 				<?php foreach($related as $post): ?>
-					<div class="col-sm-6 col-md-3 margin-10">
+					<div class="col-sm-6 col-md-3">
 						<?= $this->element('frontend/views/post-preview', compact('post')) ?>
 					</div>
 				<?php endforeach; ?>
