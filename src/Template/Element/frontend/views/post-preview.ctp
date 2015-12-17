@@ -27,11 +27,11 @@
 		<div>
 			<div>
 				<div class="content-title">
-					<?= $this->Text->truncate($post->title, 35, ['exact' => FALSE]) ?>
+					<?= $this->Text->truncate($post->title, 40, ['exact' => FALSE]) ?>
 				</div>
 				<?php if(!empty($post->text)): ?>
 					<div class="content-text">
-						<?= $this->Text->truncate(strip_tags($post->text), 90, ['exact' => FALSE]) ?>
+						<?= $this->Text->truncate(strip_tags($post->text), 80, ['exact' => FALSE]) ?>
 					</div>
 				<?php endif; ?>
 			</div>
