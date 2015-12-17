@@ -27,11 +27,21 @@
 		<div>
 			<div>
 				<div class="content-title">
-					<?= $this->Text->truncate($post->title, 40, ['exact' => FALSE]) ?>
+					<?php
+						if(isset($truncate['title']) && !$truncate['title'])
+							echo $post->title;
+						else
+							echo $this->Text->truncate($post->title, empty($truncate['title']) ? 40 : $truncate['title'], ['exact' => FALSE]);
+					?>
 				</div>
 				<?php if(!empty($post->text)): ?>
 					<div class="content-text">
-						<?= $this->Text->truncate(strip_tags($post->text), 80, ['exact' => FALSE]) ?>
+						<?php
+							if(isset($truncate['text']) && !$truncate['text'])
+								echo strip_tags($post->text);
+							else
+								echo $this->Text->truncate(strip_tags($post->text), empty($truncate['text']) ? 80 : $truncate['text'], ['exact' => FALSE]);
+						?>
 					</div>
 				<?php endif; ?>
 			</div>
