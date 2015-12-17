@@ -98,7 +98,7 @@
 				}, $related), ['icon' => 'caret-right']) ?>
 			</div>
 		
-			<div class="hidden-xs">
+			<div class="hidden-xs row">
 				<?php foreach($related as $post): ?>
 					<div class="col-sm-6 col-md-3">
 						<?= $this->element('frontend/views/post-preview', compact('post')) ?>
