@@ -147,6 +147,11 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 	
 	/**
+	 * Fallback for RSS
+	 */
+	$routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
+	
+	/**
 	 * Admin routes
 	 */
     $routes->prefix('admin', function ($routes) {
