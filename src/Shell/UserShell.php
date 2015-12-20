@@ -30,9 +30,8 @@ use MeTools\Shell\Base\BaseShell;
 class UserShell extends BaseShell {
 	/**
 	 * Adds an user
-	 * @param int $group Default group ID
 	 */
-	public function add($group = NULL) {
+	public function add() {
 		$this->loadModel('MeCms.Users');
 		
 		//Gets user groups
@@ -49,8 +48,8 @@ class UserShell extends BaseShell {
 			$user['first_name'] = $this->in(__d('me_cms', 'First name'));
 			$user['last_name'] = $this->in(__d('me_cms', 'Last name'));
 
-			//Asks for group
-			if(empty($group)) {
+			//Asks for group, if not passed as option
+			if(empty($this->params['group'])) {
 				//Prints groups as table
 				//See @http://book.cakephp.org/3.0/en/console-and-shells/helpers.html#table-helper
 				$this->helper('table')->output(am([['ID', 'Name']], array_map(function($group, $id) {
@@ -60,7 +59,7 @@ class UserShell extends BaseShell {
 				$user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
 			}
 			else
-				$user['group_id'] = $group;
+				$user['group_id'] = $this->params['group'];
 
 			//Checks fields
 			foreach($user as $value)
@@ -92,7 +91,15 @@ class UserShell extends BaseShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-			'add'	=> ['help' => __d('me_cms', 'it adds an user')]
+			'add' => [
+				'help' => __d('me_cms', 'it adds an user'),
+				'parser' => [ 'options' => [
+					'group' => [
+						'short' => 'g',
+						'help' => __d('me_cms', 'Group ID'),
+					]
+				]]
+			]
 		]);
 	}
 }
