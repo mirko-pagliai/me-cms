@@ -87,7 +87,7 @@
 <?php if(!empty($related)): ?>
 	<div class="related-contents">
 		<?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
-		<?php if(empty(config('post.related.images'))): ?>
+		<?php if(!config('post.related.images')): ?>
 			<?= $this->Html->ul(array_map(function($post) {
 					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
 				}, $related), ['icon' => 'caret-right']) ?>
