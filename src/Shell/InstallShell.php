@@ -58,6 +58,7 @@ class InstallShell extends BaseInstallShell {
 	/**
 	 * Executes all available tasks
 	 * @uses MeTools\Shell\InstallShell::all()
+	 * @uses createAdmin()
 	 * @uses copyConfig()
 	 * @uses fixKcfinder()
 	 */
@@ -67,6 +68,7 @@ class InstallShell extends BaseInstallShell {
 		if($this->param('force')) {
 			$this->copyConfig();
 			$this->fixKcfinder();
+			$this->createAdmin();
 			
 			return;
 		}
@@ -78,6 +80,18 @@ class InstallShell extends BaseInstallShell {
 		$ask = $this->in(__d('me_tools', 'Fix `{0}`?', 'KCFinder'), ['Y', 'n'], 'Y');
 		if(in_array($ask, ['Y', 'y']))
 			$this->fixKcfinder();
+		
+		$ask = $this->in(__d('me_tools', 'Create an admin user'), ['y', 'N'], 'N');
+		if(in_array($ask, ['Y', 'y']))
+			$this->createAdmin();
+	}
+	
+	/**
+	 * Creates and admin user
+	 * @see MeCms\Shell\User::add()
+	 */
+	public function createAdmin() {
+		$this->dispatchShell('MeCms.user', 'add', '--group', 1);
 	}
 	
 	/**
@@ -136,6 +150,7 @@ class InstallShell extends BaseInstallShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+			'createAdmin'	=> ['help' => __d('me_cms', 'it creates ad admin user')],
 			'copyConfig'	=> ['help' => __d('me_cms', 'it copies the configuration files')],
 			'fixKcfinder'	=> ['help' => __d('me_tools', 'it fixes `{0}`', 'KCFinder')]
 		]);
