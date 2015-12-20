@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.4
 * improved related posts. Now you can also show images;
+* added the User shell, to manage users;
 * added backward compatibility for old URLs;
 * fixed a serious bug for static pages.
 
