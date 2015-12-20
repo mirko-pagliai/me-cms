@@ -23,12 +23,12 @@
 namespace MeCms\Shell;
 
 use MeTools\Core\Plugin;
-use MeTools\Shell\InstallShell as BaseShell;
+use MeTools\Shell\InstallShell as BaseInstallShell;
 
 /**
  * Executes some tasks to make the system ready to work
  */
-class InstallShell extends BaseShell {
+class InstallShell extends BaseInstallShell {
 	/**
 	 * Construct
 	 * @uses $links
