@@ -47,9 +47,13 @@
 	<body>
 		<div id="content" class="container">
 			<?php
+				$logo = $this->Html->h1(config('main.title'), ['id' => 'logo']);
+			
 				//Check if the logo image exists
 				if(is_readable(WWW_ROOT.'img'.DS.config('frontend.logo')))
-					echo $this->Html->img(config('frontend.logo'), ['id' => 'logo']);
+					$logo = $this->Html->img(config('frontend.logo'), ['id' => 'logo']);
+
+				echo $logo;
 				
 				echo $this->Flash->render();
 				echo $this->Flash->render('auth');
