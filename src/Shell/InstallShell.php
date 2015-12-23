@@ -45,7 +45,7 @@ class InstallShell extends BaseInstallShell {
 		]);
 		
 		$this->packages = am($this->packages, [
-			'sunhater/kcfinder'
+			'sunhater/kcfinder:dev-master'
 		]);
 		
 		//Merges paths to be created and made writable
