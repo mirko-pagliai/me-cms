@@ -190,6 +190,7 @@
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
+				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
@@ -298,7 +299,7 @@
 </span></span><span id="54" class="l"><a href="#54">54: </a><span class="php-comment">     */</span>
 </span><span id="55" class="l"><a href="#55">55: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$slug</span> = <span class="php-keyword1">NULL</span>) {
 </span><span id="56" class="l"><a href="#56">56: </a>        <span class="php-comment">//Checks if there exists a static page, using all the passed arguments</span>
-</span><span id="57" class="l"><a href="#57">57: </a>        <span class="php-keyword1">if</span>(StaticPage::exists(<span class="php-var">$args</span> = <span class="php-keyword2">func_get_args</span>())) {
+</span><span id="57" class="l"><a href="#57">57: </a>        <span class="php-keyword1">if</span>(StaticPage::exists(<span class="php-var">$args</span> = af(<span class="php-keyword2">explode</span>(<span class="php-quote">'/'</span>, <span class="php-var">$slug</span>)))) {
 </span><span id="58" class="l"><a href="#58">58: </a>            <span class="php-var">$page</span> = <span class="php-keyword1">new</span> \stdClass();
 </span><span id="59" class="l"><a href="#59">59: </a>            <span class="php-var">$page</span>-&gt;slug = <span class="php-var">$slug</span>;
 </span><span id="60" class="l"><a href="#60">60: </a>            <span class="php-var">$page</span>-&gt;title = StaticPage::title(<span class="php-var">$args</span>);
@@ -322,6 +323,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?262e62223b50520b33b50e2117c3f90b08fafca5"></script>
+<script src="elementlist.js?08eb6c37f6b76b78e8826e7bf32dfe12e6870eed"></script>
 </body>
 </html>
