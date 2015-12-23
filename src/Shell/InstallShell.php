@@ -129,15 +129,14 @@ class InstallShell extends BaseInstallShell {
 		if(is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
 			return $this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
 		
-		if($this->createFile($file, '<IfModule mod_php5.c>
+		//Checks if the file has been created
+		if(!$this->createFile($file, '<IfModule mod_php5.c>
 			php_value session.cache_limiter must-revalidate
 			php_value session.cookie_httponly On
 			php_value session.cookie_lifetime 14400
 			php_value session.gc_maxlifetime 14400
 			php_value session.name CAKEPHP
 		</IfModule>'))
-			$this->verbose(__d('me_tools', 'The file `{0}` has been created', rtr($file)));
-		else
 			$this->err(__d('me_tools', 'The file `{0}` has not been created', rtr($file)));
 	}
 	
