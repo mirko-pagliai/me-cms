@@ -206,7 +206,7 @@ class AppController extends BaseController {
 		}
 		elseif(config('main.language')) {
 			if(!is_readable($file = $path.DS.config('main.language').DS.'me_cms.po'))
-				throw new \Cake\Network\Exception\InternalErrorException(__d('me_cms', 'The file {0} doesn\'t exist or is not readable', $file));
+				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory `{0}` not readable', $file));
 			
 			$language = config('main.language');
 		}

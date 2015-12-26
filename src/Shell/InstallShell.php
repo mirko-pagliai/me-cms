@@ -105,7 +105,7 @@ class InstallShell extends BaseInstallShell {
 			return $this->err(__d('me_tools', 'I can\'t find `{0}`', 'KCFinder'));
 		
 		if(is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
-			return $this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
+			return $this->verbose(__d('me_tools', 'File or directory `{0}` already exists', rtr($file)));
 		
 		//Checks if the file has been created
 		if(!$this->createFile($file, '<IfModule mod_php5.c>
@@ -127,8 +127,8 @@ class InstallShell extends BaseInstallShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-			'createAdmin'	=> ['help' => __d('me_cms', 'it creates ad admin user')],
-			'fixKcfinder'	=> ['help' => __d('me_tools', 'it fixes `{0}`', 'KCFinder')]
+			'createAdmin'	=> ['help' => __d('me_cms', 'Creates an admin user')],
+			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes `{0}`', 'KCFinder')]
 		]);
 	}
 }
