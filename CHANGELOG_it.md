@@ -1,5 +1,8 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.5
+* sistemate parecchie stringhe e traduzioni.
+
 ### 2.1.4
 * migliorati gli articoli correlati. Ora è possibile mostrare anche immagini;
 * aggiunta la shell User, per gestire gli utenti;

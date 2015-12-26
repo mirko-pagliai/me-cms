@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.5
+* fixed a lot of strings and translations.
+
 ### 2.1.4
 * improved related posts. Now you can also show images;
 * added the User shell, to manage users;
