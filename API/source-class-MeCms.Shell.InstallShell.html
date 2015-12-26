@@ -350,7 +350,7 @@
 </span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;err(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'I can\'t find `{0}`'</span>, <span class="php-quote">'KCFinder'</span>));
 </span><span id="106" class="l"><a href="#106">106: </a>        
 </span><span id="107" class="l"><a href="#107">107: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">is_readable</span>(<span class="php-var">$file</span> = WWW_ROOT.<span class="php-quote">'vendor'</span>.DS.<span class="php-quote">'kcfinder'</span>.DS.<span class="php-quote">'.htaccess'</span>))
-</span><span id="108" class="l"><a href="#108">108: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;verbose(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'The file `{0}` already exists'</span>, rtr(<span class="php-var">$file</span>)));
+</span><span id="108" class="l"><a href="#108">108: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;verbose(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'File or directory `{0}` already exists'</span>, rtr(<span class="php-var">$file</span>)));
 </span><span id="109" class="l"><a href="#109">109: </a>        
 </span><span id="110" class="l"><a href="#110">110: </a>        <span class="php-comment">//Checks if the file has been created</span>
 </span><span id="111" class="l"><a href="#111">111: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;createFile(<span class="php-var">$file</span>, <span class="php-quote">'&lt;IfModule mod_php5.c&gt;
@@ -372,8 +372,8 @@
 </span><span id="127" class="l"><a href="#127">127: </a>        <span class="php-var">$parser</span> = parent::getOptionParser();
 </span><span id="128" class="l"><a href="#128">128: </a>        
 </span><span id="129" class="l"><a href="#129">129: </a>        <span class="php-keyword1">return</span> <span class="php-var">$parser</span>-&gt;addSubcommands([
-</span><span id="130" class="l"><a href="#130">130: </a>            <span class="php-quote">'createAdmin'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'it creates ad admin user'</span>)],
-</span><span id="131" class="l"><a href="#131">131: </a>            <span class="php-quote">'fixKcfinder'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'it fixes `{0}`'</span>, <span class="php-quote">'KCFinder'</span>)]
+</span><span id="130" class="l"><a href="#130">130: </a>            <span class="php-quote">'createAdmin'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Creates an admin user'</span>)],
+</span><span id="131" class="l"><a href="#131">131: </a>            <span class="php-quote">'fixKcfinder'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Fixes `{0}`'</span>, <span class="php-quote">'KCFinder'</span>)]
 </span><span id="132" class="l"><a href="#132">132: </a>        ]);
 </span><span id="133" class="l"><a href="#133">133: </a>    }
 </span><span id="134" class="l"><a href="#134">134: </a>}</span></code></pre>
