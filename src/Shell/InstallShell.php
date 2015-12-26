@@ -81,7 +81,7 @@ class InstallShell extends BaseInstallShell {
 		if(in_array($ask, ['Y', 'y']))
 			$this->fixKcfinder();
 		
-		$ask = $this->in(__d('me_tools', 'Create an admin user'), ['y', 'N'], 'N');
+		$ask = $this->in(__d('me_tools', 'Create an admin user?'), ['y', 'N'], 'N');
 		if(in_array($ask, ['Y', 'y']))
 			$this->createAdmin();
 	}
