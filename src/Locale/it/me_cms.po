@@ -1,11 +1,10 @@
 # LANGUAGE translation of MeCms
 # Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
-# Mirko Pagliai <mirko.pagliai.it>, 2015.
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-12-13 11:11+0000\n"
-"PO-Revision-Date: 2015-12-13 12:12+0100\n"
+"POT-Creation-Date: 2015-12-26 15:32+0000\n"
+"PO-Revision-Date: 2015-12-26 16:34+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -23,19 +22,15 @@ msgstr ""
 msgid "The file was not successfully uploaded"
 msgstr "Il file non è stato correttamente caricato"
 
-#: Controller/AppController.php:209
-msgid "The file {0} doesn't exist or is not readable"
-msgstr "Il file {0} non esiste oppure non è leggibile"
-
 #: Controller/BannersController.php:46
 msgid "The banner target is missing"
 msgstr "Il target del banner non è presente"
 
-#: Controller/PostsController.php:188
+#: Controller/PostsController.php:200
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr "Puoi effettuare una nuova ricerca fra {0}secondi"
 
-#: Controller/PostsController.php:191
+#: Controller/PostsController.php:203
 msgid "You have to search at least a word of {0} characters"
 msgstr "Devi cercare un parola di almeno 0d caratteri"
 
@@ -119,14 +114,6 @@ msgstr "Account creato. Puoi fare il login"
 #: Controller/UsersController.php:401
 msgid "The account has not been created"
 msgstr "Il tuo account non è stato creato"
-
-#: Controller/Admin/BannersController.php:48
-#: Controller/Admin/PhotosAlbumsController.php:46
-#: Controller/Admin/PhotosController.php:48
-#: Controller/Admin/SystemsController.php:78
-#: Template/Admin/Systems/checkup.ctp:155;171
-msgid "The directory {0} is not readable or writable"
-msgstr "La directory {0} non è leggibile o scrivibile"
 
 #: Controller/Admin/BannersController.php:58
 msgid ""
@@ -327,10 +314,12 @@ msgid "The tag could not be saved"
 msgstr "Il tag non può essere salvato"
 
 #: Controller/Admin/UsersController.php:109;145
+#: Shell/UserShell.php:75
 msgid "The user has been saved"
 msgstr "L'utente è stato salvato"
 
 #: Controller/Admin/UsersController.php:113;149
+#: Shell/UserShell.php:80
 msgid "The user could not be saved"
 msgstr "L'utente non può essere salvato"
 
@@ -517,13 +506,86 @@ msgstr "La vecchia password è errata"
 msgid "lowercase letters"
 msgstr "lettere minuscole"
 
-#: Shell/InstallShell.php:74
-msgid "Copy configuration files?"
-msgstr "Copiare i file di configurazione?"
+#: Shell/InstallShell.php:130
+msgid "Creates an admin user"
+msgstr "Crea un utente amministratore"
 
-#: Shell/InstallShell.php:139
-msgid "it copies the configuration files"
-msgstr "copia i file di configurazione"
+#: Shell/UserShell.php:44
+#: Template/Admin/Users/add.ctp:47
+#: Template/Admin/Users/edit.ctp:41
+#: Template/Admin/Users/index.ctp:72
+#: Template/Admin/Users/view.ctp:49
+#: Template/Users/login.ctp:34
+#: Template/Users/signup.ctp:35
+msgid "Username"
+msgstr "Username"
+
+#: Shell/UserShell.php:45
+#: Template/Admin/Users/add.ctp:59
+#: Template/Admin/Users/change_password.ctp:40
+#: Template/Admin/Users/edit.ctp:49
+#: Template/Users/login.ctp:38
+#: Template/Users/reset_password.ctp:35
+#: Template/Users/signup.ctp:49
+msgid "Password"
+msgstr "Password"
+
+#: Shell/UserShell.php:46
+#: Template/Admin/Users/add.ctp:63
+#: Template/Admin/Users/change_password.ctp:45
+#: Template/Admin/Users/edit.ctp:55
+#: Template/Users/reset_password.ctp:40
+#: Template/Users/signup.ctp:54
+msgid "Repeat password"
+msgstr "Ripeti password"
+
+#: Shell/UserShell.php:47
+#: Template/Admin/Users/add.ctp:51
+#: Template/Admin/Users/edit.ctp:45
+#: Template/Admin/Users/index.ctp:74
+#: Template/Admin/Users/view.ctp:52
+#: Template/Systems/contact_form.ctp:40
+#: Template/Users/forgot_password.ctp:35
+#: Template/Users/resend_activation.ctp:34
+#: Template/Users/signup.ctp:39
+msgid "Email"
+msgstr "Email"
+
+#: Shell/UserShell.php:48
+#: Template/Admin/Users/add.ctp:67
+#: Template/Admin/Users/edit.ctp:61
+#: Template/Systems/contact_form.ctp:33
+#: Template/Users/signup.ctp:59
+msgid "First name"
+msgstr "Nome"
+
+#: Shell/UserShell.php:49
+#: Template/Admin/Users/add.ctp:71
+#: Template/Admin/Users/edit.ctp:65
+#: Template/Systems/contact_form.ctp:36
+#: Template/Users/signup.ctp:63
+msgid "Last name"
+msgstr "Cognome"
+
+#: Shell/UserShell.php:59;98
+msgid "Group ID"
+msgstr "ID gruppo"
+
+#: Shell/UserShell.php:67
+msgid "Some fields are missing. Try again"
+msgstr "Alcuni campi sono assenti. Prova ancora"
+
+#: Shell/UserShell.php:71
+msgid "Invalid group ID"
+msgstr "ID gruppo non valido"
+
+#: Shell/UserShell.php:79
+msgid "An error occurred, try again"
+msgstr "Si è verificato un errore, prova ancora"
+
+#: Shell/UserShell.php:94
+msgid "Adds an user"
+msgstr "Aggiungi un utente"
 
 #: Template/Admin/Banners/add.ctp:25;28;78
 msgid "Add banner"
@@ -1179,10 +1241,6 @@ msgstr "Eseguibili"
 msgid "{0} is available"
 msgstr "{0} è disponibile"
 
-#: Template/Admin/Systems/checkup.ctp:139
-msgid "{0} is not available"
-msgstr "{0} non è disponibile"
-
 #: Template/Admin/Systems/checkup.ctp:148
 msgid "Webroot"
 msgstr "Webroot"
@@ -1304,63 +1362,12 @@ msgstr "Attivo"
 msgid "If is not active, the user won't be able to login"
 msgstr "Se non è attivo, l'utente non potrà loggarsi"
 
-#: Template/Admin/Users/add.ctp:47
-#: Template/Admin/Users/edit.ctp:41
-#: Template/Admin/Users/index.ctp:72
-#: Template/Admin/Users/view.ctp:49
-#: Template/Users/login.ctp:34
-#: Template/Users/signup.ctp:35
-msgid "Username"
-msgstr "Username"
-
-#: Template/Admin/Users/add.ctp:51
-#: Template/Admin/Users/edit.ctp:45
-#: Template/Admin/Users/index.ctp:74
-#: Template/Admin/Users/view.ctp:52
-#: Template/Systems/contact_form.ctp:40
-#: Template/Users/forgot_password.ctp:35
-#: Template/Users/resend_activation.ctp:34
-#: Template/Users/signup.ctp:39
-msgid "Email"
-msgstr "Email"
-
 #: Template/Admin/Users/add.ctp:55
 #: Template/Users/forgot_password.ctp:40
 #: Template/Users/resend_activation.ctp:39
 #: Template/Users/signup.ctp:44
 msgid "Repeat email"
 msgstr "Ripeti email"
-
-#: Template/Admin/Users/add.ctp:59
-#: Template/Admin/Users/change_password.ctp:40
-#: Template/Admin/Users/edit.ctp:49
-#: Template/Users/login.ctp:38
-#: Template/Users/reset_password.ctp:35
-#: Template/Users/signup.ctp:49
-msgid "Password"
-msgstr "Password"
-
-#: Template/Admin/Users/add.ctp:63
-#: Template/Admin/Users/change_password.ctp:45
-#: Template/Admin/Users/edit.ctp:55
-#: Template/Users/reset_password.ctp:40
-#: Template/Users/signup.ctp:54
-msgid "Repeat password"
-msgstr "Ripeti password"
-
-#: Template/Admin/Users/add.ctp:67
-#: Template/Admin/Users/edit.ctp:61
-#: Template/Systems/contact_form.ctp:33
-#: Template/Users/signup.ctp:59
-msgid "First name"
-msgstr "Nome"
-
-#: Template/Admin/Users/add.ctp:71
-#: Template/Admin/Users/edit.ctp:65
-#: Template/Systems/contact_form.ctp:36
-#: Template/Users/signup.ctp:63
-msgid "Last name"
-msgstr "Cognome"
 
 #: Template/Admin/Users/change_password.ctp:25;28;50
 msgid "Change your password"

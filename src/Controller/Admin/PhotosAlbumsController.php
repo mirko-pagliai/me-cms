@@ -43,7 +43,7 @@ class PhotosAlbumsController extends AppController {
 		
 		//Checks if the main folder and its subfolders are writable
 		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_cms', 'The directory {0} is not readable or writable', rtr(PhotoFile::folder())));
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
 			$this->redirect(['_name' => 'dashboard']);
 		}
 	}

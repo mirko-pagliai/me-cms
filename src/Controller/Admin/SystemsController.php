@@ -75,7 +75,7 @@ class SystemsController extends AppController {
 		
 		//Checks for the files directory (`APP/webroot/files`)
 		if(!$this->KcFinder->checkFiles()) {
-			$this->Flash->error(__d('me_cms', 'The directory {0} is not readable or writable', rtr($this->KcFinder->getFilesPath())));
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr($this->KcFinder->getFilesPath())));
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		

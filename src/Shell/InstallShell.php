@@ -22,7 +22,6 @@
  */
 namespace MeCms\Shell;
 
-use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
 
 /**
@@ -31,12 +30,19 @@ use MeTools\Shell\InstallShell as BaseInstallShell;
 class InstallShell extends BaseInstallShell {
 	/**
 	 * Construct
+	 * @uses $config
 	 * @uses $links
 	 * @uses $packages
 	 * @uses $paths
 	 */
 	public function __construct() {
 		parent::__construct();
+		
+		//Configuration files to be copied
+		$this->config = am($this->config, [
+			'MeCms.me_cms',
+			'MeCms.widgets'
+		]);
 		
 		//Merges assets for which create symbolic links
 		$this->links = am($this->links, [
@@ -59,23 +65,17 @@ class InstallShell extends BaseInstallShell {
 	 * Executes all available tasks
 	 * @uses MeTools\Shell\InstallShell::all()
 	 * @uses createAdmin()
-	 * @uses copyConfig()
 	 * @uses fixKcfinder()
 	 */
 	public function all() {
 		parent::all();
 		
 		if($this->param('force')) {
-			$this->copyConfig();
 			$this->fixKcfinder();
 			$this->createAdmin();
 			
 			return;
 		}
-		
-		$ask = $this->in(__d('me_cms', 'Copy configuration files?'), ['Y', 'n'], 'Y');
-		if(in_array($ask, ['Y', 'y']))
-			$this->copyConfig();
 		
 		$ask = $this->in(__d('me_tools', 'Fix `{0}`?', 'KCFinder'), ['Y', 'n'], 'Y');
 		if(in_array($ask, ['Y', 'y']))
@@ -93,29 +93,7 @@ class InstallShell extends BaseInstallShell {
 	public function createAdmin() {
 		$this->dispatchShell('MeCms.user', 'add', '--group', 1);
 	}
-	
-	/**
-	 * Copies the configuration files
-	 */
-	public function copyConfig() {
-		$files = [
-			'me_cms.php',
-			'widgets.php'
-		];
 		
-		foreach($files as $file) {
-			if(file_exists($target = ROOT.DS.'config'.DS.$file)) {
-				$this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
-				continue;
-			}
-						
-			if(@copy(Plugin::path('MeCms', 'config'.DS.$file), $target))
-				$this->verbose(__d('me_tools', 'The file `{0}` has been copied', rtr($target)));
-			else
-				$this->err(__d('me_tools', 'The file `{0}` has not been copied', rtr($target)));
-		}
-	}
-	
 	/**
 	 * Fixes KCFinder.
 	 * Creates the file `vendor/kcfinder/.htaccess`
@@ -127,7 +105,7 @@ class InstallShell extends BaseInstallShell {
 			return $this->err(__d('me_tools', 'I can\'t find `{0}`', 'KCFinder'));
 		
 		if(is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
-			return $this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
+			return $this->verbose(__d('me_tools', 'File or directory `{0}` already exists', rtr($file)));
 		
 		//Checks if the file has been created
 		if(!$this->createFile($file, '<IfModule mod_php5.c>
@@ -149,9 +127,8 @@ class InstallShell extends BaseInstallShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-			'createAdmin'	=> ['help' => __d('me_cms', 'it creates ad admin user')],
-			'copyConfig'	=> ['help' => __d('me_cms', 'it copies the configuration files')],
-			'fixKcfinder'	=> ['help' => __d('me_tools', 'it fixes `{0}`', 'KCFinder')]
+			'createAdmin'	=> ['help' => __d('me_cms', 'Creates an admin user')],
+			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes `{0}`', 'KCFinder')]
 		]);
 	}
 }

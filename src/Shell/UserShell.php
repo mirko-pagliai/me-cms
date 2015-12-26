@@ -91,7 +91,7 @@ class UserShell extends BaseShell {
 		
 		return $parser->addSubcommands([
 			'add' => [
-				'help' => __d('me_cms', 'it adds an user'),
+				'help' => __d('me_cms', 'Adds an user'),
 				'parser' => [ 'options' => [
 					'group' => [
 						'short' => 'g',
