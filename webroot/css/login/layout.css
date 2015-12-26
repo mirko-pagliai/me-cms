@@ -32,7 +32,12 @@ body {
 
 /* Content, logo */
 #content > #logo {
-	margin: auto auto 20px;
+	margin: 10px auto 20px;
+	text-align: center;
+	/* No wrap, text truncated with ellipses */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Content, title */

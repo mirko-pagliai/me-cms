@@ -107,6 +107,15 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	);
 	
 	/**
+	 * This allows backward compatibility for URLs like:
+	 * /posts/page:3
+	 * /posts/page:3/sort:Post.created/direction:desc
+	 * These URLs will become:
+	 * /posts?page=3
+	 */
+	$routes->connect('/posts/page::page/*', ['controller' => 'Posts', 'action' => 'index_compatibility'], ['page' => '\d+', 'pass' => ['page']]);
+	
+	/**
 	 * Systems controller
 	 */
 	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
@@ -136,6 +145,11 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 */
 	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
 	$routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
+	
+	/**
+	 * Fallback for RSS
+	 */
+	$routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
 	
 	/**
 	 * Admin routes

@@ -23,12 +23,12 @@
 namespace MeCms\Shell;
 
 use MeTools\Core\Plugin;
-use MeTools\Shell\InstallShell as BaseShell;
+use MeTools\Shell\InstallShell as BaseInstallShell;
 
 /**
  * Executes some tasks to make the system ready to work
  */
-class InstallShell extends BaseShell {
+class InstallShell extends BaseInstallShell {
 	/**
 	 * Construct
 	 * @uses $links
@@ -45,7 +45,7 @@ class InstallShell extends BaseShell {
 		]);
 		
 		$this->packages = am($this->packages, [
-			'sunhater/kcfinder'
+			'sunhater/kcfinder:dev-master'
 		]);
 		
 		//Merges paths to be created and made writable
@@ -58,6 +58,7 @@ class InstallShell extends BaseShell {
 	/**
 	 * Executes all available tasks
 	 * @uses MeTools\Shell\InstallShell::all()
+	 * @uses createAdmin()
 	 * @uses copyConfig()
 	 * @uses fixKcfinder()
 	 */
@@ -67,6 +68,7 @@ class InstallShell extends BaseShell {
 		if($this->param('force')) {
 			$this->copyConfig();
 			$this->fixKcfinder();
+			$this->createAdmin();
 			
 			return;
 		}
@@ -78,6 +80,18 @@ class InstallShell extends BaseShell {
 		$ask = $this->in(__d('me_tools', 'Fix `{0}`?', 'KCFinder'), ['Y', 'n'], 'Y');
 		if(in_array($ask, ['Y', 'y']))
 			$this->fixKcfinder();
+		
+		$ask = $this->in(__d('me_tools', 'Create an admin user'), ['y', 'N'], 'N');
+		if(in_array($ask, ['Y', 'y']))
+			$this->createAdmin();
+	}
+	
+	/**
+	 * Creates and admin user
+	 * @see MeCms\Shell\User::add()
+	 */
+	public function createAdmin() {
+		$this->dispatchShell('MeCms.user', 'add', '--group', 1);
 	}
 	
 	/**
@@ -115,15 +129,14 @@ class InstallShell extends BaseShell {
 		if(is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
 			return $this->verbose(__d('me_tools', 'The file `{0}` already exists', rtr($file)));
 		
-		if($this->createFile($file, '<IfModule mod_php5.c>
+		//Checks if the file has been created
+		if(!$this->createFile($file, '<IfModule mod_php5.c>
 			php_value session.cache_limiter must-revalidate
 			php_value session.cookie_httponly On
 			php_value session.cookie_lifetime 14400
 			php_value session.gc_maxlifetime 14400
 			php_value session.name CAKEPHP
 		</IfModule>'))
-			$this->verbose(__d('me_tools', 'The file `{0}` has been created', rtr($file)));
-		else
 			$this->err(__d('me_tools', 'The file `{0}` has not been created', rtr($file)));
 	}
 	
@@ -136,6 +149,7 @@ class InstallShell extends BaseShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+			'createAdmin'	=> ['help' => __d('me_cms', 'it creates ad admin user')],
 			'copyConfig'	=> ['help' => __d('me_cms', 'it copies the configuration files')],
 			'fixKcfinder'	=> ['help' => __d('me_tools', 'it fixes `{0}`', 'KCFinder')]
 		]);

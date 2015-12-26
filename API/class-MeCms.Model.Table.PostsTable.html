@@ -220,7 +220,7 @@ Cake\ORM\Table
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsTable.html#32-270" title="Go to source code">Table/PostsTable.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PostsTable.html#32-275" title="Go to source code">Table/PostsTable.php</a>
 		<br>
 	</div>
 
@@ -520,7 +520,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRelated">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#140-188" title="Go to source code">getRelated</a>( <span><code><a href="class-MeCms.Model.Entity.Post.html">MeCms\Model\Entity\Post</a></code> <var>$post</var></span>, <span>integer <var>$limit</var> = <span class="php-num">5</span></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#140-193" title="Go to source code">getRelated</a>( <span><code><a href="class-MeCms.Model.Entity.Post.html">MeCms\Model\Entity\Post</a></code> <var>$post</var></span>, <span>integer <var>$limit</var> = <span class="php-num">5</span></span>, <span>boolean <var>$images</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets the related posts for a post</p>
@@ -536,6 +536,8 @@ This value can be used to check if the cache is valid</p>
 					<dd>Post entity. It must contain <code>Tags</code></dd>
 					<dt><var>$limit</var></dt>
 					<dd>Limit of related posts</dd>
+					<dt><var>$images</var></dt>
+					<dd>If TRUE, gets only posts with images</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -565,7 +567,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#190-221" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#195-226" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -600,7 +602,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_queryFromFilter">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#223-240" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#228-245" title="Go to source code">queryFromFilter</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$data</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Build query from filter data</p>
@@ -651,7 +653,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setNextToBePublished">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#242-260" title="Go to source code">setNextToBePublished</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#247-265" title="Go to source code">setNextToBePublished</a>( )</code>
 
 		<div class="description short">
 			<p>Sets to cache the timestamp of the next record to be published.
@@ -698,7 +700,7 @@ This value can be used to check if the cache is valid</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#262-269" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PostsTable.html#267-274" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>

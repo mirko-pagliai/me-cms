@@ -54,7 +54,7 @@ class PagesController extends AppController {
 	 */
     public function view($slug = NULL) {
 		//Checks if there exists a static page, using all the passed arguments
-		if(StaticPage::exists($args = func_get_args())) {
+		if(StaticPage::exists($args = af(explode('/', $slug)))) {
 			$page = new \stdClass();
 			$page->slug = $slug;
 			$page->title = StaticPage::title($args);

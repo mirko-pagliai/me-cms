@@ -115,6 +115,18 @@ class PostsController extends AppController {
 	}
 	
 	/**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/posts/page:3</pre>
+	 * <pre>/posts/page:3/sort:Post.created/direction:desc</pre>
+	 * These URLs will become:
+	 * <pre>/posts?page=3</pre>
+	 * @param int $page Page number
+	 */
+	public function index_compatibility($page) {
+		return $this->redirect(['_name' => 'posts', '?' => ['page' => $page]], 301);
+	}
+	
+	/**
 	 * Lists posts as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
 	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
@@ -211,7 +223,7 @@ class PostsController extends AppController {
 			->first());
 		
 		//Gets related posts
-		if(config('post.related'))
-			$this->set('related', $this->Posts->getRelated($post, config('post.related')));
+		if(config('post.related.limit'))
+			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
 	}
 }

@@ -267,6 +267,10 @@ class SystemsController extends AppController {
 		//Gets log files
 		$files = FileLog::all();
 		
+		//If there's only one log file, it automatically sets the query value
+		if(!$this->request->query('file') && count($files) < 2)
+			$this->request->query['file'] = fk($files);
+		
 		//If a log file has been specified
 		if(!empty($this->request->query['file']) && $this->request->is('get'))
 			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query('file')]));

@@ -125,6 +125,7 @@
 			<h3>Classes</h3>
 			<ul>
 				<li class="active"><a href="class-MeCms.Shell.InstallShell.html">InstallShell</a></li>
+				<li><a href="class-MeCms.Shell.UserShell.html">UserShell</a></li>
 			</ul>
 
 
@@ -202,7 +203,7 @@ MeTools\Shell\InstallShell
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Shell.html">Shell</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Shell.InstallShell.html#28-143" title="Go to source code">InstallShell.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Shell.InstallShell.html#28-157" title="Go to source code">InstallShell.php</a>
 		<br>
 	</div>
 
@@ -258,7 +259,7 @@ MeTools\Shell\InstallShell
 
 		<td class="name"><div>
 		<a class="anchor" href="#_all">#</a>
-		<code><a href="source-class-MeCms.Shell.InstallShell.html#58-81" title="Go to source code">all</a>( )</code>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#58-87" title="Go to source code">all</a>( )</code>
 
 		<div class="description short">
 			<p>Executes all available tasks</p>
@@ -274,8 +275,47 @@ MeTools\Shell\InstallShell
 				<h4>Uses</h4>
 				<div class="list">
 						MeTools\Shell\InstallShell::all()<br>
+						<code><a href="class-MeCms.Shell.InstallShell.html#_createAdmin">MeCms\Shell\InstallShell::createAdmin()</a></code><br>
 						<code><a href="class-MeCms.Shell.InstallShell.html#_copyConfig">MeCms\Shell\InstallShell::copyConfig()</a></code><br>
 						<code><a href="class-MeCms.Shell.InstallShell.html#_fixKcfinder">MeCms\Shell\InstallShell::fixKcfinder()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="createAdmin" id="_createAdmin">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createAdmin">#</a>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#89-95" title="Go to source code">createAdmin</a>( )</code>
+
+		<div class="description short">
+			<p>Creates and admin user</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Creates and admin user</p>
+
+
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						MeCms\Shell\User::add()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Shell.InstallShell.html#_all">MeCms\Shell\InstallShell::all()</a></code><br>
 				</div>
 
 
@@ -294,7 +334,7 @@ MeTools\Shell\InstallShell
 
 		<td class="name"><div>
 		<a class="anchor" href="#_copyConfig">#</a>
-		<code><a href="source-class-MeCms.Shell.InstallShell.html#83-103" title="Go to source code">copyConfig</a>( )</code>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#97-117" title="Go to source code">copyConfig</a>( )</code>
 
 		<div class="description short">
 			<p>Copies the configuration files</p>
@@ -328,7 +368,7 @@ MeTools\Shell\InstallShell
 
 		<td class="name"><div>
 		<a class="anchor" href="#_fixKcfinder">#</a>
-		<code><a href="source-class-MeCms.Shell.InstallShell.html#105-128" title="Go to source code">fixKcfinder</a>( )</code>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#119-141" title="Go to source code">fixKcfinder</a>( )</code>
 
 		<div class="description short">
 			<p>Fixes KCFinder.
@@ -368,7 +408,7 @@ Creates the file <code>vendor/kcfinder/.htaccess</code></p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getOptionParser">#</a>
-		<code><a href="source-class-MeCms.Shell.InstallShell.html#130-142" title="Go to source code">getOptionParser</a>( )</code>
+		<code><a href="source-class-MeCms.Shell.InstallShell.html#143-156" title="Go to source code">getOptionParser</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the option parser instance and configures it.</p>

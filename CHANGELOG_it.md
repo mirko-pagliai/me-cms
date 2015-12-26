@@ -1,5 +1,11 @@
 # 2.x ramo
 ## 2.1 ramo
+### 2.1.4
+* migliorati gli articoli correlati. Ora è possibile mostrare anche immagini;
+* aggiunta la shell User, per gestire gli utenti;
+* aggiunta retro-compatibilità per i vecchi url;
+* sistemato un grave bug per le pagine statiche.
+
 ### 2.1.3
 * aggiunti gli articoli correlati per ogni articolo;
 * ora è possibile elencare e modificare il tag e elencare gli articoli in base al tag;
