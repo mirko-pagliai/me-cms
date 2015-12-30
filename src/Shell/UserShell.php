@@ -36,6 +36,10 @@ class UserShell extends Shell {
 		
 		//Gets user groups
 		$groups = $this->Users->Groups->find('list')->toArray();
+		
+		//Checks for user groups
+		if(empty($groups))
+			$this->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
 				
 		while(1) {
 			$user = [];
