@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.5
+* the User shell can now list users;
 * fixed a lot of strings and translations.
 
 ### 2.1.4

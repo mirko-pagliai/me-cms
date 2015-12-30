@@ -54,11 +54,17 @@ class UserShell extends Shell {
 
 			//Asks for group, if not passed as option
 			if(empty($this->params['group'])) {
-				//Prints groups as table
-				//See @http://book.cakephp.org/3.0/en/console-and-shells/helpers.html#table-helper
-				$this->helper('table')->output(am([['ID', 'Name']], array_map(function($group, $id) {
+				//Formats groups
+				$groups = array_map(function($group, $id) {
 					return [$id, $group];
-				}, $groups, array_keys($groups))));
+				}, $groups, array_keys($groups));
+				
+				//Sets header
+				$header = ['ID', 'Name'];
+				
+				//Prints as table
+				//See @http://book.cakephp.org/3.0/en/console-and-shells/helpers.html#table-helper
+				$this->helper('table')->output(am([$header], $groups));
 
 				$user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
 			}
@@ -87,6 +93,59 @@ class UserShell extends Shell {
 	}
 	
 	/**
+	 * Lists users
+	 */
+	public function index() {
+		$this->loadModel('MeCms.Users');
+		
+		//Gets users
+		$users = $this->Users->find()
+			->contain(['Groups' => ['fields' => ['label']]])
+			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
+			->toArray();
+		
+		//Checks for users
+		if(empty($users))
+			$this->error(__d('me_cms', 'There are no users'));
+		
+		//Sets header
+		$header = [
+			__d('me_cms', 'ID'),
+			__d('me_cms', 'Username'),
+			__d('me_cms', 'Name'),
+			__d('me_cms', 'Email'),
+			__d('me_cms', 'Posts'),
+			__d('me_cms', 'Status'),
+			__d('me_cms', 'Date')
+		];
+		
+		//Formats users
+		$users = array_map(function($user) {
+			//Sets the user status
+			if($user['banned'])
+				$user['status'] = __d('me_cms', 'Banned');
+			elseif(!$user['active'])
+				$user['status'] = __d('me_cms', 'Pending');
+			else
+				$user['status'] = __d('me_cms', 'Active');
+			
+			return [
+				$user['id'],
+				$user['username'],
+				$user['full_name'],
+				$user['email'],
+				$user['post_count'],
+				$user['status'],
+				$user['created']
+			];
+		}, $users);
+		
+		//Prints as table
+		//See @http://book.cakephp.org/3.0/en/console-and-shells/helpers.html#table-helper
+		$this->helper('table')->output(am([$header], $users));
+	}
+	
+	/**
 	 * Gets the option parser instance and configures it.
 	 * @return ConsoleOptionParser
 	 */
@@ -102,7 +161,8 @@ class UserShell extends Shell {
 						'help' => __d('me_cms', 'Group ID'),
 					]
 				]]
-			]
+			],
+			'index' => ['help' => __d('me_cms', 'Lists users')]
 		]);
 	}
 }
