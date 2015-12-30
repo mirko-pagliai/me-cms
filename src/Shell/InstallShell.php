@@ -98,24 +98,20 @@ class InstallShell extends BaseInstallShell {
 	 * Fixes KCFinder.
 	 * Creates the file `vendor/kcfinder/.htaccess`
 	 * @see http://kcfinder.sunhater.com/integrate
+	 * @uses MeTools\Console\Shell::createFile()
 	 */
 	public function fixKcfinder() {
 		//Checks for KCFinder
-		if(!is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'))
+		if(!is_readable(WWW_ROOT.'vendor'.DS.'kcfinder'))
 			return $this->err(__d('me_tools', 'I can\'t find `{0}`', 'KCFinder'));
 		
-		if(is_readable($file = WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess'))
-			return $this->verbose(__d('me_tools', 'File or directory `{0}` already exists', rtr($file)));
-		
-		//Checks if the file has been created
-		if(!$this->createFile($file, '<IfModule mod_php5.c>
+		$this->createFile(WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess', '<IfModule mod_php5.c>
 			php_value session.cache_limiter must-revalidate
 			php_value session.cookie_httponly On
 			php_value session.cookie_lifetime 14400
 			php_value session.gc_maxlifetime 14400
 			php_value session.name CAKEPHP
-		</IfModule>'))
-			$this->err(__d('me_tools', 'The file `{0}` has not been created', rtr($file)));
+		</IfModule>');
 	}
 	
 	/**
