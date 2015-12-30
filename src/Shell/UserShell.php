@@ -29,11 +29,19 @@ use MeTools\Console\Shell;
  */
 class UserShell extends Shell {
 	/**
+	 * Initialize
+	 */
+	public function initialize() {
+        parent::initialize();
+		
+		//Loads the Users model
+		$this->loadModel('MeCms.Users');
+    }
+	
+	/**
 	 * Adds an user
 	 */
 	public function add() {
-		$this->loadModel('MeCms.Users');
-		
 		//Gets user groups
 		$groups = $this->Users->Groups->find('list')->toArray();
 		
@@ -63,7 +71,6 @@ class UserShell extends Shell {
 				$header = ['ID', 'Name'];
 				
 				//Prints as table
-				//See @http://book.cakephp.org/3.0/en/console-and-shells/helpers.html#table-helper
 				$this->helper('table')->output(am([$header], $groups));
 
 				$user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
@@ -93,11 +100,44 @@ class UserShell extends Shell {
 	}
 	
 	/**
+	 * Lists user groups
+	 */
+	public function groups() {		
+		//Gets user groups
+		$groups = $this->Users->Groups->find()
+			->select(['id', 'name', 'label', 'user_count'])
+			->toArray();
+		
+		//Checks for user groups
+		if(empty($groups))
+			$this->error(__d('me_cms', 'There are no user groups'));
+		
+		//Formats groups
+		$groups = array_map(function($group) {
+			return [
+				$group['id'],
+				$group['name'],
+				$group['label'],
+				$group['user_count']
+			];
+		}, $groups);
+
+		//Sets header
+		$header = [
+			__d('me_cms', 'ID'),
+			__d('me_cms', 'Name'),
+			__d('me_cms', 'Label'),
+			__d('me_cms', 'Users')
+		];
+
+		//Prints as table
+		$this->helper('table')->output(am([$header], $groups));
+	}
+	
+	/**
 	 * Lists users
 	 */
-	public function index() {
-		$this->loadModel('MeCms.Users');
-		
+	public function users() {		
 		//Gets users
 		$users = $this->Users->find()
 			->contain(['Groups' => ['fields' => ['label']]])
@@ -141,7 +181,6 @@ class UserShell extends Shell {
 		}, $users);
 		
 		//Prints as table
-		//See @http://book.cakephp.org/3.0/en/console-and-shells/helpers.html#table-helper
 		$this->helper('table')->output(am([$header], $users));
 	}
 	
@@ -162,7 +201,8 @@ class UserShell extends Shell {
 					]
 				]]
 			],
-			'index' => ['help' => __d('me_cms', 'Lists users')]
+			'groups' => ['help' => __d('me_cms', 'Lists user groups')],
+			'users' => ['help' => __d('me_cms', 'Lists users')]
 		]);
 	}
 }

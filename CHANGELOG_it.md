@@ -1,7 +1,7 @@
 # 2.x ramo
 ## 2.1 ramo
 ### 2.1.6
-* la shell User ora può elencare gli utenti.
+* la shell User ora può elencare gli utenti e i gruppi utenti.
 
 ### 2.1.5
 * sistemate parecchie stringhe e traduzioni.
