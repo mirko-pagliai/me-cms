@@ -22,12 +22,12 @@
  */
 namespace MeCms\Shell;
 
-use MeTools\Shell\Base\BaseShell;
+use MeTools\Console\Shell;
 
 /**
  * Allows the user management 
  */
-class UserShell extends BaseShell {
+class UserShell extends Shell {
 	/**
 	 * Adds an user
 	 */
