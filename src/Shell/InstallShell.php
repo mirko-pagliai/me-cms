@@ -30,6 +30,7 @@ use MeTools\Shell\InstallShell as BaseInstallShell;
 class InstallShell extends BaseInstallShell {
 	/**
 	 * Construct
+	 * @uses MeTools\Shell\InstallShell::__construct()
 	 * @uses $config
 	 * @uses $links
 	 * @uses $packages
