@@ -30,7 +30,7 @@ use MeCms\Controller\AppController;
  */
 class PhotosController extends AppController {	
     /**
-     * Views photo
+     * Views a photo
      * @param string $id Photo ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
