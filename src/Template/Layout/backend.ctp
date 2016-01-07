@@ -29,7 +29,10 @@
 			echo $this->Html->charset();
 			echo $this->Html->viewport();
 			echo $this->Html->title($this->fetch('title'));
-			echo $this->Html->meta('icon');
+			
+			if(is_readable(WWW_ROOT.'favicon.ico'))
+				echo $this->Html->meta('icon');
+			
 			echo $this->fetch('meta');
 			
 			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
