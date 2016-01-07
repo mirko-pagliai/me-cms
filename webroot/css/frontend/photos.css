@@ -10,6 +10,8 @@
 /* -------------------------------- */
 /* Photo box, link */
 .photo-box a {
+	display: block;
+	margin-bottom: 20px;
 	position: relative;
 }
 
