@@ -1,5 +1,5 @@
 # LANGUAGE translation of MeCms
-# Copyright 2015 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright (c) 2016, Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
