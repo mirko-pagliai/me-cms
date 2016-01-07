@@ -8,13 +8,13 @@
 /* -------------------------------- */
 /*				Photos box			*/
 /* -------------------------------- */
-/* Photo box, thumbnail */
-.photo-box .thumbnail {
+/* Photo box, link */
+.photo-box a {
 	position: relative;
 }
 
-/* Photo box, thumbnail, info wrapper */
-.photo-box .thumbnail .photo-info {
+/* Photo box, link, info wrapper */
+.photo-box a .photo-info {
     background: rgba(0, 0, 0, .6);
     border-radius: 3px;
     height: 100%;
@@ -29,13 +29,13 @@
 	-webkit-transition: opacity .5s ease-in-out;
 }
 
-/* Photo box, thumbnail on hover, info wrapper */
-.photo-box .thumbnail:hover .photo-info {
+/* Photo box, link on hover, info wrapper */
+.photo-box a:hover .photo-info {
 	opacity: 1;
 }
 
-/* Photo box, thumbnail, info wrapper, wrapper */
-.photo-box .thumbnail .photo-info > div {
+/* Photo box, link, info wrapper, wrapper */
+.photo-box a .photo-info > div {
     color: #fff;
 	font-size: 16px;
 	margin: 50% 0 0;
@@ -48,7 +48,7 @@
 	transform: translateY(-50%);
 }
 
-/* Photo box, thumbnail, paragraphs */
-.photo-box .thumbnail .photo-info p {
+/* Photo box, link, paragraphs */
+.photo-box a .photo-info p {
 	margin: 0;
 }
