@@ -116,6 +116,10 @@ class AppController extends BaseController {
 	 * @uses MeTools\Network\Request::isAdmin()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
+		//Ajax layout
+		if($this->request->is('ajax'))
+			$this->viewBuilder()->layout('MeCms.ajax');
+		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
 		$this->viewClass = !$this->request->isAdmin() ? 'MeCms.View/App' : 'MeCms.View/Admin';
 		
