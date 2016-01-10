@@ -80,7 +80,7 @@ class PhotosCell extends Cell {
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
-		//Returns, if there are no photos available
+		//Returns, if there are no records available
 		if(Cache::read($cache = 'no_photos', $this->Photos->cache))
 			return;
 				
@@ -92,7 +92,7 @@ class PhotosCell extends Cell {
 			->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
 			->toArray();
 		
-		//Writes on cache, if there are no photos available
+		//Writes on cache, if there are no records available
 		if(empty($photos))
 			Cache::write($cache, TRUE, $this->Photos->cache);
 		
@@ -109,7 +109,7 @@ class PhotosCell extends Cell {
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
-		//Returns, if there are no photos available
+		//Returns, if there are no records available
 		if(Cache::read($cache = 'no_photos', $this->Photos->cache))
 			return;
 		
@@ -120,7 +120,7 @@ class PhotosCell extends Cell {
 			->order('rand()')
 			->toArray();
 		
-		//Writes on cache, if there are no photos available
+		//Writes on cache, if there are no records available
 		if(empty($photos))
 			Cache::write($cache, TRUE, $this->Photos->cache);
 		
