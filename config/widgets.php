@@ -6,6 +6,7 @@ return ['Widgets' => [
 		'MeCms.Posts::search', 
 		'MeCms.Posts::categories', 
 		'MeCms.Posts::latest' => ['limit' => 10],
+		'MeCms.Photos::latest' => ['limit' => 1],
 		'MeCms.Photos::random' => ['limit' => 1],
 		'MeCms.Pages::pages'
 	],

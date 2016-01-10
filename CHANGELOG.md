@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.6
 * the User shell can now list users and user groups;
+* added "latest photos" widget;
 * added support for Ajax requests.
 
 ### 2.1.5

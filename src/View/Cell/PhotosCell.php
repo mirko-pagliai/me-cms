@@ -71,6 +71,35 @@ class PhotosCell extends Cell {
 	}
 	
 	/**
+	 * Latest widget
+	 * @param int $limit Limit
+	 * @uses MeTools\Network\Request::isController()
+	 */
+	public function latest($limit = 1) {
+		//Returns on the same controllers
+		if($this->request->isController(['Photos', 'PhotosAlbums']))
+			return;
+		
+		//Returns, if there are no photos available
+		if(Cache::read($cache = 'no_photos', $this->Photos->cache))
+			return;
+				
+		//Gets photos
+		$photos = $this->Photos->find('active')
+			->select(['album_id', 'filename'])
+			->limit($limit)
+			->order([sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
+			->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
+			->toArray();
+		
+		//Writes on cache, if there are no photos available
+		if(empty($photos))
+			Cache::write($cache, TRUE, $this->Photos->cache);
+		
+		$this->set(compact('photos'));
+	}
+	
+	/**
 	 * Random widget
 	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isController()
