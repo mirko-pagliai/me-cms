@@ -28,11 +28,11 @@ msgstr "Il target del banner non è presente"
 
 #: Controller/PostsController.php:200
 msgid "You have to wait {0} seconds to perform a new search"
-msgstr "Puoi effettuare una nuova ricerca fra {0}secondi"
+msgstr "Puoi effettuare una nuova ricerca fra {0} secondi"
 
 #: Controller/PostsController.php:203
 msgid "You have to search at least a word of {0} characters"
-msgstr "Devi cercare un parola di almeno 0d caratteri"
+msgstr "Devi cercare un parola di almeno {0} caratteri"
 
 #: Controller/SystemsController.php:41
 #: Controller/UsersController.php:153;254;361
@@ -1495,7 +1495,7 @@ msgstr "Seleziona un album"
 
 #: Template/Cell/Photos/random.ctp:34
 msgid "Random {0} photos"
-msgstr "0d foto casuali"
+msgstr "{0} foto casuali"
 
 #: Template/Cell/Photos/random.ctp:34
 msgid "Random photo"
