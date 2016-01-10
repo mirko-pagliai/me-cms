@@ -18,7 +18,7 @@ body {
 /*				Header				*/
 /* -------------------------------- */
 /* Header */
-body > header {
+body header {
     box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .3);
 }
 
@@ -26,26 +26,26 @@ body > header {
 /*			Header, logo			*/
 /* -------------------------------- */
 /* Header, logo */
-body > header #logo {
+body header #logo {
     display: inline-block;
 	max-width: 100%;
     text-decoration: none;
 }
 
 /* Header, logo (as text) */
-body > header #logo h1 {
+body header #logo h1 {
     color: #555;
     font-size: 50px;
     padding: 70px 10px 60px;
 }
 
 /* Header, logo (as text) on hover */
-body > header #logo:hover h1 {
+body header #logo:hover h1 {
 	color: #333;
 }
 
 /* Header, logo (as image) */
-body > header #logo img {
+body header #logo img {
 	padding: 40px 0;
 }
 
@@ -53,7 +53,7 @@ body > header #logo img {
 /*			Header, topbar			*/
 /* -------------------------------- */
 /* Header, topbar */
-body > header #topbar {
+body header #topbar {
     background: #eee;
     border: 0;
 	border-radius: 0;
@@ -61,18 +61,18 @@ body > header #topbar {
 }
 
 /* Header, topbar, all links */
-body > header #topbar .navbar-collapse a {
+body header #topbar .navbar-collapse a {
 	font-weight: bold;
 }
 
 /* Header, topbar, all links on hover */
-body > header #topbar .navbar-collapse a:hover {
+body header #topbar .navbar-collapse a:hover {
 	background: #d1d1d1;
 	color: #444;
 }
 	
 /* Header, topbar, open elements, link */
-body > header #topbar .navbar-collapse li.open > a {
+body header #topbar .navbar-collapse li.open > a {
 	color: #333;
 	background: #e7e7e7;
 }
@@ -80,12 +80,12 @@ body > header #topbar .navbar-collapse li.open > a {
 /* Navbar NOT collapsed */
 @media (min-width: 768px) {
 	/* Header, topbar, navbar element */
-	body > header #topbar .navbar-collapse {
+	body header #topbar .navbar-collapse {
 		padding: 0;
 	}
 
 	/* Header, topbar, all links */
-	body > header #topbar .navbar-collapse a {
+	body header #topbar .navbar-collapse a {
 		font-size: 16px;
 		/* Transition for "background" and "color" proprieties */
 		transition: background .25s ease-in-out, color .25s ease-in-out;
@@ -94,13 +94,13 @@ body > header #topbar .navbar-collapse li.open > a {
 	}
 	
 	/* Header, topbar, dropdown menu, links */
-	body > header #topbar .navbar-collapse .dropdown-menu a {
+	body header #topbar .navbar-collapse .dropdown-menu a {
 		color: #777;
 		padding: 6px 20px;
 	}
 	
 	/* Header, topbar, dropdown menu, links on hover */
-	body > header #topbar .navbar-collapse .dropdown-menu a:hover {
+	body header #topbar .navbar-collapse .dropdown-menu a:hover {
 		background: #d1d1d1;
 		color: #444;
 	}
