@@ -34,8 +34,7 @@
 			echo $this->Html->h4(count($photos) > 1 ? __d('me_cms', 'Random {0} photos', count($photos)) : __d('me_cms', 'Random photo'));
 			
 			foreach($photos as $photo)
-				echo $this->Html->link(
-					$this->Thumb->img($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
+				echo $this->Html->link($this->Thumb->img($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
 		?>
 	</div>
 <?php endif; ?>
