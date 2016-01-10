@@ -72,10 +72,10 @@ class PhotosCell extends Cell {
 	
 	/**
 	 * Random widget
-	 * @param string $limit Limit
+	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isController()
 	 */
-	public function random($limit = NULL) {
+	public function random($limit = 1) {
 		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
@@ -87,7 +87,7 @@ class PhotosCell extends Cell {
 		//Gets photos
 		$photos = $this->Photos->find('active')
 			->select(['album_id', 'filename'])
-			->limit($limit = empty($limit) ? 1 : $limit)
+			->limit($limit)
 			->order('rand()')
 			->toArray();
 		
