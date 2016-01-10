@@ -22,6 +22,9 @@ body > header {
     box-shadow: 0 4px 4px 0 rgba(50, 50, 50, .3);
 }
 
+/* -------------------------------- */
+/*			Header, logo			*/
+/* -------------------------------- */
 /* Header, logo */
 body > header #logo {
     display: inline-block;
@@ -46,6 +49,9 @@ body > header #logo img {
 	padding: 40px 0;
 }
 
+/* -------------------------------- */
+/*			Header, topbar			*/
+/* -------------------------------- */
 /* Header, topbar */
 body > header #topbar {
     background: #eee;
