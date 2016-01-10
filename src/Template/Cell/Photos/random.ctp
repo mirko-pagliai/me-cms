@@ -23,7 +23,7 @@
 ?>
 
 <?php
-	//Returns on Photos or PhotosAlbums controller
+	//Returns on the same controllers
 	if($this->request->isController(['Photos', 'PhotosAlbums']))
 		return;
 ?>
