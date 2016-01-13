@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2015-12-26 15:32+0000\n"
-"PO-Revision-Date: 2015-12-26 16:34+0100\n"
+"POT-Creation-Date: 2016-01-11 19:13+0000\n"
+"PO-Revision-Date: 2016-01-13 16:47+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -314,12 +314,12 @@ msgid "The tag could not be saved"
 msgstr "Il tag non può essere salvato"
 
 #: Controller/Admin/UsersController.php:109;145
-#: Shell/UserShell.php:75
+#: Shell/UserShell.php:92
 msgid "The user has been saved"
 msgstr "L'utente è stato salvato"
 
 #: Controller/Admin/UsersController.php:113;149
-#: Shell/UserShell.php:80
+#: Shell/UserShell.php:97
 msgid "The user could not be saved"
 msgstr "L'utente non può essere salvato"
 
@@ -506,11 +506,15 @@ msgstr "La vecchia password è errata"
 msgid "lowercase letters"
 msgstr "lettere minuscole"
 
-#: Shell/InstallShell.php:130
+#: Shell/InstallShell.php:127
 msgid "Creates an admin user"
 msgstr "Crea un utente amministratore"
 
-#: Shell/UserShell.php:44
+#: Shell/UserShell.php:50
+msgid "Before you can manage users, you have to create at least a user group"
+msgstr "Prima di gestire gli utenti, devi creare almeno un gruppo utenti"
+
+#: Shell/UserShell.php:56;154
 #: Template/Admin/Users/add.ctp:47
 #: Template/Admin/Users/edit.ctp:41
 #: Template/Admin/Users/index.ctp:72
@@ -520,7 +524,7 @@ msgstr "Crea un utente amministratore"
 msgid "Username"
 msgstr "Username"
 
-#: Shell/UserShell.php:45
+#: Shell/UserShell.php:57
 #: Template/Admin/Users/add.ctp:59
 #: Template/Admin/Users/change_password.ctp:40
 #: Template/Admin/Users/edit.ctp:49
@@ -530,7 +534,7 @@ msgstr "Username"
 msgid "Password"
 msgstr "Password"
 
-#: Shell/UserShell.php:46
+#: Shell/UserShell.php:58
 #: Template/Admin/Users/add.ctp:63
 #: Template/Admin/Users/change_password.ctp:45
 #: Template/Admin/Users/edit.ctp:55
@@ -539,7 +543,7 @@ msgstr "Password"
 msgid "Repeat password"
 msgstr "Ripeti password"
 
-#: Shell/UserShell.php:47
+#: Shell/UserShell.php:59;156
 #: Template/Admin/Users/add.ctp:51
 #: Template/Admin/Users/edit.ctp:45
 #: Template/Admin/Users/index.ctp:74
@@ -551,7 +555,7 @@ msgstr "Ripeti password"
 msgid "Email"
 msgstr "Email"
 
-#: Shell/UserShell.php:48
+#: Shell/UserShell.php:60
 #: Template/Admin/Users/add.ctp:67
 #: Template/Admin/Users/edit.ctp:61
 #: Template/Systems/contact_form.ctp:33
@@ -559,7 +563,7 @@ msgstr "Email"
 msgid "First name"
 msgstr "Nome"
 
-#: Shell/UserShell.php:49
+#: Shell/UserShell.php:61
 #: Template/Admin/Users/add.ctp:71
 #: Template/Admin/Users/edit.ctp:65
 #: Template/Systems/contact_form.ctp:36
@@ -567,25 +571,113 @@ msgstr "Nome"
 msgid "Last name"
 msgstr "Cognome"
 
-#: Shell/UserShell.php:59;98
+#: Shell/UserShell.php:76;200
 msgid "Group ID"
 msgstr "ID gruppo"
 
-#: Shell/UserShell.php:67
+#: Shell/UserShell.php:84
 msgid "Some fields are missing. Try again"
 msgstr "Alcuni campi sono assenti. Prova ancora"
 
-#: Shell/UserShell.php:71
+#: Shell/UserShell.php:88
 msgid "Invalid group ID"
 msgstr "ID gruppo non valido"
 
-#: Shell/UserShell.php:79
+#: Shell/UserShell.php:96
 msgid "An error occurred, try again"
 msgstr "Si è verificato un errore, prova ancora"
 
-#: Shell/UserShell.php:94
+#: Shell/UserShell.php:113
+msgid "There are no user groups"
+msgstr "Non ci sono gruppi utente"
+
+#: Shell/UserShell.php:127;153
+msgid "ID"
+msgstr "ID"
+
+#: Shell/UserShell.php:128;155
+#: Template/Admin/BannersPositions/index.ctp:34
+#: Template/Admin/Users/index.ctp:73
+#: Template/Admin/Users/view.ctp:55
+#: Template/Admin/UsersGroups/add.ctp:33
+#: Template/Admin/UsersGroups/edit.ctp:34
+#: Template/Admin/UsersGroups/index.ctp:34
+msgid "Name"
+msgstr "Nome"
+
+#: Shell/UserShell.php:129
+#: Template/Admin/UsersGroups/add.ctp:36
+#: Template/Admin/UsersGroups/edit.ctp:37
+#: Template/Admin/UsersGroups/index.ctp:35
+msgid "Label"
+msgstr "Etichetta"
+
+#: Shell/UserShell.php:130
+#: Template/Admin/Users/index.ctp:26;31
+#: Template/Admin/UsersGroups/index.ctp:36
+#: View/Helper/MenuDefaultHelper.php:149
+msgid "Users"
+msgstr "Utenti"
+
+#: Shell/UserShell.php:149
+msgid "There are no users"
+msgstr "Non ci sono utenti"
+
+#: Shell/UserShell.php:157
+#: Template/Admin/Posts/index.ctp:26;31
+#: Template/Admin/PostsCategories/index.ctp:36
+#: Template/Admin/Users/index.ctp:76
+#: Template/Admin/Users/view.ctp:74
+#: Template/Posts/index.ctp:50
+#: View/Helper/MenuDefaultHelper.php:62
+msgid "Posts"
+msgstr "Articoli"
+
+#: Shell/UserShell.php:158
+#: Template/Admin/Users/view.ctp:61
+msgid "Status"
+msgstr "Stato"
+
+#: Shell/UserShell.php:159
+#: Template/Admin/Pages/add.ctp:38
+#: Template/Admin/Pages/edit.ctp:38
+#: Template/Admin/Pages/index.ctp:70
+#: Template/Admin/Posts/add.ctp:50
+#: Template/Admin/Posts/edit.ctp:50
+#: Template/Admin/Posts/index.ctp:85
+#: Template/Admin/Users/index.ctp:77
+msgid "Date"
+msgstr "Data"
+
+#: Shell/UserShell.php:166
+#: Template/Admin/Users/index.ctp:89
+#: Template/Admin/Users/view.ctp:65
+msgid "Banned"
+msgstr "Bannato"
+
+#: Shell/UserShell.php:168
+#: Template/Admin/Users/index.ctp:92
+#: Template/Admin/Users/view.ctp:68
+msgid "Pending"
+msgstr "Non attivo"
+
+#: Shell/UserShell.php:170
+#: Template/Admin/Users/add.ctp:38
+#: Template/Admin/Users/view.ctp:71
+msgid "Active"
+msgstr "Attivo"
+
+#: Shell/UserShell.php:196
 msgid "Adds an user"
 msgstr "Aggiungi un utente"
+
+#: Shell/UserShell.php:204
+msgid "Lists user groups"
+msgstr "Elenca gruppi utente"
+
+#: Shell/UserShell.php:205
+msgid "Lists users"
+msgstr "Elenca utenti"
 
 #: Template/Admin/Banners/add.ctp:25;28;78
 msgid "Add banner"
@@ -820,29 +912,10 @@ msgstr "Posizioni banner"
 msgid "Add"
 msgstr "Aggiungi"
 
-#: Template/Admin/BannersPositions/index.ctp:34
-#: Template/Admin/Users/index.ctp:73
-#: Template/Admin/Users/view.ctp:55
-#: Template/Admin/UsersGroups/add.ctp:33
-#: Template/Admin/UsersGroups/edit.ctp:34
-#: Template/Admin/UsersGroups/index.ctp:34
-msgid "Name"
-msgstr "Nome"
-
 #: Template/Admin/Pages/add.ctp:26;33;73
 #: View/Helper/MenuDefaultHelper.php:78
 msgid "Add page"
 msgstr "Aggiungi pagina"
-
-#: Template/Admin/Pages/add.ctp:38
-#: Template/Admin/Pages/edit.ctp:38
-#: Template/Admin/Pages/index.ctp:70
-#: Template/Admin/Posts/add.ctp:50
-#: Template/Admin/Posts/edit.ctp:50
-#: Template/Admin/Posts/index.ctp:85
-#: Template/Admin/Users/index.ctp:77
-msgid "Date"
-msgstr "Data"
 
 #: Template/Admin/Pages/add.ctp:40
 #: Template/Admin/Pages/edit.ctp:40
@@ -1102,15 +1175,6 @@ msgstr ""
 msgid "Edit post"
 msgstr "Modifica articolo"
 
-#: Template/Admin/Posts/index.ctp:26;31
-#: Template/Admin/PostsCategories/index.ctp:36
-#: Template/Admin/Users/index.ctp:76
-#: Template/Admin/Users/view.ctp:74
-#: Template/Posts/index.ctp:50
-#: View/Helper/MenuDefaultHelper.php:62
-msgid "Posts"
-msgstr "Articoli"
-
 #: Template/Admin/Posts/index.ctp:51
 msgid "all users"
 msgstr "tutti gli utenti"
@@ -1353,11 +1417,6 @@ msgstr "Aggiungi utente"
 msgid "User group"
 msgstr "Gruppo utente"
 
-#: Template/Admin/Users/add.ctp:38
-#: Template/Admin/Users/view.ctp:71
-msgid "Active"
-msgstr "Attivo"
-
 #: Template/Admin/Users/add.ctp:39
 msgid "If is not active, the user won't be able to login"
 msgstr "Se non è attivo, l'utente non potrà loggarsi"
@@ -1403,12 +1462,6 @@ msgstr ""
 "Se vuoi cambiare la password inseriscine una nuova. Altrimenti, lascia questo "
 "campo vuoto"
 
-#: Template/Admin/Users/index.ctp:26;31
-#: Template/Admin/UsersGroups/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:149
-msgid "Users"
-msgstr "Utenti"
-
 #: Template/Admin/Users/index.ctp:41
 msgid "username"
 msgstr "nome utente"
@@ -1434,16 +1487,6 @@ msgstr "tutti i gruppi"
 msgid "Group"
 msgstr "Gruppo"
 
-#: Template/Admin/Users/index.ctp:89
-#: Template/Admin/Users/view.ctp:65
-msgid "Banned"
-msgstr "Bannato"
-
-#: Template/Admin/Users/index.ctp:92
-#: Template/Admin/Users/view.ctp:68
-msgid "Pending"
-msgstr "Non attivo"
-
 #: Template/Admin/Users/index.ctp:105
 #: Template/Admin/Users/view.ctp:39
 msgid "Activate"
@@ -1454,10 +1497,6 @@ msgstr "Attiva"
 msgid "Are you sure you want to activate this account?"
 msgstr "Sei sicuro di voler attivare questo account?"
 
-#: Template/Admin/Users/view.ctp:61
-msgid "Status"
-msgstr "Stato"
-
 #: Template/Admin/Users/view.ctp:78
 msgid "Created"
 msgstr "Creato"
@@ -1465,12 +1504,6 @@ msgstr "Creato"
 #: Template/Admin/UsersGroups/add.ctp:25;28
 msgid "Add users group"
 msgstr "Aggiungi gruppo utenti"
-
-#: Template/Admin/UsersGroups/add.ctp:36
-#: Template/Admin/UsersGroups/edit.ctp:37
-#: Template/Admin/UsersGroups/index.ctp:35
-msgid "Label"
-msgstr "Etichetta"
 
 #: Template/Admin/UsersGroups/add.ctp:45
 #: View/Helper/MenuDefaultHelper.php:146
@@ -1492,6 +1525,14 @@ msgstr "Gruppi utente"
 #: Template/Cell/Photos/albums.ctp:40
 msgid "Select an album"
 msgstr "Seleziona un album"
+
+#: Template/Cell/Photos/latest.ctp:34
+msgid "Latest {0} photos"
+msgstr "Ultime {0} foto"
+
+#: Template/Cell/Photos/latest.ctp:34
+msgid "Latest photo"
+msgstr "Ultima foto"
 
 #: Template/Cell/Photos/random.ctp:34
 msgid "Random {0} photos"
@@ -1529,7 +1570,7 @@ msgid "Toggle navigation"
 msgstr "Cambia navigazione"
 
 #: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:65
+#: Template/Layout/frontend.ctp:68
 msgid "Homepage"
 msgstr "Homepage"
 
