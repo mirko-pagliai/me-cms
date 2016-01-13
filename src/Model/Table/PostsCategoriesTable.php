@@ -16,13 +16,12 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\PostsCategory;
@@ -30,30 +29,16 @@ use MeCms\Model\Table\AppTable;
 
 /**
  * PostsCategories model
+ * @property \Cake\ORM\Association\BelongsTo $Parents
+ * @property \Cake\ORM\Association\HasMany $Childs
  */
 class PostsCategoriesTable extends AppTable {
 	/**
-	 * Called after an entity has been deleted
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * Name of the configuration to use for this table
+	 * @var string|array
 	 */
-	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');		
-	}
+	public $cache = 'posts';
 	
-	/**
-	 * Called after an entity is saved.
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'posts');
-	}
-
     /**
      * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -79,32 +64,36 @@ class PostsCategoriesTable extends AppTable {
 	/**
 	 * Gets the categories list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('categories_list', 'posts')
+			->cache('categories_list', $this->cache)
 			->toArray();
 	}
 	
 	/**
 	 * Gets the categories tree list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getTreeList() {
 		return $this->find('treeList')
-			->cache('categories_tree_list', 'posts')
+			->cache('categories_tree_list', $this->cache)
 			->toArray();
 	}
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('posts_categories');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('MeCms.Tree');
+		
 		$this->belongsTo('Parents', [
             'className' => 'MeCms.PostsCategories',
             'foreignKey' => 'parent_id'
@@ -117,6 +106,8 @@ class PostsCategoriesTable extends AppTable {
             'className' => 'MeCms.Posts',
             'foreignKey' => 'category_id'
         ]);
+		
+        $this->addBehavior('MeCms.Tree');
     }
 
     /**

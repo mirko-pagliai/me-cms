@@ -16,22 +16,26 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <?php
-	//Returns on posts index, except for category
+	//Returns on index, except for category
 	if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
+		return;
+	
+	//Returns on the last record view
+	if(count($posts) < 2 && $this->request->isAction('view', 'Posts') && $this->request->param('slug') && $posts[0]->slug && $this->request->param('slug') === $posts[0]->slug)
 		return;
 ?>
 
-<?php if($posts->count()): ?>
+<?php if(count($posts)): ?>
 	<div class="widget sidebar-widget">
 		<?php
-			echo $this->Html->h4($posts->count() > 1 ? __d('me_cms', 'Latest {0} posts', $posts->count()) : __d('me_cms', 'Latest post'));
+			echo $this->Html->h4(count($posts) > 1 ? __d('me_cms', 'Latest {0} posts', count($posts)) : __d('me_cms', 'Latest post'));
 
 			foreach($posts as $post)
 				$list[] = $this->Html->link($post->title, ['_name' => 'post', $post->slug]);

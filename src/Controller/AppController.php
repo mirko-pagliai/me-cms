@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -71,15 +71,25 @@ class AppController extends BaseController {
 	 * Called before the controller action. 
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses MeTools\Network\Request::hasPrefix()
+	 * @uses MeTools\Network\Request::isAction()
+	 * @uses MeTools\Network\Request::isAdmin()
+	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
-		//Checks if the site has been taken offline
+		date_default_timezone_set(config('main.timezone'));
+		
+		//Checks if the site is offline
 		if($this->isOffline())
 			$this->redirect(['_name' => 'offline']);
+		
+		//Checks if the user's IP address is banned
+		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
+			$this->redirect(['_name' => 'ip_not_allowed']);
 		
 		$this->setLanguage();
 		
@@ -92,37 +102,48 @@ class AppController extends BaseController {
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isPrefix('admin') ? config('backend.records') : config('frontend.records');
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isAdmin() ? config('backend.records') : config('frontend.records');
+		
+		parent::beforeFilter($event);
 	}
 	
 	/**
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
+	 * @uses App\Controller\AppController::beforeRender()
 	 * @uses MeTools\Network\Request::isAdmin()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
-		//Uses a custom View class (`AppView` or `AdminView`)
-		$this->viewClass = $this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App';
+		//Ajax layout
+		if($this->request->is('ajax'))
+			$this->viewBuilder()->layout('MeCms.ajax');
+		
+		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
+		$this->viewClass = !$this->request->isAdmin() ? 'MeCms.View/App' : 'MeCms.View/Admin';
 		
 		//Sets auth data for views
 		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
+		
+		parent::beforeRender($event);
 	}
 	
 	/**
 	 * Initialization hook method
+	 * @uses App\Controller\AppController::initialize()
 	 */
 	public function initialize() {
 		//Loads components
-		$this->loadComponent('MeCms.Auth', [
-			'authError' => __d('me_cms', 'You are not authorized for this action')
-		]);
+		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
+		$this->loadComponent('MeCms.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
+		
+		parent::initialize();
     }
 	
 	/**
@@ -137,12 +158,38 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Checks if the site is offline
-	 * @return bool TRUE if the site is offline, otherwise FALSE
-	 * @uses MeTools\Network\Request::isAction()
+	 * Checks if the user's IP address is banned
+	 * @return bool
+	 * @uses MeCms\Controller\Component\SecurityComponent::isBanned()
 	 */
-	public function isOffline() {
-		return config('frontend.offline') && !$this->request->isAction('offline', 'Systems');
+	protected function isBanned() {
+		if(!config('security.banned_ip'))
+			return FALSE;
+		
+		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
+		
+		return $this->Security->isBanned($banned_ip);
+	}
+	
+	/**
+	 * Checks if the site is offline
+	 * @return bool
+	 * @uses MeTools\Network\Request::isAction()
+	 * @uses MeTools\Network\Request::isAdmin()
+	 */
+	protected function isOffline() {
+		if(!config('frontend.offline'))
+			return FALSE;
+		
+		//Always online for these actions
+		if($this->request->isAction(['offline', 'login', 'logout']))
+			return FALSE;
+		
+		//Always online for admin requests
+		if($this->request->isAdmin())
+			return FALSE;
+		
+		return TRUE;
 	}
 	
 	/**
@@ -152,7 +199,7 @@ class AppController extends BaseController {
 	 * @uses Cake\I18n\I18n::locale()
 	 * @uses MeTools\Core\Plugin::path()
 	 */
-	public function setLanguage() {
+	protected function setLanguage() {
 		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
 		
 		if(config('main.language') === 'auto') {
@@ -163,7 +210,7 @@ class AppController extends BaseController {
 		}
 		elseif(config('main.language')) {
 			if(!is_readable($file = $path.DS.config('main.language').DS.'me_cms.po'))
-				throw new \Cake\Network\Exception\InternalErrorException(__d('me_cms', 'The file {0} doesn\'t exist or is not readable', $file));
+				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory `{0}` not readable', $file));
 			
 			$language = config('main.language');
 		}

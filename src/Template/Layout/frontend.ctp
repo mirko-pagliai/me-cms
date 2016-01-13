@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -27,32 +27,31 @@
 	<head>
 		<?php
 			echo $this->Html->charset();
-			echo $this->Layout->viewport();
+			echo $this->Html->viewport();
 			echo $this->Html->title($this->fetch('title'));
-			echo $this->Html->meta('icon');
-			echo $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
+			
+			if(is_readable(WWW_ROOT.'favicon.ico'))
+				echo $this->Html->meta('icon');
+			
 			echo $this->fetch('meta');
 			
-			echo $this->Layout->css('MeCms./assets/frontend.min', [
-				'MeTools.font-awesome.min',
+			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
+			echo $this->Asset->css([
+				'/vendor/font-awesome/css/font-awesome.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
 				'MeCms.frontend/layout',
 				'MeCms.frontend/contents',
 				'MeCms.frontend/photos'
-			]);
+			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
-			echo $this->Layout->js('MeCms./assets/frontend.min', [
-				'MeTools.jquery.min',
+			echo $this->Asset->js([
+				'/vendor/jquery/jquery.min',
 				'MeCms.frontend/bootstrap.min',
 				'MeTools.default'
-			]);
-			
-			if(is_readable(WWW_ROOT.'js'.DS.'frontend'.DS.'layout.js'))
-				echo $this->Html->js('frontend/layout');
-			
+			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
@@ -83,9 +82,17 @@
 				</div>
 			</div>
 		</div>
-		<?= $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]) ?>
-		<?= $this->Library->analytics(config('frontend.analytics')) ?>
-		<?= $this->fetch('css_bottom') ?>
-		<?= $this->fetch('script_bottom') ?>
+		<?php
+			echo $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]);
+			
+			if(config('frontend.analytics'))
+				echo $this->Library->analytics(config('frontend.analytics'));
+			
+			if(config('shareaholic.site_id'));
+				echo $this->Library->shareaholic(config('shareaholic.site_id'));
+						
+			echo $this->fetch('css_bottom');
+			echo $this->fetch('script_bottom');
+		?>
 	</body>
 </html>

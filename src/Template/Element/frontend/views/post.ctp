@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -32,8 +32,8 @@
 <div class="post-container content-container">
 	<div class="content-header">
 		<?php
-			if(!empty($post->category->title) && !empty($post->category->slug))
-				echo $this->Html->h5($this->Html->link($post->category->title, ['_name' => 'category', $post->category->slug]), ['class' => 'content-category']);
+			if(config('post.category') && !empty($post->category->title) && !empty($post->category->slug))
+				echo $this->Html->h5($this->Html->link($post->category->title, ['_name' => 'posts_category', $post->category->slug]), ['class' => 'content-category']);
 
 			echo $this->Html->h3($this->Html->link($post->title, ['_name' => 'post', $post->slug]), ['class' => 'content-title']);
 
@@ -42,24 +42,29 @@
 		?>
 		<div class="content-info">
 			<?php
-				if(!empty($post->user->full_name))
+				if(config('post.author') && !empty($post->user->full_name))
 					echo $this->Html->div('content-author',
 						__d('me_cms', 'Posted by {0}', $post->user->full_name),
 						['icon' => 'user']
 					);
 
-				if(!empty($post->created))
+				if(config('post.created') && !empty($post->created))
 					echo $this->Html->div('content-date',
 						__d('me_cms', 'Posted on {0}', $post->created->i18nFormat(config('main.datetime.long'))),
 						['icon' => 'clock-o']
 					);
+				
+				if(config('post.tags') && !empty($post->tags))
+					echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
+						return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->tag], ['icon' => 'tags']);
+					}, $post->tags)));
 			?>
 		</div>
 	</div>
 	<div class="content-text">
 		<?php
 			//If it was requested to truncate the text
-			if(!$this->request->isAction('view') && config('frontend.truncate_to'))
+			if(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to'))
 				echo $truncate = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
 			else
 				echo $post->text;
@@ -72,4 +77,34 @@
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
 		?>
 	</div>
+	<?php
+		if(config('post.shareaholic') && config('shareaholic.app_id'))
+			if($this->request->isAction('view', 'Posts') && !$this->request->isAjax())
+				echo $this->Html->shareaholic(config('shareaholic.app_id'));
+	?>
 </div>
+
+<?php if(!empty($related)): ?>
+	<div class="related-contents">
+		<?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
+		<?php if(!config('post.related.images')): ?>
+			<?= $this->Html->ul(array_map(function($post) {
+					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+				}, $related), ['icon' => 'caret-right']) ?>
+		<?php else: ?>
+			<div class="visible-xs">
+				<?= $this->Html->ul(array_map(function($post) {
+					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+				}, $related), ['icon' => 'caret-right']) ?>
+			</div>
+		
+			<div class="hidden-xs row">
+				<?php foreach($related as $post): ?>
+					<div class="col-sm-6 col-md-3">
+						<?= $this->element('frontend/views/post-preview', compact('post')) ?>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+	</div>
+<?php endif; ?>

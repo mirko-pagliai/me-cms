@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -33,34 +33,36 @@
 	
 	<?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>
 		<fieldset>
-			<?php
-				echo $this->Form->legend(__d('me_cms', 'Filter'));
-				echo $this->Form->input('username', [
-					'default'		=> $this->request->query('username'),
-					'placeholder'	=> __d('me_cms', 'username'),
-					'size'			=> 16
-				]);
-				echo $this->Form->input('status', [
-					'default'	=> $this->request->query('status'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-					'options'	=> [
-						'active'	=> __d('me_cms', 'Only active'),
-						'pending'	=> __d('me_cms', 'Only pending'),
-						'banned'	=> __d('me_cms', 'Only banned')
-					]
-				]);
-				echo $this->Form->input('group', [
-					'default'	=> $this->request->query('group'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all groups'))
-				]);
-				echo $this->Form->datepicker('created', [
-					'data-date-format'	=> 'YYYY-MM',
-					'default'			=> $this->request->query('created'),
-					'placeholder'		=> __d('me_cms', 'month'),
-					'size'				=> 5
-				]);
-				echo $this->Form->submit(NULL, ['icon' => 'search']);
-			?>
+			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
+			<div>
+				<?php
+					echo $this->Form->input('username', [
+						'default'		=> $this->request->query('username'),
+						'placeholder'	=> __d('me_cms', 'username'),
+						'size'			=> 16
+					]);
+					echo $this->Form->input('status', [
+						'default'	=> $this->request->query('status'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
+						'options'	=> [
+							'active'	=> __d('me_cms', 'Only active'),
+							'pending'	=> __d('me_cms', 'Only pending'),
+							'banned'	=> __d('me_cms', 'Only banned')
+						]
+					]);
+					echo $this->Form->input('group', [
+						'default'	=> $this->request->query('group'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all groups'))
+					]);
+					echo $this->Form->datepicker('created', [
+						'data-date-format'	=> 'YYYY-MM',
+						'default'			=> $this->request->query('created'),
+						'placeholder'		=> __d('me_cms', 'month'),
+						'size'				=> 5
+					]);
+					echo $this->Form->submit(NULL, ['icon' => 'search']);
+				?>
+			</div>
 		</fieldset>
 	<?php echo $this->Form->end(); ?>
 	
@@ -68,9 +70,9 @@
 		<thead>
 			<tr>				
 				<th><?php echo $this->Paginator->sort('username', __d('me_cms', 'Username')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('full_name', __d('me_cms', 'Name')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('email', __d('me_cms', 'Email')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('group_id', __d('me_cms', 'Group')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('first_name', __d('me_cms', 'Name')) ?></th>
+				<th class="text-center hidden-xs"><?= $this->Paginator->sort('email', __d('me_cms', 'Email')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Groups.label', __d('me_cms', 'Group')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('post_count', __d('me_cms', 'Posts')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
@@ -109,10 +111,25 @@
 						?>
 					</td>
 					<td class="text-center"><?= $user->full_name ?></td>
-					<td class="text-center"><?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?></td>
-					<td class="text-center"><?= $user->group->label ?></td>
-					<td class="min-width text-center"><?= $user->post_count ?></td>
-					<td class="min-width text-center"><?= $user->created->i18nFormat(config('main.datetime.long')) ?></td>
+					<td class="text-center hidden-xs"><?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?></td>
+					<td class="text-center">
+						<?= $this->Html->link($user->group->label, ['?' => ['group' => $user->group->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+					</td>
+					<td class="min-width text-center">
+						<?php
+							if($user->post_count) 
+								echo $this->Html->link($user->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]);
+							else
+								echo $user->post_count;
+						?>
+					</td>
+					<td class="min-width text-center">
+						<div class="hidden-xs"><?= $user->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="visible-xs">
+							<div><?= $user->created->i18nFormat(config('main.date.short')) ?></div>
+							<div><?= $user->created->i18nFormat(config('main.time.short')) ?></div>
+						</div>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

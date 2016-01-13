@@ -16,12 +16,13 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -53,7 +54,7 @@ class PostsController extends AppController {
 		}
 		
 		//Checks for categories
-		if(isset($categories) && empty($categories)) {
+		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
 			$this->Flash->alert(__d('me_cms', 'Before you can manage posts, you have to create at least a category'));
 			$this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
@@ -69,7 +70,7 @@ class PostsController extends AppController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses MeCms\Controller\AppController::beforeRender()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::configure()
 	 */
@@ -85,42 +86,48 @@ class PostsController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeCms\Model\Table\PostsTable::isOwnedBy()
+	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins and managers can edit all posts. Users can edit only their own posts
-		if($this->request->isAction('edit') && !$this->Auth->isGroup(['admin', 'manager']))
-			return $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
-				
-		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		//Only admins and managers can edit all posts.
+		//Users can edit only their own posts
+		if($this->request->isAction('edit'))
+			return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+		
+		//Only admins and managers can delete posts
+		if($this->request->isAction('delete'))
+			return $this->Auth->isGroup(['admin', 'manager']);
+		
+		return TRUE;
 	}
 	
 	/**
      * Lists posts
-	 * @uses MeCms\Model\Table\PostsTable::fromFilter()
+	 * @uses MeCms\Model\Table\PostsTable::queryFromFilter()
      */
-    public function index() {		
-		$this->set('posts', $this->paginate(
-			$this->Posts->find()
-				->contain([
-					'Categories'	=> ['fields' => ['title']],
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
-				])
-				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
-				->where($this->Posts->fromFilter($this->request->query))
-				->order(['Posts.created' => 'DESC'])
-		));
+    public function index() {
+		$query = $this->Posts->find()
+			->contain([
+				'Categories'	=> ['fields' => ['id', 'title']],
+				'Tags',
+				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
+			])
+			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+		
+		$this->paginate['order'] = ['Posts.created' => 'DESC'];
+		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'Posts.created'];
+		
+		$this->set('posts', $this->paginate($this->Posts->queryFromFilter($query, $this->request->query)));
     }
 
     /**
      * Adds post
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      */
-    public function add() {		
+    public function add() {
         $post = $this->Posts->newEntity();
 		
         if($this->request->is('post')) {
@@ -128,7 +135,12 @@ class PostsController extends AppController {
 			if(!$this->Auth->isGroup(['admin', 'manager']))
 				$this->request->data('user_id', $this->Auth->user('id'));
 			
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
+			//Sets the request data with tags
+			$data = $this->Posts->buildTagsForRequestData($this->request->data);
+			
+            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
@@ -145,17 +157,23 @@ class PostsController extends AppController {
      * Edits post
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-        $post = $this->Posts->get($id);
+		$post = $this->Posts->findById($id)->contain('Tags')->first();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
 			if(!$this->Auth->isGroup(['admin', 'manager']))
 				$this->request->data('user_id', $this->Auth->user('id'));
 			
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
+			//Sets the request data with tags
+			$data = $this->Posts->buildTagsForRequestData($this->request->data);
+						
+            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));

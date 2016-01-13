@@ -16,13 +16,12 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\UsersGroup;
@@ -33,45 +32,33 @@ use MeCms\Model\Table\AppTable;
  */
 class UsersGroupsTable extends AppTable {
 	/**
-	 * Called after an entity has been deleted
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * Name of the configuration to use for this table
+	 * @var string|array
 	 */
-	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'users');		
-	}
-	
-	/**
-	 * Called after an entity is saved.
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'users');
-	}
+	public $cache = 'users';
 	
 	/**
 	 * Gets the groups list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('groups_list', 'users')
+			->cache('groups_list', $this->cache)
 			->toArray();
 	}
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('users_groups');
         $this->displayField('label');
         $this->primaryKey('id');
+		
         $this->hasMany('Users', [
             'foreignKey' => 'group_id',
             'className' => 'MeCms.Users'

@@ -16,12 +16,13 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\AppController;
 
 /**
@@ -29,24 +30,26 @@ use MeCms\Controller\AppController;
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController {
+	use MailerAwareTrait;
+	
 	/**
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Every user can change his password
-		if($this->request->isAction('password'))
+		if($this->request->isAction('change_password'))
 			return TRUE;
+		
 		//Only admins can activate account and delete users
 		if($this->request->isAction(['activate', 'delete']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		return $this->Auth->isGroup(['admin', 'manager']);
 	}
 	
 	/**
@@ -66,16 +69,17 @@ class UsersController extends AppController {
 	
 	/**
      * Lists users
-	 * @uses MeCms\Model\Table\UsersTable::fromFilter()
+	 * @uses MeCms\Model\Table\UsersTable::queryFromFilter()
      */
     public function index() {
-		$this->set('users', $this->paginate(
-			$this->Users->find()
-				->contain(['Groups' => ['fields' => ['label']]])
-				->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-				->where($this->Users->fromFilter($this->request->query))
-				->order(['Users.username' => 'ASC'])
-		));
+		$query = $this->Users->find()
+			->contain(['Groups' => ['fields' => ['id', 'label']]])
+			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created']);
+		
+		$this->paginate['order'] = ['Users.username' => 'ASC'];
+		$this->paginate['sortWhitelist'] = ['Users.username', 'first_name', 'email', 'Groups.label', 'post_count', 'created'];
+		
+		$this->set('users', $this->paginate($this->Users->queryFromFilter($query, $this->request->query)));
     }
 	
     /**
@@ -198,7 +202,7 @@ class UsersController extends AppController {
 	
 	/**
 	 * Changes the user's password
-	 * @uses MeCms\Network\Email\Email
+	 * @uses MeCms\Mailer\UserMailer::change_password()
 	 */
 	public function change_password() {
 		$user = $this->Users->find()
@@ -211,12 +215,8 @@ class UsersController extends AppController {
 			
 			if($this->Users->save($user)) {
 				//Sends email
-				$email = new \MeCms\Network\Email\Email();
-				$email->to([$user->email => $user->full_name])
-					->subject(__d('me_cms', 'Your password has been changed'))
-					->template('MeCms.Users/change_password')
-					->set(['full_name' => $user->full_name])
-					->send();
+				$this->getMailer('MeCms.User')
+					->send('change_password', [$user]);
 				
 				$this->Flash->success(__d('me_cms', 'The password has been edited'));
 				return $this->redirect(['_name' => 'dashboard']);

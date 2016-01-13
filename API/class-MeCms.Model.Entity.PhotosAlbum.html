@@ -42,8 +42,18 @@
 						</li>
 							</ul></li>
 				<li class="main">
+					<a href="namespace-MeCms.Error.html">
+						Error					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
 
 						</li>
 				<li class="active main">
@@ -74,17 +84,10 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
+					<a href="namespace-MeCms.Shell.html">
+						Shell					</a>
 
 						</li>
-							</ul></li>
 				<li class="main">
 					<a href="namespace-MeCms.Utility.html">
 						Utility					</a>
@@ -128,6 +131,8 @@
 				<li class="active"><a href="class-MeCms.Model.Entity.PhotosAlbum.html">PhotosAlbum</a></li>
 				<li><a href="class-MeCms.Model.Entity.Post.html">Post</a></li>
 				<li><a href="class-MeCms.Model.Entity.PostsCategory.html">PostsCategory</a></li>
+				<li><a href="class-MeCms.Model.Entity.PostsTag.html">PostsTag</a></li>
+				<li><a href="class-MeCms.Model.Entity.Tag.html">Tag</a></li>
 				<li><a href="class-MeCms.Model.Entity.User.html">User</a></li>
 				<li><a href="class-MeCms.Model.Entity.UsersGroup.html">UsersGroup</a></li>
 			</ul>
@@ -207,7 +212,7 @@ Cake\ORM\Entity
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Entity.html">Entity</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#27-43" title="Go to source code">Entity/PhotosAlbum.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#27-46" title="Go to source code">Model/Entity/PhotosAlbum.php</a>
 		<br>
 	</div>
 
@@ -234,7 +239,7 @@ Cake\ORM\Entity
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#31-42" title="Go to source code"><var>$_accessible</var></a>
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#37-45" title="Go to source code"><var>$_accessible</var></a>
 
 			<div class="description short">
 				<p>Fields that can be mass assigned using newEntity() or patchEntity()</p>
@@ -249,12 +254,9 @@ Cake\ORM\Entity
 			<div>
 				<a href="#$_accessible" class="anchor">#</a>
 				<code>[
-    <span class="php-quote">'title'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'slug'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'description'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'active'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'photo_count'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'photos'</span> =&gt; <span class="php-keyword1">TRUE</span>,
+    <span class="php-quote">'*'</span> =&gt; <span class="php-keyword1">TRUE</span>,
+    <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">FALSE</span>,
+    <span class="php-quote">'photo_count'</span> =&gt; <span class="php-keyword1">FALSE</span>
 ]</code>
 			</div>
 		</td>
@@ -263,6 +265,123 @@ Cake\ORM\Entity
 
 
 
+	<table class="summary properties" id="magicProperties">
+	<caption>Magic properties summary</caption>
+	<tr data-order="id" id="m$id">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#29" title="Go to source code"><var>$id</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="title" id="m$title">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#30" title="Go to source code"><var>$title</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="slug" id="m$slug">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#31" title="Go to source code"><var>$slug</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="description" id="m$description">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#32" title="Go to source code"><var>$description</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="active" id="m$active">
+		<td class="attributes"><code>
+			public  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#33" title="Go to source code"><var>$active</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="photo_count" id="m$photo_count">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.PhotosAlbum.html#34" title="Go to source code"><var>$photo_count</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 

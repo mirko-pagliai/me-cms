@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -33,38 +33,45 @@
 	
 	<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
 		<fieldset>
-			<?php
-				echo $this->Form->legend(__d('me_cms', 'Filter'));
-				echo $this->Form->input('title', [
-					'default'		=> $this->request->query('title'),
-					'placeholder'	=> __d('me_cms', 'title'),
-					'size'			=> 16
-				]);
-				echo $this->Form->input('active', [
-					'default'	=> $this->request->query('active'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-					'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')]
-				]);
-				echo $this->Form->input('user', [
-					'default'	=> $this->request->query('user'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users'))
-				]);
-				echo $this->Form->input('category', [
-					'default'	=> $this->request->query('category'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories'))
-				]);
-				echo $this->Form->input('priority', [
-					'default'	=> $this->request->query('priority'),
-					'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities'))
-				]);
-				echo $this->Form->datepicker('created', [
-					'data-date-format'	=> 'YYYY-MM',
-					'default'			=> $this->request->query('created'),
-					'placeholder'		=> __d('me_cms', 'month'),
-					'size'				=> 5
-				]);
-				echo $this->Form->submit(NULL, ['icon' => 'search']);
-			?>
+			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
+			<div>
+				<?php
+					echo $this->Form->input('title', [
+						'default'		=> $this->request->query('title'),
+						'placeholder'	=> __d('me_cms', 'title'),
+						'size'			=> 16
+					]);
+					echo $this->Form->input('active', [
+						'default'	=> $this->request->query('active'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
+						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')]
+					]);
+					echo $this->Form->input('user', [
+						'default'	=> $this->request->query('user'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users'))
+					]);
+					echo $this->Form->input('category', [
+						'default'	=> $this->request->query('category'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories'))
+					]);
+					echo $this->Form->input('priority', [
+						'default'	=> $this->request->query('priority'),
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities'))
+					]);
+					echo $this->Form->datepicker('created', [
+						'data-date-format'	=> 'YYYY-MM',
+						'default'			=> $this->request->query('created'),
+						'placeholder'		=> __d('me_cms', 'month'),
+						'size'				=> 5
+					]);
+					echo $this->Form->input('tag', [
+						'default'		=> $this->request->query('tag'),
+						'placeholder'	=> __d('me_cms', 'tag'),
+						'size'			=> 10
+					]);
+					echo $this->Form->submit(NULL, ['icon' => 'search']);
+				?>
+			</div>
 		</fieldset>
 	<?= $this->Form->end() ?>
 	
@@ -72,8 +79,8 @@
 		<thead>
 			<tr>
 				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('category_id', __d('me_cms', 'Category')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('User.full_name', __d('me_cms', 'Author')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Users.first_name', __d('me_cms', 'Author')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
@@ -90,7 +97,12 @@
 								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
 							
 							echo $this->Html->strong($title);
-														
+							
+							if(!empty($post->tags))
+								echo $this->Html->div('small', implode(PHP_EOL, array_map(function($tag) {
+									return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
+								}, $post->tags)));
+							
 							$actions = [];
 							
 							//Only admins and managers can edit all posts. Users can edit only their own posts
@@ -108,8 +120,12 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $post->category->title ?></td>
-					<td class="text-center"><?= $post->user->full_name ?></td>
+					<td class="text-center">
+						<?= $this->Html->link($post->category->title, ['?' => ['category' => $post->category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+					</td>
+					<td class="text-center">
+						<?= $this->Html->link($post->user->full_name, ['?' => ['user' => $post->user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]) ?>
+					</td>
 					<td class="min-width text-center">
 						<?php
 							switch($post->priority) {
@@ -132,7 +148,11 @@
 						?>
 					</td>
 					<td class="min-width text-center">
-						<?= $post->created->i18nFormat(config('main.datetime.long')) ?>
+						<div class="hidden-xs"><?= $post->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="visible-xs">
+							<div><?= $post->created->i18nFormat(config('main.date.short')) ?></div>
+							<div><?= $post->created->i18nFormat(config('main.time.short')) ?></div>
+						</div>
 					</td>
 				</tr>
 			<?php endforeach; ?>

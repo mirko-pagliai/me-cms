@@ -16,13 +16,12 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Banner;
@@ -31,33 +30,28 @@ use MeCms\Utility\BannerFile;
 
 /**
  * Banners model
+ * @property \Cake\ORM\Association\BelongsTo $Positions
  */
-class BannersTable extends AppTable {	
+class BannersTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'banners';
+	
 	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses MeCms\Utility\BannerFile::delete()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the file
 		BannerFile::delete($entity->filename);
 		
-		Cache::clear(FALSE, 'banners');		
-	}
-	
-	/**
-	 * Called after an entity is saved
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 * @uses MeCms\Utility\BannerFile::save()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'banners');
+		parent::afterDelete($event, $entity, $options);
 	}
 
     /**
@@ -82,40 +76,42 @@ class BannersTable extends AppTable {
         return $query;
     }
 	
-	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"Position" field
-		if(!empty($query['position'])) {
-			$conditions[sprintf('%s.position_id', $this->alias())] = $query['position'];
-		}
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('banners');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
+		
         $this->belongsTo('Positions', [
             'foreignKey' => 'position_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.BannersPositions'
         ]);
+		
+        $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Position" field
+		if(!empty($data['position']) && preg_match('/^[1-9]\d*$/', $data['position']))
+			$query->where([sprintf('%s.position_id', $this->alias()) => $data['position']]);
+		
+		return $query;
+	}
 
     /**
      * Default validation rules

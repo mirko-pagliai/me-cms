@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -27,6 +27,11 @@ use MeCms\Utility\PhotoFile;
 
 /**
  * Photo entity
+ * @property int $id
+ * @property int $album_id
+ * @property \MeCms\Model\Entity\Album $album
+ * @property string $filename
+ * @property string $description
  */
 class Photo extends Entity {
     /**
@@ -34,10 +39,8 @@ class Photo extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'album_id' => TRUE,
-        'filename' => TRUE,
-        'description' => TRUE,
-        'album' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE
     ];
 	
 	/**
@@ -52,9 +55,6 @@ class Photo extends Entity {
 	 * @uses MeCms\Utility\PhotoFile::path()
 	 */
 	protected function _getPath() {
-		if(empty($this->_properties['filename']) || empty($this->_properties['album_id']))
-			return NULL;
-		else
-			return PhotoFile::path($this->_properties['filename'], $this->_properties['album_id']);
+		return PhotoFile::path($this->_properties['filename'], $this->_properties['album_id']);
     }
 }

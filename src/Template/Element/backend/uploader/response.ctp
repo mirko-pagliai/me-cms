@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -27,16 +27,12 @@
 		<div class="bg-danger text-danger"><?= $error ?></div>
 	<?php elseif(!empty($file)): ?>
 		<div class="bg-success text-success">
-			<div class="col-sm-3">
-				<?= $this->Thumb->img($file['target'], ['height' => 100]); ?>
-			</div>
+			<div class="col-sm-3"><?= $this->Thumb->img($file['target'], ['height' => 100]) ?></div>
 			<div class="col-sm-9">
-				<?php
-					echo $this->Html->para(NULL, $this->Html->strong(basename($file['target'])));
-					echo $this->Html->para(NULL, __d('me_cms', 'Directory: {0}', dirname(rtr($file['target']))));
-					echo $this->Html->para(NULL, __d('me_cms', 'Type: {0}', $file['type']));
-					echo $this->Html->para(NULL, __d('me_cms', 'Size: {0}', $this->Number->toReadableSize($file['size'])));
-				?>
+				<div><?= $this->Html->strong(basename($file['target'])) ?></div>
+				<div><?= __d('me_cms', 'Directory: {0}', dirname(rtr($file['target']))) ?></div>
+				<div><?= __d('me_cms', 'Type: {0}', $file['type']) ?></div>
+				<div><?= __d('me_cms', 'Size: {0}', $this->Number->toReadableSize($file['size'])) ?></div>
 			</div>
 		</div>
 	<?php endif; ?>

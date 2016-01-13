@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -30,7 +30,7 @@
 		
 		$list = array();
 		foreach($categories as $category)
-			$list[] = $this->Html->link($category->title, ['_name' => 'category', $category->slug]);
+			$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
 
 		echo $this->Html->ul($list, ['icon' => 'caret-right']);
 	?>

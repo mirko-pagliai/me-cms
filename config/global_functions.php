@@ -16,19 +16,25 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+use Cake\Core\Configure;
+
 if(!function_exists('config')) {
 	/**
-	 * Gets config values stored in configuration of MeCms
-	 * @param string $key Configuration key
+	 * Gets config values stored in the configuration.
+	 * It will first look in the MeCms configuration, then in the application configuration
+	 * @param string|NULL $key Configuration key
 	 * @return mixed Configuration value
 	 */
-	function config($key) {
-		return \Cake\Core\Configure::read(is_string($key) ? sprintf('MeCms.%s', $key) : 'MeCms');
+	function config($key = NULL) {		
+		if($key !== NULL && Configure::check(sprintf('MeCms.%s', $key)))
+			return Configure::read(sprintf('MeCms.%s', $key));
+		
+		return Configure::read($key);
 	}
 }
 

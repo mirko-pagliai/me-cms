@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -33,7 +33,6 @@ class UsersGroupsController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 */
 	public function isAuthorized($user = NULL) {
@@ -44,11 +43,12 @@ class UsersGroupsController extends AppController {
 	/**
      * Lists usersGroups
      */
-    public function index() {		
+    public function index() {
+		$this->paginate['order'] = ['name' => 'ASC'];
+		
 		$this->set('groups', $this->paginate(
 			$this->UsersGroups->find()
 				->select(['id', 'name', 'label', 'user_count'])
-				->order(['UsersGroups.name' => 'ASC'])
 		));
     }
 

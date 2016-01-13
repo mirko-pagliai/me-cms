@@ -1,5 +1,66 @@
 # 2.x branch
+## 2.1 branch
+### 2.1.6
+* the User shell can now list users and user groups;
+* added "latest photos" widget;
+* added support for Ajax requests.
+
+### 2.1.5
+* fixed a lot of strings and translations.
+
+### 2.1.4
+* improved related posts. Now you can also show images;
+* added the User shell, to manage users;
+* added backward compatibility for old URLs;
+* fixed a serious bug for static pages.
+
+### 2.1.3
+* added related posts for each post;
+* now you can list and edit tags and lists posts by tags;
+* improved the system checkup;
+* now assets are automatically generated when required;
+* fixed bug for sorting some tables;
+* improved queries for filters;
+* fixed some bugs.
+
+### 2.1.2
+* fixed a serious bug when trying to re-sort the results of paginated records;
+* filter forms are automatically hidden;
+* fixed a bug with forms on Firefox;
+* the integration with KCFinder has been improved. Now all directories are read automatically;
+* small improvements for display on mobile devices.
+
+### 2.1.1-RC3
+* in the admin panel, some views have been linked together;
+* tags can contain the dash;
+* added page options, including Shareaholic;
+* increased the limit for uploading images to 10MB;
+* added the installer console;
+* now you can use layouts from application or layouts with different names;
+* fixed bug in the display of tags in the frontend;
+* fixed the title of some actions;
+* fixed bug filtering users by group.
+
+### 2.1.0-RC2
+* now you can add tags to posts;
+* now you can list posts by date;
+* added support for Shareaholic;
+* jQuery-cookie, Fancybox and KCFinder are installed via Composer;
+* improved the logs management;
+* added error layout and templates;
+* fixed small bugs.
+
 ## 2.0 branch
+### 2.0.1-RC1
+* fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
+* fixed bug on login with cookie;
+* fixed permissions;
+* it automatically adds the meta tag for RSS resources;
+* the backend menus are generated fully automatically. You no longer need any configuration;
+* now you can choise which post details display using the configuration file;
+* now you can set the timezone using the configuration file;
+* fixed bug with the posts date.
+
 ### 2.0.0-alpha
 * all the code has been completely rewritten for CakePHP 3.x. Several optimizations have been applied;
 * uploading/adding files (for example, banners and photos) is much simplified and is optimized;
@@ -7,7 +68,8 @@
 * engine and configuration for widgets have been simplified;
 * the plugin accesses easier configuration;
 * every layout has an optimized copy of Bootstrap;
-* the backend makes greater use of cache.
+* the backend makes greater use of cache;
+* updated Bootstrap to 3.3.5.
 
 # 1.x branch
 ## 1.2 branch

@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -45,27 +45,29 @@ class PhotosController extends AppController {
 		
 		//Checks if the main folder and its subfolders are writable
 		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_cms', 'The directory {0} is not readable or writable', rtr(PhotoFile::folder())));
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		
-		if($this->request->isAction(['edit', 'upload'])) {
+		if($this->request->isAction(['index', 'edit', 'upload'])) {
 			//Gets and sets albums
 			$this->set('albums', $albums = $this->Photos->Albums->getList());
 			
 			//Checks for albums
-			if(empty($albums)) {
+			if(empty($albums) && !$this->request->isAction('index')) {
 				$this->Flash->alert(__d('me_cms', 'Before you can manage photos, you have to create at least an album'));
 				$this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
 			}
 		}
+		
+		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
+		$this->Security->config('unlockedActions', 'upload');
 	}
 	
 	/**
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
@@ -86,14 +88,16 @@ class PhotosController extends AppController {
 		if(empty($album_id))
 			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The album ID is missing'));
 		
-		$this->paginate['limit'] = config('backend.photos');
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
+		$this->paginate['order'] = ['filename' => 'ASC'];
 		
 		$this->set('photos', $this->paginate(
 			$this->Photos->find()
 				->select(['id', 'album_id', 'filename'])
 				->where(compact('album_id'))
-				->order(['Photos.filename' => 'ASC'])
 		));
+		
+		$this->set(compact('album_id'));
     }
 	
 	/**

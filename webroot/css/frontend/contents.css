@@ -1,10 +1,13 @@
 /*!
- * This file is part of MeTools.
+ * This file is part of MeCms.
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
+/* -------------------------------- */
+/*			Container				*/
+/* -------------------------------- */
 /* Container */
 .content-container {
 	margin-bottom: 20px;
@@ -15,7 +18,7 @@
 /*			Content header			*/
 /* -------------------------------- */
 /* Header */
-.content-header {
+.content-container .content-header {
 	border-color: #777;
 	border-style: solid;
 	border-width: 0 0 0 4px;
@@ -24,7 +27,7 @@
 }
 
 /* Header, links */
-.content-header a {
+.content-container .content-header a {
 	color: #555;
 	display: block;
     line-height: 1.2;
@@ -37,59 +40,72 @@
 }
 
 /* Header, links on hover */
-.content-header a:hover {
+.content-container .content-header a:hover {
 	color: #333;
 }
 
 /* Header, category */
-.content-header .content-category {
+.content-container .content-header .content-category {
     font-size: 18px;
     margin: 0 0 4px;
 }
 
 /* Header, title */
-.content-header .content-title {
+.content-container .content-header .content-title {
     font-size: 28px;
     margin: 0;
 }
 
 /* Header, subtitle */
-.content-header .content-subtitle {
+.content-container .content-header .content-subtitle {
     font-size: 22px;
     margin: 4px 0 0;
 }
 
 /* Header, info (author, date, etc) */
-.content-header .content-info {
+.content-container .content-header .content-info {
     color: #666;
-	font-size: 15px;
+	font-size: 14px;
 	margin-top: 4px;
 }
 
 /* Header, info (author, date, etc), icons */
-.content-header .content-info .fa {
+.content-container .content-header .content-info .fa {
 	margin-right: 4px;
+	width: 14px;
+}
+
+/* Header, info (author, date, etc), tags, tag */
+.content-container .content-header .content-info .content-tags > a {
+	display: inline-block;
+	margin-right: 6px;
+	margin-top: 4px;
+}
+
+/* Header, info (author, date, etc), tags, tag, icon */
+.content-container .content-header .content-info .content-tags > a > .fa {
+	margin-right: 2px;
 }
 
 /* Extra small and small devices */
 @media (max-width: 992px) {
 	/* Header, category */
-	.content-header .content-category {
+	.content-container .content-header .content-category {
 		font-size: 15px;
 	}
 	
 	/* Header, title */
-	.content-header .content-title {
+	.content-container .content-header .content-title {
 		font-size: 18px;
 	}
 
 	/* Header, subtitle */
-	.content-header .content-subtitle {
+	.content-container .content-header .content-subtitle {
 		font-size: 16px;
 	}
 
 	/* Header, info (author, date, etc) */
-	.content-header .content-info {
+	.content-container .content-header .content-info {
 		font-size: 12px;
 	}
 }
@@ -98,35 +114,41 @@
 /*			Content text			*/
 /* -------------------------------- */
 /* Content text */
-.content-text {
+.content-container .content-text {
     line-height: 1.6;
     text-align: justify;
 }
 
 /* Content text, last paragraph */
-.content-text p:last-child {
+.content-container .content-text p:last-child {
 	margin-bottom: 0;
 }
 
+/* Content text, images */
+.content-container .content-text img {
+	display: block;
+	margin-bottom: 16px;
+}
+
 /* Content text, images pulled on left */
-.content-text img.pull-left,
-.content-text img[style~="float:left"] {
+.content-container .content-text img.pull-left,
+.content-container .content-text img[style~="float:left"] {
 	margin: 2px 16px 8px 0;
 }
 
 /* Content text, images pulled on right */
-.content-text img.pull-right,
-.content-text img[style~="float:right"] {
+.content-container .content-text img.pull-right,
+.content-container .content-text img[style~="float:right"] {
 	margin: 2px 0 8px 16px;
 }
 
 /* Extra small devices */
 @media (max-width: 767px) {
 	/* Content text, images pulled on right and on left */
-	.content-text img.pull-left,
-	.content-text img[style~="float:left"],
-	.content-text img.pull-right,
-	.content-text img[style~="float:right"] {
+	.content-container .content-text img.pull-left,
+	.content-container .content-text img[style~="float:left"],
+	.content-container .content-text img.pull-right,
+	.content-container .content-text img[style~="float:right"] {
 		max-width: 40%;
 	}
 }
@@ -135,12 +157,12 @@
 /*			Content buttons			*/
 /* -------------------------------- */
 /* Content buttons */
-.content-buttons {
+.content-container .content-buttons {
 	float: right;
 }
 
 /* Content buttons, links */
-.content-buttons a {
+.content-container .content-buttons a {
     background: #ddd;
     border-color: #bbb;
     border-width: 0 0 3px;
@@ -157,14 +179,78 @@
 }
 
 /* Content buttons, links on hover */
-.content-buttons a:hover {
+.content-container .content-buttons a:hover {
 	color: #444;
 }
 
 /* Content buttons, "read more" button, icon */
-.content-buttons a.readmore:after {
+.content-container .content-buttons a.readmore:after {
 	content: "\f178";
 	font-family: FontAwesome;
 	font-size: 12px;
 	margin-left: 6px;
+}
+
+/* -------------------------------- */
+/*			Content preview			*/
+/* -------------------------------- */
+/* Content preview */
+.content-preview {
+	margin-bottom: 10px;
+}
+
+/* Content preview, link */
+.content-preview > a {
+	color: #fff;
+	display: block;
+	position: relative;
+	text-align: center;
+}
+
+/* Content preview, link, image */
+.content-preview > a > img {
+	width: 100%;
+}
+
+/* Content preview, link, main wrapper */
+.content-preview > a > div {
+	background: rgba(44, 90, 160, .66);
+	height: 100%;
+	opacity: 0;
+	padding: 10px;
+	position: absolute;
+	/* Transition for "opacity" propriety */
+	transition: opacity 1s ease-in-out;
+	-moz-transition: opacity 1s ease-in-out;
+	-webkit-transition: opacity 1s ease-in-out;
+}
+
+/* Content preview, link, main wrapper on hover */
+.content-preview > a > div:hover {
+	opacity: 1;
+}
+
+/* Content preview, link, main wrapper, centered wrapper */
+.content-preview > a > div > div {
+	margin-top: 50%;
+	/* Vertical align: middle */
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+/* Content preview, content title */
+.content-preview .content-title {
+	font-weight: bold;
+}
+
+/* -------------------------------- */
+/*		Related contents			*/
+/* -------------------------------- */
+/* Related contents, list, links */
+.related-contents ul a {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

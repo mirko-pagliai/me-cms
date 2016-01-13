@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -45,7 +45,7 @@ class BannersController extends AppController {
 		
 		//Checks if the main folder and its subfolders are writable
 		if(!BannerFile::check()) {
-			$this->Flash->error(__d('me_cms', 'The directory {0} is not readable or writable', rtr(BannerFile::folder())));
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(BannerFile::folder())));
 			$this->redirect(['_name' => 'dashboard']);
 		}
 		
@@ -54,25 +54,45 @@ class BannersController extends AppController {
 			$this->set('positions', $positions = $this->Banners->Positions->getList());
 		
 			//Checks for positions
-			if(empty($positions)) {
+			if(empty($positions) && !$this->request->isAction('index')) {
 				$this->Flash->alert(__d('me_cms', 'Before you can manage banners, you have to create at least a banner position'));
 				$this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
 			}
 		}
+		
+		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
+		$this->Security->config('unlockedActions', 'upload');
+	}
+	
+	/**
+	 * Check if the provided user is authorized for the request
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @return bool TRUE if the user is authorized, otherwise FALSE
+	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins can delete banners
+		if($this->request->isAction('delete'))
+			return $this->Auth->isGroup('admin');
+		
+		//Admins and managers can access other actions
+		return $this->Auth->isGroup(['admin', 'manager']);
 	}
 	
 	/**
      * Lists banners
-	 * @uses MeCms\Model\Table\Banners::fromFilter()
+	 * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
      */
     public function index() {
-		$this->set('banners', $this->paginate(
-			$this->Banners->find()
-				->contain(['Positions' => ['fields' => ['name']]])
-				->select(['id', 'filename', 'target', 'description', 'active', 'click_count'])
-				->where($this->Banners->fromFilter($this->request->query))
-				->order(['Banners.filename' => 'ASC'])
-		));
+		$query = $this->Banners->find()
+			->contain(['Positions' => ['fields' => ['id', 'name']]])
+			->select(['id', 'filename', 'target', 'description', 'active', 'click_count']);
+		
+		$this->paginate['order'] = ['Banners.filename' => 'ASC'];
+		$this->paginate['sortWhitelist'] = ['Banners.filename', 'Positions.name', 'description', 'click_count'];
+		
+		$this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
     }
 	
 	/**

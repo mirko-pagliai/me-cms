@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -47,10 +47,26 @@ class PostsCategoriesController extends AppController {
 	}
 	
 	/**
-     * Lists postsCategories
+	 * Checks if the provided user is authorized for the request
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @return bool TRUE if the user is authorized, otherwise FALSE
+	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins can delete posts categories
+		if($this->request->isAction('delete'))
+			return $this->Auth->isGroup('admin');
+		
+		//Admins and managers can access other actions
+		return $this->Auth->isGroup(['admin', 'manager']);
+	}
+	
+	/**
+     * Lists posts categories
 	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
-    public function index() {		
+    public function index() {
 		$categories = $this->PostsCategories->find('all')
 			->contain(['Parents' => ['fields' => ['title']]])
 			->order(['PostsCategories.lft' => 'ASC'])
@@ -87,7 +103,7 @@ class PostsCategoriesController extends AppController {
 
     /**
      * Edits posts category
-     * @param string $id Posts Category ID
+     * @param string $id Posts category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
@@ -108,7 +124,7 @@ class PostsCategoriesController extends AppController {
     }
     /**
      * Deletes posts category
-     * @param string $id Posts Category ID
+     * @param string $id Posts category ID
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {

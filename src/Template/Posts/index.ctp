@@ -16,19 +16,50 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 	
-<?php $this->assign('title', __d('me_cms', 'Posts')); ?>
+<?php
+	/**
+	 * This view can be used by many actions
+	 */
+	//PostsCategories `view`
+	if($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title))
+		$title = $posts[0]->category->title;
+	//PostsTags `view`
+	elseif($this->request->isAction('view', 'PostsTags'))
+		$title = __d('me_cms', 'Tag {0}', $this->request->param('tag'));
+	//Posts `index_by_date`
+	elseif($this->request->isAction('index_by_date', 'Posts')) {
+		$date = (new \Cake\I18n\Time())->year($this->request->param('year'))->month($this->request->param('month'))->day($this->request->param('day'));
+		
+		if($date->isToday())
+			$title = __d('me_cms', 'Posts of today');
+		elseif($date->isYesterday())
+			$title = __d('me_cms', 'Posts of yesterday');
+		else
+			$title = __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long')));
+	}
+	
+	if(!empty($title))
+		$this->assign('title', $title);
+	else
+		$this->assign('title', __d('me_cms', 'Posts'));
+?>
 
 <div class="posts index">
-	<?php 
-		foreach($posts as $post)
-			echo $this->element('frontend'.DS.'views'.DS.'post', compact('post'));
-	
-		echo $this->element('MeTools.paginator');
+	<?php
+		if(!empty($title))
+			echo $this->Html->h2($title);
+		
+		if(!empty($posts)) {
+			foreach($posts as $post)
+				echo $this->element('frontend'.DS.'views'.DS.'post', compact('post'));
+
+			echo $this->element('MeTools.paginator');
+		}
 	?>
 </div>

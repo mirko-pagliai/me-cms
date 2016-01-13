@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -37,8 +37,8 @@ class BannersPositionValidator extends AppValidator {
 		//Name
 		$this->add('name', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 100),
-				'rule'		=> ['lengthBetween', 6, 100]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			],
 			'slug' => [
 				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),

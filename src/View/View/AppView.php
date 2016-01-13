@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -44,7 +44,7 @@ class AppView extends BaseView {
 		if(!empty($this->viewVars['title']))
 			$title = sprintf('%s - %s', $this->viewVars['title'], $title);
 		//Else, if exists, it adds the title assigned by the current view
-		elseif(!empty($this->fetch('title')))
+		elseif($this->fetch('title'))
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
 		
 		return $title;
@@ -52,22 +52,22 @@ class AppView extends BaseView {
 
 	/**
      * Initialization hook method
-     * @return void
-	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_initialize
+	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_initialize
+	 * @uses App\View\AppView::initialize()
 	 */
     public function initialize() {
+		parent::initialize();
+		
 		//Loads helpers
 		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
 		$this->loadHelper('MeTools.Dropdown');
 		$this->loadHelper('MeTools.Form');
-		$this->loadHelper('MeTools.Layout');
+		$this->loadHelper('MeTools.Asset');
 		$this->loadHelper('MeTools.Library');
 		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
-		
-		//Loads the Recaptcha helper
-		if(config('security.recaptcha'))
-			$this->loadHelper('MeTools.Recaptcha');
+		$this->loadHelper('MeCms.Auth');
+		$this->loadHelper('MeTools.Recaptcha');
     }
 	
 	/**
@@ -75,28 +75,19 @@ class AppView extends BaseView {
 	 * @param string|NULL $view Name of view file to use
 	 * @param string|NULL $layout Layout to use
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
-	 * @see http://api.cakephp.org/3.0/class-Cake.View.View.html#_render
+	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
      * @throws Cake\Core\Exception\Exception
-	 * @uses MeTools\Core\Plugin::path()
 	 * @uses layout
 	 * @uses theme
 	 */
 	public function render($view = NULL, $layout = NULL) {
-		//Enables the theme
+		//Sets the theme
 		if(config('frontend.theme') && !$this->theme)
 			$this->theme = config('frontend.theme');
-				
-		if($this->layout === 'default') {
-			//It first tries to get the layout from the theme
-			if($this->theme && is_readable(\MeTools\Core\Plugin::path($this->theme, 'src'.DS.'Template'.DS.'Layout'.DS.'frontend.ctp')))
-				$this->layout = sprintf('%s.frontend', $this->theme);
-			//Otherwise, it tries to get the layout from the application
-			elseif(is_readable(APP.'Template'.DS.'Layout'.DS.'frontend.ctp'))
-				$this->layout = 'frontend';
-			//Otherwise, it gets the layout from the plugin
-			else
-				$this->layout = 'MeCms.frontend';
-		}
+		
+		//Sets the layout
+		if($this->layout === 'default')
+			$this->layout = config('frontend.layout');
 		
 		return parent::render($view, $layout);
 	}
@@ -106,13 +97,18 @@ class AppView extends BaseView {
 	 * @param string $content Content to render in a view, wrapped by the surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.0/source-class-Cake.View.View.html#477-513
+	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
      * @throws Cake\Core\Exception\Exception
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
+		
+		//Automatically adds the meta tag for RSS posts
+		if(config('frontend.rss_meta'))
+			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 				
 		return parent::renderLayout($content, $layout);
 	}
@@ -126,7 +122,7 @@ class AppView extends BaseView {
 	public function allWidgets() {
 		$widgets = config('frontend.widgets.general');
 		
-		if($this->request->isCurrent(['_name' => 'homepage']) && !empty(config('frontend.widgets.homepage')))
+		if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
 			$widgets = config('frontend.widgets.homepage');
 		
 		foreach($widgets as $name => $args)

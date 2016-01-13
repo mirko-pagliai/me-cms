@@ -42,8 +42,18 @@
 						</li>
 							</ul></li>
 				<li class="main">
+					<a href="namespace-MeCms.Error.html">
+						Error					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
 
 						</li>
 				<li class="active main">
@@ -74,17 +84,10 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
+					<a href="namespace-MeCms.Shell.html">
+						Shell					</a>
 
 						</li>
-							</ul></li>
 				<li class="main">
 					<a href="namespace-MeCms.Utility.html">
 						Utility					</a>
@@ -128,6 +131,8 @@
 				<li><a href="class-MeCms.Model.Entity.PhotosAlbum.html">PhotosAlbum</a></li>
 				<li><a href="class-MeCms.Model.Entity.Post.html">Post</a></li>
 				<li><a href="class-MeCms.Model.Entity.PostsCategory.html">PostsCategory</a></li>
+				<li><a href="class-MeCms.Model.Entity.PostsTag.html">PostsTag</a></li>
+				<li><a href="class-MeCms.Model.Entity.Tag.html">Tag</a></li>
 				<li class="active"><a href="class-MeCms.Model.Entity.User.html">User</a></li>
 				<li><a href="class-MeCms.Model.Entity.UsersGroup.html">UsersGroup</a></li>
 			</ul>
@@ -207,7 +212,7 @@ Cake\ORM\Entity
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Entity.html">Entity</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Entity.User.html#27-75" title="Go to source code">Entity/User.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Entity.User.html#27-81" title="Go to source code">Model/Entity/User.php</a>
 		<br>
 	</div>
 
@@ -220,14 +225,14 @@ Cake\ORM\Entity
 		<td class="attributes"><code>
 			 protected 
 
-			string
+			string|null
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__getFullName">#</a>
-		<code><a href="source-class-MeCms.Model.Entity.User.html#55-64" title="Go to source code">_getFullName</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Entity.User.html#64-70" title="Go to source code">_getFullName</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the full name (virtual field)</p>
@@ -240,7 +245,7 @@ Cake\ORM\Entity
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br>Full name
+					string|null<br>Full name
 				</div>
 
 
@@ -261,7 +266,7 @@ Cake\ORM\Entity
 
 		<td class="name"><div>
 		<a class="anchor" href="#__setPassword">#</a>
-		<code><a href="source-class-MeCms.Model.Entity.User.html#66-74" title="Go to source code">_setPassword</a>( <span>string <var>$password</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Entity.User.html#72-80" title="Go to source code">_setPassword</a>( <span>string <var>$password</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the password</p>
@@ -314,7 +319,7 @@ Cake\ORM\Entity
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Model.Entity.User.html#31-47" title="Go to source code"><var>$_accessible</var></a>
+				<a href="source-class-MeCms.Model.Entity.User.html#47-56" title="Go to source code"><var>$_accessible</var></a>
 
 			<div class="description short">
 				<p>Fields that can be mass assigned using newEntity() or patchEntity()</p>
@@ -329,17 +334,10 @@ Cake\ORM\Entity
 			<div>
 				<a href="#$_accessible" class="anchor">#</a>
 				<code>[
-    <span class="php-quote">'group_id'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'username'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'email'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'password'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'first_name'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'last_name'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'active'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'banned'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'post_count'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'group'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-    <span class="php-quote">'posts'</span> =&gt; <span class="php-keyword1">TRUE</span>,
+    <span class="php-quote">'*'</span> =&gt; <span class="php-keyword1">TRUE</span>,
+    <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">FALSE</span>,
+    <span class="php-quote">'modified'</span> =&gt; <span class="php-keyword1">FALSE</span>,
+    <span class="php-quote">'post_count'</span> =&gt; <span class="php-keyword1">FALSE</span>
 ]</code>
 			</div>
 		</td>
@@ -351,7 +349,7 @@ Cake\ORM\Entity
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Model.Entity.User.html#49-53" title="Go to source code"><var>$_virtual</var></a>
+				<a href="source-class-MeCms.Model.Entity.User.html#58-62" title="Go to source code"><var>$_virtual</var></a>
 
 			<div class="description short">
 				<p>Virtual fields that should be exposed</p>
@@ -373,6 +371,256 @@ Cake\ORM\Entity
 
 
 
+	<table class="summary properties" id="magicProperties">
+	<caption>Magic properties summary</caption>
+	<tr data-order="id" id="m$id">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#29" title="Go to source code"><var>$id</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="group_id" id="m$group_id">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#30" title="Go to source code"><var>$group_id</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="group" id="m$group">
+		<td class="attributes"><code>
+			public  
+			MeCms\Model\Entity\Group
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#31" title="Go to source code"><var>$group</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="username" id="m$username">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#32" title="Go to source code"><var>$username</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="email" id="m$email">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#33" title="Go to source code"><var>$email</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="password" id="m$password">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#34" title="Go to source code"><var>$password</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="first_name" id="m$first_name">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#35" title="Go to source code"><var>$first_name</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="last_name" id="m$last_name">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#36" title="Go to source code"><var>$last_name</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="active" id="m$active">
+		<td class="attributes"><code>
+			public  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#37" title="Go to source code"><var>$active</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="banned" id="m$banned">
+		<td class="attributes"><code>
+			public  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#38" title="Go to source code"><var>$banned</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="post_count" id="m$post_count">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#39" title="Go to source code"><var>$post_count</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="created" id="m$created">
+		<td class="attributes"><code>
+			public  
+			Cake\I18n\Time
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#40" title="Go to source code"><var>$created</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	<tr data-order="modified" id="m$modified">
+		<td class="attributes"><code>
+			public  
+			Cake\I18n\Time
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Entity.User.html#41" title="Go to source code"><var>$modified</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 

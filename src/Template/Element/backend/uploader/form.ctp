@@ -16,15 +16,15 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <?php
-	$this->Html->css('MeCms.backend/uploader', ['block' => 'css_bottom']);
-	$this->Html->js('MeCms.backend/uploader', ['block' => 'script_bottom']);
+	$this->Asset->css('MeCms.backend/uploader', ['block' => 'css_bottom']);
+	$this->Asset->js('MeCms.backend/uploader', ['block' => 'script_bottom']);
 ?>
 
 <div id="uploader">

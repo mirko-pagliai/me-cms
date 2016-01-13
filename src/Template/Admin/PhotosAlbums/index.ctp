@@ -16,16 +16,16 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Photos albums')); ?>
+<?php $this->assign('title', __d('me_cms', 'Albums')); ?>
 
 <div class="photosAlbums index">
-	<?= $this->Html->h2(__d('me_cms', 'Photos albums')) ?>
+	<?= $this->Html->h2(__d('me_cms', 'Albums')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">
@@ -55,8 +55,8 @@
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $album->id], ['icon' => 'pencil'])
 							];
 
-							//Only admins and managers can delete albums
-							if($this->Auth->isGroup(['admin', 'manager']))
+							//Only admins  can delete albums
+							if($this->Auth->isGroup('admin'))
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $album->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 
 							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
@@ -65,7 +65,14 @@
 						?>
 					</td>
 					<td class="text-center"><?= $album->description ?></td>
-					<td class="min-width text-center"><?= $album->photo_count ?></td>
+					<td class="min-width text-center">
+						<?php
+							if($album->photo_count) 
+								echo $this->Html->link($album->photo_count, ['controller' => 'Photos', $album->id], ['title' => __d('me_cms', 'View items that belong to this category')]);
+							else
+								echo $album->photo_count;
+						?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -35,35 +35,39 @@ class KcFinderComponent extends Component {
 	 * @var array
 	 */
     public $components = ['MeCms.Auth'];
-	
+
 	/**
 	 * Checks for KCFinder
 	 * @return bool
-	 * @uses path()
+	 * @uses getKcfinderPath()
 	 */
-	public function check() {
-		return is_readable($this->path().DS.'index.php');
+	public function checkKcfinder() {
+		return is_readable($this->getKcfinderPath().DS.'index.php');
 	}
 	
 	/**
 	 * Checks if the files directory is writeable
 	 * @return bool
-	 * @uses filesPath()
+	 * @uses getFilesPath()
 	 */
 	public function checkFiles() {
-		return is_writable($this->filesPath());
+		return folder_is_writeable($this->getFilesPath());
 	}
 	
 	/**
-	 * Sets the configuration for KCFinder
-	 * @param array $options Options
+	 * Sets the configuration for KCFinder.
+	 * It's automatically called by `beforeRender()` when the component is loaded.
 	 * @return bool
+	 * @see beforeRender()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses getFilesPath()
+	 * @uses getTypes()
 	 */
-	public function configure(array $options = []) {
+	public function configure() {
 		if($this->request->session()->check('KCFINDER'))
 			return TRUE;
 		
+		//Default configuration
 		$default = [
 			'denyExtensionRename'	=> TRUE,
 			'denyUpdateCheck'		=> TRUE,
@@ -71,9 +75,9 @@ class KcFinderComponent extends Component {
 			'disabled'				=> FALSE,
 			'filenameChangeChars'	=> [' ' => '_', ':' => '_'],
 			'jpegQuality'			=> 100,
-			'uploadDir'				=> WWW_ROOT.'files',
+			'uploadDir'				=> $this->getFilesPath(),
 			'uploadURL'				=> Router::url('/files', TRUE),
-			'types'					=> Configure::read('MeCms.kcfinder.types')
+			'types'					=> $this->getTypes()
 		];
 		
 		//If the user is not and admin
@@ -89,39 +93,65 @@ class KcFinderComponent extends Component {
 				'rename'	=> FALSE
 			];
 		}
+		
+		//Gets values from configuration
+		$config = config('kcfinder');
+		
+		//Merges options from the configuration
+		$options = am($default, empty($config) ? [] : $config);
 
-		return $this->request->session()->write('KCFINDER', am($default, $options));
+		return $this->request->session()->write('KCFINDER', $options);
 	}
-	
-    /**
-     * Alias for `getFilesPath()` method.
-     * @see getFilesPath()
-     */
-    public function filesPath() {
-        return call_user_func_array([get_class(), 'getFilesPath'], func_get_args());
-    }
 	
 	/**
 	 * Gets the files path
-	 * @return string Path
+	 * @return string
 	 */
 	public function getFilesPath() {
 		return WWW_ROOT.'files';
 	}
 	
 	/**
-	 * Gets the KCFinder path
-	 * @return string Path
+	 * Gets the folders list
+	 * @return array
+	 * @uses getFilesPath()
 	 */
-	public function getPath() {
-		return WWW_ROOT.'kcfinder';
+	public function getFolders() {
+		return array_values((new \Cake\Filesystem\Folder($this->getFilesPath()))->read(TRUE, TRUE))[0];
 	}
 	
-    /**
-     * Alias for `getPath()` method.
-     * @see getPath()
-     */
-    public function path() {
-        return call_user_func_array([get_class(), 'getPath'], func_get_args());
-    }
+	/**
+	 * Gets the KCFinder path
+	 * @return string
+	 */
+	public function getKcfinderPath() {
+		return WWW_ROOT.'vendor'.DS.'kcfinder';
+	}
+	
+	/**
+	 * Gets the file types supported by KCFinder
+	 * @return array
+	 * @uses getFolders()
+	 */
+	public function getTypes() {
+		//Each folder is a type
+		foreach($this->getFolders() as $type)
+			$types[$type] = '';
+		
+		//Adds the "images" type by default
+		$types['images'] = '*img';
+		
+		return $types;
+	}
+	
+	/**
+	 * Called after the controller action is run, but before the view is rendered.
+	 * 
+	 * Configures KCFinder.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @uses configure()
+	 */
+	public function beforeRender(\Cake\Event\Event $event) {
+		$this->configure();
+	}
 }

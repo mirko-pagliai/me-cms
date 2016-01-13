@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -26,6 +26,11 @@ use Cake\ORM\Entity;
 
 /**
  * UsersGroup entity
+ * @property int $id
+ * @property string $name
+ * @property string $label
+ * @property string $description
+ * @property int $user_count
  */
 class UsersGroup extends Entity {
     /**
@@ -33,10 +38,8 @@ class UsersGroup extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'name' => TRUE,
-        'label' => TRUE,
-        'description' => TRUE,
-        'user_count' => TRUE,
-        'users' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'user_count' => FALSE
     ];
 }

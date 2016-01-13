@@ -42,8 +42,18 @@
 						</li>
 							</ul></li>
 				<li class="main">
+					<a href="namespace-MeCms.Error.html">
+						Error					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
 
 						</li>
 				<li class="main">
@@ -74,17 +84,10 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
+					<a href="namespace-MeCms.Shell.html">
+						Shell					</a>
 
 						</li>
-							</ul></li>
 				<li class="main">
 					<a href="namespace-MeCms.Utility.html">
 						Utility					</a>
@@ -128,7 +131,9 @@
 				<li><a href="class-MeCms.Controller.Admin.PhotosController.html">PhotosController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PostsCategoriesController.html">PostsCategoriesController</a></li>
 				<li class="active"><a href="class-MeCms.Controller.Admin.PostsController.html">PostsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PostsTagsController.html">PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.SystemsController.html">SystemsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.TagsController.html">TagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersController.html">UsersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersGroupsController.html">UsersGroupsController</a></li>
 			</ul>
@@ -215,7 +220,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.PostsController.html#27-187" title="Go to source code">Admin/PostsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.PostsController.html#28-205" title="Go to source code">Controller/Admin/PostsController.php</a>
 		<br>
 	</div>
 
@@ -235,7 +240,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#32-66" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#33-67" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -283,7 +288,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#68-82" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#69-83" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -305,7 +310,7 @@ You can use this method to perform logic or set view variables that are required
 
 				<h4>See</h4>
 				<div class="list">
-						http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender<br>
+						http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender<br>
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
@@ -331,7 +336,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#84-100" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#85-104" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request</p>
@@ -355,7 +360,6 @@ You can use this method to perform logic or set view variables that are required
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.AppController.html#_isAuthorized">MeCms\Controller\AppController::isAuthorized()</a></code><br>
 						<code><a href="class-MeCms.Controller.Component.AuthComponent.html#_isGroup">MeCms\Controller\Component\AuthComponent::isGroup()</a></code><br>
 						<code><a href="class-MeCms.Model.Table.AppTable.html#_isOwnedBy">MeCms\Model\Table\AppTable::isOwnedBy()</a></code><br>
 						MeTools\Network\Request::isAction()<br>
@@ -379,7 +383,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#102-117" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#106-123" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			<p>Lists posts</p>
@@ -394,7 +398,7 @@ You can use this method to perform logic or set view variables that are required
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Model.Table.PostsTable.html#_fromFilter">MeCms\Model\Table\PostsTable::fromFilter()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_queryFromFilter">MeCms\Model\Table\PostsTable::queryFromFilter()</a></code><br>
 				</div>
 
 
@@ -413,7 +417,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_add">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#119-142" title="Go to source code">add</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#125-154" title="Go to source code">add</a>( )</code>
 
 		<div class="description short">
 			<p>Adds post</p>
@@ -429,6 +433,7 @@ You can use this method to perform logic or set view variables that are required
 				<h4>Uses</h4>
 				<div class="list">
 						<code><a href="class-MeCms.Controller.Component.AuthComponent.html#_isGroup">MeCms\Controller\Component\AuthComponent::isGroup()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_buildTagsForRequestData">MeCms\Model\Table\PostsTable::buildTagsForRequestData()</a></code><br>
 				</div>
 
 
@@ -447,7 +452,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_edit">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#144-169" title="Go to source code">edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#156-187" title="Go to source code">edit</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Edits post</p>
@@ -472,6 +477,7 @@ You can use this method to perform logic or set view variables that are required
 				<h4>Uses</h4>
 				<div class="list">
 						<code><a href="class-MeCms.Controller.Component.AuthComponent.html#_isGroup">MeCms\Controller\Component\AuthComponent::isGroup()</a></code><br>
+						<code><a href="class-MeCms.Model.Table.PostsTable.html#_buildTagsForRequestData">MeCms\Model\Table\PostsTable::buildTagsForRequestData()</a></code><br>
 				</div>
 
 
@@ -490,7 +496,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_delete">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#170-186" title="Go to source code">delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.PostsController.html#188-204" title="Go to source code">delete</a>( <span>string <var>$id</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Deletes post</p>
@@ -525,6 +531,7 @@ You can use this method to perform logic or set view variables that are required
 		<td><code>
 			<a href="class-MeCms.Controller.AppController.html#__upload">_upload()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_initialize">initialize()</a>, 
+			<a href="class-MeCms.Controller.AppController.html#_isBanned">isBanned()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_isOffline">isOffline()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_setLanguage">setLanguage()</a>
 		</code></td>
@@ -553,7 +560,7 @@ You can use this method to perform logic or set view variables that are required
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.Controller.Admin.PostsController.html#29" title="Go to source code"><var>$Posts</var></a>
+				<a href="source-class-MeCms.Controller.Admin.PostsController.html#30" title="Go to source code"><var>$Posts</var></a>
 
 			<div class="description short">
 				

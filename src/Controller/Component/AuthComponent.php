@@ -16,10 +16,10 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @see			http://api.cakephp.org/3.0/class-Cake.Controller.Component.AuthComponent.html
+ * @see			http://api.cakephp.org/3.1/class-Cake.Controller.Component.AuthComponent.html
  */
 namespace MeCms\Controller\Component;
 
@@ -31,28 +31,35 @@ use Cake\Controller\ComponentRegistry;
  *
  * Binds access control with user authentication and session management.
  * 
- * Rewrites {@link http://api.cakephp.org/3.0/class-Cake.Controller.Component.AuthComponent.html AuthComponent}.
+ * Rewrites {@link http://api.cakephp.org/3.1/class-Cake.Controller.Component.AuthComponent.html AuthComponent}.
  */
-class AuthComponent extends CakeAuthComponent {
-	/**
-	 * Default configuration
-	 * @var array 
-	 */
-	public $_defaultConfig = [
-		'authenticate'			=> ['Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users']],
-		'authorize'				=> 'Controller',
-		'flash'					=> ['element' => 'MeTools.error'],
-		'loginAction'			=> ['_name' => 'login'],
-		'loginRedirect'			=> ['_name' => 'dashboard'],
-		'logoutRedirect'		=> ['_name' => 'homepage'],
-		'unauthorizedRedirect'	=> ['_name' => 'dashboard']
-	];
-	
+class AuthComponent extends CakeAuthComponent {	
 	/**
 	 * User data
 	 * @var array 
 	 */
 	static protected $user = FALSE;
+	
+	/**
+	 * Constructor
+	 * @param ComponentRegistry $registry A ComponentRegistry this component can use to lazy load its components
+	 * @param array $config Array of configuration settings
+	 */
+	public function __construct(ComponentRegistry $registry, array $config = []) {
+		//Sets config
+		$config = am([
+			'authenticate'			=> ['Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users']],
+			'authError'				=> __d('me_cms', 'You are not authorized for this action'),
+			'authorize'				=> 'Controller',
+			'flash'					=> ['element' => 'MeTools.error'],
+			'loginAction'			=> ['_name' => 'login'],
+			'loginRedirect'			=> ['_name' => 'dashboard'],
+			'logoutRedirect'		=> ['_name' => 'homepage'],
+			'unauthorizedRedirect'	=> ['_name' => 'dashboard']
+		], $config);
+		
+		parent::__construct($registry, $config);
+	}
 	
 	/**
 	 * Method that is called automatically when the method doesn't exist.
@@ -95,7 +102,7 @@ class AuthComponent extends CakeAuthComponent {
 	/**
 	 * Constructor hook method
 	 * @param array $config The configuration settings provided to this component
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Component.html#_initialize
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Component.html#_initialize
 	 * @uses Cake\Controller\Component\AuthComponent::user()
 	 * @uses $user
 	 */
@@ -104,7 +111,7 @@ class AuthComponent extends CakeAuthComponent {
 		
 		//The authorization error is shown only if the user is already logged in and he is trying to do something not allowed
 		if(!self::user())
-			config('authError', FALSE);
+			$this->config('authError', FALSE);
 		
 		//Gets the user data
 		self::$user = self::user();

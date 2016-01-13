@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -96,8 +96,8 @@ class AppValidator extends Validator {
 		//Title
 		$this->add('title', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 100),
-				'rule'		=> ['lengthBetween', 6, 100]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			],
 			'validateUnique' => [
 				'message'	=> __d('me_cms', 'This value is already used'),
@@ -126,15 +126,15 @@ class AppValidator extends Validator {
 		
 		//Subtitle
         $this->add('subtitle', ['lengthBetween' => [
-			'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 150),
-			'rule'		=> ['lengthBetween', 6, 150]
+			'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 150),
+			'rule'		=> ['lengthBetween', 3, 150]
 		]])->allowEmpty('subtitle');
 		
 		//Slug
         $this->add('slug', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 6, 100),
-				'rule'		=> ['lengthBetween', 6, 100]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			],
 			'slug' => [
 				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
@@ -180,7 +180,7 @@ class AppValidator extends Validator {
 	 * Checks if a field contains only lowercase letters.
 	 * @param string $value Field value
 	 * @param array $context Field context
-	 * @return bool TRUE if the field contains only lowecase letters, otherwise FALSE
+	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function lowercaseLetters($value, $context) {
 		return (bool) preg_match('/^[a-z]+$', $value);
@@ -191,7 +191,7 @@ class AppValidator extends Validator {
 	 * Checks if the name is a valid person name, so contains letters, apostrophe and/or space.
 	 * @param string $value Field value
 	 * @param array $context Field context
-	 * @return bool TRUE if the name is a valid person, otherwise FALSE
+	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function personName($value, $context) {
 		return (bool) preg_match('/^[A-Z][A-z\'\ ]+$/', $value);
@@ -202,7 +202,7 @@ class AppValidator extends Validator {
 	 * Checks if the slug is a valid slug.
 	 * @param string $value Field value
 	 * @param array $context Field context
-	 * @return bool TRUE if the slug is a valid slug, otherwise FALSE
+	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function slug($value, $context) {
 		//Lowercase letters, numbers, dash.

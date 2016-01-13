@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -26,6 +26,20 @@ use Cake\ORM\Entity;
 
 /**
  * Post entity
+ * @property int $id
+ * @property int $category_id
+ * @property \MeCms\Model\Entity\Category $category
+ * @property int $user_id
+ * @property \MeCms\Model\Entity\User $user
+ * @property string $title
+ * @property string $slug
+ * @property string $subtitle
+ * @property string $text
+ * @property int $priority
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
+ * @property bool $active
+ * @property \MeCms\Model\Entity\Tag[] $tags
  */
 class Post extends Entity {
     /**
@@ -33,38 +47,37 @@ class Post extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'category_id' => TRUE,
-        'user_id' => TRUE,
-        'title' => TRUE,
-        'subtitle' => TRUE,
-        'slug' => TRUE,
-        'text' => TRUE,
-        'priority' => TRUE,
-        'active' => TRUE,
-        'category' => TRUE,
-        'user' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 	
 	/**
 	 * Virtual fields that should be exposed
 	 * @var array
 	 */
-    protected $_virtual = ['preview'];
+    protected $_virtual = ['preview', 'tags_as_string'];
 	
 	/**
 	 * Gets the post preview (virtual field)
 	 * @return string Url to preview
 	 */
 	protected function _getPreview() {
-		if(empty($this->_properties['text']))
-			return NULL;
-		
 		//Gets the first image
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
 		
 		if(empty($matches[2]))
-			return NULL;
+			return;
 		
 		return \Cake\Routing\Router::url($matches[2], TRUE);
     }
+	
+	/**
+	 * Gets tags as string, separated by a comma and a space (virtual field)
+	 * @return string Tags
+	 * @uses MeCms\Model\Table\TagsTable::tagsAsString()
+	 */
+	protected function _getTagsAsString() {
+		return \Cake\ORM\TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
+	}
 }

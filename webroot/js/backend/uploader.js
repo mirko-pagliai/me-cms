@@ -1,7 +1,7 @@
 /*!
  * This file is part of MeCms.
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @see			http://www.script-tutorials.com/html5-drag-and-drop-multiple-file-uploader
  */
@@ -13,7 +13,7 @@ $(function() {
 	var progressBar = $('#uploader .progress');
 	var error = $('#uploader .upload-error');
 	var resultArea = $('#uploader .upload-result');
-	var maxSize = 2097152; //2MB
+	var maxSize = 10485760; //10MB
 
 	var list = [];
 	var totalSize = 0;

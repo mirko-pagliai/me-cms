@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -41,12 +41,12 @@ class PhotosAlbumsController extends AppController {
 					->order('rand()');
 			}])
 			->order(['title' => 'ASC'])
-			->cache('albums_index', 'photos')
+			->cache('albums_index', $this->PhotosAlbums->cache)
 			->all()
-		);	
+		);
 		
 		//If there is only one album, redirects to that album
-		if($albums->count() < 2)
+		if($albums->count() && $albums->count() < 2)
 			$this->redirect(['_name' => 'album', $albums->toArray()[0]->slug]);
     }
 	
@@ -65,7 +65,7 @@ class PhotosAlbumsController extends AppController {
 			]])
 			->select(['id', 'title'])
 			->where(compact('slug'))
-			->cache(sprintf('albums_view_%s', md5($slug)), 'photos')
+			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
 			->first()
 		);
 	}

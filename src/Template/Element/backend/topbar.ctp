@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -37,25 +37,18 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="backend-topbar-collapse">
 			<ul class="nav navbar-nav hidden-xs hidden-sm">
-				<?=	$homeLink = $this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank'])) ?>
+				<?=	$this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank'])) ?>
 			</ul>
 			<ul class="nav navbar-nav visible-xs visible-sm">
 				<?php
-					echo $homeLink;
+					echo $this->Html->li($this->Html->link(NULL, ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank']));
 					
-					foreach(config('backend.menu') as $menu) {
-						//Gets the plugin name
-						list($plugin, $menu) = pluginSplit($menu);
+					foreach($mecms_menu as $menu)
+						echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
 
-						//Loads the menu helper
-						$this->Menu = $this->helpers()->load($helper = sprintf('%s.Menu', $plugin));
-
-						//Gets the menu
-						echo $this->Html->li($this->Menu->get($menu, 'dropdown'), ['class' => 'dropdown']);
-						
-						//Unloads the helper
-						$this->helpers()->unload($helper);
-					}
+					if(!empty($plugins_menu))
+						foreach($plugins_menu as $menu)
+							echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
 					
 					echo $menu = $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
 						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),

@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -28,7 +28,7 @@ use Cake\ORM\Behavior\TreeBehavior as CakeTreeBehavior;
  * Makes the table to which this is attached to behave like a nested set and provides methods 
  * for managing and retrieving information out of the derived hierarchical structure.
  * 
- * Rewrites {@link http://api.cakephp.org/3.0/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
+ * Rewrites {@link http://api.cakephp.org/3.1/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
  * 
  * To add to your table:
  * <code>
@@ -43,7 +43,7 @@ class TreeBehavior extends CakeTreeBehavior {
 	 * @param \Cake\ORM\Query $query Query
 	 * @param array $options Options
 	 * @return Cake\ORM\Query Query
-	 * @see http://api.cakephp.org/3.0/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
+	 * @see http://api.cakephp.org/3.1/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
 	 * @uses Cake\ORM\Behavior\TreeBehavior::findTreeList()
 	 */
 	public function findTreeList(\Cake\ORM\Query $query, array $options) {

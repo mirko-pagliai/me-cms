@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -26,6 +26,12 @@ use Cake\ORM\Entity;
 
 /**
  * PhotosAlbum entity
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $description
+ * @property bool $active
+ * @property int $photo_count
  */
 class PhotosAlbum extends Entity {
     /**
@@ -33,11 +39,8 @@ class PhotosAlbum extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'title' => TRUE,
-        'slug' => TRUE,
-        'description' => TRUE,
-        'active' => TRUE,
-        'photo_count' => TRUE,
-        'photos' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'photo_count' => FALSE
     ];
 }

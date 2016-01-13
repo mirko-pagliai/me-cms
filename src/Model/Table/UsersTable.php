@@ -16,13 +16,12 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\User;
@@ -30,29 +29,17 @@ use MeCms\Model\Table\AppTable;
 
 /**
  * Users model
+ * @property \Cake\ORM\Association\BelongsTo $Groups
+ * @property \Cake\ORM\Association\HasMany $Posts
+ * @property \Cake\ORM\Association\HasMany $Tokens
+ * @property \Cake\ORM\Association\HasMany $YoutubeVideos
  */
 class UsersTable extends AppTable {
 	/**
-	 * Called after an entity has been deleted
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * Name of the configuration to use for this table
+	 * @var string|array
 	 */
-	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'users');		
-	}
-	
-	/**
-	 * Called after an entity is saved.
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'users');
-	}
+	public $cache = 'users';
 
     /**
      * Returns a rules checker object that will be used for validating application integrity
@@ -108,83 +95,91 @@ class UsersTable extends AppTable {
         return $query;
     }
 	
-
-	/**
-	 * Gets conditions from a filter form
-	 * @param array $query Query (`$this->request->query`)
-	 * @return array Conditions
-	 * @uses MeCms\Model\Table\AppTable::fromFilter()
-	 */
-	public function fromFilter(array $query) {
-		if(empty($query))
-			return [];
-		
-		$conditions = parent::fromFilter($query);
-		
-		//"Username" field
-		if(!empty($query['username'])) {
-			$conditions[sprintf('%s.username LIKE', $this->alias())] = sprintf('%%%s%%', $query['username']);
-		}
-		
-		//"Status" field
-		if(!empty($query['status'])) {
-			switch($query['status']) {
-				case 'active':
-					$conditions[sprintf('%s.active', $this->alias())] = TRUE;
-					$conditions[sprintf('%s.banned', $this->alias())] = FALSE;
-					break;
-				case 'pending':
-					$conditions[sprintf('%s.active', $this->alias())] = FALSE;
-					break;
-				case 'banned':
-					$conditions[sprintf('%s.banned', $this->alias())] = TRUE;
-					break;
-			}
-		}
-		
-		return empty($conditions) ? [] : $conditions;
-	}
-	
 	/**
 	 * Gets the active users list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getActiveList() {
 		return $this->find('list')
 			->where(['active' => TRUE])
-			->cache('active_users_list', 'users')
+			->cache('active_users_list', $this->cache)
 			->toArray();
 	}
 	
 	/**
 	 * Gets the users list
 	 * @return array List
+	 * @uses $cache
 	 */
 	public function getList() {
 		return $this->find('list')
-			->cache('users_list', 'users')
+			->cache('users_list', $this->cache)
 			->toArray();
 	}
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('users');
         $this->displayField('full_name');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
+		
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.UsersGroups'
         ]);
         $this->hasMany('Posts', [
             'foreignKey' => 'user_id',
             'className' => 'MeCms.Posts'
         ]);
+
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Username" field
+		if(!empty($data['username']) && strlen($data['username']) > 2)
+			$query->where([sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username'])]);
+		
+		//"Group" field
+		if(!empty($data['group']) && preg_match('/^[1-9]\d*$/', $data['group']))
+			$query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
+		
+		//"Status" field
+		if(!empty($data['status']) && in_array($data['status'], ['active', 'pending', 'banned']))
+			switch($data['status']) {
+				case 'active':
+					$query->where([
+						sprintf('%s.active', $this->alias()) => TRUE,
+						sprintf('%s.banned', $this->alias()) => FALSE
+					]);
+					break;
+				case 'pending':
+					$query->where([sprintf('%s.active', $this->alias()) => FALSE]);					
+					break;
+				case 'banned':
+					$query->where([sprintf('%s.banned', $this->alias()) => TRUE]);		
+					break;
+			}
+		
+		return $query;
+	}
 
     /**
      * Default validation rules

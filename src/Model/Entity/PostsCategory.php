@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -26,6 +26,16 @@ use Cake\ORM\Entity;
 
 /**
  * PostsCategory entity
+ * @property int $id
+ * @property int $parent_id
+ * @property \MeCms\Model\Entity\PostsCategory $parent_posts_category
+ * @property int $lft
+ * @property int $rght
+ * @property string $title
+ * @property string $slug
+ * @property string $description
+ * @property int $post_count
+ * @property \MeCms\Model\Entity\PostsCategory[] $child_posts_categories
  */
 class PostsCategory extends Entity {
     /**
@@ -33,15 +43,8 @@ class PostsCategory extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'parent_id' => TRUE,
-        'lft' => TRUE,
-        'rght' => TRUE,
-        'title' => TRUE,
-        'slug' => TRUE,
-        'description' => TRUE,
-        'post_count' => TRUE,
-        'parent_category' => TRUE,
-        'posts' => TRUE,
-        'child_categories' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'post_count' => FALSE
     ];
 }

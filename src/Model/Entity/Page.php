@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -26,6 +26,15 @@ use Cake\ORM\Entity;
 
 /**
  * Page entity
+ * @property int $id
+ * @property string $title
+ * @property string $subtitle
+ * @property string $slug
+ * @property string $text
+ * @property int $priority
+ * @property bool $active
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class Page extends Entity {
     /**
@@ -33,11 +42,8 @@ class Page extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'title' => TRUE,
-        'subtitle' => TRUE,
-        'slug' => TRUE,
-        'text' => TRUE,
-        'priority' => TRUE,
-        'active' => TRUE,
+        '*' => TRUE,
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 }

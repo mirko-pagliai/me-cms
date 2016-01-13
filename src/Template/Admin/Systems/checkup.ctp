@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -38,116 +38,138 @@
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'System checkup'));
 		
-		//MeCms version
-		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms_version']));
-		//CakePHP version
-		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp_version']));
+		/* -------------------------------- */
+		/*			MeCms version			*/
+		/* -------------------------------- */
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms_version']));
+		echo $this->Html->div('col-sm-12', $text);
 		
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
+		/*			CakePHP version			*/
+		/* -------------------------------- */
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp_version']));
+		echo $this->Html->div('col-sm-12', $text);
+				
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
+		/*			Cache status			*/
+		/* -------------------------------- */
+		if($cache['status'])
+			$text = $this->Html->para($successClasses, __d('me_cms', 'The cache is enabled'), $successOptions);
+		else
+			$text = $this->Html->para($errorClasses, __d('me_cms', 'The cache is disabled or debugging is active'), $errorOptions);
+		echo $this->Html->div('col-sm-12', $text);
+				
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
+		/*				Plugins				*/
+		/* -------------------------------- */
 		echo $this->Html->h4(__d('me_cms', 'Plugins'));
+		
 		//Plugins version
-		foreach($plugins['plugins_version'] as $plugin)
-			echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin['name']), $plugin['version']));
-	
+		foreach($plugins['plugins_version'] as $plugin) {
+			$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin['name']), $plugin['version']));
+			echo $this->Html->div('col-sm-6', $text);
+		}
+		
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
+		/*				Apache				*/
+		/* -------------------------------- */
 		echo $this->Html->h4('Apache');
 		//Current version
-		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['current_version']));
-		//Rewrite
-		if(is_bool($apache['rewrite']) && $apache['rewrite'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} module is enabled', $this->Html->strong('Rewrite')), $successOptions);
-		elseif(is_bool($apache['rewrite']) && !$apache['rewrite'])
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} module is not enabled', $this->Html->strong('Rewrite')), $errorOptions);
-		else
-			echo $this->Html->para($warningClasses, __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong('Rewrite')), $warningOptions);
-		//Expires
-		if(is_bool($apache['expires']) && $apache['expires'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} module is enabled', $this->Html->strong('Expires')), $successOptions);
-		elseif(is_bool($apache['expires']) && !$apache['expires'])
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} module is not enabled', $this->Html->strong('Expires')), $errorOptions);
-		else
-			echo $this->Html->para($warningClasses, __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong('Expires')), $warningOptions);
-				
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['current_version']));
+		echo $this->Html->div('col-sm-12', $text);
+		
+		//Apache's modules
+		foreach(['rewrite', 'expires'] as $mod) {
+			if(is_bool($apache[$mod]) && $apache[$mod])
+				$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} module is enabled', $this->Html->strong($mod)), $successOptions);
+			elseif(is_bool($apache[$mod]) && !$apache[$mod])
+				$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} module is not enabled', $this->Html->strong($mod)), $errorOptions);
+			else
+				$text = $this->Html->para($warningClasses, __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong($mod)), $warningOptions);
+			
+			echo $this->Html->div('col-sm-6', $text);
+		}
+		
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
+		/*				PHP					*/
+		/* -------------------------------- */
 		echo $this->Html->h4('PHP');
 		//Current version
-		echo $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['current_version']));
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['current_version']));
+		echo $this->Html->div('col-sm-12', $text);
+		
 		//Check version
 		if($php['check_version'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $successOptions);
+			$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $successOptions);
 		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $errorOptions);
-		//imagick extension
-		if($php['imagick'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('imagick')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('imagick')), $errorOptions);
-		//mbstring extension
-		if($php['mbstring'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('mbstring')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('mbstring')), $errorOptions);
-		//mcrypt extension
-		if($php['mcrypt'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong('mcrypt')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong('mcrypt')), $errorOptions);
+			$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $errorOptions);
+		echo $this->Html->div('col-sm-12', $text);
 		
+		//PHP's extensions
+		foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $ext) {
+			if($php[$ext])
+				$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($ext)), $successOptions);
+			else
+				$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($ext)), $errorOptions);
 		
-		echo $this->Html->h4('ffmpegthumbnailer');
-		if($ffmpegthumbnailer['check'])
-			echo $this->Html->para($successClasses, __d('me_cms', '{0} is available', $this->Html->strong('ffmpegthumbnailer')), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', '{0} is not available', $this->Html->strong('ffmpegthumbnailer')), $errorOptions);
+			echo $this->Html->div('col-sm-6', $text);
+		}
+			
+		echo $this->Html->div('clearfix');
 		
-		echo $this->Html->h4(__d('me_cms', 'Banners'));
-		//Banners directory is writable
-		if($banners['check'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($banners['path'])), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($banners['path'])), $errorOptions);
+		/* -------------------------------- */
+		/*			Executables				*/
+		/* -------------------------------- */
+		echo $this->Html->h4(__d('me_cms', 'Executables'));
 		
-		echo $this->Html->h4(__d('me_cms', 'Photos'));
-		//Photos directory is writable
-		if($photos['check'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($photos['path'])), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($photos['path'])), $errorOptions);
+		foreach($executables as $name => $exists) {
+			if($exists)
+				$text = $this->Html->para($successClasses, __d('me_cms', '{0} is available', $this->Html->strong($name)), $successOptions);
+			else
+				$text = $this->Html->para($errorClasses, __d('me_tools', '{0} is not available', $this->Html->strong($name)), $errorOptions);
+			echo $this->Html->div('col-sm-6', $text);
+		}
+			
+		echo $this->Html->div('clearfix');
 		
-		echo $this->Html->h4(__d('me_cms', 'Thumbs'));
-		//Photos thumbs are writable
-		if($thumbs['photos_writable'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($thumbs['photos_path'])), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($thumbs['photos_path'])), $errorOptions);
-		//Remotes thumbs are writable
-		if($thumbs['remotes_writable'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($thumbs['remotes_path'])), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($thumbs['remotes_path'])), $errorOptions);
-		//Videos thumbs are writable
-		if($thumbs['videos_writable'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($thumbs['videos_path'])), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($thumbs['videos_path'])), $errorOptions);
+		/* -------------------------------- */
+		/*				Webroot				*/
+		/* -------------------------------- */
+		echo $this->Html->h4(__d('me_cms', 'Webroot'));
 		
+		//Webroot directories
+		foreach($webroot as $dir) {
+			if($dir['writeable'])
+				$text = $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($dir['path'])), $successOptions);
+			else
+				$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory `{0}` not writeable', $this->Html->code($dir['path'])), $errorOptions);
+			echo $this->Html->div('col-sm-6', $text);
+		}
+			
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
+		/*			Temporary				*/
+		/* -------------------------------- */
 		echo $this->Html->h4(__d('me_cms', 'Temporary directories'));
-		//Tmp is writable
-		if($tmp['tmp_writable'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The temporary directory is readable and writable'), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The temporary directory is not readable or writable'), $errorOptions);
-		//Cache status
-		if($tmp['cache_status'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The cache is enabled'), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The cache is disabled or debugging is active'), $errorOptions);
-		//Cache is writable
-		if($tmp['cache_writable'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The cache is readable and writable'), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The cache is not readable or writable'), $errorOptions);
-		//Logs are writable
-		if($tmp['logs_writable'])
-			echo $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($tmp['logs_path'])), $successOptions);
-		else
-			echo $this->Html->para($errorClasses, __d('me_cms', 'The directory {0} is not readable or writable', $this->Html->code($tmp['logs_path'])), $errorOptions);
+		
+		//Temporary directories
+		foreach($temporary as $dir) {
+			if($dir['writeable'])
+				$text = $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($dir['path'])), $successOptions);
+			else
+				$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory `{0}` not writeable', $this->Html->code($dir['path'])), $errorOptions);
+			echo $this->Html->div('col-sm-6', $text);
+		}
 	?>
 </div>

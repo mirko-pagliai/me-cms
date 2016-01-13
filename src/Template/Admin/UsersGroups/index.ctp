@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -51,7 +51,14 @@
 						?>
 					</td>
 					<td><?= $group->description ?></td>
-					<td class="min-width text-center"><?= $group->user_count ?></td>
+					<td class="min-width text-center">
+						<?php
+							if($group->user_count) 
+								echo $this->Html->link($group->user_count, ['controller' => 'Users', 'action' => 'index', '?' => ['group' => $group->id]], ['title' => __d('me_cms', 'View items that belong to this category')]);
+							else
+								echo $group->user_count;
+						?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

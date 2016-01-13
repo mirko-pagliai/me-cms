@@ -16,13 +16,20 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
-<?php $this->assign('title', $post->title); ?>
+<?php
+	$this->assign('title', $post->title);
+	
+	if(!empty($post->preview)) {
+		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
+		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+	}
+?>
 
 <div class="posts view">
 	<?= $this->element('frontend'.DS.'views'.DS.'post', compact('post')); ?>

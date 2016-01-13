@@ -16,13 +16,12 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Photo;
@@ -31,32 +30,28 @@ use MeCms\Utility\PhotoFile;
 
 /**
  * Photos model
+ * @property \Cake\ORM\Association\BelongsTo $Albums
  */
 class PhotosTable extends AppTable {
+	/**
+	 * Name of the configuration to use for this table
+	 * @var string|array
+	 */
+	public $cache = 'photos';
+	
 	/**
 	 * Called after an entity has been deleted
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
+	 * @uses MeCms\Model\Table\AppTable::afterDelete()
 	 * @uses MeCms\Utility\PhotoFile::delete()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the file
 		PhotoFile::delete($entity->filename, $entity->album_id);
 		
-		Cache::clear(FALSE, 'photos');
-	}
-	
-	/**
-	 * Called after an entity is saved
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses Cake\Cache\Cache::clear()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		Cache::clear(FALSE, 'photos');
+		parent::afterDelete($event, $entity, $options);
 	}
 
     /**
@@ -86,17 +81,22 @@ class PhotosTable extends AppTable {
 	
     /**
      * Initialize method
-     * @param array $config The table configuration
+     * @param array $config The configuration for the table
      */
     public function initialize(array $config) {
+        parent::initialize($config);
+
         $this->table('photos');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
+		
         $this->belongsTo('Albums', [
             'foreignKey' => 'album_id',
+            'joinType' => 'INNER',
             'className' => 'MeCms.PhotosAlbums'
         ]);
+		
+        $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
     }
 
     /**

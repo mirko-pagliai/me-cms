@@ -42,8 +42,18 @@
 						</li>
 							</ul></li>
 				<li class="main">
+					<a href="namespace-MeCms.Error.html">
+						Error					</a>
+
+						</li>
+				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
+
+						</li>
+				<li class="main">
+					<a href="namespace-MeCms.Mailer.html">
+						Mailer					</a>
 
 						</li>
 				<li class="active main">
@@ -74,17 +84,10 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Network.html">
-						Network<span></span>
-					</a>
-
-						<ul>
-				<li class="main">
-					<a href="namespace-MeCms.Network.Email.html">
-						Email					</a>
+					<a href="namespace-MeCms.Shell.html">
+						Shell					</a>
 
 						</li>
-							</ul></li>
 				<li class="main">
 					<a href="namespace-MeCms.Utility.html">
 						Utility					</a>
@@ -129,6 +132,8 @@
 				<li><a href="class-MeCms.Model.Table.PhotosTable.html">PhotosTable</a></li>
 				<li><a href="class-MeCms.Model.Table.PostsCategoriesTable.html">PostsCategoriesTable</a></li>
 				<li><a href="class-MeCms.Model.Table.PostsTable.html">PostsTable</a></li>
+				<li><a href="class-MeCms.Model.Table.PostsTagsTable.html">PostsTagsTable</a></li>
+				<li><a href="class-MeCms.Model.Table.TagsTable.html">TagsTable</a></li>
 				<li><a href="class-MeCms.Model.Table.UsersGroupsTable.html">UsersGroupsTable</a></li>
 				<li><a href="class-MeCms.Model.Table.UsersTable.html">UsersTable</a></li>
 			</ul>
@@ -215,7 +220,7 @@ Cake\ORM\Table
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Table.html">Table</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#32-114" title="Go to source code">Table/PhotosAlbumsTable.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#31-123" title="Go to source code">Model/Table/PhotosAlbumsTable.php</a>
 		<br>
 	</div>
 
@@ -235,7 +240,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterDelete">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#36-49" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#41-54" title="Go to source code">afterDelete</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after an entity has been deleted</p>
@@ -259,10 +264,12 @@ Cake\ORM\Table
 
 				<h4>Uses</h4>
 				<div class="list">
-						Cake\Cache\Cache::clear()<br>
+						<code><a href="class-MeCms.Model.Table.AppTable.html#_afterDelete">MeCms\Model\Table\AppTable::afterDelete()</a></code><br>
 						<code><a href="class-MeCms.Utility.PhotoFile.html#_deleteFolder">MeCms\Utility\PhotoFile::deleteFolder()</a></code><br>
 				</div>
 
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCms.Model.Table.AppTable.html#_afterDelete">MeCms\Model\Table\AppTable::afterDelete()</a></code></div>
 
 		</div>
 		</div></td>
@@ -279,7 +286,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_afterSave">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#51-65" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#56-70" title="Go to source code">afterSave</a>( <span>Cake\Event\Event <var>$event</var></span>, <span>Cake\ORM\Entity <var>$entity</var></span>, <span>ArrayObject <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after an entity is saved</p>
@@ -303,10 +310,12 @@ Cake\ORM\Table
 
 				<h4>Uses</h4>
 				<div class="list">
-						Cake\Cache\Cache::clear()<br>
+						<code><a href="class-MeCms.Model.Table.AppTable.html#_afterSave">MeCms\Model\Table\AppTable::afterSave()</a></code><br>
 						<code><a href="class-MeCms.Utility.PhotoFile.html#_createFolder">MeCms\Utility\PhotoFile::createFolder()</a></code><br>
 				</div>
 
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCms.Model.Table.AppTable.html#_afterSave">MeCms\Model\Table\AppTable::afterSave()</a></code></div>
 
 		</div>
 		</div></td>
@@ -323,7 +332,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_findActive">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#67-80" title="Go to source code">findActive</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#72-85" title="Go to source code">findActive</a>( <span>Cake\ORM\Query <var>$query</var></span>, <span>array <var>$options</var></span> )</code>
 
 		<div class="description short">
 			<p>"Active" find method</p>
@@ -366,7 +375,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getList">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#82-90" title="Go to source code">getList</a>( )</code>
+		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#87-96" title="Go to source code">getList</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the albums list</p>
@@ -383,6 +392,10 @@ Cake\ORM\Table
 				</div>
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						<br>
+				</div>
 
 
 		</div>
@@ -400,7 +413,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#92-104" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#98-113" title="Go to source code">initialize</a>( <span>array <var>$config</var></span> )</code>
 
 		<div class="description short">
 			<p>Initialize method</p>
@@ -413,7 +426,7 @@ Cake\ORM\Table
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$config</var></dt>
-					<dd>The table configuration</dd>
+					<dd>The configuration for the table</dd>
 				</dl></div>
 
 
@@ -435,7 +448,7 @@ Cake\ORM\Table
 
 		<td class="name"><div>
 		<a class="anchor" href="#_validationDefault">#</a>
-		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#106-113" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#115-122" title="Go to source code">validationDefault</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Default validation rules</p>
@@ -468,9 +481,10 @@ Cake\ORM\Table
 	<caption>Methods inherited from <a href="class-MeCms.Model.Table.AppTable.html#methods">MeCms\Model\Table\AppTable</a></caption>
 	<tr>
 		<td><code>
+			<a href="class-MeCms.Model.Table.AppTable.html#_clearCache">clearCache()</a>, 
 			<a href="class-MeCms.Model.Table.AppTable.html#_findRandom">findRandom()</a>, 
-			<a href="class-MeCms.Model.Table.AppTable.html#_fromFilter">fromFilter()</a>, 
-			<a href="class-MeCms.Model.Table.AppTable.html#_isOwnedBy">isOwnedBy()</a>
+			<a href="class-MeCms.Model.Table.AppTable.html#_isOwnedBy">isOwnedBy()</a>, 
+			<a href="class-MeCms.Model.Table.AppTable.html#_queryFromFilter">queryFromFilter()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -485,6 +499,38 @@ Cake\ORM\Table
 
 
 
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="cache" id="$cache">
+		<td class="attributes"><code>
+			public  
+			string|array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MeCms.Model.Table.PhotosAlbumsTable.html#35-39" title="Go to source code"><var>$cache</var></a>
+
+			<div class="description short">
+				<p>Name of the configuration to use for this table</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Name of the configuration to use for this table</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-MeCms.Model.Table.PhotosAlbumsTable.html#_getList">MeCms\Model\Table\PhotosAlbumsTable::getList()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$cache" class="anchor">#</a>
+				<code><span class="php-quote">'photos'</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 

@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -34,9 +34,9 @@
 
 		echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'search_posts']]);
 		echo $this->Form->input('p', [
+			'button'		=> $this->Form->button(NULL, ['class' => 'btn-primary', 'icon' => 'search']),
 			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
 		]);
-		echo $this->Form->submit(NULL, ['class' => 'btn-primary visible-lg-inline', 'icon' => 'search']);
 		echo $this->Form->end();
 	?>
 </div>

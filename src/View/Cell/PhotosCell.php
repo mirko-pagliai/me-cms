@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -49,12 +49,12 @@ class PhotosCell extends Cell {
 	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function albums() {
-		//Returns on Photos or PhotosAlbums controller
+		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
 		//Tries to get data from the cache
-		$albums = Cache::read($cache = 'widget_albums', 'photos');
+		$albums = Cache::read($cache = 'widget_albums', $this->Photos->cache);
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
@@ -64,27 +64,57 @@ class PhotosCell extends Cell {
 						->toArray() as $k => $album)
 					$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
 			
-            Cache::write($cache, $albums, 'photos');
+            Cache::write($cache, $albums, $this->Photos->cache);
 		}
 		
 		$this->set(compact('albums'));
 	}
 	
 	/**
-	 * Random photos widget
-	 * @param string $limit Limit
+	 * Latest widget
+	 * @param int $limit Limit
 	 * @uses MeTools\Network\Request::isController()
 	 */
-	public function random($limit = NULL) {
-		//Returns on Photos or PhotosAlbums controller
+	public function latest($limit = 1) {
+		//Returns on the same controllers
+		if($this->request->isController(['Photos', 'PhotosAlbums']))
+			return;
+				
+		//Gets and sets photos
+		$this->set('photos', $this->Photos->find('active')
+			->select(['album_id', 'filename'])
+			->limit($limit)
+			->order([sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
+			->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
+			->toArray()
+		);
+	}
+	
+	/**
+	 * Random widget
+	 * @param int $limit Limit
+	 * @uses MeTools\Network\Request::isController()
+	 */
+	public function random($limit = 1) {
+		//Returns on the same controllers
 		if($this->request->isController(['Photos', 'PhotosAlbums']))
 			return;
 		
-		$this->set('photos', $this->Photos->find('active')
+		//Returns, if there are no records available
+		if(Cache::read($cache = 'no_photos', $this->Photos->cache))
+			return;
+		
+		//Gets photos
+		$photos = $this->Photos->find('active')
 			->select(['album_id', 'filename'])
-			->limit($limit = empty($limit) ? 1 : $limit)
+			->limit($limit)
 			->order('rand()')
-			->toArray()
-		);
+			->toArray();
+		
+		//Writes on cache, if there are no records available
+		if(empty($photos))
+			Cache::write($cache, TRUE, $this->Photos->cache);
+		
+		$this->set(compact('photos'));
 	}
 }

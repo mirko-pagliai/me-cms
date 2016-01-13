@@ -16,7 +16,7 @@
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2015, Mirko Pagliai for Nova Atlantis Ltd
+ * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
@@ -34,7 +34,7 @@ class PagesController extends AppController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.0/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses MeCms\Controller\AppController::beforeRender()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::configure()
 	 */
@@ -50,30 +50,33 @@ class PagesController extends AppController {
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\AppController::isAuthorized()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
+		//Everyone can list pages and static pages
+		if($this->request->isAction(['index', 'statics']))
+			return TRUE;
+		
 		//Only admins can delete pages
 		if($this->request->isAction('delete'))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
-		return parent::isAuthorized($user);
+		return $this->Auth->isGroup(['admin', 'manager']);
 	}
 	
 	/**
      * Lists pages
-	 * @uses MeCms\Model\Table\PagesTable::fromFilter()
+	 * @uses MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index() {
-		$this->set('pages', $this->paginate(
-			$this->Pages->find()
-				->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
-				->where($this->Pages->fromFilter($this->request->query))
-				->order(['Pages.title' => 'ASC'])
-		));
+		$query = $this->Pages->find()
+			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+		
+		$this->paginate['order'] = ['title' => 'ASC'];
+		
+		$this->set('pages', $this->paginate($this->Pages->queryFromFilter($query, $this->request->query)));
     }
 		
 	/**
