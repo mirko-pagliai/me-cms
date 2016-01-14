@@ -23,7 +23,7 @@
 ?>
 
 <?php
-	if($this->request->isAction('view') && $post->preview) {
+	if($this->request->isAction('view') && !empty($post->preview)) {
 		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
 		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
 	}
