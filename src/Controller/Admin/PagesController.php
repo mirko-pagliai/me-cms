@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -96,6 +97,8 @@ class PagesController extends AppController {
         $page = $this->Pages->newEntity();
 		
         if($this->request->is('post')) {
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
@@ -118,6 +121,8 @@ class PagesController extends AppController {
         $page = $this->Pages->get($id);
 		
         if($this->request->is(['patch', 'post', 'put'])) {
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
