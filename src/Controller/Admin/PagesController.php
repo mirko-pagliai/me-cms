@@ -72,8 +72,7 @@ class PagesController extends AppController {
 	 * @uses MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index() {
-		$query = $this->Pages->find()
-			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+		$query = $this->Pages->find()->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
 		$this->paginate['order'] = ['title' => 'ASC'];
 		
@@ -115,7 +114,6 @@ class PagesController extends AppController {
     /**
      * Edits page
      * @param string $id Page ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $page = $this->Pages->get($id);
@@ -138,7 +136,6 @@ class PagesController extends AppController {
     /**
      * Deletes page
      * @param string $id Page ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

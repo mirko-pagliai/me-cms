@@ -68,6 +68,6 @@ class PagesController extends AppController {
 			->select(['title', 'subtitle', 'slug', 'text', 'created'])
 			->where(compact('slug'))
 			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
-			->first());
+			->firstOrFail());
     }
 }

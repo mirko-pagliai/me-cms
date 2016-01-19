@@ -38,11 +38,11 @@ class BannersController extends AppController {
 		$banner = $this->Banners->find('active')
 			->select(['id', 'target'])
 			->where(compact('id'))
-			->limit(1)
 			->cache(sprintf('view_%s', md5($id)), $this->Banners->cache)
-			->first();
+			->firstOrFail();
 		
-		if(empty($banner) || empty($banner->target))
+		//Checks for banner target
+		if(empty($banner->target))
 			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The banner target is missing'));
 				
 		//Increases the click count

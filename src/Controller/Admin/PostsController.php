@@ -158,10 +158,9 @@ class PostsController extends AppController {
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-		$post = $this->Posts->findById($id)->contain('Tags')->first();
+		$post = $this->Posts->findById($id)->contain('Tags')->firstOrFail();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
@@ -188,7 +187,6 @@ class PostsController extends AppController {
     /**
      * Deletes post
      * @param string $id Post ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

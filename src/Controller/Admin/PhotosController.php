@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 use MeCms\Utility\PhotoFile;
 
@@ -84,20 +85,16 @@ class PhotosController extends AppController {
 	 * @param string $album_id Album ID
 	 * @throws \Cake\Network\Exception\NotFoundException
 	 */
-    public function index($album_id = NULL) {
-		if(empty($album_id))
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The album ID is missing'));
+    public function index($album_id = NULL) {		
+		$query = $this->Photos->find()->select(['id', 'album_id', 'filename'])->where(compact('album_id'));
+					
+		if($query->isEmpty())
+			throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
 		
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
 		$this->paginate['order'] = ['filename' => 'ASC'];
 		
-		$this->set('photos', $this->paginate(
-			$this->Photos->find()
-				->select(['id', 'album_id', 'filename'])
-				->where(compact('album_id'))
-		));
-		
-		$this->set(compact('album_id'));
+		$this->set(am(['photos' => $this->paginate($query)], compact('album_id')));
     }
 	
 	/**
@@ -124,7 +121,6 @@ class PhotosController extends AppController {
     /**
      * Edits photo
      * @param string $id Photo ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $photo = $this->Photos->get($id);
@@ -146,7 +142,6 @@ class PhotosController extends AppController {
     /**
      * Deletes photo
      * @param string $id Photo ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

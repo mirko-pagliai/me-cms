@@ -39,7 +39,7 @@ class PhotosController extends AppController {
 			->select(['album_id', 'filename'])
 			->where(compact('id'))
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
-			->first()
+			->firstOrFail()
 		);
     }
 }

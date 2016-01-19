@@ -47,8 +47,7 @@ class UsersGroupsController extends AppController {
 		$this->paginate['order'] = ['name' => 'ASC'];
 		
 		$this->set('groups', $this->paginate(
-			$this->UsersGroups->find()
-				->select(['id', 'name', 'label', 'user_count'])
+			$this->UsersGroups->find()->select(['id', 'name', 'label', 'user_count'])
 		));
     }
 
@@ -75,7 +74,6 @@ class UsersGroupsController extends AppController {
     /**
      * Edits users group
      * @param string $id Users Group ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $group = $this->UsersGroups->get($id);
@@ -96,7 +94,6 @@ class UsersGroupsController extends AppController {
     /**
      * Deletes users group
      * @param string $id Users Group ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

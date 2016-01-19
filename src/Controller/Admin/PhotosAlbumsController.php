@@ -98,7 +98,6 @@ class PhotosAlbumsController extends AppController {
     /**
      * Edits photos album
      * @param string $id Photos Album ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $album = $this->PhotosAlbums->get($id);
@@ -119,7 +118,6 @@ class PhotosAlbumsController extends AppController {
     /**
      * Deletes photos album
      * @param string $id Photos Album ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);
