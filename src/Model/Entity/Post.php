@@ -61,15 +61,23 @@ class Post extends Entity {
 	/**
 	 * Gets the post preview (virtual field)
 	 * @return string Url to preview
+	 * @uses MeCms\Utility\Youtube::getId()
+	 * @uses MeCms\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
-		//Gets the first image
+		//Checks for the first image in the text
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
 		
-		if(empty($matches[2]))
-			return;
+		if(!empty($matches[2]))
+			return \Cake\Routing\Router::url($matches[2], TRUE);
 		
-		return \Cake\Routing\Router::url($matches[2], TRUE);
+		//Checks for a YouTube video and its preview
+		preg_match('/\[youtube](.+?)\[\/youtube]/', $this->_properties['text'], $matches);
+		
+		if(!empty($matches[1]))
+			return \MeCms\Utility\Youtube::getPreview(is_url($matches[1]) ? \MeCms\Utility\Youtube::getId($matches[1]) : $matches[1]);
+		
+		return;
     }
 	
 	/**
