@@ -42,9 +42,15 @@
 	</div>
 	<div class="content-text">
 		<?php
-			//If it was requested to truncate the text
-			if(!$this->request->isAction('view', 'Pages') && config('frontend.truncate_to'))
-				echo $truncate = $this->Text->truncate($page->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			//Executes BBCode on the text
+			$page->text = $this->BBCode->parser($page->text);
+			
+			//Truncates the text if the "<!-- read-more -->" tag is present
+			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($page->text, '<!-- read-more -->'))
+				echo $truncated_text = $this->Text->truncate($page->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
+			//Truncates the text if requested by the configuration
+			elseif(!$this->request->isAction('view', 'Pages') && config('frontend.truncate_to'))
+				echo $truncated_text = $this->Text->truncate($page->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
 			else
 				echo $page->text;
 		?>
@@ -52,7 +58,7 @@
 	<div class="content-buttons">
 		<?php
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
-			if(!empty($truncate) && $truncate !== $page->text)
+			if(!empty($truncated_text) && $truncated_text !== $page->text)
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $page->slug], ['class' => ' readmore']);
 		?>
 	</div>
