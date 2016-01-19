@@ -22,13 +22,6 @@
  */
 ?>
 
-<?php	
-	if($this->request->isAction('view') && !empty($post->preview)) {
-		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
-	}
-?>
-
 <div class="post-container content-container">
 	<div class="content-header">
 		<?php
