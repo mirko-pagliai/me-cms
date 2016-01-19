@@ -10,8 +10,8 @@
 /* -------------------------------- */
 /* Blockquote */
 blockquote {
-  background: #eee none repeat scroll 0 0;
-  border: 0 none;
+  background: #eee;
+  border: 0;
   margin-top: 20px;
   padding: 20px 60px;
   position: relative;
