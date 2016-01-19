@@ -10,11 +10,11 @@
 /* -------------------------------- */
 /* Blockquote */
 blockquote {
-  background: #eee;
-  border: 0;
-  margin-top: 20px;
-  padding: 20px 60px;
-  position: relative;
+	background: #eee;
+	border: 0;
+	margin-top: 20px;
+	padding: 20px 60px;
+	position: relative;
 }
 
 /* Blockquote, icons */
