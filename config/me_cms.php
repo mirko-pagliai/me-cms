@@ -44,6 +44,7 @@ return ['MeCms' => [
 		//Theme. Must be located in `APP/plugins/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
+		//Note that you can use the "<!-- read-more -->" tag to indicate manually where to truncate a text
 		'truncate_to' => 1000
 	],
 	//KCFinder

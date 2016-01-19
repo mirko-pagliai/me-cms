@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.8
-* support for some BBCode.
+* support for some BBCode;
+* with the "<!-- read-more -->" tag, you can indicate manually where to truncate a text.
 
 ### 2.1.7
 * an exception is now properly thrown when a record is not found;
