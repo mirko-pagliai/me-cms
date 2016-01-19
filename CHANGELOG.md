@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.8
+* support for some BBCode.
+
 ### 2.1.7
 * an exception is now properly thrown when a record is not found;
 * tags can be 30 characters long;

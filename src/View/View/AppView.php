@@ -60,6 +60,7 @@ class AppView extends BaseView {
 		
 		//Loads helpers
 		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
+		$this->loadHelper('MeTools.BBCode');
 		$this->loadHelper('MeTools.Dropdown');
 		$this->loadHelper('MeTools.Form');
 		$this->loadHelper('MeTools.Asset');

@@ -23,6 +23,9 @@
 ?>
 
 <?php
+	//Executes BBCode on the post text
+	$post->text = $this->BBCode->parser($post->text);
+	
 	if($this->request->isAction('view') && !empty($post->preview)) {
 		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
 		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
