@@ -177,7 +177,8 @@ Captures and handles all unhandled exceptions. Displays helpful framework errors
 When debug is false a CakeException will render 404 or 500 errors.
 If an uncaught exception is thrown and it is a type that ExceptionHandler does not know about it will be treated as a 500 error.</p>
 
-<p>Rewrites <a href="http://api.cakephp.org/3.1/class-Cake.Error.ExceptionRenderer.html">ExceptionRenderer</a>.</p>
+<p>Rewrites <a href="http://api.cakephp.org/3.1/class-Cake.Error.ExceptionRenderer.html">ExceptionRenderer</a>.
+This allow to use the error layout and the error templates provided by MeCms.</p>
 	</div>
 
 	<dl class="tree">
@@ -207,7 +208,7 @@ Cake\Error\ExceptionRenderer
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Error.html">Error</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Error.ExceptionRenderer.html#28-80" title="Go to source code">Error/ExceptionRenderer.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Error.ExceptionRenderer.html#28-81" title="Go to source code">Error/ExceptionRenderer.php</a>
 		<br>
 	</div>
 
@@ -227,7 +228,7 @@ Cake\Error\ExceptionRenderer
 
 		<td class="name"><div>
 		<a class="anchor" href="#__outputMessage">#</a>
-		<code><a href="source-class-MeCms.Error.ExceptionRenderer.html#37-51" title="Go to source code">_outputMessage</a>( <span>string <var>$template</var></span> )</code>
+		<code><a href="source-class-MeCms.Error.ExceptionRenderer.html#38-52" title="Go to source code">_outputMessage</a>( <span>string <var>$template</var></span> )</code>
 
 		<div class="description short">
 			<p>Generate the response using the controller object</p>
@@ -270,7 +271,7 @@ Cake\Error\ExceptionRenderer
 
 		<td class="name"><div>
 		<a class="anchor" href="#__outputMessageSafe">#</a>
-		<code><a href="source-class-MeCms.Error.ExceptionRenderer.html#53-67" title="Go to source code">_outputMessageSafe</a>( <span>string <var>$template</var></span> )</code>
+		<code><a href="source-class-MeCms.Error.ExceptionRenderer.html#54-68" title="Go to source code">_outputMessageSafe</a>( <span>string <var>$template</var></span> )</code>
 
 		<div class="description short">
 			<p>A safer way to render error messages, replaces all helpers, with basics and doesn't call component methods</p>
@@ -313,7 +314,7 @@ Cake\Error\ExceptionRenderer
 
 		<td class="name"><div>
 		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-MeCms.Error.ExceptionRenderer.html#69-79" title="Go to source code">render</a>( )</code>
+		<code><a href="source-class-MeCms.Error.ExceptionRenderer.html#70-80" title="Go to source code">render</a>( )</code>
 
 		<div class="description short">
 			<p>Renders the response for the exception</p>

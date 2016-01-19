@@ -190,6 +190,7 @@
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
+				<li><a href="class-MeCms.Shell.UpdateShell.html">MeCms\Shell\UpdateShell</a></li>
 				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
@@ -284,7 +285,7 @@
 </span><span id="39" class="l"><a href="#39">39: </a>            -&gt;select([<span class="php-quote">'album_id'</span>, <span class="php-quote">'filename'</span>])
 </span><span id="40" class="l"><a href="#40">40: </a>            -&gt;where(<span class="php-keyword2">compact</span>(<span class="php-quote">'id'</span>))
 </span><span id="41" class="l"><a href="#41">41: </a>            -&gt;cache(<span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$id</span>)), <span class="php-var">$this</span>-&gt;Photos-&gt;cache)
-</span><span id="42" class="l"><a href="#42">42: </a>            -&gt;first()
+</span><span id="42" class="l"><a href="#42">42: </a>            -&gt;firstOrFail()
 </span><span id="43" class="l"><a href="#43">43: </a>        );
 </span><span id="44" class="l"><a href="#44">44: </a>    }
 </span><span id="45" class="l"><a href="#45">45: </a>}</span></code></pre>
@@ -295,6 +296,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?08eb6c37f6b76b78e8826e7bf32dfe12e6870eed"></script>
+<script src="elementlist.js?4a8d49bdbd683785fc7f6f8f2176c683c8d9dfd1"></script>
 </body>
 </html>
