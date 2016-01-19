@@ -8,6 +8,38 @@
 /* -------------------------------- */
 /*				HTML				*/
 /* -------------------------------- */
+/* Blockquote */
+blockquote {
+  background: #eee none repeat scroll 0 0;
+  border: 0 none;
+  margin-top: 20px;
+  padding: 20px 60px;
+  position: relative;
+}
+
+/* Blockquote, icons */
+blockquote:before, blockquote:after {
+    font-size: 25px;
+    position: absolute;
+	font-family: FontAwesome;
+    font-weight: normal;
+	opacity: .5;
+}
+
+/* Blockquote, left (before) icon */
+blockquote:before {
+    content: "\f10d";
+	left: 20px;
+    top: 10px;
+}
+
+/* Blockquote, right (after) icon */
+blockquote:after {
+	bottom: 10px;
+    content: "\f10e";
+    right: 20px;
+}
+
 /* Body */
 body {
     font-family: Roboto,sans-serif;
