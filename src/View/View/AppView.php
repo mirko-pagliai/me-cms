@@ -107,7 +107,7 @@ class AppView extends BaseView {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
 		
-		//Automatically adds the meta tag for RSS posts
+		//Adds the meta tag for RSS posts
 		if(config('frontend.rss_meta'))
 			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 				
