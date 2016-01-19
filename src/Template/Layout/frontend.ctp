@@ -84,13 +84,6 @@
 		</div>
 		<?php
 			echo $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]);
-			
-			if(config('frontend.analytics'))
-				echo $this->Library->analytics(config('frontend.analytics'));
-			
-			if(config('shareaholic.site_id'))
-				echo $this->Library->shareaholic(config('shareaholic.site_id'));
-						
 			echo $this->fetch('css_bottom');
 			echo $this->fetch('script_bottom');
 		?>

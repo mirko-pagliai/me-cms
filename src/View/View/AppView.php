@@ -139,6 +139,14 @@ class AppView extends BaseView {
 		if(config('frontend.rss_meta'))
 			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
 		
+		//Adds Google Analytics
+		if(config('frontend.analytics'))
+			echo $this->Library->analytics(config('frontend.analytics'));
+
+		//Adds Shareaholic
+		if(config('shareaholic.site_id'))
+			echo $this->Library->shareaholic(config('shareaholic.site_id'));
+		
 		//Adds Facebook's tags
 		$this->_addFacebookTags();
 		
