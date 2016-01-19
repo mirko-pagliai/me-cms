@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-01-11 19:13+0000\n"
+"POT-Creation-Date: 2016-01-19 11:17+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -25,6 +25,12 @@ msgstr ""
 msgid "The banner target is missing"
 msgstr ""
 
+#: Controller/PostsCategoriesController.php:77
+#: Controller/PostsTagsController.php:68
+#: Controller/Admin/PhotosController.php:92
+msgid "Record not found"
+msgstr ""
+
 #: Controller/PostsController.php:200
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
@@ -34,7 +40,7 @@ msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
 #: Controller/SystemsController.php:41
-#: Controller/UsersController.php:153;254;361
+#: Controller/UsersController.php:153;253;360
 msgid "Disabled"
 msgstr ""
 
@@ -46,21 +52,21 @@ msgstr ""
 msgid "The email was not sent"
 msgstr ""
 
-#: Controller/UsersController.php:117;303
+#: Controller/UsersController.php:117;302
 msgid "Invalid token"
 msgstr ""
 
-#: Controller/UsersController.php:129;183;279;313
+#: Controller/UsersController.php:127;183;278;312
 msgid "No account found"
 msgstr ""
 
 #: Controller/UsersController.php:135
-#: Controller/Admin/UsersController.php:196
+#: Controller/Admin/UsersController.php:194
 msgid "The account has been activated"
 msgstr ""
 
 #: Controller/UsersController.php:138
-#: Controller/Admin/UsersController.php:198
+#: Controller/Admin/UsersController.php:196
 msgid "The account has not been activated"
 msgstr ""
 
@@ -68,49 +74,49 @@ msgstr ""
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: Controller/UsersController.php:186;282
+#: Controller/UsersController.php:186;281
 msgid "The form has not been filled in correctly"
 msgstr ""
 
-#: Controller/UsersController.php:212
+#: Controller/UsersController.php:211
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: Controller/UsersController.php:214
+#: Controller/UsersController.php:213
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: Controller/UsersController.php:228
+#: Controller/UsersController.php:227
 msgid "Invalid username or password"
 msgstr ""
 
-#: Controller/UsersController.php:240
+#: Controller/UsersController.php:239
 msgid "You are successfully logged out"
 msgstr ""
 
-#: Controller/UsersController.php:275;390
+#: Controller/UsersController.php:274;389
 msgid "We send you an email to activate your account"
 msgstr ""
 
-#: Controller/UsersController.php:322
-#: Controller/Admin/UsersController.php:221
+#: Controller/UsersController.php:321
+#: Controller/Admin/UsersController.php:218
 msgid "The password has been edited"
 msgstr ""
 
-#: Controller/UsersController.php:326
-#: Controller/Admin/UsersController.php:225
+#: Controller/UsersController.php:325
+#: Controller/Admin/UsersController.php:222
 msgid "The password has not been edited"
 msgstr ""
 
-#: Controller/UsersController.php:383
+#: Controller/UsersController.php:382
 msgid "The account has been created, but it needs to be activated by an admin"
 msgstr ""
 
-#: Controller/UsersController.php:394
+#: Controller/UsersController.php:393
 msgid "Account created. Now you can login"
 msgstr ""
 
-#: Controller/UsersController.php:401
+#: Controller/UsersController.php:400
 msgid "The account has not been created"
 msgstr ""
 
@@ -118,119 +124,115 @@ msgstr ""
 msgid "Before you can manage banners, you have to create at least a banner position"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:131
+#: Controller/Admin/BannersController.php:130
 msgid "The banner has been saved"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:135
+#: Controller/Admin/BannersController.php:134
 msgid "The banner could not be saved"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:151
+#: Controller/Admin/BannersController.php:149
 msgid "The banner has been deleted"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:153
+#: Controller/Admin/BannersController.php:151
 msgid "The banner could not be deleted"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:65;87
+#: Controller/Admin/BannersPositionsController.php:65;86
 msgid "The banners position has been saved"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:69;91
+#: Controller/Admin/BannersPositionsController.php:69;90
 msgid "The banners position could not be saved"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:109
+#: Controller/Admin/BannersPositionsController.php:107
 msgid "The banners position has been deleted"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:111
+#: Controller/Admin/BannersPositionsController.php:109
 msgid "The banners position could not be deleted"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:114
+#: Controller/Admin/BannersPositionsController.php:112
 msgid "Before you delete this position, you have to delete its banners or assign them to another position"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:102;124
+#: Controller/Admin/PagesController.php:104;127
 msgid "The page has been saved"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:106;128
+#: Controller/Admin/PagesController.php:108;131
 msgid "The page could not be saved"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:144
+#: Controller/Admin/PagesController.php:146
 msgid "The page has been deleted"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:146
+#: Controller/Admin/PagesController.php:148
 msgid "The page could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:88;110
+#: Controller/Admin/PhotosAlbumsController.php:88;109
 msgid "The photos album has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:92;114
+#: Controller/Admin/PhotosAlbumsController.php:92;113
 msgid "The photos album could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:132
+#: Controller/Admin/PhotosAlbumsController.php:130
 msgid "The photos album has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:134
+#: Controller/Admin/PhotosAlbumsController.php:132
 msgid "The photos album could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:137
+#: Controller/Admin/PhotosAlbumsController.php:135
 msgid "Before you delete this album, you have to delete its photos or assign them to another album"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:58
+#: Controller/Admin/PhotosController.php:59
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:89
-msgid "The album ID is missing"
-msgstr ""
-
-#: Controller/Admin/PhotosController.php:136
+#: Controller/Admin/PhotosController.php:132
 msgid "The photo has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:140
+#: Controller/Admin/PhotosController.php:136
 msgid "The photo could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:157
+#: Controller/Admin/PhotosController.php:152
 msgid "The photo has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:159
+#: Controller/Admin/PhotosController.php:154
 msgid "The photo could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:94;116
+#: Controller/Admin/PostsCategoriesController.php:94;115
 msgid "The posts category has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:98;120
+#: Controller/Admin/PostsCategoriesController.php:98;119
 msgid "The posts category could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:138
+#: Controller/Admin/PostsCategoriesController.php:136
 msgid "The posts category has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:140
+#: Controller/Admin/PostsCategoriesController.php:138
 msgid "The posts category could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:143
+#: Controller/Admin/PostsCategoriesController.php:141
 msgid "Before you delete this category, you have to delete its posts or assign them to another category"
 msgstr ""
 
@@ -238,19 +240,19 @@ msgstr ""
 msgid "Before you can manage posts, you have to create at least a category"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:146;179
+#: Controller/Admin/PostsController.php:146;178
 msgid "The post has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:150;183
+#: Controller/Admin/PostsController.php:150;182
 msgid "The post could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:199
+#: Controller/Admin/PostsController.php:197
 msgid "The post has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:201
+#: Controller/Admin/PostsController.php:199
 msgid "The post could not be deleted"
 msgstr ""
 
@@ -298,57 +300,57 @@ msgstr ""
 msgid "The tag could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:109;145
+#: Controller/Admin/UsersController.php:109;144
 #: Shell/UserShell.php:92
 msgid "The user has been saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:113;149
+#: Controller/Admin/UsersController.php:113;148
 #: Shell/UserShell.php:97
 msgid "The user could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:133;173
+#: Controller/Admin/UsersController.php:132;171
 msgid "Only the admin founder can edit other admin users"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:170
+#: Controller/Admin/UsersController.php:168
 msgid "You cannot delete the admin founder"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:175
+#: Controller/Admin/UsersController.php:173
 msgid "Before you delete this user, you have to delete his posts or assign them to another user"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:178
+#: Controller/Admin/UsersController.php:176
 msgid "The user has been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:180
+#: Controller/Admin/UsersController.php:178
 msgid "The user could not be deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:65;87
+#: Controller/Admin/UsersGroupsController.php:64;85
 msgid "The users group has been saved"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:69;91
+#: Controller/Admin/UsersGroupsController.php:68;89
 msgid "The users group could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:109
+#: Controller/Admin/UsersGroupsController.php:106
 msgid "The users group has been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:111
+#: Controller/Admin/UsersGroupsController.php:108
 msgid "The users group could not be deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:114
+#: Controller/Admin/UsersGroupsController.php:111
 msgid "You cannot delete this users group, because it's a necessary group"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:116
+#: Controller/Admin/UsersGroupsController.php:113
 msgid "Before you delete this users group, you have to delete its users or assign them to another group"
 msgstr ""
 
@@ -484,6 +486,10 @@ msgstr ""
 
 #: Shell/InstallShell.php:127
 msgid "Creates an admin user"
+msgstr ""
+
+#: Shell/UpdateShell.php:52
+msgid "Updates to {0} version"
 msgstr ""
 
 #: Shell/UserShell.php:50
