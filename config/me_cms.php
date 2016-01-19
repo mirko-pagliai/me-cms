@@ -26,7 +26,6 @@ return ['MeCms' => [
 		//Contact form (enabled or disabled).
 		'contact_form' => TRUE,
 		//Facebook app ID or FALSE
-		//If you have no app ID, you can retrieve it here: https://developers.facebook.com/tools/debug/
 		'facebook_app_id' => FALSE,
 		//Fancybox for photos
 		'fancybox' => TRUE,
