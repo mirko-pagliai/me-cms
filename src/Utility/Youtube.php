@@ -27,14 +27,14 @@ namespace MeCms\Utility;
  * 
  * You can use this utility by adding:
  * <code>
- * use MeYoutube\Utility\Youtube;
+ * use MeCms\Utility\Youtube;
  * </code>
  */
 class Youtube {
 	/**
-	 * Parses a video url and returns the video ID
+	 * Parses a YouTube url and returns the YouTube ID
 	 * @param string $url Video url
-	 * @return mixed Video ID or FALSE
+	 * @return mixed Youtube ID or FALSE
 	 */
 	public static function getId($url) {
 		if(preg_match('/youtube\.com/', $url)) {
@@ -51,5 +51,14 @@ class Youtube {
 			return empty($matches[1]) ? FALSE : $matches[1];
 		else
 			return FALSE;
+	}
+	
+	/**
+	 * Gets the preview for a video
+	 * @param string $id YouTube ID
+	 * @return string Url
+	 */
+	public static function getPreview($id) {
+		return sprintf('http://img.youtube.com/vi/%s/0.jpg', $id);
 	}
 }
