@@ -190,6 +190,7 @@
 				<li><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">MeCms\Model\Validation\UsersGroupValidator</a></li>
 				<li><a href="class-MeCms.Model.Validation.UserValidator.html">MeCms\Model\Validation\UserValidator</a></li>
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
+				<li><a href="class-MeCms.Shell.UpdateShell.html">MeCms\Shell\UpdateShell</a></li>
 				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
@@ -313,7 +314,7 @@
 </span><span id="68" class="l"><a href="#68">68: </a>            -&gt;select([<span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>])
 </span><span id="69" class="l"><a href="#69">69: </a>            -&gt;where(<span class="php-keyword2">compact</span>(<span class="php-quote">'slug'</span>))
 </span><span id="70" class="l"><a href="#70">70: </a>            -&gt;cache(<span class="php-keyword2">sprintf</span>(<span class="php-quote">'view_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$slug</span>)), <span class="php-var">$this</span>-&gt;Pages-&gt;cache)
-</span><span id="71" class="l"><a href="#71">71: </a>            -&gt;first());
+</span><span id="71" class="l"><a href="#71">71: </a>            -&gt;firstOrFail());
 </span><span id="72" class="l"><a href="#72">72: </a>    }
 </span><span id="73" class="l"><a href="#73">73: </a>}</span></code></pre>
 
@@ -323,6 +324,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?08eb6c37f6b76b78e8826e7bf32dfe12e6870eed"></script>
+<script src="elementlist.js?4a8d49bdbd683785fc7f6f8f2176c683c8d9dfd1"></script>
 </body>
 </html>

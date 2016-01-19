@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -71,8 +72,7 @@ class PagesController extends AppController {
 	 * @uses MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index() {
-		$query = $this->Pages->find()
-			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+		$query = $this->Pages->find()->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
 		$this->paginate['order'] = ['title' => 'ASC'];
 		
@@ -96,6 +96,8 @@ class PagesController extends AppController {
         $page = $this->Pages->newEntity();
 		
         if($this->request->is('post')) {
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
@@ -112,12 +114,13 @@ class PagesController extends AppController {
     /**
      * Edits page
      * @param string $id Page ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $page = $this->Pages->get($id);
 		
         if($this->request->is(['patch', 'post', 'put'])) {
+			$this->request->data['created'] = new Time($this->request->data('created'));
+			
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
@@ -133,7 +136,6 @@ class PagesController extends AppController {
     /**
      * Deletes page
      * @param string $id Page ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

@@ -60,13 +60,11 @@ class PhotosAlbumsController extends AppController {
 			$this->redirect([$this->request->query('q')]);
 		
 		$this->set('album', $this->PhotosAlbums->find('active')
-			->contain(['Photos' => [
-				'fields' => ['id', 'album_id', 'filename', 'description']
-			]])
+			->contain(['Photos' => ['fields' => ['id', 'album_id', 'filename', 'description']]])
 			->select(['id', 'title'])
 			->where(compact('slug'))
 			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
-			->first()
+			->firstOrFail()
 		);
 	}
 }

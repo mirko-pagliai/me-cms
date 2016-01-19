@@ -20,26 +20,36 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Controller;
+namespace MeCms\Shell;
 
-use MeCms\Controller\AppController;
+use Cake\Datasource\ConnectionManager;
+use MeTools\Console\Shell;
 
 /**
- * Photos controller
- * @property \MeCms\Model\Table\PhotosTable $Photos
+ * Applies updates
  */
-class PhotosController extends AppController {	
-    /**
-     * Views a photo
-     * @param string $id Photo ID
-     * @throws \Cake\Network\Exception\NotFoundException
-     */
-    public function view($id = NULL) {
-		$this->set('photo', $this->Photos->find()
-			->select(['album_id', 'filename'])
-			->where(compact('id'))
-			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
-			->firstOrFail()
-		);
-    }
+class UpdateShell extends Shell {	
+	/**
+	 * Updates to 2.1.7 version
+	 */
+	public function to2v1v7() {
+		$this->loadModel('MeCms.Tags');
+		
+		$connection = ConnectionManager::get('default');
+		
+		$connection->execute(sprintf('ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT NULL;', $this->Tags->table()));
+	}
+	
+	/**
+	 * Gets the option parser instance and configures it.
+	 * @return ConsoleOptionParser
+	 * @uses MeTools\Shell\InstallShell::getOptionParser()
+	 */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		
+		return $parser->addSubcommands([
+			'to2v1v7' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.7')]
+		]);
+	}
 }

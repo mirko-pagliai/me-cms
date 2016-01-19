@@ -123,10 +123,10 @@ class UsersController extends AppController {
 			->where(compact('id'))
 			->first();
 		
-		$user->active = TRUE;
-		
-		if(empty($user))
+		if($user->isEmpty())
 			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'No account found'));
+		
+		$user->active = TRUE;
 				
 		if($this->Users->save($user)) {
 			//Deletes the token
@@ -167,7 +167,7 @@ class UsersController extends AppController {
 					->where(['email' => $this->request->data('email')])
 					->first();
 
-				if(!empty($user)) {
+				if(!$user->isEmpty()) {
 					//Gets the token
 					$token = $this->Token->create($user->email, ['type' => 'forgot_password', 'user_id' => $user->id]);
 					
@@ -188,7 +188,6 @@ class UsersController extends AppController {
 		else
 			$entity = $this->Users->newEntity(NULL, ['validate' => 'NotUnique']);
 			
-		
 		$this->set('user', $entity);
 
 		$this->viewBuilder()->layout('login');
@@ -268,7 +267,7 @@ class UsersController extends AppController {
 					->where(['email' => $this->request->data('email')])
 					->first();
 
-				if(!empty($user)) {
+				if(!$user->isEmpty()) {
 					//Sends the activation mail
 					$this->_send_activation_mail($user);
 
@@ -309,7 +308,7 @@ class UsersController extends AppController {
 			->where(compact('id'))
 			->first();
 		
-		if(empty($user))
+		if($user->isEmpty())
 			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'No account found'));
 
 		if($this->request->is(['patch', 'post', 'put'])) {

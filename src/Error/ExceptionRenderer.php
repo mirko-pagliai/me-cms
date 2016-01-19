@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  * @see			http://api.cakephp.org/3.1/class-Cake.Error.ExceptionRenderer.html ExceptionRenderer
  */
@@ -32,6 +32,7 @@ use Cake\Error\ExceptionRenderer as BaseExceptionRenderer;
  * If an uncaught exception is thrown and it is a type that ExceptionHandler does not know about it will be treated as a 500 error.
  * 
  * Rewrites {@link http://api.cakephp.org/3.1/class-Cake.Error.ExceptionRenderer.html ExceptionRenderer}.
+ * This allow to use the error layout and the error templates provided by MeCms.
  */
 class ExceptionRenderer extends BaseExceptionRenderer {
 	/**

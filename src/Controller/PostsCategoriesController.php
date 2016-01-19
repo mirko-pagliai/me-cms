@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
 /**
@@ -62,17 +63,20 @@ class PostsCategoriesController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
-			$posts = $this->paginate(
-				$this->PostsCategories->Posts->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Tags',
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->where(['Categories.slug' => $category])
-					->order([sprintf('%s.created', $this->PostsCategories->Posts->alias()) => 'DESC'])
-			)->toArray();
+			$query = $this->PostsCategories->Posts->find('active')
+				->contain([
+					'Categories'	=> ['fields' => ['title', 'slug']],
+					'Tags',
+					'Users'			=> ['fields' => ['first_name', 'last_name']]
+				])
+				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+				->where(['Categories.slug' => $category])
+				->order([sprintf('%s.created', $this->PostsCategories->Posts->alias()) => 'DESC']);
+					
+			if($query->isEmpty())
+				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+					
+			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsCategories->cache);

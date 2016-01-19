@@ -37,8 +37,8 @@ class TagValidator extends AppValidator {
 		//Tag
         $this->add('tag', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 20),
-				'rule'		=> ['lengthBetween', 3, 20]
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 30),
+				'rule'		=> ['lengthBetween', 3, 30]
 			],
 			'validTag' => [
 				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),

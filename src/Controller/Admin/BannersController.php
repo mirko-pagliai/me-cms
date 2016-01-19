@@ -119,7 +119,6 @@ class BannersController extends AppController {
     /**
      * Edits banner
      * @param string $id Banner ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $banner = $this->Banners->get($id);
@@ -140,7 +139,6 @@ class BannersController extends AppController {
     /**
      * Deletes banner
      * @param string $id Banner ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

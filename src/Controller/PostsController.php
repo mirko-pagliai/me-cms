@@ -220,7 +220,7 @@ class PostsController extends AppController {
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
-			->first());
+			->firstOrFail());
 		
 		//Gets related posts
 		if(config('post.related.limit'))

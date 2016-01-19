@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
 /**
@@ -51,19 +52,22 @@ class PostsTagsController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
-			$posts = $this->paginate(
-				$this->PostsTags->Posts->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Tags',
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->matching('Tags', function ($q) use ($tag) {
-						return $q->where(['Tags.tag' => $tag]);
-					})
-					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC'])
-			)->toArray();
+			$query = $this->PostsTags->Posts->find('active')
+				->contain([
+					'Categories'	=> ['fields' => ['title', 'slug']],
+					'Tags',
+					'Users'			=> ['fields' => ['first_name', 'last_name']]
+				])
+				->matching('Tags', function ($q) use ($tag) {
+					return $q->where(['Tags.tag' => $tag]);
+				})
+				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
+					
+			if($query->isEmpty())
+				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+					
+			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsTags->cache);
