@@ -63,7 +63,7 @@
 	</div>
 	<div class="content-text">
 		<?php
-			//Executes BBCode on the post text
+			//Executes BBCode on the text
 			$post->text = $this->BBCode->parser($post->text);
 			
 			//Truncates the text if the "<!-- read-more -->" tag is present
