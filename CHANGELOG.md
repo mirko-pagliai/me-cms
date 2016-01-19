@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.7
+* fixed bug. Now managers can access "system" menu.
+
 ### 2.1.6
 * the User shell can now list users and user groups;
 * added "latest photos" widget;

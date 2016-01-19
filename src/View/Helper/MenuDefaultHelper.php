@@ -156,8 +156,8 @@ class MenuDefaultHelper extends Helper {
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
 	public function _systems() {
-		//Only admins can access this controller
-		if(!$this->Auth->isGroup('admin'))
+		//Only admins and managers can access this controller
+		if(!$this->Auth->isGroup(['admin', 'manager']))
 			return;
 		
 		$menu = [
