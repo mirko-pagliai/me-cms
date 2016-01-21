@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.8
+* now photos have the "created" date and are ordered using that;
 * support for some BBCode;
 * with the "<!-- read-more -->" tag, you can indicate manually where to truncate a text;
 * added Facebook's tag.

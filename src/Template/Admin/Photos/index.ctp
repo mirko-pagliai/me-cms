@@ -32,10 +32,11 @@
 		<?php foreach($photos as $photo): ?>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="photo-box">
+					<div class="photo-title"><?= $photo->filename ?></div>
+					<div class="photo-created">(<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)</div>
+					<div class="photo-image"><?= $this->Thumb->img($photo->path, ['side' => 400]) ?></div>
+					
 					<?php
-						echo $this->Html->div('photo-title', $photo->filename);
-						echo $this->Html->div('photo-image', $this->Thumb->img($photo->path, ['side' => 400]));
-
 						$actions = [
 							$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $photo->id], ['icon' => 'pencil'])
 						];
