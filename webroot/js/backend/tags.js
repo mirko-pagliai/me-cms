@@ -54,8 +54,8 @@ $(function() {
 			tag = tag.toLowerCase(); //Lowercase
 			
 			//Removes accents
-			var from = "àáäâèéëêìíïîòóöôùúüûñç";
-			var to = "aaaaeeeeiiiioooouuuunc";
+			var from = "àáäâèéëêìíïîıòóöôùúüûñç·/_,:;";
+			var to   = "aaaaeeeeiiiiioooouuuunc------";
 			for (var i=0, l=from.length ; i<l ; i++)
 				tag = tag.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		
