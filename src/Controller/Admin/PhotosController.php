@@ -83,16 +83,12 @@ class PhotosController extends AppController {
 	/**
      * Lists photos
 	 * @param string $album_id Album ID
-	 * @throws \Cake\Network\Exception\NotFoundException
 	 */
     public function index($album_id = NULL) {		
 		$query = $this->Photos->find()
 			->select(['id', 'album_id', 'filename', 'created'])
 			->order([sprintf('%s.created', $this->Photos->alias()) => 'DESC', sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
 			->where(compact('album_id'));
-					
-		if($query->isEmpty())
-			throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
 		
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
 		$this->paginate['order'] = ['Photos.created' => 'DESC', 'Photos.id' => 'DESC'];
