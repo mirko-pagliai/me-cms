@@ -22,22 +22,48 @@
  */
 namespace MeCms\Shell;
 
-use Cake\Datasource\ConnectionManager;
 use MeTools\Console\Shell;
 
 /**
  * Applies updates
  */
-class UpdateShell extends Shell {	
+class UpdateShell extends Shell {
+	/**
+	 * Database connection
+	 * @see initialize()
+	 * @var resource 
+	 */
+	protected $connection;
+	
+	/**
+	 * Initialize
+	 * @uses $connection
+	 */
+	public function initialize() {
+        parent::initialize();
+		
+		//Gets database connection
+		$this->connection = \Cake\Datasource\ConnectionManager::get('default');
+	}
+	
+	/**
+	 * Updates to 2.1.8 version
+	 * @uses $connection
+	 */
+	public function to2v1v8() {
+		$this->loadModel('MeCms.Photos');
+		
+		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `description`', $this->Photos->table()));
+	}
+	
 	/**
 	 * Updates to 2.1.7 version
+	 * @uses $connection
 	 */
 	public function to2v1v7() {
 		$this->loadModel('MeCms.Tags');
 		
-		$connection = ConnectionManager::get('default');
-		
-		$connection->execute(sprintf('ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT NULL;', $this->Tags->table()));
+		$this->connection->execute(sprintf('ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT NULL;', $this->Tags->table()));
 	}
 	
 	/**
@@ -49,6 +75,7 @@ class UpdateShell extends Shell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+			'to2v1v8' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.8')],
 			'to2v1v7' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.7')]
 		]);
 	}
