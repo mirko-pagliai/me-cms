@@ -72,8 +72,8 @@ class StaticPage {
 	 */
 	public static function get($slug) {
 		//Sets the file (partial) name
-		$file = implode(DS, explode('/', $slug));
-				
+		$file = implode(DS, af(explode('/', $slug)));
+		
 		//Sets the file patterns
 		$patterns = [sprintf('%s_%s', $file, \Cake\I18n\I18n::locale()), sprintf('%s', $file)];
 		
@@ -97,7 +97,7 @@ class StaticPage {
 	 * @return string
 	 */
 	public static function title($slug) {
-		$slug = explode('/', $slug);
+		$slug = af(explode('/', $slug));
 		
 		return \Cake\Utility\Inflector::humanize(str_replace('-', '_', $slug[count($slug)-1]));
 	}
