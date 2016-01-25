@@ -2,6 +2,8 @@
 return ['MeCms' => [
 	//Backend
 	'backend' => [
+		//Layout you want to use for the backend
+		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
 		'layout' => 'MeCms.backend',
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
@@ -20,7 +22,7 @@ return ['MeCms' => [
 	'frontend' => [
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
-		//Layout you want to use for the backend
+		//Layout you want to use for the frontend
 		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
 		'layout' => 'MeCms.frontend',
 		//Contact form (enabled or disabled).
