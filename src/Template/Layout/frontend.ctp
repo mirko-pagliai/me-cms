@@ -50,12 +50,15 @@
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
 				'MeCms.frontend/bootstrap.min',
-				'MeTools.default'
+				'/vendor/jquery-cookie/jquery.cookie',
+				'MeTools.default',
+				'MeCms.frontend/layout'
 			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
 	<body>
+		<?= $this->element('MeCms.frontend/cookies_policy') ?>
 		<header>
 			<div class="container">
 				<?php
