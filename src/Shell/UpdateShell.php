@@ -64,8 +64,9 @@ class UpdateShell extends Shell {
 				->where(['id' => $tag->id])
 				->execute();
 		
-		//Adds the "created" field to the photos table
-		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `description`', $this->Photos->table()));
+		//Adds the "created" field to the photos table and sets the default value
+		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL DEFAULT NULL AFTER `description`;', $this->Photos->table()));
+		$this->Photos->updateAll(['created' => 'NOW()']);
 	}
 	
 	/**
