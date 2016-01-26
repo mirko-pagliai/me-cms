@@ -85,7 +85,7 @@
 					'id'	=> 'tags-output-text',
 					'label'	=> __d('me_cms', 'Tags'),
 					'rows'	=> 2,
-					'tip'	=> __d('me_cms', 'Tags must be at least 3 chars and separated by a space. Only lowercase letters and numbers')
+					'tip'	=> __d('me_cms', 'Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
 				]);
 			?>
 		</div>
@@ -96,7 +96,7 @@
 					'button'	=> $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus', 'id' => 'tags-input-button']),
 					'id'		=> 'tags-input-text',
 					'label'		=> FALSE,
-					'tip'		=> __d('me_cms', 'Tags must be at least 3 chars and separated by a space. Only lowercase letters, numbers, dash')
+					'tip'		=> __d('me_cms', 'Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
 				]);
 				
 				//Tags error

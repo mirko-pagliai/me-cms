@@ -58,7 +58,7 @@
 						if($this->Auth->isGroup(['admin', 'manager']))
 							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['controller' => 'Tags', 'action' => 'edit', $tag->id], ['icon' => 'pencil']);
 
-						$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_tag', $tag->tag], ['icon' => 'external-link', 'target' => '_blank']);
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_tag', $tag->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>

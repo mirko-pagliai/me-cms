@@ -59,7 +59,7 @@ class PostsTagsController extends AppController {
 					'Users'			=> ['fields' => ['first_name', 'last_name']]
 				])
 				->matching('Tags', function ($q) use ($tag) {
-					return $q->where(['Tags.tag' => $tag]);
+					return $q->where(['Tags.tag' => str_replace('-', ' ', $tag)]);
 				})
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);

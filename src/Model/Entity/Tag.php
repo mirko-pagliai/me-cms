@@ -41,4 +41,18 @@ class Tag extends Entity {
         'id' => FALSE,
 		'post_count' => FALSE
     ];
+	
+	/**
+	 * Virtual fields that should be exposed
+	 * @var array
+	 */
+    protected $_virtual = ['slug'];
+	
+	/**
+	 * Gets the tag slug (virtual field)
+	 * @return string
+	 */
+	protected function _getSlug() {
+		return str_replace(' ', '-', $this->_properties['tag']);
+	}
 }

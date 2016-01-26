@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.8
 * added the cookies policy functionality;
+* tags use space instead of the hyphen;
 * you can use static pages from plugins. The code for static pages has been rewritten;
 * now photos have the "created" date and are ordered using that;
 * support for some BBCode;

@@ -52,7 +52,19 @@ class UpdateShell extends Shell {
 	 */
 	public function to2v1v8() {
 		$this->loadModel('MeCms.Photos');
+		$this->loadModel('MeCms.Tags');
 		
+		//Deletes all unused tags
+		$this->Tags->deleteAll(['post_count' => 0]);
+				
+		//For each tag, it replaces the hyphen with space
+		foreach($this->Tags->find()->toArray() as $tag)
+			$this->Tags->query()->update()
+				->set(['tag' => str_replace('-', ' ', $tag->tag)])
+				->where(['id' => $tag->id])
+				->execute();
+		
+		//Adds the "created" field to the photos table
 		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `description`', $this->Photos->table()));
 	}
 	
