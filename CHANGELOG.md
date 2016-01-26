@@ -1,5 +1,14 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.8
+* added the cookies policy functionality;
+* tags use space instead of the hyphen;
+* you can use static pages from plugins. The code for static pages has been rewritten;
+* now photos have the "created" date and are ordered using that;
+* support for some BBCode;
+* with the "<!-- read-more -->" tag, you can indicate manually where to truncate a text;
+* added Facebook's tag.
+
 ### 2.1.7
 * an exception is now properly thrown when a record is not found;
 * tags can be 30 characters long;

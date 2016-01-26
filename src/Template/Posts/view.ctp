@@ -25,10 +25,16 @@
 <?php
 	$this->assign('title', $post->title);
 	
+	//Set some tags
+	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+		
 	if(!empty($post->preview)) {
 		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
 		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
 	}
+	
+	if(!empty($post->text))
+		$this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($post->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
 ?>
 
 <div class="posts view">

@@ -195,6 +195,7 @@
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
+				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
@@ -347,8 +348,8 @@
 </span><span id="101" class="l"><a href="#101">101: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'id'</span>]))
 </span><span id="102" class="l"><a href="#102">102: </a>                <span class="php-keyword1">continue</span>;
 </span><span id="103" class="l"><a href="#103">103: </a>            
-</span><span id="104" class="l"><a href="#104">104: </a>            <span class="php-comment">//Checks if the tag has only lowercase letters, numbers, dash</span>
-</span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]) || !(bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\-]+$/'</span>, <span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]))
+</span><span id="104" class="l"><a href="#104">104: </a>            <span class="php-comment">//Checks if the tag has only lowercase letters, numbers, hyphen, space</span>
+</span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]) || !(bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\-\ ]+$/'</span>, <span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]))
 </span><span id="106" class="l"><a href="#106">106: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
 </span><span id="107" class="l"><a href="#107">107: </a>        }
 </span><span id="108" class="l"><a href="#108">108: </a>        
@@ -362,6 +363,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?4a8d49bdbd683785fc7f6f8f2176c683c8d9dfd1"></script>
+<script src="elementlist.js?863631bf16d726cc3cde8f3c8081a2e99c742337"></script>
 </body>
 </html>

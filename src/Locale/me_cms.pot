@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-01-19 11:17+0000\n"
+"POT-Creation-Date: 2016-01-26 17:58+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/AppController.php:52
+#: Controller/AppController.php:79
 msgid "The file was not successfully moved to the target directory"
 msgstr ""
 
-#: Controller/AppController.php:55
+#: Controller/AppController.php:82
 msgid "The file was not successfully uploaded"
 msgstr ""
 
@@ -27,15 +27,14 @@ msgstr ""
 
 #: Controller/PostsCategoriesController.php:77
 #: Controller/PostsTagsController.php:68
-#: Controller/Admin/PhotosController.php:92
 msgid "Record not found"
 msgstr ""
 
-#: Controller/PostsController.php:200
+#: Controller/PostsController.php:202
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
-#: Controller/PostsController.php:203
+#: Controller/PostsController.php:205
 msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
@@ -200,19 +199,19 @@ msgstr ""
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:132
+#: Controller/Admin/PhotosController.php:131
 msgid "The photo has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:136
+#: Controller/Admin/PhotosController.php:135
 msgid "The photo could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:152
+#: Controller/Admin/PhotosController.php:151
 msgid "The photo has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:154
+#: Controller/Admin/PhotosController.php:153
 msgid "The photo could not be deleted"
 msgstr ""
 
@@ -240,19 +239,19 @@ msgstr ""
 msgid "Before you can manage posts, you have to create at least a category"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:146;178
+#: Controller/Admin/PostsController.php:148;180
 msgid "The post has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:150;182
+#: Controller/Admin/PostsController.php:152;184
 msgid "The post could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:197
+#: Controller/Admin/PostsController.php:199
 msgid "The post has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:199
+#: Controller/Admin/PostsController.php:201
 msgid "The post could not be deleted"
 msgstr ""
 
@@ -434,7 +433,6 @@ msgstr ""
 #: Model/Validation/AppValidator.php:140
 #: Model/Validation/BannersPositionValidator.php:44
 #: Model/Validation/PostValidator.php:62
-#: Model/Validation/TagValidator.php:44
 #: Model/Validation/UserValidator.php:58
 msgid "lowercase letters, numbers, dash"
 msgstr ""
@@ -454,6 +452,10 @@ msgstr ""
 
 #: Model/Validation/PostValidator.php:58
 msgid "Each tag must be between {0} and {1} chars"
+msgstr ""
+
+#: Model/Validation/TagValidator.php:44
+msgid "lowercase letters, numbers, hyphen, space"
 msgstr ""
 
 #: Model/Validation/UserValidator.php:67
@@ -488,7 +490,7 @@ msgstr ""
 msgid "Creates an admin user"
 msgstr ""
 
-#: Shell/UpdateShell.php:52
+#: Shell/UpdateShell.php:90;91
 msgid "Updates to {0} version"
 msgstr ""
 
@@ -796,7 +798,7 @@ msgstr ""
 #: Template/Admin/Banners/index.ctp:80
 #: Template/Admin/BannersPositions/index.ctp:48
 #: Template/Admin/Pages/index.ctp:90
-#: Template/Admin/Photos/index.ctp:40
+#: Template/Admin/Photos/index.ctp:41
 #: Template/Admin/PhotosAlbums/index.ctp:55
 #: Template/Admin/Posts/index.ctp:110
 #: Template/Admin/PostsCategories/index.ctp:48
@@ -810,7 +812,7 @@ msgstr ""
 #: Template/Admin/Banners/index.ctp:84
 #: Template/Admin/Pages/index.ctp:94
 #: Template/Admin/Pages/statics.ctp:44
-#: Template/Admin/Photos/index.ctp:47
+#: Template/Admin/Photos/index.ctp:48
 #: Template/Admin/PhotosAlbums/index.ctp:62
 #: Template/Admin/Posts/index.ctp:118
 #: Template/Admin/PostsCategories/index.ctp:56
@@ -821,7 +823,7 @@ msgstr ""
 #: Template/Admin/Banners/index.ctp:88
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
-#: Template/Admin/Photos/index.ctp:45
+#: Template/Admin/Photos/index.ctp:46
 #: Template/Admin/PhotosAlbums/index.ctp:60
 #: Template/Admin/Posts/index.ctp:114
 #: Template/Admin/PostsCategories/index.ctp:53
@@ -834,7 +836,7 @@ msgstr ""
 #: Template/Admin/Banners/index.ctp:88
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
-#: Template/Admin/Photos/index.ctp:45
+#: Template/Admin/Photos/index.ctp:46
 #: Template/Admin/PhotosAlbums/index.ctp:60
 #: Template/Admin/Posts/index.ctp:114
 #: Template/Admin/PostsCategories/index.ctp:53
@@ -1131,14 +1133,9 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:88
-#: Template/Admin/Posts/edit.ctp:87
-msgid "Tags must be at least 3 chars and separated by a space. Only lowercase letters and numbers"
-msgstr ""
-
-#: Template/Admin/Posts/add.ctp:99
-#: Template/Admin/Posts/edit.ctp:99
-msgid "Tags must be at least 3 chars and separated by a space. Only lowercase letters, numbers, dash"
+#: Template/Admin/Posts/add.ctp:88;99
+#: Template/Admin/Posts/edit.ctp:87;99
+msgid "Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space"
 msgstr ""
 
 #: Template/Admin/Posts/edit.ctp:26;34;114
@@ -1524,7 +1521,7 @@ msgid "Toggle navigation"
 msgstr ""
 
 #: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:68
+#: Template/Layout/frontend.ctp:71
 msgid "Homepage"
 msgstr ""
 
@@ -1556,6 +1553,20 @@ msgstr ""
 msgid "Size: {0}"
 msgstr ""
 
+#: Template/Element/frontend/cookies_policy.ctp:28
+msgid "By continuing, you consent to our use of Cookies, ok?"
+msgstr ""
+
+#: Template/Element/frontend/cookies_policy.ctp:29
+msgid "Ok"
+msgstr ""
+
+#: Template/Element/frontend/cookies_policy.ctp:30
+#: Template/Element/frontend/views/page.ctp:62
+#: Template/Element/frontend/views/post.ctp:76
+msgid "Read more"
+msgstr ""
+
 #: Template/Element/frontend/footer.ctp:26
 msgid "Powered by {0}. Copyright {1}"
 msgstr ""
@@ -1573,20 +1584,15 @@ msgid "Categories"
 msgstr ""
 
 #: Template/Element/frontend/views/page.ctp:37
-#: Template/Element/frontend/views/post.ctp:53
+#: Template/Element/frontend/views/post.ctp:46
 msgid "Posted on {0}"
 msgstr ""
 
-#: Template/Element/frontend/views/page.ctp:56
-#: Template/Element/frontend/views/post.ctp:77
-msgid "Read more"
-msgstr ""
-
-#: Template/Element/frontend/views/post.ctp:47
+#: Template/Element/frontend/views/post.ctp:40
 msgid "Posted by {0}"
 msgstr ""
 
-#: Template/Element/frontend/views/post.ctp:89
+#: Template/Element/frontend/views/post.ctp:88
 msgid "Related posts"
 msgstr ""
 
@@ -1701,7 +1707,7 @@ msgid "You have searched for: {0}"
 msgstr ""
 
 #: Template/Posts/rss/rss.ctp:30;32
-#: View/View/AppView.php:111
+#: View/View/AppView.php:140
 msgid "Latest posts"
 msgstr ""
 

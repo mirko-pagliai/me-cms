@@ -43,13 +43,20 @@
 		if($this->request->query('p'))
 			echo $this->Html->div('bg-info margin-20 padding-10', __d('me_cms', 'You have searched for: {0}', $this->Html->em($this->request->query('p'))));
 	
-		if(!empty($posts)) {			
-			foreach($posts as $post) 
+		if(!empty($posts)) {
+			foreach($posts as $post) {
+				//Executes BBCode on the text
+				$post->text = $this->BBCode->parser($post->text);
+		
+				//Truncates the text
+				$post->text = $this->Text->truncate(strip_tags($post->text), 350, ['exact' => FALSE, 'html' => TRUE]);
+				
 				$list[] = $this->Html->div(NULL, implode(PHP_EOL, [
 					sprintf('%s - %s', $this->Html->link($post->title, ['_name' => 'post', $post->slug]), $post->created->i18nFormat(config('main.datetime.short'))),
-					$this->Html->para('text-justify', $this->Text->truncate(strip_tags($post->text), 350, ['exact' => FALSE, 'html' => TRUE]))
+					$this->Html->para('text-justify', $post->text)
 				]));
-
+			}
+			
 			echo $this->Html->ul($list, ['icon' => 'caret-right']);
 			
 			echo $this->element('MeTools.paginator');

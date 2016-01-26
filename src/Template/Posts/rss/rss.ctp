@@ -38,19 +38,25 @@
 		//Sets link
 		$link = ['_name' => 'post', $post->slug];
 		
-		//Sets text
-		$text = $this->Text->truncate(
-			strip_tags($post->text),
-			config('frontend.truncate_to'),
-			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
-		);
+		//Executes BBCode on the text
+		$post->text = $this->BBCode->parser($post->text);
+		
+		//Truncates the text if the "<!-- read-more -->" tag is present
+		if($strpos = strpos($post->text, '<!-- read-more -->'))
+			$post->text = $this->Text->truncate($post->text, $strpos, ['exact' => TRUE, 'html' => FALSE]);
+		//Truncates the text if requested by the configuration
+		elseif(config('frontend.truncate_to'))
+			$post->text = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			
+		//Strips tags
+		$post->text = strip_tags($post->text);
 		
 		//Adds the preview image
 		if(!empty($post['Post']['preview']))
-			$text = sprintf('%s%s', $this->Thumb->img($post['Post']['preview'], ['width' => 200]), $text);
+			$post->text = sprintf('%s%s', $this->Thumb->img($post['Post']['preview'], ['width' => 200]), $post->text);
 
 		echo $this->Rss->item([], [
-			'description'	=> $text,
+			'description'	=> $post->text,
 			'guid'			=> ['url' => $link, 'isPermaLink' => 'true'],
 			'link'			=> $link,
 			'pubDate'		=> $post->created,

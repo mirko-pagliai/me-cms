@@ -50,12 +50,15 @@
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
 				'MeCms.frontend/bootstrap.min',
-				'MeTools.default'
+				'/vendor/jquery-cookie/jquery.cookie',
+				'MeTools.default',
+				'MeCms.frontend/layout'
 			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
 	<body>
+		<?= $this->element('MeCms.frontend/cookies_policy') ?>
 		<header>
 			<div class="container">
 				<?php
@@ -84,13 +87,6 @@
 		</div>
 		<?php
 			echo $this->element('MeCms.frontend/footer', [], ['cache' => TRUE]);
-			
-			if(config('frontend.analytics'))
-				echo $this->Library->analytics(config('frontend.analytics'));
-			
-			if(config('shareaholic.site_id'))
-				echo $this->Library->shareaholic(config('shareaholic.site_id'));
-						
 			echo $this->fetch('css_bottom');
 			echo $this->fetch('script_bottom');
 		?>

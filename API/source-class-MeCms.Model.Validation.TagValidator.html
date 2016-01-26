@@ -195,6 +195,7 @@
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
+				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
@@ -287,7 +288,7 @@
 </span><span id="41" class="l"><a href="#41">41: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-quote">'lengthBetween'</span>, <span class="php-num">3</span>, <span class="php-num">30</span>]
 </span><span id="42" class="l"><a href="#42">42: </a>            ],
 </span><span id="43" class="l"><a href="#43">43: </a>            <span class="php-quote">'validTag'</span> =&gt; [
-</span><span id="44" class="l"><a href="#44">44: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers, dash'</span>)),
+</span><span id="44" class="l"><a href="#44">44: </a>                <span class="php-quote">'message'</span>   =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s: %s'</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Allowed chars'</span>), __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'lowercase letters, numbers, hyphen, space'</span>)),
 </span><span id="45" class="l"><a href="#45">45: </a>                <span class="php-quote">'rule'</span>      =&gt; [<span class="php-var">$this</span>, <span class="php-quote">'validTag'</span>]
 </span><span id="46" class="l"><a href="#46">46: </a>            ]
 </span><span id="47" class="l"><a href="#47">47: </a>        ]);
@@ -303,8 +304,8 @@
 </span></span><span id="57" class="l"><a href="#57">57: </a><span class="php-comment">     * @return bool TRUE if is valid, otherwise FALSE
 </span></span><span id="58" class="l"><a href="#58">58: </a><span class="php-comment">     */</span>
 </span><span id="59" class="l"><a href="#59">59: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validTag(<span class="php-var">$value</span>, <span class="php-var">$context</span>) {
-</span><span id="60" class="l"><a href="#60">60: </a>        <span class="php-comment">//Lowercase letters, numbers, dash</span>
-</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">return</span> (bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\-]+$/'</span>, <span class="php-var">$value</span>);
+</span><span id="60" class="l"><a href="#60">60: </a>        <span class="php-comment">//Checks if the tag has only lowercase letters, numbers, hyphen, space</span>
+</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">return</span> (bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\-\ ]+$/'</span>, <span class="php-var">$value</span>);
 </span><span id="62" class="l"><a href="#62">62: </a>    }
 </span><span id="63" class="l"><a href="#63">63: </a>}</span></code></pre>
 
@@ -314,6 +315,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?4a8d49bdbd683785fc7f6f8f2176c683c8d9dfd1"></script>
+<script src="elementlist.js?863631bf16d726cc3cde8f3c8081a2e99c742337"></script>
 </body>
 </html>

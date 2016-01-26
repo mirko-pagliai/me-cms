@@ -75,10 +75,10 @@ class TagsTable extends AppTable {
 	 * @param string $tags Tags
 	 * @return array Tags
 	 */
-	public function tagsAsArray($tags) {
-		return array_filter(array_map(function($tag) {
+	public function tagsAsArray($tags) {		
+		return af(array_map(function($tag) {
 			return trim($tag) ? compact('tag') : NULL;
-		}, preg_split('/[\s]+/', $tags)));
+		}, preg_split('/\s*,+\s*/', $tags)));
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class TagsTable extends AppTable {
 	 * @return string Tags
 	 */
 	public function tagsAsString(array $tags) {
-		return implode(' ', array_map(function($tag) {
+		return implode(', ', array_map(function($tag) {
 			return $tag['tag'];
 		}, $tags));
 	}

@@ -51,7 +51,9 @@ class PostsController extends AppController {
 				$this->Posts->find('active')
 					->contain([
 						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Tags',
+						'Tags'			=> function($q) {
+							return $q->order([sprintf('%s.post_count', $this->Posts->Tags->alias()) => 'DESC']);
+						},
 						'Users'			=> ['fields' => ['first_name', 'last_name']]
 					])
 					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])

@@ -96,6 +96,7 @@ class PhotosTable extends AppTable {
             'className' => 'MeCms.PhotosAlbums'
         ]);
 		
+        $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
     }
 

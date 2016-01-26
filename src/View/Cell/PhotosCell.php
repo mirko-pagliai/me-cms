@@ -84,7 +84,7 @@ class PhotosCell extends Cell {
 		$this->set('photos', $this->Photos->find('active')
 			->select(['album_id', 'filename'])
 			->limit($limit)
-			->order([sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
+			->order([sprintf('%s.created', $this->Photos->alias()) => 'DESC', sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
 			->toArray()
 		);

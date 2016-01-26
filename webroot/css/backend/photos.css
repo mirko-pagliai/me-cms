@@ -21,13 +21,22 @@
 	background: #fff;
     font-size: 13px;
     font-weight: bold;
-	margin-bottom: 5px;
+	margin-bottom: 3px;
 	padding: 4px;
 	text-align: center;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* Photo box, created date */
+.photo-box .photo-created {
+	background: #fff;
+	font-size: 12px;
+	margin-bottom: 5px;
+	padding: 2px 4px;
+	text-align: center;
 }
 
 /* Photo box, images wrapper */

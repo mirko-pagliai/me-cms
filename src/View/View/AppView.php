@@ -23,16 +23,43 @@
 namespace MeCms\View\View;
 
 use App\View\AppView as BaseView;
+use Cake\Routing\Router;
 
 /**
  * Application view class
  */
 class AppView extends BaseView {
 	/**
+	 * It will contain the page title.
+	 * To get the title, you should use the `_getTitleForLayout()` method
+	 * @see _getTitleForLayout()
+	 * @var string
+	 */
+	protected $title;
+	
+	/**
+	 * Adds Facebook tags
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
+	 * @uses _getTitleForLayout()
+	 */
+	protected function _addFacebookTags() {
+		$this->Html->meta(['content' => $this->_getTitleForLayout(), 'property' => 'og:title']);
+		$this->Html->meta(['content' => Router::url(NULL, TRUE), 'property' => 'og:url']);
+		
+		//Adds the app ID
+		if(config('frontend.facebook_app_id'))
+			$this->Html->meta(['content' => config('frontend.facebook_app_id'), 'property' => 'fb:app_id']);
+	}
+	
+	/**
 	 * Gets the title for layou
 	 * @return string Title
+	 * @uses title
 	 */
 	protected function _getTitleForLayout() {
+		if(!empty($this->title))
+			return $this->title;
+		
 		//Gets the main title assigned by the configuration
 		$title = config('main.title');
 		
@@ -47,7 +74,7 @@ class AppView extends BaseView {
 		elseif($this->fetch('title'))
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
 		
-		return $title;
+		return $this->title = $title;
 	}
 
 	/**
@@ -60,6 +87,7 @@ class AppView extends BaseView {
 		
 		//Loads helpers
 		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
+		$this->loadHelper('MeTools.BBCode');
 		$this->loadHelper('MeTools.Dropdown');
 		$this->loadHelper('MeTools.Form');
 		$this->loadHelper('MeTools.Asset');
@@ -101,15 +129,27 @@ class AppView extends BaseView {
      * @throws Cake\Core\Exception\Exception
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses _getTitleForLayout()
+	 * @uses _addFacebookTags()
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
 		
-		//Automatically adds the meta tag for RSS posts
+		//Adds the meta tag for RSS posts
 		if(config('frontend.rss_meta'))
 			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
-				
+		
+		//Adds Google Analytics
+		if(config('frontend.analytics'))
+			echo $this->Library->analytics(config('frontend.analytics'));
+
+		//Adds Shareaholic
+		if(config('shareaholic.site_id'))
+			echo $this->Library->shareaholic(config('shareaholic.site_id'));
+		
+		//Adds Facebook's tags
+		$this->_addFacebookTags();
+		
 		return parent::renderLayout($content, $layout);
 	}
 	

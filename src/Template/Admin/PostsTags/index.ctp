@@ -48,7 +48,7 @@
 				<div>
 					<?php
 						echo sprintf('%s (%s)',
-							$this->Html->link($this->Html->strong($tag->tag), ['action' => 'edit', $tag->id]),
+							$this->Html->link($this->Html->strong($tag->tag), ['controller' => 'Tags', 'action' => 'edit', $tag->id]),
 							$this->Html->link($tag->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')])
 						);
 
@@ -58,7 +58,7 @@
 						if($this->Auth->isGroup(['admin', 'manager']))
 							$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['controller' => 'Tags', 'action' => 'edit', $tag->id], ['icon' => 'pencil']);
 
-						$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_tag', $tag->tag], ['icon' => 'external-link', 'target' => '_blank']);
+						$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'posts_tag', $tag->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>

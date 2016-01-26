@@ -22,13 +22,6 @@
  */
 ?>
 
-<?php
-	if($this->request->isAction('view') && !empty($post->preview)) {
-		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
-	}
-?>
-
 <div class="post-container content-container">
 	<div class="content-header">
 		<?php
@@ -56,16 +49,22 @@
 				
 				if(config('post.tags') && !empty($post->tags))
 					echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
-						return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->tag], ['icon' => 'tags']);
+						return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']);
 					}, $post->tags)));
 			?>
 		</div>
 	</div>
 	<div class="content-text">
 		<?php
-			//If it was requested to truncate the text
-			if(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to'))
-				echo $truncate = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			//Executes BBCode on the text
+			$post->text = $this->BBCode->parser($post->text);
+			
+			//Truncates the text if the "<!-- read-more -->" tag is present
+			if(!$this->request->isAction('view', 'Posts') && $strpos = strpos($post->text, '<!-- read-more -->'))
+				echo $truncated_text = $this->Text->truncate($post->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
+			//Truncates the text if requested by the configuration
+			elseif(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to'))
+				echo $truncated_text = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
 			else
 				echo $post->text;
 		?>
@@ -73,7 +72,7 @@
 	<div class="content-buttons">
 		<?php
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
-			if(!empty($truncate) && $truncate !== $post->text)
+			if(!empty($truncated_text) && $truncated_text !== $post->text)
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
 		?>
 	</div>

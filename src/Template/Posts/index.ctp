@@ -31,7 +31,7 @@
 		$title = $posts[0]->category->title;
 	//PostsTags `view`
 	elseif($this->request->isAction('view', 'PostsTags'))
-		$title = __d('me_cms', 'Tag {0}', $this->request->param('tag'));
+		$title = __d('me_cms', 'Tag {0}', str_replace('-', ' ', $this->request->param('tag')));
 	//Posts `index_by_date`
 	elseif($this->request->isAction('index_by_date', 'Posts')) {
 		$date = (new \Cake\I18n\Time())->year($this->request->param('year'))->month($this->request->param('month'))->day($this->request->param('day'));

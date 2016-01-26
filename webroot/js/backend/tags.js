@@ -53,13 +53,13 @@ $(function() {
 			
 			tag = tag.toLowerCase(); //Lowercase
 			
-			//Removes accents
-			var from = "àáäâèéëêìíïîòóöôùúüûñç";
-			var to = "aaaaeeeeiiiioooouuuunc";
+			//Changes invalid chars
+			var from = "àáäâèéëêìíïîıòóöôùúüûñç·/_,:;";
+			var to   = "aaaaeeeeiiiiioooouuuunc------";
 			for (var i=0, l=from.length ; i<l ; i++)
 				tag = tag.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		
-			tag = tag.replace(/[^a-z0-9\-]/g, '')	//Removes invalid chars
+			tag = tag.replace(/[^a-z0-9\-\ ]/g, '')	//Removes invalid chars
 		
 			//Pushes the tag on the list of tags
 			listOfTags.push({key:counter, value:tag});
@@ -109,11 +109,11 @@ $(function() {
 		});
 		
 		//Updats the output text
-		outputText.val(newTags.join(' '));
+		outputText.val(newTags.join(', '));
 	}
 	
 	//On start, gets and adds tags from the output text
-	add_tags(outputText.val().split(/[\s]+/));	
+	add_tags(outputText.val().split(', '));
 	
 	//On click on the input button
 	inputButton.click(function() {		
@@ -128,7 +128,7 @@ $(function() {
 		inputText.val('');
 			
 		//Adds tags
-		add_tags(inputValue.split(/[\s]+/));
+		add_tags(inputValue.split(/\s*,+\s*/));
 	});
 	
 	//On click on the remove link

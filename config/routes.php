@@ -120,7 +120,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 */
 	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
 	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
-	$routes->connect('/contact/form',	 ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
+	$routes->connect('/contact/form', ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
 	
 	/**
 	 * Users controller

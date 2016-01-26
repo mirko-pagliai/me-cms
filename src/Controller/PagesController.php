@@ -48,20 +48,21 @@ class PagesController extends AppController {
 	 * 
 	 * Static pages must be located in `APP/View/StaticPages/`.
 	 * @param string $slug Page slug
-     * @throws \Cake\Network\Exception\NotFoundException
-	 * @uses MeCms\Utility\StaticPage::exists()
+	 * @uses MeCms\Utility\StaticPage::get()
 	 * @uses MeCms\Utility\StaticPage::title()
 	 */
     public function view($slug = NULL) {
-		//Checks if there exists a static page, using all the passed arguments
-		if(StaticPage::exists($args = af(explode('/', $slug)))) {
+		//Checks if there exists a static page
+		$static = StaticPage::get($slug);
+		
+		if(!empty($static)) {
 			$page = new \stdClass();
 			$page->slug = $slug;
-			$page->title = StaticPage::title($args);
+			$page->title = StaticPage::title($slug);
 			
 			$this->set(compact('page'));
 			
-			return $this->render('StaticPages'.DS.implode(DS, $args));			
+			return $this->render($static);
 		}
 		
 		$this->set('page', $this->Pages->find('active')

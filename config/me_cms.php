@@ -2,6 +2,8 @@
 return ['MeCms' => [
 	//Backend
 	'backend' => [
+		//Layout you want to use for the backend
+		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
 		'layout' => 'MeCms.backend',
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
@@ -20,11 +22,15 @@ return ['MeCms' => [
 	'frontend' => [
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
-		//Layout you want to use for the backend
+		//It shows the alert for the cookie policy
+		'cookies_policy' => TRUE,
+		//Layout you want to use for the frontend
 		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
 		'layout' => 'MeCms.frontend',
 		//Contact form (enabled or disabled).
 		'contact_form' => TRUE,
+		//Facebook app ID or FALSE
+		'facebook_app_id' => FALSE,
 		//Fancybox for photos
 		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`
@@ -44,6 +50,7 @@ return ['MeCms' => [
 		//Theme. Must be located in `APP/plugins/`
 		'theme' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
+		//Note that you can use the "<!-- read-more -->" tag to indicate manually where to truncate a text
 		'truncate_to' => 1000
 	],
 	//KCFinder
