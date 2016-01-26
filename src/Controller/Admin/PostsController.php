@@ -111,7 +111,9 @@ class PostsController extends AppController {
 		$query = $this->Posts->find()
 			->contain([
 				'Categories'	=> ['fields' => ['id', 'title']],
-				'Tags',
+				'Tags'			=> function($q) {
+					return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
+				},
 				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 			])
 			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
