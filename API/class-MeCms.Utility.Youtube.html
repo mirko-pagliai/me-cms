@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Namespace MeCms\Utility | MeCms API</title>
+	<title>Class MeCms\Utility\Youtube | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -127,7 +127,7 @@
 				<li><a href="class-MeCms.Utility.BannerFile.html">BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">StaticPage</a></li>
-				<li><a href="class-MeCms.Utility.Youtube.html">Youtube</a></li>
+				<li class="active"><a href="class-MeCms.Utility.Youtube.html">Youtube</a></li>
 			</ul>
 
 
@@ -153,9 +153,10 @@
 			<li>
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
-			<li class="active">
-<span>Namespace</span>			</li>
 			<li>
+				<a href="namespace-MeCms.Utility.html" title="Summary of MeCms\Utility"><span>Namespace</span></a>
+			</li>
+			<li class="active">
 <span>Class</span>			</li>
 		</ul>
 		<ul>
@@ -169,30 +170,140 @@
 		</ul>
 	</div>
 
-<div id="content" class="namespace">
-	<h1>Namespace <a href="namespace-MeCms.html">MeCms</a>\Utility</h1>
+<div id="content" class="class">
+	<h1>Class Youtube</h1>
+
+
+	<div class="description">
+	<p>An utility to get information about YouTube videos.</p>
+
+<p>You can use this utility by adding:</p>
+
+<pre><span class="php-keyword1">use</span> MeCms\Utility\Youtube;</pre>
+	</div>
 
 
 
-<table class="summary" id="classes">
-<caption>Classes summary</caption>
-<tr>
-	<td class="name"><a href="class-MeCms.Utility.BannerFile.html">BannerFile</a></td>
-	<td>An utility to manage banners.</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Utility.PhotoFile.html">PhotoFile</a></td>
-	<td>An utility to manage photos.</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Utility.StaticPage.html">StaticPage</a></td>
-	<td>An utility to manage static pages.</td>
-</tr>
-<tr>
-	<td class="name"><a href="class-MeCms.Utility.Youtube.html">Youtube</a></td>
-	<td>An utility to get information about YouTube videos.</td>
-</tr>
-</table>
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Utility.html">Utility</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-MeCms.Utility.Youtube.html#25-64" title="Go to source code">Utility/Youtube.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="getId" id="_getId">
+
+		<td class="attributes"><code>
+			 public static
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getId">#</a>
+		<code><a href="source-class-MeCms.Utility.Youtube.html#34-54" title="Go to source code">getId</a>( <span>string <var>$url</var></span> )</code>
+
+		<div class="description short">
+			<p>Parses a YouTube url and returns the YouTube ID</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Parses a YouTube url and returns the YouTube ID</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$url</var></dt>
+					<dd>Video url</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>Youtube ID or FALSE
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Entity.Post.html#__getPreview">MeCms\Model\Entity\Post::_getPreview()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPreview" id="_getPreview">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPreview">#</a>
+		<code><a href="source-class-MeCms.Utility.Youtube.html#56-63" title="Go to source code">getPreview</a>( <span>string <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Gets the preview for a video</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the preview for a video</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>YouTube ID</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Url
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Model.Entity.Post.html#__getPreview">MeCms\Model\Entity\Post::_getPreview()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -205,7 +316,7 @@
 	</div>
 </div>
 </div>
-<script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?863631bf16d726cc3cde8f3c8081a2e99c742337"></script>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
 </body>
 </html>

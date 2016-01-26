@@ -195,6 +195,7 @@
 				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
 				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
+				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
@@ -330,7 +331,7 @@
 </span><span id="84" class="l"><a href="#84"> 84: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'photos'</span>, <span class="php-var">$this</span>-&gt;Photos-&gt;find(<span class="php-quote">'active'</span>)
 </span><span id="85" class="l"><a href="#85"> 85: </a>            -&gt;select([<span class="php-quote">'album_id'</span>, <span class="php-quote">'filename'</span>])
 </span><span id="86" class="l"><a href="#86"> 86: </a>            -&gt;limit(<span class="php-var">$limit</span>)
-</span><span id="87" class="l"><a href="#87"> 87: </a>            -&gt;order([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.id'</span>, <span class="php-var">$this</span>-&gt;Photos-&gt;alias()) =&gt; <span class="php-quote">'DESC'</span>])
+</span><span id="87" class="l"><a href="#87"> 87: </a>            -&gt;order([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.created'</span>, <span class="php-var">$this</span>-&gt;Photos-&gt;alias()) =&gt; <span class="php-quote">'DESC'</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.id'</span>, <span class="php-var">$this</span>-&gt;Photos-&gt;alias()) =&gt; <span class="php-quote">'DESC'</span>])
 </span><span id="88" class="l"><a href="#88"> 88: </a>            -&gt;cache(<span class="php-keyword2">sprintf</span>(<span class="php-quote">'widget_latest_%d'</span>, <span class="php-var">$limit</span>), <span class="php-var">$this</span>-&gt;Photos-&gt;cache)
 </span><span id="89" class="l"><a href="#89"> 89: </a>            -&gt;toArray()
 </span><span id="90" class="l"><a href="#90"> 90: </a>        );
@@ -371,6 +372,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?4a8d49bdbd683785fc7f6f8f2176c683c8d9dfd1"></script>
+<script src="elementlist.js?863631bf16d726cc3cde8f3c8081a2e99c742337"></script>
 </body>
 </html>

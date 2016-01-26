@@ -243,6 +243,52 @@ App\Controller\AppController
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="_getLanguage" id="__getLanguage">
+
+		<td class="attributes"><code>
+			 protected 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__getLanguage">#</a>
+		<code><a href="source-class-MeCms.Controller.AppController.html#32-57" title="Go to source code">_getLanguage</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the user's language</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the user's language</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>Language code or FALSE
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					Cake\Network\Exception\InternalErrorException
+				</div>
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Core\Plugin::path()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.AppController.html#_beforeFilter">MeCms\Controller\AppController::beforeFilter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="_upload" id="__upload">
 
 		<td class="attributes"><code>
@@ -255,7 +301,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#__upload">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#32-68" title="Go to source code">_upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#59-95" title="Go to source code">_upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
 
 		<div class="description short">
 			<p>Uploads a file.</p>
@@ -298,7 +344,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#70-108" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#97-138" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -325,12 +371,14 @@ You can use this method to perform logic that needs to happen before each contro
 				<h4>Uses</h4>
 				<div class="list">
 						App\Controller\AppController::beforeFilter()<br>
+						Cake\I18n\I18n::locale()<br>
 						MeTools\Network\Request::hasPrefix()<br>
 						MeTools\Network\Request::isAction()<br>
 						MeTools\Network\Request::isAdmin()<br>
+						<code><a href="class-MeCms.Controller.AppController.html#__getLanguage">MeCms\Controller\AppController::_getLanguage()</a></code><br>
 						<code><a href="class-MeCms.Controller.AppController.html#_isBanned">MeCms\Controller\AppController::isBanned()</a></code><br>
 						<code><a href="class-MeCms.Controller.AppController.html#_isOffline">MeCms\Controller\AppController::isOffline()</a></code><br>
-						<code><a href="class-MeCms.Controller.AppController.html#_setLanguage">MeCms\Controller\AppController::setLanguage()</a></code><br>
+						setLanguage()<br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
@@ -359,7 +407,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#110-130" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#140-160" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -410,7 +458,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#132-147" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#162-177" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -444,7 +492,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#149-158" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#179-188" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks if the provided user is authorized for the request</p>
@@ -487,7 +535,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isBanned">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#160-172" title="Go to source code">isBanned</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#190-202" title="Go to source code">isBanned</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the user's IP address is banned</p>
@@ -530,7 +578,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#174-193" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#204-223" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>
@@ -551,53 +599,6 @@ You can use this method to perform logic or set view variables that are required
 				<div class="list">
 						MeTools\Network\Request::isAction()<br>
 						MeTools\Network\Request::isAdmin()<br>
-				</div>
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.AppController.html#_beforeFilter">MeCms\Controller\AppController::beforeFilter()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="setLanguage" id="_setLanguage">
-
-		<td class="attributes"><code>
-			 protected 
-
-			mixed
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_setLanguage">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#195-223" title="Go to source code">setLanguage</a>( )</code>
-
-		<div class="description short">
-			<p>Sets the language</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Sets the language</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					mixed<br>Language code or FALSE
-				</div>
-
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Network\Exception\InternalErrorException
-				</div>
-
-				<h4>Uses</h4>
-				<div class="list">
-						Cake\I18n\I18n::locale()<br>
-						MeTools\Core\Plugin::path()<br>
 				</div>
 				<h4>Used by</h4>
 				<div class="list">
