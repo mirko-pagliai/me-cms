@@ -29,6 +29,17 @@ use MeCms\Controller\AppController;
  */
 class SystemsController extends AppController {
 	/**
+	 * Accept cookies policy.
+	 * It sets the cookie to remember the user accepted the cookie policy and redirects
+	 */
+	public function accept_cookies() {
+		//Sets the cookie
+		$this->Cookie->write('cookies-policy', TRUE);
+		
+		return $this->redirect($this->referer('/', TRUE));
+	}
+	
+	/**
 	 * Contact form
 	 * @see MeCms\Form\ContactForm
 	 * @uses MeCms\Form\ContactForm::_execute()

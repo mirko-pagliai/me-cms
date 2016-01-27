@@ -165,6 +165,7 @@ class AppController extends BaseController {
 	 */
 	public function initialize() {
 		//Loads components
+		$this->loadComponent('Cookie');
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
