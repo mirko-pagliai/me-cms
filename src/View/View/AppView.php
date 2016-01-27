@@ -24,6 +24,7 @@ namespace MeCms\View\View;
 
 use App\View\AppView as BaseView;
 use Cake\Routing\Router;
+use Cake\Cache\Cache;
 
 /**
  * Application view class
@@ -160,15 +161,24 @@ class AppView extends BaseView {
 	 * @uses widget()
 	 */
 	public function allWidgets() {
-		$widgets = config('frontend.widgets.general');
+		//Tries to get data from cache
+		$widgets = Cache::read($cache = $this->request->isCurrent(['_name' => 'homepage']) ? 'widget_homepage' : 'widget_general', 'frontend');
 		
-		if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
-			$widgets = config('frontend.widgets.homepage');
+		if(empty($widgets)) {
+			$widgets = config('frontend.widgets.general');
+
+			if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
+				$widgets = config('frontend.widgets.homepage');
+
+			foreach($widgets as $name => $args)
+				$widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
+
+			$widgets = implode(PHP_EOL, $widgets);
+			
+			Cache::write($cache, $widgets, 'frontend');
+		}
 		
-		foreach($widgets as $name => $args)
-			$widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
-		
-		return implode(PHP_EOL, $widgets);
+		return $widgets;
 	}
 	
 	/**

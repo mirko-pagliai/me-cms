@@ -22,6 +22,7 @@
  */
 namespace MeCms\View\View;
 
+use Cake\Cache\Cache;
 use MeCms\View\View\AppView;
 use MeTools\Core\Plugin;
 
@@ -36,26 +37,31 @@ class AdminView extends AppView {
 	 * @uses MeTools\Core\Plugin::path()
 	 */
 	protected function getMenus() {
-		$menus = [];
+		//Tries to get data from cache
+		$menus = Cache::read($cache = sprintf('menus_user_%s', $this->viewVars['auth']['id']), 'backend');
 		
-		foreach(Plugin::all(['DebugKit', 'MeTools', 'Migrations']) as $plugin) {
-			//Checks if the file is readable
-			if(!is_readable($file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.'MenuDefaultHelper.php')))
-				continue;
-			
-			//Gets all public methods
-			if(!preg_match_all('/\h*public\h+function\h+(_\w+)\(\)\h+\{/', @file_get_contents($file), $matches))
-				continue;
-			
-			//Loads the menu helper
-			$this->MenuDefault = $this->helpers()->load(sprintf('%s.MenuDefault', $plugin));
-			
-			//Automatically calls each dynamic method that generates the requested menu
-			foreach($matches[1] as $method)
-				$menus[sprintf('%s_menu', $plugin === 'MeCms' ? 'mecms' : 'plugins')][] = $this->MenuDefault->{$method}();
-			
-			//Unloads the helper
-			$this->helpers()->unload('MenuDefault');
+		if(empty($menus)) {
+			foreach(Plugin::all(['DebugKit', 'MeTools', 'Migrations']) as $plugin) {
+				//Checks if the file is readable
+				if(!is_readable($file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.'MenuDefaultHelper.php')))
+					continue;
+
+				//Gets all public methods
+				if(!preg_match_all('/\h*public\h+function\h+(_\w+)\(\)\h+\{/', @file_get_contents($file), $matches))
+					continue;
+
+				//Loads the menu helper
+				$this->MenuDefault = $this->helpers()->load(sprintf('%s.MenuDefault', $plugin));
+
+				//Automatically calls each dynamic method that generates the requested menu
+				foreach($matches[1] as $method)
+					$menus[sprintf('%s_menu', $plugin === 'MeCms' ? 'mecms' : 'plugins')][] = $this->MenuDefault->{$method}();
+
+				//Unloads the helper
+				$this->helpers()->unload('MenuDefault');
+			}
+
+			Cache::write($cache, $menus, 'backend');
 		}
 		
 		return $menus;

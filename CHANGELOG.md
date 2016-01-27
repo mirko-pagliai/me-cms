@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.1 branch
+### 2.1.9
+* frontend widgets and backend menus now use cache.
+
 ### 2.1.8
 * added the cookies policy functionality;
 * tags use space instead of the hyphen;
