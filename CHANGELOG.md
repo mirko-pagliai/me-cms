@@ -2,6 +2,7 @@
 ## 2.1 branch
 ### 2.1.9
 * improved View classes;
+* the code for backend menus and the frontend widgets has been rewritten;
 * backend topbar and backend menus now use cache.
 
 ### 2.1.8
