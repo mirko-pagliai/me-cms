@@ -28,7 +28,11 @@
 	
 	//Renders menus for all others plugin
 	foreach(\MeTools\Core\Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations']) as $plugin) {
-		echo $this->Html->h6($plugin);
-		echo $this->Menu->all($plugin);
+		$menu = $this->Menu->all($plugin);
+		
+		if(!empty($menu)) {
+			echo $this->Html->h6($plugin);
+			echo $menu;
+		}
 	}
 ?>

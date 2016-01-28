@@ -91,14 +91,13 @@ class MenuBuilderHelper extends Helper {
 	 * @return string Html code
 	 * @uses MeTools\Core\Plugin::path()
 	 * @uses render()
-	 * @throws \Cake\Network\Exception\InternalErrorException
 	 */
 	public function all($plugin = 'MeCms', $type = 'collapse') {
 		$file = \MeTools\Core\Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php');
 
 		//Checks if the file is readable
 		if(!is_readable($file))
-			throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory `{0}` not readable', $file));
+			return;
 
 		//Gets all public methods from the file
 		preg_match_all('/\h*public\h+function\h+_(\w+)\(\)\h+\{/', file_get_contents($file), $matches);
