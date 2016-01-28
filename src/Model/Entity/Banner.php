@@ -43,7 +43,8 @@ class Banner extends Entity {
      */
     protected $_accessible = [
         '*' => TRUE,
-        'id' => FALSE
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 	
 	/**
