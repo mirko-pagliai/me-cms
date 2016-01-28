@@ -21,6 +21,7 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+use Cake\I18n\Time;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('InflectedRoute');
@@ -105,6 +106,20 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 			'pass'	=> ['year', 'month', 'day']
 		]
 	);
+	$routes->connect('/posts/today', [
+		'controller'	=> 'Posts', 
+		'action'		=> 'index_by_date',
+		'year'			=> date('Y'),
+		'month'			=> date('m'),
+		'day'			=> date('d'),
+	], ['_name' => 'posts_today', 'pass' => ['year', 'month', 'day']]);
+	$routes->connect('/posts/yesterday', [
+		'controller'	=> 'Posts', 
+		'action'		=> 'index_by_date',
+		'year'			=> (new Time('1 days ago'))->i18nFormat('YYYY'),
+		'month'			=> (new Time('1 days ago'))->i18nFormat('MM'),
+		'day'			=> (new Time('1 days ago'))->i18nFormat('dd'),
+	], ['_name' => 'posts_yesterday', 'pass' => ['year', 'month', 'day']]);
 	
 	/**
 	 * This allows backward compatibility for URLs like:
