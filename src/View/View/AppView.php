@@ -56,6 +56,7 @@ class AppView extends BaseView {
 	 * Gets the title for layou
 	 * @return string Title
 	 * @uses title
+	 * @uses viewVars
 	 */
 	protected function _getTitleForLayout() {
 		if(!empty($this->title))
@@ -106,7 +107,7 @@ class AppView extends BaseView {
 	 * @param string|NULL $layout Layout to use
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
 	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
-     * @throws Cake\Core\Exception\Exception
+	 * @uses App\View\AppView::render()
 	 * @uses layout
 	 * @uses theme
 	 */
@@ -128,8 +129,10 @@ class AppView extends BaseView {
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
-     * @throws Cake\Core\Exception\Exception
+	 * @uses App\View\AppView::renderLayout()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
+	 * @uses MeTools\View\Helper\LibraryHelper::analytics()
+	 * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
 	 * @uses _getTitleForLayout()
 	 * @uses _addFacebookTags()
 	 */
