@@ -3,6 +3,8 @@
 	ob_start();
 ?>
 
+<p>Entrata in vigore: 28 gennaio 2016.</p>
+	
 <h2>Cosa sono i cookie?</h2>
 <p>
 	I cookie sono piccoli file di testo memorizzati sul vostro computer o dispositivo durante la navigazione in internet. I cookie possono 

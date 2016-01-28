@@ -23,6 +23,19 @@
 ?>
 
 <footer class="navbar-fixed-bottom">
+	<?php
+		$links = [
+			$this->Html->link(__d('me_cms', 'Search'), ['_name' => 'search_posts']),
+			$this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
+			$this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss')
+		];
+		
+		if(config('frontend.contact_form'))
+			$links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contact_form']);
+		
+		echo $this->Html->ul($links);
+	?>
+	
 	<p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCMS', date('Y')) ?></p>
 	<p><?= __d('me_cms', 'Developed by {0} for {1}', 'Mirko Pagliai', $this->Html->link('Nova Atlantis LTD', 'http://novatlantis.it', ['target' => '_blank'])) ?></p>
 </footer>

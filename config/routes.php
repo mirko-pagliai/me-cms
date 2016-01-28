@@ -21,6 +21,7 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+use Cake\I18n\Time;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('InflectedRoute');
@@ -93,18 +94,29 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
-	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
+	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'posts_rss']);
 	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'search_posts']);
-	$routes->connect('/posts/:year/:month/:day',
-		['controller' => 'Posts', 'action' => 'index_by_date'],
-		[
-			'_name'	=> 'posts_by_date',
-			'year'	=> '[12][0-9]{3}',
-			'month'	=> '0[1-9]|1[012]',
-			'day'	=> '0[1-9]|[12][0-9]|3[01]',
-			'pass'	=> ['year', 'month', 'day']
-		]
-	);
+	$routes->connect('/posts/:year/:month/:day', ['controller' => 'Posts', 'action' => 'index_by_date'], [
+		'_name'	=> 'posts_by_date',
+		'year'	=> '[12][0-9]{3}',
+		'month'	=> '0[1-9]|1[012]',
+		'day'	=> '0[1-9]|[12][0-9]|3[01]',
+		'pass'	=> ['year', 'month', 'day']
+	]);
+	$routes->connect('/posts/today', [
+		'controller'	=> 'Posts', 
+		'action'		=> 'index_by_date',
+		'year'			=> date('Y'),
+		'month'			=> date('m'),
+		'day'			=> date('d'),
+	], ['_name' => 'posts_today', 'pass' => ['year', 'month', 'day']]);
+	$routes->connect('/posts/yesterday', [
+		'controller'	=> 'Posts', 
+		'action'		=> 'index_by_date',
+		'year'			=> (new Time('1 days ago'))->i18nFormat('YYYY'),
+		'month'			=> (new Time('1 days ago'))->i18nFormat('MM'),
+		'day'			=> (new Time('1 days ago'))->i18nFormat('dd'),
+	], ['_name' => 'posts_yesterday', 'pass' => ['year', 'month', 'day']]);
 	
 	/**
 	 * This allows backward compatibility for URLs like:
@@ -118,9 +130,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Systems controller
 	 */
-	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
+	$routes->connect('/accept/cookies', ['controller' => 'Systems', 'action' => 'accept_cookies'], ['_name' => 'accept_cookies']);
 	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
 	$routes->connect('/contact/form', ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
+	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
 	
 	/**
 	 * Users controller
@@ -133,7 +146,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
 	$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
 	$routes->connect('/password/forgot', ['controller' => 'Users', 'action' => 'forgot_password'], ['_name' => 'forgot_password']);
-	$routes->connect(	'/password/reset/:id/:token',
+	$routes->connect('/password/reset/:id/:token',
 		['controller' => 'Users', 'action' => 'reset_password'],
 		['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);

@@ -61,4 +61,13 @@ class Youtube {
 	public static function getPreview($id) {
 		return sprintf('http://img.youtube.com/vi/%s/0.jpg', $id);
 	}
+	
+	/**
+	 * Gets the url for a video
+	 * @param string $id YouTube ID
+	 * @return string Url
+	 */
+	public static function getUrl($id) {
+		return sprintf('http://youtu.be/%s', $id);
+	}
 }

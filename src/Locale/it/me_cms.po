@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-01-26 17:58+0000\n"
-"PO-Revision-Date: 2016-01-26 19:03+0100\n"
+"POT-Creation-Date: 2016-01-28 18:39+0000\n"
+"PO-Revision-Date: 2016-01-28 19:40+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -13,12 +13,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it\n"
 
-#: Controller/AppController.php:79
+#: Controller/AppController.php:78
 msgid "The file was not successfully moved to the target directory"
 msgstr ""
 "Il file non è stato correttamente spostato nella directory di destinazione"
 
-#: Controller/AppController.php:82
+#: Controller/AppController.php:81
 msgid "The file was not successfully uploaded"
 msgstr "Il file non è stato correttamente caricato"
 
@@ -39,16 +39,16 @@ msgstr "Puoi effettuare una nuova ricerca fra {0} secondi"
 msgid "You have to search at least a word of {0} characters"
 msgstr "Devi cercare un parola di almeno {0} caratteri"
 
-#: Controller/SystemsController.php:41
+#: Controller/SystemsController.php:52
 #: Controller/UsersController.php:153;253;360
 msgid "Disabled"
 msgstr "Disabilitato"
 
-#: Controller/SystemsController.php:55
+#: Controller/SystemsController.php:66
 msgid "The email has been sent"
 msgstr "L'email è stata inviata"
 
-#: Controller/SystemsController.php:59
+#: Controller/SystemsController.php:70
 msgid "The email was not sent"
 msgstr "L'email non è stata inviata"
 
@@ -514,7 +514,7 @@ msgstr "lettere minuscole"
 msgid "Creates an admin user"
 msgstr "Crea un utente amministratore"
 
-#: Shell/UpdateShell.php:90;91
+#: Shell/UpdateShell.php:118;119;120
 msgid "Updates to {0} version"
 msgstr "Aggiorna alla versione {0}"
 
@@ -623,7 +623,7 @@ msgstr "Etichetta"
 #: Shell/UserShell.php:130
 #: Template/Admin/Users/index.ctp:26;31
 #: Template/Admin/UsersGroups/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:149
+#: View/Helper/MeCmsMenuHelper.php:148
 msgid "Users"
 msgstr "Utenti"
 
@@ -637,7 +637,7 @@ msgstr "Non ci sono utenti"
 #: Template/Admin/Users/index.ctp:76
 #: Template/Admin/Users/view.ctp:74
 #: Template/Posts/index.ctp:50
-#: View/Helper/MenuDefaultHelper.php:62
+#: View/Helper/MeCmsMenuHelper.php:61
 msgid "Posts"
 msgstr "Articoli"
 
@@ -647,6 +647,7 @@ msgid "Status"
 msgstr "Stato"
 
 #: Shell/UserShell.php:159
+#: Template/Admin/Banners/index.ctp:64
 #: Template/Admin/Pages/add.ctp:38
 #: Template/Admin/Pages/edit.ctp:38
 #: Template/Admin/Pages/index.ctp:70
@@ -765,7 +766,7 @@ msgstr "Anteprima"
 
 #: Template/Admin/Banners/index.ctp:25;28
 #: Template/Admin/BannersPositions/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:123
+#: View/Helper/MeCmsMenuHelper.php:122
 msgid "Banners"
 msgstr "Banner"
 
@@ -814,12 +815,12 @@ msgstr "Url"
 msgid "Click"
 msgstr "Click"
 
-#: Template/Admin/Banners/index.ctp:75
+#: Template/Admin/Banners/index.ctp:76
 #: Template/Admin/PhotosAlbums/index.ctp:49
 msgid "Not published"
 msgstr "Non pubblicato"
 
-#: Template/Admin/Banners/index.ctp:80
+#: Template/Admin/Banners/index.ctp:81
 #: Template/Admin/BannersPositions/index.ctp:48
 #: Template/Admin/Pages/index.ctp:90
 #: Template/Admin/Photos/index.ctp:41
@@ -833,7 +834,7 @@ msgstr "Non pubblicato"
 msgid "Edit"
 msgstr "Modifica"
 
-#: Template/Admin/Banners/index.ctp:84
+#: Template/Admin/Banners/index.ctp:85
 #: Template/Admin/Pages/index.ctp:94
 #: Template/Admin/Pages/statics.ctp:44
 #: Template/Admin/Photos/index.ctp:48
@@ -844,7 +845,7 @@ msgstr "Modifica"
 msgid "Open"
 msgstr "Apri"
 
-#: Template/Admin/Banners/index.ctp:88
+#: Template/Admin/Banners/index.ctp:89
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:46
@@ -857,7 +858,7 @@ msgstr "Apri"
 msgid "Delete"
 msgstr "Cancella"
 
-#: Template/Admin/Banners/index.ctp:88
+#: Template/Admin/Banners/index.ctp:89
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:46
@@ -870,7 +871,7 @@ msgstr "Cancella"
 msgid "Are you sure you want to delete this?"
 msgstr "Sei sicuro di volerlo cancellare?"
 
-#: Template/Admin/Banners/index.ctp:94
+#: Template/Admin/Banners/index.ctp:95
 #: Template/Admin/BannersPositions/index.ctp:57
 #: Template/Admin/PhotosAlbums/index.ctp:71
 #: Template/Admin/Posts/index.ctp:103;124
@@ -881,7 +882,7 @@ msgid "View items that belong to this category"
 msgstr "Guarda gli oggetti che appartengono a questa categoria"
 
 #: Template/Admin/Banners/upload.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:113
+#: View/Helper/MeCmsMenuHelper.php:112
 msgid "Upload banners"
 msgstr "Carica banner"
 
@@ -894,7 +895,7 @@ msgid "Add banners position"
 msgstr "Aggiungi posizione dei banner"
 
 #: Template/Admin/BannersPositions/add.ctp:36
-#: View/Helper/MenuDefaultHelper.php:120
+#: View/Helper/MeCmsMenuHelper.php:119
 msgid "Add position"
 msgstr "Aggiungi posizioni"
 
@@ -921,7 +922,7 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: Template/Admin/Pages/add.ctp:26;33;73
-#: View/Helper/MenuDefaultHelper.php:78
+#: View/Helper/MeCmsMenuHelper.php:77
 msgid "Add page"
 msgstr "Aggiungi pagina"
 
@@ -1019,7 +1020,7 @@ msgstr "Modifica pagina"
 #: Template/Cell/Pages/pages.ctp:34
 #: Template/Element/frontend/topbar.ctp:43
 #: Template/Pages/index.ctp:25;29
-#: View/Helper/MenuDefaultHelper.php:82
+#: View/Helper/MeCmsMenuHelper.php:81
 msgid "Pages"
 msgstr "Pagine"
 
@@ -1051,31 +1052,31 @@ msgstr "Bozza"
 
 #: Template/Admin/Pages/index.ctp:107
 #: Template/Admin/Posts/index.ctp:133
-#: View/View/AdminView.php:94
+#: View/View/AdminView.php:69
 msgid "Very low"
 msgstr "Molto bassa"
 
 #: Template/Admin/Pages/index.ctp:110
 #: Template/Admin/Posts/index.ctp:136
-#: View/View/AdminView.php:95
+#: View/View/AdminView.php:70
 msgid "Low"
 msgstr "Bassa"
 
 #: Template/Admin/Pages/index.ctp:113
 #: Template/Admin/Posts/index.ctp:139
-#: View/View/AdminView.php:97
+#: View/View/AdminView.php:72
 msgid "High"
 msgstr "Alta"
 
 #: Template/Admin/Pages/index.ctp:116
 #: Template/Admin/Posts/index.ctp:142
-#: View/View/AdminView.php:98
+#: View/View/AdminView.php:73
 msgid "Very high"
 msgstr "Molto alta"
 
 #: Template/Admin/Pages/index.ctp:119
 #: Template/Admin/Posts/index.ctp:145
-#: View/View/AdminView.php:96
+#: View/View/AdminView.php:71
 msgid "Normal"
 msgstr "Normale"
 
@@ -1097,7 +1098,7 @@ msgid "Album"
 msgstr "Album"
 
 #: Template/Admin/Photos/upload.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:92
+#: View/Helper/MeCmsMenuHelper.php:91
 msgid "Upload photos"
 msgstr "Carica foto"
 
@@ -1110,7 +1111,7 @@ msgid "Add photos album"
 msgstr "Aggiungi album"
 
 #: Template/Admin/PhotosAlbums/add.ctp:57
-#: View/Helper/MenuDefaultHelper.php:94
+#: View/Helper/MeCmsMenuHelper.php:93
 msgid "Add album"
 msgstr "Aggiungi album"
 
@@ -1129,7 +1130,7 @@ msgstr "Album"
 
 #: Template/Admin/PhotosAlbums/index.ctp:36
 #: Template/Element/frontend/topbar.ctp:44
-#: View/Helper/MenuDefaultHelper.php:97
+#: View/Helper/MeCmsMenuHelper.php:96
 msgid "Photos"
 msgstr "Foto"
 
@@ -1139,7 +1140,7 @@ msgid "View"
 msgstr "Vedi"
 
 #: Template/Admin/Posts/add.ctp:26;34;114
-#: View/Helper/MenuDefaultHelper.php:50
+#: View/Helper/MeCmsMenuHelper.php:49
 msgid "Add post"
 msgstr "Aggiungi articolo"
 
@@ -1224,7 +1225,7 @@ msgid "View items that belong to this element"
 msgstr "Guarda gli oggetti che appartengono a questo elemento"
 
 #: Template/Admin/Systems/browser.ctp:26;31
-#: View/Helper/MenuDefaultHelper.php:166
+#: View/Helper/MeCmsMenuHelper.php:165
 msgid "Media browser"
 msgstr "Browser multimediale"
 
@@ -1233,7 +1234,7 @@ msgid "Type"
 msgstr "Tipo"
 
 #: Template/Admin/Systems/changelogs.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:167
+#: View/Helper/MeCmsMenuHelper.php:166
 msgid "Changelogs"
 msgstr "Changelog"
 
@@ -1242,7 +1243,7 @@ msgid "Changelog"
 msgstr "Changelog"
 
 #: Template/Admin/Systems/checkup.ctp:26;39
-#: View/Helper/MenuDefaultHelper.php:165
+#: View/Helper/MeCmsMenuHelper.php:164
 msgid "System checkup"
 msgstr "Checkup del sistema"
 
@@ -1260,7 +1261,6 @@ msgid "The cache is disabled or debugging is active"
 msgstr "La cache è disabilitata o il debug è attivo"
 
 #: Template/Admin/Systems/checkup.ctp:71
-#: Template/Element/backend/sidebar.ctp:30
 msgid "Plugins"
 msgstr "Plugin"
 
@@ -1317,7 +1317,7 @@ msgid "Temporary directories"
 msgstr "Directory temporanee"
 
 #: Template/Admin/Systems/logs.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:173
+#: View/Helper/MeCmsMenuHelper.php:172
 msgid "Log viewer"
 msgstr "Visualizzatore log"
 
@@ -1326,7 +1326,7 @@ msgid "Log file"
 msgstr "File di log"
 
 #: Template/Admin/Systems/temporary.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:164
+#: View/Helper/MeCmsMenuHelper.php:163
 msgid "Temporary files"
 msgstr "File temporanei"
 
@@ -1407,7 +1407,7 @@ msgid "Tag"
 msgstr "Tag"
 
 #: Template/Admin/Users/add.ctp:25;28;75
-#: View/Helper/MenuDefaultHelper.php:139
+#: View/Helper/MeCmsMenuHelper.php:138
 msgid "Add user"
 msgstr "Aggiungi utente"
 
@@ -1505,7 +1505,7 @@ msgid "Add users group"
 msgstr "Aggiungi gruppo utenti"
 
 #: Template/Admin/UsersGroups/add.ctp:45
-#: View/Helper/MenuDefaultHelper.php:146
+#: View/Helper/MeCmsMenuHelper.php:145
 msgid "Add group"
 msgstr "Aggiungi gruppo"
 
@@ -1559,6 +1559,7 @@ msgid "Search posts"
 msgstr "Cerca articoli"
 
 #: Template/Cell/Posts/search.ctp:38
+#: Template/Element/frontend/footer.ctp:28
 #: Template/Posts/search.ctp:35;37
 msgid "Search"
 msgstr "Cerca"
@@ -1615,11 +1616,24 @@ msgstr "Ok"
 msgid "Read more"
 msgstr "Leggi tutto"
 
-#: Template/Element/frontend/footer.ctp:26
+#: Template/Element/frontend/footer.ctp:29
+msgid "Cookies policy"
+msgstr "Politica dei cookie"
+
+#: Template/Element/frontend/footer.ctp:30
+msgid "Feed RSS"
+msgstr "Feed RSS"
+
+#: Template/Element/frontend/footer.ctp:34
+#: Template/Systems/contact_form.ctp:25;28
+msgid "Contact us"
+msgstr "Contattaci"
+
+#: Template/Element/frontend/footer.ctp:39
 msgid "Powered by {0}. Copyright {1}"
 msgstr "Powered by {0}. Copyright {1}"
 
-#: Template/Element/frontend/footer.ctp:27
+#: Template/Element/frontend/footer.ctp:40
 msgid "Developed by {0} for {1}"
 msgstr "Sviluppato da {0} per {1}"
 
@@ -1757,13 +1771,9 @@ msgid "You have searched for: {0}"
 msgstr "Hai cercato: {0}"
 
 #: Template/Posts/rss/rss.ctp:30;32
-#: View/View/AppView.php:140
+#: View/View/AppView.php:145
 msgid "Latest posts"
 msgstr "Ultimi articoli"
-
-#: Template/Systems/contact_form.ctp:25;28
-msgid "Contact us"
-msgstr "Contattaci"
 
 #: Template/Systems/contact_form.ctp:41
 #: Template/Users/forgot_password.ctp:36
@@ -1818,51 +1828,51 @@ msgstr "Inserisci la tua password"
 msgid "Repeat your password"
 msgstr "Ripeti la tua password"
 
-#: View/Helper/MenuDefaultHelper.php:49
+#: View/Helper/MeCmsMenuHelper.php:48
 msgid "List posts"
 msgstr "Elenca articoli"
 
-#: View/Helper/MenuDefaultHelper.php:56
+#: View/Helper/MeCmsMenuHelper.php:55
 msgid "List categories"
 msgstr "Elenca categorie"
 
-#: View/Helper/MenuDefaultHelper.php:57
+#: View/Helper/MeCmsMenuHelper.php:56
 msgid "Add category"
 msgstr "Aggiungi categoria"
 
-#: View/Helper/MenuDefaultHelper.php:60
+#: View/Helper/MeCmsMenuHelper.php:59
 msgid "List tags"
 msgstr "Elenca tag"
 
-#: View/Helper/MenuDefaultHelper.php:73
+#: View/Helper/MeCmsMenuHelper.php:72
 msgid "List pages"
 msgstr "Elenca pagine"
 
-#: View/Helper/MenuDefaultHelper.php:80
+#: View/Helper/MeCmsMenuHelper.php:79
 msgid "List static pages"
 msgstr "Elenca pagine statiche"
 
-#: View/Helper/MenuDefaultHelper.php:93
+#: View/Helper/MeCmsMenuHelper.php:92
 msgid "List albums"
 msgstr "Elenca album"
 
-#: View/Helper/MenuDefaultHelper.php:112
+#: View/Helper/MeCmsMenuHelper.php:111
 msgid "List banners"
 msgstr "Elenca banner"
 
-#: View/Helper/MenuDefaultHelper.php:119
+#: View/Helper/MeCmsMenuHelper.php:118
 msgid "List positions"
 msgstr "Elenca posizioni"
 
-#: View/Helper/MenuDefaultHelper.php:138
+#: View/Helper/MeCmsMenuHelper.php:137
 msgid "List users"
 msgstr "Elenca utenti"
 
-#: View/Helper/MenuDefaultHelper.php:145
+#: View/Helper/MeCmsMenuHelper.php:144
 msgid "List groups"
 msgstr "Elenca gruppi"
 
-#: View/Helper/MenuDefaultHelper.php:176
+#: View/Helper/MeCmsMenuHelper.php:175
 msgid "System"
 msgstr "Sistema"
 

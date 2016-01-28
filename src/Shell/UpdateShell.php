@@ -36,6 +36,13 @@ class UpdateShell extends Shell {
 	protected $connection;
 	
 	/**
+	 * Now for MySql
+	 * @see initialize()
+	 * @var string 
+	 */
+	protected $now;
+
+	/**
 	 * Initialize
 	 * @uses $connection
 	 */
@@ -44,6 +51,26 @@ class UpdateShell extends Shell {
 		
 		//Gets database connection
 		$this->connection = \Cake\Datasource\ConnectionManager::get('default');
+		
+		//Sets now for MySql
+		$this->now = (new \Cake\I18n\Time)->now()->i18nFormat(FORMAT_FOR_MYSQL);
+	}
+	
+	/**
+	 * Updates to 2.1.9 version
+	 * @uses $connection
+	 */
+	public function to2v1v9() {
+		$this->loadModel('MeCms.Banners');
+		$this->loadModel('MeCms.Photos');
+		
+		//Adds "created" and "modified" field to the banners table and sets the default value
+		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `click_count`, ADD `modified` DATETIME NULL AFTER `created`;', $this->Banners->table()));
+		$this->Banners->query()->update()->set(['created' => $this->now, 'modified' => $this->now])->execute();
+		
+		//Adds "modified" field to the photos table and sets the default value
+		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->Photos->table()));
+		$this->Photos->query()->update()->set(['modified' => $this->now])->execute();
 	}
 	
 	/**
@@ -64,8 +91,9 @@ class UpdateShell extends Shell {
 				->where(['id' => $tag->id])
 				->execute();
 		
-		//Adds the "created" field to the photos table
-		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `description`', $this->Photos->table()));
+		//Adds "created" field to the photos table and sets the default value
+		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL DEFAULT NULL AFTER `description`;', $this->Photos->table()));
+		$this->Photos->query()->update()->set(['created' => $this->now])->execute();
 	}
 	
 	/**
@@ -87,6 +115,7 @@ class UpdateShell extends Shell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+			'to2v1v9' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.9')],
 			'to2v1v8' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.8')],
 			'to2v1v7' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.7')]
 		]);

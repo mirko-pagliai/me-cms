@@ -34,11 +34,16 @@ $options = [
 
 return ['Cache' => [
 	//App default configuration
-	'default'	=> array_merge($options, ['path' => CACHE]),
+	'default'	=> am($options, ['path' => CACHE]),
 	
-	'banners'	=> array_merge($options, ['path' => ME_CMS_PATH.'banners']),
-	'pages'		=> array_merge($options, ['path' => ME_CMS_PATH.'pages']),
-	'photos'	=> array_merge($options, ['path' => ME_CMS_PATH.'photos']),
-	'posts'		=> array_merge($options, ['path' => ME_CMS_PATH.'posts']),
-	'users'		=> array_merge($options, ['path' => ME_CMS_PATH.'users'])
+	//Backend and frontend configurations
+	'backend'	=> am($options, ['path' => ME_CMS_PATH.'backend']),
+	'frontend'	=> am($options, ['path' => ME_CMS_PATH.'frontend']),
+	
+	//Groups
+	'banners'	=> am($options, ['path' => ME_CMS_PATH.'banners']),
+	'pages'		=> am($options, ['path' => ME_CMS_PATH.'pages']),
+	'photos'	=> am($options, ['path' => ME_CMS_PATH.'photos']),
+	'posts'		=> am($options, ['path' => ME_CMS_PATH.'posts']),
+	'users'		=> am($options, ['path' => ME_CMS_PATH.'users'])
 ]];

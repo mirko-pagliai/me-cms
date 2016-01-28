@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-01-26 17:58+0000\n"
+"POT-Creation-Date: 2016-01-28 18:39+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/AppController.php:79
+#: Controller/AppController.php:78
 msgid "The file was not successfully moved to the target directory"
 msgstr ""
 
-#: Controller/AppController.php:82
+#: Controller/AppController.php:81
 msgid "The file was not successfully uploaded"
 msgstr ""
 
@@ -38,16 +38,16 @@ msgstr ""
 msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
-#: Controller/SystemsController.php:41
+#: Controller/SystemsController.php:52
 #: Controller/UsersController.php:153;253;360
 msgid "Disabled"
 msgstr ""
 
-#: Controller/SystemsController.php:55
+#: Controller/SystemsController.php:66
 msgid "The email has been sent"
 msgstr ""
 
-#: Controller/SystemsController.php:59
+#: Controller/SystemsController.php:70
 msgid "The email was not sent"
 msgstr ""
 
@@ -490,7 +490,7 @@ msgstr ""
 msgid "Creates an admin user"
 msgstr ""
 
-#: Shell/UpdateShell.php:90;91
+#: Shell/UpdateShell.php:118;119;120
 msgid "Updates to {0} version"
 msgstr ""
 
@@ -599,7 +599,7 @@ msgstr ""
 #: Shell/UserShell.php:130
 #: Template/Admin/Users/index.ctp:26;31
 #: Template/Admin/UsersGroups/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:149
+#: View/Helper/MeCmsMenuHelper.php:148
 msgid "Users"
 msgstr ""
 
@@ -613,7 +613,7 @@ msgstr ""
 #: Template/Admin/Users/index.ctp:76
 #: Template/Admin/Users/view.ctp:74
 #: Template/Posts/index.ctp:50
-#: View/Helper/MenuDefaultHelper.php:62
+#: View/Helper/MeCmsMenuHelper.php:61
 msgid "Posts"
 msgstr ""
 
@@ -623,6 +623,7 @@ msgid "Status"
 msgstr ""
 
 #: Shell/UserShell.php:159
+#: Template/Admin/Banners/index.ctp:64
 #: Template/Admin/Pages/add.ctp:38
 #: Template/Admin/Pages/edit.ctp:38
 #: Template/Admin/Pages/index.ctp:70
@@ -741,7 +742,7 @@ msgstr ""
 
 #: Template/Admin/Banners/index.ctp:25;28
 #: Template/Admin/BannersPositions/index.ctp:36
-#: View/Helper/MenuDefaultHelper.php:123
+#: View/Helper/MeCmsMenuHelper.php:122
 msgid "Banners"
 msgstr ""
 
@@ -790,12 +791,12 @@ msgstr ""
 msgid "Click"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:75
+#: Template/Admin/Banners/index.ctp:76
 #: Template/Admin/PhotosAlbums/index.ctp:49
 msgid "Not published"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:80
+#: Template/Admin/Banners/index.ctp:81
 #: Template/Admin/BannersPositions/index.ctp:48
 #: Template/Admin/Pages/index.ctp:90
 #: Template/Admin/Photos/index.ctp:41
@@ -809,7 +810,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:84
+#: Template/Admin/Banners/index.ctp:85
 #: Template/Admin/Pages/index.ctp:94
 #: Template/Admin/Pages/statics.ctp:44
 #: Template/Admin/Photos/index.ctp:48
@@ -820,7 +821,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:88
+#: Template/Admin/Banners/index.ctp:89
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:46
@@ -833,7 +834,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:88
+#: Template/Admin/Banners/index.ctp:89
 #: Template/Admin/BannersPositions/index.ctp:49
 #: Template/Admin/Pages/index.ctp:98
 #: Template/Admin/Photos/index.ctp:46
@@ -846,7 +847,7 @@ msgstr ""
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:94
+#: Template/Admin/Banners/index.ctp:95
 #: Template/Admin/BannersPositions/index.ctp:57
 #: Template/Admin/PhotosAlbums/index.ctp:71
 #: Template/Admin/Posts/index.ctp:103;124
@@ -857,7 +858,7 @@ msgid "View items that belong to this category"
 msgstr ""
 
 #: Template/Admin/Banners/upload.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:113
+#: View/Helper/MeCmsMenuHelper.php:112
 msgid "Upload banners"
 msgstr ""
 
@@ -870,7 +871,7 @@ msgid "Add banners position"
 msgstr ""
 
 #: Template/Admin/BannersPositions/add.ctp:36
-#: View/Helper/MenuDefaultHelper.php:120
+#: View/Helper/MeCmsMenuHelper.php:119
 msgid "Add position"
 msgstr ""
 
@@ -897,7 +898,7 @@ msgid "Add"
 msgstr ""
 
 #: Template/Admin/Pages/add.ctp:26;33;73
-#: View/Helper/MenuDefaultHelper.php:78
+#: View/Helper/MeCmsMenuHelper.php:77
 msgid "Add page"
 msgstr ""
 
@@ -991,7 +992,7 @@ msgstr ""
 #: Template/Cell/Pages/pages.ctp:34
 #: Template/Element/frontend/topbar.ctp:43
 #: Template/Pages/index.ctp:25;29
-#: View/Helper/MenuDefaultHelper.php:82
+#: View/Helper/MeCmsMenuHelper.php:81
 msgid "Pages"
 msgstr ""
 
@@ -1023,31 +1024,31 @@ msgstr ""
 
 #: Template/Admin/Pages/index.ctp:107
 #: Template/Admin/Posts/index.ctp:133
-#: View/View/AdminView.php:94
+#: View/View/AdminView.php:69
 msgid "Very low"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:110
 #: Template/Admin/Posts/index.ctp:136
-#: View/View/AdminView.php:95
+#: View/View/AdminView.php:70
 msgid "Low"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:113
 #: Template/Admin/Posts/index.ctp:139
-#: View/View/AdminView.php:97
+#: View/View/AdminView.php:72
 msgid "High"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:116
 #: Template/Admin/Posts/index.ctp:142
-#: View/View/AdminView.php:98
+#: View/View/AdminView.php:73
 msgid "Very high"
 msgstr ""
 
 #: Template/Admin/Pages/index.ctp:119
 #: Template/Admin/Posts/index.ctp:145
-#: View/View/AdminView.php:96
+#: View/View/AdminView.php:71
 msgid "Normal"
 msgstr ""
 
@@ -1069,7 +1070,7 @@ msgid "Album"
 msgstr ""
 
 #: Template/Admin/Photos/upload.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:92
+#: View/Helper/MeCmsMenuHelper.php:91
 msgid "Upload photos"
 msgstr ""
 
@@ -1082,7 +1083,7 @@ msgid "Add photos album"
 msgstr ""
 
 #: Template/Admin/PhotosAlbums/add.ctp:57
-#: View/Helper/MenuDefaultHelper.php:94
+#: View/Helper/MeCmsMenuHelper.php:93
 msgid "Add album"
 msgstr ""
 
@@ -1101,7 +1102,7 @@ msgstr ""
 
 #: Template/Admin/PhotosAlbums/index.ctp:36
 #: Template/Element/frontend/topbar.ctp:44
-#: View/Helper/MenuDefaultHelper.php:97
+#: View/Helper/MeCmsMenuHelper.php:96
 msgid "Photos"
 msgstr ""
 
@@ -1111,7 +1112,7 @@ msgid "View"
 msgstr ""
 
 #: Template/Admin/Posts/add.ctp:26;34;114
-#: View/Helper/MenuDefaultHelper.php:50
+#: View/Helper/MeCmsMenuHelper.php:49
 msgid "Add post"
 msgstr ""
 
@@ -1192,7 +1193,7 @@ msgid "View items that belong to this element"
 msgstr ""
 
 #: Template/Admin/Systems/browser.ctp:26;31
-#: View/Helper/MenuDefaultHelper.php:166
+#: View/Helper/MeCmsMenuHelper.php:165
 msgid "Media browser"
 msgstr ""
 
@@ -1201,7 +1202,7 @@ msgid "Type"
 msgstr ""
 
 #: Template/Admin/Systems/changelogs.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:167
+#: View/Helper/MeCmsMenuHelper.php:166
 msgid "Changelogs"
 msgstr ""
 
@@ -1210,7 +1211,7 @@ msgid "Changelog"
 msgstr ""
 
 #: Template/Admin/Systems/checkup.ctp:26;39
-#: View/Helper/MenuDefaultHelper.php:165
+#: View/Helper/MeCmsMenuHelper.php:164
 msgid "System checkup"
 msgstr ""
 
@@ -1228,7 +1229,6 @@ msgid "The cache is disabled or debugging is active"
 msgstr ""
 
 #: Template/Admin/Systems/checkup.ctp:71
-#: Template/Element/backend/sidebar.ctp:30
 msgid "Plugins"
 msgstr ""
 
@@ -1285,7 +1285,7 @@ msgid "Temporary directories"
 msgstr ""
 
 #: Template/Admin/Systems/logs.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:173
+#: View/Helper/MeCmsMenuHelper.php:172
 msgid "Log viewer"
 msgstr ""
 
@@ -1294,7 +1294,7 @@ msgid "Log file"
 msgstr ""
 
 #: Template/Admin/Systems/temporary.ctp:25;28
-#: View/Helper/MenuDefaultHelper.php:164
+#: View/Helper/MeCmsMenuHelper.php:163
 msgid "Temporary files"
 msgstr ""
 
@@ -1363,7 +1363,7 @@ msgid "Tag"
 msgstr ""
 
 #: Template/Admin/Users/add.ctp:25;28;75
-#: View/Helper/MenuDefaultHelper.php:139
+#: View/Helper/MeCmsMenuHelper.php:138
 msgid "Add user"
 msgstr ""
 
@@ -1457,7 +1457,7 @@ msgid "Add users group"
 msgstr ""
 
 #: Template/Admin/UsersGroups/add.ctp:45
-#: View/Helper/MenuDefaultHelper.php:146
+#: View/Helper/MeCmsMenuHelper.php:145
 msgid "Add group"
 msgstr ""
 
@@ -1511,6 +1511,7 @@ msgid "Search posts"
 msgstr ""
 
 #: Template/Cell/Posts/search.ctp:38
+#: Template/Element/frontend/footer.ctp:28
 #: Template/Posts/search.ctp:35;37
 msgid "Search"
 msgstr ""
@@ -1567,11 +1568,24 @@ msgstr ""
 msgid "Read more"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:26
+#: Template/Element/frontend/footer.ctp:29
+msgid "Cookies policy"
+msgstr ""
+
+#: Template/Element/frontend/footer.ctp:30
+msgid "Feed RSS"
+msgstr ""
+
+#: Template/Element/frontend/footer.ctp:34
+#: Template/Systems/contact_form.ctp:25;28
+msgid "Contact us"
+msgstr ""
+
+#: Template/Element/frontend/footer.ctp:39
 msgid "Powered by {0}. Copyright {1}"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:27
+#: Template/Element/frontend/footer.ctp:40
 msgid "Developed by {0} for {1}"
 msgstr ""
 
@@ -1707,12 +1721,8 @@ msgid "You have searched for: {0}"
 msgstr ""
 
 #: Template/Posts/rss/rss.ctp:30;32
-#: View/View/AppView.php:140
+#: View/View/AppView.php:145
 msgid "Latest posts"
-msgstr ""
-
-#: Template/Systems/contact_form.ctp:25;28
-msgid "Contact us"
 msgstr ""
 
 #: Template/Systems/contact_form.ctp:41
@@ -1768,51 +1778,51 @@ msgstr ""
 msgid "Repeat your password"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:49
+#: View/Helper/MeCmsMenuHelper.php:48
 msgid "List posts"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:56
+#: View/Helper/MeCmsMenuHelper.php:55
 msgid "List categories"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:57
+#: View/Helper/MeCmsMenuHelper.php:56
 msgid "Add category"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:60
+#: View/Helper/MeCmsMenuHelper.php:59
 msgid "List tags"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:73
+#: View/Helper/MeCmsMenuHelper.php:72
 msgid "List pages"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:80
+#: View/Helper/MeCmsMenuHelper.php:79
 msgid "List static pages"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:93
+#: View/Helper/MeCmsMenuHelper.php:92
 msgid "List albums"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:112
+#: View/Helper/MeCmsMenuHelper.php:111
 msgid "List banners"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:119
+#: View/Helper/MeCmsMenuHelper.php:118
 msgid "List positions"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:138
+#: View/Helper/MeCmsMenuHelper.php:137
 msgid "List users"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:145
+#: View/Helper/MeCmsMenuHelper.php:144
 msgid "List groups"
 msgstr ""
 
-#: View/Helper/MenuDefaultHelper.php:176
+#: View/Helper/MeCmsMenuHelper.php:175
 msgid "System"
 msgstr ""
 

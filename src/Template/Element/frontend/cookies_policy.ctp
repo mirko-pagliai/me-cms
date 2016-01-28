@@ -26,7 +26,7 @@
 	<div id="cookies-policy">
 		<div class="container">
 			<?= __d('me_cms', 'By continuing, you consent to our use of Cookies, ok?') ?>
-			<?= $this->Html->button(__d('me_cms', 'Ok'), '#', ['class' => 'btn-xs btn-success', 'id' => 'cookies-policy-accept']) ?>
+			<?= $this->Html->button(__d('me_cms', 'Ok'), ['_name' => 'accept_cookies'], ['class' => 'btn-xs btn-success', 'id' => 'cookies-policy-accept']) ?>
 			<?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', 'cookies-policy'], ['class' => 'btn-xs btn-primary']) ?>
 		</div>
 	</div>

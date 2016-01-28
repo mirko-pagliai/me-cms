@@ -57,11 +57,11 @@
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.backend/topbar') ?>
+		<?= $this->element('MeCms.backend/topbar', [], ['cache' => ['key' => sprintf('topbar_user_%s', $auth['id']), 'config' => 'backend']]) ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
-					<?= $this->element('MeCms.backend/sidebar') ?>
+					<?= $this->element('MeCms.backend/sidebar', [], ['cache' => ['key' => sprintf('sidebar_user_%s', $auth['id']), 'config' => 'backend']]) ?>
 				</div>
 				<div id="content" class="col-md-offset-3 col-lg-offset-2">
 					<?= $this->Flash->render() ?>

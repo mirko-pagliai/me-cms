@@ -22,55 +22,31 @@
  */
 namespace MeCms\View\View;
 
+use App\View\AppView as BaseView;
 use MeCms\View\View\AppView;
-use MeTools\Core\Plugin;
 
 /**
  * Application view class for admin views
  */
 class AdminView extends AppView {
 	/**
-	 * Gets the menus for the backend
-	 * @return array Menus
-	 * @uses MeTools\Core\Plugin::all()
-	 * @uses MeTools\Core\Plugin::path()
-	 */
-	protected function getMenus() {
-		$menus = [];
-		
-		foreach(Plugin::all(['DebugKit', 'MeTools', 'Migrations']) as $plugin) {
-			//Checks if the file is readable
-			if(!is_readable($file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.'MenuDefaultHelper.php')))
-				continue;
-			
-			//Gets all public methods
-			if(!preg_match_all('/\h*public\h+function\h+(_\w+)\(\)\h+\{/', @file_get_contents($file), $matches))
-				continue;
-			
-			//Loads the menu helper
-			$this->MenuDefault = $this->helpers()->load(sprintf('%s.MenuDefault', $plugin));
-			
-			//Automatically calls each dynamic method that generates the requested menu
-			foreach($matches[1] as $method)
-				$menus[sprintf('%s_menu', $plugin === 'MeCms' ? 'mecms' : 'plugins')][] = $this->MenuDefault->{$method}();
-			
-			//Unloads the helper
-			$this->helpers()->unload('MenuDefault');
-		}
-		
-		return $menus;
-	}
-
-	/**
      * Initialization hook method
 	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_initialize
-	 * @uses MeCms\View\View::initialize()
+	 * @uses App\View\AppView::initialize()
 	 */
     public function initialize() {
-		parent::initialize();
+		BaseView::initialize();
 		
 		//Loads helpers
-		$this->loadHelper('MeCms.MenuBuilder');
+		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
+		$this->loadHelper('MeTools.Dropdown');
+		$this->loadHelper('MeTools.Form');
+		$this->loadHelper('MeTools.Asset');
+		$this->loadHelper('MeTools.Library');
+		$this->loadHelper('MeTools.Thumb');
+		$this->loadHelper('MeTools.Paginator');
+		$this->loadHelper('MeCms.Auth');
+		$this->loadHelper('Menu', ['className' => 'MeCms.MenuBuilder']);
 	}
 	
 	/**
@@ -79,8 +55,7 @@ class AdminView extends AppView {
 	 * @param string|NULL $layout Layout to use
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
 	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
-     * @throws Cake\Core\Exception\Exception
-	 * @uses MeCms\View\View\AppView::render()
+	 * @uses App\View\AppView::render()
 	 * @uses layout
 	 * @uses viewVars
 	 */
@@ -98,7 +73,7 @@ class AdminView extends AppView {
 			'5' => sprintf('5 - %s', __d('me_cms', 'Very high'))
 		];
 		
-		return parent::render($view, $layout);
+		return BaseView::render($view, $layout);
 	}
 	
 	/**
@@ -107,15 +82,12 @@ class AdminView extends AppView {
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
-     * @throws Cake\Core\Exception\Exception
-	 * @uses MeCms\View\View\AppView::renderLayout()
-	 * @uses getMenu()
-	 * @uses viewVars
+	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
-		//Sets the menus view vars
-		$this->viewVars += $this->getMenus();
-		
-		return parent::renderLayout($content, $layout);
+		//Assigns the title for layout
+		$this->assign('title', $this->_getTitleForLayout());
+				
+		return BaseView::renderLayout($content, $layout);
 	}
 }
