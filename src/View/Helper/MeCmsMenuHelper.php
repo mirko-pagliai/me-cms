@@ -23,15 +23,14 @@
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
-use MeCms\View\Helper\AuthHelper;
 
 /**
- * MenuDefault Helper.
+ * MeCmsMenu Helper.
  * 
  * This helper contains methods that will be called automatically to generate the menu of the backend.
  * You do not need to call these methods manually.
  */
-class MenuDefaultHelper extends Helper {
+class MeCmsMenuHelper extends Helper {
 	/**
 	 * Helpers
 	 * @var array

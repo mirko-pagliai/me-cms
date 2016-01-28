@@ -23,13 +23,12 @@
 ?>
 	
 <?php
-	foreach($mecms_menu as $menu)
-		echo $this->MenuBuilder->render($menu, 'collapse');
+	//Renders menus for MeCms
+	echo $this->Menu->all('MeCms');
 	
-	if(!empty($plugins_menu)) {
-		echo $this->Html->h6(__d('me_cms', 'Plugins'));
-		
-		foreach($plugins_menu as $menu)
-			echo $this->MenuBuilder->render($menu, 'collapse');
+	//Renders menus for all others plugin
+	foreach(\MeTools\Core\Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations']) as $plugin) {
+		echo $this->Html->h6($plugin);
+		echo $this->Menu->all($plugin);
 	}
 ?>

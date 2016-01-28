@@ -22,51 +22,12 @@
  */
 namespace MeCms\View\View;
 
-use Cake\Cache\Cache;
 use MeCms\View\View\AppView;
-use MeTools\Core\Plugin;
 
 /**
  * Application view class for admin views
  */
 class AdminView extends AppView {
-	/**
-	 * Gets the menus for the backend
-	 * @return array Menus
-	 * @uses MeTools\Core\Plugin::all()
-	 * @uses MeTools\Core\Plugin::path()
-	 */
-	protected function getMenus() {
-		//Tries to get data from cache
-		$menus = Cache::read($cache = sprintf('menus_user_%s', $this->viewVars['auth']['id']), 'backend');
-		
-		if(empty($menus)) {
-			foreach(Plugin::all(['DebugKit', 'MeTools', 'Migrations']) as $plugin) {
-				//Checks if the file is readable
-				if(!is_readable($file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.'MenuDefaultHelper.php')))
-					continue;
-
-				//Gets all public methods
-				if(!preg_match_all('/\h*public\h+function\h+(_\w+)\(\)\h+\{/', @file_get_contents($file), $matches))
-					continue;
-
-				//Loads the menu helper
-				$this->MenuDefault = $this->helpers()->load(sprintf('%s.MenuDefault', $plugin));
-
-				//Automatically calls each dynamic method that generates the requested menu
-				foreach($matches[1] as $method)
-					$menus[sprintf('%s_menu', $plugin === 'MeCms' ? 'mecms' : 'plugins')][] = $this->MenuDefault->{$method}();
-
-				//Unloads the helper
-				$this->helpers()->unload('MenuDefault');
-			}
-
-			Cache::write($cache, $menus, 'backend');
-		}
-		
-		return $menus;
-	}
-
 	/**
      * Initialization hook method
 	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_initialize
@@ -76,7 +37,7 @@ class AdminView extends AppView {
 		parent::initialize();
 		
 		//Loads helpers
-		$this->loadHelper('MeCms.MenuBuilder');
+		$this->loadHelper('Menu', ['className' => 'MeCms.MenuBuilder']);
 	}
 	
 	/**
@@ -105,23 +66,5 @@ class AdminView extends AppView {
 		];
 		
 		return parent::render($view, $layout);
-	}
-	
-	/**
-	 * Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout
-	 * @param string $content Content to render in a view, wrapped by the surrounding layout
-	 * @param string|null $layout Layout name
-	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
-     * @throws Cake\Core\Exception\Exception
-	 * @uses MeCms\View\View\AppView::renderLayout()
-	 * @uses getMenu()
-	 * @uses viewVars
-	 */
-	public function renderLayout($content, $layout = NULL) {
-		//Sets the menus view vars
-		$this->viewVars += $this->getMenus();
-		
-		return parent::renderLayout($content, $layout);
 	}
 }
