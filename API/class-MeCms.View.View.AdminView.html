@@ -210,7 +210,7 @@ App\View\AppView
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.View.html">View</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.View.AdminView.html#28-121" title="Go to source code">View/View/AdminView.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.View.View.AdminView.html#28-93" title="Go to source code">View/View/AdminView.php</a>
 		<br>
 	</div>
 
@@ -218,45 +218,6 @@ App\View\AppView
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="getMenus" id="_getMenus">
-
-		<td class="attributes"><code>
-			 protected 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_getMenus">#</a>
-		<code><a href="source-class-MeCms.View.View.AdminView.html#32-62" title="Go to source code">getMenus</a>( )</code>
-
-		<div class="description short">
-			<p>Gets the menus for the backend</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Gets the menus for the backend</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Menus
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Core\Plugin::all()<br>
-						MeTools\Core\Plugin::path()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="initialize" id="_initialize">
 
 		<td class="attributes"><code>
@@ -269,7 +230,7 @@ App\View\AppView
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.View.View.AdminView.html#64-74" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.View.View.AdminView.html#32-50" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -288,7 +249,7 @@ App\View\AppView
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
-						MeCms\View\View::initialize()<br>
+						App\View\AppView::initialize()<br>
 				</div>
 
 				<h4>Overrides</h4>
@@ -309,7 +270,7 @@ App\View\AppView
 
 		<td class="name"><div>
 		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-MeCms.View.View.AdminView.html#76-102" title="Go to source code">render</a>( <span>string|null <var>$view</var> = <span class="php-keyword1">NULL</span></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.View.View.AdminView.html#52-77" title="Go to source code">render</a>( <span>string|null <var>$view</var> = <span class="php-keyword1">NULL</span></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Renders view for given view file and layout</p>
@@ -332,10 +293,6 @@ App\View\AppView
 					string|null<br>Rendered content or NULL if content already rendered and returned earlier
 				</div>
 
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Core\Exception\Exception
-				</div>
 
 				<h4>See</h4>
 				<div class="list">
@@ -343,7 +300,7 @@ App\View\AppView
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.View.View.AppView.html#_render">MeCms\View\View\AppView::render()</a></code><br>
+						App\View\AppView::render()<br>
 						layout<br>
 						viewVars<br>
 				</div>
@@ -366,7 +323,7 @@ App\View\AppView
 
 		<td class="name"><div>
 		<a class="anchor" href="#_renderLayout">#</a>
-		<code><a href="source-class-MeCms.View.View.AdminView.html#104-120" title="Go to source code">renderLayout</a>( <span>string <var>$content</var></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.View.View.AdminView.html#79-92" title="Go to source code">renderLayout</a>( <span>string <var>$content</var></span>, <span>string|null <var>$layout</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout</p>
@@ -389,10 +346,6 @@ App\View\AppView
 					mixed<br>Rendered output, or false on error
 				</div>
 
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Core\Exception\Exception
-				</div>
 
 				<h4>See</h4>
 				<div class="list">
@@ -400,9 +353,7 @@ App\View\AppView
 				</div>
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.View.View.AppView.html#_renderLayout">MeCms\View\View\AppView::renderLayout()</a></code><br>
-						getMenu()<br>
-						viewVars<br>
+						<code><a href="class-MeCms.View.View.AppView.html#__getTitleForLayout">MeCms\View\View\AppView::_getTitleForLayout()</a></code><br>
 				</div>
 
 				<h4>Overrides</h4>
@@ -418,9 +369,7 @@ App\View\AppView
 	<tr>
 		<td><code>
 			<a href="class-MeCms.View.View.AppView.html#__addFacebookTags">_addFacebookTags()</a>, 
-			<a href="class-MeCms.View.View.AppView.html#__getTitleForLayout">_getTitleForLayout()</a>, 
-			<a href="class-MeCms.View.View.AppView.html#_allWidgets">allWidgets()</a>, 
-			<a href="class-MeCms.View.View.AppView.html#_widget">widget()</a>
+			<a href="class-MeCms.View.View.AppView.html#__getTitleForLayout">_getTitleForLayout()</a>
 		</code></td>
 	</tr>
 	</table>

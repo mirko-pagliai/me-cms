@@ -125,8 +125,9 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">AuthHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.MeCmsMenuHelper.html">MeCmsMenuHelper</a></li>
 				<li class="active"><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MenuBuilderHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.MenuDefaultHelper.html">MenuDefaultHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.WidgetHelper.html">WidgetHelper</a></li>
 			</ul>
 
 
@@ -176,7 +177,7 @@
 	<div class="description">
 	<p>MenuBuilder Helper</p>
 
-<p>It contains methods to generate menus.</p>
+<p>It contains methods to renders the backend menus.</p>
 	</div>
 
 	<dl class="tree">
@@ -206,7 +207,7 @@ Cake\View\Helper
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.Helper.html">Helper</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#28-92" title="Go to source code">View/Helper/MenuBuilderHelper.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#27-135" title="Go to source code">View/Helper/MenuBuilderHelper.php</a>
 		<br>
 	</div>
 
@@ -214,7 +215,7 @@ Cake\View\Helper
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__collapseMenu" id="___collapseMenu">
+	<tr data-order="_renderAsCollapse" id="__renderAsCollapse">
 
 		<td class="attributes"><code>
 			 protected 
@@ -225,15 +226,15 @@ Cake\View\Helper
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#___collapseMenu">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#40-62" title="Go to source code">__collapseMenu</a>( <span>string <var>$title</var></span>, <span>array <var>$options</var></span>, <span>array <var>$menu</var></span> )</code>
+		<a class="anchor" href="#__renderAsCollapse">#</a>
+		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#39-61" title="Go to source code">_renderAsCollapse</a>( <span>string <var>$title</var></span>, <span>array <var>$options</var></span>, <span>array <var>$menu</var></span> )</code>
 
 		<div class="description short">
-			<p>Internal function to render a collapsed menu</p>
+			<p>Internal function to render a menu as "collapse"</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Internal function to render a collapsed menu</p>
+			<p>Internal function to render a menu as "collapse"</p>
 
 
 				<h4>Parameters</h4>
@@ -262,6 +263,146 @@ Cake\View\Helper
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="_renderAsDropdown" id="__renderAsDropdown">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__renderAsDropdown">#</a>
+		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#63-73" title="Go to source code">_renderAsDropdown</a>( <span>string <var>$title</var></span>, <span>array <var>$options</var></span>, <span>array <var>$menu</var></span> )</code>
+
+		<div class="description short">
+			<p>Internal function to render a menu as "dropdown"</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Internal function to render a menu as "dropdown"</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$title</var></dt>
+					<dd>The content to be wrapped by <a> tags</dd>
+					<dt><var>$options</var></dt>
+					<dd>Array of options and HTML attributes</dd>
+					<dt><var>$menu</var></dt>
+					<dd>Menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Html code
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\View\Helper\DropdownHelper::menu()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_renderAsList" id="__renderAsList">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__renderAsList">#</a>
+		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#75-85" title="Go to source code">_renderAsList</a>( <span>string <var>$title</var></span>, <span>array <var>$options</var></span>, <span>array <var>$menu</var></span> )</code>
+
+		<div class="description short">
+			<p>Internal function to render a menu as "list"</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Internal function to render a menu as "list"</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$title</var></dt>
+					<dd>The content to be wrapped by <a> tags</dd>
+					<dt><var>$options</var></dt>
+					<dd>Array of options and HTML attributes</dd>
+					<dt><var>$menu</var></dt>
+					<dd>Menu</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Html code
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\View\Helper\HtmlHelper::ul()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="all" id="_all">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_all">#</a>
+		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#87-112" title="Go to source code">all</a>( <span>string <var>$plugin</var> = <span class="php-quote">'MeCms'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'collapse'</span></span> )</code>
+
+		<div class="description short">
+			<p>Renders all menus for a plugin</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Renders all menus for a plugin</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$plugin</var></dt>
+					<dd>Plugin name</dd>
+					<dt><var>$type</var></dt>
+					<dd>Type (<code>collapse</code>, <code>dropdown</code> or <code>list</code>)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Html code
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Core\Plugin::path()<br>
+						<code><a href="class-MeCms.View.Helper.MenuBuilderHelper.html#_render">MeCms\View\Helper\MenuBuilderHelper::render()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="render" id="_render">
 
 		<td class="attributes"><code>
@@ -274,22 +415,22 @@ Cake\View\Helper
 
 		<td class="name"><div>
 		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#64-91" title="Go to source code">render</a>( <span>array <var>$menu</var></span>, <span>string <var>$type</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#114-134" title="Go to source code">render</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = <span class="php-quote">'collapse'</span></span> )</code>
 
 		<div class="description short">
-			<p>Generates and returns a menu</p>
+			<p>Renders a menu</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Generates and returns a menu</p>
+			<p>Renders a menu</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$menu</var></dt>
-					<dd>Menu data (menu code, title and options)</dd>
+					<dt><var>$name</var></dt>
+					<dd>Menu name (with plugin notation, eg. <code>MeCms.posts</code>)</dd>
 					<dt><var>$type</var></dt>
-					<dd>Type of menu (optional, <code>ul</code> by default, <code>collapse</code> or <code>dropdown</code>)</dd>
+					<dd>Type (<code>collapse</code>, <code>dropdown</code> or <code>list</code>)</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -298,11 +439,9 @@ Cake\View\Helper
 				</div>
 
 
-				<h4>Uses</h4>
+				<h4>Used by</h4>
 				<div class="list">
-						MeTools\View\Helper\DropdownHelper::menu()<br>
-						MeTools\View\Helper\HtmlHelper::div()<br>
-						MeTools\View\Helper\HtmlHelper::ul()<br>
+						<code><a href="class-MeCms.View.Helper.MenuBuilderHelper.html#_all">MeCms\View\Helper\MenuBuilderHelper::all()</a></code><br>
 				</div>
 
 
@@ -331,7 +470,7 @@ Cake\View\Helper
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#34-38" title="Go to source code"><var>$helpers</var></a>
+				<a href="source-class-MeCms.View.Helper.MenuBuilderHelper.html#33-37" title="Go to source code"><var>$helpers</var></a>
 
 			<div class="description short">
 				<p>Helpers</p>

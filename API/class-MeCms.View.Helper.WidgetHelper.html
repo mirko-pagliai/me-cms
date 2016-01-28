@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\View\Helper\AuthHelper | MeCms API</title>
+	<title>Class MeCms\View\Helper\WidgetHelper | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -124,10 +124,10 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-MeCms.View.Helper.AuthHelper.html">AuthHelper</a></li>
+				<li><a href="class-MeCms.View.Helper.AuthHelper.html">AuthHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MeCmsMenuHelper.html">MeCmsMenuHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MenuBuilderHelper</a></li>
-				<li><a href="class-MeCms.View.Helper.WidgetHelper.html">WidgetHelper</a></li>
+				<li class="active"><a href="class-MeCms.View.Helper.WidgetHelper.html">WidgetHelper</a></li>
 			</ul>
 
 
@@ -171,13 +171,13 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class AuthHelper</h1>
+	<h1>Class WidgetHelper</h1>
 
 
 	<div class="description">
-	<p>Auth Helper.</p>
+	<p>Widget Helper</p>
 
-<p>This helper allows you to access to <code>MeCms\Controller\Component\AuthComponent</code> also from views.</p>
+<p>It contains methods to render widgets.</p>
 	</div>
 
 	<dl class="tree">
@@ -188,7 +188,7 @@ Cake\View\Helper
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\View\Helper\AuthHelper</span></b>			
+<b><span>MeCms\View\Helper\WidgetHelper</span></b>			
 			
 			
 		</dd>
@@ -207,7 +207,7 @@ Cake\View\Helper
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.View.html">View</a>\<a href="namespace-MeCms.View.Helper.html">Helper</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.View.Helper.AuthHelper.html#27-42" title="Go to source code">View/Helper/AuthHelper.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.View.Helper.WidgetHelper.html#27-63" title="Go to source code">View/Helper/WidgetHelper.php</a>
 		<br>
 	</div>
 
@@ -215,42 +215,91 @@ Cake\View\Helper
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__call" id="___call">
+	<tr data-order="all" id="_all">
 
 		<td class="attributes"><code>
 			 public 
 
-			mixed
+			string
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#___call">#</a>
-		<code><a href="source-class-MeCms.View.Helper.AuthHelper.html#33-41" title="Go to source code">__call</a>( <span>string <var>$method</var></span>, <span>array <var>$params</var></span> )</code>
+		<a class="anchor" href="#_all">#</a>
+		<code><a href="source-class-MeCms.View.Helper.WidgetHelper.html#33-50" title="Go to source code">all</a>( )</code>
 
 		<div class="description short">
-			<p>Method that is called automatically when the method doesn't exist.</p>
+			<p>Renders all widgets, reading from configuration</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Method that is called automatically when the method doesn't exist.</p>
+			<p>Renders all widgets, reading from configuration</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Html code
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Network\Request::isCurrent()<br>
+						<code><a href="class-MeCms.View.Helper.WidgetHelper.html#_widget">MeCms\View\Helper\WidgetHelper::widget()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="widget" id="_widget">
+
+		<td class="attributes"><code>
+			 public 
+
+			Cake\View\Cell
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_widget">#</a>
+		<code><a href="source-class-MeCms.View.Helper.WidgetHelper.html#52-62" title="Go to source code">widget</a>( <span>string <var>$name</var></span>, <span>array <var>$arguments</var> = []</span>, <span>array <var>$options</var> = []</span> )</code>
+
+		<div class="description short">
+			<p>Returns a widget</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns a widget</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$method</var></dt>
-					<dd>Method to invoke</dd>
-					<dt><var>$params</var></dt>
-					<dd>Array of params for the method</dd>
+					<dt><var>$name</var></dt>
+					<dd>Widget name</dd>
+					<dt><var>$arguments</var></dt>
+					<dd>Widget arguments</dd>
+					<dt><var>$options</var></dt>
+					<dd>Widget options</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					mixed
+					Cake\View\Cell<br>The cell instance
 				</div>
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						Cake\View\CellTrait::cell()<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.View.Helper.WidgetHelper.html#_all">MeCms\View\Helper\WidgetHelper::all()</a></code><br>
+				</div>
 
 
 		</div>
