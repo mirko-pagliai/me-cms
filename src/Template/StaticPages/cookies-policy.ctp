@@ -3,6 +3,8 @@
 	ob_start();
 ?>
 
+<p>Effective date: Genuary 28, 2016.</p>
+
 <h2>What are cookies?</h2>
 <p>
 	Cookies are small text files placed onto your computer or device as you browse the internet. Cookies can be used to collect, store 
