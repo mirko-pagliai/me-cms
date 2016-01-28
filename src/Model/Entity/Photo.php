@@ -32,6 +32,8 @@ use MeCms\Utility\PhotoFile;
  * @property \MeCms\Model\Entity\Album $album
  * @property string $filename
  * @property string $description
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class Photo extends Entity {
     /**

@@ -41,7 +41,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $modified
  * @property \MeCms\Model\Entity\Post[] $posts
  * @property \MeCms\Model\Entity\Token[] $tokens
- * @property \MeCms\Model\Entity\YoutubeVideo[] $youtube_videos
  */
 class User extends Entity {
     /**
