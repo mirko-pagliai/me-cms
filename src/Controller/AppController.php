@@ -23,7 +23,6 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
-use Cake\Core\Configure;
 
 /**
  * Application controller class
