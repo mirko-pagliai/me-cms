@@ -134,7 +134,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
 	$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
 	$routes->connect('/password/forgot', ['controller' => 'Users', 'action' => 'forgot_password'], ['_name' => 'forgot_password']);
-	$routes->connect(	'/password/reset/:id/:token',
+	$routes->connect('/password/reset/:id/:token',
 		['controller' => 'Users', 'action' => 'reset_password'],
 		['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
