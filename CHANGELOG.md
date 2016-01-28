@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.1 branch
 ### 2.1.9
-* frontend widgets, backend topbar and backend menus now use cache.
+* backend topbar and backend menus now use cache.
 
 ### 2.1.8
 * added the cookies policy functionality;
