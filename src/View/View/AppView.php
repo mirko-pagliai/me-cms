@@ -95,8 +95,9 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Library');
 		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
-		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeTools.Recaptcha');
+		$this->loadHelper('MeCms.Auth');
+		$this->loadHelper('MeCms.Widget');
     }
 	
 	/**
@@ -152,44 +153,5 @@ class AppView extends BaseView {
 		$this->_addFacebookTags();
 		
 		return parent::renderLayout($content, $layout);
-	}
-	
-	/**
-	 * Returns all widgets, reading from configuration
-	 * @return string Html code
-	 * @uses MeTools\Network\Request::isCurrent()
-	 * @uses widget()
-	 */
-	public function allWidgets() {
-		//Tries to get data from cache
-		$widgets = Cache::read($cache = $this->request->isCurrent(['_name' => 'homepage']) ? 'widget_homepage' : 'widget_general', 'frontend');
-		
-		if(empty($widgets)) {
-			$widgets = config('frontend.widgets.general');
-
-			if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
-				$widgets = config('frontend.widgets.homepage');
-
-			foreach($widgets as $name => $args)
-				$widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
-
-			$widgets = implode(PHP_EOL, $widgets);
-			
-			Cache::write($cache, $widgets, 'frontend');
-		}
-		
-		return $widgets;
-	}
-	
-	/**
-	 * Returns a widget
-	 * @param string $name Widget name
-	 * @param array $arguments Widget arguments
-	 * @param array $options Widget options
-	 * @return Cake\View\Cell The cell instance
-	 * @uses Cake\View\Cell::cell()
-	 */
-	public function widget($name, array $arguments = [], array $options = []) {
-		return $this->cell($name, $arguments, $options);
 	}
 }

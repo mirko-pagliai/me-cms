@@ -81,7 +81,7 @@
 				</div>
 				<div id="sidebar" class="col-sm-4 col-md-3">
 					<?= $this->fetch('sidebar') ?>
-					<?= $this->allWidgets() ?>
+					<?= $this->Widget->all() ?>
 				</div>
 			</div>
 		</div>
