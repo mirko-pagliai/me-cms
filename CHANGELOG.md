@@ -3,6 +3,7 @@
 ### 2.1.9
 * banners have "created" and "modified" fields. Photos have "modified" field;
 * fixed bug for cookies policy functionality;
+* added some utility links on the footer;
 * improved View classes;
 * the code for backend menus and the frontend widgets has been rewritten;
 * backend topbar and backend menus now use cache.

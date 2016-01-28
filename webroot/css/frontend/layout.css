@@ -242,3 +242,27 @@ body > footer p {
     font-size: 12px;
     margin: 0;
 }
+
+/* Footer, lists */
+body > footer ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+/* Footer, lists, list elements */
+body > footer > ul li {
+	border-right: 1px solid #aaa;
+	display: inline-block;
+	padding: 0 10px;
+}
+
+/* Footer, lists, last list elements */
+body > footer > ul li:last-child {
+	border-right: 0;
+}
+
+/* Footer, lists, list elements, links */
+body > footer > ul li a {
+  border: 0 none;
+  text-decoration: underline !important;
+}
