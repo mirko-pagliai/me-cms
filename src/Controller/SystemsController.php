@@ -34,7 +34,7 @@ class SystemsController extends AppController {
 	 */
 	public function accept_cookies() {
 		//Sets the cookie
-		$this->Cookie->write('cookies-policy', TRUE);
+		$this->Cookie->config(['expires' => '+999 days'])->write('cookies-policy', TRUE);
 		
 		return $this->redirect($this->referer('/', TRUE));
 	}
