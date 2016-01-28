@@ -61,6 +61,7 @@
 				<th class="text-center hidden-xs"><?= __d('me_cms', 'Url') ?></th>
 				<th class="text-center"><?php echo $this->Paginator->sort('description', __d('me_cms', 'Description')); ?></th>
 				<th class="text-center"><?php echo $this->Paginator->sort('click_count', __d('me_cms', 'Click')); ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -98,6 +99,13 @@
 					</td>
 					<td class="text-center"><?= $banner->description ?></td>
 					<td class="min-width text-center"><?= $banner->click_count ?></td>
+					<td class="min-width text-center">
+						<div class="hidden-xs"><?= $banner->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="visible-xs">
+							<div><?= $banner->created->i18nFormat(config('main.date.short')) ?></div>
+							<div><?= $banner->created->i18nFormat(config('main.time.short')) ?></div>
+						</div>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
