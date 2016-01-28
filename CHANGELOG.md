@@ -3,6 +3,7 @@
 ### 2.1.9
 * banners have "created" and "modified" fields. Photos have "modified" field;
 * fixed bug for cookies policy functionality;
+* fixed bug, now the preview image of the post is displayed correctly in RSS;
 * added some utility links on the footer;
 * added routes for "posts of today" and "posts of yesterday";
 * improved View classes;
