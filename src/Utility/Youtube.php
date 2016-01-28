@@ -68,6 +68,6 @@ class Youtube {
 	 * @return string Url
 	 */
 	public static function getUrl($id) {
-		sprintf('http://youtu.be/%s', $id);
+		return sprintf('http://youtu.be/%s', $id);
 	}
 }
