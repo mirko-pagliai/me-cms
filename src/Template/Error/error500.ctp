@@ -37,7 +37,7 @@ if (Configure::read('debug')):
     <p class="notice"><strong>SQL Query:</strong>: <?= h($error->queryString) ?></p>
 <?php endif; ?>
 <?php if (!empty($error->params)) : ?>
-        <strong>SQL Query Params</strong>: <?= Debugger::dump($error->params) ?>
+	<strong>SQL Query Params</strong>: <?= Debugger::dump($error->params) ?>
 <?php endif; ?>
 <?php
     echo $this->element('auto_table_warning');
@@ -46,6 +46,8 @@ if (Configure::read('debug')):
         xdebug_print_function_stack();
 
     $this->end();
+else:
+    $this->layout = 'MeCms.error';
 endif;
 ?>
 <h2><?= __d('me_cms', 'An internal error has occurred') ?></h2>

@@ -45,7 +45,7 @@ class ExceptionRenderer extends BaseExceptionRenderer {
 		list($plugin, $template) = pluginSplit($template);
 		
 		//Sets template from MeCms
-		if(empty($plugin))
+		if(empty($plugin) && in_array($template, ['error400', 'error500']))
 			$template = sprintf('MeCms.%s', $template);
 				
 		return parent::_outputMessage($template);
@@ -61,21 +61,9 @@ class ExceptionRenderer extends BaseExceptionRenderer {
 		list($plugin, $template) = pluginSplit($template);
 		
 		//Sets template from MeCms
-		if(empty($plugin))
+		if(empty($plugin) && in_array($template, ['error400', 'error500']))
 			$template = sprintf('MeCms.%s', $template);
 		
 		return parent::_outputMessageSafe($template);
-	}
-	
-	/**
-	 * Renders the response for the exception
-	 * @return Cake\Network\Response The response to be sent
-	 * @uses Cake\Error\ExceptionRenderer::render()
-	 */
-	public function render() {
-		//Sets layout from MeCms
-		$this->controller->viewBuilder()->layout('MeCms.error');
-			
-		return parent::render();
 	}
 }
