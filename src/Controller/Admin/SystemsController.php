@@ -146,7 +146,7 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Unix::which()
 	 */
 	public function checkup() {
-		$phpRequired = '5.4.16';
+		$phpRequired = '5.5.9';
 		
 		$this->set([
 			'apache' => [
