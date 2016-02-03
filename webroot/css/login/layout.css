@@ -41,6 +41,7 @@ body {
 /* Content, logo */
 #content > #logo {
 	margin: 10px auto 20px;
+	max-width: 100%;
 	text-align: center;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;
