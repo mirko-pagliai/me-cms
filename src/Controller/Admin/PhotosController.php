@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 use MeCms\Utility\PhotoFile;
 
