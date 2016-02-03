@@ -93,6 +93,7 @@ class BannersTable extends AppTable {
             'className' => 'MeCms.BannersPositions'
         ]);
 		
+        $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
     }
 	
