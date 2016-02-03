@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.2 branch
+### 2.2.0
+* deleted ExceptionRenderer class and errors templates and layout. From now, errors will be managed only by the app.
+
 ## 2.1 branch
 ### 2.1.9
 * banners have "created" and "modified" fields. Photos have "modified" field;
