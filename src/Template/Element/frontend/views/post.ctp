@@ -22,6 +22,12 @@
  */
 ?>
 
+<?php
+	//Adds tags as keywords meta-tag
+	if(config('post.keywords') && $this->request->isAction('view', 'Posts') && !empty($post->tags_as_string))
+		$this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
+?>
+
 <div class="post-container content-container">
 	<div class="content-header">
 		<?php

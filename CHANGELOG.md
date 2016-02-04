@@ -2,6 +2,7 @@
 ## 2.2 branch
 ### 2.2.0
 * you can now edit a photo or a banner immediately after it has been uploaded;
+* you can add post tags as keywords meta-tag;
 * the favicon is automatically added to the layout. No need to manually add;
 * deleted ExceptionRenderer class and errors templates and layout. From now, errors will be managed only by the app.
 

@@ -111,6 +111,8 @@ return ['MeCms' => [
 		'category' => TRUE,
 		//Displays the post created datetime
 		'created' => TRUE,
+		//Adds post tags as keywords meta-tag
+		'keywords' => TRUE,
 		//Related posts
 		'related' => [
 			//Limit of related posts to get for each post. Use `0` to disable.
