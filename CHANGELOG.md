@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.2 branch
 ### 2.2.0
+* you can now edit a photo or a banner immediately after it has been uploaded;
 * deleted ExceptionRenderer class and errors templates and layout. From now, errors will be managed only by the app.
 
 ## 2.1 branch
