@@ -79,18 +79,15 @@ class AppController extends BaseController {
 		}
 		else
 			$error = __d('me_cms', 'The file was not successfully uploaded');
-
-		if(!empty($error)) {
-			$success = FALSE;
-			$this->set(compact('error'));
-		}
 		
-		$this->set(compact('file'));
+		$this->set(am([
+			'error' => empty($error) ? FALSE : $error
+		], compact('file')));
 
 		//Renders
 		$this->render('/Element/backend/uploader/response', FALSE);
 		
-		return isset($success) && !$success ? FALSE : $target;
+		return empty($error) ? $target : FALSE;
 	}
 	
 	/**
