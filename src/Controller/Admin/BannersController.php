@@ -104,16 +104,24 @@ class BannersController extends AppController {
 		//If there's only one position, it automatically sets the query value
 		if(!$this->request->query('position') && count($this->viewVars['positions']) < 2)
 			$this->request->query['position'] = fk($this->viewVars['positions']);
-		
+				
 		$position = $this->request->query('position');
 		
-		if($position && $this->request->data('file'))
+		if($position && $this->request->data('file')) {
 			//Checks if the file has been uploaded
-			if($filename = $this->_upload($this->request->data('file'), BannerFile::folder()))
-				$this->Banners->save($this->Banners->newEntity([
+			if($filename = $this->_upload($this->request->data('file'), BannerFile::folder())) {
+				$banner = $this->Banners->save($this->Banners->newEntity([
 					'position_id'	=> $position,
 					'filename'		=> basename($filename)
 				]));
+				
+				if(!empty($banner->id))
+					$this->set('edit_url', ['action' => 'edit', $banner->id]);
+			}
+			
+			//Renders the element `backend/uploader/response`
+			$this->render('/Element/backend/uploader/response', FALSE);
+		}
 	}
 
     /**
