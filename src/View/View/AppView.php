@@ -144,6 +144,10 @@ class AppView extends BaseView {
 		if(is_readable(WWW_ROOT.'favicon.ico'))
 			$this->Html->meta('icon');
 		
+		//Adds the "theme color" (the toolbar color for some mobile browser)
+		if(config('frontend.toolbar_color'))
+			$this->Html->meta('theme-color', config('frontend.toolbar_color'));
+		
 		//Adds the meta tag for RSS posts
 		if(config('frontend.rss_meta'))
 			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);

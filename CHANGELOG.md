@@ -4,6 +4,7 @@
 * you can now edit a photo or a banner immediately after it has been uploaded;
 * added "popular tags" widget;
 * you can add post tags as keywords meta-tag;
+* added support for the "theme color" (the toolbar color for some mobile browser);
 * the favicon is automatically added to the layout. No need to manually add;
 * deleted ExceptionRenderer class and errors templates and layout. From now, errors will be managed only by the app.
 
