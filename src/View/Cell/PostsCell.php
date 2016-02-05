@@ -75,7 +75,7 @@ class PostsCell extends Cell {
 	
 	/**
 	 * Latest widget
-	 * @param string $limit Limit
+	 * @param int $limit Limit
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
