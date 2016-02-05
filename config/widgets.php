@@ -3,7 +3,8 @@
 return ['Widgets' => [
 	//General widgets
 	'general' => [
-		'MeCms.Posts::search', 
+		'MeCms.Posts::search',
+		'MeCms.PostsTags::popular' => ['limit' => 10, TRUE, TRUE],
 		'MeCms.Posts::categories', 
 		'MeCms.Posts::latest' => ['limit' => 10],
 		'MeCms.Photos::latest' => ['limit' => 1],
