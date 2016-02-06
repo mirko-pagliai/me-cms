@@ -104,12 +104,8 @@
 					echo $this->Form->error('tags');
 			?>
 		</div>
-		<?php
-			echo $this->Form->ckeditor('text', [
-				'label' => __d('me_cms', 'Text'),
-				'rows'	=> 10
-			]);
-        ?>
+		<?= $this->Form->ckeditor('text', ['label' => __d('me_cms', 'Text'), 'rows' => 10]) ?>
+		<?= $this->element('backend/bbcode') ?>
     </fieldset>
     <?= $this->Form->submit(__d('me_cms', 'Add post')) ?>
     <?= $this->Form->end() ?>

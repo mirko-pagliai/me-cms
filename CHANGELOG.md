@@ -3,6 +3,7 @@
 ### 2.2.0
 * you can now edit a photo or a banner immediately after it has been uploaded;
 * added "popular tags" widget;
+* added BBCode examples;
 * you can add post tags as keywords meta-tag;
 * added support for the "theme color" (the toolbar color for some mobile browser);
 * the favicon is automatically added to the layout. No need to manually add;

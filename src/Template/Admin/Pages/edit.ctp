@@ -69,6 +69,7 @@
 				'label' => __d('me_cms', 'Text')
 			));
         ?>
+		<?= $this->element('backend/bbcode') ?>
     </fieldset>
     <?= $this->Form->submit(__d('me_cms', 'Edit page')) ?>
     <?= $this->Form->end() ?>
