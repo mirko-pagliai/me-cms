@@ -262,6 +262,7 @@ class SystemsController extends AppController {
 	/**
 	 * Log viewer
 	 * @uses MeTools\Log\Engine\FileLog::all()
+	 * @uses MeTools\Log\Engine\FileLog::get()
 	 */
 	public function logs() {
 		//Gets log files
@@ -272,8 +273,8 @@ class SystemsController extends AppController {
 			$this->request->query['file'] = fk($files);
 		
 		//If a log file has been specified
-		if(!empty($this->request->query['file']) && $this->request->is('get'))
-			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query('file')]));
+		if($this->request->query('file') && $this->request->is('get'))
+			$this->set('log', FileLog::get(sprintf('%s.log', $this->request->query('file'))));
 		
 		$this->set(compact('files'));
 	}
