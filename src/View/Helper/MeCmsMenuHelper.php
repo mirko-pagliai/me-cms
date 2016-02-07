@@ -169,7 +169,7 @@ class MeCmsMenuHelper extends Helper {
 		//Only admins can see logs
 		if($this->Auth->isGroup('admin'))
 			array_push($menu,
-				$this->Html->link(__d('me_cms', 'Log viewer'), ['controller' => 'Systems', 'action' => 'logs', 'plugin' => 'MeCms'])
+				$this->Html->link(__d('me_cms', 'Log viewer'), ['controller' => 'Systems', 'action' => 'logs_viewer', 'plugin' => 'MeCms'])
 			);
 		
 		return [$menu, __d('me_cms', 'System'), ['icon' => 'wrench']];

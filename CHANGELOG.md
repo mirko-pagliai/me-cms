@@ -3,6 +3,7 @@
 ### 2.2.0
 * you can now edit a photo or a banner immediately after it has been uploaded;
 * added "popular tags" widget;
+* rewritten the log viewer. Now log files are parsed, with style;
 * added BBCode examples;
 * you can add post tags as keywords meta-tag;
 * added support for the "theme color" (the toolbar color for some mobile browser);
