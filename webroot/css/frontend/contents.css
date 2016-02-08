@@ -127,6 +127,7 @@
 /* Content text, images */
 .content-container .content-text img {
 	display: block;
+	height: auto;
 	margin-bottom: 16px;
 	max-width: 100%;
 }
