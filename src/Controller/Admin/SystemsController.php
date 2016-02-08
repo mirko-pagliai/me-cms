@@ -274,7 +274,7 @@ class SystemsController extends AppController {
 		
 		//If a log file has been specified
 		if($this->request->query('file') && $this->request->is('get'))
-			$this->set('logs', FileLog::parse(sprintf('%s.log', $this->request->query('file'))));
+			$this->set('logs', array_reverse(FileLog::parse(sprintf('%s.log', $this->request->query('file')))));
 		
 		$this->set(compact('files'));
 	}
