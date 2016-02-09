@@ -32,7 +32,8 @@
 			foreach($categories as $category)
 				$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
 
-			echo $this->Html->ul($list, ['icon' => 'caret-right']);
+			if(!empty($list))
+				echo $this->Html->ul($list, ['icon' => 'caret-right']);
 		}
 	?>
 </div>
