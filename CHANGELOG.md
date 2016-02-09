@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.2 branch
+### 2.2.1
+* fixed a major bug for tags. The hyphen is no longer accepted.
+
 ### 2.2.0
 * you can now edit a photo or a banner immediately after it has been uploaded;
 * added "popular tags" widget;
