@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-02-09 14:33+0000\n"
-"PO-Revision-Date: 2016-02-09 15:35+0100\n"
+"POT-Creation-Date: 2016-02-09 19:14+0000\n"
+"PO-Revision-Date: 2016-02-09 20:16+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid "The banner target is missing"
 msgstr "Il target del banner non è presente"
 
 #: Controller/PostsCategoriesController.php:77
-#: Controller/PostsTagsController.php:68
+#: Controller/PostsTagsController.php:79
 msgid "Record not found"
 msgstr "Record non trovato"
 
@@ -270,49 +270,57 @@ msgstr "L'articolo è stato cancellato"
 msgid "The post could not be deleted"
 msgstr "L'articolo non può essere cancellato"
 
+#: Controller/Admin/PostsTagsController.php:73
+msgid "The tag has been saved"
+msgstr "Il tag è stato salvato"
+
+#: Controller/Admin/PostsTagsController.php:77
+msgid "The tag could not be saved"
+msgstr "Il tag non può essere salvato"
+
 #: Controller/Admin/SystemsController.php:72
 msgid "{0} is not present into {1}"
 msgstr "{0} non è presente in {1}"
 
-#: Controller/Admin/SystemsController.php:207
+#: Controller/Admin/SystemsController.php:210
+msgid "All temporary files have been cleared"
+msgstr "Tutti i file temporanei sono stati cancellati"
+
+#: Controller/Admin/SystemsController.php:212
+msgid "Some temporary files have not been cleared"
+msgstr "Alcuni file temporanei non sono stati cancellati"
+
+#: Controller/Admin/SystemsController.php:226
 msgid "Assets have been cleared"
 msgstr "Gli asset sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:209
+#: Controller/Admin/SystemsController.php:228
 msgid "Assets have not been cleared"
 msgstr "Gli asset sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:223
+#: Controller/Admin/SystemsController.php:242
 msgid "The cache has been cleared"
 msgstr "La cache è stata svuotata"
 
-#: Controller/Admin/SystemsController.php:225
+#: Controller/Admin/SystemsController.php:244
 msgid "The cache has not been cleared"
 msgstr "La cache non è stata svuotata"
 
-#: Controller/Admin/SystemsController.php:239
+#: Controller/Admin/SystemsController.php:258
 msgid "The logs have been cleared"
 msgstr "I log sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:241
+#: Controller/Admin/SystemsController.php:260
 msgid "The logs have not been deleted"
 msgstr "I log non sono stati cancellati"
 
-#: Controller/Admin/SystemsController.php:255
+#: Controller/Admin/SystemsController.php:274
 msgid "The thumbnails have been deleted"
 msgstr "Le miniature sono state cancellate"
 
-#: Controller/Admin/SystemsController.php:257
+#: Controller/Admin/SystemsController.php:276
 msgid "The thumbnails have not been deleted"
 msgstr "Le miniature non sono state cancellate"
-
-#: Controller/Admin/TagsController.php:58
-msgid "The tag has been saved"
-msgstr "Il tag è stato salvato"
-
-#: Controller/Admin/TagsController.php:62
-msgid "The tag could not be saved"
-msgstr "Il tag non può essere salvato"
 
 #: Controller/Admin/UsersController.php:109;144
 #: Shell/UserShell.php:92
@@ -479,8 +487,8 @@ msgid "Each tag must be between {0} and {1} chars"
 msgstr "Ogni tag deve essere compreso tra {0} e {1} caratteri"
 
 #: Model/Validation/TagValidator.php:44
-msgid "lowercase letters, numbers, hyphen, space"
-msgstr "lettere minuscole, numeri, trattino, spazio"
+msgid "lowercase letters, numbers, space"
+msgstr "lettere minuscole, numeri, spazio"
 
 #: Model/Validation/UserValidator.php:67
 msgid "This value is reserved"
@@ -514,7 +522,7 @@ msgstr "lettere minuscole"
 msgid "Creates an admin user"
 msgstr "Crea un utente amministratore"
 
-#: Shell/UpdateShell.php:118;119;120
+#: Shell/UpdateShell.php:132;133;134;135
 msgid "Updates to {0} version"
 msgstr "Aggiorna alla versione {0}"
 
@@ -1222,6 +1230,14 @@ msgstr "Categorie articoli"
 msgid "Parent"
 msgstr "Genitore"
 
+#: Template/Admin/PostsTags/edit.ctp:25;28;37
+msgid "Edit tag"
+msgstr "Modifica tag"
+
+#: Template/Admin/PostsTags/edit.ctp:33
+msgid "Tag"
+msgstr "Tag"
+
 #: Template/Admin/PostsTags/index.ctp:52
 msgid "View items that belong to this element"
 msgstr "Guarda gli oggetti che appartengono a questo elemento"
@@ -1258,7 +1274,7 @@ msgid "The cache is enabled"
 msgstr "La cache è abilitata"
 
 #: Template/Admin/Systems/checkup.ctp:63
-#: Template/Admin/Systems/temporary.ctp:35
+#: Template/Admin/Systems/temporary.ctp:48
 msgid "The cache is disabled or debugging is active"
 msgstr "La cache è disabilitata o il debug è attivo"
 
@@ -1347,20 +1363,38 @@ msgstr "Cambia trace"
 msgid "Toggle stack trace"
 msgstr "Cambia stack trace"
 
-#: Template/Admin/Systems/temporary.ctp:25;28
+#: Template/Admin/Systems/temporary.ctp:25
 #: View/Helper/MeCmsMenuHelper.php:163
 msgid "Temporary files"
 msgstr "File temporanei"
 
-#: Template/Admin/Systems/temporary.ctp:32
+#: Template/Admin/Systems/temporary.ctp:29
+msgid "All temporary files"
+msgstr "Tutti i file temporanei"
+
+#: Template/Admin/Systems/temporary.ctp:32;45
 msgid "Cache"
 msgstr "Cache"
 
-#: Template/Admin/Systems/temporary.ctp:37
+#: Template/Admin/Systems/temporary.ctp:34
+msgid "All temporary files size: {0}"
+msgstr "Dimensione di tutti i file temporanei: {0}"
+
+#: Template/Admin/Systems/temporary.ctp:35
+msgid ""
+"This command clear all temporary files: cache, assets, logs and thumbnails"
+msgstr ""
+"Questo comando cancella tutti i file temporanei: cache, asset, log e miniature"
+
+#: Template/Admin/Systems/temporary.ctp:36
+msgid "Clear all temporary files"
+msgstr "Cancella tutti i file temporanei"
+
+#: Template/Admin/Systems/temporary.ctp:50
 msgid "Cache size: {0}"
 msgstr "Dimensioni cache: {0}"
 
-#: Template/Admin/Systems/temporary.ctp:38
+#: Template/Admin/Systems/temporary.ctp:51
 msgid ""
 "Note: you should not need to clear the cache, unless you have not edited the "
 "configuration or after an upgrade"
@@ -1368,43 +1402,43 @@ msgstr ""
 "Nota: non dovresti aver bisogno di svuotare la cache, a meno che tu non abbia "
 "modificato la configurazione o dopo un aggiornamento"
 
-#: Template/Admin/Systems/temporary.ctp:39
+#: Template/Admin/Systems/temporary.ctp:52
 msgid "Clear cache"
 msgstr "Svuota la cache"
 
-#: Template/Admin/Systems/temporary.ctp:45
+#: Template/Admin/Systems/temporary.ctp:58
 msgid "Assets"
 msgstr "Asset"
 
-#: Template/Admin/Systems/temporary.ctp:46
+#: Template/Admin/Systems/temporary.ctp:59
 msgid "Assets size: {0}"
 msgstr "Dimensione asset: {0}"
 
-#: Template/Admin/Systems/temporary.ctp:49
+#: Template/Admin/Systems/temporary.ctp:62
 msgid "Clear assets"
 msgstr "Cancella asset"
 
-#: Template/Admin/Systems/temporary.ctp:56
+#: Template/Admin/Systems/temporary.ctp:69
 msgid "Logs"
 msgstr "Log"
 
-#: Template/Admin/Systems/temporary.ctp:57
+#: Template/Admin/Systems/temporary.ctp:70
 msgid "Logs size: {0}"
 msgstr "Dimensione log: {0}"
 
-#: Template/Admin/Systems/temporary.ctp:60
+#: Template/Admin/Systems/temporary.ctp:73
 msgid "Clear logs"
 msgstr "Cancella log"
 
-#: Template/Admin/Systems/temporary.ctp:67
+#: Template/Admin/Systems/temporary.ctp:80
 msgid "Thumbs"
 msgstr "Miniature"
 
-#: Template/Admin/Systems/temporary.ctp:68
+#: Template/Admin/Systems/temporary.ctp:81
 msgid "Thumbs size: {0}"
 msgstr "Dimensione miniature: {0}"
 
-#: Template/Admin/Systems/temporary.ctp:71
+#: Template/Admin/Systems/temporary.ctp:84
 msgid ""
 "Note: you should not need to clear the thumbnails and that this will slow "
 "down the images loading the first time that are displayed. You should clear "
@@ -1416,17 +1450,9 @@ msgstr ""
 "Dovresti cancellare le miniature solo se queste hanno raggiunto una grossa "
 "dimensione o quando molte immagini non sono più utilizzate"
 
-#: Template/Admin/Systems/temporary.ctp:72
+#: Template/Admin/Systems/temporary.ctp:85
 msgid "Clear thumbs"
 msgstr "Svuota le miniature"
-
-#: Template/Admin/Tags/edit.ctp:25;28;37
-msgid "Edit tag"
-msgstr "Modifica tag"
-
-#: Template/Admin/Tags/edit.ctp:33
-msgid "Tag"
-msgstr "Tag"
 
 #: Template/Admin/Users/add.ctp:25;28;75
 #: View/Helper/MeCmsMenuHelper.php:138
@@ -1814,6 +1840,10 @@ msgstr "Hai cercato: {0}"
 #: View/View/AppView.php:153
 msgid "Latest posts"
 msgstr "Ultimi articoli"
+
+#: Template/PostsTags/index.ctp:25;29
+msgid "Posts tags"
+msgstr "Tag articoli"
 
 #: Template/Systems/contact_form.ctp:41
 #: Template/Users/forgot_password.ctp:36
