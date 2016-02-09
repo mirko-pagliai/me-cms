@@ -28,10 +28,11 @@
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Posts categories'));	
 		
-		$list = array();
-		foreach($categories as $category)
-			$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
+		if(!empty($categories)) {
+			foreach($categories as $category)
+				$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
 
-		echo $this->Html->ul($list, ['icon' => 'caret-right']);
+			echo $this->Html->ul($list, ['icon' => 'caret-right']);
+		}
 	?>
 </div>
