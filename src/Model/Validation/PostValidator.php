@@ -102,7 +102,7 @@ class PostValidator extends AppValidator {
 				continue;
 			
 			//Checks if the tag has only lowercase letters, numbers, hyphen, space
-			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\-\ ]+$/', $tag['tag']))
+			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\ ]+$/', $tag['tag']))
 				return FALSE;
 		}
 		
