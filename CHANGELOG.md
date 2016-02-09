@@ -2,6 +2,7 @@
 ## 2.2 branch
 ### 2.2.1
 * added index for tags;
+* add the button to clear all temporary files with a single command;
 * fixed a major bug for tags. The hyphen is no longer accepted;
 * fixed a bug when editing tags.
 

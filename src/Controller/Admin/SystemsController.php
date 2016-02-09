@@ -47,8 +47,8 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins can view logs and clear logs
-		if($this->request->isAction(['clear_logs', 'logs']))
+		//Only admins can clear all temporary files, clear logs and view logs
+		if($this->request->isAction(['clear_all', 'clear_logs', 'logs']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
@@ -196,6 +196,25 @@ class SystemsController extends AppController {
 	}
 	
 	/**
+	 * Clears all temporary files (cache, assets, logs and thumbnails)
+	 * @uses MeTools\Utility\Asset::clear()
+	 * @uses MeTools\Log\Engine\FileLog::clear()
+	 * @uses MeTools\Utility\System::clearCache()
+	 * @uses MeTools\Utility\Thumbs::clear()
+	 */
+	public function clear_all() {
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'cache']);
+		
+		if(Asset::clear() && FileLog::clear() && System::clearCache() && Thumbs::clear())
+			$this->Flash->success(__d('me_cms', 'All temporary files have been cleared'));
+		else
+			$this->Flash->error(__d('me_cms', 'Some temporary files have not been cleared'));
+		
+		return $this->redirect(['action' => 'temporary']);
+	}
+	
+	/**
 	 * Clears asset files
 	 * @uses MeTools\Utility\Asset::clear()
 	 */
@@ -289,6 +308,7 @@ class SystemsController extends AppController {
 	 */
 	public function temporary() {
         $this->set([
+			'all_size'		=> System::cacheSize() + Asset::size() + FileLog::size() + Thumbs::size(),
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
 			'assets_size'	=> Asset::size(),

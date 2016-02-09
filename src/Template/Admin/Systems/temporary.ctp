@@ -25,7 +25,20 @@
 <?php $this->assign('title', __d('me_cms', 'Temporary files')); ?>
 
 <div class="systems index">
-	<?= $this->Html->h2(__d('me_cms', 'Temporary files')) ?>
+	<?php if($this->Auth->isGroup('admin')): //Only admins can clear all temporary files ?>
+		<?= $this->Html->h2(__d('me_cms', 'All temporary files')) ?>
+		<div class="margin-20">
+			<?php
+				echo $this->Html->h4(__d('me_cms', 'Cache'));
+
+				echo $this->Html->para(NULL, __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($all_size)));
+				echo $this->Html->para(NULL, __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails'));
+				echo $this->Form->postButton(__d('me_cms', 'Clear all temporary files'), ['action' => 'clear_all'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+			?>
+		</div>
+
+		<hr />
+	<?php endif; ?>
 	
 	<div class="margin-20">
 		<?php
