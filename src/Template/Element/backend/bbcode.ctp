@@ -46,10 +46,10 @@
 								<code>[readmore /]</code>
 							</td>
 							<td>
-								<?= __d('me_cms', '
-									Manually indicates where to cut the text and show the "Read more" button. 
-									If this is not present, the system can still cut the text, for example after a certain number of characters
-								') ?>
+								<?= __d('me_cms',
+									'Manually indicates where to cut the text and show the "Read more" button. '.
+									'If this is not present, the system can still cut the text, for example after a certain number of characters'
+								) ?>
 							</td>
 						</tr>
 						<tr>
@@ -58,9 +58,7 @@
 								<p><code>[youtube]bL_CJKq9rIw[/youtube]</code></p>
 							</td>
 							<td>
-								<?= __d('me_cms', '
-									Adds a {0} video. You may indicate the ID or the url of the video
-								', 'YouTube') ?>
+								<?= __d('me_cms', 'Adds a {0} video. You may indicate the ID or the url of the video', 'YouTube') ?>
 							</td>
 						</tr>
 					</tbody>
