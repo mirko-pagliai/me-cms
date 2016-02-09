@@ -46,10 +46,8 @@
 								<code>[readmore /]</code>
 							</td>
 							<td>
-								<?= __d('me_cms',
-									'Manually indicates where to cut the text and show the "Read more" button. '.
-									'If this is not present, the system can still cut the text, for example after a certain number of characters'
-								) ?>
+								<?= __d('me_cms', 'Manually indicates where to cut the text and show the "Read more" button') ?>. 
+								<?= __d('me_cms', 'If this is not present, the system can still cut the text, for example after a certain number of characters') ?>
 							</td>
 						</tr>
 						<tr>
