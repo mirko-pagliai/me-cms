@@ -42,7 +42,7 @@
 <div class="postsTags index">
 	<?= $this->Html->h2(__d('me_cms', 'Tags')) ?>
 	
-	<div class="div-striped">
+	<div class="div-striped row">
 		<?php foreach($tags as $tag): ?>
 			<div class="col-sm-3">
 				<div>
