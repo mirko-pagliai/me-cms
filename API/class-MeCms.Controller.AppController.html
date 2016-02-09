@@ -42,11 +42,6 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Error.html">
-						Error					</a>
-
-						</li>
-				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
 
@@ -235,7 +230,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#27-224" title="Go to source code">Controller/AppController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.AppController.html#27-214" title="Go to source code">Controller/AppController.php</a>
 		<br>
 	</div>
 
@@ -301,16 +296,14 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#__upload">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#58-94" title="Go to source code">_upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#58-84" title="Go to source code">_upload</a>( <span>array <var>$file</var></span>, <span>string <var>$target</var></span> )</code>
 
 		<div class="description short">
-			<p>Uploads a file.</p>
+			<p>Internal method to uploads a file</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Uploads a file.</p>
-
-<p>This methods renders the element <code>backend/uploader/response</code>.</p>
+			<p>Internal method to uploads a file</p>
 
 
 				<h4>Parameters</h4>
@@ -323,7 +316,7 @@ App\Controller\AppController
 
 				<h4>Returns</h4>
 				<div class="list">
-					mixed<br>Full file path or FALSE
+					mixed<br>Full file path or FALSE if there's an error
 				</div>
 
 
@@ -344,7 +337,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#96-137" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#86-127" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -407,7 +400,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeRender">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#139-159" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#129-149" title="Go to source code">beforeRender</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called after the controller action is run, but before the view is rendered.
@@ -458,7 +451,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#161-177" title="Go to source code">initialize</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#151-167" title="Go to source code">initialize</a>( )</code>
 
 		<div class="description short">
 			<p>Initialization hook method</p>
@@ -492,7 +485,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#179-188" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#169-178" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Checks if the provided user is authorized for the request</p>
@@ -535,7 +528,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isBanned">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#190-202" title="Go to source code">isBanned</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#180-192" title="Go to source code">isBanned</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the user's IP address is banned</p>
@@ -578,7 +571,7 @@ You can use this method to perform logic or set view variables that are required
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isOffline">#</a>
-		<code><a href="source-class-MeCms.Controller.AppController.html#204-223" title="Go to source code">isOffline</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.AppController.html#194-213" title="Go to source code">isOffline</a>( )</code>
 
 		<div class="description short">
 			<p>Checks if the site is offline</p>

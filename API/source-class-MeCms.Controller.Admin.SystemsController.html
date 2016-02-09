@@ -43,11 +43,6 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Error.html">
-						Error					</a>
-
-						</li>
-				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
 
@@ -150,7 +145,6 @@
 				<li><a href="class-MeCms.Controller.PostsTagsController.html">MeCms\Controller\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">MeCms\Controller\SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">MeCms\Controller\UsersController</a></li>
-				<li><a href="class-MeCms.Error.ExceptionRenderer.html">MeCms\Error\ExceptionRenderer</a></li>
 				<li><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></li>
 				<li><a href="class-MeCms.Mailer.Mailer.html">MeCms\Mailer\Mailer</a></li>
 				<li><a href="class-MeCms.Mailer.UserMailer.html">MeCms\Mailer\UserMailer</a></li>
@@ -199,6 +193,7 @@
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
+				<li><a href="class-MeCms.View.Cell.PostsTagsCell.html">MeCms\View\Cell\PostsTagsCell</a></li>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">MeCms\View\Helper\AuthHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MeCmsMenuHelper.html">MeCms\View\Helper\MeCmsMenuHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MeCms\View\Helper\MenuBuilderHelper</a></li>
@@ -394,7 +389,7 @@
 </span></span><span id="146" class="l"><a href="#146">146: </a><span class="php-comment">     * @uses MeTools\Utility\Unix::which()
 </span></span><span id="147" class="l"><a href="#147">147: </a><span class="php-comment">     */</span>
 </span><span id="148" class="l"><a href="#148">148: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> checkup() {
-</span><span id="149" class="l"><a href="#149">149: </a>        <span class="php-var">$phpRequired</span> = <span class="php-quote">'5.4.16'</span>;
+</span><span id="149" class="l"><a href="#149">149: </a>        <span class="php-var">$phpRequired</span> = <span class="php-quote">'5.5.9'</span>;
 </span><span id="150" class="l"><a href="#150">150: </a>        
 </span><span id="151" class="l"><a href="#151">151: </a>        <span class="php-var">$this</span>-&gt;set([
 </span><span id="152" class="l"><a href="#152">152: </a>            <span class="php-quote">'apache'</span> =&gt; [
@@ -510,40 +505,41 @@
 </span><span id="262" class="l"><a href="#262">262: </a>    <span class="php-comment">/**
 </span></span><span id="263" class="l"><a href="#263">263: </a><span class="php-comment">     * Log viewer
 </span></span><span id="264" class="l"><a href="#264">264: </a><span class="php-comment">     * @uses MeTools\Log\Engine\FileLog::all()
-</span></span><span id="265" class="l"><a href="#265">265: </a><span class="php-comment">     */</span>
-</span><span id="266" class="l"><a href="#266">266: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> logs() {
-</span><span id="267" class="l"><a href="#267">267: </a>        <span class="php-comment">//Gets log files</span>
-</span><span id="268" class="l"><a href="#268">268: </a>        <span class="php-var">$files</span> = FileLog::all();
-</span><span id="269" class="l"><a href="#269">269: </a>        
-</span><span id="270" class="l"><a href="#270">270: </a>        <span class="php-comment">//If there's only one log file, it automatically sets the query value</span>
-</span><span id="271" class="l"><a href="#271">271: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>) &amp;&amp; <span class="php-keyword2">count</span>(<span class="php-var">$files</span>) &lt; <span class="php-num">2</span>)
-</span><span id="272" class="l"><a href="#272">272: </a>            <span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'file'</span>] = fk(<span class="php-var">$files</span>);
-</span><span id="273" class="l"><a href="#273">273: </a>        
-</span><span id="274" class="l"><a href="#274">274: </a>        <span class="php-comment">//If a log file has been specified</span>
-</span><span id="275" class="l"><a href="#275">275: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'file'</span>]) &amp;&amp; <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'get'</span>))
-</span><span id="276" class="l"><a href="#276">276: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'log'</span>, @<span class="php-keyword2">file_get_contents</span>(LOGS.<span class="php-var">$files</span>[<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>)]));
-</span><span id="277" class="l"><a href="#277">277: </a>        
-</span><span id="278" class="l"><a href="#278">278: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'files'</span>));
-</span><span id="279" class="l"><a href="#279">279: </a>    }
-</span><span id="280" class="l"><a href="#280">280: </a>    
-</span><span id="281" class="l"><a href="#281">281: </a>    <span class="php-comment">/**
-</span></span><span id="282" class="l"><a href="#282">282: </a><span class="php-comment">     * Manages cache, logs and thumbnails
-</span></span><span id="283" class="l"><a href="#283">283: </a><span class="php-comment">     * @uses MeTools\Log\Engine\FileLog::size()
-</span></span><span id="284" class="l"><a href="#284">284: </a><span class="php-comment">     * @uses MeTools\Utility\Asset::size()
-</span></span><span id="285" class="l"><a href="#285">285: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheSize()
-</span></span><span id="286" class="l"><a href="#286">286: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheStatus()
-</span></span><span id="287" class="l"><a href="#287">287: </a><span class="php-comment">     * @uses MeTools\Utility\Thumbs::size()
-</span></span><span id="288" class="l"><a href="#288">288: </a><span class="php-comment">     */</span>
-</span><span id="289" class="l"><a href="#289">289: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> temporary() {
-</span><span id="290" class="l"><a href="#290">290: </a>        <span class="php-var">$this</span>-&gt;set([
-</span><span id="291" class="l"><a href="#291">291: </a>            <span class="php-quote">'cache_size'</span>    =&gt; <span class="php-keyword2">System</span>::cacheSize(),
-</span><span id="292" class="l"><a href="#292">292: </a>            <span class="php-quote">'cache_status'</span>  =&gt; <span class="php-keyword2">System</span>::cacheStatus(),
-</span><span id="293" class="l"><a href="#293">293: </a>            <span class="php-quote">'assets_size'</span>   =&gt; Asset::size(),
-</span><span id="294" class="l"><a href="#294">294: </a>            <span class="php-quote">'logs_size'</span>     =&gt; FileLog::size(),
-</span><span id="295" class="l"><a href="#295">295: </a>            <span class="php-quote">'thumbs_size'</span>   =&gt; Thumbs::size()
-</span><span id="296" class="l"><a href="#296">296: </a>        ]);
-</span><span id="297" class="l"><a href="#297">297: </a>    }
-</span><span id="298" class="l"><a href="#298">298: </a>}</span></code></pre>
+</span></span><span id="265" class="l"><a href="#265">265: </a><span class="php-comment">     * @uses MeTools\Log\Engine\FileLog::parse()
+</span></span><span id="266" class="l"><a href="#266">266: </a><span class="php-comment">     */</span>
+</span><span id="267" class="l"><a href="#267">267: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> logs_viewer() {
+</span><span id="268" class="l"><a href="#268">268: </a>        <span class="php-comment">//Gets log files</span>
+</span><span id="269" class="l"><a href="#269">269: </a>        <span class="php-var">$files</span> = FileLog::all();
+</span><span id="270" class="l"><a href="#270">270: </a>        
+</span><span id="271" class="l"><a href="#271">271: </a>        <span class="php-comment">//If there's only one log file, it automatically sets the query value</span>
+</span><span id="272" class="l"><a href="#272">272: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>) &amp;&amp; <span class="php-keyword2">count</span>(<span class="php-var">$files</span>) &lt; <span class="php-num">2</span>)
+</span><span id="273" class="l"><a href="#273">273: </a>            <span class="php-var">$this</span>-&gt;request-&gt;query[<span class="php-quote">'file'</span>] = fk(<span class="php-var">$files</span>);
+</span><span id="274" class="l"><a href="#274">274: </a>        
+</span><span id="275" class="l"><a href="#275">275: </a>        <span class="php-comment">//If a log file has been specified</span>
+</span><span id="276" class="l"><a href="#276">276: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>) &amp;&amp; <span class="php-var">$this</span>-&gt;request-&gt;is(<span class="php-quote">'get'</span>))
+</span><span id="277" class="l"><a href="#277">277: </a>            <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'logs'</span>, <span class="php-keyword2">array_reverse</span>(FileLog::parse(<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.log'</span>, <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'file'</span>)))));
+</span><span id="278" class="l"><a href="#278">278: </a>        
+</span><span id="279" class="l"><a href="#279">279: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'files'</span>));
+</span><span id="280" class="l"><a href="#280">280: </a>    }
+</span><span id="281" class="l"><a href="#281">281: </a>    
+</span><span id="282" class="l"><a href="#282">282: </a>    <span class="php-comment">/**
+</span></span><span id="283" class="l"><a href="#283">283: </a><span class="php-comment">     * Manages cache, logs and thumbnails
+</span></span><span id="284" class="l"><a href="#284">284: </a><span class="php-comment">     * @uses MeTools\Log\Engine\FileLog::size()
+</span></span><span id="285" class="l"><a href="#285">285: </a><span class="php-comment">     * @uses MeTools\Utility\Asset::size()
+</span></span><span id="286" class="l"><a href="#286">286: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheSize()
+</span></span><span id="287" class="l"><a href="#287">287: </a><span class="php-comment">     * @uses MeTools\Utility\System::cacheStatus()
+</span></span><span id="288" class="l"><a href="#288">288: </a><span class="php-comment">     * @uses MeTools\Utility\Thumbs::size()
+</span></span><span id="289" class="l"><a href="#289">289: </a><span class="php-comment">     */</span>
+</span><span id="290" class="l"><a href="#290">290: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> temporary() {
+</span><span id="291" class="l"><a href="#291">291: </a>        <span class="php-var">$this</span>-&gt;set([
+</span><span id="292" class="l"><a href="#292">292: </a>            <span class="php-quote">'cache_size'</span>    =&gt; <span class="php-keyword2">System</span>::cacheSize(),
+</span><span id="293" class="l"><a href="#293">293: </a>            <span class="php-quote">'cache_status'</span>  =&gt; <span class="php-keyword2">System</span>::cacheStatus(),
+</span><span id="294" class="l"><a href="#294">294: </a>            <span class="php-quote">'assets_size'</span>   =&gt; Asset::size(),
+</span><span id="295" class="l"><a href="#295">295: </a>            <span class="php-quote">'logs_size'</span>     =&gt; FileLog::size(),
+</span><span id="296" class="l"><a href="#296">296: </a>            <span class="php-quote">'thumbs_size'</span>   =&gt; Thumbs::size()
+</span><span id="297" class="l"><a href="#297">297: </a>        ]);
+</span><span id="298" class="l"><a href="#298">298: </a>    }
+</span><span id="299" class="l"><a href="#299">299: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -551,6 +547,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?d4cbd6cefec1f6ce3fbe1ec6079656f3f7acbc1e"></script>
+<script src="elementlist.js?96ea81d2eae7a9261b6728bec3ee53ecfcee2e88"></script>
 </body>
 </html>

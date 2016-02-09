@@ -43,11 +43,6 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Error.html">
-						Error					</a>
-
-						</li>
-				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
 
@@ -150,7 +145,6 @@
 				<li><a href="class-MeCms.Controller.PostsTagsController.html">MeCms\Controller\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">MeCms\Controller\SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">MeCms\Controller\UsersController</a></li>
-				<li><a href="class-MeCms.Error.ExceptionRenderer.html">MeCms\Error\ExceptionRenderer</a></li>
 				<li><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></li>
 				<li><a href="class-MeCms.Mailer.Mailer.html">MeCms\Mailer\Mailer</a></li>
 				<li><a href="class-MeCms.Mailer.UserMailer.html">MeCms\Mailer\UserMailer</a></li>
@@ -199,6 +193,7 @@
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
+				<li><a href="class-MeCms.View.Cell.PostsTagsCell.html">MeCms\View\Cell\PostsTagsCell</a></li>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">MeCms\View\Helper\AuthHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MeCmsMenuHelper.html">MeCms\View\Helper\MeCmsMenuHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MeCms\View\Helper\MenuBuilderHelper</a></li>
@@ -317,7 +312,7 @@
 </span></span><span id="69" class="l"><a href="#69"> 69: </a><span class="php-comment">     * @uses MeTools\View\Helper\DropdownHelper::menu()
 </span></span><span id="70" class="l"><a href="#70"> 70: </a><span class="php-comment">     */</span>
 </span><span id="71" class="l"><a href="#71"> 71: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _renderAsDropdown(<span class="php-var">$title</span>, <span class="php-keyword1">array</span> <span class="php-var">$options</span> = [], <span class="php-var">$menu</span>) {
-</span><span id="72" class="l"><a href="#72"> 72: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;Dropdown-&gt;menu(<span class="php-var">$title</span>, <span class="php-var">$options</span>, <span class="php-var">$menu</span>);
+</span><span id="72" class="l"><a href="#72"> 72: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;Html-&gt;li(<span class="php-var">$this</span>-&gt;Dropdown-&gt;menu(<span class="php-var">$title</span>, <span class="php-var">$options</span>, <span class="php-var">$menu</span>));
 </span><span id="73" class="l"><a href="#73"> 73: </a>    }
 </span><span id="74" class="l"><a href="#74"> 74: </a>    
 </span><span id="75" class="l"><a href="#75"> 75: </a>    <span class="php-comment">/**
@@ -388,6 +383,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?d4cbd6cefec1f6ce3fbe1ec6079656f3f7acbc1e"></script>
+<script src="elementlist.js?96ea81d2eae7a9261b6728bec3ee53ecfcee2e88"></script>
 </body>
 </html>

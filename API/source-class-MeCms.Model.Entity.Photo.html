@@ -43,11 +43,6 @@
 						</li>
 							</ul></li>
 				<li class="main">
-					<a href="namespace-MeCms.Error.html">
-						Error					</a>
-
-						</li>
-				<li class="main">
 					<a href="namespace-MeCms.Form.html">
 						Form					</a>
 
@@ -150,7 +145,6 @@
 				<li><a href="class-MeCms.Controller.PostsTagsController.html">MeCms\Controller\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.SystemsController.html">MeCms\Controller\SystemsController</a></li>
 				<li><a href="class-MeCms.Controller.UsersController.html">MeCms\Controller\UsersController</a></li>
-				<li><a href="class-MeCms.Error.ExceptionRenderer.html">MeCms\Error\ExceptionRenderer</a></li>
 				<li><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></li>
 				<li><a href="class-MeCms.Mailer.Mailer.html">MeCms\Mailer\Mailer</a></li>
 				<li><a href="class-MeCms.Mailer.UserMailer.html">MeCms\Mailer\UserMailer</a></li>
@@ -199,6 +193,7 @@
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PhotosCell.html">MeCms\View\Cell\PhotosCell</a></li>
 				<li><a href="class-MeCms.View.Cell.PostsCell.html">MeCms\View\Cell\PostsCell</a></li>
+				<li><a href="class-MeCms.View.Cell.PostsTagsCell.html">MeCms\View\Cell\PostsTagsCell</a></li>
 				<li><a href="class-MeCms.View.Helper.AuthHelper.html">MeCms\View\Helper\AuthHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MeCmsMenuHelper.html">MeCms\View\Helper\MeCmsMenuHelper</a></li>
 				<li><a href="class-MeCms.View.Helper.MenuBuilderHelper.html">MeCms\View\Helper\MenuBuilderHelper</a></li>
@@ -280,32 +275,35 @@
 </span></span><span id="32" class="l"><a href="#32">32: </a><span class="php-comment"> * @property \MeCms\Model\Entity\Album $album
 </span></span><span id="33" class="l"><a href="#33">33: </a><span class="php-comment"> * @property string $filename
 </span></span><span id="34" class="l"><a href="#34">34: </a><span class="php-comment"> * @property string $description
-</span></span><span id="35" class="l"><a href="#35">35: </a><span class="php-comment"> */</span>
-</span><span id="36" class="l"><a href="#36">36: </a><span class="php-keyword1">class</span> Photo <span class="php-keyword1">extends</span> Entity {
-</span><span id="37" class="l"><a href="#37">37: </a>    <span class="php-comment">/**
-</span></span><span id="38" class="l"><a href="#38">38: </a><span class="php-comment">     * Fields that can be mass assigned using newEntity() or patchEntity()
-</span></span><span id="39" class="l"><a href="#39">39: </a><span class="php-comment">     * @var array
-</span></span><span id="40" class="l"><a href="#40">40: </a><span class="php-comment">     */</span>
-</span><span id="41" class="l"><a href="#41">41: </a>    <span class="php-keyword1">protected</span> <span class="php-var">$_accessible</span> = [
-</span><span id="42" class="l"><a href="#42">42: </a>        <span class="php-quote">'*'</span> =&gt; <span class="php-keyword1">TRUE</span>,
-</span><span id="43" class="l"><a href="#43">43: </a>        <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">FALSE</span>
-</span><span id="44" class="l"><a href="#44">44: </a>    ];
-</span><span id="45" class="l"><a href="#45">45: </a>    
-</span><span id="46" class="l"><a href="#46">46: </a>    <span class="php-comment">/**
-</span></span><span id="47" class="l"><a href="#47">47: </a><span class="php-comment">     * Virtual fields that should be exposed
-</span></span><span id="48" class="l"><a href="#48">48: </a><span class="php-comment">     * @var array
-</span></span><span id="49" class="l"><a href="#49">49: </a><span class="php-comment">     */</span>
-</span><span id="50" class="l"><a href="#50">50: </a>    <span class="php-keyword1">protected</span> <span class="php-var">$_virtual</span> = [<span class="php-quote">'path'</span>];
-</span><span id="51" class="l"><a href="#51">51: </a>    
-</span><span id="52" class="l"><a href="#52">52: </a>    <span class="php-comment">/**
-</span></span><span id="53" class="l"><a href="#53">53: </a><span class="php-comment">     * Gets the photo path (virtual field)
-</span></span><span id="54" class="l"><a href="#54">54: </a><span class="php-comment">     * @return string Path
-</span></span><span id="55" class="l"><a href="#55">55: </a><span class="php-comment">     * @uses MeCms\Utility\PhotoFile::path()
-</span></span><span id="56" class="l"><a href="#56">56: </a><span class="php-comment">     */</span>
-</span><span id="57" class="l"><a href="#57">57: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _getPath() {
-</span><span id="58" class="l"><a href="#58">58: </a>        <span class="php-keyword1">return</span> PhotoFile::path(<span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'filename'</span>], <span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'album_id'</span>]);
-</span><span id="59" class="l"><a href="#59">59: </a>    }
-</span><span id="60" class="l"><a href="#60">60: </a>}</span></code></pre>
+</span></span><span id="35" class="l"><a href="#35">35: </a><span class="php-comment"> * @property \Cake\I18n\Time $created
+</span></span><span id="36" class="l"><a href="#36">36: </a><span class="php-comment"> * @property \Cake\I18n\Time $modified
+</span></span><span id="37" class="l"><a href="#37">37: </a><span class="php-comment"> */</span>
+</span><span id="38" class="l"><a href="#38">38: </a><span class="php-keyword1">class</span> Photo <span class="php-keyword1">extends</span> Entity {
+</span><span id="39" class="l"><a href="#39">39: </a>    <span class="php-comment">/**
+</span></span><span id="40" class="l"><a href="#40">40: </a><span class="php-comment">     * Fields that can be mass assigned using newEntity() or patchEntity()
+</span></span><span id="41" class="l"><a href="#41">41: </a><span class="php-comment">     * @var array
+</span></span><span id="42" class="l"><a href="#42">42: </a><span class="php-comment">     */</span>
+</span><span id="43" class="l"><a href="#43">43: </a>    <span class="php-keyword1">protected</span> <span class="php-var">$_accessible</span> = [
+</span><span id="44" class="l"><a href="#44">44: </a>        <span class="php-quote">'*'</span> =&gt; <span class="php-keyword1">TRUE</span>,
+</span><span id="45" class="l"><a href="#45">45: </a>        <span class="php-quote">'id'</span> =&gt; <span class="php-keyword1">FALSE</span>,
+</span><span id="46" class="l"><a href="#46">46: </a>        <span class="php-quote">'modified'</span> =&gt; <span class="php-keyword1">FALSE</span>
+</span><span id="47" class="l"><a href="#47">47: </a>    ];
+</span><span id="48" class="l"><a href="#48">48: </a>    
+</span><span id="49" class="l"><a href="#49">49: </a>    <span class="php-comment">/**
+</span></span><span id="50" class="l"><a href="#50">50: </a><span class="php-comment">     * Virtual fields that should be exposed
+</span></span><span id="51" class="l"><a href="#51">51: </a><span class="php-comment">     * @var array
+</span></span><span id="52" class="l"><a href="#52">52: </a><span class="php-comment">     */</span>
+</span><span id="53" class="l"><a href="#53">53: </a>    <span class="php-keyword1">protected</span> <span class="php-var">$_virtual</span> = [<span class="php-quote">'path'</span>];
+</span><span id="54" class="l"><a href="#54">54: </a>    
+</span><span id="55" class="l"><a href="#55">55: </a>    <span class="php-comment">/**
+</span></span><span id="56" class="l"><a href="#56">56: </a><span class="php-comment">     * Gets the photo path (virtual field)
+</span></span><span id="57" class="l"><a href="#57">57: </a><span class="php-comment">     * @return string Path
+</span></span><span id="58" class="l"><a href="#58">58: </a><span class="php-comment">     * @uses MeCms\Utility\PhotoFile::path()
+</span></span><span id="59" class="l"><a href="#59">59: </a><span class="php-comment">     */</span>
+</span><span id="60" class="l"><a href="#60">60: </a>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> _getPath() {
+</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">return</span> PhotoFile::path(<span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'filename'</span>], <span class="php-var">$this</span>-&gt;_properties[<span class="php-quote">'album_id'</span>]);
+</span><span id="62" class="l"><a href="#62">62: </a>    }
+</span><span id="63" class="l"><a href="#63">63: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -313,6 +311,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?d4cbd6cefec1f6ce3fbe1ec6079656f3f7acbc1e"></script>
+<script src="elementlist.js?96ea81d2eae7a9261b6728bec3ee53ecfcee2e88"></script>
 </body>
 </html>
