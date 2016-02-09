@@ -33,12 +33,8 @@ use MeCms\Controller\AppController;
 class PostsTagsController extends AppController {
 	/**
 	 * Lists posts tags
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function index() {
-		//Checks if the cache is valid
-		$this->PostsTags->Posts->checkIfCacheIsValid();
-		
 		$this->set('tags', $this->PostsTags->Tags->find()
 			->order(['tag' => 'ASC'])
 			->where(['post_count >' => 0])
