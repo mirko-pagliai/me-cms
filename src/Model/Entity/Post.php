@@ -32,13 +32,13 @@ use Cake\ORM\Entity;
  * @property int $user_id
  * @property \MeCms\Model\Entity\User $user
  * @property string $title
- * @property string $slug
  * @property string $subtitle
+ * @property string $slug
  * @property string $text
  * @property int $priority
+ * @property bool $active
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- * @property bool $active
  * @property \MeCms\Model\Entity\Tag[] $tags
  */
 class Post extends Entity {

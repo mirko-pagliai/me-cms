@@ -82,11 +82,16 @@ class AdminView extends AppView {
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
+		
+		//Adds the favicon
+		if(is_readable(WWW_ROOT.'favicon.ico'))
+			$this->Html->meta('icon');
 				
 		return BaseView::renderLayout($content, $layout);
 	}

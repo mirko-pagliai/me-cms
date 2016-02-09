@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-01-28 18:39+0000\n"
-"PO-Revision-Date: 2016-01-28 19:40+0100\n"
+"POT-Creation-Date: 2016-02-09 14:33+0000\n"
+"PO-Revision-Date: 2016-02-09 15:35+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -13,12 +13,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it\n"
 
-#: Controller/AppController.php:78
+#: Controller/AppController.php:76
 msgid "The file was not successfully moved to the target directory"
 msgstr ""
 "Il file non è stato correttamente spostato nella directory di destinazione"
 
-#: Controller/AppController.php:81
+#: Controller/AppController.php:79
 msgid "The file was not successfully uploaded"
 msgstr "Il file non è stato correttamente caricato"
 
@@ -126,19 +126,19 @@ msgid ""
 msgstr ""
 "Prima di poter gestire i banner, devi creare almeno una posizione per i banner"
 
-#: Controller/Admin/BannersController.php:130
+#: Controller/Admin/BannersController.php:138
 msgid "The banner has been saved"
 msgstr "Il banner è stato salvato"
 
-#: Controller/Admin/BannersController.php:134
+#: Controller/Admin/BannersController.php:142
 msgid "The banner could not be saved"
 msgstr "Il banner non è stato salvato"
 
-#: Controller/Admin/BannersController.php:149
+#: Controller/Admin/BannersController.php:157
 msgid "The banner has been deleted"
 msgstr "Il banner è stato eliminato"
 
-#: Controller/Admin/BannersController.php:151
+#: Controller/Admin/BannersController.php:159
 msgid "The banner could not be deleted"
 msgstr "Il banner non può essere eliminato"
 
@@ -206,23 +206,23 @@ msgstr ""
 "Prima di cancellare questo album, devi cancellare le sue foto o assegnarle a "
 "un altro album"
 
-#: Controller/Admin/PhotosController.php:59
+#: Controller/Admin/PhotosController.php:58
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr "Prima di gestire le foto, devi creare almeno un album"
 
-#: Controller/Admin/PhotosController.php:131
+#: Controller/Admin/PhotosController.php:138
 msgid "The photo has been saved"
 msgstr "La foto è stata salvata"
 
-#: Controller/Admin/PhotosController.php:135
+#: Controller/Admin/PhotosController.php:142
 msgid "The photo could not be saved"
 msgstr "La foto non può essere salvata"
 
-#: Controller/Admin/PhotosController.php:151
+#: Controller/Admin/PhotosController.php:158
 msgid "The photo has been deleted"
 msgstr "La foto è stata cancellata"
 
-#: Controller/Admin/PhotosController.php:153
+#: Controller/Admin/PhotosController.php:160
 msgid "The photo could not be deleted"
 msgstr "La foto non può essere cancellata"
 
@@ -254,19 +254,19 @@ msgstr ""
 msgid "Before you can manage posts, you have to create at least a category"
 msgstr "Prima di gestire gli articoli, devi creare almeno una categoria"
 
-#: Controller/Admin/PostsController.php:148;180
+#: Controller/Admin/PostsController.php:148;184
 msgid "The post has been saved"
 msgstr "L'articolo è stato salvato"
 
-#: Controller/Admin/PostsController.php:152;184
+#: Controller/Admin/PostsController.php:152;188
 msgid "The post could not be saved"
 msgstr "L'articolo non può essere salvato"
 
-#: Controller/Admin/PostsController.php:199
+#: Controller/Admin/PostsController.php:203
 msgid "The post has been deleted"
 msgstr "L'articolo è stato cancellato"
 
-#: Controller/Admin/PostsController.php:201
+#: Controller/Admin/PostsController.php:205
 msgid "The post could not be deleted"
 msgstr "L'articolo non può essere cancellato"
 
@@ -701,7 +701,7 @@ msgstr "Banner"
 #: Template/Admin/Photos/upload.ctp:40
 #: Template/Admin/Systems/browser.ctp:40
 #: Template/Admin/Systems/changelogs.ctp:41
-#: Template/Admin/Systems/logs.ctp:42
+#: Template/Admin/Systems/logs_viewer.ctp:45
 msgid "Select"
 msgstr "Seleziona"
 
@@ -752,6 +752,7 @@ msgstr "L'indirizzo deve cominciare con {0}"
 #: Template/Admin/PostsCategories/edit.ctp:55
 #: Template/Admin/UsersGroups/add.ctp:39
 #: Template/Admin/UsersGroups/edit.ctp:40
+#: Template/Element/backend/bbcode.ctp:40
 msgid "Description"
 msgstr "Descrizione"
 
@@ -831,6 +832,7 @@ msgstr "Non pubblicato"
 #: Template/Admin/Users/index.ctp:98
 #: Template/Admin/Users/view.ctp:32
 #: Template/Admin/UsersGroups/index.ctp:48
+#: Template/Element/backend/uploader/response.ctp:39
 msgid "Edit"
 msgstr "Modifica"
 
@@ -921,7 +923,7 @@ msgstr "Posizioni banner"
 msgid "Add"
 msgstr "Aggiungi"
 
-#: Template/Admin/Pages/add.ctp:26;33;73
+#: Template/Admin/Pages/add.ctp:26;33;74
 #: View/Helper/MeCmsMenuHelper.php:77
 msgid "Add page"
 msgstr "Aggiungi pagina"
@@ -1007,12 +1009,12 @@ msgstr ""
 
 #: Template/Admin/Pages/add.ctp:68
 #: Template/Admin/Pages/edit.ctp:69
-#: Template/Admin/Posts/add.ctp:109
-#: Template/Admin/Posts/edit.ctp:109
+#: Template/Admin/Posts/add.ctp:107
+#: Template/Admin/Posts/edit.ctp:107
 msgid "Text"
 msgstr "Testo"
 
-#: Template/Admin/Pages/edit.ctp:26;33;73
+#: Template/Admin/Pages/edit.ctp:26;33;74
 msgid "Edit page"
 msgstr "Modifica pagina"
 
@@ -1139,7 +1141,7 @@ msgstr "Foto"
 msgid "View"
 msgstr "Vedi"
 
-#: Template/Admin/Posts/add.ctp:26;34;114
+#: Template/Admin/Posts/add.ctp:26;34;110
 #: View/Helper/MeCmsMenuHelper.php:49
 msgid "Add post"
 msgstr "Aggiungi articolo"
@@ -1171,7 +1173,7 @@ msgstr ""
 "I tag devono essere di almeno 3 caratteri e separati da una una virgola o da "
 "una virgola e uno spazio. Solo lettere minuscole, numeri, trattino, spazio"
 
-#: Template/Admin/Posts/edit.ctp:26;34;114
+#: Template/Admin/Posts/edit.ctp:26;34;110
 msgid "Edit post"
 msgstr "Modifica articolo"
 
@@ -1316,14 +1318,34 @@ msgstr "La directory {0} è leggibile e scrivibile"
 msgid "Temporary directories"
 msgstr "Directory temporanee"
 
-#: Template/Admin/Systems/logs.ctp:25;28
+#: Template/Admin/Systems/logs_viewer.ctp:26;31
 #: View/Helper/MeCmsMenuHelper.php:172
 msgid "Log viewer"
 msgstr "Visualizzatore log"
 
-#: Template/Admin/Systems/logs.ctp:35;38
+#: Template/Admin/Systems/logs_viewer.ctp:38;41
 msgid "Log file"
 msgstr "File di log"
+
+#: Template/Admin/Systems/logs_viewer.ctp:73
+msgid "Request URL"
+msgstr "URL richiesta"
+
+#: Template/Admin/Systems/logs_viewer.ctp:80
+msgid "Referer URL"
+msgstr "URL referer"
+
+#: Template/Admin/Systems/logs_viewer.ctp:92
+msgid "Toggle exception attributes"
+msgstr "Cambia attributi dell'eccezione"
+
+#: Template/Admin/Systems/logs_viewer.ctp:97
+msgid "Toggle trace"
+msgstr "Cambia trace"
+
+#: Template/Admin/Systems/logs_viewer.ctp:102
+msgid "Toggle stack trace"
+msgstr "Cambia stack trace"
 
 #: Template/Admin/Systems/temporary.ctp:25;28
 #: View/Helper/MeCmsMenuHelper.php:163
@@ -1564,13 +1586,44 @@ msgstr "Cerca articoli"
 msgid "Search"
 msgstr "Cerca"
 
+#: Template/Cell/PostsTags/popular.ctp:27
+msgid "Popular tags"
+msgstr "Tag popolari"
+
+#: Template/Element/backend/bbcode.ctp:30
+msgid "BBCode"
+msgstr "BBCode"
+
+#: Template/Element/backend/bbcode.ctp:39
+msgid "BBCode tag"
+msgstr "Tag BBCode"
+
+#: Template/Element/backend/bbcode.ctp:49
+msgid ""
+"Manually indicates where to cut the text and show the \"Read more\" button"
+msgstr ""
+"Indica manualmente dove tagliare il testo e mostrare il pulsante \"Leggi "
+"tutto\""
+
+#: Template/Element/backend/bbcode.ctp:50
+msgid ""
+"If this is not present, the system can still cut the text, for example after "
+"a certain number of characters"
+msgstr ""
+"Se questo non è presente, il sistema taglierà comunque il testo, ad esempio "
+"dopo un certo numero di caratteri"
+
+#: Template/Element/backend/bbcode.ctp:59
+msgid "Adds a {0} video. You may indicate the ID or the url of the video"
+msgstr "Aggiunge un video di {0}. Puoi indicare l'ID o l'url del video"
+
 #: Template/Element/backend/topbar.ctp:30
 #: Template/Element/frontend/topbar.ctp:30
 msgid "Toggle navigation"
 msgstr "Cambia navigazione"
 
 #: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:71
+#: Template/Layout/frontend.ctp:67
 msgid "Homepage"
 msgstr "Homepage"
 
@@ -1612,7 +1665,7 @@ msgstr "Ok"
 
 #: Template/Element/frontend/cookies_policy.ctp:30
 #: Template/Element/frontend/views/page.ctp:62
-#: Template/Element/frontend/views/post.ctp:76
+#: Template/Element/frontend/views/post.ctp:82
 msgid "Read more"
 msgstr "Leggi tutto"
 
@@ -1646,15 +1699,15 @@ msgid "Categories"
 msgstr "Categorie"
 
 #: Template/Element/frontend/views/page.ctp:37
-#: Template/Element/frontend/views/post.ctp:46
+#: Template/Element/frontend/views/post.ctp:52
 msgid "Posted on {0}"
 msgstr "Pubblicato il {0}"
 
-#: Template/Element/frontend/views/post.ctp:40
+#: Template/Element/frontend/views/post.ctp:46
 msgid "Posted by {0}"
 msgstr "Pubblicato da {0}"
 
-#: Template/Element/frontend/views/post.ctp:88
+#: Template/Element/frontend/views/post.ctp:94
 msgid "Related posts"
 msgstr "Articoli correlati"
 
@@ -1717,19 +1770,6 @@ msgstr "hai richiesto di cambiare la tua password sul sito {0}"
 msgid "To reset your password, click {0}"
 msgstr "Per reimpostare la password, clicca {0}"
 
-#: Template/Error/error400.ctp:49
-#: Template/Error/error500.ctp:52
-msgid "Error"
-msgstr "Error"
-
-#: Template/Error/error400.ctp:50
-msgid "the requested address {0} was not found on this server"
-msgstr "l'indirizzo richiesto {0} non è stato trovato"
-
-#: Template/Error/error500.ctp:51
-msgid "An internal error has occurred"
-msgstr "Si è verificato un errore interno"
-
 #: Template/Layout/Email/html/default.ctp:38
 msgid "This email was sent automatically from {0}"
 msgstr "Questa email è stata inviata automaticamente da {0}"
@@ -1771,7 +1811,7 @@ msgid "You have searched for: {0}"
 msgstr "Hai cercato: {0}"
 
 #: Template/Posts/rss/rss.ctp:30;32
-#: View/View/AppView.php:145
+#: View/View/AppView.php:153
 msgid "Latest posts"
 msgstr "Ultimi articoli"
 

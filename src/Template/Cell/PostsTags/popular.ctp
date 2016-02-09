@@ -21,33 +21,18 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Log viewer')); ?>
 
-<div class="systems index">
-	<?= $this->Html->h2(__d('me_cms', 'Log viewer')) ?>
-	
-	<?php if(!empty($files)): ?>
-		<div class="well">
-			<?=	$this->Form->createInline(FALSE, ['type' => 'get']) ?>
-			<fieldset>
-				<?php 
-					echo $this->Form->label('file', __d('me_cms', 'Log file'));
-					echo $this->Form->input('file', [
-						'default'	=> $this->request->query('file'),
-						'label'		=> __d('me_cms', 'Log file'),
-						'name'		=> 'file',
-						'onchange'	=> 'send_form(this)'
-					]);
-					echo $this->Form->submit(__d('me_cms', 'Select'));
-					echo $this->Form->end();
+<?php if(count($tags)): ?>
+	<div class="widget sidebar-widget">
+		<?= $this->Html->h4(__d('me_cms', 'Popular tags')) ?>
+		
+		<?php foreach($tags as $tag): ?>
+			<div>
+				<?php
+					$options = empty($tag['size']) ? [] : ['style' => sprintf('font-size:%spx;', $tag['size'])];
+					echo $this->Html->link(sprintf('#%s', $tag['tag']), ['_name' => 'posts_tag', $tag['tag']], $options);
 				?>
-			</fieldset>
-		</div>
-	<?php endif; ?>
-	
-	<?php
-		if(!empty($log))
-			echo $this->Html->pre($log, ['class' => 'pre-scrollable']);
-	?>
-</div>
+			</div>
+		<?php endforeach; ?>
+	</div>
+<?php endif; ?>

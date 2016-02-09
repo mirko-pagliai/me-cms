@@ -146,7 +146,7 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Unix::which()
 	 */
 	public function checkup() {
-		$phpRequired = '5.4.16';
+		$phpRequired = '5.5.9';
 		
 		$this->set([
 			'apache' => [
@@ -262,8 +262,9 @@ class SystemsController extends AppController {
 	/**
 	 * Log viewer
 	 * @uses MeTools\Log\Engine\FileLog::all()
+	 * @uses MeTools\Log\Engine\FileLog::parse()
 	 */
-	public function logs() {
+	public function logs_viewer() {
 		//Gets log files
 		$files = FileLog::all();
 		
@@ -272,8 +273,8 @@ class SystemsController extends AppController {
 			$this->request->query['file'] = fk($files);
 		
 		//If a log file has been specified
-		if(!empty($this->request->query['file']) && $this->request->is('get'))
-			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query('file')]));
+		if($this->request->query('file') && $this->request->is('get'))
+			$this->set('logs', array_reverse(FileLog::parse(sprintf('%s.log', $this->request->query('file')))));
 		
 		$this->set(compact('files'));
 	}

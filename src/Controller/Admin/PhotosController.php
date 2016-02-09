@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 use MeCms\Utility\PhotoFile;
 
@@ -108,13 +107,21 @@ class PhotosController extends AppController {
 		
 		$album = $this->request->query('album');
 		
-		if($album && $this->request->data('file'))
+		if($album && $this->request->data('file')) {
 			//Checks if the file has been uploaded
-			if($filename = $this->_upload($this->request->data('file'), PhotoFile::folder($album)))
-				$this->Photos->save($this->Photos->newEntity([
+			if($filename = $this->_upload($this->request->data('file'), PhotoFile::folder($album))) {
+				$photo = $this->Photos->save($this->Photos->newEntity([
 					'album_id'	=> $album,
 					'filename'	=> basename($filename)
 				]));
+				
+				if(!empty($photo->id))
+					$this->set('edit_url', ['action' => 'edit', $photo->id]);
+			}
+			
+			//Renders the element `backend/uploader/response`
+			$this->render('/Element/backend/uploader/response', FALSE);
+		}
 	}
 
     /**

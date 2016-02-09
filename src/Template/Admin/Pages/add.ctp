@@ -69,6 +69,7 @@
 				'rows'	=> 10
 			]);
         ?>
+		<?= $this->element('backend/bbcode') ?>
     </fieldset>
     <?= $this->Form->submit(__d('me_cms', 'Add page')) ?>
     <?= $this->Form->end() ?>

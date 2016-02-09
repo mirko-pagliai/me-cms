@@ -1,4 +1,15 @@
 # 2.x branch
+## 2.2 branch
+### 2.2.0
+* you can now edit a photo or a banner immediately after it has been uploaded;
+* added "popular tags" widget;
+* rewritten the log viewer. Now log files are parsed, with style;
+* added BBCode examples;
+* you can add post tags as keywords meta-tag;
+* added support for the "theme color" (the toolbar color for some mobile browser);
+* the favicon is automatically added to the layout. No need to manually add;
+* deleted ExceptionRenderer class and errors templates and layout. From now, errors will be managed only by the app.
+
 ## 2.1 branch
 ### 2.1.9
 * banners have "created" and "modified" fields. Photos have "modified" field;

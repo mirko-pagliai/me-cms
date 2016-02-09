@@ -86,6 +86,12 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['_name' => 'posts_tag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
 	);
 	
+	//Shortcut
+	$routes->connect('/tag/:tag',
+		['controller' => 'PostsTags', 'action' => 'view'],
+		['tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
+	);
+	
 	/**
 	 * Posts controller
 	 */
@@ -128,6 +134,11 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/posts/page::page/*', ['controller' => 'Posts', 'action' => 'index_compatibility'], ['page' => '\d+', 'pass' => ['page']]);
 	
 	/**
+	 * Fallback for RSS
+	 */
+	$routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
+	
+	/**
 	 * Systems controller
 	 */
 	$routes->connect('/accept/cookies', ['controller' => 'Systems', 'action' => 'accept_cookies'], ['_name' => 'accept_cookies']);
@@ -158,11 +169,6 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 */
 	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
 	$routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
-	
-	/**
-	 * Fallback for RSS
-	 */
-	$routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
 	
 	/**
 	 * Admin routes

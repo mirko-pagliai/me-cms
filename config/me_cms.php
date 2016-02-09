@@ -49,6 +49,9 @@ return ['MeCms' => [
 		'rss_meta' => TRUE,
 		//Theme. Must be located in `APP/plugins/`
 		'theme' => FALSE,
+		//For some mobile browsers you can choose a color for the browser bar. Must be a valid HEX color or FALSE to disable
+		//See https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android
+		'toolbar_color' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
 		//Note that you can use the "<!-- read-more -->" tag to indicate manually where to truncate a text
 		'truncate_to' => 1000
@@ -111,6 +114,8 @@ return ['MeCms' => [
 		'category' => TRUE,
 		//Displays the post created datetime
 		'created' => TRUE,
+		//Adds post tags as keywords meta-tag
+		'keywords' => TRUE,
 		//Related posts
 		'related' => [
 			//Limit of related posts to get for each post. Use `0` to disable.

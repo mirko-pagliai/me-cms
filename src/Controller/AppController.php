@@ -56,12 +56,10 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Uploads a file.
-	 * 
-	 * This methods renders the element `backend/uploader/response`.
+	 * Internal method to uploads a file
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
-	 * @return mixed Full file path or FALSE
+	 * @return mixed Full file path or FALSE if there's an error
 	 */
 	protected function _upload($file, $target) {
 		//Checks if the file was successfully uploaded
@@ -79,18 +77,10 @@ class AppController extends BaseController {
 		}
 		else
 			$error = __d('me_cms', 'The file was not successfully uploaded');
-
-		if(!empty($error)) {
-			$success = FALSE;
-			$this->set(compact('error'));
-		}
 		
-		$this->set(compact('file'));
-
-		//Renders
-		$this->render('/Element/backend/uploader/response', FALSE);
+		$this->set(am(['error' => empty($error) ? FALSE : $error], compact('file')));
 		
-		return isset($success) && !$success ? FALSE : $target;
+		return empty($error) ? $target : FALSE;
 	}
 	
 	/**

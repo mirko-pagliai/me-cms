@@ -69,7 +69,7 @@ class MenuBuilderHelper extends Helper {
 	 * @uses MeTools\View\Helper\DropdownHelper::menu()
 	 */
 	protected function _renderAsDropdown($title, array $options = [], $menu) {
-		return $this->Dropdown->menu($title, $options, $menu);
+		return $this->Html->li($this->Dropdown->menu($title, $options, $menu));
 	}
 	
 	/**

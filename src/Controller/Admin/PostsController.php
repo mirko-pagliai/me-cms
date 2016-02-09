@@ -162,7 +162,11 @@ class PostsController extends AppController {
 	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      */
     public function edit($id = NULL)  {
-		$post = $this->Posts->findById($id)->contain('Tags')->firstOrFail();
+		$post = $this->Posts->findById($id)
+			->contain(['Tags' => function($q) {
+				return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
+			}])
+			->firstOrFail();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
