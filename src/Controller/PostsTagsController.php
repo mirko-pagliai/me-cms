@@ -17,7 +17,7 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
@@ -32,11 +32,26 @@ use MeCms\Controller\AppController;
  */
 class PostsTagsController extends AppController {
 	/**
+	 * Lists posts tags
+	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 */
+	public function index() {
+		//Checks if the cache is valid
+		$this->PostsTags->Posts->checkIfCacheIsValid();
+		
+		$this->set('tags', $this->PostsTags->Tags->find()
+			->order(['tag' => 'ASC'])
+			->where(['post_count >' => 0])
+			->cache('tag_index', $this->PostsTags->Posts->cache)
+			->all());
+	}
+	
+	/**
 	 * Lists posts for a tag
 	 * @param string $tag Tag name
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function view($tag) {		
+    public function view($tag) {
 		//Checks if the cache is valid
 		$this->PostsTags->Posts->checkIfCacheIsValid();
 		

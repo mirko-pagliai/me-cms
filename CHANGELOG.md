@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.2 branch
 ### 2.2.1
+* added index for tags;
 * fixed a major bug for tags. The hyphen is no longer accepted;
 * fixed a bug when editing tags.
 
