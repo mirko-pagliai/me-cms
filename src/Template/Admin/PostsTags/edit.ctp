@@ -24,7 +24,7 @@
 	
 <?php $this->assign('title', __d('me_cms', 'Edit tag')); ?>
 
-<div class="tags form">
+<div class="postsTags form">
 	<?= $this->Html->h2(__d('me_cms', 'Edit tag')) ?>
     <?= $this->Form->create($tag); ?>
 	<fieldset>

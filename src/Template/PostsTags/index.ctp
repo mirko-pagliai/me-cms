@@ -22,15 +22,15 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Posts categories')); ?>
+<?php $this->assign('title', __d('me_cms', 'Posts tags')); ?>
 
-<div class="postsCategories index">
+<div class="postsTags index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Posts categories'));	
+		echo $this->Html->h2(__d('me_cms', 'Posts tags'));	
 		
-		if(!empty($categories)) {
-			foreach($categories as $category)
-				$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
+		if(!empty($tags)) {
+			foreach($tags as $tag)
+				$list[] = $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
 
 			if(!empty($list))
 				echo $this->Html->ul($list, ['icon' => 'caret-right']);

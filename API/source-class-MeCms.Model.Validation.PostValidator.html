@@ -129,7 +129,6 @@
 				<li><a href="class-MeCms.Controller.Admin.PostsController.html">MeCms\Controller\Admin\PostsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PostsTagsController.html">MeCms\Controller\Admin\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.SystemsController.html">MeCms\Controller\Admin\SystemsController</a></li>
-				<li><a href="class-MeCms.Controller.Admin.TagsController.html">MeCms\Controller\Admin\TagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersController.html">MeCms\Controller\Admin\UsersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersGroupsController.html">MeCms\Controller\Admin\UsersGroupsController</a></li>
 				<li><a href="class-MeCms.Controller.AppController.html">MeCms\Controller\AppController</a></li>
@@ -345,7 +344,7 @@
 </span><span id="102" class="l"><a href="#102">102: </a>                <span class="php-keyword1">continue</span>;
 </span><span id="103" class="l"><a href="#103">103: </a>            
 </span><span id="104" class="l"><a href="#104">104: </a>            <span class="php-comment">//Checks if the tag has only lowercase letters, numbers, hyphen, space</span>
-</span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]) || !(bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\-\ ]+$/'</span>, <span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]))
+</span><span id="105" class="l"><a href="#105">105: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]) || !(bool) <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[a-z0-9\ ]+$/'</span>, <span class="php-var">$tag</span>[<span class="php-quote">'tag'</span>]))
 </span><span id="106" class="l"><a href="#106">106: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
 </span><span id="107" class="l"><a href="#107">107: </a>        }
 </span><span id="108" class="l"><a href="#108">108: </a>        
@@ -359,6 +358,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?96ea81d2eae7a9261b6728bec3ee53ecfcee2e88"></script>
+<script src="elementlist.js?bb802639439896aa2b394837658d27a075245dc7"></script>
 </body>
 </html>

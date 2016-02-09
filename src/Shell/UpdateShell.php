@@ -55,6 +55,20 @@ class UpdateShell extends Shell {
 		//Sets now for MySql
 		$this->now = (new \Cake\I18n\Time)->now()->i18nFormat(FORMAT_FOR_MYSQL);
 	}
+	/**
+	 * Updates to 2.2.1 version
+	 * @uses $connection
+	 */
+	public function to2v2v1() {
+		$this->loadModel('MeCms.Tags');
+		
+		//For each tag, it replaces the hyphen with space
+		foreach($this->Tags->find()->where(['tag LIKE' => '%-%'])->toArray() as $tag)
+			$this->Tags->query()->update()
+				->set(['tag' => str_replace('-', ' ', $tag->tag)])
+				->where(['id' => $tag->id])
+				->execute();
+	}
 	
 	/**
 	 * Updates to 2.1.9 version
@@ -115,6 +129,7 @@ class UpdateShell extends Shell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+			'to2v2v1' => ['help' => __d('me_cms', 'Updates to {0} version', '2.2.1')],
 			'to2v1v9' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.9')],
 			'to2v1v8' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.8')],
 			'to2v1v7' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.7')]

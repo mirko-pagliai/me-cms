@@ -54,12 +54,13 @@ $(function() {
 			tag = tag.toLowerCase(); //Lowercase
 			
 			//Changes invalid chars
-			var from = "àáäâèéëêìíïîıòóöôùúüûñç·/_,:;";
-			var to   = "aaaaeeeeiiiiioooouuuunc------";
+			var from = "àáäâèéëêìíïîıòóöôùúüûñç·/_,:;-";
+			var to   = "aaaaeeeeiiiiioooouuuunc       ";
 			for (var i=0, l=from.length ; i<l ; i++)
 				tag = tag.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		
-			tag = tag.replace(/[^a-z0-9\-\ ]/g, '')	//Removes invalid chars
+			//Removes invalid chars
+			tag = tag.replace(/[^a-z0-9\ ]/g, '')
 		
 			//Pushes the tag on the list of tags
 			listOfTags.push({key:counter, value:tag});

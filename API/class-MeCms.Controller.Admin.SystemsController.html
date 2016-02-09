@@ -128,7 +128,6 @@
 				<li><a href="class-MeCms.Controller.Admin.PostsController.html">PostsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PostsTagsController.html">PostsTagsController</a></li>
 				<li class="active"><a href="class-MeCms.Controller.Admin.SystemsController.html">SystemsController</a></li>
-				<li><a href="class-MeCms.Controller.Admin.TagsController.html">TagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersController.html">UsersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersGroupsController.html">UsersGroupsController</a></li>
 			</ul>
@@ -215,7 +214,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#38-299" title="Go to source code">Controller/Admin/SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#38-319" title="Go to source code">Controller/Admin/SystemsController.php</a>
 		<br>
 	</div>
 
@@ -399,6 +398,43 @@ App\Controller\AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="clear_all" id="_clear_all">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clear_all">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#198-215" title="Go to source code">clear_all</a>( )</code>
+
+		<div class="description short">
+			<p>Clears all temporary files (cache, assets, logs and thumbnails)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Clears all temporary files (cache, assets, logs and thumbnails)</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Utility\Asset::clear()<br>
+						MeTools\Log\Engine\FileLog::clear()<br>
+						MeTools\Utility\System::clearCache()<br>
+						MeTools\Utility\Thumbs::clear()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="clear_assets" id="_clear_assets">
 
 		<td class="attributes"><code>
@@ -411,7 +447,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_clear_assets">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#198-212" title="Go to source code">clear_assets</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#217-231" title="Go to source code">clear_assets</a>( )</code>
 
 		<div class="description short">
 			<p>Clears asset files</p>
@@ -445,7 +481,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_clear_cache">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#214-228" title="Go to source code">clear_cache</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#233-247" title="Go to source code">clear_cache</a>( )</code>
 
 		<div class="description short">
 			<p>Clears the cache</p>
@@ -479,7 +515,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_clear_logs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#230-244" title="Go to source code">clear_logs</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#249-263" title="Go to source code">clear_logs</a>( )</code>
 
 		<div class="description short">
 			<p>Clears logs</p>
@@ -513,7 +549,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_clear_thumbs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#246-260" title="Go to source code">clear_thumbs</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#265-279" title="Go to source code">clear_thumbs</a>( )</code>
 
 		<div class="description short">
 			<p>Clears the thumbnails</p>
@@ -547,7 +583,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logs_viewer">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#262-280" title="Go to source code">logs_viewer</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#281-299" title="Go to source code">logs_viewer</a>( )</code>
 
 		<div class="description short">
 			<p>Log viewer</p>
@@ -582,7 +618,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_temporary">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#282-298" title="Go to source code">temporary</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#301-318" title="Go to source code">temporary</a>( )</code>
 
 		<div class="description short">
 			<p>Manages cache, logs and thumbnails</p>
