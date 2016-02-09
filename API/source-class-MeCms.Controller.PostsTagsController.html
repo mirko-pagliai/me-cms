@@ -129,7 +129,6 @@
 				<li><a href="class-MeCms.Controller.Admin.PostsController.html">MeCms\Controller\Admin\PostsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PostsTagsController.html">MeCms\Controller\Admin\PostsTagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.SystemsController.html">MeCms\Controller\Admin\SystemsController</a></li>
-				<li><a href="class-MeCms.Controller.Admin.TagsController.html">MeCms\Controller\Admin\TagsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersController.html">MeCms\Controller\Admin\UsersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.UsersGroupsController.html">MeCms\Controller\Admin\UsersGroupsController</a></li>
 				<li><a href="class-MeCms.Controller.AppController.html">MeCms\Controller\AppController</a></li>
@@ -260,7 +259,7 @@
 </span></span><span id="17" class="l"><a href="#17">17: </a><span class="php-comment"> *
 </span></span><span id="18" class="l"><a href="#18">18: </a><span class="php-comment"> * @author      Mirko Pagliai &lt;mirko.pagliai@gmail.com&gt;
 </span></span><span id="19" class="l"><a href="#19">19: </a><span class="php-comment"> * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
-</span></span><span id="20" class="l"><a href="#20">20: </a><span class="php-comment"> * @license http://www.gnu.org/licenses/agpl.txt AGPL License
+</span></span><span id="20" class="l"><a href="#20">20: </a><span class="php-comment"> * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
 </span></span><span id="21" class="l"><a href="#21">21: </a><span class="php-comment"> * @link        http://git.novatlantis.it Nova Atlantis Ltd
 </span></span><span id="22" class="l"><a href="#22">22: </a><span class="php-comment"> */</span>
 </span><span id="23" class="l"><a href="#23">23: </a><span class="php-keyword1">namespace</span> MeCms\Controller;
@@ -275,56 +274,67 @@
 </span></span><span id="32" class="l"><a href="#32">32: </a><span class="php-comment"> */</span>
 </span><span id="33" class="l"><a href="#33">33: </a><span class="php-keyword1">class</span> PostsTagsController <span class="php-keyword1">extends</span> AppController {
 </span><span id="34" class="l"><a href="#34">34: </a>    <span class="php-comment">/**
-</span></span><span id="35" class="l"><a href="#35">35: </a><span class="php-comment">     * Lists posts for a tag
-</span></span><span id="36" class="l"><a href="#36">36: </a><span class="php-comment">     * @param string $tag Tag name
-</span></span><span id="37" class="l"><a href="#37">37: </a><span class="php-comment">     * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
-</span></span><span id="38" class="l"><a href="#38">38: </a><span class="php-comment">     */</span>
-</span><span id="39" class="l"><a href="#39">39: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$tag</span>) {        
-</span><span id="40" class="l"><a href="#40">40: </a>        <span class="php-comment">//Checks if the cache is valid</span>
-</span><span id="41" class="l"><a href="#41">41: </a>        <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;checkIfCacheIsValid();
-</span><span id="42" class="l"><a href="#42">42: </a>        
-</span><span id="43" class="l"><a href="#43">43: </a>        <span class="php-comment">//Sets the initial cache name</span>
-</span><span id="44" class="l"><a href="#44">44: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'index_tag_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$tag</span>));
-</span><span id="45" class="l"><a href="#45">45: </a>                
-</span><span id="46" class="l"><a href="#46">46: </a>        <span class="php-comment">//Updates the cache name with the query limit and the number of the page</span>
-</span><span id="47" class="l"><a href="#47">47: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_limit_%s'</span>, <span class="php-var">$cache</span>, <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'limit'</span>]);
-</span><span id="48" class="l"><a href="#48">48: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_page_%s'</span>, <span class="php-var">$cache</span>, <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'page'</span>) ? <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'page'</span>) : <span class="php-num">1</span>);
-</span><span id="49" class="l"><a href="#49">49: </a>        
-</span><span id="50" class="l"><a href="#50">50: </a>        <span class="php-comment">//Tries to get data from the cache</span>
-</span><span id="51" class="l"><a href="#51">51: </a>        <span class="php-keyword1">list</span>(<span class="php-var">$posts</span>, <span class="php-var">$paging</span>) = <span class="php-keyword2">array_values</span>(Cache::readMany([<span class="php-var">$cache</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>)], <span class="php-var">$this</span>-&gt;PostsTags-&gt;cache));
-</span><span id="52" class="l"><a href="#52">52: </a>        
-</span><span id="53" class="l"><a href="#53">53: </a>        <span class="php-comment">//If the data are not available from the cache</span>
-</span><span id="54" class="l"><a href="#54">54: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$posts</span>) || <span class="php-keyword1">empty</span>(<span class="php-var">$paging</span>)) {
-</span><span id="55" class="l"><a href="#55">55: </a>            <span class="php-var">$query</span> = <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;find(<span class="php-quote">'active'</span>)
-</span><span id="56" class="l"><a href="#56">56: </a>                -&gt;contain([
-</span><span id="57" class="l"><a href="#57">57: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>]],
-</span><span id="58" class="l"><a href="#58">58: </a>                    <span class="php-quote">'Tags'</span>,
-</span><span id="59" class="l"><a href="#59">59: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
-</span><span id="60" class="l"><a href="#60">60: </a>                ])
-</span><span id="61" class="l"><a href="#61">61: </a>                -&gt;matching(<span class="php-quote">'Tags'</span>, <span class="php-keyword1">function</span> (<span class="php-var">$q</span>) <span class="php-keyword1">use</span> (<span class="php-var">$tag</span>) {
-</span><span id="62" class="l"><a href="#62">62: </a>                    <span class="php-keyword1">return</span> <span class="php-var">$q</span>-&gt;where([<span class="php-quote">'Tags.tag'</span> =&gt; <span class="php-keyword2">str_replace</span>(<span class="php-quote">'-'</span>, <span class="php-quote">' '</span>, <span class="php-var">$tag</span>)]);
-</span><span id="63" class="l"><a href="#63">63: </a>                })
-</span><span id="64" class="l"><a href="#64">64: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>])
-</span><span id="65" class="l"><a href="#65">65: </a>                -&gt;order([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.created'</span>, <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;alias()) =&gt; <span class="php-quote">'DESC'</span>]);
-</span><span id="66" class="l"><a href="#66">66: </a>                    
-</span><span id="67" class="l"><a href="#67">67: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$query</span>-&gt;isEmpty())
-</span><span id="68" class="l"><a href="#68">68: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> RecordNotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Record not found'</span>));
-</span><span id="69" class="l"><a href="#69">69: </a>                    
-</span><span id="70" class="l"><a href="#70">70: </a>            <span class="php-var">$posts</span> = <span class="php-var">$this</span>-&gt;paginate(<span class="php-var">$query</span>)-&gt;toArray();
-</span><span id="71" class="l"><a href="#71">71: </a>                        
-</span><span id="72" class="l"><a href="#72">72: </a>            <span class="php-comment">//Writes on cache</span>
-</span><span id="73" class="l"><a href="#73">73: </a>            Cache::writeMany([<span class="php-var">$cache</span> =&gt; <span class="php-var">$posts</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>) =&gt; <span class="php-var">$this</span>-&gt;request-&gt;param(<span class="php-quote">'paging'</span>)], <span class="php-var">$this</span>-&gt;PostsTags-&gt;cache);
-</span><span id="74" class="l"><a href="#74">74: </a>        }
-</span><span id="75" class="l"><a href="#75">75: </a>        <span class="php-comment">//Else, sets the paging parameter</span>
-</span><span id="76" class="l"><a href="#76">76: </a>        <span class="php-keyword1">else</span>
-</span><span id="77" class="l"><a href="#77">77: </a>            <span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'paging'</span>] = <span class="php-var">$paging</span>;
-</span><span id="78" class="l"><a href="#78">78: </a>        
-</span><span id="79" class="l"><a href="#79">79: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'posts'</span>));
-</span><span id="80" class="l"><a href="#80">80: </a>        
-</span><span id="81" class="l"><a href="#81">81: </a>        <span class="php-comment">//Renders on a different view</span>
-</span><span id="82" class="l"><a href="#82">82: </a>        <span class="php-var">$this</span>-&gt;render(<span class="php-quote">'Posts/index'</span>);
-</span><span id="83" class="l"><a href="#83">83: </a>    }
-</span><span id="84" class="l"><a href="#84">84: </a>}</span></code></pre>
+</span></span><span id="35" class="l"><a href="#35">35: </a><span class="php-comment">     * Lists posts tags
+</span></span><span id="36" class="l"><a href="#36">36: </a><span class="php-comment">     */</span>
+</span><span id="37" class="l"><a href="#37">37: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> index() {
+</span><span id="38" class="l"><a href="#38">38: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'tags'</span>, <span class="php-var">$this</span>-&gt;PostsTags-&gt;Tags-&gt;find()
+</span><span id="39" class="l"><a href="#39">39: </a>            -&gt;order([<span class="php-quote">'tag'</span> =&gt; <span class="php-quote">'ASC'</span>])
+</span><span id="40" class="l"><a href="#40">40: </a>            -&gt;where([<span class="php-quote">'post_count &gt;'</span> =&gt; <span class="php-num">0</span>])
+</span><span id="41" class="l"><a href="#41">41: </a>            -&gt;cache(<span class="php-quote">'tag_index'</span>, <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;cache)
+</span><span id="42" class="l"><a href="#42">42: </a>            -&gt;all());
+</span><span id="43" class="l"><a href="#43">43: </a>    }
+</span><span id="44" class="l"><a href="#44">44: </a>    
+</span><span id="45" class="l"><a href="#45">45: </a>    <span class="php-comment">/**
+</span></span><span id="46" class="l"><a href="#46">46: </a><span class="php-comment">     * Lists posts for a tag
+</span></span><span id="47" class="l"><a href="#47">47: </a><span class="php-comment">     * @param string $tag Tag name
+</span></span><span id="48" class="l"><a href="#48">48: </a><span class="php-comment">     * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+</span></span><span id="49" class="l"><a href="#49">49: </a><span class="php-comment">     */</span>
+</span><span id="50" class="l"><a href="#50">50: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> view(<span class="php-var">$tag</span>) {
+</span><span id="51" class="l"><a href="#51">51: </a>        <span class="php-comment">//Checks if the cache is valid</span>
+</span><span id="52" class="l"><a href="#52">52: </a>        <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;checkIfCacheIsValid();
+</span><span id="53" class="l"><a href="#53">53: </a>        
+</span><span id="54" class="l"><a href="#54">54: </a>        <span class="php-comment">//Sets the initial cache name</span>
+</span><span id="55" class="l"><a href="#55">55: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'index_tag_%s'</span>, <span class="php-keyword2">md5</span>(<span class="php-var">$tag</span>));
+</span><span id="56" class="l"><a href="#56">56: </a>                
+</span><span id="57" class="l"><a href="#57">57: </a>        <span class="php-comment">//Updates the cache name with the query limit and the number of the page</span>
+</span><span id="58" class="l"><a href="#58">58: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_limit_%s'</span>, <span class="php-var">$cache</span>, <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'limit'</span>]);
+</span><span id="59" class="l"><a href="#59">59: </a>        <span class="php-var">$cache</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_page_%s'</span>, <span class="php-var">$cache</span>, <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'page'</span>) ? <span class="php-var">$this</span>-&gt;request-&gt;query(<span class="php-quote">'page'</span>) : <span class="php-num">1</span>);
+</span><span id="60" class="l"><a href="#60">60: </a>        
+</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-comment">//Tries to get data from the cache</span>
+</span><span id="62" class="l"><a href="#62">62: </a>        <span class="php-keyword1">list</span>(<span class="php-var">$posts</span>, <span class="php-var">$paging</span>) = <span class="php-keyword2">array_values</span>(Cache::readMany([<span class="php-var">$cache</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>)], <span class="php-var">$this</span>-&gt;PostsTags-&gt;cache));
+</span><span id="63" class="l"><a href="#63">63: </a>        
+</span><span id="64" class="l"><a href="#64">64: </a>        <span class="php-comment">//If the data are not available from the cache</span>
+</span><span id="65" class="l"><a href="#65">65: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$posts</span>) || <span class="php-keyword1">empty</span>(<span class="php-var">$paging</span>)) {
+</span><span id="66" class="l"><a href="#66">66: </a>            <span class="php-var">$query</span> = <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;find(<span class="php-quote">'active'</span>)
+</span><span id="67" class="l"><a href="#67">67: </a>                -&gt;contain([
+</span><span id="68" class="l"><a href="#68">68: </a>                    <span class="php-quote">'Categories'</span>    =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>]],
+</span><span id="69" class="l"><a href="#69">69: </a>                    <span class="php-quote">'Tags'</span>,
+</span><span id="70" class="l"><a href="#70">70: </a>                    <span class="php-quote">'Users'</span>         =&gt; [<span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'first_name'</span>, <span class="php-quote">'last_name'</span>]]
+</span><span id="71" class="l"><a href="#71">71: </a>                ])
+</span><span id="72" class="l"><a href="#72">72: </a>                -&gt;matching(<span class="php-quote">'Tags'</span>, <span class="php-keyword1">function</span> (<span class="php-var">$q</span>) <span class="php-keyword1">use</span> (<span class="php-var">$tag</span>) {
+</span><span id="73" class="l"><a href="#73">73: </a>                    <span class="php-keyword1">return</span> <span class="php-var">$q</span>-&gt;where([<span class="php-quote">'Tags.tag'</span> =&gt; <span class="php-keyword2">str_replace</span>(<span class="php-quote">'-'</span>, <span class="php-quote">' '</span>, <span class="php-var">$tag</span>)]);
+</span><span id="74" class="l"><a href="#74">74: </a>                })
+</span><span id="75" class="l"><a href="#75">75: </a>                -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'subtitle'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'text'</span>, <span class="php-quote">'created'</span>])
+</span><span id="76" class="l"><a href="#76">76: </a>                -&gt;order([<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s.created'</span>, <span class="php-var">$this</span>-&gt;PostsTags-&gt;Posts-&gt;alias()) =&gt; <span class="php-quote">'DESC'</span>]);
+</span><span id="77" class="l"><a href="#77">77: </a>                    
+</span><span id="78" class="l"><a href="#78">78: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$query</span>-&gt;isEmpty())
+</span><span id="79" class="l"><a href="#79">79: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> RecordNotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Record not found'</span>));
+</span><span id="80" class="l"><a href="#80">80: </a>                    
+</span><span id="81" class="l"><a href="#81">81: </a>            <span class="php-var">$posts</span> = <span class="php-var">$this</span>-&gt;paginate(<span class="php-var">$query</span>)-&gt;toArray();
+</span><span id="82" class="l"><a href="#82">82: </a>                        
+</span><span id="83" class="l"><a href="#83">83: </a>            <span class="php-comment">//Writes on cache</span>
+</span><span id="84" class="l"><a href="#84">84: </a>            Cache::writeMany([<span class="php-var">$cache</span> =&gt; <span class="php-var">$posts</span>, <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_paging'</span>, <span class="php-var">$cache</span>) =&gt; <span class="php-var">$this</span>-&gt;request-&gt;param(<span class="php-quote">'paging'</span>)], <span class="php-var">$this</span>-&gt;PostsTags-&gt;cache);
+</span><span id="85" class="l"><a href="#85">85: </a>        }
+</span><span id="86" class="l"><a href="#86">86: </a>        <span class="php-comment">//Else, sets the paging parameter</span>
+</span><span id="87" class="l"><a href="#87">87: </a>        <span class="php-keyword1">else</span>
+</span><span id="88" class="l"><a href="#88">88: </a>            <span class="php-var">$this</span>-&gt;request-&gt;params[<span class="php-quote">'paging'</span>] = <span class="php-var">$paging</span>;
+</span><span id="89" class="l"><a href="#89">89: </a>        
+</span><span id="90" class="l"><a href="#90">90: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'posts'</span>));
+</span><span id="91" class="l"><a href="#91">91: </a>        
+</span><span id="92" class="l"><a href="#92">92: </a>        <span class="php-comment">//Renders on a different view</span>
+</span><span id="93" class="l"><a href="#93">93: </a>        <span class="php-var">$this</span>-&gt;render(<span class="php-quote">'Posts/index'</span>);
+</span><span id="94" class="l"><a href="#94">94: </a>    }
+</span><span id="95" class="l"><a href="#95">95: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -332,6 +342,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?96ea81d2eae7a9261b6728bec3ee53ecfcee2e88"></script>
+<script src="elementlist.js?bb802639439896aa2b394837658d27a075245dc7"></script>
 </body>
 </html>
