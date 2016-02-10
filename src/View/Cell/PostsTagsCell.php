@@ -50,9 +50,9 @@ class PostsTagsCell extends Cell {
 	 * @param bool $shuffle Shuffles tags
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-	public function popular($limit = NULL, $style = TRUE, $shuffle = TRUE) {
+	public function popular($limit = 10, $style = TRUE, $shuffle = TRUE) {
 		//Sets the initial cache name
-		$cache = sprintf('widget_tags_popular_%s', empty($limit) ? 10 : $limit);
+		$cache = sprintf('widget_tags_popular_%s', $limit);
 		
 		//Updates the cache name
 		if($style)
@@ -68,7 +68,7 @@ class PostsTagsCell extends Cell {
         if(empty($tags)) {
 			$tags = $this->Tags->find()
 				->select(['tag', 'post_count'])
-				->limit($limit = empty($limit) ? 10 : $limit)
+				->limit($limit)
 				->order(['post_count' => 'DESC'])
 				->toArray();
 
