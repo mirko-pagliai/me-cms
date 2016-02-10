@@ -79,7 +79,7 @@ class PostsCell extends Cell {
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
-    public function latest($limit = NULL) {
+    public function latest($limit = 10) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 			return;
@@ -89,7 +89,7 @@ class PostsCell extends Cell {
 
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug'])
-			->limit($limit = empty($limit) ? 10 : $limit)
+			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
 			->toArray()
