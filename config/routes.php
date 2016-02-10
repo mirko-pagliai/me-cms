@@ -192,6 +192,8 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		$routes->connect('/:controller', [], ['controller' => $controllers]);
 		$routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
     });
-	
-    $routes->fallbacks();
+});
+
+Router::plugin('MeCms', ['path' => '/me-cms'], function ($routes) {
+	$routes->fallbacks('InflectedRoute');
 });
