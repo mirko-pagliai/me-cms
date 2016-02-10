@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.2 branch
 ### 2.2.2
-* fixed bug in the "album" widget.
+* fixed bug in "album" and posts "categories" widgets.
 
 ### 2.2.1
 * added index for tags;
