@@ -46,11 +46,11 @@ class PhotosCell extends Cell {
 	
 	/**
 	 * Albums widget
-	 * @uses MeTools\Network\Request::isController()
+	 * @uses MeTools\Network\Request::isCurrent()
 	 */
 	public function albums() {
-		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums']))
+		//Returns on albums index
+		if($this->request->isCurrent(['_name' => 'albums']))
 			return;
 		
 		//Tries to get data from the cache
