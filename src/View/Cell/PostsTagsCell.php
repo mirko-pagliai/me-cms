@@ -44,19 +44,25 @@ class PostsTagsCell extends Cell {
 	}
 	
 	/**
-	 * Popular widget
+	 * Popular tags widgets
 	 * @param int $limit Limit
-	 * @param bool $style Applies style to tags
+	 * @param array|bool $style Applies style to tags
 	 * @param bool $shuffle Shuffles tags
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-	public function popular($limit = 10, $style = TRUE, $shuffle = TRUE) {
+	public function popular($limit = 10, array $style = ['maxFont' => 40, 'minFont' => 12], $shuffle = TRUE) {
 		//Sets the initial cache name
 		$cache = sprintf('widget_tags_popular_%s', $limit);
 		
 		//Updates the cache name
-		if($style)
-			$cache = sprintf('%s_with_style', $cache);
+		if($style) {
+			//Maximum font size we want to use
+			$maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
+			//Minimum font size we want to use
+			$minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+			
+			$cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
+		}
 		
 		//Checks if the cache is valid
 		$this->Tags->Posts->checkIfCacheIsValid();
@@ -77,10 +83,6 @@ class PostsTagsCell extends Cell {
 				$maxCount = $tags[0]['post_count'];
 				//Number of occurrences of the tag with the lowest number of occurrences
 				$minCount = end($tags)['post_count'];
-				//Maximum font size we want to use
-				$maxFont = 40;
-				//Minimum font size we want to use
-				$minFont = 12;
 
 				//Adds the proportional font size to each tag
 				$tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
