@@ -46,6 +46,7 @@ class PagesCell extends Cell {
 	
 	/**
 	 * Pages list widget
+	 * @uses MeTools\Network\Request::isCurrent()
 	 */
 	public function pages() {
 		//Returns on pages index
