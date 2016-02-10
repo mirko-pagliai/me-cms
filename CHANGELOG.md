@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.2 branch
+### 2.2.2
+* fixed bug in the "album" widget.
+
 ### 2.2.1
 * added index for tags;
 * add the button to clear all temporary files with a single command;
