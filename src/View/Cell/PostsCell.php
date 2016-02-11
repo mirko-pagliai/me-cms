@@ -61,11 +61,15 @@ class PostsCell extends Cell {
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
-			foreach($this->Posts->Categories->find('active')
-					->select(['title', 'slug', 'post_count'])
-					->order(['title' => 'ASC'])
-					->toArray() as $k => $category)
+			$categories = $this->Posts->Categories->find('active')
+				->select(['title', 'slug', 'post_count'])
+				->order(['title' => 'ASC'])
+				->toArray();
+			
+			foreach($categories as $k => $category) {
 				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->post_count);
+				unset($categories[$k]);
+			}
 			
             Cache::write($cache, $categories, $this->Posts->cache);
 		}
