@@ -23,26 +23,22 @@
 ?>
 
 <?php
-	//Returns on Photos or PhotosAlbums controller
-	if($this->request->isController(['Photos', 'PhotosAlbums']))
+	if(empty($albums) || count($albums) < 2)
 		return;
+	
+	//Extends the widget common view
+	$this->extend('/Common/widget');
+	$this->assign('title', __d('me_cms', 'Albums'));
+	
+	echo $this->Form->create(FALSE, [
+		'type'	=> 'get', 
+		'url'	=> ['_name' => 'album', 'album']
+	]);
+	echo $this->Form->input('q', [
+		'empty'		=> __d('me_cms', 'Select an album'),
+		'label'		=> FALSE,
+		'onchange'	=> 'send_form(this)',
+		'options'	=> $albums
+	]);
+	echo $this->Form->end();
 ?>
-
-<?php if(!empty($albums) && count($albums) > 1): ?>
-	<div class="widget sidebar-widget">
-		<?php 
-			echo $this->Html->h4(__d('me_cms', 'Albums'));
-			echo $this->Form->create(FALSE, [
-				'type'	=> 'get', 
-				'url'	=> ['controller' => 'PhotosAlbums', 'action' => 'view', 'plugin' => MECMS]
-			]);
-			echo $this->Form->input('q', [
-				'empty'		=> __d('me_cms', 'Select an album'),
-				'label'		=> FALSE,
-				'onchange'	=> 'send_form(this)',
-				'options'	=> $albums
-			]);
-			echo $this->Form->end();
-		?>
-	</div>
-<?php endif; ?>

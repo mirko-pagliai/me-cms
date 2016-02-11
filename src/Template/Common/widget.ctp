@@ -22,15 +22,14 @@
  */
 ?>
 
-<?php
-	if(empty($pages))
-		return;
-	
-	//Extends the widget common view
-	$this->extend('/Common/widget');
-	$this->assign('title', __d('me_cms', 'Pages'));
-			
-	echo $this->Html->ul(array_map(function($page) {
-		return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
-	}, $pages), ['icon' => 'caret-right']);
-?>
+<?php if(trim($this->fetch('content'))): ?>
+	<div class="widget">
+		<?php if(trim($this->fetch('title'))): ?>
+			<h4 class="widget-title"><?= $this->fetch('title') ?></h4>
+		<?php endif; ?>
+
+		<div class="widget-content">
+			<?= $this->fetch('content') ?>
+		</div>
+	</div>
+<?php endif; ?>
