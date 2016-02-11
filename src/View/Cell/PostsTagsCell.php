@@ -49,8 +49,13 @@ class PostsTagsCell extends Cell {
 	 * @param array|bool $style Applies style to tags
 	 * @param bool $shuffle Shuffles tags
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 * @uses MeTools\Network\Request::isCurrent()
 	 */
 	public function popular($limit = 10, array $style = ['maxFont' => 40, 'minFont' => 12], $shuffle = TRUE) {
+		//Returns on tags index
+		if($this->request->isCurrent(['_name' => 'posts_tags']))
+			return;
+		
 		//Sets the initial cache name
 		$cache = sprintf('widget_tags_popular_%s', $limit);
 		
