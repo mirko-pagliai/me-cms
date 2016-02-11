@@ -26,17 +26,15 @@
 	//Returns on search
 	if($this->request->isCurrent(['_name' => 'search_posts']))
 		return;
+		
+	//Extends the widget common view
+	$this->extend('/Common/widget');
+	$this->assign('title', __d('me_cms', 'Search posts'));
+
+	echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'search_posts']]);
+	echo $this->Form->input('p', [
+		'button'		=> $this->Form->button(NULL, ['class' => 'btn-primary', 'icon' => 'search']),
+		'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
+	]);
+	echo $this->Form->end();
 ?>
-
-<div class="widget sidebar-widget">
-	<?php 
-		echo $this->Html->h4(__d('me_cms', 'Search posts'));
-
-		echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'search_posts']]);
-		echo $this->Form->input('p', [
-			'button'		=> $this->Form->button(NULL, ['class' => 'btn-primary', 'icon' => 'search']),
-			'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))
-		]);
-		echo $this->Form->end();
-	?>
-</div>

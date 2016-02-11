@@ -23,24 +23,14 @@
 ?>
 
 <?php
-	//Returns on index, except for category
-	if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
+	if(empty($posts))
 		return;
 	
-	//Returns on the last record view
-	if(count($posts) < 2 && $this->request->isAction('view', 'Posts') && $this->request->param('slug') && $posts[0]->slug && $this->request->param('slug') === $posts[0]->slug)
-		return;
+	//Extends the widget common view
+	$this->extend('/Common/widget');
+	$this->assign('title', count($posts) > 1 ? __d('me_cms', 'Latest {0} posts', count($posts)) : __d('me_cms', 'Latest post'));
+			
+	echo $this->Html->ul(array_map(function($post) {
+		return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+	}, $posts), ['icon' => 'caret-right']);
 ?>
-
-<?php if(count($posts)): ?>
-	<div class="widget sidebar-widget">
-		<?php
-			echo $this->Html->h4(count($posts) > 1 ? __d('me_cms', 'Latest {0} posts', count($posts)) : __d('me_cms', 'Latest post'));
-
-			foreach($posts as $post)
-				$list[] = $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-
-			echo $this->Html->ul($list, ['icon' => 'caret-right']);
-		?>
-	</div>
-<?php endif; ?>

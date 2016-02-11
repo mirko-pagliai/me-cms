@@ -52,12 +52,12 @@ class WidgetHelper extends Helper {
 	/**
 	 * Returns a widget
 	 * @param string $name Widget name
-	 * @param array $arguments Widget arguments
+	 * @param array $data Widget arguments
 	 * @param array $options Widget options
 	 * @return Cake\View\Cell The cell instance
 	 * @uses Cake\View\CellTrait::cell()
 	 */
-	public function widget($name, array $arguments = [], array $options = []) {
-		return $this->_View->cell($name, $arguments, $options);
+	public function widget($name, array $data = [], array $options = []) {
+		return $this->_View->cell($name, $data, $options);
 	}
 }

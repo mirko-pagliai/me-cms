@@ -294,13 +294,13 @@
 </span><span id="52" class="l"><a href="#52">52: </a>    <span class="php-comment">/**
 </span></span><span id="53" class="l"><a href="#53">53: </a><span class="php-comment">     * Returns a widget
 </span></span><span id="54" class="l"><a href="#54">54: </a><span class="php-comment">     * @param string $name Widget name
-</span></span><span id="55" class="l"><a href="#55">55: </a><span class="php-comment">     * @param array $arguments Widget arguments
+</span></span><span id="55" class="l"><a href="#55">55: </a><span class="php-comment">     * @param array $data Widget arguments
 </span></span><span id="56" class="l"><a href="#56">56: </a><span class="php-comment">     * @param array $options Widget options
 </span></span><span id="57" class="l"><a href="#57">57: </a><span class="php-comment">     * @return Cake\View\Cell The cell instance
 </span></span><span id="58" class="l"><a href="#58">58: </a><span class="php-comment">     * @uses Cake\View\CellTrait::cell()
 </span></span><span id="59" class="l"><a href="#59">59: </a><span class="php-comment">     */</span>
-</span><span id="60" class="l"><a href="#60">60: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> widget(<span class="php-var">$name</span>, <span class="php-keyword1">array</span> <span class="php-var">$arguments</span> = [], <span class="php-keyword1">array</span> <span class="php-var">$options</span> = []) {
-</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;_View-&gt;cell(<span class="php-var">$name</span>, <span class="php-var">$arguments</span>, <span class="php-var">$options</span>);
+</span><span id="60" class="l"><a href="#60">60: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> widget(<span class="php-var">$name</span>, <span class="php-keyword1">array</span> <span class="php-var">$data</span> = [], <span class="php-keyword1">array</span> <span class="php-var">$options</span> = []) {
+</span><span id="61" class="l"><a href="#61">61: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;_View-&gt;cell(<span class="php-var">$name</span>, <span class="php-var">$data</span>, <span class="php-var">$options</span>);
 </span><span id="62" class="l"><a href="#62">62: </a>    }
 </span><span id="63" class="l"><a href="#63">63: </a>}</span></code></pre>
 

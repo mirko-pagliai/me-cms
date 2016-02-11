@@ -44,19 +44,31 @@ class PostsTagsCell extends Cell {
 	}
 	
 	/**
-	 * Popular widget
+	 * Popular tags widgets
 	 * @param int $limit Limit
-	 * @param bool $style Applies style to tags
+	 * @param string $prefix Prefix for each tag
 	 * @param bool $shuffle Shuffles tags
+	 * @param array|bool $style Applies style to tags
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 * @uses MeTools\Network\Request::isCurrent()
 	 */
-	public function popular($limit = NULL, $style = TRUE, $shuffle = TRUE) {
+	public function popular($limit = 10, $prefix = '#', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
+		//Returns on tags index
+		if($this->request->isCurrent(['_name' => 'posts_tags']))
+			return;
+		
 		//Sets the initial cache name
-		$cache = sprintf('widget_tags_popular_%s', empty($limit) ? 10 : $limit);
+		$cache = sprintf('widget_tags_popular_%s', $limit);
 		
 		//Updates the cache name
-		if($style)
-			$cache = sprintf('%s_with_style', $cache);
+		if($style) {
+			//Maximum font size we want to use
+			$maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
+			//Minimum font size we want to use
+			$minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+			
+			$cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
+		}
 		
 		//Checks if the cache is valid
 		$this->Tags->Posts->checkIfCacheIsValid();
@@ -68,7 +80,7 @@ class PostsTagsCell extends Cell {
         if(empty($tags)) {
 			$tags = $this->Tags->find()
 				->select(['tag', 'post_count'])
-				->limit($limit = empty($limit) ? 10 : $limit)
+				->limit($limit)
 				->order(['post_count' => 'DESC'])
 				->toArray();
 
@@ -77,10 +89,6 @@ class PostsTagsCell extends Cell {
 				$maxCount = $tags[0]['post_count'];
 				//Number of occurrences of the tag with the lowest number of occurrences
 				$minCount = end($tags)['post_count'];
-				//Maximum font size we want to use
-				$maxFont = 40;
-				//Minimum font size we want to use
-				$minFont = 12;
 
 				//Adds the proportional font size to each tag
 				$tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
@@ -95,6 +103,6 @@ class PostsTagsCell extends Cell {
 		if($shuffle)
 			shuffle($tags);
 		
-		$this->set(compact('tags'));
+		$this->set(compact('prefix', 'tags'));
 	}
 }

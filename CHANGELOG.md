@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.2 branch
+### 2.2.2
+* fixed bug in "album" and "posts categories" widgets;
+* widgets now use a common view. Rewritten the code of all widgets;
+* you can specify the minimum font, the maximum font and the tag prefix for the "popular tags" widget.
+
 ### 2.2.1
 * added index for tags;
 * add the button to clear all temporary files with a single command;

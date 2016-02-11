@@ -226,12 +226,12 @@ body header #topbar .navbar-collapse li.open > a {
 /*			Sidebar widgets			*/
 /* -------------------------------- */
 /* Widget */
-.widget.sidebar-widget {
+.widget {
 	margin-bottom: 20px;
 }
 
 /* Widget, list, element list, link */
-.widget.sidebar-widget > ul li a {
+.widget ul li a {
 	display: block;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;

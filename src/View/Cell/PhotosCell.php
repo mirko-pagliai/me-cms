@@ -46,11 +46,11 @@ class PhotosCell extends Cell {
 	
 	/**
 	 * Albums widget
-	 * @uses MeTools\Network\Request::isController()
+	 * @uses MeTools\Network\Request::isCurrent()
 	 */
 	public function albums() {
-		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums']))
+		//Returns on albums index
+		if($this->request->isCurrent(['_name' => 'albums']))
 			return;
 		
 		//Tries to get data from the cache
@@ -58,11 +58,15 @@ class PhotosCell extends Cell {
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
-			foreach($this->Photos->Albums->find('active')
-						->select(['title', 'slug', 'photo_count'])
-						->order(['title' => 'ASC'])
-						->toArray() as $k => $album)
-					$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
+			$albums = $this->Photos->Albums->find('active')
+				->select(['title', 'slug', 'photo_count'])
+				->order(['title' => 'ASC'])
+				->toArray();
+			
+			foreach($albums as $k => $album) {
+				$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
+				unset($albums[$k]);
+			}
 			
             Cache::write($cache, $albums, $this->Photos->cache);
 		}

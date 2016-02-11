@@ -46,9 +46,10 @@ class PagesCell extends Cell {
 	
 	/**
 	 * Pages list widget
+	 * @uses MeTools\Network\Request::isCurrent()
 	 */
 	public function pages() {
-		//Returns on index
+		//Returns on pages index
 		if($this->request->isCurrent(['_name' => 'pages']))
 			return;
 

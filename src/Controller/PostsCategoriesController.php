@@ -50,7 +50,7 @@ class PostsCategoriesController extends AppController {
 	public function view($category = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q'))
-			$this->redirect([$this->request->query('q')]);
+			return $this->redirect([$this->request->query('q')]);
 		
 		//Checks if the cache is valid
 		$this->PostsCategories->Posts->checkIfCacheIsValid();

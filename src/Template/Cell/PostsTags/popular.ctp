@@ -22,17 +22,22 @@
  */
 ?>
 
-<?php if(count($tags)): ?>
-	<div class="widget sidebar-widget">
-		<?= $this->Html->h4(__d('me_cms', 'Popular tags')) ?>
-		
-		<?php foreach($tags as $tag): ?>
-			<div>
-				<?php
-					$options = empty($tag['size']) ? [] : ['style' => sprintf('font-size:%spx;', $tag['size'])];
-					echo $this->Html->link(sprintf('#%s', $tag['tag']), ['_name' => 'posts_tag', $tag['tag']], $options);
-				?>
-			</div>
-		<?php endforeach; ?>
+<?php
+	if(empty($tags))
+		return;
+	
+	//Extends the widget common view
+	$this->extend('/Common/widget');
+	$this->assign('title', __d('me_cms', 'Popular tags'));
+?>
+
+<?php foreach($tags as $tag): ?>
+	<div>
+		<?php
+			$text = empty($prefix) ? $tag['tag'] : sprintf('%s%s', $prefix, $tag['tag']);
+			$options = empty($tag['size']) ? [] : ['style' => sprintf('font-size:%spx;', $tag['size'])];
+			
+			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag['tag']], $options);
+		?>
 	</div>
-<?php endif; ?>
+<?php endforeach; ?>

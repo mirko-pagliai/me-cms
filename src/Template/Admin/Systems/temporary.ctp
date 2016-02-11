@@ -26,10 +26,10 @@
 
 <div class="systems index">
 	<?php if($this->Auth->isGroup('admin')): //Only admins can clear all temporary files ?>
-		<?= $this->Html->h2(__d('me_cms', 'All temporary files')) ?>
+		<?= $this->Html->h2(__d('me_cms', 'Temporary files')) ?>
 		<div class="margin-20">
 			<?php
-				echo $this->Html->h4(__d('me_cms', 'Cache'));
+				echo $this->Html->h4(__d('me_cms', 'All temporary files'));
 
 				echo $this->Html->para(NULL, __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($all_size)));
 				echo $this->Html->para(NULL, __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails'));
@@ -77,12 +77,12 @@
 	
 	<div class="margin-20">
 		<?php
-			echo $this->Html->h4(__d('me_cms', 'Thumbs'));
-			echo $this->Html->para(NULL, __d('me_cms', 'Thumbs size: {0}', $this->Number->toReadableSize($thumbs_size)));
+			echo $this->Html->h4(__d('me_cms', 'Thumbnails'));
+			echo $this->Html->para(NULL, __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbs_size)));
 
 			if($thumbs_size) {
 				echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used'));
-				echo $this->Form->postButton(__d('me_cms', 'Clear thumbs'), ['action' => 'clear_thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+				echo $this->Form->postButton(__d('me_cms', 'Clear Thumbnails'), ['action' => 'clear_thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 			}
 		?>
 	</div>

@@ -57,7 +57,7 @@ class PhotosAlbumsController extends AppController {
 	public function view($slug = NULL) {
 		//The slug can be passed as query string, from a widget
 		if($this->request->query('q'))
-			$this->redirect([$this->request->query('q')]);
+			return $this->redirect([$this->request->query('q')]);
 		
 		$this->set('album', $this->PhotosAlbums->find('active')
 			->contain(['Photos' => function($q) {
