@@ -34,8 +34,10 @@
 <?php foreach($tags as $tag): ?>
 	<div>
 		<?php
+			$text = empty($prefix) ? $tag['tag'] : sprintf('%s%s', $prefix, $tag['tag']);
 			$options = empty($tag['size']) ? [] : ['style' => sprintf('font-size:%spx;', $tag['size'])];
-			echo $this->Html->link(sprintf('#%s', $tag['tag']), ['_name' => 'posts_tag', $tag['tag']], $options);
+			
+			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag['tag']], $options);
 		?>
 	</div>
 <?php endforeach; ?>

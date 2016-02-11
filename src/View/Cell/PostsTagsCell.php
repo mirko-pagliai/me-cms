@@ -46,12 +46,13 @@ class PostsTagsCell extends Cell {
 	/**
 	 * Popular tags widgets
 	 * @param int $limit Limit
+	 * @param string $prefix Prefix for each tag
 	 * @param array|bool $style Applies style to tags
 	 * @param bool $shuffle Shuffles tags
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isCurrent()
 	 */
-	public function popular($limit = 10, array $style = ['maxFont' => 40, 'minFont' => 12], $shuffle = TRUE) {
+	public function popular($limit = 10, $prefix = '#', array $style = ['maxFont' => 40, 'minFont' => 12], $shuffle = TRUE) {
 		//Returns on tags index
 		if($this->request->isCurrent(['_name' => 'posts_tags']))
 			return;
@@ -102,6 +103,6 @@ class PostsTagsCell extends Cell {
 		if($shuffle)
 			shuffle($tags);
 		
-		$this->set(compact('tags'));
+		$this->set(compact('prefix', 'tags'));
 	}
 }
