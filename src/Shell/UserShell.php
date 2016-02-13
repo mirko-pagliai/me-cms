@@ -47,7 +47,7 @@ class UserShell extends Shell {
 		
 		//Checks for user groups
 		if(empty($groups))
-			$this->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
+			$this->abort(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
 				
 		while(1) {
 			$user = [];
@@ -81,11 +81,11 @@ class UserShell extends Shell {
 			//Checks fields
 			foreach($user as $value)
 				if(empty($value))
-					$this->error(__d('me_cms', 'Some fields are missing. Try again'));
+					$this->abort(__d('me_cms', 'Some fields are missing. Try again'));
 
 			//Checks the group IDS
 			if(!array_key_exists($user['group_id'], $groups))
-				$this->error(__d('me_cms', 'Invalid group ID'));
+				$this->abort(__d('me_cms', 'Invalid group ID'));
 				
 			//Saves the user
 			if($this->Users->save($this->Users->newEntity($user))) {
@@ -110,7 +110,7 @@ class UserShell extends Shell {
 		
 		//Checks for user groups
 		if(empty($groups))
-			$this->error(__d('me_cms', 'There are no user groups'));
+			$this->abort(__d('me_cms', 'There are no user groups'));
 		
 		//Formats groups
 		$groups = array_map(function($group) {
@@ -146,7 +146,7 @@ class UserShell extends Shell {
 		
 		//Checks for users
 		if(empty($users))
-			$this->error(__d('me_cms', 'There are no users'));
+			$this->abort(__d('me_cms', 'There are no users'));
 		
 		//Sets header
 		$header = [
