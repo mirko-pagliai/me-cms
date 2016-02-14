@@ -81,7 +81,7 @@ class AppView extends BaseView {
 
 	/**
      * Initialization hook method
-	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_initialize
+	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_initialize
 	 * @uses App\View\AppView::initialize()
 	 */
     public function initialize() {
@@ -106,7 +106,7 @@ class AppView extends BaseView {
 	 * @param string|NULL $view Name of view file to use
 	 * @param string|NULL $layout Layout to use
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
-	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
+	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_render
 	 * @uses App\View\AppView::render()
 	 * @uses layout
 	 * @uses theme
@@ -128,7 +128,7 @@ class AppView extends BaseView {
 	 * @param string $content Content to render in a view, wrapped by the surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
+	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
 	 * @uses App\View\AppView::renderLayout()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses MeTools\View\Helper\LibraryHelper::analytics()
