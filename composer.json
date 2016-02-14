@@ -11,7 +11,7 @@
 	"require": {
         "php": ">=5.5.9",
         "cakephp/cakephp": "~3.2",
-        "mirko-pagliai/me-tools": ">=2.2.7",
+        "mirko-pagliai/me-tools": ">=2.2.8",
 		"components/jquery-cookie": "1.4.*"
     },
     "autoload": {
