@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.2 branch
+### 2.2.3
+* updated to CakePHP 3.2.
+
 ### 2.2.2
 * fixed bug in "album" and "posts categories" widgets;
 * widgets now use a common view. Rewritten the code of all widgets;
