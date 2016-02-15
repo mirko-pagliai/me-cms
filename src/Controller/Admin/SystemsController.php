@@ -204,7 +204,7 @@ class SystemsController extends AppController {
 	 */
 	public function clear_all() {
 		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
+			return $this->redirect(['action' => 'temporary']);
 		
 		if(Asset::clear() && FileLog::clear() && System::clearCache() && Thumbs::clear())
 			$this->Flash->success(__d('me_cms', 'All temporary files have been cleared'));
@@ -220,7 +220,7 @@ class SystemsController extends AppController {
 	 */
 	public function clear_assets() {
 		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
+			return $this->redirect(['action' => 'temporary']);
 		
 		if(Asset::clear())
 			$this->Flash->success(__d('me_cms', 'Assets have been cleared'));
@@ -236,7 +236,7 @@ class SystemsController extends AppController {
 	 */
 	public function clear_cache() {
 		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
+			return $this->redirect(['action' => 'temporary']);
 		
 		if(System::clearCache())
 			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
@@ -252,7 +252,7 @@ class SystemsController extends AppController {
 	 */
 	public function clear_logs() {
 		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
+			return $this->redirect(['action' => 'temporary']);
 		
 		if(FileLog::clear())
 			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
@@ -268,7 +268,7 @@ class SystemsController extends AppController {
 	 */
 	public function clear_thumbs() {
 		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
+			return $this->redirect(['action' => 'temporary']);
 		
 		if(Thumbs::clear())
 			$this->Flash->success(__d('me_cms', 'The thumbnails have been deleted'));
