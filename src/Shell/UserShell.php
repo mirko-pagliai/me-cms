@@ -187,6 +187,7 @@ class UserShell extends Shell {
 	/**
 	 * Gets the option parser instance and configures it.
 	 * @return ConsoleOptionParser
+	 * @uses MeTools\Shell\InstallShell::getOptionParser()
 	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
