@@ -23,13 +23,17 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /**
  * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
 
 //Loads the MeTools plugin
-\Cake\Core\Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
+Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
+
+//Loads the DatabaseBackup plugin
+Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
 
 require_once 'constants.php';
 require_once 'global_functions.php';
@@ -57,12 +61,12 @@ if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.
 if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug')) {
 	Configure::write('debug', TRUE);
 	
-	\Cake\Core\Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+	Plugin::load('DebugKit', ['bootstrap' => TRUE]);
 }
 
 //Loads the theme
-if(($theme = Configure::read('MeCms.frontend.theme')) && !\Cake\Core\Plugin::loaded($theme))
-	\Cake\Core\Plugin::load($theme);
+if(($theme = Configure::read('MeCms.frontend.theme')) && !Plugin::loaded($theme))
+	Plugin::load($theme);
 
 /**
  * Cache configuration
