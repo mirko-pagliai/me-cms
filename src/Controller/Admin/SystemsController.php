@@ -299,14 +299,14 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Manages cache, logs and thumbnails
+	 * Temporary viewer (assets, cache, logs and thumbnails)
 	 * @uses MeTools\Log\Engine\FileLog::size()
 	 * @uses MeTools\Utility\Asset::size()
 	 * @uses MeTools\Utility\System::cacheSize()
 	 * @uses MeTools\Utility\System::cacheStatus()
 	 * @uses MeTools\Utility\Thumbs::size()
 	 */
-	public function temporary() {
+	public function tmp_viewer() {
         $this->set([
 			'all_size'		=> System::cacheSize() + Asset::size() + FileLog::size() + Thumbs::size(),
 			'cache_size'	=> System::cacheSize(),

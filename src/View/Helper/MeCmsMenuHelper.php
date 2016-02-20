@@ -160,7 +160,7 @@ class MeCmsMenuHelper extends Helper {
 			return;
 		
 		$menu = [
-			$this->Html->link(__d('me_cms', 'Temporary files'), ['controller' => 'Systems', 'action' => 'temporary', 'plugin' => 'MeCms']),
+			$this->Html->link(__d('me_cms', 'Temporary files'), ['controller' => 'Systems', 'action' => 'tmp_viewer', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'System checkup'), ['controller' => 'Systems', 'action' => 'checkup', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Media browser'), ['controller' => 'Systems', 'action' => 'browser', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms'])
