@@ -47,8 +47,12 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
-		//Only admins can clear all temporary files, clear logs and view logs
-		if($this->request->isAction(['clear_all', 'clear_logs', 'logs_viewer']))
+		//Only admins can view logs
+		if($this->request->isAction('logs_viewer'))
+			return $this->Auth->isGroup('admin');
+		
+		//Only admins can clear all temporary files or logs
+		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
@@ -196,90 +200,7 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Clears all temporary files (cache, assets, logs and thumbnails)
-	 * @uses MeTools\Utility\Asset::clear()
-	 * @uses MeTools\Log\Engine\FileLog::clear()
-	 * @uses MeTools\Utility\System::clearCache()
-	 * @uses MeTools\Utility\Thumbs::clear()
-	 */
-	public function clear_all() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'temporary']);
-		
-		if(Asset::clear() && FileLog::clear() && System::clearCache() && Thumbs::clear())
-			$this->Flash->success(__d('me_cms', 'All temporary files have been cleared'));
-		else
-			$this->Flash->error(__d('me_cms', 'Some temporary files have not been cleared'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}
-	
-	/**
-	 * Clears asset files
-	 * @uses MeTools\Utility\Asset::clear()
-	 */
-	public function clear_assets() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'temporary']);
-		
-		if(Asset::clear())
-			$this->Flash->success(__d('me_cms', 'Assets have been cleared'));
-		else
-			$this->Flash->error(__d('me_cms', 'Assets have not been cleared'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}	
-		
-	/**
-	 * Clears the cache
-	 * @uses MeTools\Utility\System::clearCache()
-	 */
-	public function clear_cache() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'temporary']);
-		
-		if(System::clearCache())
-			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
-		else
-			$this->Flash->error(__d('me_cms', 'The cache has not been cleared'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}
-	
-	/**
-	 * Clears logs
-	 * @uses MeTools\Log\Engine\FileLog::clear()
-	 */
-	public function clear_logs() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'temporary']);
-		
-		if(FileLog::clear())
-			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
-		else
-			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}
-	
-	/**
-	 * Clears the thumbnails
-	 * @uses MeTools\Utility\Thumbs::clear()
-	 */
-	public function clear_thumbs() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'temporary']);
-		
-		if(Thumbs::clear())
-			$this->Flash->success(__d('me_cms', 'The thumbnails have been deleted'));
-		else
-			$this->Flash->error(__d('me_cms', 'The thumbnails have not been deleted'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}
-	
-	/**
-	 * Log viewer
+	 * Logs viewer
 	 * @uses MeTools\Log\Engine\FileLog::all()
 	 * @uses MeTools\Log\Engine\FileLog::parse()
 	 */
@@ -296,6 +217,44 @@ class SystemsController extends AppController {
 			$this->set('logs', array_reverse(FileLog::parse(sprintf('%s.log', $this->request->query('file')))));
 		
 		$this->set(compact('files'));
+	}
+	
+	/**
+	 * Temporary cleaner (assets, cache, logs and thumbnails)
+	 * @param string $type Type
+	 * @uses MeTools\Utility\Asset::clear()
+	 * @uses MeTools\Log\Engine\FileLog::clear()
+	 * @uses MeTools\Utility\System::clearCache()
+	 * @uses MeTools\Utility\Thumbs::clear()
+	 */
+	public function tmp_cleaner($type) {
+		if(!$this->request->is(['post', 'delete']))
+			return $this->redirect(['action' => 'tmp_viewer']);
+		
+		switch($type) {
+			case 'all':
+				$success = Asset::clear() && FileLog::clear() && System::clearCache() && Thumbs::clear();
+				break;
+			case 'cache':
+				$success = System::clearCache();
+				break;
+			case 'assets':
+				$success = Asset::clear();
+				break;
+			case 'logs':
+				$success = FileLog::clear();
+				break;
+			case 'thumbs':
+				$success = Thumbs::clear();
+				break;
+		}
+		
+		if(!empty($success))
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+		else
+			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+		
+		return $this->redirect(['action' => 'tmp_viewer']);
 	}
 	
 	/**

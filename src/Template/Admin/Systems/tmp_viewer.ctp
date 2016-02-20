@@ -33,7 +33,7 @@
 
 				echo $this->Html->para(NULL, __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($all_size)));
 				echo $this->Html->para(NULL, __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails'));
-				echo $this->Form->postButton(__d('me_cms', 'Clear all temporary files'), ['action' => 'clear_all'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+				echo $this->Form->postButton(__d('me_cms', 'Clear all temporary files'), ['action' => 'tmp_cleaner', 'all'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 			?>
 		</div>
 
@@ -49,7 +49,7 @@
 
 			echo $this->Html->para(NULL, __d('me_cms', 'Cache size: {0}', $this->Number->toReadableSize($cache_size)));
 			echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade'));
-			echo $this->Form->postButton(__d('me_cms', 'Clear cache'), ['action' => 'clear_cache'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+			echo $this->Form->postButton(__d('me_cms', 'Clear cache'), ['action' => 'tmp_cleaner', 'cache'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 		?>
 	</div>
 	
@@ -59,7 +59,7 @@
 			echo $this->Html->para(NULL, __d('me_cms', 'Assets size: {0}', $this->Number->toReadableSize($assets_size)));
 
 			if($assets_size)
-				echo $this->Form->postButton(__d('me_cms', 'Clear assets'), ['action' => 'clear_assets'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+				echo $this->Form->postButton(__d('me_cms', 'Clear assets'), ['action' => 'tmp_cleaner', 'assets'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 		?>
 	</div>
 	
@@ -70,7 +70,7 @@
 				echo $this->Html->para(NULL, __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)));
 
 				if($logs_size)
-					echo $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'clear_logs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+					echo $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 			?>
 		</div>
 	<?php endif; ?>
@@ -82,7 +82,7 @@
 
 			if($thumbs_size) {
 				echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used'));
-				echo $this->Form->postButton(__d('me_cms', 'Clear Thumbnails'), ['action' => 'clear_thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+				echo $this->Form->postButton(__d('me_cms', 'Clear Thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 			}
 		?>
 	</div>
