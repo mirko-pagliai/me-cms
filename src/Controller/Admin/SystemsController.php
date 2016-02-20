@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
@@ -61,6 +62,7 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Media browser with KCFinder
+	 * @throws InternalErrorException
 	 * @uses MeCms\Controller\Component\KcFinderComponent::checkKcfinder()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::checkFiles()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::getFilesPath()
@@ -72,16 +74,12 @@ class SystemsController extends AppController {
 		$this->loadComponent('MeCms.KcFinder');
 		
 		//Checks for KCFinder
-		if(!$this->KcFinder->checkKcfinder()) {
-			$this->Flash->error(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
+		if(!$this->KcFinder->checkKcfinder())
+			throw new InternalErrorException(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
 		
 		//Checks for the files directory (`APP/webroot/files`)
-		if(!$this->KcFinder->checkFiles()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr($this->KcFinder->getFilesPath())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
+		if(!$this->KcFinder->checkFiles())
+			throw new InternalErrorException(__d('me_tools', 'File or directory `{0}` not writeable', rtr($this->KcFinder->getFilesPath())));
 		
 		//Gets the supperted types from configuration
 		$types = $this->KcFinder->getTypes();
