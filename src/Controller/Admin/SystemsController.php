@@ -48,7 +48,7 @@ class SystemsController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can clear all temporary files, clear logs and view logs
-		if($this->request->isAction(['clear_all', 'clear_logs', 'logs']))
+		if($this->request->isAction(['clear_all', 'clear_logs', 'logs_viewer']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
