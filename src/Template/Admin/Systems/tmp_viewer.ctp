@@ -82,7 +82,7 @@
 
 			if($thumbs_size) {
 				echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used'));
-				echo $this->Form->postButton(__d('me_cms', 'Clear Thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
+				echo $this->Form->postButton(__d('me_cms', 'Clear thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
 			}
 		?>
 	</div>
