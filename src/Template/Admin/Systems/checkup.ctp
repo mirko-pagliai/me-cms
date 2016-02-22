@@ -143,6 +143,18 @@
 		echo $this->Html->div('clearfix');
 		
 		/* -------------------------------- */
+		/*				Backups				*/
+		/* -------------------------------- */
+		echo $this->Html->h4(__d('me_cms', 'Backups'));
+		if($backups['writeable'])
+			$text = $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($backups['path'])), $successOptions);
+		else
+			$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory `{0}` not writeable', $this->Html->code($backups['path'])), $errorOptions);
+		echo $this->Html->div('col-sm-6', $text);
+		
+		echo $this->Html->div('clearfix');
+		
+		/* -------------------------------- */
 		/*				Webroot				*/
 		/* -------------------------------- */
 		echo $this->Html->h4(__d('me_cms', 'Webroot'));
