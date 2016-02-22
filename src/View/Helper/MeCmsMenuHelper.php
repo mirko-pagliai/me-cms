@@ -149,6 +149,23 @@ class MeCmsMenuHelper extends Helper {
 	}
 	
 	/**
+	 * Internal function to generate the menu for "backups" actions
+	 * @return mixed Array with menu, title and link options
+	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
+	 */
+	public function _backups() {
+		//Only admins can access this controller
+		if(!$this->Auth->isGroup('admin'))
+			return;
+		
+		$menu = [
+			$this->Html->link(__d('me_cms', 'List backups'), ['controller' => 'Backups', 'action' => 'index', 'plugin' => 'MeCms'])
+		];
+		
+		return [$menu, __d('me_cms', 'Backups'), ['icon' => 'database']];
+	}
+	
+	/**
 	 * Internal function to generate the menu for "systems" actions
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
