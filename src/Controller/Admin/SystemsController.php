@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use DatabaseBackup\Utility\BackupManager;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
@@ -155,6 +156,10 @@ class SystemsController extends AppController {
 				'current_version'	=> Apache::version(),
 				'expires'			=> Apache::module('mod_expires'),
 				'rewrite'			=> Apache::module('mod_rewrite'),
+			],
+			'backups' => [
+				'path'		=> rtr(BackupManager::path()),
+				'writeable'	=> folder_is_writable(BackupManager::path())
 			],
 			'cache' => [
 				'status' => System::cacheStatus()
