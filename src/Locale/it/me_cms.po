@@ -1,7 +1,6 @@
 # LANGUAGE translation of MeCms
 # Copyright (c) 2016, Mirko Pagliai <mirko.pagliai@gmail.com>
 #
-# Mirko Pagliai <mirko.pagliai.it>, 2016.
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2016-02-22 12:33+0000\n"
@@ -12,9 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Project-Id-Version: \n"
 "Language: it\n"
-"X-Generator: Lokalize 2.0\n"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Controller/AppController.php:76
 msgid "The file was not successfully moved to the target directory"
