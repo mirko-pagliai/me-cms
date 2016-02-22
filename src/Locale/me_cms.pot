@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-02-09 19:14+0000\n"
+"POT-Creation-Date: 2016-02-22 12:33+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,1877 +13,1878 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/AppController.php:76
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/AppController.php:76
 msgid "The file was not successfully moved to the target directory"
 msgstr ""
 
-#: Controller/AppController.php:79
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/AppController.php:79
 msgid "The file was not successfully uploaded"
 msgstr ""
 
-#: Controller/BannersController.php:46
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/BannersController.php:46
 msgid "The banner target is missing"
 msgstr ""
 
-#: Controller/PostsCategoriesController.php:77
-#: Controller/PostsTagsController.php:79
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/PostsCategoriesController.php:77
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/PostsTagsController.php:79
 msgid "Record not found"
 msgstr ""
 
-#: Controller/PostsController.php:202
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/PostsController.php:202
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
-#: Controller/PostsController.php:205
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/PostsController.php:205
 msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
-#: Controller/SystemsController.php:52
-#: Controller/UsersController.php:153;253;360
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/SystemsController.php:52
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:153;253;360
 msgid "Disabled"
 msgstr ""
 
-#: Controller/SystemsController.php:66
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/SystemsController.php:66
 msgid "The email has been sent"
 msgstr ""
 
-#: Controller/SystemsController.php:70
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/SystemsController.php:70
 msgid "The email was not sent"
 msgstr ""
 
-#: Controller/UsersController.php:117;302
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:117;302
 msgid "Invalid token"
 msgstr ""
 
-#: Controller/UsersController.php:127;183;278;312
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:127;183;278;312
 msgid "No account found"
 msgstr ""
 
-#: Controller/UsersController.php:135
-#: Controller/Admin/UsersController.php:194
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:135
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:194
 msgid "The account has been activated"
 msgstr ""
 
-#: Controller/UsersController.php:138
-#: Controller/Admin/UsersController.php:196
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:138
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:196
 msgid "The account has not been activated"
 msgstr ""
 
-#: Controller/UsersController.php:179
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:179
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: Controller/UsersController.php:186;281
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:186;281
 msgid "The form has not been filled in correctly"
 msgstr ""
 
-#: Controller/UsersController.php:211
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:211
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: Controller/UsersController.php:213
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:213
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: Controller/UsersController.php:227
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:227
 msgid "Invalid username or password"
 msgstr ""
 
-#: Controller/UsersController.php:239
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:239
 msgid "You are successfully logged out"
 msgstr ""
 
-#: Controller/UsersController.php:274;389
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:274;389
 msgid "We send you an email to activate your account"
 msgstr ""
 
-#: Controller/UsersController.php:321
-#: Controller/Admin/UsersController.php:218
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:321
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:218
 msgid "The password has been edited"
 msgstr ""
 
-#: Controller/UsersController.php:325
-#: Controller/Admin/UsersController.php:222
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:325
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:222
 msgid "The password has not been edited"
 msgstr ""
 
-#: Controller/UsersController.php:382
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:382
 msgid "The account has been created, but it needs to be activated by an admin"
 msgstr ""
 
-#: Controller/UsersController.php:393
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:393
 msgid "Account created. Now you can login"
 msgstr ""
 
-#: Controller/UsersController.php:400
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/UsersController.php:400
 msgid "The account has not been created"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BackupsController.php:49
+msgid "The backup has been deleted"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BackupsController.php:51
+msgid "The backup could not be deleted"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersController.php:58
 msgid "Before you can manage banners, you have to create at least a banner position"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:138
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersController.php:138
 msgid "The banner has been saved"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:142
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersController.php:142
 msgid "The banner could not be saved"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:157
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersController.php:157
 msgid "The banner has been deleted"
 msgstr ""
 
-#: Controller/Admin/BannersController.php:159
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersController.php:159
 msgid "The banner could not be deleted"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:65;86
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersPositionsController.php:65;86
 msgid "The banners position has been saved"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:69;90
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersPositionsController.php:69;90
 msgid "The banners position could not be saved"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:107
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersPositionsController.php:107
 msgid "The banners position has been deleted"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:109
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersPositionsController.php:109
 msgid "The banners position could not be deleted"
 msgstr ""
 
-#: Controller/Admin/BannersPositionsController.php:112
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/BannersPositionsController.php:112
 msgid "Before you delete this position, you have to delete its banners or assign them to another position"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:104;127
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PagesController.php:104;127
 msgid "The page has been saved"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:108;131
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PagesController.php:108;131
 msgid "The page could not be saved"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:146
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PagesController.php:146
 msgid "The page has been deleted"
 msgstr ""
 
-#: Controller/Admin/PagesController.php:148
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PagesController.php:148
 msgid "The page could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:88;109
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosAlbumsController.php:88;109
 msgid "The photos album has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:92;113
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosAlbumsController.php:92;113
 msgid "The photos album could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:130
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosAlbumsController.php:130
 msgid "The photos album has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:132
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosAlbumsController.php:132
 msgid "The photos album could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosAlbumsController.php:135
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosAlbumsController.php:135
 msgid "Before you delete this album, you have to delete its photos or assign them to another album"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosController.php:58
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:138
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosController.php:138
 msgid "The photo has been saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:142
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosController.php:142
 msgid "The photo could not be saved"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:158
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosController.php:158
 msgid "The photo has been deleted"
 msgstr ""
 
-#: Controller/Admin/PhotosController.php:160
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PhotosController.php:160
 msgid "The photo could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:94;115
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsCategoriesController.php:94;115
 msgid "The posts category has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:98;119
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsCategoriesController.php:98;119
 msgid "The posts category could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:136
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsCategoriesController.php:136
 msgid "The posts category has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:138
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsCategoriesController.php:138
 msgid "The posts category could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsCategoriesController.php:141
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsCategoriesController.php:141
 msgid "Before you delete this category, you have to delete its posts or assign them to another category"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsController.php:58
 msgid "Before you can manage posts, you have to create at least a category"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:148;184
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsController.php:148;184
 msgid "The post has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:152;188
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsController.php:152;188
 msgid "The post could not be saved"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:203
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsController.php:203
 msgid "The post has been deleted"
 msgstr ""
 
-#: Controller/Admin/PostsController.php:205
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsController.php:205
 msgid "The post could not be deleted"
 msgstr ""
 
-#: Controller/Admin/PostsTagsController.php:73
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsTagsController.php:73
 msgid "The tag has been saved"
 msgstr ""
 
-#: Controller/Admin/PostsTagsController.php:77
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/PostsTagsController.php:77
 msgid "The tag could not be saved"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:72
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:79
 msgid "{0} is not present into {1}"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:210
-msgid "All temporary files have been cleared"
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:256
+msgid "The operation has been performed correctly"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:212
-msgid "Some temporary files have not been cleared"
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:258
+msgid "The operation has not been performed correctly"
 msgstr ""
 
-#: Controller/Admin/SystemsController.php:226
-msgid "Assets have been cleared"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:228
-msgid "Assets have not been cleared"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:242
-msgid "The cache has been cleared"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:244
-msgid "The cache has not been cleared"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:258
-msgid "The logs have been cleared"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:260
-msgid "The logs have not been deleted"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:274
-msgid "The thumbnails have been deleted"
-msgstr ""
-
-#: Controller/Admin/SystemsController.php:276
-msgid "The thumbnails have not been deleted"
-msgstr ""
-
-#: Controller/Admin/UsersController.php:109;144
-#: Shell/UserShell.php:92
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:109;144
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:92
 msgid "The user has been saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:113;148
-#: Shell/UserShell.php:97
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:113;148
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:97
 msgid "The user could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:132;171
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:132;171
 msgid "Only the admin founder can edit other admin users"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:168
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:168
 msgid "You cannot delete the admin founder"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:173
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:173
 msgid "Before you delete this user, you have to delete his posts or assign them to another user"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:176
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:176
 msgid "The user has been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersController.php:178
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersController.php:178
 msgid "The user could not be deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:64;85
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersGroupsController.php:64;85
 msgid "The users group has been saved"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:68;89
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersGroupsController.php:68;89
 msgid "The users group could not be saved"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:106
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersGroupsController.php:106
 msgid "The users group has been deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:108
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersGroupsController.php:108
 msgid "The users group could not be deleted"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:111
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersGroupsController.php:111
 msgid "You cannot delete this users group, because it's a necessary group"
 msgstr ""
 
-#: Controller/Admin/UsersGroupsController.php:113
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/UsersGroupsController.php:113
 msgid "Before you delete this users group, you have to delete its users or assign them to another group"
 msgstr ""
 
-#: Controller/Component/AuthComponent.php:52
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Component/AuthComponent.php:52
 msgid "You are not authorized for this action"
 msgstr ""
 
-#: Form/ContactForm.php:55
-#: Model/Validation/AppValidator.php:67;75;87;99;129;136
-#: Model/Validation/BannersPositionValidator.php:40
-#: Model/Validation/TagValidator.php:40
-#: Model/Validation/UserValidator.php:54
-#: Model/Validation/UsersGroupValidator.php:45;62
+#: /home/mirko/Server/MeCms_Plugin/src/Form/ContactForm.php:55
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:67;75;87;99;129;136
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannersPositionValidator.php:40
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/TagValidator.php:40
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:54
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UsersGroupValidator.php:45;62
 msgid "Must be between {0} and {1} chars"
 msgstr ""
 
-#: Form/ContactForm.php:71
-#: Template/Email/html/Systems/contact_form.ctp:25
+#: /home/mirko/Server/MeCms_Plugin/src/Form/ContactForm.php:71
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Systems/contact_form.ctp:25
 msgid "Email from {0}"
 msgstr ""
 
-#: Mailer/UserMailer.php:40
+#: /home/mirko/Server/MeCms_Plugin/src/Mailer/UserMailer.php:40
 msgid "Activate your account"
 msgstr ""
 
-#: Mailer/UserMailer.php:52
+#: /home/mirko/Server/MeCms_Plugin/src/Mailer/UserMailer.php:52
 msgid "Your password has been changed"
 msgstr ""
 
-#: Mailer/UserMailer.php:64
+#: /home/mirko/Server/MeCms_Plugin/src/Mailer/UserMailer.php:64
 msgid "Reset your password"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:56;155;167
-#: Model/Validation/BannerValidator.php:45
-#: Model/Validation/PhotoValidator.php:45
-#: Model/Validation/PostValidator.php:39
-#: Model/Validation/UserValidator.php:42;136
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:56;155;167
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannerValidator.php:45
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/PhotoValidator.php:45
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/PostValidator.php:39
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:42;136
 msgid "You have to select a valid option"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:63;173
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:63;173
 msgid "You have to enter a valid value"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:79;91;140
-#: Model/Validation/BannersPositionValidator.php:44
-#: Model/Validation/PostValidator.php:62
-#: Model/Validation/TagValidator.php:44
-#: Model/Validation/UserValidator.php:58
-#: Model/Validation/UsersGroupValidator.php:54
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:79;91;140
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannersPositionValidator.php:44
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/PostValidator.php:62
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/TagValidator.php:44
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UsersGroupValidator.php:54
 msgid "Allowed chars"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:79;91
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:79;91
 msgid "letters, apostrophe, space"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:79;91
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:79;91
 msgid "Has to begin with a capital letter"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:103;121;144
-#: Model/Validation/BannersPositionValidator.php:48
-#: Model/Validation/UserValidator.php:62;77
-#: Model/Validation/UsersGroupValidator.php:49;66
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:103;121;144
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannersPositionValidator.php:48
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:62;77
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UsersGroupValidator.php:49;66
 msgid "This value is already used"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:112
-#: Model/Validation/UserValidator.php:49
-#: Model/Validation/UsersGroupValidator.php:40
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:112
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:49
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UsersGroupValidator.php:40
 msgid "Can not be changed"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:117;161
-#: Model/Validation/BannerValidator.php:52
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:117;161
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannerValidator.php:52
 msgid "Must be at most {0} chars"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:140
-#: Model/Validation/BannersPositionValidator.php:44
-#: Model/Validation/PostValidator.php:62
-#: Model/Validation/UserValidator.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:140
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannersPositionValidator.php:44
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/PostValidator.php:62
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:58
 msgid "lowercase letters, numbers, dash"
 msgstr ""
 
-#: Model/Validation/AppValidator.php:151
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/AppValidator.php:151
 msgid "This field can not be empty"
 msgstr ""
 
-#: Model/Validation/BannerValidator.php:39
-#: Model/Validation/PhotoValidator.php:39
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannerValidator.php:39
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/PhotoValidator.php:39
 msgid "Valid extensions"
 msgstr ""
 
-#: Model/Validation/BannerValidator.php:56
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/BannerValidator.php:56
 msgid "Must be a valid url"
 msgstr ""
 
-#: Model/Validation/PostValidator.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/PostValidator.php:58
 msgid "Each tag must be between {0} and {1} chars"
 msgstr ""
 
-#: Model/Validation/TagValidator.php:44
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/TagValidator.php:44
 msgid "lowercase letters, numbers, space"
 msgstr ""
 
-#: Model/Validation/UserValidator.php:67
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:67
 msgid "This value is reserved"
 msgstr ""
 
-#: Model/Validation/UserValidator.php:86
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:86
 msgid "Email addresses don't match"
 msgstr ""
 
-#: Model/Validation/UserValidator.php:94
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:94
 msgid "Must be at least {0} chars"
 msgstr ""
 
-#: Model/Validation/UserValidator.php:98
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:98
 msgid "The password should contain letters, numbers and symbols"
 msgstr ""
 
-#: Model/Validation/UserValidator.php:107
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:107
 msgid "Passwords don't match"
 msgstr ""
 
-#: Model/Validation/UserValidator.php:114
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UserValidator.php:114
 msgid "The old password is wrong"
 msgstr ""
 
-#: Model/Validation/UsersGroupValidator.php:54
+#: /home/mirko/Server/MeCms_Plugin/src/Model/Validation/UsersGroupValidator.php:54
 msgid "lowercase letters"
 msgstr ""
 
-#: Shell/InstallShell.php:127
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/InstallShell.php:128
 msgid "Creates an admin user"
 msgstr ""
 
-#: Shell/UpdateShell.php:132;133;134;135
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UpdateShell.php:132;133;134;135
 msgid "Updates to {0} version"
 msgstr ""
 
-#: Shell/UserShell.php:50
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:50
 msgid "Before you can manage users, you have to create at least a user group"
 msgstr ""
 
-#: Shell/UserShell.php:56;154
-#: Template/Admin/Users/add.ctp:47
-#: Template/Admin/Users/edit.ctp:41
-#: Template/Admin/Users/index.ctp:72
-#: Template/Admin/Users/view.ctp:49
-#: Template/Users/login.ctp:34
-#: Template/Users/signup.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:56;154
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:72
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/login.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:35
 msgid "Username"
 msgstr ""
 
-#: Shell/UserShell.php:57
-#: Template/Admin/Users/add.ctp:59
-#: Template/Admin/Users/change_password.ctp:40
-#: Template/Admin/Users/edit.ctp:49
-#: Template/Users/login.ctp:38
-#: Template/Users/reset_password.ctp:35
-#: Template/Users/signup.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:57
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/login.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/reset_password.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:49
 msgid "Password"
 msgstr ""
 
-#: Shell/UserShell.php:58
-#: Template/Admin/Users/add.ctp:63
-#: Template/Admin/Users/change_password.ctp:45
-#: Template/Admin/Users/edit.ctp:55
-#: Template/Users/reset_password.ctp:40
-#: Template/Users/signup.ctp:54
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:58
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:63
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/reset_password.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:54
 msgid "Repeat password"
 msgstr ""
 
-#: Shell/UserShell.php:59;156
-#: Template/Admin/Users/add.ctp:51
-#: Template/Admin/Users/edit.ctp:45
-#: Template/Admin/Users/index.ctp:74
-#: Template/Admin/Users/view.ctp:52
-#: Template/Systems/contact_form.ctp:40
-#: Template/Users/forgot_password.ctp:35
-#: Template/Users/resend_activation.ctp:34
-#: Template/Users/signup.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:59;156
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:74
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/forgot_password.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/resend_activation.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:39
 msgid "Email"
 msgstr ""
 
-#: Shell/UserShell.php:60
-#: Template/Admin/Users/add.ctp:67
-#: Template/Admin/Users/edit.ctp:61
-#: Template/Systems/contact_form.ctp:33
-#: Template/Users/signup.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:60
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:67
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:61
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:59
 msgid "First name"
 msgstr ""
 
-#: Shell/UserShell.php:61
-#: Template/Admin/Users/add.ctp:71
-#: Template/Admin/Users/edit.ctp:65
-#: Template/Systems/contact_form.ctp:36
-#: Template/Users/signup.ctp:63
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:61
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:71
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:65
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:63
 msgid "Last name"
 msgstr ""
 
-#: Shell/UserShell.php:76;200
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:76;201
 msgid "Group ID"
 msgstr ""
 
-#: Shell/UserShell.php:84
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:84
 msgid "Some fields are missing. Try again"
 msgstr ""
 
-#: Shell/UserShell.php:88
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:88
 msgid "Invalid group ID"
 msgstr ""
 
-#: Shell/UserShell.php:96
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:96
 msgid "An error occurred, try again"
 msgstr ""
 
-#: Shell/UserShell.php:113
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:113
 msgid "There are no user groups"
 msgstr ""
 
-#: Shell/UserShell.php:127;153
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:127;153
 msgid "ID"
 msgstr ""
 
-#: Shell/UserShell.php:128;155
-#: Template/Admin/BannersPositions/index.ctp:34
-#: Template/Admin/Users/index.ctp:73
-#: Template/Admin/Users/view.ctp:55
-#: Template/Admin/UsersGroups/add.ctp:33
-#: Template/Admin/UsersGroups/edit.ctp:34
-#: Template/Admin/UsersGroups/index.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:128;155
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:73
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/add.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/edit.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:34
 msgid "Name"
 msgstr ""
 
-#: Shell/UserShell.php:129
-#: Template/Admin/UsersGroups/add.ctp:36
-#: Template/Admin/UsersGroups/edit.ctp:37
-#: Template/Admin/UsersGroups/index.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:129
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/add.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/edit.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:35
 msgid "Label"
 msgstr ""
 
-#: Shell/UserShell.php:130
-#: Template/Admin/Users/index.ctp:26;31
-#: Template/Admin/UsersGroups/index.ctp:36
-#: View/Helper/MeCmsMenuHelper.php:148
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:130
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:148
 msgid "Users"
 msgstr ""
 
-#: Shell/UserShell.php:149
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:149
 msgid "There are no users"
 msgstr ""
 
-#: Shell/UserShell.php:157
-#: Template/Admin/Posts/index.ctp:26;31
-#: Template/Admin/PostsCategories/index.ctp:36
-#: Template/Admin/Users/index.ctp:76
-#: Template/Admin/Users/view.ctp:74
-#: Template/Posts/index.ctp:50
-#: View/Helper/MeCmsMenuHelper.php:61
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:157
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:76
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:74
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/index.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:61
 msgid "Posts"
 msgstr ""
 
-#: Shell/UserShell.php:158
-#: Template/Admin/Users/view.ctp:61
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:158
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:61
 msgid "Status"
 msgstr ""
 
-#: Shell/UserShell.php:159
-#: Template/Admin/Banners/index.ctp:64
-#: Template/Admin/Pages/add.ctp:38
-#: Template/Admin/Pages/edit.ctp:38
-#: Template/Admin/Pages/index.ctp:70
-#: Template/Admin/Posts/add.ctp:50
-#: Template/Admin/Posts/edit.ctp:50
-#: Template/Admin/Posts/index.ctp:85
-#: Template/Admin/Users/index.ctp:77
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:159
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:64
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:70
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:85
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:77
 msgid "Date"
 msgstr ""
 
-#: Shell/UserShell.php:166
-#: Template/Admin/Users/index.ctp:89
-#: Template/Admin/Users/view.ctp:65
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:166
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:89
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:65
 msgid "Banned"
 msgstr ""
 
-#: Shell/UserShell.php:168
-#: Template/Admin/Users/index.ctp:92
-#: Template/Admin/Users/view.ctp:68
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:168
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:92
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:68
 msgid "Pending"
 msgstr ""
 
-#: Shell/UserShell.php:170
-#: Template/Admin/Users/add.ctp:38
-#: Template/Admin/Users/view.ctp:71
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:170
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:71
 msgid "Active"
 msgstr ""
 
-#: Shell/UserShell.php:196
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:197
 msgid "Adds an user"
 msgstr ""
 
-#: Shell/UserShell.php:204
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:205
 msgid "Lists user groups"
 msgstr ""
 
-#: Shell/UserShell.php:205
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/UserShell.php:206
 msgid "Lists users"
 msgstr ""
 
-#: Template/Admin/Banners/add.ctp:25;28;78
-msgid "Add banner"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:25;28
+msgid "Database backups"
 msgstr ""
 
-#: Template/Admin/Banners/add.ctp:33;36
-msgid "Banner"
-msgstr ""
-
-#: Template/Admin/Banners/add.ctp:40
-#: Template/Admin/Banners/upload.ctp:40
-#: Template/Admin/Photos/upload.ctp:40
-#: Template/Admin/Systems/browser.ctp:40
-#: Template/Admin/Systems/changelogs.ctp:41
-#: Template/Admin/Systems/logs_viewer.ctp:45
-msgid "Select"
-msgstr ""
-
-#: Template/Admin/Banners/add.ctp:51
-#: Template/Admin/Banners/edit.ctp:33
-#: Template/Admin/Banners/index.ctp:60
-msgid "Position"
-msgstr ""
-
-#: Template/Admin/Banners/add.ctp:55
-#: Template/Admin/Banners/edit.ctp:36
-#: Template/Admin/Pages/add.ctp:50
-#: Template/Admin/Pages/edit.ctp:49
-#: Template/Admin/PhotosAlbums/add.ctp:37
-#: Template/Admin/PhotosAlbums/edit.ctp:36
-#: Template/Admin/Posts/add.ctp:62
-#: Template/Admin/Posts/edit.ctp:61
-msgid "Published"
-msgstr ""
-
-#: Template/Admin/Banners/add.ctp:63
-#: Template/Admin/Banners/edit.ctp:47
-#: Template/Admin/Banners/index.ctp:59
-#: Template/Admin/Pages/statics.ctp:31
-#: Template/Admin/Photos/edit.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:63
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/statics.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:44
 msgid "Filename"
 msgstr ""
 
-#: Template/Admin/Banners/add.ctp:68
-#: Template/Admin/Banners/edit.ctp:50
-msgid "Web address"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:32
+msgid "Compression"
 msgstr ""
 
-#: Template/Admin/Banners/add.ctp:69
-#: Template/Admin/Banners/edit.ctp:51
-msgid "The address should begin with {0}"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:44
+msgid "Download"
 msgstr ""
 
-#: Template/Admin/Banners/add.ctp:72
-#: Template/Admin/Banners/edit.ctp:54
-#: Template/Admin/Banners/index.ctp:62
-#: Template/Admin/BannersPositions/index.ctp:35
-#: Template/Admin/Photos/edit.ctp:47
-#: Template/Admin/PhotosAlbums/add.ctp:53
-#: Template/Admin/PhotosAlbums/edit.ctp:52
-#: Template/Admin/PhotosAlbums/index.ctp:35
-#: Template/Admin/PostsCategories/add.ctp:55
-#: Template/Admin/PostsCategories/edit.ctp:55
-#: Template/Admin/UsersGroups/add.ctp:39
-#: Template/Admin/UsersGroups/edit.ctp:40
-#: Template/Element/backend/bbcode.ctp:40
-msgid "Description"
-msgstr ""
-
-#: Template/Admin/Banners/edit.ctp:25;28;60
-msgid "Edit banner"
-msgstr ""
-
-#: Template/Admin/Banners/edit.ctp:42
-#: Template/Admin/Photos/edit.ctp:39
-msgid "Preview"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:25;28
-#: Template/Admin/BannersPositions/index.ctp:36
-#: View/Helper/MeCmsMenuHelper.php:122
-msgid "Banners"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:29
-#: Template/Admin/Photos/index.ctp:29
-msgid "Upload"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:33
-#: Template/Admin/Pages/index.ctp:36
-#: Template/Admin/Posts/index.ctp:36
-#: Template/Admin/Users/index.ctp:36
-msgid "Filter"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:38
-msgid "filename"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:43
-#: Template/Admin/Pages/index.ctp:46
-#: Template/Admin/Posts/index.ctp:46
-#: Template/Admin/Users/index.ctp:46
-msgid "all status"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:44
-#: Template/Admin/Pages/index.ctp:47
-#: Template/Admin/Posts/index.ctp:47
-msgid "Only published"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:44
-msgid "Only not published"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:48
-msgid "all positions"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:61
-msgid "Url"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:63
-msgid "Click"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:76
-#: Template/Admin/PhotosAlbums/index.ctp:49
-msgid "Not published"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:81
-#: Template/Admin/BannersPositions/index.ctp:48
-#: Template/Admin/Pages/index.ctp:90
-#: Template/Admin/Photos/index.ctp:41
-#: Template/Admin/PhotosAlbums/index.ctp:55
-#: Template/Admin/Posts/index.ctp:110
-#: Template/Admin/PostsCategories/index.ctp:48
-#: Template/Admin/PostsTags/index.ctp:59
-#: Template/Admin/Users/index.ctp:98
-#: Template/Admin/Users/view.ctp:32
-#: Template/Admin/UsersGroups/index.ctp:48
-#: Template/Element/backend/uploader/response.ctp:39
-msgid "Edit"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:85
-#: Template/Admin/Pages/index.ctp:94
-#: Template/Admin/Pages/statics.ctp:44
-#: Template/Admin/Photos/index.ctp:48
-#: Template/Admin/PhotosAlbums/index.ctp:62
-#: Template/Admin/Posts/index.ctp:118
-#: Template/Admin/PostsCategories/index.ctp:56
-#: Template/Admin/PostsTags/index.ctp:61
-msgid "Open"
-msgstr ""
-
-#: Template/Admin/Banners/index.ctp:89
-#: Template/Admin/BannersPositions/index.ctp:49
-#: Template/Admin/Pages/index.ctp:98
-#: Template/Admin/Photos/index.ctp:46
-#: Template/Admin/PhotosAlbums/index.ctp:60
-#: Template/Admin/Posts/index.ctp:114
-#: Template/Admin/PostsCategories/index.ctp:53
-#: Template/Admin/Users/index.ctp:107
-#: Template/Admin/Users/view.ctp:41
-#: Template/Admin/UsersGroups/index.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:89
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:98
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/index.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:60
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:114
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:107
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:49
 msgid "Delete"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:89
-#: Template/Admin/BannersPositions/index.ctp:49
-#: Template/Admin/Pages/index.ctp:98
-#: Template/Admin/Photos/index.ctp:46
-#: Template/Admin/PhotosAlbums/index.ctp:60
-#: Template/Admin/Posts/index.ctp:114
-#: Template/Admin/PostsCategories/index.ctp:53
-#: Template/Admin/Users/index.ctp:107
-#: Template/Admin/Users/view.ctp:41
-#: Template/Admin/UsersGroups/index.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:89
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:98
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/index.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:60
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:114
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:107
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:49
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: Template/Admin/Banners/index.ctp:95
-#: Template/Admin/BannersPositions/index.ctp:57
-#: Template/Admin/PhotosAlbums/index.ctp:71
-#: Template/Admin/Posts/index.ctp:103;124
-#: Template/Admin/PostsCategories/index.ctp:65
-#: Template/Admin/Users/index.ctp:116
-#: Template/Admin/UsersGroups/index.ctp:57
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:25;28;78
+msgid "Add banner"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:33;36
+msgid "Banner"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/upload.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/upload.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/browser.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/changelogs.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:45
+msgid "Select"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:60
+msgid "Position"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:62
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:61
+msgid "Published"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:68
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:50
+msgid "Web address"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:51
+msgid "The address should begin with {0}"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:72
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:54
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:62
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/add.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/edit.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:40
+msgid "Description"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:25;28;60
+msgid "Edit banner"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:39
+msgid "Preview"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:122
+msgid "Banners"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/index.ctp:29
+msgid "Upload"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:36
+msgid "Filter"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:38
+msgid "filename"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:43
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:46
+msgid "all status"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:47
+msgid "Only published"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:44
+msgid "Only not published"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:48
+msgid "all positions"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:61
+msgid "Url"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:63
+msgid "Click"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:76
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:49
+msgid "Not published"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:81
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:90
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/index.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:110
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsTags/index.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:98
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:32
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/uploader/response.ctp:39
+msgid "Edit"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:85
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:94
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/statics.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/index.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:62
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:118
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:56
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsTags/index.ctp:61
+msgid "Open"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:95
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:57
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:71
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:103;124
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:65
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:116
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:57
 msgid "View items that belong to this category"
 msgstr ""
 
-#: Template/Admin/Banners/upload.ctp:25;28
-#: View/Helper/MeCmsMenuHelper.php:112
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/upload.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:112
 msgid "Upload banners"
 msgstr ""
 
-#: Template/Admin/Banners/upload.ctp:33;36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/upload.ctp:33;36
 msgid "Position to upload banners"
 msgstr ""
 
-#: Template/Admin/BannersPositions/add.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/add.ctp:25;28
 msgid "Add banners position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/add.ctp:36
-#: View/Helper/MeCmsMenuHelper.php:119
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/add.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:119
 msgid "Add position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/edit.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/edit.ctp:25;28
 msgid "Edit banners position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/edit.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/edit.ctp:36
 msgid "Edit position"
 msgstr ""
 
-#: Template/Admin/BannersPositions/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:25;28
 msgid "Banners positions"
 msgstr ""
 
-#: Template/Admin/BannersPositions/index.ctp:29
-#: Template/Admin/Pages/index.ctp:32
-#: Template/Admin/PhotosAlbums/index.ctp:29
-#: Template/Admin/Posts/index.ctp:32
-#: Template/Admin/PostsCategories/index.ctp:29
-#: Template/Admin/Users/index.ctp:32
-#: Template/Admin/UsersGroups/index.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:32
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:32
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:32
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:29
 msgid "Add"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:26;33;74
-#: View/Helper/MeCmsMenuHelper.php:77
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:26;33;74
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:77
 msgid "Add page"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:40
-#: Template/Admin/Pages/edit.ctp:40
-#: Template/Admin/Posts/add.ctp:52
-#: Template/Admin/Posts/edit.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:52
 msgid "If blank, the current date and time will be used"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:41
-#: Template/Admin/Pages/edit.ctp:41
-#: Template/Admin/Posts/add.ctp:53
-#: Template/Admin/Posts/edit.ctp:53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:53
 msgid "You can delay the publication by entering a future date"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:46
-#: Template/Admin/Pages/edit.ctp:46
-#: Template/Admin/Pages/index.ctp:69
-#: Template/Admin/Posts/add.ctp:58
-#: Template/Admin/Posts/edit.ctp:58
-#: Template/Admin/Posts/index.ctp:84
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:58
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:58
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:84
 msgid "Priority"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:51
-#: Template/Admin/Pages/edit.ctp:50
-#: Template/Admin/Posts/add.ctp:63
-#: Template/Admin/Posts/edit.ctp:62
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:63
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:62
 msgid "Disable this option to save as a draft"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:59
-#: Template/Admin/Pages/edit.ctp:58
-#: Template/Admin/Pages/index.ctp:68
-#: Template/Admin/Pages/statics.ctp:32
-#: Template/Admin/PhotosAlbums/add.ctp:45
-#: Template/Admin/PhotosAlbums/edit.ctp:44
-#: Template/Admin/PhotosAlbums/index.ctp:34
-#: Template/Admin/Posts/add.ctp:71
-#: Template/Admin/Posts/edit.ctp:70
-#: Template/Admin/Posts/index.ctp:81
-#: Template/Admin/PostsCategories/add.ctp:47
-#: Template/Admin/PostsCategories/edit.ctp:47
-#: Template/Admin/PostsCategories/index.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:58
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:68
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/statics.ctp:32
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:71
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:70
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:81
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:34
 msgid "Title"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:61
-#: Template/Admin/Pages/edit.ctp:61
-#: Template/Admin/Posts/add.ctp:74
-#: Template/Admin/Posts/edit.ctp:73
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:61
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:61
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:74
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:73
 msgid "Subtitle"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:64
-#: Template/Admin/Pages/edit.ctp:65
-#: Template/Admin/PhotosAlbums/add.ctp:49
-#: Template/Admin/PhotosAlbums/edit.ctp:48
-#: Template/Admin/Posts/add.ctp:78
-#: Template/Admin/Posts/edit.ctp:77
-#: Template/Admin/PostsCategories/add.ctp:51
-#: Template/Admin/PostsCategories/edit.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:64
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:65
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:78
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:77
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:51
 msgid "Slug"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:65
-#: Template/Admin/Pages/edit.ctp:66
-#: Template/Admin/PhotosAlbums/add.ctp:50
-#: Template/Admin/PhotosAlbums/edit.ctp:49
-#: Template/Admin/Posts/add.ctp:79
-#: Template/Admin/Posts/edit.ctp:78
-#: Template/Admin/PostsCategories/add.ctp:52
-#: Template/Admin/PostsCategories/edit.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:65
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:66
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:79
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:78
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:52
 msgid "The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically"
 msgstr ""
 
-#: Template/Admin/Pages/add.ctp:68
-#: Template/Admin/Pages/edit.ctp:69
-#: Template/Admin/Posts/add.ctp:107
-#: Template/Admin/Posts/edit.ctp:107
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:68
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:107
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:107
 msgid "Text"
 msgstr ""
 
-#: Template/Admin/Pages/edit.ctp:26;33;74
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:26;33;74
 msgid "Edit page"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:26;31
-#: Template/Cell/Pages/pages.ctp:34
-#: Template/Element/frontend/topbar.ctp:43
-#: Template/Pages/index.ctp:25;29
-#: View/Helper/MeCmsMenuHelper.php:81
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Pages/pages.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/topbar.ctp:43
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Pages/index.ctp:25;29
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:81
 msgid "Pages"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:41
-#: Template/Admin/Posts/index.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:41
 msgid "title"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:47
-#: Template/Admin/Posts/index.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:47
 msgid "Only drafts"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:51
-#: Template/Admin/Posts/index.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:59
 msgid "all priorities"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:56
-#: Template/Admin/Posts/index.ctp:64
-#: Template/Admin/Users/index.ctp:60
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:56
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:64
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:60
 msgid "month"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:82
-#: Template/Admin/Posts/index.ctp:97
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:82
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:97
 msgid "Draft"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:107
-#: Template/Admin/Posts/index.ctp:133
-#: View/View/AdminView.php:69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:107
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:133
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AdminView.php:69
 msgid "Very low"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:110
-#: Template/Admin/Posts/index.ctp:136
-#: View/View/AdminView.php:70
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:110
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:136
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AdminView.php:70
 msgid "Low"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:113
-#: Template/Admin/Posts/index.ctp:139
-#: View/View/AdminView.php:72
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:113
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:139
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AdminView.php:72
 msgid "High"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:116
-#: Template/Admin/Posts/index.ctp:142
-#: View/View/AdminView.php:73
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:116
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:142
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AdminView.php:73
 msgid "Very high"
 msgstr ""
 
-#: Template/Admin/Pages/index.ctp:119
-#: Template/Admin/Posts/index.ctp:145
-#: View/View/AdminView.php:71
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/index.ctp:119
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:145
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AdminView.php:71
 msgid "Normal"
 msgstr ""
 
-#: Template/Admin/Pages/statics.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/statics.ctp:25;28
 msgid "Static pages"
 msgstr ""
 
-#: Template/Admin/Pages/statics.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/statics.ctp:33
 msgid "Path"
 msgstr ""
 
-#: Template/Admin/Photos/edit.ctp:25;28;53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:25;28;53
 msgid "Edit photo"
 msgstr ""
 
-#: Template/Admin/Photos/edit.ctp:33
-#: Template/Admin/Photos/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/index.ctp:25;28
 msgid "Album"
 msgstr ""
 
-#: Template/Admin/Photos/upload.ctp:25;28
-#: View/Helper/MeCmsMenuHelper.php:91
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/upload.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:91
 msgid "Upload photos"
 msgstr ""
 
-#: Template/Admin/Photos/upload.ctp:33;36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/upload.ctp:33;36
 msgid "Album to upload photos"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/add.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:26;31
 msgid "Add photos album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/add.ctp:57
-#: View/Helper/MeCmsMenuHelper.php:93
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/add.ctp:57
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:93
 msgid "Add album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/edit.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:26;31
 msgid "Edit photos album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/edit.ctp:56
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/edit.ctp:56
 msgid "Edit album"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/index.ctp:25;28
-#: Template/Cell/Photos/albums.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Photos/albums.ctp:31
 msgid "Albums"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/index.ctp:36
-#: Template/Element/frontend/topbar.ctp:44
-#: View/Helper/MeCmsMenuHelper.php:96
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/topbar.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:96
 msgid "Photos"
 msgstr ""
 
-#: Template/Admin/PhotosAlbums/index.ctp:54
-#: Template/Admin/Users/index.ctp:97
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PhotosAlbums/index.ctp:54
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:97
 msgid "View"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:26;34;110
-#: View/Helper/MeCmsMenuHelper.php:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:26;34;110
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:49
 msgid "Add post"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:42
-#: Template/Admin/Posts/edit.ctp:42
-#: Template/Admin/Posts/index.ctp:83
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:83
 msgid "Author"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:47
-#: Template/Admin/Posts/edit.ctp:47
-#: Template/Admin/Posts/index.ctp:82
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:82
 msgid "Category"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:86;94
-#: Template/Admin/Posts/edit.ctp:85;94
-#: Template/Admin/PostsTags/index.ctp:25;43
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:86;94
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:85;94
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsTags/index.ctp:25;43
 msgid "Tags"
 msgstr ""
 
-#: Template/Admin/Posts/add.ctp:88;99
-#: Template/Admin/Posts/edit.ctp:87;99
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/add.ctp:88;99
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:87;99
 msgid "Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space"
 msgstr ""
 
-#: Template/Admin/Posts/edit.ctp:26;34;110
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/edit.ctp:26;34;110
 msgid "Edit post"
 msgstr ""
 
-#: Template/Admin/Posts/index.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:51
 msgid "all users"
 msgstr ""
 
-#: Template/Admin/Posts/index.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:55
 msgid "all categories"
 msgstr ""
 
-#: Template/Admin/Posts/index.ctp:69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:69
 msgid "tag"
 msgstr ""
 
-#: Template/Admin/Posts/index.ctp:127
-#: Template/Admin/Users/index.ctp:121
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Posts/index.ctp:127
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:121
 msgid "View items that belong to this user"
 msgstr ""
 
-#: Template/Admin/PostsCategories/add.ctp:26;31;60
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:26;31;60
 msgid "Add posts category"
 msgstr ""
 
-#: Template/Admin/PostsCategories/add.ctp:37
-#: Template/Admin/PostsCategories/edit.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:37
 msgid "Parent category"
 msgstr ""
 
-#: Template/Admin/PostsCategories/add.ctp:39
-#: Template/Admin/PostsCategories/edit.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/add.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:39
 msgid "Leave blank to create a parent category"
 msgstr ""
 
-#: Template/Admin/PostsCategories/edit.ctp:26;31;60
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/edit.ctp:26;31;60
 msgid "Edit posts category"
 msgstr ""
 
-#: Template/Admin/PostsCategories/index.ctp:25;28
-#: Template/Cell/Posts/categories.ctp:34
-#: Template/PostsCategories/index.ctp:25;29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Posts/categories.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/PostsCategories/index.ctp:25;29
 msgid "Posts categories"
 msgstr ""
 
-#: Template/Admin/PostsCategories/index.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsCategories/index.ctp:35
 msgid "Parent"
 msgstr ""
 
-#: Template/Admin/PostsTags/edit.ctp:25;28;37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsTags/edit.ctp:25;28;37
 msgid "Edit tag"
 msgstr ""
 
-#: Template/Admin/PostsTags/edit.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsTags/edit.ctp:33
 msgid "Tag"
 msgstr ""
 
-#: Template/Admin/PostsTags/index.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/PostsTags/index.ctp:52
 msgid "View items that belong to this element"
 msgstr ""
 
-#: Template/Admin/Systems/browser.ctp:26;31
-#: View/Helper/MeCmsMenuHelper.php:165
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/browser.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:182
 msgid "Media browser"
 msgstr ""
 
-#: Template/Admin/Systems/browser.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/browser.ctp:35
 msgid "Type"
 msgstr ""
 
-#: Template/Admin/Systems/changelogs.ctp:25;28
-#: View/Helper/MeCmsMenuHelper.php:166
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/changelogs.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:183
 msgid "Changelogs"
 msgstr ""
 
-#: Template/Admin/Systems/changelogs.ctp:34;37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/changelogs.ctp:34;37
 msgid "Changelog"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:26;39
-#: View/Helper/MeCmsMenuHelper.php:164
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:26;39
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:181
 msgid "System checkup"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:44;52;86;108
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:44;52;86;108
 msgid "{0} version: {1}"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:61
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:61
 msgid "The cache is enabled"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:63
-#: Template/Admin/Systems/temporary.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:63
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:48
 msgid "The cache is disabled or debugging is active"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:71
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:71
 msgid "Plugins"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:75
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:75
 msgid "{0} plugin version: {1}"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:92
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:92
 msgid "The {0} module is enabled"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:94
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:94
 msgid "The {0} module is not enabled"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:96
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:96
 msgid "The {0} module cannot be checked"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:113
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:113
 msgid "The {0} version is at least {1}"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:115
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:115
 msgid "The {0} version is less than {1}"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:121
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:121
 msgid "The {0} extension is enabled"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:123
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:123
 msgid "The {0} extension is not enabled"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:133
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:133
 msgid "Executables"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:137
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:137
 msgid "{0} is available"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:148
-msgid "Webroot"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:148
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:165
+msgid "Backups"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:153;169
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:150;165;181
 msgid "The directory {0} is readable and writable"
 msgstr ""
 
-#: Template/Admin/Systems/checkup.ctp:164
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:160
+msgid "Webroot"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/checkup.ctp:176
 msgid "Temporary directories"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:26;31
-#: View/Helper/MeCmsMenuHelper.php:172
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:26;31
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:189
 msgid "Log viewer"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:38;41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:38;41
 msgid "Log file"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:73
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:73
 msgid "Request URL"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:80
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:80
 msgid "Referer URL"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:92
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:92
 msgid "Toggle exception attributes"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:97
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:97
 msgid "Toggle trace"
 msgstr ""
 
-#: Template/Admin/Systems/logs_viewer.ctp:102
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:102
 msgid "Toggle stack trace"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:25
-#: View/Helper/MeCmsMenuHelper.php:163
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:25;29
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:180
 msgid "Temporary files"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:32
 msgid "All temporary files"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:32;45
-msgid "Cache"
-msgstr ""
-
-#: Template/Admin/Systems/temporary.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:34
 msgid "All temporary files size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:35
 msgid "This command clear all temporary files: cache, assets, logs and thumbnails"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:36
 msgid "Clear all temporary files"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:45
+msgid "Cache"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:50
 msgid "Cache size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:51
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:51
 msgid "Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:52
 msgid "Clear cache"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:58
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:58
 msgid "Assets"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:59
 msgid "Assets size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:62
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:62
 msgid "Clear assets"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:69
 msgid "Logs"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:70
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:70
 msgid "Logs size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:73
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:73
 msgid "Clear logs"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:80
-msgid "Thumbs"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:80
+msgid "Thumbnails"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:81
-msgid "Thumbs size: {0}"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:81
+msgid "Thumbnails size: {0}"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:84
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:84
 msgid "Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used"
 msgstr ""
 
-#: Template/Admin/Systems/temporary.ctp:85
-msgid "Clear thumbs"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:85
+msgid "Clear thumbnails"
 msgstr ""
 
-#: Template/Admin/Users/add.ctp:25;28;75
-#: View/Helper/MeCmsMenuHelper.php:138
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:25;28;75
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:138
 msgid "Add user"
 msgstr ""
 
-#: Template/Admin/Users/add.ctp:34
-#: Template/Admin/Users/edit.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:33
 msgid "User group"
 msgstr ""
 
-#: Template/Admin/Users/add.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:39
 msgid "If is not active, the user won't be able to login"
 msgstr ""
 
-#: Template/Admin/Users/add.ctp:55
-#: Template/Users/forgot_password.ctp:40
-#: Template/Users/resend_activation.ctp:39
-#: Template/Users/signup.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/add.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/forgot_password.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/resend_activation.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:44
 msgid "Repeat email"
 msgstr ""
 
-#: Template/Admin/Users/change_password.ctp:25;28;50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:25;28;50
 msgid "Change your password"
 msgstr ""
 
-#: Template/Admin/Users/change_password.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:34
 msgid "Old password"
 msgstr ""
 
-#: Template/Admin/Users/change_password.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:35
 msgid "Enter your old password"
 msgstr ""
 
-#: Template/Admin/Users/change_password.ctp:41
-#: Template/Users/reset_password.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/reset_password.ctp:36
 msgid "Enter your new password"
 msgstr ""
 
-#: Template/Admin/Users/change_password.ctp:46
-#: Template/Users/reset_password.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/change_password.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/reset_password.ctp:41
 msgid "Repeat your new password"
 msgstr ""
 
-#: Template/Admin/Users/edit.ctp:25;28;69
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:25;28;69
 msgid "Edit user"
 msgstr ""
 
-#: Template/Admin/Users/edit.ctp:51;57
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/edit.ctp:51;57
 msgid "If you want to change the password just type a new one. Otherwise, leave the field empty"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:41
 msgid "username"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:48
 msgid "Only active"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:49
 msgid "Only pending"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:50
 msgid "Only banned"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:55
 msgid "all groups"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:75
-#: Template/Admin/Users/view.ctp:58
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:75
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:58
 msgid "Group"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:105
-#: Template/Admin/Users/view.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:105
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:39
 msgid "Activate"
 msgstr ""
 
-#: Template/Admin/Users/index.ctp:105
-#: Template/Admin/Users/view.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/index.ctp:105
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:39
 msgid "Are you sure you want to activate this account?"
 msgstr ""
 
-#: Template/Admin/Users/view.ctp:78
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Users/view.ctp:78
 msgid "Created"
 msgstr ""
 
-#: Template/Admin/UsersGroups/add.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/add.ctp:25;28
 msgid "Add users group"
 msgstr ""
 
-#: Template/Admin/UsersGroups/add.ctp:45
-#: View/Helper/MeCmsMenuHelper.php:145
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/add.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:145
 msgid "Add group"
 msgstr ""
 
-#: Template/Admin/UsersGroups/edit.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/edit.ctp:25;28
 msgid "Edit users group"
 msgstr ""
 
-#: Template/Admin/UsersGroups/edit.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/edit.ctp:46
 msgid "Edit group"
 msgstr ""
 
-#: Template/Admin/UsersGroups/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/UsersGroups/index.ctp:25;28
 msgid "Users groups"
 msgstr ""
 
-#: Template/Cell/Photos/albums.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Photos/albums.ctp:38
 msgid "Select an album"
 msgstr ""
 
-#: Template/Cell/Photos/latest.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Photos/latest.ctp:31
 msgid "Latest {0} photos"
 msgstr ""
 
-#: Template/Cell/Photos/latest.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Photos/latest.ctp:31
 msgid "Latest photo"
 msgstr ""
 
-#: Template/Cell/Photos/random.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Photos/random.ctp:31
 msgid "Random {0} photos"
 msgstr ""
 
-#: Template/Cell/Photos/random.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Photos/random.ctp:31
 msgid "Random photo"
 msgstr ""
 
-#: Template/Cell/Posts/categories.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Posts/categories.ctp:35
 msgid "Select a category"
 msgstr ""
 
-#: Template/Cell/Posts/latest.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Posts/latest.ctp:31
 msgid "Latest {0} posts"
 msgstr ""
 
-#: Template/Cell/Posts/latest.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Posts/latest.ctp:31
 msgid "Latest post"
 msgstr ""
 
-#: Template/Cell/Posts/search.ctp:33
-#: Template/Posts/search.ctp:25;29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Posts/search.ctp:32
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/search.ctp:25;29
 msgid "Search posts"
 msgstr ""
 
-#: Template/Cell/Posts/search.ctp:38
-#: Template/Element/frontend/footer.ctp:28
-#: Template/Posts/search.ctp:35;37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/Posts/search.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/footer.ctp:28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/search.ctp:35;37
 msgid "Search"
 msgstr ""
 
-#: Template/Cell/PostsTags/popular.ctp:27
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Cell/PostsTags/popular.ctp:31
 msgid "Popular tags"
 msgstr ""
 
-#: Template/Element/backend/bbcode.ctp:30
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:30
 msgid "BBCode"
 msgstr ""
 
-#: Template/Element/backend/bbcode.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:39
 msgid "BBCode tag"
 msgstr ""
 
-#: Template/Element/backend/bbcode.ctp:49
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:49
 msgid "Manually indicates where to cut the text and show the \"Read more\" button"
 msgstr ""
 
-#: Template/Element/backend/bbcode.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:50
 msgid "If this is not present, the system can still cut the text, for example after a certain number of characters"
 msgstr ""
 
-#: Template/Element/backend/bbcode.ctp:59
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:59
 msgid "Adds a {0} video. You may indicate the ID or the url of the video"
 msgstr ""
 
-#: Template/Element/backend/topbar.ctp:30
-#: Template/Element/frontend/topbar.ctp:30
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/topbar.ctp:30
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/topbar.ctp:30
 msgid "Toggle navigation"
 msgstr ""
 
-#: Template/Element/backend/topbar.ctp:40
-#: Template/Layout/frontend.ctp:67
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/topbar.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Layout/frontend.ctp:67
 msgid "Homepage"
 msgstr ""
 
-#: Template/Element/backend/topbar.ctp:54
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/topbar.ctp:54
 msgid "Change password"
 msgstr ""
 
-#: Template/Element/backend/topbar.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/topbar.ctp:55
 msgid "Logout"
 msgstr ""
 
-#: Template/Element/backend/uploader/form.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/uploader/form.ctp:33
 msgid "Drag here files to upload"
 msgstr ""
 
-#: Template/Element/backend/uploader/form.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/uploader/form.ctp:45
 msgid "The file {0} exceeds the maximum limit"
 msgstr ""
 
-#: Template/Element/backend/uploader/response.ctp:33
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/uploader/response.ctp:33
 msgid "Directory: {0}"
 msgstr ""
 
-#: Template/Element/backend/uploader/response.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/uploader/response.ctp:34
 msgid "Type: {0}"
 msgstr ""
 
-#: Template/Element/backend/uploader/response.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/uploader/response.ctp:35
 msgid "Size: {0}"
 msgstr ""
 
-#: Template/Element/frontend/cookies_policy.ctp:28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/cookies_policy.ctp:28
 msgid "By continuing, you consent to our use of Cookies, ok?"
 msgstr ""
 
-#: Template/Element/frontend/cookies_policy.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/cookies_policy.ctp:29
 msgid "Ok"
 msgstr ""
 
-#: Template/Element/frontend/cookies_policy.ctp:30
-#: Template/Element/frontend/views/page.ctp:62
-#: Template/Element/frontend/views/post.ctp:82
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/cookies_policy.ctp:30
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/views/page.ctp:62
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/views/post.ctp:82
 msgid "Read more"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/footer.ctp:29
 msgid "Cookies policy"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:30
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/footer.ctp:30
 msgid "Feed RSS"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:34
-#: Template/Systems/contact_form.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/footer.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:25;28
 msgid "Contact us"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/footer.ctp:39
 msgid "Powered by {0}. Copyright {1}"
 msgstr ""
 
-#: Template/Element/frontend/footer.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/footer.ctp:40
 msgid "Developed by {0} for {1}"
 msgstr ""
 
-#: Template/Element/frontend/topbar.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/topbar.ctp:41
 msgid "Home"
 msgstr ""
 
-#: Template/Element/frontend/topbar.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/topbar.ctp:42
 msgid "Categories"
 msgstr ""
 
-#: Template/Element/frontend/views/page.ctp:37
-#: Template/Element/frontend/views/post.ctp:52
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/views/page.ctp:37
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/views/post.ctp:52
 msgid "Posted on {0}"
 msgstr ""
 
-#: Template/Element/frontend/views/post.ctp:46
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/views/post.ctp:46
 msgid "Posted by {0}"
 msgstr ""
 
-#: Template/Element/frontend/views/post.ctp:94
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/frontend/views/post.ctp:94
 msgid "Related posts"
 msgstr ""
 
-#: Template/Element/login/menu.ctp:27
-#: Template/Users/login.ctp:25;47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/login/menu.ctp:27
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/login.ctp:25;47
 msgid "Login"
 msgstr ""
 
-#: Template/Element/login/menu.ctp:31
-#: Template/Users/signup.ctp:26;29;70
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/login/menu.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:26;29;70
 msgid "Sign up"
 msgstr ""
 
-#: Template/Element/login/menu.ctp:35
-#: Template/Users/resend_activation.ctp:25;28;47
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/login/menu.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/resend_activation.ctp:25;28;47
 msgid "Resend activation email"
 msgstr ""
 
-#: Template/Element/login/menu.ctp:39
-#: Template/Users/forgot_password.ctp:26;29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Element/login/menu.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/forgot_password.ctp:26;29
 msgid "Forgot your password?"
 msgstr ""
 
-#: Template/Email/html/Users/activate_account.ctp:25
-#: Template/Email/html/Users/change_password.ctp:25
-#: Template/Email/html/Users/forgot_password.ctp:25
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/activate_account.ctp:25
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/change_password.ctp:25
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/forgot_password.ctp:25
 msgid "Hello {0}"
 msgstr ""
 
-#: Template/Email/html/Users/activate_account.ctp:27
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/activate_account.ctp:27
 msgid "you have signed on the site {0}"
 msgstr ""
 
-#: Template/Email/html/Users/activate_account.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/activate_account.ctp:29
 msgid "To activate your account, click {0}"
 msgstr ""
 
-#: Template/Email/html/Users/activate_account.ctp:29
-#: Template/Email/html/Users/forgot_password.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/activate_account.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/forgot_password.ctp:29
 msgid "here"
 msgstr ""
 
-#: Template/Email/html/Users/activate_account.ctp:31
-#: Template/Email/html/Users/change_password.ctp:28
-#: Template/Email/html/Users/forgot_password.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/activate_account.ctp:31
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/change_password.ctp:28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/forgot_password.ctp:31
 msgid "If you have not made this request, please contact an administrator"
 msgstr ""
 
-#: Template/Email/html/Users/change_password.ctp:27
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/change_password.ctp:27
 msgid "you have recently changed your password on our site {0}"
 msgstr ""
 
-#: Template/Email/html/Users/forgot_password.ctp:27
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/forgot_password.ctp:27
 msgid "you have requested to change your password on the site {0}"
 msgstr ""
 
-#: Template/Email/html/Users/forgot_password.ctp:29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Email/html/Users/forgot_password.ctp:29
 msgid "To reset your password, click {0}"
 msgstr ""
 
-#: Template/Layout/Email/html/default.ctp:38
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Layout/Email/html/default.ctp:38
 msgid "This email was sent automatically from {0}"
 msgstr ""
 
-#: Template/Layout/Email/html/default.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Layout/Email/html/default.ctp:42
 msgid "The request has been sent from the IP {0}"
 msgstr ""
 
-#: Template/Layout/Email/html/default.ctp:43
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Layout/Email/html/default.ctp:43
 msgid "Please, don't reply to this email"
 msgstr ""
 
-#: Template/PhotosAlbums/index.ctp:25;28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/PhotosAlbums/index.ctp:25;28
 msgid "Photos albums"
 msgstr ""
 
-#: Template/PhotosAlbums/index.ctp:39
+#: /home/mirko/Server/MeCms_Plugin/src/Template/PhotosAlbums/index.ctp:39
 msgid "{0} photos"
 msgstr ""
 
-#: Template/Posts/index.ctp:34
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/index.ctp:34
 msgid "Tag {0}"
 msgstr ""
 
-#: Template/Posts/index.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/index.ctp:40
 msgid "Posts of today"
 msgstr ""
 
-#: Template/Posts/index.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/index.ctp:42
 msgid "Posts of yesterday"
 msgstr ""
 
-#: Template/Posts/index.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/index.ctp:44
 msgid "Posts of {0}"
 msgstr ""
 
-#: Template/Posts/search.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/search.ctp:44
 msgid "You have searched for: {0}"
 msgstr ""
 
-#: Template/Posts/rss/rss.ctp:30;32
-#: View/View/AppView.php:153
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/rss/rss.ctp:30;32
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AppView.php:153
 msgid "Latest posts"
 msgstr ""
 
-#: Template/PostsTags/index.ctp:25;29
+#: /home/mirko/Server/MeCms_Plugin/src/Template/PostsTags/index.ctp:25;29
 msgid "Posts tags"
 msgstr ""
 
-#: Template/Systems/contact_form.ctp:41
-#: Template/Users/forgot_password.ctp:36
-#: Template/Users/resend_activation.ctp:35
-#: Template/Users/signup.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/forgot_password.ctp:36
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/resend_activation.ctp:35
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:40
 msgid "Enter your email"
 msgstr ""
 
-#: Template/Systems/contact_form.ctp:44
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:44
 msgid "Message"
 msgstr ""
 
-#: Template/Systems/contact_form.ctp:53
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/contact_form.ctp:53
 msgid "Send"
 msgstr ""
 
-#: Template/Systems/ip_not_allowed.ctp:26
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/ip_not_allowed.ctp:26
 msgid "Your IP address is not allowed"
 msgstr ""
 
-#: Template/Systems/offline.ctp:28
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Systems/offline.ctp:28
 msgid "The website is temporarily offline"
 msgstr ""
 
-#: Template/Users/forgot_password.ctp:41
-#: Template/Users/resend_activation.ctp:40
-#: Template/Users/signup.ctp:45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/forgot_password.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/resend_activation.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:45
 msgid "Repeat your email"
 msgstr ""
 
-#: Template/Users/forgot_password.ctp:48
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/forgot_password.ctp:48
 msgid "Request new password"
 msgstr ""
 
-#: Template/Users/login.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/login.ctp:41
 msgid "Remember me"
 msgstr ""
 
-#: Template/Users/login.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/login.ctp:42
 msgid "Don't use on public computers"
 msgstr ""
 
-#: Template/Users/reset_password.ctp:26;29;45
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/reset_password.ctp:26;29;45
 msgid "Reset password"
 msgstr ""
 
-#: Template/Users/signup.ctp:50
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:50
 msgid "Enter your password"
 msgstr ""
 
-#: Template/Users/signup.ctp:55
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Users/signup.ctp:55
 msgid "Repeat your password"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:48
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:48
 msgid "List posts"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:55
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:55
 msgid "List categories"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:56
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:56
 msgid "Add category"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:59
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:59
 msgid "List tags"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:72
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:72
 msgid "List pages"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:79
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:79
 msgid "List static pages"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:92
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:92
 msgid "List albums"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:111
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:111
 msgid "List banners"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:118
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:118
 msgid "List positions"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:137
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:137
 msgid "List users"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:144
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:144
 msgid "List groups"
 msgstr ""
 
-#: View/Helper/MeCmsMenuHelper.php:175
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:162
+msgid "List backups"
+msgstr ""
+
+#: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:192
 msgid "System"
 msgstr ""
 
