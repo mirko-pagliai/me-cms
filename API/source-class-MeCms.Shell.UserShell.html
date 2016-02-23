@@ -120,6 +120,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-MeCms.Controller.Admin.BackupsController.html">MeCms\Controller\Admin\BackupsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersController.html">MeCms\Controller\Admin\BannersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersPositionsController.html">MeCms\Controller\Admin\BannersPositionsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PagesController.html">MeCms\Controller\Admin\PagesController</a></li>
@@ -289,7 +290,7 @@
 </span><span id="47" class="l"><a href="#47"> 47: </a>        
 </span><span id="48" class="l"><a href="#48"> 48: </a>        <span class="php-comment">//Checks for user groups</span>
 </span><span id="49" class="l"><a href="#49"> 49: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$groups</span>))
-</span><span id="50" class="l"><a href="#50"> 50: </a>            <span class="php-var">$this</span>-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Before you can manage users, you have to create at least a user group'</span>));
+</span><span id="50" class="l"><a href="#50"> 50: </a>            <span class="php-var">$this</span>-&gt;abort(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Before you can manage users, you have to create at least a user group'</span>));
 </span><span id="51" class="l"><a href="#51"> 51: </a>                
 </span><span id="52" class="l"><a href="#52"> 52: </a>        <span class="php-keyword1">while</span>(<span class="php-num">1</span>) {
 </span><span id="53" class="l"><a href="#53"> 53: </a>            <span class="php-var">$user</span> = [];
@@ -323,11 +324,11 @@
 </span><span id="81" class="l"><a href="#81"> 81: </a>            <span class="php-comment">//Checks fields</span>
 </span><span id="82" class="l"><a href="#82"> 82: </a>            <span class="php-keyword1">foreach</span>(<span class="php-var">$user</span> <span class="php-keyword1">as</span> <span class="php-var">$value</span>)
 </span><span id="83" class="l"><a href="#83"> 83: </a>                <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$value</span>))
-</span><span id="84" class="l"><a href="#84"> 84: </a>                    <span class="php-var">$this</span>-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Some fields are missing. Try again'</span>));
+</span><span id="84" class="l"><a href="#84"> 84: </a>                    <span class="php-var">$this</span>-&gt;abort(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Some fields are missing. Try again'</span>));
 </span><span id="85" class="l"><a href="#85"> 85: </a>
 </span><span id="86" class="l"><a href="#86"> 86: </a>            <span class="php-comment">//Checks the group IDS</span>
 </span><span id="87" class="l"><a href="#87"> 87: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">array_key_exists</span>(<span class="php-var">$user</span>[<span class="php-quote">'group_id'</span>], <span class="php-var">$groups</span>))
-</span><span id="88" class="l"><a href="#88"> 88: </a>                <span class="php-var">$this</span>-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid group ID'</span>));
+</span><span id="88" class="l"><a href="#88"> 88: </a>                <span class="php-var">$this</span>-&gt;abort(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Invalid group ID'</span>));
 </span><span id="89" class="l"><a href="#89"> 89: </a>                
 </span><span id="90" class="l"><a href="#90"> 90: </a>            <span class="php-comment">//Saves the user</span>
 </span><span id="91" class="l"><a href="#91"> 91: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Users-&gt;save(<span class="php-var">$this</span>-&gt;Users-&gt;newEntity(<span class="php-var">$user</span>))) {
@@ -352,7 +353,7 @@
 </span><span id="110" class="l"><a href="#110">110: </a>        
 </span><span id="111" class="l"><a href="#111">111: </a>        <span class="php-comment">//Checks for user groups</span>
 </span><span id="112" class="l"><a href="#112">112: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$groups</span>))
-</span><span id="113" class="l"><a href="#113">113: </a>            <span class="php-var">$this</span>-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'There are no user groups'</span>));
+</span><span id="113" class="l"><a href="#113">113: </a>            <span class="php-var">$this</span>-&gt;abort(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'There are no user groups'</span>));
 </span><span id="114" class="l"><a href="#114">114: </a>        
 </span><span id="115" class="l"><a href="#115">115: </a>        <span class="php-comment">//Formats groups</span>
 </span><span id="116" class="l"><a href="#116">116: </a>        <span class="php-var">$groups</span> = <span class="php-keyword2">array_map</span>(<span class="php-keyword1">function</span>(<span class="php-var">$group</span>) {
@@ -388,7 +389,7 @@
 </span><span id="146" class="l"><a href="#146">146: </a>        
 </span><span id="147" class="l"><a href="#147">147: </a>        <span class="php-comment">//Checks for users</span>
 </span><span id="148" class="l"><a href="#148">148: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$users</span>))
-</span><span id="149" class="l"><a href="#149">149: </a>            <span class="php-var">$this</span>-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'There are no users'</span>));
+</span><span id="149" class="l"><a href="#149">149: </a>            <span class="php-var">$this</span>-&gt;abort(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'There are no users'</span>));
 </span><span id="150" class="l"><a href="#150">150: </a>        
 </span><span id="151" class="l"><a href="#151">151: </a>        <span class="php-comment">//Sets header</span>
 </span><span id="152" class="l"><a href="#152">152: </a>        <span class="php-var">$header</span> = [
@@ -429,25 +430,26 @@
 </span><span id="187" class="l"><a href="#187">187: </a>    <span class="php-comment">/**
 </span></span><span id="188" class="l"><a href="#188">188: </a><span class="php-comment">     * Gets the option parser instance and configures it.
 </span></span><span id="189" class="l"><a href="#189">189: </a><span class="php-comment">     * @return ConsoleOptionParser
-</span></span><span id="190" class="l"><a href="#190">190: </a><span class="php-comment">     */</span>
-</span><span id="191" class="l"><a href="#191">191: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getOptionParser() {
-</span><span id="192" class="l"><a href="#192">192: </a>        <span class="php-var">$parser</span> = parent::getOptionParser();
-</span><span id="193" class="l"><a href="#193">193: </a>        
-</span><span id="194" class="l"><a href="#194">194: </a>        <span class="php-keyword1">return</span> <span class="php-var">$parser</span>-&gt;addSubcommands([
-</span><span id="195" class="l"><a href="#195">195: </a>            <span class="php-quote">'add'</span> =&gt; [
-</span><span id="196" class="l"><a href="#196">196: </a>                <span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Adds an user'</span>),
-</span><span id="197" class="l"><a href="#197">197: </a>                <span class="php-quote">'parser'</span> =&gt; [ <span class="php-quote">'options'</span> =&gt; [
-</span><span id="198" class="l"><a href="#198">198: </a>                    <span class="php-quote">'group'</span> =&gt; [
-</span><span id="199" class="l"><a href="#199">199: </a>                        <span class="php-quote">'short'</span> =&gt; <span class="php-quote">'g'</span>,
-</span><span id="200" class="l"><a href="#200">200: </a>                        <span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Group ID'</span>),
-</span><span id="201" class="l"><a href="#201">201: </a>                    ]
-</span><span id="202" class="l"><a href="#202">202: </a>                ]]
-</span><span id="203" class="l"><a href="#203">203: </a>            ],
-</span><span id="204" class="l"><a href="#204">204: </a>            <span class="php-quote">'groups'</span> =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Lists user groups'</span>)],
-</span><span id="205" class="l"><a href="#205">205: </a>            <span class="php-quote">'users'</span> =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Lists users'</span>)]
-</span><span id="206" class="l"><a href="#206">206: </a>        ]);
-</span><span id="207" class="l"><a href="#207">207: </a>    }
-</span><span id="208" class="l"><a href="#208">208: </a>}</span></code></pre>
+</span></span><span id="190" class="l"><a href="#190">190: </a><span class="php-comment">     * @uses MeTools\Shell\InstallShell::getOptionParser()
+</span></span><span id="191" class="l"><a href="#191">191: </a><span class="php-comment">     */</span>
+</span><span id="192" class="l"><a href="#192">192: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getOptionParser() {
+</span><span id="193" class="l"><a href="#193">193: </a>        <span class="php-var">$parser</span> = parent::getOptionParser();
+</span><span id="194" class="l"><a href="#194">194: </a>        
+</span><span id="195" class="l"><a href="#195">195: </a>        <span class="php-keyword1">return</span> <span class="php-var">$parser</span>-&gt;addSubcommands([
+</span><span id="196" class="l"><a href="#196">196: </a>            <span class="php-quote">'add'</span> =&gt; [
+</span><span id="197" class="l"><a href="#197">197: </a>                <span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Adds an user'</span>),
+</span><span id="198" class="l"><a href="#198">198: </a>                <span class="php-quote">'parser'</span> =&gt; [ <span class="php-quote">'options'</span> =&gt; [
+</span><span id="199" class="l"><a href="#199">199: </a>                    <span class="php-quote">'group'</span> =&gt; [
+</span><span id="200" class="l"><a href="#200">200: </a>                        <span class="php-quote">'short'</span> =&gt; <span class="php-quote">'g'</span>,
+</span><span id="201" class="l"><a href="#201">201: </a>                        <span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Group ID'</span>),
+</span><span id="202" class="l"><a href="#202">202: </a>                    ]
+</span><span id="203" class="l"><a href="#203">203: </a>                ]]
+</span><span id="204" class="l"><a href="#204">204: </a>            ],
+</span><span id="205" class="l"><a href="#205">205: </a>            <span class="php-quote">'groups'</span> =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Lists user groups'</span>)],
+</span><span id="206" class="l"><a href="#206">206: </a>            <span class="php-quote">'users'</span> =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Lists users'</span>)]
+</span><span id="207" class="l"><a href="#207">207: </a>        ]);
+</span><span id="208" class="l"><a href="#208">208: </a>    }
+</span><span id="209" class="l"><a href="#209">209: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -455,6 +457,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?bb802639439896aa2b394837658d27a075245dc7"></script>
+<script src="elementlist.js?48cb09458468b6711d99bac7e757bcc8d538ced9"></script>
 </body>
 </html>

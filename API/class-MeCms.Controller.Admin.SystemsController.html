@@ -119,6 +119,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-MeCms.Controller.Admin.BackupsController.html">BackupsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersController.html">BannersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersPositionsController.html">BannersPositionsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PagesController.html">PagesController</a></li>
@@ -214,7 +215,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#38-319" title="Go to source code">Controller/Admin/SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#40-281" title="Go to source code">Controller/Admin/SystemsController.php</a>
 		<br>
 	</div>
 
@@ -234,7 +235,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#42-56" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#44-62" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request</p>
@@ -280,7 +281,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_browser">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#58-99" title="Go to source code">browser</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#64-102" title="Go to source code">browser</a>( )</code>
 
 		<div class="description short">
 			<p>Media browser with KCFinder</p>
@@ -292,6 +293,10 @@ App\Controller\AppController
 
 
 
+				<h4>Throws</h4>
+				<div class="list">
+					Cake\Network\Exception\InternalErrorException
+				</div>
 
 				<h4>Uses</h4>
 				<div class="list">
@@ -318,7 +323,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_changelogs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#101-118" title="Go to source code">changelogs</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#104-121" title="Go to source code">changelogs</a>( )</code>
 
 		<div class="description short">
 			<p>Changelogs viewer</p>
@@ -352,7 +357,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_checkup">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#120-196" title="Go to source code">checkup</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#123-203" title="Go to source code">checkup</a>( )</code>
 
 		<div class="description short">
 			<p>System checkup</p>
@@ -398,179 +403,6 @@ App\Controller\AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="clear_all" id="_clear_all">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_clear_all">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#198-215" title="Go to source code">clear_all</a>( )</code>
-
-		<div class="description short">
-			<p>Clears all temporary files (cache, assets, logs and thumbnails)</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Clears all temporary files (cache, assets, logs and thumbnails)</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Utility\Asset::clear()<br>
-						MeTools\Log\Engine\FileLog::clear()<br>
-						MeTools\Utility\System::clearCache()<br>
-						MeTools\Utility\Thumbs::clear()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="clear_assets" id="_clear_assets">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_clear_assets">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#217-231" title="Go to source code">clear_assets</a>( )</code>
-
-		<div class="description short">
-			<p>Clears asset files</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Clears asset files</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Utility\Asset::clear()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="clear_cache" id="_clear_cache">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_clear_cache">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#233-247" title="Go to source code">clear_cache</a>( )</code>
-
-		<div class="description short">
-			<p>Clears the cache</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Clears the cache</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Utility\System::clearCache()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="clear_logs" id="_clear_logs">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_clear_logs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#249-263" title="Go to source code">clear_logs</a>( )</code>
-
-		<div class="description short">
-			<p>Clears logs</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Clears logs</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Log\Engine\FileLog::clear()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="clear_thumbs" id="_clear_thumbs">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_clear_thumbs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#265-279" title="Go to source code">clear_thumbs</a>( )</code>
-
-		<div class="description short">
-			<p>Clears the thumbnails</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Clears the thumbnails</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Utility\Thumbs::clear()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="logs_viewer" id="_logs_viewer">
 
 		<td class="attributes"><code>
@@ -583,14 +415,14 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logs_viewer">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#281-299" title="Go to source code">logs_viewer</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#205-223" title="Go to source code">logs_viewer</a>( )</code>
 
 		<div class="description short">
-			<p>Log viewer</p>
+			<p>Logs viewer</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Log viewer</p>
+			<p>Logs viewer</p>
 
 
 
@@ -606,7 +438,7 @@ App\Controller\AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="temporary" id="_temporary">
+	<tr data-order="tmp_cleaner" id="_tmp_cleaner">
 
 		<td class="attributes"><code>
 			 public 
@@ -617,15 +449,57 @@ App\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_temporary">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#301-318" title="Go to source code">temporary</a>( )</code>
+		<a class="anchor" href="#_tmp_cleaner">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#225-261" title="Go to source code">tmp_cleaner</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
-			<p>Manages cache, logs and thumbnails</p>
+			<p>Temporary cleaner (assets, cache, logs and thumbnails)</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Manages cache, logs and thumbnails</p>
+			<p>Temporary cleaner (assets, cache, logs and thumbnails)</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>Type</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Utility\Asset::clear()<br>
+						MeTools\Log\Engine\FileLog::clear()<br>
+						MeTools\Utility\System::clearCache()<br>
+						MeTools\Utility\Thumbs::clear()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="tmp_viewer" id="_tmp_viewer">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_tmp_viewer">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#263-280" title="Go to source code">tmp_viewer</a>( )</code>
+
+		<div class="description short">
+			<p>Temporary viewer (assets, cache, logs and thumbnails)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Temporary viewer (assets, cache, logs and thumbnails)</p>
 
 
 
