@@ -120,6 +120,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-MeCms.Controller.Admin.BackupsController.html">MeCms\Controller\Admin\BackupsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersController.html">MeCms\Controller\Admin\BannersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersPositionsController.html">MeCms\Controller\Admin\BannersPositionsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PagesController.html">MeCms\Controller\Admin\PagesController</a></li>
@@ -299,78 +300,79 @@
 </span><span id="57" class="l"><a href="#57"> 57: </a>        
 </span><span id="58" class="l"><a href="#58"> 58: </a>        <span class="php-comment">//Merges paths to be created and made writable</span>
 </span><span id="59" class="l"><a href="#59"> 59: </a>        <span class="php-var">$this</span>-&gt;paths = am(<span class="php-var">$this</span>-&gt;paths, [
-</span><span id="60" class="l"><a href="#60"> 60: </a>            WWW_ROOT.<span class="php-quote">'img'</span>.DS.<span class="php-quote">'banners'</span>,
-</span><span id="61" class="l"><a href="#61"> 61: </a>            WWW_ROOT.<span class="php-quote">'img'</span>.DS.<span class="php-quote">'photos'</span>
-</span><span id="62" class="l"><a href="#62"> 62: </a>        ]);
-</span><span id="63" class="l"><a href="#63"> 63: </a>    }
-</span><span id="64" class="l"><a href="#64"> 64: </a>    
-</span><span id="65" class="l"><a href="#65"> 65: </a>    <span class="php-comment">/**
-</span></span><span id="66" class="l"><a href="#66"> 66: </a><span class="php-comment">     * Executes all available tasks
-</span></span><span id="67" class="l"><a href="#67"> 67: </a><span class="php-comment">     * @uses MeTools\Shell\InstallShell::all()
-</span></span><span id="68" class="l"><a href="#68"> 68: </a><span class="php-comment">     * @uses createAdmin()
-</span></span><span id="69" class="l"><a href="#69"> 69: </a><span class="php-comment">     * @uses fixKcfinder()
-</span></span><span id="70" class="l"><a href="#70"> 70: </a><span class="php-comment">     */</span>
-</span><span id="71" class="l"><a href="#71"> 71: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> all() {
-</span><span id="72" class="l"><a href="#72"> 72: </a>        parent::all();
-</span><span id="73" class="l"><a href="#73"> 73: </a>        
-</span><span id="74" class="l"><a href="#74"> 74: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;param(<span class="php-quote">'force'</span>)) {
-</span><span id="75" class="l"><a href="#75"> 75: </a>            <span class="php-var">$this</span>-&gt;fixKcfinder();
-</span><span id="76" class="l"><a href="#76"> 76: </a>            <span class="php-var">$this</span>-&gt;createAdmin();
-</span><span id="77" class="l"><a href="#77"> 77: </a>            
-</span><span id="78" class="l"><a href="#78"> 78: </a>            <span class="php-keyword1">return</span>;
-</span><span id="79" class="l"><a href="#79"> 79: </a>        }
-</span><span id="80" class="l"><a href="#80"> 80: </a>        
-</span><span id="81" class="l"><a href="#81"> 81: </a>        <span class="php-var">$ask</span> = <span class="php-var">$this</span>-&gt;in(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Fix `{0}`?'</span>, <span class="php-quote">'KCFinder'</span>), [<span class="php-quote">'Y'</span>, <span class="php-quote">'n'</span>], <span class="php-quote">'Y'</span>);
-</span><span id="82" class="l"><a href="#82"> 82: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">in_array</span>(<span class="php-var">$ask</span>, [<span class="php-quote">'Y'</span>, <span class="php-quote">'y'</span>]))
-</span><span id="83" class="l"><a href="#83"> 83: </a>            <span class="php-var">$this</span>-&gt;fixKcfinder();
-</span><span id="84" class="l"><a href="#84"> 84: </a>        
-</span><span id="85" class="l"><a href="#85"> 85: </a>        <span class="php-var">$ask</span> = <span class="php-var">$this</span>-&gt;in(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Create an admin user?'</span>), [<span class="php-quote">'y'</span>, <span class="php-quote">'N'</span>], <span class="php-quote">'N'</span>);
-</span><span id="86" class="l"><a href="#86"> 86: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">in_array</span>(<span class="php-var">$ask</span>, [<span class="php-quote">'Y'</span>, <span class="php-quote">'y'</span>]))
-</span><span id="87" class="l"><a href="#87"> 87: </a>            <span class="php-var">$this</span>-&gt;createAdmin();
-</span><span id="88" class="l"><a href="#88"> 88: </a>    }
-</span><span id="89" class="l"><a href="#89"> 89: </a>    
-</span><span id="90" class="l"><a href="#90"> 90: </a>    <span class="php-comment">/**
-</span></span><span id="91" class="l"><a href="#91"> 91: </a><span class="php-comment">     * Creates and admin user
-</span></span><span id="92" class="l"><a href="#92"> 92: </a><span class="php-comment">     * @see MeCms\Shell\User::add()
-</span></span><span id="93" class="l"><a href="#93"> 93: </a><span class="php-comment">     */</span>
-</span><span id="94" class="l"><a href="#94"> 94: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> createAdmin() {
-</span><span id="95" class="l"><a href="#95"> 95: </a>        <span class="php-var">$this</span>-&gt;dispatchShell(<span class="php-quote">'MeCms.user'</span>, <span class="php-quote">'add'</span>, <span class="php-quote">'--group'</span>, <span class="php-num">1</span>);
-</span><span id="96" class="l"><a href="#96"> 96: </a>    }
-</span><span id="97" class="l"><a href="#97"> 97: </a>        
-</span><span id="98" class="l"><a href="#98"> 98: </a>    <span class="php-comment">/**
-</span></span><span id="99" class="l"><a href="#99"> 99: </a><span class="php-comment">     * Fixes KCFinder.
-</span></span><span id="100" class="l"><a href="#100">100: </a><span class="php-comment">     * Creates the file `vendor/kcfinder/.htaccess`
-</span></span><span id="101" class="l"><a href="#101">101: </a><span class="php-comment">     * @see http://kcfinder.sunhater.com/integrate
-</span></span><span id="102" class="l"><a href="#102">102: </a><span class="php-comment">     * @uses MeTools\Console\Shell::createFile()
-</span></span><span id="103" class="l"><a href="#103">103: </a><span class="php-comment">     */</span>
-</span><span id="104" class="l"><a href="#104">104: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixKcfinder() {
-</span><span id="105" class="l"><a href="#105">105: </a>        <span class="php-comment">//Checks for KCFinder</span>
-</span><span id="106" class="l"><a href="#106">106: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(WWW_ROOT.<span class="php-quote">'vendor'</span>.DS.<span class="php-quote">'kcfinder'</span>))
-</span><span id="107" class="l"><a href="#107">107: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;err(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'I can\'t find `{0}`'</span>, <span class="php-quote">'KCFinder'</span>));
-</span><span id="108" class="l"><a href="#108">108: </a>        
-</span><span id="109" class="l"><a href="#109">109: </a>        <span class="php-var">$this</span>-&gt;createFile(WWW_ROOT.<span class="php-quote">'vendor'</span>.DS.<span class="php-quote">'kcfinder'</span>.DS.<span class="php-quote">'.htaccess'</span>, <span class="php-quote">'&lt;IfModule mod_php5.c&gt;
-</span></span><span id="110" class="l"><a href="#110">110: </a><span class="php-quote">            php_value session.cache_limiter must-revalidate
-</span></span><span id="111" class="l"><a href="#111">111: </a><span class="php-quote">            php_value session.cookie_httponly On
-</span></span><span id="112" class="l"><a href="#112">112: </a><span class="php-quote">            php_value session.cookie_lifetime 14400
-</span></span><span id="113" class="l"><a href="#113">113: </a><span class="php-quote">            php_value session.gc_maxlifetime 14400
-</span></span><span id="114" class="l"><a href="#114">114: </a><span class="php-quote">            php_value session.name CAKEPHP
-</span></span><span id="115" class="l"><a href="#115">115: </a><span class="php-quote">        &lt;/IfModule&gt;'</span>);
-</span><span id="116" class="l"><a href="#116">116: </a>    }
-</span><span id="117" class="l"><a href="#117">117: </a>    
-</span><span id="118" class="l"><a href="#118">118: </a>    <span class="php-comment">/**
-</span></span><span id="119" class="l"><a href="#119">119: </a><span class="php-comment">     * Gets the option parser instance and configures it.
-</span></span><span id="120" class="l"><a href="#120">120: </a><span class="php-comment">     * @return ConsoleOptionParser
-</span></span><span id="121" class="l"><a href="#121">121: </a><span class="php-comment">     * @uses MeTools\Shell\InstallShell::getOptionParser()
-</span></span><span id="122" class="l"><a href="#122">122: </a><span class="php-comment">     */</span>
-</span><span id="123" class="l"><a href="#123">123: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getOptionParser() {
-</span><span id="124" class="l"><a href="#124">124: </a>        <span class="php-var">$parser</span> = parent::getOptionParser();
-</span><span id="125" class="l"><a href="#125">125: </a>        
-</span><span id="126" class="l"><a href="#126">126: </a>        <span class="php-keyword1">return</span> <span class="php-var">$parser</span>-&gt;addSubcommands([
-</span><span id="127" class="l"><a href="#127">127: </a>            <span class="php-quote">'createAdmin'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Creates an admin user'</span>)],
-</span><span id="128" class="l"><a href="#128">128: </a>            <span class="php-quote">'fixKcfinder'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Fixes `{0}`'</span>, <span class="php-quote">'KCFinder'</span>)]
-</span><span id="129" class="l"><a href="#129">129: </a>        ]);
-</span><span id="130" class="l"><a href="#130">130: </a>    }
-</span><span id="131" class="l"><a href="#131">131: </a>}</span></code></pre>
+</span><span id="60" class="l"><a href="#60"> 60: </a>            BACKUP,
+</span><span id="61" class="l"><a href="#61"> 61: </a>            WWW_ROOT.<span class="php-quote">'img'</span>.DS.<span class="php-quote">'banners'</span>,
+</span><span id="62" class="l"><a href="#62"> 62: </a>            WWW_ROOT.<span class="php-quote">'img'</span>.DS.<span class="php-quote">'photos'</span>
+</span><span id="63" class="l"><a href="#63"> 63: </a>        ]);
+</span><span id="64" class="l"><a href="#64"> 64: </a>    }
+</span><span id="65" class="l"><a href="#65"> 65: </a>    
+</span><span id="66" class="l"><a href="#66"> 66: </a>    <span class="php-comment">/**
+</span></span><span id="67" class="l"><a href="#67"> 67: </a><span class="php-comment">     * Executes all available tasks
+</span></span><span id="68" class="l"><a href="#68"> 68: </a><span class="php-comment">     * @uses MeTools\Shell\InstallShell::all()
+</span></span><span id="69" class="l"><a href="#69"> 69: </a><span class="php-comment">     * @uses createAdmin()
+</span></span><span id="70" class="l"><a href="#70"> 70: </a><span class="php-comment">     * @uses fixKcfinder()
+</span></span><span id="71" class="l"><a href="#71"> 71: </a><span class="php-comment">     */</span>
+</span><span id="72" class="l"><a href="#72"> 72: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> all() {
+</span><span id="73" class="l"><a href="#73"> 73: </a>        parent::all();
+</span><span id="74" class="l"><a href="#74"> 74: </a>        
+</span><span id="75" class="l"><a href="#75"> 75: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;param(<span class="php-quote">'force'</span>)) {
+</span><span id="76" class="l"><a href="#76"> 76: </a>            <span class="php-var">$this</span>-&gt;fixKcfinder();
+</span><span id="77" class="l"><a href="#77"> 77: </a>            <span class="php-var">$this</span>-&gt;createAdmin();
+</span><span id="78" class="l"><a href="#78"> 78: </a>            
+</span><span id="79" class="l"><a href="#79"> 79: </a>            <span class="php-keyword1">return</span>;
+</span><span id="80" class="l"><a href="#80"> 80: </a>        }
+</span><span id="81" class="l"><a href="#81"> 81: </a>        
+</span><span id="82" class="l"><a href="#82"> 82: </a>        <span class="php-var">$ask</span> = <span class="php-var">$this</span>-&gt;in(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Fix `{0}`?'</span>, <span class="php-quote">'KCFinder'</span>), [<span class="php-quote">'Y'</span>, <span class="php-quote">'n'</span>], <span class="php-quote">'Y'</span>);
+</span><span id="83" class="l"><a href="#83"> 83: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">in_array</span>(<span class="php-var">$ask</span>, [<span class="php-quote">'Y'</span>, <span class="php-quote">'y'</span>]))
+</span><span id="84" class="l"><a href="#84"> 84: </a>            <span class="php-var">$this</span>-&gt;fixKcfinder();
+</span><span id="85" class="l"><a href="#85"> 85: </a>        
+</span><span id="86" class="l"><a href="#86"> 86: </a>        <span class="php-var">$ask</span> = <span class="php-var">$this</span>-&gt;in(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Create an admin user?'</span>), [<span class="php-quote">'y'</span>, <span class="php-quote">'N'</span>], <span class="php-quote">'N'</span>);
+</span><span id="87" class="l"><a href="#87"> 87: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">in_array</span>(<span class="php-var">$ask</span>, [<span class="php-quote">'Y'</span>, <span class="php-quote">'y'</span>]))
+</span><span id="88" class="l"><a href="#88"> 88: </a>            <span class="php-var">$this</span>-&gt;createAdmin();
+</span><span id="89" class="l"><a href="#89"> 89: </a>    }
+</span><span id="90" class="l"><a href="#90"> 90: </a>    
+</span><span id="91" class="l"><a href="#91"> 91: </a>    <span class="php-comment">/**
+</span></span><span id="92" class="l"><a href="#92"> 92: </a><span class="php-comment">     * Creates and admin user
+</span></span><span id="93" class="l"><a href="#93"> 93: </a><span class="php-comment">     * @see MeCms\Shell\User::add()
+</span></span><span id="94" class="l"><a href="#94"> 94: </a><span class="php-comment">     */</span>
+</span><span id="95" class="l"><a href="#95"> 95: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> createAdmin() {
+</span><span id="96" class="l"><a href="#96"> 96: </a>        <span class="php-var">$this</span>-&gt;dispatchShell(<span class="php-quote">'MeCms.user'</span>, <span class="php-quote">'add'</span>, <span class="php-quote">'--group'</span>, <span class="php-num">1</span>);
+</span><span id="97" class="l"><a href="#97"> 97: </a>    }
+</span><span id="98" class="l"><a href="#98"> 98: </a>        
+</span><span id="99" class="l"><a href="#99"> 99: </a>    <span class="php-comment">/**
+</span></span><span id="100" class="l"><a href="#100">100: </a><span class="php-comment">     * Fixes KCFinder.
+</span></span><span id="101" class="l"><a href="#101">101: </a><span class="php-comment">     * Creates the file `vendor/kcfinder/.htaccess`
+</span></span><span id="102" class="l"><a href="#102">102: </a><span class="php-comment">     * @see http://kcfinder.sunhater.com/integrate
+</span></span><span id="103" class="l"><a href="#103">103: </a><span class="php-comment">     * @uses MeTools\Console\Shell::createFile()
+</span></span><span id="104" class="l"><a href="#104">104: </a><span class="php-comment">     */</span>
+</span><span id="105" class="l"><a href="#105">105: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixKcfinder() {
+</span><span id="106" class="l"><a href="#106">106: </a>        <span class="php-comment">//Checks for KCFinder</span>
+</span><span id="107" class="l"><a href="#107">107: </a>        <span class="php-keyword1">if</span>(!<span class="php-keyword2">is_readable</span>(WWW_ROOT.<span class="php-quote">'vendor'</span>.DS.<span class="php-quote">'kcfinder'</span>))
+</span><span id="108" class="l"><a href="#108">108: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;err(__d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'I can\'t find `{0}`'</span>, <span class="php-quote">'KCFinder'</span>));
+</span><span id="109" class="l"><a href="#109">109: </a>        
+</span><span id="110" class="l"><a href="#110">110: </a>        <span class="php-var">$this</span>-&gt;createFile(WWW_ROOT.<span class="php-quote">'vendor'</span>.DS.<span class="php-quote">'kcfinder'</span>.DS.<span class="php-quote">'.htaccess'</span>, <span class="php-quote">'&lt;IfModule mod_php5.c&gt;
+</span></span><span id="111" class="l"><a href="#111">111: </a><span class="php-quote">            php_value session.cache_limiter must-revalidate
+</span></span><span id="112" class="l"><a href="#112">112: </a><span class="php-quote">            php_value session.cookie_httponly On
+</span></span><span id="113" class="l"><a href="#113">113: </a><span class="php-quote">            php_value session.cookie_lifetime 14400
+</span></span><span id="114" class="l"><a href="#114">114: </a><span class="php-quote">            php_value session.gc_maxlifetime 14400
+</span></span><span id="115" class="l"><a href="#115">115: </a><span class="php-quote">            php_value session.name CAKEPHP
+</span></span><span id="116" class="l"><a href="#116">116: </a><span class="php-quote">        &lt;/IfModule&gt;'</span>);
+</span><span id="117" class="l"><a href="#117">117: </a>    }
+</span><span id="118" class="l"><a href="#118">118: </a>    
+</span><span id="119" class="l"><a href="#119">119: </a>    <span class="php-comment">/**
+</span></span><span id="120" class="l"><a href="#120">120: </a><span class="php-comment">     * Gets the option parser instance and configures it.
+</span></span><span id="121" class="l"><a href="#121">121: </a><span class="php-comment">     * @return ConsoleOptionParser
+</span></span><span id="122" class="l"><a href="#122">122: </a><span class="php-comment">     * @uses MeTools\Shell\InstallShell::getOptionParser()
+</span></span><span id="123" class="l"><a href="#123">123: </a><span class="php-comment">     */</span>
+</span><span id="124" class="l"><a href="#124">124: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getOptionParser() {
+</span><span id="125" class="l"><a href="#125">125: </a>        <span class="php-var">$parser</span> = parent::getOptionParser();
+</span><span id="126" class="l"><a href="#126">126: </a>        
+</span><span id="127" class="l"><a href="#127">127: </a>        <span class="php-keyword1">return</span> <span class="php-var">$parser</span>-&gt;addSubcommands([
+</span><span id="128" class="l"><a href="#128">128: </a>            <span class="php-quote">'createAdmin'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Creates an admin user'</span>)],
+</span><span id="129" class="l"><a href="#129">129: </a>            <span class="php-quote">'fixKcfinder'</span>   =&gt; [<span class="php-quote">'help'</span> =&gt; __d(<span class="php-quote">'me_tools'</span>, <span class="php-quote">'Fixes `{0}`'</span>, <span class="php-quote">'KCFinder'</span>)]
+</span><span id="130" class="l"><a href="#130">130: </a>        ]);
+</span><span id="131" class="l"><a href="#131">131: </a>    }
+</span><span id="132" class="l"><a href="#132">132: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -378,6 +380,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?bb802639439896aa2b394837658d27a075245dc7"></script>
+<script src="elementlist.js?48cb09458468b6711d99bac7e757bcc8d538ced9"></script>
 </body>
 </html>

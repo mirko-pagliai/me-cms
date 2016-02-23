@@ -10,8 +10,9 @@
     }],
 	"require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "~3.1",
-        "mirko-pagliai/me-tools": ">=2.2.7",
+        "cakephp/cakephp": "~3.2",
+        "mirko-pagliai/me-tools": ">=2.2.9",
+		"mirko-pagliai/database-backup": ">=1.0.0",
 		"components/jquery-cookie": "1.4.*"
     },
     "autoload": {

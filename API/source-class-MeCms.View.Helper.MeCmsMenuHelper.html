@@ -120,6 +120,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-MeCms.Controller.Admin.BackupsController.html">MeCms\Controller\Admin\BackupsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersController.html">MeCms\Controller\Admin\BannersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersPositionsController.html">MeCms\Controller\Admin\BannersPositionsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PagesController.html">MeCms\Controller\Admin\PagesController</a></li>
@@ -391,32 +392,49 @@
 </span><span id="149" class="l"><a href="#149">149: </a>    }
 </span><span id="150" class="l"><a href="#150">150: </a>    
 </span><span id="151" class="l"><a href="#151">151: </a>    <span class="php-comment">/**
-</span></span><span id="152" class="l"><a href="#152">152: </a><span class="php-comment">     * Internal function to generate the menu for &quot;systems&quot; actions
+</span></span><span id="152" class="l"><a href="#152">152: </a><span class="php-comment">     * Internal function to generate the menu for &quot;backups&quot; actions
 </span></span><span id="153" class="l"><a href="#153">153: </a><span class="php-comment">     * @return mixed Array with menu, title and link options
 </span></span><span id="154" class="l"><a href="#154">154: </a><span class="php-comment">     * @uses MeCms\View\Helper\AuthHelper::isGroup()
-</span></span><span id="155" class="l"><a href="#155">155: </a><span class="php-comment">     * @uses MeTools\View\Helper\HtmlHelper::link()
-</span></span><span id="156" class="l"><a href="#156">156: </a><span class="php-comment">     */</span>
-</span><span id="157" class="l"><a href="#157">157: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> _systems() {
-</span><span id="158" class="l"><a href="#158">158: </a>        <span class="php-comment">//Only admins and managers can access this controller</span>
-</span><span id="159" class="l"><a href="#159">159: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup([<span class="php-quote">'admin'</span>, <span class="php-quote">'manager'</span>]))
-</span><span id="160" class="l"><a href="#160">160: </a>            <span class="php-keyword1">return</span>;
-</span><span id="161" class="l"><a href="#161">161: </a>        
-</span><span id="162" class="l"><a href="#162">162: </a>        <span class="php-var">$menu</span> = [
-</span><span id="163" class="l"><a href="#163">163: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Temporary files'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'temporary'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>]),
-</span><span id="164" class="l"><a href="#164">164: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'System checkup'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'checkup'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>]),
-</span><span id="165" class="l"><a href="#165">165: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Media browser'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'browser'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>]),
-</span><span id="166" class="l"><a href="#166">166: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Changelogs'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'changelogs'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>])
-</span><span id="167" class="l"><a href="#167">167: </a>        ];
-</span><span id="168" class="l"><a href="#168">168: </a>        
-</span><span id="169" class="l"><a href="#169">169: </a>        <span class="php-comment">//Only admins can see logs</span>
-</span><span id="170" class="l"><a href="#170">170: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup(<span class="php-quote">'admin'</span>))
-</span><span id="171" class="l"><a href="#171">171: </a>            <span class="php-keyword2">array_push</span>(<span class="php-var">$menu</span>,
-</span><span id="172" class="l"><a href="#172">172: </a>                <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Log viewer'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'logs_viewer'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>])
-</span><span id="173" class="l"><a href="#173">173: </a>            );
-</span><span id="174" class="l"><a href="#174">174: </a>        
-</span><span id="175" class="l"><a href="#175">175: </a>        <span class="php-keyword1">return</span> [<span class="php-var">$menu</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'System'</span>), [<span class="php-quote">'icon'</span> =&gt; <span class="php-quote">'wrench'</span>]];
-</span><span id="176" class="l"><a href="#176">176: </a>    }
-</span><span id="177" class="l"><a href="#177">177: </a>}</span></code></pre>
+</span></span><span id="155" class="l"><a href="#155">155: </a><span class="php-comment">     */</span>
+</span><span id="156" class="l"><a href="#156">156: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> _backups() {
+</span><span id="157" class="l"><a href="#157">157: </a>        <span class="php-comment">//Only admins can access this controller</span>
+</span><span id="158" class="l"><a href="#158">158: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup(<span class="php-quote">'admin'</span>))
+</span><span id="159" class="l"><a href="#159">159: </a>            <span class="php-keyword1">return</span>;
+</span><span id="160" class="l"><a href="#160">160: </a>        
+</span><span id="161" class="l"><a href="#161">161: </a>        <span class="php-var">$menu</span> = [
+</span><span id="162" class="l"><a href="#162">162: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'List backups'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Backups'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>])
+</span><span id="163" class="l"><a href="#163">163: </a>        ];
+</span><span id="164" class="l"><a href="#164">164: </a>        
+</span><span id="165" class="l"><a href="#165">165: </a>        <span class="php-keyword1">return</span> [<span class="php-var">$menu</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Backups'</span>), [<span class="php-quote">'icon'</span> =&gt; <span class="php-quote">'database'</span>]];
+</span><span id="166" class="l"><a href="#166">166: </a>    }
+</span><span id="167" class="l"><a href="#167">167: </a>    
+</span><span id="168" class="l"><a href="#168">168: </a>    <span class="php-comment">/**
+</span></span><span id="169" class="l"><a href="#169">169: </a><span class="php-comment">     * Internal function to generate the menu for &quot;systems&quot; actions
+</span></span><span id="170" class="l"><a href="#170">170: </a><span class="php-comment">     * @return mixed Array with menu, title and link options
+</span></span><span id="171" class="l"><a href="#171">171: </a><span class="php-comment">     * @uses MeCms\View\Helper\AuthHelper::isGroup()
+</span></span><span id="172" class="l"><a href="#172">172: </a><span class="php-comment">     * @uses MeTools\View\Helper\HtmlHelper::link()
+</span></span><span id="173" class="l"><a href="#173">173: </a><span class="php-comment">     */</span>
+</span><span id="174" class="l"><a href="#174">174: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> _systems() {
+</span><span id="175" class="l"><a href="#175">175: </a>        <span class="php-comment">//Only admins and managers can access this controller</span>
+</span><span id="176" class="l"><a href="#176">176: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup([<span class="php-quote">'admin'</span>, <span class="php-quote">'manager'</span>]))
+</span><span id="177" class="l"><a href="#177">177: </a>            <span class="php-keyword1">return</span>;
+</span><span id="178" class="l"><a href="#178">178: </a>        
+</span><span id="179" class="l"><a href="#179">179: </a>        <span class="php-var">$menu</span> = [
+</span><span id="180" class="l"><a href="#180">180: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Temporary files'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'tmp_viewer'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>]),
+</span><span id="181" class="l"><a href="#181">181: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'System checkup'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'checkup'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>]),
+</span><span id="182" class="l"><a href="#182">182: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Media browser'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'browser'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>]),
+</span><span id="183" class="l"><a href="#183">183: </a>            <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Changelogs'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'changelogs'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>])
+</span><span id="184" class="l"><a href="#184">184: </a>        ];
+</span><span id="185" class="l"><a href="#185">185: </a>        
+</span><span id="186" class="l"><a href="#186">186: </a>        <span class="php-comment">//Only admins can see logs</span>
+</span><span id="187" class="l"><a href="#187">187: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Auth-&gt;isGroup(<span class="php-quote">'admin'</span>))
+</span><span id="188" class="l"><a href="#188">188: </a>            <span class="php-keyword2">array_push</span>(<span class="php-var">$menu</span>,
+</span><span id="189" class="l"><a href="#189">189: </a>                <span class="php-var">$this</span>-&gt;Html-&gt;<span class="php-keyword2">link</span>(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Log viewer'</span>), [<span class="php-quote">'controller'</span> =&gt; <span class="php-quote">'Systems'</span>, <span class="php-quote">'action'</span> =&gt; <span class="php-quote">'logs_viewer'</span>, <span class="php-quote">'plugin'</span> =&gt; <span class="php-quote">'MeCms'</span>])
+</span><span id="190" class="l"><a href="#190">190: </a>            );
+</span><span id="191" class="l"><a href="#191">191: </a>        
+</span><span id="192" class="l"><a href="#192">192: </a>        <span class="php-keyword1">return</span> [<span class="php-var">$menu</span>, __d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'System'</span>), [<span class="php-quote">'icon'</span> =&gt; <span class="php-quote">'wrench'</span>]];
+</span><span id="193" class="l"><a href="#193">193: </a>    }
+</span><span id="194" class="l"><a href="#194">194: </a>}</span></code></pre>
 
 	<div id="footer">
 		MeCms API API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -424,6 +442,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?bb802639439896aa2b394837658d27a075245dc7"></script>
+<script src="elementlist.js?48cb09458468b6711d99bac7e757bcc8d538ced9"></script>
 </body>
 </html>
