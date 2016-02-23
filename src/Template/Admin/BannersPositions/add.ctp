@@ -29,8 +29,8 @@
     <?= $this->Form->create($position); ?>
     <fieldset>
         <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('description');
+            echo $this->Form->input('name', ['label' => __d('me_cms', 'Name')]);
+            echo $this->Form->input('description', ['label' => __d('me_cms', 'Description')]);
         ?>
     </fieldset>
     <?= $this->Form->submit(__d('me_cms', 'Add position')) ?>
