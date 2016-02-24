@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\Form\ContactForm | MeCms API</title>
+	<title>Class MeCms\Form\BackupForm | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -119,8 +119,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCms.Form.BackupForm.html">BackupForm</a></li>
-				<li class="active"><a href="class-MeCms.Form.ContactForm.html">ContactForm</a></li>
+				<li class="active"><a href="class-MeCms.Form.BackupForm.html">BackupForm</a></li>
+				<li><a href="class-MeCms.Form.ContactForm.html">ContactForm</a></li>
 			</ul>
 
 
@@ -164,13 +164,13 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class ContactForm</h1>
+	<h1>Class BackupForm</h1>
 
 
 	<div class="description">
-	<p>ContactForm class.</p>
+	<p>BackupForm class.</p>
 
-<p>It is used by <code>MeCms\Controller\SystemsController::contact_form()</code>.</p>
+<p>It is used by <code>MeCms\Controller\Admin\BackupsController::add()</code>.</p>
 	</div>
 
 	<dl class="tree">
@@ -181,7 +181,7 @@ Cake\Form\Form
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\Form\ContactForm</span></b>			
+<b><span>MeCms\Form\BackupForm</span></b>			
 			
 			
 		</dd>
@@ -200,7 +200,7 @@ Cake\Form\Form
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Form.html">Form</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Form.ContactForm.html#27-75" title="Go to source code">Form/ContactForm.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Form.BackupForm.html#29-80" title="Go to source code">Form/BackupForm.php</a>
 		<br>
 	</div>
 
@@ -220,7 +220,7 @@ Cake\Form\Form
 
 		<td class="name"><div>
 		<a class="anchor" href="#__buildValidator">#</a>
-		<code><a href="source-class-MeCms.Form.ContactForm.html#33-59" title="Go to source code">_buildValidator</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
+		<code><a href="source-class-MeCms.Form.BackupForm.html#35-61" title="Go to source code">_buildValidator</a>( <span>Cake\Validation\Validator <var>$validator</var></span> )</code>
 
 		<div class="description short">
 			<p>Defines the validator using the methods on Cake\Validation\Validator or
@@ -261,7 +261,7 @@ loads a pre-defined validator from a concrete class.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__execute">#</a>
-		<code><a href="source-class-MeCms.Form.ContactForm.html#61-74" title="Go to source code">_execute</a>( <span>array <var>$data</var></span> )</code>
+		<code><a href="source-class-MeCms.Form.BackupForm.html#63-79" title="Go to source code">_execute</a>( <span>array <var>$data</var></span> )</code>
 
 		<div class="description short">
 			<p>Used by <code>execute()</code> to execute the form's action</p>
@@ -285,7 +285,8 @@ loads a pre-defined validator from a concrete class.</p>
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeCms\Network\Email\Email<br>
+						DatabaseBackup\Utility\BackupExport::filename()<br>
+						DatabaseBackup\Utility\BackupExport::export()<br>
 				</div>
 
 

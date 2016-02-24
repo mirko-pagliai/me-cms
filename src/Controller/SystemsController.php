@@ -42,7 +42,7 @@ class SystemsController extends AppController {
 	/**
 	 * Contact form
 	 * @see MeCms\Form\ContactForm
-	 * @uses MeCms\Form\ContactForm::_execute()
+	 * @see MeCms\Form\ContactForm::execute()
 	 * @uses MeTools\Controller\Component\Recaptcha::check()
 	 * @uses MeTools\Controller\Component\Recaptcha::getError()
 	 */

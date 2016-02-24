@@ -26,11 +26,13 @@
 
 <div class="backups index">
 	<?= $this->Html->h2(__d('me_cms', 'Database backups')) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	
 	<table class="table table-striped">
 		<tr>
 			<th><?= __d('me_cms', 'Filename') ?></th>
-			<th><?= __d('me_cms', 'Compression') ?></th>
-			<th><?= __d('me_cms', 'Date') ?></th>
+			<th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
+			<th class="min-width text-center"><?= __d('me_cms', 'Date') ?></th>
 		</tr>
 		<?php foreach($backups as $backup): ?>
 			<tr>
@@ -48,8 +50,8 @@
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
 				</td>
-				<td><?= $backup->compression ?></td>
-				<td><?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?></td>
+				<td class="min-width text-center"><?= $backup->compression ?></td>
+				<td class="min-width text-center"><?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

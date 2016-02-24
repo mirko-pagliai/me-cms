@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.2 branch
+### 2.2.4
+* you can create database backups.
+
 ### 2.2.3
 * added DatabaseBackup plugin;
 * fixed tmp viewer and tmp cleaner;

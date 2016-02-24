@@ -23,13 +23,15 @@
 namespace MeCms\Form;
 
 use Cake\Form\Form;
+use Cake\Network\Exception\InternalErrorException;
+use DatabaseBackup\Utility\BackupExport;
 
 /**
- * ContactForm class.
+ * BackupForm class.
  * 
- * It is used by `MeCms\Controller\SystemsController::contact_form()`.
+ * It is used by `MeCms\Controller\Admin\BackupsController::add()`.
  */
-class ContactForm extends Form {
+class BackupForm extends Form {
     /**
 	 * Defines the validator using the methods on Cake\Validation\Validator or 
 	 * loads a pre-defined validator from a concrete class.
@@ -39,20 +41,20 @@ class ContactForm extends Form {
     protected function _buildValidator(\Cake\Validation\Validator $validator) {
 		$validator = new \MeCms\Model\Validation\AppValidator();
 				
-		//First name
-		$validator->requirePresence('first_name');
-		
-		//Last name
-		$validator->requirePresence('last_name');
-		
-		//Email
-		$validator->requirePresence('email');
-		
-		//Message
-		$validator->requirePresence('message')
-			->add('message', ['lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
-				'rule'		=> ['lengthBetween', 10, 1000]
+		//Filename
+		$validator->requirePresence('filename')
+			->remove('filename', 'validateUnique')
+			->add('filename', 'validExtension', [
+				'rule' => function ($value, $context) {
+					$extensions = array_map(function($v) { return preg_quote($v, '/'); }, ['sql', 'sql.gz', 'sql.bz2']);
+					
+					return (bool) preg_match(sprintf('/\.(%s)$/i', implode('|', $extensions)), $value);
+				},
+				'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2')
+			])
+			->add('filename', ['lengthBetween' => [
+				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule'		=> ['lengthBetween', 3, 100]
 			]]);
 		
         return $validator;
@@ -62,14 +64,17 @@ class ContactForm extends Form {
 	 * Used by `execute()` to execute the form's action
 	 * @param array $data Form data
 	 * @return boolean
-	 * @uses MeCms\Network\Email\Email
+	 * @uses DatabaseBackup\Utility\BackupExport::filename()
+	 * @uses DatabaseBackup\Utility\BackupExport::export()
 	 */
     protected function _execute(array $data) {
-		return (new \MeCms\Network\Email\Email)->from([$data['email'] => sprintf('%s %s', $data['first_name'], $data['last_name'])])
-			->to(config('email.webmaster'))
-			->subject(__d('me_cms', 'Email from {0}', config('main.title')))
-			->template('MeCms.Systems/contact_form')
-			->set($data)
-			->send();
+		try {
+			$backup = new BackupExport();
+			$backup->filename($data['filename']);
+			return $backup->export();
+		}
+		catch(InternalErrorException $e) {
+			return FALSE;
+		}
     }
 }

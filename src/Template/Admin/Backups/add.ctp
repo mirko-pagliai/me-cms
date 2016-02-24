@@ -22,17 +22,19 @@
  */
 ?>
 	
-<?php $this->assign('title', __d('me_cms', 'Add banners position')); ?>
+<?php $this->assign('title', __d('me_cms', 'Add backup')); ?>
 
-<div class="bannersPositions form">
-	<?= $this->Html->h2(__d('me_cms', 'Add banners position')) ?>
-    <?= $this->Form->create($position); ?>
+<div class="backups form">
+	<?= $this->Html->h2(__d('me_cms', 'Add backup')) ?>
+    <?= $this->Form->create($backup); ?>
     <fieldset>
         <?php
-            echo $this->Form->input('name', ['label' => __d('me_cms', 'Name')]);
-            echo $this->Form->input('description', ['label' => __d('me_cms', 'Description')]);
+            echo $this->Form->input('filename', [
+				'default'	=> 'backup_{$DATABASE}_{$DATETIME}.sql.gz',
+				'label'		=> __d('me_cms', 'Filename')
+			]);
         ?>
     </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add position')) ?>
+    <?= $this->Form->submit(__d('me_cms', 'Add backup')) ?>
     <?= $this->Form->end() ?>
 </div>

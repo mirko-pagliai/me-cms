@@ -30,11 +30,43 @@ use MeCms\Controller\AppController;
  */
 class BackupsController extends AppController {
 	/**
+	 * Check if the provided user is authorized for the request
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @return bool TRUE if the user is authorized, otherwise FALSE
+	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins can access this controller
+		return $this->Auth->isGroup('admin');
+	}
+	
+	/**
 	 * Lists backup files
 	 * @uses DatabaseBackup\Utility\BackupManager::index()
 	 */
 	public function index() {
 		$this->set('backups', BackupManager::index());
+	}
+	
+	/**
+	 * Adds a backup file
+	 * @see MeCms\Form\BackupForm
+	 * @see MeCms\Form\BackupForm::execute()
+	 */
+	public function add() {
+		$backup = new \MeCms\Form\BackupForm();
+		
+		if($this->request->is('post')) {
+			//Creates the backup
+			if($backup->execute($this->request->data)) {
+				$this->Flash->success(__d('me_cms', 'The backup has been created'));
+				$this->redirect(['action' => 'index']);
+			}
+			else
+				$this->Flash->error(__d('me_cms', 'The backup has not been created'));
+		}
+		
+		$this->set(compact('backup'));
 	}
 	
 	/**

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\Controller\SystemsController | MeCms API</title>
+	<title>Class MeCms\Controller\Admin\BackupsController | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -30,7 +30,7 @@
 					</a>
 
 						<ul>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeCms.Controller.Admin.html">
 						Admin					</a>
 
@@ -119,16 +119,18 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCms.Controller.AppController.html">AppController</a></li>
-				<li><a href="class-MeCms.Controller.BannersController.html">BannersController</a></li>
-				<li><a href="class-MeCms.Controller.PagesController.html">PagesController</a></li>
-				<li><a href="class-MeCms.Controller.PhotosAlbumsController.html">PhotosAlbumsController</a></li>
-				<li><a href="class-MeCms.Controller.PhotosController.html">PhotosController</a></li>
-				<li><a href="class-MeCms.Controller.PostsCategoriesController.html">PostsCategoriesController</a></li>
-				<li><a href="class-MeCms.Controller.PostsController.html">PostsController</a></li>
-				<li><a href="class-MeCms.Controller.PostsTagsController.html">PostsTagsController</a></li>
-				<li class="active"><a href="class-MeCms.Controller.SystemsController.html">SystemsController</a></li>
-				<li><a href="class-MeCms.Controller.UsersController.html">UsersController</a></li>
+				<li class="active"><a href="class-MeCms.Controller.Admin.BackupsController.html">BackupsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.BannersController.html">BannersController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.BannersPositionsController.html">BannersPositionsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PagesController.html">PagesController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PhotosAlbumsController.html">PhotosAlbumsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PhotosController.html">PhotosController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PostsCategoriesController.html">PostsCategoriesController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PostsController.html">PostsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.PostsTagsController.html">PostsTagsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.SystemsController.html">SystemsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.UsersController.html">UsersController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.UsersGroupsController.html">UsersGroupsController</a></li>
 			</ul>
 
 
@@ -155,7 +157,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeCms.Controller.html" title="Summary of MeCms\Controller"><span>Namespace</span></a>
+				<a href="namespace-MeCms.Controller.Admin.html" title="Summary of MeCms\Controller\Admin"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -172,11 +174,11 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class SystemsController</h1>
+	<h1>Class BackupsController</h1>
 
 
 	<div class="description">
-	<p>Systems controller</p>
+	<p>Backups controller</p>
 	</div>
 
 	<dl class="tree">
@@ -194,7 +196,7 @@ App\Controller\AppController
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\Controller\SystemsController</span></b>			
+<b><span>MeCms\Controller\Admin\BackupsController</span></b>			
 			
 			
 		</dd>
@@ -210,10 +212,10 @@ App\Controller\AppController
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
+		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.SystemsController.html#27-99" title="Go to source code">Controller/SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.BackupsController.html#28-97" title="Go to source code">Controller/Admin/BackupsController.php</a>
 		<br>
 	</div>
 
@@ -221,7 +223,52 @@ App\Controller\AppController
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="accept_cookies" id="_accept_cookies">
+	<tr data-order="isAuthorized" id="_isAuthorized">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAuthorized">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#32-41" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Check if the provided user is authorized for the request</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Check if the provided user is authorized for the request</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd>The user to check the authorization of. If empty the user in the session will be used</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>TRUE if the user is authorized, otherwise FALSE
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Component.AuthComponent.html#_isGroup">MeCms\Controller\Component\AuthComponent::isGroup()</a></code><br>
+				</div>
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCms.Controller.AppController.html#_isAuthorized">MeCms\Controller\AppController::isAuthorized()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="index" id="_index">
 
 		<td class="attributes"><code>
 			 public 
@@ -232,28 +279,30 @@ App\Controller\AppController
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_accept_cookies">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#31-40" title="Go to source code">accept_cookies</a>( )</code>
+		<a class="anchor" href="#_index">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#43-49" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
-			<p>Accept cookies policy.
-It sets the cookie to remember the user accepted the cookie policy and redirects</p>
+			<p>Lists backup files</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Accept cookies policy.
-It sets the cookie to remember the user accepted the cookie policy and redirects</p>
+			<p>Lists backup files</p>
 
 
 
 
 
+				<h4>Uses</h4>
+				<div class="list">
+						DatabaseBackup\Utility\BackupManager::index()<br>
+				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="contact_form" id="_contact_form">
+	<tr data-order="add" id="_add">
 
 		<td class="attributes"><code>
 			 public 
@@ -264,15 +313,15 @@ It sets the cookie to remember the user accepted the cookie policy and redirects
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_contact_form">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#42-75" title="Go to source code">contact_form</a>( )</code>
+		<a class="anchor" href="#_add">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#51-70" title="Go to source code">add</a>( )</code>
 
 		<div class="description short">
-			<p>Contact form</p>
+			<p>Adds a backup file</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Contact form</p>
+			<p>Adds a backup file</p>
 
 
 
@@ -280,20 +329,15 @@ It sets the cookie to remember the user accepted the cookie policy and redirects
 
 				<h4>See</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Form.ContactForm.html">MeCms\Form\ContactForm</a></code><br>
-						MeCms\Form\ContactForm::execute()<br>
-				</div>
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Controller\Component\Recaptcha::check()<br>
-						MeTools\Controller\Component\Recaptcha::getError()<br>
+						<code><a href="class-MeCms.Form.BackupForm.html">MeCms\Form\BackupForm</a></code><br>
+						MeCms\Form\BackupForm::execute()<br>
 				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="ip_not_allowed" id="_ip_not_allowed">
+	<tr data-order="delete" id="_delete">
 
 		<td class="attributes"><code>
 			 public 
@@ -304,30 +348,35 @@ It sets the cookie to remember the user accepted the cookie policy and redirects
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_ip_not_allowed">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#77-87" title="Go to source code">ip_not_allowed</a>( )</code>
+		<a class="anchor" href="#_delete">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#72-86" title="Go to source code">delete</a>( <span>string <var>$filename</var></span> )</code>
 
 		<div class="description short">
-			<p>"Ip not allowed" page</p>
+			<p>Deletes a backup file</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>"Ip not allowed" page</p>
+			<p>Deletes a backup file</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd>Backup filename</dd>
+				</dl></div>
 
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Controller.AppController.html#_isBanned">MeCms\Controller\AppController::isBanned()</a></code><br>
+						DatabaseBackup\Utility\BackupManager::delete()<br>
 				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="offline" id="_offline">
+	<tr data-order="download" id="_download">
 
 		<td class="attributes"><code>
 			 public 
@@ -338,20 +387,29 @@ It sets the cookie to remember the user accepted the cookie policy and redirects
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_offline">#</a>
-		<code><a href="source-class-MeCms.Controller.SystemsController.html#89-98" title="Go to source code">offline</a>( )</code>
+		<a class="anchor" href="#_download">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#88-96" title="Go to source code">download</a>( <span>string <var>$filename</var></span> )</code>
 
 		<div class="description short">
-			<p>Offline page</p>
+			<p>Downloads a backup file</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Offline page</p>
+			<p>Downloads a backup file</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd>Backup filename</dd>
+				</dl></div>
 
 
 
-
-
+				<h4>Uses</h4>
+				<div class="list">
+						DatabaseBackup\Utility\BackupManager::path()<br>
+				</div>
 
 
 		</div>
@@ -368,7 +426,6 @@ It sets the cookie to remember the user accepted the cookie policy and redirects
 			<a href="class-MeCms.Controller.AppController.html#_beforeFilter">beforeFilter()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_beforeRender">beforeRender()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_initialize">initialize()</a>, 
-			<a href="class-MeCms.Controller.AppController.html#_isAuthorized">isAuthorized()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_isBanned">isBanned()</a>, 
 			<a href="class-MeCms.Controller.AppController.html#_isOffline">isOffline()</a>
 		</code></td>
