@@ -159,7 +159,8 @@ class MeCmsMenuHelper extends Helper {
 			return;
 		
 		$menu = [
-			$this->Html->link(__d('me_cms', 'List backups'), ['controller' => 'Backups', 'action' => 'index', 'plugin' => 'MeCms'])
+			$this->Html->link(__d('me_cms', 'List backups'), ['controller' => 'Backups', 'action' => 'index', 'plugin' => 'MeCms']),
+			$this->Html->link(__d('me_cms', 'Add backup'), ['controller' => 'Backups', 'action' => 'add', 'plugin' => 'MeCms'])
 		];
 		
 		return [$menu, __d('me_cms', 'Backups'), ['icon' => 'database']];

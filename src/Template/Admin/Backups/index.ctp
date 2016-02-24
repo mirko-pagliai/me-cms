@@ -26,6 +26,8 @@
 
 <div class="backups index">
 	<?= $this->Html->h2(__d('me_cms', 'Database backups')) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	
 	<table class="table table-striped">
 		<tr>
 			<th><?= __d('me_cms', 'Filename') ?></th>

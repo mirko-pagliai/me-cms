@@ -49,6 +49,27 @@ class BackupsController extends AppController {
 	}
 	
 	/**
+	 * Adds a backup file
+	 * @see MeCms\Form\BackupForm
+	 * @see MeCms\Form\BackupForm::execute()
+	 */
+	public function add() {
+		$backup = new \MeCms\Form\BackupForm();
+		
+		if($this->request->is('post')) {
+			//Creates the backup
+			if($backup->execute($this->request->data)) {
+				$this->Flash->success(__d('me_cms', 'The backup has been created'));
+				$this->redirect(['action' => 'index']);
+			}
+			else
+				$this->Flash->error(__d('me_cms', 'The backup has not been created'));
+		}
+		
+		$this->set(compact('backup'));
+	}
+	
+	/**
 	 * Deletes a backup file
 	 * @param string $filename Backup filename
 	 * @uses DatabaseBackup\Utility\BackupManager::delete()
