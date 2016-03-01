@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-02-24 10:54+0000\n"
-"PO-Revision-Date: 2016-02-24 11:55+0100\n"
+"POT-Creation-Date: 2016-03-01 17:57+0000\n"
+"PO-Revision-Date: 2016-03-01 18:58+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai.it>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -294,15 +294,15 @@ msgstr "Il tag è stato salvato"
 msgid "The tag could not be saved"
 msgstr "Il tag non può essere salvato"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:79
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:78
 msgid "{0} is not present into {1}"
 msgstr "{0} non è presente in {1}"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:256
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:247
 msgid "The operation has been performed correctly"
 msgstr "L'operazione è stata eseguita correttamente"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:258
+#: /home/mirko/Server/MeCms_Plugin/src/Controller/Admin/SystemsController.php:249
 msgid "The operation has not been performed correctly"
 msgstr "L'operazione non è stata eseguita correttamente"
 
@@ -503,7 +503,7 @@ msgstr "La vecchia password è errata"
 msgid "lowercase letters"
 msgstr "lettere minuscole"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Shell/InstallShell.php:128
+#: /home/mirko/Server/MeCms_Plugin/src/Shell/InstallShell.php:129
 msgid "Creates an admin user"
 msgstr "Crea un utente amministratore"
 
@@ -690,7 +690,6 @@ msgstr "Aggiungi backup"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/add.ctp:34
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Backups/index.ctp:33
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:63
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:47
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:59
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/statics.ctp:31
@@ -749,30 +748,15 @@ msgstr "Cancella"
 msgid "Are you sure you want to delete this?"
 msgstr "Sei sicuro di volerlo cancellare?"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:25;28;78
-msgid "Add banner"
-msgstr "Aggiungi banner"
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:25;28;60
+msgid "Edit banner"
+msgstr "Modifica banner"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:33;36
-msgid "Banner"
-msgstr "Banner"
-
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:40
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/upload.ctp:40
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/upload.ctp:40
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/browser.ctp:40
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/changelogs.ctp:41
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:45
-msgid "Select"
-msgstr "Seleziona"
-
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:51
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:33
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:60
 msgid "Position"
 msgstr "Posizione"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:55
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:36
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/add.ctp:50
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Pages/edit.ctp:49
@@ -783,17 +767,19 @@ msgstr "Posizione"
 msgid "Published"
 msgstr "Pubblicato"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:68
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:42
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:39
+msgid "Preview"
+msgstr "Anteprima"
+
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:50
 msgid "Web address"
 msgstr "Indirizzo web"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:69
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:51
 msgid "The address should begin with {0}"
 msgstr "L'indirizzo deve cominciare con {0}"
 
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/add.ctp:72
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:54
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:62
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/add.ctp:33
@@ -809,15 +795,6 @@ msgstr "L'indirizzo deve cominciare con {0}"
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Element/backend/bbcode.ctp:40
 msgid "Description"
 msgstr "Descrizione"
-
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:25;28;60
-msgid "Edit banner"
-msgstr "Modifica banner"
-
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/edit.ctp:42
-#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/edit.ctp:39
-msgid "Preview"
-msgstr "Anteprima"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/index.ctp:25;28
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/index.ctp:36
@@ -919,6 +896,14 @@ msgstr "Carica banner"
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/upload.ctp:33;36
 msgid "Position to upload banners"
 msgstr "Posizione dove caricare i banner"
+
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Banners/upload.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Photos/upload.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/browser.ctp:40
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/changelogs.ctp:41
+#: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:45
+msgid "Select"
+msgstr "Seleziona"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/BannersPositions/add.ctp:25;28
 msgid "Add banners position"
@@ -1367,16 +1352,16 @@ msgid "Referer URL"
 msgstr "URL referer"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:92
-msgid "Toggle exception attributes"
-msgstr "Cambia attributi dell'eccezione"
+msgid "Exception attributes"
+msgstr "Attributi dell'eccezione"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:97
-msgid "Toggle trace"
-msgstr "Cambia trace"
+msgid "Trace"
+msgstr "Trace"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/logs_viewer.ctp:102
-msgid "Toggle stack trace"
-msgstr "Cambia stack trace"
+msgid "Stack trace"
+msgstr "Stack trace"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Admin/Systems/tmp_viewer.ctp:25;29
 #: /home/mirko/Server/MeCms_Plugin/src/View/Helper/MeCmsMenuHelper.php:181
@@ -1852,7 +1837,7 @@ msgid "You have searched for: {0}"
 msgstr "Hai cercato: {0}"
 
 #: /home/mirko/Server/MeCms_Plugin/src/Template/Posts/rss/rss.ctp:30;32
-#: /home/mirko/Server/MeCms_Plugin/src/View/View/AppView.php:153
+#: /home/mirko/Server/MeCms_Plugin/src/View/View/AppView.php:152
 msgid "Latest posts"
 msgstr "Ultimi articoli"
 
