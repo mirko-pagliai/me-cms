@@ -20,36 +20,32 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
+namespace MeCms\Utility;
 
-<?php $this->assign('title', __d('me_cms', 'Edit photo')); ?>
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
+use MeTools\Utility\System as BaseSystem;
 
-<div class="photos form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit photo')) ?>
-    <?= $this->Form->create($photo); ?>
-	<div class='float-form'>
-		<?php
-			echo $this->Form->input('album_id', [
-				'label' => __d('me_cms', 'Album')
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Html->para(NULL, $this->Html->strong(__d('me_cms', 'Preview')));
-			echo $this->Thumb->image($photo->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]);
-			
-			echo $this->Form->input('filename', [
-				'disabled'	=> TRUE,
-				'label'		=> __d('me_cms', 'Filename')
-			]);
-			echo $this->Form->input('description', [
-				'label'	=> __d('me_cms', 'Description'),
-				'rows'	=> 3,
-				'type'	=> 'textarea'
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit photo')) ?>
-    <?= $this->Form->end() ?>
-</div>
+/**
+ * An utility for checking the status of the system and perform maintenance tasks.
+ */
+class System extends BaseSystem {
+    /**
+     * Clears thumbnails
+     * @return boolean
+     */
+    public static function clearThumbs() {
+		if(!folder_is_writable(THUMBS))
+			return FALSE;
+		
+		$success = TRUE;
+		
+		//Deletes each file
+		foreach((new Folder(THUMBS))->read(FALSE, ['empty'])[1] as $file) {
+			if(!(new File(THUMBS.DS.$file))->delete())
+				$success = FALSE;
+		}
+		
+		return $success;
+    }
+}

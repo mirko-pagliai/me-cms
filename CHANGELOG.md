@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.3 branch
+### 2.3.0
+* now the `Thumbs` plugin is used.
+
 ## 2.2 branch
 ### 2.2.4
 * you can create database backups.

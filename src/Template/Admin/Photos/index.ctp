@@ -34,7 +34,7 @@
 				<div class="photo-box">
 					<div class="photo-title"><?= $photo->filename ?></div>
 					<div class="photo-created">(<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)</div>
-					<div class="photo-image"><?= $this->Thumb->img($photo->path, ['side' => 400]) ?></div>
+					<div class="photo-image"><?= $this->Thumb->image($photo->path, ['side' => 400]) ?></div>
 					
 					<?php
 						$actions = [

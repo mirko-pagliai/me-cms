@@ -53,7 +53,7 @@
 		
 		//Adds the preview image
 		if(!empty($post->preview))
-			$text = $this->Thumb->img($post->preview, ['width' => 200]).$this->Html->br().$text;
+			$text = $this->Thumb->image($post->preview, ['width' => 200]).$this->Html->br().$text;
 
 		echo $this->Rss->item([], [
 			'description'	=> $text,

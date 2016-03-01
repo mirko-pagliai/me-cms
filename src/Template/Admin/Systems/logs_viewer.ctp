@@ -89,17 +89,17 @@
 							$buttons = $codes = [];
 
 							if(!empty($log->attributes)) {
-								$buttons[] = $this->Html->button(__d('me_cms', 'Toggle exception attributes'), '#', ['class' => 'toggle-log-attributes btn-sm btn-primary']);
+								$buttons[] = $this->Html->button(__d('me_cms', 'Exception attributes'), '#', ['class' => 'toggle-log-attributes btn-sm btn-primary']);
 								$codes[] = $this->Html->pre($log->attributes, ['class' => 'log-attributes']);
 							}
 
 							if(!empty($log->trace)) {
-								$buttons[] = $this->Html->button(__d('me_cms', 'Toggle trace'), '#', ['class' => 'toggle-log-trace btn-sm btn-primary']);
+								$buttons[] = $this->Html->button(__d('me_cms', 'Trace'), '#', ['class' => 'toggle-log-trace btn-sm btn-primary']);
 								$codes[] = $this->Html->pre($log->trace, ['class' => 'log-trace']);
 							}
 
 							if(!empty($log->stack_trace)) {
-								$buttons[] = $this->Html->button(__d('me_cms', 'Toggle stack trace'), '#', ['class' => 'toggle-log-stack-trace btn-sm btn-primary']);
+								$buttons[] = $this->Html->button(__d('me_cms', 'Stack trace'), '#', ['class' => 'toggle-log-stack-trace btn-sm btn-primary']);
 								$codes[] = $this->Html->pre($log->stack_trace, ['class' => 'log-stack-trace']);
 							}
 

@@ -27,7 +27,7 @@
 		<div class="bg-danger text-danger"><?= $error ?></div>
 	<?php elseif(!empty($file)): ?>
 		<div class="bg-success text-success">
-			<div class="col-sm-3"><?= $this->Thumb->img($file['target'], ['height' => 100]) ?></div>
+			<div class="col-sm-3"><?= $this->Thumb->image($file['target'], ['height' => 100]) ?></div>
 			<div class="col-sm-9">
 				<div><?= $this->Html->strong(basename($file['target'])) ?></div>
 				<div><?= __d('me_cms', 'Directory: {0}', dirname(rtr($file['target']))) ?></div>

@@ -23,5 +23,5 @@
 ?>
 
 <div class="photos view">
-	<?= $this->Thumb->img($photo->path, ['side' => 828]) ?>
+	<?= $this->Thumb->image($photo->path, ['side' => 828]) ?>
 </div>

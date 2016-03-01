@@ -24,7 +24,6 @@ namespace MeCms\View\View;
 
 use App\View\AppView as BaseView;
 use Cake\Routing\Router;
-use Cake\Cache\Cache;
 
 /**
  * Application view class
@@ -94,9 +93,9 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Form');
 		$this->loadHelper('MeTools.Asset');
 		$this->loadHelper('MeTools.Library');
-		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('MeTools.Recaptcha');
+		$this->loadHelper('Thumbs.Thumb');
 		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeCms.Widget');
     }

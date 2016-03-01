@@ -33,7 +33,7 @@
 					<div class="photo-box">
 						<?php
 							$text = implode(PHP_EOL, [
-								$this->Thumb->img($album->photos[0]->path, ['side' => 275]),
+								$this->Thumb->image($album->photos[0]->path, ['side' => 275]),
 								$this->Html->div('photo-info', $this->Html->div(NULL, implode(PHP_EOL, [
 									$this->Html->para('strong', $album->title),
 									$this->Html->para('small', __d('me_cms', '{0} photos', $album->photo_count))
