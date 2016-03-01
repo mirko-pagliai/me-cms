@@ -215,7 +215,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#40-281" title="Go to source code">Controller/Admin/SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#39-269" title="Go to source code">Controller/Admin/SystemsController.php</a>
 		<br>
 	</div>
 
@@ -235,7 +235,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#44-62" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#43-61" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request</p>
@@ -281,7 +281,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_browser">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#64-102" title="Go to source code">browser</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#63-101" title="Go to source code">browser</a>( )</code>
 
 		<div class="description short">
 			<p>Media browser with KCFinder</p>
@@ -323,7 +323,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_changelogs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#104-121" title="Go to source code">changelogs</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#103-120" title="Go to source code">changelogs</a>( )</code>
 
 		<div class="description short">
 			<p>Changelogs viewer</p>
@@ -338,7 +338,7 @@ App\Controller\AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeTools\Utility\System::changelogs()<br>
+						MeCms\Utility\System::changelogs()<br>
 				</div>
 
 
@@ -357,7 +357,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_checkup">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#123-203" title="Go to source code">checkup</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#122-194" title="Go to source code">checkup</a>( )</code>
 
 		<div class="description short">
 			<p>System checkup</p>
@@ -376,6 +376,10 @@ App\Controller\AppController
 						<code><a href="class-MeCms.Utility.BannerFile.html#_folder">MeCms\Utility\BannerFile::folder()</a></code><br>
 						<code><a href="class-MeCms.Utility.PhotoFile.html#_check">MeCms\Utility\PhotoFile::check()</a></code><br>
 						<code><a href="class-MeCms.Utility.PhotoFile.html#_folder">MeCms\Utility\PhotoFile::folder()</a></code><br>
+						MeCms\Utility\System::checkCacheStatus()<br>
+						MeCms\Utility\System::cakeVersion()<br>
+						MeCms\Utility\System::checkCache()<br>
+						MeCms\Utility\System::checkTmp()<br>
 						MeTools\Core\Plugin::version()<br>
 						MeTools\Core\Plugin::versions()<br>
 						MeTools\Log\Engine\FileLog::check()<br>
@@ -386,16 +390,6 @@ App\Controller\AppController
 						MeTools\Utility\Php::check()<br>
 						MeTools\Utility\Php::extension()<br>
 						MeTools\Utility\Php::version()<br>
-						MeTools\Utility\System::cacheStatus()<br>
-						MeTools\Utility\System::cakeVersion()<br>
-						MeTools\Utility\System::checkCache()<br>
-						MeTools\Utility\System::checkTmp()<br>
-						MeTools\Utility\Thumbs::checkPhotos()<br>
-						MeTools\Utility\Thumbs::checkRemotes()<br>
-						MeTools\Utility\Thumbs::checkVideos()<br>
-						MeTools\Utility\Thumbs::photo()<br>
-						MeTools\Utility\Thumbs::remote()<br>
-						MeTools\Utility\Thumbs::video()<br>
 						MeTools\Utility\Unix::which()<br>
 				</div>
 
@@ -415,7 +409,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_logs_viewer">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#205-223" title="Go to source code">logs_viewer</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#196-214" title="Go to source code">logs_viewer</a>( )</code>
 
 		<div class="description short">
 			<p>Logs viewer</p>
@@ -450,7 +444,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_tmp_cleaner">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#225-261" title="Go to source code">tmp_cleaner</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#216-252" title="Go to source code">tmp_cleaner</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Temporary cleaner (assets, cache, logs and thumbnails)</p>
@@ -470,10 +464,10 @@ App\Controller\AppController
 
 				<h4>Uses</h4>
 				<div class="list">
+						MeCms\Utility\System::clearCache()<br>
+						<code><a href="class-MeCms.Utility.System.html#_clearThumbs">MeCms\Utility\System::clearThumbs()</a></code><br>
 						MeTools\Utility\Asset::clear()<br>
 						MeTools\Log\Engine\FileLog::clear()<br>
-						MeTools\Utility\System::clearCache()<br>
-						MeTools\Utility\Thumbs::clear()<br>
 				</div>
 
 
@@ -492,7 +486,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_tmp_viewer">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#263-280" title="Go to source code">tmp_viewer</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#254-268" title="Go to source code">tmp_viewer</a>( )</code>
 
 		<div class="description short">
 			<p>Temporary viewer (assets, cache, logs and thumbnails)</p>
@@ -507,11 +501,8 @@ App\Controller\AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						MeTools\Log\Engine\FileLog::size()<br>
-						MeTools\Utility\Asset::size()<br>
-						MeTools\Utility\System::cacheSize()<br>
-						MeTools\Utility\System::cacheStatus()<br>
-						MeTools\Utility\Thumbs::size()<br>
+						MeCms\Utility\System::checkCacheStatus()<br>
+						MeTools\Utility\Asset::folder()<br>
 				</div>
 
 
