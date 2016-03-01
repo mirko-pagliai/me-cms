@@ -28,13 +28,12 @@ use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
+use MeCms\Utility\System;
 use MeTools\Core\Plugin;
 use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
 use MeTools\Utility\Asset;
 use MeTools\Utility\Php;
-use MeTools\Utility\System;
-use MeTools\Utility\Thumbs;
 use MeTools\Utility\Unix;
 
 /**
@@ -103,7 +102,7 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Changelogs viewer
-	 * @uses MeTools\Utility\System::changelogs()
+	 * @uses MeCms\Utility\System::changelogs()
 	 */
 	public function changelogs() {
 		//Gets changelogs files
@@ -126,6 +125,10 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
+	 * @uses MeCms\Utility\System::cacheStatus()
+	 * @uses MeCms\Utility\System::cakeVersion()
+	 * @uses MeCms\Utility\System::checkCache()
+	 * @uses MeCms\Utility\System::checkTmp()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Log\Engine\FileLog::check()
@@ -136,16 +139,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\System::cakeVersion()
-	 * @uses MeTools\Utility\System::checkCache()
-	 * @uses MeTools\Utility\System::checkTmp()
-	 * @uses MeTools\Utility\Thumbs::checkPhotos()
-	 * @uses MeTools\Utility\Thumbs::checkRemotes()
-	 * @uses MeTools\Utility\Thumbs::checkVideos()
-	 * @uses MeTools\Utility\Thumbs::photo()
-	 * @uses MeTools\Utility\Thumbs::remote()
-	 * @uses MeTools\Utility\Thumbs::video()
 	 * @uses MeTools\Utility\Unix::which()
 	 */
 	public function checkup() {
@@ -185,12 +178,10 @@ class SystemsController extends AppController {
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
 			'temporary' => [
-				['path' => rtr(LOGS),				'writeable' => FileLog::check()],
-				['path' => rtr(TMP),				'writeable' => System::checkTmp()],
-				['path' => rtr(CACHE),				'writeable' => System::checkCache()],
-				['path' => rtr(Thumbs::photo()),	'writeable' => Thumbs::checkPhotos()],
-				['path' => rtr(Thumbs::remote()),	'writeable' => Thumbs::checkRemotes()],
-				['path' => rtr(Thumbs::video()),	'writeable' => Thumbs::checkVideos()]
+				['path' => rtr(LOGS),	'writeable' => FileLog::check()],
+				['path' => rtr(TMP),	'writeable' => System::checkTmp()],
+				['path' => rtr(CACHE),	'writeable' => System::checkCache()],
+				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
 			],
 			'webroot' => [
 				['path' => rtr(Asset::folder()),			'writeable' => Asset::check()],
@@ -225,10 +216,10 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
+	 * @uses MeCms\Utility\System::clearCache()
+	 * @uses MeCms\Utility\System::clearThumbs()
 	 * @uses MeTools\Utility\Asset::clear()
 	 * @uses MeTools\Log\Engine\FileLog::clear()
-	 * @uses MeTools\Utility\System::clearCache()
-	 * @uses MeTools\Utility\Thumbs::clear()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete']))
@@ -236,7 +227,7 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = Asset::clear() && FileLog::clear() && System::clearCache() && Thumbs::clear();
+				$success = Asset::clear() && FileLog::clear() && System::clearCache() && System::clearThumbs();
 				break;
 			case 'cache':
 				$success = System::clearCache();
@@ -248,7 +239,7 @@ class SystemsController extends AppController {
 				$success = FileLog::clear();
 				break;
 			case 'thumbs':
-				$success = Thumbs::clear();
+				$success = System::clearThumbs();
 				break;
 		}
 		
@@ -262,20 +253,19 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
+	 * @uses MeCms\Utility\System::cacheSize()
+	 * @uses MeCms\Utility\System::cacheStatus()
 	 * @uses MeTools\Log\Engine\FileLog::size()
 	 * @uses MeTools\Utility\Asset::size()
-	 * @uses MeTools\Utility\System::cacheSize()
-	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\Thumbs::size()
 	 */
 	public function tmp_viewer() {
         $this->set([
-			'all_size'		=> System::cacheSize() + Asset::size() + FileLog::size() + Thumbs::size(),
+			'all_size'		=> System::cacheSize() + Asset::size() + FileLog::size() + dirsize(THUMBS),
 			'cache_size'	=> System::cacheSize(),
 			'cache_status'	=> System::cacheStatus(),
 			'assets_size'	=> Asset::size(),
 			'logs_size'		=> FileLog::size(),
-			'thumbs_size'	=> Thumbs::size()
+			'thumbs_size'	=> dirsize(THUMBS)
         ]);
 	}
 }

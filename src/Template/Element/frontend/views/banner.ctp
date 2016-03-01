@@ -24,7 +24,7 @@
 
 <div class="banner <?= $banner->position->name ? sprintf('banner-%s', $banner->position->name) : NULL ?>">
 	<?php
-		$image = $this->Thumb->img($banner->path);
+		$image = $this->Html->img($banner->path);
 		
 		if($banner->target)
 			echo $this->Html->link($image, ['_name' => 'banner', $banner->id], [

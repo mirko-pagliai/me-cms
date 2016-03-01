@@ -43,7 +43,7 @@ class AdminView extends AppView {
 		$this->loadHelper('MeTools.Form');
 		$this->loadHelper('MeTools.Asset');
 		$this->loadHelper('MeTools.Library');
-		$this->loadHelper('MeTools.Thumb');
+		$this->loadHelper('Thumbs.Thumb');
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('Menu', ['className' => 'MeCms.MenuBuilder']);
