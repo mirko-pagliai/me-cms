@@ -125,7 +125,7 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
-	 * @uses MeCms\Utility\System::cacheStatus()
+	 * @uses MeCms\Utility\System::checkCacheStatus()
 	 * @uses MeCms\Utility\System::cakeVersion()
 	 * @uses MeCms\Utility\System::checkCache()
 	 * @uses MeCms\Utility\System::checkTmp()
@@ -155,7 +155,7 @@ class SystemsController extends AppController {
 				'writeable'	=> folder_is_writable(BackupManager::path())
 			],
 			'cache' => [
-				'status' => System::cacheStatus()
+				'status' => System::checkCacheStatus()
 			],
 			'executables' => [
 				'clean-css'			=> Unix::which('cleancss'),
@@ -253,18 +253,16 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
-	 * @uses MeCms\Utility\System::cacheSize()
-	 * @uses MeCms\Utility\System::cacheStatus()
-	 * @uses MeTools\Log\Engine\FileLog::size()
-	 * @uses MeTools\Utility\Asset::size()
+	 * @uses MeCms\Utility\System::checkCacheStatus()
+	 * @uses MeTools\Utility\Asset::folder()
 	 */
 	public function tmp_viewer() {
         $this->set([
-			'all_size'		=> System::cacheSize() + Asset::size() + FileLog::size() + dirsize(THUMBS),
-			'cache_size'	=> System::cacheSize(),
-			'cache_status'	=> System::cacheStatus(),
-			'assets_size'	=> Asset::size(),
-			'logs_size'		=> FileLog::size(),
+			'all_size'		=> dirsize(CACHE) + dirsize(Asset::folder()) + dirsize(LOGS) + dirsize(THUMBS),
+			'cache_size'	=> dirsize(CACHE),
+			'cache_status'	=> System::checkCacheStatus(),
+			'assets_size'	=> dirsize(Asset::folder()),
+			'logs_size'		=> dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS)
         ]);
 	}
