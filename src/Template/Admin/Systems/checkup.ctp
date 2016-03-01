@@ -83,7 +83,7 @@
 		/* -------------------------------- */
 		echo $this->Html->h4('Apache');
 		//Current version
-		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['current_version']));
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['version']));
 		echo $this->Html->div('col-sm-12', $text);
 		
 		//Apache's modules
@@ -105,14 +105,14 @@
 		/* -------------------------------- */
 		echo $this->Html->h4('PHP');
 		//Current version
-		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['current_version']));
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['version']));
 		echo $this->Html->div('col-sm-12', $text);
 		
 		//Check version
-		if($php['check_version'])
-			$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $successOptions);
+		if($php['check'])
+			$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required'])), $successOptions);
 		else
-			$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required_version'])), $errorOptions);
+			$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required'])), $errorOptions);
 		echo $this->Html->div('col-sm-12', $text);
 		
 		//PHP's extensions

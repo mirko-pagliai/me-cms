@@ -146,9 +146,9 @@ class SystemsController extends AppController {
 		
 		$this->set([
 			'apache' => [
-				'current_version'	=> Apache::version(),
-				'expires'			=> Apache::module('mod_expires'),
-				'rewrite'			=> Apache::module('mod_rewrite'),
+				'expires'	=> Apache::module('mod_expires'),
+				'rewrite'	=> Apache::module('mod_rewrite'),
+				'version'	=> Apache::version(),
 			],
 			'backups' => [
 				'path'		=> rtr(BackupManager::path()),
@@ -163,14 +163,14 @@ class SystemsController extends AppController {
 				'UglifyJS 2'		=> Unix::which('uglifyjs')
 			],
 			'php' => [
-				'current_version'	=> Php::version(),
-				'check_version'		=> Php::check($phpRequired),
-				'exif'				=> Php::extension('exif'),
-				'imagick'			=> Php::extension('imagick'),
-				'mbstring'			=> Php::extension('mbstring'),
-				'mcrypt'			=> Php::extension('mcrypt'),
-				'required_version'	=> $phpRequired,
-				'zip'				=> Php::extension('zip')
+				'check'		=> Php::check($phpRequired),
+				'exif'		=> Php::extension('exif'),
+				'imagick'	=> Php::extension('imagick'),
+				'mbstring'	=> Php::extension('mbstring'),
+				'mcrypt'	=> Php::extension('mcrypt'),
+				'required'	=> $phpRequired,
+				'version'	=> Php::version(),
+				'zip'		=> Php::extension('zip')
 			],
 			'plugins' => [
 				'cakephp_version'	=> System::cakeVersion(),
