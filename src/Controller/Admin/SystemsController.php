@@ -28,11 +28,11 @@ use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
-use MeCms\Utility\System;
 use MeTools\Core\Plugin;
 use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
 use MeTools\Utility\Php;
+use MeTools\Utility\System;
 
 /**
  * Systems controller
@@ -100,7 +100,7 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Changelogs viewer
-	 * @uses MeCms\Utility\System::changelogs()
+	 * @uses MeTools\Utility\System::changelogs()
 	 */
 	public function changelogs() {
 		//Gets changelogs files
@@ -123,10 +123,6 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
-	 * @uses MeCms\Utility\System::checkCacheStatus()
-	 * @uses MeCms\Utility\System::cakeVersion()
-	 * @uses MeCms\Utility\System::checkCache()
-	 * @uses MeCms\Utility\System::checkTmp()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Log\Engine\FileLog::check()
@@ -135,6 +131,10 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
+	 * @uses MeTools\Utility\System::checkCacheStatus()
+	 * @uses MeTools\Utility\System::cakeVersion()
+	 * @uses MeTools\Utility\System::checkCache()
+	 * @uses MeTools\Utility\System::checkTmp()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -210,10 +210,7 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
-	 * @uses MeCms\Utility\System::clearAssets()
-	 * @uses MeCms\Utility\System::clearCache()
-	 * @uses MeCms\Utility\System::clearThumbs()
-	 * @uses MeTools\Log\Engine\FileLog::clear()
+	 * @uses MeTools\Utility\System::clearCache()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete']))
@@ -221,19 +218,19 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = System::clearAssets() && FileLog::clear() && System::clearCache() && System::clearThumbs();
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && System::clearCache() && clear_dir(THUMBS);
 				break;
 			case 'cache':
 				$success = System::clearCache();
 				break;
 			case 'assets':
-				$success = System::clearAssets();
+				$success = clear_dir(ASSETS);
 				break;
 			case 'logs':
-				$success = FileLog::clear();
+				$success = clear_dir(LOGS);
 				break;
 			case 'thumbs':
-				$success = System::clearThumbs();
+				$success = clear_dir(THUMBS);
 				break;
 		}
 		
@@ -247,7 +244,7 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
-	 * @uses MeCms\Utility\System::checkCacheStatus()
+	 * @uses MeTools\Utility\System::checkCacheStatus()
 	 */
 	public function tmp_viewer() {
         $this->set([
