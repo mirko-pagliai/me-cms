@@ -33,7 +33,6 @@ use MeTools\Core\Plugin;
 use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
 use MeTools\Utility\Php;
-use MeTools\Utility\Unix;
 
 /**
  * Systems controller
@@ -136,7 +135,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\Unix::which()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -155,8 +153,8 @@ class SystemsController extends AppController {
 				'status' => System::checkCacheStatus()
 			],
 			'executables' => [
-				'clean-css'		=> Unix::which('cleancss'),
-				'UglifyJS 2'	=> Unix::which('uglifyjs')
+				'clean-css'		=> which('cleancss'),
+				'UglifyJS 2'	=> which('uglifyjs')
 			],
 			'php' => [
 				'check'		=> Php::check($phpRequired),
