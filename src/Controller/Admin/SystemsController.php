@@ -28,13 +28,11 @@ use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
-use MeCms\Utility\System;
 use MeTools\Core\Plugin;
 use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
-use MeTools\Utility\Asset;
 use MeTools\Utility\Php;
-use MeTools\Utility\Unix;
+use MeTools\Utility\System;
 
 /**
  * Systems controller
@@ -102,7 +100,7 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Changelogs viewer
-	 * @uses MeCms\Utility\System::changelogs()
+	 * @uses MeTools\Utility\System::changelogs()
 	 */
 	public function changelogs() {
 		//Gets changelogs files
@@ -125,21 +123,14 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
-	 * @uses MeCms\Utility\System::checkCacheStatus()
-	 * @uses MeCms\Utility\System::cakeVersion()
-	 * @uses MeCms\Utility\System::checkCache()
-	 * @uses MeCms\Utility\System::checkTmp()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
-	 * @uses MeTools\Log\Engine\FileLog::check()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Asset::check()
-	 * @uses MeTools\Utility\Asset::folder()
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\Unix::which()
+	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -155,12 +146,11 @@ class SystemsController extends AppController {
 				'writeable'	=> folder_is_writable(BackupManager::path())
 			],
 			'cache' => [
-				'status' => System::checkCacheStatus()
+				'status' => System::checkCache()
 			],
 			'executables' => [
-				'clean-css'			=> Unix::which('cleancss'),
-				'ffmpegthumbnailer'	=> Unix::which('ffmpegthumbnailer'),
-				'UglifyJS 2'		=> Unix::which('uglifyjs')
+				'clean-css'		=> which('cleancss'),
+				'UglifyJS 2'	=> which('uglifyjs')
 			],
 			'php' => [
 				'check'		=> Php::check($phpRequired),
@@ -173,18 +163,18 @@ class SystemsController extends AppController {
 				'zip'		=> Php::extension('zip')
 			],
 			'plugins' => [
-				'cakephp_version'	=> System::cakeVersion(),
+				'cakephp_version'	=> Configure::version(),
 				'plugins_version'	=> Plugin::versions('MeCms'),
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
 			'temporary' => [
-				['path' => rtr(LOGS),	'writeable' => FileLog::check()],
-				['path' => rtr(TMP),	'writeable' => System::checkTmp()],
-				['path' => rtr(CACHE),	'writeable' => System::checkCache()],
+				['path' => rtr(LOGS),	'writeable' => folder_is_writable(LOGS)],
+				['path' => rtr(TMP),	'writeable' => folder_is_writable(TMP)],
+				['path' => rtr(CACHE),	'writeable' => folder_is_writable(CACHE)],
 				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
 			],
 			'webroot' => [
-				['path' => rtr(Asset::folder()),			'writeable' => Asset::check()],
+				['path' => rtr(ASSETS),					'writeable' => folder_is_writable(ASSETS)],
 				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
 				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
 				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
@@ -216,10 +206,7 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
-	 * @uses MeCms\Utility\System::clearCache()
-	 * @uses MeCms\Utility\System::clearThumbs()
-	 * @uses MeTools\Utility\Asset::clear()
-	 * @uses MeTools\Log\Engine\FileLog::clear()
+	 * @uses MeTools\Utility\System::clearCache()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete']))
@@ -227,19 +214,19 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = Asset::clear() && FileLog::clear() && System::clearCache() && System::clearThumbs();
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && System::clearCache() && clear_dir(THUMBS);
 				break;
 			case 'cache':
 				$success = System::clearCache();
 				break;
 			case 'assets':
-				$success = Asset::clear();
+				$success = clear_dir(ASSETS);
 				break;
 			case 'logs':
-				$success = FileLog::clear();
+				$success = clear_dir(LOGS);
 				break;
 			case 'thumbs':
-				$success = System::clearThumbs();
+				$success = clear_dir(THUMBS);
 				break;
 		}
 		
@@ -253,15 +240,14 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
-	 * @uses MeCms\Utility\System::checkCacheStatus()
-	 * @uses MeTools\Utility\Asset::folder()
+	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function tmp_viewer() {
         $this->set([
-			'all_size'		=> dirsize(CACHE) + dirsize(Asset::folder()) + dirsize(LOGS) + dirsize(THUMBS),
+			'all_size'		=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
 			'cache_size'	=> dirsize(CACHE),
-			'cache_status'	=> System::checkCacheStatus(),
-			'assets_size'	=> dirsize(Asset::folder()),
+			'cache_status'	=> System::checkCache(),
+			'assets_size'	=> dirsize(ASSETS),
 			'logs_size'		=> dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS)
         ]);

@@ -91,10 +91,10 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.BBCode');
 		$this->loadHelper('MeTools.Dropdown');
 		$this->loadHelper('MeTools.Form');
-		$this->loadHelper('MeTools.Asset');
 		$this->loadHelper('MeTools.Library');
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('MeTools.Recaptcha');
+		$this->loadHelper('Assets.Asset');
 		$this->loadHelper('Thumbs.Thumb');
 		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeCms.Widget');
