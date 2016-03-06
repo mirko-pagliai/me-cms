@@ -11,10 +11,11 @@
 	"require": {
         "php": ">=5.5.9",
         "cakephp/cakephp": "~3.2",
-        "mirko-pagliai/me-tools": ">=2.3.0",
+		"components/jquery-cookie": "1.4.*",
+        "mirko-pagliai/assets": ">=1.0.0",
 		"mirko-pagliai/database-backup": ">=1.0.1",
-		"mirko-pagliai/thumbs": ">=1.0.0",
-		"components/jquery-cookie": "1.4.*"
+        "mirko-pagliai/me-tools": ">=2.3.0",
+		"mirko-pagliai/thumbs": ">=1.0.0"
     },
     "autoload": {
 		"psr-4": {

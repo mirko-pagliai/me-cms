@@ -29,8 +29,9 @@ use Cake\Core\Plugin;
  * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
 
-//Loads MeTools, Thumbs and DatabaseBackup plugins
+//Loads MeTools, Assets, Thumbs and DatabaseBackup plugins
 Plugin::load('MeTools', ['bootstrap' => TRUE]);
+Plugin::load('Assets', ['bootstrap' => TRUE]);
 Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
 Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
 

@@ -30,6 +30,25 @@ use MeTools\Utility\System as BaseSystem;
  * An utility for checking the status of the system and perform maintenance tasks.
  */
 class System extends BaseSystem {
+	/**
+	 * Clears assets
+	 * @return boolean
+	 */
+	public static function clearAssets() {
+		if(!folder_is_writable(ASSETS))
+			return FALSE;
+		
+		$success = TRUE;
+		
+		//Deletes each file
+		foreach((new Folder(ASSETS))->read(FALSE, ['empty'])[1] as $file) {
+			if(!(new File(ASSETS.DS.$file))->delete())
+				$success = FALSE;
+		}
+		
+		return $success;
+	}
+	
     /**
      * Clears thumbnails
      * @return boolean

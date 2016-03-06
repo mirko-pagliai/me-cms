@@ -57,7 +57,8 @@ class InstallShell extends BaseInstallShell {
 		
 		//Merges paths to be created and made writable
 		$this->paths = am($this->paths, [
-			BACKUP,
+			ASSETS,
+			BACKUPS,
 			THUMBS,
 			WWW_ROOT.'img'.DS.'banners',
 			WWW_ROOT.'img'.DS.'photos',

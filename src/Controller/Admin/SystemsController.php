@@ -32,7 +32,6 @@ use MeCms\Utility\System;
 use MeTools\Core\Plugin;
 use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
-use MeTools\Utility\Asset;
 use MeTools\Utility\Php;
 use MeTools\Utility\Unix;
 
@@ -134,8 +133,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Log\Engine\FileLog::check()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Asset::check()
-	 * @uses MeTools\Utility\Asset::folder()
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
@@ -184,7 +181,7 @@ class SystemsController extends AppController {
 				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
 			],
 			'webroot' => [
-				['path' => rtr(Asset::folder()),			'writeable' => Asset::check()],
+				['path' => rtr(ASSETS),					'writeable' => folder_is_writable(ASSETS)],
 				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
 				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
 				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
@@ -216,9 +213,9 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
+	 * @uses MeCms\Utility\System::clearAssets()
 	 * @uses MeCms\Utility\System::clearCache()
 	 * @uses MeCms\Utility\System::clearThumbs()
-	 * @uses MeTools\Utility\Asset::clear()
 	 * @uses MeTools\Log\Engine\FileLog::clear()
 	 */
 	public function tmp_cleaner($type) {
@@ -227,13 +224,13 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = Asset::clear() && FileLog::clear() && System::clearCache() && System::clearThumbs();
+				$success = System::clearAssets() && FileLog::clear() && System::clearCache() && System::clearThumbs();
 				break;
 			case 'cache':
 				$success = System::clearCache();
 				break;
 			case 'assets':
-				$success = Asset::clear();
+				$success = System::clearAssets();
 				break;
 			case 'logs':
 				$success = FileLog::clear();
@@ -254,14 +251,13 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
 	 * @uses MeCms\Utility\System::checkCacheStatus()
-	 * @uses MeTools\Utility\Asset::folder()
 	 */
 	public function tmp_viewer() {
         $this->set([
-			'all_size'		=> dirsize(CACHE) + dirsize(Asset::folder()) + dirsize(LOGS) + dirsize(THUMBS),
+			'all_size'		=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
 			'cache_size'	=> dirsize(CACHE),
 			'cache_status'	=> System::checkCacheStatus(),
-			'assets_size'	=> dirsize(Asset::folder()),
+			'assets_size'	=> dirsize(ASSETS),
 			'logs_size'		=> dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS)
         ]);
