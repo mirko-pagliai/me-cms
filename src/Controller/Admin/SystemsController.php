@@ -125,7 +125,6 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
-	 * @uses MeTools\Log\Engine\FileLog::check()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
 	 * @uses MeTools\Utility\Php::check()
@@ -172,7 +171,7 @@ class SystemsController extends AppController {
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
 			'temporary' => [
-				['path' => rtr(LOGS),	'writeable' => FileLog::check()],
+				['path' => rtr(LOGS),	'writeable' => folder_is_writable(LOGS)],
 				['path' => rtr(TMP),	'writeable' => System::checkTmp()],
 				['path' => rtr(CACHE),	'writeable' => System::checkCache()],
 				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
