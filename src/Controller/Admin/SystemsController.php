@@ -155,9 +155,8 @@ class SystemsController extends AppController {
 				'status' => System::checkCacheStatus()
 			],
 			'executables' => [
-				'clean-css'			=> Unix::which('cleancss'),
-				'ffmpegthumbnailer'	=> Unix::which('ffmpegthumbnailer'),
-				'UglifyJS 2'		=> Unix::which('uglifyjs')
+				'clean-css'		=> Unix::which('cleancss'),
+				'UglifyJS 2'	=> Unix::which('uglifyjs')
 			],
 			'php' => [
 				'check'		=> Php::check($phpRequired),
