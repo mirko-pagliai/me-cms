@@ -130,10 +130,7 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\System::checkCacheStatus()
-	 * @uses MeTools\Utility\System::cakeVersion()
 	 * @uses MeTools\Utility\System::checkCache()
-	 * @uses MeTools\Utility\System::checkTmp()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -149,7 +146,7 @@ class SystemsController extends AppController {
 				'writeable'	=> folder_is_writable(BackupManager::path())
 			],
 			'cache' => [
-				'status' => System::checkCacheStatus()
+				'status' => System::checkCache()
 			],
 			'executables' => [
 				'clean-css'		=> which('cleancss'),
@@ -166,14 +163,14 @@ class SystemsController extends AppController {
 				'zip'		=> Php::extension('zip')
 			],
 			'plugins' => [
-				'cakephp_version'	=> System::cakeVersion(),
+				'cakephp_version'	=> Configure::version(),
 				'plugins_version'	=> Plugin::versions('MeCms'),
 				'mecms_version'		=> Plugin::version('MeCms')
 			],
 			'temporary' => [
 				['path' => rtr(LOGS),	'writeable' => folder_is_writable(LOGS)],
-				['path' => rtr(TMP),	'writeable' => System::checkTmp()],
-				['path' => rtr(CACHE),	'writeable' => System::checkCache()],
+				['path' => rtr(TMP),	'writeable' => folder_is_writable(TMP)],
+				['path' => rtr(CACHE),	'writeable' => folder_is_writable(CACHE)],
 				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
 			],
 			'webroot' => [
@@ -243,13 +240,13 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
-	 * @uses MeTools\Utility\System::checkCacheStatus()
+	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function tmp_viewer() {
         $this->set([
 			'all_size'		=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
 			'cache_size'	=> dirsize(CACHE),
-			'cache_status'	=> System::checkCacheStatus(),
+			'cache_status'	=> System::checkCache(),
 			'assets_size'	=> dirsize(ASSETS),
 			'logs_size'		=> dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS)
