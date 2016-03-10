@@ -187,7 +187,6 @@ class SystemsController extends AppController {
 	/**
 	 * Logs viewer
 	 * @uses MeTools\Log\Engine\FileLog::all()
-	 * @uses MeTools\Log\Engine\FileLog::parse()
 	 */
 	public function logs_viewer() {
 		//Gets log files
@@ -198,8 +197,19 @@ class SystemsController extends AppController {
 			$this->request->query['file'] = fk($files);
 		
 		//If a log file has been specified
-		if($this->request->query('file') && $this->request->is('get'))
-			$this->set('logs', array_reverse(FileLog::parse(sprintf('%s.log', $this->request->query('file')))));
+		if($this->request->query('file') && $this->request->is('get')) {
+			//Gets the log content
+			$logs = file_get_contents(LOGS.sprintf('%s.log', $this->request->query('file')));
+			
+			//Tries to unserialized
+			$unserialized = @unserialize($logs);
+			
+			if($unserialized !== FALSE) {
+				$this->set('unserialized_logs', $unserialized);
+			}
+			else
+				$this->set('plain_logs', $logs);
+		}
 		
 		$this->set(compact('files'));
 	}
