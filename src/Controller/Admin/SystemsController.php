@@ -23,6 +23,7 @@
 namespace MeCms\Controller\Admin;
 
 use DatabaseBackup\Utility\BackupManager;
+use Cake\Core\Configure;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
