@@ -30,7 +30,6 @@ use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
 use MeTools\Core\Plugin;
-use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
 use MeTools\Utility\Php;
 use MeTools\Utility\System;
@@ -186,11 +185,13 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Logs viewer
-	 * @uses MeTools\Log\Engine\FileLog::all()
 	 */
 	public function logs_viewer() {
-		//Gets log files
-		$files = FileLog::all();
+		//Gets all log files
+		$files = (new \Cake\Filesystem\Folder(LOGS))->read(TRUE, ['empty'])[1];
+				
+		//The array keys will be the filename without extension
+		$files = array_combine(array_map(function($v) { return pathinfo($v, PATHINFO_FILENAME);	}, $files), $files);
 		
 		//If there's only one log file, it automatically sets the query value
 		if(!$this->request->query('file') && count($files) < 2)
