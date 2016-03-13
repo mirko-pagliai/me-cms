@@ -147,7 +147,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -163,7 +162,7 @@ class SystemsController extends AppController {
 				'writeable'	=> folder_is_writable(BackupManager::path())
 			],
 			'cache' => [
-				'status' => System::checkCache()
+				'status' => Cache::enabled()
 			],
 			'executables' => [
 				'clean-css'		=> which('cleancss'),
@@ -269,13 +268,12 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
-	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function tmp_viewer() {
         $this->set([
 			'all_size'		=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
 			'cache_size'	=> dirsize(CACHE),
-			'cache_status'	=> System::checkCache(),
+			'cache_status'	=> Cache::enabled(),
 			'assets_size'	=> dirsize(ASSETS),
 			'logs_size'		=> dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS)
