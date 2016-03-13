@@ -22,7 +22,7 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Cache\Cache;
+use MeTools\Cache\Cache;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
