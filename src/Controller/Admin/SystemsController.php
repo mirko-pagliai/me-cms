@@ -30,10 +30,10 @@ use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
+use MeTools\Cache\Cache;
 use MeTools\Core\Plugin;
 use MeTools\Utility\Apache;
 use MeTools\Utility\Php;
-use MeTools\Utility\System;
 
 /**
  * Systems controller
@@ -234,7 +234,7 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
-	 * @uses MeTools\Utility\System::clearCache()
+	 * @uses MeTools\Cache\Cache::clearAll()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete']))
@@ -242,10 +242,10 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = clear_dir(ASSETS) && clear_dir(LOGS) && System::clearCache() && clear_dir(THUMBS);
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && Cache::clearAll() && clear_dir(THUMBS);
 				break;
 			case 'cache':
-				$success = System::clearCache();
+				$success = Cache::clearAll();
 				break;
 			case 'assets':
 				$success = clear_dir(ASSETS);
