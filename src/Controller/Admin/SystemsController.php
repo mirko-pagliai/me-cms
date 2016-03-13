@@ -24,6 +24,7 @@ namespace MeCms\Controller\Admin;
 
 use DatabaseBackup\Utility\BackupManager;
 use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
@@ -99,12 +100,28 @@ class SystemsController extends AppController {
 	}
 	
 	/**
+	 * Gets all changelog files. 
+	 * It searchs into `ROOT` and all loaded plugins.
+	 * @return array Changelog files
+	 * @uses MeTools\Core\Plugin::path()
+	 */
+	protected function _changelogs() {
+		foreach(am([ROOT.DS], Plugin::path()) as $path) {
+			//For each changelog file in the current path
+			foreach((new Folder($path))->find('CHANGELOG(\..+)?') as $file)
+				$files[] = rtr($path.$file);
+		}
+		
+		return $files;
+	}
+
+	/**
 	 * Changelogs viewer
-	 * @uses MeTools\Utility\System::changelogs()
+	 * @uses changelogs()
 	 */
 	public function changelogs() {
 		//Gets changelogs files
-		$files = System::changelogs();
+		$files = $this->_changelogs();
 		
 		//If a changelog file has been specified
 		if($this->request->query('file') && $this->request->is('get')) {
@@ -188,7 +205,7 @@ class SystemsController extends AppController {
 	 */
 	public function logs_viewer() {
 		//Gets all log files
-		$files = (new \Cake\Filesystem\Folder(LOGS))->read(TRUE, ['empty'])[1];
+		$files = (new Folder(LOGS))->read(TRUE, ['empty'])[1];
 				
 		//The array keys will be the filename without extension
 		$files = array_combine(array_map(function($v) { return pathinfo($v, PATHINFO_FILENAME);	}, $files), $files);
