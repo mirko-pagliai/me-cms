@@ -22,7 +22,7 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
+use MeTools\Cache\Cache;
 use Cake\View\Cell;
 
 /**

@@ -22,7 +22,6 @@
  */
 namespace MeCms\Utility;
 
-use Cake\Core\App;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 

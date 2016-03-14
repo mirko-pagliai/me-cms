@@ -23,16 +23,17 @@
 namespace MeCms\Controller\Admin;
 
 use DatabaseBackup\Utility\BackupManager;
+use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\BannerFile;
 use MeCms\Utility\PhotoFile;
+use MeTools\Cache\Cache;
 use MeTools\Core\Plugin;
-use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
 use MeTools\Utility\Php;
-use MeTools\Utility\System;
 
 /**
  * Systems controller
@@ -99,12 +100,28 @@ class SystemsController extends AppController {
 	}
 	
 	/**
+	 * Gets all changelog files. 
+	 * It searchs into `ROOT` and all loaded plugins.
+	 * @return array Changelog files
+	 * @uses MeTools\Core\Plugin::path()
+	 */
+	protected function _changelogs() {
+		foreach(am([ROOT.DS], Plugin::path()) as $path) {
+			//For each changelog file in the current path
+			foreach((new Folder($path))->find('CHANGELOG(\..+)?') as $file)
+				$files[] = rtr($path.$file);
+		}
+		
+		return $files;
+	}
+
+	/**
 	 * Changelogs viewer
-	 * @uses MeTools\Utility\System::changelogs()
+	 * @uses changelogs()
 	 */
 	public function changelogs() {
 		//Gets changelogs files
-		$files = System::changelogs();
+		$files = $this->_changelogs();
 		
 		//If a changelog file has been specified
 		if($this->request->query('file') && $this->request->is('get')) {
@@ -130,7 +147,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -146,7 +162,7 @@ class SystemsController extends AppController {
 				'writeable'	=> folder_is_writable(BackupManager::path())
 			],
 			'cache' => [
-				'status' => System::checkCache()
+				'status' => Cache::enabled()
 			],
 			'executables' => [
 				'clean-css'		=> which('cleancss'),
@@ -185,20 +201,32 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Logs viewer
-	 * @uses MeTools\Log\Engine\FileLog::all()
-	 * @uses MeTools\Log\Engine\FileLog::parse()
 	 */
 	public function logs_viewer() {
-		//Gets log files
-		$files = FileLog::all();
+		//Gets all log files
+		$files = (new Folder(LOGS))->read(TRUE, ['empty'])[1];
+				
+		//The array keys will be the filename without extension
+		$files = array_combine(array_map(function($v) { return pathinfo($v, PATHINFO_FILENAME);	}, $files), $files);
 		
 		//If there's only one log file, it automatically sets the query value
 		if(!$this->request->query('file') && count($files) < 2)
 			$this->request->query['file'] = fk($files);
 		
 		//If a log file has been specified
-		if($this->request->query('file') && $this->request->is('get'))
-			$this->set('logs', array_reverse(FileLog::parse(sprintf('%s.log', $this->request->query('file')))));
+		if($this->request->query('file') && $this->request->is('get')) {
+			//Gets the log content
+			$logs = file_get_contents(LOGS.sprintf('%s.log', $this->request->query('file')));
+			
+			//Tries to unserialized
+			$unserialized = @unserialize($logs);
+			
+			if($unserialized !== FALSE) {
+				$this->set('unserialized_logs', $unserialized);
+			}
+			else
+				$this->set('plain_logs', $logs);
+		}
 		
 		$this->set(compact('files'));
 	}
@@ -206,7 +234,7 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
-	 * @uses MeTools\Utility\System::clearCache()
+	 * @uses MeTools\Cache\Cache::clearAll()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete']))
@@ -214,10 +242,10 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = clear_dir(ASSETS) && clear_dir(LOGS) && System::clearCache() && clear_dir(THUMBS);
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && Cache::clearAll() && clear_dir(THUMBS);
 				break;
 			case 'cache':
-				$success = System::clearCache();
+				$success = Cache::clearAll();
 				break;
 			case 'assets':
 				$success = clear_dir(ASSETS);
@@ -240,13 +268,12 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Temporary viewer (assets, cache, logs and thumbnails)
-	 * @uses MeTools\Utility\System::checkCache()
 	 */
 	public function tmp_viewer() {
         $this->set([
 			'all_size'		=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
 			'cache_size'	=> dirsize(CACHE),
-			'cache_status'	=> System::checkCache(),
+			'cache_status'	=> Cache::enabled(),
 			'assets_size'	=> dirsize(ASSETS),
 			'logs_size'		=> dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS)

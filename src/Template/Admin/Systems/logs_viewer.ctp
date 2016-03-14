@@ -22,10 +22,7 @@
  */
 ?>
 	
-<?php
-	$this->assign('title', __d('me_cms', 'Log viewer'));
-	$this->Asset->js('MeCms.backend/logs_viewer', ['block' => 'script_bottom']);
-?>
+<?php $this->assign('title', __d('me_cms', 'Log viewer')); ?>
 
 <div class="systems index">
 	<?= $this->Html->h2(__d('me_cms', 'Log viewer')) ?>
@@ -49,29 +46,29 @@
 		</div>
 	<?php endif; ?>
 	
-	<?php if(!empty($logs)): ?>
+	<?php if(!empty($unserialized_logs)): ?>
 		<div class="as-table">
-			<?php foreach($logs as $log): ?>
+			<?php foreach($unserialized_logs as $k => $log): ?>
 				<div class="padding-10 small">
 					<?php
-						if($log->type === 'error' || $log->type === 'fatal')
+						if(in_array($log->level, ['error', 'fatal']))
 							$class = 'bg-danger text-danger';
-						elseif($log->type === 'warning' || $log->type === 'notice')
+						elseif(in_array($log->level, ['warning', 'notice']))
 							$class = 'bg-warning text-warning';
 						else
 							$class = 'bg-info text-info';
 					?>
-
+					
 					<div class="<?= $class ?> margin-10 padding-10">
-						<strong><?= $log->datetime ?> - <?= $log->error ?></strong>
+						<strong><?= $log->datetime ?> - <?= $log->message ?></strong>
 					</div>
-
-					<?php if(!empty($log->url) || !empty($log->referer)): ?>
+					
+					<?php if(!empty($log->request) || !empty($log->referer) || !empty($log->ip)): ?>
 						<div class="margin-10 text-muted">
-							<?php if(!empty($log->url)): ?>
+							<?php if(!empty($log->request)): ?>
 								<div>
 									<?= __d('me_cms', 'Request URL') ?>: 
-									<?= $this->Html->link($log->url === '/' ? '(Root)' : $log->url, $log->url, ['target' => '_blank']) ?>
+									<?= $this->Html->link($log->request === '/' ? '(Root)' : $log->request, $log->request, ['target' => '_blank']) ?>
 								</div>
 							<?php endif; ?>
 
@@ -81,34 +78,39 @@
 									<?= $this->Html->link($log->referer, $log->referer, ['target' => '_blank']) ?>
 								</div>
 							<?php endif; ?>
+								
+							<?php if(!empty($log->ip)): ?>
+								<div>
+									<?= __d('me_cms', 'Client IP') ?>: 
+									<?= $log->ip ?>
+								</div>
+							<?php endif; ?>
 						</div>
 					<?php endif; ?>
-
+					
 					<?php
-						if(!empty($log->attributes) || !empty($log->trace) || !empty($log->stack_trace)) {
-							$buttons = $codes = [];
-
-							if(!empty($log->attributes)) {
-								$buttons[] = $this->Html->button(__d('me_cms', 'Exception attributes'), '#', ['class' => 'toggle-log-attributes btn-sm btn-primary']);
-								$codes[] = $this->Html->pre($log->attributes, ['class' => 'log-attributes']);
-							}
-
-							if(!empty($log->trace)) {
-								$buttons[] = $this->Html->button(__d('me_cms', 'Trace'), '#', ['class' => 'toggle-log-trace btn-sm btn-primary']);
-								$codes[] = $this->Html->pre($log->trace, ['class' => 'log-trace']);
-							}
-
-							if(!empty($log->stack_trace)) {
-								$buttons[] = $this->Html->button(__d('me_cms', 'Stack trace'), '#', ['class' => 'toggle-log-stack-trace btn-sm btn-primary']);
-								$codes[] = $this->Html->pre($log->stack_trace, ['class' => 'log-stack-trace']);
-							}
-
-							echo $this->Html->div('btn-group margin-10', implode(PHP_EOL, $buttons), ['role' => 'group']);
-							echo implode(PHP_EOL, $codes);
+						$buttons = $collapse = [];
+					
+						if(!empty($log->attributes)) {
+							$buttons[] = $this->Html->button(__d('me_cms', 'Exception attributes'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => "#log-attributes-{$k}"]);
+							$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->attributes), ['id' => "log-attributes-{$k}"]);
 						}
-					?>
+						
+						if(!empty($log->trace)) {
+							$buttons[] = $this->Html->button(__d('me_cms', 'Trace'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => "#log-trace-{$k}"]);
+							$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->trace), ['id' => "log-trace-{$k}"]);
+						}
+						
+						$buttons[] = $this->Html->button(__d('me_cms', 'Full log'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => "#log-full-{$k}"]);
+						$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->full), ['id' => "log-full-{$k}"]);
+										
+						echo $this->Html->div('btn-group margin-10', implode(PHP_EOL, $buttons), ['role' => 'group']);
+						echo implode(PHP_EOL, $collapse);
+					?>					
 				</div>
 			<?php endforeach; ?>
 		</div>
+	<?php elseif(!empty($plain_logs)): ?>
+		<?= $this->Html->pre($plain_logs) ?>
 	<?php endif; ?>
 </div>
