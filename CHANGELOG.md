@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.2
+* fixed bug on "popular tags" widget.
+
 ### 2.4.1
 * logs are turned into arrays when they are written. The system supports both plain logs and logs as array.
 
