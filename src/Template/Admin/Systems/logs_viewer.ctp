@@ -48,7 +48,7 @@
 	
 	<?php if(!empty($unserialized_logs)): ?>
 		<div class="as-table">
-			<?php foreach($unserialized_logs as $log): ?>
+			<?php foreach($unserialized_logs as $k => $log): ?>
 				<div class="padding-10 small">
 					<?php
 						if(in_array($log->level, ['error', 'fatal']))
@@ -92,17 +92,17 @@
 						$buttons = $collapse = [];
 					
 						if(!empty($log->attributes)) {
-							$buttons[] = $this->Html->button(__d('me_cms', 'Exception attributes'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => '#log-attributes']);
-							$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->attributes), ['id' => 'log-attributes']);
+							$buttons[] = $this->Html->button(__d('me_cms', 'Exception attributes'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => "#log-attributes-{$k}"]);
+							$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->attributes), ['id' => "log-attributes-{$k}"]);
 						}
 						
 						if(!empty($log->trace)) {
-							$buttons[] = $this->Html->button(__d('me_cms', 'Trace'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => '#log-trace']);
-							$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->trace), ['id' => 'log-trace']);
+							$buttons[] = $this->Html->button(__d('me_cms', 'Trace'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => "#log-trace-{$k}"]);
+							$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->trace), ['id' => "log-trace-{$k}"]);
 						}
 						
-						$buttons[] = $this->Html->button(__d('me_cms', 'Full log'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => '#log-full']);
-						$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->full), ['id' => 'log-full']);
+						$buttons[] = $this->Html->button(__d('me_cms', 'Full log'), '#', ['class' => 'btn-sm btn-primary', 'data-toggle' => 'collapse', 'data-target' => "#log-full-{$k}"]);
+						$collapse[] = $this->Html->div('collapse', $this->Html->pre($log->full), ['id' => "log-full-{$k}"]);
 										
 						echo $this->Html->div('btn-group margin-10', implode(PHP_EOL, $buttons), ['role' => 'group']);
 						echo implode(PHP_EOL, $collapse);
