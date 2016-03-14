@@ -66,18 +66,24 @@
 					<?php if(!empty($log->request) || !empty($log->referer) || !empty($log->ip)): ?>
 						<div class="margin-10 text-muted">
 							<?php if(!empty($log->request)): ?>
-								<?= __d('me_cms', 'Request URL') ?>: 
-								<?= $this->Html->link($log->request === '/' ? '(Root)' : $log->request, $log->request, ['target' => '_blank']) ?>
+								<div>
+									<?= __d('me_cms', 'Request URL') ?>: 
+									<?= $this->Html->link($log->request === '/' ? '(Root)' : $log->request, $log->request, ['target' => '_blank']) ?>
+								</div>
 							<?php endif; ?>
 
 							<?php if(!empty($log->referer)): ?>
-								<?= __d('me_cms', 'Referer URL') ?>: 
-								<?= $this->Html->link($log->referer, $log->referer, ['target' => '_blank']) ?>
+								<div>
+									<?= __d('me_cms', 'Referer URL') ?>: 
+									<?= $this->Html->link($log->referer, $log->referer, ['target' => '_blank']) ?>
+								</div>
 							<?php endif; ?>
 								
 							<?php if(!empty($log->ip)): ?>
-								<?= __d('me_cms', 'Client IP') ?>: 
-								<?= $log->ip ?>
+								<div>
+									<?= __d('me_cms', 'Client IP') ?>: 
+									<?= $log->ip ?>
+								</div>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
