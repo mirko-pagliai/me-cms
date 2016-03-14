@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class MeCms\Model\Validation\UsersGroupValidator | MeCms API</title>
+	<title>Class MeCms\Log\Engine\SerializedLog | MeCms API</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -46,13 +46,13 @@
 						Form					</a>
 
 						</li>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeCms.Log.html">
 						Log<span></span>
 					</a>
 
 						<ul>
-				<li class="main">
+				<li class="active main">
 					<a href="namespace-MeCms.Log.Engine.html">
 						Engine					</a>
 
@@ -63,7 +63,7 @@
 						Mailer					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeCms.Model.html">
 						Model<span></span>
 					</a>
@@ -84,7 +84,7 @@
 						Table					</a>
 
 						</li>
-				<li class="active main">
+				<li class="main">
 					<a href="namespace-MeCms.Model.Validation.html">
 						Validation					</a>
 
@@ -131,17 +131,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-MeCms.Model.Validation.AppValidator.html">AppValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.BannersPositionValidator.html">BannersPositionValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.BannerValidator.html">BannerValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.PageValidator.html">PageValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.PhotosAlbumValidator.html">PhotosAlbumValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.PhotoValidator.html">PhotoValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.PostsCategoryValidator.html">PostsCategoryValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.PostValidator.html">PostValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.TagValidator.html">TagValidator</a></li>
-				<li class="active"><a href="class-MeCms.Model.Validation.UsersGroupValidator.html">UsersGroupValidator</a></li>
-				<li><a href="class-MeCms.Model.Validation.UserValidator.html">UserValidator</a></li>
+				<li class="active"><a href="class-MeCms.Log.Engine.SerializedLog.html">SerializedLog</a></li>
 			</ul>
 
 
@@ -168,7 +158,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MeCms.Model.Validation.html" title="Summary of MeCms\Model\Validation"><span>Namespace</span></a>
+				<a href="namespace-MeCms.Log.Engine.html" title="Summary of MeCms\Log\Engine"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -185,38 +175,27 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class UsersGroupValidator</h1>
+	<h1>Class SerializedLog</h1>
 
 
 	<div class="description">
-	<p>Application validator class.
-Used for validation of model data, it adds some default validation rules.</p>
+	<p>File Storage stream for Logging. Writes logs to different files
+based on the level of log it is.</p>
 
-<p>Example:</p>
-
-<pre><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validationDefault(Validator <span class="php-var">$validator</span>) {
-    <span class="php-var">$validator</span> = <span class="php-keyword1">new</span> \MeCms\Model\Validation\AppValidator;
-
-    <span class="php-keyword1">return</span> <span class="php-var">$validator</span>;
-}</pre>
+<p>Rewrites <a href="http://api.cakephp.org/3.2/class-Cake.Log.Engine.FileLog.html">FileLog</a>.
+This adapter writes logs as a serialized array.
+The log information are splitted from the message, using regex.</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-Cake\Validation\Validator
+Cake\Log\Engine\FileLog
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-MeCms.Model.Validation.AppValidator.html"><span>MeCms\Model\Validation\AppValidator</span></a>
-			
-			
-			
-		</dd>
-		<dd style="padding-left:60px">
-			<img src="resources/inherit.png" alt="Extended by">
-<b><span>MeCms\Model\Validation\UsersGroupValidator</span></b>			
+<b><span>MeCms\Log\Engine\SerializedLog</span></b>			
 			
 			
 		</dd>
@@ -232,10 +211,10 @@ Cake\Validation\Validator
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Model.html">Model</a>\<a href="namespace-MeCms.Model.Validation.html">Validation</a><br>
+		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Log.html">Log</a>\<a href="namespace-MeCms.Log.Engine.html">Engine</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Model.Validation.UsersGroupValidator.html#27-74" title="Go to source code">Model/Validation/UsersGroupValidator.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Log.Engine.SerializedLog.html#27-137" title="Go to source code">Log/Engine/SerializedLog.php</a>
 		<br>
 	</div>
 
@@ -243,56 +222,102 @@ Cake\Validation\Validator
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__construct" id="___construct">
+	<tr data-order="_getLogAsArray" id="__getLogAsArray">
 
 		<td class="attributes"><code>
-			 public 
+			 protected 
 
-			
+			array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-MeCms.Model.Validation.UsersGroupValidator.html#28-73" title="Go to source code">__construct</a>( )</code>
+		<a class="anchor" href="#__getLogAsArray">#</a>
+		<code><a href="source-class-MeCms.Log.Engine.SerializedLog.html#36-84" title="Go to source code">_getLogAsArray</a>( <span>string <var>$level</var></span>, <span>string <var>$message</var></span> )</code>
 
 		<div class="description short">
-			<p>Construct.</p>
+			<p>Gets the log as an array. It splits the log information from the message, using regex</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Construct.</p>
-
-<p>Adds some validation rules.</p>
+			<p>Gets the log as an array. It splits the log information from the message, using regex</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$level</var></dt>
+					<dd><p>The severity level of the message being written.
+    See Cake\Log\Log::$_levels for list of possible levels.</p></dd>
+					<dt><var>$message</var></dt>
+					<dd>The message you want to log.</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Log.Engine.SerializedLog.html#_log">MeCms\Log\Engine\SerializedLog::log()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="log" id="_log">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_log">#</a>
+		<code><a href="source-class-MeCms.Log.Engine.SerializedLog.html#86-136" title="Go to source code">log</a>( <span>string <var>$level</var></span>, <span>string <var>$message</var></span>, <span>array <var>$context</var> = []</span> )</code>
+
+		<div class="description short">
+			<p>Implements writing to log files.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Implements writing to log files.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$level</var></dt>
+					<dd><p>The severity level of the message being written.
+    See Cake\Log\Log::$_levels for list of possible levels.</p></dd>
+					<dt><var>$message</var></dt>
+					<dd>The message you want to log.</dd>
+					<dt><var>$context</var></dt>
+					<dd>Additional information about the logged message</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>success of write
+				</div>
 
 
 				<h4>Uses</h4>
 				<div class="list">
-						<code><a href="class-MeCms.Model.Validation.AppValidator.html#___construct">MeCms\Model\Validation\AppValidator::__construct()</a></code><br>
+						<code><a href="class-MeCms.Log.Engine.SerializedLog.html#__getLogAsArray">MeCms\Log\Engine\SerializedLog::_getLogAsArray()</a></code><br>
 				</div>
 
-				<h4>Overrides</h4>
-				<div class="list"><code><a href="class-MeCms.Model.Validation.AppValidator.html#___construct">MeCms\Model\Validation\AppValidator::__construct()</a></code></div>
 
 		</div>
 		</div></td>
 	</tr>
 	</table>
 
-	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-MeCms.Model.Validation.AppValidator.html#methods">MeCms\Model\Validation\AppValidator</a></caption>
-	<tr>
-		<td><code>
-			<a href="class-MeCms.Model.Validation.AppValidator.html#_lowercaseLetters">lowercaseLetters()</a>, 
-			<a href="class-MeCms.Model.Validation.AppValidator.html#_personName">personName()</a>, 
-			<a href="class-MeCms.Model.Validation.AppValidator.html#_slug">slug()</a>
-		</code></td>
-	</tr>
-	</table>
 
 
 
