@@ -22,33 +22,40 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Static pages')); ?>
+<?php $this->assign('title', __d('me_cms', 'Logs')); ?>
 
-<div class="pages index">
-	<?= $this->Html->h2(__d('me_cms', 'Static pages')) ?>
+<div class="logs index">
+	<?= $this->Html->h2(__d('me_cms', 'Logs')) ?>
 	<table class="table table-striped">
 		<tr>
 			<th><?= __d('me_cms', 'Filename') ?></th>
-			<th><?= __d('me_cms', 'Title') ?></th>
-			<th><?= __d('me_cms', 'Path') ?></th>
+			<th class="text-center"><?= __d('me_cms', 'Type') ?></th>
+			<th class="text-center"><?= __d('me_cms', 'Size') ?></th>
 		</tr>
-		<?php foreach($pages as $page): ?>
+		<?php foreach($logs as $log): ?>
 			<tr>
 				<td>
 					<?php
-						$title = $this->Html->link($page->filename, ['_name' => 'page', $page->slug]);
+						$title = $this->Html->link($log->filename, ['action' => 'view', $log->slug]);
 						
 						echo $this->Html->strong($title);
 						
 						$actions = [
-							$this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank'])
+							$this->Html->link(__d('me_cms', 'Basic view'), ['action' => 'view', $log->slug], ['icon' => 'eye']),
 						];
+						
+						if($log->serialized)
+							$actions[] = $this->Html->link(__d('me_cms', 'Advanced view'), ['action' => 'view_serialized', $log->slug], ['icon' => 'eye']);
 						
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
 				</td>
-				<td><?= $page->title ?></td>
-				<td><?= $page->path ?></td>
+				<td class="min-width text-center">
+					<?= $log->serialized ? __d('me_cms', 'Serialized') : __d('me_cms', 'Plain') ?>
+				</td>
+				<td class="min-width text-center">
+					<?= $this->Number->toReadableSize($log->size) ?>
+				</td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

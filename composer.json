@@ -14,7 +14,7 @@
 		"components/jquery-cookie": "1.4.*",
         "mirko-pagliai/assets": ">=1.0.0",
 		"mirko-pagliai/database-backup": ">=1.0.1",
-        "mirko-pagliai/me-tools": ">=2.5.0",
+        "mirko-pagliai/me-tools": ">=2.5.1",
 		"mirko-pagliai/thumbs": ">=1.0.0"
     },
     "autoload": {

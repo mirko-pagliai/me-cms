@@ -29,7 +29,9 @@ use Cake\Log\Engine\FileLog;
  * based on the level of log it is.
  * 
  * Rewrites {@link http://api.cakephp.org/3.2/class-Cake.Log.Engine.FileLog.html FileLog}.
- * This adapter writes logs as a serialized array. 
+ * 
+ * This adapter writes writes the normal log (using the `FileLog::log` method) 
+ * and a serialized copy of the log.  
  * The log information are splitted from the message, using regex.
  */
 class SerializedLog extends FileLog {
@@ -40,7 +42,7 @@ class SerializedLog extends FileLog {
 	 * @param string $message The message you want to log.
 	 * @return array
 	 */
-	protected function _getLogAsArray($level, $message) {		
+	protected function _getLogAsArray($level, $message) {
 		$serialized['level'] = $level;
 		$serialized['datetime'] = date('Y-m-d H:i:s');
 		
@@ -85,6 +87,10 @@ class SerializedLog extends FileLog {
 
 	/**
 	 * Implements writing to log files.
+	 * 
+	 * Each time that is called, it writes the normal log (using the `FileLog::log` method) 
+	 * and a serialized copy of the log.  
+	 * For example, if the log is `error.log`, the serialized log will be `error_serialized.log`.
 	 * @param string $level The severity level of the message being written.
 	 *		See Cake\Log\Log::$_levels for list of possible levels.
 	 * @param string $message The message you want to log.
@@ -93,9 +99,21 @@ class SerializedLog extends FileLog {
 	 * @uses _getLogAsArray()
 	 */
 	public function log($level, $message, array $context = []) {
+		//First of all, it normally writes log
+		$parent_result = parent::log($level, $message, $context);
+		
+		/**
+		 * Now, it writes the serialized log
+		 */
+		
         $message = $this->_format(trim($message), $context);
 		
         $filename = $this->_getFilename($level);
+		
+		//It sets a new filename, adding the `_serialized` suffix
+		//For example, if the log is `error.log`, the serialized log will be `error_serialized.log`
+		$filename = sprintf('%s_serialized.log', pathinfo($filename, PATHINFO_FILENAME));
+		
         if (!empty($this->_size)) {
             $this->_rotateFile($filename);
         }
@@ -109,8 +127,8 @@ class SerializedLog extends FileLog {
 		if(empty($logs) || !is_array($logs))
 			$logs = [];
 		
-		//Adds the current log
-		$logs[] = (object) $this->_getLogAsArray($level, $message);
+		//Adds the current log at the beginning
+		array_unshift($logs, (object) $this->_getLogAsArray($level, $message));
 		
 		//Serializes logs
 		$output = serialize($logs);

@@ -184,10 +184,10 @@ class MeCmsMenuHelper extends Helper {
 			$this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms'])
 		];
 		
-		//Only admins can see logs
+		//Only admins can manage logs
 		if($this->Auth->isGroup('admin'))
 			array_push($menu,
-				$this->Html->link(__d('me_cms', 'Log viewer'), ['controller' => 'Systems', 'action' => 'logs_viewer', 'plugin' => 'MeCms'])
+				$this->Html->link(__d('me_cms', 'Log viewer'), ['controller' => 'Logs', 'action' => 'index', 'plugin' => 'MeCms'])
 			);
 		
 		return [$menu, __d('me_cms', 'System'), ['icon' => 'wrench']];

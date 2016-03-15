@@ -46,11 +46,7 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
-	public function isAuthorized($user = NULL) {
-		//Only admins can view logs
-		if($this->request->isAction('logs_viewer'))
-			return $this->Auth->isGroup('admin');
-		
+	public function isAuthorized($user = NULL) {		
 		//Only admins can clear all temporary files or logs
 		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs']))
 			return $this->Auth->isGroup('admin');
@@ -98,30 +94,18 @@ class SystemsController extends AppController {
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}
-	
+
 	/**
-	 * Gets all changelog files. 
-	 * It searchs into `ROOT` and all loaded plugins.
-	 * @return array Changelog files
-	 * @uses MeTools\Core\Plugin::path()
+	 * Changelogs viewer
 	 */
-	protected function _changelogs() {
+	public function changelogs() {
+		//Gets all changelog files. 
+		//Searchs into `ROOT` and all loaded plugins.
 		foreach(am([ROOT.DS], Plugin::path()) as $path) {
 			//For each changelog file in the current path
 			foreach((new Folder($path))->find('CHANGELOG(\..+)?') as $file)
 				$files[] = rtr($path.$file);
 		}
-		
-		return $files;
-	}
-
-	/**
-	 * Changelogs viewer
-	 * @uses changelogs()
-	 */
-	public function changelogs() {
-		//Gets changelogs files
-		$files = $this->_changelogs();
 		
 		//If a changelog file has been specified
 		if($this->request->query('file') && $this->request->is('get')) {
@@ -197,38 +181,6 @@ class SystemsController extends AppController {
 				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
 			]
 		]);
-	}
-	
-	/**
-	 * Logs viewer
-	 */
-	public function logs_viewer() {
-		//Gets all log files
-		$files = (new Folder(LOGS))->read(TRUE, ['empty'])[1];
-				
-		//The array keys will be the filename without extension
-		$files = array_combine(array_map(function($v) { return pathinfo($v, PATHINFO_FILENAME);	}, $files), $files);
-		
-		//If there's only one log file, it automatically sets the query value
-		if(!$this->request->query('file') && count($files) < 2)
-			$this->request->query['file'] = fk($files);
-		
-		//If a log file has been specified
-		if($this->request->query('file') && $this->request->is('get')) {
-			//Gets the log content
-			$logs = file_get_contents(LOGS.sprintf('%s.log', $this->request->query('file')));
-			
-			//Tries to unserialized
-			$unserialized = @unserialize($logs);
-			
-			if($unserialized !== FALSE) {
-				$this->set('unserialized_logs', $unserialized);
-			}
-			else
-				$this->set('plain_logs', $logs);
-		}
-		
-		$this->set(compact('files'));
 	}
 	
 	/**

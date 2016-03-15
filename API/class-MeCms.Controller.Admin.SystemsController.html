@@ -134,6 +134,7 @@
 				<li><a href="class-MeCms.Controller.Admin.BackupsController.html">BackupsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersController.html">BannersController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.BannersPositionsController.html">BannersPositionsController</a></li>
+				<li><a href="class-MeCms.Controller.Admin.LogsController.html">LogsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PagesController.html">PagesController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PhotosAlbumsController.html">PhotosAlbumsController</a></li>
 				<li><a href="class-MeCms.Controller.Admin.PhotosController.html">PhotosController</a></li>
@@ -227,7 +228,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#38-282" title="Go to source code">Controller/Admin/SystemsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.SystemsController.html#38-234" title="Go to source code">Controller/Admin/SystemsController.php</a>
 		<br>
 	</div>
 
@@ -247,7 +248,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#42-60" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#42-56" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request</p>
@@ -293,7 +294,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_browser">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#62-100" title="Go to source code">browser</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#58-96" title="Go to source code">browser</a>( )</code>
 
 		<div class="description short">
 			<p>Media browser with KCFinder</p>
@@ -323,46 +324,6 @@ App\Controller\AppController
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="_changelogs" id="__changelogs">
-
-		<td class="attributes"><code>
-			 protected 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#__changelogs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#102-116" title="Go to source code">_changelogs</a>( )</code>
-
-		<div class="description short">
-			<p>Gets all changelog files.
-It searchs into <code>ROOT</code> and all loaded plugins.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Gets all changelog files.
-It searchs into <code>ROOT</code> and all loaded plugins.</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					array<br>Changelog files
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Core\Plugin::path()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="changelogs" id="_changelogs">
 
 		<td class="attributes"><code>
@@ -375,7 +336,7 @@ It searchs into <code>ROOT</code> and all loaded plugins.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_changelogs">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#118-135" title="Go to source code">changelogs</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#98-119" title="Go to source code">changelogs</a>( )</code>
 
 		<div class="description short">
 			<p>Changelogs viewer</p>
@@ -388,14 +349,6 @@ It searchs into <code>ROOT</code> and all loaded plugins.</p>
 
 
 
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_changelogs">MeCms\Controller\Admin\SystemsController::changelogs()</a></code><br>
-				</div>
-				<h4>Used by</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.Admin.SystemsController.html#_changelogs">MeCms\Controller\Admin\SystemsController::changelogs()</a></code><br>
-				</div>
 
 
 		</div>
@@ -413,7 +366,7 @@ It searchs into <code>ROOT</code> and all loaded plugins.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_checkup">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#137-200" title="Go to source code">checkup</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#121-184" title="Go to source code">checkup</a>( )</code>
 
 		<div class="description short">
 			<p>System checkup</p>
@@ -445,36 +398,6 @@ It searchs into <code>ROOT</code> and all loaded plugins.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="logs_viewer" id="_logs_viewer">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_logs_viewer">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#202-232" title="Go to source code">logs_viewer</a>( )</code>
-
-		<div class="description short">
-			<p>Logs viewer</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Logs viewer</p>
-
-
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="tmp_cleaner" id="_tmp_cleaner">
 
 		<td class="attributes"><code>
@@ -487,7 +410,7 @@ It searchs into <code>ROOT</code> and all loaded plugins.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_tmp_cleaner">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#234-267" title="Go to source code">tmp_cleaner</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#186-219" title="Go to source code">tmp_cleaner</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Temporary cleaner (assets, cache, logs and thumbnails)</p>
@@ -526,7 +449,7 @@ It searchs into <code>ROOT</code> and all loaded plugins.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_tmp_viewer">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#269-281" title="Go to source code">tmp_viewer</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.SystemsController.html#221-233" title="Go to source code">tmp_viewer</a>( )</code>
 
 		<div class="description short">
 			<p>Temporary viewer (assets, cache, logs and thumbnails)</p>
