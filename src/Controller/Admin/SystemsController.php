@@ -46,11 +46,7 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
-	public function isAuthorized($user = NULL) {
-		//Only admins can view logs
-		if($this->request->isAction('logs_viewer'))
-			return $this->Auth->isGroup('admin');
-		
+	public function isAuthorized($user = NULL) {		
 		//Only admins can clear all temporary files or logs
 		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs']))
 			return $this->Auth->isGroup('admin');
