@@ -95,7 +95,7 @@ class LogsController extends AppController {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
 		
 		$this->set('log', (object) am([
-			'content' => array_reverse(unserialize(file_get_contents($path)))
+			'content' => unserialize(file_get_contents($path))
 		], compact('filename')));
 	}
 }

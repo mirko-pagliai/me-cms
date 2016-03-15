@@ -127,8 +127,8 @@ class SerializedLog extends FileLog {
 		if(empty($logs) || !is_array($logs))
 			$logs = [];
 		
-		//Adds the current log
-		$logs[] = (object) $this->_getLogAsArray($level, $message);
+		//Adds the current log at the beginning
+		array_unshift($logs, (object) $this->_getLogAsArray($level, $message));
 		
 		//Serializes logs
 		$output = serialize($logs);
