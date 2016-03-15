@@ -22,9 +22,7 @@
  */
 namespace MeCms\Utility;
 
-use Cake\Core\App;
 use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 
 /**
  * An utility to manage banners.
