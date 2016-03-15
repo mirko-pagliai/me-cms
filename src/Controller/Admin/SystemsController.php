@@ -94,30 +94,18 @@ class SystemsController extends AppController {
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}
-	
+
 	/**
-	 * Gets all changelog files. 
-	 * It searchs into `ROOT` and all loaded plugins.
-	 * @return array Changelog files
-	 * @uses MeTools\Core\Plugin::path()
+	 * Changelogs viewer
 	 */
-	protected function _changelogs() {
+	public function changelogs() {
+		//Gets all changelog files. 
+		//Searchs into `ROOT` and all loaded plugins.
 		foreach(am([ROOT.DS], Plugin::path()) as $path) {
 			//For each changelog file in the current path
 			foreach((new Folder($path))->find('CHANGELOG(\..+)?') as $file)
 				$files[] = rtr($path.$file);
 		}
-		
-		return $files;
-	}
-
-	/**
-	 * Changelogs viewer
-	 * @uses changelogs()
-	 */
-	public function changelogs() {
-		//Gets changelogs files
-		$files = $this->_changelogs();
 		
 		//If a changelog file has been specified
 		if($this->request->query('file') && $this->request->is('get')) {
