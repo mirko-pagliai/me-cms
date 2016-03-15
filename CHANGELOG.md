@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.3
+* added `Logs` controller and templates. Log management has improved. The log can be displayed as plain or serialized;
 * each time that is called, the `SerializedLog` adapter writes the normal log and a serialized copy of the log.  
 
 ### 2.4.2
