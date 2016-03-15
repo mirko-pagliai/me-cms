@@ -222,7 +222,7 @@ class SystemsController extends AppController {
 			$unserialized = @unserialize($logs);
 			
 			if($unserialized !== FALSE) {
-				$this->set('unserialized_logs', $unserialized);
+				$this->set('unserialized_logs', array_reverse($unserialized));
 			}
 			else
 				$this->set('plain_logs', $logs);
