@@ -182,8 +182,10 @@
 	<p>File Storage stream for Logging. Writes logs to different files
 based on the level of log it is.</p>
 
-<p>Rewrites <a href="http://api.cakephp.org/3.2/class-Cake.Log.Engine.FileLog.html">FileLog</a>.
-This adapter writes logs as a serialized array.
+<p>Rewrites <a href="http://api.cakephp.org/3.2/class-Cake.Log.Engine.FileLog.html">FileLog</a>.</p>
+
+<p>This adapter writes writes the normal log (using the <code>FileLog::log</code> method)
+and a serialized copy of the log.
 The log information are splitted from the message, using regex.</p>
 	</div>
 
@@ -214,7 +216,7 @@ Cake\Log\Engine\FileLog
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Log.html">Log</a>\<a href="namespace-MeCms.Log.Engine.html">Engine</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Log.Engine.SerializedLog.html#27-137" title="Go to source code">Log/Engine/SerializedLog.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Log.Engine.SerializedLog.html#27-155" title="Go to source code">Log/Engine/SerializedLog.php</a>
 		<br>
 	</div>
 
@@ -234,7 +236,7 @@ Cake\Log\Engine\FileLog
 
 		<td class="name"><div>
 		<a class="anchor" href="#__getLogAsArray">#</a>
-		<code><a href="source-class-MeCms.Log.Engine.SerializedLog.html#36-84" title="Go to source code">_getLogAsArray</a>( <span>string <var>$level</var></span>, <span>string <var>$message</var></span> )</code>
+		<code><a href="source-class-MeCms.Log.Engine.SerializedLog.html#38-86" title="Go to source code">_getLogAsArray</a>( <span>string <var>$level</var></span>, <span>string <var>$message</var></span> )</code>
 
 		<div class="description short">
 			<p>Gets the log as an array. It splits the log information from the message, using regex</p>
@@ -280,7 +282,7 @@ Cake\Log\Engine\FileLog
 
 		<td class="name"><div>
 		<a class="anchor" href="#_log">#</a>
-		<code><a href="source-class-MeCms.Log.Engine.SerializedLog.html#86-136" title="Go to source code">log</a>( <span>string <var>$level</var></span>, <span>string <var>$message</var></span>, <span>array <var>$context</var> = []</span> )</code>
+		<code><a href="source-class-MeCms.Log.Engine.SerializedLog.html#88-154" title="Go to source code">log</a>( <span>string <var>$level</var></span>, <span>string <var>$message</var></span>, <span>array <var>$context</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Implements writing to log files.</p>
@@ -288,6 +290,10 @@ Cake\Log\Engine\FileLog
 
 		<div class="description detailed hidden">
 			<p>Implements writing to log files.</p>
+
+<p>Each time that is called, it writes the normal log (using the <code>FileLog::log</code> method)
+and a serialized copy of the log.
+For example, if the log is <code>error.log</code>, the serialized log will be <code>error_serialized.log</code>.</p>
 
 
 				<h4>Parameters</h4>
