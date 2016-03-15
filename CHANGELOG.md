@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.3
+* each time that is called, the `SerializedLog` adapter writes the normal log and a serialized copy of the log.  
+
 ### 2.4.2
 * fixed bug on "popular tags" widget.
 
