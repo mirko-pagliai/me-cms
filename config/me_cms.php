@@ -136,6 +136,10 @@ return ['MeCms' => [
 		//You can use the asterisk (*) as a wildcard.
 		//With "false" or an empty value, access is granted to any ip addresses (no limitation).
 		'banned_ip' => [],
+		//Link for "IP map". The `{IP}` string will be replaced with the IP address
+		'ip_map' => 'http://www.traceip.net/?query={IP}',
+		//Link for "IP who is". The `{IP}` string will be replaced with the IP address
+		'ip_whois' => 'http://www.traceip.net/whois/{IP}',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
 		'recaptcha' => FALSE,
