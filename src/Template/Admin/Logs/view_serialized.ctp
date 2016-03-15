@@ -64,8 +64,8 @@
 								<div>
 									<?= __d('me_cms', 'Client IP') ?>: 
 									<?= $row->ip ?> 
-									(<?= $this->Html->link('Who is', str_replace('{IP}', '178.248.150.31', config('security.ip_whois')), ['target' => '_blank']) ?> | 
-										<?= $this->Html->link('Map', str_replace('{IP}', '178.248.150.31', config('security.ip_map')), ['target' => '_blank']) ?>)
+									(<?= $this->Html->link(__d('me_cms', 'Who is'), str_replace('{IP}', '178.248.150.31', config('security.ip_whois')), ['target' => '_blank']) ?> | 
+										<?= $this->Html->link(__d('me_cms', 'Map'), str_replace('{IP}', '178.248.150.31', config('security.ip_map')), ['target' => '_blank']) ?>)
 								</div>
 							<?php endif; ?>
 						</div>
