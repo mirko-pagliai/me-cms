@@ -35,7 +35,7 @@
 		<?php foreach($pages as $page): ?>
 			<tr>
 				<td>
-					<?php 
+					<?php
 						$title = $this->Html->link($page->filename, ['_name' => 'page', $page->slug]);
 						
 						echo $this->Html->strong($title);
