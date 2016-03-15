@@ -200,38 +200,6 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Logs viewer
-	 */
-	public function logs_viewer() {
-		//Gets all log files
-		$files = (new Folder(LOGS))->read(TRUE, ['empty'])[1];
-				
-		//The array keys will be the filename without extension
-		$files = array_combine(array_map(function($v) { return pathinfo($v, PATHINFO_FILENAME);	}, $files), $files);
-		
-		//If there's only one log file, it automatically sets the query value
-		if(!$this->request->query('file') && count($files) < 2)
-			$this->request->query['file'] = fk($files);
-		
-		//If a log file has been specified
-		if($this->request->query('file') && $this->request->is('get')) {
-			//Gets the log content
-			$logs = file_get_contents(LOGS.sprintf('%s.log', $this->request->query('file')));
-			
-			//Tries to unserialized
-			$unserialized = @unserialize($logs);
-			
-			if($unserialized !== FALSE) {
-				$this->set('unserialized_logs', array_reverse($unserialized));
-			}
-			else
-				$this->set('plain_logs', $logs);
-		}
-		
-		$this->set(compact('files'));
-	}
-	
-	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
 	 * @uses MeTools\Cache\Cache::clearAll()
