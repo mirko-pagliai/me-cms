@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.4
+* fixed a major bug for the menu builder;
 * fixed bug on log advanced viewer.
 
 ### 2.4.3

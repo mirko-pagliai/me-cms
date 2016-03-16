@@ -128,7 +128,10 @@ class MenuBuilderHelper extends Helper {
 		
 		//Calls dynamically the method from the menu helper
 		list($menu, $title, $options) = $this->{$helper}->{sprintf('_%s', $name)}();
-				
+		
+        if(empty($menu) || empty($title))
+            return;
+        
 		//Calls dynamically the internal render method
 		return $this->{sprintf('_renderAs%s', ucfirst($type))}($title, $options, $menu);
 	}
