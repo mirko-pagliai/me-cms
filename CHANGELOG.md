@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.4
+* fixed bug on log advanced viewer.
+
 ### 2.4.3
 * added `Logs` controller and templates. Log management has improved. The log can be displayed as plain or serialized;
 * added "who is" and "map" functionalities for IP addresses on logs;
