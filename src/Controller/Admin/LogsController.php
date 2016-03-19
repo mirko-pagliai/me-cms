@@ -66,7 +66,7 @@ class LogsController extends AppController {
 	}
 	
 	/**
-	 * Views a (plain) log
+	 * Views a log
 	 * @param string $slug
 	 * @throws InternalErrorException
 	 */
@@ -98,4 +98,20 @@ class LogsController extends AppController {
 			'content' => unserialize(file_get_contents($path))
 		], compact('filename')));
 	}
+    
+    /**
+     * Downloads a log
+	 * @param string $slug
+     * @throws InternalErrorException
+     */
+    public function download($slug) {
+		$filename = sprintf('%s.log', urldecode($slug));
+		$path = LOGS.$filename;
+		
+		if(!is_readable($path))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
+                
+		$this->response->file($path);
+		return $this->response;
+    }
 }

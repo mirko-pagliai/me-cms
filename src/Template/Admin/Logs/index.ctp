@@ -46,6 +46,8 @@
 						if($log->serialized)
 							$actions[] = $this->Html->link(__d('me_cms', 'Advanced view'), ['action' => 'view_serialized', $log->slug], ['icon' => 'eye']);
 						
+                        $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $log->slug], ['icon' => 'download']);
+                        
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
 				</td>
