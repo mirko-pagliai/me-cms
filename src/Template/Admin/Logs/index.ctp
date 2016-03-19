@@ -29,7 +29,6 @@
 	<table class="table table-striped">
 		<tr>
 			<th><?= __d('me_cms', 'Filename') ?></th>
-			<th class="text-center"><?= __d('me_cms', 'Type') ?></th>
 			<th class="text-center"><?= __d('me_cms', 'Size') ?></th>
 		</tr>
 		<?php foreach($logs as $log): ?>
@@ -49,9 +48,6 @@
 						
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
-				</td>
-				<td class="min-width text-center">
-					<?= $log->serialized ? __d('me_cms', 'Serialized') : __d('me_cms', 'Plain') ?>
 				</td>
 				<td class="min-width text-center">
 					<?= $this->Number->toReadableSize($log->size) ?>
