@@ -108,14 +108,16 @@ body {
 }
 
 /* Content, title */
-#content > .form > h2, #content > .index > h2 {
+#content > .form > h2,
+#content > .index > h2,
+#content > .view > h2 {
 	font-size: 24px;
 	display: inline-block;
 	margin: 0 0 20px;
 }
 
 /* Content, button after page title ("add new") */
-#content > .index > h2 + a.btn {
+#content > .index > h2 + .btn {
     font-size: 13px;
     margin: 0 0 20px 15px;
     padding: 3px 8px;
@@ -123,7 +125,7 @@ body {
 }
 
 /* Content, button after page title ("add new"), icon */
-#content > .index > h2 + a.btn > .fa {
+#content > .index > h2 + .btn > .fa {
 	font-size: 10px;
     margin-right: 2px;
 }
