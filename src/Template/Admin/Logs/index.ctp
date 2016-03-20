@@ -47,6 +47,7 @@
 							$actions[] = $this->Html->link(__d('me_cms', 'Advanced view'), ['action' => 'view_serialized', $log->slug], ['icon' => 'eye']);
 						
                         $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $log->slug], ['icon' => 'download']);
+                        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $log->slug], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                         
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
