@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
 use MeCms\Controller\AppController;
 
@@ -94,4 +95,24 @@ class BackupsController extends AppController {
 		$this->response->file(BackupManager::path(urldecode($filename)));
 		return $this->response;
 	}
+    
+    /**
+     * Restores a backup file
+	 * @param string $filename Backup filename
+	 * @uses DatabaseBackup\Utility\BackupImport::filename()
+	 * @uses DatabaseBackup\Utility\BackupImport::import()
+	 * @uses DatabaseBackup\Utility\BackupManager::path()
+     * 
+     */
+    public function restore($filename) {        
+		$backup = new BackupImport();
+		$backup->filename(BackupManager::path(urldecode($filename)));
+        
+        if($backup->import())
+			$this->Flash->success(__d('me_cms', 'The backup has been restored'));
+		else
+			$this->Flash->error(__d('me_cms', 'The backup could not be restored'));
+        
+        return $this->redirect(['action' => 'index']);
+    }
 }

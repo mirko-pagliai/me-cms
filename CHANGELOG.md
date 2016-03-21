@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.5
+* now you can restore database backups;
 * now you can download and deletes logs.
 
 ### 2.4.4
