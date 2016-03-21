@@ -89,23 +89,23 @@ class BackupsController extends AppController {
 	/**
 	 * Downloads a backup file
 	 * @param string $filename Backup filename
-	 * @uses DatabaseBackup\Utility\Backup::path()
 	 */
 	public function download($filename) {
-		$this->response->file(Backup::path(urldecode($filename)));
+        $filename = BACKUPS.DS.urldecode($filename);
+        
+		$this->response->file($filename);
 		return $this->response;
 	}
     
     /**
      * Restores a backup file
 	 * @param string $filename Backup filename
-	 * @uses DatabaseBackup\Utility\Backup::path()
 	 * @uses DatabaseBackup\Utility\BackupImport::filename()
 	 * @uses DatabaseBackup\Utility\BackupImport::import()
      * 
      */
     public function restore($filename) {
-        $filename = Backup::path(urldecode($filename));
+        $filename = BACKUPS.DS.urldecode($filename);
         
 		$backup = new BackupImport();
 		$backup->filename($filename);
