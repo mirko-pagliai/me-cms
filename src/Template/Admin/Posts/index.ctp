@@ -95,6 +95,10 @@
 							//If the post is not active (it's a draft)
 							if(!$post->active)
 								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
+                            
+                            //If the post is scheduled
+                            if($post->created->isFuture())
+                                $title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'text-warning']));
 							
 							echo $this->Html->strong($title);
 							

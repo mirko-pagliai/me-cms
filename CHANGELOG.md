@@ -2,6 +2,7 @@
 ## 2.4 branch
 ### 2.4.5
 * logged users can view future posts, future pages and drafts;
+* scheduled posts and pages are shown;
 * now you can restore database backups;
 * now you can download and deletes logs.
 

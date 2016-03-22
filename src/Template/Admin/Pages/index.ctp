@@ -80,6 +80,10 @@
 							//If the page is not active (it's a draft)
 							if(!$page->active)
 								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
+                            
+                            //If the page is scheduled
+                            if($page->created->isFuture())
+                                $title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'text-warning']));
 							
 							echo $this->Html->strong($title);
 														
