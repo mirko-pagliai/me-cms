@@ -4,6 +4,7 @@
 * logged users can view future posts, future pages and drafts;
 * the status of a record is properly shown in the admin panel, including publication in the future;
 * added filter for tags;
+* added patterns table for database backups;
 * now you can restore database backups;
 * now you can download and deletes logs.
 

@@ -38,3 +38,38 @@
     <?= $this->Form->submit(__d('me_cms', 'Add backup')) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<table class="table margin-0">
+    <thead>
+        <tr>
+            <th><?= __d('me_cms', 'Pattern') ?></th>
+            <th><?= __d('me_cms', 'Description') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="min-width"><code>{$DATABASE}</code></td>
+            <td>
+                <?= __d('me_cms', 'Database name') ?>.
+            </td>
+        </tr>
+        <tr>
+            <td class="min-width"><code>{$DATETIME}</code></td>
+            <td>
+                <?= __d('me_cms', 'Datetime. This is the equivalent of {0}', $this->Html->code('date(\'YmdHis\')')) ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="min-width"><code>{$HOSTNAME}</code></td>
+            <td>
+                <?= __d('me_cms', 'Database hostname') ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="min-width"><code>{$TIMESTAMP}</code></td>
+            <td>
+                <?= __d('me_cms', 'Timestamp. This is the equivalent of {0}', $this->Html->code('time()')) ?>
+            </td>
+        </tr>
+    </tbody>
+</table>
