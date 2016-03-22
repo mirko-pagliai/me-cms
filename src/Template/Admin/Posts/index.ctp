@@ -113,9 +113,7 @@
 							if($this->Auth->isGroup(['admin', 'manager']))
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $post->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 
-							//If the post is active (it's published)
-							if($post->active)
-								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
+							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
