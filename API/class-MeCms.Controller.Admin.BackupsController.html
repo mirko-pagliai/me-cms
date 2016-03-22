@@ -228,7 +228,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.BackupsController.html#28-97" title="Go to source code">Controller/Admin/BackupsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.BackupsController.html#29-120" title="Go to source code">Controller/Admin/BackupsController.php</a>
 		<br>
 	</div>
 
@@ -248,7 +248,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#32-41" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#33-42" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request</p>
@@ -293,7 +293,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#43-49" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#44-50" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			<p>Lists backup files</p>
@@ -308,7 +308,7 @@ App\Controller\AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						DatabaseBackup\Utility\BackupManager::index()<br>
+						DatabaseBackup\Utility\Backup::index()<br>
 				</div>
 
 
@@ -327,7 +327,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_add">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#51-70" title="Go to source code">add</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#52-71" title="Go to source code">add</a>( )</code>
 
 		<div class="description short">
 			<p>Adds a backup file</p>
@@ -362,7 +362,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_delete">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#72-86" title="Go to source code">delete</a>( <span>string <var>$filename</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#73-87" title="Go to source code">delete</a>( <span>string <var>$filename</var></span> )</code>
 
 		<div class="description short">
 			<p>Deletes a backup file</p>
@@ -382,7 +382,7 @@ App\Controller\AppController
 
 				<h4>Uses</h4>
 				<div class="list">
-						DatabaseBackup\Utility\BackupManager::delete()<br>
+						DatabaseBackup\Utility\Backup::delete()<br>
 				</div>
 
 
@@ -401,7 +401,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_download">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#88-96" title="Go to source code">download</a>( <span>string <var>$filename</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#89-98" title="Go to source code">download</a>( <span>string <var>$filename</var></span> )</code>
 
 		<div class="description short">
 			<p>Downloads a backup file</p>
@@ -419,9 +419,45 @@ App\Controller\AppController
 
 
 
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="restore" id="_restore">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_restore">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.BackupsController.html#100-119" title="Go to source code">restore</a>( <span>string <var>$filename</var></span> )</code>
+
+		<div class="description short">
+			<p>Restores a backup file</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Restores a backup file</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd>Backup filename</dd>
+				</dl></div>
+
+
+
 				<h4>Uses</h4>
 				<div class="list">
-						DatabaseBackup\Utility\BackupManager::path()<br>
+						DatabaseBackup\Utility\BackupImport::filename()<br>
+						DatabaseBackup\Utility\BackupImport::import()<br>
 				</div>
 
 
@@ -468,7 +504,7 @@ App\Controller\AppController
 	</div>
 </div>
 </div>
-<script src="resources/combined.js"></script>
-<script src="elementlist.js"></script>
+<script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
+<script src="elementlist.js?11d86f6c2391a7153316736d1dfaed9b9a4a2c53"></script>
 </body>
 </html>

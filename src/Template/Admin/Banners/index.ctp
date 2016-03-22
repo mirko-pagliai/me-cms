@@ -68,14 +68,11 @@
 			<?php foreach($banners as $banner): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]);
-
-							//If the banner is not active (not published)
-							if(!$banner->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'text-warning']));
-
-							echo $this->Html->strong($title);
+                            //If the banner is not active (not published)
+                            if(!$banner->active)
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-icon']);
 			
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
@@ -95,7 +92,12 @@
 						<?= $this->Html->link($banner->position->name, ['?' => ['position' => $banner->position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
 					</td>
 					<td class="text-center hidden-xs">
-						<?= empty($banner->target) ? NULL : $this->Html->link($banner->target, $banner->target, ['target' => '_blank']) ?>
+                        <?php
+                            if($banner->target) {
+                                $truncated = $this->Text->truncate($banner->target, 50, ['exact' => FALSE]);
+                                echo $this->Html->link($truncated, $banner->target, ['target' => '_blank']);
+                            }
+                        ?>
 					</td>
 					<td class="text-center"><?= $banner->description ?></td>
 					<td class="min-width text-center"><?= $banner->click_count ?></td>

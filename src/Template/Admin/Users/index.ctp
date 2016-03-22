@@ -81,18 +81,15 @@
 			<?php foreach($users as $user): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($user->username, array('action' => 'view', $user->id)) ?></strong>
 						<?php
-							$title = $this->Html->link($user->username, array('action' => 'view', $user->id));
-
-							//If the user is banned
+                            //If the user is banned
 							if($user->banned)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'text-danger']));
+                                echo $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'record-icon']);
 							//Else, if the user is not active (pending)
 							elseif(!$user->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'text-warning']));
-
-							echo $this->Html->strong($title);
-
+                                echo $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'record-icon']);
+                            
 							$actions = [
 								$this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->id], ['icon' => 'eye']),
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['icon' => 'pencil'])

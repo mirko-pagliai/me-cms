@@ -32,7 +32,6 @@ class PhotosController extends AppController {
     /**
      * Views a photo
      * @param string $id Photo ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function view($id = NULL) {
 		$this->set('photo', $this->Photos->find()

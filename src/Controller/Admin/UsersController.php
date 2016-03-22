@@ -85,7 +85,6 @@ class UsersController extends AppController {
     /**
      * Views user
      * @param string $id User ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function view($id = NULL) {
         $this->set('user', $this->Users->find()

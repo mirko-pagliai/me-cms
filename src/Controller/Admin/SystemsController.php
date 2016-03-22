@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use DatabaseBackup\Utility\BackupManager;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
@@ -142,8 +141,8 @@ class SystemsController extends AppController {
 				'version'	=> Apache::version(),
 			],
 			'backups' => [
-				'path'		=> rtr(BackupManager::path()),
-				'writeable'	=> folder_is_writable(BackupManager::path())
+				'path'		=> rtr(BACKUPS),
+				'writeable'	=> folder_is_writable(BACKUPS)
 			],
 			'cache' => [
 				'status' => Cache::enabled()

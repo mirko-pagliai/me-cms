@@ -22,7 +22,8 @@
  */
 namespace MeCms\Controller\Admin;
 
-use DatabaseBackup\Utility\BackupManager;
+use DatabaseBackup\Utility\Backup;
+use DatabaseBackup\Utility\BackupImport;
 use MeCms\Controller\AppController;
 
 /**
@@ -42,10 +43,10 @@ class BackupsController extends AppController {
 	
 	/**
 	 * Lists backup files
-	 * @uses DatabaseBackup\Utility\BackupManager::index()
+	 * @uses DatabaseBackup\Utility\Backup::index()
 	 */
 	public function index() {
-		$this->set('backups', BackupManager::index());
+		$this->set('backups', Backup::index());
 	}
 	
 	/**
@@ -72,12 +73,12 @@ class BackupsController extends AppController {
 	/**
 	 * Deletes a backup file
 	 * @param string $filename Backup filename
-	 * @uses DatabaseBackup\Utility\BackupManager::delete()
+	 * @uses DatabaseBackup\Utility\Backup::delete()
 	 */
 	public function delete($filename) {
         $this->request->allowMethod(['post', 'delete']);
 		
-		if(BackupManager::delete(urldecode($filename)))
+		if(Backup::delete(urldecode($filename)))
 			$this->Flash->success(__d('me_cms', 'The backup has been deleted'));
 		else
 			$this->Flash->error(__d('me_cms', 'The backup could not be deleted'));
@@ -88,10 +89,32 @@ class BackupsController extends AppController {
 	/**
 	 * Downloads a backup file
 	 * @param string $filename Backup filename
-	 * @uses DatabaseBackup\Utility\BackupManager::path()
 	 */
 	public function download($filename) {
-		$this->response->file(BackupManager::path(urldecode($filename)));
+        $filename = BACKUPS.DS.urldecode($filename);
+        
+		$this->response->file($filename);
 		return $this->response;
 	}
+    
+    /**
+     * Restores a backup file
+	 * @param string $filename Backup filename
+	 * @uses DatabaseBackup\Utility\BackupImport::filename()
+	 * @uses DatabaseBackup\Utility\BackupImport::import()
+     * 
+     */
+    public function restore($filename) {
+        $filename = BACKUPS.DS.urldecode($filename);
+        
+		$backup = new BackupImport();
+		$backup->filename($filename);
+        
+        if($backup->import())
+			$this->Flash->success(__d('me_cms', 'The backup has been restored'));
+		else
+			$this->Flash->error(__d('me_cms', 'The backup could not be restored'));
+        
+        return $this->redirect(['action' => 'index']);
+    }
 }

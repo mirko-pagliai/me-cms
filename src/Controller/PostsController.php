@@ -22,9 +22,10 @@
  */
 namespace MeCms\Controller;
 
-use MeTools\Cache\Cache;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
+use MeTools\Cache\Cache;
 
 /**
  * Posts controller
@@ -209,21 +210,27 @@ class PostsController extends AppController {
 	/**
      * Views post
 	 * @param string $slug Post slug
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws RecordNotFoundException
 	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
-		$this->set('post', $post = $this->Posts->find('active')
+		$post = $this->Posts->find()
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Tags',
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
-			->firstOrFail());
+			->firstOrFail();
 		
+        //Checks created datetime and status. Logged users can view future posts and drafts
+        if(!$this->Auth->user() && ($post->active || $post->created->isFuture()))
+            throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+        
+        $this->set(compact('post'));
+        
 		//Gets related posts
 		if(config('post.related.limit'))
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));

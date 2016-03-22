@@ -71,6 +71,20 @@ class TagsTable extends AppTable {
 	}
 	
 	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		//"Name" field
+		if(!empty($data['name']) && strlen($data['name']) > 2)
+			$query->where([sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name'])]);
+		
+		return $query;
+	}
+	
+	/**
 	 * Changes tags from string to array
 	 * @param string $tags Tags
 	 * @return array Tags

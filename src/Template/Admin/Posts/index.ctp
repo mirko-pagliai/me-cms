@@ -89,17 +89,18 @@
 			<?php foreach($posts as $post): ?>
 				<tr>
 					<td>
-						<?php
-							$title = $this->Html->link($post->title, ['action' => 'edit', $post->id]);
-						
-							//If the post is not active (it's a draft)
-							if(!$post->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
-							
-							echo $this->Html->strong($title);
-							
-							if(!empty($post->tags))
-								echo $this->Html->div('small', implode(PHP_EOL, array_map(function($tag) {
+                        <strong><?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?></strong>
+                        <?php
+                            //If the post is not active (it's a draft)
+                            if(!$post->active)
+                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-icon']);
+                            
+                            //If the post is scheduled
+                            if($post->created->isFuture())
+                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-icon']);
+                            
+                            if(!empty($post->tags))
+								echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function($tag) {
 									return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
 								}, $post->tags)));
 							
@@ -113,9 +114,7 @@
 							if($this->Auth->isGroup(['admin', 'manager']))
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $post->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 
-							//If the post is active (it's published)
-							if($post->active)
-								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
+							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>

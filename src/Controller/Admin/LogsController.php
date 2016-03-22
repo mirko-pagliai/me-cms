@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Filesystem\File;
 use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
@@ -39,6 +40,16 @@ class LogsController extends AppController {
 		//Only admins can access this controller
 		return $this->Auth->isGroup('admin');
 	}
+    
+    /**
+     * Returns the path for a log 
+	 * @param string $slug
+     * @param bool $serialized TRUE if is a serialized log
+     * @return string
+     */
+    protected function _logPath($slug, $serialized = FALSE) {
+		return LOGS.sprintf($serialized ? '%s_serialized.log' : '%s.log', urldecode($slug));
+    }
 	
 	/**
 	 * Lists logs
@@ -66,36 +77,89 @@ class LogsController extends AppController {
 	}
 	
 	/**
-	 * Views a (plain) log
+	 * Views a log
 	 * @param string $slug
 	 * @throws InternalErrorException
+     * @uses _logPath()
 	 */
 	public function view($slug) {
-		$filename = sprintf('%s.log', urldecode($slug));
-		$path = LOGS.$filename;
-		
-		if(!is_readable($path))
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
+        $log = $this->_logPath($slug);
+        
+		if(!is_readable($log))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
 				
-		$this->set('log', (object) am([
-			'content' => trim(file_get_contents($path))
-		], compact('filename')));
+        $this->set('log', (object) [
+            'content' => trim(file_get_contents($log)),
+            'filename' => basename($log),
+        ]);
 	}
 	
 	/**
 	 * Views a (serialized) log
 	 * @param string $slug
 	 * @throws InternalErrorException
+     * @uses _logPath()
 	 */
-	public function view_serialized($slug) {
-		$filename = sprintf('%s_serialized.log', urldecode($slug));
-		$path = LOGS.$filename;
-		
-		if(!is_readable($path))
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
-		
-		$this->set('log', (object) am([
-			'content' => unserialize(file_get_contents($path))
-		], compact('filename')));
+	public function view_serialized($slug) {		
+        $log = $this->_logPath($slug, TRUE);
+        
+		if(!is_readable($log))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
+				
+        $this->set('log', (object) [
+			'content' => unserialize(file_get_contents($log)),
+            'filename' => basename($log),
+        ]);
 	}
+    
+    /**
+     * Downloads a log
+	 * @param string $slug
+     * @throws InternalErrorException
+     * @uses _logPath()
+     */
+    public function download($slug) {
+        $log = $this->_logPath($slug);
+		
+		if(!is_readable($log))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
+                
+		$this->response->file($log);
+		return $this->response;
+    }
+    
+    /**
+     * Deletes a log.  
+     * If there's even a serialized log copy, it also deletes that.
+	 * @param string $slug
+     * @throws InternalErrorException
+     */
+    public function delete($slug) {
+        $this->request->allowMethod(['post', 'delete']);
+        
+        $log = $this->_logPath($slug);
+		
+		if(!is_writeable($log))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($log)));
+        
+        $success = (new File($log))->delete();
+                
+        $serialized = $this->_logPath($slug, TRUE);
+        
+        //It also deletes the serialized log copy, where such exists 
+        if(file_exists($serialized)) {
+            if(!is_writeable($serialized))
+                throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($serialized)));
+            
+            if(!(new File($serialized))->delete())
+                $success = FALSE;
+        }
+        
+        if($success)
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+		else
+			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+        
+		return $this->redirect(['action' => 'index']);
+    }
 }

@@ -108,14 +108,16 @@ body {
 }
 
 /* Content, title */
-#content > .form > h2, #content > .index > h2 {
+#content > .form > h2,
+#content > .index > h2,
+#content > .view > h2 {
 	font-size: 24px;
 	display: inline-block;
 	margin: 0 0 20px;
 }
 
 /* Content, button after page title ("add new") */
-#content > .index > h2 + a.btn {
+#content > .index > h2 + .btn {
     font-size: 13px;
     margin: 0 0 20px 15px;
     padding: 3px 8px;
@@ -123,7 +125,7 @@ body {
 }
 
 /* Content, button after page title ("add new"), icon */
-#content > .index > h2 + a.btn > .fa {
+#content > .index > h2 + .btn > .fa {
 	font-size: 10px;
     margin-right: 2px;
 }
@@ -215,7 +217,7 @@ form.filter-form legend .fa {
 /* -------------------------------- */
 /* Actions links */
 ul.actions {
-	margin: 2px 0 0;
+	margin: 5px 0 0;
     padding-left: 10px;
 }
 
@@ -232,6 +234,21 @@ ul.actions > li:last-child {
     border: 0;
     margin: 0;
     padding: 0;
+}
+
+/* -------------------------------- */
+/*			Record labels			*/
+/* -------------------------------- */
+/* Record labels */
+.record-label {
+    background-color: #f0ad4e;
+    color: #fff;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 17px;
+    margin-left: 6px;
+	padding: 0 3px;
+    vertical-align: top;
 }
 
 /* -------------------------------- */
