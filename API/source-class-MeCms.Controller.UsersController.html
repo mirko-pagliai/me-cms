@@ -281,8 +281,8 @@
 </span><span id="23" class="l"><a href="#23"> 23: </a><span class="php-keyword1">namespace</span> MeCms\Controller;
 </span><span id="24" class="l"><a href="#24"> 24: </a>
 </span><span id="25" class="l"><a href="#25"> 25: </a><span class="php-keyword1">use</span> Cake\Mailer\MailerAwareTrait;
-</span><span id="26" class="l"><a href="#26"> 26: </a><span class="php-keyword1">use</span> Cake\Routing\Router;
-</span><span id="27" class="l"><a href="#27"> 27: </a><span class="php-keyword1">use</span> Cake\Utility\Security;
+</span><span id="26" class="l"><a href="#26"> 26: </a><span class="php-keyword1">use</span> Cake\Network\Exception\NotFoundException;
+</span><span id="27" class="l"><a href="#27"> 27: </a><span class="php-keyword1">use</span> Cake\Routing\Router;
 </span><span id="28" class="l"><a href="#28"> 28: </a><span class="php-keyword1">use</span> MeCms\Controller\AppController;
 </span><span id="29" class="l"><a href="#29"> 29: </a>
 </span><span id="30" class="l"><a href="#30"> 30: </a><span class="php-comment">/**
@@ -367,7 +367,7 @@
 </span></span><span id="109" class="l"><a href="#109">109: </a><span class="php-comment">     * @param string $token Token
 </span></span><span id="110" class="l"><a href="#110">110: </a><span class="php-comment">     * @uses MeTools\Controller\Component\Token::check()
 </span></span><span id="111" class="l"><a href="#111">111: </a><span class="php-comment">     * @uses MeTools\Controller\Component\Token::delete()
-</span></span><span id="112" class="l"><a href="#112">112: </a><span class="php-comment">     * @throws \Cake\Network\Exception\NotFoundException
+</span></span><span id="112" class="l"><a href="#112">112: </a><span class="php-comment">     * @throws NotFoundException
 </span></span><span id="113" class="l"><a href="#113">113: </a><span class="php-comment">     */</span>
 </span><span id="114" class="l"><a href="#114">114: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> activate_account(<span class="php-var">$id</span>, <span class="php-var">$token</span>) {
 </span><span id="115" class="l"><a href="#115">115: </a>        <span class="php-comment">//Checks for token</span>
@@ -382,7 +382,7 @@
 </span><span id="124" class="l"><a href="#124">124: </a>            -&gt;first();
 </span><span id="125" class="l"><a href="#125">125: </a>        
 </span><span id="126" class="l"><a href="#126">126: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$user</span>-&gt;isEmpty())
-</span><span id="127" class="l"><a href="#127">127: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Cake\Network\Exception\NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'No account found'</span>));
+</span><span id="127" class="l"><a href="#127">127: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'No account found'</span>));
 </span><span id="128" class="l"><a href="#128">128: </a>        
 </span><span id="129" class="l"><a href="#129">129: </a>        <span class="php-var">$user</span>-&gt;active = <span class="php-keyword1">TRUE</span>;
 </span><span id="130" class="l"><a href="#130">130: </a>                
@@ -552,7 +552,7 @@
 </span></span><span id="294" class="l"><a href="#294">294: </a><span class="php-comment">     * @param string $token Token
 </span></span><span id="295" class="l"><a href="#295">295: </a><span class="php-comment">     * @uses MeTools\Controller\Component\Token::check()
 </span></span><span id="296" class="l"><a href="#296">296: </a><span class="php-comment">     * @uses MeTools\Controller\Component\Token::delete()
-</span></span><span id="297" class="l"><a href="#297">297: </a><span class="php-comment">     * @throws \Cake\Network\Exception\NotFoundException
+</span></span><span id="297" class="l"><a href="#297">297: </a><span class="php-comment">     * @throws NotFoundException
 </span></span><span id="298" class="l"><a href="#298">298: </a><span class="php-comment">     */</span>
 </span><span id="299" class="l"><a href="#299">299: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> reset_password(<span class="php-var">$id</span>, <span class="php-var">$token</span>) {
 </span><span id="300" class="l"><a href="#300">300: </a>        <span class="php-comment">//Checks for token</span>
@@ -567,7 +567,7 @@
 </span><span id="309" class="l"><a href="#309">309: </a>            -&gt;first();
 </span><span id="310" class="l"><a href="#310">310: </a>        
 </span><span id="311" class="l"><a href="#311">311: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$user</span>-&gt;isEmpty())
-</span><span id="312" class="l"><a href="#312">312: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Cake\Network\Exception\NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'No account found'</span>));
+</span><span id="312" class="l"><a href="#312">312: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> NotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'No account found'</span>));
 </span><span id="313" class="l"><a href="#313">313: </a>
 </span><span id="314" class="l"><a href="#314">314: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;is([<span class="php-quote">'patch'</span>, <span class="php-quote">'post'</span>, <span class="php-quote">'put'</span>])) {
 </span><span id="315" class="l"><a href="#315">315: </a>            <span class="php-var">$user</span> = <span class="php-var">$this</span>-&gt;Users-&gt;patchEntity(<span class="php-var">$user</span>, <span class="php-var">$this</span>-&gt;request-&gt;data);

@@ -228,7 +228,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a>\<a href="namespace-MeCms.Controller.Admin.html">Admin</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.LogsController.html#28-101" title="Go to source code">Controller/Admin/LogsController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.Admin.LogsController.html#29-165" title="Go to source code">Controller/Admin/LogsController.php</a>
 		<br>
 	</div>
 
@@ -248,7 +248,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAuthorized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#32-41" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#33-42" title="Go to source code">isAuthorized</a>( <span>array <var>$user</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Check if the provided user is authorized for the request</p>
@@ -281,6 +281,53 @@ App\Controller\AppController
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="_logPath" id="__logPath">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__logPath">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#44-52" title="Go to source code">_logPath</a>( <span>string <var>$slug</var></span>, <span>boolean <var>$serialized</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Returns the path for a log</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the path for a log</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$slug</var></dt>
+					<dd></dd>
+					<dt><var>$serialized</var></dt>
+					<dd>TRUE if is a serialized log</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.LogsController.html#_view">MeCms\Controller\Admin\LogsController::view()</a></code><br>
+						<code><a href="class-MeCms.Controller.Admin.LogsController.html#_view_serialized">MeCms\Controller\Admin\LogsController::view_serialized()</a></code><br>
+						<code><a href="class-MeCms.Controller.Admin.LogsController.html#_download">MeCms\Controller\Admin\LogsController::download()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="index" id="_index">
 
 		<td class="attributes"><code>
@@ -293,7 +340,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_index">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#43-66" title="Go to source code">index</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#54-77" title="Go to source code">index</a>( )</code>
 
 		<div class="description short">
 			<p>Lists logs</p>
@@ -323,14 +370,14 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#68-83" title="Go to source code">view</a>( <span>string <var>$slug</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#79-95" title="Go to source code">view</a>( <span>string <var>$slug</var></span> )</code>
 
 		<div class="description short">
-			<p>Views a (plain) log</p>
+			<p>Views a log</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Views a (plain) log</p>
+			<p>Views a log</p>
 
 
 				<h4>Parameters</h4>
@@ -345,6 +392,10 @@ App\Controller\AppController
 					Cake\Network\Exception\InternalErrorException
 				</div>
 
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.LogsController.html#__logPath">MeCms\Controller\Admin\LogsController::_logPath()</a></code><br>
+				</div>
 
 
 		</div>
@@ -362,7 +413,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_view_serialized">#</a>
-		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#85-100" title="Go to source code">view_serialized</a>( <span>string <var>$slug</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#97-113" title="Go to source code">view_serialized</a>( <span>string <var>$slug</var></span> )</code>
 
 		<div class="description short">
 			<p>Views a (serialized) log</p>
@@ -370,6 +421,94 @@ App\Controller\AppController
 
 		<div class="description detailed hidden">
 			<p>Views a (serialized) log</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$slug</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					Cake\Network\Exception\InternalErrorException
+				</div>
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.LogsController.html#__logPath">MeCms\Controller\Admin\LogsController::_logPath()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="download" id="_download">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_download">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#115-129" title="Go to source code">download</a>( <span>string <var>$slug</var></span> )</code>
+
+		<div class="description short">
+			<p>Downloads a log</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Downloads a log</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$slug</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					Cake\Network\Exception\InternalErrorException
+				</div>
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.Admin.LogsController.html#__logPath">MeCms\Controller\Admin\LogsController::_logPath()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="delete" id="_delete">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_delete">#</a>
+		<code><a href="source-class-MeCms.Controller.Admin.LogsController.html#131-164" title="Go to source code">delete</a>( <span>string <var>$slug</var></span> )</code>
+
+		<div class="description short">
+			<p>Deletes a log.
+If there's even a serialized log copy, it also deletes that.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Deletes a log.
+If there's even a serialized log copy, it also deletes that.</p>
 
 
 				<h4>Parameters</h4>
@@ -429,7 +568,7 @@ App\Controller\AppController
 	</div>
 </div>
 </div>
-<script src="resources/combined.js"></script>
-<script src="elementlist.js"></script>
+<script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
+<script src="elementlist.js?11d86f6c2391a7153316736d1dfaed9b9a4a2c53"></script>
 </body>
 </html>
