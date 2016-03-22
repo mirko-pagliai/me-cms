@@ -663,7 +663,7 @@ msgstr "Bannato"
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:92
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:68
 msgid "Pending"
-msgstr "Non attivo"
+msgstr "In attivazione"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:170
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:38
