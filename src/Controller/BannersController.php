@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Network\Exception\NotFoundException;
 use MeCms\Controller\AppController;
 
 /**
@@ -32,7 +33,7 @@ class BannersController extends AppController {
 	/**
 	 * Open a banner target (link)
 	 * @param string $id Banner ID
-	 * @throws \Cake\Network\Exception\NotFoundException
+	 * @throws NotFoundException
 	 */
 	public function open($id = NULL) {
 		$banner = $this->Banners->find('active')
@@ -43,7 +44,7 @@ class BannersController extends AppController {
 		
 		//Checks for banner target
 		if(empty($banner->target))
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The banner target is missing'));
+			throw new NotFoundException(__d('me_cms', 'The banner target is missing'));
 				
 		//Increases the click count
 		$expression = new \Cake\Database\Expression\QueryExpression('click_count = click_count + 1');

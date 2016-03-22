@@ -23,8 +23,8 @@
 namespace MeCms\Controller;
 
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
-use Cake\Utility\Security;
 use MeCms\Controller\AppController;
 
 /**
@@ -109,7 +109,7 @@ class UsersController extends AppController {
 	 * @param string $token Token
 	 * @uses MeTools\Controller\Component\Token::check()
 	 * @uses MeTools\Controller\Component\Token::delete()
-	 * @throws \Cake\Network\Exception\NotFoundException
+     * @throws NotFoundException
 	 */
 	public function activate_account($id, $token) {
 		//Checks for token
@@ -124,7 +124,7 @@ class UsersController extends AppController {
 			->first();
 		
 		if($user->isEmpty())
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'No account found'));
+			throw new NotFoundException(__d('me_cms', 'No account found'));
 		
 		$user->active = TRUE;
 				
@@ -294,7 +294,7 @@ class UsersController extends AppController {
 	 * @param string $token Token
 	 * @uses MeTools\Controller\Component\Token::check()
 	 * @uses MeTools\Controller\Component\Token::delete()
-	 * @throws \Cake\Network\Exception\NotFoundException
+	 * @throws NotFoundException
 	 */
 	public function reset_password($id, $token) {
 		//Checks for token
@@ -309,7 +309,7 @@ class UsersController extends AppController {
 			->first();
 		
 		if($user->isEmpty())
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'No account found'));
+			throw new NotFoundException(__d('me_cms', 'No account found'));
 
 		if($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
