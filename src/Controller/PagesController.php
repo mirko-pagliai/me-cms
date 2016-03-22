@@ -23,7 +23,6 @@
 namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -74,7 +73,7 @@ class PagesController extends AppController {
 			->firstOrFail();
 		
         //Checks created datetime and status. Logged users can view future pages and drafts
-        if(!$this->Auth->user() && ($page->created > new Time() || $page->active))
+        if(!$this->Auth->user() && ($page->active || $page->created->isFuture()))
             throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
         
         $this->set(compact('page'));
