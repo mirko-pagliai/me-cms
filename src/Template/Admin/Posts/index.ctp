@@ -89,21 +89,18 @@
 			<?php foreach($posts as $post): ?>
 				<tr>
 					<td>
-						<?php
-							$title = $this->Html->link($post->title, ['action' => 'edit', $post->id]);
-						
-							//If the post is not active (it's a draft)
-							if(!$post->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
+                        <strong><?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?></strong>
+                        <?php
+                            //If the post is not active (it's a draft)
+                            if(!$post->active)
+                                echo $this->Html->span(NULL, ['class' => 'record-icon', 'icon' => 'pencil', 'title' => __d('me_cms', 'Draft')]);
                             
                             //If the post is scheduled
                             if($post->created->isFuture())
-                                $title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'text-warning']));
-							
-							echo $this->Html->strong($title);
-							
-							if(!empty($post->tags))
-								echo $this->Html->div('small', implode(PHP_EOL, array_map(function($tag) {
+                                echo $this->Html->span(NULL, ['class' => 'record-icon', 'icon' => 'clock-o', 'title' => __d('me_cms', 'Scheduled')]);
+                            
+                            if(!empty($post->tags))
+								echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function($tag) {
 									return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
 								}, $post->tags)));
 							

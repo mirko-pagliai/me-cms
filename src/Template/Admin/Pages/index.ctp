@@ -74,18 +74,15 @@
 			<?php foreach($pages as $page): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($page->title, ['action' => 'edit', $page->id]);
-							
-							//If the page is not active (it's a draft)
-							if(!$page->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'text-warning']));
+                            //If the page is not active (it's a draft)
+                            if(!$page->active)
+                                echo $this->Html->span(NULL, ['class' => 'record-icon', 'icon' => 'pencil', 'title' => __d('me_cms', 'Draft')]);
                             
                             //If the page is scheduled
                             if($page->created->isFuture())
-                                $title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'text-warning']));
-							
-							echo $this->Html->strong($title);
+                                echo $this->Html->span(NULL, ['class' => 'record-icon', 'icon' => 'clock-o', 'title' => __d('me_cms', 'Scheduled')]);
 														
 							$actions = [];
 							

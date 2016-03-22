@@ -217,7 +217,7 @@ form.filter-form legend .fa {
 /* -------------------------------- */
 /* Actions links */
 ul.actions {
-	margin: 2px 0 0;
+	margin: 5px 0 0;
     padding-left: 10px;
 }
 
@@ -234,6 +234,28 @@ ul.actions > li:last-child {
     border: 0;
     margin: 0;
     padding: 0;
+}
+
+/* -------------------------------- */
+/*			Record icons			*/
+/* -------------------------------- */
+/* Record icons */
+.record-icon {
+    background-color: #f0ad4e;
+    border-radius: 12px;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 22px;
+    margin-left: 6px;
+    text-align: center;
+    vertical-align: bottom;
+    width: 22px;
+}
+
+/* Record icons, with "title" attr */
+.record-icon[title] {
+	cursor: pointer;
 }
 
 /* -------------------------------- */
