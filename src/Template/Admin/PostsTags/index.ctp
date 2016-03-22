@@ -42,6 +42,22 @@
 <div class="postsTags index">
 	<?= $this->Html->h2(__d('me_cms', 'Tags')) ?>
 	
+    <?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
+		<fieldset>
+			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
+			<div>
+				<?php
+					echo $this->Form->input('name', [
+						'default'		=> $this->request->query('name'),
+						'placeholder'	=> __d('me_cms', 'name'),
+						'size'			=> 16
+					]);
+					echo $this->Form->submit(NULL, ['icon' => 'search']);
+				?>
+			</div>
+		</fieldset>
+	<?= $this->Form->end() ?>
+    
 	<div class="div-striped row">
 		<?php foreach($tags as $tag): ?>
 			<div class="col-sm-3">

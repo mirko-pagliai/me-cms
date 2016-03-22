@@ -46,17 +46,17 @@ class PostsTagsController extends AppController {
 	
 	/**
      * Lists tags
+	 * @uses MeCms\Model\Table\Tags::queryFromFilter()
 	 */
 	public function index() {
+        $query = $this->PostsTags->Tags->find()->where(['post_count >' => 0]);
+        
 		$this->paginate['order'] = ['tag' => 'ASC'];
 		
 		//Limit X4
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 		
-		$this->set('tags', $this->paginate(
-			$this->PostsTags->Tags->find()
-				->where(['post_count >' => 0])
-		));
+		$this->set('tags', $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->query)));
 	}
 	
 	/**
