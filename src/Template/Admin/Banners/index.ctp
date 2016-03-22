@@ -95,7 +95,12 @@
 						<?= $this->Html->link($banner->position->name, ['?' => ['position' => $banner->position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
 					</td>
 					<td class="text-center hidden-xs">
-						<?= empty($banner->target) ? NULL : $this->Html->link($banner->target, $banner->target, ['target' => '_blank']) ?>
+                        <?php
+                            if($banner->target) {
+                                $truncated = $this->Text->truncate($banner->target, 50, ['exact' => FALSE]);
+                                echo $this->Html->link($truncated, $banner->target, ['target' => '_blank']);
+                            }
+                        ?>
 					</td>
 					<td class="text-center"><?= $banner->description ?></td>
 					<td class="min-width text-center"><?= $banner->click_count ?></td>
