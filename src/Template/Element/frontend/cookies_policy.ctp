@@ -22,12 +22,20 @@
  */
 ?>
 
-<?php if(config('frontend.cookies_policy') && empty($_COOKIE['cookies-policy'])): ?>
-	<div id="cookies-policy">
-		<div class="container">
-			<?= __d('me_cms', 'By continuing, you consent to our use of Cookies, ok?') ?>
-			<?= $this->Html->button(__d('me_cms', 'Ok'), ['_name' => 'accept_cookies'], ['class' => 'btn-xs btn-success', 'id' => 'cookies-policy-accept']) ?>
-			<?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', 'cookies-policy'], ['class' => 'btn-xs btn-primary']) ?>
-		</div>
-	</div>
-<?php endif; ?>
+<?php
+    //Returns for logged user
+    if(!empty($auth['id']))
+        return;
+    
+    //Returns if disabled or already checked
+    if(!config('frontend.cookies_policy') || !empty($_COOKIE['cookies-policy']))
+        return;
+?>
+
+<div id="cookies-policy">
+    <div class="container">
+        <?= __d('me_cms', 'By continuing, you consent to our use of Cookies, ok?') ?>
+        <?= $this->Html->button(__d('me_cms', 'Ok'), ['_name' => 'accept_cookies'], ['class' => 'btn-xs btn-success', 'id' => 'cookies-policy-accept']) ?>
+        <?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', 'cookies-policy'], ['class' => 'btn-xs btn-primary']) ?>
+    </div>
+</div>
