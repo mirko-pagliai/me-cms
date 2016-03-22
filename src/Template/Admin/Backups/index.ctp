@@ -37,11 +37,8 @@
 		<?php foreach($backups as $backup): ?>
 			<tr>
 				<td>
+                    <strong><?= $this->Html->link($backup->filename, ['action' => 'download', urlencode($backup->filename)]) ?></strong>
 					<?php 
-						$title = $this->Html->link($backup->filename, ['action' => 'download', urlencode($backup->filename)]);
-						
-						echo $this->Html->strong($title);
-						
 						$actions = [
 							$this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', urlencode($backup->filename)], ['icon' => 'download']),
 							$this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', urlencode($backup->filename)], ['icon' => 'upload', 'confirm' => __d('me_cms', 'This will overwrite the current database and some data may be lost. Are you sure?')]),

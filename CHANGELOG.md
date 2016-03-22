@@ -2,7 +2,7 @@
 ## 2.4 branch
 ### 2.4.5
 * logged users can view future posts, future pages and drafts;
-* scheduled posts and pages are shown with icons;
+* the status of a record is properly shown in the admin panel, including publication in the future;
 * now you can restore database backups;
 * now you can download and deletes logs.
 

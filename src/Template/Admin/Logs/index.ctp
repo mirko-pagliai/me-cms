@@ -34,11 +34,8 @@
 		<?php foreach($logs as $log): ?>
 			<tr>
 				<td>
+                    <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->slug]) ?></strong>
 					<?php
-						$title = $this->Html->link($log->filename, ['action' => 'view', $log->slug]);
-						
-						echo $this->Html->strong($title);
-						
 						$actions = [
 							$this->Html->link(__d('me_cms', 'Basic view'), ['action' => 'view', $log->slug], ['icon' => 'eye']),
 						];

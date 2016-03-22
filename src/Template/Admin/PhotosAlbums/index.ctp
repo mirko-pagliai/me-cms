@@ -40,16 +40,12 @@
 			<?php foreach($albums as $album): ?>
 				<tr>
 					<td>
-					
+                        <strong><?= $this->Html->link($album->title, ['controller' => 'Photos', $album->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($album->title, ['controller' => 'Photos', $album->id]);
-
-							//If the album is not active (not published)
-							if(!$album->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'text-warning']));
-
-							echo $this->Html->strong($title);
-
+                            //If the album is not active (not published)
+                            if(!$album->active)
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-icon']);
+                            
 							$actions = [
 								$this->Html->link(__d('me_cms', 'View'), ['controller' => 'Photos', $album->id], ['icon' => 'eye']),
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $album->id], ['icon' => 'pencil'])

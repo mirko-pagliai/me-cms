@@ -78,11 +78,11 @@
 						<?php
                             //If the page is not active (it's a draft)
                             if(!$page->active)
-                                echo $this->Html->span(NULL, ['class' => 'record-icon', 'icon' => 'pencil', 'title' => __d('me_cms', 'Draft')]);
+                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-icon']);
                             
                             //If the page is scheduled
                             if($page->created->isFuture())
-                                echo $this->Html->span(NULL, ['class' => 'record-icon', 'icon' => 'clock-o', 'title' => __d('me_cms', 'Scheduled')]);
+                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-icon']);
 														
 							$actions = [];
 							

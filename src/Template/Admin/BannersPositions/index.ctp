@@ -40,14 +40,14 @@
 			<?php foreach($positions as $position): ?>
 				<tr>
 					<td>
-						<?php 
-							$title = $this->Html->link($position->name, ['action' => 'edit', $position->id]);
-							echo $this->Html->strong($title);
-
-							echo $this->Html->ul([
+                        <strong><?= $this->Html->link($position->name, ['action' => 'edit', $position->id]) ?></strong>
+						<?php
+                            $actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $position->id], ['icon' => 'pencil']),
 								$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $position->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
-							], ['class' => 'actions']);
+                            ];
+                        
+							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
 					<td><?= $position->description ?></td>

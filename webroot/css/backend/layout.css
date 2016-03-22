@@ -237,25 +237,18 @@ ul.actions > li:last-child {
 }
 
 /* -------------------------------- */
-/*			Record icons			*/
+/*			Record labels			*/
 /* -------------------------------- */
-/* Record icons */
-.record-icon {
+/* Record labels */
+.record-label {
     background-color: #f0ad4e;
-    border-radius: 12px;
     color: #fff;
     display: inline-block;
-    font-size: 12px;
-    line-height: 22px;
+    font-size: 11px;
+    line-height: 17px;
     margin-left: 6px;
-    text-align: center;
-    vertical-align: bottom;
-    width: 22px;
-}
-
-/* Record icons, with "title" attr */
-.record-icon[title] {
-	cursor: pointer;
+	padding: 0 3px;
+    vertical-align: top;
 }
 
 /* -------------------------------- */

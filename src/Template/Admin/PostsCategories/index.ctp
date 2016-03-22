@@ -40,10 +40,8 @@
 			<?php foreach($categories as $category): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($category->title, ['action' => 'edit', $category->id]);
-							echo $this->Html->strong($title);
-
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $category->id], ['icon' => 'pencil'])
 							];

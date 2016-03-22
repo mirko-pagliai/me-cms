@@ -68,14 +68,11 @@
 			<?php foreach($banners as $banner): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]);
-
-							//If the banner is not active (not published)
-							if(!$banner->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'text-warning']));
-
-							echo $this->Html->strong($title);
+                            //If the banner is not active (not published)
+                            if(!$banner->active)
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-icon']);
 			
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
