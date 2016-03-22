@@ -214,7 +214,7 @@ class PostsController extends AppController {
 	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
-		$this->set('post', $post = $this->Posts->find()
+		$post = $this->Posts->find()
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Tags',
@@ -223,11 +223,13 @@ class PostsController extends AppController {
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
-			->firstOrFail());
+			->firstOrFail();
 		
-        //Checks created datetime and post status. Logged users can view future posts and drafts
+        //Checks created datetime and status. Logged users can view future posts and drafts
         if(!$this->Auth->user() && ($post->created > new Time() || $post->active))
             throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+        
+        $this->set(compact('post'));
         
 		//Gets related posts
 		if(config('post.related.limit'))

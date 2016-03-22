@@ -89,15 +89,13 @@
 							if($this->Auth->isGroup(['admin', 'manager']))
 								$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $page->id], ['icon' => 'pencil']);
 							
-							//If the page is active (it's published)
-							if($page->active)
-								$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
-
 							//Only admins can delete pages
 							if($this->Auth->isAdmin())
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $page->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
 							
-							echo $this->Html->ul($actions, ['class' => 'actions']);
+							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
+
+                            echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
 					<td class="min-width text-center">

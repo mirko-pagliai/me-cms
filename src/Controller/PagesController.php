@@ -22,6 +22,8 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -65,10 +67,16 @@ class PagesController extends AppController {
 			return $this->render($static);
 		}
 		
-		$this->set('page', $this->Pages->find('active')
-			->select(['title', 'subtitle', 'slug', 'text', 'created'])
+		$page = $this->Pages->find()
+			->select(['title', 'subtitle', 'slug', 'text', 'active', 'created'])
 			->where(compact('slug'))
 			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
-			->firstOrFail());
+			->firstOrFail();
+		
+        //Checks created datetime and status. Logged users can view future pages and drafts
+        if(!$this->Auth->user() && ($page->created > new Time() || $page->active))
+            throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+        
+        $this->set(compact('page'));
     }
 }
