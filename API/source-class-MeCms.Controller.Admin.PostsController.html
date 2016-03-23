@@ -376,7 +376,7 @@
 </span><span id="118" class="l"><a href="#118">118: </a>            ])
 </span><span id="119" class="l"><a href="#119">119: </a>            -&gt;select([<span class="php-quote">'id'</span>, <span class="php-quote">'title'</span>, <span class="php-quote">'slug'</span>, <span class="php-quote">'priority'</span>, <span class="php-quote">'active'</span>, <span class="php-quote">'created'</span>]);
 </span><span id="120" class="l"><a href="#120">120: </a>        
-</span><span id="121" class="l"><a href="#121">121: </a>        <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'order'</span>] = [<span class="php-quote">'Posts.created'</span> =&gt; <span class="php-quote">'DESC'</span>];
+</span><span id="121" class="l"><a href="#121">121: </a>        <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'order'</span>] = [<span class="php-quote">'created'</span> =&gt; <span class="php-quote">'DESC'</span>];
 </span><span id="122" class="l"><a href="#122">122: </a>        <span class="php-var">$this</span>-&gt;paginate[<span class="php-quote">'sortWhitelist'</span>] = [<span class="php-quote">'title'</span>, <span class="php-quote">'Categories.title'</span>, <span class="php-quote">'Users.first_name'</span>, <span class="php-quote">'priority'</span>, <span class="php-quote">'created'</span>];
 </span><span id="123" class="l"><a href="#123">123: </a>        
 </span><span id="124" class="l"><a href="#124">124: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-quote">'posts'</span>, <span class="php-var">$this</span>-&gt;paginate(<span class="php-var">$this</span>-&gt;Posts-&gt;queryFromFilter(<span class="php-var">$query</span>, <span class="php-var">$this</span>-&gt;request-&gt;query)));
