@@ -85,10 +85,10 @@
 						<?php
                             //If the user is banned
 							if($user->banned)
-                                echo $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'record-icon']);
+                                echo $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'record-label']);
 							//Else, if the user is not active (pending)
 							elseif(!$user->active)
-                                echo $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'record-icon']);
+                                echo $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'record-label']);
                             
 							$actions = [
 								$this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->id], ['icon' => 'eye']),
