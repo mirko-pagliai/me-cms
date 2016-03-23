@@ -226,7 +226,7 @@ class PostsController extends AppController {
 			->firstOrFail();
 		
         //Checks created datetime and status. Logged users can view future posts and drafts
-        if(!$this->Auth->user() && ($post->active || $post->created->isFuture()))
+        if(!$this->Auth->user() && (!$post->active || $post->created->isFuture()))
             throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
         
         $this->set(compact('post'));
