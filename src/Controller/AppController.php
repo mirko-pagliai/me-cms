@@ -90,9 +90,8 @@ class AppController extends BaseController {
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses Cake\I18n\I18n::locale()
-	 * @uses MeTools\Network\Request::hasPrefix()
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeTools\Network\Request::isAdmin()
+	 * @uses MeTools\Network\Request::isPrefix()
 	 * @uses _getLanguage()
 	 * @uses isBanned()
 	 * @uses isOffline()
@@ -113,7 +112,7 @@ class AppController extends BaseController {
 		\Cake\I18n\I18n::locale($this->_getLanguage());
 		
 		//If the current request has no prefix, it authorizes the current action
-		if(!$this->request->hasPrefix())
+		if(!$this->request->param('prefix'))
 			$this->Auth->allow($this->request->action);
 		
 		if(!$this->Auth->user())
@@ -121,7 +120,7 @@ class AppController extends BaseController {
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isAdmin() ? config('backend.records') : config('frontend.records');
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isPrefix('admin') ? config('backend.records') : config('frontend.records');
 		
 		parent::beforeFilter($event);
 	}
@@ -132,7 +131,7 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses App\Controller\AppController::beforeRender()
-	 * @uses MeTools\Network\Request::isAdmin()
+	 * @uses MeTools\Network\Request::isPrefix()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
 		//Ajax layout
@@ -140,7 +139,7 @@ class AppController extends BaseController {
 			$this->viewBuilder()->layout('MeCms.ajax');
 		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-		$this->viewClass = !$this->request->isAdmin() ? 'MeCms.View/App' : 'MeCms.View/Admin';
+		$this->viewClass = !$this->request->isPrefix('admin') ? 'MeCms.View/App' : 'MeCms.View/Admin';
 		
 		//Sets auth data for views
 		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
@@ -195,7 +194,7 @@ class AppController extends BaseController {
 	 * Checks if the site is offline
 	 * @return bool
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeTools\Network\Request::isAdmin()
+	 * @uses MeTools\Network\Request::isPrefix()
 	 */
 	protected function isOffline() {
 		if(!config('frontend.offline'))
@@ -206,7 +205,7 @@ class AppController extends BaseController {
 			return FALSE;
 		
 		//Always online for admin requests
-		if($this->request->isAdmin())
+		if($this->request->isPrefix('admin'))
 			return FALSE;
 		
 		return TRUE;

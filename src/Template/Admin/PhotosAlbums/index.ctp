@@ -44,7 +44,7 @@
 						<?php
                             //If the album is not active (not published)
                             if(!$album->active)
-                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-icon']);
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label']);
                             
 							$actions = [
 								$this->Html->link(__d('me_cms', 'View'), ['controller' => 'Photos', $album->id], ['icon' => 'eye']),

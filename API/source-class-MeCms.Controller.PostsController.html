@@ -484,7 +484,7 @@
 </span><span id="226" class="l"><a href="#226">226: </a>            -&gt;firstOrFail();
 </span><span id="227" class="l"><a href="#227">227: </a>        
 </span><span id="228" class="l"><a href="#228">228: </a>        <span class="php-comment">//Checks created datetime and status. Logged users can view future posts and drafts</span>
-</span><span id="229" class="l"><a href="#229">229: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;user() &amp;&amp; (<span class="php-var">$post</span>-&gt;active || <span class="php-var">$post</span>-&gt;created-&gt;isFuture()))
+</span><span id="229" class="l"><a href="#229">229: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;Auth-&gt;user() &amp;&amp; (!<span class="php-var">$post</span>-&gt;active || <span class="php-var">$post</span>-&gt;created-&gt;isFuture()))
 </span><span id="230" class="l"><a href="#230">230: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> RecordNotFoundException(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Record not found'</span>));
 </span><span id="231" class="l"><a href="#231">231: </a>        
 </span><span id="232" class="l"><a href="#232">232: </a>        <span class="php-var">$this</span>-&gt;set(<span class="php-keyword2">compact</span>(<span class="php-quote">'post'</span>));
