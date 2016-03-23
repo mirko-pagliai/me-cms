@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.6
+* fixed some bugs.
+
 ### 2.4.5
 * logged users can view future posts, future pages and drafts;
 * the status of a record is properly shown in the admin panel, including publication in the future;
