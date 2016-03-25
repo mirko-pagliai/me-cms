@@ -99,3 +99,10 @@ if(is_readable(CONFIG.'widgets.php'))
 
 //Adds the widgets configuration to the MeCms configuration
 Configure::write('MeCms.frontend.widgets', Configure::consume('Widgets'));
+
+/**
+ * Adds `isAdmin()` detector for the request
+ */
+\MeTools\Network\Request::addDetector('admin', function ($request) {
+    return $request->param('prefix') === 'admin';
+});
