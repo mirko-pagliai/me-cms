@@ -46,11 +46,11 @@ class PostsCell extends Cell {
 	/**
 	 * Categories widget
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
-	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function categories() {
 		//Returns on categories index
-		if($this->request->isCurrent(['_name' => 'posts_categories']))
+		if($this->request->isHere(['_name' => 'posts_categories']))
 			return;
 		
 		//Checks if the cache is valid

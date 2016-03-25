@@ -24,7 +24,7 @@
 
 <?php
 	//Returns on search
-	if($this->request->isCurrent(['_name' => 'search_posts']))
+	if($this->request->isHere(['_name' => 'search_posts']))
 		return;
 		
 	//Extends the widget common view

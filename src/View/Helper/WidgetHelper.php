@@ -33,11 +33,11 @@ class WidgetHelper extends Helper {
 	/**
 	 * Renders all widgets, reading from configuration
 	 * @return string Html code
-	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeTools\Network\Request::isHere()
 	 * @uses widget()
 	 */
 	public function all() {
-		if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
+		if($this->request->isHere(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
 			$widgets = config('frontend.widgets.homepage');
 		else
 			$widgets = config('frontend.widgets.general');
