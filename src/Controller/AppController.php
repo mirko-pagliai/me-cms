@@ -97,8 +97,6 @@ class AppController extends BaseController {
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
-		date_default_timezone_set(config('main.timezone'));
-		
 		//Checks if the site is offline
 		if($this->isOffline())
 			$this->redirect(['_name' => 'offline']);

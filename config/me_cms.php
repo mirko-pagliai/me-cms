@@ -92,9 +92,6 @@ return ['MeCms' => [
 			//Short format
 			'short'	=> 'HH:mm'
 		],
-		//Timezone. See the list of supported timezones:
-		//http://php.net/manual/en/timezones.php
-		'timezone' => 'UTC',
 		//Site title
 		'title' => 'MeCms'
 	],
