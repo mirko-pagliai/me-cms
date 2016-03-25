@@ -72,7 +72,7 @@
 						<?php
                             //If the banner is not active (not published)
                             if(!$banner->active)
-                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
 			
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])

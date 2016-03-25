@@ -93,11 +93,11 @@
                         <?php
                             //If the post is not active (it's a draft)
                             if(!$post->active)
-                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
                             
                             //If the post is scheduled
                             if($post->created->isFuture())
-                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
                             
                             if(!empty($post->tags))
 								echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function($tag) {

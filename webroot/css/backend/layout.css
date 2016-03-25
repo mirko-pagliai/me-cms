@@ -239,9 +239,9 @@ ul.actions > li:last-child {
 /* -------------------------------- */
 /*			Record labels			*/
 /* -------------------------------- */
-/* Record labels */
+/* Record label */
 .record-label {
-    background-color: #f0ad4e;
+    background-color: #777;
     color: #fff;
     display: inline-block;
     font-size: 11px;
@@ -249,6 +249,26 @@ ul.actions > li:last-child {
     margin-left: 6px;
 	padding: 0 3px;
     vertical-align: top;
+}
+
+/* Record label, danger label */
+.record-label.record-label-danger {
+	background-color: #d9534f;
+}
+
+/* Record label, primary label */
+.record-label.record-label-primary {
+	background-color: #337ab7;
+}
+
+/* Record label, success label */
+.record-label.record-label-success {
+	background-color: #5cb85c;
+}
+
+/* Record label, warning label */
+.record-label.record-label-warning {
+    background-color: #f0ad4e;
 }
 
 /* -------------------------------- */
