@@ -56,7 +56,7 @@ class PagesController extends AppController {
 		//Checks if there exists a static page
 		$static = StaticPage::get($slug);
 		
-		if(!empty($static)) {
+		if($static) {
 			$page = new \stdClass();
 			$page->slug = $slug;
 			$page->title = StaticPage::title($slug);
