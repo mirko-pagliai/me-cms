@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.4 branch
+### 2.4.7
+* fixed bug for localized static pages.
+
 ### 2.4.6
 * fixed some bugs.
 
