@@ -45,6 +45,7 @@ class PostsCategoriesController extends AppController {
 	/**
 	 * Lists posts for a category
 	 * @param string $category Category slug
+     * @throws RecordNotFoundException
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function view($category = NULL) {

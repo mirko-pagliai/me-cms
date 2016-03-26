@@ -132,7 +132,6 @@ class PostsController extends AppController {
 	/**
 	 * Lists posts as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
-	 * @uses Cake\Controller\Component\RequestHandlerComponent:isRss()
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function rss() {
@@ -158,7 +157,9 @@ class PostsController extends AppController {
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function search() {
-		if($pattern = $this->request->query('p')) {
+        $pattern = $this->request->query('p');
+        
+		if($pattern) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
 				if($this->Security->checkLastSearch($pattern)) {
@@ -205,6 +206,8 @@ class PostsController extends AppController {
 			else
 				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
 		}
+        
+        $this->set(compact('pattern'));
 	}
 	
 	/**

@@ -22,7 +22,9 @@
  */
 ?>
 
-<?php	
+<?php
+    $menu = [];
+    
 	if(!$this->request->isHere($url = ['_name' => 'login']))
 		$menu[] = $this->Html->link(__d('me_cms', 'Login'), $url);
 
@@ -38,6 +40,5 @@
 	if(config('users.reset_password') && !$this->request->isHere($url = ['_name' => 'forgot_password']))
 		$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
 
-	if(!empty($menu))
-		echo $this->Html->ul($menu, ['class' => 'actions']);
+	echo $this->Html->ul($menu, ['class' => 'actions']);
 ?>

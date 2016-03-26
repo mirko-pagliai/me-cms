@@ -20,10 +20,12 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use Cake\Routing\Router;
 ?>
 
 <div class="content-preview">
-	<a href="<?= \Cake\Routing\Router::url(['_name' => 'post', $post->slug]) ?>">
+	<a href="<?= Router::url(['_name' => 'post', $post->slug]) ?>">
 		<div>
 			<div>
 				<div class="content-title">

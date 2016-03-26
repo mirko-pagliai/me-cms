@@ -62,12 +62,9 @@
 		<?php foreach($tags as $tag): ?>
 			<div class="col-sm-3">
 				<div>
-					<?php
-						echo sprintf('%s (%s)',
-							$this->Html->link($this->Html->strong($tag->tag), ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]),
-							$this->Html->link($tag->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')])
-						);
-
+                    <?= $this->Html->link($this->Html->strong($tag->tag), ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]) ?> 
+                    (<?= $this->Html->link($tag->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')]) ?>)
+                    <?php
 						$actions = [];
 
 						//Only admins and managers can edit tags

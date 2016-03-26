@@ -50,7 +50,9 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td><?= $group->description ?></td>
+					<td>
+                        <?= $group->description ?>
+                    </td>
 					<td class="min-width text-center">
 						<?php
 							if($group->user_count) 

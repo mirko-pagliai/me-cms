@@ -147,7 +147,9 @@
 						?>
 					</td>
 					<td class="min-width text-center">
-						<div class="hidden-xs"><?= $post->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="hidden-xs">
+                            <?= $post->created->i18nFormat(config('main.datetime.long')) ?>
+                        </div>
 						<div class="visible-xs">
 							<div><?= $post->created->i18nFormat(config('main.date.short')) ?></div>
 							<div><?= $post->created->i18nFormat(config('main.time.short')) ?></div>

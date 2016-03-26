@@ -39,11 +39,9 @@ class PostsCategoriesController extends AppController {
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
-		
-		if($this->request->isAction(['add', 'edit'])) {
-			//Gets and sets categories
-			$this->set('categories', $categories = $this->PostsCategories->getTreeList());
-		}
+        
+		if($this->request->isAction(['add', 'edit']))
+			$this->set('categories', $this->PostsCategories->getTreeList());
 	}
 	
 	/**
@@ -72,11 +70,15 @@ class PostsCategoriesController extends AppController {
 			->order(['PostsCategories.lft' => 'ASC'])
 			->select(['id', 'title', 'slug', 'post_count'])
 			->toArray();
+        
+        //Gets categories as tree list
+        $treeList = $this->PostsCategories->getTreeList();
 		
 		//Changes the category titles, replacing them with the titles of the tree list
-		array_walk($categories, function(&$category, $k, $treeList) {
-			$category->title = $treeList[$category->id];
-		}, $this->PostsCategories->getTreeList());
+        $categories = array_map(function($category) use($treeList) {
+            $category->title = $treeList[$category->id];
+            return $category;
+        }, $categories);
 		
         $this->set(compact('categories'));
     }

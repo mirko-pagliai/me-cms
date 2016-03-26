@@ -107,8 +107,12 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $user->full_name ?></td>
-					<td class="text-center hidden-xs"><?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?></td>
+					<td class="text-center">
+                        <?= $user->full_name ?>
+                    </td>
+					<td class="text-center hidden-xs">
+                        <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
+                    </td>
 					<td class="text-center">
 						<?= $this->Html->link($user->group->label, ['?' => ['group' => $user->group->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
 					</td>
@@ -121,7 +125,9 @@
 						?>
 					</td>
 					<td class="min-width text-center">
-						<div class="hidden-xs"><?= $user->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="hidden-xs">
+                            <?= $user->created->i18nFormat(config('main.datetime.long')) ?>
+                        </div>
 						<div class="visible-xs">
 							<div><?= $user->created->i18nFormat(config('main.date.short')) ?></div>
 							<div><?= $user->created->i18nFormat(config('main.time.short')) ?></div>

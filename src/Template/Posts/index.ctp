@@ -24,17 +24,13 @@
 	
 <?php
 	/**
-	 * This view can be used by many actions
+	 * This template can be used by many actions
 	 */
-	//PostsCategories `view`
-	if($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title))
-		$title = $posts[0]->category->title;
-	//PostsTags `view`
-	elseif($this->request->isAction('view', 'PostsTags'))
-		$title = __d('me_cms', 'Tag {0}', str_replace('-', ' ', $this->request->param('tag')));
-	//Posts `index_by_date`
-	elseif($this->request->isAction('index_by_date', 'Posts')) {
-		$date = (new \Cake\I18n\Time())->year($this->request->param('year'))->month($this->request->param('month'))->day($this->request->param('day'));
+	if($this->request->isAction('index_by_date', 'Posts')) {
+        $date = new \Cake\I18n\Time();
+        $date->year($this->request->param('year'));
+        $date->month($this->request->param('month'));
+        $date->day($this->request->param('day'));
 		
 		if($date->isToday())
 			$title = __d('me_cms', 'Posts of today');
@@ -43,17 +39,19 @@
 		else
 			$title = __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long')));
 	}
+	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title))
+		$title = $posts[0]->category->title;
+	elseif($this->request->isAction('view', 'PostsTags'))
+		$title = __d('me_cms', 'Tag {0}', str_replace('-', ' ', $this->request->param('tag')));
+    else
+        $title = __d('me_cms', 'Posts');
 	
-	if(!empty($title))
-		$this->assign('title', $title);
-	else
-		$this->assign('title', __d('me_cms', 'Posts'));
+	$this->assign('title', $title);
 ?>
 
 <div class="posts index">
 	<?php
-		if(!empty($title))
-			echo $this->Html->h2($title);
+		echo $this->Html->h2($title);
 		
 		if(!empty($posts)) {
 			foreach($posts as $post)

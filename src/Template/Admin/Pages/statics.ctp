@@ -35,11 +35,8 @@
 		<?php foreach($pages as $page): ?>
 			<tr>
 				<td>
+                    <strong><?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug]) ?></strong>
 					<?php
-						$title = $this->Html->link($page->filename, ['_name' => 'page', $page->slug]);
-						
-						echo $this->Html->strong($title);
-						
 						$actions = [
 							$this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank'])
 						];
@@ -47,8 +44,12 @@
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
 				</td>
-				<td><?= $page->title ?></td>
-				<td><?= $page->path ?></td>
+				<td>
+                    <?= $page->title ?>
+                </td>
+				<td>
+                    <?= $page->path ?>
+                </td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

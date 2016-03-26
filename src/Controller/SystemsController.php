@@ -50,7 +50,7 @@ class SystemsController extends AppController {
 		//Checks if the contact form is enabled
 		if(!config('frontend.contact_form')) {
 			$this->Session->Error(__d('me_cms', 'Disabled'));
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		}
 		
 		$contact = new \MeCms\Form\ContactForm();
@@ -64,7 +64,7 @@ class SystemsController extends AppController {
 				//Sends the email
 				if($contact->execute($this->request->data)) {
 					$this->Flash->success(__d('me_cms', 'The email has been sent'));
-					$this->redirect(['_name' => 'homepage']);
+					return $this->redirect(['_name' => 'homepage']);
 				} 
 				else
 					$this->Flash->error(__d('me_cms', 'The email was not sent'));
@@ -81,7 +81,7 @@ class SystemsController extends AppController {
 	public function ip_not_allowed() {
 		//If the user's IP address is not banned
 		if(!$this->isBanned())
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
 	}
@@ -92,7 +92,7 @@ class SystemsController extends AppController {
 	public function offline() {
 		//If the site has not been taken offline
 		if(!config('frontend.offline'))
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
 	}

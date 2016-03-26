@@ -26,7 +26,7 @@
 
 <div class="pages index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Pages'));	
+		echo $this->Html->h2(__d('me_cms', 'Pages'));
         
         $pages = array_map(function($page) {
             return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);

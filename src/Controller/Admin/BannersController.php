@@ -46,18 +46,20 @@ class BannersController extends AppController {
 		//Checks if the main folder and its subfolders are writable
 		if(!BannerFile::check()) {
 			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(BannerFile::folder())));
-			$this->redirect(['_name' => 'dashboard']);
+			return $this->redirect(['_name' => 'dashboard']);
 		}
 		
 		if($this->request->isAction(['index', 'edit', 'upload'])) {
-			//Gets and sets positions
-			$this->set('positions', $positions = $this->Banners->Positions->getList());
+			//Gets positions
+			$positions = $this->Banners->Positions->getList();
 		
 			//Checks for positions
 			if(empty($positions) && !$this->request->isAction('index')) {
 				$this->Flash->alert(__d('me_cms', 'Before you can manage banners, you have to create at least a banner position'));
-				$this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
+				return $this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
 			}
+            
+            $this->set(compact('positions'));
 		}
 		
 		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
@@ -108,14 +110,17 @@ class BannersController extends AppController {
 		$position = $this->request->query('position');
 		
 		if($position && $this->request->data('file')) {
+            //Uploads
+            $filename = $this->_upload($this->request->data('file'), BannerFile::folder());
+            
 			//Checks if the file has been uploaded
-			if($filename = $this->_upload($this->request->data('file'), BannerFile::folder())) {
+			if($filename) {
 				$banner = $this->Banners->save($this->Banners->newEntity([
 					'position_id'	=> $position,
 					'filename'		=> basename($filename)
 				]));
 				
-				if(!empty($banner->id))
+				if($banner->id)
 					$this->set('edit_url', ['action' => 'edit', $banner->id]);
 			}
 			

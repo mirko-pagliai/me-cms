@@ -60,7 +60,9 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $album->description ?></td>
+					<td class="text-center">
+                        <?= $album->description ?>
+                    </td>
 					<td class="min-width text-center">
 						<?php
 							if($album->photo_count) 

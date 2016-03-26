@@ -20,10 +20,12 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use Cake\Routing\Router;
 ?>
 	
 <?php
-	$this->assign('title', $album->title);
+	$this->assign('title', sprintf('%s - %s', __d('me_cms', 'Photos'), $album->title));
 	
 	if(config('frontend.fancybox'))
 		$this->Library->fancybox();

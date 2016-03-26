@@ -28,12 +28,10 @@
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Posts tags'));	
 		
-		if(!empty($tags)) {
-			foreach($tags as $tag)
-				$list[] = $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
-
-			if(!empty($list))
-				echo $this->Html->ul($list, ['icon' => 'caret-right']);
-		}
+        $tags = array_map(function($tag) {
+            return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
+        }, $tags->toArray());
+		
+        echo $this->Html->ul($tags, ['icon' => 'caret-right']);
 	?>
 </div>

@@ -32,8 +32,8 @@ class PhotosAlbumsController extends AppController {
 	/**
      * Lists albums
      */
-    public function index() {		
-		$this->set('albums', $albums = $this->PhotosAlbums->find('active')
+    public function index() {
+        $albums = $this->PhotosAlbums->find('active')
 			->select(['id', 'title', 'slug', 'photo_count'])
 			->contain(['Photos' => function($q) {
 				return $q
@@ -42,12 +42,13 @@ class PhotosAlbumsController extends AppController {
 			}])
 			->order(['title' => 'ASC'])
 			->cache('albums_index', $this->PhotosAlbums->cache)
-			->all()
-		);
-		
+			->all();    
+            
 		//If there is only one album, redirects to that album
-		if($albums->count() && $albums->count() < 2)
-			$this->redirect(['_name' => 'album', $albums->toArray()[0]->slug]);
+		if($albums->count() === 1)
+			return $this->redirect(['action' => 'view', $albums->toArray()[0]->slug]);
+        
+        $this->set(compact('albums'));
     }
 	
 	/**

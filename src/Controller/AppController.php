@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
+use Cake\I18n\I18n;
 
 /**
  * Application controller class
@@ -89,7 +90,6 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
-	 * @uses Cake\I18n\I18n::locale()
 	 * @uses MeTools\Network\Request::isAction()
 	 * @uses _getLanguage()
 	 * @uses isBanned()
@@ -99,14 +99,14 @@ class AppController extends BaseController {
 	public function beforeFilter(\Cake\Event\Event $event) {
 		//Checks if the site is offline
 		if($this->isOffline())
-			$this->redirect(['_name' => 'offline']);
+			return $this->redirect(['_name' => 'offline']);
 		
 		//Checks if the user's IP address is banned
 		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
-			$this->redirect(['_name' => 'ip_not_allowed']);
+			return $this->redirect(['_name' => 'ip_not_allowed']);
 		
 		//Sets the user's language
-		\Cake\I18n\I18n::locale($this->_getLanguage());
+		I18n::locale($this->_getLanguage());
 		
 		//If the current request has no prefix, it authorizes the current action
 		if(!$this->request->param('prefix'))

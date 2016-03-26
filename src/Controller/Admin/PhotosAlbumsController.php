@@ -44,7 +44,7 @@ class PhotosAlbumsController extends AppController {
 		//Checks if the main folder and its subfolders are writable
 		if(!PhotoFile::check()) {
 			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
-			$this->redirect(['_name' => 'dashboard']);
+			return $this->redirect(['_name' => 'dashboard']);
 		}
 	}
 	
@@ -58,7 +58,7 @@ class PhotosAlbumsController extends AppController {
 	public function isAuthorized($user = NULL) {		
 		//Only admins can delete albums
 		if($this->request->isAction('delete'))
-			$this->Auth->isGroup('admin');
+			return $this->Auth->isGroup('admin');
 				
 		return TRUE;
 	}
@@ -70,8 +70,7 @@ class PhotosAlbumsController extends AppController {
 		$this->paginate['order'] = ['title' => 'ASC'];
 		
 		$this->set('albums', $this->paginate(
-			$this->PhotosAlbums->find()
-				->select(['id', 'slug', 'title', 'photo_count', 'active'])
+			$this->PhotosAlbums->find()->select(['id', 'slug', 'title', 'photo_count', 'active'])
 		));
     }
 

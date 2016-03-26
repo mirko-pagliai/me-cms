@@ -48,8 +48,12 @@
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
 				</td>
-				<td class="min-width text-center"><?= $backup->compression ?></td>
-				<td class="min-width text-center"><?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?></td>
+				<td class="min-width text-center">
+                    <?= $backup->compression ?>
+                </td>
+				<td class="min-width text-center">
+                    <?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?>
+                </td>
 			</tr>
 		<?php endforeach; ?>
 	</table>
