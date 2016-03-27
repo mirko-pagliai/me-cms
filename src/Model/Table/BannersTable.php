@@ -27,7 +27,6 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Banner;
 use MeCms\Model\Table\AppTable;
-use MeCms\Utility\BannerFile;
 
 /**
  * Banners model

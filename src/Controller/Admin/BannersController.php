@@ -23,7 +23,6 @@
 namespace MeCms\Controller\Admin;
 
 use MeCms\Controller\AppController;
-use MeCms\Utility\BannerFile;
 
 /**
  * Banners controller
