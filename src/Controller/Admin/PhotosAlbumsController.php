@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -37,12 +38,10 @@ class PhotosAlbumsController extends AppController {
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
-		
-		//Checks if the main folder and its subfolders are writable
-		if(!is_writeable(PHOTOS)) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PHOTOS)));
-			return $this->redirect(['_name' => 'dashboard']);
-		}
+        
+		//Checks if the folder and its subfolders are writeable
+		if(!folder_is_writeable(PHOTOS))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(PHOTOS)));
 	}
 	
 	/**

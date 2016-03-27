@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -40,11 +41,9 @@ class BannersController extends AppController {
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		//Checks if the main folder and its subfolders are writable
-		if(!is_writeable(BANNERS)) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(BANNERS)));
-			return $this->redirect(['_name' => 'dashboard']);
-		}
+		//Checks if the folder is writeable
+		if(!is_writeable(BANNERS))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(BANNERS)));
 		
 		if($this->request->isAction(['index', 'edit', 'upload'])) {
 			//Gets positions
