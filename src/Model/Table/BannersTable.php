@@ -45,11 +45,10 @@ class BannersTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses MeCms\Model\Table\AppTable::afterDelete()
-	 * @uses MeCms\Utility\BannerFile::delete()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the file
-		BannerFile::delete($entity->filename);
+        (new \Cake\Filesystem\File(BANNERS.DS.$entity->filename))->delete();
 		
 		parent::afterDelete($event, $entity, $options);
 	}

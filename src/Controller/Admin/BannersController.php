@@ -36,16 +36,14 @@ class BannersController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeCms\Model\Table\BannersPositions::getList()
-	 * @uses MeCms\Utility\BannerFile::check()
-	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
 		//Checks if the main folder and its subfolders are writable
-		if(!BannerFile::check()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(BannerFile::folder())));
+		if(!is_writeable(BANNERS)) {
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(BANNERS)));
 			return $this->redirect(['_name' => 'dashboard']);
 		}
 		
@@ -100,7 +98,6 @@ class BannersController extends AppController {
 	/**
 	 * Uploads banners
 	 * @uses MeCms\Controller\_upload()
-	 * @uses MeCms\Utility\BannerFile::folder()
 	 */
 	public function upload() {
 		//If there's only one position, it automatically sets the query value
@@ -111,7 +108,7 @@ class BannersController extends AppController {
 		
 		if($position && $this->request->data('file')) {
             //Uploads
-            $filename = $this->_upload($this->request->data('file'), BannerFile::folder());
+            $filename = $this->_upload($this->request->data('file'), BANNERS);
             
 			//Checks if the file has been uploaded
 			if($filename) {

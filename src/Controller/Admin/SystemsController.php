@@ -119,8 +119,6 @@ class SystemsController extends AppController {
 	
 	/**
 	 * System checkup
-	 * @uses MeCms\Utility\BannerFile::check()
-	 * @uses MeCms\Utility\BannerFile::folder()
 	 * @uses MeCms\Utility\PhotoFile::check()
 	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Core\Plugin::version()
@@ -176,7 +174,7 @@ class SystemsController extends AppController {
 				['path' => rtr(ASSETS),					'writeable' => folder_is_writable(ASSETS)],
 				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
 				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
-				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
+				['path' => rtr(BANNERS),                'writeable' => folder_is_writable(BANNERS)],
 				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
 			]
 		]);
