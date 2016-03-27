@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.7
-* fixed bug for localized static pages.
+* fixed bug for localized static pages;
+* fixed shell output style;
 * fixed a lot of little bugs and codes.
 
 ### 2.4.6
