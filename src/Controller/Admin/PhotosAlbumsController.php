@@ -23,7 +23,6 @@
 namespace MeCms\Controller\Admin;
 
 use MeCms\Controller\AppController;
-use MeCms\Utility\PhotoFile;
 
 /**
  * PhotosAlbums controller
@@ -35,15 +34,13 @@ class PhotosAlbumsController extends AppController {
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
 		//Checks if the main folder and its subfolders are writable
-		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
+		if(!is_writeable(PHOTOS)) {
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PHOTOS)));
 			return $this->redirect(['_name' => 'dashboard']);
 		}
 	}

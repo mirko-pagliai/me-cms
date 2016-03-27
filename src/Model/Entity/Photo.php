@@ -23,7 +23,6 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeCms\Utility\PhotoFile;
 
 /**
  * Photo entity
@@ -55,9 +54,8 @@ class Photo extends Entity {
 	/**
 	 * Gets the photo path (virtual field)
 	 * @return string Path
-	 * @uses MeCms\Utility\PhotoFile::path()
 	 */
 	protected function _getPath() {
-		return PhotoFile::path($this->_properties['filename'], $this->_properties['album_id']);
+        return PHOTOS.DS.$this->_properties['album_id'].DS.$this->_properties['filename'];
     }
 }

@@ -23,7 +23,6 @@
 namespace MeCms\Controller\Admin;
 
 use MeCms\Controller\AppController;
-use MeCms\Utility\PhotoFile;
 
 /**
  * Photos controller
@@ -36,16 +35,14 @@ class PhotosController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeCms\Model\Table\PhotosAlbums::getList()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
 		//Checks if the main folder and its subfolders are writable
-		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
+		if(!is_writeable(PHOTOS)) {
+			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PHOTOS)));
 			return $this->redirect(['_name' => 'dashboard']);
 		}
 		
@@ -100,7 +97,6 @@ class PhotosController extends AppController {
 	/**
 	 * Uploads photos
 	 * @uses MeCms\Controller\_upload()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 */
 	public function upload() {
 		//If there's only one album, it automatically sets the query value
@@ -111,7 +107,7 @@ class PhotosController extends AppController {
 		
 		if($album && $this->request->data('file')) {
             //Uploads
-            $filename = $this->_upload($this->request->data('file'), PhotoFile::folder($album));
+            $filename = $this->_upload($this->request->data('file'), PHOTOS.DS.$album);
                 
 			//Checks if the file has been uploaded
 			if($filename) {

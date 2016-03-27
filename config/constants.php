@@ -29,4 +29,8 @@ if(!defined('BANNERS'))
 if(!defined('FORMAT_FOR_MYSQL'))
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
 
+//Sets the default photos directory
+if(!defined('PHOTOS'))
+	define('PHOTOS', WWW_ROOT.'img'.DS.'photos');
+
 define('MECMS', 'MeCms');

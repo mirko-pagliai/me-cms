@@ -27,8 +27,6 @@ use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
-use MeCms\Utility\BannerFile;
-use MeCms\Utility\PhotoFile;
 use MeTools\Cache\Cache;
 use MeTools\Core\Plugin;
 use MeTools\Utility\Apache;
@@ -119,8 +117,6 @@ class SystemsController extends AppController {
 	
 	/**
 	 * System checkup
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Utility\Apache::module()
@@ -171,11 +167,11 @@ class SystemsController extends AppController {
 				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
 			],
 			'webroot' => [
-				['path' => rtr(ASSETS),					'writeable' => folder_is_writable(ASSETS)],
-				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
-				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
-				['path' => rtr(BANNERS),                'writeable' => folder_is_writable(BANNERS)],
-				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
+				['path' => rtr(ASSETS),             'writeable' => folder_is_writable(ASSETS)],
+				['path' => rtr(WWW_ROOT.'files'),   'writeable' => folder_is_writable(WWW_ROOT.'files')],
+				['path' => rtr(WWW_ROOT.'fonts'),   'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
+				['path' => rtr(BANNERS),            'writeable' => folder_is_writable(BANNERS)],
+				['path' => rtr(PHOTOS),             'writeable' => folder_is_writable(PHOTOS)],
 			]
 		]);
 	}
