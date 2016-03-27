@@ -152,6 +152,7 @@ class SystemsController extends AppController {
             'version'	=> Php::version(),
         ];
         
+        //Checks for PHP's extensions
         foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $extension)
             $checkup['php'][$extension] = Php::extension($extension);
         
@@ -161,9 +162,11 @@ class SystemsController extends AppController {
             'mecms_version'		=> Plugin::version('MeCms')
         ];
         
+        //Checks for temporary directories
         foreach([CACHE, LOGS, THUMBS, TMP] as $path)
             $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
         
+        //Checks for webroot directories
         foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path)
             $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
         
@@ -175,6 +178,7 @@ class SystemsController extends AppController {
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
+     * @throws InternalErrorException
 	 * @uses MeTools\Cache\Cache::clearAll()
 	 */
 	public function tmp_cleaner($type) {
@@ -197,6 +201,8 @@ class SystemsController extends AppController {
 			case 'thumbs':
 				$success = clear_dir(THUMBS);
 				break;
+            default:
+                throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
 		}
 		
 		if(!empty($success))
