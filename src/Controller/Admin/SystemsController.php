@@ -123,7 +123,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Utility\Apache::version()
 	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
-	 * @uses MeTools\Utility\Php::version()
 	 */
 	public function checkup() {
 		$phpRequired = '5.5.9';
@@ -149,7 +148,7 @@ class SystemsController extends AppController {
         $checkup['php'] = [
             'check'		=> Php::check($phpRequired),
             'required'	=> $phpRequired,
-            'version'	=> Php::version(),
+            'version'	=> PHP_VERSION,
         ];
         
         //Checks for PHP's extensions
