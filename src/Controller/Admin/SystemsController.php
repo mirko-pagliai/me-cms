@@ -128,52 +128,48 @@ class SystemsController extends AppController {
 	public function checkup() {
 		$phpRequired = '5.5.9';
 		
-		$this->set([
-			'apache' => [
-				'expires'	=> Apache::module('mod_expires'),
-				'rewrite'	=> Apache::module('mod_rewrite'),
-				'version'	=> Apache::version(),
-			],
-			'backups' => [
-				'path'		=> rtr(BACKUPS),
-				'writeable'	=> folder_is_writable(BACKUPS)
-			],
-			'cache' => [
-				'status' => Cache::enabled()
-			],
-			'executables' => [
-				'clean-css'		=> which('cleancss'),
-				'UglifyJS 2'	=> which('uglifyjs')
-			],
-			'php' => [
-				'check'		=> Php::check($phpRequired),
-				'exif'		=> Php::extension('exif'),
-				'imagick'	=> Php::extension('imagick'),
-				'mbstring'	=> Php::extension('mbstring'),
-				'mcrypt'	=> Php::extension('mcrypt'),
-				'required'	=> $phpRequired,
-				'version'	=> Php::version(),
-				'zip'		=> Php::extension('zip')
-			],
-			'plugins' => [
-				'cakephp_version'	=> Configure::version(),
-				'plugins_version'	=> Plugin::versions('MeCms'),
-				'mecms_version'		=> Plugin::version('MeCms')
-			],
-			'temporary' => [
-				['path' => rtr(LOGS),	'writeable' => folder_is_writable(LOGS)],
-				['path' => rtr(TMP),	'writeable' => folder_is_writable(TMP)],
-				['path' => rtr(CACHE),	'writeable' => folder_is_writable(CACHE)],
-				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
-			],
-			'webroot' => [
-				['path' => rtr(ASSETS),             'writeable' => folder_is_writable(ASSETS)],
-				['path' => rtr(WWW_ROOT.'files'),   'writeable' => folder_is_writable(WWW_ROOT.'files')],
-				['path' => rtr(WWW_ROOT.'fonts'),   'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
-				['path' => rtr(BANNERS),            'writeable' => folder_is_writable(BANNERS)],
-				['path' => rtr(PHOTOS),             'writeable' => folder_is_writable(PHOTOS)],
-			]
-		]);
+        $checkup['apache'] = [
+            'expires'	=> Apache::module('mod_expires'),
+            'rewrite'	=> Apache::module('mod_rewrite'),
+            'version'	=> Apache::version(),
+        ];
+        
+        $checkup['backups'] = [
+            'path'		=> rtr(BACKUPS),
+            'writeable'	=> folder_is_writable(BACKUPS)
+        ];
+        
+        $checkup['cache'] = Cache::enabled();
+        
+        $checkup['executables'] = [
+            'clean-css'		=> which('cleancss'),
+            'UglifyJS 2'	=> which('uglifyjs')
+        ];
+        
+        $checkup['php'] = [
+            'check'		=> Php::check($phpRequired),
+            'required'	=> $phpRequired,
+            'version'	=> Php::version(),
+        ];
+        
+        foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $extension)
+            $checkup['php'][$extension] = Php::extension($extension);
+        
+        $checkup['plugins'] = [
+            'cakephp_version'	=> Configure::version(),
+            'plugins_version'	=> Plugin::versions('MeCms'),
+            'mecms_version'		=> Plugin::version('MeCms')
+        ];
+        
+        foreach([CACHE, LOGS, THUMBS, TMP] as $path)
+            $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        
+        foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path)
+            $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        
+        array_walk($checkup, function($value, $key) {
+            $this->set($key, $value);
+        });
 	}
 	
 	/**

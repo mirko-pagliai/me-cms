@@ -57,7 +57,7 @@
 		/* -------------------------------- */
 		/*			Cache status			*/
 		/* -------------------------------- */
-		if($cache['status'])
+		if($cache)
 			$text = $this->Html->para($successClasses, __d('me_cms', 'The cache is enabled'), $successOptions);
 		else
 			$text = $this->Html->para($errorClasses, __d('me_cms', 'The cache is disabled or debugging is active'), $errorOptions);
