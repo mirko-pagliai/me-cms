@@ -59,9 +59,9 @@ class InstallShell extends BaseInstallShell {
 		$this->paths = am($this->paths, [
 			ASSETS,
 			BACKUPS,
+            BANNERS,
+            PHOTOS,
 			THUMBS,
-			WWW_ROOT.'img'.DS.'banners',
-			WWW_ROOT.'img'.DS.'photos',
 		]);
 	}
 	
