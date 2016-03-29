@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.4 branch
 ### 2.4.7
+* improved code for banners and photos;
 * fixed bug for localized static pages;
 * fixed shell output style;
 * fixed a lot of little bugs and codes.
