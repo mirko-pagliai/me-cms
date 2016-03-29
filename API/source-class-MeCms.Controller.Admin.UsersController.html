@@ -201,8 +201,6 @@
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
 				<li><a href="class-MeCms.Shell.UpdateShell.html">MeCms\Shell\UpdateShell</a></li>
 				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
-				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
-				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
 				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
@@ -387,7 +385,7 @@
 </span><span id="129" class="l"><a href="#129">129: </a>        <span class="php-comment">//Only the admin founder can edit others admin users</span>
 </span><span id="130" class="l"><a href="#130">130: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$user</span>-&gt;group_id === <span class="php-num">1</span> &amp;&amp; !<span class="php-var">$this</span>-&gt;Auth-&gt;isFounder()) {
 </span><span id="131" class="l"><a href="#131">131: </a>            <span class="php-var">$this</span>-&gt;Flash-&gt;alert(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Only the admin founder can edit other admin users'</span>));
-</span><span id="132" class="l"><a href="#132">132: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>]);
+</span><span id="132" class="l"><a href="#132">132: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'action'</span> =&gt; <span class="php-quote">'index'</span>]);
 </span><span id="133" class="l"><a href="#133">133: </a>        }
 </span><span id="134" class="l"><a href="#134">134: </a>        
 </span><span id="135" class="l"><a href="#135">135: </a>        <span class="php-comment">//It prevents a blank password is saved</span>
@@ -489,6 +487,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?11d86f6c2391a7153316736d1dfaed9b9a4a2c53"></script>
+<script src="elementlist.js?7bc4080adc10a69de6e0da6a61bcfcf0799c07da"></script>
 </body>
 </html>
