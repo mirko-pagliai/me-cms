@@ -30,7 +30,9 @@
 	$this->extend('/Common/widget');
 	$this->assign('title', count($posts) > 1 ? __d('me_cms', 'Latest {0} posts', count($posts)) : __d('me_cms', 'Latest post'));
 			
-	echo $this->Html->ul(array_map(function($post) {
+    $posts = array_map(function($post) {
 		return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-	}, $posts), ['icon' => 'caret-right']);
+	}, $posts);
+    
+	echo $this->Html->ul($posts, ['icon' => 'caret-right']);
 ?>

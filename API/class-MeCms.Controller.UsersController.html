@@ -228,7 +228,7 @@ App\Controller\AppController
 		<b>Namespace:</b> <a href="namespace-MeCms.html">MeCms</a>\<a href="namespace-MeCms.Controller.html">Controller</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-MeCms.Controller.UsersController.html#30-407" title="Go to source code">Controller/UsersController.php</a>
+			<b>Located at</b> <a href="source-class-MeCms.Controller.UsersController.html#30-401" title="Go to source code">Controller/UsersController.php</a>
 		<br>
 	</div>
 
@@ -248,7 +248,7 @@ App\Controller\AppController
 
 		<td class="name"><div>
 		<a class="anchor" href="#_beforeFilter">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#37-54" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#37-53" title="Go to source code">beforeFilter</a>( <span>Cake\Event\Event <var>$event</var></span> )</code>
 
 		<div class="description short">
 			<p>Called before the controller action.
@@ -283,7 +283,7 @@ You can use this method to perform logic that needs to happen before each contro
 	<tr data-order="_loginWithCookie" id="__loginWithCookie">
 
 		<td class="attributes"><code>
-			 private 
+			 protected 
 
 			mixed
 			
@@ -292,7 +292,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#__loginWithCookie">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#56-77" title="Go to source code">_loginWithCookie</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#55-79" title="Go to source code">_loginWithCookie</a>( )</code>
 
 		<div class="description short">
 			<p>Internal function to login with cookie</p>
@@ -325,7 +325,7 @@ You can use this method to perform logic that needs to happen before each contro
 	<tr data-order="_logout" id="__logout">
 
 		<td class="attributes"><code>
-			 private 
+			 protected 
 
 			mixed
 			
@@ -334,7 +334,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#__logout">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#79-94" title="Go to source code">_logout</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#81-96" title="Go to source code">_logout</a>( )</code>
 
 		<div class="description short">
 			<p>Internal function to logout</p>
@@ -361,279 +361,6 @@ You can use this method to perform logic that needs to happen before each contro
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="initialize" id="_initialize">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_initialize">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#96-104" title="Go to source code">initialize</a>( )</code>
-
-		<div class="description short">
-			<p>Initialization hook method</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Initialization hook method</p>
-
-
-
-
-
-
-				<h4>Overrides</h4>
-				<div class="list"><code><a href="class-MeCms.Controller.AppController.html#_initialize">MeCms\Controller\AppController::initialize()</a></code></div>
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="activate_account" id="_activate_account">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_activate_account">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#106-141" title="Go to source code">activate_account</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
-
-		<div class="description short">
-			<p>Activates account</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Activates account</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd>User ID</dd>
-					<dt><var>$token</var></dt>
-					<dd>Token</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Network\Exception\NotFoundException
-				</div>
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Controller\Component\Token::check()<br>
-						MeTools\Controller\Component\Token::delete()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="forgot_password" id="_forgot_password">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_forgot_password">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#143-194" title="Go to source code">forgot_password</a>( )</code>
-
-		<div class="description short">
-			<p>Requests a new password</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Requests a new password</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Mailer.UserMailer.html#_forgot_password">MeCms\Mailer\UserMailer::forgot_password()</a></code><br>
-						MeTools\Controller\Component\Recaptcha::check()<br>
-						MeTools\Controller\Component\Recaptcha::getError()<br>
-						MeTools\Controller\Component\Token::create()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="login" id="_login">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_login">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#196-231" title="Go to source code">login</a>( )</code>
-
-		<div class="description short">
-			<p>Login</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Login</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.UsersController.html#__loginWithCookie">MeCms\Controller\UsersController::_loginWithCookie()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="logout" id="_logout">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_logout">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#233-242" title="Go to source code">logout</a>( )</code>
-
-		<div class="description short">
-			<p>Logout</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Logout</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean
-				</div>
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						<code><a href="class-MeCms.Controller.UsersController.html#__logout">MeCms\Controller\UsersController::_logout()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="resend_activation" id="_resend_activation">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_resend_activation">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#244-289" title="Go to source code">resend_activation</a>( )</code>
-
-		<div class="description short">
-			<p>Resends the activation mail</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Resends the activation mail</p>
-
-
-
-
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Controller\Component\Recaptcha::check()<br>
-						MeTools\Controller\Component\Recaptcha::getError()<br>
-						<code><a href="class-MeCms.Controller.UsersController.html#__send_activation_mail">MeCms\Controller\UsersController::_send_activation_mail()</a></code><br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="reset_password" id="_reset_password">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_reset_password">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#291-331" title="Go to source code">reset_password</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
-
-		<div class="description short">
-			<p>Resets password</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Resets password</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$id</var></dt>
-					<dd>User ID</dd>
-					<dt><var>$token</var></dt>
-					<dd>Token</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					Cake\Network\Exception\NotFoundException
-				</div>
-
-				<h4>Uses</h4>
-				<div class="list">
-						MeTools\Controller\Component\Token::check()<br>
-						MeTools\Controller\Component\Token::delete()<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="_send_activation_mail" id="__send_activation_mail">
 
 		<td class="attributes"><code>
@@ -646,7 +373,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#__send_activation_mail">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#333-349" title="Go to source code">_send_activation_mail</a>( <span>object <var>$user</var></span> )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#98-114" title="Go to source code">_send_activation_mail</a>( <span>object <var>$user</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal function to send the activation mail</p>
@@ -684,6 +411,271 @@ You can use this method to perform logic that needs to happen before each contro
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="initialize" id="_initialize">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initialize">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#116-124" title="Go to source code">initialize</a>( )</code>
+
+		<div class="description short">
+			<p>Initialization hook method</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Initialization hook method</p>
+
+
+
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-MeCms.Controller.AppController.html#_initialize">MeCms\Controller\AppController::initialize()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="activate_account" id="_activate_account">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_activate_account">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#126-157" title="Go to source code">activate_account</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
+
+		<div class="description short">
+			<p>Activates account</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Activates account</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>User ID</dd>
+					<dt><var>$token</var></dt>
+					<dd>Token</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Controller\Component\Token::check()<br>
+						MeTools\Controller\Component\Token::delete()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="forgot_password" id="_forgot_password">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_forgot_password">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#159-210" title="Go to source code">forgot_password</a>( )</code>
+
+		<div class="description short">
+			<p>Requests a new password</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Requests a new password</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Mailer.UserMailer.html#_forgot_password">MeCms\Mailer\UserMailer::forgot_password()</a></code><br>
+						MeTools\Controller\Component\Recaptcha::check()<br>
+						MeTools\Controller\Component\Recaptcha::getError()<br>
+						MeTools\Controller\Component\Token::create()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="login" id="_login">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_login">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#212-247" title="Go to source code">login</a>( )</code>
+
+		<div class="description short">
+			<p>Login</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Login</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.UsersController.html#__loginWithCookie">MeCms\Controller\UsersController::_loginWithCookie()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="logout" id="_logout">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_logout">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#249-258" title="Go to source code">logout</a>( )</code>
+
+		<div class="description short">
+			<p>Logout</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Logout</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-MeCms.Controller.UsersController.html#__logout">MeCms\Controller\UsersController::_logout()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resend_activation" id="_resend_activation">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resend_activation">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#260-305" title="Go to source code">resend_activation</a>( )</code>
+
+		<div class="description short">
+			<p>Resends the activation mail</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Resends the activation mail</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Controller\Component\Recaptcha::check()<br>
+						MeTools\Controller\Component\Recaptcha::getError()<br>
+						<code><a href="class-MeCms.Controller.UsersController.html#__send_activation_mail">MeCms\Controller\UsersController::_send_activation_mail()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="reset_password" id="_reset_password">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_reset_password">#</a>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#307-343" title="Go to source code">reset_password</a>( <span>string <var>$id</var></span>, <span>string <var>$token</var></span> )</code>
+
+		<div class="description short">
+			<p>Resets password</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Resets password</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>User ID</dd>
+					<dt><var>$token</var></dt>
+					<dd>Token</dd>
+				</dl></div>
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						MeTools\Controller\Component\Token::check()<br>
+						MeTools\Controller\Component\Token::delete()<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="signup" id="_signup">
 
 		<td class="attributes"><code>
@@ -696,7 +688,7 @@ You can use this method to perform logic that needs to happen before each contro
 
 		<td class="name"><div>
 		<a class="anchor" href="#_signup">#</a>
-		<code><a href="source-class-MeCms.Controller.UsersController.html#351-406" title="Go to source code">signup</a>( )</code>
+		<code><a href="source-class-MeCms.Controller.UsersController.html#345-400" title="Go to source code">signup</a>( )</code>
 
 		<div class="description short">
 			<p>Sign up</p>

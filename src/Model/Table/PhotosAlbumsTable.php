@@ -22,11 +22,11 @@
  */
 namespace MeCms\Model\Table;
 
+use Cake\Filesystem\Folder;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\PhotosAlbum;
 use MeCms\Model\Table\AppTable;
-use MeCms\Utility\PhotoFile;
 
 /**
  * PhotosAlbums model
@@ -44,11 +44,10 @@ class PhotosAlbumsTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses MeCms\Model\Table\AppTable::afterDelete()
-	 * @uses MeCms\Utility\PhotoFile::deleteFolder()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the folder
-		PhotoFile::deleteFolder($entity->id);
+        (new Folder(PHOTOS.DS.$entity->id))->delete();
 		
 		parent::afterDelete($event, $entity, $options);
 	}
@@ -59,12 +58,11 @@ class PhotosAlbumsTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses MeCms\Model\Table\AppTable::afterSave()
-	 * @uses MeCms\Utility\PhotoFile::createFolder()
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Creates the folder
 		if($entity->isNew())
-			PhotoFile::createFolder($entity->id);
+           (new Folder())->create(PHOTOS.DS.$entity->id, 0777);
 		
 		parent::afterSave($event, $entity, $options);
 	}

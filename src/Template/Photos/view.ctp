@@ -22,6 +22,8 @@
  */
 ?>
 
+<?php $this->assign('title', sprintf('%s - %s', __d('me_cms', 'Photo'), $photo->filename)); ?>
+
 <div class="photos view">
 	<?= $this->Thumb->image($photo->path, ['side' => 828]) ?>
 </div>

@@ -21,5 +21,16 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
+//Sets the default banners directory
+if(!defined('BANNERS'))
+	define('BANNERS', WWW_ROOT.'img'.DS.'banners');
+
+//Sets the datetime format for MySql
+if(!defined('FORMAT_FOR_MYSQL'))
+    define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
+
+//Sets the default photos directory
+if(!defined('PHOTOS'))
+	define('PHOTOS', WWW_ROOT.'img'.DS.'photos');
+
 define('MECMS', 'MeCms');

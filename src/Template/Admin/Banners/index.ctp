@@ -72,13 +72,13 @@
 						<?php
                             //If the banner is not active (not published)
                             if(!$banner->active)
-                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
 			
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
 							];
 							
-							if(!empty($banner->target))
+							if($banner->target)
 								$actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
 							
 							//Only admins can delete banners
@@ -99,8 +99,12 @@
                             }
                         ?>
 					</td>
-					<td class="text-center"><?= $banner->description ?></td>
-					<td class="min-width text-center"><?= $banner->click_count ?></td>
+					<td class="text-center">
+                        <?= $banner->description ?>
+                    </td>
+					<td class="min-width text-center">
+                        <?= $banner->click_count ?>
+                    </td>
 					<td class="min-width text-center">
 						<div class="hidden-xs"><?= $banner->created->i18nFormat(config('main.datetime.long')) ?></div>
 						<div class="visible-xs">

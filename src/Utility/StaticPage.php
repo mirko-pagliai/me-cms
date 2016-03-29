@@ -75,7 +75,7 @@ class StaticPage {
 		$file = implode(DS, af(explode('/', $slug)));
 		
 		//Sets the file patterns
-		$patterns = [sprintf('%s_%s', $file, \Cake\I18n\I18n::locale()), sprintf('%s', $file)];
+		$patterns = [sprintf('%s-%s', $file, \Cake\I18n\I18n::locale()), $file];
 		
 		//Checks if the page exists in APP
 		foreach($patterns as $pattern)

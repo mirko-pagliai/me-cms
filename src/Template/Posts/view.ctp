@@ -38,5 +38,5 @@
 ?>
 
 <div class="posts view">
-	<?= $this->element('frontend'.DS.'views'.DS.'post', compact('post')); ?>
+	<?= $this->element('frontend/views/post', compact('post')); ?>
 </div>

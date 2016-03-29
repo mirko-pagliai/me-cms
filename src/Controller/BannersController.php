@@ -31,26 +31,21 @@ use MeCms\Controller\AppController;
  */
 class BannersController extends AppController {
 	/**
-	 * Open a banner target (link)
+	 * Opens a banner (redirects to the banner target)
 	 * @param string $id Banner ID
-	 * @throws NotFoundException
 	 */
 	public function open($id = NULL) {
 		$banner = $this->Banners->find('active')
 			->select(['id', 'target'])
-			->where(compact('id'))
+			->where(am(['target !=' => ''], compact('id')))
 			->cache(sprintf('view_%s', md5($id)), $this->Banners->cache)
 			->firstOrFail();
-		
-		//Checks for banner target
-		if(empty($banner->target))
-			throw new NotFoundException(__d('me_cms', 'The banner target is missing'));
 				
 		//Increases the click count
 		$expression = new \Cake\Database\Expression\QueryExpression('click_count = click_count + 1');
 		$this->Banners->updateAll([$expression], [compact('id')]);
 		
 		//Redirects
-		$this->redirect($banner->target);
+		return $this->redirect($banner->target);
 	}
 }

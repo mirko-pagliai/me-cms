@@ -57,7 +57,7 @@
 		/* -------------------------------- */
 		/*			Cache status			*/
 		/* -------------------------------- */
-		if($cache['status'])
+		if($cache)
 			$text = $this->Html->para($successClasses, __d('me_cms', 'The cache is enabled'), $successOptions);
 		else
 			$text = $this->Html->para($errorClasses, __d('me_cms', 'The cache is disabled or debugging is active'), $errorOptions);
@@ -105,22 +105,15 @@
 		/* -------------------------------- */
 		echo $this->Html->h4('PHP');
 		//Current version
-		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['version']));
-		echo $this->Html->div('col-sm-12', $text);
-		
-		//Check version
-		if($php['check'])
-			$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required'])), $successOptions);
-		else
-			$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required'])), $errorOptions);
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), PHP_VERSION));
 		echo $this->Html->div('col-sm-12', $text);
 		
 		//PHP's extensions
-		foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $ext) {
-			if($php[$ext])
-				$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($ext)), $successOptions);
+		foreach($php_extensions as $extension => $exists) {
+			if($exists)
+				$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($extension)), $successOptions);
 			else
-				$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($ext)), $errorOptions);
+				$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($extension)), $errorOptions);
 		
 			echo $this->Html->div('col-sm-6', $text);
 		}
@@ -149,7 +142,7 @@
 		if($backups['writeable'])
 			$text = $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($backups['path'])), $successOptions);
 		else
-			$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory `{0}` not writeable', $this->Html->code($backups['path'])), $errorOptions);
+			$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($backups['path'])), $errorOptions);
 		echo $this->Html->div('col-sm-6', $text);
 		
 		echo $this->Html->div('clearfix');
@@ -164,7 +157,7 @@
 			if($dir['writeable'])
 				$text = $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($dir['path'])), $successOptions);
 			else
-				$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory `{0}` not writeable', $this->Html->code($dir['path'])), $errorOptions);
+				$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($dir['path'])), $errorOptions);
 			echo $this->Html->div('col-sm-6', $text);
 		}
 			
@@ -180,7 +173,7 @@
 			if($dir['writeable'])
 				$text = $this->Html->para($successClasses, __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($dir['path'])), $successOptions);
 			else
-				$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory `{0}` not writeable', $this->Html->code($dir['path'])), $errorOptions);
+				$text =  $this->Html->para($errorClasses, __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($dir['path'])), $errorOptions);
 			echo $this->Html->div('col-sm-6', $text);
 		}
 	?>

@@ -27,8 +27,6 @@ use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
-use MeCms\Utility\BannerFile;
-use MeCms\Utility\PhotoFile;
 use MeTools\Cache\Cache;
 use MeTools\Core\Plugin;
 use MeTools\Utility\Apache;
@@ -73,7 +71,7 @@ class SystemsController extends AppController {
 		
 		//Checks for the files directory (`APP/webroot/files`)
 		if(!$this->KcFinder->checkFiles())
-			throw new InternalErrorException(__d('me_tools', 'File or directory `{0}` not writeable', rtr($this->KcFinder->getFilesPath())));
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($this->KcFinder->getFilesPath())));
 		
 		//Gets the supperted types from configuration
 		$types = $this->KcFinder->getTypes();
@@ -119,72 +117,58 @@ class SystemsController extends AppController {
 	
 	/**
 	 * System checkup
-	 * @uses MeCms\Utility\BannerFile::check()
-	 * @uses MeCms\Utility\BannerFile::folder()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
-	 * @uses MeTools\Utility\Php::version()
 	 */
 	public function checkup() {
-		$phpRequired = '5.5.9';
-		
-		$this->set([
-			'apache' => [
-				'expires'	=> Apache::module('mod_expires'),
-				'rewrite'	=> Apache::module('mod_rewrite'),
-				'version'	=> Apache::version(),
-			],
-			'backups' => [
-				'path'		=> rtr(BACKUPS),
-				'writeable'	=> folder_is_writable(BACKUPS)
-			],
-			'cache' => [
-				'status' => Cache::enabled()
-			],
-			'executables' => [
-				'clean-css'		=> which('cleancss'),
-				'UglifyJS 2'	=> which('uglifyjs')
-			],
-			'php' => [
-				'check'		=> Php::check($phpRequired),
-				'exif'		=> Php::extension('exif'),
-				'imagick'	=> Php::extension('imagick'),
-				'mbstring'	=> Php::extension('mbstring'),
-				'mcrypt'	=> Php::extension('mcrypt'),
-				'required'	=> $phpRequired,
-				'version'	=> Php::version(),
-				'zip'		=> Php::extension('zip')
-			],
-			'plugins' => [
-				'cakephp_version'	=> Configure::version(),
-				'plugins_version'	=> Plugin::versions('MeCms'),
-				'mecms_version'		=> Plugin::version('MeCms')
-			],
-			'temporary' => [
-				['path' => rtr(LOGS),	'writeable' => folder_is_writable(LOGS)],
-				['path' => rtr(TMP),	'writeable' => folder_is_writable(TMP)],
-				['path' => rtr(CACHE),	'writeable' => folder_is_writable(CACHE)],
-				['path' => rtr(THUMBS),	'writeable' => folder_is_writable(THUMBS)],
-			],
-			'webroot' => [
-				['path' => rtr(ASSETS),					'writeable' => folder_is_writable(ASSETS)],
-				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
-				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
-				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
-				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
-			]
-		]);
+        $checkup['apache'] = [
+            'expires'	=> Apache::module('mod_expires'),
+            'rewrite'	=> Apache::module('mod_rewrite'),
+            'version'	=> Apache::version(),
+        ];
+        
+        $checkup['backups'] = [
+            'path'		=> rtr(BACKUPS),
+            'writeable'	=> folder_is_writable(BACKUPS)
+        ];
+        
+        $checkup['cache'] = Cache::enabled();
+        
+        $checkup['executables'] = [
+            'clean-css'		=> which('cleancss'),
+            'UglifyJS 2'	=> which('uglifyjs')
+        ];
+        
+        //Checks for PHP's extensions
+        foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension)
+            $checkup['php_extensions'][$extension] = Php::extension($extension);
+        
+        $checkup['plugins'] = [
+            'cakephp_version'	=> Configure::version(),
+            'plugins_version'	=> Plugin::versions('MeCms'),
+            'mecms_version'		=> Plugin::version('MeCms')
+        ];
+        
+        //Checks for temporary directories
+        foreach([CACHE, LOGS, THUMBS, TMP] as $path)
+            $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        
+        //Checks for webroot directories
+        foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path)
+            $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        
+        array_walk($checkup, function($value, $key) {
+            $this->set($key, $value);
+        });
 	}
 	
 	/**
 	 * Temporary cleaner (assets, cache, logs and thumbnails)
 	 * @param string $type Type
+     * @throws InternalErrorException
 	 * @uses MeTools\Cache\Cache::clearAll()
 	 */
 	public function tmp_cleaner($type) {
@@ -207,6 +191,8 @@ class SystemsController extends AppController {
 			case 'thumbs':
 				$success = clear_dir(THUMBS);
 				break;
+            default:
+                throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
 		}
 		
 		if(!empty($success))

@@ -24,6 +24,7 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use MeTools\Network\Request;
 
 /**
  * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
@@ -99,3 +100,10 @@ if(is_readable(CONFIG.'widgets.php'))
 
 //Adds the widgets configuration to the MeCms configuration
 Configure::write('MeCms.frontend.widgets', Configure::consume('Widgets'));
+
+/**
+ * Adds `isAdmin()` detector for the request
+ */
+Request::addDetector('admin', function ($request) {
+    return $request->param('prefix') === 'admin';
+});

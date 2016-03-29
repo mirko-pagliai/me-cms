@@ -30,7 +30,9 @@
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Pages'));
 			
-	echo $this->Html->ul(array_map(function($page) {
+    $pages = array_map(function($page) {
 		return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
-	}, $pages), ['icon' => 'caret-right']);
+	}, $pages);
+    
+	echo $this->Html->ul($pages, ['icon' => 'caret-right']);
 ?>

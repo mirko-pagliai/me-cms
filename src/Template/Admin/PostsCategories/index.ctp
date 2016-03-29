@@ -56,7 +56,9 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= empty($category->parent->title) ? NULL : $category->parent->title ?></td>
+					<td class="text-center">
+                        <?= empty($category->parent->title) ? NULL : $category->parent->title ?>
+                    </td>
 					<td class="min-width text-center">
 						<?php
 							if($category->post_count) 

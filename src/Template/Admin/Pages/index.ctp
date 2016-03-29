@@ -78,11 +78,11 @@
 						<?php
                             //If the page is not active (it's a draft)
                             if(!$page->active)
-                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
                             
                             //If the page is scheduled
                             if($page->created->isFuture())
-                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
 														
 							$actions = [];
 							
@@ -121,7 +121,9 @@
 						?>
 					</td>
 					<td class="min-width text-center">
-						<div class="hidden-xs"><?= $page->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="hidden-xs">
+                            <?= $page->created->i18nFormat(config('main.datetime.long')) ?>
+                        </div>
 						<div class="visible-xs">
 							<div><?= $page->created->i18nFormat(config('main.date.short')) ?></div>
 							<div><?= $page->created->i18nFormat(config('main.time.short')) ?></div>

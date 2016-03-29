@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
+use Cake\I18n\I18n;
 
 /**
  * Application controller class
@@ -47,7 +48,7 @@ class AppController extends BaseController {
 		}
 		elseif(!empty($config)) {
 			if(!is_readable($file = $path.DS.$config.DS.'me_cms.po'))
-				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory `{0}` not readable', $file));
+				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory {0} not readable', $file));
 			
 			return $config;
 		}
@@ -89,27 +90,23 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
-	 * @uses Cake\I18n\I18n::locale()
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeTools\Network\Request::isPrefix()
 	 * @uses _getLanguage()
 	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
-		date_default_timezone_set(config('main.timezone'));
-		
 		//Checks if the site is offline
 		if($this->isOffline())
-			$this->redirect(['_name' => 'offline']);
+			return $this->redirect(['_name' => 'offline']);
 		
 		//Checks if the user's IP address is banned
 		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
-			$this->redirect(['_name' => 'ip_not_allowed']);
+			return $this->redirect(['_name' => 'ip_not_allowed']);
 		
 		//Sets the user's language
-		\Cake\I18n\I18n::locale($this->_getLanguage());
+		I18n::locale($this->_getLanguage());
 		
 		//If the current request has no prefix, it authorizes the current action
 		if(!$this->request->param('prefix'))
@@ -120,7 +117,7 @@ class AppController extends BaseController {
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isPrefix('admin') ? config('backend.records') : config('frontend.records');
+		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isAdmin() ? config('backend.records') : config('frontend.records');
 		
 		parent::beforeFilter($event);
 	}
@@ -131,7 +128,6 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses App\Controller\AppController::beforeRender()
-	 * @uses MeTools\Network\Request::isPrefix()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
 		//Ajax layout
@@ -139,7 +135,7 @@ class AppController extends BaseController {
 			$this->viewBuilder()->layout('MeCms.ajax');
 		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-		$this->viewClass = !$this->request->isPrefix('admin') ? 'MeCms.View/App' : 'MeCms.View/Admin';
+		$this->viewClass = !$this->request->isAdmin() ? 'MeCms.View/App' : 'MeCms.View/Admin';
 		
 		//Sets auth data for views
 		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
@@ -194,7 +190,6 @@ class AppController extends BaseController {
 	 * Checks if the site is offline
 	 * @return bool
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeTools\Network\Request::isPrefix()
 	 */
 	protected function isOffline() {
 		if(!config('frontend.offline'))
@@ -205,7 +200,7 @@ class AppController extends BaseController {
 			return FALSE;
 		
 		//Always online for admin requests
-		if($this->request->isPrefix('admin'))
+		if($this->request->isAdmin())
 			return FALSE;
 		
 		return TRUE;

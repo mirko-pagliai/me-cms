@@ -50,7 +50,9 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td><?= $position->description ?></td>
+					<td>
+                        <?= $position->description ?>
+                    </td>
 					<td class="min-width text-center">
 						<?php
 							if($position->banner_count) 

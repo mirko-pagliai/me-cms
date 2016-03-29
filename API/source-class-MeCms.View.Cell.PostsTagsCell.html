@@ -201,8 +201,6 @@
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
 				<li><a href="class-MeCms.Shell.UpdateShell.html">MeCms\Shell\UpdateShell</a></li>
 				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
-				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
-				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
 				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
@@ -308,11 +306,11 @@
 </span></span><span id="50" class="l"><a href="#50"> 50: </a><span class="php-comment">     * @param bool $shuffle Shuffles tags
 </span></span><span id="51" class="l"><a href="#51"> 51: </a><span class="php-comment">     * @param array|bool $style Applies style to tags
 </span></span><span id="52" class="l"><a href="#52"> 52: </a><span class="php-comment">     * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
-</span></span><span id="53" class="l"><a href="#53"> 53: </a><span class="php-comment">     * @uses MeTools\Network\Request::isCurrent()
+</span></span><span id="53" class="l"><a href="#53"> 53: </a><span class="php-comment">     * @uses MeTools\Network\Request::isHere()
 </span></span><span id="54" class="l"><a href="#54"> 54: </a><span class="php-comment">     */</span>
 </span><span id="55" class="l"><a href="#55"> 55: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> popular(<span class="php-var">$limit</span> = <span class="php-num">10</span>, <span class="php-var">$prefix</span> = <span class="php-quote">'#'</span>, <span class="php-var">$shuffle</span> = <span class="php-keyword1">TRUE</span>, <span class="php-keyword1">array</span> <span class="php-var">$style</span> = [<span class="php-quote">'maxFont'</span> =&gt; <span class="php-num">40</span>, <span class="php-quote">'minFont'</span> =&gt; <span class="php-num">12</span>]) {
 </span><span id="56" class="l"><a href="#56"> 56: </a>        <span class="php-comment">//Returns on tags index</span>
-</span><span id="57" class="l"><a href="#57"> 57: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;isCurrent([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'posts_tags'</span>]))
+</span><span id="57" class="l"><a href="#57"> 57: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;request-&gt;isHere([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'posts_tags'</span>]))
 </span><span id="58" class="l"><a href="#58"> 58: </a>            <span class="php-keyword1">return</span>;
 </span><span id="59" class="l"><a href="#59"> 59: </a>        
 </span><span id="60" class="l"><a href="#60"> 60: </a>        <span class="php-comment">//Sets the initial cache name</span>
@@ -371,6 +369,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?11d86f6c2391a7153316736d1dfaed9b9a4a2c53"></script>
+<script src="elementlist.js?7bc4080adc10a69de6e0da6a61bcfcf0799c07da"></script>
 </body>
 </html>

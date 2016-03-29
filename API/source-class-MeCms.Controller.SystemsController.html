@@ -201,8 +201,6 @@
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
 				<li><a href="class-MeCms.Shell.UpdateShell.html">MeCms\Shell\UpdateShell</a></li>
 				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
-				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
-				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
 				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
@@ -308,7 +306,7 @@
 </span><span id="50" class="l"><a href="#50">50: </a>        <span class="php-comment">//Checks if the contact form is enabled</span>
 </span><span id="51" class="l"><a href="#51">51: </a>        <span class="php-keyword1">if</span>(!config(<span class="php-quote">'frontend.contact_form'</span>)) {
 </span><span id="52" class="l"><a href="#52">52: </a>            <span class="php-var">$this</span>-&gt;Session-&gt;Error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'Disabled'</span>));
-</span><span id="53" class="l"><a href="#53">53: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
+</span><span id="53" class="l"><a href="#53">53: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
 </span><span id="54" class="l"><a href="#54">54: </a>        }
 </span><span id="55" class="l"><a href="#55">55: </a>        
 </span><span id="56" class="l"><a href="#56">56: </a>        <span class="php-var">$contact</span> = <span class="php-keyword1">new</span> \MeCms\Form\ContactForm();
@@ -322,7 +320,7 @@
 </span><span id="64" class="l"><a href="#64">64: </a>                <span class="php-comment">//Sends the email</span>
 </span><span id="65" class="l"><a href="#65">65: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$contact</span>-&gt;execute(<span class="php-var">$this</span>-&gt;request-&gt;data)) {
 </span><span id="66" class="l"><a href="#66">66: </a>                    <span class="php-var">$this</span>-&gt;Flash-&gt;success(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The email has been sent'</span>));
-</span><span id="67" class="l"><a href="#67">67: </a>                    <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
+</span><span id="67" class="l"><a href="#67">67: </a>                    <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
 </span><span id="68" class="l"><a href="#68">68: </a>                } 
 </span><span id="69" class="l"><a href="#69">69: </a>                <span class="php-keyword1">else</span>
 </span><span id="70" class="l"><a href="#70">70: </a>                    <span class="php-var">$this</span>-&gt;Flash-&gt;error(__d(<span class="php-quote">'me_cms'</span>, <span class="php-quote">'The email was not sent'</span>));
@@ -339,7 +337,7 @@
 </span><span id="81" class="l"><a href="#81">81: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> ip_not_allowed() {
 </span><span id="82" class="l"><a href="#82">82: </a>        <span class="php-comment">//If the user's IP address is not banned</span>
 </span><span id="83" class="l"><a href="#83">83: </a>        <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;isBanned())
-</span><span id="84" class="l"><a href="#84">84: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
+</span><span id="84" class="l"><a href="#84">84: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
 </span><span id="85" class="l"><a href="#85">85: </a>        
 </span><span id="86" class="l"><a href="#86">86: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="87" class="l"><a href="#87">87: </a>    }
@@ -350,7 +348,7 @@
 </span><span id="92" class="l"><a href="#92">92: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> offline() {
 </span><span id="93" class="l"><a href="#93">93: </a>        <span class="php-comment">//If the site has not been taken offline</span>
 </span><span id="94" class="l"><a href="#94">94: </a>        <span class="php-keyword1">if</span>(!config(<span class="php-quote">'frontend.offline'</span>))
-</span><span id="95" class="l"><a href="#95">95: </a>            <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
+</span><span id="95" class="l"><a href="#95">95: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redirect([<span class="php-quote">'_name'</span> =&gt; <span class="php-quote">'homepage'</span>]);
 </span><span id="96" class="l"><a href="#96">96: </a>        
 </span><span id="97" class="l"><a href="#97">97: </a>        <span class="php-var">$this</span>-&gt;viewBuilder()-&gt;layout(<span class="php-quote">'login'</span>);
 </span><span id="98" class="l"><a href="#98">98: </a>    }
@@ -362,6 +360,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?11d86f6c2391a7153316736d1dfaed9b9a4a2c53"></script>
+<script src="elementlist.js?7bc4080adc10a69de6e0da6a61bcfcf0799c07da"></script>
 </body>
 </html>

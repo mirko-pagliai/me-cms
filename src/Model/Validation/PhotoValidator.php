@@ -36,7 +36,7 @@ class PhotoValidator extends AppValidator {
 		
 		//Filename
 		$this->add('filename', ['extension' => [
-			'message'	=> s__d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
+			'message'	=> __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
 			'rule'		=> ['extension', ['gif', 'jpg', 'jpeg', 'png']]
 		]])->requirePresence('filename', 'create');
 		

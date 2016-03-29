@@ -50,11 +50,11 @@ class PostsTagsCell extends Cell {
 	 * @param bool $shuffle Shuffles tags
 	 * @param array|bool $style Applies style to tags
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
-	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function popular($limit = 10, $prefix = '#', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
 		//Returns on tags index
-		if($this->request->isCurrent(['_name' => 'posts_tags']))
+		if($this->request->isHere(['_name' => 'posts_tags']))
 			return;
 		
 		//Sets the initial cache name

@@ -44,7 +44,7 @@
 						<?php
                             //If the album is not active (not published)
                             if(!$album->active)
-                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label']);
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
                             
 							$actions = [
 								$this->Html->link(__d('me_cms', 'View'), ['controller' => 'Photos', $album->id], ['icon' => 'eye']),
@@ -60,7 +60,9 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $album->description ?></td>
+					<td class="text-center">
+                        <?= $album->description ?>
+                    </td>
 					<td class="min-width text-center">
 						<?php
 							if($album->photo_count) 

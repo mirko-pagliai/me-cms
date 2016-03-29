@@ -129,7 +129,7 @@ class UsersController extends AppController {
 		//Only the admin founder can edit others admin users
 		if($user->group_id === 1 && !$this->Auth->isFounder()) {
 			$this->Flash->alert(__d('me_cms', 'Only the admin founder can edit other admin users'));
-			$this->redirect(['action' => 'index']);
+			return $this->redirect(['action' => 'index']);
 		}
 		
 		//It prevents a blank password is saved

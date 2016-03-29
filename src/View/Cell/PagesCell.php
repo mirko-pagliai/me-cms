@@ -22,7 +22,6 @@
  */
 namespace MeCms\View\Cell;
 
-use MeTools\Cache\Cache;
 use Cake\View\Cell;
 
 /**
@@ -46,11 +45,11 @@ class PagesCell extends Cell {
 	
 	/**
 	 * Pages list widget
-	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function pages() {
 		//Returns on pages index
-		if($this->request->isCurrent(['_name' => 'pages']))
+		if($this->request->isHere(['_name' => 'pages']))
 			return;
 
 		$this->set('pages', $this->Pages->find('active')

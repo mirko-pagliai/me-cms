@@ -45,6 +45,7 @@ class PostsTagsController extends AppController {
 	/**
 	 * Lists posts for a tag
 	 * @param string $tag Tag name
+     * @throws RecordNotFoundException
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
     public function view($tag) {

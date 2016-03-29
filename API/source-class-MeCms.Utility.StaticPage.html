@@ -201,8 +201,6 @@
 				<li><a href="class-MeCms.Shell.InstallShell.html">MeCms\Shell\InstallShell</a></li>
 				<li><a href="class-MeCms.Shell.UpdateShell.html">MeCms\Shell\UpdateShell</a></li>
 				<li><a href="class-MeCms.Shell.UserShell.html">MeCms\Shell\UserShell</a></li>
-				<li><a href="class-MeCms.Utility.BannerFile.html">MeCms\Utility\BannerFile</a></li>
-				<li><a href="class-MeCms.Utility.PhotoFile.html">MeCms\Utility\PhotoFile</a></li>
 				<li><a href="class-MeCms.Utility.StaticPage.html">MeCms\Utility\StaticPage</a></li>
 				<li><a href="class-MeCms.Utility.Youtube.html">MeCms\Utility\Youtube</a></li>
 				<li><a href="class-MeCms.View.Cell.PagesCell.html">MeCms\View\Cell\PagesCell</a></li>
@@ -333,7 +331,7 @@
 </span><span id="75" class="l"><a href="#75"> 75: </a>        <span class="php-var">$file</span> = <span class="php-keyword2">implode</span>(DS, af(<span class="php-keyword2">explode</span>(<span class="php-quote">'/'</span>, <span class="php-var">$slug</span>)));
 </span><span id="76" class="l"><a href="#76"> 76: </a>        
 </span><span id="77" class="l"><a href="#77"> 77: </a>        <span class="php-comment">//Sets the file patterns</span>
-</span><span id="78" class="l"><a href="#78"> 78: </a>        <span class="php-var">$patterns</span> = [<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s_%s'</span>, <span class="php-var">$file</span>, \Cake\I18n\I18n::locale()), <span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s'</span>, <span class="php-var">$file</span>)];
+</span><span id="78" class="l"><a href="#78"> 78: </a>        <span class="php-var">$patterns</span> = [<span class="php-keyword2">sprintf</span>(<span class="php-quote">'%s-%s'</span>, <span class="php-var">$file</span>, \Cake\I18n\I18n::locale()), <span class="php-var">$file</span>];
 </span><span id="79" class="l"><a href="#79"> 79: </a>        
 </span><span id="80" class="l"><a href="#80"> 80: </a>        <span class="php-comment">//Checks if the page exists in APP</span>
 </span><span id="81" class="l"><a href="#81"> 81: </a>        <span class="php-keyword1">foreach</span>(<span class="php-var">$patterns</span> <span class="php-keyword1">as</span> <span class="php-var">$pattern</span>)
@@ -367,6 +365,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?11d86f6c2391a7153316736d1dfaed9b9a4a2c53"></script>
+<script src="elementlist.js?7bc4080adc10a69de6e0da6a61bcfcf0799c07da"></script>
 </body>
 </html>

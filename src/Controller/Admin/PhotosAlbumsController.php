@@ -22,8 +22,8 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
-use MeCms\Utility\PhotoFile;
 
 /**
  * PhotosAlbums controller
@@ -35,17 +35,13 @@ class PhotosAlbumsController extends AppController {
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
-		
-		//Checks if the main folder and its subfolders are writable
-		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
+        
+		//Checks if the folder and its subfolders are writeable
+		if(!folder_is_writeable(PHOTOS))
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(PHOTOS)));
 	}
 	
 	/**
@@ -58,7 +54,7 @@ class PhotosAlbumsController extends AppController {
 	public function isAuthorized($user = NULL) {		
 		//Only admins can delete albums
 		if($this->request->isAction('delete'))
-			$this->Auth->isGroup('admin');
+			return $this->Auth->isGroup('admin');
 				
 		return TRUE;
 	}
@@ -70,8 +66,7 @@ class PhotosAlbumsController extends AppController {
 		$this->paginate['order'] = ['title' => 'ASC'];
 		
 		$this->set('albums', $this->paginate(
-			$this->PhotosAlbums->find()
-				->select(['id', 'slug', 'title', 'photo_count', 'active'])
+			$this->PhotosAlbums->find()->select(['id', 'slug', 'title', 'photo_count', 'active'])
 		));
     }
 

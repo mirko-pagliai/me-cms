@@ -59,9 +59,9 @@ class InstallShell extends BaseInstallShell {
 		$this->paths = am($this->paths, [
 			ASSETS,
 			BACKUPS,
+            BANNERS,
+            PHOTOS,
 			THUMBS,
-			WWW_ROOT.'img'.DS.'banners',
-			WWW_ROOT.'img'.DS.'photos',
 		]);
 	}
 	
@@ -81,11 +81,11 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 		
-		$ask = $this->in(__d('me_tools', 'Fix `{0}`?', 'KCFinder'), ['Y', 'n'], 'Y');
+		$ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
 		if(in_array($ask, ['Y', 'y']))
 			$this->fixKcfinder();
 		
-		$ask = $this->in(__d('me_tools', 'Create an admin user?'), ['y', 'N'], 'N');
+		$ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
 		if(in_array($ask, ['Y', 'y']))
 			$this->createAdmin();
 	}
@@ -107,7 +107,7 @@ class InstallShell extends BaseInstallShell {
 	public function fixKcfinder() {
 		//Checks for KCFinder
 		if(!is_readable(WWW_ROOT.'vendor'.DS.'kcfinder'))
-			return $this->err(__d('me_tools', 'I can\'t find `{0}`', 'KCFinder'));
+			return $this->err(__d('me_tools', '{0} is not available', 'KCFinder'));
 		
 		$this->createFile(WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess', '<IfModule mod_php5.c>
 			php_value session.cache_limiter must-revalidate
@@ -128,7 +128,7 @@ class InstallShell extends BaseInstallShell {
 		
 		return $parser->addSubcommands([
 			'createAdmin'	=> ['help' => __d('me_cms', 'Creates an admin user')],
-			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes `{0}`', 'KCFinder')]
+			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')]
 		]);
 	}
 }
