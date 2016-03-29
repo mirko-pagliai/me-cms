@@ -105,22 +105,15 @@
 		/* -------------------------------- */
 		echo $this->Html->h4('PHP');
 		//Current version
-		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['version']));
-		echo $this->Html->div('col-sm-12', $text);
-		
-		//Check version
-		if($php['check'])
-			$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} version is at least {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required'])), $successOptions);
-		else
-			$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} version is less than {1}', $this->Html->strong('PHP'), $this->Html->strong($php['required'])), $errorOptions);
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), PHP_VERSION));
 		echo $this->Html->div('col-sm-12', $text);
 		
 		//PHP's extensions
-		foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $ext) {
-			if($php[$ext])
-				$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($ext)), $successOptions);
+		foreach($php_extensions as $extension => $exists) {
+			if($exists)
+				$text = $this->Html->para($successClasses, __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($extension)), $successOptions);
 			else
-				$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($ext)), $errorOptions);
+				$text = $this->Html->para($errorClasses, __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($extension)), $errorOptions);
 		
 			echo $this->Html->div('col-sm-6', $text);
 		}

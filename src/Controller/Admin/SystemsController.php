@@ -121,12 +121,9 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Php::check()
 	 * @uses MeTools\Utility\Php::extension()
 	 */
 	public function checkup() {
-		$phpRequired = '5.5.9';
-		
         $checkup['apache'] = [
             'expires'	=> Apache::module('mod_expires'),
             'rewrite'	=> Apache::module('mod_rewrite'),
@@ -145,15 +142,9 @@ class SystemsController extends AppController {
             'UglifyJS 2'	=> which('uglifyjs')
         ];
         
-        $checkup['php'] = [
-            'check'		=> Php::check($phpRequired),
-            'required'	=> $phpRequired,
-            'version'	=> PHP_VERSION,
-        ];
-        
         //Checks for PHP's extensions
-        foreach(['exif', 'imagick', 'mbstring', 'mcrypt', 'zip'] as $extension)
-            $checkup['php'][$extension] = Php::extension($extension);
+        foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension)
+            $checkup['php_extensions'][$extension] = Php::extension($extension);
         
         $checkup['plugins'] = [
             'cakephp_version'	=> Configure::version(),
