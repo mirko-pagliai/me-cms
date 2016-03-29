@@ -71,7 +71,7 @@ class SystemsController extends AppController {
 		
 		//Checks for the files directory (`APP/webroot/files`)
 		if(!$this->KcFinder->checkFiles())
-			throw new InternalErrorException(__d('me_tools', 'File or directory `{0}` not writeable', rtr($this->KcFinder->getFilesPath())));
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($this->KcFinder->getFilesPath())));
 		
 		//Gets the supperted types from configuration
 		$types = $this->KcFinder->getTypes();
