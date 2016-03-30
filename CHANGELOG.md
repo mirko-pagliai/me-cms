@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.5 branch
+### 2.5.0
+* the code for loading the configuration files has been optimized.
+
 ## 2.4 branch
 ### 2.4.7
 * improved code for banners and photos;

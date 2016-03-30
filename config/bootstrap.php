@@ -21,16 +21,15 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+/**
+ * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
+ */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use MeTools\Network\Request;
 
-/**
- * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
- */
-
-//Loads MeTools, Assets, Thumbs and DatabaseBackup plugins
+//Loads plugins
 Plugin::load('MeTools', ['bootstrap' => TRUE]);
 Plugin::load('Assets', ['bootstrap' => TRUE]);
 Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
@@ -40,45 +39,41 @@ require_once 'constants.php';
 require_once 'global_functions.php';
 
 /**
- * MeCms configuration
+ * Loads the MeCms configuration
  */
-//Loads the configuration from the plugin
 Configure::load('MeCms.me_cms');
 
-$config = Configure::read('MeCms');
+//Merges with the configuration from application, if exists
+if(is_readable(CONFIG.'me_cms.php'))
+	Configure::load('me_cms');
 
-//Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'me_cms.php')) {
-	Configure::load('me_cms', 'default', FALSE);
-	
-	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::consume('MeCms'), $config));
-}
-
-//Fixes value
-if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.users.activation') > 2)
-	Configure::write('MeCms.users.activation', 1);
-
-//Forces debug and loads DebugKit on localhost, if required
-if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug')) {
+/**
+ * Forces debug and loads DebugKit on localhost, if required
+ */
+if(is_localhost() && config('main.debug_on_localhost') && !Configure::read('debug')) {
 	Configure::write('debug', TRUE);
 	
-	Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+    if(!Plugin::loaded('DebugKit'))
+        Plugin::load('DebugKit', ['bootstrap' => TRUE]);
 }
 
-//Loads the theme
-if(($theme = Configure::read('MeCms.frontend.theme')) && !Plugin::loaded($theme))
+/**
+ * Loads the theme plugin
+ */
+$theme = config('frontend.theme');
+
+if($theme && !Plugin::loaded($theme))
 	Plugin::load($theme);
 
 /**
- * Cache configuration
+ * Loads the cache configuration
  */
-//Loads the cache configuration from the plugin
 Configure::load('MeCms.cache');
 
-//Loads the cache from the application, if exists
+//Merges with the configuration from application, if exists
 if(is_readable(CONFIG.'cache.php'))
-	Configure::load('cache', 'default', FALSE);
-
+	Configure::load('cache');
+    
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
 	//Drops the default cache
@@ -89,12 +84,11 @@ foreach(Configure::consume('Cache') as $key => $config) {
 }
 
 /**
- * Widgets configuration
+ * Loads the widgets configuration
  */
-//Loads the widgets configuration from the plugin
 Configure::load('MeCms.widgets');
 
-//Loads the widgets from the application, if exists
+//Overwrites with the configuration from application, if exists
 if(is_readable(CONFIG.'widgets.php'))
 	Configure::load('widgets', 'default', FALSE);
 
