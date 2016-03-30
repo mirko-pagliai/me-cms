@@ -76,9 +76,9 @@ if(is_readable(CONFIG.'cache.php'))
     
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
-	//Drops the default cache
-	if($key === 'default')
-		Cache::drop('default');
+	//Drops cache configurations that already exist
+	if(Cache::config($key))
+		Cache::drop($key);
 	
 	Cache::config($key, $config);
 }
@@ -91,9 +91,6 @@ Configure::load('MeCms.widgets');
 //Overwrites with the configuration from application, if exists
 if(is_readable(CONFIG.'widgets.php'))
 	Configure::load('widgets', 'default', FALSE);
-
-//Adds the widgets configuration to the MeCms configuration
-Configure::write('MeCms.frontend.widgets', Configure::consume('Widgets'));
 
 /**
  * Adds `isAdmin()` detector for the request

@@ -37,10 +37,10 @@ class WidgetHelper extends Helper {
 	 * @uses widget()
 	 */
 	public function all() {
-		if($this->request->isHere(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
-			$widgets = config('frontend.widgets.homepage');
+		if($this->request->isHere(['_name' => 'homepage']) && config('Widgets.homepage'))
+			$widgets = config('Widgets.homepage');
 		else
-			$widgets = config('frontend.widgets.general');
+			$widgets = config('Widgets.general');
 			
 
 		foreach($widgets as $name => $args)
