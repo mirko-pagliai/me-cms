@@ -23,7 +23,7 @@
 namespace MeCms\Controller;
 
 use Cake\Mailer\MailerAwareTrait;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Log\Log;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 
@@ -219,8 +219,10 @@ class UsersController extends AppController {
 		if(config('users.cookies_login'))
 			$this->_loginWithCookie();
 		
-		if($this->request->is('post')) {			
-			if($user = $this->Auth->identify()) {
+		if($this->request->is('post')) {
+            $user = $this->Auth->identify();
+                
+			if($user) {
 				//Checks if the user is banned or if is disabled (the account should still be enabled)
 				if($user['banned'] || !$user['active']) {
 					if($user['banned'])
@@ -239,8 +241,17 @@ class UsersController extends AppController {
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
-			else
+			else {
+                //Logging
+                Log::error(sprintf(
+                    '%s - Failed login with username `%s` and password `%s`',
+                    $this->request->clientIp(),
+                    $this->request->data('username'),
+                    $this->request->data('password')
+                ), 'unauthorized');
+                
 				$this->Flash->error(__d('me_cms', 'Invalid username or password'));
+            }
 		}
 		
 		$this->viewBuilder()->layout('login');

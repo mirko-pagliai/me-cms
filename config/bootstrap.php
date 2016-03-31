@@ -27,6 +27,7 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Log\Log;
 use MeTools\Network\Request;
 
 //Loads plugins
@@ -91,6 +92,15 @@ Configure::load('MeCms.widgets');
 //Overwrites with the configuration from application, if exists
 if(is_readable(CONFIG.'widgets.php'))
 	Configure::load('widgets', 'default', FALSE);
+
+//Adds log for unauthorized actions
+Log::config('unauthorized', [
+    'className' => 'MeCms\Log\Engine\SerializedLog',
+    'path' => LOGS,
+    'levels' => [],
+    'file' => 'unauthorized.log',
+    'url' => env('LOG_DEBUG_URL', null),
+]);
 
 /**
  * Adds `isAdmin()` detector for the request
