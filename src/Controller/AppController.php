@@ -47,7 +47,9 @@ class AppController extends BaseController {
 				return substr($language, 0, 2);
 		}
 		elseif(!empty($config)) {
-			if(!is_readable($file = $path.DS.$config.DS.'me_cms.po'))
+            $file = $path.DS.$config.DS.'me_cms.po';
+            
+			if(!is_readable($file))
 				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory {0} not readable', $file));
 			
 			return $config;
