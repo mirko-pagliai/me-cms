@@ -28,7 +28,7 @@ if(!defined('ME_CMS_CACHE'))
 $options = [
     'className' => 'File',
 	'duration'	=> '+999 days',
-	'path'		=> ME_CMS_PATH,
+	'path'		=> ME_CMS_CACHE,
 	'prefix'	=> '',
 	'mask'		=> 0777
 ];
