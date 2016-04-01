@@ -30,14 +30,13 @@ use Cake\Core\Plugin;
 use Cake\Log\Log;
 use MeTools\Network\Request;
 
-//Loads plugins
-Plugin::load('MeTools', ['bootstrap' => TRUE]);
-Plugin::load('Assets', ['bootstrap' => TRUE]);
-Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
-Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
-
 require_once 'constants.php';
 require_once 'global_functions.php';
+
+/**
+ * Loads MeTools plugins
+ */
+Plugin::load('MeTools', ['bootstrap' => TRUE]);
 
 /**
  * Loads the MeCms configuration
@@ -51,7 +50,7 @@ if(is_readable(CONFIG.'me_cms.php'))
 /**
  * Forces debug and loads DebugKit on localhost, if required
  */
-if(is_localhost() && config('main.debug_on_localhost') && !Configure::read('debug')) {
+if(is_localhost() && config('main.debug_on_localhost') && !config('debug')) {
 	Configure::write('debug', TRUE);
 	
     if(!Plugin::loaded('DebugKit'))
@@ -59,7 +58,14 @@ if(is_localhost() && config('main.debug_on_localhost') && !Configure::read('debu
 }
 
 /**
- * Loads the theme plugin
+ * Loads plugins
+ */
+Plugin::load('Assets', ['bootstrap' => TRUE]);
+Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
+Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
+
+/**
+ * Loads theme plugin
  */
 $theme = config('frontend.theme');
 
