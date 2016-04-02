@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Log\Log;
 use Cake\Routing\Router;
@@ -127,15 +128,14 @@ class UsersController extends AppController {
 	 * Activates account
 	 * @param string $id User ID
 	 * @param string $token Token
+     * @throws RecordNotFoundException
 	 * @uses MeTools\Controller\Component\Token::check()
 	 * @uses MeTools\Controller\Component\Token::delete()
 	 */
 	public function activate_account($id, $token) {
 		//Checks for token
-		if(!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id])) {
-			$this->Flash->error(__d('me_cms', 'Invalid token'));
-			return $this->redirect(['_name' => 'login']);
-		}
+		if(!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id]))
+            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
 		
 		$user = $this->Users->find('pending')
 			->select(['id'])
@@ -335,15 +335,14 @@ class UsersController extends AppController {
 	 * Resets password
 	 * @param string $id User ID
 	 * @param string $token Token
+     * @throws RecordNotFoundException
 	 * @uses MeTools\Controller\Component\Token::check()
 	 * @uses MeTools\Controller\Component\Token::delete()
 	 */
 	public function reset_password($id, $token) {
 		//Checks for token
-		if(!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id])) {
-			$this->Flash->error(__d('me_cms', 'Invalid token'));
-			return $this->redirect(['_name' => 'login']);
-		}
+		if(!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id]))
+            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
 		
 		$user = $this->Users->find('active')
 			->select(['id'])
