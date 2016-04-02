@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Network\Exception\NotFoundException;
 use MeCms\Controller\AppController;
 
 /**
