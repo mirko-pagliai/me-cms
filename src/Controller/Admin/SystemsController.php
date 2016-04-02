@@ -209,7 +209,7 @@ class SystemsController extends AppController {
 			'cache_size'	=> dirsize(CACHE),
 			'cache_status'	=> Cache::enabled(),
 			'assets_size'	=> dirsize(ASSETS),
-			'logs_size'		=> dirsize(LOGS),
+			'logs_size'     => dirsize(LOGS),
 			'thumbs_size'	=> dirsize(THUMBS),
 			'total_size'	=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
         ]);
