@@ -121,7 +121,6 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Core\Plugin::versions()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Php::extension()
 	 */
 	public function checkup() {
         $checkup['apache'] = [
@@ -144,7 +143,7 @@ class SystemsController extends AppController {
         
         //Checks for PHP's extensions
         foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension)
-            $checkup['php_extensions'][$extension] = Php::extension($extension);
+            $checkup['php_extensions'][$extension] = extension_loaded($extension);
         
         $checkup['plugins'] = [
             'cakephp_version'	=> Configure::version(),
