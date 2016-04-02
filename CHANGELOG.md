@@ -3,7 +3,8 @@
 ### 2.5.0
 * fixed "view" action for photos albums;
 * added log for some users actions;
-* the code for loading the configuration files has been optimized.
+* the code for loading the configuration files has been optimized;
+* fixed a lot of little bugs and codes.
 
 ## 2.4 branch
 ### 2.4.7
