@@ -28,62 +28,52 @@
 	<?php if($this->Auth->isGroup('admin')): //Only admins can clear all temporary files ?>
 		<?= $this->Html->h2(__d('me_cms', 'Temporary files')) ?>
 		<div class="margin-20">
-			<?php
-				echo $this->Html->h4(__d('me_cms', 'All temporary files'));
-
-				echo $this->Html->para(NULL, __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($all_size)));
-				echo $this->Html->para(NULL, __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails'));
-				echo $this->Form->postButton(__d('me_cms', 'Clear all temporary files'), ['action' => 'tmp_cleaner', 'all'], ['class' => 'btn-success', 'icon' => 'trash-o']);
-			?>
+            <?= $this->Html->h4(__d('me_cms', 'All temporary files')) ?>
+            <p><?= __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($total_size)) ?></p>
+            <p><?= __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails') ?></p>
+            <?= $this->Form->postButton(__d('me_cms', 'Clear all temporary files'), ['action' => 'tmp_cleaner', 'all'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
 		</div>
 
 		<hr />
 	<?php endif; ?>
 	
 	<div class="margin-20">
-		<?php
-			echo $this->Html->h4(__d('me_cms', 'Cache'));
-			
-			if(!$cache_status)
-				echo $this->Html->para('text-danger', __d('me_cms', 'The cache is disabled or debugging is active'));
-
-			echo $this->Html->para(NULL, __d('me_cms', 'Cache size: {0}', $this->Number->toReadableSize($cache_size)));
-			echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade'));
-			echo $this->Form->postButton(__d('me_cms', 'Clear cache'), ['action' => 'tmp_cleaner', 'cache'], ['class' => 'btn-success', 'icon' => 'trash-o']);
-		?>
+        <?= $this->Html->h4(__d('me_cms', 'Cache')) ?>
+		<?php if(!$cache_status): ?>
+			<?= $this->Html->para('text-danger', __d('me_cms', 'The cache is disabled or debugging is active')) ?>
+		<?php endif; ?>
+        <p><?= __d('me_cms', 'Cache size: {0}', $this->Number->toReadableSize($cache_size)) ?></p>
+        <p><?= __d('me_cms', 'Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade') ?></p>
+        <?= $this->Form->postButton(__d('me_cms', 'Clear cache'), ['action' => 'tmp_cleaner', 'cache'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
 	</div>
 	
 	<div class="margin-20">
-		<?php
-			echo $this->Html->h4(__d('me_cms', 'Assets'));
-			echo $this->Html->para(NULL, __d('me_cms', 'Assets size: {0}', $this->Number->toReadableSize($assets_size)));
-
-			if($assets_size)
-				echo $this->Form->postButton(__d('me_cms', 'Clear assets'), ['action' => 'tmp_cleaner', 'assets'], ['class' => 'btn-success', 'icon' => 'trash-o']);
-		?>
+        <?= $this->Html->h4(__d('me_cms', 'Assets')) ?>
+        <p><?= __d('me_cms', 'Assets size: {0}', $this->Number->toReadableSize($assets_size)) ?></p>
+		<?php if($assets_size): ?>
+			<?= $this->Form->postButton(__d('me_cms', 'Clear assets'), ['action' => 'tmp_cleaner', 'assets'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+		<?php endif; ?>
 	</div>
 	
 	<?php if($this->Auth->isGroup('admin')): //Only admins can clear logs ?>
 		<div class="margin-20">
-			<?php
-				echo $this->Html->h4(__d('me_cms', 'Logs'));
-				echo $this->Html->para(NULL, __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)));
-
-				if($logs_size)
-					echo $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
-			?>
+            <?= $this->Html->h4(__d('me_cms', 'Logs')) ?>
+            <p><?= __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)) ?></p>
+			<?php if($logs_size): ?>
+				<?= $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 	
 	<div class="margin-20">
-		<?php
-			echo $this->Html->h4(__d('me_cms', 'Thumbnails'));
-			echo $this->Html->para(NULL, __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbs_size)));
-
-			if($thumbs_size) {
-				echo $this->Html->para(NULL, __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used'));
-				echo $this->Form->postButton(__d('me_cms', 'Clear thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']);
-			}
-		?>
+        <?= $this->Html->h4(__d('me_cms', 'Thumbnails')) ?>
+        <p><?= __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbs_size)) ?></p>
+        <?php if($thumbs_size): ?>
+            <p>
+                <?= __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. '
+                    . 'You should clear thumbnails only when they have reached a large size or when many images are no longer used') ?>
+            </p>
+        <?= $this->Form->postButton(__d('me_cms', 'Clear thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+        <?php endif; ?>
 	</div>
 </div>

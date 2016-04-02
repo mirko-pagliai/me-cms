@@ -206,12 +206,12 @@ class SystemsController extends AppController {
 	 */
 	public function tmp_viewer() {
         $this->set([
-			'all_size'		=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
 			'cache_size'	=> dirsize(CACHE),
 			'cache_status'	=> Cache::enabled(),
 			'assets_size'	=> dirsize(ASSETS),
 			'logs_size'		=> dirsize(LOGS),
-			'thumbs_size'	=> dirsize(THUMBS)
+			'thumbs_size'	=> dirsize(THUMBS),
+			'total_size'	=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
         ]);
 	}
 }
