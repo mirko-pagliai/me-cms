@@ -177,13 +177,13 @@ class UsersController extends AppController {
 			if(config('security.recaptcha') && !$this->Recaptcha->check()) {
 				$this->Flash->error($this->Recaptcha->getError());
 			}
-			if(!$entity->errors()) {
+			elseif(!$entity->errors()) {
 				$user = $this->Users->find('active')
 					->select(['id', 'email', 'first_name', 'last_name'])
 					->where(['email' => $this->request->data('email')])
 					->first();
 
-				if(!$user->isEmpty()) {
+				if($user) {
 					//Gets the token
 					$token = $this->Token->create($user->email, ['type' => 'forgot_password', 'user_id' => $user->id]);
 					
@@ -195,8 +195,16 @@ class UsersController extends AppController {
 					$this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 					return $this->redirect(['_name' => 'login']);
 				}
-				else
+				else {
+                    //Logging
+                    Log::error(sprintf(
+                        '%s - Forgot password with incorrect email `%s`',
+                        $this->request->clientIp(),
+                        $this->request->data('email')
+                    ), 'users');
+                    
 					$this->Flash->error(__d('me_cms', 'No account found'));
+                }
 			}
 			else
 				$this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
@@ -294,15 +302,23 @@ class UsersController extends AppController {
 					->where(['email' => $this->request->data('email')])
 					->first();
 
-				if(!$user->isEmpty()) {
+				if($user) {
 					//Sends the activation mail
 					$this->_send_activation_mail($user);
 
 					$this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 					return $this->redirect(['_name' => 'login']);
 				}
-				else
+				else {
+                    //Logging
+                    Log::error(sprintf(
+                        '%s - Resend activation with incorrect email `%s`',
+                        $this->request->clientIp(),
+                        $this->request->data('email')
+                    ), 'users');
+                    
 					$this->Flash->error(__d('me_cms', 'No account found'));
+                }
 			}
 			else
 				$this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
