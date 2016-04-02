@@ -38,16 +38,22 @@
 		//Sets link
 		$link = ['_name' => 'post', $post->slug];
 		
-		//Sets text
-		$text = $this->Text->truncate(
-			strip_tags($post->text),
-			config('frontend.truncate_to'),
-			['ending' => '...', 'exact' => FALSE, 'html' => TRUE]
-		);
+		//Executes BBCode on the text
+		$text = $this->BBCode->parser($post->text);
+		
+		//Truncates the text if the "<!-- read-more -->" tag is present
+		if($strpos = strpos($text, '<!-- read-more -->'))
+			$text = $this->Text->truncate($text, $strpos, ['exact' => TRUE, 'html' => FALSE]);
+		//Truncates the text if requested by the configuration
+		elseif(config('frontend.truncate_to'))
+			$text = $this->Text->truncate($text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			
+		//Strips tags
+		$text = strip_tags($text);
 		
 		//Adds the preview image
-		if(!empty($post['Post']['preview']))
-			$text = sprintf('%s%s', $this->Thumb->img($post['Post']['preview'], ['width' => 200]), $text);
+		if(!empty($post->preview))
+			$text = $this->Thumb->image($post->preview, ['width' => 200]).$this->Html->br().$text;
 
 		echo $this->Rss->item([], [
 			'description'	=> $text,

@@ -22,18 +22,14 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
-use MeCms\Utility\BannerFile;
-use MeCms\Utility\PhotoFile;
+use MeTools\Cache\Cache;
 use MeTools\Core\Plugin;
-use MeTools\Log\Engine\FileLog;
 use MeTools\Utility\Apache;
-use MeTools\Utility\Asset;
-use MeTools\Utility\Php;
-use MeTools\Utility\System;
-use MeTools\Utility\Thumbs;
-use MeTools\Utility\Unix;
 
 /**
  * Systems controller
@@ -46,9 +42,9 @@ class SystemsController extends AppController {
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
-	public function isAuthorized($user = NULL) {
-		//Only admins can view logs and clear logs
-		if($this->request->isAction(['clear_logs', 'logs']))
+	public function isAuthorized($user = NULL) {		
+		//Only admins can clear all temporary files or logs
+		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs']))
 			return $this->Auth->isGroup('admin');
 		
 		//Admins and managers can access other actions
@@ -57,6 +53,7 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Media browser with KCFinder
+	 * @throws InternalErrorException
 	 * @uses MeCms\Controller\Component\KcFinderComponent::checkKcfinder()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::checkFiles()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::getFilesPath()
@@ -68,16 +65,12 @@ class SystemsController extends AppController {
 		$this->loadComponent('MeCms.KcFinder');
 		
 		//Checks for KCFinder
-		if(!$this->KcFinder->checkKcfinder()) {
-			$this->Flash->error(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
+		if(!$this->KcFinder->checkKcfinder())
+			throw new InternalErrorException(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
 		
 		//Checks for the files directory (`APP/webroot/files`)
-		if(!$this->KcFinder->checkFiles()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr($this->KcFinder->getFilesPath())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
+		if(!$this->KcFinder->checkFiles())
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($this->KcFinder->getFilesPath())));
 		
 		//Gets the supperted types from configuration
 		$types = $this->KcFinder->getTypes();
@@ -97,14 +90,18 @@ class SystemsController extends AppController {
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}
-	
+
 	/**
 	 * Changelogs viewer
-	 * @uses MeTools\Utility\System::changelogs()
 	 */
 	public function changelogs() {
-		//Gets changelogs files
-		$files = System::changelogs();
+		//Gets all changelog files. 
+		//Searchs into `ROOT` and all loaded plugins.
+		foreach(am([ROOT.DS], Plugin::path()) as $path) {
+			//For each changelog file in the current path
+			foreach((new Folder($path))->find('CHANGELOG(\..+)?') as $file)
+				$files[] = rtr($path.$file);
+		}
 		
 		//If a changelog file has been specified
 		if($this->request->query('file') && $this->request->is('get')) {
@@ -119,180 +116,102 @@ class SystemsController extends AppController {
 	
 	/**
 	 * System checkup
-	 * @uses MeCms\Utility\BannerFile::check()
-	 * @uses MeCms\Utility\BannerFile::folder()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Core\Plugin::version()
 	 * @uses MeTools\Core\Plugin::versions()
-	 * @uses MeTools\Log\Engine\FileLog::check()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
-	 * @uses MeTools\Utility\Asset::check()
-	 * @uses MeTools\Utility\Asset::folder()
-	 * @uses MeTools\Utility\Php::check()
-	 * @uses MeTools\Utility\Php::extension()
-	 * @uses MeTools\Utility\Php::version()
-	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\System::cakeVersion()
-	 * @uses MeTools\Utility\System::checkCache()
-	 * @uses MeTools\Utility\System::checkTmp()
-	 * @uses MeTools\Utility\Thumbs::checkPhotos()
-	 * @uses MeTools\Utility\Thumbs::checkRemotes()
-	 * @uses MeTools\Utility\Thumbs::checkVideos()
-	 * @uses MeTools\Utility\Thumbs::photo()
-	 * @uses MeTools\Utility\Thumbs::remote()
-	 * @uses MeTools\Utility\Thumbs::video()
-	 * @uses MeTools\Utility\Unix::which()
 	 */
 	public function checkup() {
-		$phpRequired = '5.4.16';
-		
-		$this->set([
-			'apache' => [
-				'current_version'	=> Apache::version(),
-				'expires'			=> Apache::module('mod_expires'),
-				'rewrite'			=> Apache::module('mod_rewrite'),
-			],
-			'cache' => [
-				'status' => System::cacheStatus()
-			],
-			'executables' => [
-				'clean-css'			=> Unix::which('cleancss'),
-				'ffmpegthumbnailer'	=> Unix::which('ffmpegthumbnailer'),
-				'UglifyJS 2'		=> Unix::which('uglifyjs')
-			],
-			'php' => [
-				'current_version'	=> Php::version(),
-				'check_version'		=> Php::check($phpRequired),
-				'exif'				=> Php::extension('exif'),
-				'imagick'			=> Php::extension('imagick'),
-				'mbstring'			=> Php::extension('mbstring'),
-				'mcrypt'			=> Php::extension('mcrypt'),
-				'required_version'	=> $phpRequired,
-				'zip'				=> Php::extension('zip')
-			],
-			'plugins' => [
-				'cakephp_version'	=> System::cakeVersion(),
-				'plugins_version'	=> Plugin::versions('MeCms'),
-				'mecms_version'		=> Plugin::version('MeCms')
-			],
-			'temporary' => [
-				['path' => rtr(LOGS),				'writeable' => FileLog::check()],
-				['path' => rtr(TMP),				'writeable' => System::checkTmp()],
-				['path' => rtr(CACHE),				'writeable' => System::checkCache()],
-				['path' => rtr(Thumbs::photo()),	'writeable' => Thumbs::checkPhotos()],
-				['path' => rtr(Thumbs::remote()),	'writeable' => Thumbs::checkRemotes()],
-				['path' => rtr(Thumbs::video()),	'writeable' => Thumbs::checkVideos()]
-			],
-			'webroot' => [
-				['path' => rtr(Asset::folder()),			'writeable' => Asset::check()],
-				['path' => rtr(WWW_ROOT.'files'),		'writeable' => folder_is_writable(WWW_ROOT.'files')],
-				['path' => rtr(WWW_ROOT.'fonts'),		'writeable' => folder_is_writable(WWW_ROOT.'fonts')],
-				['path' => rtr(BannerFile::folder()),	'writeable' => BannerFile::check()],
-				['path' => rtr(PhotoFile::folder()),		'writeable' => PhotoFile::check()]
-			]
-		]);
+        $checkup['apache'] = [
+            'expires'	=> Apache::module('mod_expires'),
+            'rewrite'	=> Apache::module('mod_rewrite'),
+            'version'	=> Apache::version(),
+        ];
+        
+        $checkup['backups'] = [
+            'path'		=> rtr(BACKUPS),
+            'writeable'	=> folder_is_writable(BACKUPS),
+        ];
+        
+        $checkup['cache'] = Cache::enabled();
+        
+        $checkup['executables'] = [
+            'clean-css'		=> which('cleancss'),
+            'UglifyJS 2'	=> which('uglifyjs'),
+        ];
+        
+        //Checks for PHP's extensions
+        foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension)
+            $checkup['php_extensions'][$extension] = extension_loaded($extension);
+        
+        $checkup['plugins'] = [
+            'cakephp_version'	=> Configure::version(),
+            'plugins_version'	=> Plugin::versions('MeCms'),
+            'mecms_version'		=> Plugin::version('MeCms'),
+        ];
+        
+        //Checks for temporary directories
+        foreach([CACHE, LOGS, THUMBS, TMP] as $path)
+            $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        
+        //Checks for webroot directories
+        foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path)
+            $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        
+        array_walk($checkup, function($value, $key) {
+            $this->set($key, $value);
+        });
 	}
 	
 	/**
-	 * Clears asset files
-	 * @uses MeTools\Utility\Asset::clear()
+	 * Temporary cleaner (assets, cache, logs and thumbnails)
+	 * @param string $type Type
+     * @throws InternalErrorException
+	 * @uses MeTools\Cache\Cache::clearAll()
 	 */
-	public function clear_assets() {
+	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
+			return $this->redirect(['action' => 'tmp_viewer']);
 		
-		if(Asset::clear())
-			$this->Flash->success(__d('me_cms', 'Assets have been cleared'));
+		switch($type) {
+			case 'all':
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && Cache::clearAll() && clear_dir(THUMBS);
+				break;
+			case 'cache':
+				$success = Cache::clearAll();
+				break;
+			case 'assets':
+				$success = clear_dir(ASSETS);
+				break;
+			case 'logs':
+				$success = clear_dir(LOGS);
+				break;
+			case 'thumbs':
+				$success = clear_dir(THUMBS);
+				break;
+            default:
+                throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
+		}
+		
+		if(!empty($success))
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 		else
-			$this->Flash->error(__d('me_cms', 'Assets have not been cleared'));
+			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
 		
-		return $this->redirect(['action' => 'temporary']);
-	}	
-		
-	/**
-	 * Clears the cache
-	 * @uses MeTools\Utility\System::clearCache()
-	 */
-	public function clear_cache() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
-		
-		if(System::clearCache())
-			$this->Flash->success(__d('me_cms', 'The cache has been cleared'));
-		else
-			$this->Flash->error(__d('me_cms', 'The cache has not been cleared'));
-		
-		return $this->redirect(['action' => 'temporary']);
+		return $this->redirect(['action' => 'tmp_viewer']);
 	}
 	
 	/**
-	 * Clears logs
-	 * @uses MeTools\Log\Engine\FileLog::clear()
+	 * Temporary viewer (assets, cache, logs and thumbnails)
 	 */
-	public function clear_logs() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
-		
-		if(FileLog::clear())
-			$this->Flash->success(__d('me_cms', 'The logs have been cleared'));
-		else
-			$this->Flash->error(__d('me_cms', 'The logs have not been deleted'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}
-	
-	/**
-	 * Clears the thumbnails
-	 * @uses MeTools\Utility\Thumbs::clear()
-	 */
-	public function clear_thumbs() {
-		if(!$this->request->is(['post', 'delete']))
-			return $this->redirect(['action' => 'cache']);
-		
-		if(Thumbs::clear())
-			$this->Flash->success(__d('me_cms', 'The thumbnails have been deleted'));
-		else
-			$this->Flash->error(__d('me_cms', 'The thumbnails have not been deleted'));
-		
-		return $this->redirect(['action' => 'temporary']);
-	}
-	
-	/**
-	 * Log viewer
-	 * @uses MeTools\Log\Engine\FileLog::all()
-	 */
-	public function logs() {
-		//Gets log files
-		$files = FileLog::all();
-		
-		//If there's only one log file, it automatically sets the query value
-		if(!$this->request->query('file') && count($files) < 2)
-			$this->request->query['file'] = fk($files);
-		
-		//If a log file has been specified
-		if(!empty($this->request->query['file']) && $this->request->is('get'))
-			$this->set('log', @file_get_contents(LOGS.$files[$this->request->query('file')]));
-		
-		$this->set(compact('files'));
-	}
-	
-	/**
-	 * Manages cache, logs and thumbnails
-	 * @uses MeTools\Log\Engine\FileLog::size()
-	 * @uses MeTools\Utility\Asset::size()
-	 * @uses MeTools\Utility\System::cacheSize()
-	 * @uses MeTools\Utility\System::cacheStatus()
-	 * @uses MeTools\Utility\Thumbs::size()
-	 */
-	public function temporary() {
+	public function tmp_viewer() {
         $this->set([
-			'cache_size'	=> System::cacheSize(),
-			'cache_status'	=> System::cacheStatus(),
-			'assets_size'	=> Asset::size(),
-			'logs_size'		=> FileLog::size(),
-			'thumbs_size'	=> Thumbs::size()
+			'cache_size'	=> dirsize(CACHE),
+			'cache_status'	=> Cache::enabled(),
+			'assets_size'	=> dirsize(ASSETS),
+			'logs_size'     => dirsize(LOGS),
+			'thumbs_size'	=> dirsize(THUMBS),
+			'total_size'	=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
         ]);
 	}
 }

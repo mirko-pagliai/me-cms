@@ -30,17 +30,53 @@ use MeCms\Controller\AppController;
  */
 class PostsTagsController extends AppController {
 	/**
+	 * Check if the provided user is authorized for the request
+	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @return bool TRUE if the user is authorized, otherwise FALSE
+	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function isAuthorized($user = NULL) {
+		//Only admins and managers can edit tags
+		if($this->request->isAction('edit'))
+			return $this->Auth->isGroup(['admin', 'manager']);
+		
+		return TRUE;
+	}
+	
+	/**
      * Lists tags
+	 * @uses MeCms\Model\Table\Tags::queryFromFilter()
 	 */
 	public function index() {
+        $query = $this->PostsTags->Tags->find()->where(['post_count >' => 0]);
+        
 		$this->paginate['order'] = ['tag' => 'ASC'];
 		
 		//Limit X4
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 		
-		$this->set('tags', $this->paginate(
-			$this->PostsTags->Tags->find()
-				->where(['post_count >' => 0])
-		));
+		$this->set('tags', $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->query)));
+	}
+	
+	/**
+     * Edits tag
+     * @param string $id Tag ID
+	 */
+    public function edit($id = NULL)  {
+        $tag = $this->PostsTags->Tags->get($id);
+		
+        if($this->request->is(['patch', 'post', 'put'])) {
+            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->request->data);
+			
+            if($this->PostsTags->Tags->save($tag)) {
+                $this->Flash->success(__d('me_cms', 'The tag has been saved'));
+                return $this->redirect(['action' => 'index']);
+            } 
+			else
+                $this->Flash->error(__d('me_cms', 'The tag could not be saved'));
+        }
+
+        $this->set(compact('tag'));
 	}
 }

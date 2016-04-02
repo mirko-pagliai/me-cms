@@ -22,9 +22,10 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Log\Log;
 use Cake\Routing\Router;
-use Cake\Utility\Security;
 use MeCms\Controller\AppController;
 
 /**
@@ -45,9 +46,8 @@ class UsersController extends AppController {
 		parent::beforeFilter($event);
 		
 		//Checks if the user is already logged in
-		if($this->request->isAction(['activate_account', 'forgot_password', 'login', 'resend_activation', 'reset_password', 'signup']))
-			if($this->Auth->isLogged())
-				$this->redirect(['_name' => 'dashboard']);
+		if(!$this->request->isAction('logout') && $this->Auth->isLogged())
+			return $this->redirect(['_name' => 'dashboard']);
 		
 		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
 		$this->Security->config('unlockedActions', ['forgot_password', 'resend_activation', 'signup']);
@@ -58,7 +58,7 @@ class UsersController extends AppController {
 	 * @return mixed
 	 * @uses _logout()
 	 */
-	private function _loginWithCookie() {
+	protected function _loginWithCookie() {
 		//Checks if the cookie exists
 		if(!$this->Cookie->read('login'))
 			return;
@@ -66,11 +66,14 @@ class UsersController extends AppController {
 		$this->request->data = $this->Cookie->read('login');
 		
 		//Tries to login...
-		if(!empty($this->request->data['username']) && !empty($this->request->data['password']))
-			if(($user = $this->Auth->identify()) && $user['active'] && !$user['banned']) {
+		if(!empty($this->request->data['username']) && !empty($this->request->data['password'])) {
+            $user = $this->Auth->identify();
+            
+			if($user && $user['active'] && !$user['banned']) {
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
+        }
 		
 		//Internal function to logout
 		$this->_logout();
@@ -80,7 +83,7 @@ class UsersController extends AppController {
 	 * Internal function to logout
 	 * @return mixed
 	 */
-	private function _logout() {
+	protected function _logout() {
 		//Deletes the login cookie
 		$this->Cookie->delete('login');
 		
@@ -91,6 +94,24 @@ class UsersController extends AppController {
 		setcookie('sidebar-lastmenu', '', 1, '/');
 		
 		return $this->redirect($this->Auth->logout());
+	}
+	
+	/**
+	 * Internal function to send the activation mail
+	 * @param object $user Users entity
+	 * @return boolean
+	 * @uses MeCms\Mailer\UserMailer::activation_mail()
+	 * @uses MeCms\Network\Email\Email
+	 * @uses MeTools\Controller\Component\Token::create()
+	 */
+	protected function _send_activation_mail($user) {
+		//Gets the token
+		$token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
+		
+		//Sends email
+		return $this->getMailer('MeCms.User')
+			->set('url', Router::url(['_name' => 'activate_account', $user->id, $token], TRUE))
+			->send('activation_mail', [$user]);
 	}
 	
 	/**
@@ -107,26 +128,21 @@ class UsersController extends AppController {
 	 * Activates account
 	 * @param string $id User ID
 	 * @param string $token Token
+     * @throws RecordNotFoundException
 	 * @uses MeTools\Controller\Component\Token::check()
 	 * @uses MeTools\Controller\Component\Token::delete()
-	 * @throws \Cake\Network\Exception\NotFoundException
 	 */
 	public function activate_account($id, $token) {
 		//Checks for token
-		if(!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id])) {
-			$this->Flash->error(__d('me_cms', 'Invalid token'));
-			$this->redirect(['_name' => 'login']);
-		}
+		if(!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id]))
+            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
 		
 		$user = $this->Users->find('pending')
 			->select(['id'])
 			->where(compact('id'))
-			->first();
+			->firstOrFail();
 		
 		$user->active = TRUE;
-		
-		if(empty($user))
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'No account found'));
 				
 		if($this->Users->save($user)) {
 			//Deletes the token
@@ -151,7 +167,7 @@ class UsersController extends AppController {
 		//Checks if reset password is enabled
 		if(!config('users.reset_password')) {
 			$this->Flash->error(__d('me_cms', 'Disabled'));
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		}
 		
 		if($this->request->is('post')) {
@@ -161,13 +177,13 @@ class UsersController extends AppController {
 			if(config('security.recaptcha') && !$this->Recaptcha->check()) {
 				$this->Flash->error($this->Recaptcha->getError());
 			}
-			if(!$entity->errors()) {
+			elseif(!$entity->errors()) {
 				$user = $this->Users->find('active')
 					->select(['id', 'email', 'first_name', 'last_name'])
 					->where(['email' => $this->request->data('email')])
 					->first();
 
-				if(!empty($user)) {
+				if($user) {
 					//Gets the token
 					$token = $this->Token->create($user->email, ['type' => 'forgot_password', 'user_id' => $user->id]);
 					
@@ -177,10 +193,18 @@ class UsersController extends AppController {
 						->send('forgot_password', [$user]);
 
 					$this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
-					$this->redirect(['_name' => 'login']);
+					return $this->redirect(['_name' => 'login']);
 				}
-				else
+				else {
+                    //Logging
+                    Log::error(sprintf(
+                        '%s - Forgot password with incorrect email `%s`',
+                        $this->request->clientIp(),
+                        $this->request->data('email')
+                    ), 'users');
+                    
 					$this->Flash->error(__d('me_cms', 'No account found'));
+                }
 			}
 			else
 				$this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
@@ -188,7 +212,6 @@ class UsersController extends AppController {
 		else
 			$entity = $this->Users->newEntity(NULL, ['validate' => 'NotUnique']);
 			
-		
 		$this->set('user', $entity);
 
 		$this->viewBuilder()->layout('login');
@@ -204,8 +227,10 @@ class UsersController extends AppController {
 		if(config('users.cookies_login'))
 			$this->_loginWithCookie();
 		
-		if($this->request->is('post')) {			
-			if($user = $this->Auth->identify()) {
+		if($this->request->is('post')) {
+            $user = $this->Auth->identify();
+                
+			if($user) {
 				//Checks if the user is banned or if is disabled (the account should still be enabled)
 				if($user['banned'] || !$user['active']) {
 					if($user['banned'])
@@ -224,8 +249,17 @@ class UsersController extends AppController {
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
-			else
+			else {
+                //Logging
+                Log::error(sprintf(
+                    '%s - Failed login with username `%s` and password `%s`',
+                    $this->request->clientIp(),
+                    $this->request->data('username'),
+                    $this->request->data('password')
+                ), 'users');
+                
 				$this->Flash->error(__d('me_cms', 'Invalid username or password'));
+            }
 		}
 		
 		$this->viewBuilder()->layout('login');
@@ -252,7 +286,7 @@ class UsersController extends AppController {
 		//Checks if signup is enabled and if accounts will be enabled by the user via email
 		if(!config('users.signup') && config('users.activation') === 1) {
 			$this->Flash->error(__d('me_cms', 'Disabled'));
-			$this->redirect(['_name' => 'login']);
+			return $this->redirect(['_name' => 'login']);
 		}
 				
 		if($this->request->is('post')) {
@@ -268,15 +302,23 @@ class UsersController extends AppController {
 					->where(['email' => $this->request->data('email')])
 					->first();
 
-				if(!empty($user)) {
+				if($user) {
 					//Sends the activation mail
 					$this->_send_activation_mail($user);
 
 					$this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
-					$this->redirect(['_name' => 'login']);
+					return $this->redirect(['_name' => 'login']);
 				}
-				else
+				else {
+                    //Logging
+                    Log::error(sprintf(
+                        '%s - Resend activation with incorrect email `%s`',
+                        $this->request->clientIp(),
+                        $this->request->data('email')
+                    ), 'users');
+                    
 					$this->Flash->error(__d('me_cms', 'No account found'));
+                }
 			}
 			else
 				$this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
@@ -293,24 +335,19 @@ class UsersController extends AppController {
 	 * Resets password
 	 * @param string $id User ID
 	 * @param string $token Token
+     * @throws RecordNotFoundException
 	 * @uses MeTools\Controller\Component\Token::check()
 	 * @uses MeTools\Controller\Component\Token::delete()
-	 * @throws \Cake\Network\Exception\NotFoundException
 	 */
 	public function reset_password($id, $token) {
 		//Checks for token
-		if(!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id])) {
-			$this->Flash->error(__d('me_cms', 'Invalid token'));
-			$this->redirect(['_name' => 'login']);
-		}
+		if(!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id]))
+            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
 		
 		$user = $this->Users->find('active')
 			->select(['id'])
 			->where(compact('id'))
-			->first();
-		
-		if(empty($user))
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'No account found'));
+			->firstOrFail();
 
 		if($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
@@ -320,7 +357,7 @@ class UsersController extends AppController {
 				$this->Token->delete($token);
 				
 				$this->Flash->success(__d('me_cms', 'The password has been edited'));
-				$this->redirect(['_name' => 'login']);
+				return $this->redirect(['_name' => 'login']);
 			}
 			else
 				$this->Flash->error(__d('me_cms', 'The password has not been edited'));
@@ -329,24 +366,6 @@ class UsersController extends AppController {
 		$this->set(compact('user'));
 		
 		$this->viewBuilder()->layout('login');
-	}
-	
-	/**
-	 * Internal function to send the activation mail
-	 * @param object $user Users entity
-	 * @return boolean
-	 * @uses MeCms\Mailer\UserMailer::activation_mail()
-	 * @uses MeCms\Network\Email\Email
-	 * @uses MeTools\Controller\Component\Token::create()
-	 */
-	protected function _send_activation_mail($user) {
-		//Gets the token
-		$token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
-		
-		//Sends email
-		return $this->getMailer('MeCms.User')
-			->set('url', Router::url(['_name' => 'activate_account', $user->id, $token], TRUE))
-			->send('activation_mail', [$user]);
 	}
 	
 	/**
@@ -359,7 +378,7 @@ class UsersController extends AppController {
 		//Checks if signup is enabled
 		if(!config('users.signup')) {
 			$this->Flash->error(__d('me_cms', 'Disabled'));
-			$this->redirect(['_name' => 'login']);
+			return $this->redirect(['_name' => 'login']);
 		}
 		
 		$this->request->data += [

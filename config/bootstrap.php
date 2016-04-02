@@ -21,77 +21,103 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+/**
+ * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
+ */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-
-/**
- * (here `\Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
- */
-
-//Loads the MeTools plugin
-\Cake\Core\Plugin::load('MeTools', ['bootstrap' => TRUE, 'routes' => TRUE]);
+use Cake\Core\Plugin;
+use Cake\Log\Log;
+use Cake\Network\Exception\InternalErrorException;
+use MeTools\Network\Request;
 
 require_once 'constants.php';
 require_once 'global_functions.php';
 
 /**
- * MeCms configuration
+ * Loads MeTools plugins
  */
-//Loads the configuration from the plugin
-Configure::load('MeCms.me_cms');
+Plugin::load('MeTools', ['bootstrap' => TRUE]);
 
-$config = Configure::read('MeCms');
-
-//Loads the configuration from the application, if exists
-if(is_readable(CONFIG.'me_cms.php')) {
-	Configure::load('me_cms', 'default', FALSE);
-	
-	Configure::write('MeCms', \Cake\Utility\Hash::mergeDiff(Configure::consume('MeCms'), $config));
-}
-
-//Fixes value
-if(!is_int(Configure::read('MeCms.users.activation')) || Configure::read('MeCms.users.activation') > 2)
-	Configure::write('MeCms.users.activation', 1);
-
-//Forces debug and loads DebugKit on localhost, if required
-if(is_localhost() && Configure::read('MeCms.main.debug_on_localhost') && !Configure::read('debug')) {
-	Configure::write('debug', TRUE);
-	
-	\Cake\Core\Plugin::load('DebugKit', ['bootstrap' => TRUE]);
-}
-
-//Loads the theme
-if(($theme = Configure::read('MeCms.frontend.theme')) && !\Cake\Core\Plugin::loaded($theme))
-	\Cake\Core\Plugin::load($theme);
+if(!is_writeable(BANNERS))
+    throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
+		
+if(!folder_is_writeable(PHOTOS))
+    throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
 
 /**
- * Cache configuration
+ * Loads the MeCms configuration
  */
-//Loads the cache configuration from the plugin
+Configure::load('MeCms.me_cms');
+
+//Merges with the configuration from application, if exists
+if(is_readable(CONFIG.'me_cms.php'))
+	Configure::load('me_cms');
+
+/**
+ * Forces debug and loads DebugKit on localhost, if required
+ */
+if(is_localhost() && config('main.debug_on_localhost') && !config('debug')) {
+	Configure::write('debug', TRUE);
+	
+    if(!Plugin::loaded('DebugKit'))
+        Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+}
+
+/**
+ * Loads plugins
+ */
+Plugin::load('Assets', ['bootstrap' => TRUE]);
+Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
+Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
+
+/**
+ * Loads theme plugin
+ */
+$theme = config('frontend.theme');
+
+if($theme && !Plugin::loaded($theme))
+	Plugin::load($theme);
+
+/**
+ * Loads the cache configuration
+ */
 Configure::load('MeCms.cache');
 
-//Loads the cache from the application, if exists
+//Merges with the configuration from application, if exists
 if(is_readable(CONFIG.'cache.php'))
-	Configure::load('cache', 'default', FALSE);
-
+	Configure::load('cache');
+    
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
-	//Drops the default cache
-	if($key === 'default')
-		Cache::drop('default');
+	//Drops cache configurations that already exist
+	if(Cache::config($key))
+		Cache::drop($key);
 	
 	Cache::config($key, $config);
 }
 
 /**
- * Widgets configuration
+ * Loads the widgets configuration
  */
-//Loads the widgets configuration from the plugin
 Configure::load('MeCms.widgets');
 
-//Loads the widgets from the application, if exists
+//Overwrites with the configuration from application, if exists
 if(is_readable(CONFIG.'widgets.php'))
 	Configure::load('widgets', 'default', FALSE);
 
-//Adds the widgets configuration to the MeCms configuration
-Configure::write('MeCms.frontend.widgets', Configure::consume('Widgets'));
+//Adds log for users actions
+Log::config('users', [
+    'className' => 'MeCms\Log\Engine\SerializedLog',
+    'path' => LOGS,
+    'levels' => [],
+    'file' => 'users.log',
+    'url' => env('LOG_DEBUG_URL', null),
+]);
+
+/**
+ * Adds `isAdmin()` detector for the request
+ */
+Request::addDetector('admin', function ($request) {
+    return $request->param('prefix') === 'admin';
+});

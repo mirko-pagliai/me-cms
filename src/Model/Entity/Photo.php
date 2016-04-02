@@ -23,7 +23,6 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeCms\Utility\PhotoFile;
 
 /**
  * Photo entity
@@ -32,6 +31,8 @@ use MeCms\Utility\PhotoFile;
  * @property \MeCms\Model\Entity\Album $album
  * @property string $filename
  * @property string $description
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class Photo extends Entity {
     /**
@@ -40,7 +41,8 @@ class Photo extends Entity {
      */
     protected $_accessible = [
         '*' => TRUE,
-        'id' => FALSE
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 	
 	/**
@@ -52,9 +54,8 @@ class Photo extends Entity {
 	/**
 	 * Gets the photo path (virtual field)
 	 * @return string Path
-	 * @uses MeCms\Utility\PhotoFile::path()
 	 */
 	protected function _getPath() {
-		return PhotoFile::path($this->_properties['filename'], $this->_properties['album_id']);
+        return PHOTOS.DS.$this->_properties['album_id'].DS.$this->_properties['filename'];
     }
 }

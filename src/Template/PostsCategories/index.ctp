@@ -26,12 +26,12 @@
 
 <div class="postsCategories index">
 	<?php
-		echo $this->Html->h2(__d('me_cms', 'Posts categories'));	
-		
-		$list = array();
-		foreach($categories as $category)
-			$list[] = $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
-
-		echo $this->Html->ul($list, ['icon' => 'caret-right']);
+		echo $this->Html->h2(__d('me_cms', 'Posts categories'));
+        
+        $categories = array_map(function($category) {
+            return $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
+        }, $categories->toArray());
+        
+		echo $this->Html->ul($categories, ['icon' => 'caret-right']);
 	?>
 </div>

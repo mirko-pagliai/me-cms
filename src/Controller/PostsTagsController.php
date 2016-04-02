@@ -17,12 +17,13 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
 
-use Cake\Cache\Cache;
+use MeTools\Cache\Cache;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
 /**
@@ -31,11 +32,23 @@ use MeCms\Controller\AppController;
  */
 class PostsTagsController extends AppController {
 	/**
+	 * Lists posts tags
+	 */
+	public function index() {
+		$this->set('tags', $this->PostsTags->Tags->find()
+			->order(['tag' => 'ASC'])
+			->where(['post_count >' => 0])
+			->cache('tag_index', $this->PostsTags->Posts->cache)
+			->all());
+	}
+	
+	/**
 	 * Lists posts for a tag
 	 * @param string $tag Tag name
+     * @throws RecordNotFoundException
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
-    public function view($tag) {		
+    public function view($tag) {
 		//Checks if the cache is valid
 		$this->PostsTags->Posts->checkIfCacheIsValid();
 		
@@ -51,19 +64,22 @@ class PostsTagsController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
-			$posts = $this->paginate(
-				$this->PostsTags->Posts->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Tags',
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->matching('Tags', function ($q) use ($tag) {
-						return $q->where(['Tags.tag' => $tag]);
-					})
-					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC'])
-			)->toArray();
+			$query = $this->PostsTags->Posts->find('active')
+				->contain([
+					'Categories'	=> ['fields' => ['title', 'slug']],
+					'Tags',
+					'Users'			=> ['fields' => ['first_name', 'last_name']]
+				])
+				->matching('Tags', function ($q) use ($tag) {
+					return $q->where(['Tags.tag' => str_replace('-', ' ', $tag)]);
+				})
+				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
+					
+			if($query->isEmpty())
+				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+					
+			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsTags->cache);

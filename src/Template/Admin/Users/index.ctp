@@ -81,18 +81,15 @@
 			<?php foreach($users as $user): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($user->username, array('action' => 'view', $user->id)) ?></strong>
 						<?php
-							$title = $this->Html->link($user->username, array('action' => 'view', $user->id));
-
-							//If the user is banned
+                            //If the user is banned
 							if($user->banned)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'text-danger']));
+                                echo $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'record-label record-label-danger']);
 							//Else, if the user is not active (pending)
 							elseif(!$user->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'text-warning']));
-
-							echo $this->Html->strong($title);
-
+                                echo $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'record-label record-label-warning']);
+                            
 							$actions = [
 								$this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->id], ['icon' => 'eye']),
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['icon' => 'pencil'])
@@ -110,8 +107,12 @@
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td class="text-center"><?= $user->full_name ?></td>
-					<td class="text-center hidden-xs"><?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?></td>
+					<td class="text-center">
+                        <?= $user->full_name ?>
+                    </td>
+					<td class="text-center hidden-xs">
+                        <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
+                    </td>
 					<td class="text-center">
 						<?= $this->Html->link($user->group->label, ['?' => ['group' => $user->group->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
 					</td>
@@ -124,7 +125,9 @@
 						?>
 					</td>
 					<td class="min-width text-center">
-						<div class="hidden-xs"><?= $user->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="hidden-xs">
+                            <?= $user->created->i18nFormat(config('main.datetime.long')) ?>
+                        </div>
 						<div class="visible-xs">
 							<div><?= $user->created->i18nFormat(config('main.date.short')) ?></div>
 							<div><?= $user->created->i18nFormat(config('main.time.short')) ?></div>

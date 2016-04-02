@@ -23,7 +23,6 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeCms\Utility\BannerFile;
 
 /**
  * Banner entity
@@ -43,7 +42,8 @@ class Banner extends Entity {
      */
     protected $_accessible = [
         '*' => TRUE,
-        'id' => FALSE
+        'id' => FALSE,
+		'modified' => FALSE
     ];
 	
 	/**
@@ -55,9 +55,8 @@ class Banner extends Entity {
 	/**
 	 * Gets the banner path (virtual field)
 	 * @return string Path
-	 * @uses MeCms\Utility\BannerFile::path()
 	 */
 	protected function _getPath() {
-        return BannerFile::path($this->_properties['filename']);
+        return BANNERS.DS.$this->_properties['filename'];
     }
 }

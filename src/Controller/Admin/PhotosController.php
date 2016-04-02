@@ -23,7 +23,6 @@
 namespace MeCms\Controller\Admin;
 
 use MeCms\Controller\AppController;
-use MeCms\Utility\PhotoFile;
 
 /**
  * Photos controller
@@ -36,28 +35,22 @@ class PhotosController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeCms\Model\Table\PhotosAlbums::getList()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		//Checks if the main folder and its subfolders are writable
-		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
-		
 		if($this->request->isAction(['index', 'edit', 'upload'])) {
-			//Gets and sets albums
-			$this->set('albums', $albums = $this->Photos->Albums->getList());
+			//Gets albums
+            $albums = $this->Photos->Albums->getList();
 			
 			//Checks for albums
 			if(empty($albums) && !$this->request->isAction('index')) {
 				$this->Flash->alert(__d('me_cms', 'Before you can manage photos, you have to create at least an album'));
-				$this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
+				return $this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
 			}
+            
+            $this->set(compact('albums'));
 		}
 		
 		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
@@ -74,36 +67,14 @@ class PhotosController extends AppController {
 	public function isAuthorized($user = NULL) {		
 		//Only admins and managers can delete photos
 		if($this->request->isAction('delete'))
-			$this->Auth->isGroup(['admin', 'manager']);
+			return $this->Auth->isGroup(['admin', 'manager']);
 				
 		return TRUE;
 	}
 	
 	/**
-     * Lists photos
-	 * @param string $album_id Album ID
-	 * @throws \Cake\Network\Exception\NotFoundException
-	 */
-    public function index($album_id = NULL) {
-		if(empty($album_id))
-			throw new \Cake\Network\Exception\NotFoundException(__d('me_cms', 'The album ID is missing'));
-		
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
-		$this->paginate['order'] = ['filename' => 'ASC'];
-		
-		$this->set('photos', $this->paginate(
-			$this->Photos->find()
-				->select(['id', 'album_id', 'filename'])
-				->where(compact('album_id'))
-		));
-		
-		$this->set(compact('album_id'));
-    }
-	
-	/**
 	 * Uploads photos
 	 * @uses MeCms\Controller\_upload()
-	 * @uses MeCms\Utility\PhotoFile::folder()
 	 */
 	public function upload() {
 		//If there's only one album, it automatically sets the query value
@@ -112,19 +83,29 @@ class PhotosController extends AppController {
 		
 		$album = $this->request->query('album');
 		
-		if($album && $this->request->data('file'))
+		if($album && $this->request->data('file')) {
+            //Uploads
+            $filename = $this->_upload($this->request->data('file'), PHOTOS.DS.$album);
+                
 			//Checks if the file has been uploaded
-			if($filename = $this->_upload($this->request->data('file'), PhotoFile::folder($album)))
-				$this->Photos->save($this->Photos->newEntity([
+			if($filename) {
+				$photo = $this->Photos->save($this->Photos->newEntity([
 					'album_id'	=> $album,
 					'filename'	=> basename($filename)
 				]));
+				
+				if($photo->id)
+					$this->set('edit_url', ['action' => 'edit', $photo->id]);
+			}
+			
+			//Renders the element `backend/uploader/response`
+			$this->render('/Element/backend/uploader/response', FALSE);
+		}
 	}
 
     /**
      * Edits photo
      * @param string $id Photo ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $photo = $this->Photos->get($id);
@@ -146,7 +127,6 @@ class PhotosController extends AppController {
     /**
      * Deletes photo
      * @param string $id Photo ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

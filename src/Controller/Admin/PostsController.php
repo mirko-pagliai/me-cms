@@ -56,7 +56,7 @@ class PostsController extends AppController {
 		//Checks for categories
 		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
 			$this->Flash->alert(__d('me_cms', 'Before you can manage posts, you have to create at least a category'));
-			$this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
+			return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
 		
 		if(!empty($categories))
@@ -70,7 +70,7 @@ class PostsController extends AppController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses MeCms\Controller\AppController::beforeRender()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::configure()
 	 */
@@ -111,13 +111,15 @@ class PostsController extends AppController {
 		$query = $this->Posts->find()
 			->contain([
 				'Categories'	=> ['fields' => ['id', 'title']],
-				'Tags',
+				'Tags'			=> function($q) {
+					return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
+				},
 				'Users'			=> ['fields' => ['id', 'first_name', 'last_name']]
 			])
 			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
-		$this->paginate['order'] = ['Posts.created' => 'DESC'];
-		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'Posts.created'];
+		$this->paginate['order'] = ['created' => 'DESC'];
+		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'created'];
 		
 		$this->set('posts', $this->paginate($this->Posts->queryFromFilter($query, $this->request->query)));
     }
@@ -158,10 +160,13 @@ class PostsController extends AppController {
      * @param string $id Post ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
-		$post = $this->Posts->findById($id)->contain('Tags')->first();
+		$post = $this->Posts->findById($id)
+			->contain(['Tags' => function($q) {
+				return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
+			}])
+			->firstOrFail();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
@@ -188,7 +193,6 @@ class PostsController extends AppController {
     /**
      * Deletes post
      * @param string $id Post ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

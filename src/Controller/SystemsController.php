@@ -29,9 +29,20 @@ use MeCms\Controller\AppController;
  */
 class SystemsController extends AppController {
 	/**
+	 * Accept cookies policy.
+	 * It sets the cookie to remember the user accepted the cookie policy and redirects
+	 */
+	public function accept_cookies() {
+		//Sets the cookie
+		$this->Cookie->config(['expires' => '+999 days'])->write('cookies-policy', TRUE);
+		
+		return $this->redirect($this->referer('/', TRUE));
+	}
+	
+	/**
 	 * Contact form
 	 * @see MeCms\Form\ContactForm
-	 * @uses MeCms\Form\ContactForm::_execute()
+	 * @see MeCms\Form\ContactForm::execute()
 	 * @uses MeTools\Controller\Component\Recaptcha::check()
 	 * @uses MeTools\Controller\Component\Recaptcha::getError()
 	 */
@@ -39,7 +50,7 @@ class SystemsController extends AppController {
 		//Checks if the contact form is enabled
 		if(!config('frontend.contact_form')) {
 			$this->Session->Error(__d('me_cms', 'Disabled'));
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		}
 		
 		$contact = new \MeCms\Form\ContactForm();
@@ -53,7 +64,7 @@ class SystemsController extends AppController {
 				//Sends the email
 				if($contact->execute($this->request->data)) {
 					$this->Flash->success(__d('me_cms', 'The email has been sent'));
-					$this->redirect(['_name' => 'homepage']);
+					return $this->redirect(['_name' => 'homepage']);
 				} 
 				else
 					$this->Flash->error(__d('me_cms', 'The email was not sent'));
@@ -70,7 +81,7 @@ class SystemsController extends AppController {
 	public function ip_not_allowed() {
 		//If the user's IP address is not banned
 		if(!$this->isBanned())
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
 	}
@@ -81,7 +92,7 @@ class SystemsController extends AppController {
 	public function offline() {
 		//If the site has not been taken offline
 		if(!config('frontend.offline'))
-			$this->redirect(['_name' => 'homepage']);
+			return $this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
 	}

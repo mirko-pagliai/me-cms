@@ -22,7 +22,7 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
+use MeTools\Cache\Cache;
 use Cake\View\Cell;
 
 /**
@@ -46,11 +46,11 @@ class PhotosCell extends Cell {
 	
 	/**
 	 * Albums widget
-	 * @uses MeTools\Network\Request::isController()
+	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function albums() {
-		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums']))
+		//Returns on albums index
+		if($this->request->isHere(['_name' => 'albums']))
 			return;
 		
 		//Tries to get data from the cache
@@ -58,11 +58,15 @@ class PhotosCell extends Cell {
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
-			foreach($this->Photos->Albums->find('active')
-						->select(['title', 'slug', 'photo_count'])
-						->order(['title' => 'ASC'])
-						->toArray() as $k => $album)
-					$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
+			$albums = $this->Photos->Albums->find('active')
+				->select(['title', 'slug', 'photo_count'])
+				->order(['title' => 'ASC'])
+				->toArray();
+			
+			foreach($albums as $k => $album) {
+				$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
+				unset($albums[$k]);
+			}
 			
             Cache::write($cache, $albums, $this->Photos->cache);
 		}
@@ -84,7 +88,7 @@ class PhotosCell extends Cell {
 		$this->set('photos', $this->Photos->find('active')
 			->select(['album_id', 'filename'])
 			->limit($limit)
-			->order([sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
+			->order([sprintf('%s.created', $this->Photos->alias()) => 'DESC', sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
 			->toArray()
 		);

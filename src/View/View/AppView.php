@@ -23,21 +23,49 @@
 namespace MeCms\View\View;
 
 use App\View\AppView as BaseView;
+use Cake\Routing\Router;
 
 /**
  * Application view class
  */
 class AppView extends BaseView {
 	/**
+	 * It will contain the page title.
+	 * To get the title, you should use the `_getTitleForLayout()` method
+	 * @see _getTitleForLayout()
+	 * @var string
+	 */
+	protected $title;
+	
+	/**
+	 * Adds Facebook tags
+	 * @uses MeTools\View\Helper\HtmlHelper::meta()
+	 * @uses _getTitleForLayout()
+	 */
+	protected function _addFacebookTags() {
+		$this->Html->meta(['content' => $this->_getTitleForLayout(), 'property' => 'og:title']);
+		$this->Html->meta(['content' => Router::url(NULL, TRUE), 'property' => 'og:url']);
+		
+		//Adds the app ID
+		if(config('frontend.facebook_app_id'))
+			$this->Html->meta(['content' => config('frontend.facebook_app_id'), 'property' => 'fb:app_id']);
+	}
+	
+	/**
 	 * Gets the title for layou
 	 * @return string Title
+	 * @uses title
+	 * @uses viewVars
 	 */
 	protected function _getTitleForLayout() {
+		if(!empty($this->title))
+			return $this->title;
+		
 		//Gets the main title assigned by the configuration
 		$title = config('main.title');
 		
 		//For homepage, it uses only the main title
-		if($this->request->isCurrent(['_name' => 'homepage']))
+		if($this->request->isHere(['_name' => 'homepage']))
 			return $title;
 		
 		//If exists, it adds the title assigned by the controller
@@ -47,12 +75,12 @@ class AppView extends BaseView {
 		elseif($this->fetch('title'))
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
 		
-		return $title;
+		return $this->title = $title;
 	}
 
 	/**
      * Initialization hook method
-	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_initialize
+	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_initialize
 	 * @uses App\View\AppView::initialize()
 	 */
     public function initialize() {
@@ -60,14 +88,16 @@ class AppView extends BaseView {
 		
 		//Loads helpers
 		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
+		$this->loadHelper('MeTools.BBCode');
 		$this->loadHelper('MeTools.Dropdown');
 		$this->loadHelper('MeTools.Form');
-		$this->loadHelper('MeTools.Asset');
 		$this->loadHelper('MeTools.Library');
-		$this->loadHelper('MeTools.Thumb');
 		$this->loadHelper('MeTools.Paginator');
-		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeTools.Recaptcha');
+		$this->loadHelper('Assets.Asset');
+		$this->loadHelper('Thumbs.Thumb');
+		$this->loadHelper('MeCms.Auth');
+		$this->loadHelper('MeCms.Widget');
     }
 	
 	/**
@@ -75,8 +105,8 @@ class AppView extends BaseView {
 	 * @param string|NULL $view Name of view file to use
 	 * @param string|NULL $layout Layout to use
 	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
-	 * @see http://api.cakephp.org/3.1/class-Cake.View.View.html#_render
-     * @throws Cake\Core\Exception\Exception
+	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_render
+	 * @uses App\View\AppView::render()
 	 * @uses layout
 	 * @uses theme
 	 */
@@ -97,49 +127,41 @@ class AppView extends BaseView {
 	 * @param string $content Content to render in a view, wrapped by the surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.1/source-class-Cake.View.View.html#477-513
-     * @throws Cake\Core\Exception\Exception
+	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
+	 * @uses App\View\AppView::renderLayout()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
+	 * @uses MeTools\View\Helper\LibraryHelper::analytics()
+	 * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
 	 * @uses _getTitleForLayout()
+	 * @uses _addFacebookTags()
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Assigns the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
 		
-		//Automatically adds the meta tag for RSS posts
+		//Adds the favicon
+		if(is_readable(WWW_ROOT.'favicon.ico'))
+			$this->Html->meta('icon');
+		
+		//Adds the "theme color" (the toolbar color for some mobile browser)
+		if(config('frontend.toolbar_color'))
+			$this->Html->meta('theme-color', config('frontend.toolbar_color'));
+		
+		//Adds the meta tag for RSS posts
 		if(config('frontend.rss_meta'))
 			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
-				
+		
+		//Adds Google Analytics
+		if(config('frontend.analytics'))
+			echo $this->Library->analytics(config('frontend.analytics'));
+
+		//Adds Shareaholic
+		if(config('shareaholic.site_id'))
+			echo $this->Library->shareaholic(config('shareaholic.site_id'));
+		
+		//Adds Facebook's tags
+		$this->_addFacebookTags();
+		
 		return parent::renderLayout($content, $layout);
-	}
-	
-	/**
-	 * Returns all widgets, reading from configuration
-	 * @return string Html code
-	 * @uses MeTools\Network\Request::isCurrent()
-	 * @uses widget()
-	 */
-	public function allWidgets() {
-		$widgets = config('frontend.widgets.general');
-		
-		if($this->request->isCurrent(['_name' => 'homepage']) && config('frontend.widgets.homepage'))
-			$widgets = config('frontend.widgets.homepage');
-		
-		foreach($widgets as $name => $args)
-			$widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
-		
-		return implode(PHP_EOL, $widgets);
-	}
-	
-	/**
-	 * Returns a widget
-	 * @param string $name Widget name
-	 * @param array $arguments Widget arguments
-	 * @param array $options Widget options
-	 * @return Cake\View\Cell The cell instance
-	 * @uses Cake\View\Cell::cell()
-	 */
-	public function widget($name, array $arguments = [], array $options = []) {
-		return $this->cell($name, $arguments, $options);
 	}
 }

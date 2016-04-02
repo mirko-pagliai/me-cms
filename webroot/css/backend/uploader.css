@@ -41,13 +41,12 @@
 /* -------------------------------- */
 /* Result, wrappers */
 #uploader .upload-result > div {
-	height: 120px;
+	min-height: 140px;
 	margin-bottom: 10px;
 }
 
 /* Result, wrappers */
 #uploader .upload-result > div > div {
-	height: 100%;
 	overflow: hidden;
 	padding: 10px 0;	
 }

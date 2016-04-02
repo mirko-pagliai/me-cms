@@ -2,6 +2,8 @@
 return ['MeCms' => [
 	//Backend
 	'backend' => [
+		//Layout you want to use for the backend
+		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
 		'layout' => 'MeCms.backend',
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
@@ -20,11 +22,15 @@ return ['MeCms' => [
 	'frontend' => [
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
-		//Layout you want to use for the backend
+		//It shows the alert for the cookie policy
+		'cookies_policy' => TRUE,
+		//Layout you want to use for the frontend
 		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
 		'layout' => 'MeCms.frontend',
 		//Contact form (enabled or disabled).
 		'contact_form' => TRUE,
+		//Facebook app ID or FALSE
+		'facebook_app_id' => FALSE,
 		//Fancybox for photos
 		'fancybox' => TRUE,
 		//Site logo. Relative path to `APP/webroot/img/`
@@ -43,7 +49,11 @@ return ['MeCms' => [
 		'rss_meta' => TRUE,
 		//Theme. Must be located in `APP/plugins/`
 		'theme' => FALSE,
+		//For some mobile browsers you can choose a color for the browser bar. Must be a valid HEX color or FALSE to disable
+		//See https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android
+		'toolbar_color' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
+		//Note that you can use the "<!-- read-more -->" tag to indicate manually where to truncate a text
 		'truncate_to' => 1000
 	],
 	//KCFinder
@@ -82,9 +92,6 @@ return ['MeCms' => [
 			//Short format
 			'short'	=> 'HH:mm'
 		],
-		//Timezone. See the list of supported timezones:
-		//http://php.net/manual/en/timezones.php
-		'timezone' => 'UTC',
 		//Site title
 		'title' => 'MeCms'
 	],
@@ -104,6 +111,8 @@ return ['MeCms' => [
 		'category' => TRUE,
 		//Displays the post created datetime
 		'created' => TRUE,
+		//Adds post tags as keywords meta-tag
+		'keywords' => TRUE,
 		//Related posts
 		'related' => [
 			//Limit of related posts to get for each post. Use `0` to disable.
@@ -124,6 +133,10 @@ return ['MeCms' => [
 		//You can use the asterisk (*) as a wildcard.
 		//With "false" or an empty value, access is granted to any ip addresses (no limitation).
 		'banned_ip' => [],
+		//Link for "IP map". The `{IP}` string will be replaced with the IP address
+		'ip_map' => 'http://www.traceip.net/?query={IP}',
+		//Link for "IP who is". The `{IP}` string will be replaced with the IP address
+		'ip_whois' => 'http://www.traceip.net/whois/{IP}',
 		//reCAPTCHA (enabled or disabled).
 		//It will be used for some actions, such as signup or reset the password
 		'recaptcha' => FALSE,

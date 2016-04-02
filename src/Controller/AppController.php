@@ -23,19 +23,46 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
-use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 /**
  * Application controller class
  */
 class AppController extends BaseController {
 	/**
-	 * Uploads a file.
-	 * 
-	 * This methods renders the element `backend/uploader/response`.
+	 * Gets the user's language
+	 * @return mixed Language code or FALSE
+	 * @throws \Cake\Network\Exception\InternalErrorException
+	 * @uses MeTools\Core\Plugin::path()
+	 */
+	protected function _getLanguage() {
+		$config = config('main.language');
+		$language = $this->request->env('HTTP_ACCEPT_LANGUAGE');
+		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
+		
+		if(empty($config) || $config === 'auto') {
+			if(is_readable($path.DS.substr($language, 0, 5).DS.'me_cms.po'))
+				return substr($language, 0, 5);
+			elseif(is_readable($path.DS.substr($language, 0, 2).DS.'me_cms.po'))
+				return substr($language, 0, 2);
+		}
+		elseif(!empty($config)) {
+            $file = $path.DS.$config.DS.'me_cms.po';
+            
+			if(!is_readable($file))
+				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory {0} not readable', $file));
+			
+			return $config;
+		}
+		
+		return FALSE;
+	}
+	
+	/**
+	 * Internal method to uploads a file
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
-	 * @return mixed Full file path or FALSE
+	 * @return mixed Full file path or FALSE if there's an error
 	 */
 	protected function _upload($file, $target) {
 		//Checks if the file was successfully uploaded
@@ -53,48 +80,38 @@ class AppController extends BaseController {
 		}
 		else
 			$error = __d('me_cms', 'The file was not successfully uploaded');
-
-		if(!empty($error)) {
-			$success = FALSE;
-			$this->set(compact('error'));
-		}
 		
-		$this->set(compact('file'));
-
-		//Renders
-		$this->render('/Element/backend/uploader/response', FALSE);
+		$this->set(am(['error' => empty($error) ? FALSE : $error], compact('file')));
 		
-		return isset($success) && !$success ? FALSE : $target;
+		return empty($error) ? $target : FALSE;
 	}
 	
 	/**
 	 * Called before the controller action. 
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::hasPrefix()
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeTools\Network\Request::isAdmin()
+	 * @uses _getLanguage()
 	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
-		date_default_timezone_set(config('main.timezone'));
-		
 		//Checks if the site is offline
 		if($this->isOffline())
-			$this->redirect(['_name' => 'offline']);
+			return $this->redirect(['_name' => 'offline']);
 		
 		//Checks if the user's IP address is banned
 		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
-			$this->redirect(['_name' => 'ip_not_allowed']);
+			return $this->redirect(['_name' => 'ip_not_allowed']);
 		
-		$this->setLanguage();
+		//Sets the user's language
+		I18n::locale($this->_getLanguage());
 		
 		//If the current request has no prefix, it authorizes the current action
-		if(!$this->request->hasPrefix())
+		if(!$this->request->param('prefix'))
 			$this->Auth->allow($this->request->action);
 		
 		if(!$this->Auth->user())
@@ -111,9 +128,8 @@ class AppController extends BaseController {
 	 * Called after the controller action is run, but before the view is rendered.
 	 * You can use this method to perform logic or set view variables that are required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.1/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses App\Controller\AppController::beforeRender()
-	 * @uses MeTools\Network\Request::isAdmin()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
 		//Ajax layout
@@ -135,6 +151,7 @@ class AppController extends BaseController {
 	 */
 	public function initialize() {
 		//Loads components
+		$this->loadComponent('Cookie');
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
@@ -175,7 +192,6 @@ class AppController extends BaseController {
 	 * Checks if the site is offline
 	 * @return bool
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses MeTools\Network\Request::isAdmin()
 	 */
 	protected function isOffline() {
 		if(!config('frontend.offline'))
@@ -190,35 +206,5 @@ class AppController extends BaseController {
 			return FALSE;
 		
 		return TRUE;
-	}
-	
-	/**
-	 * Sets the language
-	 * @return mixed Language code or FALSE
-	 * @throws \Cake\Network\Exception\InternalErrorException
-	 * @uses Cake\I18n\I18n::locale()
-	 * @uses MeTools\Core\Plugin::path()
-	 */
-	protected function setLanguage() {
-		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
-		
-		if(config('main.language') === 'auto') {
-			if(is_readable($path.DS.substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 5).DS.'me_cms.po'))
-				$language = substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 5);
-			elseif(is_readable($path.DS.substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 2).DS.'me_cms.po'))
-				$language = substr($this->request->env('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-		}
-		elseif(config('main.language')) {
-			if(!is_readable($file = $path.DS.config('main.language').DS.'me_cms.po'))
-				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory `{0}` not readable', $file));
-			
-			$language = config('main.language');
-		}
-		
-		if(empty($language))
-			return FALSE;
-			
-		\Cake\I18n\I18n::locale($language);
-		return $language;
 	}
 }

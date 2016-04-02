@@ -25,5 +25,5 @@
 <?php $this->assign('title', $page->title); ?>
 
 <div class="pages view">
-	<?= $this->element('frontend'.DS.'views'.DS.'page', compact('page')); ?>
+	<?= $this->element('frontend/views/page', compact('page')); ?>
 </div>

@@ -40,17 +40,19 @@
 			<?php foreach($groups as $group): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($group->name, ['action' => 'edit', $group->id]);
-							echo $this->Html->strong($title);
-
-							echo $this->Html->ul([
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $group->id], ['icon' => 'pencil']),
-								$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $group->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
-							], ['class' => 'actions']);
+                            $actions = [
+                                $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $group->id], ['icon' => 'pencil']),
+                                $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $group->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
+							];
+                        
+							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>
-					<td><?= $group->description ?></td>
+					<td>
+                        <?= $group->description ?>
+                    </td>
 					<td class="min-width text-center">
 						<?php
 							if($group->user_count) 

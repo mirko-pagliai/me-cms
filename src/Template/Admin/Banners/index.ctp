@@ -61,26 +61,24 @@
 				<th class="text-center hidden-xs"><?= __d('me_cms', 'Url') ?></th>
 				<th class="text-center"><?php echo $this->Paginator->sort('description', __d('me_cms', 'Description')); ?></th>
 				<th class="text-center"><?php echo $this->Paginator->sort('click_count', __d('me_cms', 'Click')); ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($banners as $banner): ?>
 				<tr>
 					<td>
+                        <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
 						<?php
-							$title = $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]);
-
-							//If the banner is not active (not published)
-							if(!$banner->active)
-								$title = sprintf('%s - %s', $title, $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'text-warning']));
-
-							echo $this->Html->strong($title);
+                            //If the banner is not active (not published)
+                            if(!$banner->active)
+                                echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
 			
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
 							];
 							
-							if(!empty($banner->target))
+							if($banner->target)
 								$actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
 							
 							//Only admins can delete banners
@@ -94,10 +92,26 @@
 						<?= $this->Html->link($banner->position->name, ['?' => ['position' => $banner->position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
 					</td>
 					<td class="text-center hidden-xs">
-						<?= empty($banner->target) ? NULL : $this->Html->link($banner->target, $banner->target, ['target' => '_blank']) ?>
+                        <?php
+                            if($banner->target) {
+                                $truncated = $this->Text->truncate($banner->target, 50, ['exact' => FALSE]);
+                                echo $this->Html->link($truncated, $banner->target, ['target' => '_blank']);
+                            }
+                        ?>
 					</td>
-					<td class="text-center"><?= $banner->description ?></td>
-					<td class="min-width text-center"><?= $banner->click_count ?></td>
+					<td class="text-center">
+                        <?= $banner->description ?>
+                    </td>
+					<td class="min-width text-center">
+                        <?= $banner->click_count ?>
+                    </td>
+					<td class="min-width text-center">
+						<div class="hidden-xs"><?= $banner->created->i18nFormat(config('main.datetime.long')) ?></div>
+						<div class="visible-xs">
+							<div><?= $banner->created->i18nFormat(config('main.date.short')) ?></div>
+							<div><?= $banner->created->i18nFormat(config('main.time.short')) ?></div>
+						</div>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

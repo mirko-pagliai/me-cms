@@ -24,15 +24,24 @@ body {
 	border-radius: 8px;
     box-shadow: 0 3px 6px -6px #000;
 	font-size: 16px;
-    margin: auto;
+	margin: 20px;
 	overflow: hidden;
     padding: 20px;
-	width: 450px;
+}
+
+/* Min width content */
+@media (min-width: 470px) {
+	/* Content */
+	#content {
+		margin: auto;
+		width: 450px;
+	}
 }
 
 /* Content, logo */
 #content > #logo {
 	margin: 10px auto 20px;
+	max-width: 100%;
 	text-align: center;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;

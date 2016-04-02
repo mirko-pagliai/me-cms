@@ -22,11 +22,11 @@
  */
 namespace MeCms\Model\Table;
 
+use Cake\Filesystem\File;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Photo;
 use MeCms\Model\Table\AppTable;
-use MeCms\Utility\PhotoFile;
 
 /**
  * Photos model
@@ -45,11 +45,10 @@ class PhotosTable extends AppTable {
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
 	 * @uses MeCms\Model\Table\AppTable::afterDelete()
-	 * @uses MeCms\Utility\PhotoFile::delete()
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Deletes the file
-		PhotoFile::delete($entity->filename, $entity->album_id);
+		(new File(PHOTOS.DS.$entity->album_id.DS.$entity->filename))->delete();
 		
 		parent::afterDelete($event, $entity, $options);
 	}
@@ -96,6 +95,7 @@ class PhotosTable extends AppTable {
             'className' => 'MeCms.PhotosAlbums'
         ]);
 		
+        $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
     }
 

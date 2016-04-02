@@ -32,8 +32,8 @@ class PhotosAlbumsController extends AppController {
 	/**
      * Lists albums
      */
-    public function index() {		
-		$this->set('albums', $albums = $this->PhotosAlbums->find('active')
+    public function index() {
+        $albums = $this->PhotosAlbums->find('active')
 			->select(['id', 'title', 'slug', 'photo_count'])
 			->contain(['Photos' => function($q) {
 				return $q
@@ -42,12 +42,13 @@ class PhotosAlbumsController extends AppController {
 			}])
 			->order(['title' => 'ASC'])
 			->cache('albums_index', $this->PhotosAlbums->cache)
-			->all()
-		);
-		
+			->all();    
+            
 		//If there is only one album, redirects to that album
-		if($albums->count() && $albums->count() < 2)
-			$this->redirect(['_name' => 'album', $albums->toArray()[0]->slug]);
+		if($albums->count() === 1)
+			return $this->redirect(['action' => 'view', $albums->toArray()[0]->slug]);
+        
+        $this->set(compact('albums'));
     }
 	
 	/**
@@ -57,16 +58,18 @@ class PhotosAlbumsController extends AppController {
 	public function view($slug = NULL) {
 		//The slug can be passed as query string, from a widget
 		if($this->request->query('q'))
-			$this->redirect([$this->request->query('q')]);
+			return $this->redirect([$this->request->query('q')]);
 		
 		$this->set('album', $this->PhotosAlbums->find('active')
-			->contain(['Photos' => [
-				'fields' => ['id', 'album_id', 'filename', 'description']
-			]])
+			->contain(['Photos' => function($q) {
+				return $q
+					->select(['id', 'album_id', 'filename', 'description'])
+					->order([sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC', sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC']);
+			 }])
 			->select(['id', 'title'])
 			->where(compact('slug'))
 			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
-			->first()
+			->firstOrFail()
 		);
 	}
 }

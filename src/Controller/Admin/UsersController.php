@@ -85,14 +85,13 @@ class UsersController extends AppController {
     /**
      * Views user
      * @param string $id User ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function view($id = NULL) {
         $this->set('user', $this->Users->find()
 			->contain(['Groups' => ['fields' => ['label']]])
 			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
 			->where(['Users.id' => $id])
-			->first()
+			->firstOrFail()
         );
     }
 
@@ -120,18 +119,17 @@ class UsersController extends AppController {
      * Edits user
      * @param string $id User ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isFounder()
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
 		$user = $this->Users->find()
 			->select(['id', 'group_id', 'username', 'email', 'first_name', 'last_name', 'active'])
 			->where(['Users.id' => $id])
-			->first();
+			->firstOrFail();
 		
 		//Only the admin founder can edit others admin users
 		if($user->group_id === 1 && !$this->Auth->isFounder()) {
 			$this->Flash->alert(__d('me_cms', 'Only the admin founder can edit other admin users'));
-			$this->redirect(['action' => 'index']);
+			return $this->redirect(['action' => 'index']);
 		}
 		
 		//It prevents a blank password is saved
@@ -155,7 +153,6 @@ class UsersController extends AppController {
      * Deletes user
      * @param string $id User ID
 	 * @uses MeCms\Controller\Component\AuthComponent::isFounder()
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);
@@ -163,7 +160,7 @@ class UsersController extends AppController {
 		$user = $this->Users->find()
 			->select(['id', 'group_id', 'post_count'])
 			->where(['Users.id' => $id])
-			->first();
+			->firstOrFail();
 		
 		//You cannot delete the admin founder
 		if($user->id === 1)
@@ -186,10 +183,10 @@ class UsersController extends AppController {
 	/**
 	 * Activates account
 	 * @param string $id User ID
-     * @throws \Cake\Network\Exception\NotFoundException
 	 */
 	public function activate($id) {
 		$user = $this->Users->get($id);
+		
 		$user->active = TRUE;
 		
 		if($this->Users->save($user))
@@ -208,15 +205,14 @@ class UsersController extends AppController {
 		$user = $this->Users->find()
 			->select(['id', 'email', 'first_name', 'last_name'])
 			->where(['id' => $this->Auth->user('id')])
-			->first();
+			->firstOrFail();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			
 			if($this->Users->save($user)) {
 				//Sends email
-				$this->getMailer('MeCms.User')
-					->send('change_password', [$user]);
+				$this->getMailer('MeCms.User')->send('change_password', [$user]);
 				
 				$this->Flash->success(__d('me_cms', 'The password has been edited'));
 				return $this->redirect(['_name' => 'dashboard']);

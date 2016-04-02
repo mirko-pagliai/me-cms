@@ -20,6 +20,8 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use Cake\Routing\Router;
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +35,21 @@
 				echo $line.'<br />'.PHP_EOL;
 		?>
 		<br />
+        
 		<small>
-			<?= 
-				__d('me_cms', 'This email was sent automatically from {0}',
-					$this->Html->link(config('main.title'), \Cake\Routing\Router::url('/', TRUE)))
-			?>
-		</small><br />
-		<small><?= __d('me_cms', 'The request has been sent from the IP {0}', $ip_address) ?></small><br />
-		<small><?= __d('me_cms', 'Please, don\'t reply to this email') ?></small>		
+			<?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(config('main.title'), Router::url('/', TRUE))) ?>
+		</small>
+        
+        <br />
+        
+		<small>
+            <?= __d('me_cms', 'The request has been sent from the IP {0}', $ip_address) ?>
+        </small>
+        
+        <br />
+        
+		<small>
+            <?= __d('me_cms', 'Please, don\'t reply to this email') ?>
+        </small>		
 	</body>
 </html>

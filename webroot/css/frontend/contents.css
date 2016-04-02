@@ -127,7 +127,9 @@
 /* Content text, images */
 .content-container .content-text img {
 	display: block;
+	height: auto;
 	margin-bottom: 16px;
+	max-width: 100%;
 }
 
 /* Content text, images pulled on left */
@@ -242,6 +244,14 @@
 /* Content preview, content title */
 .content-preview .content-title {
 	font-weight: bold;
+}
+
+/* -------------------------------- */
+/*			Shareaholic				*/
+/* -------------------------------- */
+/* Shareaholic wrapper */
+.shareaholic-canvas {
+	margin-top: 20px;
 }
 
 /* -------------------------------- */

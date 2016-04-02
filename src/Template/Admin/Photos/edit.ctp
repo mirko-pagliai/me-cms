@@ -37,7 +37,7 @@
     <fieldset>
         <?php
 			echo $this->Html->para(NULL, $this->Html->strong(__d('me_cms', 'Preview')));
-			echo $this->Thumb->img($photo->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]);
+			echo $this->Thumb->image($photo->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]);
 			
 			echo $this->Form->input('filename', [
 				'disabled'	=> TRUE,

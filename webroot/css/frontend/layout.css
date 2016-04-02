@@ -8,10 +8,89 @@
 /* -------------------------------- */
 /*				HTML				*/
 /* -------------------------------- */
+/* Blockquote */
+blockquote {
+	background: #eee;
+	border: 0;
+	margin-top: 20px;
+	padding: 20px 60px;
+	position: relative;
+}
+
+/* Blockquote, icons */
+blockquote:before, blockquote:after {
+    font-size: 25px;
+    position: absolute;
+	font-family: FontAwesome;
+    font-weight: normal;
+	opacity: .5;
+}
+
+/* Blockquote, left (before) icon */
+blockquote:before {
+    content: "\f10d";
+	left: 20px;
+    top: 10px;
+}
+
+/* Blockquote, right (after) icon */
+blockquote:after {
+	bottom: 10px;
+    content: "\f10e";
+    right: 20px;
+}
+
+/* Extra small and small devices */
+@media (max-width: 992px) {
+	/* Blockquote */
+	blockquote {
+		font-size: 14px;
+		line-height: 1.3;
+		padding: 32px 15px;
+	}
+	
+	/* Blockquote, icons */
+	blockquote:before, blockquote:after {
+		font-size: 15px !important;
+	}
+
+	/* Blockquote, left (before) icon */
+	blockquote:before {
+		left: 16px !important;
+		top: 8px !important;
+	}
+
+	/* Blockquote, right (after) icon */
+	blockquote:after {
+		bottom: 8px !important;
+		right: 16px !important;
+	}
+}
+
 /* Body */
 body {
     font-family: Roboto,sans-serif;
 	padding-bottom: 60px;
+}
+
+/* -------------------------------- */
+/*			Cookies policy			*/
+/* -------------------------------- */
+/* Cookies policy */
+#cookies-policy {
+	background: #000;
+	color: #fff;
+	font-size: 13px;
+	padding: 8px 0;
+	position: fixed;
+	width: 100%;
+	z-index: 9999999;
+}
+
+/* Cookies policy, links */
+#cookies-policy a {
+	font-size: 13px;
+	margin-left: 6px;
 }
 
 /* -------------------------------- */
@@ -147,12 +226,12 @@ body header #topbar .navbar-collapse li.open > a {
 /*			Sidebar widgets			*/
 /* -------------------------------- */
 /* Widget */
-.widget.sidebar-widget {
+.widget {
 	margin-bottom: 20px;
 }
 
 /* Widget, list, element list, link */
-.widget.sidebar-widget > ul li a {
+.widget ul li a {
 	display: block;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;
@@ -189,4 +268,28 @@ body > footer p {
     font-family: Arial,sans-serif;
     font-size: 12px;
     margin: 0;
+}
+
+/* Footer, lists */
+body > footer ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+/* Footer, lists, list elements */
+body > footer > ul li {
+	border-right: 1px solid #aaa;
+	display: inline-block;
+	padding: 0 10px;
+}
+
+/* Footer, lists, last list elements */
+body > footer > ul li:last-child {
+	border-right: 0;
+}
+
+/* Footer, lists, list elements, links */
+body > footer > ul li a {
+  border: 0 none;
+  text-decoration: underline !important;
 }

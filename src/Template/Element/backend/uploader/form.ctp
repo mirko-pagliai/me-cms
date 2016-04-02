@@ -29,20 +29,18 @@
 
 <div id="uploader">
 	<div class="upload-area">
-		<?php
-			echo __d('me_cms', 'Drag here files to upload');
-			echo $this->Html->div('upload-icon', $this->Html->icon('cloud-upload'));
-		?>
+        <?= __d('me_cms', 'Drag here files to upload') ?>
+        <div class="upload-icon"><?= $this->Html->icon('cloud-upload') ?></div>
 	</div>
 	<div class="upload-info">
 		<div class="progress">
 			<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-				<span class="sr-only">60% Complete</span>
+				<span class="sr-only">0% complete</span>
 			</div>
 		</div>
 		<div class="upload-result row"></div>
 		<div class="upload-error bg-danger text-danger padding-10 margin-10">
-			<?php echo __d('me_cms', 'The file {0} exceeds the maximum limit', '<strong></strong>'); ?>
+			<?= __d('me_cms', 'The file {0} exceeds the maximum limit', '<strong></strong>') ?>
 		</div>
 	</div>
 </div>

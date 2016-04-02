@@ -80,8 +80,8 @@ class PostValidator extends AppValidator {
 			if(!empty($tag['id']))
 				continue;
 			
-			//Checks if the tag has between 3 and 20 chars
-			if(empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag'] > 20))
+			//Checks if the tag has between 3 and 30 chars
+			if(empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag'] > 30))
 				return FALSE;
 		}
 		
@@ -101,8 +101,8 @@ class PostValidator extends AppValidator {
 			if(!empty($tag['id']))
 				continue;
 			
-			//Checks if the tag has only lowercase letters, numbers, dash
-			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\-]+$/', $tag['tag']))
+			//Checks if the tag has only lowercase letters, numbers, hyphen, space
+			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\ ]+$/', $tag['tag']))
 				return FALSE;
 		}
 		

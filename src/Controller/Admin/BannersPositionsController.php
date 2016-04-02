@@ -47,9 +47,8 @@ class BannersPositionsController extends AppController {
 		$this->paginate['order'] = ['name' => 'ASC'];
 		
 		$this->set('positions', $this->paginate(
-			$this->BannersPositions->find()
-				->select(['id', 'name', 'description', 'banner_count'])
-		));
+			$this->BannersPositions->find()->select(['id', 'name', 'description', 'banner_count'])
+        ));
     }
 
     /**
@@ -75,7 +74,6 @@ class BannersPositionsController extends AppController {
     /**
      * Edits banners position
      * @param string $id Banners Position ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $position = $this->BannersPositions->get($id);
@@ -96,7 +94,6 @@ class BannersPositionsController extends AppController {
     /**
      * Deletes banners position
      * @param string $id Banners Position ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

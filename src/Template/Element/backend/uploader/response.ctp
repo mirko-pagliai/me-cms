@@ -27,12 +27,18 @@
 		<div class="bg-danger text-danger"><?= $error ?></div>
 	<?php elseif(!empty($file)): ?>
 		<div class="bg-success text-success">
-			<div class="col-sm-3"><?= $this->Thumb->img($file['target'], ['height' => 100]) ?></div>
+			<div class="col-sm-3"><?= $this->Thumb->image($file['target'], ['height' => 100]) ?></div>
 			<div class="col-sm-9">
 				<div><?= $this->Html->strong(basename($file['target'])) ?></div>
 				<div><?= __d('me_cms', 'Directory: {0}', dirname(rtr($file['target']))) ?></div>
 				<div><?= __d('me_cms', 'Type: {0}', $file['type']) ?></div>
 				<div><?= __d('me_cms', 'Size: {0}', $this->Number->toReadableSize($file['size'])) ?></div>
+				
+				<?php if(!empty($edit_url)): ?>
+					<div class="margin-top-10">
+						<?= $this->Html->button(__d('me_cms', 'Edit'), $edit_url, ['class' => 'btn-success btn-sm', 'icon' => 'pencil']) ?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	<?php endif; ?>

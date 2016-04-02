@@ -35,20 +35,21 @@
 		<?php foreach($pages as $page): ?>
 			<tr>
 				<td>
-					<?php 
-						$title = $this->Html->link($page['StaticPage']['filename'], $url = am(['_name' => 'page'], $args = $page['StaticPage']['args']));
-						
-						echo $this->Html->strong($title);
-						
+                    <strong><?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug]) ?></strong>
+					<?php
 						$actions = [
-							$this->Html->link(__d('me_cms', 'Open'), $url, ['icon' => 'external-link', 'target' => '_blank'])
+							$this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank'])
 						];
 						
 						echo $this->Html->ul($actions, ['class' => 'actions']);
 					?>
 				</td>
-				<td><?= $page['StaticPage']['title'] ?></td>
-				<td><?= $page['StaticPage']['path'] ?></td>
+				<td>
+                    <?= $page->title ?>
+                </td>
+				<td>
+                    <?= $page->path ?>
+                </td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

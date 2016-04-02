@@ -23,31 +23,12 @@
 namespace MeCms\Controller\Admin;
 
 use MeCms\Controller\AppController;
-use MeCms\Utility\PhotoFile;
 
 /**
  * PhotosAlbums controller
  * @property \MeCms\Model\Table\PhotosAlbumsTable $PhotosAlbums
  */
 class PhotosAlbumsController extends AppController {
-	/**
-	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before each controller action.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeCms\Utility\PhotoFile::check()
-	 * @uses MeCms\Utility\PhotoFile::folder()
-	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
-		parent::beforeFilter($event);
-		
-		//Checks if the main folder and its subfolders are writable
-		if(!PhotoFile::check()) {
-			$this->Flash->error(__d('me_tools', 'File or directory `{0}` not writeable', rtr(PhotoFile::folder())));
-			$this->redirect(['_name' => 'dashboard']);
-		}
-	}
-	
 	/**
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
@@ -58,7 +39,7 @@ class PhotosAlbumsController extends AppController {
 	public function isAuthorized($user = NULL) {		
 		//Only admins can delete albums
 		if($this->request->isAction('delete'))
-			$this->Auth->isGroup('admin');
+			return $this->Auth->isGroup('admin');
 				
 		return TRUE;
 	}
@@ -70,9 +51,23 @@ class PhotosAlbumsController extends AppController {
 		$this->paginate['order'] = ['title' => 'ASC'];
 		
 		$this->set('albums', $this->paginate(
-			$this->PhotosAlbums->find()
-				->select(['id', 'slug', 'title', 'photo_count', 'active'])
+			$this->PhotosAlbums->find()->select(['id', 'slug', 'title', 'photo_count', 'active'])
 		));
+    }
+    
+    /**
+     * Views photos album
+     * @param string $id Photos Album ID
+     */
+    public function view($id = NULL)  {
+        $this->set('album', $this->PhotosAlbums->find()
+            ->select(['id', 'title'])
+            ->contain(['Photos' => function($q) {
+                return $q->select(['id', 'album_id', 'filename', 'created']);
+            }])
+            ->where(compact('id'))
+            ->firstOrFail()
+        );
     }
 
     /**
@@ -98,7 +93,6 @@ class PhotosAlbumsController extends AppController {
     /**
      * Edits photos album
      * @param string $id Photos Album ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function edit($id = NULL)  {
         $album = $this->PhotosAlbums->get($id);
@@ -119,7 +113,6 @@ class PhotosAlbumsController extends AppController {
     /**
      * Deletes photos album
      * @param string $id Photos Album ID
-     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function delete($id = NULL) {
         $this->request->allowMethod(['post', 'delete']);

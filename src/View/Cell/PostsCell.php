@@ -22,7 +22,7 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
+use MeTools\Cache\Cache;
 use Cake\View\Cell;
 
 /**
@@ -46,11 +46,11 @@ class PostsCell extends Cell {
 	/**
 	 * Categories widget
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
-	 * @uses MeTools\Network\Request::isCurrent()
+	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function categories() {
 		//Returns on categories index
-		if($this->request->isCurrent(['_name' => 'posts_categories']))
+		if($this->request->isHere(['_name' => 'posts_categories']))
 			return;
 		
 		//Checks if the cache is valid
@@ -61,11 +61,15 @@ class PostsCell extends Cell {
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
-			foreach($this->Posts->Categories->find('active')
-					->select(['title', 'slug', 'post_count'])
-					->order(['title' => 'ASC'])
-					->toArray() as $k => $category)
+			$categories = $this->Posts->Categories->find('active')
+				->select(['title', 'slug', 'post_count'])
+				->order(['title' => 'ASC'])
+				->toArray();
+			
+			foreach($categories as $k => $category) {
 				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->post_count);
+				unset($categories[$k]);
+			}
 			
             Cache::write($cache, $categories, $this->Posts->cache);
 		}
@@ -75,11 +79,11 @@ class PostsCell extends Cell {
 	
 	/**
 	 * Latest widget
-	 * @param string $limit Limit
+	 * @param int $limit Limit
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
-    public function latest($limit = NULL) {
+    public function latest($limit = 10) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 			return;
@@ -89,7 +93,7 @@ class PostsCell extends Cell {
 
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug'])
-			->limit($limit = empty($limit) ? 10 : $limit)
+			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
 			->toArray()
@@ -99,5 +103,7 @@ class PostsCell extends Cell {
 	/**
 	 * Search widget
 	 */
-	public function search() { }
+	public function search() {
+		//For this widget, control of the action takes place in the view
+	}
 }

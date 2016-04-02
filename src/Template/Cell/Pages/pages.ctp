@@ -23,20 +23,16 @@
 ?>
 
 <?php
-	//Returns on pages index
-	if($this->request->isCurrent(['_name' => 'pages']))
+	if(empty($pages))
 		return;
+	
+	//Extends the widget common view
+	$this->extend('/Common/widget');
+	$this->assign('title', __d('me_cms', 'Pages'));
+			
+    $pages = array_map(function($page) {
+		return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
+	}, $pages);
+    
+	echo $this->Html->ul($pages, ['icon' => 'caret-right']);
 ?>
-
-<?php if(count($pages)): ?>
-	<div class="widget sidebar-widget">
-		<?php
-			echo $this->Html->h4(__d('me_cms', 'Pages'));
-
-			foreach($pages as $page)
-				$list[] = $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
-
-			echo $this->Html->ul($list, ['icon' => 'caret-right']);
-		?>
-	</div>
-<?php endif; ?>

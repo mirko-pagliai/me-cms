@@ -9,8 +9,13 @@
 		"email": "mirko.pagliai@gmail.com"
     }],
 	"require": {
-        "mirko-pagliai/me-tools": ">=2.2.3",
-	"components/jquery-cookie": "1.4.*"
+        "php": ">=5.5.9",
+        "cakephp/cakephp": "~3.2",
+		"components/jquery-cookie": "1.4.*",
+        "mirko-pagliai/assets": ">=1.0.1",
+		"mirko-pagliai/database-backup": ">=1.1.1",
+        "mirko-pagliai/me-tools": ">=2.5.2",
+		"mirko-pagliai/thumbs": ">=1.0.4"
     },
     "autoload": {
 		"psr-4": {

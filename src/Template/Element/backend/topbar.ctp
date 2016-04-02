@@ -43,12 +43,12 @@
 				<?php
 					echo $this->Html->li($this->Html->link(NULL, ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank']));
 					
-					foreach($mecms_menu as $menu)
-						echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
-
-					if(!empty($plugins_menu))
-						foreach($plugins_menu as $menu)
-							echo $this->Html->li($this->MenuBuilder->render($menu, 'dropdown'));
+					//Renders menus for MeCms
+					echo $this->Menu->all('MeCms', 'dropdown');
+					
+					//Renders menus for all others plugin
+					foreach(\MeTools\Core\Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations']) as $plugin)
+						echo $this->Menu->all($plugin, 'dropdown');
 					
 					echo $menu = $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
 						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),

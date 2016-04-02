@@ -20,10 +20,12 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use Cake\Routing\Router;
 ?>
 	
 <?php
-	$this->assign('title', $album->title);
+	$this->assign('title', sprintf('%s - %s', __d('me_cms', 'Photos'), $album->title));
 	
 	if(config('frontend.fancybox'))
 		$this->Library->fancybox();
@@ -37,7 +39,7 @@
 				<div class="photo-box">
 					<?php
 						$text = implode(PHP_EOL, [
-							$this->Thumb->img($photo->path, ['side' => 275]),
+							$this->Thumb->image($photo->path, ['side' => 275]),
 							$this->Html->div('photo-info', $this->Html->div(NULL, $this->Html->para('small', $photo->description)))
 						]);
 						

@@ -23,7 +23,6 @@
 namespace MeCms\Form;
 
 use Cake\Form\Form;
-use Cake\Core\Configure;
 
 /**
  * ContactForm class.
