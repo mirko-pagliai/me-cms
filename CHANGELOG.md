@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.5 branch
 ### 2.5.0
-* added log for users actions;
+* added log for some users actions;
 * the code for loading the configuration files has been optimized.
 
 ## 2.4 branch
