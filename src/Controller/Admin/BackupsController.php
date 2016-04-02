@@ -46,12 +46,10 @@ class BackupsController extends AppController {
 	 * @uses DatabaseBackup\Utility\Backup::index()
 	 */
 	public function index() {
-        $backups = Backup::index();
-        
         $backups = array_map(function($backup) {
             $backup->slug = urlencode($backup->filename);
             return $backup;
-        }, $backups);
+        }, Backup::index());
         
 		$this->set(compact('backups'));
 	}
