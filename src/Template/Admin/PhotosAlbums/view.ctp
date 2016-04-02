@@ -22,14 +22,14 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Album')); ?>
+<?php $this->assign('title', $album->title); ?>
 
-<div class="photos index">
-	<?= $this->Html->h2(__d('me_cms', 'Album')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload', '?' => ['album' => $album_id]], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+<div class="photosAlbums index">
+	<?= $this->Html->h2($album->title) ?>
+	<?= $this->Html->button(__d('me_cms', 'Upload'), ['controller' => 'Photos', 'action' => 'upload', '?' => ['album' => $album->id]], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<div class='clearfix'>
-		<?php foreach($photos as $photo): ?>
+		<?php foreach($album->photos as $photo): ?>
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="photo-box">
 					<div class="photo-title">

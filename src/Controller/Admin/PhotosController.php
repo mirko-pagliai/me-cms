@@ -78,22 +78,6 @@ class PhotosController extends AppController {
 	}
 	
 	/**
-     * Lists photos
-	 * @param string $album_id Album ID
-	 */
-    public function index($album_id = NULL) {		
-		$query = $this->Photos->find()
-			->select(['id', 'album_id', 'filename', 'created'])
-			->order([sprintf('%s.created', $this->Photos->alias()) => 'DESC', sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
-			->where(compact('album_id'));
-		
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
-		$this->paginate['order'] = ['Photos.created' => 'DESC', 'Photos.id' => 'DESC'];
-		
-		$this->set(am(['photos' => $this->paginate($query)], compact('album_id')));
-    }
-	
-	/**
 	 * Uploads photos
 	 * @uses MeCms\Controller\_upload()
 	 */

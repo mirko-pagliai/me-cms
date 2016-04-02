@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.5 branch
 ### 2.5.0
+* fixed "view" action for photos albums;
 * added log for some users actions;
 * the code for loading the configuration files has been optimized.
 
