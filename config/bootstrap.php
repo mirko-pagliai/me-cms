@@ -28,6 +28,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
+use Cake\Network\Exception\InternalErrorException;
 use MeTools\Network\Request;
 
 require_once 'constants.php';
@@ -37,6 +38,12 @@ require_once 'global_functions.php';
  * Loads MeTools plugins
  */
 Plugin::load('MeTools', ['bootstrap' => TRUE]);
+
+if(!is_writeable(BANNERS))
+    throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
+		
+if(!folder_is_writeable(PHOTOS))
+    throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
 
 /**
  * Loads the MeCms configuration

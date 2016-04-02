@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -39,20 +38,6 @@ class BannersPositionsController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins can access this controller
 		return $this->Auth->isGroup('admin');
-	}
-    
-	/**
-	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before each controller action.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
-		parent::beforeFilter($event);
-		
-		//Checks if the folder is writeable
-		if(!is_writeable(BANNERS))
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(BANNERS)));
 	}
 	
 	/**

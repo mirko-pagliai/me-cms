@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -30,20 +29,6 @@ use MeCms\Controller\AppController;
  * @property \MeCms\Model\Table\PhotosAlbumsTable $PhotosAlbums
  */
 class PhotosAlbumsController extends AppController {
-	/**
-	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before each controller action.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
-		parent::beforeFilter($event);
-        
-		//Checks if the folder and its subfolders are writeable
-		if(!folder_is_writeable(PHOTOS))
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(PHOTOS)));
-	}
-	
 	/**
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
