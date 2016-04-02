@@ -30,7 +30,6 @@ use MeCms\Controller\AppController;
 use MeTools\Cache\Cache;
 use MeTools\Core\Plugin;
 use MeTools\Utility\Apache;
-use MeTools\Utility\Php;
 
 /**
  * Systems controller
@@ -131,14 +130,14 @@ class SystemsController extends AppController {
         
         $checkup['backups'] = [
             'path'		=> rtr(BACKUPS),
-            'writeable'	=> folder_is_writable(BACKUPS)
+            'writeable'	=> folder_is_writable(BACKUPS),
         ];
         
         $checkup['cache'] = Cache::enabled();
         
         $checkup['executables'] = [
             'clean-css'		=> which('cleancss'),
-            'UglifyJS 2'	=> which('uglifyjs')
+            'UglifyJS 2'	=> which('uglifyjs'),
         ];
         
         //Checks for PHP's extensions
@@ -148,7 +147,7 @@ class SystemsController extends AppController {
         $checkup['plugins'] = [
             'cakephp_version'	=> Configure::version(),
             'plugins_version'	=> Plugin::versions('MeCms'),
-            'mecms_version'		=> Plugin::version('MeCms')
+            'mecms_version'		=> Plugin::version('MeCms'),
         ];
         
         //Checks for temporary directories
