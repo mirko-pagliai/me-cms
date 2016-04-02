@@ -99,12 +99,12 @@ Configure::load('MeCms.widgets');
 if(is_readable(CONFIG.'widgets.php'))
 	Configure::load('widgets', 'default', FALSE);
 
-//Adds log for unauthorized actions
-Log::config('unauthorized', [
+//Adds log for users actions
+Log::config('users', [
     'className' => 'MeCms\Log\Engine\SerializedLog',
     'path' => LOGS,
     'levels' => [],
-    'file' => 'unauthorized.log',
+    'file' => 'users.log',
     'url' => env('LOG_DEBUG_URL', null),
 ]);
 

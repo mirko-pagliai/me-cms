@@ -248,7 +248,7 @@ class UsersController extends AppController {
                     $this->request->clientIp(),
                     $this->request->data('username'),
                     $this->request->data('password')
-                ), 'unauthorized');
+                ), 'users');
                 
 				$this->Flash->error(__d('me_cms', 'Invalid username or password'));
             }
