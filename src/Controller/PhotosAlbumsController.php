@@ -36,8 +36,7 @@ class PhotosAlbumsController extends AppController {
         $albums = $this->PhotosAlbums->find('active')
 			->select(['id', 'title', 'slug', 'photo_count'])
 			->contain(['Photos' => function($q) {
-				return $q
-					->select(['album_id', 'filename'])
+				return $q->select(['album_id', 'filename'])
 					->order('rand()');
 			}])
 			->order(['title' => 'ASC'])
