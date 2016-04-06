@@ -35,6 +35,6 @@ if(!defined('PHOTOS'))
 
 //Sets the default sitemap path
 if(!defined('SITEMAP'))
-	define('SITEMAP', TMP.'sitemap.xml');
+	define('SITEMAP', TMP.'sitemap.xml.gz');
 
 define('MECMS', 'MeCms');

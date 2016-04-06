@@ -100,12 +100,12 @@ class SystemsController extends AppController {
 	}
     
     /**
-     * Internal method to generate and write the sitemap
-     * @return string Sitemap content
+     * Internal method to generate, encode and write the sitemap
+     * @return string Sitemap content, encoded
      * @uses MeCms\Utility\Sitemap::generate;
      */
     protected function _sitemap() {
-        $sitemap = \MeCms\Utility\Sitemap::generate();
+        $sitemap = gzencode(\MeCms\Utility\Sitemap::generate(), 9);
 
         (new File(SITEMAP, TRUE, 0777))->write($sitemap);
 
@@ -135,7 +135,7 @@ class SystemsController extends AppController {
         }
 
         $this->response->body($sitemap);
-        $this->response->type('xml');
+        $this->response->type('x-gzip');
         
         return $this->response;
     }
