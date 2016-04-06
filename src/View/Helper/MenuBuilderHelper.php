@@ -23,6 +23,7 @@
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
+use MeTools\Core\Plugin;
 
 /**
  * MenuBuilder Helper
@@ -93,7 +94,7 @@ class MenuBuilderHelper extends Helper {
 	 * @uses render()
 	 */
 	public function all($plugin = 'MeCms', $type = 'collapse') {
-		$file = \MeTools\Core\Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php');
+		$file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php');
 
 		//Checks if the file is readable
 		if(!is_readable($file))

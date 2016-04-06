@@ -28,7 +28,7 @@
 	<?php
 		echo $this->Html->h2(__d('me_cms', 'Search posts'));
 		
-		echo $this->Form->create(NULL, ['type' => 'get', 'url' => ['_name' => 'search_posts']]);
+		echo $this->Form->create(NULL, ['type' => 'get', 'url' => ['_name' => 'posts_search']]);
 		echo $this->Form->input('p', [
 			'default'		=> $this->request->query('p'),
 			'label'			=> FALSE,

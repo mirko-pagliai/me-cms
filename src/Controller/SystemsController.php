@@ -22,6 +22,8 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Filesystem\File;
+use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -96,4 +98,45 @@ class SystemsController extends AppController {
 		
 		$this->viewBuilder()->layout('login');
 	}
+    
+    /**
+     * Internal method to generate, encode and write the sitemap
+     * @return string Sitemap content, encoded
+     * @uses MeCms\Utility\Sitemap::generate;
+     */
+    protected function _sitemap() {
+        $sitemap = gzencode(\MeCms\Utility\Sitemap::generate(), 9);
+
+        (new File(SITEMAP, TRUE, 0777))->write($sitemap);
+
+        return $sitemap;
+    }
+
+    /**
+     * Returns the site sitemap.
+     * If the sitemap doesn't exist or has expired, it generates and writes the sitemap.
+     * @uses _sitemap()
+     */
+    public function sitemap() {
+        //If the sitemap doesn't exists, it writes the sitemap
+        if(!is_readable(SITEMAP)) {
+            $sitemap = $this->_sitemap();
+        }
+        else {
+            $time = Time::createFromTimestamp(filemtime(SITEMAP));
+            
+            //If the sitemap has expired, it writes a new sitemap
+            if($time->modify('+6 hours')->isPast()) {
+                $sitemap = $this->_sitemap();
+            }
+            else {
+                $sitemap = file_get_contents(SITEMAP);
+            }
+        }
+
+        $this->response->body($sitemap);
+        $this->response->type('x-gzip');
+        
+        return $this->response;
+    }
 }

@@ -64,9 +64,20 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Photos controller
 	 */
-	$routes->connect('/photo/:id',
+	$routes->connect('/photo/:slug/:id',
 		['controller' => 'Photos', 'action' => 'view'],
-		['_name' => 'photo', 'id' => '\d+', 'pass' => ['id']]
+		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['id']]
+	);
+    
+	/**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/photo/11</pre>
+	 * These URLs will become:
+	 * <pre>/photo/album-name/1</pre>
+	 */
+	$routes->connect('/photo/:id',
+		['controller' => 'Photos', 'action' => 'view_compatibility'],
+		['id' => '\d+', 'pass' => ['id']]
 	);
 	
 	/**
@@ -105,7 +116,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	);
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'posts_rss']);
-	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'search_posts']);
+	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'posts_search']);
 	$routes->connect('/posts/:year/:month/:day', ['controller' => 'Posts', 'action' => 'index_by_date'], [
 		'_name'	=> 'posts_by_date',
 		'year'	=> '[12][0-9]{3}',
@@ -146,8 +157,9 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 * Systems controller
 	 */
 	$routes->connect('/accept/cookies', ['controller' => 'Systems', 'action' => 'accept_cookies'], ['_name' => 'accept_cookies']);
-	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
 	$routes->connect('/contact/form', ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
+	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
+    $routes->connect('/sitemap.xml.gz', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap']);
 	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
 	
 	/**

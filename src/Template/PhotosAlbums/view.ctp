@@ -20,8 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use Cake\Routing\Router;
 ?>
 	
 <?php
@@ -49,8 +47,8 @@ use Cake\Routing\Router;
 							'data-fancybox-href'	=> $this->Thumb->url($photo->path, ['height' => 1280]),
 							'rel'					=> 'group'
 						] : [];
-						
-						echo $this->Html->link($text, ['_name' => 'photo', $photo->id], am([
+                        
+						echo $this->Html->link($text, ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], am([
 							'class' => 'thumbnail',
 							'title' => $photo->description
 						], $options));

@@ -61,7 +61,7 @@ class PhotosAlbumsController extends AppController {
      */
     public function view($id = NULL)  {
         $this->set('album', $this->PhotosAlbums->find()
-            ->select(['id', 'title'])
+            ->select(['id', 'slug', 'title'])
             ->contain(['Photos' => function($q) {
                 return $q->select(['id', 'album_id', 'filename', 'created']);
             }])
