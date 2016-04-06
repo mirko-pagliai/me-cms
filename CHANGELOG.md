@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.5 branch
+### 2.5.1
+* added functions to generate the site sitemap.
+
 ### 2.5.0
 * fixed "view" action for photos albums;
 * added log for some users actions;

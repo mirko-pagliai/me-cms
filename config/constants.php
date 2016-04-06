@@ -33,4 +33,8 @@ if(!defined('FORMAT_FOR_MYSQL'))
 if(!defined('PHOTOS'))
 	define('PHOTOS', WWW_ROOT.'img'.DS.'photos');
 
+//Sets the default sitemap path
+if(!defined('SITEMAP'))
+	define('SITEMAP', TMP.'sitemap.xml');
+
 define('MECMS', 'MeCms');
