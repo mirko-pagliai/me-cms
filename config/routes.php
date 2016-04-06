@@ -68,6 +68,17 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['controller' => 'Photos', 'action' => 'view'],
 		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
 	);
+    
+	/**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/photo/11</pre>
+	 * These URLs will become:
+	 * <pre>/photo/album-name/1</pre>
+	 */
+	$routes->connect('/photo/:id',
+		['controller' => 'Photos', 'action' => 'view_compatibility'],
+		['id' => '\d+', 'pass' => ['id']]
+	);
 	
 	/**
 	 * PostsCategories controller

@@ -42,4 +42,22 @@ class PhotosController extends AppController {
 			->firstOrFail()
 		);
     }
+    
+    /**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/photo/11</pre>
+	 * These URLs will become:
+	 * <pre>/photo/album-name/1</pre>
+     * @param string $id Photo ID
+     */
+    public function view_compatibility($id) {
+        $photo = $this->Photos->find()
+            ->select(['id'])
+            ->contain(['Albums' => function($q) {
+                return $q->select(['slug']);
+            }])
+           ->firstOrFail();
+        
+		return $this->redirect(['_name' => 'photo', $photo->album->slug, $id], 301);
+    }
 }
