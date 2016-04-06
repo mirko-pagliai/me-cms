@@ -31,10 +31,9 @@ use MeCms\Controller\AppController;
 class PhotosController extends AppController {	
     /**
      * Views a photo
-     * @param string $slug Album slug (this is not used for the query, only to generate a route)
      * @param string $id Photo ID
      */
-    public function view($slug = NULL, $id = NULL) {
+    public function view($id = NULL) {
 		$this->set('photo', $this->Photos->find()
 			->select(['album_id', 'filename'])
 			->where(compact('id'))
@@ -58,6 +57,6 @@ class PhotosController extends AppController {
             }])
            ->firstOrFail();
         
-		return $this->redirect(['_name' => 'photo', $photo->album->slug, $id], 301);
+		return $this->redirect(am(['_name' => 'photo', 'slug' => $photo->album->slug], compact('id')), 301);
     }
 }

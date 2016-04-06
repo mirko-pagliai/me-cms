@@ -79,7 +79,7 @@ class Sitemap extends SitemapBuilder {
 
             //Adds the photos
             $url = am($url, array_map(function($photo) use($album) {
-                return self::url(['_name' => 'photo', $album->slug, $photo->id]);
+                return self::url(['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id]);
             }, $album->photos));
         }
             

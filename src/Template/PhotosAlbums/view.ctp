@@ -48,7 +48,7 @@
 							'rel'					=> 'group'
 						] : [];
                         
-						echo $this->Html->link($text, ['_name' => 'photo', $album->slug, $photo->id], am([
+						echo $this->Html->link($text, ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], am([
 							'class' => 'thumbnail',
 							'title' => $photo->description
 						], $options));
