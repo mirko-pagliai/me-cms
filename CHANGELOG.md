@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.5 branch
 ### 2.5.1
-* added functions to generate the site sitemap.
+* added functions to generate the site sitemap;
+* now the photo urls contain the album slug.
 
 ### 2.5.0
 * fixed "view" action for photos albums;

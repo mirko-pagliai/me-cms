@@ -64,9 +64,9 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Photos controller
 	 */
-	$routes->connect('/photo/:id',
+	$routes->connect('/photo/:slug/:id',
 		['controller' => 'Photos', 'action' => 'view'],
-		['_name' => 'photo', 'id' => '\d+', 'pass' => ['id']]
+		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
 	);
 	
 	/**

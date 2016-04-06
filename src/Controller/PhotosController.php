@@ -31,9 +31,10 @@ use MeCms\Controller\AppController;
 class PhotosController extends AppController {	
     /**
      * Views a photo
+     * @param string $slug Album slug (this is not used for the query, only to generate a route)
      * @param string $id Photo ID
      */
-    public function view($id = NULL) {
+    public function view($slug = NULL, $id = NULL) {
 		$this->set('photo', $this->Photos->find()
 			->select(['album_id', 'filename'])
 			->where(compact('id'))
