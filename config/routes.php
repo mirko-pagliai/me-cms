@@ -105,7 +105,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	);
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'posts_rss']);
-	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'search_posts']);
+	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'posts_search']);
 	$routes->connect('/posts/:year/:month/:day', ['controller' => 'Posts', 'action' => 'index_by_date'], [
 		'_name'	=> 'posts_by_date',
 		'year'	=> '[12][0-9]{3}',

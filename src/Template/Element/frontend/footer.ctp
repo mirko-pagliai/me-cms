@@ -25,7 +25,7 @@
 <footer class="navbar-fixed-bottom">
 	<?php
 		$links = [
-			$this->Html->link(__d('me_cms', 'Search'), ['_name' => 'search_posts']),
+			$this->Html->link(__d('me_cms', 'Search'), ['_name' => 'posts_search']),
 			$this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
 			$this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss')
 		];

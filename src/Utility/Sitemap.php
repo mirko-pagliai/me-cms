@@ -106,7 +106,7 @@ class Sitemap extends SitemapBuilder {
         $url = [
             self::url(['_name' => 'posts']),
             self::url(['_name' => 'posts_categories']),
-            self::url(['_name' => 'search_posts']),
+            self::url(['_name' => 'posts_search']),
         ];
         
         foreach($categories as $category) {
