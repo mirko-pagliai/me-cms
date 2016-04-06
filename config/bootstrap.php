@@ -112,7 +112,8 @@ Log::config('users', [
     'path' => LOGS,
     'levels' => [],
     'file' => 'users.log',
-    'url' => env('LOG_DEBUG_URL', null),
+    'scopes' => ['users'],
+    'url' => env('LOG_DEBUG_URL', NULL),
 ]);
 
 /**
