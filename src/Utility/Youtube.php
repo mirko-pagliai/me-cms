@@ -23,12 +23,7 @@
 namespace MeCms\Utility;
 
 /**
- * An utility to get information about YouTube videos.
- * 
- * You can use this utility by adding:
- * <code>
- * use MeCms\Utility\Youtube;
- * </code>
+ * An utility to get information about YouTube videos
  */
 class Youtube {
 	/**
