@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.6 branch
 ### 2.6.0
+* fixed bug for "contact form" and added the `ContactFormMailer` class;
 * added `isBanned()` detector. Removed `SecurityComponent` class.
 
 ## 2.5 branch

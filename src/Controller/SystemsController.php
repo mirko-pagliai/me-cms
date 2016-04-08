@@ -45,6 +45,7 @@ class SystemsController extends AppController {
 	 * Contact form
 	 * @see MeCms\Form\ContactForm
 	 * @see MeCms\Form\ContactForm::execute()
+     * @see MeCms\Mailer\ContactFormMailer::contact_form_mail()
 	 * @uses MeTools\Controller\Component\Recaptcha::check()
 	 * @uses MeTools\Controller\Component\Recaptcha::getError()
 	 */
