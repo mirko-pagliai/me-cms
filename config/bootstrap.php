@@ -132,7 +132,7 @@ Request::addDetector('banned', function ($request) {
 
     /**
      * The IP address is allowed if:
-     *  - the list of banned ip is empty;
+     *  - the list of banned IP is empty;
      *  - is localhost;
      *  - the IP address has already been verified.
      */
