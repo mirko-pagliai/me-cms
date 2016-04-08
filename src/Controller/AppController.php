@@ -30,6 +30,34 @@ use Cake\I18n\I18n;
  */
 class AppController extends BaseController {
 	/**
+     * Checks if the latest search has been executed out of the minimum interval
+	 * @return bool
+	 */
+	protected function _checkLastSearch($query_id = NULL) {
+        $interval = config('security.search_interval');
+		
+        if(empty($interval))
+            return TRUE;
+		
+		$query_id = empty($query_id) ? NULL : md5($query_id);
+		
+		$last_search = $this->request->session()->read('last_search');
+		
+		if(!empty($last_search)) {
+			//Checks if it's the same search
+			if(!empty($query_id) && !empty($last_search['id']) && $query_id === $last_search['id'])
+				return TRUE;
+			//Checks if the interval has not yet expired
+			elseif(($last_search['time'] + $interval) > time())
+				return FALSE;
+		}
+		
+		$this->request->session()->write('last_search', ['id' => $query_id, 'time' => time()]);
+		
+		return TRUE;
+	}
+    
+	/**
 	 * Gets the user's language
 	 * @return mixed Language code or FALSE
 	 * @throws \Cake\Network\Exception\InternalErrorException
@@ -94,7 +122,6 @@ class AppController extends BaseController {
 	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses MeTools\Network\Request::isAction()
 	 * @uses _getLanguage()
-	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
@@ -104,7 +131,7 @@ class AppController extends BaseController {
 			return $this->redirect(['_name' => 'offline']);
 		
 		//Checks if the user's IP address is banned
-		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
+		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->request->isBanned())
 			return $this->redirect(['_name' => 'ip_not_allowed']);
 		
 		//Sets the user's language
@@ -155,7 +182,6 @@ class AppController extends BaseController {
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
-		$this->loadComponent('MeCms.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
@@ -172,20 +198,6 @@ class AppController extends BaseController {
 	public function isAuthorized($user = NULL) {		
 		//By default, admins and managers can access every action
 		return $this->Auth->isGroup(['admin', 'manager']);
-	}
-	
-	/**
-	 * Checks if the user's IP address is banned
-	 * @return bool
-	 * @uses MeCms\Controller\Component\SecurityComponent::isBanned()
-	 */
-	protected function isBanned() {
-		if(!config('security.banned_ip'))
-			return FALSE;
-		
-		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
-		
-		return $this->Security->isBanned($banned_ip);
 	}
 	
 	/**

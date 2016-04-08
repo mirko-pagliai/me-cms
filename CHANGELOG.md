@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.6 branch
+### 2.6.0
+* added `isBanned()` detector. Removed `SecurityComponent` class.
+
 ## 2.5 branch
 ### 2.5.1
 * added functions to generate the site sitemap;

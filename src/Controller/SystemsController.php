@@ -77,12 +77,11 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * "Ip not allowed" page
-	 * @uses MeCms\Controller\AppController::isBanned()
+	 * "IP not allowed" page
 	 */
 	public function ip_not_allowed() {
 		//If the user's IP address is not banned
-		if(!$this->isBanned())
+		if(!$this->request->isBanned())
 			return $this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
