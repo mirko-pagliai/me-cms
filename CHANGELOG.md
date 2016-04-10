@@ -2,6 +2,7 @@
 ## 2.6 branch
 ### 2.6.0
 * fixed bug for "contact form" and added the `ContactFormMailer` class;
+* rewrote the code to generate the backend menus;
 * added `isBanned()` detector. Removed `SecurityComponent` class.
 
 ## 2.5 branch

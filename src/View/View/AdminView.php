@@ -46,7 +46,7 @@ class AdminView extends AppView {
 		$this->loadHelper('Assets.Asset');
 		$this->loadHelper('Thumbs.Thumb');
 		$this->loadHelper('MeCms.Auth');
-		$this->loadHelper('Menu', ['className' => 'MeCms.MenuBuilder']);
+		$this->loadHelper('MeCms.MenuBuilder');
 	}
 	
 	/**

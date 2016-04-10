@@ -23,12 +23,11 @@
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
-use MeTools\Core\Plugin;
 
 /**
  * MenuBuilder Helper
  * 
- * It contains methods to renders the backend menus.
+ * An helper to generate the backend menus.
  */
 class MenuBuilderHelper extends Helper {
 	/**
@@ -46,7 +45,7 @@ class MenuBuilderHelper extends Helper {
 	 * @uses MeTools\View\Helper\HtmlHelper::div()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	protected function _renderAsCollapse($title, array $options = [], $menu) {
+	protected function renderAsCollapse($title, array $options = [], $menu) {
 		//Sets the collapse name
 		$collapseName = sprintf('collapse-%s', strtolower($title));
 		
@@ -69,7 +68,7 @@ class MenuBuilderHelper extends Helper {
 	 * @return string Html code
 	 * @uses MeTools\View\Helper\DropdownHelper::menu()
 	 */
-	protected function _renderAsDropdown($title, array $options = [], $menu) {
+	protected function renderAsDropdown($title, array $options = [], $menu) {
 		return $this->Html->li($this->Dropdown->menu($title, $options, $menu));
 	}
 	
@@ -81,59 +80,47 @@ class MenuBuilderHelper extends Helper {
 	 * @return string Html code
 	 * @uses MeTools\View\Helper\HtmlHelper::ul()
 	 */
-	protected function _renderAsList($title, array $options = [], $menu) {
+	protected function renderAsList($title, array $options = [], $menu) {
 		return $this->Html->ul($menu);
 	}
-	
-	/**
-	 * Renders all menus for a plugin
+    
+    /**
+     * Generates all menus for a plugin
 	 * @param string $plugin Plugin name
 	 * @param string $type Type (`collapse`, `dropdown` or `list`)
 	 * @return string Html code
-	 * @uses MeTools\Core\Plugin::path()
-	 * @uses render()
-	 */
-	public function all($plugin = 'MeCms', $type = 'collapse') {
-		$file = Plugin::path($plugin, 'src'.DS.'View'.DS.'Helper'.DS.$plugin.'MenuHelper.php');
-
-		//Checks if the file is readable
-		if(!is_readable($file))
-			return;
-
-		//Gets all public methods from the file
-		preg_match_all('/\h*public\h+function\h+_(\w+)\(\)\h+\{/', file_get_contents($file), $matches);
-
-		if(empty($matches[1]))
-			return;
-
-		foreach($matches[1] as $menu)
-			$menus[] = $this->render(sprintf('%s.%s', $plugin, $menu), $type);
-		
-		return implode(PHP_EOL, $menus);
-	}
-
-	/**
-	 * Renders a menu
-	 * @param string $name Menu name (with plugin notation, eg. `MeCms.posts`)
-	 * @param string $type Type (`collapse`, `dropdown` or `list`)
-	 * @return string Html code
-	 */
-	public function render($name, $type = 'collapse') {
-		list($plugin, $name) = pluginSplit($name);
-		
-		$helper = sprintf('%sMenu', $plugin);
-		
-		//Loads the menu helper
-		if(empty($this->{$helper}))
-			$this->{$helper} = $this->_View->loadHelper(sprintf('%s.%s', $plugin, $helper));
-		
-		//Calls dynamically the method from the menu helper
-		list($menu, $title, $options) = $this->{$helper}->{sprintf('_%s', $name)}();
-		
-        if(empty($menu) || empty($title))
+     * @uses renderAsCollapse()
+     * @uses renderAsDropdown()
+     * @uses renderAsList()
+     */
+    public function generate($plugin, $type = 'collapse') {
+        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper` class
+        $methods = get_class_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+            
+        if(empty($methods)) {
             return;
+        }
+            
+        //Because each class is an extension of `\Cake\View\Helper`, 
+        //it calculates the difference between the methods of the two classes
+        $methods = array_diff($methods, get_class_methods('\Cake\View\Helper'));
         
-		//Calls dynamically the internal render method
-		return $this->{sprintf('_renderAs%s', ucfirst($type))}($title, $options, $menu);
-	}
+        //Sets the helper name
+        $helper = sprintf('%sMenu', $plugin);
+        
+        //Loads the helper
+        $this->{$helper} = $this->_View->loadHelper($helper, ['className' => sprintf('%s.Menu', $plugin)]);
+        
+        $menus = [];
+        
+        foreach($methods as $method) {
+            //Calls dynamically the method from the menu helper
+            list($menu, $title, $options) = $this->{$helper}->{$method}();
+            
+            //Calls dynamically the internal render method
+            $menus[] = $this->{sprintf('renderAs%s', ucfirst($type))}($title, $options, $menu);
+        }
+        
+        return implode(PHP_EOL, $menus);
+    }
 }
