@@ -24,6 +24,7 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\I18n\I18n;
+use MeTools\Core\Plugin;
 
 /**
  * Application controller class
@@ -66,7 +67,7 @@ class AppController extends BaseController {
 	protected function _getLanguage() {
 		$config = config('main.language');
 		$language = $this->request->env('HTTP_ACCEPT_LANGUAGE');
-		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
+		$path = Plugin::path('MeCms', 'src'.DS.'Locale');
 		
 		if(empty($config) || $config === 'auto') {
 			if(is_readable($path.DS.substr($language, 0, 5).DS.'me_cms.po'))
@@ -102,8 +103,10 @@ class AppController extends BaseController {
 			else
 				$target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
 
+            $upload = move_uploaded_file($file['tmp_name'], $file['target'] = $target);
+            
 			//Checks if the file was successfully moved to the target directory
-			if(!@move_uploaded_file($file['tmp_name'], $file['target'] = $target))
+			if(!$upload)
 				$error = __d('me_cms', 'The file was not successfully moved to the target directory');
 		}
 		else
