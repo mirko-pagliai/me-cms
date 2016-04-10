@@ -64,7 +64,7 @@ class SitemapBuilder {
                 continue;
             }
             
-            //Because each `Utility` class may be an extension of this class, 
+            //Because each class may be an extension of this class, 
             //it calculates the difference between the methods of the two classes
             $methods = array_diff($methods, get_class_methods(__CLASS__));
             
