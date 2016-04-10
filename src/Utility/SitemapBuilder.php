@@ -53,7 +53,7 @@ class SitemapBuilder {
         //Adds the homepage
         $url = [self::url('/')];
         
-        foreach(am(['MeCms'], Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations'])) as $plugin) {
+        foreach(Plugin::all() as $plugin) {
             //Sets the class name
             $class = sprintf('\%s\Utility\Sitemap', $plugin);
             

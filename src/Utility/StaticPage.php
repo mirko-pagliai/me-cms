@@ -39,7 +39,7 @@ class StaticPage {
 		//Adds all plugins to paths, adding first MeCms
         $paths = array_map(function($plugin) {
             return array_values(App::path('Template', $plugin))[0].'StaticPages';
-        }, am(['MeCms'], Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations'])));
+        }, Plugin::all());
         
 		//Adds APP to paths
         array_unshift($paths, array_values(App::path('Template'))[0].'StaticPages');
@@ -82,7 +82,7 @@ class StaticPage {
         }
         
 		//Checks if the page exists in all plugins, beginning with MeCms
-		foreach(am(['MeCms'], Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations'])) as $plugin) {
+		foreach(Plugin::all() as $plugin) {
 			foreach($patterns as $pattern) {
 				if(is_readable(array_values(App::path('Template', $plugin))[0].'StaticPages'.DS.$pattern.'.ctp')) {
 					return sprintf('%s.%s', $plugin, 'StaticPages'.DS.$pattern);

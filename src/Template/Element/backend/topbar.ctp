@@ -49,7 +49,7 @@ use MeCms\Core\Plugin;
 					echo $this->MenuBuilder->generate('MeCms', 'dropdown');
 					
 					//Renders menus for all others plugin
-					foreach(Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations']) as $plugin)
+					foreach(Plugin::all(['exclude' => ['MeCms', 'MeTools']]) as $plugin)
 						echo $this->MenuBuilder->generate($plugin, 'dropdown');
 					
 					echo $menu = $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
