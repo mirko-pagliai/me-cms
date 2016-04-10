@@ -128,9 +128,7 @@ class AppController extends BaseController {
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
-        debug(\MeCms\Core\Plugin::all(['except' => ['Assets', 'MeTools']])); exit;
-        
+	public function beforeFilter(\Cake\Event\Event $event) {        
 		//Checks if the site is offline
 		if($this->isOffline())
 			return $this->redirect(['_name' => 'offline']);
