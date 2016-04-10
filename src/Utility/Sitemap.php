@@ -29,6 +29,9 @@ use MeCms\Utility\SitemapBuilder;
 /**
  * This class contains methods called by the `SitemapBuilder`.
  * Each method must be return an array or urls to add to the sitemap.
+ * 
+ * This class contains methods that will be called automatically.
+ * You do not need to call these methods manually.
  */
 class Sitemap extends SitemapBuilder {
     /**
