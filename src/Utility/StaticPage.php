@@ -23,7 +23,7 @@
 namespace MeCms\Utility;
 
 use Cake\Core\App;
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 
 /**
  * An utility to handle static pages
@@ -32,7 +32,7 @@ class StaticPage {
 	/**
 	 * Gets all static pages
 	 * @return array Static pages
-	 * @uses MeTools\Core\Plugin::all()
+	 * @uses MeCms\Core\Plugin::all()
 	 * @uses title()
 	 */
 	public static function all() {
@@ -65,7 +65,7 @@ class StaticPage {
 	 * Gets a static page
 	 * @param string $slug Slug
 	 * @return string|boolean Static page or FALSE
-	 * @uses MeTools\Core\Plugin::all()
+	 * @uses MeCms\Core\Plugin::all()
 	 */
 	public static function get($slug) {
 		//Sets the file (partial) name

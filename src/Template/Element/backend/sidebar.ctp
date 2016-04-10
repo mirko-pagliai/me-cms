@@ -21,7 +21,7 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 ?>
 	
 <?php

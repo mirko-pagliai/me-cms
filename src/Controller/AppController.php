@@ -24,7 +24,7 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\I18n\I18n;
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 
 /**
  * Application controller class
@@ -62,7 +62,7 @@ class AppController extends BaseController {
 	 * Gets the user's language
 	 * @return mixed Language code or FALSE
 	 * @throws \Cake\Network\Exception\InternalErrorException
-	 * @uses MeTools\Core\Plugin::path()
+	 * @uses MeCms\Core\Plugin::path()
 	 */
 	protected function _getLanguage() {
 		$config = config('main.language');
@@ -129,6 +129,8 @@ class AppController extends BaseController {
 	 * @uses setLanguage()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
+        debug(\MeCms\Core\Plugin::all(['except' => ['Assets', 'MeTools']])); exit;
+        
 		//Checks if the site is offline
 		if($this->isOffline())
 			return $this->redirect(['_name' => 'offline']);

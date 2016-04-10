@@ -23,7 +23,7 @@
 namespace MeCms\Utility;
 
 use Cake\Utility\Xml;
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 
 /**
  * An utility to generate a sitemap
@@ -46,7 +46,7 @@ class SitemapBuilder {
      * `$PLUGIN\Utility\Sitemap`.
      * Each method must be return an array or urls to add to the sitemap.
      * @see MeCms\Utility\Sitemap
-     * @uses MeTools\Core\Plugin::all()
+     * @uses MeCms\Core\Plugin::all()
      * @uses url()
      */
     public function generate() {

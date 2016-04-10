@@ -21,7 +21,7 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 ?>
 
 <nav id="topbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">

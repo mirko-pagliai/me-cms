@@ -28,7 +28,7 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeTools\Cache\Cache;
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 use MeTools\Utility\Apache;
 
 /**
@@ -116,8 +116,8 @@ class SystemsController extends AppController {
 	
 	/**
 	 * System checkup
-	 * @uses MeTools\Core\Plugin::version()
-	 * @uses MeTools\Core\Plugin::versions()
+	 * @uses MeCms\Core\Plugin::version()
+	 * @uses MeCms\Core\Plugin::versions()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
 	 */
