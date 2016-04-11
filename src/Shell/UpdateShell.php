@@ -42,7 +42,32 @@ class UpdateShell extends Shell {
 	 */
 	protected $now;
 
-	/**
+    /**
+     * Checks if a column exists
+     * @param string $column Column name
+     * @param string $table Table name
+     * @return bool
+     * @uses _getColumns()
+     */
+    protected function _checkColumn($column, $table) {
+        return in_array($column, $this->_getColumns($table));
+    }
+
+    /**
+     * Gets the table columns
+     * @param string $table Table name
+     * @return array
+	 * @uses $connection
+     */
+    protected function _getColumns($table) {
+        $columns = $this->connection->execute(sprintf('SHOW COLUMNS FROM %s;', $table))->fetchAll();
+        
+        return array_map(function($column) {
+            return array_values($column)[0];
+        }, $columns);
+    }
+
+    /**
 	 * Initialize
 	 * @uses $connection
 	 */
