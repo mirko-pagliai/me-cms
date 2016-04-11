@@ -54,6 +54,7 @@ class StaticPage {
                     'path' => rtr($file),
                     'slug' => preg_replace('/\.ctp$/', '', preg_replace(sprintf('/^%s/', preg_quote($path.DS, DS)), NULL, $file)),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
+                    'modified' => new \Cake\I18n\FrozenTime(filemtime($file)),
                 ];
             }, (new \Cake\Filesystem\Folder($path))->findRecursive('^.+\.ctp$', TRUE)));
         }
