@@ -71,8 +71,8 @@
 		echo $this->Html->h4(__d('me_cms', 'Plugins'));
 		
 		//Plugins version
-		foreach($plugins['plugins_version'] as $plugin) {
-			$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin['name']), $plugin['version']));
+		foreach($plugins['plugins_version'] as $plugin => $version) {
+			$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin), $version));
 			echo $this->Html->div('col-sm-6', $text);
 		}
 		

@@ -93,15 +93,13 @@ class SystemsController extends AppController {
 
 	/**
 	 * Changelogs viewer
+     * @uses MeCms\Core\Plugin:all()
+     * @uses MeCms\Core\Plugin:path()
 	 */
 	public function changelogs() {
-		//Gets all changelog files. 
-		//Searchs into `ROOT` and all loaded plugins.
-		foreach(am([ROOT.DS], Plugin::path()) as $path) {
-			//For each changelog file in the current path
-			foreach((new Folder($path))->find('CHANGELOG(\..+)?') as $file)
-				$files[] = rtr($path.$file);
-		}
+        foreach(Plugin::all() as $plugin) {
+            $files[$plugin] = rtr(Plugin::path($plugin, 'CHANGELOG.md', TRUE));
+        }
 		
 		//If a changelog file has been specified
 		if($this->request->query('file') && $this->request->is('get')) {
@@ -116,8 +114,8 @@ class SystemsController extends AppController {
 	
 	/**
 	 * System checkup
-	 * @uses MeCms\Core\Plugin::version()
-	 * @uses MeCms\Core\Plugin::versions()
+	 * @uses MeCms\Core\Plugin::all()
+	 * @uses MeCms\Core\Plugin::path()
 	 * @uses MeTools\Utility\Apache::module()
 	 * @uses MeTools\Utility\Apache::version()
 	 */
@@ -146,9 +144,16 @@ class SystemsController extends AppController {
         
         $checkup['plugins'] = [
             'cakephp_version'	=> Configure::version(),
-            'plugins_version'	=> Plugin::versions('MeCms'),
-            'mecms_version'		=> Plugin::version('MeCms'),
+            'mecms_version'		=> trim(file_get_contents(Plugin::path(MECMS, 'version'))),
         ];
+        
+        foreach(Plugin::all(['exclude' => MECMS]) as $plugin) {
+            $file = Plugin::path(MECMS, 'version', TRUE);
+            
+            if($file) {
+                $checkup['plugins']['plugins_version'][$plugin] = trim(file_get_contents($file));
+            }
+        }
         
         //Checks for temporary directories
         foreach([CACHE, LOGS, THUMBS, TMP] as $path)

@@ -29,7 +29,7 @@ use MeCms\Core\Plugin;
 	echo $this->MenuBuilder->generate('MeCms');
 	
 	//Renders menus for all others plugin
-	foreach(Plugin::all(['exclude' => ['MeCms', 'MeTools']]) as $plugin) {
+	foreach(Plugin::all(['exclude' => 'MeCms']) as $plugin) {
 		$menu = $this->MenuBuilder->generate($plugin);
 		
 		if(!empty($menu)) {
