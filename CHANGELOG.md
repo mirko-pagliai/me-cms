@@ -4,6 +4,7 @@
 * fixed bug for "contact form" and added the `ContactFormMailer` class;
 * added the `Plugin` class, which improves the code;
 * rewrote the code to generate the backend menus;
+* fixed bug for `UpdateShell`;
 * added `isBanned()` detector. Removed `SecurityComponent` class.
 
 ## 2.5 branch

@@ -98,23 +98,35 @@ class UpdateShell extends Shell {
 	/**
 	 * Updates to 2.1.9 version
 	 * @uses $connection
+     * @uses _checkColumn()
 	 */
 	public function to2v1v9() {
 		$this->loadModel('MeCms.Banners');
 		$this->loadModel('MeCms.Photos');
 		
-		//Adds "created" and "modified" field to the banners table and sets the default value
-		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `click_count`, ADD `modified` DATETIME NULL AFTER `created`;', $this->Banners->table()));
-		$this->Banners->query()->update()->set(['created' => $this->now, 'modified' => $this->now])->execute();
-		
-		//Adds "modified" field to the photos table and sets the default value
-		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->Photos->table()));
-		$this->Photos->query()->update()->set(['modified' => $this->now])->execute();
+        //Adds "created" field to the banners table and sets the default value
+        if(!$this->_checkColumn('created', $this->Banners->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `click_count`;', $this->Banners->table()));
+            $this->Banners->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the banners table and sets the default value
+        if(!$this->_checkColumn('modified', $this->Banners->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->Banners->table()));
+            $this->Banners->query()->update()->set(['modified' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the photos table and sets the default value
+        if(!$this->_checkColumn('modified', $this->Photos->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->Photos->table()));
+            $this->Photos->query()->update()->set(['modified' => $this->now])->execute();
+        }
 	}
 	
 	/**
 	 * Updates to 2.1.8 version
 	 * @uses $connection
+     * @uses _checkColumn()
 	 */
 	public function to2v1v8() {
 		$this->loadModel('MeCms.Photos');
@@ -131,8 +143,10 @@ class UpdateShell extends Shell {
 				->execute();
 		
 		//Adds "created" field to the photos table and sets the default value
-		$this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL DEFAULT NULL AFTER `description`;', $this->Photos->table()));
-		$this->Photos->query()->update()->set(['created' => $this->now])->execute();
+        if(!$this->_checkColumn('created', $this->Photos->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL DEFAULT NULL AFTER `description`;', $this->Photos->table()));
+            $this->Photos->query()->update()->set(['created' => $this->now])->execute();
+        }
 	}
 	
 	/**
