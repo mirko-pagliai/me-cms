@@ -49,7 +49,7 @@ class Post extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'modified' => FALSE
+		'modified' => FALSE,
     ];
 	
 	/**

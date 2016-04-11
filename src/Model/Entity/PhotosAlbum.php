@@ -32,6 +32,8 @@ use Cake\ORM\Entity;
  * @property string $description
  * @property bool $active
  * @property int $photo_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class PhotosAlbum extends Entity {
     /**
@@ -41,6 +43,7 @@ class PhotosAlbum extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'photo_count' => FALSE
+		'photo_count' => FALSE,
+		'modified' => FALSE,
     ];
 }

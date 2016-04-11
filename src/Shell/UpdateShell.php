@@ -80,6 +80,80 @@ class UpdateShell extends Shell {
 		//Sets now for MySql
 		$this->now = (new \Cake\I18n\Time)->now()->i18nFormat(FORMAT_FOR_MYSQL);
 	}
+    
+	/**
+	 * Updates to 2.6.0 version
+	 * @uses $connection
+     * @uses _checkColumn()
+	 */
+	public function to2v6v0() {
+		$this->loadModel('MeCms.BannersPositions');
+		$this->loadModel('MeCms.PhotosAlbums');
+		$this->loadModel('MeCms.PostsCategories');
+		$this->loadModel('MeCms.Tags');
+		$this->loadModel('MeCms.UsersGroups');
+        
+        //Adds "created" field to the banners positions table and sets the default value
+        if(!$this->_checkColumn('created', $this->BannersPositions->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `banner_count`;', $this->BannersPositions->table()));
+            $this->BannersPositions->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the banners positions table and sets the default value
+        if(!$this->_checkColumn('modified', $this->BannersPositions->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->BannersPositions->table()));
+            $this->BannersPositions->query()->update()->set(['modified' => $this->now])->execute();
+        }
+        
+        //Adds "created" field to the photos albums table and sets the default value
+        if(!$this->_checkColumn('created', $this->PhotosAlbums->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `photo_count`;', $this->PhotosAlbums->table()));
+            $this->PhotosAlbums->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the photos albums table and sets the default value
+        if(!$this->_checkColumn('modified', $this->PhotosAlbums->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->PhotosAlbums->table()));
+            $this->PhotosAlbums->query()->update()->set(['modified' => $this->now])->execute();
+        }
+        
+        //Adds "created" field to the posts categories table and sets the default value
+        if(!$this->_checkColumn('created', $this->PostsCategories->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `post_count`;', $this->PostsCategories->table()));
+            $this->PostsCategories->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the posts categories table and sets the default value
+        if(!$this->_checkColumn('modified', $this->PostsCategories->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->PostsCategories->table()));
+            $this->PostsCategories->query()->update()->set(['modified' => $this->now])->execute();
+        }
+        
+        //Adds "created" field to the tags table and sets the default value
+        if(!$this->_checkColumn('created', $this->Tags->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `post_count`;', $this->Tags->table()));
+            $this->Tags->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the tags table and sets the default value
+        if(!$this->_checkColumn('modified', $this->Tags->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->Tags->table()));
+            $this->Tags->query()->update()->set(['modified' => $this->now])->execute();
+        }
+        
+        //Adds "created" field to the users groups table and sets the default value
+        if(!$this->_checkColumn('created', $this->UsersGroups->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `created` DATETIME NULL AFTER `user_count`;', $this->UsersGroups->table()));
+            $this->UsersGroups->query()->update()->set(['created' => $this->now])->execute();
+        }
+        
+        //Adds "modified" field to the users groups table and sets the default value
+        if(!$this->_checkColumn('modified', $this->UsersGroups->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `modified` DATETIME NULL AFTER `created`;', $this->UsersGroups->table()));
+            $this->UsersGroups->query()->update()->set(['modified' => $this->now])->execute();
+        }
+    }
+    
 	/**
 	 * Updates to 2.2.1 version
 	 * @uses $connection
@@ -168,6 +242,7 @@ class UpdateShell extends Shell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+            'to2v6v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.6.0')],
 			'to2v2v1' => ['help' => __d('me_cms', 'Updates to {0} version', '2.2.1')],
 			'to2v1v9' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.9')],
 			'to2v1v8' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.8')],

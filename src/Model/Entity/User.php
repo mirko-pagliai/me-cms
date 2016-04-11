@@ -50,8 +50,8 @@ class User extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
+		'post_count' => FALSE,
 		'modified' => FALSE,
-		'post_count' => FALSE
     ];
 	
 	/**
