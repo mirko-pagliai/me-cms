@@ -29,6 +29,8 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $tag
  * @property int $post_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property \MeCms\Model\Entity\Post[] $posts
  */
 class Tag extends Entity {
@@ -39,7 +41,8 @@ class Tag extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'post_count' => FALSE
+		'post_count' => FALSE,
+		'modified' => FALSE,
     ];
 	
 	/**

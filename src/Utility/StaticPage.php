@@ -23,52 +23,50 @@
 namespace MeCms\Utility;
 
 use Cake\Core\App;
-use Cake\Filesystem\Folder;
+use MeCms\Core\Plugin;
 
 /**
- * An utility to manage static pages.
- * 
- * Static pages must be located in `APP/View/StaticPages/`.
- * 
- * You can use this utility by adding:
- * <code>
- * use MeCms\Utility\StaticPage;
- * </code>
+ * An utility to handle static pages
  */
 class StaticPage {
 	/**
 	 * Gets all static pages
 	 * @return array Static pages
-	 * @uses MeTools\Core\Plugin::all()
-	 * @ses title()
+	 * @uses MeCms\Core\Plugin::all()
+	 * @uses title()
 	 */
 	public static function all() {
-		//Adds APP to paths
-		$paths = [array_values(App::path('Template'))[0].'StaticPages'];
-				
 		//Adds all plugins to paths, adding first MeCms
-		foreach(am(['MeCms'], \MeTools\Core\Plugin::all('MeCms')) as $plugin)
-			$paths[] = array_values(App::path('Template', $plugin))[0].'StaticPages';
-				
+        $paths = array_map(function($plugin) {
+            return array_values(App::path('Template', $plugin))[0].'StaticPages';
+        }, Plugin::all());
+        
+		//Adds APP to paths
+        array_unshift($paths, array_values(App::path('Template'))[0].'StaticPages');
+        
+        $pages = [];
+        
 		//Gets all static pages
-		foreach($paths as $path)
-			foreach((new Folder($path))->findRecursive('^.+\.ctp$', TRUE) as $file) {
-				$page = new \stdClass();
-				$page->filename = pathinfo($file, PATHINFO_FILENAME);
-				$page->path = rtr($file);
-				$page->slug = preg_replace('/\.ctp$/', '', preg_replace(sprintf('/^%s/', preg_quote($path.DS, DS)), NULL, $file));
-				$page->title = self::title(pathinfo($file, PATHINFO_FILENAME));
-				
-				$files[] = $page;
-			}
-		
-		return $files;
+		foreach($paths as $path) {
+            $pages = am($pages, array_map(function($file) use($path) {                
+                return (object) [
+                    'filename' => pathinfo($file, PATHINFO_FILENAME),
+                    'path' => rtr($file),
+                    'slug' => preg_replace('/\.ctp$/', '', preg_replace(sprintf('/^%s/', preg_quote($path.DS, DS)), NULL, $file)),
+                    'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
+                    'modified' => new \Cake\I18n\FrozenTime(filemtime($file)),
+                ];
+            }, (new \Cake\Filesystem\Folder($path))->findRecursive('^.+\.ctp$', TRUE)));
+        }
+        
+		return $pages;
 	}
 	
 	/**
 	 * Gets a static page
 	 * @param string $slug Slug
-	 * @return mixed Static page or FALSE
+	 * @return string|boolean Static page or FALSE
+	 * @uses MeCms\Core\Plugin::all()
 	 */
 	public static function get($slug) {
 		//Sets the file (partial) name
@@ -78,15 +76,20 @@ class StaticPage {
 		$patterns = [sprintf('%s-%s', $file, \Cake\I18n\I18n::locale()), $file];
 		
 		//Checks if the page exists in APP
-		foreach($patterns as $pattern)
-			if(is_readable(array_values(App::path('Template'))[0].'StaticPages'.DS.$pattern.'.ctp'))
+		foreach($patterns as $pattern) {
+			if(is_readable(array_values(App::path('Template'))[0].'StaticPages'.DS.$pattern.'.ctp')) {
 				return 'StaticPages'.DS.$pattern;
-		
+            }
+        }
+        
 		//Checks if the page exists in all plugins, beginning with MeCms
-		foreach(am(['MeCms'], \MeTools\Core\Plugin::all('MeCms')) as $plugin)
-			foreach($patterns as $pattern)
-				if(is_readable(array_values(App::path('Template', $plugin))[0].'StaticPages'.DS.$pattern.'.ctp'))
+		foreach(Plugin::all() as $plugin) {
+			foreach($patterns as $pattern) {
+				if(is_readable(array_values(App::path('Template', $plugin))[0].'StaticPages'.DS.$pattern.'.ctp')) {
 					return sprintf('%s.%s', $plugin, 'StaticPages'.DS.$pattern);
+                }
+            }
+        }
 				
 		return FALSE;		
 	}

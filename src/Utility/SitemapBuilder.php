@@ -23,20 +23,29 @@
 namespace MeCms\Utility;
 
 use Cake\Utility\Xml;
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 
 /**
  * An utility to generate a sitemap
  */
 class SitemapBuilder {
     /**
-     * Internal method to generate url for the sitempa
+     * Parses url
      * @param string|array|null $url
-     * @return string
+     * @param array $options Options, for example `lastmod` or `priority`
+     * @return array
      * @see Cake\Routing\Router::url()
      */
-    protected static function url($url) {
-        return \Cake\Routing\Router::url($url, TRUE);
+    protected static function parse($url, array $options = []) {
+        if(!empty($options['lastmod'])) {
+            $options['lastmod'] = $options['lastmod']->format('c');
+        }
+        
+        if(empty($options['priority'])) {
+            $options['priority'] = '0.5';
+        }
+        
+        return am(['loc' => \Cake\Routing\Router::url($url, TRUE)], $options);
     }
 
     /**
@@ -46,14 +55,14 @@ class SitemapBuilder {
      * `$PLUGIN\Utility\Sitemap`.
      * Each method must be return an array or urls to add to the sitemap.
      * @see MeCms\Utility\Sitemap
-     * @uses MeTools\Core\Plugin::all()
-     * @uses url()
+     * @uses MeCms\Core\Plugin::all()
+     * @uses parse()
      */
     public function generate() {
         //Adds the homepage
-        $url = [self::url('/')];
+        $url = [self::parse('/')];
         
-        foreach(am(['MeCms'], Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations'])) as $plugin) {
+        foreach(Plugin::all() as $plugin) {
             //Sets the class name
             $class = sprintf('\%s\Utility\Sitemap', $plugin);
             
@@ -64,7 +73,7 @@ class SitemapBuilder {
                 continue;
             }
             
-            //Because each `Utility` class may be an extension of this class, 
+            //Because each class may be an extension of this class, 
             //it calculates the difference between the methods of the two classes
             $methods = array_diff($methods, get_class_methods(__CLASS__));
             
@@ -74,10 +83,12 @@ class SitemapBuilder {
             }
         }
                 
-        $xml = Xml::fromArray(['urlset' => [
-            'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
-            'url' => array_map(function($url) { return ['loc' => $url]; }, $url),
-        ]], ['pretty' => TRUE]);
+        $xml = Xml::fromArray([
+            'urlset' => [
+                'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
+                'url' => $url,
+            ]
+         ], ['pretty' => TRUE]);
         
         return $xml->asXML();
     }

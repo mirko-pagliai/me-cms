@@ -30,6 +30,8 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $description
  * @property int $banner_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class BannersPosition extends Entity {
     /**
@@ -39,6 +41,7 @@ class BannersPosition extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-        'banner_count' => FALSE
+        'banner_count' => FALSE,
+		'modified' => FALSE,
     ];
 }

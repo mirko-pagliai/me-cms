@@ -34,6 +34,8 @@ use Cake\ORM\Entity;
  * @property string $description
  * @property bool $active
  * @property int $click_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class Banner extends Entity {
     /**
@@ -43,7 +45,7 @@ class Banner extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'modified' => FALSE
+		'modified' => FALSE,
     ];
 	
 	/**

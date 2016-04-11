@@ -20,30 +20,26 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Model\Entity;
+namespace MeCms\Mailer;
 
-use Cake\ORM\Entity;
+use MeCms\Mailer\Mailer;
 
 /**
- * Page entity
- * @property int $id
- * @property string $title
- * @property string $subtitle
- * @property string $slug
- * @property string $text
- * @property int $priority
- * @property bool $active
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * ContactFormMailer class
  */
-class Page extends Entity {
+class ContactFormMailer extends Mailer {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
-     * @var array
+     * Email for the contact form
+     * @param array $data Data
+     * @see MeCms\Controller\SystemsController::contact_form()
+	 * @see MeCms\Form\ContactForm
+     * @see MeCms\Form\ContactForm::_execute()
      */
-    protected $_accessible = [
-        '*' => TRUE,
-        'id' => FALSE,
-		'modified' => FALSE,
-    ];
+    public function contact_form_mail($data) {
+        $this->from([$data['email'] => sprintf('%s %s', $data['first_name'], $data['last_name'])])
+			->to(config('email.webmaster'))
+			->subject(__d('me_cms', 'Email from {0}', config('main.title')))
+			->template('MeCms.Systems/contact_form')
+            ->set($data);
+    }
 }

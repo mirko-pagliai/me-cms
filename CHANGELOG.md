@@ -1,4 +1,17 @@
 # 2.x branch
+## 2.6 branch
+### 2.6.0
+* you can now set the expiration of sitemap;
+* now the sitemap uses the cache and handles `lastmod` and `priority` values;
+* fixed bug for "contact form" and added the `ContactFormMailer` class;
+* fixed bug for cleaning temporary files;
+* you can now delete the sitemap;
+* now all objects have "created" and "modified" fields;
+* added the `Plugin` class, which improves the code;
+* rewrote the code to generate the backend menus;
+* fixed bug for `UpdateShell`;
+* added `isBanned()` detector. Removed `SecurityComponent` class.
+
 ## 2.5 branch
 ### 2.5.1
 * added functions to generate the site sitemap;

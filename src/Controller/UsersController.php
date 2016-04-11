@@ -48,9 +48,6 @@ class UsersController extends AppController {
 		//Checks if the user is already logged in
 		if(!$this->request->isAction('logout') && $this->Auth->isLogged())
 			return $this->redirect(['_name' => 'dashboard']);
-		
-		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
-		$this->Security->config('unlockedActions', ['forgot_password', 'resend_activation', 'signup']);
 	}
 	
 	/**
@@ -100,7 +97,7 @@ class UsersController extends AppController {
 	 * Internal function to send the activation mail
 	 * @param object $user Users entity
 	 * @return boolean
-	 * @uses MeCms\Mailer\UserMailer::activation_mail()
+	 * @uses MeCms\Mailer\UserMailer::activate_account()
 	 * @uses MeCms\Network\Email\Email
 	 * @uses MeTools\Controller\Component\Token::create()
 	 */
@@ -111,7 +108,7 @@ class UsersController extends AppController {
 		//Sends email
 		return $this->getMailer('MeCms.User')
 			->set('url', Router::url(['_name' => 'activate_account', $user->id, $token], TRUE))
-			->send('activation_mail', [$user]);
+			->send('activate_account', [$user]);
 	}
 	
 	/**

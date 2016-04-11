@@ -63,6 +63,8 @@ class BannersPositionsTable extends AppTable {
             'foreignKey' => 'position_id',
             'className' => 'MeCms.Banners'
         ]);
+        
+        $this->addBehavior('Timestamp');
     }
 
     /**

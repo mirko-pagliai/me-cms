@@ -31,6 +31,8 @@ use Cake\ORM\Entity;
  * @property string $label
  * @property string $description
  * @property int $user_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  */
 class UsersGroup extends Entity {
     /**
@@ -40,6 +42,7 @@ class UsersGroup extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'user_count' => FALSE
+		'user_count' => FALSE,
+		'modified' => FALSE,
     ];
 }

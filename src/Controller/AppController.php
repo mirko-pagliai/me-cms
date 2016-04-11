@@ -24,21 +24,50 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\I18n\I18n;
+use MeCms\Core\Plugin;
 
 /**
  * Application controller class
  */
 class AppController extends BaseController {
 	/**
+     * Checks if the latest search has been executed out of the minimum interval
+	 * @return bool
+	 */
+	protected function _checkLastSearch($query_id = NULL) {
+        $interval = config('security.search_interval');
+		
+        if(empty($interval))
+            return TRUE;
+		
+		$query_id = empty($query_id) ? NULL : md5($query_id);
+		
+		$last_search = $this->request->session()->read('last_search');
+		
+		if(!empty($last_search)) {
+			//Checks if it's the same search
+			if(!empty($query_id) && !empty($last_search['id']) && $query_id === $last_search['id'])
+				return TRUE;
+			//Checks if the interval has not yet expired
+			elseif(($last_search['time'] + $interval) > time())
+				return FALSE;
+		}
+		
+		$this->request->session()->write('last_search', ['id' => $query_id, 'time' => time()]);
+		
+		return TRUE;
+	}
+    
+	/**
 	 * Gets the user's language
 	 * @return mixed Language code or FALSE
 	 * @throws \Cake\Network\Exception\InternalErrorException
-	 * @uses MeTools\Core\Plugin::path()
+	 * @uses MeCms\Core\Plugin::path()
 	 */
 	protected function _getLanguage() {
 		$config = config('main.language');
 		$language = $this->request->env('HTTP_ACCEPT_LANGUAGE');
-		$path = \MeTools\Core\Plugin::path('MeCms', 'src'.DS.'Locale');
+		$path = Plugin::path('MeCms', 'src'.DS.'Locale');
 		
 		if(empty($config) || $config === 'auto') {
 			if(is_readable($path.DS.substr($language, 0, 5).DS.'me_cms.po'))
@@ -74,8 +103,10 @@ class AppController extends BaseController {
 			else
 				$target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
 
+            $upload = move_uploaded_file($file['tmp_name'], $file['target'] = $target);
+            
 			//Checks if the file was successfully moved to the target directory
-			if(!@move_uploaded_file($file['tmp_name'], $file['target'] = $target))
+			if(!$upload)
 				$error = __d('me_cms', 'The file was not successfully moved to the target directory');
 		}
 		else
@@ -94,17 +125,16 @@ class AppController extends BaseController {
 	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses MeTools\Network\Request::isAction()
 	 * @uses _getLanguage()
-	 * @uses isBanned()
 	 * @uses isOffline()
 	 * @uses setLanguage()
 	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
+	public function beforeFilter(\Cake\Event\Event $event) {        
 		//Checks if the site is offline
 		if($this->isOffline())
 			return $this->redirect(['_name' => 'offline']);
 		
 		//Checks if the user's IP address is banned
-		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->isBanned())
+		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->request->isBanned())
 			return $this->redirect(['_name' => 'ip_not_allowed']);
 		
 		//Sets the user's language
@@ -113,9 +143,6 @@ class AppController extends BaseController {
 		//If the current request has no prefix, it authorizes the current action
 		if(!$this->request->param('prefix'))
 			$this->Auth->allow($this->request->action);
-		
-		if(!$this->Auth->user())
-			$this->Auth->config('authError', FALSE);
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
@@ -155,7 +182,6 @@ class AppController extends BaseController {
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
-		$this->loadComponent('MeCms.Security');
 		
 		if(config('security.recaptcha'))
 			$this->loadComponent('MeTools.Recaptcha');
@@ -172,20 +198,6 @@ class AppController extends BaseController {
 	public function isAuthorized($user = NULL) {		
 		//By default, admins and managers can access every action
 		return $this->Auth->isGroup(['admin', 'manager']);
-	}
-	
-	/**
-	 * Checks if the user's IP address is banned
-	 * @return bool
-	 * @uses MeCms\Controller\Component\SecurityComponent::isBanned()
-	 */
-	protected function isBanned() {
-		if(!config('security.banned_ip'))
-			return FALSE;
-		
-		$banned_ip = is_string(config('security.banned_ip')) ? [config('security.banned_ip')] : config('security.banned_ip');
-		
-		return $this->Security->isBanned($banned_ip);
 	}
 	
 	/**

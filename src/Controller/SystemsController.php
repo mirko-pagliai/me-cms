@@ -45,6 +45,7 @@ class SystemsController extends AppController {
 	 * Contact form
 	 * @see MeCms\Form\ContactForm
 	 * @see MeCms\Form\ContactForm::execute()
+     * @see MeCms\Mailer\ContactFormMailer::contact_form_mail()
 	 * @uses MeTools\Controller\Component\Recaptcha::check()
 	 * @uses MeTools\Controller\Component\Recaptcha::getError()
 	 */
@@ -77,12 +78,11 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * "Ip not allowed" page
-	 * @uses MeCms\Controller\AppController::isBanned()
+	 * "IP not allowed" page
 	 */
 	public function ip_not_allowed() {
 		//If the user's IP address is not banned
-		if(!$this->isBanned())
+		if(!$this->request->isBanned())
 			return $this->redirect(['_name' => 'homepage']);
 		
 		$this->viewBuilder()->layout('login');
@@ -126,7 +126,7 @@ class SystemsController extends AppController {
             $time = Time::createFromTimestamp(filemtime(SITEMAP));
             
             //If the sitemap has expired, it writes a new sitemap
-            if($time->modify('+6 hours')->isPast()) {
+            if($time->modify(config('main.sitemap_expiration'))->isPast()) {
                 $sitemap = $this->_sitemap();
             }
             else {

@@ -20,15 +20,17 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use MeCms\Core\Plugin;
 ?>
 	
 <?php
 	//Renders menus for MeCms
-	echo $this->Menu->all('MeCms');
+	echo $this->MenuBuilder->generate('MeCms');
 	
 	//Renders menus for all others plugin
-	foreach(\MeTools\Core\Plugin::all(['DebugKit', 'MeCms', 'MeTools', 'Migrations']) as $plugin) {
-		$menu = $this->Menu->all($plugin);
+	foreach(Plugin::all(['exclude' => 'MeCms']) as $plugin) {
+		$menu = $this->MenuBuilder->generate($plugin);
 		
 		if(!empty($menu)) {
 			echo $this->Html->h6($plugin);

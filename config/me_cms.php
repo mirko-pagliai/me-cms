@@ -84,6 +84,8 @@ return ['MeCms' => [
 		//Interface language.
 		//With "auto" value, it will try to use the browser language
 		'language' => 'auto',
+        //Sitemap expiration. Must be a valid strtotime string
+        'sitemap_expiration' => '+24 hours',
 		//Time formats
 		//See; http://php.net/manual/it/datetime.formats.php
 		'time' => [
