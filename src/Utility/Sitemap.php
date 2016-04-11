@@ -25,6 +25,7 @@ namespace MeCms\Utility;
 
 use Cake\ORM\TableRegistry;
 use MeCms\Utility\SitemapBuilder;
+use MeTools\Cache\Cache;
 
 /**
  * This class contains methods called by the `SitemapBuilder`.
@@ -41,6 +42,12 @@ class Sitemap extends SitemapBuilder {
      */
     public static function pages() {
         $table = TableRegistry::get('MeCms.Pages');
+        
+        $url = Cache::read('sitemap', $table->cache);
+        
+        if($url) {
+            return $url;
+        }
         
         $pages = $table->find('active')
             ->select(['slug', 'modified']);
@@ -62,6 +69,8 @@ class Sitemap extends SitemapBuilder {
             return self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
         }, $pages->toArray()));
         
+        Cache::write('sitemap', $url, $table->cache);
+        
         return $url;
     }
 
@@ -72,6 +81,12 @@ class Sitemap extends SitemapBuilder {
      */
     public static function photos() {
         $table = TableRegistry::get('MeCms.PhotosAlbums');
+        
+        $url = Cache::read('sitemap', $table->cache);
+        
+        if($url) {
+            return $url;
+        }
         
         $albums = $table->find('active')
             ->select(['id', 'slug'])
@@ -102,6 +117,8 @@ class Sitemap extends SitemapBuilder {
                 return self::parse(['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], ['lastmod' => $photo->modified]);
             }, $album->photos));
         }
+        
+        Cache::write('sitemap', $url, $table->cache);
             
         return $url;
     }
@@ -113,6 +130,12 @@ class Sitemap extends SitemapBuilder {
      */
     public static function posts() {
         $table = TableRegistry::get('MeCms.PostsCategories');
+        
+        $url = Cache::read('sitemap', $table->cache);
+        
+        if($url) {
+            return $url;
+        }
         
         $categories = $table->find('active')
             ->select(['id', 'slug'])
@@ -148,6 +171,8 @@ class Sitemap extends SitemapBuilder {
             }, $category->posts));
         }
         
+        Cache::write('sitemap', $url, $table->cache);
+        
         return $url;
     }
     
@@ -158,6 +183,12 @@ class Sitemap extends SitemapBuilder {
      */
     public static function posts_tags() {
         $table = TableRegistry::get('MeCms.Tags');
+        
+        $url = Cache::read('sitemap', $table->cache);
+        
+        if($url) {
+            return $url;
+        }
         
         $tags = $table->find('all')
             ->select(['tag', 'modified'])
@@ -180,6 +211,8 @@ class Sitemap extends SitemapBuilder {
         $url = am($url, array_map(function($tag) {
             return self::parse(['_name' => 'posts_tag', $tag->slug], ['lastmod' => $tag->modified]);
         }, $tags->toArray()));
+        
+        Cache::write('sitemap', $url, $table->cache);
         
         return $url;
     }
