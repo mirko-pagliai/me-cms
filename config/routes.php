@@ -159,7 +159,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/accept/cookies', ['controller' => 'Systems', 'action' => 'accept_cookies'], ['_name' => 'accept_cookies']);
 	$routes->connect('/contact/form', ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
 	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
-    $routes->connect('/sitemap.xml.gz', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap']);
+    $routes->connect('/sitemap:ext', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']);
 	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
 	
 	/**
