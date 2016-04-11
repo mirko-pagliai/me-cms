@@ -22,69 +22,16 @@
  */
 namespace MeCms\Shell;
 
-use MeTools\Console\Shell;
+use MeCms\Shell\BaseUpdateShell;
 
 /**
  * Applies updates
  */
-class UpdateShell extends Shell {
-	/**
-	 * Database connection
-	 * @see initialize()
-	 * @var resource 
-	 */
-	protected $connection;
-	
-	/**
-	 * Now for MySql
-	 * @see initialize()
-	 * @var string 
-	 */
-	protected $now;
-
-    /**
-     * Checks if a column exists
-     * @param string $column Column name
-     * @param string $table Table name
-     * @return bool
-     * @uses _getColumns()
-     */
-    protected function _checkColumn($column, $table) {
-        return in_array($column, $this->_getColumns($table));
-    }
-
-    /**
-     * Gets the table columns
-     * @param string $table Table name
-     * @return array
-	 * @uses $connection
-     */
-    protected function _getColumns($table) {
-        $columns = $this->connection->execute(sprintf('SHOW COLUMNS FROM %s;', $table))->fetchAll();
-        
-        return array_map(function($column) {
-            return array_values($column)[0];
-        }, $columns);
-    }
-
-    /**
-	 * Initialize
-	 * @uses $connection
-	 */
-	public function initialize() {
-        parent::initialize();
-		
-		//Gets database connection
-		$this->connection = \Cake\Datasource\ConnectionManager::get('default');
-		
-		//Sets now for MySql
-		$this->now = (new \Cake\I18n\Time)->now()->i18nFormat(FORMAT_FOR_MYSQL);
-	}
-    
+class UpdateShell extends BaseUpdateShell {
 	/**
 	 * Updates to 2.6.0 version
-	 * @uses $connection
-     * @uses _checkColumn()
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
 	public function to2v6v0() {
 		$this->loadModel('MeCms.BannersPositions');
@@ -156,7 +103,7 @@ class UpdateShell extends Shell {
     
 	/**
 	 * Updates to 2.2.1 version
-	 * @uses $connection
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
 	 */
 	public function to2v2v1() {
 		$this->loadModel('MeCms.Tags');
@@ -172,8 +119,8 @@ class UpdateShell extends Shell {
 	
 	/**
 	 * Updates to 2.1.9 version
-	 * @uses $connection
-     * @uses _checkColumn()
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
 	public function to2v1v9() {
 		$this->loadModel('MeCms.Banners');
@@ -200,8 +147,8 @@ class UpdateShell extends Shell {
 	
 	/**
 	 * Updates to 2.1.8 version
-	 * @uses $connection
-     * @uses _checkColumn()
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
 	public function to2v1v8() {
 		$this->loadModel('MeCms.Photos');
@@ -227,7 +174,7 @@ class UpdateShell extends Shell {
 	
 	/**
 	 * Updates to 2.1.7 version
-	 * @uses $connection
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
 	 */
 	public function to2v1v7() {
 		$this->loadModel('MeCms.Tags');
@@ -238,7 +185,6 @@ class UpdateShell extends Shell {
 	/**
 	 * Gets the option parser instance and configures it.
 	 * @return ConsoleOptionParser
-	 * @uses MeTools\Shell\InstallShell::getOptionParser()
 	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
