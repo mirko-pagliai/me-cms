@@ -66,6 +66,18 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
+	
+    <div class="margin-20">
+        <?= $this->Html->h4(__d('me_cms', 'Sitemap')) ?>
+        <p><?= __d('me_cms', 'Sitemap size: {0}', $this->Number->toReadableSize($sitemap_size)) ?></p>
+
+        <?php if($this->Auth->isGroup('admin')): //Only admins can clear sitemap ?>
+            <?php if($sitemap_size): ?>
+                <p><?= __d('me_cms', 'Note: you should not need to clear the sitemap, unless you have recently changed many records') ?></p>
+                <?= $this->Form->postButton(__d('me_cms', 'Clear sitemap'), ['action' => 'tmp_cleaner', 'sitemap'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
 
 	<div class="margin-20">
         <?= $this->Html->h4(__d('me_cms', 'Thumbnails')) ?>

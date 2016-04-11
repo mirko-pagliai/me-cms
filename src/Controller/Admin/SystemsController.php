@@ -176,11 +176,20 @@ class SystemsController extends AppController {
         });
 	}
 	
-	/**
-	 * Temporary cleaner (assets, cache, logs and thumbnails)
+    /**
+     * Internal function to clear the sitemap
+     * @return bool
+     */
+    protected function clear_sitemap() {
+        return (new \Cake\Filesystem\File(SITEMAP))->delete();
+    }
+
+    /**
+	 * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
 	 * @param string $type Type
      * @throws InternalErrorException
 	 * @uses MeTools\Cache\Cache::clearAll()
+     * @uses clear_sitemap();
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete'])) {
@@ -189,7 +198,7 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = clear_dir(ASSETS) && clear_dir(LOGS) && Cache::clearAll() && clear_dir(THUMBS);
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && Cache::clearAll() && self::clear_sitemap() && clear_dir(THUMBS);
 				break;
 			case 'cache':
 				$success = Cache::clearAll();
@@ -200,6 +209,9 @@ class SystemsController extends AppController {
 			case 'logs':
 				$success = clear_dir(LOGS);
 				break;
+            case 'sitemap':
+                $success = self::clear_sitemap();
+                break;
 			case 'thumbs':
 				$success = clear_dir(THUMBS);
 				break;
@@ -218,16 +230,19 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Temporary viewer (assets, cache, logs and thumbnails)
+	 * Temporary viewer (assets, cache, logs, sitemap and thumbnails)
 	 */
 	public function tmp_viewer() {
+        $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
+        
         $this->set([
 			'cache_size' => dirsize(CACHE),
 			'cache_status' => Cache::enabled(),
 			'assets_size' => dirsize(ASSETS),
 			'logs_size' => dirsize(LOGS),
+            'sitemap_size' => $sitemap,
 			'thumbs_size' => dirsize(THUMBS),
-			'total_size' => dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
+			'total_size' => dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + $sitemap + dirsize(THUMBS),
         ]);
 	}
 }
