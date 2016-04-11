@@ -162,11 +162,12 @@ class UpdateShell extends Shell {
 		$this->loadModel('MeCms.Tags');
 		
 		//For each tag, it replaces the hyphen with space
-		foreach($this->Tags->find()->where(['tag LIKE' => '%-%'])->toArray() as $tag)
+		foreach($this->Tags->find()->where(['tag LIKE' => '%-%'])->toArray() as $tag) {
 			$this->Tags->query()->update()
 				->set(['tag' => str_replace('-', ' ', $tag->tag)])
 				->where(['id' => $tag->id])
 				->execute();
+        }
 	}
 	
 	/**
@@ -210,11 +211,12 @@ class UpdateShell extends Shell {
 		$this->Tags->deleteAll(['post_count' => 0]);
 				
 		//For each tag, it replaces the hyphen with space
-		foreach($this->Tags->find()->toArray() as $tag)
+		foreach($this->Tags->find()->toArray() as $tag) {
 			$this->Tags->query()->update()
 				->set(['tag' => str_replace('-', ' ', $tag->tag)])
 				->where(['id' => $tag->id])
 				->execute();
+        }
 		
 		//Adds "created" field to the photos table and sets the default value
         if(!$this->_checkColumn('created', $this->Photos->table())) {
