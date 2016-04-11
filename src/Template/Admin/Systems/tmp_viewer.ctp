@@ -30,7 +30,6 @@
         <?= $this->Html->h4(__d('me_cms', 'All temporary files')) ?>
         <p><?= __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($total_size)) ?></p>
 
-
         <?php if($this->Auth->isGroup('admin')): //Only admins can clear all temporary files ?>
             <p><?= __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails') ?></p>
             <?= $this->Form->postButton(__d('me_cms', 'Clear all temporary files'), ['action' => 'tmp_cleaner', 'all'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
@@ -57,16 +56,17 @@
 		<?php endif; ?>
 	</div>
 	
-	<?php if($this->Auth->isGroup('admin')): //Only admins can clear logs ?>
-		<div class="margin-20">
-            <?= $this->Html->h4(__d('me_cms', 'Logs')) ?>
-            <p><?= __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)) ?></p>
-			<?php if($logs_size): ?>
-				<?= $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
-	
+    <div class="margin-20">
+        <?= $this->Html->h4(__d('me_cms', 'Logs')) ?>
+        <p><?= __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logs_size)) ?></p>
+
+        <?php if($this->Auth->isGroup('admin')): //Only admins can clear logs ?>
+            <?php if($logs_size): ?>
+                <?= $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+
 	<div class="margin-20">
         <?= $this->Html->h4(__d('me_cms', 'Thumbnails')) ?>
         <p><?= __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbs_size)) ?></p>
