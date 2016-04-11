@@ -144,9 +144,6 @@ class AppController extends BaseController {
 		if(!$this->request->param('prefix'))
 			$this->Auth->allow($this->request->action);
 		
-		if(!$this->Auth->user())
-			$this->Auth->config('authError', FALSE);
-		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isAdmin() ? config('backend.records') : config('frontend.records');
