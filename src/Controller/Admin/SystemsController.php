@@ -23,12 +23,11 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
-use MeTools\Cache\Cache;
 use MeCms\Core\Plugin;
+use MeTools\Cache\Cache;
 use MeTools\Utility\Apache;
 
 /**
@@ -44,8 +43,9 @@ class SystemsController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {		
 		//Only admins can clear all temporary files or logs
-		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs']))
+		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs'])) {
 			return $this->Auth->isGroup('admin');
+        }
 		
 		//Admins and managers can access other actions
 		return $this->Auth->isGroup(['admin', 'manager']);
@@ -65,19 +65,22 @@ class SystemsController extends AppController {
 		$this->loadComponent('MeCms.KcFinder');
 		
 		//Checks for KCFinder
-		if(!$this->KcFinder->checkKcfinder())
+		if(!$this->KcFinder->checkKcfinder()) {
 			throw new InternalErrorException(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
-		
+        }
+        
 		//Checks for the files directory (`APP/webroot/files`)
-		if(!$this->KcFinder->checkFiles())
+		if(!$this->KcFinder->checkFiles()) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($this->KcFinder->getFilesPath())));
+        }
 		
 		//Gets the supperted types from configuration
 		$types = $this->KcFinder->getTypes();
 		
 		//If there's only one type, it automatically sets the query value
-		if(!$this->request->query('type') && count($types) < 2)
+		if(!$this->request->query('type') && count($types) < 2) {
 			$this->request->query['type'] = fk($types);
+        }
 		
 		//Gets the type from the query and the types from configuration
 		$type = $this->request->query('type');
@@ -85,8 +88,9 @@ class SystemsController extends AppController {
 		$locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
 		
 		//Checks the type, then sets the KCFinder path
-		if($type && array_key_exists($type, $types))
+		if($type && array_key_exists($type, $types)) {
 			$this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', TRUE), empty($locale) ? 'en' : $locale, $type));
+        }
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));
 	}
@@ -121,47 +125,51 @@ class SystemsController extends AppController {
 	 */
 	public function checkup() {
         $checkup['apache'] = [
-            'expires'	=> Apache::module('mod_expires'),
-            'rewrite'	=> Apache::module('mod_rewrite'),
-            'version'	=> Apache::version(),
+            'expires' => Apache::module('mod_expires'),
+            'rewrite' => Apache::module('mod_rewrite'),
+            'version' => Apache::version(),
         ];
         
         $checkup['backups'] = [
-            'path'		=> rtr(BACKUPS),
+            'path' => rtr(BACKUPS),
             'writeable'	=> folder_is_writable(BACKUPS),
         ];
         
         $checkup['cache'] = Cache::enabled();
         
         $checkup['executables'] = [
-            'clean-css'		=> which('cleancss'),
-            'UglifyJS 2'	=> which('uglifyjs'),
+            'clean-css' => which('cleancss'),
+            'UglifyJS 2' => which('uglifyjs'),
         ];
         
         //Checks for PHP's extensions
-        foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension)
+        foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension) {
             $checkup['php_extensions'][$extension] = extension_loaded($extension);
+        }
         
         $checkup['plugins'] = [
-            'cakephp_version'	=> Configure::version(),
-            'mecms_version'		=> trim(file_get_contents(Plugin::path(MECMS, 'version'))),
+            'cakephp' => Configure::version(),
+            'mecms'	=> trim(file_get_contents(Plugin::path(MECMS, 'version'))),
         ];
         
+        //Gets plugins versions
         foreach(Plugin::all(['exclude' => MECMS]) as $plugin) {
             $file = Plugin::path(MECMS, 'version', TRUE);
             
             if($file) {
-                $checkup['plugins']['plugins_version'][$plugin] = trim(file_get_contents($file));
+                $checkup['plugins']['plugins'][$plugin] = trim(file_get_contents($file));
             }
         }
         
         //Checks for temporary directories
-        foreach([CACHE, LOGS, THUMBS, TMP] as $path)
+        foreach([CACHE, LOGS, THUMBS, TMP] as $path) {
             $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        }
         
         //Checks for webroot directories
-        foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path)
+        foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path) {
             $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+        }
         
         array_walk($checkup, function($value, $key) {
             $this->set($key, $value);
@@ -175,8 +183,9 @@ class SystemsController extends AppController {
 	 * @uses MeTools\Cache\Cache::clearAll()
 	 */
 	public function tmp_cleaner($type) {
-		if(!$this->request->is(['post', 'delete']))
+		if(!$this->request->is(['post', 'delete'])) {
 			return $this->redirect(['action' => 'tmp_viewer']);
+        }
 		
 		switch($type) {
 			case 'all':
@@ -198,10 +207,12 @@ class SystemsController extends AppController {
                 throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
 		}
 		
-		if(!empty($success))
+		if(!empty($success)) {
 			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-		else
+        }
+		else {
 			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+        }
 		
 		return $this->redirect(['action' => 'tmp_viewer']);
 	}
@@ -211,12 +222,12 @@ class SystemsController extends AppController {
 	 */
 	public function tmp_viewer() {
         $this->set([
-			'cache_size'	=> dirsize(CACHE),
-			'cache_status'	=> Cache::enabled(),
-			'assets_size'	=> dirsize(ASSETS),
-			'logs_size'     => dirsize(LOGS),
-			'thumbs_size'	=> dirsize(THUMBS),
-			'total_size'	=> dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
+			'cache_size' => dirsize(CACHE),
+			'cache_status' => Cache::enabled(),
+			'assets_size' => dirsize(ASSETS),
+			'logs_size' => dirsize(LOGS),
+			'thumbs_size' => dirsize(THUMBS),
+			'total_size' => dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + dirsize(THUMBS),
         ]);
 	}
 }
