@@ -175,12 +175,25 @@ class SystemsController extends AppController {
             $this->set($key, $value);
         });
 	}
-	
+    
+    /**
+     * Internal function to clear the cache
+     * @return bool
+	 * @uses MeTools\Cache\Cache::clearAll()
+     */
+    protected function clear_cache() {
+        return !array_search(FALSE, Cache::clearAll(), TRUE);
+    }
+
     /**
      * Internal function to clear the sitemap
      * @return bool
      */
     protected function clear_sitemap() {
+        if(!is_readable(SITEMAP)) {
+            return TRUE;
+        }
+        
         return (new \Cake\Filesystem\File(SITEMAP))->delete();
     }
 
@@ -188,8 +201,8 @@ class SystemsController extends AppController {
 	 * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
 	 * @param string $type Type
      * @throws InternalErrorException
-	 * @uses MeTools\Cache\Cache::clearAll()
-     * @uses clear_sitemap();
+     * @uses clear_cache()
+     * @uses clear_sitemap()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete'])) {
@@ -198,10 +211,10 @@ class SystemsController extends AppController {
 		
 		switch($type) {
 			case 'all':
-				$success = clear_dir(ASSETS) && clear_dir(LOGS) && Cache::clearAll() && self::clear_sitemap() && clear_dir(THUMBS);
+				$success = clear_dir(ASSETS) && clear_dir(LOGS) && self::clear_cache() && self::clear_sitemap() && clear_dir(THUMBS);
 				break;
 			case 'cache':
-				$success = Cache::clearAll();
+				$success = self::clear_cache();
 				break;
 			case 'assets':
 				$success = clear_dir(ASSETS);

@@ -2,6 +2,7 @@
 ## 2.6 branch
 ### 2.6.0
 * fixed bug for "contact form" and added the `ContactFormMailer` class;
+* fixed bug for cleaning temporary files;
 * you can now delete the sitemap;
 * now all objects have "created" and "modified" fields;
 * added the `Plugin` class, which improves the code;
