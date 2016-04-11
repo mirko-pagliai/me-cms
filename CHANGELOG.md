@@ -2,7 +2,7 @@
 ## 2.6 branch
 ### 2.6.0
 * you can now set the expiration of sitemap;
-* now the sitemap use the cache and handles `lastmod` and `priority` values;
+* now the sitemap uses the cache and handles `lastmod` and `priority` values;
 * fixed bug for "contact form" and added the `ContactFormMailer` class;
 * fixed bug for cleaning temporary files;
 * you can now delete the sitemap;
