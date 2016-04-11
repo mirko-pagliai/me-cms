@@ -126,7 +126,7 @@ class SystemsController extends AppController {
             $time = Time::createFromTimestamp(filemtime(SITEMAP));
             
             //If the sitemap has expired, it writes a new sitemap
-            if($time->modify('+6 hours')->isPast()) {
+            if($time->modify(config('main.sitemap_expiration'))->isPast()) {
                 $sitemap = $this->_sitemap();
             }
             else {

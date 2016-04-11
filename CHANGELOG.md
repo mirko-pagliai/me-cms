@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.6 branch
 ### 2.6.0
+* you can now set the expiration of sitemap;
 * fixed bug for "contact form" and added the `ContactFormMailer` class;
 * fixed bug for cleaning temporary files;
 * you can now delete the sitemap;
