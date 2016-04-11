@@ -30,13 +30,22 @@ use MeCms\Core\Plugin;
  */
 class SitemapBuilder {
     /**
-     * Internal method to generate url for the sitempa
+     * Parses url
      * @param string|array|null $url
-     * @return string
+     * @param array $options Options, for example `lastmod` or `priority`
+     * @return array
      * @see Cake\Routing\Router::url()
      */
-    protected static function url($url) {
-        return \Cake\Routing\Router::url($url, TRUE);
+    protected static function parse($url, array $options = []) {
+        if(!empty($options['lastmod'])) {
+            $options['lastmod'] = $options['lastmod']->format('c');
+        }
+        
+        if(empty($options['priority'])) {
+            $options['priority'] = '0.5';
+        }
+        
+        return am(['loc' => \Cake\Routing\Router::url($url, TRUE)], $options);
     }
 
     /**
@@ -47,11 +56,11 @@ class SitemapBuilder {
      * Each method must be return an array or urls to add to the sitemap.
      * @see MeCms\Utility\Sitemap
      * @uses MeCms\Core\Plugin::all()
-     * @uses url()
+     * @uses parse()
      */
     public function generate() {
         //Adds the homepage
-        $url = [self::url('/')];
+        $url = [self::parse('/')];
         
         foreach(Plugin::all() as $plugin) {
             //Sets the class name
@@ -74,10 +83,12 @@ class SitemapBuilder {
             }
         }
                 
-        $xml = Xml::fromArray(['urlset' => [
-            'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
-            'url' => array_map(function($url) { return ['loc' => $url]; }, $url),
-        ]], ['pretty' => TRUE]);
+        $xml = Xml::fromArray([
+            'urlset' => [
+                'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
+                'url' => $url,
+            ]
+         ], ['pretty' => TRUE]);
         
         return $xml->asXML();
     }
