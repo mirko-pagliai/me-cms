@@ -136,8 +136,9 @@ Request::addDetector('banned', function ($request) {
      *  - is localhost;
      *  - the IP address has already been verified.
      */
-    if(!$banned || is_localhost() || $request->session()->read('allowed_ip'))
+    if(!$banned || is_localhost() || $request->session()->read('allowed_ip')) {
         return FALSE;
+    }
     
 	//Replaces asteriskes
     $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', is_array($banned) ? $banned : [$banned]));
