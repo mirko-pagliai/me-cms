@@ -42,11 +42,11 @@
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="frontend-userbar-collapse">
-			<ul class="nav navbar-nav hidden-xs hidden-sm">
+			<ul class="nav navbar-nav">
 				<?=	$this->Html->li($this->Html->link(__d('me_cms', 'Dashboard'), ['_name' => 'dashboard'], ['icon' => 'dashboard'])) ?>
                 <?= $this->fetch('userbar') ?>
 			</ul>
-			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+			<ul class="nav navbar-nav navbar-right">
 				<?php
 					echo $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
 						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),
