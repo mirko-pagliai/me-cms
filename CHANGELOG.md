@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.1
+* added userbar for frontend. It allows to edit an delete posts, pages and photos.
+
 ### 2.6.0
 * you can now set the expiration of sitemap;
 * now the sitemap uses the cache and handles `lastmod` and `priority` values;

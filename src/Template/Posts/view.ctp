@@ -22,6 +22,11 @@
  */
 ?>
 
+<?php $this->append('userbar'); ?>
+<li><?= $this->Html->link(__d('me_cms', 'Edit post'), ['action' => 'edit', $post->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
+<li><?= $this->Form->postLink(__d('me_cms', 'Delete post'), ['action' => 'delete', $post->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
+<?php $this->end(); ?>
+
 <?php
 	$this->assign('title', $post->title);
 	
@@ -33,8 +38,9 @@
 		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
 	}
 	
-	if(!empty($post->text))
+	if(!empty($post->text)) {
 		$this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($post->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+    }
 ?>
 
 <div class="posts view">
