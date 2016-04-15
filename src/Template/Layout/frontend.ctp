@@ -54,6 +54,7 @@
 		?>
 	</head>
 	<body>
+		<?= $this->element('MeCms.frontend/userbar') ?>
 		<?= $this->element('MeCms.frontend/cookies_policy') ?>
 		<header>
 			<div class="container">

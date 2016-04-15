@@ -394,6 +394,7 @@
     "navs.less",
     "navbar.less",
     "pagination.less",
+    "labels.less",
     "thumbnails.less",
     "alerts.less",
     "responsive-embed.less",
@@ -406,5 +407,5 @@
     "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=920272f2a4e45f4fafd3"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=2d1b1dfe1a81baae55f0ff9f02a3f65f"
 }

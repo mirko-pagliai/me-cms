@@ -68,7 +68,7 @@ class PagesController extends AppController {
 		}
 		
 		$page = $this->Pages->find()
-			->select(['title', 'subtitle', 'slug', 'text', 'active', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
 			->where(compact('slug'))
 			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
 			->firstOrFail();

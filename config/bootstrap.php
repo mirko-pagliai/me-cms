@@ -60,8 +60,9 @@ if(is_readable(CONFIG.'me_cms.php'))
 if(is_localhost() && config('main.debug_on_localhost') && !config('debug')) {
 	Configure::write('debug', TRUE);
 	
-    if(!Plugin::loaded('DebugKit'))
+    if(!Plugin::loaded('DebugKit')) {
         Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+    }
 }
 
 /**
@@ -76,8 +77,9 @@ Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
  */
 $theme = config('frontend.theme');
 
-if($theme && !Plugin::loaded($theme))
+if($theme && !Plugin::loaded($theme)) {
 	Plugin::load($theme);
+}
 
 /**
  * Loads the cache configuration
@@ -85,14 +87,16 @@ if($theme && !Plugin::loaded($theme))
 Configure::load('MeCms.cache');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'cache.php'))
+if(is_readable(CONFIG.'cache.php')) {
 	Configure::load('cache');
+}
     
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
 	//Drops cache configurations that already exist
-	if(Cache::config($key))
+	if(Cache::config($key)) {
 		Cache::drop($key);
+    }
 	
 	Cache::config($key, $config);
 }
@@ -103,8 +107,9 @@ foreach(Configure::consume('Cache') as $key => $config) {
 Configure::load('MeCms.widgets');
 
 //Overwrites with the configuration from application, if exists
-if(is_readable(CONFIG.'widgets.php'))
+if(is_readable(CONFIG.'widgets.php')) {
 	Configure::load('widgets', 'default', FALSE);
+}
 
 //Adds log for users actions
 Log::config('users', [
@@ -136,11 +141,12 @@ Request::addDetector('banned', function ($request) {
      *  - is localhost;
      *  - the IP address has already been verified.
      */
-    if(!$banned || is_localhost() || $request->session()->read('allowed_ip'))
+    if(!$banned || is_localhost() || $request->session()->read('allowed_ip')) {
         return FALSE;
+    }
     
 	//Replaces asteriskes
-    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', is_array($banned) ? $banned : [$banned]));
+    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array) $banned));
 
     if(preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
         return TRUE;

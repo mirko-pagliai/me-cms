@@ -35,7 +35,7 @@ class PhotosController extends AppController {
      */
     public function view($id = NULL) {
 		$this->set('photo', $this->Photos->find()
-			->select(['album_id', 'filename'])
+			->select(['id', 'album_id', 'filename'])
 			->where(compact('id'))
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail()

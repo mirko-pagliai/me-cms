@@ -22,6 +22,11 @@
  */
 ?>
 
+<?php $this->append('userbar'); ?>
+<li><?= $this->Html->link(__d('me_cms', 'Edit photo'), ['action' => 'edit', $photo->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
+<li><?= $this->Form->postLink(__d('me_cms', 'Delete photo'), ['action' => 'delete', $photo->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
+<?php $this->end(); ?>
+
 <?php $this->assign('title', sprintf('%s - %s', __d('me_cms', 'Photo'), $photo->filename)); ?>
 
 <div class="photos view">
