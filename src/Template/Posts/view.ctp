@@ -23,6 +23,18 @@
 ?>
 
 <?php $this->append('userbar'); ?>
+<?php if(!$post->active || $post->created->isFuture()): ?>
+    <li>
+        <?php if(!$post->active): ?>
+            <?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?>
+        <?php endif; ?>
+
+        <?php if($post->created->isFuture()): ?>
+            <?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?>
+        <?php endif; ?>
+    </li>
+<?php endif; ?>
+
 <li><?= $this->Html->link(__d('me_cms', 'Edit post'), ['action' => 'edit', $post->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
 <li><?= $this->Form->postLink(__d('me_cms', 'Delete post'), ['action' => 'delete', $post->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
 <?php $this->end(); ?>

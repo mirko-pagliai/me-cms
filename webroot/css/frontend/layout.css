@@ -76,13 +76,13 @@ body {
 /* -------------------------------- */
 /*				Userbar				*/
 /* -------------------------------- */
-/* Topbar */
+/* Userbar */
 #userbar {
 	box-shadow: 0 -3px 4px 6px rgba(50, 50, 50, .3);
 	margin: 0;
 }
 
-/* Topbar, navigation links */
+/* Userbar, navigation links */
 #userbar .navbar-nav > li > a {
     font-family: Arial,sans-serif;
     font-size: 110%;
@@ -90,7 +90,20 @@ body {
 	padding: 15px 10px;
 }
 
-/* Topbar, dropdown, links on hover */
+/* Userbar, labels */
+#userbar .navbar-nav > li > span.label {
+	display: inline-block;
+	font-size: 100%;
+	margin: 13px 0 13px 10px;
+	padding: .3em .6em .4em;
+}
+
+/* Userbar, last label */
+#userbar .navbar-nav > li > span.label:last-child {
+	margin-right: 13px;
+}
+
+/* Userbar, dropdown, links on hover */
 #userbar .navbar-nav > li .dropdown-menu a:hover {
 	background: #eee;
 }
