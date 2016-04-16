@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.2
+* fixed bug on MenuBuilder helper.
+
 ### 2.6.1
 * added userbar for frontend. It allows to edit an delete posts, pages and photos.
 
