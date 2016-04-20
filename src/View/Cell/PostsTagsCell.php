@@ -49,7 +49,6 @@ class PostsTagsCell extends Cell {
 	 * @param string $prefix Prefix for each tag
 	 * @param bool $shuffle Shuffles tags
 	 * @param array|bool $style Applies style to tags
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function popular($limit = 10, $prefix = '#', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
@@ -69,9 +68,6 @@ class PostsTagsCell extends Cell {
 			
 			$cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
 		}
-		
-		//Checks if the cache is valid
-		$this->Tags->Posts->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
 		$tags = Cache::read($cache, $this->Tags->Posts->cache);

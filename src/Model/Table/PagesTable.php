@@ -50,6 +50,47 @@ class PagesTable extends AppTable {
 
         $this->addBehavior('Timestamp');
     }
+    
+    /**
+     * Creates a new Query for this repository and applies some defaults based on the type of search that was selected
+     * @param string $type The type of query to perform
+     * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
+     * @return Cake\ORM\Query The query builder
+     * @uses setNextToBePublished()
+     */
+    public function find($type = 'all', $options = []) {
+        //Gets from cache the timestamp of the next record to be published
+		$next = Cache::read('next_to_be_published', $this->cache);
+		
+		//If the cache is not valid, it empties the cache
+		if($next && time() >= $next) {
+			Cache::clear(FALSE, $this->cache);
+		
+			//Sets the next record to be published
+			$this->setNextToBePublished();
+		}
+        
+        return parent::find($type, $options);
+    }
+	
+	/**
+	 * Sets to cache the timestamp of the next record to be published.
+	 * This value can be used to check if the cache is valid
+	 * @uses Cake\I18n\Time::toUnixString()
+	 * @uses $cache
+	 */
+	public function setNextToBePublished() {		
+		$next = $this->find()
+			->select('created')
+			->where([
+				sprintf('%s.active', $this->alias()) => TRUE,
+				sprintf('%s.created >', $this->alias()) => new Time()
+			])
+			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
+			->first();
+		
+		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
+	}
 
     /**
      * Default validation rules
