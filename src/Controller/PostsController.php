@@ -184,7 +184,7 @@ class PostsController extends AppController {
 	}
 	
 	/**
-	 * Search posts
+	 * Searches posts
 	 * @uses MeCms\Controller\AppController::_checkLastSearch()
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
