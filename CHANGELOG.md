@@ -3,7 +3,8 @@
 ### 2.6.2
 * improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods;
 * improved code for posts and pages that are drafts or to be published in the future;
-* fixed bug on MenuBuilder helper.
+* fixed bug on MenuBuilder helper;
+* updated Facebook's tags.
 
 ### 2.6.1
 * added userbar for frontend. It allows to edit an delete posts, pages and photos.
