@@ -24,6 +24,7 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\I18n\I18n;
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Core\Plugin;
 
 /**
@@ -84,7 +85,7 @@ class AppController extends BaseController {
             $file = $path.DS.$config.DS.'me_cms.po';
             
 			if(!is_readable($file)) {
-				throw new \Cake\Network\Exception\InternalErrorException(__d('me_tools', 'File or directory {0} not readable', $file));
+				throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', $file));
             }
 			
 			return $config;
@@ -177,7 +178,7 @@ class AppController extends BaseController {
         }
 		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-		$this->viewClass = !$this->request->isAdmin() ? 'MeCms.View/App' : 'MeCms.View/Admin';
+		$this->viewClass = $this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App';
 		
 		//Sets auth data for views
 		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
@@ -224,13 +225,13 @@ class AppController extends BaseController {
 			return FALSE;
         }
 		
-		//Always online for these actions
-		if($this->request->isAction(['offline', 'login', 'logout'])) {
+		//Always online for admin requests
+		if($this->request->isAdmin()) {
 			return FALSE;
         }
 		
-		//Always online for admin requests
-		if($this->request->isAdmin()) {
+		//Always online for these actions
+		if($this->request->isAction(['offline', 'login', 'logout'])) {
 			return FALSE;
         }
 		
