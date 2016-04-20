@@ -44,7 +44,7 @@
 	
 	//Set some tags
 	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $post->created->toUnixString(), 'property' => 'og:updated_time']);
+    $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
     
 	if(!empty($post->preview)) {
 		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);

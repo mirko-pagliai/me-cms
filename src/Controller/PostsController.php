@@ -239,7 +239,7 @@ class PostsController extends AppController {
 				'Tags',
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
 			->firstOrFail();
