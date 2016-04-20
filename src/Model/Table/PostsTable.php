@@ -106,36 +106,28 @@ class PostsTable extends AppTable {
 		
 		return am($requestData, compact('tags'));
 	}
-	
-	/**
-	 * Checks if the cache is valid.
-	 * If the cache is not valid, it empties the cache.
-	 * @uses getNextToBePublished()
-	 * @uses setNextToBePublished()
-	 */
-	public function checkIfCacheIsValid() {
-		//Gets from cache the timestamp of the next record to be published
-		$next = $this->getNextToBePublished();
+    
+    /**
+     * Creates a new Query for this repository and applies some defaults based on the type of search that was selected
+     * @param string $type The type of query to perform
+     * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
+     * @return Cake\ORM\Query The query builder
+     * @uses setNextToBePublished()
+     */
+    public function find($type = 'all', $options = []) {
+        //Gets from cache the timestamp of the next record to be published
+		$next = Cache::read('next_to_be_published', $this->cache);
 		
 		//If the cache is not valid, it empties the cache
 		if($next && time() >= $next) {
-			Cache::clear(FALSE, 'posts');
+			Cache::clear(FALSE, $this->cache);
 		
 			//Sets the next record to be published
 			$this->setNextToBePublished();
 		}
-	}
-	
-	/**
-	 * Gets from cache the timestamp of the next record to be published.
-	 * This value can be used to check if the cache is valid
-	 * @return int Timestamp
-	 * @see checkIfCacheIsValid()
-	 * @uses $cache
-	 */
-	public function getNextToBePublished() {
-		return Cache::read('next_to_be_published', $this->cache);
-	}
+        
+        return parent::find($type, $options);
+    }
 	
 	/**
 	 * Gets the related posts for a post
@@ -247,7 +239,6 @@ class PostsTable extends AppTable {
 	/**
 	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
-	 * @see checkIfCacheIsValid()
 	 * @uses Cake\I18n\Time::toUnixString()
 	 * @uses $cache
 	 */
@@ -255,7 +246,7 @@ class PostsTable extends AppTable {
 		$next = $this->find()
 			->select('created')
 			->where([
-				sprintf('%s.active', $this->alias())	=> TRUE,
+				sprintf('%s.active', $this->alias()) => TRUE,
 				sprintf('%s.created >', $this->alias()) => new Time()
 			])
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
