@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeTools\Cache\Cache;
@@ -32,6 +31,39 @@ use MeTools\Cache\Cache;
  * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsController extends AppController {
+	/**
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        
+        //View posts. It checks created datetime and status. Logged users can view future objects and drafts
+		if($this->request->isAction('view')) {
+            if($this->Auth->user()) {
+                return;
+            }
+            
+            $slug = $this->request->param('slug');
+            
+            $post = $this->Posts->find()
+                ->select(['active', 'created'])
+                ->where(compact('slug'))
+                ->cache(sprintf('status_%s', md5($slug)), $this->Posts->cache)
+                ->firstOrFail();
+            
+            if($post->active && $post->created->isPast()) {
+                return;
+            }
+            
+            $this->Auth->deny('view');
+        }
+    }
+    
 	/**
      * Lists posts
 	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
@@ -213,7 +245,6 @@ class PostsController extends AppController {
 	/**
      * Views post
 	 * @param string $slug Post slug
-     * @throws RecordNotFoundException
 	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
@@ -227,15 +258,12 @@ class PostsController extends AppController {
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
 			->firstOrFail();
-		
-        //Checks created datetime and status. Logged users can view future posts and drafts
-        if(!$this->Auth->user() && (!$post->active || $post->created->isFuture()))
-            throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
         
         $this->set(compact('post'));
         
 		//Gets related posts
-		if(config('post.related.limit'))
+		if(config('post.related.limit')) {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
+        }
 	}
 }

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.6 branch
 ### 2.6.2
+* improved code for posts and pages that are drafts or to be published in the future;
 * fixed bug on MenuBuilder helper.
 
 ### 2.6.1
