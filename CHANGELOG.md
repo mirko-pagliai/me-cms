@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.6 branch
+### 2.6.3
+* fixed bug ordering posts and pages.
+
 ### 2.6.2
 * improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods;
 * improved code for posts and pages that are drafts or to be published in the future;
