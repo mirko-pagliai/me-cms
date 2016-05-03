@@ -151,6 +151,7 @@
 	.content-container .content-text img[style~="float:left"],
 	.content-container .content-text img.pull-right,
 	.content-container .content-text img[style~="float:right"] {
+		height: auto;
 		max-width: 40%;
 	}
 }
