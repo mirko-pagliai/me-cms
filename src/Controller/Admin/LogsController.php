@@ -60,8 +60,9 @@ class LogsController extends AppController {
 				
 		$logs = af(array_map(function($log){
 			//Return, if this is a serialized log
-			if(preg_match('/_serialized\.log$/i', $log))
+			if(preg_match('/_serialized\.log$/i', $log)) {
 				return;
+            }
 			
 			//If this log has a serialized copy
 			$serialized = is_readable(LOGS.sprintf('%s_serialized.log', pathinfo($log, PATHINFO_FILENAME)));
@@ -85,9 +86,10 @@ class LogsController extends AppController {
 	public function view($slug) {
         $log = $this->_logPath($slug);
         
-		if(!is_readable($log))
+		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-				
+        }
+        
         $this->set('log', (object) [
             'content' => trim(file_get_contents($log)),
             'filename' => basename($log),
@@ -103,9 +105,10 @@ class LogsController extends AppController {
 	public function view_serialized($slug) {		
         $log = $this->_logPath($slug, TRUE);
         
-		if(!is_readable($log))
+		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-				
+        }
+        
         $this->set('log', (object) [
 			'content' => unserialize(file_get_contents($log)),
             'filename' => basename($log),
@@ -121,10 +124,11 @@ class LogsController extends AppController {
     public function download($slug) {
         $log = $this->_logPath($slug);
 		
-		if(!is_readable($log))
+		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
+        }
                 
-		$this->response->file($log);
+		$this->response->file($log, ['download' => TRUE]);
 		return $this->response;
     }
     
@@ -139,8 +143,9 @@ class LogsController extends AppController {
         
         $log = $this->_logPath($slug);
 		
-		if(!is_writeable($log))
+		if(!is_writeable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($log)));
+        }
         
         $success = (new File($log))->delete();
                 
@@ -148,17 +153,21 @@ class LogsController extends AppController {
         
         //It also deletes the serialized log copy, where such exists 
         if(file_exists($serialized)) {
-            if(!is_writeable($serialized))
+            if(!is_writeable($serialized)) {
                 throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($serialized)));
+            }
             
-            if(!(new File($serialized))->delete())
+            if(!(new File($serialized))->delete()) {
                 $success = FALSE;
+            }
         }
         
-        if($success)
+        if($success) {
 			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-		else
+        }
+		else {
 			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+        }
         
 		return $this->redirect(['action' => 'index']);
     }
