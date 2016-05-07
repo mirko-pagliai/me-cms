@@ -44,8 +44,8 @@
 	background: #fff;
 }
 
-/* Photo box, images wrapper, thumb */
-.photo-box .photo-image .thumb {
+/* Photo box, images wrapper, image */
+.photo-box .photo-image img {
 	margin: 0 auto;
 }
 
