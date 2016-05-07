@@ -52,6 +52,7 @@
 /* Photo box, actions */
 .photo-box .actions {
     background: #fff;
+	font-size: 90%;
 	margin: 5px 0 0;
 	padding: 6px;
     text-align: center;
