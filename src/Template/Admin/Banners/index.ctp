@@ -58,11 +58,11 @@
     <table class="table table-hover">
 		<thead>
 			<tr>
-				<th><?php echo $this->Paginator->sort('filename', __d('me_cms', 'Filename')); ?></th>
-				<th class="text-center"><?php echo $this->Paginator->sort('Positions.name', __d('me_cms', 'Position')); ?></th>
+				<th><?= $this->Paginator->sort('filename', __d('me_cms', 'Filename')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Positions.name', __d('me_cms', 'Position')) ?></th>
 				<th class="text-center hidden-xs"><?= __d('me_cms', 'Url') ?></th>
-				<th class="text-center"><?php echo $this->Paginator->sort('description', __d('me_cms', 'Description')); ?></th>
-				<th class="text-center"><?php echo $this->Paginator->sort('click_count', __d('me_cms', 'Click')); ?></th>
+				<th class="text-center"><?= __d('me_cms', 'Description') ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('click_count', __d('me_cms', 'Click')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
 		</thead>
