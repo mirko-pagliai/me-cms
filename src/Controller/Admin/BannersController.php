@@ -72,10 +72,18 @@ class BannersController extends AppController {
 	}
 	
 	/**
-     * Lists banners
+     * Lists banners.
+     * 
+     * This action can use the `index_as_grid` template.
 	 * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
      */
-    public function index() {
+    public function index() {        
+        $render = $this->request->query('render');
+        
+        if($this->Cookie->read('render.banners') === 'grid' && !$render) {
+            return $this->redirect(['?' => am($this->request->query, ['render' => 'grid'])]);
+        }
+        
 		$query = $this->Banners->find()
 			->contain(['Positions' => ['fields' => ['id', 'name']]])
 			->select(['id', 'filename', 'target', 'description', 'active', 'click_count', 'created']);
@@ -84,6 +92,14 @@ class BannersController extends AppController {
 		$this->paginate['sortWhitelist'] = ['Banners.filename', 'Positions.name', 'description', 'click_count', 'Banners.created'];
 		
 		$this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
+        
+        if($render) {
+            $this->Cookie->write('render.banners', $render);
+            
+            if($render === 'grid') {
+                $this->render('index_as_grid');
+            }
+        }
     }
 	
 	/**

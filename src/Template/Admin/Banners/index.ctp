@@ -53,6 +53,8 @@
 		</fieldset>
 	<?php echo $this->Form->end(); ?>
 	
+    <?= $this->element('backend/list-grid-buttons') ?>
+    
     <table class="table table-hover">
 		<thead>
 			<tr>
@@ -71,22 +73,25 @@
                         <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
 						<?php
                             //If the banner is not active (not published)
-                            if(!$banner->active)
+                            if(!$banner->active) {
                                 echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
-			
+                            }
+                            
 							$actions = [
 								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
 							];
 							
-							if($banner->target)
+							if($banner->target) {
 								$actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
-							
+                            }
+                            
                             $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $banner->id], ['icon' => 'download']);
                         
 							//Only admins can delete banners
-							if($this->Auth->isGroup('admin'))
+							if($this->Auth->isGroup('admin')) {
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-															
+                            }
+                            
 							echo $this->Html->ul($actions, ['class' => 'actions']);								
 						?>
 					</td>
@@ -118,5 +123,6 @@
 			<?php endforeach; ?>
 		</tbody>
     </table>
+    
 	<?= $this->element('MeTools.paginator') ?>
 </div>

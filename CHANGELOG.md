@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.6 branch
 ### 2.6.4
+* now you can show banners as grid;
 * now you can download banners.
 
 ### 2.6.3
