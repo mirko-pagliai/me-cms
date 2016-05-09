@@ -76,7 +76,7 @@ class BannersController extends AppController {
      * This action can use the `index_as_grid` template.
 	 * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
      */
-    public function index() {        
+    public function index() {
         $render = $this->request->query('render');
         
         if($this->Cookie->read('render.banners') === 'grid' && !$render) {
