@@ -98,6 +98,24 @@ class PhotosTable extends AppTable {
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
     }
+	
+	/**
+	 * Build query from filter data
+	 * @param Query $query Query object
+	 * @param array $data Filter data ($this->request->query)
+	 * @return Query $query Query object
+	 * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
+	 */
+	public function queryFromFilter(Query $query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+		
+		//"Album" field
+		if(!empty($data['album']) && preg_match('/^[1-9]\d*$/', $data['album'])) {
+			$query->where([sprintf('%s.album_id', $this->alias()) => $data['album']]);
+        }
+        
+		return $query;
+	}
 
     /**
      * Default validation rules

@@ -54,21 +54,6 @@ class PhotosAlbumsController extends AppController {
 			$this->PhotosAlbums->find()->select(['id', 'slug', 'title', 'photo_count', 'active'])
 		));
     }
-    
-    /**
-     * Views photos album
-     * @param string $id Photos Album ID
-     */
-    public function view($id = NULL)  {
-        $this->set('album', $this->PhotosAlbums->find()
-            ->select(['id', 'slug', 'title'])
-            ->contain(['Photos' => function($q) {
-                return $q->select(['id', 'album_id', 'filename', 'created']);
-            }])
-            ->where(compact('id'))
-            ->firstOrFail()
-        );
-    }
 
     /**
      * Adds photos album
