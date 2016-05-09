@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -157,17 +156,12 @@ class BannersController extends AppController {
     /**
      * Downloads a banner
      * @param string $id Banner ID
-     * @throws InternalErrorException
+     * @uses MeCms\Controller\AppController::_download()
      */
     public function download($id = NULL) {
         $banner = $this->Banners->get($id);
-		
-		if(!is_readable($banner->path)) {
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($banner->path)));
-        }
-                
-		$this->response->file($banner->path, ['download' => TRUE]);
-		return $this->response;
+        
+        return $this->_download($banner->path);
     }
     
     /**

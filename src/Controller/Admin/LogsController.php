@@ -118,18 +118,11 @@ class LogsController extends AppController {
     /**
      * Downloads a log
 	 * @param string $slug
-     * @throws InternalErrorException
+     * @uses MeCms\Controller\AppController::_download()
      * @uses _logPath()
      */
     public function download($slug) {
-        $log = $this->_logPath($slug);
-		
-		if(!is_readable($log)) {
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-        }
-                
-		$this->response->file($log, ['download' => TRUE]);
-		return $this->response;
+        return $this->_download($this->_logPath($slug));
     }
     
     /**

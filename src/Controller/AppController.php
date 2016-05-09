@@ -62,7 +62,22 @@ class AppController extends BaseController {
 		return TRUE;
 	}
     
-	/**
+    /**
+     * Internal method to download a file
+     * @param string $path File path
+     * @param bool $force If `TRUE`, it forces the download
+     * @throws InternalErrorException
+     */
+    protected function _download($path, $force = TRUE) {
+        if(!is_readable($path)) {
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
+        }
+                
+		$this->response->file($path, ['download' => !empty($force)]);
+		return $this->response;
+    }
+
+    /**
 	 * Gets the user's language
 	 * @return mixed Language code or FALSE
 	 * @throws \Cake\Network\Exception\InternalErrorException
