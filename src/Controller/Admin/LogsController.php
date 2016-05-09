@@ -47,7 +47,7 @@ class LogsController extends AppController {
      * @param bool $serialized TRUE if is a serialized log
      * @return string
      */
-    protected function _logPath($slug, $serialized = FALSE) {
+    protected function _path($slug, $serialized = FALSE) {
 		return LOGS.sprintf($serialized ? '%s_serialized.log' : '%s.log', urldecode($slug));
     }
 	
@@ -81,10 +81,10 @@ class LogsController extends AppController {
 	 * Views a log
 	 * @param string $slug
 	 * @throws InternalErrorException
-     * @uses _logPath()
+     * @uses _path()
 	 */
 	public function view($slug) {
-        $log = $this->_logPath($slug);
+        $log = $this->_path($slug);
         
 		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
@@ -100,10 +100,10 @@ class LogsController extends AppController {
 	 * Views a (serialized) log
 	 * @param string $slug
 	 * @throws InternalErrorException
-     * @uses _logPath()
+     * @uses _path()
 	 */
 	public function view_serialized($slug) {		
-        $log = $this->_logPath($slug, TRUE);
+        $log = $this->_path($slug, TRUE);
         
 		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
@@ -119,10 +119,10 @@ class LogsController extends AppController {
      * Downloads a log
 	 * @param string $slug
      * @uses MeCms\Controller\AppController::_download()
-     * @uses _logPath()
+     * @uses _path()
      */
     public function download($slug) {
-        return $this->_download($this->_logPath($slug));
+        return $this->_download($this->_path($slug));
     }
     
     /**
@@ -134,7 +134,7 @@ class LogsController extends AppController {
     public function delete($slug) {
         $this->request->allowMethod(['post', 'delete']);
         
-        $log = $this->_logPath($slug);
+        $log = $this->_path($slug);
 		
 		if(!is_writeable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($log)));
@@ -142,7 +142,7 @@ class LogsController extends AppController {
         
         $success = (new File($log))->delete();
                 
-        $serialized = $this->_logPath($slug, TRUE);
+        $serialized = $this->_path($slug, TRUE);
         
         //It also deletes the serialized log copy, where such exists 
         if(file_exists($serialized)) {
