@@ -78,7 +78,7 @@
                             }
                             
 							$actions = [
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
 							];
 							
 							if($banner->target) {
