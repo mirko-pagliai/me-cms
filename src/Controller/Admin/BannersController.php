@@ -154,7 +154,7 @@ class BannersController extends AppController {
     }
     
     /**
-     * Downloads a banner
+     * Downloads banner
      * @param string $id Banner ID
      * @uses MeCms\Controller\AppController::_download()
      */
