@@ -155,6 +155,17 @@ class PhotosController extends AppController {
 
         $this->set(compact('photo'));
     }
+    
+    /**
+     * Downloads photo
+     * @param string $id Photo ID
+     * @uses MeCms\Controller\AppController::_download()
+     */
+    public function download($id = NULL) {
+        $photo = $this->Photos->get($id);
+        
+        return $this->_download($photo->path);
+    }
 	
     /**
      * Deletes photo
