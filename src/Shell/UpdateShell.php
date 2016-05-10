@@ -28,6 +28,15 @@ use MeCms\Shell\BaseUpdateShell;
  * Applies updates
  */
 class UpdateShell extends BaseUpdateShell {
+    /**
+	 * Updates to 2.7.0 version
+     */
+	public function to2v7v0() {
+        $this->dispatchShell('MeCms.install', 'createVendorsLinks');
+        
+        @unlink(WWW_ROOT.'vendor'.DS.'jquery-cookie');
+    }
+    
 	/**
 	 * Updates to 2.6.0 version
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
@@ -190,6 +199,7 @@ class UpdateShell extends BaseUpdateShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
+            'to2v7v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.7.0')],
             'to2v6v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.6.0')],
 			'to2v2v1' => ['help' => __d('me_cms', 'Updates to {0} version', '2.2.1')],
 			'to2v1v9' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.9')],
