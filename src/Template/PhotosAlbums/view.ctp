@@ -37,7 +37,7 @@
 				<div class="photo-box">
 					<?php
 						$text = implode(PHP_EOL, [
-							$this->Thumb->image($photo->path, ['side' => 275]),
+							$this->Thumb->square($photo->path, ['side' => 275, 'force' => TRUE]),
 							$this->Html->div('photo-info', $this->Html->div(NULL, $this->Html->para('small', $photo->description)))
 						]);
 						

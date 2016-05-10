@@ -21,8 +21,11 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Banners')); ?>
+
+<?php
+    $this->assign('title', __d('me_cms', 'Banners'));
+	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
+?>
 
 <div class="banners index">
 	<?= $this->Html->h2(__d('me_cms', 'Banners')) ?>
@@ -36,16 +39,22 @@
 					echo $this->Form->input('filename', [
 						'default'		=> $this->request->query('filename'),
 						'placeholder'	=> __d('me_cms', 'filename'),
-						'size'			=> 16
+						'size'			=> 16,
 					]);
 					echo $this->Form->input('active', [
 						'default'	=> $this->request->query('active'),
 						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')]
+						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')],
 					]);
 					echo $this->Form->input('position', [
 						'default'	=> $this->request->query('position'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all positions'))
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all positions')),
+					]);
+					echo $this->Form->datepicker('created', [
+						'data-date-format'	=> 'YYYY-MM',
+						'default'			=> $this->request->query('created'),
+						'placeholder'		=> __d('me_cms', 'month'),
+						'size'				=> 5,
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
@@ -53,14 +62,16 @@
 		</fieldset>
 	<?php echo $this->Form->end(); ?>
 	
+    <?= $this->element('backend/list-grid-buttons') ?>
+    
     <table class="table table-hover">
 		<thead>
 			<tr>
-				<th><?php echo $this->Paginator->sort('filename', __d('me_cms', 'Filename')); ?></th>
-				<th class="text-center"><?php echo $this->Paginator->sort('Positions.name', __d('me_cms', 'Position')); ?></th>
+				<th><?= $this->Paginator->sort('filename', __d('me_cms', 'Filename')) ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('Positions.name', __d('me_cms', 'Position')) ?></th>
 				<th class="text-center hidden-xs"><?= __d('me_cms', 'Url') ?></th>
-				<th class="text-center"><?php echo $this->Paginator->sort('description', __d('me_cms', 'Description')); ?></th>
-				<th class="text-center"><?php echo $this->Paginator->sort('click_count', __d('me_cms', 'Click')); ?></th>
+				<th class="text-center"><?= __d('me_cms', 'Description') ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('click_count', __d('me_cms', 'Click')) ?></th>
 				<th class="text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
 			</tr>
 		</thead>
@@ -71,20 +82,25 @@
                         <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
 						<?php
                             //If the banner is not active (not published)
-                            if(!$banner->active)
+                            if(!$banner->active) {
                                 echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
-			
+                            }
+                            
 							$actions = [
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil'])
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
 							];
 							
-							if($banner->target)
+							if($banner->target) {
 								$actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
-							
+                            }
+                            
+                            $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $banner->id], ['icon' => 'download']);
+                        
 							//Only admins can delete banners
-							if($this->Auth->isGroup('admin'))
+							if($this->Auth->isGroup('admin')) {
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-															
+                            }
+                            
 							echo $this->Html->ul($actions, ['class' => 'actions']);								
 						?>
 					</td>
@@ -116,5 +132,6 @@
 			<?php endforeach; ?>
 		</tbody>
     </table>
+    
 	<?= $this->element('MeTools.paginator') ?>
 </div>

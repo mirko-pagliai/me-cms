@@ -89,6 +89,7 @@ class MenuHelper extends Helper {
 	 */
 	public function photos() {
 		$menu = [
+			$this->Html->link(__d('me_cms', 'List photos'), ['controller' => 'Photos', 'action' => 'index', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Upload photos'), ['controller' => 'Photos', 'action' => 'upload', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'List albums'), ['controller' => 'PhotosAlbums', 'action' => 'index', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add', 'plugin' => 'MeCms']),

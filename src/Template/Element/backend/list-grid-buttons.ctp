@@ -22,13 +22,9 @@
  */
 ?>
 
-<?php $this->append('userbar'); ?>
-<li><?= $this->Html->link(__d('me_cms', 'Edit photo'), ['action' => 'edit', $photo->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
-<li><?= $this->Form->postLink(__d('me_cms', 'Delete photo'), ['action' => 'delete', $photo->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
-<?php $this->end(); ?>
-
-<?php $this->assign('title', sprintf('%s - %s', __d('me_cms', 'Photo'), $photo->filename)); ?>
-
-<div class="photos view">
-	<?= $this->Thumb->resize($photo->path, ['width' => 848]) ?>
+<div class="margin-20">
+    <div class="btn-group btn-group-sm" role="group">
+        <?= $this->Html->button(__d('me_cms', 'Show as list'), ['?' => am($this->request->query, ['render' => 'list'])], ['class' => 'btn-primary', 'icon' => 'align-justify']) ?>
+        <?= $this->Html->button(__d('me_cms', 'Show as grid'), ['?' => am($this->request->query, ['render' => 'grid'])], ['class' => 'btn-primary', 'icon' => 'th-large']) ?>
+    </div>
 </div>

@@ -32,7 +32,7 @@
 		<thead>
 			<tr>
 				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
+				<th class="text-center"><?= __d('me_cms', 'Description') ?></th>
 				<th class="min-width text-center"><?= $this->Paginator->sort('photo_count', __d('me_cms', 'Photos')) ?></th>
 			</tr>
 		</thead>
@@ -43,18 +43,19 @@
                         <strong><?= $this->Html->link($album->title, ['action' => 'view', $album->id]) ?></strong>
 						<?php
                             //If the album is not active (not published)
-                            if(!$album->active)
+                            if(!$album->active) {
                                 echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
+                            }
                             
 							$actions = [
-								$this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $album->id], ['icon' => 'eye']),
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $album->id], ['icon' => 'pencil'])
+								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $album->id], ['icon' => 'pencil']),
 							];
 
 							//Only admins  can delete albums
-							if($this->Auth->isGroup('admin'))
+							if($this->Auth->isGroup('admin')) {
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $album->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-
+                            }
+                            
 							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
 							echo $this->Html->ul($actions, ['class' => 'actions']);
@@ -64,12 +65,11 @@
                         <?= $album->description ?>
                     </td>
 					<td class="min-width text-center">
-						<?php
-							if($album->photo_count) 
-								echo $this->Html->link($album->photo_count, ['controller' => 'Photos', $album->id], ['title' => __d('me_cms', 'View items that belong to this category')]);
-							else
-								echo $album->photo_count;
-						?>
+						<?php if($album->photo_count): ?>
+							<?= $this->Html->link($album->photo_count, ['controller' => 'Photos', 'action' => 'index', '?' => ['album' => $album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                        <?php else: ?>
+							<?= $album->photo_count ?>
+                        <?php endif; ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
