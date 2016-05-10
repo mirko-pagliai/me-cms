@@ -96,6 +96,8 @@ class PhotosController extends AppController {
             $this->Cookie->write('render.photos', $render);
             
             if($render === 'grid') {
+                $this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
+                
                 $this->render('index_as_grid');
             }
         }
