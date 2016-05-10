@@ -21,8 +21,11 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Banners')); ?>
+
+<?php
+    $this->assign('title', __d('me_cms', 'Banners'));
+	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
+?>
 
 <div class="banners index">
 	<?= $this->Html->h2(__d('me_cms', 'Banners')) ?>
@@ -46,6 +49,12 @@
 					echo $this->Form->input('position', [
 						'default'	=> $this->request->query('position'),
 						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all positions')),
+					]);
+					echo $this->Form->datepicker('created', [
+						'data-date-format'	=> 'YYYY-MM',
+						'default'			=> $this->request->query('created'),
+						'placeholder'		=> __d('me_cms', 'month'),
+						'size'				=> 5,
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>

@@ -22,7 +22,10 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Photos')); ?>
+<?php
+    $this->assign('title', __d('me_cms', 'Photos'));
+	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
+?>
 
 <div class="photos index">
 	<?= $this->Html->h2(__d('me_cms', 'Photos')) ?>
@@ -41,6 +44,12 @@
 					echo $this->Form->input('album', [
 						'default'	=> $this->request->query('album'),
 						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all albums')),
+					]);
+					echo $this->Form->datepicker('created', [
+						'data-date-format'	=> 'YYYY-MM',
+						'default'			=> $this->request->query('created'),
+						'placeholder'		=> __d('me_cms', 'month'),
+						'size'				=> 5,
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
