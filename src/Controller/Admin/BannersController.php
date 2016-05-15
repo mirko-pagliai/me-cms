@@ -117,7 +117,7 @@ class BannersController extends AppController {
 		
 		if($position && $this->request->data('file')) {
             //Uploads
-            $filename = $this->_upload($this->request->data('file'), BANNERS);
+            $filename = $this->_upload($this->request->data('file'), BANNERS, 'image');
             
 			if($filename) {
 				$this->Banners->save($this->Banners->newEntity([

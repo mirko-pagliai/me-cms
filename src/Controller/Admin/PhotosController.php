@@ -117,7 +117,7 @@ class PhotosController extends AppController {
 		
 		if($album && $this->request->data('file')) {
             //Uploads
-            $filename = $this->_upload($this->request->data('file'), PHOTOS.DS.$album);
+            $filename = $this->_upload($this->request->data('file'), PHOTOS.DS.$album, 'image');
             
 			if($filename) {
 				$this->Photos->save($this->Photos->newEntity([

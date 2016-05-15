@@ -113,12 +113,25 @@ class AppController extends BaseController {
 	 * Internal method to uploads a file
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
+     * @param string|array $mimetype Array of supported mimetypes or a magic word ("image")
 	 * @return string File path
 	 */
-	protected function _upload($file, $target) {
+	protected function _upload($file, $target, $mimetype = FALSE) {
         if($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
             http_response_code(500);
             exit(__d('me_cms', 'The file was not successfully uploaded'));
+        }
+        
+        if($mimetype === 'image') {
+            $mimetype = ['image/gif', 'image/jpeg', 'image/png'];
+        }
+        
+        //Checks for mimetype
+        if(!empty($mimetype) && is_array($mimetype)) {
+            if(!in_array($file['type'], $mimetype)) {
+                http_response_code(500);
+                exit(__d('me_cms', 'File type not accepted'));
+            }
         }
         
         //Updated the target, adding the filename
