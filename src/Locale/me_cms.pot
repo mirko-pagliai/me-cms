@@ -1,11 +1,11 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
+# LANGUAGE translation of MeCms
+# Copyright 2016 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-05-10 12:01+0200\n"
+"POT-Creation-Date: 2016-05-15 17:33+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,12 +14,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:134
-msgid "The file was not successfully moved to the target directory"
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:122
+msgid "The file was not successfully uploaded"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:138
-msgid "The file was not successfully uploaded"
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:133
+msgid "File type not accepted"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:149
+msgid "The file was not successfully moved to the target directory"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsCategoriesController.php:74
@@ -144,19 +148,19 @@ msgstr ""
 msgid "Before you can manage banners, you have to create at least a banner position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:146
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:142
 msgid "The banner has been saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:150
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:146
 msgid "The banner could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:177
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:173
 msgid "The banner has been deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:179
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:175
 msgid "The banner could not be deleted"
 msgstr ""
 
@@ -230,19 +234,19 @@ msgstr ""
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:148
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:142
 msgid "The photo has been saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:152
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:146
 msgid "The photo could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:180
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:174
 msgid "The photo has been deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:183
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:177
 msgid "The photo could not be deleted"
 msgstr ""
 
@@ -492,15 +496,15 @@ msgstr ""
 msgid "lowercase letters"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:88
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:90
 msgid "Create an admin user?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:130
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:134
 msgid "Creates an admin user"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UpdateShell.php:193;194;195;196;197
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UpdateShell.php:202;203;204;205;206;207
 msgid "Updates to {0} version"
 msgstr ""
 
@@ -929,7 +933,6 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:95
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/index.ctp:46
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:43
 msgid "Edit"
 msgstr ""
 
@@ -1752,24 +1755,8 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/form.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader.ctp:33
 msgid "Drag here files to upload"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/form.ctp:43
-msgid "The file {0} exceeds the maximum limit"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:37
-msgid "Directory: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:38
-msgid "Type: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:39
-msgid "Size: {0}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/cookies_policy.ctp:37
