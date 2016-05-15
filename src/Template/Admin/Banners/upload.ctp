@@ -35,7 +35,7 @@
 				'default'	=> $this->request->query('position'),
 				'label'		=> __d('me_cms', 'Position to upload banners'),
 				'onchange'	=> 'send_form(this)',
-				'options'	=> $positions
+				'options'	=> $positions,
 			]);
 			echo $this->Form->submit(__d('me_cms', 'Select'));
 			echo $this->Form->end();
@@ -43,7 +43,8 @@
 	</div>
 
 	<?php
-		if($this->request->query('position'))
-			echo $this->element('backend/uploader/form');
+		if($this->request->query('position')) {
+			echo $this->element('backend/uploader');
+        }
 	?>
 </div>

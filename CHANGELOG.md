@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.7 branch
+### 2.7.0
+* new uploader (Dropzone);
+* you can now check the mime type of uploaded files;
+* updated js-cookie via Composer.
+
 ## 2.6 branch
 ### 2.6.4
 * you can show banners and photos as list or as grid;

@@ -42,17 +42,18 @@ class InstallShell extends BaseInstallShell {
 		//Configuration files to be copied
 		$this->config = am($this->config, [
 			'MeCms.me_cms',
-			'MeCms.widgets'
+			'MeCms.widgets',
 		]);
 		
 		//Merges assets for which create symbolic links
 		$this->links = am($this->links, [
-			'components/jquery-cookie'	=> 'jquery-cookie',
-			'sunhater/kcfinder'			=> 'kcfinder'
+			'js-cookie/js-cookie/src' => 'js-cookie',
+			'sunhater/kcfinder' => 'kcfinder',
+            'enyo/dropzone/dist' => 'dropzone',
 		]);
 		
 		$this->packages = am($this->packages, [
-			'sunhater/kcfinder:dev-master'
+			'sunhater/kcfinder:dev-master',
 		]);
 		
 		//Merges paths to be created and made writable
@@ -82,12 +83,14 @@ class InstallShell extends BaseInstallShell {
 		}
 		
 		$ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
-		if(in_array($ask, ['Y', 'y']))
+		if(in_array($ask, ['Y', 'y'])) {
 			$this->fixKcfinder();
+        }
 		
 		$ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
-		if(in_array($ask, ['Y', 'y']))
+		if(in_array($ask, ['Y', 'y'])) {
 			$this->createAdmin();
+        }
 	}
 	
 	/**
@@ -106,9 +109,10 @@ class InstallShell extends BaseInstallShell {
 	 */
 	public function fixKcfinder() {
 		//Checks for KCFinder
-		if(!is_readable(WWW_ROOT.'vendor'.DS.'kcfinder'))
+		if(!is_readable(WWW_ROOT.'vendor'.DS.'kcfinder')) {
 			return $this->err(__d('me_tools', '{0} is not available', 'KCFinder'));
-		
+        }
+        
 		$this->createFile(WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'.htaccess', '<IfModule mod_php5.c>
 			php_value session.cache_limiter must-revalidate
 			php_value session.cookie_httponly On
@@ -128,7 +132,7 @@ class InstallShell extends BaseInstallShell {
 		
 		return $parser->addSubcommands([
 			'createAdmin'	=> ['help' => __d('me_cms', 'Creates an admin user')],
-			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')]
+			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')],
 		]);
 	}
 }
