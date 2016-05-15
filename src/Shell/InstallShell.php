@@ -47,8 +47,9 @@ class InstallShell extends BaseInstallShell {
 		
 		//Merges assets for which create symbolic links
 		$this->links = am($this->links, [
-			'js-cookie/js-cookie/src'	=> 'js-cookie',
-			'sunhater/kcfinder'			=> 'kcfinder',
+			'js-cookie/js-cookie/src' => 'js-cookie',
+			'sunhater/kcfinder' => 'kcfinder',
+            'enyo/dropzone/dist' => 'dropzone',
 		]);
 		
 		$this->packages = am($this->packages, [

@@ -113,34 +113,30 @@ class AppController extends BaseController {
 	 * Internal method to uploads a file
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
-	 * @return mixed Full file path or FALSE if there's an error
+	 * @return string File path
 	 */
 	protected function _upload($file, $target) {
-		//Checks if the file was successfully uploaded
-		if(isset($file['error']) && $file['error'] == UPLOAD_ERR_OK && is_uploaded_file($file['tmp_name'])) {
-			//Updated the target, adding the filename
-			if(!file_exists($target.DS.$file['name'])) {
-				$target .= DS.$file['name'];
-            }
-			//If the file already exists, adds the name of the temporary file to the filename
-			else {
-				$target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
-            }
-
-            $upload = move_uploaded_file($file['tmp_name'], $file['target'] = $target);
-            
-			//Checks if the file was successfully moved to the target directory
-			if(!$upload) {
-				$error = __d('me_cms', 'The file was not successfully moved to the target directory');
-            }
-		}
-		else {
-			$error = __d('me_cms', 'The file was not successfully uploaded');
+        if($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
+            http_response_code(500);
+            exit(__d('me_cms', 'The file was not successfully uploaded'));
         }
-		
-		$this->set(am(['error' => empty($error) ? FALSE : $error], compact('file')));
-		
-		return empty($error) ? $target : FALSE;
+        
+        //Updated the target, adding the filename
+        if(!file_exists($target.DS.$file['name'])) {
+            $target .= DS.$file['name'];
+        }
+        //If the file already exists, adds the name of the temporary file to the filename
+        else {
+            $target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
+        }
+
+        //Checks if the file was successfully moved to the target directory
+        if(!move_uploaded_file($file['tmp_name'], $file['target'] = $target)) {
+            http_response_code(500);
+            exit(__d('me_cms', 'The file was not successfully moved to the target directory'));
+        }
+        
+        return $target;
 	}
 	
 	/**

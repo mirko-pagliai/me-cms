@@ -118,21 +118,13 @@ class PhotosController extends AppController {
 		if($album && $this->request->data('file')) {
             //Uploads
             $filename = $this->_upload($this->request->data('file'), PHOTOS.DS.$album);
-                
-			//Checks if the file has been uploaded
+            
 			if($filename) {
-				$photo = $this->Photos->save($this->Photos->newEntity([
-					'album_id'	=> $album,
-					'filename'	=> basename($filename),
+				$this->Photos->save($this->Photos->newEntity([
+					'album_id' => $album,
+					'filename' => basename($filename),
 				]));
-				
-				if($photo->id) {
-					$this->set('edit_url', ['action' => 'edit', $photo->id]);
-                }
 			}
-			
-			//Renders the element `backend/uploader/response`
-			$this->render('/Element/backend/uploader/response', FALSE);
 		}
 	}
 

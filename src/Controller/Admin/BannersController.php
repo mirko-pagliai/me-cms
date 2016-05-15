@@ -109,8 +109,9 @@ class BannersController extends AppController {
 	 */
 	public function upload() {
 		//If there's only one position, it automatically sets the query value
-		if(!$this->request->query('position') && count($this->viewVars['positions']) < 2)
+		if(!$this->request->query('position') && count($this->viewVars['positions']) < 2) {
 			$this->request->query['position'] = fk($this->viewVars['positions']);
+        }
 				
 		$position = $this->request->query('position');
 		
@@ -118,19 +119,12 @@ class BannersController extends AppController {
             //Uploads
             $filename = $this->_upload($this->request->data('file'), BANNERS);
             
-			//Checks if the file has been uploaded
 			if($filename) {
-				$banner = $this->Banners->save($this->Banners->newEntity([
-					'position_id'	=> $position,
-					'filename'		=> basename($filename)
+				$this->Banners->save($this->Banners->newEntity([
+					'position_id' => $position,
+					'filename' => basename($filename),
 				]));
-				
-				if($banner->id)
-					$this->set('edit_url', ['action' => 'edit', $banner->id]);
 			}
-			
-			//Renders the element `backend/uploader/response`
-			$this->render('/Element/backend/uploader/response', FALSE);
 		}
 	}
 

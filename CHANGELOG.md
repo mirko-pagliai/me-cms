@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.0
+* new uploader (Dropzone);
 * updated js-cookie via Composer.
 
 ## 2.6 branch
