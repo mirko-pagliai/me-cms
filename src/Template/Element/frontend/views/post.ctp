@@ -99,10 +99,8 @@
 	</div>
     
 	<?php
-		if(config('post.shareaholic') && config('shareaholic.app_id')) {
-			if($this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
-				echo $this->Html->shareaholic(config('shareaholic.app_id'));
-            }
+		if(config('post.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
+			echo $this->Html->shareaholic(config('shareaholic.app_id'));
         }
 	?>
 </div>
