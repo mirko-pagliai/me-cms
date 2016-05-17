@@ -70,7 +70,7 @@ blockquote:after {
 /* Body */
 body {
     font-family: Roboto,sans-serif;
-	padding-bottom: 60px;
+	padding-bottom: 84px;
 }
 
 /* -------------------------------- */
@@ -281,7 +281,6 @@ body header #topbar .navbar-collapse li.open > a {
 body > footer {
     background: #f2f2f2;
     color: #888;
-	margin-top: 20px;
     padding: 10px;
     text-align: center;
 }
