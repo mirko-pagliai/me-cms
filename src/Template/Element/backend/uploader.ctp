@@ -30,7 +30,7 @@
 <?= $this->Html->scriptStart(); ?>
     //See http://www.dropzonejs.com/#configuration-options
     Dropzone.options.uploader = {
-        dictDefaultMessage: '<?= __d('me_cms', 'Drag here files to upload') ?>',
+        dictDefaultMessage: '<?= __d('me_cms', 'Drag files here or click') ?>',
         previewTemplate: '<div class="col-md-3 dz-preview dz-file-preview">' +
             '<div>' +
                 '<div class="dz-details">' +
