@@ -92,7 +92,9 @@ class BannersController extends AppController {
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
+        if($render === 'grid') {
+            $this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
+        }
 		
 		$this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
         
@@ -100,8 +102,6 @@ class BannersController extends AppController {
             $this->Cookie->write('render.banners', $render);
             
             if($render === 'grid') {
-                $this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
-                
                 $this->render('index_as_grid');
             }
         }
