@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.2
+* fixed titles.
+
 ### 2.7.1
 * fixed bug for uploader;
 * fixed bug for paginate of banners and photos;
