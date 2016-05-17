@@ -68,8 +68,9 @@ class BackupsController extends AppController {
 				$this->Flash->success(__d('me_cms', 'The backup has been created'));
 				return $this->redirect(['action' => 'index']);
 			}
-			else
+			else {
 				$this->Flash->error(__d('me_cms', 'The backup has not been created'));
+            }
 		}
 		
 		$this->set(compact('backup'));
@@ -83,11 +84,13 @@ class BackupsController extends AppController {
 	public function delete($filename) {
         $this->request->allowMethod(['post', 'delete']);
 		
-		if(Backup::delete(urldecode($filename)))
+		if(Backup::delete(urldecode($filename))) {
 			$this->Flash->success(__d('me_cms', 'The backup has been deleted'));
-		else
+        }
+		else {
 			$this->Flash->error(__d('me_cms', 'The backup could not be deleted'));
-		
+        }
+        
         return $this->redirect(['action' => 'index']);
 	}
 
@@ -113,10 +116,15 @@ class BackupsController extends AppController {
 		$backup = new BackupImport();
 		$backup->filename($filename);
         
-        if($backup->import())
+        if($backup->import()) {
+            //Clears the cache
+            Cache::clearAll();
+            
 			$this->Flash->success(__d('me_cms', 'The backup has been restored'));
-		else
+        }
+		else {
 			$this->Flash->error(__d('me_cms', 'The backup could not be restored'));
+        }
         
         return $this->redirect(['action' => 'index']);
     }

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.2
+* fixed bug to restore databases. The cache is properly cleaned;
 * fixed titles.
 
 ### 2.7.1
