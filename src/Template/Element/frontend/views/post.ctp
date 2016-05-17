@@ -42,6 +42,7 @@
 				echo $this->Html->h4($this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]), ['class' => 'content-subtitle']);
             }
 		?>
+        
 		<div class="content-info">
 			<?php
 				if(config('post.author') && !empty($post->user->full_name)) {
@@ -57,15 +58,10 @@
 						['icon' => 'clock-o']
 					);
                 }
-                
-				if(config('post.tags') && !empty($post->tags)) {
-					echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
-						return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']);
-					}, $post->tags)));
-                }
 			?>
 		</div>
 	</div>
+    
 	<div class="content-text">
 		<?php
 			//Executes BBCode on the text
@@ -84,6 +80,7 @@
             }
 		?>
 	</div>
+    
 	<div class="content-buttons">
 		<?php
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
@@ -92,6 +89,15 @@
             }
 		?>
 	</div>
+    
+    <?php
+        if(config('post.tags') && !empty($post->tags) && $this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
+            echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
+                return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']);
+            }, $post->tags)));
+        }
+    ?>
+    
 	<?php
 		if(config('post.shareaholic') && config('shareaholic.app_id')) {
 			if($this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {

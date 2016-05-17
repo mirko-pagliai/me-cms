@@ -75,18 +75,6 @@
 	width: 14px;
 }
 
-/* Header, info (author, date, etc), tags, tag */
-.content-container .content-header .content-info .content-tags > a {
-	display: inline-block;
-	margin-right: 6px;
-	margin-top: 4px;
-}
-
-/* Header, info (author, date, etc), tags, tag, icon */
-.content-container .content-header .content-info .content-tags > a > .fa {
-	margin-right: 2px;
-}
-
 /* Extra small and small devices */
 @media (max-width: 992px) {
 	/* Header, category */
@@ -192,6 +180,26 @@
 	font-family: FontAwesome;
 	font-size: 12px;
 	margin-left: 6px;
+}
+
+/* -------------------------------- */
+/*			Content tags			*/
+/* -------------------------------- */
+/* Tags */
+.content-container .content-tags {
+	margin-top: 20px;
+}
+
+/* Tags, tag */
+.content-container .content-tags a {
+	display: inline-block;
+	margin-right: 6px;
+	text-decoration: none;
+}
+
+/* Tags, tag, icon */
+.content-container .content-tags a .fa {
+	margin-right: 2px;
 }
 
 /* -------------------------------- */
