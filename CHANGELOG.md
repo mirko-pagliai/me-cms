@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.1
+* fixed bug for paginate of banners and photos;
 * fixed bug for filter forms.
 
 ### 2.7.0
