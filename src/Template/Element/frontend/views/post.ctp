@@ -62,7 +62,7 @@
 		</div>
 	</div>
     
-	<div class="content-text">
+	<div class="content-text clearfix">
 		<?php
 			//Executes BBCode on the text
 			$post->text = $this->BBCode->parser($post->text);
