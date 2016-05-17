@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.1
+* fixed bug for filter forms.
+
 ### 2.7.0
 * new uploader (Dropzone);
 * you can now check the mime type of uploaded files;
