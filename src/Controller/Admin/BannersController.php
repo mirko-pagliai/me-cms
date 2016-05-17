@@ -129,6 +129,8 @@ class BannersController extends AppController {
 					'filename' => basename($filename),
 				]));
 			}
+            
+            $this->render(FALSE);
 		}
 	}
 

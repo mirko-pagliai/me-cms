@@ -129,6 +129,8 @@ class PhotosController extends AppController {
 					'filename' => basename($filename),
 				]));
 			}
+            
+            $this->render(FALSE);
 		}
 	}
 
