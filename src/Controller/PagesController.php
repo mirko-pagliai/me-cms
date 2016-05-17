@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -31,6 +30,44 @@ use MeCms\Utility\StaticPage;
  * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesController extends AppController {
+	/**
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeCms\Utility\StaticPage::get()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        
+        //View pages. It checks created datetime and status. Logged users can view future objects and drafts
+		if($this->request->isAction('view')) {
+            if($this->Auth->user()) {
+                return;
+            }
+            
+            $slug = $this->request->param('slug');
+            
+            if(StaticPage::get($slug)) {
+                return;
+            }
+            
+            $page = $this->Pages->find()
+                ->select(['active', 'created'])
+                ->where(compact('slug'))
+                ->cache(sprintf('status_%s', md5($slug)), $this->Pages->cache)
+                ->firstOrFail();
+            
+            if($page->active && $page->created->isPast()) {
+                return;
+            }
+            
+            $this->Auth->deny('view');
+        }
+    }
+    
 	/**
      * Lists pages
      */
@@ -49,7 +86,6 @@ class PagesController extends AppController {
 	 * 
 	 * Static pages must be located in `APP/View/StaticPages/`.
 	 * @param string $slug Page slug
-     * @throws RecordNotFoundException
 	 * @uses MeCms\Utility\StaticPage::get()
 	 * @uses MeCms\Utility\StaticPage::title()
 	 */
@@ -68,14 +104,10 @@ class PagesController extends AppController {
 		}
 		
 		$page = $this->Pages->find()
-			->select(['title', 'subtitle', 'slug', 'text', 'active', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
 			->where(compact('slug'))
 			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
 			->firstOrFail();
-		
-        //Checks created datetime and status. Logged users can view future pages and drafts
-        if(!$this->Auth->user() && (!$page->active || $page->created->isFuture()))
-            throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
         
         $this->set(compact('page'));
     }

@@ -14,6 +14,6 @@ $(function() {
 		$('#cookies-policy').remove();
 		
 		//Sets the cookies
-		$.cookie('cookies-policy', true, { expires: 999, path: '/' });
+		Cookies.set('cookies-policy', true, { expires: 999, path: '/' });
 	});
 });

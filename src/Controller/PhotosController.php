@@ -35,10 +35,28 @@ class PhotosController extends AppController {
      */
     public function view($id = NULL) {
 		$this->set('photo', $this->Photos->find()
-			->select(['album_id', 'filename'])
+			->select(['id', 'album_id', 'filename'])
 			->where(compact('id'))
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail()
 		);
+    }
+    
+    /**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/photo/11</pre>
+	 * These URLs will become:
+	 * <pre>/photo/album-name/1</pre>
+     * @param string $id Photo ID
+     */
+    public function view_compatibility($id) {
+        $photo = $this->Photos->find()
+            ->select(['id'])
+            ->contain(['Albums' => function($q) {
+                return $q->select(['slug']);
+            }])
+           ->firstOrFail();
+        
+		return $this->redirect(am(['_name' => 'photo', 'slug' => $photo->album->slug], compact('id')), 301);
     }
 }

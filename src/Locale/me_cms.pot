@@ -1,11 +1,11 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
+# LANGUAGE translation of MeCms
+# Copyright 2016 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-04-02 17:48+0200\n"
+"POT-Creation-Date: 2016-05-17 18:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,107 +14,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:79
-msgid "The file was not successfully moved to the target directory"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:82
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:122
 msgid "The file was not successfully uploaded"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PagesController.php:78
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsCategoriesController.php:78
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:233
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsTagsController.php:80
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:133
+msgid "File type not accepted"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/AppController.php:149
+msgid "The file was not successfully moved to the target directory"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsCategoriesController.php:74
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsTagsController.php:77
 msgid "Record not found"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:204
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:221
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:207
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:224
 msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:52
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:169;288;380
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:55
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:166;285;377
 msgid "Disabled"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:66
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:69
 msgid "The email has been sent"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:70
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:73
 msgid "The email was not sent"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:138;345
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:135;342
 msgid "Invalid token"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:151
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:148
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:193
 msgid "The account has been activated"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:154
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:151
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:195
 msgid "The account has not been activated"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:195
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:192
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:206;320
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:203;317
 msgid "No account found"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:210;324
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:207;321
 msgid "The form has not been filled in correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:237
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:234
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:239
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:236
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:261
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:258
 msgid "Invalid username or password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:274
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:271
 msgid "You are successfully logged out"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:309;409
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:306;406
 msgid "We send you an email to activate your account"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:359
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:356
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:217
 msgid "The password has been edited"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:363
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:360
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:221
 msgid "The password has not been edited"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:402
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:399
 msgid "The account has been created, but it needs to be activated by an admin"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:413
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:410
 msgid "Account created. Now you can login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:420
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:417
 msgid "The account has not been created"
 msgstr ""
 
@@ -134,11 +136,11 @@ msgstr ""
 msgid "The backup could not be deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:119
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:117
 msgid "The backup has been restored"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:121
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:119
 msgid "The backup could not be restored"
 msgstr ""
 
@@ -146,19 +148,19 @@ msgstr ""
 msgid "Before you can manage banners, you have to create at least a banner position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:133
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:148
 msgid "The banner has been saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:137
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:152
 msgid "The banner could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:152
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:179
 msgid "The banner has been deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:154
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:181
 msgid "The banner could not be deleted"
 msgstr ""
 
@@ -183,48 +185,48 @@ msgid "Before you delete this position, you have to delete its banners or assign
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:159
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:197
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:235
 msgid "The operation has been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:161
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:199
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:162
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:238
 msgid "The operation has not been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:104;127
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:105;128
 msgid "The page has been saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:108;131
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:109;132
 msgid "The page could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:146
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:147
 msgid "The page has been deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:148
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:149
 msgid "The page could not be deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:83;104
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:68;89
 msgid "The photos album has been saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:87;108
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:72;93
 msgid "The photos album could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:125
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:110
 msgid "The photos album has been deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:127
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:112
 msgid "The photos album could not be deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:130
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:115
 msgid "Before you delete this album, you have to delete its photos or assign them to another album"
 msgstr ""
 
@@ -232,19 +234,19 @@ msgstr ""
 msgid "Before you can manage photos, you have to create at least an album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:117
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:148
 msgid "The photo has been saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:121
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:152
 msgid "The photo could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:137
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:180
 msgid "The photo has been deleted"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:139
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:183
 msgid "The photo could not be deleted"
 msgstr ""
 
@@ -300,7 +302,7 @@ msgstr ""
 msgid "{0} is not present into {1}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:193
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:231
 msgid "Unknown command type"
 msgstr ""
 
@@ -370,7 +372,7 @@ msgid "Valid extensions: {0}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Form/BackupForm.php:56
-#: /home/mirko/Libs/Plugins/MeCms/src/Form/ContactForm.php:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Form/ContactForm.php:57
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:67;75;87;99;129;136
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:40
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/TagValidator.php:40
@@ -379,7 +381,7 @@ msgstr ""
 msgid "Must be between {0} and {1} chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Form/ContactForm.php:70
+#: /home/mirko/Libs/Plugins/MeCms/src/Mailer/ContactFormMailer.php:41
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Systems/contact_form.ctp:25
 msgid "Email from {0}"
 msgstr ""
@@ -494,15 +496,15 @@ msgstr ""
 msgid "lowercase letters"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:88
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:90
 msgid "Create an admin user?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:130
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:134
 msgid "Creates an admin user"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UpdateShell.php:132;133;134;135
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UpdateShell.php:202;203;204;205;206;207
 msgid "Updates to {0} version"
 msgstr ""
 
@@ -612,7 +614,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:130
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:26;31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/index.ctp:36
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:148
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:150
 msgid "Users"
 msgstr ""
 
@@ -626,7 +628,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:76
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:74
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/index.ctp:47
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:61
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:61
 msgid "Posts"
 msgstr ""
 
@@ -637,10 +639,11 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:159
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:35
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:64
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:35
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:38
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:38
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:70
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:33
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:50
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:50
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:85
@@ -679,17 +682,18 @@ msgid "Lists users"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/add.ctp:25;28;39
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:163
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:166
 msgid "Add backup"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/add.ctp:34
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:33
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/edit.ctp:47
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:59
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:30
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/statics.ctp:31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:44
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:30
 msgid "Filename"
 msgstr ""
 
@@ -699,10 +703,11 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/add.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/edit.ctp:54
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:62
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:33
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/add.ctp:33
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:35
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/add.ctp:53
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/edit.ctp:52
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:35
@@ -750,7 +755,11 @@ msgid "Compression"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:43
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:57
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:50
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:44
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index_as_grid.ctp:44
 msgid "Download"
 msgstr ""
 
@@ -763,12 +772,14 @@ msgid "This will overwrite the current database and some data may be lost. Are y
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:86
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:61
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:54
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:95
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:49
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index_as_grid.ctp:49
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:56
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/view.ctp:52
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:115
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:51
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:104
@@ -778,17 +789,22 @@ msgid "Delete"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:86
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:61
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:54
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:95
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:49
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index_as_grid.ctp:49
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:56
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/view.ctp:52
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:115
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:51
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:104
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:41
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/index.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Pages/view.ctp:39
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Photos/view.ctp:27
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/view.ctp:39
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
@@ -797,7 +813,7 @@ msgid "Edit banner"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/edit.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:60
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:31
 msgid "Position"
 msgstr ""
 
@@ -824,91 +840,49 @@ msgstr ""
 msgid "The address should begin with {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:25;28
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:36
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:122
-msgid "Banners"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:29
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/view.ctp:29
-msgid "Upload"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:36
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:36
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsTags/index.ctp:47
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:36
-msgid "Filter"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:38
-msgid "filename"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:43
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:46
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:46
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:46
-msgid "all status"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:44
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:47
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:47
-msgid "Only published"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:44
-msgid "Only not published"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:48
-msgid "all positions"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:61
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:32
 msgid "Url"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:63
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:34
 msgid "Click"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:75
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:46
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:47
 msgid "Not published"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:78
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:50
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:43
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:46
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:91
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:43
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index_as_grid.ctp:43
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:51
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/view.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:111
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:46
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsTags/index.ctp:72
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:95
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/index.ctp:46
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:39
 msgid "Edit"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:82
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:97
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/statics.ctp:41
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:58
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/view.ctp:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:59
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:117
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:54
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsTags/index.ctp:74
 msgid "Open"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:92
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:59
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:68
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:58
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:56
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:69
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:104;123
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:65
@@ -918,7 +892,7 @@ msgid "View items that belong to this category"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/upload.ctp:25;28
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:112
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:115
 msgid "Upload banners"
 msgstr ""
 
@@ -938,7 +912,7 @@ msgid "Add banners position"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/add.ctp:36
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:119
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:121
 msgid "Add position"
 msgstr ""
 
@@ -952,6 +926,12 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:25;28
 msgid "Banners positions"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:26;31
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:124
+msgid "Banners"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:25;28
@@ -1009,7 +989,7 @@ msgid "Full log"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:26;33;74
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:77
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:77
 msgid "Add page"
 msgstr ""
 
@@ -1096,6 +1076,7 @@ msgid "Text"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:26;33;74
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Pages/view.ctp:38
 msgid "Edit page"
 msgstr ""
 
@@ -1103,13 +1084,35 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Pages/pages.ctp:31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/topbar.ctp:43
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Pages/index.ctp:25;29
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:81
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:82
 msgid "Pages"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsTags/index.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:36
+msgid "Filter"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:41
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:41
 msgid "title"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:46
+msgid "all status"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:47
+msgid "Only published"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:47
@@ -1125,16 +1128,22 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:56
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:64
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:60
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:56
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:51
 msgid "month"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:81
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:96
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Pages/view.ctp:29
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/view.ctp:29
 msgid "Draft"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:85
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:100
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Pages/view.ctp:33
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/view.ctp:33
 msgid "Scheduled"
 msgstr ""
 
@@ -1177,15 +1186,17 @@ msgid "Path"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:25;28;53
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Photos/view.ctp:26
 msgid "Edit photo"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:33
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:31
 msgid "Album"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/upload.ctp:25;28
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:91
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:93
 msgid "Upload photos"
 msgstr ""
 
@@ -1198,7 +1209,7 @@ msgid "Add photos album"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/add.ctp:57
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:93
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:95
 msgid "Add album"
 msgstr ""
 
@@ -1216,20 +1227,16 @@ msgid "Albums"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:26;31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/topbar.ctp:44
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/PhotosAlbums/index.ctp:27;30
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/PhotosAlbums/view.ctp:28
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:96
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/PhotosAlbums/view.ctp:26
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:98
 msgid "Photos"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:50
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:94
-msgid "View"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:26;34;110
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:49
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:50
 msgid "Add post"
 msgstr ""
 
@@ -1257,6 +1264,7 @@ msgid "Tags must be at least 3 chars and separated by a comma or a comma and a s
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:26;34;110
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/view.ctp:38
 msgid "Edit post"
 msgstr ""
 
@@ -1322,7 +1330,7 @@ msgid "View items that belong to this element"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/browser.ctp:26;31
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:190
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:194
 msgid "Media browser"
 msgstr ""
 
@@ -1331,7 +1339,7 @@ msgid "Type"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/changelogs.ctp:25;28
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:191
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:195
 msgid "Changelogs"
 msgstr ""
 
@@ -1340,7 +1348,7 @@ msgid "Changelog"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:26;39
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:189
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:193
 msgid "System checkup"
 msgstr ""
 
@@ -1353,7 +1361,7 @@ msgid "The cache is enabled"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:63
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:43
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:44
 msgid "The cache is disabled or debugging is active"
 msgstr ""
 
@@ -1394,7 +1402,7 @@ msgid "{0} is available"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:141
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:166
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:169
 msgid "Backups"
 msgstr ""
 
@@ -1410,52 +1418,52 @@ msgstr ""
 msgid "Temporary directories"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:25;29
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:181
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:25;28
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:185
 msgid "Temporary files"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:31
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:30
 msgid "All temporary files"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:31
 msgid "All temporary files size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:33
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:34
 msgid "This command clear all temporary files: cache, assets, logs and thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:34
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:35
 msgid "Clear all temporary files"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:41
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:42
 msgid "Cache"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:46
 msgid "Cache size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:47
 msgid "Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:48
 msgid "Clear cache"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:51
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:52
 msgid "Assets"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:52
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:53
 msgid "Assets size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:55
 msgid "Clear assets"
 msgstr ""
 
@@ -1463,28 +1471,44 @@ msgstr ""
 msgid "Logs size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:63
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:65
 msgid "Clear logs"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:69
-msgid "Thumbnails"
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:71
+msgid "Sitemap"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:70
-msgid "Thumbnails size: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:73
-msgid "Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used"
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:72
+msgid "Sitemap size: {0}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:76
+msgid "Note: you should not need to clear the sitemap, unless you have recently changed many records"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:77
+msgid "Clear sitemap"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:83
+msgid "Thumbnails"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:84
+msgid "Thumbnails size: {0}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:87
+msgid "Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:90
 msgid "Clear thumbnails"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:25;28;75
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:138
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:141
 msgid "Add user"
 msgstr ""
 
@@ -1559,6 +1583,10 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:94
+msgid "View"
+msgstr ""
+
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:102
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:39
 msgid "Activate"
@@ -1578,7 +1606,7 @@ msgid "Add users group"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/add.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:145
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:147
 msgid "Add group"
 msgstr ""
 
@@ -1641,6 +1669,28 @@ msgstr ""
 msgid "Popular tags"
 msgstr ""
 
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:32
+msgid "Upload"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:41
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:41
+msgid "filename"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:47
+msgid "Only not published"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:51
+msgid "all positions"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:46
+msgid "all albums"
+msgstr ""
+
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/bbcode.ctp:30
 msgid "BBCode"
 msgstr ""
@@ -1661,42 +1711,37 @@ msgstr ""
 msgid "Adds a {0} video. You may indicate the ID or the url of the video"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:30
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/list-grid-buttons.ctp:27
+msgid "Show as list"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/list-grid-buttons.ctp:28
+msgid "Show as grid"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/topbar.ctp:30
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/userbar.ctp:36
 msgid "Toggle navigation"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:40
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Layout/frontend.ctp:67
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:42
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Layout/frontend.ctp:68
 msgid "Homepage"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:56
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/userbar.ctp:52
 msgid "Change password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:55
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/topbar.ctp:57
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/userbar.ctp:53
 msgid "Logout"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/form.ctp:32
-msgid "Drag here files to upload"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/form.ctp:43
-msgid "The file {0} exceeds the maximum limit"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:33
-msgid "Directory: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:34
-msgid "Type: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader/response.ctp:35
-msgid "Size: {0}"
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/backend/uploader.ctp:33
+msgid "Drag files here or click"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/cookies_policy.ctp:37
@@ -1740,6 +1785,10 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/topbar.ctp:42
 msgid "Categories"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/userbar.ctp:46
+msgid "Dashboard"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/frontend/views/page.ctp:37
@@ -1824,7 +1873,15 @@ msgstr ""
 msgid "Please, don't reply to this email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Photos/view.ctp:25
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Pages/view.ctp:39
+msgid "Delete page"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Photos/view.ctp:27
+msgid "Delete photo"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Photos/view.ctp:30
 msgid "Photo"
 msgstr ""
 
@@ -1850,6 +1907,10 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/search.ctp:46
 msgid "You have searched for: {0}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/view.ctp:39
+msgid "Delete post"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Posts/rss/rss.ctp:30;32
@@ -1914,59 +1975,63 @@ msgstr ""
 msgid "Repeat your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:48
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:49
 msgid "List posts"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:55
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:55
 msgid "List categories"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:56
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:56
 msgid "Add category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:59
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:59
 msgid "List tags"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:72
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:72
 msgid "List pages"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:79
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:80
 msgid "List static pages"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:92
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:92
+msgid "List photos"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:94
 msgid "List albums"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:111
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:114
 msgid "List banners"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:118
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:120
 msgid "List positions"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:137
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:140
 msgid "List users"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:144
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:146
 msgid "List groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:162
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:165
 msgid "List backups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:186
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:190
 msgid "Log management"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MeCmsMenuHelper.php:194
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:197
 msgid "System"
 msgstr ""
 

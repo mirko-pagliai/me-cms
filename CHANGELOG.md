@@ -1,5 +1,50 @@
 # 2.x branch
+## 2.7 branch
+### 2.7.1
+* fixed bug for uploader;
+* fixed bug for paginate of banners and photos;
+* fixed bug for filter forms.
+
+### 2.7.0
+* new uploader (Dropzone);
+* you can now check the mime type of uploaded files;
+* updated js-cookie via Composer.
+
+## 2.6 branch
+### 2.6.4
+* you can show banners and photos as list or as grid;
+* you can filter banners and photos by created date;
+* you can download banners and photos.
+
+### 2.6.3
+* fixed bug ordering posts and pages.
+
+### 2.6.2
+* improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods;
+* improved code for posts and pages that are drafts or to be published in the future;
+* fixed bug on MenuBuilder helper;
+* updated Facebook's tags.
+
+### 2.6.1
+* added userbar for frontend. It allows to edit an delete posts, pages and photos.
+
+### 2.6.0
+* you can now set the expiration of sitemap;
+* now the sitemap uses the cache and handles `lastmod` and `priority` values;
+* fixed bug for "contact form" and added the `ContactFormMailer` class;
+* fixed bug for cleaning temporary files;
+* you can now delete the sitemap;
+* now all objects have "created" and "modified" fields;
+* added the `Plugin` class, which improves the code;
+* rewrote the code to generate the backend menus;
+* fixed bug for `UpdateShell`;
+* added `isBanned()` detector. Removed `SecurityComponent` class.
+
 ## 2.5 branch
+### 2.5.1
+* added functions to generate the site sitemap;
+* now the photo urls contain the album slug.
+
 ### 2.5.0
 * fixed "view" action for photos albums;
 * added log for some users actions;

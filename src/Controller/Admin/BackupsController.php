@@ -94,12 +94,10 @@ class BackupsController extends AppController {
 	/**
 	 * Downloads a backup file
 	 * @param string $filename Backup filename
+     * @uses MeCms\Controller\AppController::_download()
 	 */
 	public function download($filename) {
-        $filename = BACKUPS.DS.urldecode($filename);
-        
-		$this->response->file($filename);
-		return $this->response;
+        return $this->_download(BACKUPS.DS.urldecode($filename));
 	}
     
     /**

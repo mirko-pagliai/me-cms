@@ -22,7 +22,7 @@
  */
 namespace MeCms\View\Cell;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\View\Cell;
 
 /**
@@ -45,16 +45,12 @@ class PostsCell extends Cell {
 	
 	/**
 	 * Categories widget
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function categories() {
 		//Returns on categories index
 		if($this->request->isHere(['_name' => 'posts_categories']))
 			return;
-		
-		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
 		
 		//Tries to get data from the cache
 		$categories = Cache::read($cache = 'widget_categories', $this->Posts->cache);
@@ -80,16 +76,12 @@ class PostsCell extends Cell {
 	/**
 	 * Latest widget
 	 * @param int $limit Limit
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 * @uses MeTools\Network\Request::isAction()
 	 */
     public function latest($limit = 10) {
 		//Returns on index, except for category
 		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
 			return;
-		
-		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
 
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug'])

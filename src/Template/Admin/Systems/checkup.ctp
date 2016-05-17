@@ -41,7 +41,7 @@
 		/* -------------------------------- */
 		/*			MeCms version			*/
 		/* -------------------------------- */
-		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms_version']));
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms']));
 		echo $this->Html->div('col-sm-12', $text);
 		
 		echo $this->Html->div('clearfix');
@@ -49,7 +49,7 @@
 		/* -------------------------------- */
 		/*			CakePHP version			*/
 		/* -------------------------------- */
-		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp_version']));
+		$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp']));
 		echo $this->Html->div('col-sm-12', $text);
 				
 		echo $this->Html->div('clearfix');
@@ -71,8 +71,8 @@
 		echo $this->Html->h4(__d('me_cms', 'Plugins'));
 		
 		//Plugins version
-		foreach($plugins['plugins_version'] as $plugin) {
-			$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin['name']), $plugin['version']));
+		foreach($plugins['plugins'] as $plugin => $version) {
+			$text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin), $version));
 			echo $this->Html->div('col-sm-6', $text);
 		}
 		

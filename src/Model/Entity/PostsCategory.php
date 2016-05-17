@@ -35,6 +35,8 @@ use Cake\ORM\Entity;
  * @property string $slug
  * @property string $description
  * @property int $post_count
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  * @property \MeCms\Model\Entity\PostsCategory[] $child_posts_categories
  */
 class PostsCategory extends Entity {
@@ -45,6 +47,7 @@ class PostsCategory extends Entity {
     protected $_accessible = [
         '*' => TRUE,
         'id' => FALSE,
-		'post_count' => FALSE
+		'post_count' => FALSE,
+		'modified' => FALSE,
     ];
 }

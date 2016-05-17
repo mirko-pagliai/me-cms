@@ -22,7 +22,7 @@
  */
 namespace MeCms\Model\Table;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -59,7 +59,6 @@ class AppTable extends Table {
 	/**
 	 * Clears the cache
 	 * @param string|array $config Name of the configuration to clear
-	 * @uses MeTools\Cache\Cache::clear()
 	 */
 	public function clearCache($config) {
 		array_walk(is_array($config) ? $config : [$config], function($config) {

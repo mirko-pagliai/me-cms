@@ -108,6 +108,8 @@ class PhotosAlbumsTable extends AppTable {
             'foreignKey' => 'album_id',
             'className' => 'MeCms.Photos'
         ]);
+        
+        $this->addBehavior('Timestamp');
     }
 
     /**

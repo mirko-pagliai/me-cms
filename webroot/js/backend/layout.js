@@ -30,9 +30,9 @@ $(function() {
 	});
 	
 	//Checks if there is the cookie of the last open menu
-	if($.cookie('sidebar-lastmenu') && $('#sidebar').is(':visible')) {
+	if(Cookies.get('sidebar-lastmenu') && $('#sidebar').is(':visible')) {
 		//Gets the element (menu) ID
-		var id = '#' + $.cookie('sidebar-lastmenu');
+		var id = '#' + Cookies.get('sidebar-lastmenu');
 		
 		//Opens the menu
 		$(id, '#sidebar').addClass('collapse in').attr('aria-expanded', 'true').prev('a').removeClass('collapsed').attr('aria-expanded', 'true');
@@ -41,28 +41,32 @@ $(function() {
 	//On click on a sidebar menu
 	$('#sidebar a[data-toggle=collapse]').click(function() {		
 		//Saves the menu ID into a cookie
-		$.cookie('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
+		Cookies.set('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
 	});
 	
 	//On click on legend of a filter form
 	$('.filter-form legend').click(function() {
 		$('.fa', this).toggleClass('fa-eye fa-eye-slash');
 		
-		if(window.location.search)
+		if(window.location.search) {
 			$('+ div', this).toggle();
-		else
+		}
+		else {
 			$('+ div', this).slideToggle();
+		}
 	});
 	
 	//Gets query string as objects, removing empty values and pagination values
 	var queryString = $.map(document.location.search.replace(/(^\?)/, '').split('&'), function(value, key) {
 		value = value.split('=');
 		
-		if(value[0] == 'direction' || value[0] == 'page' || value[0] == 'sort')
+		if(value[0] == 'direction' || value[0] == 'page' || value[0] == 'render' || value[0] == 'sort') {
 			return null;
+		}
 		
-		if(value[1] == "" || value[1] == null || value[1] == undefined)
+		if(value[1] == "" || value[1] == null || value[1] == undefined) {
 			return null;
+		}
 		
 		var obj = {};
 		obj[value[0]] = value[1];
@@ -70,6 +74,7 @@ $(function() {
 	});	
 	
 	//If there are query string values, shows the filters form
-	if(Object.keys(queryString).length && $('.filter-form legend').length)
+	if(Object.keys(queryString).length && $('.filter-form legend').length) {
 		$('.filter-form legend').trigger('click');
+	}
 });

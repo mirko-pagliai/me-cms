@@ -397,6 +397,7 @@
     "pagination.less",
     "badges.less",
     "alerts.less",
+    "progress-bars.less",
     "panels.less",
     "responsive-embed.less",
     "wells.less",
@@ -412,5 +413,5 @@
     "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=fe6fe79a321dc2224243"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=6b7ab65514c40c9582353e63c619c21b"
 }

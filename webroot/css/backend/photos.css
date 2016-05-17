@@ -44,14 +44,15 @@
 	background: #fff;
 }
 
-/* Photo box, images wrapper, thumb */
-.photo-box .photo-image .thumb {
+/* Photo box, images wrapper, image */
+.photo-box .photo-image img {
 	margin: 0 auto;
 }
 
 /* Photo box, actions */
 .photo-box .actions {
     background: #fff;
+	font-size: 90%;
 	margin: 5px 0 0;
 	padding: 6px;
     text-align: center;

@@ -107,6 +107,7 @@ class PostsCategoriesTable extends AppTable {
             'foreignKey' => 'category_id'
         ]);
 		
+        $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');
     }
 

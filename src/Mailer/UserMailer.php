@@ -29,12 +29,12 @@ use MeCms\Mailer\Mailer;
  */
 class UserMailer extends Mailer {
 	/**
-	 * Sends activation mail (signup and resend activation)
+	 * Email to activate the user account account (signup and resend activation)
 	 * @param array $user User data
 	 * @see MeCms\Controller\Admin\UsersController::resend_activation()
 	 * @see MeCms\Controller\Admin\UsersController::signup()
 	 */
-	public function activation_mail($user) {
+	public function activate_account($user) {
 		$this->to([$user->email => $user->full_name])
 			->set(['full_name' => $user->full_name])
 			->subject(__d('me_cms', 'Activate your account'))
@@ -42,7 +42,7 @@ class UserMailer extends Mailer {
 	}
 	
 	/**
-	 * Changes the user's password
+	 * Email to change the user's password
 	 * @param array $user User data
 	 * @see MeCms\Controller\Admin\UsersController::change_password()
 	 */
@@ -54,7 +54,7 @@ class UserMailer extends Mailer {
 	}
 	
 	/**
-	 * Requests a new password
+	 * Email to ask a new password
 	 * @param array $user User data
 	 * @see MeCms\Controller\UsersController::forgot_password()
 	 */

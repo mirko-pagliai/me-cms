@@ -22,25 +22,9 @@
  */
 ?>
 
-<?php
-	$this->Asset->css('MeCms.backend/uploader', ['block' => 'css_bottom']);
-	$this->Asset->js('MeCms.backend/uploader', ['block' => 'script_bottom']);
-?>
-
-<div id="uploader">
-	<div class="upload-area">
-        <?= __d('me_cms', 'Drag here files to upload') ?>
-        <div class="upload-icon"><?= $this->Html->icon('cloud-upload') ?></div>
-	</div>
-	<div class="upload-info">
-		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-				<span class="sr-only">0% complete</span>
-			</div>
-		</div>
-		<div class="upload-result row"></div>
-		<div class="upload-error bg-danger text-danger padding-10 margin-10">
-			<?= __d('me_cms', 'The file {0} exceeds the maximum limit', '<strong></strong>') ?>
-		</div>
-	</div>
+<div class="margin-20">
+    <div class="btn-group btn-group-sm" role="group">
+        <?= $this->Html->button(__d('me_cms', 'Show as list'), ['?' => am($this->request->query, ['render' => 'list'])], ['class' => 'btn-primary', 'icon' => 'align-justify']) ?>
+        <?= $this->Html->button(__d('me_cms', 'Show as grid'), ['?' => am($this->request->query, ['render' => 'grid'])], ['class' => 'btn-primary', 'icon' => 'th-large']) ?>
+    </div>
 </div>

@@ -22,7 +22,7 @@
  */
 namespace MeCms\Controller;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
@@ -46,11 +46,8 @@ class PostsTagsController extends AppController {
 	 * Lists posts for a tag
 	 * @param string $tag Tag name
      * @throws RecordNotFoundException
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
     public function view($tag) {
-		//Checks if the cache is valid
-		$this->PostsTags->Posts->checkIfCacheIsValid();
 		
 		//Sets the initial cache name
 		$cache = sprintf('index_tag_%s', md5($tag));

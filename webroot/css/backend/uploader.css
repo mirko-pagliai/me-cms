@@ -6,62 +6,114 @@
  * @see			http://www.script-tutorials.com/html5-drag-and-drop-multiple-file-uploader
  */
 
-/* -------------------------------- */
-/*			Uploader form			*/
-/* -------------------------------- */
-/* Upload area and upload info */
-#uploader .upload-area, 
-#uploader .upload-info {
-	margin-bottom: 10px;
-}
-
-/* Upload area */
-#uploader .upload-area {
-    background-color: #eee;
-    font-size: 20px;
-	padding: 20px;
+/* Main wrapper */
+.dropzone {
+    font-family: sans-serif;
+    font-size: 12px;
     text-align: center;
 }
 
-/* Upload area, icon */
-#uploader .upload-area .fa {
-    font-size: 50px;
-    margin-top: 20px;
+/* Message */
+.dropzone .dz-message {
+    background-color: #eee;
+	cursor: pointer;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding: 30px 20px;
 }
 
-/* Hides the info wrapper, the progress bar and the error message */
-#uploader .upload-info,
-#uploader .progress,
-#uploader .upload-error {
-	display: none;
+/* Message, icon */
+.dropzone .dz-message::before {
+	content: "\f0ee";
+	font-family: FontAwesome;
+    font-weight: normal;
+	margin-right: 4px;
 }
 
-/* -------------------------------- */
-/*			Uploader response		*/
-/* -------------------------------- */
-/* Result, wrappers */
-#uploader .upload-result > div {
-	min-height: 140px;
+/* Preview */
+.dropzone .dz-preview {
+	margin: 10px 0;
+	min-height: 277px;
+}
+
+/* Preview, first div */
+.dropzone .dz-preview > div {
+	background-color: #eee;
+	padding: 10px;
+}
+
+
+/* Preview, details */
+.dropzone .dz-preview .dz-details {
 	margin-bottom: 10px;
 }
 
-/* Result, wrappers */
-#uploader .upload-result > div > div {
-	overflow: hidden;
-	padding: 10px 0;	
-}
-
-/* Result, thumb */
-#uploader .upload-result img.thumb {
-	margin: auto;
-	opacity: .8;
-}
-
-/* Result, paragraphs */
-#uploader p {
-	margin: 0;
-	/* No wrap, text truncated with ellipses */
-	overflow: hidden;
+/* Preview, details, filename and size */
+.dropzone .dz-preview .dz-details .dz-filename,
+.dropzone .dz-preview .dz-details .dz-size {
+    background: #fff;
+    margin: 0 -2px 4px;
+    overflow: hidden;
+    padding: 2px 6px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* Preview, details, size */
+.dropzone .dz-preview .dz-details .dz-size {
+	margin-bottom: 10px !important;
+}
+
+/* Preview, details, image */
+.dropzone .dz-preview .dz-details img {
+	background: #fff;
+	max-height: 120px;
+    max-width: 100%;
+}
+
+/* Preview, progress bar */
+.dropzone .dz-preview .dz-progress {
+	margin-bottom: 10px;
+}
+
+/* Preview, error message */
+.dropzone .dz-preview .dz-error-message {
+	color: #d9534f;
+	display: none;
+	font-size: 11px;
+    margin-top: 10px;
+}
+
+/* Preview, error message, error mark and success mark */
+.dropzone .dz-preview.dz-error .dz-error-message,
+.dropzone .dz-preview.dz-error .dz-error-mark,
+.dropzone .dz-preview.dz-success .dz-success-mark {
+	display: block;
+}
+
+/* Preview,  error mark and success mark */
+.dropzone .dz-preview .dz-error-mark,
+.dropzone .dz-preview .dz-success-mark {
+	display: none;
+}
+
+/* Preview,  error mark and success mark, icons */
+.dropzone .dz-preview .dz-error-mark .fa,
+.dropzone .dz-preview .dz-success-mark .fa {
+    border-radius: 20px;
+    color: #fff;
+    font-size: 20px;
+    line-height: 40px;
+    width: 40px;
+}
+
+/* Preview,  error mark, icon */
+.dropzone .dz-preview .dz-error-mark .fa {
+	background: #d9534f;
+}
+
+/* Preview,  success mark, icon */
+.dropzone .dz-preview .dz-success-mark .fa {
+	background: #5cb85c;
+}
+	

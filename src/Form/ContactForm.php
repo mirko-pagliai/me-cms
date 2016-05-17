@@ -23,6 +23,7 @@
 namespace MeCms\Form;
 
 use Cake\Form\Form;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * ContactForm class.
@@ -30,6 +31,8 @@ use Cake\Form\Form;
  * It is used by `MeCms\Controller\SystemsController::contact_form()`.
  */
 class ContactForm extends Form {
+	use MailerAwareTrait;
+    
     /**
 	 * Defines the validator using the methods on Cake\Validation\Validator or 
 	 * loads a pre-defined validator from a concrete class.
@@ -62,14 +65,11 @@ class ContactForm extends Form {
 	 * Used by `execute()` to execute the form's action
 	 * @param array $data Form data
 	 * @return boolean
-	 * @uses MeCms\Network\Email\Email
+     * @see MeCms\Mailer\ContactFormMailer::contact_form_mail()
 	 */
     protected function _execute(array $data) {
-		return (new \MeCms\Network\Email\Email)->from([$data['email'] => sprintf('%s %s', $data['first_name'], $data['last_name'])])
-			->to(config('email.webmaster'))
-			->subject(__d('me_cms', 'Email from {0}', config('main.title')))
-			->template('MeCms.Systems/contact_form')
-			->set($data)
-			->send();
+        //Sends email
+		return $this->getMailer('MeCms.ContactForm')
+			->send('contact_form_mail', [$data]);
     }
 }

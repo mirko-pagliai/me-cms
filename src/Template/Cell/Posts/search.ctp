@@ -24,14 +24,14 @@
 
 <?php
 	//Returns on search
-	if($this->request->isHere(['_name' => 'search_posts']))
+	if($this->request->isHere(['_name' => 'posts_search']))
 		return;
 		
 	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Search posts'));
 
-	echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'search_posts']]);
+	echo $this->Form->createInline(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_search']]);
 	echo $this->Form->input('p', [
 		'button'		=> $this->Form->button(NULL, ['class' => 'btn-primary', 'icon' => 'search']),
 		'placeholder'	=> sprintf('%s...', __d('me_cms', 'Search'))

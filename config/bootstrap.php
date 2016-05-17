@@ -60,8 +60,9 @@ if(is_readable(CONFIG.'me_cms.php'))
 if(is_localhost() && config('main.debug_on_localhost') && !config('debug')) {
 	Configure::write('debug', TRUE);
 	
-    if(!Plugin::loaded('DebugKit'))
+    if(!Plugin::loaded('DebugKit')) {
         Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+    }
 }
 
 /**
@@ -76,8 +77,9 @@ Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
  */
 $theme = config('frontend.theme');
 
-if($theme && !Plugin::loaded($theme))
+if($theme && !Plugin::loaded($theme)) {
 	Plugin::load($theme);
+}
 
 /**
  * Loads the cache configuration
@@ -85,14 +87,16 @@ if($theme && !Plugin::loaded($theme))
 Configure::load('MeCms.cache');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'cache.php'))
+if(is_readable(CONFIG.'cache.php')) {
 	Configure::load('cache');
+}
     
 //Adds all cache configurations
 foreach(Configure::consume('Cache') as $key => $config) {
 	//Drops cache configurations that already exist
-	if(Cache::config($key))
+	if(Cache::config($key)) {
 		Cache::drop($key);
+    }
 	
 	Cache::config($key, $config);
 }
@@ -103,8 +107,9 @@ foreach(Configure::consume('Cache') as $key => $config) {
 Configure::load('MeCms.widgets');
 
 //Overwrites with the configuration from application, if exists
-if(is_readable(CONFIG.'widgets.php'))
+if(is_readable(CONFIG.'widgets.php')) {
 	Configure::load('widgets', 'default', FALSE);
+}
 
 //Adds log for users actions
 Log::config('users', [
@@ -112,12 +117,42 @@ Log::config('users', [
     'path' => LOGS,
     'levels' => [],
     'file' => 'users.log',
-    'url' => env('LOG_DEBUG_URL', null),
+    'scopes' => ['users'],
+    'url' => env('LOG_DEBUG_URL', NULL),
 ]);
 
 /**
- * Adds `isAdmin()` detector for the request
+ * Adds `isAdmin()` detector
  */
 Request::addDetector('admin', function ($request) {
     return $request->param('prefix') === 'admin';
+});
+
+/**
+ * Adds `isBanned()` detector.
+ * It checks if the user's IP address is banned.
+ */
+Request::addDetector('banned', function ($request) {
+    $banned = config('security.banned_ip');
+
+    /**
+     * The IP address is allowed if:
+     *  - the list of banned IP is empty;
+     *  - is localhost;
+     *  - the IP address has already been verified.
+     */
+    if(!$banned || is_localhost() || $request->session()->read('allowed_ip')) {
+        return FALSE;
+    }
+    
+	//Replaces asteriskes
+    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array) $banned));
+
+    if(preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
+        return TRUE;
+    }
+		
+    //In any other case, saves the result in the session
+    $request->session()->write('allowed_ip', TRUE);
+    return FALSE;
 });

@@ -57,6 +57,8 @@ class TagsTable extends AppTable {
             'className' => 'MeCms.Posts',
 			'through' => 'MeCms.PostsTags'
         ]);
+        
+        $this->addBehavior('Timestamp');
     }
 	
 	/**

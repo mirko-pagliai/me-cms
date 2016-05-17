@@ -17,15 +17,14 @@
  *
  * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license	http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 
 /**
  * Posts controller
@@ -33,13 +32,42 @@ use MeTools\Cache\Cache;
  */
 class PostsController extends AppController {
 	/**
-     * Lists posts
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeTools\Network\Request::isAction()
 	 */
-    public function index() {
-		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
-		
+	public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        
+        //View posts. It checks created datetime and status. Logged users can view future objects and drafts
+		if($this->request->isAction('view')) {
+            if($this->Auth->user()) {
+                return;
+            }
+            
+            $slug = $this->request->param('slug');
+            
+            $post = $this->Posts->find()
+                ->select(['active', 'created'])
+                ->where(compact('slug'))
+                ->cache(sprintf('status_%s', md5($slug)), $this->Posts->cache)
+                ->firstOrFail();
+            
+            if($post->active && $post->created->isPast()) {
+                return;
+            }
+            
+            $this->Auth->deny('view');
+        }
+    }
+    
+	/**
+     * Lists posts
+	 */
+    public function index() {		
 		//Sets the cache name
 		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -76,11 +104,8 @@ class PostsController extends AppController {
 	 * @param int $year Year
 	 * @param int $month Month
 	 * @param int $day Day
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function index_by_date($year, $month, $day) {
-		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
 		
 		//Sets the cache name
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
@@ -132,15 +157,11 @@ class PostsController extends AppController {
 	/**
 	 * Lists posts as RSS
 	 * @throws \Cake\Network\Exception\ForbiddenException
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function rss() {
 		//This method works only for RSS
 		if(!$this->RequestHandler->isRss())
             throw new \Cake\Network\Exception\ForbiddenException();
-		
-		//Checks if the cache is valid
-		$this->Posts->checkIfCacheIsValid();
 		
 		$this->set('posts', $this->Posts->find('active')
 			->select(['title', 'slug', 'text', 'created'])
@@ -152,9 +173,8 @@ class PostsController extends AppController {
 	}
 	
 	/**
-	 * Search posts
-	 * @uses MeCms\Controller\Component\SecurityComponent::checkLastSearch()
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
+	 * Searches posts
+	 * @uses MeCms\Controller\AppController::_checkLastSearch()
 	 */
 	public function search() {
         $pattern = $this->request->query('p');
@@ -162,11 +182,8 @@ class PostsController extends AppController {
 		if($pattern) {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
-				if($this->Security->checkLastSearch($pattern)) {
+				if($this->_checkLastSearch($pattern)) {
 					$this->paginate['limit'] = config('frontend.records_for_searches');
-					
-					//Checks if the cache is valid
-					$this->Posts->checkIfCacheIsValid();
 					
 					//Sets the initial cache name
 					$cache = sprintf('search_%s', md5($pattern));
@@ -213,7 +230,6 @@ class PostsController extends AppController {
 	/**
      * Views post
 	 * @param string $slug Post slug
-     * @throws RecordNotFoundException
 	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
@@ -223,19 +239,16 @@ class PostsController extends AppController {
 				'Tags',
 				'Users'			=> ['fields' => ['first_name', 'last_name']]
 			])
-			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
 			->firstOrFail();
-		
-        //Checks created datetime and status. Logged users can view future posts and drafts
-        if(!$this->Auth->user() && (!$post->active || $post->created->isFuture()))
-            throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
         
         $this->set(compact('post'));
         
 		//Gets related posts
-		if(config('post.related.limit'))
+		if(config('post.related.limit')) {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
+        }
 	}
 }

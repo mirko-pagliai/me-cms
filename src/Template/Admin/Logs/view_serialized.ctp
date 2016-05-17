@@ -47,14 +47,14 @@
 					<?php if(!empty($row->request) || !empty($row->referer) || !empty($row->ip)): ?>
 						<div class="margin-10 text-muted">
 							<?php if(!empty($row->request)): ?>
-								<div>
+								<div class="text-truncated">
 									<?= __d('me_cms', 'Request URL') ?>: 
 									<?= $this->Html->link($row->request === '/' ? '(Root)' : $row->request, $row->request, ['target' => '_blank']) ?>
 								</div>
 							<?php endif; ?>
 
 							<?php if(!empty($row->referer)): ?>
-								<div>
+								<div class="text-truncated">
 									<?= __d('me_cms', 'Referer URL') ?>: 
 									<?= $this->Html->link($row->referer, $row->referer, ['target' => '_blank']) ?>
 								</div>

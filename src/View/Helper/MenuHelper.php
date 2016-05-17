@@ -19,18 +19,19 @@
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\View\Helper\MenuBuilderHelper
  */
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
 
 /**
- * MeCmsMenu Helper.
+ * Menu Helper.
  * 
  * This helper contains methods that will be called automatically to generate the menu of the backend.
  * You do not need to call these methods manually.
  */
-class MeCmsMenuHelper extends Helper {
+class MenuHelper extends Helper {
 	/**
 	 * Helpers
 	 * @var array
@@ -43,20 +44,19 @@ class MeCmsMenuHelper extends Helper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _posts() {
+	public function posts() {
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List posts'), ['controller' => 'Posts', 'action' => 'index', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add', 'plugin' => 'MeCms']),
 		];
 		
 		//Only admins and managers can access these actions
-		if($this->Auth->isGroup(['admin', 'manager']))
-			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List categories'),	['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => 'MeCms']),
-				$this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms'])
-			);
+		if($this->Auth->isGroup(['admin', 'manager'])) {
+			$menu[] = $this->Html->link(__d('me_cms', 'List categories'),	['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => 'MeCms']);
+			$menu[] = $this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms']);
+        }
 		
-		array_push($menu, $this->Html->link(__d('me_cms', 'List tags'), ['controller' => 'PostsTags', 'action' => 'index', 'plugin' => 'MeCms']));
+		$menu[] = $this->Html->link(__d('me_cms', 'List tags'), ['controller' => 'PostsTags', 'action' => 'index', 'plugin' => 'MeCms']);
 		
 		return [$menu, __d('me_cms', 'Posts'), ['icon' => 'file-text-o']];
 	}
@@ -67,16 +67,17 @@ class MeCmsMenuHelper extends Helper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _pages() {
+	public function pages() {
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List pages'), ['controller' => 'Pages', 'action' => 'index', 'plugin' => 'MeCms']),
 		];
 		
 		//Only admins and manages can add pages
-		if($this->Auth->isGroup(['admin', 'manager']))
-			array_push($menu, $this->Html->link(__d('me_cms', 'Add page'), ['controller' => 'Pages', 'action' => 'add', 'plugin' => 'MeCms']));
+		if($this->Auth->isGroup(['admin', 'manager'])) {
+			$menu[] = $this->Html->link(__d('me_cms', 'Add page'), ['controller' => 'Pages', 'action' => 'add', 'plugin' => 'MeCms']);
+        }
 		
-		array_push($menu, $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'statics', 'plugin' => 'MeCms']));
+		$menu[] = $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'statics', 'plugin' => 'MeCms']);
 		
 		return [$menu, __d('me_cms', 'Pages'), ['icon' => 'files-o']];
 	}
@@ -86,8 +87,9 @@ class MeCmsMenuHelper extends Helper {
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _photos() {
+	public function photos() {
 		$menu = [
+			$this->Html->link(__d('me_cms', 'List photos'), ['controller' => 'Photos', 'action' => 'index', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Upload photos'), ['controller' => 'Photos', 'action' => 'upload', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'List albums'), ['controller' => 'PhotosAlbums', 'action' => 'index', 'plugin' => 'MeCms']),
 			$this->Html->link(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add', 'plugin' => 'MeCms']),
@@ -102,10 +104,11 @@ class MeCmsMenuHelper extends Helper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _banners() {
+	public function banners() {
 		//Only admins and managers can access these controllers
-		if(!$this->Auth->isGroup(['admin', 'manager']))
+		if(!$this->Auth->isGroup(['admin', 'manager'])) {
 			return;
+        }
 		
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List banners'), ['controller' => 'Banners', 'action' => 'index', 'plugin' => 'MeCms']),
@@ -113,12 +116,11 @@ class MeCmsMenuHelper extends Helper {
 		];
 		
 		//Only admin can access this controller
-		if($this->Auth->isGroup('admin'))
-			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List positions'), ['controller' => 'BannersPositions', 'action' => 'index', 'plugin' => 'MeCms']),
-				$this->Html->link(__d('me_cms', 'Add position'), ['controller' => 'BannersPositions', 'action' => 'add', 'plugin' => 'MeCms'])
-			);
-		
+		if($this->Auth->isGroup('admin')) {
+			$menu[] = $this->Html->link(__d('me_cms', 'List positions'), ['controller' => 'BannersPositions', 'action' => 'index', 'plugin' => 'MeCms']);
+			$menu[] = $this->Html->link(__d('me_cms', 'Add position'), ['controller' => 'BannersPositions', 'action' => 'add', 'plugin' => 'MeCms']);
+        }
+        
 		return [$menu, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart']];
 	}
 	
@@ -128,10 +130,11 @@ class MeCmsMenuHelper extends Helper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _users() {
+	public function users() {
 		//Only admins and managers can access this controller
-		if(!$this->Auth->isGroup(['admin', 'manager']))
+		if(!$this->Auth->isGroup(['admin', 'manager'])) {
 			return;
+        }
 		
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List users'), ['controller' => 'Users', 'action' => 'index', 'plugin' => 'MeCms']),
@@ -139,12 +142,11 @@ class MeCmsMenuHelper extends Helper {
 		];
 		
 		//Only admins can access these actions
-		if($this->Auth->isGroup('admin'))
-			array_push($menu,
-				$this->Html->link(__d('me_cms', 'List groups'), ['controller' => 'UsersGroups', 'action' => 'index', 'plugin' => 'MeCms']),
-				$this->Html->link(__d('me_cms', 'Add group'), ['controller' => 'UsersGroups', 'action' => 'add', 'plugin' => 'MeCms'])
-			);
-		
+		if($this->Auth->isGroup('admin')) {
+			$menu[] = $this->Html->link(__d('me_cms', 'List groups'), ['controller' => 'UsersGroups', 'action' => 'index', 'plugin' => 'MeCms']);
+			$menu[] = $this->Html->link(__d('me_cms', 'Add group'), ['controller' => 'UsersGroups', 'action' => 'add', 'plugin' => 'MeCms']);
+        }
+        
 		return [$menu, __d('me_cms', 'Users'), ['icon' => 'users']];
 	}
 	
@@ -153,10 +155,11 @@ class MeCmsMenuHelper extends Helper {
 	 * @return mixed Array with menu, title and link options
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 */
-	public function _backups() {
+	public function backups() {
 		//Only admins can access this controller
-		if(!$this->Auth->isGroup('admin'))
+		if(!$this->Auth->isGroup('admin')) {
 			return;
+        }
 		
 		$menu = [
 			$this->Html->link(__d('me_cms', 'List backups'), ['controller' => 'Backups', 'action' => 'index', 'plugin' => 'MeCms']),
@@ -172,24 +175,24 @@ class MeCmsMenuHelper extends Helper {
 	 * @uses MeCms\View\Helper\AuthHelper::isGroup()
 	 * @uses MeTools\View\Helper\HtmlHelper::link()
 	 */
-	public function _systems() {
+	public function systems() {
 		//Only admins and managers can access this controller
-		if(!$this->Auth->isGroup(['admin', 'manager']))
+		if(!$this->Auth->isGroup(['admin', 'manager'])) {
 			return;
+        }
 		
 		$menu = [
 			$this->Html->link(__d('me_cms', 'Temporary files'), ['controller' => 'Systems', 'action' => 'tmp_viewer', 'plugin' => 'MeCms']),
         ];
 		
 		//Only admins can manage logs
-		if($this->Auth->isGroup('admin'))
-			array_push($menu, $this->Html->link(__d('me_cms', 'Log management'), ['controller' => 'Logs', 'action' => 'index', 'plugin' => 'MeCms']));
-        
-        array_push($menu,
-			$this->Html->link(__d('me_cms', 'System checkup'), ['controller' => 'Systems', 'action' => 'checkup', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Media browser'), ['controller' => 'Systems', 'action' => 'browser', 'plugin' => 'MeCms']),
-			$this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms'])
-		);
+		if($this->Auth->isGroup('admin')) {
+			$menu[] = $this->Html->link(__d('me_cms', 'Log management'), ['controller' => 'Logs', 'action' => 'index', 'plugin' => 'MeCms']);
+        }
+            
+        $menu[] = $this->Html->link(__d('me_cms', 'System checkup'), ['controller' => 'Systems', 'action' => 'checkup', 'plugin' => 'MeCms']);
+		$menu[] = $this->Html->link(__d('me_cms', 'Media browser'), ['controller' => 'Systems', 'action' => 'browser', 'plugin' => 'MeCms']);
+		$menu[] = $this->Html->link(__d('me_cms', 'Changelogs'), ['controller' => 'Systems', 'action' => 'changelogs', 'plugin' => 'MeCms']);
 		
 		return [$menu, __d('me_cms', 'System'), ['icon' => 'wrench']];
 	}

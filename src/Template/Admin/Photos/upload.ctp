@@ -35,7 +35,7 @@
 				'default'	=> $this->request->query('album'),
 				'label'		=> __d('me_cms', 'Album to upload photos'),
 				'onchange'	=> 'send_form(this)',
-				'options'	=> $albums
+				'options'	=> $albums,
 			]);
 			echo $this->Form->submit(__d('me_cms', 'Select'));
 			echo $this->Form->end();
@@ -43,7 +43,8 @@
 	</div>
 
 	<?php
-		if($this->request->query('album'))
-			echo $this->element('backend/uploader/form');
+		if($this->request->query('album')) {
+			echo $this->element('backend/uploader');
+        }
 	?>
 </div>

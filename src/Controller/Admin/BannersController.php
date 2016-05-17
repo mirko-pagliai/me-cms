@@ -52,9 +52,6 @@ class BannersController extends AppController {
             
             $this->set(compact('positions'));
 		}
-		
-		//See http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#disabling-csrf-and-post-data-validation-for-specific-actions
-		$this->Security->config('unlockedActions', 'upload');
 	}
 	
 	/**
@@ -74,10 +71,18 @@ class BannersController extends AppController {
 	}
 	
 	/**
-     * Lists banners
+     * Lists banners.
+     * 
+     * This action can use the `index_as_grid` template.
 	 * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
      */
     public function index() {
+        $render = $this->request->query('render');
+        
+        if($this->Cookie->read('render.banners') === 'grid' && !$render) {
+            return $this->redirect(['?' => am($this->request->query, ['render' => 'grid'])]);
+        }
+        
 		$query = $this->Banners->find()
 			->contain(['Positions' => ['fields' => ['id', 'name']]])
 			->select(['id', 'filename', 'target', 'description', 'active', 'click_count', 'created']);
@@ -85,7 +90,21 @@ class BannersController extends AppController {
 		$this->paginate['order'] = ['Banners.created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['Banners.filename', 'Positions.name', 'description', 'click_count', 'Banners.created'];
 		
+		//Sets the paginate limit and the maximum paginate limit
+		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
+        if($render === 'grid') {
+            $this->paginate['limit'] = $this->paginate['maxLimit'] = config('backend.photos');
+        }
+		
 		$this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
+        
+        if($render) {
+            $this->Cookie->write('render.banners', $render);
+            
+            if($render === 'grid') {
+                $this->render('index_as_grid');
+            }
+        }
     }
 	
 	/**
@@ -94,28 +113,24 @@ class BannersController extends AppController {
 	 */
 	public function upload() {
 		//If there's only one position, it automatically sets the query value
-		if(!$this->request->query('position') && count($this->viewVars['positions']) < 2)
+		if(!$this->request->query('position') && count($this->viewVars['positions']) < 2) {
 			$this->request->query['position'] = fk($this->viewVars['positions']);
+        }
 				
 		$position = $this->request->query('position');
 		
 		if($position && $this->request->data('file')) {
             //Uploads
-            $filename = $this->_upload($this->request->data('file'), BANNERS);
+            $filename = $this->_upload($this->request->data('file'), BANNERS, 'image');
             
-			//Checks if the file has been uploaded
 			if($filename) {
-				$banner = $this->Banners->save($this->Banners->newEntity([
-					'position_id'	=> $position,
-					'filename'		=> basename($filename)
+				$this->Banners->save($this->Banners->newEntity([
+					'position_id' => $position,
+					'filename' => basename($filename),
 				]));
-				
-				if($banner->id)
-					$this->set('edit_url', ['action' => 'edit', $banner->id]);
 			}
-			
-			//Renders the element `backend/uploader/response`
-			$this->render('/Element/backend/uploader/response', FALSE);
+            
+            $this->render(FALSE);
 		}
 	}
 
@@ -139,6 +154,18 @@ class BannersController extends AppController {
 
         $this->set(compact('banner'));
     }
+    
+    /**
+     * Downloads banner
+     * @param string $id Banner ID
+     * @uses MeCms\Controller\AppController::_download()
+     */
+    public function download($id = NULL) {
+        $banner = $this->Banners->get($id);
+        
+        return $this->_download($banner->path);
+    }
+    
     /**
      * Deletes banner
      * @param string $id Banner ID

@@ -22,7 +22,7 @@
  */
 namespace MeCms\Controller;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
@@ -46,15 +46,11 @@ class PostsCategoriesController extends AppController {
 	 * Lists posts for a category
 	 * @param string $category Category slug
      * @throws RecordNotFoundException
-	 * @uses MeCms\Model\Table\PostsTable::checkIfCacheIsValid()
 	 */
 	public function view($category = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q'))
 			return $this->redirect([$this->request->query('q')]);
-		
-		//Checks if the cache is valid
-		$this->PostsCategories->Posts->checkIfCacheIsValid();
 		
 		//Sets the cache name
 		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);

@@ -54,12 +54,11 @@
                         <?= $position->description ?>
                     </td>
 					<td class="min-width text-center">
-						<?php
-							if($position->banner_count) 
-								echo $this->Html->link($position->banner_count, ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]);
-							else
-								echo $position->banner_count;
-						?>
+						<?php if($position->banner_count): ?>
+							<?= $this->Html->link($position->banner_count, ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+						<?php else: ?>
+							<?= $position->banner_count ?>
+						<?php endif; ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
