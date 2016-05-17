@@ -82,7 +82,7 @@
 	</div>
     
     <?php
-        if(config('post.tags') && !empty($post->tags) && $this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
+        if(config('post.tags') && !empty($post->tags)) {
             echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
                 return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']);
             }, $post->tags)));
