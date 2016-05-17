@@ -12,7 +12,7 @@
 	],
 	"require": {
 		"php": ">=5.5.9",
-		"cakephp/cakephp": "~3.2",
+		"cakephp/cakephp": "~3.2.9",
 		"js-cookie/js-cookie": "2.1.1",
         "enyo/dropzone": "^4.3",
 		"mirko-pagliai/assets": ">=1.0.1",

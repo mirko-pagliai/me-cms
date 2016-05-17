@@ -25,7 +25,7 @@ namespace MeCms\Utility;
 
 use Cake\ORM\TableRegistry;
 use MeCms\Utility\SitemapBuilder;
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 
 /**
  * This class contains methods called by the `SitemapBuilder`.

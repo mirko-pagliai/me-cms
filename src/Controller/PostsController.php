@@ -24,7 +24,7 @@ namespace MeCms\Controller;
 
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 
 /**
  * Posts controller

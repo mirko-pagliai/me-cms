@@ -27,7 +27,7 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use MeTools\Utility\Apache;
 
 /**
@@ -179,7 +179,6 @@ class SystemsController extends AppController {
     /**
      * Internal function to clear the cache
      * @return bool
-	 * @uses MeTools\Cache\Cache::clearAll()
      */
     protected function clear_cache() {
         return !array_search(FALSE, Cache::clearAll(), TRUE);

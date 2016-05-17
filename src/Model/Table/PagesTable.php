@@ -26,7 +26,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Page;
 use MeCms\Model\Table\AppTable;
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 
 /**
  * Pages model

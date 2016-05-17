@@ -22,7 +22,7 @@
  */
 namespace MeCms\Controller;
 
-use MeTools\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
