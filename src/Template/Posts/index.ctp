@@ -39,24 +39,29 @@
 		else
 			$title = __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long')));
 	}
-	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title))
+	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title)) {
 		$title = $posts[0]->category->title;
-	elseif($this->request->isAction('view', 'PostsTags'))
+    }
+	elseif($this->request->isAction('view', 'PostsTags')) {
 		$title = __d('me_cms', 'Tag {0}', str_replace('-', ' ', $this->request->param('tag')));
-    else
-        $title = __d('me_cms', 'Posts');
-	
-	$this->assign('title', $title);
+    }
+    
+    if(!empty($title)) {
+        $this->assign('title', $title);
+    }
 ?>
 
 <div class="posts index">
 	<?php
-		echo $this->Html->h2($title);
-		
+        if(!empty($title)) {
+            echo $this->Html->h2($title);
+        }
+        
 		if(!empty($posts)) {
-			foreach($posts as $post)
+			foreach($posts as $post) {
 				echo $this->element('frontend/views/post', compact('post'));
-
+            }
+            
 			echo $this->element('MeTools.paginator');
 		}
 	?>

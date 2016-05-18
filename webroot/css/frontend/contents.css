@@ -75,18 +75,6 @@
 	width: 14px;
 }
 
-/* Header, info (author, date, etc), tags, tag */
-.content-container .content-header .content-info .content-tags > a {
-	display: inline-block;
-	margin-right: 6px;
-	margin-top: 4px;
-}
-
-/* Header, info (author, date, etc), tags, tag, icon */
-.content-container .content-header .content-info .content-tags > a > .fa {
-	margin-right: 2px;
-}
-
 /* Extra small and small devices */
 @media (max-width: 992px) {
 	/* Header, category */
@@ -195,6 +183,26 @@
 }
 
 /* -------------------------------- */
+/*			Content tags			*/
+/* -------------------------------- */
+/* Tags */
+.content-container .content-tags {
+	margin-top: 20px;
+}
+
+/* Tags, tag */
+.content-container .content-tags a {
+	display: inline-block;
+	margin-right: 6px;
+	text-decoration: none;
+}
+
+/* Tags, tag, icon */
+.content-container .content-tags a .fa {
+	margin-right: 2px;
+}
+
+/* -------------------------------- */
 /*			Content preview			*/
 /* -------------------------------- */
 /* Content preview */
@@ -258,8 +266,13 @@
 /* -------------------------------- */
 /*		Related contents			*/
 /* -------------------------------- */
-/* Related contents, list, links */
-.related-contents ul a {
+/* Related contents */
+.related-contents {
+	margin-bottom: 20px;
+}
+
+/* Related contents, links */
+.related-contents a {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
