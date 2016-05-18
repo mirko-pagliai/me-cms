@@ -2,7 +2,7 @@
 ## 2.7 branch
 ### 2.7.2
 * tags have been moved below posts;
-* fixed bug to restore databases. The cache is properly cleaned;
+* fixed bug for restoring databases. The cache is properly cleaned;
 * fixed titles.
 
 ### 2.7.1
