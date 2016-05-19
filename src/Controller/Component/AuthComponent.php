@@ -33,16 +33,11 @@ use Cake\Controller\ComponentRegistry;
  * 
  * Rewrites {@link http://api.cakephp.org/3.2/class-Cake.Controller.Component.AuthComponent.html AuthComponent}.
  */
-class AuthComponent extends CakeAuthComponent {	
-	/**
-	 * User data
-	 * @var array 
-	 */
-	static protected $user = FALSE;
-	
+class AuthComponent extends CakeAuthComponent {
 	/**
 	 * Constructor
-	 * @param ComponentRegistry $registry A ComponentRegistry this component can use to lazy load its components
+	 * @param ComponentRegistry $registry A ComponentRegistry this component 
+     *  can use to lazy load its components
 	 * @param array $config Array of configuration settings
 	 */
 	public function __construct(ComponentRegistry $registry, array $config = []) {
@@ -62,62 +57,19 @@ class AuthComponent extends CakeAuthComponent {
 	}
 	
 	/**
-	 * Method that is called automatically when the method doesn't exist.
-	 * 
-	 * This method provides aliases for the `isGroup()` method. For example:
-	 * <code>
-	 * $this->Auth->isAdmin()
-	 * </code>
-	 * will call:
-	 * <code>
-	 * $this->Auth->isGroup('admin');
-	 * </code>
-	 * @param string $method Method to invoke
-	 * @param array $params Array of params for the method
-	 * @uses isGroup()
-	 */
-	public function __call($method, $params) {
-		preg_match('/^is([A-Z][a-z]+)$/', $method, $matches);
-		
-		if(!empty($matches[1])) {
-			return self::isGroup(strtolower($matches[1]));
-        }
-	}
-	
-	/**
-	 * Method that is called automatically when the method doesn't exist.
-	 * 
-	 * See the `__call()` method for examples.
-	 * @param string $method Method to invoke
-	 * @param array $params Array of params for the method
-	 * @see __call()
-	 * @uses isGroup()
-	 */
-	public static function __callStatic($method, $params) {
-		preg_match('/^is([A-Z][a-z]+)$/', $method, $matches);
-		
-		if(!empty($matches[1])) {
-			return self::isGroup(strtolower($matches[1]));
-        }
-	}
-	
-	/**
 	 * Constructor hook method
-	 * @param array $config The configuration settings provided to this component
+	 * @param array $config The configuration settings provided to this 
+     *  component
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Component.html#_initialize
-	 * @uses Cake\Controller\Component\AuthComponent::user()
-	 * @uses $user
 	 */
 	public function initialize(array $config) {
 		parent::initialize($config);
 		
-		//The authorization error is shown only if the user is already logged in and he is trying to do something not allowed
-		if(!self::user()) {
+		//The authorization error is shown only if the user is already logged 
+        //  in and he is trying to do something not allowed
+		if(!$this->user('id')) {
 			$this->config('authError', FALSE);
         }
-        
-		//Gets the user data
-		self::$user = self::user();
 	}
 
 	/**
@@ -127,52 +79,49 @@ class AuthComponent extends CakeAuthComponent {
 	 * In the last case, it will be sufficient that the user has one of the IDs.
 	 * @param string|array $id User ID as string or array
 	 * @return boolean
-	 * @uses $user
 	 */
-	static public function hasId($id) {
-		if(empty(self::$user['id'])) {
-			return FALSE;
+	public function hasId($id) {
+        if(!$this->user('id')) {
+            return FALSE;
         }
 		
-		return in_array(self::$user['id'], is_array($id) ? $id : [$id]);
+        return in_array($this->user('id'), (array) $id);
 	}
 	
 	/**
 	 * Checks whether the logged user is the admin founder (ID 1)
 	 * @return boolean
-	 * @uses $user
 	 */
-	static public function isFounder() {
-		if(empty(self::$user['id'])) {
-			return FALSE;
+	public function isFounder() {
+        if(!$this->user('id')) {
+            return FALSE;
         }
 		
-		return (int) self::$user['id'] === 1;
+		return $this->user('id') === 1;
 	}
 	
 	/**
 	 * Checks whether the user is logged in
 	 * @return boolean
-	 * @uses $user
 	 */
-	static public function isLogged() {
-		return !empty(self::$user['id']);
+	public function isLogged() {
+        return !empty($this->user('id'));
 	}
 	
 	/**
      * Checks whether the logged user belongs to a group.
 	 * 
 	 * You can pass the group as string or array of groups.
-	 * In the last case, it will be sufficient that the user belongs to one of the groups.
+	 * In the last case, it will be sufficient that the user belongs to one of 
+     *  the groups.
 	 * @param string|array $group User group as string or array
 	 * @return boolean
-	 * @uses $user
 	 */
-	static public function isGroup($group) {
-		if(empty(self::$user['group']['name'])) {
-			return FALSE;
+	public function isGroup($group) {
+        if(!$this->user('group.name')) {
+            return FALSE;
         }
 		
-		return in_array(self::$user['group']['name'], is_array($group) ? $group : [$group]);
+		return in_array($this->user('group.name'), (array) $group);
 	}
 }

@@ -113,7 +113,8 @@ class AppController extends BaseController {
 	 * Internal method to uploads a file
 	 * @param array $file File ($_FILE)
 	 * @param string $target Target directory
-     * @param string|array $mimetype Array of supported mimetypes or a magic word ("image")
+     * @param string|array $mimetype Array of supported mimetypes or a magic 
+     *  word (eg., "image")
 	 * @return string File path
 	 */
 	protected function _upload($file, $target, $mimetype = FALSE) {
@@ -138,7 +139,7 @@ class AppController extends BaseController {
         if(!file_exists($target.DS.$file['name'])) {
             $target .= DS.$file['name'];
         }
-        //If the file already exists, adds the name of the temporary file to the filename
+        //If the file already exists, adds the name of the temporary file
         else {
             $target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
         }
@@ -154,7 +155,8 @@ class AppController extends BaseController {
 	
 	/**
 	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * You can use this method to perform logic that needs to happen before 
+     *  each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
@@ -189,8 +191,10 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Called after the controller action is run, but before the view is rendered.
-	 * You can use this method to perform logic or set view variables that are required on every request.
+	 * Called after the controller action is run, but before the view is 
+     *  rendered.
+	 * You can use this method to perform logic or set view variables that are 
+     *  required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses App\Controller\AppController::beforeRender()
@@ -217,6 +221,7 @@ class AppController extends BaseController {
 	 */
 	public function initialize() {
 		//Loads components
+        //The configuration for `AuthComponent`  takes place in the same class
 		$this->loadComponent('Cookie');
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
@@ -231,7 +236,8 @@ class AppController extends BaseController {
 	
 	/**
 	 * Checks if the user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @param array $user The user to check the authorization of. If empty the 
+     *  user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 */

@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.8 branch
 ### 2.8.0
-* improved the `AuthHelper`. Now it has its own methods and this makes user data safer.
+* improved the `AuthHelper`. Now it has its own methods and this makes user data safer;
+* improved the `AuthComponent`.
 
 ## 2.7 branch
 ### 2.7.3
