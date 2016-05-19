@@ -40,7 +40,7 @@
 			<?php foreach($albums as $album): ?>
 				<tr>
 					<td>
-                        <strong><?= $this->Html->link($album->title, ['action' => 'view', $album->id]) ?></strong>
+                        <strong><?= $this->Html->link($album->title, ['action' => 'edit', $album->id]) ?></strong>
 						<?php
                             //If the album is not active (not published)
                             if(!$album->active) {
