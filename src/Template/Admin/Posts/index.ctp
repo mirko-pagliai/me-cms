@@ -30,6 +30,7 @@
 <div class="posts index">
 	<?= $this->Html->h2(__d('me_cms', 'Posts')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
 		<fieldset>

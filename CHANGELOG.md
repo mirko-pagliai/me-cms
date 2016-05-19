@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.7 branch
 ### 2.7.3
+* added some buttons for backend;
 * fixed links for banners and photos as grid.
 
 ### 2.7.2

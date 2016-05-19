@@ -30,6 +30,7 @@
 <div class="users index">
 	<?= $this->Html->h2(__d('me_cms', 'Users')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add group'), ['controller' => 'UsersGroups', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>
 		<fieldset>

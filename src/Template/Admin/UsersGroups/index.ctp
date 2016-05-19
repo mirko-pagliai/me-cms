@@ -27,6 +27,7 @@
 <div class="usersGroups index">
 	<?= $this->Html->h2(__d('me_cms', 'Users groups')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">
 		<thead>

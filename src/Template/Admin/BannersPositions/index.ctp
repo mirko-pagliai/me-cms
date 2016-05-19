@@ -27,6 +27,7 @@
 <div class="bannersPositions index">
 	<?= $this->Html->h2(__d('me_cms', 'Banners positions')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Upload banners'), ['controller' => 'Banners', 'action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
     <table class="table table-hover">
 		<thead>
