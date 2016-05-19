@@ -941,7 +941,7 @@ msgstr "Aggiungi posizione dei banner"
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/add.ctp:36
 #: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:121
 msgid "Add position"
-msgstr "Aggiungi posizioni"
+msgstr "Aggiungi posizione"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/edit.ctp:25;28
 msgid "Edit banners position"
