@@ -1729,7 +1729,7 @@ msgstr "Tag popolari"
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:32
 msgid "Upload"
-msgstr "Upload"
+msgstr "Carica"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Banners/index.ctp:41
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Common/Admin/Photos/index.ctp:41
