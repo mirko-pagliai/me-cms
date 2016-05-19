@@ -45,7 +45,6 @@ class AdminView extends AppView {
 		$this->loadHelper('MeTools.Paginator');
 		$this->loadHelper('Assets.Asset');
 		$this->loadHelper('Thumbs.Thumb');
-		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeCms.MenuBuilder');
 	}
 	

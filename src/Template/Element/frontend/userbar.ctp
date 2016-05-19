@@ -23,7 +23,7 @@
 ?>
 
 <?php
-    if(!$auth) {
+    if(!$this->Auth->user('id')) {
         return;
     }
 ?>
@@ -48,9 +48,9 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php
-					echo $this->Html->li($this->Dropdown->menu($auth['full_name'], ['icon' => 'user'], [
+					echo $this->Html->li($this->Dropdown->menu($this->Auth->user('full_name'), ['icon' => 'user'], [
 						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),
-						$this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout'])
+						$this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']),
 					]),	['class' => 'dropdown']);
 				?>
             </ul>

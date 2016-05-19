@@ -23,20 +23,105 @@
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
+use Cake\Utility\Hash;
 
 /**
  * Auth Helper.
  * 
- * This helper allows you to access to `MeCms\Controller\Component\AuthComponent` also from views.
+ * This helper allows you to check the user data.
  */
 class AuthHelper extends Helper {
-	/**
-	 * Method that is called automatically when the method doesn't exist.
-	 * @param string $method Method to invoke
-	 * @param array $params Array of params for the method
-	 * @return mixed
-	 */
-	public function __call($method, $params) {
-        return call_user_func_array(['\MeCms\Controller\Component\AuthComponent', $method], $params);
-	}
+    /**
+     * User data.  
+     * You should use the `user()` method to access user data.
+     * @var array
+     * @see user() 
+     */
+    protected $user;
+    
+    /**
+     * Constructor hook method
+     * @param array $config The configuration settings provided to this helper
+     * @uses $user
+     */
+    public function initialize(array $config) {
+        $this->user = $config;
+    }
+    
+    /**
+	 * Checks whether the logged user has a specific ID.
+	 * 
+	 * You can pass the ID as string or array of IDs.
+	 * In the last case, it will be sufficient that the user has one of the IDs.
+	 * @param string|array $id User ID as string or array
+     * @return boolean
+     * @uses user()
+     */
+    public function hasId($id) {
+        if(!$this->user('id')) {
+            return FALSE;
+        }
+        
+        return in_array($this->user('id'), (array) $id);
+    }
+    
+    /**
+	 * Checks whether the logged user is the admin founder (ID 1)
+     * @return boolean
+     * @uses user()
+     */
+    public function isFounder() {
+        if(!$this->user('id')) {
+            return FALSE;
+        }
+        
+        return $this->user('id') === 1;
+    }
+    
+    /**
+     * Checks whether the logged user belongs to a group.
+	 * 
+	 * You can pass the group as string or array of groups.
+	 * In the last case, it will be sufficient that the user belongs to one of 
+     *  the groups.
+	 * @param string|array $group User group as string or array
+     * @return boolean
+     * @uses user()
+     */
+    public function isGroup($group) {
+        if(!$this->user('group.name')) {
+            return FALSE;
+        }
+        
+        return in_array($this->user('group.name'), (array) $group);
+    }
+    
+    /**
+     * Checks whether the user is logged in
+     * @return boolean
+     * @uses user()
+     */
+    public function isLogged() {
+        return !empty($this->user('id'));
+    }
+    
+    /**
+     * Get the current user from storage
+     * @param string|null $key Field to retrieve. Leave null to get entire User 
+     *  record
+     * @return mixed|null Either User record or null if no user is logged in, 
+     *  or retrieved field if key is specified
+     * @uses $user
+     */
+    public function user($key = NULL) {
+        if(empty($this->user)) {
+            return NULL;
+        }
+        
+        if($key === NULL) {
+            return $this->user;
+        }
+        
+        return Hash::get($this->user, $key);
+    }
 }

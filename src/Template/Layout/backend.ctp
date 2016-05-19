@@ -38,7 +38,7 @@
 				'MeTools.default',
 				'MeTools.forms',
 				'MeCms.backend/layout',
-				'MeCms.backend/photos'
+				'MeCms.backend/photos',
 			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
@@ -47,17 +47,17 @@
 				'MeCms.backend/bootstrap.min',
 				'/vendor/js-cookie/js.cookie',
 				'MeTools.default',
-				'MeCms.backend/layout'
+				'MeCms.backend/layout',
 			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.backend/topbar', [], ['cache' => ['key' => sprintf('topbar_user_%s', $auth['id']), 'config' => 'backend']]) ?>
+		<?= $this->element('MeCms.backend/topbar', [], ['cache' => ['key' => sprintf('topbar_user_%s', $this->Auth->user('id')), 'config' => 'backend']]) ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
-					<?= $this->element('MeCms.backend/sidebar', [], ['cache' => ['key' => sprintf('sidebar_user_%s', $auth['id']), 'config' => 'backend']]) ?>
+					<?= $this->element('MeCms.backend/sidebar', [], ['cache' => ['key' => sprintf('sidebar_user_%s', $this->Auth->user('id')), 'config' => 'backend']]) ?>
 				</div>
 				<div id="content" class="col-md-offset-3 col-lg-offset-2">
 					<?= $this->Flash->render() ?>

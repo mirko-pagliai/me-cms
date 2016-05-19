@@ -39,22 +39,22 @@
 					echo $this->Form->input('title', [
 						'default'		=> $this->request->query('title'),
 						'placeholder'	=> __d('me_cms', 'title'),
-						'size'			=> 16
+						'size'			=> 16,
 					]);
 					echo $this->Form->input('active', [
 						'default'	=> $this->request->query('active'),
 						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')]
+						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
 					]);
 					echo $this->Form->input('priority', [
 						'default'	=> $this->request->query('priority'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities'))
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities')),
 					]);
 					echo $this->Form->datepicker('created', [
 						'data-date-format'	=> 'YYYY-MM',
 						'default'			=> $this->request->query('created'),
 						'placeholder'		=> __d('me_cms', 'month'),
-						'size'				=> 5
+						'size'				=> 5,
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
@@ -77,23 +77,27 @@
                         <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
 						<?php
                             //If the page is not active (it's a draft)
-                            if(!$page->active)
+                            if(!$page->active) {
                                 echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
+                            }
                             
                             //If the page is scheduled
-                            if($page->created->isFuture())
+                            if($page->created->isFuture()) {
                                 echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
-														
+                            }
+                            
 							$actions = [];
 							
 							//Only admins and managers can edit pages
-							if($this->Auth->isGroup(['admin', 'manager']))
+							if($this->Auth->isGroup(['admin', 'manager'])) {
 								$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $page->id], ['icon' => 'pencil']);
-							
+                            }
+                            
 							//Only admins can delete pages
-							if($this->Auth->isAdmin())
+							if($this->Auth->isGroup('admin')) {
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $page->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-							
+                            }
+                            
 							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
 
                             echo $this->Html->ul($actions, ['class' => 'actions']);

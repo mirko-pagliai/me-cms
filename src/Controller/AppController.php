@@ -202,10 +202,11 @@ class AppController extends BaseController {
         }
 		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-		$this->viewClass = $this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App';
-		
-		//Sets auth data for views
-		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
+        $this->viewBuilder()->className($this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App');
+        
+        //Loads the `Auth` helper.
+        //The `helper is loaded here (instead of the view) to pass user data
+        $this->viewBuilder()->helpers(['MeCms.Auth' => $this->Auth->user()]);
 		
 		parent::beforeRender($event);
 	}
