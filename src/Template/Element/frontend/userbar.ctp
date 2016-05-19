@@ -23,7 +23,7 @@
 ?>
 
 <?php
-    if(!$this->Auth->user('id')) {
+    if(!$this->Auth->isLogged()) {
         return;
     }
 ?>

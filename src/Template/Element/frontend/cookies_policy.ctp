@@ -24,7 +24,7 @@
 
 <?php
     //Returns for logged user
-    if($this->Auth->user('id')) {
+    if($this->Auth->isLogged()) {
         return;
     }
     
