@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.3
+* fixed links for banners and photos as grid.
+
 ### 2.7.2
 * tags have been moved below posts;
 * fixed bug to restore databases. The cache is properly cleaned;

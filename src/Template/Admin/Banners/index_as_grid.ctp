@@ -40,18 +40,18 @@
 
                 <?php
                     $actions = [
-                        $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
+                        $this->Html->link(NULL, ['action' => 'edit', $banner->id], ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]),
                     ];
 
                     if($banner->target) {
-                        $actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
+                        $actions[] = $this->Html->link(NULL, $banner->target, ['icon' => 'external-link', 'title' => __d('me_cms', 'Open'), 'target' => '_blank']);
                     }
 
-                    $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $banner->id], ['icon' => 'download']);
+                    $actions[] = $this->Html->link(NULL, ['action' => 'download', $banner->id], ['icon' => 'download', 'title' => __d('me_cms', 'Download')]);
 
                     //Only admins can delete banners
                     if($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+                        $actions[] = $this->Form->postLink(NULL, ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'title' => __d('me_cms', 'Delete'), 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                     }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);

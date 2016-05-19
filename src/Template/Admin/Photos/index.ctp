@@ -48,6 +48,8 @@
                         if($this->Auth->isGroup('admin')) {
                             $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $photo->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                         }
+                        
+                        $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'target' => '_blank']);
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);								
                     ?>
