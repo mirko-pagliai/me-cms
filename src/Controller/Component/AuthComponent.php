@@ -79,8 +79,9 @@ class AuthComponent extends CakeAuthComponent {
 	public function __call($method, $params) {
 		preg_match('/^is([A-Z][a-z]+)$/', $method, $matches);
 		
-		if(!empty($matches[1]))
+		if(!empty($matches[1])) {
 			return self::isGroup(strtolower($matches[1]));
+        }
 	}
 	
 	/**
@@ -95,8 +96,9 @@ class AuthComponent extends CakeAuthComponent {
 	public static function __callStatic($method, $params) {
 		preg_match('/^is([A-Z][a-z]+)$/', $method, $matches);
 		
-		if(!empty($matches[1]))
+		if(!empty($matches[1])) {
 			return self::isGroup(strtolower($matches[1]));
+        }
 	}
 	
 	/**
@@ -110,43 +112,46 @@ class AuthComponent extends CakeAuthComponent {
 		parent::initialize($config);
 		
 		//The authorization error is shown only if the user is already logged in and he is trying to do something not allowed
-		if(!self::user())
+		if(!self::user()) {
 			$this->config('authError', FALSE);
-		
+        }
+        
 		//Gets the user data
 		self::$user = self::user();
 	}
 
 	/**
-	 * Checks whether the user has a specific ID.
+	 * Checks whether the logged user has a specific ID.
 	 * 
-	 * You can pass the ID as a string or as an array of IDs.
-	 * In this case, will be sufficient that the user has one of the IDs.
+	 * You can pass the ID as string or array of IDs.
+	 * In the last case, it will be sufficient that the user has one of the IDs.
 	 * @param string|array $id User ID as string or array
 	 * @return boolean
 	 * @uses $user
 	 */
 	static public function hasId($id) {
-		if(empty(self::$user['id']))
+		if(empty(self::$user['id'])) {
 			return FALSE;
+        }
 		
 		return in_array(self::$user['id'], is_array($id) ? $id : [$id]);
 	}
 	
 	/**
-	 * Checks whether the user is the admin founder
+	 * Checks whether the logged user is the admin founder (ID 1)
 	 * @return boolean
 	 * @uses $user
 	 */
 	static public function isFounder() {
-		if(empty(self::$user['id']))
+		if(empty(self::$user['id'])) {
 			return FALSE;
+        }
 		
 		return (int) self::$user['id'] === 1;
 	}
 	
 	/**
-	 * Checks whether the user is logged
+	 * Checks whether the user is logged in
 	 * @return boolean
 	 * @uses $user
 	 */
@@ -155,17 +160,18 @@ class AuthComponent extends CakeAuthComponent {
 	}
 	
 	/**
-	 * Checks whether the user belongs to a group.
+     * Checks whether the logged user belongs to a group.
 	 * 
-	 * You can pass the group as a string or as an array of groups.
-	 * In this case, will be sufficient that the user belongs to one of the groups.
+	 * You can pass the group as string or array of groups.
+	 * In the last case, it will be sufficient that the user belongs to one of the groups.
 	 * @param string|array $group User group as string or array
 	 * @return boolean
 	 * @uses $user
 	 */
 	static public function isGroup($group) {
-		if(empty(self::$user['group']['name']))
+		if(empty(self::$user['group']['name'])) {
 			return FALSE;
+        }
 		
 		return in_array(self::$user['group']['name'], is_array($group) ? $group : [$group]);
 	}
