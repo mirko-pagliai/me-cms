@@ -22,7 +22,7 @@
  */
 ?>
 
-<?= $this->extend('/Common/Admin/Photos/index') ?>
+<?= $this->extend('/Admin/Common/Photos/index') ?>
     
 <div class='clearfix'>
     <?php foreach($photos as $photo): ?>
@@ -40,14 +40,16 @@
 
                 <?php
                     $actions = [
-                        $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $photo->id], ['icon' => 'pencil']),
-                        $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $photo->id], ['icon' => 'download']),
+                        $this->Html->link(NULL, ['action' => 'edit', $photo->id], ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]),
+                        $this->Html->link(NULL, ['action' => 'download', $photo->id], ['icon' => 'download', 'title' => __d('me_cms', 'Download')]),
                     ];
 
                     //Only admins can delete photos
                     if($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $photo->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+                        $actions[] = $this->Form->postLink(NULL, ['action' => 'delete', $photo->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'title' => __d('me_cms', 'Delete'), 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                     }
+                    
+                    $actions[] = $this->Html->link(NULL, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'title' => __d('me_cms', 'Open'), 'target' => '_blank']);
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>

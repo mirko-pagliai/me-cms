@@ -116,12 +116,17 @@ body {
 	margin: 0 0 20px;
 }
 
-/* Content, button after page title ("add new") */
-#content > .index > h2 + .btn {
+/* Content, buttons after page title ("add new") */
+#content > .index > .btn {
     font-size: 13px;
-    margin: 0 0 20px 15px;
+    margin: 0 0 20px 4px;
     padding: 3px 8px;
     vertical-align: bottom;
+}
+
+/* Content, buttons after page title ("add new"), first button */
+#content > .index > .btn:first-of-type {
+	margin-left: 15px;
 }
 
 /* Content, button after page title ("add new"), icon */

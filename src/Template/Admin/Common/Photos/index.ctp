@@ -30,6 +30,7 @@
 <div class="photos index">
 	<?= $this->Html->h2(__d('me_cms', 'Photos')) ?>
 	<?= $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
+	<?= $this->Html->button(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
 	
 	<?= $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']) ?>
 		<fieldset>
