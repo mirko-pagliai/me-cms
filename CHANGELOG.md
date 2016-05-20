@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.7 branch
+### 2.7.4
+* improved the uploader.
+
 ### 2.7.3
 * added some buttons for backend;
 * fixed links for banners and photos as grid.

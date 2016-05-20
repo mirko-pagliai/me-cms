@@ -29,7 +29,7 @@
 
 <?= $this->Html->scriptStart(); ?>
     $(function() {
-        $('#uploader').dropzone({
+        $('.dropzone').dropzone({
             dictDefaultMessage: '<?= __d('me_cms', 'Drag files here or click') ?>',
             previewTemplate: '<div class="col-md-3 dz-preview dz-file-preview">' +
                 '<div>' +
@@ -48,7 +48,7 @@
     });
 <?= $this->Html->scriptEnd(); ?>
     
-<?= $this->Form->create(NULL, ['class' => 'dropzone', 'id' => 'uploader', 'type' => 'file']) ?>
+<?= $this->Form->create(NULL, ['class' => 'dropzone', 'type' => 'file']) ?>
     <div class="fallback">
         <?= $this->Form->input('file', ['label' => FALSE, 'multiple' => 'multiple', 'type' => 'file']) ?>
     </div>
