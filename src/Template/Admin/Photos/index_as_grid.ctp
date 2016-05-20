@@ -22,7 +22,7 @@
  */
 ?>
 
-<?= $this->extend('/Common/Admin/Photos/index') ?>
+<?= $this->extend('/Admin/Common/Photos/index') ?>
     
 <div class='clearfix'>
     <?php foreach($photos as $photo): ?>
