@@ -28,23 +28,24 @@
 ?>
 
 <?= $this->Html->scriptStart(); ?>
-    //See http://www.dropzonejs.com/#configuration-options
-    Dropzone.options.uploader = {
-        dictDefaultMessage: '<?= __d('me_cms', 'Drag files here or click') ?>',
-        previewTemplate: '<div class="col-md-3 dz-preview dz-file-preview">' +
-            '<div>' +
-                '<div class="dz-details">' +
-                    '<div class="dz-filename" data-dz-name></div>' +
-                    '<div class="dz-size" data-dz-size></div>' +
-                    '<img data-dz-thumbnail />' +
+    $(function() {
+        $('#uploader').dropzone({
+            dictDefaultMessage: '<?= __d('me_cms', 'Drag files here or click') ?>',
+            previewTemplate: '<div class="col-md-3 dz-preview dz-file-preview">' +
+                '<div>' +
+                    '<div class="dz-details">' +
+                        '<div class="dz-filename" data-dz-name></div>' +
+                        '<div class="dz-size" data-dz-size></div>' +
+                        '<img data-dz-thumbnail />' +
+                    '</div>' +
+                    '<div class="progress dz-progress"><div class="progress-bar progress-bar-success dz-upload" role="progressbar" data-dz-uploadprogress></div></div>' +
+                    '<div class="dz-success-mark"><?= $this->Html->icon('check') ?></div>' +
+                    '<div class="dz-error-mark"><?= $this->Html->icon('close') ?></div>' +
+                    '<div class="dz-error-message" data-dz-errormessage></div>' +
                 '</div>' +
-                '<div class="progress dz-progress"><div class="progress-bar progress-bar-success dz-upload" role="progressbar" data-dz-uploadprogress></div></div>' +
-                '<div class="dz-success-mark"><?= $this->Html->icon('check') ?></div>' +
-                '<div class="dz-error-mark"><?= $this->Html->icon('close') ?></div>' +
-                '<div class="dz-error-message" data-dz-errormessage></div>' +
-            '</div>' +
-        '</div>',
-    }
+            '</div>',
+        });
+    });
 <?= $this->Html->scriptEnd(); ?>
     
 <?= $this->Form->create(NULL, ['class' => 'dropzone', 'id' => 'uploader', 'type' => 'file']) ?>
