@@ -47,8 +47,8 @@
     }
 <?= $this->Html->scriptEnd(); ?>
     
-<form action="<?= $_SERVER['REQUEST_URI'] ?>" id="uploader" class="dropzone">
+<?= $this->Form->create(NULL, ['class' => 'dropzone', 'id' => 'uploader', 'type' => 'file']) ?>
     <div class="fallback">
-        <input name="file" type="file" multiple />
+        <?= $this->Form->input('file', ['label' => FALSE, 'multiple' => 'multiple', 'type' => 'file']) ?>
     </div>
-</form>
+<?= $this->Form->end() ?>
