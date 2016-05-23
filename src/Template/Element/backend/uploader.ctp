@@ -28,6 +28,7 @@
 ?>
 
 <?= $this->Html->scriptStart(); ?>
+    Dropzone.autoDiscover = false;
     $(function() {
         $('.dropzone').dropzone({
             dictDefaultMessage: '<?= __d('me_cms', 'Drag files here or click') ?>',
