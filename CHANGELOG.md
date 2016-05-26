@@ -1,10 +1,14 @@
 # 2.x branch
 ## 2.8 branch
 ### 2.8.0
+* now uses the `UploaderComponent`;
 * improved the `AuthHelper`. Now it has its own methods and this makes user data safer;
 * improved the `AuthComponent`.
 
 ## 2.7 branch
+### 2.7.4
+* improved the uploader.
+
 ### 2.7.3
 * added some buttons for backend;
 * fixed links for banners and photos as grid.

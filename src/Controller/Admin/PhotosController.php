@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -109,29 +110,47 @@ class PhotosController extends AppController {
 	
 	/**
 	 * Uploads photos
-	 * @uses MeCms\Controller\_upload()
+     * @uses MeTools\Controller\Component\UploaderComponent::error()
+     * @uses MeTools\Controller\Component\UploaderComponent::mimetype()
+     * @uses MeTools\Controller\Component\UploaderComponent::save()
+     * @uses MeTools\Controller\Component\UploaderComponent::set()
 	 */
 	public function upload() {
+        $album = $this->request->query('album');
+            
 		//If there's only one album, it automatically sets the query value
-		if(!$this->request->query('album') && count($this->viewVars['albums']) < 2) {
+		if(!$album && count($this->viewVars['albums']) < 2) {
 			$this->request->query['album'] = fk($this->viewVars['albums']);
         }
         
-		$album = $this->request->query('album');
-		
-		if($album && $this->request->data('file')) {
-            //Uploads
-            $filename = $this->_upload($this->request->data('file'), PHOTOS.DS.$album, 'image');
+        if($this->request->data('file')) {
+            if(empty($album)) {
+				throw new InternalErrorException(__d('me_cms', 'Missing album ID'));
+            }
             
-			if($filename) {
-				$this->Photos->save($this->Photos->newEntity([
-					'album_id' => $album,
-					'filename' => basename($filename),
-				]));
-			}
+            http_response_code(500);
             
-            $this->render(FALSE);
-		}
+            $uploaded = $this->Uploader->set($this->request->data('file'))
+                ->mimetype('image')
+                ->save(PHOTOS.DS.$album);
+            
+            if(!$uploaded) {
+                exit($this->Uploader->error());
+            }
+            
+            $saved = $this->Photos->save($this->Photos->newEntity([
+                'album_id' => $album,
+                'filename' => basename($uploaded),
+            ]));
+            
+            if(!$saved) {
+                exit(__d('me_cms', 'The photo could not be saved'));
+            }
+            
+            http_response_code(200);
+            
+            $this->render(FALSE);            
+        }
 	}
 
     /**
