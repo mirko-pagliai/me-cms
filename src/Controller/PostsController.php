@@ -37,31 +37,11 @@ class PostsController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
         
-        //View posts. It checks created datetime and status. Logged users can view future objects and drafts
-		if($this->request->isAction('view')) {
-            if($this->Auth->user()) {
-                return;
-            }
-            
-            $slug = $this->request->param('slug');
-            
-            $post = $this->Posts->find()
-                ->select(['active', 'created'])
-                ->where(compact('slug'))
-                ->cache(sprintf('status_%s', md5($slug)), $this->Posts->cache)
-                ->firstOrFail();
-            
-            if($post->active && $post->created->isPast()) {
-                return;
-            }
-            
-            $this->Auth->deny('view');
-        }
+        $this->Auth->deny('preview');
     }
     
 	/**
@@ -106,7 +86,6 @@ class PostsController extends AppController {
 	 * @param int $day Day
 	 */
 	public function index_by_date($year, $month, $day) {
-		
 		//Sets the cache name
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -233,7 +212,7 @@ class PostsController extends AppController {
 	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
-		$post = $this->Posts->find()
+		$post = $this->Posts->find('active')
 			->contain([
 				'Categories'	=> ['fields' => ['title', 'slug']],
 				'Tags',
@@ -251,4 +230,31 @@ class PostsController extends AppController {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
         }
 	}
+    
+    /**
+     * Preview for posts.
+     * It uses the `view` template.
+	 * @param string $slug Post slug
+	 * @uses MeCms\Model\Table\PostsTable::getRelated()
+     */
+    public function preview($slug = NULL) {
+        $post = $this->Posts->find()
+			->contain([
+				'Categories'	=> ['fields' => ['title', 'slug']],
+				'Tags',
+				'Users'			=> ['fields' => ['first_name', 'last_name']]
+			])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
+			->firstOrFail();
+        
+        $this->set(compact('post'));
+        
+		//Gets related posts
+		if(config('post.related.limit')) {
+			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
+        }
+        
+        $this->render('view');
+    }
 }

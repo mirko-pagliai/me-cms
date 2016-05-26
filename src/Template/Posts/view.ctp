@@ -39,16 +39,18 @@
 	$this->assign('title', $post->title);
 	
 	//Set some tags
-	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
-    
-	if(!empty($post->preview)) {
-		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
-	}
-	
-	if(!empty($post->text)) {
-		$this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($post->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+    if($this->request->isAction('view')) {
+        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+        $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
+
+        if(!empty($post->preview)) {
+            $this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+        }
+
+        if(!empty($post->text)) {
+            $this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($post->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+        }
     }
 ?>
 

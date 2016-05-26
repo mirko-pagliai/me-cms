@@ -40,35 +40,35 @@
 					echo $this->Form->input('title', [
 						'default'		=> $this->request->query('title'),
 						'placeholder'	=> __d('me_cms', 'title'),
-						'size'			=> 16
+						'size'			=> 16,
 					]);
 					echo $this->Form->input('active', [
 						'default'	=> $this->request->query('active'),
 						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')]
+						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
 					]);
 					echo $this->Form->input('user', [
 						'default'	=> $this->request->query('user'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users'))
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all users')),
 					]);
 					echo $this->Form->input('category', [
 						'default'	=> $this->request->query('category'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories'))
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all categories')),
 					]);
 					echo $this->Form->input('priority', [
 						'default'	=> $this->request->query('priority'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities'))
+						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities')),
 					]);
 					echo $this->Form->datepicker('created', [
 						'data-date-format'	=> 'YYYY-MM',
 						'default'			=> $this->request->query('created'),
 						'placeholder'		=> __d('me_cms', 'month'),
-						'size'				=> 5
+						'size'				=> 5,
 					]);
 					echo $this->Form->input('tag', [
 						'default'		=> $this->request->query('tag'),
 						'placeholder'	=> __d('me_cms', 'tag'),
-						'size'			=> 10
+						'size'			=> 10,
 					]);
 					echo $this->Form->submit(NULL, ['icon' => 'search']);
 				?>
@@ -93,30 +93,41 @@
                         <strong><?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?></strong>
                         <?php
                             //If the post is not active (it's a draft)
-                            if(!$post->active)
+                            if(!$post->active) {
                                 echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
+                            }
                             
                             //If the post is scheduled
-                            if($post->created->isFuture())
+                            if($post->created->isFuture()) {
                                 echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
+                            }
                             
-                            if(!empty($post->tags))
+                            if(!empty($post->tags)) {
 								echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function($tag) {
 									return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
 								}, $post->tags)));
-							
+                            }
+                            
 							$actions = [];
 							
 							//Only admins and managers can edit all posts. Users can edit only their own posts
-							if($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id))
+							if($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
 								$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $post->id], ['icon' => 'pencil']);					
-
+                            }
+                            
 							//Only admins and managers can delete posts
-							if($this->Auth->isGroup(['admin', 'manager']))
+							if($this->Auth->isGroup(['admin', 'manager'])) {
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $post->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-
-							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
-
+                            }
+                            
+                            //If the post is active and is not scheduled
+                            if($post->active && !$post->created->isFuture()) {
+                                $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                            }
+                            else {
+                                $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'posts_preview', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                            }
+                            
 							echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>

@@ -36,36 +36,11 @@ class PagesController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeCms\Utility\StaticPage::get()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
         
-        //View pages. It checks created datetime and status. Logged users can view future objects and drafts
-		if($this->request->isAction('view')) {
-            if($this->Auth->user()) {
-                return;
-            }
-            
-            $slug = $this->request->param('slug');
-            
-            if(StaticPage::get($slug)) {
-                return;
-            }
-            
-            $page = $this->Pages->find()
-                ->select(['active', 'created'])
-                ->where(compact('slug'))
-                ->cache(sprintf('status_%s', md5($slug)), $this->Pages->cache)
-                ->firstOrFail();
-            
-            if($page->active && $page->created->isPast()) {
-                return;
-            }
-            
-            $this->Auth->deny('view');
-        }
+        $this->Auth->deny('view');
     }
     
 	/**
@@ -103,12 +78,28 @@ class PagesController extends AppController {
 			return $this->render($static);
 		}
 		
-		$page = $this->Pages->find()
+		$page = $this->Pages->find('active')
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
 			->where(compact('slug'))
 			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
 			->firstOrFail();
         
         $this->set(compact('page'));
+    }
+    
+    /**
+     * Preview for pages.
+     * It uses the `view` template.
+	 * @param string $slug Page slug
+     */
+    public function preview($slug = NULL) {
+		$page = $this->Pages->find()
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created'])
+			->where(compact('slug'))
+			->firstOrFail();
+        
+        $this->set(compact('page'));
+        
+        $this->render('view');
     }
 }
