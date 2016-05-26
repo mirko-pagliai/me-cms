@@ -23,16 +23,12 @@
 ?>
 
 <?php $this->append('userbar'); ?>
-<?php if(!$page->active || $page->created->isFuture()): ?>
-    <li>
-        <?php if(!$page->active): ?>
-            <?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
+<?php if(!$page->active): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
+<?php endif; ?>
 
-        <?php if($page->created->isFuture()): ?>
-            <?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
-    </li>
+<?php if($page->created->isFuture()): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?></li>
 <?php endif; ?>
 
 <li><?= $this->Html->link(__d('me_cms', 'Edit page'), ['action' => 'edit', $page->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
