@@ -110,49 +110,6 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Internal method to uploads a file
-	 * @param array $file File ($_FILE)
-	 * @param string $target Target directory
-     * @param string|array $mimetype Array of supported mimetypes or a magic word ("image")
-	 * @return string File path
-	 */
-	protected function _upload($file, $target, $mimetype = FALSE) {
-        if($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
-            http_response_code(500);
-            exit(__d('me_cms', 'The file was not successfully uploaded'));
-        }
-        
-        if($mimetype === 'image') {
-            $mimetype = ['image/gif', 'image/jpeg', 'image/png'];
-        }
-        
-        //Checks for mimetype
-        if(!empty($mimetype) && is_array($mimetype)) {
-            if(!in_array($file['type'], $mimetype)) {
-                http_response_code(500);
-                exit(__d('me_cms', 'File type not accepted'));
-            }
-        }
-        
-        //Updated the target, adding the filename
-        if(!file_exists($target.DS.$file['name'])) {
-            $target .= DS.$file['name'];
-        }
-        //If the file already exists, adds the name of the temporary file to the filename
-        else {
-            $target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
-        }
-
-        //Checks if the file was successfully moved to the target directory
-        if(!move_uploaded_file($file['tmp_name'], $file['target'] = $target)) {
-            http_response_code(500);
-            exit(__d('me_cms', 'The file was not successfully moved to the target directory'));
-        }
-        
-        return $target;
-	}
-	
-	/**
 	 * Called before the controller action. 
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
@@ -220,6 +177,7 @@ class AppController extends BaseController {
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('MeTools.Uploader');
 		
 		if(config('security.recaptcha')) {
 			$this->loadComponent('MeTools.Recaptcha');
