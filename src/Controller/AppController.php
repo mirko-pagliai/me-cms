@@ -110,51 +110,9 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Internal method to uploads a file
-	 * @param array $file File ($_FILE)
-	 * @param string $target Target directory
-     * @param string|array $mimetype Array of supported mimetypes or a magic word ("image")
-	 * @return string File path
-	 */
-	protected function _upload($file, $target, $mimetype = FALSE) {
-        if($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
-            http_response_code(500);
-            exit(__d('me_cms', 'The file was not successfully uploaded'));
-        }
-        
-        if($mimetype === 'image') {
-            $mimetype = ['image/gif', 'image/jpeg', 'image/png'];
-        }
-        
-        //Checks for mimetype
-        if(!empty($mimetype) && is_array($mimetype)) {
-            if(!in_array($file['type'], $mimetype)) {
-                http_response_code(500);
-                exit(__d('me_cms', 'File type not accepted'));
-            }
-        }
-        
-        //Updated the target, adding the filename
-        if(!file_exists($target.DS.$file['name'])) {
-            $target .= DS.$file['name'];
-        }
-        //If the file already exists, adds the name of the temporary file to the filename
-        else {
-            $target .= DS.pathinfo($file['name'], PATHINFO_FILENAME).'_'.basename($file['tmp_name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
-        }
-
-        //Checks if the file was successfully moved to the target directory
-        if(!move_uploaded_file($file['tmp_name'], $file['target'] = $target)) {
-            http_response_code(500);
-            exit(__d('me_cms', 'The file was not successfully moved to the target directory'));
-        }
-        
-        return $target;
-	}
-	
-	/**
 	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before each controller action.
+	 * You can use this method to perform logic that needs to happen before 
+     *  each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
@@ -189,8 +147,10 @@ class AppController extends BaseController {
 	}
 	
 	/**
-	 * Called after the controller action is run, but before the view is rendered.
-	 * You can use this method to perform logic or set view variables that are required on every request.
+	 * Called after the controller action is run, but before the view is 
+     *  rendered.
+	 * You can use this method to perform logic or set view variables that are 
+     *  required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses App\Controller\AppController::beforeRender()
@@ -202,10 +162,11 @@ class AppController extends BaseController {
         }
 		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-		$this->viewClass = $this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App';
-		
-		//Sets auth data for views
-		$this->set('auth', empty($this->Auth) ? FALSE : $this->Auth->user());
+        $this->viewBuilder()->className($this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App');
+        
+        //Loads the `Auth` helper.
+        //The `helper is loaded here (instead of the view) to pass user data
+        $this->viewBuilder()->helpers(['MeCms.Auth' => $this->Auth->user()]);
 		
 		parent::beforeRender($event);
 	}
@@ -216,10 +177,12 @@ class AppController extends BaseController {
 	 */
 	public function initialize() {
 		//Loads components
+        //The configuration for `AuthComponent`  takes place in the same class
 		$this->loadComponent('Cookie');
 		$this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('MeTools.Uploader');
 		
 		if(config('security.recaptcha')) {
 			$this->loadComponent('MeTools.Recaptcha');
@@ -230,7 +193,8 @@ class AppController extends BaseController {
 	
 	/**
 	 * Checks if the user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @param array $user The user to check the authorization of. If empty the 
+     *  user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 */

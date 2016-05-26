@@ -24,12 +24,14 @@
 
 <?php
     //Returns for logged user
-    if(!empty($auth['id']))
+    if($this->Auth->isLogged()) {
         return;
+    }
     
     //Returns if disabled or already checked
-    if(!config('frontend.cookies_policy') || !empty($_COOKIE['cookies-policy']))
+    if(!config('frontend.cookies_policy') || !empty($_COOKIE['cookies-policy'])) {
         return;
+    }
 ?>
 
 <div id="cookies-policy">

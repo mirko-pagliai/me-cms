@@ -109,29 +109,47 @@ class BannersController extends AppController {
 	
 	/**
 	 * Uploads banners
-	 * @uses MeCms\Controller\_upload()
+     * @uses MeTools\Controller\Component\UploaderComponent::error()
+     * @uses MeTools\Controller\Component\UploaderComponent::mimetype()
+     * @uses MeTools\Controller\Component\UploaderComponent::save()
+     * @uses MeTools\Controller\Component\UploaderComponent::set()
 	 */
 	public function upload() {
+		$position = $this->request->query('position');
+        
 		//If there's only one position, it automatically sets the query value
-		if(!$this->request->query('position') && count($this->viewVars['positions']) < 2) {
+		if(!$position && count($this->viewVars['positions']) < 2) {
 			$this->request->query['position'] = fk($this->viewVars['positions']);
         }
-				
-		$position = $this->request->query('position');
-		
-		if($position && $this->request->data('file')) {
-            //Uploads
-            $filename = $this->_upload($this->request->data('file'), BANNERS, 'image');
+        
+        if($this->request->data('file')) {
+            if(empty($position)) {
+				throw new InternalErrorException(__d('me_cms', 'Missing position ID'));
+            }
             
-			if($filename) {
-				$this->Banners->save($this->Banners->newEntity([
-					'position_id' => $position,
-					'filename' => basename($filename),
-				]));
-			}
+            http_response_code(500);
             
-            $this->render(FALSE);
-		}
+            $uploaded = $this->Uploader->set($this->request->data('file'))
+                ->mimetype('image')
+                ->save(BANNERS);
+            
+            if(!$uploaded) {
+                exit($this->Uploader->error());
+            }
+            
+            $saved = $this->Banners->save($this->Banners->newEntity([
+                'position_id' => $position,
+                'filename' => basename($uploaded),
+            ]));
+            
+            if(!$saved) {
+                exit(__d('me_cms', 'The banner could not be saved'));
+            }
+            
+            http_response_code(200);
+            
+            $this->render(FALSE);            
+        }
 	}
 
     /**

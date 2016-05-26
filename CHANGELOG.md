@@ -1,12 +1,21 @@
 # 2.x branch
+## 2.8 branch
+### 2.8.0
+* now uses the `UploaderComponent`;
+* improved the `AuthHelper`. Now it has its own methods and this makes user data safer;
+* improved the `AuthComponent`.
+
 ## 2.7 branch
+### 2.7.4
+* improved the uploader.
+
 ### 2.7.3
 * added some buttons for backend;
 * fixed links for banners and photos as grid.
 
 ### 2.7.2
 * tags have been moved below posts;
-* fixed bug to restore databases. The cache is properly cleaned;
+* fixed bug for restoring databases. The cache is properly cleaned;
 * fixed titles.
 
 ### 2.7.1

@@ -96,7 +96,6 @@ class AppView extends BaseView {
 		$this->loadHelper('MeTools.Recaptcha');
 		$this->loadHelper('Assets.Asset');
 		$this->loadHelper('Thumbs.Thumb');
-		$this->loadHelper('MeCms.Auth');
 		$this->loadHelper('MeCms.Widget');
     }
 	
