@@ -22,9 +22,9 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
-use Cake\Cache\Cache;
 
 /**
  * Posts controller
