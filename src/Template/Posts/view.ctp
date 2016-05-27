@@ -39,7 +39,7 @@
 	$this->assign('title', $post->title);
 	
 	//Set some tags
-    if($this->request->isAction('view')) {
+    if($this->request->isAction('view', 'Posts')) {
         $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
         $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
 
