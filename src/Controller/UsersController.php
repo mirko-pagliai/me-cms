@@ -46,8 +46,9 @@ class UsersController extends AppController {
 		parent::beforeFilter($event);
 		
 		//Checks if the user is already logged in
-		if(!$this->request->isAction('logout') && $this->Auth->isLogged())
+		if(!$this->request->isAction('logout') && $this->Auth->isLogged()) {
 			return $this->redirect(['_name' => 'dashboard']);
+        }
 	}
 	
 	/**
@@ -57,12 +58,13 @@ class UsersController extends AppController {
 	 */
 	protected function _loginWithCookie() {
 		//Checks if the cookie exists
-		if(!$this->Cookie->read('login'))
+		if(!$this->Cookie->read('login')) {
 			return;
+        }
 		
 		$this->request->data = $this->Cookie->read('login');
 		
-		//Tries to login...
+		//Tries to login
 		if(!empty($this->request->data['username']) && !empty($this->request->data['password'])) {
             $user = $this->Auth->identify();
             
@@ -131,9 +133,10 @@ class UsersController extends AppController {
 	 */
 	public function activate_account($id, $token) {
 		//Checks for token
-		if(!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id]))
+		if(!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id])) {
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
-		
+        }
+        
 		$user = $this->Users->find('pending')
 			->select(['id'])
 			->where(compact('id'))
@@ -147,9 +150,10 @@ class UsersController extends AppController {
 			
 			$this->Flash->success(__d('me_cms', 'The account has been activated'));
 		}
-		else
+		else {
 			$this->Flash->error(__d('me_cms', 'The account has not been activated'));
-		
+        }
+        
         return $this->redirect(['_name' => 'login']);
 	}
 	
@@ -203,12 +207,14 @@ class UsersController extends AppController {
 					$this->Flash->error(__d('me_cms', 'No account found'));
                 }
 			}
-			else
+			else {
 				$this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
+            }
 		}
-		else
+		else {
 			$entity = $this->Users->newEntity(NULL, ['validate' => 'NotUnique']);
-			
+        }
+        
 		$this->set('user', $entity);
 
 		$this->viewBuilder()->layout('login');
@@ -221,28 +227,32 @@ class UsersController extends AppController {
 	 */
 	public function login() {
 		//Tries to login with cookies, if the login with cookies is enabled
-		if(config('users.cookies_login'))
+		if(config('users.cookies_login')) {
 			$this->_loginWithCookie();
-		
+        }
+        
 		if($this->request->is('post')) {
             $user = $this->Auth->identify();
                 
 			if($user) {
 				//Checks if the user is banned or if is disabled (the account should still be enabled)
 				if($user['banned'] || !$user['active']) {
-					if($user['banned'])
+					if($user['banned']) {
 						$this->Flash->error(__d('me_cms', 'Your account has been banned by an admin'));
-					elseif(!$user['active'])
+                    }
+					elseif(!$user['active']) {
 						$this->Flash->error(__d('me_cms', 'Your account has not been activated yet'));
-					
+                    }
+                    
 					return $this->_logout();
 				}
 				
 				//Saves the login data in a cookie, if it was requested
-				if($this->request->data('remember_me'))
+				if($this->request->data('remember_me')) {
 					$this->Cookie->config(['expires' => '+365 days'])
 						->write('login', ['username' => $this->request->data('username'), 'password' => $this->request->data('password')]);
-				
+                }
+                
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
@@ -317,12 +327,14 @@ class UsersController extends AppController {
 					$this->Flash->error(__d('me_cms', 'No account found'));
                 }
 			}
-			else
+			else {
 				$this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
+            }
 		}
-		else
+		else {
 			$entity = $this->Users->newEntity(NULL, ['validate' => 'OnlyCheck']);
-		
+        }
+        
 		$this->set('user', $entity);
 		
 		$this->viewBuilder()->layout('login');
@@ -338,9 +350,10 @@ class UsersController extends AppController {
 	 */
 	public function reset_password($id, $token) {
 		//Checks for token
-		if(!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id]))
+		if(!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id])) {
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
-		
+        }
+        
 		$user = $this->Users->find('active')
 			->select(['id'])
 			->where(compact('id'))
@@ -356,8 +369,9 @@ class UsersController extends AppController {
 				$this->Flash->success(__d('me_cms', 'The password has been edited'));
 				return $this->redirect(['_name' => 'login']);
 			}
-			else
+			else {
 				$this->Flash->error(__d('me_cms', 'The password has not been edited'));
+            }
 		}
 		
 		$this->set(compact('user'));
@@ -379,8 +393,8 @@ class UsersController extends AppController {
 		}
 		
 		$this->request->data += [
-			'group_id'	=> config('users.default_group'),
-			'active'	=> (bool) !config('users.activation')
+			'group_id' => config('users.default_group'),
+			'active' => (bool) !config('users.activation'),
 		];
 				
         $user = $this->Users->newEntity();
@@ -413,8 +427,9 @@ class UsersController extends AppController {
 				
 				return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
 				$this->Flash->error(__d('me_cms', 'The account has not been created'));
+            }
         }
 
         $this->set(compact('user'));

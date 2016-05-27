@@ -35,23 +35,27 @@ class PostsCategoriesController extends AppController {
      * Lists posts categories
      */
     public function index() {
-		$this->set('categories', $this->PostsCategories->find('active')
+        $categories = $this->PostsCategories->find('active')
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
 			->cache('categories_index', $this->PostsCategories->cache)
-			->all());
+			->all();
+        
+        $this->set(compact('categories '));
     }
 	
 	/**
-	 * Lists posts for a category
+	 * Lists posts for a category.
+     * It uses the `Posts/index` template.
 	 * @param string $category Category slug
      * @throws RecordNotFoundException
 	 */
 	public function view($category = NULL) {
 		//The category can be passed as query string, from a widget
-		if($this->request->query('q'))
+		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
-		
+        }
+        
 		//Sets the cache name
 		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -62,29 +66,30 @@ class PostsCategoriesController extends AppController {
 		if(empty($posts) || empty($paging)) {
 			$query = $this->PostsCategories->Posts->find('active')
 				->contain([
-					'Categories'	=> ['fields' => ['title', 'slug']],
+					'Categories' => ['fields' => ['title', 'slug']],
 					'Tags',
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
+					'Users' => ['fields' => ['first_name', 'last_name']],
 				])
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->where(['Categories.slug' => $category])
 				->order([sprintf('%s.created', $this->PostsCategories->Posts->alias()) => 'DESC']);
 					
-			if($query->isEmpty())
+			if($query->isEmpty()) {
 				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
-					
+            }
+            
 			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsCategories->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
 		$this->set(compact('posts'));
 		
-		//Renders on a different view
 		$this->render('Posts/index');
 	}
 }

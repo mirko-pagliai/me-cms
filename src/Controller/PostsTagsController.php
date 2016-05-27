@@ -35,20 +35,22 @@ class PostsTagsController extends AppController {
 	 * Lists posts tags
 	 */
 	public function index() {
-		$this->set('tags', $this->PostsTags->Tags->find()
+		$tags = $this->PostsTags->Tags->find()
 			->order(['tag' => 'ASC'])
 			->where(['post_count >' => 0])
 			->cache('tag_index', $this->PostsTags->Posts->cache)
-			->all());
+			->all();
+        
+        $this->set(compact('tags'));
 	}
 	
 	/**
-	 * Lists posts for a tag
+	 * Lists posts for a tag.
+     * It uses the `Posts/index` template.
 	 * @param string $tag Tag name
      * @throws RecordNotFoundException
 	 */
     public function view($tag) {
-		
 		//Sets the initial cache name
 		$cache = sprintf('index_tag_%s', md5($tag));
 				
@@ -63,9 +65,9 @@ class PostsTagsController extends AppController {
 		if(empty($posts) || empty($paging)) {
 			$query = $this->PostsTags->Posts->find('active')
 				->contain([
-					'Categories'	=> ['fields' => ['title', 'slug']],
+					'Categories' => ['fields' => ['title', 'slug']],
 					'Tags',
-					'Users'			=> ['fields' => ['first_name', 'last_name']]
+					'Users' => ['fields' => ['first_name', 'last_name']],
 				])
 				->matching('Tags', function ($q) use ($tag) {
 					return $q->where(['Tags.tag' => str_replace('-', ' ', $tag)]);
@@ -73,21 +75,22 @@ class PostsTagsController extends AppController {
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
 					
-			if($query->isEmpty())
+			if($query->isEmpty()) {
 				throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
-					
+            }
+            
 			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsTags->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
 		$this->set(compact('posts'));
 		
-		//Renders on a different view
 		$this->render('Posts/index');
     }
 }
