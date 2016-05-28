@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.8 branch
 ### 2.8.1
+* pages now have the `preview` property, just as for posts;
 * added specific methods for previews. This improves the code.
 
 ### 2.8.0

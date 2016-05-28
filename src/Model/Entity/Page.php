@@ -23,6 +23,8 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
+use MeCms\Utility\Youtube;
 
 /**
  * Page entity
@@ -46,4 +48,34 @@ class Page extends Entity {
         'id' => FALSE,
 		'modified' => FALSE,
     ];
+	
+	/**
+	 * Virtual fields that should be exposed
+	 * @var array
+	 */
+    protected $_virtual = ['preview'];
+    
+	/**
+	 * Gets the post preview (virtual field)
+	 * @return string Url to preview
+	 * @uses MeCms\Utility\Youtube::getId()
+	 * @uses MeCms\Utility\Youtube::getPreview()
+	 */
+	protected function _getPreview() {
+		//Checks for the first image in the text
+		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
+		
+		if(!empty($matches[2])) {
+			return Router::url($matches[2], TRUE);
+        }
+        
+		//Checks for a YouTube video and its preview
+		preg_match('/\[youtube](.+?)\[\/youtube]/', $this->_properties['text'], $matches);
+		
+		if(!empty($matches[1])) {
+			return Youtube::getPreview(is_url($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
+        }
+        
+		return;
+    }
 }
