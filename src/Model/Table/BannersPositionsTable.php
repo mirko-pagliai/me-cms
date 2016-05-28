@@ -44,6 +44,7 @@ class BannersPositionsTable extends AppTable {
 	 */
 	public function getList() {
 		return $this->find('list')
+            ->order(['name' => 'ASC'])
 			->cache('positions_list', $this->cache)
 			->toArray();
 	}
@@ -61,7 +62,7 @@ class BannersPositionsTable extends AppTable {
 		
         $this->hasMany('Banners', [
             'foreignKey' => 'position_id',
-            'className' => 'MeCms.Banners'
+            'className' => 'MeCms.Banners',
         ]);
         
         $this->addBehavior('Timestamp');

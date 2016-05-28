@@ -31,7 +31,7 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {	
+Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Banners controller
 	 */
@@ -46,6 +46,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/page/:slug',
 		['controller' => 'Pages', 'action' => 'view'],
 		['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+	);
+	$routes->connect('/page/preview/:slug',
+		['controller' => 'Pages', 'action' => 'preview'],
+		['_name' => 'pages_preview', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
 	);
 	$routes->connect('/pages',
 		['controller' => 'Pages', 'action' => 'index'],
@@ -113,6 +117,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	$routes->connect('/post/:slug',
 		['controller' => 'Posts', 'action' => 'view'],
 		['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
+	$routes->connect('/post/preview/:slug',
+		['controller' => 'Posts', 'action' => 'preview'],
+		['_name' => 'posts_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'posts_rss']);

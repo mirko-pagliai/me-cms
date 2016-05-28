@@ -15,6 +15,15 @@ body {
 	padding: 60px 0 40px;
 }
 
+/* Extra small devices */
+@media (max-width: 767px) {
+	/* Body */
+	body {
+		background: #fff;
+		padding: 0;
+	}
+}
+
 /* -------------------------------- */
 /*				Content				*/
 /* -------------------------------- */
@@ -24,16 +33,25 @@ body {
 	border-radius: 8px;
     box-shadow: 0 3px 6px -6px #000;
 	font-size: 16px;
-	margin: 20px;
+	margin: 20px auto;
 	overflow: hidden;
     padding: 20px;
+}
+
+/* Extra small devices */
+@media (max-width: 767px) {
+	/* Content */
+	#content {
+		box-shadow: none;
+		margin: 0 auto;
+		width: auto;
+	}
 }
 
 /* Min width content */
 @media (min-width: 470px) {
 	/* Content */
 	#content {
-		margin: auto;
 		width: 450px;
 	}
 }
@@ -63,6 +81,7 @@ body {
     text-align: center;
 }
 
+/* Content, actions */
 #content > div > .actions {
     font-size: 90%;
     list-style: none;
@@ -89,6 +108,7 @@ body {
 /* -------------------------------- */
 /*				Forms				*/
 /* -------------------------------- */
+/* Form, error message */
 form .error-message {
 	font-size: 80%;
     padding: 4px 6px;

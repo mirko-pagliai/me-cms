@@ -82,9 +82,10 @@ class SystemsController extends AppController {
 	 */
 	public function ip_not_allowed() {
 		//If the user's IP address is not banned
-		if(!$this->request->isBanned())
+		if(!$this->request->isBanned()) {
 			return $this->redirect(['_name' => 'homepage']);
-		
+        }
+        
 		$this->viewBuilder()->layout('login');
 	}
 	
@@ -93,9 +94,10 @@ class SystemsController extends AppController {
 	 */
 	public function offline() {
 		//If the site has not been taken offline
-		if(!config('frontend.offline'))
+		if(!config('frontend.offline')) {
 			return $this->redirect(['_name' => 'homepage']);
-		
+        }
+        
 		$this->viewBuilder()->layout('login');
 	}
     

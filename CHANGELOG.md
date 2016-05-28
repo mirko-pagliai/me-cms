@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.8 branch
+### 2.8.1
+* pages now have tags for Facebook;
+* pages now have the `preview` property, just as for posts;
+* improved login layout for extra small devices;
+* added specific methods for previews. This improves the code.
+
 ### 2.8.0
 * now uses the `UploaderComponent`;
 * improved the `AuthHelper`. Now it has its own methods and this makes user data safer;

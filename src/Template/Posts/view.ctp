@@ -23,16 +23,12 @@
 ?>
 
 <?php $this->append('userbar'); ?>
-<?php if(!$post->active || $post->created->isFuture()): ?>
-    <li>
-        <?php if(!$post->active): ?>
-            <?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
+<?php if(!$post->active): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
+<?php endif; ?>
 
-        <?php if($post->created->isFuture()): ?>
-            <?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?>
-        <?php endif; ?>
-    </li>
+<?php if($post->created->isFuture()): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?></li>
 <?php endif; ?>
 
 <li><?= $this->Html->link(__d('me_cms', 'Edit post'), ['action' => 'edit', $post->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
@@ -43,16 +39,18 @@
 	$this->assign('title', $post->title);
 	
 	//Set some tags
-	$this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
-    
-	if(!empty($post->preview)) {
-		$this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-		$this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
-	}
-	
-	if(!empty($post->text)) {
-		$this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($post->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+    if($this->request->isAction('view', 'Posts')) {
+        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+        $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
+
+        if(!empty($post->preview)) {
+            $this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+        }
+
+        if(!empty($post->text)) {
+            $this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($post->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+        }
     }
 ?>
 

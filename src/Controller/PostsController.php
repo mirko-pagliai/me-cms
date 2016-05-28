@@ -22,9 +22,9 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
-use Cake\Cache\Cache;
 
 /**
  * Posts controller
@@ -37,31 +37,11 @@ class PostsController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
         
-        //View posts. It checks created datetime and status. Logged users can view future objects and drafts
-		if($this->request->isAction('view')) {
-            if($this->Auth->user()) {
-                return;
-            }
-            
-            $slug = $this->request->param('slug');
-            
-            $post = $this->Posts->find()
-                ->select(['active', 'created'])
-                ->where(compact('slug'))
-                ->cache(sprintf('status_%s', md5($slug)), $this->Posts->cache)
-                ->firstOrFail();
-            
-            if($post->active && $post->created->isPast()) {
-                return;
-            }
-            
-            $this->Auth->deny('view');
-        }
+        $this->Auth->deny('preview');
     }
     
 	/**
@@ -76,37 +56,38 @@ class PostsController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
-			$posts = $this->paginate(
-				$this->Posts->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Tags'			=> function($q) {
-							return $q->order([sprintf('%s.post_count', $this->Posts->Tags->alias()) => 'DESC']);
-						},
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
-			)->toArray();
+            $query = $this->Posts->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Tags' => function($q) {
+                        return $q->order([sprintf('%s.post_count', $this->Posts->Tags->alias()) => 'DESC']);
+                    },
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+            
+			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
         $this->set(compact('posts'));
     }
 	
 	/**
-	 * Lists posts by a date
+	 * Lists posts by a date.
+     * It uses the `index` template.
 	 * @param int $year Year
 	 * @param int $month Month
 	 * @param int $day Day
 	 */
 	public function index_by_date($year, $month, $day) {
-		
 		//Sets the cache name
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
@@ -114,32 +95,33 @@ class PostsController extends AppController {
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
 		
 		//If the data are not available from the cache
-		if(empty($posts) || empty($paging)) {		
-			$posts = $this->paginate(
-				$this->Posts->find('active')
-					->contain([
-						'Categories'	=> ['fields' => ['title', 'slug']],
-						'Tags',
-						'Users'			=> ['fields' => ['first_name', 'last_name']]
-					])
-					->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-					->where([
-						sprintf('%s.created >=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
-						sprintf('%s.created <=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL)
-					])
-					->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
-			)->toArray();
+		if(empty($posts) || empty($paging)) {
+            $query = $this->Posts->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Tags',
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+                ->where([
+                    sprintf('%s.created >=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
+                    sprintf('%s.created <=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL),
+                ])
+                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+            
+			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
 			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
 		}
 		//Else, sets the paging parameter
-		else
+		else {
 			$this->request->params['paging'] = $paging;
-		
+        }
+        
         $this->set(compact('posts'));
 		
-		$this->render('Posts/index');
+		$this->render('index');
 	}
 	
 	/**
@@ -160,14 +142,17 @@ class PostsController extends AppController {
 	 */
 	public function rss() {
 		//This method works only for RSS
-		if(!$this->RequestHandler->isRss())
+		if(!$this->RequestHandler->isRss()) {
             throw new \Cake\Network\Exception\ForbiddenException();
-		
-		$this->set('posts', $this->Posts->find('active')
+        }
+        
+        $posts = $this->Posts->find('active')
 			->select(['title', 'slug', 'text', 'created'])
 			->limit(config('frontend.records_for_rss'))
 			->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
-			->cache('rss', $this->Posts->cache));
+			->cache('rss', $this->Posts->cache);
+        
+        $this->set(compact('posts'));
 		
 		$this->viewBuilder()->layout('MeCms.frontend');
 	}
@@ -197,31 +182,34 @@ class PostsController extends AppController {
 
 					//If the data are not available from the cache
 					if(empty($posts) || empty($paging)) {
-						$posts = $this->paginate(
-							$this->Posts->find('active')
-								->select(['title', 'slug', 'text', 'created'])
-								->where(['OR' => [
-									'title LIKE'	=> sprintf('%%%s%%', $pattern),
-									'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-									'text LIKE'		=> sprintf('%%%s%%', $pattern)
-								]])
-								->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
-						)->toArray();
+                        $query = $this->Posts->find('active')
+                            ->select(['title', 'slug', 'text', 'created'])
+                            ->where(['OR' => [
+                                'title LIKE' => sprintf('%%%s%%', $pattern),
+                                'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+                                'text LIKE' => sprintf('%%%s%%', $pattern),
+                            ]])
+                            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                        
+						$posts = $this->paginate($query)->toArray();
 
 						//Writes on cache
 						Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
 					}
 					//Else, sets the paging parameter
-					else
+					else {
 						$this->request->params['paging'] = $paging;
-
+                    }
+                    
 					$this->set(compact('posts'));
 				}
-				else
+				else {
 					$this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
+                }
 			}
-			else
+			else {
 				$this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+            }
 		}
         
         $this->set(compact('pattern'));
@@ -233,11 +221,11 @@ class PostsController extends AppController {
 	 * @uses MeCms\Model\Table\PostsTable::getRelated()
 	 */
     public function view($slug = NULL) {
-		$post = $this->Posts->find()
+		$post = $this->Posts->find('active')
 			->contain([
-				'Categories'	=> ['fields' => ['title', 'slug']],
+				'Categories' => ['fields' => ['title', 'slug']],
 				'Tags',
-				'Users'			=> ['fields' => ['first_name', 'last_name']]
+				'Users' => ['fields' => ['first_name', 'last_name']],
 			])
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
@@ -251,4 +239,31 @@ class PostsController extends AppController {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
         }
 	}
+    
+    /**
+     * Preview for posts.
+     * It uses the `view` template.
+	 * @param string $slug Post slug
+	 * @uses MeCms\Model\Table\PostsTable::getRelated()
+     */
+    public function preview($slug = NULL) {
+        $post = $this->Posts->find()
+			->contain([
+				'Categories' => ['fields' => ['title', 'slug']],
+				'Tags',
+				'Users' => ['fields' => ['first_name', 'last_name']],
+			])
+			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
+			->firstOrFail();
+        
+        $this->set(compact('post'));
+        
+		//Gets related posts
+		if(config('post.related.limit')) {
+			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
+        }
+        
+        $this->render('view');
+    }
 }

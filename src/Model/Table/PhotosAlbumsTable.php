@@ -61,9 +61,10 @@ class PhotosAlbumsTable extends AppTable {
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		//Creates the folder
-		if($entity->isNew())
+		if($entity->isNew()) {
            (new Folder())->create(PHOTOS.DS.$entity->id, 0777);
-		
+        }
+        
 		parent::afterSave($event, $entity, $options);
 	}
 	
@@ -76,7 +77,7 @@ class PhotosAlbumsTable extends AppTable {
 	public function findActive(Query $query, array $options) {
         $query->where([
 			sprintf('%s.active', $this->alias()) => TRUE,
-			sprintf('%s.photo_count >', $this->alias())	=> 0
+			sprintf('%s.photo_count >', $this->alias())	=> 0,
 		]);
 		
         return $query;
@@ -89,6 +90,7 @@ class PhotosAlbumsTable extends AppTable {
 	 */
 	public function getList() {
 		return $this->find('list')
+            ->order(['title' => 'ASC'])
 			->cache('albums_list', $this->cache)
 			->toArray();
 	}
@@ -106,7 +108,7 @@ class PhotosAlbumsTable extends AppTable {
 		
         $this->hasMany('Photos', [
             'foreignKey' => 'album_id',
-            'className' => 'MeCms.Photos'
+            'className' => 'MeCms.Photos',
         ]);
         
         $this->addBehavior('Timestamp');

@@ -34,12 +34,13 @@ class PhotosController extends AppController {
      * @param string $id Photo ID
      */
     public function view($id = NULL) {
-		$this->set('photo', $this->Photos->find()
+        $photo = $this->Photos->find()
 			->select(['id', 'album_id', 'filename'])
 			->where(compact('id'))
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
-			->firstOrFail()
-		);
+			->firstOrFail();
+        
+        $this->set(compact('photo'));
     }
     
     /**
@@ -52,10 +53,12 @@ class PhotosController extends AppController {
     public function view_compatibility($id) {
         $photo = $this->Photos->find()
             ->select(['id'])
-            ->contain(['Albums' => function($q) {
-                return $q->select(['slug']);
-            }])
-           ->firstOrFail();
+            ->contain([
+                'Albums' => function($q) {
+                    return $q->select(['slug']);
+                }
+            ])
+            ->firstOrFail();
         
 		return $this->redirect(am(['_name' => 'photo', 'slug' => $photo->album->slug], compact('id')), 301);
     }

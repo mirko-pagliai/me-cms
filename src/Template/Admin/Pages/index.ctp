@@ -98,8 +98,14 @@
 								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $page->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                             }
                             
-							$actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
-
+                            //If the page is active and is not scheduled
+                            if($page->active && !$page->created->isFuture()) {
+                                $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                            }
+                            else {
+                                $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'pages_preview', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                            }
+                            
                             echo $this->Html->ul($actions, ['class' => 'actions']);
 						?>
 					</td>

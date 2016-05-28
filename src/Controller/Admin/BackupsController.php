@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Cache\Cache;
 use DatabaseBackup\Utility\Backup;
 use DatabaseBackup\Utility\BackupImport;
 use MeCms\Controller\AppController;

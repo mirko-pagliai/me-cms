@@ -35,17 +35,19 @@ class PhotosAlbumsController extends AppController {
     public function index() {
         $albums = $this->PhotosAlbums->find('active')
 			->select(['id', 'title', 'slug', 'photo_count'])
-			->contain(['Photos' => function($q) {
-				return $q->select(['album_id', 'filename'])
-					->order('rand()');
-			}])
+			->contain([
+                'Photos' => function($q) {
+                    return $q->select(['album_id', 'filename'])->order('rand()');
+                }
+            ])
 			->order(['title' => 'ASC'])
 			->cache('albums_index', $this->PhotosAlbums->cache)
 			->all();    
             
 		//If there is only one album, redirects to that album
-		if($albums->count() === 1)
+		if($albums->count() === 1) {
 			return $this->redirect(['action' => 'view', $albums->toArray()[0]->slug]);
+        }
         
         $this->set(compact('albums'));
     }
@@ -56,19 +58,22 @@ class PhotosAlbumsController extends AppController {
 	 */
 	public function view($slug = NULL) {
 		//The slug can be passed as query string, from a widget
-		if($this->request->query('q'))
+		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
-		
-		$this->set('album', $this->PhotosAlbums->find('active')
-			->contain(['Photos' => function($q) {
-				return $q
-					->select(['id', 'album_id', 'filename', 'description'])
-					->order([sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC', sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC']);
-			 }])
+        }
+        
+		$album = $this->PhotosAlbums->find('active')
+			->contain([
+                'Photos' => function($q) {
+                    return $q->select(['id', 'album_id', 'filename', 'description'])
+                        ->order([sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC', sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC']);
+                 }
+             ])
 			->select(['id', 'slug', 'title'])
 			->where(compact('slug'))
 			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
-			->firstOrFail()
-		);
+			->firstOrFail();
+             
+        $this->set(compact('album'));
 	}
 }
