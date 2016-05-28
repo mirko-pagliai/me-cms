@@ -48,7 +48,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
 	);
 	$routes->connect('/page/preview/:slug',
-		['controller' => 'Pages', 'action' => 'view'],
+		['controller' => 'Pages', 'action' => 'preview'],
 		['_name' => 'pages_preview', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
 	);
 	$routes->connect('/pages',
