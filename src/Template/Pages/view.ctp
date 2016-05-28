@@ -35,7 +35,24 @@
 <li><?= $this->Form->postLink(__d('me_cms', 'Delete page'), ['action' => 'delete', $page->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
 <?php $this->end(); ?>
 	
-<?php $this->assign('title', $page->title); ?>
+<?php
+    $this->assign('title', $page->title);
+    
+	//Set some tags
+    if($this->request->isAction('view', 'Pages')) {
+        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+        $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
+        
+        if(!empty($page->preview)) {
+            $this->Html->meta(['href' => $page->preview, 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $page->preview, 'property' => 'og:image']);
+        }
+
+        if(!empty($page->text)) {
+            $this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($page->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+        }
+    }
+?>
 
 <div class="pages view">
 	<?= $this->element('frontend/views/page', compact('page')); ?>
