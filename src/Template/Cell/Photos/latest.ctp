@@ -23,13 +23,15 @@
 ?>
 
 <?php
-	if(empty($photos))
+	if(empty($photos)) {
 		return;
-	
+    }
+    
 	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Latest {0} photos', count($photos)) : __d('me_cms', 'Latest photo'));
 	
-	foreach($photos as $photo)
+	foreach($photos as $photo) {
 		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
+    }
 ?>

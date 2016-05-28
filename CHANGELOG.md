@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.8 branch
+### 2.8.2
+* you can set a custom class for widgets.
+
 ### 2.8.1
 * pages now have tags for Facebook;
 * pages now have the `preview` property, just as for posts;

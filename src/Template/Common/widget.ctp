@@ -23,13 +23,13 @@
 ?>
 
 <?php if(trim($this->fetch('content'))): ?>
-	<div class="widget">
+	<div class="<?= trim($this->fetch('class')) ? sprintf('widget %s', trim($this->fetch('class'))) : 'widget' ?>">
 		<?php if(trim($this->fetch('title'))): ?>
-			<h4 class="widget-title"><?= $this->fetch('title') ?></h4>
+			<h4 class="widget-title"><?= trim($this->fetch('title')) ?></h4>
 		<?php endif; ?>
 
 		<div class="widget-content">
-			<?= $this->fetch('content') ?>
+			<?= trim($this->fetch('content')) ?>
 		</div>
 	</div>
 <?php endif; ?>
