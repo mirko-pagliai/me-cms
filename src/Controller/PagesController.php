@@ -40,7 +40,7 @@ class PagesController extends AppController {
 	public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
         
-        $this->Auth->deny('view');
+        $this->Auth->deny('preview');
     }
     
 	/**
