@@ -43,6 +43,7 @@
         $date = new \Cake\I18n\Time();
         $date->year($this->request->param('year'));
         $date->month($this->request->param('month'));
+        $date->day(1);
         
         $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM Y'));
     }
