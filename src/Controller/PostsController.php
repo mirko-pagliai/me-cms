@@ -79,6 +79,53 @@ class PostsController extends AppController {
         
         $this->set(compact('posts'));
     }
+	
+	/**
+	 * Lists posts by a date.
+     * It uses the `index` template.
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+	 */
+	public function index_by_date($year, $month, $day) {
+		//Sets the cache name
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		
+		//Tries to get data from the cache
+		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
+		
+		//If the data are not available from the cache
+		if(empty($posts) || empty($paging)) {
+            $first = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
+            $last = (new Time($first))->addDay(1);
+        
+            $query = $this->Posts->find('active')
+                ->contain([
+                    'Categories' => ['fields' => ['title', 'slug']],
+                    'Tags',
+                    'Users' => ['fields' => ['first_name', 'last_name']],
+                ])
+                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+                ->where([
+                    sprintf('%s.created >=', $this->Posts->alias()) => $first,
+                    sprintf('%s.created <', $this->Posts->alias()) => $last,
+                ])
+                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+            
+			$posts = $this->paginate($query)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
+		}
+		//Else, sets the paging parameter
+		else {
+			$this->request->params['paging'] = $paging;
+        }
+        
+        $this->set(compact('posts'));
+		
+		$this->render('index');
+	}
     
     /**
 	 * Lists posts by a month (year and month).
@@ -131,53 +178,6 @@ class PostsController extends AppController {
 		
 		$this->render('index');
     }
-	
-	/**
-	 * Lists posts by a date.
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-	 * @param int $day Day
-	 */
-	public function index_by_date($year, $month, $day) {
-		//Sets the cache name
-		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
-		
-		//Tries to get data from the cache
-		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
-		
-		//If the data are not available from the cache
-		if(empty($posts) || empty($paging)) {
-            $first = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
-            $last = (new Time($first))->addDay(1);
-        
-            $query = $this->Posts->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags',
-                    'Users' => ['fields' => ['first_name', 'last_name']],
-                ])
-                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->where([
-                    sprintf('%s.created >=', $this->Posts->alias()) => $first,
-                    sprintf('%s.created <', $this->Posts->alias()) => $last,
-                ])
-                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
-            
-			$posts = $this->paginate($query)->toArray();
-						
-			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
-		}
-		//Else, sets the paging parameter
-		else {
-			$this->request->params['paging'] = $paging;
-        }
-        
-        $this->set(compact('posts'));
-		
-		$this->render('index');
-	}
 	
 	/**
 	 * This allows backward compatibility for URLs like:
