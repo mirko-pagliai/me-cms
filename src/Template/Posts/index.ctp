@@ -26,7 +26,7 @@
 	/**
 	 * This template can be used by many actions
 	 */
-	if($this->request->isAction('index_by_date', 'Posts')) {
+	if($this->request->isAction('index_by_day', 'Posts')) {
         $date = new \Cake\I18n\Time();
         $date->year($this->request->param('year'));
         $date->month($this->request->param('month'));

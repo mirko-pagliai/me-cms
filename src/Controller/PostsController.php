@@ -81,13 +81,13 @@ class PostsController extends AppController {
     }
 	
 	/**
-	 * Lists posts by a date.
+	 * Lists posts by a day (year, month and day).
      * It uses the `index` template.
 	 * @param int $year Year
 	 * @param int $month Month
 	 * @param int $day Day
 	 */
-	public function index_by_date($year, $month, $day) {
+	public function index_by_day($year, $month, $day) {
 		//Sets the cache name
 		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		

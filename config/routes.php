@@ -131,8 +131,8 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		'month'	=> '0[1-9]|1[012]',
 		'pass'	=> ['year', 'month']
 	]);
-	$routes->connect('/posts/:year/:month/:day', ['controller' => 'Posts', 'action' => 'index_by_date'], [
-		'_name'	=> 'posts_by_date',
+	$routes->connect('/posts/:year/:month/:day', ['controller' => 'Posts', 'action' => 'index_by_day'], [
+		'_name'	=> 'posts_by_day',
 		'year'	=> '[12][0-9]{3}',
 		'month'	=> '0[1-9]|1[012]',
 		'day'	=> '0[1-9]|[12][0-9]|3[01]',
@@ -140,14 +140,14 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	]);
 	$routes->connect('/posts/today', [
 		'controller'	=> 'Posts', 
-		'action'		=> 'index_by_date',
+		'action'		=> 'index_by_day',
 		'year'			=> date('Y'),
 		'month'			=> date('m'),
 		'day'			=> date('d'),
 	], ['_name' => 'posts_today', 'pass' => ['year', 'month', 'day']]);
 	$routes->connect('/posts/yesterday', [
 		'controller'	=> 'Posts', 
-		'action'		=> 'index_by_date',
+		'action'		=> 'index_by_day',
 		'year'			=> (new Time('1 days ago'))->i18nFormat('YYYY'),
 		'month'			=> (new Time('1 days ago'))->i18nFormat('MM'),
 		'day'			=> (new Time('1 days ago'))->i18nFormat('dd'),
