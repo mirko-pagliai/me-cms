@@ -23,8 +23,9 @@
 ?>
 
 <?php
-	if(empty($pages))
+	if(empty($pages)) {
 		return;
+    }
 	
 	//Extends the widget common view
 	$this->extend('/Common/widget');

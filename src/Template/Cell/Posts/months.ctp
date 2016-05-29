@@ -23,15 +23,19 @@
 ?>
 
 <?php
-	if(empty($photos)) {
+	if(empty($months) || count($months) < 2) {
 		return;
     }
     
 	//Extends the widget common view
 	$this->extend('/Common/widget');
-	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Random {0} photos', count($photos)) : __d('me_cms', 'Random photo'));
-	
-	foreach($photos as $photo) {
-		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
-    }
+	$this->assign('title', __d('me_cms', 'Posts by month'));
+    
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_by_month', date('Y'), date('m')]]);
+	echo $this->Form->input('q', [
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+		'options' => $months,
+	]);
+	echo $this->Form->end();
 ?>

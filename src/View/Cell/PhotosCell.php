@@ -50,8 +50,9 @@ class PhotosCell extends Cell {
 	 */
 	public function albums() {
 		//Returns on albums index
-		if($this->request->isHere(['_name' => 'albums']))
+		if($this->request->isHere(['_name' => 'albums'])) {
 			return;
+        }
 		
 		//Tries to get data from the cache
 		$albums = Cache::read($cache = 'widget_albums', $this->Photos->cache);
@@ -81,17 +82,18 @@ class PhotosCell extends Cell {
 	 */
 	public function latest($limit = 1) {
 		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums']))
+		if($this->request->isController(['Photos', 'PhotosAlbums'])) {
 			return;
-				
-		//Gets and sets photos
-		$this->set('photos', $this->Photos->find('active')
+        }
+        
+		$photos = $this->Photos->find('active')
 			->select(['album_id', 'filename'])
 			->limit($limit)
 			->order([sprintf('%s.created', $this->Photos->alias()) => 'DESC', sprintf('%s.id', $this->Photos->alias()) => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
-			->toArray()
-		);
+			->toArray();
+        
+        $this->set(compact('photos'));
 	}
 	
 	/**
@@ -101,14 +103,15 @@ class PhotosCell extends Cell {
 	 */
 	public function random($limit = 1) {
 		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums']))
+		if($this->request->isController(['Photos', 'PhotosAlbums'])) {
 			return;
+        }
 		
 		//Returns, if there are no records available
-		if(Cache::read($cache = 'no_photos', $this->Photos->cache))
+		if(Cache::read($cache = 'no_photos', $this->Photos->cache)) {
 			return;
-		
-		//Gets photos
+        }
+        
 		$photos = $this->Photos->find('active')
 			->select(['album_id', 'filename'])
 			->limit($limit)
@@ -116,9 +119,10 @@ class PhotosCell extends Cell {
 			->toArray();
 		
 		//Writes on cache, if there are no records available
-		if(empty($photos))
+		if(empty($photos)) {
 			Cache::write($cache, TRUE, $this->Photos->cache);
-		
+        }
+        
 		$this->set(compact('photos'));
 	}
 }

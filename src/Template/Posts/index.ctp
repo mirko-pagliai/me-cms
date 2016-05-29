@@ -32,13 +32,24 @@
         $date->month($this->request->param('month'));
         $date->day($this->request->param('day'));
 		
-		if($date->isToday())
+		if($date->isToday()) {
 			$title = __d('me_cms', 'Posts of today');
-		elseif($date->isYesterday())
+        }
+		elseif($date->isYesterday()) {
 			$title = __d('me_cms', 'Posts of yesterday');
-		else
+        }
+		else {
 			$title = __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long')));
+        }
 	}
+    elseif($this->request->isAction('index_by_month', 'Posts')) {
+        $date = new \Cake\I18n\Time();
+        $date->year($this->request->param('year'));
+        $date->month($this->request->param('month'));
+        $date->day(1);
+        
+        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM Y'));
+    }
 	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title)) {
 		$title = $posts[0]->category->title;
     }

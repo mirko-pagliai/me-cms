@@ -9,6 +9,7 @@ return ['Widgets' => [
 		'MeCms.Photos::random' => ['limit' => 1],
 		'MeCms.Posts::categories',
 		'MeCms.Posts::latest' => ['limit' => 10],
+		'MeCms.Posts::month',
 		'MeCms.Posts::search',
 		'MeCms.PostsTags::popular' => [
 			'limit' => 10,

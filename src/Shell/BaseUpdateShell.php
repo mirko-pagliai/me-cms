@@ -75,6 +75,6 @@ class BaseUpdateShell extends Shell {
 		$this->connection = \Cake\Datasource\ConnectionManager::get('default');
 		
 		//Sets now for MySql
-		$this->now = (new \Cake\I18n\Time)->now()->i18nFormat(FORMAT_FOR_MYSQL);
+		$this->now = (new \Cake\I18n\Time)->now();
 	}    
 }
