@@ -50,8 +50,9 @@ class PostsCell extends Cell {
 	 */
 	public function categories() {
 		//Returns on categories index
-		if($this->request->isHere(['_name' => 'posts_categories']))
+		if($this->request->isHere(['_name' => 'posts_categories'])) {
 			return;
+        }
 		
 		//Tries to get data from the cache
 		$categories = Cache::read($cache = 'widget_categories', $this->Posts->cache);
@@ -81,16 +82,18 @@ class PostsCell extends Cell {
 	 */
     public function latest($limit = 10) {
 		//Returns on index, except for category
-		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug'))
+		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug')) {
 			return;
+        }
 
-		$this->set('posts', $this->Posts->find('active')
+		$posts = $this->Posts->find('active')
 			->select(['title', 'slug'])
 			->limit($limit)
 			->order(['created' => 'DESC'])
 			->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
-			->toArray()
-		);
+			->toArray();
+        
+        $this->set(compact('posts'));
     }
     
     /**

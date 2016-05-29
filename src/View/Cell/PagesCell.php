@@ -49,14 +49,16 @@ class PagesCell extends Cell {
 	 */
 	public function pages() {
 		//Returns on pages index
-		if($this->request->isHere(['_name' => 'pages']))
+		if($this->request->isHere(['_name' => 'pages'])) {
 			return;
+        }
 
-		$this->set('pages', $this->Pages->find('active')
+		$pages = $this->Pages->find('active')
 			->select(['title', 'slug'])
 			->order(['title' => 'ASC'])
 			->cache(sprintf('widget_list'), $this->Pages->cache)
-			->toArray()
-		);
+			->toArray();
+        
+        $this->set(compact('pages'));
 	}
 }

@@ -53,8 +53,9 @@ class PostsTagsCell extends Cell {
 	 */
 	public function popular($limit = 10, $prefix = '#', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
 		//Returns on tags index
-		if($this->request->isHere(['_name' => 'posts_tags']))
+		if($this->request->isHere(['_name' => 'posts_tags'])) {
 			return;
+        }
 		
 		//Sets the initial cache name
 		$cache = sprintf('widget_tags_popular_%s', $limit);
@@ -96,9 +97,10 @@ class PostsTagsCell extends Cell {
             Cache::write($cache, $tags, $this->Tags->Posts->cache);
 		}
 		
-		if($shuffle)
+		if($shuffle) {
 			shuffle($tags);
-		
+        }
+        
 		$this->set(compact('prefix', 'tags'));
 	}
 }
