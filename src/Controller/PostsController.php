@@ -148,6 +148,9 @@ class PostsController extends AppController {
 		
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
+            $first = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
+            $last = (new Time($first))->addDay(1);
+        
             $query = $this->Posts->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
@@ -156,8 +159,8 @@ class PostsController extends AppController {
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->where([
-                    sprintf('%s.created >=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0)->i18nFormat(FORMAT_FOR_MYSQL),
-                    sprintf('%s.created <=', $this->Posts->alias()) => (new Time())->setDate($year, $month, $day)->setTime(23, 59, 59)->i18nFormat(FORMAT_FOR_MYSQL),
+                    sprintf('%s.created >=', $this->Posts->alias()) => $first,
+                    sprintf('%s.created <', $this->Posts->alias()) => $last,
                 ])
                 ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
             
