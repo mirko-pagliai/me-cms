@@ -57,7 +57,7 @@ class PhotosAlbumsController extends AppController {
 	 * @param string $slug Album slug
 	 */
 	public function view($slug = NULL) {
-		//The slug can be passed as query string, from a widget
+		//Data can be passed as query string, from a widget
 		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
         }
