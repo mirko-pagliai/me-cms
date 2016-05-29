@@ -23,6 +23,7 @@
 namespace MeCms\View\Cell;
 
 use Cake\Cache\Cache;
+use Cake\I18n\Time;
 use Cake\View\Cell;
 
 /**
@@ -90,6 +91,41 @@ class PostsCell extends Cell {
 			->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
 			->toArray()
 		);
+    }
+    
+    /**
+     * Posts by month widget
+     */
+    public function months() {
+		//Returns on index
+		if($this->request->isAction('index', 'Posts')) {
+			return;
+        }
+        
+		//Tries to get data from the cache
+		$months = Cache::read($cache = 'widget_months', $this->Posts->cache);
+        
+		//If the data are not available from the cache
+        if(empty($months)) {
+            $months = $this->Posts->find('active')
+                ->select([
+                    'month' => 'DATE_FORMAT(created, "%m-%Y")',
+                    'post_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+                ])
+                ->distinct(['month'])
+                ->order(['created' => 'DESC'])
+                ->toArray();
+            
+            foreach($months as $k => $month) {
+                $exploded = explode('-', $month->month);
+                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM Y'), $month->post_count);
+                unset($months[$k]);
+            }
+            
+            Cache::write($cache, $months, $this->Posts->cache);
+        }
+        
+        $this->set(compact('months'));
     }
 	
 	/**

@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.8 branch
 ### 2.8.2
+* added action to list posts by month (year and month);
+* added "posts by month" widget;
 * you can set a custom class for widgets.
 
 ### 2.8.1

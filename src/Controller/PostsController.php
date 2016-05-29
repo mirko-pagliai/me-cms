@@ -87,6 +87,12 @@ class PostsController extends AppController {
 	 * @param int $month Month
      */
     public function index_by_month($year, $month) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+            $exploded = explode('-', $this->request->query('q'));
+			return $this->redirect([$exploded[1], $exploded[0]]);
+        }
+        
 		//Sets the cache name
 		$cache = sprintf('index_month_%s_limit_%s_page_%s', md5(serialize([$year, $month])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
