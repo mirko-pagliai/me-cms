@@ -121,7 +121,7 @@ class PostsCell extends Cell {
             
             foreach($months as $k => $month) {
                 $exploded = explode('-', $month->month);
-                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM Y'), $month->post_count);
+                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM y'), $month->post_count);
                 unset($months[$k]);
             }
             
