@@ -48,7 +48,7 @@
         $date->month($this->request->param('month'));
         $date->day(1);
         
-        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM Y'));
+        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM y'));
     }
     elseif($this->request->isAction('index_by_year', 'Posts')) {
         $date = new \Cake\I18n\Time();
@@ -56,7 +56,7 @@
         $date->month(1);
         $date->day(1);
         
-        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('Y'));
+        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('y'));
     }
 	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title)) {
 		$title = $posts[0]->category->title;
