@@ -137,4 +137,38 @@ class PostsCell extends Cell {
 	public function search() {
 		//For this widget, control of the action takes place in the view
 	}
+    
+    /**
+     * Posts by year widget
+     */
+    public function years() {
+		//Returns on index
+		if($this->request->isAction('index', 'Posts')) {
+			return;
+        }
+        
+		//Tries to get data from the cache
+		$years = Cache::read($cache = 'widget_years', $this->Posts->cache);
+
+        //If the data are not available from the cache
+        if(empty($years)) {
+            $years = $this->Posts->find('active')
+                ->select([
+                    'year' => 'DATE_FORMAT(created, "%Y")',
+                    'post_count' => 'COUNT(DATE_FORMAT(created, "%Y"))',
+                ])
+                ->distinct(['year'])
+                ->order(['created' => 'DESC'])
+                ->toArray();
+            
+            foreach($years as $k => $year) {
+                $years[$year->year] = sprintf('%s (%s)', $year->year, $year->post_count);
+                unset($years[$k]);
+            }
+            
+            Cache::write($cache, $years, $this->Posts->cache);
+        }
+        
+        $this->set(compact('years'));
+    }
 }

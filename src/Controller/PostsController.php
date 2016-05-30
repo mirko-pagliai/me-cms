@@ -168,6 +168,11 @@ class PostsController extends AppController {
      * @uses _index_by_date()
      */
     public function index_by_year($year) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+			return $this->redirect([$this->request->query('q')]);
+        }
+        
         $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
         $end = (new Time($start))->addYear(1);
         
