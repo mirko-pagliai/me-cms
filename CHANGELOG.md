@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.9 branch
 ### 2.9.0
+* added action to list posts by year;
 * `index_by_date` action renamed as `index_by_day`.
 
 ## 2.8 branch

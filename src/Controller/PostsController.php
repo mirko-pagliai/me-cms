@@ -160,6 +160,21 @@ class PostsController extends AppController {
 		
 		$this->render('index');
     }
+    
+    /**
+	 * Lists posts by a year.
+     * It uses the `index` template.
+	 * @param int $year Year
+     * @uses _index_by_date()
+     */
+    public function index_by_year($year) {
+        $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addYear(1);
+        
+        $this->_index_by_date($start, $end);
+        
+		$this->render('index');
+    }
 	
 	/**
 	 * This allows backward compatibility for URLs like:
