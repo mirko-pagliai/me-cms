@@ -23,7 +23,7 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 
 /**
@@ -56,7 +56,8 @@ class KcFinderComponent extends Component {
 	
 	/**
 	 * Sets the configuration for KCFinder.
-	 * It's automatically called by `beforeRender()` when the component is loaded.
+	 * It's automatically called by `beforeRender()` when the component is 
+     *  loaded.
 	 * @return bool
 	 * @see beforeRender()
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
@@ -64,33 +65,38 @@ class KcFinderComponent extends Component {
 	 * @uses getTypes()
 	 */
 	public function configure() {
-		if($this->request->session()->check('KCFINDER'))
+		if($this->request->session()->check('KCFINDER')) {
 			return TRUE;
+        }
 		
 		//Default configuration
 		$default = [
-			'denyExtensionRename'	=> TRUE,
-			'denyUpdateCheck'		=> TRUE,
-			'dirnameChangeChars'	=> [' ' => '_', ':' => '_'],
-			'disabled'				=> FALSE,
-			'filenameChangeChars'	=> [' ' => '_', ':' => '_'],
-			'jpegQuality'			=> 100,
-			'uploadDir'				=> $this->getFilesPath(),
-			'uploadURL'				=> Router::url('/files', TRUE),
-			'types'					=> $this->getTypes()
+			'denyExtensionRename' => TRUE,
+			'denyUpdateCheck' => TRUE,
+			'dirnameChangeChars' => [' ' => '_', ':' => '_'],
+			'disabled' => FALSE,
+			'filenameChangeChars' => [' ' => '_', ':' => '_'],
+			'jpegQuality' => 100,
+			'uploadDir' => $this->getFilesPath(),
+			'uploadURL' => Router::url('/files', TRUE),
+			'types' => $this->getTypes(),
 		];
 		
 		//If the user is not and admin
 		if(!$this->Auth->isGroup(['admin'])) {
 			//Only admins can delete or rename directories
-			$default['access']['dirs'] = ['create' => TRUE, 'delete' => FALSE, 'rename' => FALSE];
+			$default['access']['dirs'] = [
+                'create' => TRUE,
+                'delete' => FALSE,
+                'rename' => FALSE,
+            ];
 			//Only admins can delete, move or rename files
 			$default['access']['files'] = [
-				'upload'	=> TRUE,
-				'delete'	=> FALSE,
-				'copy'		=> TRUE,
-				'move'		=> FALSE,
-				'rename'	=> FALSE
+				'upload' => TRUE,
+				'delete' => FALSE,
+				'copy' => TRUE,
+				'move' => FALSE,
+				'rename' => FALSE,
 			];
 		}
 		
@@ -117,7 +123,7 @@ class KcFinderComponent extends Component {
 	 * @uses getFilesPath()
 	 */
 	public function getFolders() {
-		return array_values((new \Cake\Filesystem\Folder($this->getFilesPath()))->read(TRUE, TRUE))[0];
+		return array_values((new Folder($this->getFilesPath()))->read(TRUE, TRUE))[0];
 	}
 	
 	/**
@@ -135,8 +141,9 @@ class KcFinderComponent extends Component {
 	 */
 	public function getTypes() {
 		//Each folder is a type
-		foreach($this->getFolders() as $type)
+		foreach($this->getFolders() as $type) {
 			$types[$type] = '';
+        }
 		
 		//Adds the "images" type by default
 		$types['images'] = '*img';
@@ -145,7 +152,8 @@ class KcFinderComponent extends Component {
 	}
 	
 	/**
-	 * Called after the controller action is run, but before the view is rendered.
+	 * Called after the controller action is run, but before the view is 
+     *  rendered.
 	 * 
 	 * Configures KCFinder.
 	 * @param \Cake\Event\Event $event An Event instance

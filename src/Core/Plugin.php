@@ -45,7 +45,7 @@ class Plugin extends BasePlugin {
         $options = am([
             'core' => FALSE,
             'except' => [],
-            'order' => TRUE
+            'order' => TRUE,
         ], $options);
         
 		$plugins = parent::all($options);

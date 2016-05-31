@@ -35,17 +35,19 @@ class Youtube {
 		if(preg_match('/youtube\.com/', $url)) {
 			$url = parse_url($url);
 			
-			if(empty($url['query']))
+			if(empty($url['query'])) {
 				return FALSE;
+            }
 			
 			parse_str($url['query'], $url);
 				
 			return empty($url['v']) ? FALSE : $url['v'];
 		}
-		elseif(preg_match('/youtu.be\/(.+)$/', $url, $matches))
+		elseif(preg_match('/youtu.be\/(.+)$/', $url, $matches)) {
 			return empty($matches[1]) ? FALSE : $matches[1];
-		else
-			return FALSE;
+        }
+		
+        return FALSE;
 	}
 	
 	/**
