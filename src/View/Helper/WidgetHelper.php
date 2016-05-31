@@ -37,15 +37,17 @@ class WidgetHelper extends Helper {
 	 * @uses widget()
 	 */
 	public function all() {
-		if($this->request->isHere(['_name' => 'homepage']) && config('Widgets.homepage'))
+		if($this->request->isHere(['_name' => 'homepage']) && config('Widgets.homepage')) {
 			$widgets = config('Widgets.homepage');
-		else
+        }
+		else {
 			$widgets = config('Widgets.general');
-			
+        }
 
-		foreach($widgets as $name => $args)
+		foreach($widgets as $name => $args) {
 			$widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
-
+        }
+        
 		return implode(PHP_EOL, $widgets);
 	}
 	
