@@ -3,6 +3,7 @@
 ### 2.9.0
 * added action to list posts by year;
 * added "posts by year" widget;
+* improved view classes;
 * `index_by_date` action renamed as `index_by_day`.
 
 ## 2.8 branch
