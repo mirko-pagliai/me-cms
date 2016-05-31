@@ -46,9 +46,10 @@ class UserShell extends Shell {
 		$groups = $this->Users->Groups->find('list')->toArray();
 		
 		//Checks for user groups
-		if(empty($groups))
+		if(empty($groups)) {
 			$this->abort(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
-				
+        }
+        
 		while(1) {
 			$user = [];
 			
@@ -75,18 +76,22 @@ class UserShell extends Shell {
 
 				$user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
 			}
-			else
+			else {
 				$user['group_id'] = $this->params['group'];
-
+            }
+            
 			//Checks fields
-			foreach($user as $value)
-				if(empty($value))
+			foreach($user as $value) {
+				if(empty($value)) {
 					$this->abort(__d('me_cms', 'Some fields are missing. Try again'));
-
+                }
+            }
+            
 			//Checks the group IDS
-			if(!array_key_exists($user['group_id'], $groups))
+			if(!array_key_exists($user['group_id'], $groups)) {
 				$this->abort(__d('me_cms', 'Invalid group ID'));
-				
+            }
+            
 			//Saves the user
 			if($this->Users->save($this->Users->newEntity($user))) {
 				$this->success(__d('me_cms', 'The user has been saved'));
@@ -109,9 +114,10 @@ class UserShell extends Shell {
 			->toArray();
 		
 		//Checks for user groups
-		if(empty($groups))
+		if(empty($groups)) {
 			$this->abort(__d('me_cms', 'There are no user groups'));
-		
+        }
+        
 		//Formats groups
 		$groups = array_map(function($group) {
 			return [
@@ -145,9 +151,10 @@ class UserShell extends Shell {
 			->toArray();
 		
 		//Checks for users
-		if(empty($users))
+		if(empty($users)) {
 			$this->abort(__d('me_cms', 'There are no users'));
-		
+        }
+        
 		//Sets header
 		$header = [
 			__d('me_cms', 'ID'),
@@ -162,13 +169,16 @@ class UserShell extends Shell {
 		//Formats users
 		$users = array_map(function($user) {
 			//Sets the user status
-			if($user['banned'])
+			if($user['banned']) {
 				$user['status'] = __d('me_cms', 'Banned');
-			elseif(!$user['active'])
+            }
+			elseif(!$user['active']) {
 				$user['status'] = __d('me_cms', 'Pending');
-			else
+            }
+			else {
 				$user['status'] = __d('me_cms', 'Active');
-			
+            }
+            
 			return [
 				$user['id'],
 				$user['username'],
