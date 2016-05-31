@@ -22,56 +22,56 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Add user')); ?>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Add user'));
+?>
 
-<div class="users form">
-	<?= $this->Html->h2(__d('me_cms', 'Add user')) ?>
-    <?= $this->Form->create($user); ?>
-	<div class='float-form'>
-		<?php
-			echo $this->Form->input('group_id', [
-				'default'	=> config('users.default_group'),
-				'label'		=> __d('me_cms', 'User group')
-			]);
-			echo $this->Form->input('active', [
-				'checked'	=> TRUE,
-				'label'		=> sprintf('%s?', __d('me_cms', 'Active')),
-				'tip'		=> __d('me_cms', 'If is not active, the user won\'t be able to login')
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Form->input('username', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Username')
-			]);
-			echo $this->Form->input('email', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Email')
-			]);
-			echo $this->Form->input('email_repeat', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Repeat email')
-			]);
-			echo $this->Form->input('password', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Password')
-			]);
-			echo $this->Form->input('password_repeat', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Repeat password')
-			]);
-			echo $this->Form->input('first_name', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'First name')
-			]);
-			echo $this->Form->input('last_name', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Last name')
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add user')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($user); ?>
+<div class='float-form'>
+    <?php
+        echo $this->Form->input('group_id', [
+            'default' => config('users.default_group'),
+            'label' => __d('me_cms', 'User group'),
+        ]);
+        echo $this->Form->input('active', [
+            'checked' => TRUE,
+            'label'=> sprintf('%s?', __d('me_cms', 'Active')),
+            'tip' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
+        ]);
+    ?>
 </div>
+<fieldset>
+    <?php
+        echo $this->Form->input('username', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Username'),
+        ]);
+        echo $this->Form->input('email', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Email'),
+        ]);
+        echo $this->Form->input('email_repeat', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Repeat email'),
+        ]);
+        echo $this->Form->input('password', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Password'),
+        ]);
+        echo $this->Form->input('password_repeat', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Repeat password'),
+        ]);
+        echo $this->Form->input('first_name', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'First name'),
+        ]);
+        echo $this->Form->input('last_name', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Last name'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

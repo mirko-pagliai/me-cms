@@ -22,18 +22,9 @@
  */
 ?>
 
-<?php
-    $this->extend('/Admin/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Edit tag'));
-?>
+<?php $this->assign('title', $this->fetch('title')); ?>
 
-<?= $this->Form->create($tag); ?>
-<fieldset>
-    <?php
-        echo $this->Form->input('tag', [
-            'label'	=> __d('me_cms', 'Tag'),
-        ]);
-    ?>
-</fieldset>
-<?= $this->Form->submit($title) ?>
-<?= $this->Form->end() ?>
+<div class="form">
+    <?= $this->Html->h2($this->fetch('title')) ?>
+    <?= $this->fetch('content') ?>
+</div>

@@ -22,31 +22,31 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Change your password')); ?>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Change your password'));
+?>
 
-<div class="users form">
-	<?= $this->Html->h2(__d('me_cms', 'Change your password')) ?>
-	<?= $this->Form->create($user) ?>
-		<fieldset>
-			<?php
-				echo $this->Form->input('password_old', array(
-					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Old password'),
-					'tip'			=> __d('me_cms', 'Enter your old password'),
-					'type'			=> 'password'
-				));
-				echo $this->Form->input('password', array(
-					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Password'),
-					'tip'			=> __d('me_cms', 'Enter your new password')
-				));
-				echo $this->Form->input('password_repeat', array(
-					'autocomplete'	=> FALSE,
-					'label'			=> __d('me_cms', 'Repeat password'),
-					'tip'			=> __d('me_cms', 'Repeat your new password')
-				));
-			?>
-		</fieldset>
-	<?= $this->Form->submit(__d('me_cms', 'Change your password')) ?>
-	<?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($user) ?>
+    <fieldset>
+        <?php
+            echo $this->Form->input('password_old', array(
+                'autocomplete' => FALSE,
+                'label' => __d('me_cms', 'Old password'),
+                'tip' => __d('me_cms', 'Enter your old password'),
+                'type' => 'password',
+            ));
+            echo $this->Form->input('password', array(
+                'autocomplete' => FALSE,
+                'label'	=> __d('me_cms', 'Password'),
+                'tip' => __d('me_cms', 'Enter your new password'),
+            ));
+            echo $this->Form->input('password_repeat', array(
+                'autocomplete' => FALSE,
+                'label' => __d('me_cms', 'Repeat password'),
+                'tip' => __d('me_cms', 'Repeat your new password'),
+            ));
+        ?>
+    </fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

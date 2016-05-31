@@ -22,34 +22,34 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Edit photo')); ?>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit photo'));
+?>
 
-<div class="photos form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit photo')) ?>
-    <?= $this->Form->create($photo); ?>
-	<div class='float-form'>
-		<?php
-			echo $this->Form->input('album_id', [
-				'label' => __d('me_cms', 'Album')
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Html->para(NULL, $this->Html->strong(__d('me_cms', 'Preview')));
-			echo $this->Thumb->image($photo->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]);
-			
-			echo $this->Form->input('filename', [
-				'disabled'	=> TRUE,
-				'label'		=> __d('me_cms', 'Filename')
-			]);
-			echo $this->Form->input('description', [
-				'label'	=> __d('me_cms', 'Description'),
-				'rows'	=> 3,
-				'type'	=> 'textarea'
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit photo')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($photo); ?>
+<div class='float-form'>
+    <?php
+        echo $this->Form->input('album_id', [
+            'label' => __d('me_cms', 'Album'),
+        ]);
+    ?>
 </div>
+<fieldset>
+    <p><?= $this->Html->strong(__d('me_cms', 'Preview')) ?></p>
+    <?= $this->Thumb->image($photo->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]) ?>
+    
+    <?php
+        echo $this->Form->input('filename', [
+            'disabled' => TRUE,
+            'label' => __d('me_cms', 'Filename'),
+        ]);
+        echo $this->Form->input('description', [
+            'label' => __d('me_cms', 'Description'),
+            'rows' => 3,
+            'type' => 'textarea',
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

@@ -23,40 +23,39 @@
 ?>
 
 <?php
-	$this->assign('title', __d('me_cms', 'Add posts category'));
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Add posts category'));
 	$this->Library->slugify();
 ?>
 
-<div class="postsCategories form">
-	<?= $this->Html->h2(__d('me_cms', 'Add posts category')) ?>
-    <?= $this->Form->create($category); ?>
-	<div class='float-form'>
-		<?php
-			if(!empty($categories))
-				echo $this->Form->input('parent_id', [
-					'label'		=> __d('me_cms', 'Parent category'),
-					'options'	=> $categories,
-					'tip'		=> __d('me_cms', 'Leave blank to create a parent category')
-				]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Form->input('title', [
-				'id'	=> 'title',
-				'label'	=> __d('me_cms', 'Title')
-			]);
-			echo $this->Form->input('slug', [
-				'id'	=> 'slug',
-				'label'	=> __d('me_cms', 'Slug'),
-				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
-			]);
-            echo $this->Form->input('description', [
-				'label'	=> __d('me_cms', 'Description'),
-				'rows'	=> 3
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add posts category')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($category); ?>
+<div class='float-form'>
+    <?php
+        if(!empty($categories)) {
+            echo $this->Form->input('parent_id', [
+                'label' => __d('me_cms', 'Parent category'),
+                'options' => $categories,
+                'tip' => __d('me_cms', 'Leave blank to create a parent category'),
+            ]);
+        }
+    ?>
 </div>
+<fieldset>
+    <?php
+        echo $this->Form->input('title', [
+            'id' => 'title',
+            'label'	=> __d('me_cms', 'Title'),
+        ]);
+        echo $this->Form->input('slug', [
+            'id' => 'slug',
+            'label'	=> __d('me_cms', 'Slug'),
+            'tip' => __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically'),
+        ]);
+        echo $this->Form->input('description', [
+            'label'	=> __d('me_cms', 'Description'),
+            'rows' => 3,
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

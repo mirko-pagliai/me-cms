@@ -21,42 +21,42 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Edit banner')); ?>
 
-<div class="banners form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit banner')) ?>
-    <?= $this->Form->create($banner); ?>
-	<div class='float-form'>
-		<?php
-			echo $this->Form->input('position_id', [
-				'label' => __d('me_cms', 'Position')
-			]);
-			echo $this->Form->input('active', [
-				'label' => sprintf('%s?', __d('me_cms', 'Published'))
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Html->para(NULL, $this->Html->strong(__d('me_cms', 'Preview')));
-			echo $this->Thumb->image($banner->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]);
-			
-			echo $this->Form->input('filename', [
-				'disabled'	=> TRUE,
-				'label'		=> __d('me_cms', 'Filename')
-			]);
-			echo $this->Form->input('target', [
-				'label' => __d('me_cms', 'Web address'),
-				'tip'	=> __d('me_cms', 'The address should begin with {0}', $this->Html->em('http://'))
-			]);
-			echo $this->Form->input('description', [
-				'label'	=> __d('me_cms', 'Description'),
-				'rows'	=> 3,
-				'type'	=> 'textarea'
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit banner')) ?>
-    <?= $this->Form->end() ?>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit banner'));
+?>
+
+<?= $this->Form->create($banner); ?>
+<div class='float-form'>
+    <?php
+        echo $this->Form->input('position_id', [
+            'label' => __d('me_cms', 'Position'),
+        ]);
+        echo $this->Form->input('active', [
+            'label' => sprintf('%s?', __d('me_cms', 'Published')),
+        ]);
+    ?>
 </div>
+<fieldset>
+    <p><?= $this->Html->para(NULL, $this->Html->strong(__d('me_cms', 'Preview'))) ?></p>
+    <?= $this->Thumb->image($banner->path, ['class' => 'img-thumbnail margin-15', 'width' => 1186]) ?>
+    
+    <?php
+        echo $this->Form->input('filename', [
+            'disabled' => TRUE,
+            'label' => __d('me_cms', 'Filename'),
+        ]);
+        echo $this->Form->input('target', [
+            'label' => __d('me_cms', 'Web address'),
+            'tip' => __d('me_cms', 'The address should begin with {0}', $this->Html->em('http://')),
+        ]);
+        echo $this->Form->input('description', [
+            'label' => __d('me_cms', 'Description'),
+            'rows' => 3,
+            'type' => 'textarea',
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>
