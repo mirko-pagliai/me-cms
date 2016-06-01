@@ -20,7 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-use MeCms\Core\Plugin;
 ?>
 
 <nav id="topbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -48,7 +47,7 @@ use MeCms\Core\Plugin;
 					echo $this->MenuBuilder->generate('MeCms', 'dropdown');
 					
 					//Renders menus for all others plugin
-					foreach(Plugin::all(['exclude' => 'MeCms']) as $plugin) {
+					foreach(MeCms\Core\Plugin::all(['exclude' => 'MeCms']) as $plugin) {
 						echo $this->MenuBuilder->generate($plugin, 'dropdown');
                     }
                     
