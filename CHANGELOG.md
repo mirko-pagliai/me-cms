@@ -4,6 +4,7 @@
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
 * added common templates for all admin views;
+* fixed titles for some admin templates;
 * you can set a custom class for widgets.
 
 ### 2.8.1

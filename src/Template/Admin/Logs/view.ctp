@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/view');
-    $this->assign('title', $title = $log->filename);
+    $this->assign('title', $title = __d('me_cms', 'Log {0}', $log->filename));
 ?>
 
 <?php if(!empty($log->content)): ?>
