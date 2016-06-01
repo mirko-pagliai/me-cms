@@ -102,6 +102,7 @@ class PostsTagsCell extends Cell {
 			shuffle($tags);
         }
         
+        //Takes place here, because shuffle() re-indexes
         foreach($tags as $k => $tag) {
             $tags[$tag->slug] = $tag;
             unset($tags[$k]);
