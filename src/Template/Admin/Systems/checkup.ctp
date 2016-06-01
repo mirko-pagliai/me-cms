@@ -27,11 +27,12 @@
     $this->assign('title', $title = __d('me_cms', 'System checkup'));
 	
 	//Sets some classes and options
-	$successClasses = 'bg-success text-success padding10';
 	$errorClasses = 'bg-danger text-danger padding10';
+    $infoClasses = 'bg-info text-info padding10';
+	$successClasses = 'bg-success text-success padding10';
 	$warningClasses = 'bg-warning text-warning padding10';
-	$successOptions = ['icon' => 'check'];
 	$errorOptions = ['icon' => 'times'];
+	$successOptions = ['icon' => 'check'];
 	$warningOptions = ['icon' => 'check'];
 ?>
 
@@ -39,7 +40,7 @@
     /* -------------------------------- */
     /*			MeCms version			*/
     /* -------------------------------- */
-    $text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms']));
+    $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms']));
     echo $this->Html->div('col-sm-12', $text);
 
     echo $this->Html->div('clearfix');
@@ -47,7 +48,7 @@
     /* -------------------------------- */
     /*			CakePHP version			*/
     /* -------------------------------- */
-    $text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp']));
+    $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp']));
     echo $this->Html->div('col-sm-12', $text);
 
     echo $this->Html->div('clearfix');
@@ -72,7 +73,7 @@
 
     //Plugins version
     foreach($plugins['plugins'] as $plugin => $version) {
-        $text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin), $version));
+        $text = $this->Html->para($infoClasses, __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin), $version));
         echo $this->Html->div('col-sm-6', $text);
     }
 
@@ -83,7 +84,7 @@
     /* -------------------------------- */
     echo $this->Html->h4('Apache');
     //Current version
-    $text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['version']));
+    $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache['version']));
     echo $this->Html->div('col-sm-12', $text);
 
     //Apache's modules
@@ -108,7 +109,7 @@
     /* -------------------------------- */
     echo $this->Html->h4('PHP');
     //Current version
-    $text = $this->Html->para('bg-info text-info padding10', __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), PHP_VERSION));
+    $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), PHP_VERSION));
     echo $this->Html->div('col-sm-12', $text);
 
     //PHP's extensions
