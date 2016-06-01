@@ -32,10 +32,10 @@
 			echo $this->Form->createInline(NULL, ['type' => 'get']);
 			echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
 			echo $this->Form->input('album', [
-				'default'	=> $this->request->query('album'),
-				'label'		=> __d('me_cms', 'Album to upload photos'),
-				'onchange'	=> 'send_form(this)',
-				'options'	=> $albums,
+				'default' => $this->request->query('album'),
+				'label' => __d('me_cms', 'Album to upload photos'),
+				'onchange' => 'send_form(this)',
+				'options' => $albums,
 			]);
 			echo $this->Form->submit(__d('me_cms', 'Select'));
 			echo $this->Form->end();
