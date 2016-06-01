@@ -30,9 +30,8 @@
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Popular tags'));
 	
-	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_category', 'category']]);
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_tag', 'tag']]);
 	echo $this->Form->input('q', [
-		'empty' => __d('me_cms', 'Select a category'),
 		'label' => FALSE,
 		'onchange' => 'send_form(this)',
         'options' => array_map(function($tag) {

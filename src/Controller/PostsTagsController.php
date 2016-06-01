@@ -51,6 +51,11 @@ class PostsTagsController extends AppController {
      * @throws RecordNotFoundException
 	 */
     public function view($tag) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+			return $this->redirect([$this->request->query('q')]);
+        }
+        
 		//Sets the initial cache name
 		$cache = sprintf('index_tag_%s', md5($tag));
 				

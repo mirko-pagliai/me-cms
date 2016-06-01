@@ -81,16 +81,16 @@ class PostsTagsCell extends Cell {
 				->limit($limit)
 				->order(['post_count' => 'DESC'])
 				->toArray();
-
+            
 			if($style) {
 				//Number of occurrences of the tag with the highest number of occurrences
-				$maxCount = $tags[0]['post_count'];
+				$maxCount = $tags[0]->post_count;
 				//Number of occurrences of the tag with the lowest number of occurrences
-				$minCount = end($tags)['post_count'];
+				$minCount = end($tags)->post_count;
 
 				//Adds the proportional font size to each tag
 				$tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
-					$tag['size'] = round((($tag['post_count'] - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
+					$tag->size = round((($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
 					return $tag;
 				}, $tags);
 			}
@@ -100,6 +100,11 @@ class PostsTagsCell extends Cell {
 		
 		if($shuffle) {
 			shuffle($tags);
+        }
+        
+        foreach($tags as $k => $tag) {
+            $tags[$tag->slug] = $tag;
+            unset($tags[$k]);
         }
         
 		$this->set(compact('prefix', 'tags'));
