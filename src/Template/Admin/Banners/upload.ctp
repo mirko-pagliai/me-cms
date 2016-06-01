@@ -32,10 +32,10 @@
 			echo $this->Form->createInline(NULL, ['type' => 'get']);
 			echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
 			echo $this->Form->input('position', [
-				'default'	=> $this->request->query('position'),
-				'label'		=> __d('me_cms', 'Position to upload banners'),
-				'onchange'	=> 'send_form(this)',
-				'options'	=> $positions,
+				'default' => $this->request->query('position'),
+				'label' => __d('me_cms', 'Position to upload banners'),
+				'onchange' => 'send_form(this)',
+				'options' => $positions,
 			]);
 			echo $this->Form->submit(__d('me_cms', 'Select'));
 			echo $this->Form->end();
