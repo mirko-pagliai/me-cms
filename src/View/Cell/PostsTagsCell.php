@@ -47,7 +47,7 @@ class PostsTagsCell extends Cell {
 	 * Popular tags widgets
 	 * @param int $limit Limit
 	 * @param string $prefix Prefix for each tag
-     * @param type $render
+     * @param string $render Render type (`cloud`, `form` or `list`)
 	 * @param bool $shuffle Shuffles tags
 	 * @param array|bool $style Applies style to tags
 	 * @uses MeTools\Network\Request::isHere()
