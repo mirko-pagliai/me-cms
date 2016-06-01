@@ -1,4 +1,7 @@
 # 2.x branch
+## 2.10 branch
+* `statics` action renamed as `index_statics`.
+
 ## 2.9 branch
 ### 2.9.0
 * added action to list posts by month (year and month);

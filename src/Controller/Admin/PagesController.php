@@ -56,7 +56,7 @@ class PagesController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Everyone can list pages and static pages
-		if($this->request->isAction(['index', 'statics']))
+		if($this->request->isAction(['index', 'index_statics']))
 			return TRUE;
 		
 		//Only admins can delete pages
@@ -86,7 +86,7 @@ class PagesController extends AppController {
 	 * Static pages must be located in `APP/View/StaticPages/`.
 	 * @uses MeCms\Utility\StaticPage::all()
 	 */
-	public function statics() {
+	public function index_statics() {
 		$this->set('pages', StaticPage::all());
 	}
 

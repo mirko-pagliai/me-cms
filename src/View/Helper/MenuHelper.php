@@ -77,7 +77,7 @@ class MenuHelper extends Helper {
 			$menu[] = $this->Html->link(__d('me_cms', 'Add page'), ['controller' => 'Pages', 'action' => 'add', 'plugin' => 'MeCms']);
         }
 		
-		$menu[] = $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'statics', 'plugin' => 'MeCms']);
+		$menu[] = $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'index_statics', 'plugin' => 'MeCms']);
 		
 		return [$menu, __d('me_cms', 'Pages'), ['icon' => 'files-o']];
 	}
