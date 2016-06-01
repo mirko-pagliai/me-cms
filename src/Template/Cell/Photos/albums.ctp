@@ -35,7 +35,6 @@
 		'url' => ['_name' => 'album', 'album'],
 	]);
 	echo $this->Form->input('q', [
-		'empty' => __d('me_cms', 'Select an album'),
 		'label' => FALSE,
 		'onchange' => 'send_form(this)',
         'options' => array_map(function($album) {
