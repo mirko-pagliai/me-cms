@@ -22,50 +22,50 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Edit user')); ?>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit user'));
+?>
 
-<div class="users form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit user')) ?>
-    <?= $this->Form->create($user); ?>
-	<div class='float-form'>
-		<?php
-			echo $this->Form->input('group_id', [
-				'label' => __d('me_cms', 'User group')
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Form->input('username', [
-				'disabled'	=> TRUE,
-				'label'		=> __d('me_cms', 'Username')
-			]);
-			echo $this->Form->input('email', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Email')
-			]);
-			echo $this->Form->input('password', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Password'),
-				'required'		=> FALSE,
-				'tip'			=> __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty')
-			]);
-			echo $this->Form->input('password_repeat', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Repeat password'),
-				'required'		=> FALSE,
-				'tip'			=> __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty')
-			]);
-			echo $this->Form->input('first_name', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'First name')
-			]);
-			echo $this->Form->input('last_name', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Last name')
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit user')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($user); ?>
+<div class='float-form'>
+    <?php
+        echo $this->Form->input('group_id', [
+            'label' => __d('me_cms', 'User group')
+        ]);
+    ?>
 </div>
+<fieldset>
+    <?php
+        echo $this->Form->input('username', [
+            'disabled' => TRUE,
+            'label' => __d('me_cms', 'Username'),
+        ]);
+        echo $this->Form->input('email', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Email'),
+        ]);
+        echo $this->Form->input('password', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Password'),
+            'required' => FALSE,
+            'tip' => __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty'),
+        ]);
+        echo $this->Form->input('password_repeat', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Repeat password'),
+            'required' => FALSE,
+            'tip' => __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty'),
+        ]);
+        echo $this->Form->input('first_name', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'First name'),
+        ]);
+        echo $this->Form->input('last_name', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Last name'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

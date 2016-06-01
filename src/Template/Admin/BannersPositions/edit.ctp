@@ -21,18 +21,22 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Edit banners position')); ?>
 
-<div class="bannersPositions form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit banners position')) ?>
-    <?= $this->Form->create($position); ?>
-    <fieldset>
-        <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('description');
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit position')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit banners position'));
+?>
+
+<?= $this->Form->create($position); ?>
+<fieldset>
+    <?php
+        echo $this->Form->input('name', [
+            'label' => __d('me_cms', 'Name'),
+        ]);
+        echo $this->Form->input('description', [
+            'label' => __d('me_cms', 'Description'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

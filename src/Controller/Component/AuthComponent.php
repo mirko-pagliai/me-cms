@@ -43,14 +43,16 @@ class AuthComponent extends CakeAuthComponent {
 	public function __construct(ComponentRegistry $registry, array $config = []) {
 		//Sets config
 		$config = am([
-			'authenticate'			=> ['Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users']],
-			'authError'				=> __d('me_cms', 'You are not authorized for this action'),
-			'authorize'				=> 'Controller',
-			'flash'					=> ['element' => 'MeTools.error'],
-			'loginAction'			=> ['_name' => 'login'],
-			'loginRedirect'			=> ['_name' => 'dashboard'],
-			'logoutRedirect'		=> ['_name' => 'homepage'],
-			'unauthorizedRedirect'	=> ['_name' => 'dashboard']
+			'authenticate' => [
+                'Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users']
+            ],
+			'authError' => __d('me_cms', 'You are not authorized for this action'),
+			'authorize' => 'Controller',
+			'flash' => ['element' => 'MeTools.error'],
+			'loginAction' => ['_name' => 'login'],
+			'loginRedirect' => ['_name' => 'dashboard'],
+			'logoutRedirect' => ['_name' => 'homepage'],
+			'unauthorizedRedirect' => ['_name' => 'dashboard'],
 		], $config);
 		
 		parent::__construct($registry, $config);

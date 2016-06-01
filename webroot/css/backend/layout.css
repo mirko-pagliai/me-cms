@@ -183,7 +183,7 @@ form.filter-form legend {
 	font-family: Arial;
     font-size: 14px;
     font-weight: bold;
-	margin: 0;
+	margin-bottom: 5px;
 	padding: 0 2px;
     text-transform: uppercase;
 }
@@ -193,16 +193,9 @@ form.filter-form legend:hover {
 	color: #444;
 }
 
-/* Filter form, legend, next wrapper */
-form.filter-form legend + div {
-	display: none;
-	margin-top: 10px;
-}
-
 /* Filter form, legend, icon */
 form.filter-form legend .fa {
 	font-size: 16px;
-    margin-left: 6px;
 }
 
 /* -------------------------------- */

@@ -27,7 +27,6 @@
 		return;
     }
     
-	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Random {0} photos', count($photos)) : __d('me_cms', 'Random photo'));
 	

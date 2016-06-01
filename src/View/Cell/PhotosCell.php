@@ -46,9 +46,10 @@ class PhotosCell extends Cell {
 	
 	/**
 	 * Albums widget
+     * @param string $render Render type (`form` or `list`)
 	 * @uses MeTools\Network\Request::isHere()
-	 */
-	public function albums() {
+     */
+	public function albums($render = 'form') {
 		//Returns on albums index
 		if($this->request->isHere(['_name' => 'albums'])) {
 			return;
@@ -63,16 +64,20 @@ class PhotosCell extends Cell {
 				->select(['title', 'slug', 'photo_count'])
 				->order(['title' => 'ASC'])
 				->toArray();
-			
-			foreach($albums as $k => $album) {
-				$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
-				unset($albums[$k]);
-			}
+            
+            foreach($albums as $k => $album) {
+                $albums[$album->slug] = $album;
+                unset($albums[$k]);
+            }
 			
             Cache::write($cache, $albums, $this->Photos->cache);
 		}
 		
 		$this->set(compact('albums'));
+        
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
+        }
 	}
 	
 	/**

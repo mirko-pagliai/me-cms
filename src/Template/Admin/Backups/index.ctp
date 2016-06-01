@@ -22,39 +22,38 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Database backups')); ?>
+<?php
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Database backups'));
+    $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
+?>
 
-<div class="backups index">
-	<?= $this->Html->h2(__d('me_cms', 'Database backups')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	
-	<table class="table table-striped">
-		<tr>
-			<th><?= __d('me_cms', 'Filename') ?></th>
-			<th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
-			<th class="min-width text-center"><?= __d('me_cms', 'Date') ?></th>
-		</tr>
-		<?php foreach($backups as $backup): ?>
-			<tr>
-				<td>
-                    <strong><?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?></strong>
-					<?php 
-						$actions = [
-							$this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $backup->slug], ['icon' => 'download']),
-							$this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', $backup->slug], ['icon' => 'upload', 'confirm' => __d('me_cms', 'This will overwrite the current database and some data may be lost. Are you sure?')]),
-							$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $backup->slug], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]),
-						];
-						
-						echo $this->Html->ul($actions, ['class' => 'actions']);
-					?>
-				</td>
-				<td class="min-width text-center">
-                    <?= $backup->compression ?>
-                </td>
-				<td class="min-width text-center">
-                    <?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?>
-                </td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
-</div>
+<table class="table table-striped">
+    <tr>
+        <th><?= __d('me_cms', 'Filename') ?></th>
+        <th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
+        <th class="min-width text-center"><?= __d('me_cms', 'Date') ?></th>
+    </tr>
+    <?php foreach($backups as $backup): ?>
+        <tr>
+            <td>
+                <strong><?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?></strong>
+                <?php 
+                    $actions = [
+                        $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $backup->slug], ['icon' => 'download']),
+                        $this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', $backup->slug], ['icon' => 'upload', 'confirm' => __d('me_cms', 'This will overwrite the current database and some data may be lost. Are you sure?')]),
+                        $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $backup->slug], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]),
+                    ];
+
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                ?>
+            </td>
+            <td class="min-width text-center">
+                <?= $backup->compression ?>
+            </td>
+            <td class="min-width text-center">
+                <?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

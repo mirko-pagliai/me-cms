@@ -21,24 +21,24 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Add backup')); ?>
 
-<div class="backups form">
-	<?= $this->Html->h2(__d('me_cms', 'Add backup')) ?>
-    <?= $this->Form->create($backup); ?>
-    <fieldset>
-        <?php
-            echo $this->Form->input('filename', [
-				'default'	=> 'backup_{$DATABASE}_{$DATETIME}.sql.gz',
-				'label'		=> __d('me_cms', 'Filename'),
-				'tip'       => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2')
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add backup')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Add backup'));
+?>
+
+<?= $this->Form->create($backup); ?>
+<fieldset>
+    <?php
+        echo $this->Form->input('filename', [
+            'default' => 'backup_{$DATABASE}_{$DATETIME}.sql.gz',
+            'label' => __d('me_cms', 'Filename'),
+            'tip' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>
 
 <table class="table margin-0">
     <thead>

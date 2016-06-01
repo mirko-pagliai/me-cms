@@ -36,9 +36,10 @@ use Cake\Log\Engine\FileLog;
  */
 class SerializedLog extends FileLog {
 	/**
-	 * Gets the log as an array. It splits the log information from the message, using regex
+	 * Gets the log as an array. It splits the log information from the 
+     *  message, using regex
 	 * @param string $level The severity level of the message being written.
-	 *		See Cake\Log\Log::$_levels for list of possible levels.
+     *  See Cake\Log\Log::$_levels for list of possible levels.
 	 * @param string $message The message you want to log.
 	 * @return array
 	 */
@@ -48,9 +49,10 @@ class SerializedLog extends FileLog {
 		
 		//Sets exception type and message
 		if(preg_match('/^(\[([^\]]+)\]\s)?(.+)/', $message, $matches)) {				
-			if(!empty($matches[2]))
+			if(!empty($matches[2])) {
 				$serialized['exception'] = $matches[2];
-
+            }
+            
 			$serialized['message'] = $matches[3];
 		}
 		
@@ -88,11 +90,12 @@ class SerializedLog extends FileLog {
 	/**
 	 * Implements writing to log files.
 	 * 
-	 * Each time that is called, it writes the normal log (using the `FileLog::log` method) 
-	 * and a serialized copy of the log.  
-	 * For example, if the log is `error.log`, the serialized log will be `error_serialized.log`.
+	 * Each time that is called, it writes the normal log (using the 
+     *  `FileLog::log` method) and a serialized copy of the log.  
+	 * For example, if the log is `error.log`, the serialized log will be 
+     *  `error_serialized.log`.
 	 * @param string $level The severity level of the message being written.
-	 *		See Cake\Log\Log::$_levels for list of possible levels.
+     *  See Cake\Log\Log::$_levels for list of possible levels.
 	 * @param string $message The message you want to log.
 	 * @param array $context Additional information about the logged message
 	 * @return bool success of write
@@ -105,7 +108,6 @@ class SerializedLog extends FileLog {
 		/**
 		 * Now, it writes the serialized log
 		 */
-		
         $message = $this->_format(trim($message), $context);
 		
         $filename = $this->_getFilename($level);
@@ -114,7 +116,7 @@ class SerializedLog extends FileLog {
 		//For example, if the log is `error.log`, the serialized log will be `error_serialized.log`
 		$filename = sprintf('%s_serialized.log', pathinfo($filename, PATHINFO_FILENAME));
 		
-        if (!empty($this->_size)) {
+        if(!empty($this->_size)) {
             $this->_rotateFile($filename);
         }
 
@@ -124,8 +126,9 @@ class SerializedLog extends FileLog {
 		//Gets the content of the existing logs and unserializes
 		$logs = @unserialize(@file_get_contents($pathname));
 		
-		if(empty($logs) || !is_array($logs))
+		if(empty($logs) || !is_array($logs)) {
 			$logs = [];
+        }
 		
 		//Adds the current log at the beginning
 		array_unshift($logs, (object) $this->_getLogAsArray($level, $message));
@@ -133,7 +136,7 @@ class SerializedLog extends FileLog {
 		//Serializes logs
 		$output = serialize($logs);
 		
-        if (empty($mask)) {
+        if(empty($mask)) {
             return file_put_contents($pathname, $output);
         }
 
@@ -141,7 +144,7 @@ class SerializedLog extends FileLog {
         $result = file_put_contents($pathname, $output);
         static $selfError = false;
 
-        if (!$selfError && !$exists && !chmod($pathname, (int)$mask)) {
+        if(!$selfError && !$exists && !chmod($pathname, (int)$mask)) {
             $selfError = true;
             trigger_error(vsprintf(
                 'Could not apply permission mask "%s" on log file "%s"',

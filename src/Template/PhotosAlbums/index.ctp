@@ -20,8 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use Cake\Routing\Router;
 ?>
 	
 <?php $this->assign('title', __d('me_cms', 'Photos')); ?>
@@ -33,7 +31,7 @@ use Cake\Routing\Router;
 			<?php foreach($albums as $album): ?>
 				<div class="col-sm-6 col-md-4">
 					<div class="photo-box">
-                        <a href="<?= Router::url(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
+                        <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
                             <?= $this->Thumb->image($album->photos[0]->path, ['side' => 275]) ?>
                             <div class="photo-info">
                                 <div>

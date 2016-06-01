@@ -52,7 +52,7 @@ class MenuHelper extends Helper {
 		
 		//Only admins and managers can access these actions
 		if($this->Auth->isGroup(['admin', 'manager'])) {
-			$menu[] = $this->Html->link(__d('me_cms', 'List categories'),	['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => 'MeCms']);
+			$menu[] = $this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'PostsCategories', 'action' => 'index', 'plugin' => 'MeCms']);
 			$menu[] = $this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add', 'plugin' => 'MeCms']);
         }
 		

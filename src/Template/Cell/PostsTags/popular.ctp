@@ -27,7 +27,6 @@
 		return;
     }
     
-	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Popular tags'));
 ?>
@@ -35,10 +34,10 @@
 <?php foreach($tags as $tag): ?>
 	<div>
 		<?php
-			$text = empty($prefix) ? $tag['tag'] : sprintf('%s%s', $prefix, $tag['tag']);
-			$options = empty($tag['size']) ? [] : ['style' => sprintf('font-size:%spx;', $tag['size'])];
+			$text = empty($prefix) ? $tag->tag : sprintf('%s%s', $prefix, $tag->tag);
+			$options = empty($tag->size) ? [] : ['style' => sprintf('font-size:%spx;', $tag->size)];
 			
-			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag['slug']], $options);
+			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag->slug], $options);
 		?>
 	</div>
 <?php endforeach; ?>

@@ -22,19 +22,25 @@
  */
 
 //Sets the default banners directory
-if(!defined('BANNERS'))
+if(!defined('BANNERS')) {
 	define('BANNERS', WWW_ROOT.'img'.DS.'banners');
+}
 
 //Sets the datetime format for MySql
-if(!defined('FORMAT_FOR_MYSQL'))
+if(!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
+}
+
+//Sets the default MeCms name
+if(!defined('MECMS')) {
+    define('MECMS', 'MeCms');
+}
 
 //Sets the default photos directory
-if(!defined('PHOTOS'))
+if(!defined('PHOTOS')) {
 	define('PHOTOS', WWW_ROOT.'img'.DS.'photos');
-
+} 
 //Sets the default sitemap path
-if(!defined('SITEMAP'))
+if(!defined('SITEMAP')) {
 	define('SITEMAP', TMP.'sitemap.xml.gz');
-
-define('MECMS', 'MeCms');
+}

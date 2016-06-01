@@ -23,7 +23,7 @@
 namespace MeCms\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
 /**
@@ -46,9 +46,10 @@ class PostsCell extends Cell {
 	
 	/**
 	 * Categories widget
+     * @param string $render Render type (`form` or `list`)
 	 * @uses MeTools\Network\Request::isHere()
 	 */
-	public function categories() {
+	public function categories($render = 'form') {
 		//Returns on categories index
 		if($this->request->isHere(['_name' => 'posts_categories'])) {
 			return;
@@ -63,16 +64,20 @@ class PostsCell extends Cell {
 				->select(['title', 'slug', 'post_count'])
 				->order(['title' => 'ASC'])
 				->toArray();
-			
-			foreach($categories as $k => $category) {
-				$categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->post_count);
-				unset($categories[$k]);
-			}
+            
+            foreach($categories as $k => $category) {
+                $categories[$category->slug] = $category;
+                unset($categories[$k]);
+            }
 			
             Cache::write($cache, $categories, $this->Posts->cache);
 		}
 		
 		$this->set(compact('categories'));
+        
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        }
 	}
 	
 	/**
@@ -98,8 +103,9 @@ class PostsCell extends Cell {
     
     /**
      * Posts by month widget
+     * @param string $render Render type (`form` or `list`)
      */
-    public function months() {
+    public function months($render = 'form') {
 		//Returns on index
 		if($this->request->isAction('index', 'Posts')) {
 			return;
@@ -121,7 +127,8 @@ class PostsCell extends Cell {
             
             foreach($months as $k => $month) {
                 $exploded = explode('-', $month->month);
-                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM Y'), $month->post_count);
+                $months[$month->month] = $month;
+                $months[$month->month]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0])->day(1);
                 unset($months[$k]);
             }
             
@@ -129,6 +136,10 @@ class PostsCell extends Cell {
         }
         
         $this->set(compact('months'));
+        
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+        }
     }
 	
 	/**

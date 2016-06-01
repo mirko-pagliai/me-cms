@@ -1,8 +1,14 @@
 # 2.x branch
-## 2.8 branch
-### 2.8.2
+## 2.9 branch
+### 2.9.0
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
+* `Photos::albums`, `Posts::categories` and `Posts::categories` widgets can now render as form (default) or list;
+* `PostsTags::popular` widget can now render as cloud (default), form or list;
+* added common templates for all admin views;
+* fixed titles for some admin templates;
+* improved view classes;
+* `index_by_date` action renamed as `index_by_day`.
 * you can set a custom class for widgets.
 
 ### 2.8.1

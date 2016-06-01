@@ -21,28 +21,27 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Edit users group')); ?>
 
-<div class="usersGroups form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit users group')) ?>
-    <?= $this->Form->create($group); ?>
-    <fieldset>
-        <?php
-			echo $this->Form->input('name', [
-				'disabled'	=> TRUE,
-				'label'		=> __d('me_cms', 'Name')
-			]);
-			echo $this->Form->input('label', [
-				'label' => __d('me_cms', 'Label')
-			]);
-			echo $this->Form->input('description', [
-				'label'	=> __d('me_cms', 'Description'),
-				'rows'	=> 3,
-				'type'	=> 'textarea'
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit group')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit users group')); ?>
+
+<?= $this->Form->create($group); ?>
+<fieldset>
+    <?php
+        echo $this->Form->input('name', [
+            'disabled' => TRUE,
+            'label' => __d('me_cms', 'Name'),
+        ]);
+        echo $this->Form->input('label', [
+            'label' => __d('me_cms', 'Label'),
+        ]);
+        echo $this->Form->input('description', [
+            'label'	=> __d('me_cms', 'Description'),
+            'rows' => 3,
+            'type' => 'textarea',
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

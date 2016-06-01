@@ -22,7 +22,7 @@
  */
 ?>
 
-<?= $this->extend('/Admin/Common/Photos/index') ?>
+<?php $this->extend('/Admin/Common/Photos/index'); ?>
     
 <table class="table table-hover">
     <thead>

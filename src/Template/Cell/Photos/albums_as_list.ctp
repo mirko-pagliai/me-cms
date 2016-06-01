@@ -23,14 +23,16 @@
 ?>
 
 <?php
-	if(empty($photos)) {
+	if(empty($albums) || count($albums) < 2) {
 		return;
     }
     
 	$this->extend('/Common/widget');
-	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Latest {0} photos', count($photos)) : __d('me_cms', 'Latest photo'));
+	$this->assign('title', __d('me_cms', 'Albums'));
 	
-	foreach($photos as $photo) {
-		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
-    }
+    $albums = array_map(function($album) {
+		return $this->Html->link($album->title, ['_name' => 'album', $album->slug]);
+	}, $albums);
+    
+	echo $this->Html->ul($albums, ['icon' => 'caret-right']);
 ?>

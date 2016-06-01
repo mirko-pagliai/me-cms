@@ -22,35 +22,36 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Static pages')); ?>
+<?php
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Static pages'));
+?>
 
-<div class="pages index">
-	<?= $this->Html->h2(__d('me_cms', 'Static pages')) ?>
-	<table class="table table-striped">
-		<tr>
-			<th><?= __d('me_cms', 'Filename') ?></th>
-			<th><?= __d('me_cms', 'Title') ?></th>
-			<th><?= __d('me_cms', 'Path') ?></th>
-		</tr>
-		<?php foreach($pages as $page): ?>
-			<tr>
-				<td>
-                    <strong><?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug]) ?></strong>
-					<?php
-						$actions = [
-							$this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank'])
-						];
-						
-						echo $this->Html->ul($actions, ['class' => 'actions']);
-					?>
-				</td>
-				<td>
-                    <?= $page->title ?>
-                </td>
-				<td>
-                    <?= $page->path ?>
-                </td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
+<table class="table table-striped">
+    <tr>
+        <th><?= __d('me_cms', 'Filename') ?></th>
+        <th><?= __d('me_cms', 'Title') ?></th>
+        <th><?= __d('me_cms', 'Path') ?></th>
+    </tr>
+    <?php foreach($pages as $page): ?>
+        <tr>
+            <td>
+                <strong><?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug]) ?></strong>
+                <?php
+                    $actions = [
+                        $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']),
+                    ];
+
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                ?>
+            </td>
+            <td>
+                <?= $page->title ?>
+            </td>
+            <td>
+                <?= $page->path ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
 </div>

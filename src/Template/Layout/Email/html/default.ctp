@@ -20,8 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use Cake\Routing\Router;
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +35,7 @@ use Cake\Routing\Router;
 		<br />
         
 		<small>
-			<?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(config('main.title'), Router::url('/', TRUE))) ?>
+			<?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(config('main.title'), $this->Url->build('/', TRUE))) ?>
 		</small>
         
         <br />

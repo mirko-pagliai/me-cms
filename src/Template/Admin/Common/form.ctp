@@ -22,15 +22,9 @@
  */
 ?>
 
-<?php
-	if(empty($photos)) {
-		return;
-    }
-    
-	$this->extend('/Common/widget');
-	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Latest {0} photos', count($photos)) : __d('me_cms', 'Latest photo'));
-	
-	foreach($photos as $photo) {
-		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
-    }
-?>
+<?php $this->assign('title', $this->fetch('title')); ?>
+
+<div class="form">
+    <?= $this->Html->h2($this->fetch('title')) ?>
+    <?= $this->fetch('content') ?>
+</div>

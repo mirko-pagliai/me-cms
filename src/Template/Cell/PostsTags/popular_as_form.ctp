@@ -23,14 +23,20 @@
 ?>
 
 <?php
-	if(empty($photos)) {
+	if(empty($tags)) {
 		return;
     }
     
 	$this->extend('/Common/widget');
-	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Latest {0} photos', count($photos)) : __d('me_cms', 'Latest photo'));
+	$this->assign('title', __d('me_cms', 'Popular tags'));
 	
-	foreach($photos as $photo) {
-		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
-    }
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_tag', 'tag']]);
+	echo $this->Form->input('q', [
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+        'options' => array_map(function($tag) {
+            return sprintf('%s (%d)', $tag->tag, $tag->post_count);
+        }, $tags),
+	]);
+	echo $this->Form->end();
 ?>

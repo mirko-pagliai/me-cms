@@ -21,19 +21,19 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Edit tag')); ?>
 
-<div class="postsTags form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit tag')) ?>
-    <?= $this->Form->create($tag); ?>
-	<fieldset>
-        <?php
-			echo $this->Form->input('tag', [
-				'label'	=> __d('me_cms', 'Tag')
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit tag')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit tag'));
+?>
+
+<?= $this->Form->create($tag); ?>
+<fieldset>
+    <?php
+        echo $this->Form->input('tag', [
+            'label'	=> __d('me_cms', 'Tag'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

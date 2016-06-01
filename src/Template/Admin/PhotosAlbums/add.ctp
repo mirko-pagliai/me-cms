@@ -23,37 +23,35 @@
 ?>
 
 <?php
-	$this->assign('title', __d('me_cms', 'Add photos album'));
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Add photos album'));
 	$this->Library->slugify();
 ?>
 
-<div class="photosAlbums form">
-	<?= $this->Html->h2(__d('me_cms', 'Add photos album')) ?>
-    <?= $this->Form->create($album); ?>
-	<div class='float-form'>
-		<?php
-			echo $this->Form->input('active', [
-				'checked'	=> TRUE,
-				'label'		=> sprintf('%s?', __d('me_cms', 'Published'))
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Form->input('title', [
-				'id'	=> 'title',
-				'label'	=> __d('me_cms', 'Title')
-			]);
-			echo $this->Form->input('slug', [
-				'id'	=> 'slug',
-				'label'	=> __d('me_cms', 'Slug'),
-				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
-			]);
-			echo $this->Form->input('description', [
-				'label'	=> __d('me_cms', 'Description')
-			]);
-        ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Add album')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($album); ?>
+<div class='float-form'>
+    <?php
+        echo $this->Form->input('active', [
+            'checked' => TRUE,
+            'label' => sprintf('%s?', __d('me_cms', 'Published')),
+        ]);
+    ?>
 </div>
+<fieldset>
+    <?php
+        echo $this->Form->input('title', [
+            'id' => 'title',
+            'label'	=> __d('me_cms', 'Title'),
+        ]);
+        echo $this->Form->input('slug', [
+            'id' => 'slug',
+            'label'	=> __d('me_cms', 'Slug'),
+            'tip' => __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically'),
+        ]);
+        echo $this->Form->input('description', [
+            'label'	=> __d('me_cms', 'Description'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

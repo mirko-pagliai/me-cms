@@ -79,26 +79,23 @@ class PostsController extends AppController {
         
         $this->set(compact('posts'));
     }
-	
-	/**
-	 * Lists posts by a date.
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-	 * @param int $day Day
-	 */
-	public function index_by_date($year, $month, $day) {
-		//Sets the cache name
-		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$year, $month, $day])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+    
+    /**
+	 * Internal method to list posts in a date interval
+     * @param Time $start Start time
+     * @param Time $end End time
+     */
+    protected function _index_by_date(Time $start, Time $end) {
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
+        //Sets the cache name
+		$cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
 		
 		//Tries to get data from the cache
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
 		
 		//If the data are not available from the cache
-		if(empty($posts) || empty($paging)) {
-            $first = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
-            $last = (new Time($first))->addDay(1);
-        
+		if(empty($posts) || empty($paging)) {        
             $query = $this->Posts->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
@@ -107,8 +104,8 @@ class PostsController extends AppController {
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->where([
-                    sprintf('%s.created >=', $this->Posts->alias()) => $first,
-                    sprintf('%s.created <', $this->Posts->alias()) => $last,
+                    sprintf('%s.created >=', $this->Posts->alias()) => $start,
+                    sprintf('%s.created <', $this->Posts->alias()) => $end,
                 ])
                 ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
             
@@ -123,6 +120,21 @@ class PostsController extends AppController {
         }
         
         $this->set(compact('posts'));
+    }
+    
+    /**
+	 * Lists posts by a day (year, month and day).
+     * It uses the `index` template.
+	 * @param int $year Year
+	 * @param int $month Month
+	 * @param int $day Day
+     * @uses _index_by_date()
+	 */
+	public function index_by_day($year, $month, $day) {
+        $start = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
+        $end = (new Time($start))->addDay(1);
+        
+        $this->_index_by_date($start, $end);
 		
 		$this->render('index');
 	}
@@ -132,6 +144,7 @@ class PostsController extends AppController {
      * It uses the `index` template.
 	 * @param int $year Year
 	 * @param int $month Month
+     * @uses _index_by_date()
      */
     public function index_by_month($year, $month) {
         //Data can be passed as query string, from a widget
@@ -140,42 +153,31 @@ class PostsController extends AppController {
 			return $this->redirect([$exploded[1], $exploded[0]]);
         }
         
-		//Sets the cache name
-		$cache = sprintf('index_month_%s_limit_%s_page_%s', md5(serialize([$year, $month])), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+        $start = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addMonth(1);
+        
+        $this->_index_by_date($start, $end);
 		
-		//Tries to get data from the cache
-		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
-		
-		//If the data are not available from the cache
-		if(empty($posts) || empty($paging)) {
-            $first = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
-            $last = (new Time($first))->addMonth(1);
-            
-            $query = $this->Posts->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags',
-                    'Users' => ['fields' => ['first_name', 'last_name']],
-                ])
-                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->where([
-                    sprintf('%s.created >=', $this->Posts->alias()) => $first,
-                    sprintf('%s.created <', $this->Posts->alias()) => $last,
-                ])
-                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
-            
-			$posts = $this->paginate($query)->toArray();
-						
-			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
-        }
-		//Else, sets the paging parameter
-		else {
-			$this->request->params['paging'] = $paging;
+		$this->render('index');
+    }
+    
+    /**
+	 * Lists posts by a year.
+     * It uses the `index` template.
+	 * @param int $year Year
+     * @uses _index_by_date()
+     */
+    public function index_by_year($year) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+			return $this->redirect([$this->request->query('q')]);
         }
         
-        $this->set(compact('posts'));
-		
+        $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
+        $end = (new Time($start))->addYear(1);
+        
+        $this->_index_by_date($start, $end);
+        
 		$this->render('index');
     }
 	

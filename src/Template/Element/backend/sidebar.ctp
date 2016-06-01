@@ -20,8 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use MeCms\Core\Plugin;
 ?>
 	
 <?php
@@ -29,7 +27,7 @@ use MeCms\Core\Plugin;
 	echo $this->MenuBuilder->generate('MeCms');
 	
 	//Renders menus for all others plugin
-	foreach(Plugin::all(['exclude' => 'MeCms']) as $plugin) {
+	foreach(\MeCms\Core\Plugin::all(['exclude' => 'MeCms']) as $plugin) {
 		$menu = $this->MenuBuilder->generate($plugin);
 		
 		if(!empty($menu)) {

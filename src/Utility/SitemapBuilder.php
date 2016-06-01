@@ -73,8 +73,8 @@ class SitemapBuilder {
                 continue;
             }
             
-            //Because each class may be an extension of this class, 
-            //it calculates the difference between the methods of the two classes
+            //Because each class may be an extension of this, it calculates 
+            //  the difference between the methods of the two classes
             $methods = array_diff($methods, get_class_methods(__CLASS__));
             
             //Calls all methods 
@@ -87,7 +87,7 @@ class SitemapBuilder {
             'urlset' => [
                 'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
                 'url' => $url,
-            ]
+            ],
          ], ['pretty' => TRUE]);
         
         return $xml->asXML();

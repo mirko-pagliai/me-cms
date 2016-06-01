@@ -27,7 +27,6 @@
 		return;
     }
     
-	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Posts by month'));
     
@@ -35,7 +34,9 @@
 	echo $this->Form->input('q', [
 		'label' => FALSE,
 		'onchange' => 'send_form(this)',
-		'options' => $months,
+		'options' => array_map(function($month) {
+            return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->post_count);
+        }, $months),
 	]);
 	echo $this->Form->end();
 ?>

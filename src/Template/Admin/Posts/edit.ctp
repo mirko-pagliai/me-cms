@@ -23,90 +23,93 @@
 ?>
 
 <?php
-	$this->assign('title', __d('me_cms', 'Edit post'));
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Edit post'));
 	$this->Library->ckeditor();
 	$this->Library->datetimepicker();
 	$this->Library->slugify();
 	$this->Asset->js('MeCms.backend/tags', ['block' => 'script_bottom']);
 ?>
 
-<div class="posts form">
-	<?= $this->Html->h2(__d('me_cms', 'Edit post')) ?>
-    <?= $this->Form->create($post); ?>
-	<div class='float-form'>
-		<?php
-			//Only admins and managers can edit posts on behalf of other users
-			if($this->Auth->isGroup(['admin', 'manager']))
-				echo $this->Form->input('user_id', [
-					'empty'	=> FALSE,
-					'label' => __d('me_cms', 'Author')
-				]);
-			
-            echo $this->Form->input('category_id', [
-				'empty'	=> FALSE,
-				'label' => __d('me_cms', 'Category')
-			]);
-            echo $this->Form->datetimepicker('created', [
-				'label'	=> __d('me_cms', 'Date'),
-				'tip'	=> [
-					__d('me_cms', 'If blank, the current date and time will be used'),
-					__d('me_cms', 'You can delay the publication by entering a future date')
-				],
-				'value'	=> $post->created->i18nFormat(FORMAT_FOR_MYSQL)
-			]);
-            echo $this->Form->input('priority', [
-				'label' => __d('me_cms', 'Priority')
-			]);
-            echo $this->Form->input('active', [
-				'label'	=> sprintf('%s?', __d('me_cms', 'Published')),
-				'tip'	=> __d('me_cms', 'Disable this option to save as a draft')
-			]);
-		?>
-	</div>
-    <fieldset>
-        <?php
-			echo $this->Form->input('title', [
-				'id'	=> 'title',
-				'label'	=> __d('me_cms', 'Title')
-			]);
-			echo $this->Form->input('subtitle', [
-				'label' => __d('me_cms', 'Subtitle')
-			]);
-			echo $this->Form->input('slug', [
-				'id'	=> 'slug',
-				'label'	=> __d('me_cms', 'Slug'),
-				'tip'	=> __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically')
-			]);
-		?>
-		<div class="form-group to-be-hidden">
-			<?php
-				echo $this->Form->input('tags', [
-					'id'	=> 'tags-output-text',
-					'label'	=> __d('me_cms', 'Tags'),
-					'rows'	=> 2,
-					'tip'	=> __d('me_cms', 'Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
-					'value'	=> $this->request->data('tags') ? $this->request->data('tags') : $post->tags_as_string
-				]);
-			?>
-		</div>
-		<div class="form-group hidden to-be-shown">
-			<?php
-				echo $this->Html->div(NULL, sprintf('%s:', __d('me_cms', 'Tags')), ['id' => 'tags-preview']);
-				echo $this->Form->input('add_tags', [
-					'button'	=> $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus', 'id' => 'tags-input-button']),
-					'id'		=> 'tags-input-text',
-					'label'		=> FALSE,
-					'tip'		=> __d('me_cms', 'Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space')
-				]);
-				
-				//Tags error
-				if($this->Form->isFieldError('tags'))
-					echo $this->Form->error('tags');
-			?>
-		</div>
-		<?= $this->Form->ckeditor('text', ['label' => __d('me_cms', 'Text'), 'rows'	=> 10]) ?>
-		<?= $this->element('backend/bbcode') ?>
-    </fieldset>
-    <?= $this->Form->submit(__d('me_cms', 'Edit post')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($post); ?>
+<div class='float-form'>
+    <?php
+        //Only admins and managers can edit posts on behalf of other users
+        if($this->Auth->isGroup(['admin', 'manager']))
+            echo $this->Form->input('user_id', [
+                'empty'	=> FALSE,
+                'label' => __d('me_cms', 'Author'),
+            ]);
+
+        echo $this->Form->input('category_id', [
+            'empty'	=> FALSE,
+            'label' => __d('me_cms', 'Category'),
+        ]);
+        echo $this->Form->datetimepicker('created', [
+            'label'	=> __d('me_cms', 'Date'),
+            'tip' => [
+                __d('me_cms', 'If blank, the current date and time will be used'),
+                __d('me_cms', 'You can delay the publication by entering a future date'),
+            ],
+        ]);
+        echo $this->Form->input('priority', [
+            'label' => __d('me_cms', 'Priority'),
+        ]);
+        echo $this->Form->input('active', [
+            'label'	=> sprintf('%s?', __d('me_cms', 'Published')),
+            'tip' => __d('me_cms', 'Disable this option to save as a draft'),
+        ]);
+    ?>
 </div>
+<fieldset>
+    <?php
+        echo $this->Form->input('title', [
+            'id' => 'title',
+            'label'	=> __d('me_cms', 'Title'),
+        ]);
+        echo $this->Form->input('subtitle', [
+            'label' => __d('me_cms', 'Subtitle'),
+        ]);
+        echo $this->Form->input('slug', [
+            'id' => 'slug',
+            'label'	=> __d('me_cms', 'Slug'),
+            'tip' => __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically'),
+        ]);
+    ?>
+    <div class="form-group to-be-hidden">
+        <?php
+            echo $this->Form->input('tags', [
+                'id' => 'tags-output-text',
+                'label'	=> __d('me_cms', 'Tags'),
+                'rows' => 2,
+                'tip' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
+                'value' => $this->request->data('tags') ? $this->request->data('tags') : $post->tags_as_string,
+            ]);
+        ?>
+    </div>
+    <div class="form-group hidden to-be-shown">
+        <div id="tags-preview"><?= sprintf('%s:', __d('me_cms', 'Tags')) ?></div>
+        <?php
+            echo $this->Form->input('add_tags', [
+                'button' => $this->Form->button(NULL, ['class' => 'btn-success', 'icon' => 'plus', 'id' => 'tags-input-button']),
+                'id' => 'tags-input-text',
+                'label' => FALSE,
+                'tip' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
+            ]);
+
+            //Tags error
+            if($this->Form->isFieldError('tags')) {
+                echo $this->Form->error('tags');
+            }
+        ?>
+    </div>
+    <?php
+        echo $this->Form->ckeditor('text', [
+            'label' => __d('me_cms', 'Text'),
+            'rows' => 10
+        ]);
+    ?>
+    <?= $this->element('backend/bbcode') ?>
+</fieldset>
+<?= $this->Form->submit($title) ?>
+<?= $this->Form->end() ?>

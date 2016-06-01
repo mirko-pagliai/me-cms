@@ -23,6 +23,10 @@
 namespace MeCms\Utility;
 
 use Cake\Core\App;
+use Cake\Filesystem\Folder;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 
 /**
@@ -54,9 +58,9 @@ class StaticPage {
                     'path' => rtr($file),
                     'slug' => preg_replace('/\.ctp$/', '', preg_replace(sprintf('/^%s/', preg_quote($path.DS, DS)), NULL, $file)),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
-                    'modified' => new \Cake\I18n\FrozenTime(filemtime($file)),
+                    'modified' => new FrozenTime(filemtime($file)),
                 ];
-            }, (new \Cake\Filesystem\Folder($path))->findRecursive('^.+\.ctp$', TRUE)));
+            }, (new Folder($path))->findRecursive('^.+\.ctp$', TRUE)));
         }
         
 		return $pages;
@@ -73,7 +77,7 @@ class StaticPage {
 		$file = implode(DS, af(explode('/', $slug)));
 		
 		//Sets the file patterns
-		$patterns = [sprintf('%s-%s', $file, \Cake\I18n\I18n::locale()), $file];
+		$patterns = [sprintf('%s-%s', $file, I18n::locale()), $file];
 		
 		//Checks if the page exists in APP
 		foreach($patterns as $pattern) {
@@ -102,6 +106,6 @@ class StaticPage {
 	public static function title($slug) {
 		$slug = af(explode('/', $slug));
 		
-		return \Cake\Utility\Inflector::humanize(str_replace('-', '_', $slug[count($slug)-1]));
+		return Inflector::humanize(str_replace('-', '_', $slug[count($slug)-1]));
 	}
 }

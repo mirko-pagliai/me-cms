@@ -47,11 +47,12 @@ class PostsTagsCell extends Cell {
 	 * Popular tags widgets
 	 * @param int $limit Limit
 	 * @param string $prefix Prefix for each tag
+     * @param string $render Render type (`cloud`, `form` or `list`)
 	 * @param bool $shuffle Shuffles tags
 	 * @param array|bool $style Applies style to tags
 	 * @uses MeTools\Network\Request::isHere()
 	 */
-	public function popular($limit = 10, $prefix = '#', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
+	public function popular($limit = 10, $prefix = '#', $render = 'cloud', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
 		//Returns on tags index
 		if($this->request->isHere(['_name' => 'posts_tags'])) {
 			return;
@@ -80,16 +81,16 @@ class PostsTagsCell extends Cell {
 				->limit($limit)
 				->order(['post_count' => 'DESC'])
 				->toArray();
-
+            
 			if($style) {
 				//Number of occurrences of the tag with the highest number of occurrences
-				$maxCount = $tags[0]['post_count'];
+				$maxCount = $tags[0]->post_count;
 				//Number of occurrences of the tag with the lowest number of occurrences
-				$minCount = end($tags)['post_count'];
+				$minCount = end($tags)->post_count;
 
 				//Adds the proportional font size to each tag
 				$tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
-					$tag['size'] = round((($tag['post_count'] - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
+					$tag->size = round((($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
 					return $tag;
 				}, $tags);
 			}
@@ -101,6 +102,16 @@ class PostsTagsCell extends Cell {
 			shuffle($tags);
         }
         
+        //Takes place here, because shuffle() re-indexes
+        foreach($tags as $k => $tag) {
+            $tags[$tag->slug] = $tag;
+            unset($tags[$k]);
+        }
+        
 		$this->set(compact('prefix', 'tags'));
+        
+        if($render !== 'cloud') {
+            $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
+        }
 	}
 }

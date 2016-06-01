@@ -22,12 +22,11 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Log')); ?>
+<?php
+    $this->extend('/Admin/Common/view');
+    $this->assign('title', $title = __d('me_cms', 'Log {0}', $log->filename));
+?>
 
-<div class="logs view">
-	<?= $this->Html->h2($log->filename) ?>
-
-	<?php if(!empty($log->content)): ?>
-		<?= $this->Html->pre($log->content) ?>
-	<?php endif; ?>
-</div>	
+<?php if(!empty($log->content)): ?>
+    <?= $this->Html->pre($log->content) ?>
+<?php endif; ?>

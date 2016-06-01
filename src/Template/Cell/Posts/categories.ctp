@@ -27,16 +27,16 @@
 		return;
     }
     
-	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Posts categories'));
 	
 	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_category', 'category']]);
 	echo $this->Form->input('q', [
-		'empty'		=> __d('me_cms', 'Select a category'),
-		'label'		=> FALSE,
-		'onchange'	=> 'send_form(this)',
-		'options'	=> $categories,
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+        'options' => array_map(function($category) {
+            return sprintf('%s (%d)', $category->title, $category->post_count);
+        }, $categories),
 	]);
 	echo $this->Form->end();
 ?>

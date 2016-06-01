@@ -26,8 +26,7 @@
 	if(empty($pages)) {
 		return;
     }
-	
-	//Extends the widget common view
+    
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Pages'));
 			

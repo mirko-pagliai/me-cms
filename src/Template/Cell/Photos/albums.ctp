@@ -26,20 +26,20 @@
 	if(empty($albums) || count($albums) < 2) {
 		return;
     }
-	
-	//Extends the widget common view
+    
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Albums'));
 	
 	echo $this->Form->create(FALSE, [
-		'type'	=> 'get', 
-		'url'	=> ['_name' => 'album', 'album'],
+		'type' => 'get', 
+		'url' => ['_name' => 'album', 'album'],
 	]);
 	echo $this->Form->input('q', [
-		'empty'		=> __d('me_cms', 'Select an album'),
-		'label'		=> FALSE,
-		'onchange'	=> 'send_form(this)',
-		'options'	=> $albums,
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+        'options' => array_map(function($album) {
+            return sprintf('%s (%d)', $album->title, $album->photo_count);
+        }, $albums),
 	]);
 	echo $this->Form->end();
 ?>

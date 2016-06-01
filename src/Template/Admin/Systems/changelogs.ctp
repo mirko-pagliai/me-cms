@@ -21,31 +21,31 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Changelogs')); ?>
 
-<div class="systems index">
-	<?= $this->Html->h2(__d('me_cms', 'Changelogs')) ?>
-	
-	<div class="well">
-		<?= $this->Form->createInline(FALSE, ['type' => 'get']) ?>
-		<fieldset>
-			<?php
-				echo $this->Form->label('file', __d('me_cms', 'Changelog'));
-				echo $this->Form->input('file', [
-					'default'	=> $this->request->query('file'),
-					'label'		=> __d('me_cms', 'Changelog'),
-					'name'		=> 'file',
-					'onchange'	=> 'send_form(this)'
-				]);
-				echo $this->Form->submit(__d('me_cms', 'Select'));
-			?>
-		</fieldset>
-		<?= $this->Form->end() ?>
-	</div>
-	
-	<?php 
-		if(!empty($changelog))
-			echo $this->Html->div(NULL, $this->Markdown->toHtml($changelog), ['id' => 'changelog']);
-	?>
+<?php
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Changelogs'));
+?>
+
+<div class="well">
+    <?= $this->Form->createInline(FALSE, ['type' => 'get']) ?>
+    <fieldset>
+        <?php
+            echo $this->Form->label('file', __d('me_cms', 'Changelog'));
+            echo $this->Form->input('file', [
+                'default' => $this->request->query('file'),
+                'label' => __d('me_cms', 'Changelog'),
+                'name' => 'file',
+                'onchange' => 'send_form(this)',
+            ]);
+            echo $this->Form->submit(__d('me_cms', 'Select'));
+        ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
 </div>
+
+<?php if(!empty($changelog)): ?>
+    <div id="changelog">
+        <?= $this->Markdown->toHtml($changelog) ?>
+    </div>
+<?php endif; ?>

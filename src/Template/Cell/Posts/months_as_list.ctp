@@ -23,14 +23,16 @@
 ?>
 
 <?php
-	if(empty($photos)) {
+	if(empty($months) || count($months) < 2) {
 		return;
     }
     
 	$this->extend('/Common/widget');
-	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Latest {0} photos', count($photos)) : __d('me_cms', 'Latest photo'));
+	$this->assign('title', __d('me_cms', 'Posts by month'));
 	
-	foreach($photos as $photo) {
-		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);
-    }
+    $months = array_map(function($month) {
+        return $this->Html->link($month->month->i18nFormat('MMMM Y'), ['_name' => 'posts_by_month', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')]);
+	}, $months);
+    
+	echo $this->Html->ul($months, ['icon' => 'caret-right']);
 ?>
