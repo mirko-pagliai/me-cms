@@ -75,8 +75,8 @@ class PhotosCell extends Cell {
 		
 		$this->set(compact('albums'));
         
-        if($render === 'list') {
-            $this->viewBuilder()->template('albums_as_list');
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
         }
 	}
 	

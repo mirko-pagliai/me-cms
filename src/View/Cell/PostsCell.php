@@ -75,8 +75,8 @@ class PostsCell extends Cell {
 		
 		$this->set(compact('categories'));
         
-        if($render === 'list') {
-            $this->viewBuilder()->template('categories_as_list');
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
         }
 	}
 	
@@ -137,8 +137,8 @@ class PostsCell extends Cell {
         
         $this->set(compact('months'));
         
-        if($render === 'list') {
-            $this->viewBuilder()->template('months_as_list');
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('months_as_%s', $render));
         }
     }
 	
