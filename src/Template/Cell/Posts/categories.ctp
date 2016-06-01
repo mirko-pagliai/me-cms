@@ -33,10 +33,10 @@
 	
 	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_category', 'category']]);
 	echo $this->Form->input('q', [
-		'empty'		=> __d('me_cms', 'Select a category'),
-		'label'		=> FALSE,
-		'onchange'	=> 'send_form(this)',
-		'options'	=> $categories,
+		'empty' => __d('me_cms', 'Select a category'),
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+		'options' => $categories,
 	]);
 	echo $this->Form->end();
 ?>
