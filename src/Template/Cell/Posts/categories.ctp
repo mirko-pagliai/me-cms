@@ -35,7 +35,9 @@
 		'empty' => __d('me_cms', 'Select a category'),
 		'label' => FALSE,
 		'onchange' => 'send_form(this)',
-		'options' => $categories,
+        'options' => array_map(function($category) {
+            return sprintf('%s (%d)', $category->title, $category->post_count);
+        }, $categories),
 	]);
 	echo $this->Form->end();
 ?>

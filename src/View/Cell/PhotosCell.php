@@ -56,7 +56,7 @@ class PhotosCell extends Cell {
         }
 		
 		//Tries to get data from the cache
-		$albums = Cache::read($cache = sprintf('widget_albums_as_%s', $render), $this->Photos->cache);
+		$albums = Cache::read($cache = 'widget_albums', $this->Photos->cache);
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
@@ -64,12 +64,10 @@ class PhotosCell extends Cell {
 				->select(['title', 'slug', 'photo_count'])
 				->order(['title' => 'ASC'])
 				->toArray();
-			
-            if($render === 'form') {
-                foreach($albums as $k => $album) {
-                    $albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
-                    unset($albums[$k]);
-                }
+            
+            foreach($albums as $k => $album) {
+                $albums[$album->slug] = $album;
+                unset($albums[$k]);
             }
 			
             Cache::write($cache, $albums, $this->Photos->cache);

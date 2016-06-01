@@ -38,7 +38,9 @@
 		'empty' => __d('me_cms', 'Select an album'),
 		'label' => FALSE,
 		'onchange' => 'send_form(this)',
-		'options' => $albums,
+        'options' => array_map(function($album) {
+            return sprintf('%s (%d)', $album->title, $album->photo_count);
+        }, $albums),
 	]);
 	echo $this->Form->end();
 ?>

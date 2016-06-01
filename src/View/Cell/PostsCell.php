@@ -56,7 +56,7 @@ class PostsCell extends Cell {
         }
 		
 		//Tries to get data from the cache
-		$categories = Cache::read($cache = sprintf('widget_categories_as_%s', $render), $this->Posts->cache);
+		$categories = Cache::read($cache = 'widget_categories', $this->Posts->cache);
 		
 		//If the data are not available from the cache
         if(empty($categories)) {
@@ -65,11 +65,9 @@ class PostsCell extends Cell {
 				->order(['title' => 'ASC'])
 				->toArray();
             
-            if($render === 'form') {
-                foreach($categories as $k => $category) {
-                    $categories[$category->slug] = sprintf('%s (%d)', $category->title, $category->post_count);
-                    unset($categories[$k]);
-                }
+            foreach($categories as $k => $category) {
+                $categories[$category->slug] = $category;
+                unset($categories[$k]);
             }
 			
             Cache::write($cache, $categories, $this->Posts->cache);
