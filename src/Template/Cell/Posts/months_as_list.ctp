@@ -29,14 +29,10 @@
     
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Posts by month'));
+	
+    $months = array_map(function($month) {
+        return $this->Html->link($month->month->i18nFormat('MMMM Y'), ['_name' => 'posts_by_month', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')]);
+	}, $months);
     
-	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_by_month', date('Y'), date('m')]]);
-	echo $this->Form->input('q', [
-		'label' => FALSE,
-		'onchange' => 'send_form(this)',
-		'options' => array_map(function($month) {
-            return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->post_count);
-        }, $months),
-	]);
-	echo $this->Form->end();
+	echo $this->Html->ul($months, ['icon' => 'caret-right']);
 ?>

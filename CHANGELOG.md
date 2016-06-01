@@ -3,7 +3,7 @@
 ### 2.8.2
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
-* `Photos::albums` and `Posts::categories` widgets can now render as form or list;
+* `Photos::albums`, `Posts::categories` and `Posts::categories` widgets can now render as form or list;
 * added common templates for all admin views;
 * fixed titles for some admin templates;
 * you can set a custom class for widgets.

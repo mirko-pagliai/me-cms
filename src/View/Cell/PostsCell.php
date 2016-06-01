@@ -23,7 +23,7 @@
 namespace MeCms\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
 /**
@@ -105,8 +105,9 @@ class PostsCell extends Cell {
     
     /**
      * Posts by month widget
+     * @param string $render Render type (`form` or `list`)
      */
-    public function months() {
+    public function months($render = 'form') {
 		//Returns on index
 		if($this->request->isAction('index', 'Posts')) {
 			return;
@@ -128,7 +129,8 @@ class PostsCell extends Cell {
             
             foreach($months as $k => $month) {
                 $exploded = explode('-', $month->month);
-                $months[$month->month] = sprintf('%s (%s)', (new Time())->year($exploded[1])->month($exploded[0])->day(1)->i18nFormat('MMMM Y'), $month->post_count);
+                $months[$month->month] = $month;
+                $months[$month->month]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0])->day(1);
                 unset($months[$k]);
             }
             
@@ -136,6 +138,10 @@ class PostsCell extends Cell {
         }
         
         $this->set(compact('months'));
+        
+        if($render === 'list') {
+            $this->viewBuilder()->template('months_as_list');
+        }
     }
 	
 	/**
