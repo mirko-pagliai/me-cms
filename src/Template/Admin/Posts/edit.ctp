@@ -111,5 +111,5 @@
     ?>
     <?= $this->element('backend/bbcode') ?>
 </fieldset>
-<?= $this->Form->submit(__d('me_cms', $title)) ?>
+<?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>
