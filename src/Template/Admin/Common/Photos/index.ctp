@@ -23,44 +23,45 @@
 ?>
 
 <?php
-    $this->assign('title', __d('me_cms', 'Photos'));
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Photos'));
+    
+    $this->start('actions');
+	echo $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']);
+	echo $this->Html->button(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
+    $this->end();
+    
 	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
-<div class="photos index">
-	<?= $this->Html->h2(__d('me_cms', 'Photos')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	
-	<?= $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']) ?>
-		<fieldset>
-			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
-			<div>
-				<?php
-					echo $this->Form->input('filename', [
-						'default'		=> $this->request->query('filename'),
-						'placeholder'	=> __d('me_cms', 'filename'),
-						'size'			=> 16,
-					]);
-					echo $this->Form->input('album', [
-						'default'	=> $this->request->query('album'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all albums')),
-					]);
-					echo $this->Form->datepicker('created', [
-						'data-date-format'	=> 'YYYY-MM',
-						'default'			=> $this->request->query('created'),
-						'placeholder'		=> __d('me_cms', 'month'),
-						'size'				=> 5,
-					]);
-					echo $this->Form->submit(NULL, ['icon' => 'search']);
-				?>
-			</div>
-		</fieldset>
-	<?= $this->Form->end() ?>
-	
-    <?= $this->element('backend/list-grid-buttons') ?>
-    
-    <?= $this->fetch('content') ?>
-    
-	<?= $this->element('MeTools.paginator') ?>
-</div>
+<?= $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']) ?>
+    <fieldset>
+        <legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
+        <div>
+            <?php
+                echo $this->Form->input('filename', [
+                    'default' => $this->request->query('filename'),
+                    'placeholder' => __d('me_cms', 'filename'),
+                    'size' => 16,
+                ]);
+                echo $this->Form->input('album', [
+                    'default' => $this->request->query('album'),
+                    'empty' => sprintf('-- %s --', __d('me_cms', 'all albums')),
+                ]);
+                echo $this->Form->datepicker('created', [
+                    'data-date-format' => 'YYYY-MM',
+                    'default' => $this->request->query('created'),
+                    'placeholder' => __d('me_cms', 'month'),
+                    'size' => 5,
+                ]);
+                echo $this->Form->submit(NULL, ['icon' => 'search']);
+            ?>
+        </div>
+    </fieldset>
+<?= $this->Form->end() ?>
+
+<?= $this->element('backend/list-grid-buttons') ?>
+
+<?= $this->fetch('content') ?>
+
+<?= $this->element('MeTools.paginator') ?>

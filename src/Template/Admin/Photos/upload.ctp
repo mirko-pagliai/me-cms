@@ -21,30 +21,29 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Upload photos')); ?>
 
-<div class="photos form">
-	<?= $this->Html->h2(__d('me_cms', 'Upload photos')) ?>
-	
-	<div class="well">
-		<?php
-			echo $this->Form->createInline(NULL, ['type' => 'get']);
-			echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
-			echo $this->Form->input('album', [
-				'default' => $this->request->query('album'),
-				'label' => __d('me_cms', 'Album to upload photos'),
-				'onchange' => 'send_form(this)',
-				'options' => $albums,
-			]);
-			echo $this->Form->submit(__d('me_cms', 'Select'));
-			echo $this->Form->end();
-		?>
-	</div>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Upload photos'));
+?>
 
-	<?php
-		if($this->request->query('album')) {
-			echo $this->element('backend/uploader');
-        }
-	?>
+<div class="well">
+    <?php
+        echo $this->Form->createInline(NULL, ['type' => 'get']);
+        echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
+        echo $this->Form->input('album', [
+            'default' => $this->request->query('album'),
+            'label' => __d('me_cms', 'Album to upload photos'),
+            'onchange' => 'send_form(this)',
+            'options' => $albums,
+        ]);
+        echo $this->Form->submit(__d('me_cms', 'Select'));
+        echo $this->Form->end();
+    ?>
 </div>
+
+<?php
+    if($this->request->query('album')) {
+        echo $this->element('backend/uploader');
+    }
+?>

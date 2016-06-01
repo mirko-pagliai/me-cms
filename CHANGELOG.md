@@ -3,7 +3,7 @@
 ### 2.8.2
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
-* added common view for admin forms;
+* added common templates for all admin views;
 * you can set a custom class for widgets.
 
 ### 2.8.1

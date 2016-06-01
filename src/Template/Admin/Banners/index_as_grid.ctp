@@ -22,7 +22,7 @@
  */
 ?>
 
-<?= $this->extend('/Admin/Common/Banners/index') ?>
+<?php $this->extend('/Admin/Common/Banners/index'); ?>
     
 <div class='clearfix'>
     <?php foreach($banners as $banner): ?>

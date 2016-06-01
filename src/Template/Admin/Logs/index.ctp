@@ -22,37 +22,38 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Logs')); ?>
+<?php
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Logs'));
+?>
 
-<div class="logs index">
-	<?= $this->Html->h2(__d('me_cms', 'Logs')) ?>
-	<table class="table table-striped">
-		<tr>
-			<th><?= __d('me_cms', 'Filename') ?></th>
-			<th class="text-center"><?= __d('me_cms', 'Size') ?></th>
-		</tr>
-		<?php foreach($logs as $log): ?>
-			<tr>
-				<td>
-                    <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->slug]) ?></strong>
-					<?php
-						$actions = [
-							$this->Html->link(__d('me_cms', 'Basic view'), ['action' => 'view', $log->slug], ['icon' => 'eye']),
-						];
-						
-						if($log->serialized)
-							$actions[] = $this->Html->link(__d('me_cms', 'Advanced view'), ['action' => 'view_serialized', $log->slug], ['icon' => 'eye']);
-						
-                        $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $log->slug], ['icon' => 'download']);
-                        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $log->slug], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-                        
-						echo $this->Html->ul($actions, ['class' => 'actions']);
-					?>
-				</td>
-				<td class="min-width text-center">
-					<?= $this->Number->toReadableSize($log->size) ?>
-				</td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
-</div>
+<table class="table table-striped">
+    <tr>
+        <th><?= __d('me_cms', 'Filename') ?></th>
+        <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
+    </tr>
+    <?php foreach($logs as $log): ?>
+        <tr>
+            <td>
+                <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->slug]) ?></strong>
+                <?php
+                    $actions = [
+                        $this->Html->link(__d('me_cms', 'Basic view'), ['action' => 'view', $log->slug], ['icon' => 'eye']),
+                    ];
+
+                    if($log->serialized) {
+                        $actions[] = $this->Html->link(__d('me_cms', 'Advanced view'), ['action' => 'view_serialized', $log->slug], ['icon' => 'eye']);
+                    }
+                    
+                    $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $log->slug], ['icon' => 'download']);
+                    $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $log->slug], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                ?>
+            </td>
+            <td class="min-width text-center">
+                <?= $this->Number->toReadableSize($log->size) ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

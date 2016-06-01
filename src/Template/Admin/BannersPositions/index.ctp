@@ -22,48 +22,50 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Banners positions')); ?>
+<?php
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Banners positions')); 
+   
+    $this->start('actions');
+	echo $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
+	echo $this->Html->button(__d('me_cms', 'Upload banners'), ['controller' => 'Banners', 'action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']);
+    $this->end();
+?>
 
-<div class="bannersPositions index">
-	<?= $this->Html->h2(__d('me_cms', 'Banners positions')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	<?= $this->Html->button(__d('me_cms', 'Upload banners'), ['controller' => 'Banners', 'action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th><?= $this->Paginator->sort('name', __d('me_cms', 'Name')) ?></th>
-				<th><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
-				<th class="text-center"><?= $this->Paginator->sort('banner_count', __d('me_cms', 'Banners')) ?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach($positions as $position): ?>
-				<tr>
-					<td>
-                        <strong><?= $this->Html->link($position->name, ['action' => 'edit', $position->id]) ?></strong>
-						<?php
-                            $actions = [
-								$this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $position->id], ['icon' => 'pencil']),
-								$this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $position->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
-                            ];
-                        
-							echo $this->Html->ul($actions, ['class' => 'actions']);
-						?>
-					</td>
-					<td>
-                        <?= $position->description ?>
-                    </td>
-					<td class="min-width text-center">
-						<?php if($position->banner_count): ?>
-							<?= $this->Html->link($position->banner_count, ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
-						<?php else: ?>
-							<?= $position->banner_count ?>
-						<?php endif; ?>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-		</tbody>
-    </table>
-	<?= $this->element('MeTools.paginator') ?>
-</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><?= $this->Paginator->sort('name', __d('me_cms', 'Name')) ?></th>
+            <th><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('banner_count', __d('me_cms', 'Banners')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($positions as $position): ?>
+            <tr>
+                <td>
+                    <strong><?= $this->Html->link($position->name, ['action' => 'edit', $position->id]) ?></strong>
+                    <?php
+                        $actions = [
+                            $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $position->id], ['icon' => 'pencil']),
+                            $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $position->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
+                        ];
+
+                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    ?>
+                </td>
+                <td>
+                    <?= $position->description ?>
+                </td>
+                <td class="min-width text-center">
+                    <?php if($position->banner_count): ?>
+                        <?= $this->Html->link($position->banner_count, ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                    <?php else: ?>
+                        <?= $position->banner_count ?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $this->element('MeTools.paginator') ?>

@@ -23,125 +23,126 @@
 ?>
 
 <?php
-	$this->assign('title', __d('me_cms', 'Pages'));
+    $this->extend('/Admin/Common/index');
+    $this->assign('title', $title = __d('me_cms', 'Pages'));
+    
+    $this->start('actions');
+	echo $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
+    $this->end();
+    
 	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
-<div class="pages index">
-	<?= $this->Html->h2(__d('me_cms', 'Pages')) ?>
-	<?= $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']) ?>
-	
-	<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
-		<fieldset>
-			<legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
-			<div>
-				<?php
-					echo $this->Form->input('title', [
-						'default'		=> $this->request->query('title'),
-						'placeholder'	=> __d('me_cms', 'title'),
-						'size'			=> 16,
-					]);
-					echo $this->Form->input('active', [
-						'default'	=> $this->request->query('active'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all status')),
-						'options'	=> ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
-					]);
-					echo $this->Form->input('priority', [
-						'default'	=> $this->request->query('priority'),
-						'empty'		=> sprintf('-- %s --', __d('me_cms', 'all priorities')),
-					]);
-					echo $this->Form->datepicker('created', [
-						'data-date-format'	=> 'YYYY-MM',
-						'default'			=> $this->request->query('created'),
-						'placeholder'		=> __d('me_cms', 'month'),
-						'size'				=> 5,
-					]);
-					echo $this->Form->submit(NULL, ['icon' => 'search']);
-				?>
-			</div>
-		</fieldset>
-	<?= $this->Form->end() ?>
-	
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-				<th class="min-width text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
-				<th class="min-width text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach($pages as $page): ?>
-				<tr>
-					<td>
-                        <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
-						<?php
-                            //If the page is not active (it's a draft)
-                            if(!$page->active) {
-                                echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
-                            }
-                            
-                            //If the page is scheduled
-                            if($page->created->isFuture()) {
-                                echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
-                            }
-                            
-							$actions = [];
-							
-							//Only admins and managers can edit pages
-							if($this->Auth->isGroup(['admin', 'manager'])) {
-								$actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $page->id], ['icon' => 'pencil']);
-                            }
-                            
-							//Only admins can delete pages
-							if($this->Auth->isGroup('admin')) {
-								$actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $page->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-                            }
-                            
-                            //If the page is active and is not scheduled
-                            if($page->active && !$page->created->isFuture()) {
-                                $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
-                            }
-                            else {
-                                $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'pages_preview', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
-                            }
-                            
-                            echo $this->Html->ul($actions, ['class' => 'actions']);
-						?>
-					</td>
-					<td class="min-width text-center">
-						<?php
-							switch($page->priority) {
-								case '1':
-									echo $this->Html->badge('1', ['class' => 'priority-verylow', 'tooltip' => __d('me_cms', 'Very low')]);
-									break;
-								case '2':
-									echo $this->Html->badge('2', ['class' => 'priority-low', 'tooltip' => __d('me_cms', 'Low')]);
-									break;
-								case '4':	
-									echo $this->Html->badge('4', ['class' => 'priority-high', 'tooltip' => __d('me_cms', 'High')]);
-									break;
-								case '5':
-									echo $this->Html->badge('5', ['class' => 'priority-veryhigh', 'tooltip' => __d('me_cms', 'Very high')]);
-									break;
-								default:
-									echo $this->Html->badge('3', ['class' => 'priority-normal', 'tooltip' => __d('me_cms', 'Normal')]);
-									break;
-							}
-						?>
-					</td>
-					<td class="min-width text-center">
-						<div class="hidden-xs">
-                            <?= $page->created->i18nFormat(config('main.datetime.long')) ?>
-                        </div>
-						<div class="visible-xs">
-							<div><?= $page->created->i18nFormat(config('main.date.short')) ?></div>
-							<div><?= $page->created->i18nFormat(config('main.time.short')) ?></div>
-						</div>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-		</tbody>
-    </table>
-	<?= $this->element('MeTools.paginator') ?>
-</div>
+<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
+    <fieldset>
+        <legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
+        <div>
+            <?php
+                echo $this->Form->input('title', [
+                    'default' => $this->request->query('title'),
+                    'placeholder' => __d('me_cms', 'title'),
+                    'size' => 16,
+                ]);
+                echo $this->Form->input('active', [
+                    'default' => $this->request->query('active'),
+                    'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                    'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
+                ]);
+                echo $this->Form->input('priority', [
+                    'default' => $this->request->query('priority'),
+                    'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
+                ]);
+                echo $this->Form->datepicker('created', [
+                    'data-date-format' => 'YYYY-MM',
+                    'default' => $this->request->query('created'),
+                    'placeholder' => __d('me_cms', 'month'),
+                    'size' => 5,
+                ]);
+                echo $this->Form->submit(NULL, ['icon' => 'search']);
+            ?>
+        </div>
+    </fieldset>
+<?= $this->Form->end() ?>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
+            <th class="min-width text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
+            <th class="min-width text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($pages as $page): ?>
+            <tr>
+                <td>
+                    <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
+                    <?php
+                        //If the page is not active (it's a draft)
+                        if(!$page->active) {
+                            echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
+                        }
+
+                        //If the page is scheduled
+                        if($page->created->isFuture()) {
+                            echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
+                        }
+
+                        $actions = [];
+
+                        //Only admins and managers can edit pages
+                        if($this->Auth->isGroup(['admin', 'manager'])) {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $page->id], ['icon' => 'pencil']);
+                        }
+
+                        //Only admins can delete pages
+                        if($this->Auth->isGroup('admin')) {
+                            $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $page->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+                        }
+
+                        //If the page is active and is not scheduled
+                        if($page->active && !$page->created->isFuture()) {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
+                        else {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'pages_preview', $page->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
+
+                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    ?>
+                </td>
+                <td class="min-width text-center">
+                    <?php
+                        switch($page->priority) {
+                            case '1':
+                                echo $this->Html->badge('1', ['class' => 'priority-verylow', 'tooltip' => __d('me_cms', 'Very low')]);
+                                break;
+                            case '2':
+                                echo $this->Html->badge('2', ['class' => 'priority-low', 'tooltip' => __d('me_cms', 'Low')]);
+                                break;
+                            case '4':	
+                                echo $this->Html->badge('4', ['class' => 'priority-high', 'tooltip' => __d('me_cms', 'High')]);
+                                break;
+                            case '5':
+                                echo $this->Html->badge('5', ['class' => 'priority-veryhigh', 'tooltip' => __d('me_cms', 'Very high')]);
+                                break;
+                            default:
+                                echo $this->Html->badge('3', ['class' => 'priority-normal', 'tooltip' => __d('me_cms', 'Normal')]);
+                                break;
+                        }
+                    ?>
+                </td>
+                <td class="min-width text-center">
+                    <div class="hidden-xs">
+                        <?= $page->created->i18nFormat(config('main.datetime.long')) ?>
+                    </div>
+                    <div class="visible-xs">
+                        <div><?= $page->created->i18nFormat(config('main.date.short')) ?></div>
+                        <div><?= $page->created->i18nFormat(config('main.time.short')) ?></div>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $this->element('MeTools.paginator') ?>

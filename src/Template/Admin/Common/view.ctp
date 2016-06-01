@@ -22,26 +22,12 @@
  */
 ?>
 
-<?php
-    $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Media browser'));
-    
-	$this->Asset->js('MeCms.backend/kcfinder', ['block' => 'script_bottom']);
-?>
+<?php $this->assign('title', $this->fetch('title')); ?>
 
-<div class="well">
-    <?php 
-        echo $this->Form->createInline(FALSE, ['type' => 'get']);
-        echo $this->Form->label('type', __d('me_cms', 'Type'));
-        echo $this->Form->input('type', [
-            'default' => $this->request->query('type'),
-            'onchange' => 'send_form(this)',
-        ]);
-        echo $this->Form->submit(__d('me_cms', 'Select'));
-        echo $this->Form->end();
+<div class="view">
+    <?php
+        echo $this->Html->h2($this->fetch('title'));
+        
+        echo $this->fetch('content');
     ?>
 </div>
-
-<?php if(!empty($kcfinder)): ?>
-    <?= $this->Html->iframe($kcfinder, ['id' => 'kcfinder', 'width' => '100%']) ?>
-<?php endif; ?>

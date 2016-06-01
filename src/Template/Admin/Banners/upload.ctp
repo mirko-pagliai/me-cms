@@ -21,30 +21,29 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Upload banners')); ?>
 
-<div class="banners form">
-	<?= $this->Html->h2(__d('me_cms', 'Upload banners')) ?>
-	
-	<div class="well">
-		<?php
-			echo $this->Form->createInline(NULL, ['type' => 'get']);
-			echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
-			echo $this->Form->input('position', [
-				'default' => $this->request->query('position'),
-				'label' => __d('me_cms', 'Position to upload banners'),
-				'onchange' => 'send_form(this)',
-				'options' => $positions,
-			]);
-			echo $this->Form->submit(__d('me_cms', 'Select'));
-			echo $this->Form->end();
-		?>
-	</div>
+<?php
+    $this->extend('/Admin/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Upload banners'));
+?>
 
-	<?php
-		if($this->request->query('position')) {
-			echo $this->element('backend/uploader');
-        }
-	?>
+<div class="well">
+    <?php
+        echo $this->Form->createInline(NULL, ['type' => 'get']);
+        echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
+        echo $this->Form->input('position', [
+            'default' => $this->request->query('position'),
+            'label' => __d('me_cms', 'Position to upload banners'),
+            'onchange' => 'send_form(this)',
+            'options' => $positions,
+        ]);
+        echo $this->Form->submit(__d('me_cms', 'Select'));
+        echo $this->Form->end();
+    ?>
 </div>
+
+<?php
+    if($this->request->query('position')) {
+        echo $this->element('backend/uploader');
+    }
+?>
