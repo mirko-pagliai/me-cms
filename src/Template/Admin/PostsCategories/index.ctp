@@ -25,11 +25,8 @@
 <?php
     $this->extend('/Admin/Common/index');
     $this->assign('title', $title = __d('me_cms', 'Posts categories'));
-    
-    $this->start('actions');
-	echo $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
-	echo $this->Html->button(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
-    $this->end();
+    $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
+	$this->append('actions', $this->Html->button(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
 ?>
 
 <table class="table table-hover">

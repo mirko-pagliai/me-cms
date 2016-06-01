@@ -25,11 +25,8 @@
 <?php
     $this->extend('/Admin/Common/index');
     $this->assign('title', $title = __d('me_cms', 'Photos'));
-    
-    $this->start('actions');
-	echo $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']);
-	echo $this->Html->button(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']);
-    $this->end();
+    $this->append('actions', $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']));
+	$this->append('actions', $this->Html->button(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
     
 	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
