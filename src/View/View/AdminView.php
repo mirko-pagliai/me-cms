@@ -22,29 +22,21 @@
  */
 namespace MeCms\View\View;
 
-use App\View\AppView as BaseView;
-use MeCms\View\View\AppView;
+use MeCms\View\View\BaseView;
 
 /**
  * Application view class for admin views
  */
-class AdminView extends AppView {
+class AdminView extends BaseView {
 	/**
      * Initialization hook method
 	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_initialize
-	 * @uses App\View\AppView::initialize()
+	 * @uses MeCms\View\View\BaseView::initialize()
 	 */
     public function initialize() {
-		BaseView::initialize();
+		parent::initialize();
 		
 		//Loads helpers
-		$this->loadHelper('Html', ['className' => 'MeTools.Html']);
-		$this->loadHelper('MeTools.Dropdown');
-		$this->loadHelper('MeTools.Form');
-		$this->loadHelper('MeTools.Library');
-		$this->loadHelper('MeTools.Paginator');
-		$this->loadHelper('Assets.Asset');
-		$this->loadHelper('Thumbs.Thumb');
 		$this->loadHelper('MeCms.MenuBuilder');
 	}
 	
@@ -52,17 +44,17 @@ class AdminView extends AppView {
 	 * Renders view for given view file and layout
 	 * @param string|NULL $view Name of view file to use
 	 * @param string|NULL $layout Layout to use
-	 * @return string|NULL Rendered content or NULL if content already rendered and returned earlier
+	 * @return string|NULL Rendered content or NULL if content already 
+     *  rendered and returned earlier
 	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_render
-	 * @uses App\View\AppView::render()
-	 * @uses layout
 	 * @uses viewVars
 	 */
 	public function render($view = NULL, $layout = NULL) {
 		//Sets the layout
-		if($this->layout === 'default')
-			$this->layout = config('backend.layout');
-		
+		if($this->layout() === 'default') {
+			$this->layout(config('backend.layout'));
+        }
+        
 		//Sets some view vars
 		$this->viewVars['priorities'] = [
 			'1' => sprintf('1 - %s', __d('me_cms', 'Very low')),
@@ -72,26 +64,6 @@ class AdminView extends AppView {
 			'5' => sprintf('5 - %s', __d('me_cms', 'Very high'))
 		];
 		
-		return BaseView::render($view, $layout);
-	}
-	
-	/**
-	 * Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout
-	 * @param string $content Content to render in a view, wrapped by the surrounding layout
-	 * @param string|null $layout Layout name
-	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
-	 * @uses MeTools\View\Helper\HtmlHelper::meta()
-	 * @uses _getTitleForLayout()
-	 */
-	public function renderLayout($content, $layout = NULL) {
-		//Assigns the title for layout
-		$this->assign('title', $this->_getTitleForLayout());
-		
-		//Adds the favicon
-		if(is_readable(WWW_ROOT.'favicon.ico'))
-			$this->Html->meta('icon');
-				
-		return BaseView::renderLayout($content, $layout);
+		return parent::render($view, $layout);
 	}
 }
