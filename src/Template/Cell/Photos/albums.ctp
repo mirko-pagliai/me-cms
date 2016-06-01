@@ -32,14 +32,14 @@
 	$this->assign('title', __d('me_cms', 'Albums'));
 	
 	echo $this->Form->create(FALSE, [
-		'type'	=> 'get', 
-		'url'	=> ['_name' => 'album', 'album'],
+		'type' => 'get', 
+		'url' => ['_name' => 'album', 'album'],
 	]);
 	echo $this->Form->input('q', [
-		'empty'		=> __d('me_cms', 'Select an album'),
-		'label'		=> FALSE,
-		'onchange'	=> 'send_form(this)',
-		'options'	=> $albums,
+		'empty' => __d('me_cms', 'Select an album'),
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+		'options' => $albums,
 	]);
 	echo $this->Form->end();
 ?>
