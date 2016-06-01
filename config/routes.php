@@ -31,7 +31,7 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
+Router::scope('/', ['plugin' => MECMS], function ($routes) {
 	/**
 	 * Banners controller
 	 */
@@ -225,6 +225,6 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
     });
 });
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function ($routes) {
+Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
 	$routes->fallbacks('InflectedRoute');
 });

@@ -86,7 +86,7 @@ class AppController extends BaseController {
 	protected function _getLanguage() {
 		$config = config('main.language');
 		$language = $this->request->env('HTTP_ACCEPT_LANGUAGE');
-		$path = Plugin::path('MeCms', 'src'.DS.'Locale');
+		$path = Plugin::path(MECMS, 'src'.DS.'Locale');
 		
 		if(empty($config) || $config === 'auto') {
 			if(is_readable($path.DS.substr($language, 0, 5).DS.'me_cms.po')) {
