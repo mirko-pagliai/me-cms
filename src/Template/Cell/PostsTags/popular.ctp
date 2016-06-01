@@ -27,7 +27,6 @@
 		return;
     }
     
-	//Extends the widget common view
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Popular tags'));
 ?>
