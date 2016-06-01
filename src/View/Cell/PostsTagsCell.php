@@ -47,11 +47,12 @@ class PostsTagsCell extends Cell {
 	 * Popular tags widgets
 	 * @param int $limit Limit
 	 * @param string $prefix Prefix for each tag
+     * @param type $render
 	 * @param bool $shuffle Shuffles tags
 	 * @param array|bool $style Applies style to tags
 	 * @uses MeTools\Network\Request::isHere()
 	 */
-	public function popular($limit = 10, $prefix = '#', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
+	public function popular($limit = 10, $prefix = '#', $render = 'cloud', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
 		//Returns on tags index
 		if($this->request->isHere(['_name' => 'posts_tags'])) {
 			return;
@@ -102,5 +103,9 @@ class PostsTagsCell extends Cell {
         }
         
 		$this->set(compact('prefix', 'tags'));
+        
+        if($render !== 'cloud') {
+            $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
+        }
 	}
 }

@@ -14,6 +14,7 @@ return ['Widgets' => [
 		'MeCms.PostsTags::popular' => [
 			'limit' => 10,
 			'prefix' => '#',
+            'render' => 'cloud',
 			'shuffle' => TRUE,
 			'style' => ['maxFont' => 40, 'minFont' => 12]
 		],

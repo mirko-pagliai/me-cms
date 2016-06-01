@@ -29,15 +29,10 @@
     
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Popular tags'));
+    
+    $tags = array_map(function($tag) {
+		return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
+	}, $tags);
+    
+	echo $this->Html->ul($tags, ['icon' => 'caret-right']);
 ?>
-
-<?php foreach($tags as $tag): ?>
-	<div>
-		<?php
-			$text = empty($prefix) ? $tag->tag : sprintf('%s%s', $prefix, $tag->tag);
-			$options = empty($tag->size) ? [] : ['style' => sprintf('font-size:%spx;', $tag->size)];
-			
-			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag->slug], $options);
-		?>
-	</div>
-<?php endforeach; ?>

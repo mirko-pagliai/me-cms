@@ -29,15 +29,15 @@
     
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Popular tags'));
+	
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_category', 'category']]);
+	echo $this->Form->input('q', [
+		'empty' => __d('me_cms', 'Select a category'),
+		'label' => FALSE,
+		'onchange' => 'send_form(this)',
+        'options' => array_map(function($tag) {
+            return sprintf('%s (%d)', $tag->tag, $tag->post_count);
+        }, $tags),
+	]);
+	echo $this->Form->end();
 ?>
-
-<?php foreach($tags as $tag): ?>
-	<div>
-		<?php
-			$text = empty($prefix) ? $tag->tag : sprintf('%s%s', $prefix, $tag->tag);
-			$options = empty($tag->size) ? [] : ['style' => sprintf('font-size:%spx;', $tag->size)];
-			
-			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag->slug], $options);
-		?>
-	</div>
-<?php endforeach; ?>
