@@ -26,11 +26,6 @@ if(!defined('BANNERS')) {
 	define('BANNERS', WWW_ROOT.'img'.DS.'banners');
 }
 
-//Sets the datetime format for MySql
-if(!defined('FORMAT_FOR_MYSQL')) {
-    define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
-}
-
 //Sets the default MeCms name
 if(!defined('MECMS')) {
     define('MECMS', 'MeCms');
