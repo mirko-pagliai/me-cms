@@ -4,10 +4,10 @@ return ['Widgets' => [
 	//General widgets
 	'general' => [
 		'MeCms.Pages::pages',
-		'MeCms.Photos::albums',
+        'MeCms.Photos::albums' => ['render' => 'form'],
 		'MeCms.Photos::latest' => ['limit' => 1],
 		'MeCms.Photos::random' => ['limit' => 1],
-		'MeCms.Posts::categories',
+		'MeCms.Posts::categories' => ['render' => 'form'],
 		'MeCms.Posts::latest' => ['limit' => 10],
 		'MeCms.Posts::month',
 		'MeCms.Posts::search',

@@ -46,16 +46,17 @@ class PhotosCell extends Cell {
 	
 	/**
 	 * Albums widget
+     * @param string $render Render type (`form` or `list`)
 	 * @uses MeTools\Network\Request::isHere()
-	 */
-	public function albums() {
+     */
+	public function albums($render = 'form') {
 		//Returns on albums index
 		if($this->request->isHere(['_name' => 'albums'])) {
 			return;
         }
 		
 		//Tries to get data from the cache
-		$albums = Cache::read($cache = 'widget_albums', $this->Photos->cache);
+		$albums = Cache::read($cache = sprintf('widget_albums_as_%s', $render), $this->Photos->cache);
 		
 		//If the data are not available from the cache
         if(empty($albums)) {
@@ -64,15 +65,21 @@ class PhotosCell extends Cell {
 				->order(['title' => 'ASC'])
 				->toArray();
 			
-			foreach($albums as $k => $album) {
-				$albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
-				unset($albums[$k]);
-			}
+            if($render === 'form') {
+                foreach($albums as $k => $album) {
+                    $albums[$album->slug] = sprintf('%s (%d)', $album->title, $album->photo_count);
+                    unset($albums[$k]);
+                }
+            }
 			
             Cache::write($cache, $albums, $this->Photos->cache);
 		}
 		
 		$this->set(compact('albums'));
+        
+        if($render === 'list') {
+            $this->viewBuilder()->template('albums_as_list');
+        }
 	}
 	
 	/**
