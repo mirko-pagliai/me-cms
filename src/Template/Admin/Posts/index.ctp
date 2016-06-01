@@ -36,45 +36,43 @@
 
 <?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
-        <div>
-            <?php
-                echo $this->Form->input('title', [
-                    'default' => $this->request->query('title'),
-                    'placeholder' => __d('me_cms', 'title'),
-                    'size' => 16,
-                ]);
-                echo $this->Form->input('active', [
-                    'default' => $this->request->query('active'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                    'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
-                ]);
-                echo $this->Form->input('user', [
-                    'default' => $this->request->query('user'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all users')),
-                ]);
-                echo $this->Form->input('category', [
-                    'default' => $this->request->query('category'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
-                ]);
-                echo $this->Form->input('priority', [
-                    'default' => $this->request->query('priority'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
-                ]);
-                echo $this->Form->datepicker('created', [
-                    'data-date-format' => 'YYYY-MM',
-                    'default' => $this->request->query('created'),
-                    'placeholder' > __d('me_cms', 'month'),
-                    'size' => 5,
-                ]);
-                echo $this->Form->input('tag', [
-                    'default' => $this->request->query('tag'),
-                    'placeholder' => __d('me_cms', 'tag'),
-                    'size' => 10,
-                ]);
-                echo $this->Form->submit(NULL, ['icon' => 'search']);
-            ?>
-        </div>
+        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?php
+            echo $this->Form->input('title', [
+                'default' => $this->request->query('title'),
+                'placeholder' => __d('me_cms', 'title'),
+                'size' => 16,
+            ]);
+            echo $this->Form->input('active', [
+                'default' => $this->request->query('active'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
+            ]);
+            echo $this->Form->input('user', [
+                'default' => $this->request->query('user'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all users')),
+            ]);
+            echo $this->Form->input('category', [
+                'default' => $this->request->query('category'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
+            ]);
+            echo $this->Form->input('priority', [
+                'default' => $this->request->query('priority'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
+            ]);
+            echo $this->Form->datepicker('created', [
+                'data-date-format' => 'YYYY-MM',
+                'default' => $this->request->query('created'),
+                'placeholder' => __d('me_cms', 'month'),
+                'size' => 5,
+            ]);
+            echo $this->Form->input('tag', [
+                'default' => $this->request->query('tag'),
+                'placeholder' => __d('me_cms', 'tag'),
+                'size' => 10,
+            ]);
+            echo $this->Form->submit(NULL, ['icon' => 'search']);
+        ?>
     </fieldset>
 <?= $this->Form->end() ?>
 

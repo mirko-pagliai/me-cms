@@ -48,17 +48,15 @@
     
 <?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
-        <div>
-            <?php
-                echo $this->Form->input('name', [
-                    'default' => $this->request->query('name'),
-                    'placeholder' => __d('me_cms', 'name'),
-                    'size' => 16,
-                ]);
-                echo $this->Form->submit(NULL, ['icon' => 'search']);
-            ?>
-        </div>
+        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?php
+            echo $this->Form->input('name', [
+                'default' => $this->request->query('name'),
+                'placeholder' => __d('me_cms', 'name'),
+                'size' => 16,
+            ]);
+            echo $this->Form->submit(NULL, ['icon' => 'search']);
+        ?>
     </fieldset>
 <?= $this->Form->end() ?>
 

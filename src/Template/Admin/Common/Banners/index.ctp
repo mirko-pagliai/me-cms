@@ -36,32 +36,30 @@
 
 <?= $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
-        <div>
-            <?php
-                echo $this->Form->input('filename', [
-                    'default' => $this->request->query('filename'),
-                    'placeholder' => __d('me_cms', 'filename'),
-                    'size' => 16,
-                ]);
-                echo $this->Form->input('active', [
-                    'default' => $this->request->query('active'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                    'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')],
-                ]);
-                echo $this->Form->input('position', [
-                    'default' => $this->request->query('position'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all positions')),
-                ]);
-                echo $this->Form->datepicker('created', [
-                    'data-date-format' => 'YYYY-MM',
-                    'default' => $this->request->query('created'),
-                    'placeholder' => __d('me_cms', 'month'),
-                    'size' => 5,
-                ]);
-                echo $this->Form->submit(NULL, ['icon' => 'search']);
-            ?>
-        </div>
+        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?php
+            echo $this->Form->input('filename', [
+                'default' => $this->request->query('filename'),
+                'placeholder' => __d('me_cms', 'filename'),
+                'size' => 16,
+            ]);
+            echo $this->Form->input('active', [
+                'default' => $this->request->query('active'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')],
+            ]);
+            echo $this->Form->input('position', [
+                'default' => $this->request->query('position'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all positions')),
+            ]);
+            echo $this->Form->datepicker('created', [
+                'data-date-format' => 'YYYY-MM',
+                'default' => $this->request->query('created'),
+                'placeholder' => __d('me_cms', 'month'),
+                'size' => 5,
+            ]);
+            echo $this->Form->submit(NULL, ['icon' => 'search']);
+        ?>
     </fieldset>
 <?= $this->Form->end() ?>
 

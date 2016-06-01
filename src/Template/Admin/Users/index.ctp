@@ -36,36 +36,34 @@
 
 <?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>
     <fieldset>
-        <legend><?= __d('me_cms', 'Filter').$this->Html->icon('eye') ?></legend>
-        <div>
-            <?php
-                echo $this->Form->input('username', [
-                    'default' => $this->request->query('username'),
-                    'placeholder' => __d('me_cms', 'username'),
-                    'size' => 16,
-                ]);
-                echo $this->Form->input('status', [
-                    'default' => $this->request->query('status'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                    'options' => [
-                        'active' => __d('me_cms', 'Only active'),
-                        'pending' => __d('me_cms', 'Only pending'),
-                        'banned' => __d('me_cms', 'Only banned'),
-                    ],
-                ]);
-                echo $this->Form->input('group', [
-                    'default' => $this->request->query('group'),
-                    'empty' => sprintf('-- %s --', __d('me_cms', 'all groups')),
-                ]);
-                echo $this->Form->datepicker('created', [
-                    'data-date-format' => 'YYYY-MM',
-                    'default' => $this->request->query('created'),
-                    'placeholder' => __d('me_cms', 'month'),
-                    'size' => 5,
-                ]);
-                echo $this->Form->submit(NULL, ['icon' => 'search']);
-            ?>
-        </div>
+        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?php
+            echo $this->Form->input('username', [
+                'default' => $this->request->query('username'),
+                'placeholder' => __d('me_cms', 'username'),
+                'size' => 16,
+            ]);
+            echo $this->Form->input('status', [
+                'default' => $this->request->query('status'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                'options' => [
+                    'active' => __d('me_cms', 'Only active'),
+                    'pending' => __d('me_cms', 'Only pending'),
+                    'banned' => __d('me_cms', 'Only banned'),
+                ],
+            ]);
+            echo $this->Form->input('group', [
+                'default' => $this->request->query('group'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all groups')),
+            ]);
+            echo $this->Form->datepicker('created', [
+                'data-date-format' => 'YYYY-MM',
+                'default' => $this->request->query('created'),
+                'placeholder' => __d('me_cms', 'month'),
+                'size' => 5,
+            ]);
+            echo $this->Form->submit(NULL, ['icon' => 'search']);
+        ?>
     </fieldset>
 <?php echo $this->Form->end(); ?>
 
