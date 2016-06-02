@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.9 branch
+### 2.9.1
+* fixed serious bug on the created date of objects when editing.
+
 ### 2.9.0
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
