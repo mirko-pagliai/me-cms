@@ -24,10 +24,10 @@
 	
 <?php
 	//Renders menus for MeCms
-	echo $this->MenuBuilder->generate('MeCms');
+	echo $this->MenuBuilder->generate(MECMS);
 	
 	//Renders menus for all others plugin
-	foreach(\MeCms\Core\Plugin::all(['exclude' => 'MeCms']) as $plugin) {
+	foreach(\MeCms\Core\Plugin::all(['exclude' => MECMS]) as $plugin) {
 		$menu = $this->MenuBuilder->generate($plugin);
 		
 		if(!empty($menu)) {

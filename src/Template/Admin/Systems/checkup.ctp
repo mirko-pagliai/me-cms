@@ -40,7 +40,7 @@
     /* -------------------------------- */
     /*			MeCms version			*/
     /* -------------------------------- */
-    $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCMS'), $plugins['mecms']));
+    $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCms'), $plugins['mecms']));
     echo $this->Html->div('col-sm-12', $text);
 
     echo $this->Html->div('clearfix');

@@ -44,15 +44,15 @@
 					echo $this->Html->li($this->Html->link(NULL, ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank']));
 					
 					//Renders menus for MeCms
-					echo $this->MenuBuilder->generate('MeCms', 'dropdown');
+					echo $this->MenuBuilder->generate(MECMS, 'dropdown');
 					
 					//Renders menus for all others plugin
-					foreach(MeCms\Core\Plugin::all(['exclude' => 'MeCms']) as $plugin) {
+					foreach(MeCms\Core\Plugin::all(['exclude' => MECMS]) as $plugin) {
 						echo $this->MenuBuilder->generate($plugin, 'dropdown');
                     }
                     
 					echo $menu = $this->Html->li($this->Dropdown->menu($this->Auth->user('full_name'), ['icon' => 'user'], [
-						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => 'MeCms']),
+						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => MECMS]),
 						$this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']),
 					]),	['class' => 'dropdown']);
 				?>

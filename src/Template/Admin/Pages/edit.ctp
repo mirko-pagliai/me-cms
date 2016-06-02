@@ -39,6 +39,7 @@
                 __d('me_cms', 'If blank, the current date and time will be used'),
                 __d('me_cms', 'You can delay the publication by entering a future date'),
             ],
+            'value' => $page->created->i18nFormat(FORMAT_FOR_MYSQL),
         ]);
         echo $this->Form->input('priority', [
             'label' => __d('me_cms', 'Priority'),
