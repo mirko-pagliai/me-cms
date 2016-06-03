@@ -1,5 +1,7 @@
 # 2.x branch
 ## 2.10 branch
+* the banned ip list has been moved to a dedicated file 
+	(`Config/banned_ip.php`);
 * added common templates for all normal views;
 * `statics` action renamed as `index_statics`.
 

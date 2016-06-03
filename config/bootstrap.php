@@ -105,6 +105,13 @@ foreach(Configure::consume('Cache') as $key => $config) {
 }
 
 /**
+ * Loads the banned ip configuration
+ */
+if(is_readable(CONFIG.'banned_ip.php')) {
+	Configure::load('banned_ip');
+}
+
+/**
  * Loads the widgets configuration
  */
 Configure::load('MeCms.widgets');
@@ -136,7 +143,7 @@ Request::addDetector('admin', function ($request) {
  * It checks if the user's IP address is banned.
  */
 Request::addDetector('banned', function ($request) {
-    $banned = config('security.banned_ip');
+    $banned = config('Banned');
 
     /**
      * The IP address is allowed if:

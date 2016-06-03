@@ -41,6 +41,7 @@ class InstallShell extends BaseInstallShell {
 		
 		//Configuration files to be copied
 		$this->config = am($this->config, [
+            'MeCms.banned_ip',
 			'MeCms.me_cms',
 			'MeCms.widgets',
 		]);
