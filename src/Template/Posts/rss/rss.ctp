@@ -25,13 +25,13 @@
 	
 <?php
 	$this->set([
-		'documentData'	=> ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
-		'channelData'	=> [
-			'title'			=> __d('me_cms', 'Latest posts'),
-			'link'			=> \Cake\Routing\Router::url('/', TRUE),
-			'description'	=> __d('me_cms', 'Latest posts'),
-			'language'		=> 'en-us'
-		]
+		'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
+		'channelData' => [
+			'title' => __d('me_cms', 'Latest posts'),
+			'link' => \Cake\Routing\Router::url('/', TRUE),
+			'description' => __d('me_cms', 'Latest posts'),
+			'language' => 'en-us',
+		],
 	]);
 	
 	foreach($posts as $post) {
@@ -42,25 +42,28 @@
 		$text = $this->BBCode->parser($post->text);
 		
 		//Truncates the text if the "<!-- read-more -->" tag is present
-		if($strpos = strpos($text, '<!-- read-more -->'))
+		if($strpos = strpos($text, '<!-- read-more -->')) {
 			$text = $this->Text->truncate($text, $strpos, ['exact' => TRUE, 'html' => FALSE]);
+        }
 		//Truncates the text if requested by the configuration
-		elseif(config('frontend.truncate_to'))
+		elseif(config('frontend.truncate_to')) {
 			$text = $this->Text->truncate($text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
-			
+        }
+        
 		//Strips tags
 		$text = strip_tags($text);
 		
 		//Adds the preview image
-		if(!empty($post->preview))
+		if(!empty($post->preview)) {
 			$text = $this->Thumb->image($post->preview, ['width' => 200]).$this->Html->br().$text;
-
+        }
+        
 		echo $this->Rss->item([], [
-			'description'	=> $text,
-			'guid'			=> ['url' => $link, 'isPermaLink' => 'true'],
-			'link'			=> $link,
-			'pubDate'		=> $post->created,
-			'title'			=> $post->title
+			'description' => $text,
+			'guid' => ['url' => $link, 'isPermaLink' => 'true'],
+			'link' => $link,
+			'pubDate' => $post->created,
+			'title' => $post->title,
 		]);
 	}
 ?>
