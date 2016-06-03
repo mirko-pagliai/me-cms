@@ -22,13 +22,9 @@
  */
 ?>
 
-<?php
-    $this->extend('/Common/index');
-    $this->assign('title', __d('me_cms', 'Posts categories'));
-    
-    $categories = array_map(function($category) {
-        return $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);
-    }, $categories->toArray());
+<?php $this->assign('title', $this->fetch('title')); ?>
 
-    echo $this->Html->ul($categories, ['icon' => 'caret-right']);
-?>
+<div class="form">
+    <?= $this->Html->h2($this->fetch('title')) ?>
+    <?= $this->fetch('content') ?>
+</div>

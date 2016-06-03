@@ -21,8 +21,10 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
+
 <?php
+    $this->extend('/Common/index');
+    
 	/**
 	 * This template can be used by many actions
 	 */
@@ -70,18 +72,12 @@
     }
 ?>
 
-<div class="posts index">
-	<?php
-        if(!empty($title)) {
-            echo $this->Html->h2($title);
+<?php
+    if(!empty($posts)) {
+        foreach($posts as $post) {
+            echo $this->element('frontend/views/post', compact('post'));
         }
-        
-		if(!empty($posts)) {
-			foreach($posts as $post) {
-				echo $this->element('frontend/views/post', compact('post'));
-            }
-            
-			echo $this->element('MeTools.paginator');
-		}
-	?>
-</div>
+
+        echo $this->element('MeTools.paginator');
+    }
+?>

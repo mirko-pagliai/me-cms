@@ -22,11 +22,17 @@
  */
 ?>
 
-<div class="system view text-center">
+<?php
+    $this->extend('/Common/view');
+?>
+
+<div class="text-center">
 	<?php
-		if(!config('frontend.offline_text'))
+		if(!config('frontend.offline_text')) {
 			echo __d('me_cms', 'The website is temporarily offline');
-		else
+        }
+        else {
 			echo config('frontend.offline_text');
+        }
 	?>
 </div>

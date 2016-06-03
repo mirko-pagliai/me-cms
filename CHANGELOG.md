@@ -1,5 +1,6 @@
 # 2.x branch
 ## 2.10 branch
+* added common templates for all normal views;
 * `statics` action renamed as `index_statics`.
 
 ## 2.9 branch

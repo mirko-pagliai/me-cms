@@ -22,29 +22,30 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Resend activation email')); ?>
+<?php
+    $this->extend('/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Resend activation email'));
+?>
 
-<div class="users form">
-	<?= $this->Html->h2(__d('me_cms', 'Resend activation email')) ?>
-	<?= $this->Form->create($user) ?>
-	<fieldset>
-		<?php
-			echo $this->Form->input('email', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Email'),
-				'tip'			=> __d('me_cms', 'Enter your email')
-			]);
-			echo $this->Form->input('email_repeat', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Repeat email'),
-				'tip'			=> __d('me_cms', 'Repeat your email')
-			]);
+<?= $this->Form->create($user) ?>
+<fieldset>
+    <?php
+        echo $this->Form->input('email', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Email'),
+            'tip' => __d('me_cms', 'Enter your email'),
+        ]);
+        echo $this->Form->input('email_repeat', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Repeat email'),
+            'tip' => __d('me_cms', 'Repeat your email'),
+        ]);
 
-			if(config('security.recaptcha'))
-				echo $this->Recaptcha->recaptcha();
-		?>
-	</fieldset>
-	<?= $this->Form->submit(__d('me_cms', 'Resend activation email'), ['class' => 'btn-block btn-lg btn-primary']) ?>
-	<?= $this->Form->end() ?>
-	<?= $this->element('login/menu'); ?>
-</div>
+        if(config('security.recaptcha')) {
+            echo $this->Recaptcha->recaptcha();
+        }
+    ?>
+</fieldset>
+<?= $this->Form->submit($title, ['class' => 'btn-block btn-lg btn-primary']) ?>
+<?= $this->Form->end() ?>
+<?= $this->element('login/menu'); ?>

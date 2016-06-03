@@ -21,35 +21,36 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
-<?php $this->assign('title', __d('me_cms', 'Contact us')); ?>
 
-<div class="system view">
-	<?= $this->Html->h2(__d('me_cms', 'Contact us')) ?>
-	<?= $this->Form->create($contact) ?>
-	<fieldset>
-		<?php			
-			echo $this->Form->input('first_name', [
-				'label' => __d('me_cms', 'First name')
-			]);
-			echo $this->Form->input('last_name', [
-				'label' => __d('me_cms', 'Last name')
-			]);
-			echo $this->Form->input('email', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Email'),
-				'tip'			=> __d('me_cms', 'Enter your email')
-			]);
-			echo $this->Form->input('message', [
-				'label'	=> __d('me_cms', 'Message'),
-				'rows'	=> 8,
-				'type'	=> 'textarea'
-			]);
-			
-			if(config('security.recaptcha'))
-				echo $this->Recaptcha->recaptcha();
-		?>
-	</fieldset>
-	<?= $this->Form->submit(__d('me_cms', 'Send'), ['class' => 'btn-block btn-lg btn-primary']) ?>
-	<?= $this->Form->end() ?>
-</div>
+<?php
+    $this->extend('/Common/view');
+    $this->assign('title', __d('me_cms', 'Contact us'));
+?>
+
+<?= $this->Form->create($contact) ?>
+<fieldset>
+    <?php			
+        echo $this->Form->input('first_name', [
+            'label' => __d('me_cms', 'First name'),
+        ]);
+        echo $this->Form->input('last_name', [
+            'label' => __d('me_cms', 'Last name'),
+        ]);
+        echo $this->Form->input('email', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Email'),
+            'tip' => __d('me_cms', 'Enter your email'),
+        ]);
+        echo $this->Form->input('message', [
+            'label' => __d('me_cms', 'Message'),
+            'rows' => 8,
+            'type' => 'textarea',
+        ]);
+
+        if(config('security.recaptcha')) {
+            echo $this->Recaptcha->recaptcha();
+        }
+    ?>
+</fieldset>
+<?= $this->Form->submit(__d('me_cms', 'Send'), ['class' => 'btn-block btn-lg btn-primary']) ?>
+<?= $this->Form->end() ?>
