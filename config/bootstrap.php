@@ -39,11 +39,13 @@ require_once 'global_functions.php';
  */
 Plugin::load('MeTools', ['bootstrap' => TRUE]);
 
-if(!is_writeable(BANNERS))
+if(!is_writeable(BANNERS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
-		
-if(!folder_is_writeable(PHOTOS))
+}
+
+if(!folder_is_writeable(PHOTOS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
+}
 
 /**
  * Loads the MeCms configuration
@@ -51,8 +53,9 @@ if(!folder_is_writeable(PHOTOS))
 Configure::load('MeCms.me_cms');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'me_cms.php'))
+if(is_readable(CONFIG.'me_cms.php')) {
 	Configure::load('me_cms');
+}
 
 /**
  * Forces debug and loads DebugKit on localhost, if required
