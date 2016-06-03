@@ -25,9 +25,6 @@
 <?php $this->assign('title', $this->fetch('title')); ?>
 
 <div class="view">
-    <?php
-        echo $this->Html->h2($this->fetch('title'));
-        
-        echo $this->fetch('content');
-    ?>
+    <?= $this->Html->h2($this->fetch('title')) ?>
+    <?= $this->fetch('content') ?>
 </div>
