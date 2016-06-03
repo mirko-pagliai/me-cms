@@ -35,12 +35,13 @@
 <div class='float-form'>
     <?php
         //Only admins and managers can edit posts on behalf of other users
-        if($this->Auth->isGroup(['admin', 'manager']))
+        if($this->Auth->isGroup(['admin', 'manager'])) {
             echo $this->Form->input('user_id', [
                 'empty'	=> FALSE,
                 'label' => __d('me_cms', 'Author'),
             ]);
-
+        }
+        
         echo $this->Form->input('category_id', [
             'empty'	=> FALSE,
             'label' => __d('me_cms', 'Category'),
@@ -51,6 +52,7 @@
                 __d('me_cms', 'If blank, the current date and time will be used'),
                 __d('me_cms', 'You can delay the publication by entering a future date'),
             ],
+            'value' => $post->created->i18nFormat(FORMAT_FOR_MYSQL),
         ]);
         echo $this->Form->input('priority', [
             'label' => __d('me_cms', 'Priority'),
