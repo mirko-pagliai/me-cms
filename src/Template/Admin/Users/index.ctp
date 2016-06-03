@@ -79,7 +79,7 @@
         <?php foreach($users as $user): ?>
             <tr>
                 <td>
-                    <strong><?= $this->Html->link($user->username, array('action' => 'view', $user->id)) ?></strong>
+                    <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
                     <?php
                         //If the user is banned
                         if($user->banned) {

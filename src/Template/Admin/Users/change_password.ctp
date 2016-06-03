@@ -30,22 +30,22 @@
 <?= $this->Form->create($user) ?>
     <fieldset>
         <?php
-            echo $this->Form->input('password_old', array(
+            echo $this->Form->input('password_old', [
                 'autocomplete' => FALSE,
                 'label' => __d('me_cms', 'Old password'),
                 'tip' => __d('me_cms', 'Enter your old password'),
                 'type' => 'password',
-            ));
-            echo $this->Form->input('password', array(
+            ]);
+            echo $this->Form->input('password', [
                 'autocomplete' => FALSE,
                 'label'	=> __d('me_cms', 'Password'),
                 'tip' => __d('me_cms', 'Enter your new password'),
-            ));
-            echo $this->Form->input('password_repeat', array(
+            ]);
+            echo $this->Form->input('password_repeat', [
                 'autocomplete' => FALSE,
                 'label' => __d('me_cms', 'Repeat password'),
                 'tip' => __d('me_cms', 'Repeat your new password'),
-            ));
+            ]);
         ?>
     </fieldset>
 <?= $this->Form->submit($title) ?>
