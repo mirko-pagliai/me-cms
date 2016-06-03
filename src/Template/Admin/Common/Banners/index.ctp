@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Banners'));
+    $this->assign('title', __d('me_cms', 'Banners'));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Add position'), ['controller' => 'BannersPositions', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
     

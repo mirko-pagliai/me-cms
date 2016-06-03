@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Users'));
+    $this->assign('title', __d('me_cms', 'Users'));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
 	$this->append('actions', $this->Html->button(__d('me_cms', 'Add group'), ['controller' => 'UsersGroups', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
     
