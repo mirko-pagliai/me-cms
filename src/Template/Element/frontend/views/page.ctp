@@ -24,20 +24,18 @@
 
 <div class="page-container content-container">
 	<div class="content-header">
-		<?php
-			echo $this->Html->h3($this->Html->link($page->title, ['_name' => 'page', $page->slug]), ['class' => 'content-title']);
-
-			if(!empty($page->subtitle))
-				echo $this->Html->h4($this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]), ['class' => 'content-subtitle']);
-		?>
+        <h3 class="content-title">
+            <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
+        </h3>
+        
+        <?php if($page->subtitle): ?>
+            <h4 class="content-subtitle"><?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?></h4>
+        <?php endif; ?>
+            
 		<div class="content-info">
-			<?php				
-				if(config('page.created') && !empty($page->created))
-					echo $this->Html->div('content-date',
-						__d('me_cms', 'Posted on {0}', $page->created->i18nFormat(config('main.datetime.long'))),
-						['icon' => 'clock-o']
-					);
-			?>
+			<?php if(config('page.created')): ?>
+				<?= $this->Html->div('content-date', __d('me_cms', 'Posted on {0}', $page->created->i18nFormat(config('main.datetime.long'))), ['icon' => 'clock-o']) ?>
+			<?php endif; ?>
 		</div>
 	</div>
 	<div class="content-text">
@@ -46,25 +44,29 @@
 			$page->text = $this->BBCode->parser($page->text);
 			
 			//Truncates the text if the "<!-- read-more -->" tag is present
-			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($page->text, '<!-- read-more -->'))
+			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($page->text, '<!-- read-more -->')) {
 				echo $truncated_text = $this->Text->truncate($page->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
+            }
 			//Truncates the text if requested by the configuration
-			elseif(!$this->request->isAction('view', 'Pages') && config('frontend.truncate_to'))
+			elseif(!$this->request->isAction('view', 'Pages') && config('frontend.truncate_to')) {
 				echo $truncated_text = $this->Text->truncate($page->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
-			else
+            }
+			else {
 				echo $page->text;
+            }
 		?>
 	</div>
 	<div class="content-buttons">
 		<?php
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
-			if(!empty($truncated_text) && $truncated_text !== $page->text)
+			if(!empty($truncated_text) && $truncated_text !== $page->text) {
 				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $page->slug], ['class' => ' readmore']);
+            }
 		?>
 	</div>
 	<?php
-		if(config('page.shareaholic') && config('shareaholic.app_id'))
-			if($this->request->isAction('view', 'Pges') && !$this->request->isAjax())
-				echo $this->Html->shareaholic(config('shareaholic.app_id'));
+		if(config('page.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Pges') && !$this->request->isAjax()) {
+            echo $this->Html->shareaholic(config('shareaholic.app_id'));
+        }
 	?>
 </div>

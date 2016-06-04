@@ -26,12 +26,14 @@
 	<?php
 		$image = $this->Html->img($banner->path);
 		
-		if($banner->target)
+		if($banner->target) {
 			echo $this->Html->link($image, ['_name' => 'banner', $banner->id], [
-				'target'	=> '_blank',
-				'title'		=> $banner->description ? $banner->description : NULL
+				'target' => '_blank',
+				'title' => $banner->description ? $banner->description : NULL,
 			]);
-		else
+        }
+		else {
 			echo $image;
+        }
 	?>
 </div>
