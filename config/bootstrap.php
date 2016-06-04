@@ -29,6 +29,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\Routing\DispatcherFactory;
 use MeTools\Network\Request;
 
 require_once 'constants.php';
@@ -130,6 +131,9 @@ Log::config('users', [
     'scopes' => ['users'],
     'url' => env('LOG_DEBUG_URL', NULL),
 ]);
+
+//CakePHP will automatically set the locale based on the current user
+DispatcherFactory::add('LocaleSelector');
 
 /**
  * Adds `isAdmin()` detector
