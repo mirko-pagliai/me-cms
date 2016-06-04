@@ -41,21 +41,21 @@
                         $this->Html->div('photo-info', $this->Html->div(NULL, $this->Html->para('small', $photo->description))),
                     ]);
 
-                    $options = [];
+                    $options = [
+                        'class' => 'thumbnail',
+                        'title' => $photo->description,
+                    ];
                     
                     //If Fancybox is enabled, adds some options
                     if(config('frontend.fancybox')) {
-                        $options = [
+                        $options = am($options, [
                             'class' => 'fancybox thumbnail',
                             'data-fancybox-href' => $this->Thumb->url($photo->path, ['height' => 1280]),
                             'rel' => 'group',
-                        ];
+                        ]);
                     }
 
-                    echo $this->Html->link($text, ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], am([
-                        'class' => 'thumbnail',
-                        'title' => $photo->description,
-                    ], $options));
+                    echo $this->Html->link($text, ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], $options);
                 ?>
             </div>
         </div>
