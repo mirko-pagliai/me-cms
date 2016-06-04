@@ -28,9 +28,9 @@
 		'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
 		'channelData' => [
 			'title' => __d('me_cms', 'Latest posts'),
-			'link' => \Cake\Routing\Router::url('/', TRUE),
+			'link' => $this->Url->build('/', TRUE),
 			'description' => __d('me_cms', 'Latest posts'),
-			'language' => 'en-us',
+			'language' => \Cake\I18n\I18n::locale(),
 		],
 	]);
 	
