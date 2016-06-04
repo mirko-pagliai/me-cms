@@ -66,7 +66,10 @@ class PhotosAlbumsController extends AppController {
 			->contain([
                 'Photos' => function($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
-                        ->order([sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC', sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC']);
+                        ->order([
+                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                        ]);
                  }
              ])
 			->select(['id', 'slug', 'title'])
