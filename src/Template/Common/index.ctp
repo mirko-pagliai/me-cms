@@ -22,14 +22,16 @@
  */
 ?>
 
-<?php $this->assign('title', $this->fetch('title')); ?>
+<?php
+    if($this->fetch('title')) {
+        $this->assign('title', $this->fetch('title'));
+    }
+?>
 
 <div class="index">
     <?php
-        echo $this->Html->h2($this->fetch('title'));
-        
-        if($this->fetch('actions')) {
-            echo $this->fetch('actions');
+        if($this->fetch('title')) {
+            echo $this->Html->h2($this->fetch('title'));
         }
         
         echo $this->fetch('content');

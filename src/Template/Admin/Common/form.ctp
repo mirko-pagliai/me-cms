@@ -22,9 +22,18 @@
  */
 ?>
 
-<?php $this->assign('title', $this->fetch('title')); ?>
+<?php
+    if($this->fetch('title')) {
+        $this->assign('title', $this->fetch('title'));
+    }
+?>
 
 <div class="form">
-    <?= $this->Html->h2($this->fetch('title')) ?>
-    <?= $this->fetch('content') ?>
+    <?php
+        if($this->fetch('title')) {
+            echo $this->Html->h2($this->fetch('title'));
+        }
+        
+        echo $this->fetch('content');
+    ?>
 </div>
