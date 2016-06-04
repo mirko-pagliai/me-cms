@@ -28,7 +28,7 @@
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>
         
-        <?php if($page->subtitle): ?>
+        <?php if(!empty($page->subtitle)): ?>
             <h4 class="content-subtitle"><?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?></h4>
         <?php endif; ?>
             
