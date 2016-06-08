@@ -41,7 +41,7 @@ class PostsCategoriesController extends AppController {
 			->cache('categories_index', $this->PostsCategories->cache)
 			->all();
         
-        $this->set(compact('categories '));
+        $this->set(compact('categories'));
     }
 	
 	/**
