@@ -24,6 +24,7 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 
 /**
@@ -56,6 +57,8 @@ class PostsTagsController extends AppController {
 			return $this->redirect([$this->request->query('q')]);
         }
         
+        $tag = Text::slug($tag, ['replacement' => ' ']);
+        
 		//Sets the initial cache name
 		$cache = sprintf('index_tag_%s', md5($tag));
 				
@@ -75,7 +78,7 @@ class PostsTagsController extends AppController {
 					'Users' => ['fields' => ['first_name', 'last_name']],
 				])
 				->matching('Tags', function ($q) use ($tag) {
-					return $q->where(['Tags.tag' => str_replace('-', ' ', $tag)]);
+					return $q->where(['Tags.tag' => $tag]);
 				})
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
@@ -94,7 +97,7 @@ class PostsTagsController extends AppController {
 			$this->request->params['paging'] = $paging;
         }
         
-		$this->set(compact('posts'));
+		$this->set(compact('posts', 'tag'));
 		
 		$this->render('Posts/index');
     }

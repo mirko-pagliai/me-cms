@@ -64,7 +64,7 @@
 		$title = $posts[0]->category->title;
     }
 	elseif($this->request->isAction('view', 'PostsTags')) {
-		$title = __d('me_cms', 'Tag {0}', str_replace('-', ' ', $this->request->param('tag')));
+		$title = __d('me_cms', 'Tag {0}', $tag);
     }
     
     if(!empty($title)) {
