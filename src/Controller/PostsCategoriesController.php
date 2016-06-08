@@ -47,17 +47,17 @@ class PostsCategoriesController extends AppController {
 	/**
 	 * Lists posts for a category.
      * It uses the `Posts/index` template.
-	 * @param string $category Category slug
+	 * @param string $slug Category slug
      * @throws RecordNotFoundException
 	 */
-	public function view($category = NULL) {
+	public function view($slug = NULL) {
 		//The category can be passed as query string, from a widget
 		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
         }
         
 		//Sets the cache name
-		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($category), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+		$cache = sprintf('index_category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		
 		//Tries to get data from the cache
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->PostsCategories->cache));
@@ -71,7 +71,7 @@ class PostsCategoriesController extends AppController {
 					'Users' => ['fields' => ['first_name', 'last_name']],
 				])
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-				->where(['Categories.slug' => $category])
+				->where(['Categories.slug' => $slug])
 				->order([sprintf('%s.created', $this->PostsCategories->Posts->alias()) => 'DESC']);
 					
 			if($query->isEmpty()) {
