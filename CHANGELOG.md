@@ -2,6 +2,7 @@
 ## 2.10 branch
 * the banned ip list has been moved to a dedicated file 
 	(`Config/banned_ip.php`);
+* now the installer also runs the installer of other plugins;
 * CakePHP will automatically set the locale based on the current user;
 * added common templates for all normal views;
 * `statics` action renamed as `index_statics`.

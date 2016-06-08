@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
 
 /**
@@ -66,10 +67,41 @@ class InstallShell extends BaseInstallShell {
 			THUMBS,
 		]);
 	}
-	
-	/**
+    
+    /**
+     * Gets others plugins that have the `InstallShell` class
+     * @return array
+     */
+    protected function _get_other_plugins() {
+        //Gets all plugins
+        $plugins = Plugin::all(['exclude' => ['MeTools', 'MeCms']]);
+        
+        //Returns only the plugins that have the `InstallShell` class
+        return af(array_map(function($plugin) {
+            return Plugin::path($plugin, 'src'.DS.'Shell'.DS.'InstallShell.php', TRUE) ? $plugin : FALSE;
+        }, $plugins));
+    }
+    
+    /**
+     * Runs  the `InstallShell` class from other plugins
+     * @uses _get_other_plugins()
+     */
+    protected function _run_other_plugins() {
+        $plugins = $this->_get_other_plugins();
+        
+        foreach($plugins as $plugin) {
+            $this->dispatchShell([
+                'command' => sprintf('%s.install all', $plugin),
+                'extra' => $this->params,
+             ]);
+        }
+    }
+
+    /**
 	 * Executes all available tasks
 	 * @uses MeTools\Shell\InstallShell::all()
+     * @uses _get_other_plugins()
+     * @uses _run_other_plugins()
 	 * @uses createAdmin()
 	 * @uses fixKcfinder()
 	 */
@@ -79,6 +111,7 @@ class InstallShell extends BaseInstallShell {
 		if($this->param('force')) {
 			$this->fixKcfinder();
 			$this->createAdmin();
+            $this->_run_other_plugins();
 			
 			return;
 		}
@@ -91,6 +124,13 @@ class InstallShell extends BaseInstallShell {
 		$ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
 		if(in_array($ask, ['Y', 'y'])) {
 			$this->createAdmin();
+        }
+        
+        if($this->_get_other_plugins()) {
+            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
+            if(in_array($ask, ['Y', 'y'])) {
+                $this->_run_other_plugins();
+            }
         }
 	}
 	
@@ -132,8 +172,8 @@ class InstallShell extends BaseInstallShell {
 		$parser = parent::getOptionParser();
 		
 		return $parser->addSubcommands([
-			'createAdmin'	=> ['help' => __d('me_cms', 'Creates an admin user')],
-			'fixKcfinder'	=> ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')],
+			'createAdmin' => ['help' => __d('me_cms', 'Creates an admin user')],
+			'fixKcfinder' => ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')],
 		]);
 	}
 }
