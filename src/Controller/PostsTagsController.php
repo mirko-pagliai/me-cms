@@ -50,7 +50,7 @@ class PostsTagsController extends AppController {
 	 * @param string $tag Tag name
      * @throws RecordNotFoundException
 	 */
-    public function view($tag) {
+    public function view($tag = NULL) {
         //Data can be passed as query string, from a widget
 		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
