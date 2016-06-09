@@ -36,7 +36,12 @@ class PhotosController extends AppController {
     public function view($id = NULL) {
         $photo = $this->Photos->find()
 			->select(['id', 'album_id', 'filename'])
-			->where(compact('id'))
+			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+            ->matching('Albums', function($q) {
+                return $q->where([
+                    sprintf('%s.active', $this->Photos->Albums->alias()) => TRUE,
+                ]);
+            })
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail();
         
