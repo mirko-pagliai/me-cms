@@ -31,6 +31,15 @@
     }
 ?>
 
+<?php $this->append('userbar'); ?>
+<?php if(!$album->active): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'label label-warning']) ?></li>
+<?php endif; ?>
+
+<li><?= $this->Html->link(__d('me_cms', 'Edit album'), ['action' => 'edit', $album->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
+<li><?= $this->Form->postLink(__d('me_cms', 'Delete album'), ['action' => 'delete', $album->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
+<?php $this->end(); ?>
+
 <div class="clearfix">
     <?php foreach($album->photos as $photo): ?>
         <div class="col-sm-6 col-md-4">

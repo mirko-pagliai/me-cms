@@ -2,6 +2,7 @@
 ## 2.10 branch
 * now you can disable (published/unpublished) each photo;
 * added preview for photos and albums;
+* added userbar for albums;
 * the banned ip list has been moved to a dedicated file 
 	(`Config/banned_ip.php`);
 * now the installer also runs the installer of other plugins;

@@ -67,6 +67,7 @@ class PhotosAlbumsController extends AppController {
         }
         
 		$album = $this->PhotosAlbums->find('active')
+			->select(['id', 'slug', 'title', 'active'])
 			->contain([
                 'Photos' => function($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
@@ -79,7 +80,6 @@ class PhotosAlbumsController extends AppController {
                         ]);
                 }
              ])
-			->select(['id', 'slug', 'title'])
 			->where(compact('slug'))
 			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
 			->firstOrFail();
@@ -94,6 +94,7 @@ class PhotosAlbumsController extends AppController {
      */
     public function preview($slug = NULL) {
         $album = $this->PhotosAlbums->find()
+			->select(['id', 'slug', 'title', 'active'])
 			->contain([
                 'Photos' => function($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
@@ -103,7 +104,6 @@ class PhotosAlbumsController extends AppController {
                         ]);
                 }
              ])
-			->select(['id', 'slug', 'title'])
 			->where(compact('slug'))
 			->firstOrFail();
              
