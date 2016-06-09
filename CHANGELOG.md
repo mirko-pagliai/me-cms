@@ -1,5 +1,6 @@
 # 2.x branch
 ## 2.10 branch
+### 2.10.0
 * now you can disable (published/unpublished) each photo;
 * added preview for photos and albums;
 * added userbar for albums;
