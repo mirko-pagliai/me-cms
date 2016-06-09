@@ -28,7 +28,7 @@ use MeCms\Controller\AppController;
  * Photos controller
  * @property \MeCms\Model\Table\PhotosTable $Photos
  */
-class PhotosController extends AppController {	
+class PhotosController extends AppController {
     /**
      * Views a photo
      * @param string $slug Album slug
@@ -54,11 +54,27 @@ class PhotosController extends AppController {
         }
         
         $photo = $this->Photos->find('active')
-			->select(['id', 'album_id', 'filename'])
+			->select(['id', 'album_id', 'filename', 'active'])
 			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail();
         
         $this->set(compact('photo'));
+    }
+    
+    /**
+     * Preview for photos.
+     * It uses the `view` template.
+     * @param string $id Photo ID
+     */
+    public function preview($id = NULL) {        
+        $photo = $this->Photos->find()
+			->select(['id', 'album_id', 'filename'])
+			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+			->firstOrFail();
+        
+        $this->set(compact('photo'));
+        
+        $this->render('view');
     }
 }

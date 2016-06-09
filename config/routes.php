@@ -72,6 +72,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['controller' => 'Photos', 'action' => 'view'],
 		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
 	);
+	$routes->connect('/photo/preview/:id',
+		['controller' => 'Photos', 'action' => 'preview'],
+		['_name' => 'photos_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['id']]
+	);
     
 	/**
 	 * This allows backward compatibility for URLs like:

@@ -54,7 +54,13 @@
                             $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $photo->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                         }
                         
-                        $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'target' => '_blank']);
+                        //If the photo is active
+                        if($photo->active) {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
+                        else {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'photos_preview', $photo->id], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);								
                     ?>
