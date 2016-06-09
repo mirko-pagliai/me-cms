@@ -12,7 +12,8 @@
 ### 2.9.0
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
-* `Photos::albums`, `Posts::categories` and `Posts::categories` widgets can now render as form (default) or list;
+* `Photos::albums`, `Posts::categories` and `Posts::categories` widgets can 
+	now render as form (default) or list;
 * `PostsTags::popular` widget can now render as cloud (default), form or list;
 * added common templates for all admin views;
 * fixed titles for some admin templates;
@@ -28,7 +29,8 @@
 
 ### 2.8.0
 * now uses the `UploaderComponent`;
-* improved the `AuthHelper`. Now it has its own methods and this makes user data safer;
+* improved the `AuthHelper`. Now it has its own methods and this makes user 
+	data safer;
 * improved the `AuthComponent`.
 
 ## 2.7 branch
@@ -64,13 +66,16 @@
 * fixed bug ordering posts and pages.
 
 ### 2.6.2
-* improved the code to check the cache validity. Removed `checkIfCacheIsValid()` and `getNextToBePublished()` methods;
-* improved code for posts and pages that are drafts or to be published in the future;
+* improved the code to check the cache validity. Removed 
+	`checkIfCacheIsValid()` and `getNextToBePublished()` methods;
+* improved code for posts and pages that are drafts or to be published in the 
+	future;
 * fixed bug on MenuBuilder helper;
 * updated Facebook's tags.
 
 ### 2.6.1
-* added userbar for frontend. It allows to edit an delete posts, pages and photos.
+* added userbar for frontend. It allows to edit an delete posts, pages and 
+	photos.
 
 ### 2.6.0
 * you can now set the expiration of sitemap;
@@ -107,7 +112,8 @@
 
 ### 2.4.5
 * logged users can view future posts, future pages and drafts;
-* the status of a record is properly shown in the admin panel, including publication in the future;
+* the status of a record is properly shown in the admin panel, including 
+	publication in the future;
 * added filter for tags;
 * added patterns table for database backups;
 * now you can restore database backups;
@@ -118,15 +124,18 @@
 * fixed bug on log advanced viewer.
 
 ### 2.4.3
-* added `Logs` controller and templates. Log management has improved. The log can be displayed as plain or serialized;
+* added `Logs` controller and templates. Log management has improved. The log 
+	can be displayed as plain or serialized;
 * added "who is" and "map" functionalities for IP addresses on logs;
-* each time that is called, the `SerializedLog` adapter writes the normal log and a serialized copy of the log.  
+* each time that is called, the `SerializedLog` adapter writes the normal log 
+	and a serialized copy of the log.  
 
 ### 2.4.2
 * fixed bug on "popular tags" widget.
 
 ### 2.4.1
-* logs are turned into arrays when they are written. The system supports both plain logs and logs as array.
+* logs are turned into arrays when they are written. The system supports both 
+	plain logs and logs as array.
 
 ### 2.4.0
 * now the `Assets` plugin is used.
@@ -147,7 +156,8 @@
 ### 2.2.2
 * fixed bug in "album" and "posts categories" widgets;
 * widgets now use a common view. Rewritten the code of all widgets;
-* you can specify the minimum font, the maximum font and the tag prefix for the "popular tags" widget.
+* you can specify the minimum font, the maximum font and the tag prefix for 
+	the "popular tags" widget.
 
 ### 2.2.1
 * added index for tags;
@@ -161,9 +171,11 @@
 * rewritten the log viewer. Now log files are parsed, with style;
 * added BBCode examples;
 * you can add post tags as keywords meta-tag;
-* added support for the "theme color" (the toolbar color for some mobile browser);
+* added support for the "theme color" (the toolbar color for some mobile 
+	browser);
 * the favicon is automatically added to the layout. No need to manually add;
-* deleted ExceptionRenderer class and errors templates and layout. From now, errors will be managed only by the app.
+* deleted ExceptionRenderer class and errors templates and layout. From now, 
+	errors will be managed only by the app.
 
 ## 2.1 branch
 ### 2.1.9
@@ -179,10 +191,12 @@
 ### 2.1.8
 * added the cookies policy functionality;
 * tags use space instead of the hyphen;
-* you can use static pages from plugins. The code for static pages has been rewritten;
+* you can use static pages from plugins. The code for static pages has been 
+	rewritten;
 * now photos have the "created" date and are ordered using that;
 * support for some BBCode;
-* with the "<!-- read-more -->" tag, you can indicate manually where to truncate a text;
+* with the "<!-- read-more -->" tag, you can indicate manually where to 
+	truncate a text;
 * added Facebook's tag.
 
 ### 2.1.7
@@ -217,7 +231,8 @@
 * fixed a serious bug when trying to re-sort the results of paginated records;
 * filter forms are automatically hidden;
 * fixed a bug with forms on Firefox;
-* the integration with KCFinder has been improved. Now all directories are read automatically;
+* the integration with KCFinder has been improved. Now all directories are 
+	read automatically;
 * small improvements for display on mobile devices.
 
 ### 2.1.1-RC3
@@ -242,18 +257,22 @@
 
 ## 2.0 branch
 ### 2.0.1-RC1
-* fixed bug, now the cache is flushed automatically, if there's a post-dated post to be published;
+* fixed bug, now the cache is flushed automatically, if there's a post-dated 
+	post to be published;
 * fixed bug on login with cookie;
 * fixed permissions;
 * it automatically adds the meta tag for RSS resources;
-* the backend menus are generated fully automatically. You no longer need any configuration;
+* the backend menus are generated fully automatically. You no longer need any 
+	configuration;
 * now you can choise which post details display using the configuration file;
 * now you can set the timezone using the configuration file;
 * fixed bug with the posts date.
 
 ### 2.0.0-alpha
-* all the code has been completely rewritten for CakePHP 3.x. Several optimizations have been applied;
-* uploading/adding files (for example, banners and photos) is much simplified and is optimized;
+* all the code has been completely rewritten for CakePHP 3.x. Several 
+	optimizations have been applied;
+* uploading/adding files (for example, banners and photos) is much simplified 
+	and is optimized;
 * the application can now rewrite the cache configuration;
 * engine and configuration for widgets have been simplified;
 * the plugin accesses easier configuration;
@@ -273,7 +292,8 @@
 * added a contact form;
 * pending users may require the activation email is sent again;
 * you can pass options to widgets;
-* some widgets accept the `limit` option, which indicates the number of records to show.
+* some widgets accept the `limit` option, which indicates the number of 
+	records to show.
 
 ### 1.2.1
 * full support for reCAPTCHA. It's used for signup and to reset passwords;
@@ -285,11 +305,15 @@
 
 ### 1.2.0
 * added the log viewer and the changelogs viewer;
-* fixed bug on the backend topbar. The topbar is entirely shown only on mobile devices. Added the sidebar;
-* widgets are hidden on the pages that contain the same information or the same data;
+* fixed bug on the backend topbar. The topbar is entirely shown only on 
+	mobile devices. Added the sidebar;
+* widgets are hidden on the pages that contain the same information or the 
+	same data;
 * checks if the latest search has been executed out of the minimum interval;
 * shows the version of Apache and PHP;
 * KCFinder permissions are based on MeCms users permissions;
-* many buttons are disabled after the click, to prevent some actions are performed repeatedly;
-* usernames and the name of user groups cannot be changed. Improved permissions about users and user groups;
+* many buttons are disabled after the click, to prevent some actions are 
+	performed repeatedly;
+* usernames and the name of user groups cannot be changed. Improved 
+	permissions about users and user groups;
 * added the changelog file.
