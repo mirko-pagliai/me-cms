@@ -31,9 +31,28 @@ use MeCms\Controller\AppController;
 class PhotosController extends AppController {	
     /**
      * Views a photo
+     * @param string $slug Album slug
      * @param string $id Photo ID
      */
-    public function view($id = NULL) {
+    public function view($slug = NULL, $id = NULL) {
+        /**
+         * This allows backward compatibility for URLs like:
+         * <pre>/photo/11</pre>
+         */
+        if(empty($slug)) {
+            $photo = $this->Photos->find('active')
+                ->select(['album_id'])
+                ->contain([
+                    'Albums' => function($q) {
+                        return $q->select(['id', 'slug']);
+                    }
+                ])
+                ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+                ->firstOrFail();
+                
+            return $this->redirect(am(['slug' => $photo->album->slug], compact('id')), 301);
+        }
+        
         $photo = $this->Photos->find('active')
 			->select(['id', 'album_id', 'filename'])
 			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
@@ -41,25 +60,5 @@ class PhotosController extends AppController {
 			->firstOrFail();
         
         $this->set(compact('photo'));
-    }
-    
-    /**
-	 * This allows backward compatibility for URLs like:
-	 * <pre>/photo/11</pre>
-	 * These URLs will become:
-	 * <pre>/photo/album-name/1</pre>
-     * @param string $id Photo ID
-     */
-    public function view_compatibility($id) {
-        $photo = $this->Photos->find('active')
-            ->select(['id'])
-            ->contain([
-                'Albums' => function($q) {
-                    return $q->select(['slug']);
-                }
-            ])
-            ->firstOrFail();
-        
-		return $this->redirect(am(['_name' => 'photo', 'slug' => $photo->album->slug], compact('id')), 301);
     }
 }

@@ -70,7 +70,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 */
 	$routes->connect('/photo/:slug/:id',
 		['controller' => 'Photos', 'action' => 'view'],
-		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['id']]
+		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
 	);
     
 	/**
@@ -80,8 +80,8 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	 * <pre>/photo/album-name/1</pre>
 	 */
 	$routes->connect('/photo/:id',
-		['controller' => 'Photos', 'action' => 'view_compatibility'],
-		['id' => '\d+', 'pass' => ['id']]
+		['controller' => 'Photos', 'action' => 'view', 'slug' => FALSE],
+		['id' => '\d+', 'pass' => ['slug', 'id']]
 	);
 	
 	/**
