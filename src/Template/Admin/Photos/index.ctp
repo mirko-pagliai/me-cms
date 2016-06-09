@@ -38,7 +38,12 @@
             <tr>
                 <td>
                     <strong><?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?></strong>
-                    <?php                            
+                    <?php
+                        //If the photo is not active (not published)
+                        if(!$photo->active) {
+                            echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
+                        }
+                        
                         $actions = [
                             $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $photo->id], ['icon' => 'pencil']),
                             $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $photo->id], ['icon' => 'download']),

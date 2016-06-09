@@ -70,6 +70,9 @@ class PhotosTable extends AppTable {
 	 * @return Query Query object
 	 */
 	public function findActive(Query $query, array $options) {
+        $query->where([
+            sprintf('%s.active', $this->alias()) => TRUE,
+        ]);
 		$query->matching('Albums', function ($q) {
 			return $q->where([
                 sprintf('%s.active', $this->Albums->alias()) => TRUE,

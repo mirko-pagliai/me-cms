@@ -37,7 +37,11 @@ class PhotosAlbumsController extends AppController {
 			->select(['id', 'title', 'slug', 'photo_count'])
 			->contain([
                 'Photos' => function($q) {
-                    return $q->select(['album_id', 'filename'])->order('rand()');
+                    return $q->select(['album_id', 'filename'])
+                        ->where([
+                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => TRUE,
+                        ])
+                        ->order('rand()');
                 }
             ])
 			->order(['title' => 'ASC'])
@@ -66,6 +70,9 @@ class PhotosAlbumsController extends AppController {
 			->contain([
                 'Photos' => function($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
+                        ->where([
+                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => TRUE,
+                        ])
                         ->order([
                             sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
                             sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',

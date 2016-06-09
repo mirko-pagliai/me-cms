@@ -86,7 +86,7 @@ class PhotosController extends AppController {
         
 		$query = $this->Photos->find()
 			->contain(['Albums' => ['fields' => ['id', 'title']]])
-            ->select(['id', 'album_id', 'filename', 'description', 'created']);
+            ->select(['id', 'album_id', 'filename', 'active', 'description', 'created']);
 		
 		$this->paginate['order'] = ['Photos.created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['filename', 'Albums.title', 'Photos.created'];

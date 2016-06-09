@@ -40,6 +40,11 @@
                 'placeholder' => __d('me_cms', 'filename'),
                 'size' => 16,
             ]);
+            echo $this->Form->input('active', [
+                'default' => $this->request->query('active'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')],
+            ]);
             echo $this->Form->input('album', [
                 'default' => $this->request->query('album'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all albums')),
