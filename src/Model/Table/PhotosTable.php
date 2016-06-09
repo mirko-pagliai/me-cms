@@ -68,11 +68,12 @@ class PhotosTable extends AppTable {
 	 * @param Query $query Query object
 	 * @param array $options Options
 	 * @return Query Query object
-	 * @uses Cake\I18n\Time::i18nFormat()
 	 */
 	public function findActive(Query $query, array $options) {
 		$query->matching('Albums', function ($q) {
-			return $q->where(['active' => TRUE]);
+			return $q->where([
+                sprintf('%s.active', $this->Albums->alias()) => TRUE,
+            ]);
 		});
 		
         return $query;

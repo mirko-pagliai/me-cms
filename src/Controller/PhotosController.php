@@ -34,14 +34,9 @@ class PhotosController extends AppController {
      * @param string $id Photo ID
      */
     public function view($id = NULL) {
-        $photo = $this->Photos->find()
+        $photo = $this->Photos->find('active')
 			->select(['id', 'album_id', 'filename'])
 			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
-            ->matching('Albums', function($q) {
-                return $q->where([
-                    sprintf('%s.active', $this->Photos->Albums->alias()) => TRUE,
-                ]);
-            })
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail();
         
@@ -56,7 +51,7 @@ class PhotosController extends AppController {
      * @param string $id Photo ID
      */
     public function view_compatibility($id) {
-        $photo = $this->Photos->find()
+        $photo = $this->Photos->find('active')
             ->select(['id'])
             ->contain([
                 'Albums' => function($q) {
