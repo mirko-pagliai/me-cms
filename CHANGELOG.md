@@ -5,6 +5,7 @@
 	(`Config/banned_ip.php`);
 * now the installer also runs the installer of other plugins;
 * fixed bug. Now if you disable a photo album all its photos become disabled;
+* fixed bug for filter forms;
 * CakePHP will automatically set the locale based on the current user;
 * added common templates for all normal views;
 * `statics` action renamed as `index_statics`.
