@@ -77,7 +77,7 @@ class PhotosAlbumsController extends AppController {
                             sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
                             sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
                         ]);
-                 }
+                }
              ])
 			->select(['id', 'slug', 'title'])
 			->where(compact('slug'))
@@ -86,4 +86,29 @@ class PhotosAlbumsController extends AppController {
              
         $this->set(compact('album'));
 	}
+    
+    /**
+     * Preview for albums.
+     * It uses the `view` template.
+	 * @param string $slug Album slug
+     */
+    public function preview($slug = NULL) {
+        $album = $this->PhotosAlbums->find()
+			->contain([
+                'Photos' => function($q) {
+                    return $q->select(['id', 'album_id', 'filename', 'description'])
+                        ->order([
+                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                        ]);
+                }
+             ])
+			->select(['id', 'slug', 'title'])
+			->where(compact('slug'))
+			->firstOrFail();
+             
+        $this->set(compact('album'));
+        
+        $this->render('view');
+    }
 }

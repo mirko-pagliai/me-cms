@@ -64,6 +64,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 		['controller' => 'PhotosAlbums', 'action' => 'view'],
 		['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
+	$routes->connect('/album/preview/:slug',
+		['controller' => 'PhotosAlbums', 'action' => 'preview'],
+		['_name' => 'albums_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
 
 	/**
 	 * Photos controller
