@@ -33,7 +33,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
      */
-    public function to2v10v0() {
+    public function to_2_10_0() {
 		$this->loadModel('MeCms.Photos');
         
         //Adds "active" field to the photos table and sets the default value
@@ -46,7 +46,7 @@ class UpdateShell extends BaseUpdateShell {
     /**
 	 * Updates to 2.7.0 version
      */
-	public function to2v7v0() {
+	public function to_2_7_0() {
         $this->dispatchShell('MeCms.install', 'createVendorsLinks');
         
         @unlink(WWW_ROOT.'vendor'.DS.'jquery-cookie');
@@ -57,7 +57,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
-	public function to2v6v0() {
+	public function to_2_6_0() {
 		$this->loadModel('MeCms.BannersPositions');
 		$this->loadModel('MeCms.PhotosAlbums');
 		$this->loadModel('MeCms.PostsCategories');
@@ -129,7 +129,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * Updates to 2.2.1 version
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
 	 */
-	public function to2v2v1() {
+	public function to_2_2_1() {
 		$this->loadModel('MeCms.Tags');
 		
 		//For each tag, it replaces the hyphen with space
@@ -146,7 +146,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
-	public function to2v1v9() {
+	public function to_2_1_9() {
 		$this->loadModel('MeCms.Banners');
 		$this->loadModel('MeCms.Photos');
 		
@@ -174,7 +174,7 @@ class UpdateShell extends BaseUpdateShell {
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
 	 */
-	public function to2v1v8() {
+	public function to_2_1_8() {
 		$this->loadModel('MeCms.Photos');
 		$this->loadModel('MeCms.Tags');
 		
@@ -200,27 +200,9 @@ class UpdateShell extends BaseUpdateShell {
 	 * Updates to 2.1.7 version
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
 	 */
-	public function to2v1v7() {
+	public function to_2_1_7() {
 		$this->loadModel('MeCms.Tags');
 		
 		$this->connection->execute(sprintf('ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT NULL;', $this->Tags->table()));
-	}
-	
-	/**
-	 * Gets the option parser instance and configures it.
-	 * @return ConsoleOptionParser
-	 */
-	public function getOptionParser() {
-		$parser = parent::getOptionParser();
-		
-		return $parser->addSubcommands([
-            'to2v10v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.10.0')],
-            'to2v7v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.7.0')],
-            'to2v6v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.6.0')],
-			'to2v2v1' => ['help' => __d('me_cms', 'Updates to {0} version', '2.2.1')],
-			'to2v1v9' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.9')],
-			'to2v1v8' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.8')],
-			'to2v1v7' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.7')]
-		]);
 	}
 }

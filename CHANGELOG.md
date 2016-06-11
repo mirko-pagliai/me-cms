@@ -7,6 +7,8 @@
 * added userbar for albums;
 * the banned ip list has been moved to a dedicated file 
 	(`Config/banned_ip.php`);
+* methods of the `UpdateShell` class are automatically detected and added to 
+	the parser;
 * now the installer also runs the installer of other plugins;
 * tags are always sorted alphabetically;
 * fixed bug. Now if you disable a photo album all its photos become disabled;
