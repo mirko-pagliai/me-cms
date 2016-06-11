@@ -184,10 +184,8 @@ class PhotosController extends AppController {
      * @param string $id Photo ID
      * @uses MeCms\Controller\AppController::_download()
      */
-    public function download($id = NULL) {
-        $photo = $this->Photos->get($id);
-        
-        return $this->_download($photo->path);
+    public function download($id = NULL) {        
+        return $this->_download($this->Photos->get($id)->path);
     }
 	
     /**

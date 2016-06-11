@@ -63,9 +63,10 @@ class BannersController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can delete banners
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup('admin');
-		
+        }
+        
 		//Admins and managers can access other actions
 		return $this->Auth->isGroup(['admin', 'manager']);
 	}
@@ -170,8 +171,9 @@ class BannersController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The banner has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The banner could not be saved'));
+            }
         }
 
         $this->set(compact('banner'));
@@ -183,9 +185,7 @@ class BannersController extends AppController {
      * @uses MeCms\Controller\AppController::_download()
      */
     public function download($id = NULL) {
-        $banner = $this->Banners->get($id);
-        
-        return $this->_download($banner->path);
+        return $this->_download($this->Banners->get($id)->path);
     }
     
     /**
@@ -197,10 +197,12 @@ class BannersController extends AppController {
 		
         $banner = $this->Banners->get($id);
 		
-        if($this->Banners->delete($banner))
+        if($this->Banners->delete($banner)) {
             $this->Flash->success(__d('me_cms', 'The banner has been deleted'));
-        else
+        }
+        else {
             $this->Flash->error(__d('me_cms', 'The banner could not be deleted'));
+        }
 			
         return $this->redirect(['action' => 'index']);
     }

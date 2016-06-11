@@ -59,11 +59,13 @@ class PostsController extends AppController {
 			return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
 		
-		if(!empty($categories))
+		if(!empty($categories)) {
 			$this->set(compact('categories'));
-		
-		if(!empty($users))
+        }
+        
+		if(!empty($users)) {
 			$this->set(compact('users'));
+        }
 	}
 	
 	/**
@@ -93,13 +95,15 @@ class PostsController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all posts.
 		//Users can edit only their own posts
-		if($this->request->isAction('edit'))
+		if($this->request->isAction('edit')) {
 			return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
-		
+        }
+        
 		//Only admins and managers can delete posts
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
-		
+        }
+        
 		return TRUE;
 	}
 	
@@ -125,7 +129,9 @@ class PostsController extends AppController {
 		$this->paginate['order'] = ['Posts.created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'Posts.created'];
 		
-		$this->set('posts', $this->paginate($this->Posts->queryFromFilter($query, $this->request->query)));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->query));
+        
+		$this->set(compact('posts'));
     }
 
     /**
@@ -186,7 +192,7 @@ class PostsController extends AppController {
 			$data = $this->Posts->buildTagsForRequestData($this->request->data);
 						
             $post = $this->Posts->patchEntity($post, $data, [
-                'associated' => ['Tags' => ['validate' => FALSE]]
+                'associated' => ['Tags' => ['validate' => FALSE]],
             ]);
 			
             if($this->Posts->save($post)) {
