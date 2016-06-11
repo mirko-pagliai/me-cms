@@ -45,7 +45,7 @@ class BackupForm extends Form {
 		$validator->requirePresence('filename')
 			->remove('filename', 'validateUnique')
 			->add('filename', 'validExtension', [
-				'rule' => function ($value, $context) {
+				'rule' => function($value, $context) {
 					$extensions = array_map(function($v) { return preg_quote($v, '/'); }, ['sql', 'sql.gz', 'sql.bz2']);
 					
 					return (bool) preg_match(sprintf('/\.(%s)$/i', implode('|', $extensions)), $value);

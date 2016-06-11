@@ -29,7 +29,7 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
+Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 	/**
 	 * Banners controller
 	 */
@@ -187,7 +187,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
 	/**
 	 * Admin routes
 	 */
-    $routes->prefix('admin', function ($routes) {
+    $routes->prefix('admin', function($routes) {
 		/**
 		 * Admin home page
 		 */
@@ -204,6 +204,6 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
     });
 });
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function ($routes) {
+Router::plugin('MeCms', ['path' => '/me-cms'], function($routes) {
 	$routes->fallbacks('InflectedRoute');
 });

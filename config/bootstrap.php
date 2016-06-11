@@ -138,7 +138,7 @@ DispatcherFactory::add('LocaleSelector');
 /**
  * Adds `isAdmin()` detector
  */
-Request::addDetector('admin', function ($request) {
+Request::addDetector('admin', function($request) {
     return $request->param('prefix') === 'admin';
 });
 
@@ -146,7 +146,7 @@ Request::addDetector('admin', function ($request) {
  * Adds `isBanned()` detector.
  * It checks if the user's IP address is banned.
  */
-Request::addDetector('banned', function ($request) {
+Request::addDetector('banned', function($request) {
     $banned = config('Banned');
 
     /**
