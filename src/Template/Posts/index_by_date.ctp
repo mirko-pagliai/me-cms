@@ -38,13 +38,13 @@
 			$this->assign('title', __d('me_cms', 'Posts of yesterday'));
         }
 		else {
-			$this->assign('title', __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long'))));
+			$this->assign('title', __dx('me_cms', 'posts of day', 'Posts of {0}', $date->i18nFormat(config('main.date.long'))));
         }
     }
     elseif($year && $month) {
-        $this->assign('title', __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM y')));
+        $this->assign('title', __dx('me_cms', 'posts of month', 'Posts of {0}', $date->i18nFormat('MMMM y')));
     }
     else {
-        $this->assign('title', __d('me_cms', 'Posts of {0}', $date->i18nFormat('y')));
+        $this->assign('title', __dx('me_cms', 'posts of year', 'Posts of {0}', $date->i18nFormat('y')));
     }
 ?>    
