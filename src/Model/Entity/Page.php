@@ -24,7 +24,7 @@ namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
-use MeCms\Utility\Youtube;
+use MeTools\Utility\Youtube;
 
 /**
  * Page entity
@@ -58,8 +58,8 @@ class Page extends Entity {
 	/**
 	 * Gets the post preview (virtual field)
 	 * @return string Url to preview
-	 * @uses MeCms\Utility\Youtube::getId()
-	 * @uses MeCms\Utility\Youtube::getPreview()
+	 * @uses MeTools\Utility\Youtube::getId()
+	 * @uses MeTools\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
 		//Checks for the first image in the text
