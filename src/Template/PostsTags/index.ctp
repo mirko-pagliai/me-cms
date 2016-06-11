@@ -22,16 +22,13 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Posts tags')); ?>
+<?php
+    $this->extend('/Common/index');
+    $this->assign('title', __d('me_cms', 'Posts tags'));
+    
+    $tags = array_map(function($tag) {
+        return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
+    }, $tags->toArray());
 
-<div class="postsTags index">
-	<?php
-		echo $this->Html->h2(__d('me_cms', 'Posts tags'));	
-		
-        $tags = array_map(function($tag) {
-            return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
-        }, $tags->toArray());
-		
-        echo $this->Html->ul($tags, ['icon' => 'caret-right']);
-	?>
-</div>
+    echo $this->Html->ul($tags, ['icon' => 'caret-right']);
+?>

@@ -85,8 +85,12 @@ class PhotosController extends AppController {
         }
         
 		$query = $this->Photos->find()
-			->contain(['Albums' => ['fields' => ['id', 'title']]])
-            ->select(['id', 'album_id', 'filename', 'description', 'created']);
+            ->select(['id', 'album_id', 'filename', 'active', 'description', 'created'])
+			->contain([
+                'Albums' => function($q) {
+                    return $q->select(['id', 'slug', 'title']);
+                },
+            ]);
 		
 		$this->paginate['order'] = ['Photos.created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['filename', 'Albums.title', 'Photos.created'];
@@ -180,10 +184,8 @@ class PhotosController extends AppController {
      * @param string $id Photo ID
      * @uses MeCms\Controller\AppController::_download()
      */
-    public function download($id = NULL) {
-        $photo = $this->Photos->get($id);
-        
-        return $this->_download($photo->path);
+    public function download($id = NULL) {        
+        return $this->_download($this->Photos->get($id)->path);
     }
 	
     /**

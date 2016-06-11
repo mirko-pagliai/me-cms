@@ -59,11 +59,13 @@ class PostsController extends AppController {
 			return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
 		
-		if(!empty($categories))
+		if(!empty($categories)) {
 			$this->set(compact('categories'));
-		
-		if(!empty($users))
+        }
+        
+		if(!empty($users)) {
 			$this->set(compact('users'));
+        }
 	}
 	
 	/**
@@ -93,13 +95,15 @@ class PostsController extends AppController {
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all posts.
 		//Users can edit only their own posts
-		if($this->request->isAction('edit'))
+		if($this->request->isAction('edit')) {
 			return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
-		
+        }
+        
 		//Only admins and managers can delete posts
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
-		
+        }
+        
 		return TRUE;
 	}
 	
@@ -109,19 +113,25 @@ class PostsController extends AppController {
      */
     public function index() {
 		$query = $this->Posts->find()
+			->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
 			->contain([
-				'Categories' => ['fields' => ['id', 'title']],
+                'Categories' => function($q) {
+                    return $q->select(['id', 'title']);
+                },
 				'Tags' => function($q) {
-					return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
+                    return $q->order(['tag' => 'ASC']);
 				},
-				'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-			])
-			->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+                'Users' => function($q) {
+                    return $q->select(['id', 'first_name', 'last_name']);
+                },
+			]);
 		
 		$this->paginate['order'] = ['Posts.created' => 'DESC'];
 		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'Posts.created'];
 		
-		$this->set('posts', $this->paginate($this->Posts->queryFromFilter($query, $this->request->query)));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->query));
+        
+		$this->set(compact('posts'));
     }
 
     /**
@@ -134,9 +144,10 @@ class PostsController extends AppController {
 		
         if($this->request->is('post')) {
 			//Only admins and managers can add posts on behalf of other users
-			if(!$this->Auth->isGroup(['admin', 'manager']))
+			if(!$this->Auth->isGroup(['admin', 'manager'])) {
 				$this->request->data('user_id', $this->Auth->user('id'));
-			
+            }
+            
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
 			//Sets the request data with tags
@@ -148,8 +159,9 @@ class PostsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The post could not be saved'));
+            }
         }
 		
         $this->set(compact('post'));
@@ -163,29 +175,35 @@ class PostsController extends AppController {
      */
     public function edit($id = NULL)  {
 		$post = $this->Posts->findById($id)
-			->contain(['Tags' => function($q) {
-				return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
-			}])
+			->contain([
+                'Tags' => function($q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
+            ])
 			->firstOrFail();
 		
         if($this->request->is(['patch', 'post', 'put'])) {
 			//Only admins and managers can edit posts on behalf of other users
-			if(!$this->Auth->isGroup(['admin', 'manager']))
+			if(!$this->Auth->isGroup(['admin', 'manager'])) {
 				$this->request->data('user_id', $this->Auth->user('id'));
-			
+            }
+            
 			$this->request->data['created'] = new Time($this->request->data('created'));
 			
 			//Sets the request data with tags
 			$data = $this->Posts->buildTagsForRequestData($this->request->data);
 						
-            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
+            $post = $this->Posts->patchEntity($post, $data, [
+                'associated' => ['Tags' => ['validate' => FALSE]],
+            ]);
 			
             if($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The post has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The post could not be saved'));
+            }
         }
 		
         $this->set(compact('post'));
@@ -199,10 +217,12 @@ class PostsController extends AppController {
 		
         $post = $this->Posts->get($id);
 		
-        if($this->Posts->delete($post))
+        if($this->Posts->delete($post)) {
             $this->Flash->success(__d('me_cms', 'The post has been deleted'));
-        else
+        }
+        else {
             $this->Flash->error(__d('me_cms', 'The post could not be deleted'));
+        }
 			
         return $this->redirect(['action' => 'index']);
     }

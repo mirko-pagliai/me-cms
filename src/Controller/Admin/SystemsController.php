@@ -109,8 +109,10 @@ class SystemsController extends AppController {
 		if($this->request->query('file') && $this->request->is('get')) {
 			//Loads the Markdown helper
 			$this->helpers[] = 'MeTools.Markdown';
+            
+            $path = ROOT.DS.$files[$this->request->query('file')];
 			
-			$this->set('changelog', @file_get_contents(ROOT.DS.$files[$this->request->query('file')]));
+			$this->set('changelog', file_get_contents($path));
 		}
 		
 		$this->set(compact('files'));

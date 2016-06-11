@@ -23,9 +23,7 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
-use Cake\I18n\I18n;
 use Cake\Network\Exception\InternalErrorException;
-use MeCms\Core\Plugin;
 
 /**
  * Application controller class
@@ -76,39 +74,7 @@ class AppController extends BaseController {
 		$this->response->file($path, ['download' => !empty($force)]);
 		return $this->response;
     }
-
-    /**
-	 * Gets the user's language
-	 * @return mixed Language code or FALSE
-	 * @throws \Cake\Network\Exception\InternalErrorException
-	 * @uses MeCms\Core\Plugin::path()
-	 */
-	protected function _getLanguage() {
-		$config = config('main.language');
-		$language = $this->request->env('HTTP_ACCEPT_LANGUAGE');
-		$path = Plugin::path(MECMS, 'src'.DS.'Locale');
-		
-		if(empty($config) || $config === 'auto') {
-			if(is_readable($path.DS.substr($language, 0, 5).DS.'me_cms.po')) {
-				return substr($language, 0, 5);
-            }
-			elseif(is_readable($path.DS.substr($language, 0, 2).DS.'me_cms.po')) {
-				return substr($language, 0, 2);
-            }
-		}
-		elseif(!empty($config)) {
-            $file = $path.DS.$config.DS.'me_cms.po';
-            
-			if(!is_readable($file)) {
-				throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', $file));
-            }
-			
-			return $config;
-		}
-		
-		return FALSE;
-	}
-	
+    
 	/**
 	 * Called before the controller action. 
 	 * You can use this method to perform logic that needs to happen before 
@@ -117,7 +83,6 @@ class AppController extends BaseController {
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses MeTools\Network\Request::isAction()
-	 * @uses _getLanguage()
 	 * @uses isOffline()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {        
@@ -127,12 +92,9 @@ class AppController extends BaseController {
         }
 		
 		//Checks if the user's IP address is banned
-		if(!$this->request->isAction('ip_not_allowed', 'Systems') && $this->request->isBanned()) {
+		if($this->request->isBanned() && !$this->request->isAction('ip_not_allowed', 'Systems')) {
 			return $this->redirect(['_name' => 'ip_not_allowed']);
         }
-		
-		//Sets the user's language
-		I18n::locale($this->_getLanguage());
 		
 		//Authorizes the current action, if this is not an admin request
 		if(!$this->request->isAdmin()) {

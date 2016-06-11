@@ -146,8 +146,12 @@ class UserShell extends Shell {
 	public function users() {		
 		//Gets users
 		$users = $this->Users->find()
-			->contain(['Groups' => ['fields' => ['label']]])
 			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
+			->contain([
+                'Groups' => function($q) {
+                    return $q->select(['label']);
+                },
+            ])
 			->toArray();
 		
 		//Checks for users
@@ -163,7 +167,7 @@ class UserShell extends Shell {
 			__d('me_cms', 'Email'),
 			__d('me_cms', 'Posts'),
 			__d('me_cms', 'Status'),
-			__d('me_cms', 'Date')
+			__d('me_cms', 'Date'),
 		];
 		
 		//Formats users
@@ -186,7 +190,7 @@ class UserShell extends Shell {
 				$user['email'],
 				$user['post_count'],
 				$user['status'],
-				$user['created']
+				$user['created'],
 			];
 		}, $users);
 		
@@ -209,11 +213,11 @@ class UserShell extends Shell {
 					'group' => [
 						'short' => 'g',
 						'help' => __d('me_cms', 'Group ID'),
-					]
-				]]
+					],
+				]],
 			],
 			'groups' => ['help' => __d('me_cms', 'Lists user groups')],
-			'users' => ['help' => __d('me_cms', 'Lists users')]
+			'users' => ['help' => __d('me_cms', 'Lists users')],
 		]);
 	}
 }

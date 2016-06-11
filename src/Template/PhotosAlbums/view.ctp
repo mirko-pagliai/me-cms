@@ -21,40 +21,52 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
+
 <?php
-	$this->assign('title', sprintf('%s - %s', __d('me_cms', 'Photos'), $album->title));
-	
-	if(config('frontend.fancybox'))
+    $this->extend('/Common/view');
+    $this->assign('title', __d('me_cms', 'Album {0}', $album->title));
+    
+	if(config('frontend.fancybox')) {
 		$this->Library->fancybox();
+    }
 ?>
 
-<div class="photosAlbums index">
-	<?= $this->Html->h2($album->title) ?>
-	<div class="clearfix">
-		<?php foreach($album->photos as $photo): ?>
-			<div class="col-sm-6 col-md-4">
-				<div class="photo-box">
-					<?php
-						$text = implode(PHP_EOL, [
-							$this->Thumb->square($photo->path, ['side' => 275, 'force' => TRUE]),
-							$this->Html->div('photo-info', $this->Html->div(NULL, $this->Html->para('small', $photo->description)))
-						]);
-						
-						//If Fancybox is enabled, adds some options
-						$options = config('frontend.fancybox') ? [
-							'class'					=> 'fancybox thumbnail',
-							'data-fancybox-href'	=> $this->Thumb->url($photo->path, ['height' => 1280]),
-							'rel'					=> 'group'
-						] : [];
-                        
-						echo $this->Html->link($text, ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], am([
-							'class' => 'thumbnail',
-							'title' => $photo->description
-						], $options));
-					?>
-				</div>
-			</div>
-		<?php endforeach; ?>
-	</div>
+<?php $this->append('userbar'); ?>
+<?php if(!$album->active): ?>
+    <li><?= $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'label label-warning']) ?></li>
+<?php endif; ?>
+
+<li><?= $this->Html->link(__d('me_cms', 'Edit album'), ['action' => 'edit', $album->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
+<li><?= $this->Form->postLink(__d('me_cms', 'Delete album'), ['action' => 'delete', $album->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
+<?php $this->end(); ?>
+
+<div class="clearfix">
+    <?php foreach($album->photos as $photo): ?>
+        <div class="col-sm-6 col-md-4">
+            <div class="photo-box">
+                <?php
+                    $text = implode(PHP_EOL, [
+                        $this->Thumb->square($photo->path, ['side' => 275, 'force' => TRUE]),
+                        $this->Html->div('photo-info', $this->Html->div(NULL, $this->Html->para('small', $photo->description))),
+                    ]);
+
+                    $options = [
+                        'class' => 'thumbnail',
+                        'title' => $photo->description,
+                    ];
+                    
+                    //If Fancybox is enabled, adds some options
+                    if(config('frontend.fancybox')) {
+                        $options = am($options, [
+                            'class' => 'fancybox thumbnail',
+                            'data-fancybox-href' => $this->Thumb->url($photo->path, ['height' => 1280]),
+                            'rel' => 'group',
+                        ]);
+                    }
+
+                    echo $this->Html->link($text, ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id], $options);
+                ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>

@@ -31,7 +31,7 @@
 	$this->assign('title', __d('me_cms', 'Posts by month'));
 	
     $months = array_map(function($month) {
-        return $this->Html->link($month->month->i18nFormat('MMMM Y'), ['_name' => 'posts_by_month', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')]);
+        return $this->Html->link($month->month->i18nFormat('MMMM Y'), ['_name' => 'posts_by_date', sprintf('%s/%s', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM'))]);
 	}, $months);
     
 	echo $this->Html->ul($months, ['icon' => 'caret-right']);

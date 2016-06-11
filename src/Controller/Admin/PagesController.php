@@ -56,13 +56,15 @@ class PagesController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Everyone can list pages and static pages
-		if($this->request->isAction(['index', 'statics']))
+		if($this->request->isAction(['index', 'index_statics'])) {
 			return TRUE;
-		
+        }
+        
 		//Only admins can delete pages
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup('admin');
-		
+        }
+        
 		//Admins and managers can access other actions
 		return $this->Auth->isGroup(['admin', 'manager']);
 	}
@@ -72,12 +74,15 @@ class PagesController extends AppController {
 	 * @uses MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index() {
-		$query = $this->Pages->find()->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+		$query = $this->Pages->find()
+            ->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
 		
 		$this->paginate['order'] = ['title' => 'ASC'];
 		$this->paginate['sortWhitelist'] = ['title', 'priority', 'created'];
 		
-		$this->set('pages', $this->paginate($this->Pages->queryFromFilter($query, $this->request->query)));
+        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->query));
+        
+		$this->set(compact('pages'));
     }
 		
 	/**
@@ -86,7 +91,7 @@ class PagesController extends AppController {
 	 * Static pages must be located in `APP/View/StaticPages/`.
 	 * @uses MeCms\Utility\StaticPage::all()
 	 */
-	public function statics() {
+	public function index_statics() {
 		$this->set('pages', StaticPage::all());
 	}
 
@@ -105,8 +110,9 @@ class PagesController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The page has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The page could not be saved'));
+            }
         }
 
         $this->set(compact('page'));
@@ -128,8 +134,9 @@ class PagesController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The page has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The page could not be saved'));
+            }
         }
 
         $this->set(compact('page'));
@@ -143,11 +150,13 @@ class PagesController extends AppController {
 		
         $page = $this->Pages->get($id);
 		
-        if($this->Pages->delete($page))
+        if($this->Pages->delete($page)) {
             $this->Flash->success(__d('me_cms', 'The page has been deleted'));
-        else
+        }
+        else {
             $this->Flash->error(__d('me_cms', 'The page could not be deleted'));
-			
+        }
+        
         return $this->redirect(['action' => 'index']);
     }
 }

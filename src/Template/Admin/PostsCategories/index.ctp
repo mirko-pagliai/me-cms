@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Posts categories'));
+    $this->assign('title', __d('me_cms', 'Posts categories'));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
 	$this->append('actions', $this->Html->button(__d('me_cms', 'Add post'), ['controller' => 'Posts', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
 ?>

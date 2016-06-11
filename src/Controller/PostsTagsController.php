@@ -24,6 +24,7 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 
 /**
@@ -45,23 +46,21 @@ class PostsTagsController extends AppController {
 	}
 	
 	/**
-	 * Lists posts for a tag.
-     * It uses the `Posts/index` template.
+	 * Lists posts for a tag
 	 * @param string $tag Tag name
      * @throws RecordNotFoundException
 	 */
-    public function view($tag) {
+    public function view($tag = NULL) {
         //Data can be passed as query string, from a widget
 		if($this->request->query('q')) {
 			return $this->redirect([$this->request->query('q')]);
         }
         
-		//Sets the initial cache name
-		$cache = sprintf('index_tag_%s', md5($tag));
-				
-		//Updates the cache name with the query limit and the number of the page
-		$cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-		$cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+        $tag = Text::slug($tag, ['replacement' => ' ']);
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
+		//Sets the cache name
+		$cache = sprintf('tag_%s_limit_%s_page_%s', md5($tag), $this->paginate['limit'], $page);
 		
 		//Tries to get data from the cache
 		list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->PostsTags->cache));
@@ -70,12 +69,18 @@ class PostsTagsController extends AppController {
 		if(empty($posts) || empty($paging)) {
 			$query = $this->PostsTags->Posts->find('active')
 				->contain([
-					'Categories' => ['fields' => ['title', 'slug']],
-					'Tags',
-					'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Categories' => function($q) {
+                        return $q->select(['title', 'slug']);
+                    },
+                    'Tags' => function($q) {
+                        return $q->order(['tag' => 'ASC']);
+                    },
+                    'Users' => function($q) {
+                        return $q->select(['first_name', 'last_name']);
+                    },
 				])
-				->matching('Tags', function ($q) use ($tag) {
-					return $q->where(['Tags.tag' => str_replace('-', ' ', $tag)]);
+				->matching('Tags', function($q) use ($tag) {
+					return $q->where(['Tags.tag' => $tag]);
 				})
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
@@ -87,15 +92,16 @@ class PostsTagsController extends AppController {
 			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->PostsTags->cache);
+			Cache::writeMany([
+                $cache => $posts,
+                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+            ], $this->PostsTags->cache);
 		}
 		//Else, sets the paging parameter
 		else {
 			$this->request->params['paging'] = $paging;
         }
         
-		$this->set(compact('posts'));
-		
-		$this->render('Posts/index');
+		$this->set(compact('posts', 'tag'));
     }
 }

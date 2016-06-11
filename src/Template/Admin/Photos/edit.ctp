@@ -33,6 +33,9 @@
         echo $this->Form->input('album_id', [
             'label' => __d('me_cms', 'Album'),
         ]);
+        echo $this->Form->input('active', [
+            'label' => sprintf('%s?', __d('me_cms', 'Published')),
+        ]);
     ?>
 </div>
 <fieldset>

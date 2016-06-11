@@ -37,7 +37,11 @@ class PhotosAlbumsController extends AppController {
 			->select(['id', 'title', 'slug', 'photo_count'])
 			->contain([
                 'Photos' => function($q) {
-                    return $q->select(['album_id', 'filename'])->order('rand()');
+                    return $q->select(['album_id', 'filename'])
+                        ->where([
+                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => TRUE,
+                        ])
+                        ->order('rand()');
                 }
             ])
 			->order(['title' => 'ASC'])
@@ -63,17 +67,48 @@ class PhotosAlbumsController extends AppController {
         }
         
 		$album = $this->PhotosAlbums->find('active')
+			->select(['id', 'slug', 'title', 'active'])
 			->contain([
                 'Photos' => function($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
-                        ->order([sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC', sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC']);
-                 }
+                        ->where([
+                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => TRUE,
+                        ])
+                        ->order([
+                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                        ]);
+                }
              ])
-			->select(['id', 'slug', 'title'])
 			->where(compact('slug'))
 			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
 			->firstOrFail();
              
         $this->set(compact('album'));
 	}
+    
+    /**
+     * Preview for albums.
+     * It uses the `view` template.
+	 * @param string $slug Album slug
+     */
+    public function preview($slug = NULL) {
+        $album = $this->PhotosAlbums->find()
+			->select(['id', 'slug', 'title', 'active'])
+			->contain([
+                'Photos' => function($q) {
+                    return $q->select(['id', 'album_id', 'filename', 'description'])
+                        ->order([
+                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                        ]);
+                }
+             ])
+			->where(compact('slug'))
+			->firstOrFail();
+             
+        $this->set(compact('album'));
+        
+        $this->render('view');
+    }
 }

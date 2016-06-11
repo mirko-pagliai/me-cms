@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Albums'));
+    $this->assign('title', __d('me_cms', 'Albums'));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
 	$this->append('actions', $this->Html->button(__d('me_cms', 'Upload photos'), ['controller' => 'Photos', 'action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']));
 ?>
@@ -56,9 +56,15 @@
                         if($this->Auth->isGroup('admin')) {
                             $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $album->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                         }
-
-                        $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
-
+                        
+                        //If the the is active
+                        if($album->active) {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
+                        else {
+                            $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'albums_preview', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
+                        }
+                        
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>

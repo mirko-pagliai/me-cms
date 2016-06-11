@@ -48,8 +48,14 @@
                     if($this->Auth->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(NULL, ['action' => 'delete', $photo->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'title' => __d('me_cms', 'Delete'), 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
                     }
-                    
-                    $actions[] = $this->Html->link(NULL, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'title' => __d('me_cms', 'Open'), 'target' => '_blank']);
+                        
+                    //If the photo is active
+                    if($photo->active) {
+                        $actions[] = $this->Html->link(NULL, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'target' => '_blank', 'title' => __d('me_cms', 'Open')]);
+                    }
+                    else {
+                        $actions[] = $this->Html->link(NULL, ['_name' => 'photos_preview', $photo->id], ['icon' => 'external-link', 'target' => '_blank', 'title' => __d('me_cms', 'Preview')]);
+                    }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>

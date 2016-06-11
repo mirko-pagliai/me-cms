@@ -40,8 +40,9 @@ class PostsCategoriesController extends AppController {
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
         
-		if($this->request->isAction(['add', 'edit']))
+		if($this->request->isAction(['add', 'edit'])) {
 			$this->set('categories', $this->PostsCategories->getTreeList());
+        }
 	}
 	
 	/**
@@ -53,9 +54,10 @@ class PostsCategoriesController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can delete posts categories
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup('admin');
-		
+        }
+        
 		//Admins and managers can access other actions
 		return $this->Auth->isGroup(['admin', 'manager']);
 	}
@@ -66,9 +68,13 @@ class PostsCategoriesController extends AppController {
      */
     public function index() {
 		$categories = $this->PostsCategories->find('all')
-			->contain(['Parents' => ['fields' => ['title']]])
-			->order(['PostsCategories.lft' => 'ASC'])
 			->select(['id', 'title', 'slug', 'post_count'])
+			->contain([
+                'Parents' => function($q) {
+                    return $q->select(['title']);
+                },
+            ])
+			->order(['PostsCategories.lft' => 'ASC'])
 			->toArray();
         
         //Gets categories as tree list
@@ -96,8 +102,9 @@ class PostsCategoriesController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The posts category has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The posts category could not be saved'));
+            }
         }
 
         $this->set(compact('category'));
@@ -117,8 +124,9 @@ class PostsCategoriesController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The posts category has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The posts category could not be saved'));
+            }
         }
 
         $this->set(compact('category'));
@@ -134,14 +142,17 @@ class PostsCategoriesController extends AppController {
 		
 		//Before deleting, it checks if the category has some posts
 		if(!$category->post_count) {
-			if($this->PostsCategories->delete($category))
+			if($this->PostsCategories->delete($category)) {
 				$this->Flash->success(__d('me_cms', 'The posts category has been deleted'));
-			else
+            }
+			else {
 				$this->Flash->error(__d('me_cms', 'The posts category could not be deleted'));
+            }
 		}
-		else
+		else {
 			$this->Flash->alert(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'));
-		
+        }
+        
         return $this->redirect(['action' => 'index']);
     }
 }

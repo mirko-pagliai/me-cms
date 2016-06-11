@@ -56,7 +56,8 @@ class PagesController extends AppController {
 	/**
      * Views page.
 	 * 
-	 * It first checks if there's a static page, using all the passed arguments.
+	 * It first checks if there's a static page, using all the passed 
+     *  arguments.
 	 * Otherwise, it checks for the page in the database, using that slug.
 	 * 
 	 * Static pages must be located in `APP/View/StaticPages/`.
@@ -69,9 +70,9 @@ class PagesController extends AppController {
 		$static = StaticPage::get($slug);
 		
 		if($static) {
-			$page = new \stdClass();
-			$page->slug = $slug;
-			$page->title = StaticPage::title($slug);
+            $page = (object) am([
+                'title' => StaticPage::title($slug),
+            ], compact('slug'));
 			
 			$this->set(compact('page'));
 			

@@ -41,12 +41,14 @@ class UsersController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Every user can change his password
-		if($this->request->isAction('change_password'))
+		if($this->request->isAction('change_password')) {
 			return TRUE;
+        }
 		
 		//Only admins can activate account and delete users
-		if($this->request->isAction(['activate', 'delete']))
+		if($this->request->isAction(['activate', 'delete'])) {
 			return $this->Auth->isGroup('admin');
+        }
 		
 		//Admins and managers can access other actions
 		return $this->Auth->isGroup(['admin', 'manager']);
@@ -63,8 +65,9 @@ class UsersController extends AppController {
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction(['index', 'add', 'edit']))
+		if($this->request->isAction(['index', 'add', 'edit'])) {
 			$this->set('groups', $this->Users->Groups->getList());
+        }
 	}
 	
 	/**
@@ -73,13 +76,19 @@ class UsersController extends AppController {
      */
     public function index() {
 		$query = $this->Users->find()
-			->contain(['Groups' => ['fields' => ['id', 'label']]])
-			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created']);
+			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
+			->contain([
+                'Groups' => function($q) {
+                    return $q->select(['id', 'label']);
+                },
+            ]);
 		
 		$this->paginate['order'] = ['Users.username' => 'ASC'];
 		$this->paginate['sortWhitelist'] = ['Users.username', 'first_name', 'email', 'Groups.label', 'post_count', 'created'];
 		
-		$this->set('users', $this->paginate($this->Users->queryFromFilter($query, $this->request->query)));
+        $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->query));
+        
+		$this->set(compact('users'));
     }
 	
     /**
@@ -87,12 +96,13 @@ class UsersController extends AppController {
      * @param string $id User ID
      */
     public function view($id = NULL) {
-        $this->set('user', $this->Users->find()
-			->contain(['Groups' => ['fields' => ['label']]])
+        $user = $this->Users->find()
 			->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
+			->contain(['Groups' => ['fields' => ['label']]])
 			->where(['Users.id' => $id])
-			->firstOrFail()
-        );
+			->firstOrFail();
+        
+        $this->set(compact('user'));
     }
 
     /**
@@ -108,8 +118,9 @@ class UsersController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The user has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The user could not be saved'));
+            }
         }
 
         $this->set(compact('user'));
@@ -133,9 +144,10 @@ class UsersController extends AppController {
 		}
 		
 		//It prevents a blank password is saved
-		if(!$this->request->data('password'))
+		if(!$this->request->data('password')) {
 			unset($this->request->data['password'], $this->request->data['password_repeat']);
-			
+        }
+        
 		$user = $this->Users->patchEntity($user, $this->request->data, ['validate' => 'EmptyPassword']);
 			
         if($this->request->is(['patch', 'post', 'put'])) {
@@ -143,8 +155,9 @@ class UsersController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The user has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The user could not be saved'));
+            }
         }
 
         $this->set(compact('user'));
@@ -163,18 +176,23 @@ class UsersController extends AppController {
 			->firstOrFail();
 		
 		//You cannot delete the admin founder
-		if($user->id === 1)
+		if($user->id === 1) {
 			$this->Flash->error(__d('me_cms', 'You cannot delete the admin founder'));
+        }
 		//Only the admin founder can delete others admin users
-		elseif($user->group_id === 1 && !$this->Auth->isFounder())
+		elseif($user->group_id === 1 && !$this->Auth->isFounder()) {
 			$this->Flash->alert(__d('me_cms', 'Only the admin founder can edit other admin users'));
-		elseif(!empty($user->post_count))
+        }
+		elseif(!empty($user->post_count)) {
 			$this->Flash->alert(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'));
+        }
 		else {
-	        if($this->Users->delete($user))
+	        if($this->Users->delete($user)) {
 	            $this->Flash->success(__d('me_cms', 'The user has been deleted'));
-	        else
+            }
+	        else  {
 	            $this->Flash->error(__d('me_cms', 'The user could not be deleted'));
+            }
 		}
 		
         return $this->redirect(['action' => 'index']);
@@ -189,11 +207,13 @@ class UsersController extends AppController {
 		
 		$user->active = TRUE;
 		
-		if($this->Users->save($user))
+		if($this->Users->save($user)) {
 			$this->Flash->success(__d('me_cms', 'The account has been activated'));
-		else
+        }
+		else {
 			$this->Flash->error(__d('me_cms', 'The account has not been activated'));
-		
+        }
+        
         return $this->redirect(['action' => 'index']);
 	}
 	
@@ -217,8 +237,9 @@ class UsersController extends AppController {
 				$this->Flash->success(__d('me_cms', 'The password has been edited'));
 				return $this->redirect(['_name' => 'dashboard']);
 			}
-			else
+			else {
 				$this->Flash->error(__d('me_cms', 'The password has not been edited'));
+            }
 		}
 
 		$this->set(compact('user'));

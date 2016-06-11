@@ -24,7 +24,7 @@
 	
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'System checkup'));
+    $this->assign('title', __d('me_cms', 'System checkup'));
 	
 	//Sets some classes and options
 	$errorClasses = 'bg-danger text-danger padding10';

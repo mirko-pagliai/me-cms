@@ -20,8 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use Cake\I18n\Time;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('InflectedRoute');
@@ -31,7 +29,7 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => MECMS], function ($routes) {
+Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 	/**
 	 * Banners controller
 	 */
@@ -64,13 +62,21 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
 		['controller' => 'PhotosAlbums', 'action' => 'view'],
 		['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
+	$routes->connect('/album/preview/:slug',
+		['controller' => 'PhotosAlbums', 'action' => 'preview'],
+		['_name' => 'albums_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
 
 	/**
 	 * Photos controller
 	 */
 	$routes->connect('/photo/:slug/:id',
 		['controller' => 'Photos', 'action' => 'view'],
-		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['id']]
+		['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
+	);
+	$routes->connect('/photo/preview/:id',
+		['controller' => 'Photos', 'action' => 'preview'],
+		['_name' => 'photos_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['id']]
 	);
     
 	/**
@@ -80,8 +86,8 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
 	 * <pre>/photo/album-name/1</pre>
 	 */
 	$routes->connect('/photo/:id',
-		['controller' => 'Photos', 'action' => 'view_compatibility'],
-		['id' => '\d+', 'pass' => ['id']]
+		['controller' => 'Photos', 'action' => 'view', 'slug' => FALSE],
+		['id' => '\d+', 'pass' => ['slug', 'id']]
 	);
 	
 	/**
@@ -125,38 +131,11 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
 	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'posts_rss']);
 	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'posts_search']);
-	$routes->connect('/posts/:year/:month/:day', ['controller' => 'Posts', 'action' => 'index_by_day'], [
-		'_name'	=> 'posts_by_day',
-		'year'	=> '[12][0-9]{3}',
-		'month'	=> '0[1-9]|1[012]',
-		'day'	=> '0[1-9]|[12][0-9]|3[01]',
-		'pass'	=> ['year', 'month', 'day']
-	]);
-	$routes->connect('/posts/:year/:month', ['controller' => 'Posts', 'action' => 'index_by_month'], [
-		'_name'	=> 'posts_by_month',
-		'year'	=> '[12][0-9]{3}',
-		'month'	=> '0[1-9]|1[012]',
-		'pass'	=> ['year', 'month']
-	]);
-	$routes->connect('/posts/:year', ['controller' => 'Posts', 'action' => 'index_by_year'], [
-		'_name'	=> 'posts_by_year',
-		'year'	=> '[12][0-9]{3}',
-		'pass'	=> ['year']
-	]);
-	$routes->connect('/posts/today', [
-		'controller'	=> 'Posts', 
-		'action'		=> 'index_by_day',
-		'year'			=> date('Y'),
-		'month'			=> date('m'),
-		'day'			=> date('d'),
-	], ['_name' => 'posts_today', 'pass' => ['year', 'month', 'day']]);
-	$routes->connect('/posts/yesterday', [
-		'controller'	=> 'Posts', 
-		'action'		=> 'index_by_day',
-		'year'			=> (new Time('1 days ago'))->i18nFormat('YYYY'),
-		'month'			=> (new Time('1 days ago'))->i18nFormat('MM'),
-		'day'			=> (new Time('1 days ago'))->i18nFormat('dd'),
-	], ['_name' => 'posts_yesterday', 'pass' => ['year', 'month', 'day']]);
+    $routes->connect('/posts/:date', ['controller' => 'Posts', 'action' => 'index_by_date'], [
+		'_name'	=> 'posts_by_date',
+        'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+        'pass' => ['date']
+    ]);
 	
 	/**
 	 * This allows backward compatibility for URLs like:
@@ -208,7 +187,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
 	/**
 	 * Admin routes
 	 */
-    $routes->prefix('admin', function ($routes) {
+    $routes->prefix('admin', function($routes) {
 		/**
 		 * Admin home page
 		 */
@@ -225,6 +204,6 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
     });
 });
 
-Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
+Router::plugin('MeCms', ['path' => '/me-cms'], function($routes) {
 	$routes->fallbacks('InflectedRoute');
 });

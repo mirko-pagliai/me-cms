@@ -22,29 +22,32 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Login')); ?>
+<?php
+    $this->extend('/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Login'));
+?>
 	
-<div id="login" class="users form">
+<div id="login">
 	<?= $this->Form->create('User') ?>
 	<fieldset>
 		<?php
 			echo $this->Form->input('username', [
-				'autofocus'		=> TRUE,
-				'label'			=> FALSE,
-				'placeholder'	=> __d('me_cms', 'Username')
+				'autofocus' => TRUE,
+				'label' => FALSE,
+				'placeholder' => __d('me_cms', 'Username'),
 			]);
 			echo $this->Form->input('password', [
-				'label'			=> FALSE,
-				'placeholder'	=> __d('me_cms', 'Password')
+				'label' => FALSE,
+				'placeholder' => __d('me_cms', 'Password'),
 			]);
 			echo $this->Form->input('remember_me', [
 				'label'	=> __d('me_cms', 'Remember me'),
-				'tip'	=> __d('me_cms', 'Don\'t use on public computers'),
-				'type'	=> 'checkbox'
+				'tip' => __d('me_cms', 'Don\'t use on public computers'),
+				'type' => 'checkbox',
 			]);
 		?>
 	</fieldset>
-	<?= $this->Form->submit(__d('me_cms', 'Login'), ['class' => 'btn-block btn-lg btn-primary']) ?>
+	<?= $this->Form->submit($title, ['class' => 'btn-block btn-lg btn-primary']) ?>
 	<?= $this->Form->end() ?>
 	<?= $this->element('login/menu'); ?>
 </div>

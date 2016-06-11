@@ -22,18 +22,29 @@
  */
 ?>
 
-<div class="banner <?= $banner->position->name ? sprintf('banner-%s', $banner->position->name) : NULL ?>">
-	<?php
-		$image = $this->Html->img($banner->path);
-		
-		if($banner->target) {
-			echo $this->Html->link($image, ['_name' => 'banner', $banner->id], [
-				'target' => '_blank',
-				'title' => $banner->description ? $banner->description : NULL,
-			]);
+<?php
+    $this->extend('/Posts/index');
+    
+    $date = new \Cake\I18n\Time();
+    $date->year($year)
+        ->month(empty($month) ? 1 : $month)
+        ->day(empty($day) ? 1 : $day);
+    
+    if($year && $month && $day) {        
+		if($date->isToday()) {
+			$this->assign('title', __d('me_cms', 'Posts of today'));
+        }
+		elseif($date->isYesterday()) {
+			$this->assign('title', __d('me_cms', 'Posts of yesterday'));
         }
 		else {
-			echo $image;
+			$this->assign('title', __dx('me_cms', 'posts of day', 'Posts of {0}', $date->i18nFormat(config('main.date.long'))));
         }
-	?>
-</div>
+    }
+    elseif($year && $month) {
+        $this->assign('title', __dx('me_cms', 'posts of month', 'Posts of {0}', $date->i18nFormat('MMMM y')));
+    }
+    else {
+        $this->assign('title', __dx('me_cms', 'posts of year', 'Posts of {0}', $date->i18nFormat('y')));
+    }
+?>    

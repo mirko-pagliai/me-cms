@@ -28,19 +28,23 @@
 			<div>
 				<div class="content-title">
 					<?php
-						if(isset($truncate['title']) && !$truncate['title'])
+						if(isset($truncate['title']) && !$truncate['title']) {
 							echo $post->title;
-						else
+                        }
+						else {
 							echo $this->Text->truncate($post->title, empty($truncate['title']) ? 40 : $truncate['title'], ['exact' => FALSE]);
+                        }
 					?>
 				</div>
 				<?php if(!empty($post->text)): ?>
 					<div class="content-text">
 						<?php
-							if(isset($truncate['text']) && !$truncate['text'])
+							if(isset($truncate['text']) && !$truncate['text']) {
 								echo strip_tags($post->text);
-							else
+                            }
+							else {
 								echo $this->Text->truncate(strip_tags($post->text), empty($truncate['text']) ? 80 : $truncate['text'], ['exact' => FALSE]);
+                            }
 						?>
 					</div>
 				<?php endif; ?>

@@ -22,6 +22,11 @@
  */
 ?>
 
+<?php
+    $this->extend('/Common/view');
+    $this->assign('title', $page->title);
+?>
+
 <?php $this->append('userbar'); ?>
 <?php if(!$page->active): ?>
     <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
@@ -36,8 +41,6 @@
 <?php $this->end(); ?>
 	
 <?php
-    $this->assign('title', $page->title);
-    
 	//Set some tags
     if($this->request->isAction('view', 'Pages')) {
         $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
@@ -49,11 +52,12 @@
         }
 
         if(!empty($page->text)) {
-            $this->Html->meta(['content' => $this->Text->truncate($this->BBCode->remove($page->text), 100, ['html' => TRUE]), 'property' => 'og:description']);
+            $this->Html->meta([
+                'content' => $this->Text->truncate($this->BBCode->remove($page->text), 100, ['html' => TRUE]),
+                'property' => 'og:description'
+            ]);
         }
     }
+    
+    echo $this->element('frontend/views/page', compact('page'));
 ?>
-
-<div class="pages view">
-	<?= $this->element('frontend/views/page', compact('page')); ?>
-</div>

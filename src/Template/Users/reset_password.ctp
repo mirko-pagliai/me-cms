@@ -23,26 +23,26 @@
  */
 ?>
 
-<?php $this->assign('title', __d('me_cms', 'Reset password')); ?>
+<?php
+    $this->extend('/Common/form');
+    $this->assign('title', $title = __d('me_cms', 'Reset password'));
+?>
 
-<div class="users form">
-	<?= $this->Html->h2(__d('me_cms', 'Reset password')) ?>
-	<?= $this->Form->create($user) ?>
-	<fieldset>
-		<?php
-			echo $this->Form->input('password', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Password'),
-				'tip'			=> __d('me_cms', 'Enter your new password')
-			]);
-			echo $this->Form->input('password_repeat', [
-				'autocomplete'	=> FALSE,
-				'label'			=> __d('me_cms', 'Repeat password'),
-				'tip'			=> __d('me_cms', 'Repeat your new password')
-			]);
-		?>
-	</fieldset>
-	<?= $this->Form->submit(__d('me_cms', 'Reset password'), array('class' => 'btn-block btn-lg btn-primary')) ?>
-	<?= $this->Form->end() ?>
-	<?= $this->element('login/menu'); ?>
-</div>
+<?= $this->Form->create($user) ?>
+<fieldset>
+    <?php
+        echo $this->Form->input('password', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Password'),
+            'tip' => __d('me_cms', 'Enter your new password'),
+        ]);
+        echo $this->Form->input('password_repeat', [
+            'autocomplete' => FALSE,
+            'label' => __d('me_cms', 'Repeat password'),
+            'tip' => __d('me_cms', 'Repeat your new password'),
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->submit($title, ['class' => 'btn-block btn-lg btn-primary']) ?>
+<?= $this->Form->end() ?>
+<?= $this->element('login/menu'); ?>

@@ -38,9 +38,10 @@ class PhotosAlbumsController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {		
 		//Only admins can delete albums
-		if($this->request->isAction('delete'))
+		if($this->request->isAction('delete')) {
 			return $this->Auth->isGroup('admin');
-				
+        }
+        
 		return TRUE;
 	}
 	
@@ -50,9 +51,12 @@ class PhotosAlbumsController extends AppController {
     public function index() {
 		$this->paginate['order'] = ['title' => 'ASC'];
 		
-		$this->set('albums', $this->paginate(
-			$this->PhotosAlbums->find()->select(['id', 'slug', 'title', 'photo_count', 'active'])
-		));
+        $albums = $this->paginate(
+			$this->PhotosAlbums->find()
+                ->select(['id', 'slug', 'title', 'photo_count', 'active'])
+		);
+        
+		$this->set(compact('albums'));
     }
 
     /**
@@ -68,8 +72,9 @@ class PhotosAlbumsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The photos album has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The photos album could not be saved'));
+            }
         }
 
         $this->set(compact('album'));
@@ -89,8 +94,9 @@ class PhotosAlbumsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The photos album has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The photos album could not be saved'));
+            }
         }
 
         $this->set(compact('album'));
@@ -106,14 +112,17 @@ class PhotosAlbumsController extends AppController {
 		
 		//Before deleting, it checks if the album has some photos
 		if(!$album->photo_count) {
-			if($this->PhotosAlbums->delete($album))
+			if($this->PhotosAlbums->delete($album)) {
 				$this->Flash->success(__d('me_cms', 'The photos album has been deleted'));
-			else
+            }
+            else {
 				$this->Flash->error(__d('me_cms', 'The photos album could not be deleted'));
+            }
 		}
-		else
+		else {
 			$this->Flash->alert(__d('me_cms', 'Before you delete this album, you have to delete its photos or assign them to another album'));
-		
+        }
+        
         return $this->redirect(['action' => 'index']);
     }
 }

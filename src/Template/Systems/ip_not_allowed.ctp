@@ -22,6 +22,12 @@
  */
 ?>
 
-<div class="system view text-center">
+<?php $this->extend('/Common/view'); ?>
+
+<div class="text-center">
 	<?= __d('me_cms', 'Your IP address is not allowed') ?>
+</div>
+
+<div class="text-center">
+    <?= __d('me_cms', 'You can send us an email to {0}', $this->Recaptcha->mail(config('email.webmaster'))) ?>
 </div>

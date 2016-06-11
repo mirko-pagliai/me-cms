@@ -13,6 +13,16 @@ function getAvailableHeight() {
 	return $(window).height() - $('#topbar').outerHeight(true);
 }
 
+/**
+ * Toggles the filter form
+ */
+function toggleFilterForm() {
+	var form = $('.filter-form legend');
+	
+	$('.fa', form).toggleClass('fa-eye fa-eye-slash');
+	$(form).nextAll().toggle();
+}
+
 //On windows load and resize, it sets the maximum height available for the content
 $(window).on('load resize', function() {
 	$('#content').css('min-height', getAvailableHeight());
@@ -44,18 +54,6 @@ $(function() {
 		Cookies.set('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
 	});
 	
-	//On click on legend of a filter form
-	$('.filter-form legend').click(function() {
-		$('.fa', this).toggleClass('fa-eye fa-eye-slash');
-		
-		if(window.location.search) {
-			$('+ div', this).toggle();
-		}
-		else {
-			$('+ div', this).slideToggle();
-		}
-	});
-	
 	//Gets query string as objects, removing empty values and pagination values
 	var queryString = $.map(document.location.search.replace(/(^\?)/, '').split('&'), function(value, key) {
 		value = value.split('=');
@@ -71,10 +69,15 @@ $(function() {
 		var obj = {};
 		obj[value[0]] = value[1];
 		return obj;
-	});	
+	});
 	
-	//If there are query string values, shows the filters form
-	if(Object.keys(queryString).length && $('.filter-form legend').length) {
-		$('.filter-form legend').trigger('click');
+	//If there are no query string values, toggles the filter form
+	if(!Object.keys(queryString).length && $('.filter-form legend').length) {
+		toggleFilterForm();
 	}
+	
+	//On click on legend of a filter form, toggles the filter form
+	$('.filter-form legend').click(function() {
+		toggleFilterForm();
+	});
 });

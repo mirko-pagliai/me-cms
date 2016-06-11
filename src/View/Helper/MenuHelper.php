@@ -76,8 +76,8 @@ class MenuHelper extends Helper {
 		if($this->Auth->isGroup(['admin', 'manager'])) {
 			$menu[] = $this->Html->link(__d('me_cms', 'Add page'), ['controller' => 'Pages', 'action' => 'add', 'plugin' => MECMS]);
         }
-		
-		$menu[] = $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'statics', 'plugin' => MECMS]);
+        
+		$menu[] = $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'index_statics', 'plugin' => MECMS]);
 		
 		return [$menu, __d('me_cms', 'Pages'), ['icon' => 'files-o']];
 	}
