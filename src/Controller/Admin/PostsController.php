@@ -119,7 +119,7 @@ class PostsController extends AppController {
                     return $q->select(['id', 'title']);
                 },
 				'Tags' => function($q) {
-					return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
+                    return $q->order(['tag' => 'ASC']);
 				},
                 'Users' => function($q) {
                     return $q->select(['id', 'first_name', 'last_name']);
@@ -175,9 +175,11 @@ class PostsController extends AppController {
      */
     public function edit($id = NULL)  {
 		$post = $this->Posts->findById($id)
-			->contain(['Tags' => function($q) {
-				return $q->order([sprintf('%s.tag', $this->Posts->Tags->alias()) => 'ASC']);
-			}])
+			->contain([
+                'Tags' => function($q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
+            ])
 			->firstOrFail();
 		
         if($this->request->is(['patch', 'post', 'put'])) {

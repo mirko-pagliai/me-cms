@@ -61,7 +61,9 @@ class PostsController extends AppController {
                     'Categories' => function($q) {
                         return $q->select(['title', 'slug']);
                     },
-                    'Tags',
+                    'Tags' => function($q) {
+                        return $q->order(['tag' => 'ASC']);
+                    },
                     'Users' => function($q) {
                         return $q->select(['first_name', 'last_name']);
                     },
@@ -158,7 +160,9 @@ class PostsController extends AppController {
                     'Categories' => function($q) {
                         return $q->select(['title', 'slug']);
                     },
-                    'Tags',
+                    'Tags' => function($q) {
+                        return $q->order(['tag' => 'ASC']);
+                    },
                     'Users' => function($q) {
                         return $q->select(['first_name', 'last_name']);
                     },
@@ -276,7 +280,9 @@ class PostsController extends AppController {
                 'Categories' => function($q) {
                     return $q->select(['title', 'slug']);
                 },
-                'Tags',
+                'Tags' => function($q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
                 'Users' => function($q) {
                     return $q->select(['first_name', 'last_name']);
                 },
@@ -306,7 +312,9 @@ class PostsController extends AppController {
                 'Categories' => function($q) {
                     return $q->select(['title', 'slug']);
                 },
-                'Tags',
+                'Tags' => function($q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
                 'Users' => function($q) {
                     return $q->select(['first_name', 'last_name']);
                 },
