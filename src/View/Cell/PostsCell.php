@@ -125,11 +125,13 @@ class PostsCell extends Cell {
                 ->order(['created' => 'DESC'])
                 ->toArray();
             
-            foreach($months as $k => $month) {
+            foreach($months as $old_key => $month) {
                 $exploded = explode('-', $month->month);
-                $months[$month->month] = $month;
-                $months[$month->month]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0])->day(1);
-                unset($months[$k]);
+                $new_key = sprintf('%s/%s', $exploded[1], $exploded[0]);
+                
+                $months[$new_key] = $month;
+                $months[$new_key]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0]);
+                unset($months[$old_key]);
             }
             
             Cache::write($cache, $months, $this->Posts->cache);

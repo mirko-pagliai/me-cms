@@ -79,13 +79,68 @@ class PostsController extends AppController {
         
         $this->set(compact('posts'));
     }
+	
+	/**
+	 * This allows backward compatibility for URLs like:
+	 * <pre>/posts/page:3</pre>
+	 * <pre>/posts/page:3/sort:Post.created/direction:desc</pre>
+	 * These URLs will become:
+	 * <pre>/posts?page=3</pre>
+	 * @param int $page Page number
+	 */
+	public function index_compatibility($page) {
+		return $this->redirect(['_name' => 'posts', '?' => ['page' => $page]], 301);
+	}
     
     /**
-	 * Internal method to list posts in a date interval
-     * @param Time $start Start time
-     * @param Time $end End time
+     * List posts for a specific date:
+     * 
+     * The date must be passed in the format:
+     * <pre>YYYY/MM/dd</pre>
+     * The month and day are optional.  
+     * You can also use the special keywords "today" and "yesterday".
+     * 
+     * Examples:
+     * <pre>/index_by_date/2016/06/11</pre>
+     * <pre>/index_by_date/2016/06</pre>
+     * <pre>/index_by_date/2016</pre>
+     * <pre>/index_by_date/today</pre>
+     * <pre>/index_by_date/yesterday</pre>
+     * @param string $date
      */
-    protected function _index_by_date(Time $start, Time $end) {
+    public function index_by_date($date = NULL) {
+        //Data can be passed as query string, from a widget
+		if($this->request->query('q')) {
+            return $this->redirect([$this->request->query('q')]);
+        }
+        
+        //Sets `$year`, `$month` and `$day`
+        //`$month` and `$day` may be `NULL`
+        if($date === 'today' || $date === 'yesterday') {
+            $date = new Time($date === 'today' ? 'now' : '1 days ago');
+            
+            list($year, $month, $day) = explode('/', $date->i18nFormat('YYYY/MM/dd'));
+        }
+        else {
+            list($year, $month, $day) = am(explode('/', $date), [NULL, NULL, NULL]);
+        }
+        
+        //Sets the start date
+        $start = (new Time())
+            ->setDate($year, empty($month) ? 1 : $month, empty($day) ? 1 : $day)
+            ->setTime(0, 0, 0);
+        
+        //Sets the end date
+        if($year && $month && $day) {
+            $end = (new Time($start))->addDay(1);
+        }
+        elseif($year && $month) {
+            $end = (new Time($start))->addMonth(1);
+        }
+        else {
+            $end = (new Time($start))->addYear(1);
+        }
+        
         $page = $this->request->query('page') ? $this->request->query('page') : 1;
         
         //Sets the cache name
@@ -99,7 +154,9 @@ class PostsController extends AppController {
             $query = $this->Posts->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags',
+                    'Tags' => function($q) {
+                        return $q->order([sprintf('%s.post_count', $this->Posts->Tags->alias()) => 'DESC']);
+                    },
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
@@ -112,86 +169,18 @@ class PostsController extends AppController {
 			$posts = $this->paginate($query)->toArray();
 						
 			//Writes on cache
-			Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
+			Cache::writeMany([
+                $cache => $posts,
+                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+            ], $this->Posts->cache);
 		}
 		//Else, sets the paging parameter
 		else {
 			$this->request->params['paging'] = $paging;
         }
         
-        $this->set(compact('posts'));
+        $this->set(compact('posts', 'year', 'month', 'day'));
     }
-    
-    /**
-	 * Lists posts by a day (year, month and day).
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-	 * @param int $day Day
-     * @uses _index_by_date()
-	 */
-	public function index_by_day($year, $month, $day) {
-        $start = (new Time())->setDate($year, $month, $day)->setTime(0, 0, 0);
-        $end = (new Time($start))->addDay(1);
-        
-        $this->_index_by_date($start, $end);
-		
-		$this->render('index');
-	}
-    
-    /**
-	 * Lists posts by a month (year and month).
-     * It uses the `index` template.
-	 * @param int $year Year
-	 * @param int $month Month
-     * @uses _index_by_date()
-     */
-    public function index_by_month($year, $month) {
-        //Data can be passed as query string, from a widget
-		if($this->request->query('q')) {
-            $exploded = explode('-', $this->request->query('q'));
-			return $this->redirect([$exploded[1], $exploded[0]]);
-        }
-        
-        $start = (new Time())->setDate($year, $month, 1)->setTime(0, 0, 0);
-        $end = (new Time($start))->addMonth(1);
-        
-        $this->_index_by_date($start, $end);
-		
-		$this->render('index');
-    }
-    
-    /**
-	 * Lists posts by a year.
-     * It uses the `index` template.
-	 * @param int $year Year
-     * @uses _index_by_date()
-     */
-    public function index_by_year($year) {
-        //Data can be passed as query string, from a widget
-		if($this->request->query('q')) {
-			return $this->redirect([$this->request->query('q')]);
-        }
-        
-        $start = (new Time())->setDate($year, 1, 1)->setTime(0, 0, 0);
-        $end = (new Time($start))->addYear(1);
-        
-        $this->_index_by_date($start, $end);
-        
-		$this->render('index');
-    }
-	
-	/**
-	 * This allows backward compatibility for URLs like:
-	 * <pre>/posts/page:3</pre>
-	 * <pre>/posts/page:3/sort:Post.created/direction:desc</pre>
-	 * These URLs will become:
-	 * <pre>/posts?page=3</pre>
-	 * @param int $page Page number
-	 */
-	public function index_compatibility($page) {
-		return $this->redirect(['_name' => 'posts', '?' => ['page' => $page]], 301);
-	}
 	
 	/**
 	 * Lists posts as RSS

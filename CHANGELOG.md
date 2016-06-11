@@ -2,6 +2,7 @@
 ## 2.10 branch
 ### 2.10.0
 * now you can disable (published/unpublished) each photo;
+* the code to list posts by date has been greatly improved and simplified;
 * added preview for photos and albums;
 * added userbar for albums;
 * the banned ip list has been moved to a dedicated file 

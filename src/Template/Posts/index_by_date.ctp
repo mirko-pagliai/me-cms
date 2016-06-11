@@ -23,13 +23,28 @@
 ?>
 
 <?php
-    $this->extend('/Common/index');
+    $this->extend('/Posts/index');
     
-    if(!empty($posts)) {
-        foreach($posts as $post) {
-            echo $this->element('frontend/views/post', compact('post'));
+    $date = new \Cake\I18n\Time();
+    $date->year($year)
+        ->month(empty($month) ? 1 : $month)
+        ->day(empty($day) ? 1 : $day);
+    
+    if($year && $month && $day) {        
+		if($date->isToday()) {
+			$this->assign('title', __d('me_cms', 'Posts of today'));
         }
-
-        echo $this->element('MeTools.paginator');
+		elseif($date->isYesterday()) {
+			$this->assign('title', __d('me_cms', 'Posts of yesterday'));
+        }
+		else {
+			$this->assign('title', __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long'))));
+        }
     }
-?>
+    elseif($year && $month) {
+        $this->assign('title', __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM y')));
+    }
+    else {
+        $this->assign('title', __d('me_cms', 'Posts of {0}', $date->i18nFormat('y')));
+    }
+?>    
