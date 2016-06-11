@@ -38,9 +38,10 @@ class PostsTagsController extends AppController {
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit tags
-		if($this->request->isAction('edit'))
+		if($this->request->isAction('edit')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
-		
+        }
+        
 		return TRUE;
 	}
 	
@@ -56,7 +57,9 @@ class PostsTagsController extends AppController {
 		//Limit X4
 		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 		
-		$this->set('tags', $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->query)));
+        $tags = $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->query));
+        
+		$this->set(compact('tags'));
 	}
 	
 	/**
@@ -73,8 +76,9 @@ class PostsTagsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The tag has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The tag could not be saved'));
+            }
         }
 
         $this->set(compact('tag'));

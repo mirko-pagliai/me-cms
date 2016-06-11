@@ -22,6 +22,8 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Datasource\ConnectionManager;
+use Cake\I18n\Time;
 use MeTools\Console\Shell;
 
 class BaseUpdateShell extends Shell {
@@ -63,18 +65,39 @@ class BaseUpdateShell extends Shell {
             return array_values($column)[0];
         }, $columns);
     }
+    
+	/**
+	 * Gets the option parser instance and configures it.
+	 * @return ConsoleOptionParser
+	 */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+        
+        //Scans all methods of the class and adds to the parser all valid 
+        //  subcommands
+        foreach(get_class_methods($this) as $method) {
+            if(preg_match('/^to(\d+v\d+v\d+(v(RC|alpha|beta)\d+)?)$/', $method, $matches)) {
+                $parser->addSubcommand($method, [
+                    'help' => __d('me_cms', 'Updates to {0} version', str_replace('v', '.', $matches[1])),
+                ]);
+            }
+        }
+        
+        return $parser;
+    }
 
     /**
 	 * Initialize
 	 * @uses $connection
+     * @uses $now
 	 */
 	public function initialize() {
         parent::initialize();
 		
 		//Gets database connection
-		$this->connection = \Cake\Datasource\ConnectionManager::get('default');
+		$this->connection = ConnectionManager::get('default');
 		
 		//Sets now for MySql
-		$this->now = (new \Cake\I18n\Time)->now();
-	}    
+		$this->now = new Time();
+	}
 }

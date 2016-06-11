@@ -21,67 +21,15 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-	
+
 <?php
-	/**
-	 * This template can be used by many actions
-	 */
-	if($this->request->isAction('index_by_day', 'Posts')) {
-        $date = new \Cake\I18n\Time();
-        $date->year($this->request->param('year'));
-        $date->month($this->request->param('month'));
-        $date->day($this->request->param('day'));
-		
-		if($date->isToday()) {
-			$title = __d('me_cms', 'Posts of today');
-        }
-		elseif($date->isYesterday()) {
-			$title = __d('me_cms', 'Posts of yesterday');
-        }
-		else {
-			$title = __d('me_cms', 'Posts of {0}', $date->i18nFormat(config('main.date.long')));
-        }
-	}
-    elseif($this->request->isAction('index_by_month', 'Posts')) {
-        $date = new \Cake\I18n\Time();
-        $date->year($this->request->param('year'));
-        $date->month($this->request->param('month'));
-        $date->day(1);
-        
-        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('MMMM y'));
-    }
-    elseif($this->request->isAction('index_by_year', 'Posts')) {
-        $date = new \Cake\I18n\Time();
-        $date->year($this->request->param('year'));
-        $date->month(1);
-        $date->day(1);
-        
-        $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('y'));
-    }
-	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title)) {
-		$title = $posts[0]->category->title;
-    }
-	elseif($this->request->isAction('view', 'PostsTags')) {
-		$title = __d('me_cms', 'Tag {0}', str_replace('-', ' ', $this->request->param('tag')));
-    }
+    $this->extend('/Common/index');
     
-    if(!empty($title)) {
-        $this->assign('title', $title);
+    if(!empty($posts)) {
+        foreach($posts as $post) {
+            echo $this->element('frontend/views/post', compact('post'));
+        }
+
+        echo $this->element('MeTools.paginator');
     }
 ?>
-
-<div class="posts index">
-	<?php
-        if(!empty($title)) {
-            echo $this->Html->h2($title);
-        }
-        
-		if(!empty($posts)) {
-			foreach($posts as $post) {
-				echo $this->element('frontend/views/post', compact('post'));
-            }
-            
-			echo $this->element('MeTools.paginator');
-		}
-	?>
-</div>

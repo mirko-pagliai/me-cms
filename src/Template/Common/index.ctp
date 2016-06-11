@@ -22,18 +22,18 @@
  */
 ?>
 
-<div class="banner <?= $banner->position->name ? sprintf('banner-%s', $banner->position->name) : NULL ?>">
-	<?php
-		$image = $this->Html->img($banner->path);
-		
-		if($banner->target) {
-			echo $this->Html->link($image, ['_name' => 'banner', $banner->id], [
-				'target' => '_blank',
-				'title' => $banner->description ? $banner->description : NULL,
-			]);
+<?php
+    if($this->fetch('title')) {
+        $this->assign('title', $this->fetch('title'));
+    }
+?>
+
+<div class="index">
+    <?php
+        if($this->fetch('title')) {
+            echo $this->Html->h2($this->fetch('title'));
         }
-		else {
-			echo $image;
-        }
-	?>
+        
+        echo $this->fetch('content');
+    ?>
 </div>

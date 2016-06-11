@@ -46,9 +46,12 @@ class UsersGroupsController extends AppController {
     public function index() {
 		$this->paginate['order'] = ['name' => 'ASC'];
 		
-		$this->set('groups', $this->paginate(
-			$this->UsersGroups->find()->select(['id', 'name', 'label', 'user_count'])
-		));
+        $groups = $this->paginate(
+			$this->UsersGroups->find()
+                ->select(['id', 'name', 'label', 'user_count'])
+		);
+        
+		$this->set(compact('groups'));
     }
 
     /**
@@ -64,8 +67,9 @@ class UsersGroupsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The users group has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The users group could not be saved'));
+            }
         }
 
         $this->set(compact('group'));
@@ -85,8 +89,9 @@ class UsersGroupsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The users group has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The users group could not be saved'));
+            }
         }
 
         $this->set(compact('group'));
@@ -102,16 +107,20 @@ class UsersGroupsController extends AppController {
 		
 		//Before deleting, checks if the group is a necessary group or if the group has some users
 		if($id > 3 && !$group->user_count) {
-			if($this->UsersGroups->delete($group))
+			if($this->UsersGroups->delete($group)) {
 				$this->Flash->success(__d('me_cms', 'The users group has been deleted'));
-			else
+            }
+			else {
 				$this->Flash->error(__d('me_cms', 'The users group could not be deleted'));
+            }
 		}
-		elseif($id <= 3)
+		elseif($id <= 3) {
 			$this->Flash->alert(__d('me_cms', 'You cannot delete this users group, because it\'s a necessary group'));
-		else
+        }
+		else {
 			$this->Flash->alert(__d('me_cms', 'Before you delete this users group, you have to delete its users or assign them to another group'));
-			
+        }
+        
         return $this->redirect(['action' => 'index']);
     }
 }

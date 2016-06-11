@@ -30,7 +30,7 @@
 	$this->extend('/Common/widget');
 	$this->assign('title', __d('me_cms', 'Posts by month'));
     
-	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_by_month', date('Y'), date('m')]]);
+	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_by_date', sprintf('%s/%s', date('Y'), date('m'))]]);
 	echo $this->Form->input('q', [
 		'label' => FALSE,
 		'onchange' => 'send_form(this)',

@@ -29,6 +29,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\Routing\DispatcherFactory;
 use MeTools\Network\Request;
 
 require_once 'constants.php';
@@ -39,11 +40,13 @@ require_once 'global_functions.php';
  */
 Plugin::load('MeTools', ['bootstrap' => TRUE]);
 
-if(!is_writeable(BANNERS))
+if(!is_writeable(BANNERS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
-		
-if(!folder_is_writeable(PHOTOS))
+}
+
+if(!folder_is_writeable(PHOTOS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
+}
 
 /**
  * Loads the MeCms configuration
@@ -51,8 +54,9 @@ if(!folder_is_writeable(PHOTOS))
 Configure::load('MeCms.me_cms');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'me_cms.php'))
+if(is_readable(CONFIG.'me_cms.php')) {
 	Configure::load('me_cms');
+}
 
 /**
  * Forces debug and loads DebugKit on localhost, if required
@@ -102,6 +106,13 @@ foreach(Configure::consume('Cache') as $key => $config) {
 }
 
 /**
+ * Loads the banned ip configuration
+ */
+if(is_readable(CONFIG.'banned_ip.php')) {
+	Configure::load('banned_ip');
+}
+
+/**
  * Loads the widgets configuration
  */
 Configure::load('MeCms.widgets');
@@ -121,10 +132,13 @@ Log::config('users', [
     'url' => env('LOG_DEBUG_URL', NULL),
 ]);
 
+//CakePHP will automatically set the locale based on the current user
+DispatcherFactory::add('LocaleSelector');
+
 /**
  * Adds `isAdmin()` detector
  */
-Request::addDetector('admin', function ($request) {
+Request::addDetector('admin', function($request) {
     return $request->param('prefix') === 'admin';
 });
 
@@ -132,8 +146,8 @@ Request::addDetector('admin', function ($request) {
  * Adds `isBanned()` detector.
  * It checks if the user's IP address is banned.
  */
-Request::addDetector('banned', function ($request) {
-    $banned = config('security.banned_ip');
+Request::addDetector('banned', function($request) {
+    $banned = config('Banned');
 
     /**
      * The IP address is allowed if:

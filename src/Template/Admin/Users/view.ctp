@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/view');
-    $this->assign('title', $title = __d('me_cms', 'User {0}', $user->full_name));
+    $this->assign('title', __d('me_cms', 'User {0}', $user->full_name));
 ?>
 
 <?php

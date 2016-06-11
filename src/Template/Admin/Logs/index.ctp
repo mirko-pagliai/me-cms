@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Logs'));
+    $this->assign('title', __d('me_cms', 'Logs'));
 ?>
 
 <table class="table table-striped">

@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Media browser'));
+    $this->assign('title', __d('me_cms', 'Media browser'));
     
 	$this->Asset->js('MeCms.backend/kcfinder', ['block' => 'script_bottom']);
 ?>

@@ -29,6 +29,21 @@ use MeCms\Shell\BaseUpdateShell;
  */
 class UpdateShell extends BaseUpdateShell {
     /**
+	 * Updates to 2.10.0 version
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     */
+    public function to2v10v0() {
+		$this->loadModel('MeCms.Photos');
+        
+        //Adds "active" field to the photos table and sets the default value
+        if(!$this->_checkColumn('active', $this->Photos->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `active` BOOLEAN NOT NULL DEFAULT TRUE AFTER `description`;', $this->Photos->table()));
+            $this->Photos->query()->update()->set(['active' => TRUE])->execute();
+        }
+    }
+    
+    /**
 	 * Updates to 2.7.0 version
      */
 	public function to2v7v0() {
@@ -189,22 +204,5 @@ class UpdateShell extends BaseUpdateShell {
 		$this->loadModel('MeCms.Tags');
 		
 		$this->connection->execute(sprintf('ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT NULL;', $this->Tags->table()));
-	}
-	
-	/**
-	 * Gets the option parser instance and configures it.
-	 * @return ConsoleOptionParser
-	 */
-	public function getOptionParser() {
-		$parser = parent::getOptionParser();
-		
-		return $parser->addSubcommands([
-            'to2v7v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.7.0')],
-            'to2v6v0' => ['help' => __d('me_cms', 'Updates to {0} version', '2.6.0')],
-			'to2v2v1' => ['help' => __d('me_cms', 'Updates to {0} version', '2.2.1')],
-			'to2v1v9' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.9')],
-			'to2v1v8' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.8')],
-			'to2v1v7' => ['help' => __d('me_cms', 'Updates to {0} version', '2.1.7')]
-		]);
 	}
 }

@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Photos'));
+    $this->assign('title', __d('me_cms', 'Photos'));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']));
 	$this->append('actions', $this->Html->button(__d('me_cms', 'Add album'), ['controller' => 'PhotosAlbums', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
     
@@ -39,6 +39,11 @@
                 'default' => $this->request->query('filename'),
                 'placeholder' => __d('me_cms', 'filename'),
                 'size' => 16,
+            ]);
+            echo $this->Form->input('active', [
+                'default' => $this->request->query('active'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
+                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')],
             ]);
             echo $this->Form->input('album', [
                 'default' => $this->request->query('album'),

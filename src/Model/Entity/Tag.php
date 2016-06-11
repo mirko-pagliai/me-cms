@@ -23,6 +23,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Utility\Text;
 
 /**
  * Tag entity
@@ -56,6 +57,6 @@ class Tag extends Entity {
 	 * @return string
 	 */
 	protected function _getSlug() {
-		return str_replace(' ', '-', $this->_properties['tag']);
+		return Text::slug($this->_properties['tag']);
 	}
 }

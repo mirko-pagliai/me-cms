@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Static pages'));
+    $this->assign('title', __d('me_cms', 'Static pages'));
 ?>
 
 <table class="table table-striped">

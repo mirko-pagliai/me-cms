@@ -46,9 +46,12 @@ class BannersPositionsController extends AppController {
     public function index() {
 		$this->paginate['order'] = ['name' => 'ASC'];
 		
-		$this->set('positions', $this->paginate(
-			$this->BannersPositions->find()->select(['id', 'name', 'description', 'banner_count'])
-        ));
+        $positions = $this->paginate(
+			$this->BannersPositions->find()
+                ->select(['id', 'name', 'description', 'banner_count'])
+        );
+        
+		$this->set(compact('positions'));
     }
 
     /**
@@ -64,8 +67,9 @@ class BannersPositionsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The banners position has been saved'));
 				return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The banners position could not be saved'));
+            }
         }
 
         $this->set(compact('position'));
@@ -85,8 +89,9 @@ class BannersPositionsController extends AppController {
                 $this->Flash->success(__d('me_cms', 'The banners position has been saved'));
                 return $this->redirect(['action' => 'index']);
             } 
-			else
+			else {
                 $this->Flash->error(__d('me_cms', 'The banners position could not be saved'));
+            }
         }
 
         $this->set(compact('position'));
@@ -102,14 +107,17 @@ class BannersPositionsController extends AppController {
 		
 		//Before deleting, it checks if the position has some banners
 		if(!$position->banner_count) {
-			if($this->BannersPositions->delete($position))
+			if($this->BannersPositions->delete($position)) {
 				$this->Flash->success(__d('me_cms', 'The banners position has been deleted'));
-			else
+            }
+			else {
 				$this->Flash->error(__d('me_cms', 'The banners position could not be deleted'));
+            }
 		}
-		else
+		else {
 			$this->Flash->alert(__d('me_cms', 'Before you delete this position, you have to delete its banners or assign them to another position'));
-		
+        }
+        
         return $this->redirect(['action' => 'index']);
     }
 }

@@ -24,7 +24,7 @@
 
 <?php
     $this->extend('/Admin/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Upload banners'));
+    $this->assign('title', __d('me_cms', 'Upload banners'));
 ?>
 
 <div class="well">

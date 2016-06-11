@@ -28,15 +28,34 @@ use MeCms\Controller\AppController;
  * Photos controller
  * @property \MeCms\Model\Table\PhotosTable $Photos
  */
-class PhotosController extends AppController {	
+class PhotosController extends AppController {
     /**
      * Views a photo
+     * @param string $slug Album slug
      * @param string $id Photo ID
      */
-    public function view($id = NULL) {
-        $photo = $this->Photos->find()
-			->select(['id', 'album_id', 'filename'])
-			->where(compact('id'))
+    public function view($slug = NULL, $id = NULL) {
+        /**
+         * This allows backward compatibility for URLs like:
+         * <pre>/photo/11</pre>
+         */
+        if(empty($slug)) {
+            $photo = $this->Photos->find('active')
+                ->select(['album_id'])
+                ->contain([
+                    'Albums' => function($q) {
+                        return $q->select(['id', 'slug']);
+                    }
+                ])
+                ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+                ->firstOrFail();
+                
+            return $this->redirect(am(['slug' => $photo->album->slug], compact('id')), 301);
+        }
+        
+        $photo = $this->Photos->find('active')
+			->select(['id', 'album_id', 'filename', 'active'])
+			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail();
         
@@ -44,22 +63,18 @@ class PhotosController extends AppController {
     }
     
     /**
-	 * This allows backward compatibility for URLs like:
-	 * <pre>/photo/11</pre>
-	 * These URLs will become:
-	 * <pre>/photo/album-name/1</pre>
+     * Preview for photos.
+     * It uses the `view` template.
      * @param string $id Photo ID
      */
-    public function view_compatibility($id) {
+    public function preview($id = NULL) {        
         $photo = $this->Photos->find()
-            ->select(['id'])
-            ->contain([
-                'Albums' => function($q) {
-                    return $q->select(['slug']);
-                }
-            ])
-            ->firstOrFail();
+			->select(['id', 'album_id', 'filename'])
+			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+			->firstOrFail();
         
-		return $this->redirect(am(['_name' => 'photo', 'slug' => $photo->album->slug], compact('id')), 301);
+        $this->set(compact('photo'));
+        
+        $this->render('view');
     }
 }
