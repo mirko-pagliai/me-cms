@@ -20,8 +20,6 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-use Cake\I18n\Time;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('InflectedRoute');
