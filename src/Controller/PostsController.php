@@ -58,11 +58,13 @@ class PostsController extends AppController {
 		if(empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function($q) {
-                        return $q->order([sprintf('%s.post_count', $this->Posts->Tags->alias()) => 'DESC']);
+                    'Categories' => function($q) {
+                        return $q->select(['title', 'slug']);
                     },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Tags',
+                    'Users' => function($q) {
+                        return $q->select(['first_name', 'last_name']);
+                    },
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
@@ -153,11 +155,13 @@ class PostsController extends AppController {
 		if(empty($posts) || empty($paging)) {        
             $query = $this->Posts->find('active')
                 ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function($q) {
-                        return $q->order([sprintf('%s.post_count', $this->Posts->Tags->alias()) => 'DESC']);
+                    'Categories' => function($q) {
+                        return $q->select(['title', 'slug']);
                     },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Tags',
+                    'Users' => function($q) {
+                        return $q->select(['first_name', 'last_name']);
+                    },
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->where([
@@ -269,9 +273,13 @@ class PostsController extends AppController {
     public function view($slug = NULL) {
 		$post = $this->Posts->find('active')
 			->contain([
-				'Categories' => ['fields' => ['title', 'slug']],
-				'Tags',
-				'Users' => ['fields' => ['first_name', 'last_name']],
+                'Categories' => function($q) {
+                    return $q->select(['title', 'slug']);
+                },
+                'Tags',
+                'Users' => function($q) {
+                    return $q->select(['first_name', 'last_name']);
+                },
 			])
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
@@ -295,9 +303,13 @@ class PostsController extends AppController {
     public function preview($slug = NULL) {
         $post = $this->Posts->find()
 			->contain([
-				'Categories' => ['fields' => ['title', 'slug']],
-				'Tags',
-				'Users' => ['fields' => ['first_name', 'last_name']],
+                'Categories' => function($q) {
+                    return $q->select(['title', 'slug']);
+                },
+                'Tags',
+                'Users' => function($q) {
+                    return $q->select(['first_name', 'last_name']);
+                },
 			])
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
 			->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
