@@ -76,9 +76,9 @@ class BaseUpdateShell extends Shell {
         //Scans all methods of the class and adds to the parser all valid 
         //  subcommands
         foreach(get_class_methods($this) as $method) {
-            if(preg_match('/^to_(\d+_\d+_\d+(_(RC|alpha|beta)\d+)?)$/', $method, $matches)) {
+            if(preg_match('/^to(\d+v\d+v\d+(v(RC|alpha|beta)\d+)?)$/', $method, $matches)) {
                 $parser->addSubcommand($method, [
-                    'help' => __d('me_cms', 'Updates to {0} version', str_replace('_', '.', $matches[1])),
+                    'help' => __d('me_cms', 'Updates to {0} version', str_replace('v', '.', $matches[1])),
                 ]);
             }
         }
