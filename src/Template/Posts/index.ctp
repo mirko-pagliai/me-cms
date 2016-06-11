@@ -60,12 +60,6 @@
         
         $title = __d('me_cms', 'Posts of {0}', $date->i18nFormat('y'));
     }
-	elseif($this->request->isAction('view', 'PostsCategories') && !empty($posts[0]->category->title)) {
-		$title = $posts[0]->category->title;
-    }
-	elseif($this->request->isAction('view', 'PostsTags')) {
-		$title = __d('me_cms', 'Tag {0}', $tag);
-    }
     
     if(!empty($title)) {
         $this->assign('title', $title);
