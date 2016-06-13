@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.10 branch
 ### 2.10.1
+* added links on userbar for posts categories and tags;
 * added `userbar()` method for `AppViews`. This simplifies the code to add 
 	elements to the userbar;
 * added links to upload banners and photos from indexes of banner positions 

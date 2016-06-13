@@ -56,7 +56,6 @@ class PostsTagsController extends AppController {
 			return $this->redirect([$this->request->query('q')]);
         }
         
-        $tag = Text::slug($tag, ['replacement' => ' ']);
         $page = $this->request->query('page') ? $this->request->query('page') : 1;
         
 		//Sets the cache name
@@ -80,7 +79,9 @@ class PostsTagsController extends AppController {
                     },
 				])
 				->matching('Tags', function($q) use ($tag) {
-					return $q->where(['Tags.tag' => $tag]);
+					return $q->where([
+                        'Tags.tag' => Text::slug($tag, ['replacement' => ' ']),
+                    ]);
 				})
 				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
@@ -102,6 +103,10 @@ class PostsTagsController extends AppController {
 			$this->request->params['paging'] = $paging;
         }
         
-		$this->set(compact('posts', 'tag'));
+		$this->set(am([
+            'tag' => $posts[0]->tags[array_search($tag, array_map(function($tag) {
+                return $tag->tag;
+            }, $posts[0]->tags))],
+        ], compact('posts')));
     }
 }
