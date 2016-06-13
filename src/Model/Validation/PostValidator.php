@@ -35,10 +35,12 @@ class PostValidator extends AppValidator {
         parent::__construct();
 		
 		//Category
-        $this->add('category_id', ['naturalNumber' => [
-			'message'	=> __d('me_cms', 'You have to select a valid option'),
-			'rule'		=> 'naturalNumber'
-		]])->requirePresence('category_id', 'create');
+        $this->add('category_id', [
+            'naturalNumber' => [
+                'message' => __d('me_cms', 'You have to select a valid option'),
+                'rule' => 'naturalNumber',
+            ],
+        ])->requirePresence('category_id', 'create');
 		
 		//User (author)
 		$this->requirePresence('user_id', 'create');
@@ -55,13 +57,13 @@ class PostValidator extends AppValidator {
 		//Tags
         $this->add('tags', [
 			'validTagsLength' => [
-				'message'	=> __d('me_cms', 'Each tag must be between {0} and {1} chars', 3, 20),
-				'rule'		=> [$this, 'validTagsLength']
+				'message' => __d('me_cms', 'Each tag must be between {0} and {1} chars', 3, 20),
+				'rule' => [$this, 'validTagsLength'],
 			],
 			'validTagsChars' => [
-				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
-				'rule'		=> [$this, 'validTagsChars']
-			]
+				'message' => sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
+				'rule' => [$this, 'validTagsChars'],
+			],
 		])->allowEmpty('tags');
 		
         return $this;
@@ -77,12 +79,14 @@ class PostValidator extends AppValidator {
 	public function validTagsLength($value, $context) {
 		foreach($value as $tag) {
 			//Continues, if the tag has the ID
-			if(!empty($tag['id']))
+			if(!empty($tag['id'])) {
 				continue;
-			
+            }
+            
 			//Checks if the tag has between 3 and 30 chars
-			if(empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag'] > 30))
+			if(empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag'] > 30)) {
 				return FALSE;
+            }
 		}
 		
 		return TRUE;
@@ -98,12 +102,14 @@ class PostValidator extends AppValidator {
 	public function validTagsChars($value, $context) {
 		foreach($value as $tag) {
 			//Continues, if the tag has the ID
-			if(!empty($tag['id']))
+			if(!empty($tag['id'])) {
 				continue;
-			
+            }
+            
 			//Checks if the tag has only lowercase letters, numbers, hyphen, space
-			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\ ]+$/', $tag['tag']))
+			if(empty($tag['tag']) || !(bool) preg_match('/^[a-z0-9\ ]+$/', $tag['tag'])) {
 				return FALSE;
+            }
 		}
 		
 		return TRUE;

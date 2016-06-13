@@ -38,6 +38,6 @@ class PostsTag extends Entity {
      * @var array
      */
     protected $_accessible = [
-        '*' => FALSE
+        '*' => FALSE,
     ];
 }

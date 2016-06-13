@@ -96,7 +96,7 @@ class PhotosTable extends AppTable {
         $this->belongsTo('Albums', [
             'foreignKey' => 'album_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.PhotosAlbums'
+            'className' => 'MeCms.PhotosAlbums',
         ]);
 		
         $this->addBehavior('Timestamp');
@@ -115,7 +115,9 @@ class PhotosTable extends AppTable {
 		
 		//"Album" field
 		if(!empty($data['album']) && preg_match('/^[1-9]\d*$/', $data['album'])) {
-			$query->where([sprintf('%s.album_id', $this->alias()) => $data['album']]);
+			$query->where([
+                sprintf('%s.album_id', $this->alias()) => $data['album'],
+            ]);
         }
         
 		return $query;

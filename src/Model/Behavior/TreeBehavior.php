@@ -25,8 +25,9 @@ namespace MeCms\Model\Behavior;
 use Cake\ORM\Behavior\TreeBehavior as CakeTreeBehavior;
 
 /**
- * Makes the table to which this is attached to behave like a nested set and provides methods 
- * for managing and retrieving information out of the derived hierarchical structure.
+ * Makes the table to which this is attached to behave like a nested set and 
+ *  provides methods  for managing and retrieving information out of the 
+ *  derived hierarchical structure.
  * 
  * Rewrites {@link http://api.cakephp.org/3.2/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
  * 
@@ -37,9 +38,10 @@ use Cake\ORM\Behavior\TreeBehavior as CakeTreeBehavior;
  */
 class TreeBehavior extends CakeTreeBehavior {
 	/**
-	 * Gets a representation of the elements in the tree as a flat list where the keys are the 
-	 * primary key for the table and the values are the display field for the table. Values 
-	 * are prefixed to visually indicate relative depth in the tree
+	 * Gets a representation of the elements in the tree as a flat list where 
+     *  the keys are the primary key for the table and the values are the 
+     *  display field for the table. Values are prefixed to visually indicate 
+     *  relative depth in the tree
 	 * @param \Cake\ORM\Query $query Query
 	 * @param array $options Options
 	 * @return Cake\ORM\Query Query

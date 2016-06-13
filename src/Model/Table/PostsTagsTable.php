@@ -65,12 +65,12 @@ class PostsTagsTable extends AppTable {
         $this->belongsTo('Tags', [
             'foreignKey' => 'tag_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.Tags'
+            'className' => 'MeCms.Tags',
         ]);
         $this->belongsTo('Posts', [
             'foreignKey' => 'post_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.Posts'
+            'className' => 'MeCms.Posts',
         ]);
 		
         $this->addBehavior('CounterCache', ['Tags' => ['post_count']]);
