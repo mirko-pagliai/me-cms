@@ -50,12 +50,14 @@ class BackupForm extends Form {
 					
 					return (bool) preg_match(sprintf('/\.(%s)$/i', implode('|', $extensions)), $value);
 				},
-				'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2')
+				'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
 			])
-			->add('filename', ['lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-				'rule'		=> ['lengthBetween', 3, 100]
-			]]);
+			->add('filename', [
+                    'lengthBetween' => [
+                    'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+                    'rule' => ['lengthBetween', 3, 100],
+                ],
+            ]);
 		
         return $validator;
     }

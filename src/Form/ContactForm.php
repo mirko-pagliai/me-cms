@@ -53,10 +53,12 @@ class ContactForm extends Form {
 		
 		//Message
 		$validator->requirePresence('message')
-			->add('message', ['lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
-				'rule'		=> ['lengthBetween', 10, 1000]
-			]]);
+			->add('message', [
+                'lengthBetween' => [
+                    'message' => __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
+                    'rule' => ['lengthBetween', 10, 1000],
+                ],
+            ]);
 		
         return $validator;
     }
