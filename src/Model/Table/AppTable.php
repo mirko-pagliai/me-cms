@@ -37,12 +37,11 @@ class AppTable extends Table {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses clearCache()
      * @uses $cache
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		if(!empty($this->cache)) {
-			$this->clearCache($this->cache);
+			Cache::clear(FALSE, $this->cache);
         }
 	}
 	
@@ -51,23 +50,12 @@ class AppTable extends Table {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses clearCache()
      * @uses $cache
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
 		if(!empty($this->cache)) {
-			$this->clearCache($this->cache);
+			Cache::clear(FALSE, $this->cache);
         }
-	}
-	
-	/**
-	 * Clears the cache
-	 * @param string|array $config Name of the configuration to clear
-	 */
-	public function clearCache($config) {
-		array_walk((array) $config, function($config) {
-			Cache::clear(FALSE, $config);		
-		});
 	}
 	
 	/**
