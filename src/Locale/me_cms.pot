@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-06-13 16:02+0200\n"
+"POT-Creation-Date: 2016-06-13 17:26+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -45,12 +45,10 @@ msgid "Invalid token"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:151
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:211
 msgid "The account has been activated"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:154
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:214
 msgid "The account has not been activated"
 msgstr ""
 
@@ -87,12 +85,10 @@ msgid "We send you an email to activate your account"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:369
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:237
 msgid "The password has been edited"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:373
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:241
 msgid "The password has not been edited"
 msgstr ""
 
@@ -108,252 +104,88 @@ msgstr ""
 msgid "The account has not been created"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:69
-msgid "The backup has been created"
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:69;89;124
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:171;201
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:67;89;111
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:170
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:110;134;154
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:72;94;116
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:171;201
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:102;124;146
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:159;201;221
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:76
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:237
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:118;155;191;211;237
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:67;89;111
+msgid "The operation has been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:73
-msgid "The backup has not been created"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:89
-msgid "The backup has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:92
-msgid "The backup could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:124
-msgid "The backup has been restored"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:127
-msgid "The backup could not be restored"
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:73;92;127
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:175;204
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:71;93;114
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:173
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:114;138;157
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:76;98;119
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:175;204
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:106;128;149
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:163;205;224
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:80
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:240
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:122;159;194;214;241
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:71;93;114
+msgid "The operation has not been performed correctly"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:49
-msgid "Before you can manage banners, you have to create at least a banner position"
+msgid "You must first create a banner position"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:132
 msgid "Missing position ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:151;175
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:151
 msgid "The banner could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:171
-msgid "The banner has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:201
-msgid "The banner has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:204
-msgid "The banner could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:67;89
-msgid "The banners position has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:71;93
-msgid "The banners position could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:111
-msgid "The banners position has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:114
-msgid "The banners position could not be deleted"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:118
-msgid "Before you delete this position, you have to delete its banners or assign them to another position"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:170
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:237
-msgid "The operation has been performed correctly"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:173
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:240
-msgid "The operation has not been performed correctly"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:110;134
-msgid "The page has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:114;138
-msgid "The page could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:154
-msgid "The page has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:157
-msgid "The page could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:72;94
-msgid "The photos album has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:76;98
-msgid "The photos album could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:116
-msgid "The photos album has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:119
-msgid "The photos album could not be deleted"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:123
-msgid "Before you delete this album, you have to delete its photos or assign them to another album"
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:153
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:187
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:121
+msgid "Before deleting this, you must delete or reassign all items that belong to this element"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:50
-msgid "Before you can manage photos, you have to create at least an album"
+msgid "You must first create an album"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:132
 msgid "Missing album ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:151;175
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:151
 msgid "The photo could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:171
-msgid "The photo has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:201
-msgid "The photo has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:204
-msgid "The photo could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:102;124
-msgid "The posts category has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:106;128
-msgid "The posts category could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:146
-msgid "The posts category has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:149
-msgid "The posts category could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:153
-msgid "Before you delete this category, you have to delete its posts or assign them to another category"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:58
-msgid "Before you can manage posts, you have to create at least a category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:159;201
-msgid "The post has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:163;205
-msgid "The post could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:221
-msgid "The post has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:224
-msgid "The post could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:76
-msgid "The tag has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:80
-msgid "The tag could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:69
-msgid "{0} is not present into {1}"
+msgid "You must first create a category"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:233
 msgid "Unknown command type"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:118;155
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:97
-msgid "The user has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:122;159
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:102
-msgid "The user could not be saved"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:142;184
-msgid "Only the admin founder can edit other admin users"
+msgid "Only the admin founder can do this"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:180
 msgid "You cannot delete the admin founder"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:187
-msgid "Before you delete this user, you have to delete his posts or assign them to another user"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:191
-msgid "The user has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:194
-msgid "The user could not be deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:67;89
-msgid "The users group has been saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:71;93
-msgid "The users group could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:111
-msgid "The users group has been deleted"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:114
-msgid "The users group could not be deleted"
-msgstr ""
-
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:118
-msgid "You cannot delete this users group, because it's a necessary group"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:121
-msgid "Before you delete this users group, you have to delete its users or assign them to another group"
+msgid "You cannot delete this users group"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Component/AuthComponent.php:49
@@ -581,8 +413,16 @@ msgstr ""
 msgid "Invalid group ID"
 msgstr ""
 
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:97
+msgid "The user has been saved"
+msgstr ""
+
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:101
 msgid "An error occurred, try again"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:102
+msgid "The user could not be saved"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:118

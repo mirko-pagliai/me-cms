@@ -107,11 +107,11 @@ class PagesController extends AppController {
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
-                $this->Flash->success(__d('me_cms', 'The page has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The page could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -131,11 +131,11 @@ class PagesController extends AppController {
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
-                $this->Flash->success(__d('me_cms', 'The page has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The page could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -151,10 +151,10 @@ class PagesController extends AppController {
         $page = $this->Pages->get($id);
 		
         if($this->Pages->delete($page)) {
-            $this->Flash->success(__d('me_cms', 'The page has been deleted'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
         else {
-            $this->Flash->error(__d('me_cms', 'The page could not be deleted'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
         
         return $this->redirect(['action' => 'index']);

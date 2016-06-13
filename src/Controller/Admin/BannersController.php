@@ -46,7 +46,7 @@ class BannersController extends AppController {
 		
 			//Checks for positions
 			if(empty($positions) && !$this->request->isAction('index')) {
-				$this->Flash->alert(__d('me_cms', 'Before you can manage banners, you have to create at least a banner position'));
+				$this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
 				return $this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
 			}
             
@@ -168,11 +168,11 @@ class BannersController extends AppController {
             $banner = $this->Banners->patchEntity($banner, $this->request->data);
 			
             if($this->Banners->save($banner)) {
-                $this->Flash->success(__d('me_cms', 'The banner has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The banner could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -198,10 +198,10 @@ class BannersController extends AppController {
         $banner = $this->Banners->get($id);
 		
         if($this->Banners->delete($banner)) {
-            $this->Flash->success(__d('me_cms', 'The banner has been deleted'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
         else {
-            $this->Flash->error(__d('me_cms', 'The banner could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 			
         return $this->redirect(['action' => 'index']);

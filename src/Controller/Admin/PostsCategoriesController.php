@@ -99,11 +99,11 @@ class PostsCategoriesController extends AppController {
             $category = $this->PostsCategories->patchEntity($category, $this->request->data);
 			
             if($this->PostsCategories->save($category)) {
-                $this->Flash->success(__d('me_cms', 'The posts category has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The posts category could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -121,11 +121,11 @@ class PostsCategoriesController extends AppController {
             $category = $this->PostsCategories->patchEntity($category, $this->request->data);
 			
             if($this->PostsCategories->save($category)) {
-                $this->Flash->success(__d('me_cms', 'The posts category has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The posts category could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -143,14 +143,14 @@ class PostsCategoriesController extends AppController {
 		//Before deleting, it checks if the category has some posts
 		if(!$category->post_count) {
 			if($this->PostsCategories->delete($category)) {
-				$this->Flash->success(__d('me_cms', 'The posts category has been deleted'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
             }
 			else {
-				$this->Flash->error(__d('me_cms', 'The posts category could not be deleted'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 		}
 		else {
-			$this->Flash->alert(__d('me_cms', 'Before you delete this category, you have to delete its posts or assign them to another category'));
+			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
         
         return $this->redirect(['action' => 'index']);

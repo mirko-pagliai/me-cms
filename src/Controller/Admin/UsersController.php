@@ -115,11 +115,11 @@ class UsersController extends AppController {
             $user = $this->Users->patchEntity($user, $this->request->data);
 			
             if($this->Users->save($user)) {
-                $this->Flash->success(__d('me_cms', 'The user has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 				return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The user could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -139,7 +139,7 @@ class UsersController extends AppController {
 		
 		//Only the admin founder can edit others admin users
 		if($user->group_id === 1 && !$this->Auth->isFounder()) {
-			$this->Flash->alert(__d('me_cms', 'Only the admin founder can edit other admin users'));
+			$this->Flash->alert(__d('me_cms', 'Only the admin founder can do this'));
 			return $this->redirect(['action' => 'index']);
 		}
 		
@@ -152,11 +152,11 @@ class UsersController extends AppController {
 			
         if($this->request->is(['patch', 'post', 'put'])) {
             if($this->Users->save($user)) {
-                $this->Flash->success(__d('me_cms', 'The user has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The user could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -181,17 +181,17 @@ class UsersController extends AppController {
         }
 		//Only the admin founder can delete others admin users
 		elseif($user->group_id === 1 && !$this->Auth->isFounder()) {
-			$this->Flash->alert(__d('me_cms', 'Only the admin founder can edit other admin users'));
+			$this->Flash->alert(__d('me_cms', 'Only the admin founder can do this'));
         }
 		elseif(!empty($user->post_count)) {
-			$this->Flash->alert(__d('me_cms', 'Before you delete this user, you have to delete his posts or assign them to another user'));
+			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
 		else {
 	        if($this->Users->delete($user)) {
-	            $this->Flash->success(__d('me_cms', 'The user has been deleted'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
             }
 	        else  {
-	            $this->Flash->error(__d('me_cms', 'The user could not be deleted'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 		}
 		
@@ -208,10 +208,10 @@ class UsersController extends AppController {
 		$user->active = TRUE;
 		
 		if($this->Users->save($user)) {
-			$this->Flash->success(__d('me_cms', 'The account has been activated'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
 		else {
-			$this->Flash->error(__d('me_cms', 'The account has not been activated'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
         
         return $this->redirect(['action' => 'index']);
@@ -234,11 +234,11 @@ class UsersController extends AppController {
 				//Sends email
 				$this->getMailer('MeCms.User')->send('change_password', [$user]);
 				
-				$this->Flash->success(__d('me_cms', 'The password has been edited'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 				return $this->redirect(['_name' => 'dashboard']);
 			}
 			else {
-				$this->Flash->error(__d('me_cms', 'The password has not been edited'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 		}
 

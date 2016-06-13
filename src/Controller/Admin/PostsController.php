@@ -55,7 +55,7 @@ class PostsController extends AppController {
 		
 		//Checks for categories
 		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
-			$this->Flash->alert(__d('me_cms', 'Before you can manage posts, you have to create at least a category'));
+			$this->Flash->alert(__d('me_cms', 'You must first create a category'));
 			return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
 		
@@ -156,11 +156,11 @@ class PostsController extends AppController {
             $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => FALSE]]]);
 			
             if($this->Posts->save($post)) {
-                $this->Flash->success(__d('me_cms', 'The post has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The post could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 		
@@ -198,11 +198,11 @@ class PostsController extends AppController {
             ]);
 			
             if($this->Posts->save($post)) {
-                $this->Flash->success(__d('me_cms', 'The post has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The post could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 		
@@ -218,10 +218,10 @@ class PostsController extends AppController {
         $post = $this->Posts->get($id);
 		
         if($this->Posts->delete($post)) {
-            $this->Flash->success(__d('me_cms', 'The post has been deleted'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
         else {
-            $this->Flash->error(__d('me_cms', 'The post could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 			
         return $this->redirect(['action' => 'index']);
