@@ -42,7 +42,6 @@ class BaseView extends AppView {
 	 * Gets the title for layout
 	 * @return string Title
 	 * @uses title
-	 * @uses viewVars
 	 */
 	protected function _getTitleForLayout() {
 		if(!empty($this->title)) {
@@ -58,8 +57,8 @@ class BaseView extends AppView {
         }
 		
 		//If exists, it adds the title assigned by the controller
-		if(!empty($this->viewVars['title'])) {
-			$title = sprintf('%s - %s', $this->viewVars['title'], $title);
+		if($this->get('title')) {
+			$title = sprintf('%s - %s', $this->get('title'), $title);
         }
 		//Else, if exists, it adds the title assigned by the current view
 		elseif($this->fetch('title')) {

@@ -47,7 +47,6 @@ class AdminView extends BaseView {
 	 * @return string|NULL Rendered content or NULL if content already 
      *  rendered and returned earlier
 	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_render
-	 * @uses viewVars
 	 */
 	public function render($view = NULL, $layout = NULL) {
 		//Sets the layout
@@ -56,13 +55,13 @@ class AdminView extends BaseView {
         }
         
 		//Sets some view vars
-		$this->viewVars['priorities'] = [
+		$this->set('priorities', [
 			'1' => sprintf('1 - %s', __d('me_cms', 'Very low')),
 			'2' => sprintf('2 - %s', __d('me_cms', 'Low')),
 			'3' => sprintf('3 - %s', __d('me_cms', 'Normal')),
 			'4' => sprintf('4 - %s', __d('me_cms', 'High')),
 			'5' => sprintf('5 - %s', __d('me_cms', 'Very high'))
-		];
+		]);
 		
 		return parent::render($view, $layout);
 	}
