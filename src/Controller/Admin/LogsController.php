@@ -23,6 +23,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
@@ -56,8 +57,8 @@ class LogsController extends AppController {
 	 */
 	public function index() {
 		//Gets all log files
-		$logs = (new \Cake\Filesystem\Folder(LOGS))->read(TRUE, ['empty'])[1];		
-				
+		$logs = (new Folder(LOGS))->read(TRUE, ['empty'])[1];
+        
 		$logs = af(array_map(function($log){
 			//Return, if this is a serialized log
 			if(preg_match('/_serialized\.log$/i', $log)) {
