@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.10 branch
 ### 2.10.1
+* added links to upload banners and photos from indexes of banner positions 
+	and photo albums;
 * fixed bug for rotated logs;
 * fixed messages pluralized;
 * strings to be translated were defined and simplified.

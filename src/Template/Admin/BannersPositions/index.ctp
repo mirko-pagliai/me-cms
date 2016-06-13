@@ -45,7 +45,8 @@
                     <?php
                         $actions = [
                             $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $position->id], ['icon' => 'pencil']),
-                            $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $position->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')])
+                            $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $position->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]),
+                            $this->Html->link(__d('me_cms', 'Upload'), ['controller' => 'Banners', 'action' => 'upload', '?' => ['position' => $position->id]], ['icon' => 'upload']),
                         ];
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);
