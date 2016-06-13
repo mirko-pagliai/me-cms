@@ -25,22 +25,20 @@
 <?php
     $this->extend('/Common/view');
     $this->assign('title', $post->title);
-?>
-
-<?php $this->append('userbar'); ?>
-<?php if(!$post->active): ?>
-    <li><?= $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']) ?></li>
-<?php endif; ?>
-
-<?php if($post->created->isFuture()): ?>
-    <li><?= $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']) ?></li>
-<?php endif; ?>
-
-<li><?= $this->Html->link(__d('me_cms', 'Edit post'), ['action' => 'edit', $post->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']) ?></li>
-<li><?= $this->Form->postLink(__d('me_cms', 'Delete post'), ['action' => 'delete', $post->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']) ?></li>
-<?php $this->end(); ?>
-
-<?php
+    
+    if(!$post->active) {
+       $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning'])); 
+    }
+    
+    if($post->created->isFuture()) {
+        $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
+    }
+    
+    $this->userbar([
+        $this->Html->link(__d('me_cms', 'Edit post'), ['action' => 'edit', $post->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']),
+        $this->Form->postLink(__d('me_cms', 'Delete post'), ['action' => 'delete', $post->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
+    ]);
+    
 	//Set some tags
     if($this->request->isAction('view', 'Posts')) {
         $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
@@ -58,6 +56,6 @@
             ]);
         }
     }
-    
-    echo $this->element('frontend/views/post', compact('post'));
 ?>
+
+<?= $this->element('frontend/views/post', compact('post')) ?>

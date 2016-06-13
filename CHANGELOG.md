@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.10 branch
 ### 2.10.1
+* added `userbar()` method for `AppViews`. This simplifies the code to add 
+	elements to the userbar;
 * added links to upload banners and photos from indexes of banner positions 
 	and photo albums;
 * fixed bug for rotated logs;
