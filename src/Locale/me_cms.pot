@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-06-11 19:28+0200\n"
+"POT-Creation-Date: 2016-06-13 16:02+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,12 +176,12 @@ msgstr ""
 msgid "Before you delete this position, you have to delete its banners or assign them to another position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:159
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:170
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:237
 msgid "The operation has been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:162
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:173
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:240
 msgid "The operation has not been performed correctly"
 msgstr ""
@@ -361,18 +361,18 @@ msgid "You are not authorized for this action"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Form/BackupForm.php:53
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:39
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:39
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:40
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:40
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/add.ctp:36
 msgid "Valid extensions: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Form/BackupForm.php:56
-#: /home/mirko/Libs/Plugins/MeCms/src/Form/ContactForm.php:57
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:67;75;87;99;129;136
+#: /home/mirko/Libs/Plugins/MeCms/src/Form/BackupForm.php:57
+#: /home/mirko/Libs/Plugins/MeCms/src/Form/ContactForm.php:58
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:69;77;89;101;132;140
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:40
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/TagValidator.php:40
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:56
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:45;62
 msgid "Must be between {0} and {1} chars"
 msgstr ""
@@ -394,69 +394,69 @@ msgstr ""
 msgid "Reset your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:56;155;167
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:39
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:42;136
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:57;160;176
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:48
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:48
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:40
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:43;142
 msgid "You have to select a valid option"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:63;173
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:65;184
 msgid "You have to enter a valid value"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:79;91;140
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:81;93;144
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:44
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:62
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:64
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/TagValidator.php:44
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:58
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:60
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:54
 msgid "Allowed chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:79;91
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:81;93
 msgid "letters, apostrophe, space"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:79;91
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:81;93
 msgid "Has to begin with a capital letter"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:103;121;144
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:105;123;148
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:48
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:62;77
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:64;79
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:49;66
 msgid "This value is already used"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:112
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:49
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:114
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:51
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:40
 msgid "Can not be changed"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:117;161
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:52
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:119;168
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:56
 msgid "Must be at most {0} chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:140
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:144
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:44
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:62
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:58
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:64
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:60
 msgid "lowercase letters, numbers, dash"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:151
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:155
 msgid "This field can not be empty"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:56
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:60
 msgid "Must be a valid url"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:58
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:60
 msgid "Each tag must be between {0} and {1} chars"
 msgstr ""
 
@@ -464,27 +464,27 @@ msgstr ""
 msgid "lowercase letters, numbers, space"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:67
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:69
 msgid "This value is reserved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:86
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:88
 msgid "Email addresses don't match"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:94
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:96
 msgid "Must be at least {0} chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:98
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:100
 msgid "The password should contain letters, numbers and symbols"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:107
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:110
 msgid "Passwords don't match"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:114
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:118
 msgid "The old password is wrong"
 msgstr ""
 
@@ -1150,7 +1150,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:69
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:68
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:110
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:110
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:112
 msgid "Text"
 msgstr ""
 
@@ -1287,13 +1287,13 @@ msgid "Category"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:86;93
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:85;93
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:85;94
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsTags/index.ctp:27
 msgid "Tags"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:88;99
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:87;99
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:87;101
 msgid "Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space"
 msgstr ""
 
@@ -1664,28 +1664,22 @@ msgid "Users groups"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Photos/latest.ctp:31
-msgid "Latest {0} photos"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Photos/latest.ctp:31
 msgid "Latest photo"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Photos/random.ctp:31
-msgid "Random {0} photos"
-msgstr ""
+msgid_plural "Latest {0} photos"
+msgstr[0] ""
+msgstr[1] ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Photos/random.ctp:31
 msgid "Random photo"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Posts/latest.ctp:31
-msgid "Latest {0} posts"
-msgstr ""
+msgid_plural "Random {0} photos"
+msgstr[0] ""
+msgstr[1] ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Posts/latest.ctp:31
 msgid "Latest post"
-msgstr ""
+msgid_plural "Latest {0} posts"
+msgstr[0] ""
+msgstr[1] ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Posts/months.ctp:31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Posts/months_as_list.ctp:31

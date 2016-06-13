@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.10 branch
 ### 2.10.1
-* fixed bug for rotated logs.
+* fixed bug for rotated logs;
+* fixed messages pluralized.
 
 ### 2.10.0
 * now you can disable (published/unpublished) each photo;
