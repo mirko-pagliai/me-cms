@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.10 branch
+### 2.10.1
+* fixed bug for rotated logs.
+
 ### 2.10.0
 * now you can disable (published/unpublished) each photo;
 * the code to list posts by date has been greatly improved and simplified;

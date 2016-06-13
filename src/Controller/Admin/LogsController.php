@@ -44,12 +44,18 @@ class LogsController extends AppController {
     
     /**
      * Returns the path for a log 
-	 * @param string $slug
+	 * @param string $filename
      * @param bool $serialized TRUE if is a serialized log
      * @return string
      */
-    protected function _path($slug, $serialized = FALSE) {
-		return LOGS.sprintf($serialized ? '%s_serialized.log' : '%s.log', urldecode($slug));
+    protected function _path($filename, $serialized = FALSE) {
+        if($serialized) {
+            list(,, $extension, $filename) = array_values(pathinfo($filename));
+            
+            $filename = sprintf('%s_serialized.%s', $filename, $extension);
+        }
+        
+        return LOGS.$filename;
     }
 	
 	/**
@@ -67,11 +73,10 @@ class LogsController extends AppController {
 			
 			//If this log has a serialized copy
 			$serialized = is_readable(LOGS.sprintf('%s_serialized.log', pathinfo($log, PATHINFO_FILENAME)));
-			
+            
 			return (object) am([
 				'filename' => $log,
 				'size' => filesize(LOGS.$log),
-				'slug' => urlencode(pathinfo($log, PATHINFO_FILENAME)),
 			], compact('serialized'));
 		}, $logs));
 		
@@ -80,70 +85,75 @@ class LogsController extends AppController {
 	
 	/**
 	 * Views a log
-	 * @param string $slug
+	 * @param string $filename
 	 * @throws InternalErrorException
      * @uses _path()
 	 */
-	public function view($slug) {
-        $log = $this->_path($slug);
+	public function view($filename) {
+        $log = $this->_path($filename);
         
 		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
         }
         
-        $this->set('log', (object) [
+        $log = (object) am([
             'content' => trim(file_get_contents($log)),
-            'filename' => basename($log),
-        ]);
+        ], compact('filename'));
+        
+        $this->set(compact('log'));
 	}
 	
 	/**
 	 * Views a (serialized) log
-	 * @param string $slug
+	 * @param string $filename
 	 * @throws InternalErrorException
      * @uses _path()
 	 */
-	public function view_serialized($slug) {		
-        $log = $this->_path($slug, TRUE);
+	public function view_serialized($filename) {
+        $log = $this->_path($filename, TRUE);
         
 		if(!is_readable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
         }
         
-        $this->set('log', (object) [
-			'content' => unserialize(file_get_contents($log)),
-            'filename' => basename($log),
-        ]);
+        $log = (object) am([
+            'content' => unserialize(file_get_contents($log)),
+        ], compact('filename'));
+        
+        $this->set(compact('log'));
 	}
     
     /**
      * Downloads a log
-	 * @param string $slug
+	 * @param string $filename
      * @uses MeCms\Controller\AppController::_download()
      * @uses _path()
      */
-    public function download($slug) {
-        return $this->_download($this->_path($slug));
+    public function download($filename) {
+        $log = $this->_path($filename);
+        
+        return $this->_download($log);
     }
     
     /**
      * Deletes a log.  
      * If there's even a serialized log copy, it also deletes that.
-	 * @param string $slug
+	 * @param string $filename
      * @throws InternalErrorException
+     * @uses _path()
      */
-    public function delete($slug) {
+    public function delete($filename) {
         $this->request->allowMethod(['post', 'delete']);
         
-        $log = $this->_path($slug);
+        $log = $this->_path($filename);
 		
 		if(!is_writeable($log)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($log)));
         }
         
         $success = (new File($log))->delete();
-                
-        $serialized = $this->_path($slug, TRUE);
+        
+        $serialized = $this->_path($filename, TRUE);
         
         //It also deletes the serialized log copy, where such exists 
         if(file_exists($serialized)) {
