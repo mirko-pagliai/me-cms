@@ -150,7 +150,7 @@ class AppTable extends Table {
 		//"Active" field
 		if(!empty($data['active'])) {
             $query->where([
-                sprintf('%s.active', $this->alias()) => (bool) $data['active'] === 'yes',
+                sprintf('%s.active', $this->alias()) => $data['active'] === 'yes',
             ]);
         }
         
