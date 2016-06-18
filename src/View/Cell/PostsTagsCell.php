@@ -82,7 +82,7 @@ class PostsTagsCell extends Cell {
 				->order(['post_count' => 'DESC'])
 				->toArray();
             
-			if($style) {
+			if($style && !empty($tags)) {
 				//Number of occurrences of the tag with the highest number of occurrences
 				$maxCount = $tags[0]->post_count;
 				//Number of occurrences of the tag with the lowest number of occurrences
