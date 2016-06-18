@@ -8,7 +8,7 @@ return ['MeCms' => [
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
 		//Number of records to show per page
-		'records' => 10
+		'records' => 10,
 	 ],
 	//Email
 	'email' => [
@@ -16,7 +16,7 @@ return ['MeCms' => [
 		'config' => 'default',
 		//Address used as the sender for emails sent to users and as a 
 		//recipient for the email sent by users
-		'webmaster' => 'email@example.com'
+		'webmaster' => 'email@example.com',
 	],
 	//Frontend
 	'frontend' => [
@@ -54,7 +54,7 @@ return ['MeCms' => [
 		'toolbar_color' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
 		//Note that you can use the "<!-- read-more -->" tag to indicate manually where to truncate a text
-		'truncate_to' => 1000
+		'truncate_to' => 1000,
 	],
 	//KCFinder
 	'kcfinder' => [
@@ -69,7 +69,7 @@ return ['MeCms' => [
 			//Long format
 			'long'	=> 'YYYY/MM/dd',
 			//Short format
-			'short'	=> 'yy/MM/dd'
+			'short'	=> 'yy/MM/dd',
 		],
 		//Datetime formats
 		//See; http://php.net/manual/it/datetime.formats.php
@@ -77,7 +77,7 @@ return ['MeCms' => [
 			//Long format
 			'long'	=> 'YYYY/MM/dd, HH:mm',
 			//Short format
-			'short'	=> 'yy/MM/dd, HH:mm'
+			'short'	=> 'yy/MM/dd, HH:mm',
 		],
 		//Forces debug on localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,
@@ -92,10 +92,10 @@ return ['MeCms' => [
 			//Long format
 			'long'	=> 'HH:mm',
 			//Short format
-			'short'	=> 'HH:mm'
+			'short'	=> 'HH:mm',
 		],
 		//Site title
-		'title' => 'MeCms'
+		'title' => 'MeCms',
 	],
 	//Pages
 	'page' => [
@@ -103,7 +103,7 @@ return ['MeCms' => [
 		'created' => FALSE,
 		//Displays the Shareaholic social buttons
 		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
-		'shareaholic' => FALSE	
+		'shareaholic' => FALSE,
 	],
 	//Posts
 	'post' => [
@@ -121,13 +121,13 @@ return ['MeCms' => [
 			//If you use images, it recommended a multiple of 4 
 			'limit' => 4,
 			//Gets only related posts with images
-			'images' => TRUE
+			'images' => TRUE,
 		],
 		//Displays the Shareaholic social buttons
 		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
 		'shareaholic' => FALSE,
 		//Displays the post tags
-		'tags' => TRUE
+		'tags' => TRUE,
 	],
 	//Security
 	'security' => [
@@ -139,7 +139,7 @@ return ['MeCms' => [
 		//It will be used for some actions, such as signup or reset the password
 		'recaptcha' => FALSE,
 		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
-		'search_interval' => 10
+		'search_interval' => 10,
 	],
 	//Shareaholic
 	'shareaholic' => [
@@ -148,7 +148,7 @@ return ['MeCms' => [
 		'app_id' => '',
 		//Site ID. Used for render the "setup code" of Shareaholic.
 		//You can found it on the "Site Tools Dashboard"
-		'site_id' => ''
+		'site_id' => '',
 	],
 	//Users
 	'users' => [
@@ -164,6 +164,6 @@ return ['MeCms' => [
 		//Reset password (enabled or disabled)
 		'reset_password' => TRUE,
 		//Signup (enabled or disabled)
-		'signup' => TRUE
+		'signup' => TRUE,
 	]
 ]];
