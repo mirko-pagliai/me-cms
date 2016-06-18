@@ -7,6 +7,7 @@
 * added links to upload banners and photos from indexes of banner positions 
 	and photo albums;
 * fixed bug for "only published" field on filter forms;
+* fixed cache code for widgets;
 * fixed bug for rotated logs;
 * fixed messages pluralized;
 * strings to be translated were defined and simplified.

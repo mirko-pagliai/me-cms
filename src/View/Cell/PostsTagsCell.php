@@ -62,7 +62,7 @@ class PostsTagsCell extends Cell {
 		$cache = sprintf('widget_tags_popular_%s', $limit);
 		
 		//Updates the cache name
-		if($style) {
+		if(!empty($style['maxFont']) || !empty($style['minFont'])) {
 			//Maximum font size we want to use
 			$maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
 			//Minimum font size we want to use
@@ -70,33 +70,30 @@ class PostsTagsCell extends Cell {
 			
 			$cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
 		}
-		
-		//Tries to get data from the cache
-		$tags = Cache::read($cache, $this->Tags->Posts->cache);
-		
-		//If the data are not available from the cache
+        
+        $tags = $this->Tags->find()
+            ->select(['tag', 'post_count'])
+            ->limit($limit)
+            ->order(['post_count' => 'DESC'])
+            ->cache($cache, $this->Tags->Posts->cache)
+            ->toArray();
+        
         if(empty($tags)) {
-			$tags = $this->Tags->find()
-				->select(['tag', 'post_count'])
-				->limit($limit)
-				->order(['post_count' => 'DESC'])
-				->toArray();
-            
-			if($style && !empty($tags)) {
-				//Number of occurrences of the tag with the highest number of occurrences
-				$maxCount = $tags[0]->post_count;
-				//Number of occurrences of the tag with the lowest number of occurrences
-				$minCount = end($tags)->post_count;
+            return;
+        }
 
-				//Adds the proportional font size to each tag
-				$tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
-					$tag->size = round((($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
-					return $tag;
-				}, $tags);
-			}
-			
-            Cache::write($cache, $tags, $this->Tags->Posts->cache);
-		}
+		if(!empty($style['maxFont']) || !empty($style['minFont'])) {
+            //Number of occurrences of the tag with the highest number of occurrences
+            $maxCount = $tags[0]->post_count;
+            //Number of occurrences of the tag with the lowest number of occurrences
+            $minCount = end($tags)->post_count;
+
+            //Adds the proportional font size to each tag
+            $tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
+                $tag->size = round((($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
+                return $tag;
+            }, $tags);
+        }
 		
 		if($shuffle) {
 			shuffle($tags);

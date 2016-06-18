@@ -22,7 +22,6 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
 use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
@@ -54,24 +53,17 @@ class PostsCell extends Cell {
 		if($this->request->isHere(['_name' => 'posts_categories'])) {
 			return;
         }
-		
-		//Tries to get data from the cache
-		$categories = Cache::read($cache = 'widget_categories', $this->Posts->cache);
-		
-		//If the data are not available from the cache
-        if(empty($categories)) {
-			$categories = $this->Posts->Categories->find('active')
-				->select(['title', 'slug', 'post_count'])
-				->order(['title' => 'ASC'])
-				->toArray();
-            
-            foreach($categories as $k => $category) {
-                $categories[$category->slug] = $category;
-                unset($categories[$k]);
-            }
-			
-            Cache::write($cache, $categories, $this->Posts->cache);
-		}
+        
+        $categories = $this->Posts->Categories->find('active')
+            ->select(['title', 'slug', 'post_count'])
+            ->order(['title' => 'ASC'])
+            ->cache('widget_categories', $this->Posts->cache)
+            ->toArray();
+
+        foreach($categories as $k => $category) {
+            $categories[$category->slug] = $category;
+            unset($categories[$k]);
+        }
 		
 		$this->set(compact('categories'));
         
@@ -86,8 +78,8 @@ class PostsCell extends Cell {
 	 * @uses MeTools\Network\Request::isAction()
 	 */
     public function latest($limit = 10) {
-		//Returns on index, except for category
-		if($this->request->isAction('index', 'Posts') && !$this->request->param('slug')) {
+		//Returns on posts index, except for category
+		if($this->request->isHere(['_name' => 'posts'])) {
 			return;
         }
 
@@ -106,35 +98,28 @@ class PostsCell extends Cell {
      * @param string $render Render type (`form` or `list`)
      */
     public function months($render = 'form') {
-		//Returns on index
-		if($this->request->isAction('index', 'Posts')) {
+		//Returns on posts index, except for category
+		if($this->request->isHere(['_name' => 'posts'])) {
 			return;
         }
         
-		//Tries to get data from the cache
-		$months = Cache::read($cache = 'widget_months', $this->Posts->cache);
-        
-		//If the data are not available from the cache
-        if(empty($months)) {
-            $months = $this->Posts->find('active')
-                ->select([
-                    'month' => 'DATE_FORMAT(created, "%m-%Y")',
-                    'post_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
-                ])
-                ->distinct(['month'])
-                ->order(['created' => 'DESC'])
-                ->toArray();
-            
-            foreach($months as $old_key => $month) {
-                $exploded = explode('-', $month->month);
-                $new_key = sprintf('%s/%s', $exploded[1], $exploded[0]);
-                
-                $months[$new_key] = $month;
-                $months[$new_key]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0]);
-                unset($months[$old_key]);
-            }
-            
-            Cache::write($cache, $months, $this->Posts->cache);
+        $months = $this->Posts->find('active')
+            ->select([
+                'month' => 'DATE_FORMAT(created, "%m-%Y")',
+                'post_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+            ])
+            ->distinct(['month'])
+            ->order(['created' => 'DESC'])
+            ->cache('widget_months', $this->Posts->cache)
+            ->toArray();
+
+        foreach($months as $old_key => $month) {
+            $exploded = explode('-', $month->month);
+            $new_key = sprintf('%s/%s', $exploded[1], $exploded[0]);
+
+            $months[$new_key] = $month;
+            $months[$new_key]->month = (new FrozenDate())->year($exploded[1])->month($exploded[0]);
+            unset($months[$old_key]);
         }
         
         $this->set(compact('months'));
