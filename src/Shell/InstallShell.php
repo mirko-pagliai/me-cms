@@ -55,6 +55,8 @@ class InstallShell extends BaseInstallShell {
 		]);
 		
 		$this->packages = am($this->packages, [
+            'enyo/dropzone',
+            'js-cookie/js-cookie:dev-master',
 			'sunhater/kcfinder:dev-master',
 		]);
 		
