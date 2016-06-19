@@ -29,6 +29,62 @@ use MeCms\Shell\BaseUpdateShell;
  */
 class UpdateShell extends BaseUpdateShell {
     /**
+	 * Updates to 2.10.1 version
+	 * @uses MeCms\Shell\BaseUpdateShell::$connection
+	 * @uses MeCms\Shell\BaseUpdateShell::$now
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Shell\BaseUpdateShell::_tableExists()
+     */
+    public function to2v10v1() {
+		$this->loadModel('MeCms.Pages');
+        
+        $pages = $this->Pages->find('all');
+        
+        //Creates the `pages_categories` table and the first category
+        if(!$this->_tableExists('pages_categories')) {
+            $this->connection->execute("CREATE TABLE `pages_categories` (
+                `id` int(11) NOT NULL,
+                `parent_id` int(11) DEFAULT NULL,
+                `lft` int(11) DEFAULT NULL,
+                `rght` int(11) DEFAULT NULL,
+                `title` varchar(100) NOT NULL,
+                `slug` varchar(100) NOT NULL,
+                `description` varchar(255) DEFAULT NULL,
+                `page_count` int(11) NOT NULL DEFAULT '0',
+                `created` datetime DEFAULT NULL,
+                `modified` datetime DEFAULT NULL
+              );"
+            );
+            $this->connection->execute("ALTER TABLE `pages_categories`
+                ADD PRIMARY KEY (`id`),
+                ADD UNIQUE KEY `title` (`title`),
+                ADD UNIQUE KEY `slug` (`slug`);"
+            );
+            
+            //Creates the first category
+            if(!$pages->isEmpty()) {
+                $this->connection->execute(sprintf("INSERT INTO `%s` (`id`, `parent_id`, `lft`, `rght`, `title`, `slug`, `description`, `page_count`, `created`, `modified`) VALUES ('1', NULL, '1', '2', 'Main category', 'main-category', NULL, '0', '%s', '%s');", $this->Pages->Categories->table(), $this->now->i18nFormat('yyyy-MM-dd HH:mm:ss'), $this->now->i18nFormat('yyyy-MM-dd HH:mm:ss')));
+            }
+        }
+        
+        //Adds "category_id" field to the pages table
+        if(!$this->_checkColumn('category_id', $this->Pages->table())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` ADD `category_id` INT(11) NOT NULL AFTER `id`;', $this->Pages->table()));
+        
+            //Adds the pages to the first category
+            if(!$pages->isEmpty()) {
+                $this->Pages->query()->update()->set(['category_id' => '1'])->execute();
+                
+                //Updates the `page_count`
+                $this->Pages->Categories->query()->update()
+                    ->set(['page_count' => $pages->count()])
+                    ->where(['id' => '1'])
+                    ->execute();
+            }
+        }
+    }
+    
+    /**
 	 * Updates to 2.10.0 version
 	 * @uses MeCms\Shell\BaseUpdateShell::$connection
      * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()

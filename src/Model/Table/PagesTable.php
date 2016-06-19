@@ -37,19 +37,15 @@ class PagesTable extends AppTable {
 	 * @var string|array
 	 */
 	public $cache = 'pages';
-	
+
     /**
-     * Initialize method
-     * @param array $config The configuration for the table
+     * Returns a rules checker object that will be used for validating application integrity
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
+     * @return \Cake\ORM\RulesChecker
      */
-    public function initialize(array $config) {
-        parent::initialize($config);
-
-        $this->table('pages');
-        $this->displayField('title');
-        $this->primaryKey('id');
-
-        $this->addBehavior('Timestamp');
+    public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+        return $rules;
     }
     
     /**
@@ -73,6 +69,27 @@ class PagesTable extends AppTable {
 		}
         
         return parent::find($type, $options);
+    }
+	
+    /**
+     * Initialize method
+     * @param array $config The configuration for the table
+     */
+    public function initialize(array $config) {
+        parent::initialize($config);
+
+        $this->table('pages');
+        $this->displayField('title');
+        $this->primaryKey('id');
+
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
+            'className' => 'MeCms.PagesCategories',
+        ]);
+        
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);
     }
 	
 	/**

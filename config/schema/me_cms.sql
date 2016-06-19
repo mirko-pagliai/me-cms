@@ -30,6 +30,7 @@ CREATE TABLE `banners_positions` (
 
 CREATE TABLE `pages` (
   `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `subtitle` varchar(150) DEFAULT NULL,
   `slug` varchar(100) NOT NULL,
@@ -39,6 +40,19 @@ CREATE TABLE `pages` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `pages_categories` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `lft` int(11) DEFAULT NULL,
+  `rght` int(11) DEFAULT NULL,
+  `title` varchar(100) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `page_count` int(11) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `photos` (
   `id` int(11) NOT NULL,
@@ -63,7 +77,7 @@ CREATE TABLE `photos_albums` (
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL DEFAULT '1',
+  `category_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
@@ -146,6 +160,11 @@ ALTER TABLE `banners_positions`
 
 ALTER TABLE `pages`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `pages_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `title` (`title`),
+  ADD UNIQUE KEY `slug` (`slug`);
 
 ALTER TABLE `photos`
   ADD PRIMARY KEY (`id`),
