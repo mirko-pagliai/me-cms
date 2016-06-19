@@ -60,6 +60,9 @@ class UpdateShell extends BaseUpdateShell {
                 ADD UNIQUE KEY `title` (`title`),
                 ADD UNIQUE KEY `slug` (`slug`);"
             );
+            $this->connection->execute("ALTER TABLE `pages_categories`
+                MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
+            );
             
             //Creates the first category
             if(!$pages->isEmpty()) {
