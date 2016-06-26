@@ -24,7 +24,7 @@ namespace MeCms\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
-class PageValidator extends AppValidator {
+class PagesCategoryValidator extends AppValidator {
 	/**
 	 * Construct.
 	 * 
@@ -34,23 +34,12 @@ class PageValidator extends AppValidator {
     public function __construct() {
         parent::__construct();
 		
-		//Category
-        $this->add('category_id', [
-            'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
-                'rule' => 'naturalNumber',
-            ],
-        ])->requirePresence('category_id', 'create');
-		
 		//Title
 		$this->requirePresence('title', 'create');
 		
 		//Slug
         $this->requirePresence('slug', 'create');
 		
-		//Text
-        $this->requirePresence('text', 'create');
-
         return $this;
 	}
 }

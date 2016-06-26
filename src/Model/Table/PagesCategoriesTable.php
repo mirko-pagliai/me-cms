@@ -51,6 +51,42 @@ class PagesCategoriesTable extends AppTable {
         $rules->add($rules->existsIn(['parent_id'], 'Parents'));
         return $rules;
     }
+	
+	/**
+	 * "Active" find method
+	 * @param Query $query Query object
+	 * @param array $options Options
+	 * @return Query Query object
+	 */
+	public function findActive(Query $query, array $options) {
+        $query->where([
+            sprintf('%s.page_count >', $this->alias()) => 0,
+        ]);
+		
+        return $query;
+    }
+	
+	/**
+	 * Gets the categories list
+	 * @return array List
+	 * @uses $cache
+	 */
+	public function getList() {
+		return $this->find('list')
+			->cache('categories_list', $this->cache)
+			->toArray();
+	}
+	
+	/**
+	 * Gets the categories tree list
+	 * @return array List
+	 * @uses $cache
+	 */
+	public function getTreeList() {
+		return $this->find('treeList')
+			->cache('categories_tree_list', $this->cache)
+			->toArray();
+	}
 
     /**
      * Initialize method

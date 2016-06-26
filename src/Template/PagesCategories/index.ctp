@@ -20,37 +20,15 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Model\Validation;
+?>
 
-use MeCms\Model\Validation\AppValidator;
+<?php
+    $this->extend('/Common/index');
+    $this->assign('title', __d('me_cms', 'Pages categories'));
+    
+    $categories = array_map(function($category) {
+        return $this->Html->link($category->title, ['_name' => 'pages_category', $category->slug]);
+    }, $categories->toArray());
 
-class PageValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
-        parent::__construct();
-		
-		//Category
-        $this->add('category_id', [
-            'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
-                'rule' => 'naturalNumber',
-            ],
-        ])->requirePresence('category_id', 'create');
-		
-		//Title
-		$this->requirePresence('title', 'create');
-		
-		//Slug
-        $this->requirePresence('slug', 'create');
-		
-		//Text
-        $this->requirePresence('text', 'create');
-
-        return $this;
-	}
-}
+    echo $this->Html->ul($categories, ['icon' => 'caret-right']);
+?>

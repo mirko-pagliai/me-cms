@@ -99,6 +99,8 @@ return ['MeCms' => [
 	],
 	//Pages
 	'page' => [
+		//Displays the page category
+		'category' => TRUE,
 		//Displays the page created datetime
 		'created' => FALSE,
 		//Displays the Shareaholic social buttons

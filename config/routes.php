@@ -39,6 +39,18 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 	);
 	
 	/**
+	 * PagesCategories controller
+	 */
+	$routes->connect('/pages/categories',
+        ['controller' => 'PagesCategories', 'action' => 'index'],
+        ['_name' => 'pages_categories']
+    );
+	$routes->connect('/pages/category/:slug',
+		['controller' => 'PagesCategories', 'action' => 'view'],
+		['_name' => 'pages_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+	);
+	
+	/**
 	 * Pages controller
 	 */
 	$routes->connect('/page/:slug',
@@ -190,8 +202,23 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 		/**
 		 * Other admin routes
 		 */
-		$controllers = ['backups', 'banners', 'banners_positions', 'logs', 'pages', 'photos_albums', 'photos', 'posts_categories', 'posts_tags', 'posts', 'systems', 'tags', 'users', 'users_groups'];
-		$controllers = sprintf('(%s)', implode('|', $controllers));
+		$controllers = sprintf('(%s)', implode('|', [
+            'backups',
+            'banners',
+            'banners_positions',
+            'logs',
+            'pages_categories',
+            'pages',
+            'photos_albums',
+            'photos',
+            'posts_categories',
+            'posts_tags',
+            'posts',
+            'systems',
+            'tags',
+            'users',
+            'users_groups',
+        ]));
 		
 		$routes->connect('/:controller', [], ['controller' => $controllers]);
 		$routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);

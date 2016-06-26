@@ -24,6 +24,12 @@
 
 <div class="page-container content-container">
 	<div class="content-header">
+        <?php if(config('page.category')): ?>
+            <h5 class="content-category">
+                <?= $this->Html->link($page->category->title, ['_name' => 'pages_category', $page->category->slug]) ?>
+            </h5>
+        <?php endif; ?>
+        
         <h3 class="content-title">
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>

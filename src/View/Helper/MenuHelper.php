@@ -72,9 +72,11 @@ class MenuHelper extends Helper {
 			$this->Html->link(__d('me_cms', 'List pages'), ['controller' => 'Pages', 'action' => 'index', 'plugin' => MECMS]),
 		];
 		
-		//Only admins and manages can add pages
+		//Only admins and managers can access these actions
 		if($this->Auth->isGroup(['admin', 'manager'])) {
 			$menu[] = $this->Html->link(__d('me_cms', 'Add page'), ['controller' => 'Pages', 'action' => 'add', 'plugin' => MECMS]);
+			$menu[] = $this->Html->link(__d('me_cms', 'List categories'), ['controller' => 'PagesCategories', 'action' => 'index', 'plugin' => MECMS]);
+			$menu[] = $this->Html->link(__d('me_cms', 'Add category'), ['controller' => 'PagesCategories', 'action' => 'add', 'plugin' => MECMS]);
         }
         
 		$menu[] = $this->Html->link(__d('me_cms', 'List static pages'), ['controller' => 'Pages', 'action' => 'index_statics', 'plugin' => MECMS]);
