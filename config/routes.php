@@ -69,7 +69,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 	/**
 	 * PhotosAlbums controller
 	 */
-	$routes->connect('/albums', ['controller' => 'PhotosAlbums', 'action' => 'index'], ['_name' => 'albums']);
+	$routes->connect('/albums',
+        ['controller' => 'PhotosAlbums', 'action' => 'index'],
+        ['_name' => 'albums']
+    );
 	$routes->connect('/album/:slug',
 		['controller' => 'PhotosAlbums', 'action' => 'view'],
 		['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
@@ -105,7 +108,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 	/**
 	 * PostsCategories controller
 	 */
-	$routes->connect('/posts/categories', ['controller' => 'PostsCategories', 'action' => 'index'], ['_name' => 'posts_categories']);
+	$routes->connect('/posts/categories',
+        ['controller' => 'PostsCategories', 'action' => 'index'],
+        ['_name' => 'posts_categories']
+    );
 	$routes->connect('/posts/category/:slug',
 		['controller' => 'PostsCategories', 'action' => 'view'],
 		['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
@@ -134,14 +140,26 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 		['controller' => 'Posts', 'action' => 'preview'],
 		['_name' => 'posts_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 	);
-	$routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
-	$routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'posts_rss']);
-	$routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'posts_search']);
-    $routes->connect('/posts/:date', ['controller' => 'Posts', 'action' => 'index_by_date'], [
-		'_name'	=> 'posts_by_date',
-        'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-        'pass' => ['date']
-    ]);
+	$routes->connect('/posts',
+        ['controller' => 'Posts', 'action' => 'index'],
+        ['_name' => 'posts']
+    );
+	$routes->connect('/posts/rss',
+        ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
+        ['_name' => 'posts_rss']
+    );
+	$routes->connect('/posts/search',
+        ['controller' => 'Posts', 'action' => 'search'],
+        ['_name' => 'posts_search']
+    );
+    $routes->connect('/posts/:date',
+        ['controller' => 'Posts', 'action' => 'index_by_date'], 
+        [
+            '_name'	=> 'posts_by_date',
+            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+            'pass' => ['date']
+        ]
+    );
 	
 	/**
 	 * This allows backward compatibility for URLs like:
@@ -150,45 +168,85 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 	 * These URLs will become:
 	 * /posts?page=3
 	 */
-	$routes->connect('/posts/page::page/*', ['controller' => 'Posts', 'action' => 'index_compatibility'], ['page' => '\d+', 'pass' => ['page']]);
+	$routes->connect('/posts/page::page/*',
+        ['controller' => 'Posts', 'action' => 'index_compatibility'],
+        ['page' => '\d+', 'pass' => ['page']]
+    );
 	
 	/**
 	 * Fallback for RSS
 	 */
-	$routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
+	$routes->connect('/rss',
+        ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']
+    );
 	
 	/**
 	 * Systems controller
 	 */
-	$routes->connect('/accept/cookies', ['controller' => 'Systems', 'action' => 'accept_cookies'], ['_name' => 'accept_cookies']);
-	$routes->connect('/contact/form', ['controller' => 'Systems', 'action' => 'contact_form'], ['_name' => 'contact_form']);
-	$routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
-    $routes->connect('/sitemap:ext', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']);
-	$routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ip_not_allowed'], ['_name' => 'ip_not_allowed']);
+	$routes->connect('/accept/cookies',
+        ['controller' => 'Systems', 'action' => 'accept_cookies'],
+        ['_name' => 'accept_cookies']
+    );
+	$routes->connect('/contact/form',
+        ['controller' => 'Systems', 'action' => 'contact_form'],
+        ['_name' => 'contact_form']
+    );
+	$routes->connect('/offline',
+        ['controller' => 'Systems', 'action' => 'offline'],
+        ['_name' => 'offline']
+    );
+    $routes->connect('/sitemap:ext',
+        ['controller' => 'Systems', 'action' => 'sitemap'],
+        ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
+    );
+	$routes->connect('/unallowed',
+        ['controller' => 'Systems', 'action' => 'ip_not_allowed'],
+        ['_name' => 'ip_not_allowed']
+    );
 	
 	/**
 	 * Users controller
 	 */
-	$routes->connect('/activation/resend', ['controller' => 'Users', 'action' => 'resend_activation'], ['_name' => 'resend_activation']);
+	$routes->connect('/activation/resend',
+        ['controller' => 'Users', 'action' => 'resend_activation'],
+        ['_name' => 'resend_activation']
+    );
 	$routes->connect('/activation/:id/:token',
 		['controller' => 'Users', 'action' => 'activate_account'],
 		['_name' => 'activate_account', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
-	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
-	$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
-	$routes->connect('/password/forgot', ['controller' => 'Users', 'action' => 'forgot_password'], ['_name' => 'forgot_password']);
+	$routes->connect('/login',
+        ['controller' => 'Users', 'action' => 'login'],
+        ['_name' => 'login']
+    );
+	$routes->connect('/logout',
+        ['controller' => 'Users', 'action' => 'logout'],
+        ['_name' => 'logout']
+    );
+	$routes->connect('/password/forgot',
+        ['controller' => 'Users', 'action' => 'forgot_password'],
+        ['_name' => 'forgot_password']
+    );
 	$routes->connect('/password/reset/:id/:token',
 		['controller' => 'Users', 'action' => 'reset_password'],
 		['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
 	);
-	$routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup'], ['_name' => 'signup']);
+	$routes->connect('/signup',
+        ['controller' => 'Users', 'action' => 'signup'],
+        ['_name' => 'signup']
+    );
 	
 	/**
 	 * Default home page
 	 * For not create incompatibility with `/posts`, this route has to be at the bottom
 	 */
-	$routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
-	$routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
+	$routes->connect('/',
+        ['controller' => 'Posts', 'action' => 'index'],
+        ['_name' => 'homepage']
+    );
+	$routes->connect('/homepage',
+        ['controller' => 'Posts', 'action' => 'index']
+    );
 	
 	/**
 	 * Admin routes
@@ -197,7 +255,10 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
 		/**
 		 * Admin home page
 		 */
-        $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
+        $routes->connect('/',
+            ['controller' => 'Posts', 'action' => 'index'],
+            ['_name' => 'dashboard']
+        );
 		
 		/**
 		 * Other admin routes
