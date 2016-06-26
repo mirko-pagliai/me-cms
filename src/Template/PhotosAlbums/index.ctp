@@ -27,22 +27,20 @@
     $this->assign('title', __d('me_cms', 'Photos'));
 ?>
 
-<?php if(!empty($albums)): ?>
-    <div class="clearfix">
-        <?php foreach($albums as $album): ?>
-            <div class="col-sm-6 col-md-4">
-                <div class="photo-box">
-                    <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
-                        <?= $this->Thumb->image($album->photos[0]->path, ['side' => 275]) ?>
-                        <div class="photo-info">
-                            <div>
-                                <p><strong><?= $album->title ?></strong></p>
-                                <p><small><?= __d('me_cms', '{0} photos', $album->photo_count) ?></small></p>
-                            </div>
+<div class="clearfix">
+    <?php foreach($albums as $album): ?>
+        <div class="col-sm-6 col-md-4">
+            <div class="photo-box">
+                <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
+                    <?= $this->Thumb->image($album->photos[0]->path, ['side' => 275]) ?>
+                    <div class="photo-info">
+                        <div>
+                            <p><strong><?= $album->title ?></strong></p>
+                            <p><small><?= __d('me_cms', '{0} photos', $album->photo_count) ?></small></p>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
