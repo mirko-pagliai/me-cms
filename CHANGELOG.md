@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.11 branch
+### 2.11.0
+* pages index has been removed.
+
 ## 2.10 branch
 ### 2.10.1
 * now pages have categories, with category widget;
