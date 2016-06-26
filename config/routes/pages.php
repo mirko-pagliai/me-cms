@@ -20,39 +20,31 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Routing\Router;
-
-Router::defaultRouteClass('InflectedRoute');
-Router::extensions('rss');
 
 /**
- * MeCms routes
+ * PagesCategories controller
  */
-Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
-	/**
-     * Includes routes
-     */
-    include_once 'routes/admins.php';
-    include_once 'routes/banners.php';
-    include_once 'routes/pages.php';
-    include_once 'routes/photos.php';
-    include_once 'routes/posts.php';
-    include_once 'routes/systems.php';
-    include_once 'routes/users.php';
-    
-	/**
-	 * Default home page
-	 * For not create incompatibility with `/posts`, this route has to be at the bottom
-	 */
-	$routes->connect('/',
-        ['controller' => 'Posts', 'action' => 'index'],
-        ['_name' => 'homepage']
-    );
-	$routes->connect('/homepage',
-        ['controller' => 'Posts', 'action' => 'index']
-    );
-});
+$routes->connect('/pages/categories',
+    ['controller' => 'PagesCategories', 'action' => 'index'],
+    ['_name' => 'pages_categories']
+);
+$routes->connect('/pages/category/:slug',
+    ['controller' => 'PagesCategories', 'action' => 'view'],
+    ['_name' => 'pages_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+);
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function($routes) {
-	$routes->fallbacks('InflectedRoute');
-});
+/**
+ * Pages controller
+ */
+$routes->connect('/page/:slug',
+    ['controller' => 'Pages', 'action' => 'view'],
+    ['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+);
+$routes->connect('/page/preview/:slug',
+    ['controller' => 'Pages', 'action' => 'preview'],
+    ['_name' => 'pages_preview', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+);
+$routes->connect('/pages',
+    ['controller' => 'Pages', 'action' => 'index'],
+    ['_name' => 'pages']
+);

@@ -8,6 +8,7 @@
 	elements to the userbar;
 * added links to upload banners and photos from indexes of banner positions 
 	and photo albums;
+* routes have been split into multiple files; 
 * fixed bug for "only published" field on filter forms;
 * fixed cache code for widgets;
 * fixed bug for rotated logs;
