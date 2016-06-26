@@ -195,7 +195,7 @@ class AppValidator extends Validator {
 	 * @return bool TRUE if is valid, otherwise FALSE
 	 */
 	public function lowercaseLetters($value, $context) {
-		return (bool) preg_match('/^[a-z]+$', $value);
+		return (bool) preg_match('/^[a-z]+$/', $value);
 	}
 	
 	/**
