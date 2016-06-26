@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.10 branch
 ### 2.10.1
-* now pages have categories;
+* now pages have categories, with category widget;
 * now the install shell can create user groups;
 * added links on userbar for posts categories and tags;
 * added `userbar()` method for `AppViews`. This simplifies the code to add 

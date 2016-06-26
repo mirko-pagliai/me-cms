@@ -44,6 +44,35 @@ class PagesCell extends Cell {
 	}
 	
 	/**
+	 * Categories widget
+     * @param string $render Render type (`form` or `list`)
+	 * @uses MeTools\Network\Request::isHere()
+	 */
+	public function categories($render = 'form') {
+		//Returns on categories index
+		if($this->request->isHere(['_name' => 'pages_categories'])) {
+			return;
+        }
+        
+        $categories = $this->Pages->Categories->find('active')
+            ->select(['title', 'slug', 'page_count'])
+            ->order(['title' => 'ASC'])
+            ->cache('widget_categories', $this->Pages->cache)
+            ->toArray();
+
+        foreach($categories as $k => $category) {
+            $categories[$category->slug] = $category;
+            unset($categories[$k]);
+        }
+		
+		$this->set(compact('categories'));
+        
+        if($render !== 'form') {
+            $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        }
+    }
+	
+	/**
 	 * Pages list widget
 	 * @uses MeTools\Network\Request::isHere()
 	 */

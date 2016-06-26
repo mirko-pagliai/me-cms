@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
@@ -50,6 +49,11 @@ class PagesCategoriesController extends AppController {
      * @throws RecordNotFoundException
 	 */
 	public function view($slug = NULL) {
+		//The category can be passed as query string, from a widget
+		if($this->request->query('q')) {
+			return $this->redirect([$this->request->query('q')]);
+        }
+        
         $category = $this->PagesCategories->find('active')
             ->select(['id', 'title'])
             ->contain([
