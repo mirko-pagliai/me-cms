@@ -54,24 +54,17 @@ class PhotosCell extends Cell {
 		if($this->request->isHere(['_name' => 'albums'])) {
 			return;
         }
-		
-		//Tries to get data from the cache
-		$albums = Cache::read($cache = 'widget_albums', $this->Photos->cache);
-		
-		//If the data are not available from the cache
-        if(empty($albums)) {
-			$albums = $this->Photos->Albums->find('active')
-				->select(['title', 'slug', 'photo_count'])
-				->order(['title' => 'ASC'])
-				->toArray();
-            
-            foreach($albums as $k => $album) {
-                $albums[$album->slug] = $album;
-                unset($albums[$k]);
-            }
-			
-            Cache::write($cache, $albums, $this->Photos->cache);
-		}
+        
+        $albums = $this->Photos->Albums->find('active')
+            ->select(['title', 'slug', 'photo_count'])
+            ->order(['title' => 'ASC'])
+            ->cache('widget_albums', $this->Photos->cache)
+            ->toArray();
+
+        foreach($albums as $k => $album) {
+            $albums[$album->slug] = $album;
+            unset($albums[$k]);
+        }
 		
 		$this->set(compact('albums'));
         

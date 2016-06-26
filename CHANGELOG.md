@@ -1,5 +1,20 @@
 # 2.x branch
 ## 2.10 branch
+### 2.10.1
+* now pages have categories, with category widget;
+* now the install shell can create user groups;
+* added links on userbar for posts categories and tags;
+* added `userbar()` method for `AppViews`. This simplifies the code to add 
+	elements to the userbar;
+* added links to upload banners and photos from indexes of banner positions 
+	and photo albums;
+* routes have been split into multiple files; 
+* fixed bug for "only published" field on filter forms;
+* fixed cache code for widgets;
+* fixed bug for rotated logs;
+* fixed messages pluralized;
+* strings to be translated were defined and simplified.
+
 ### 2.10.0
 * now you can disable (published/unpublished) each photo;
 * the code to list posts by date has been greatly improved and simplified;

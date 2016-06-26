@@ -66,7 +66,7 @@ class SystemsController extends AppController {
 		
 		//Checks for KCFinder
 		if(!$this->KcFinder->checkKcfinder()) {
-			throw new InternalErrorException(__d('me_cms', '{0} is not present into {1}', 'KCFinder', rtr($this->KcFinder->getKcfinderPath())));
+			throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
         }
         
 		//Checks for the files directory (`APP/webroot/files`)

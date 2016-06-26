@@ -81,7 +81,12 @@ class PagesController extends AppController {
 		
 		$page = $this->Pages->find('active')
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-			->where(compact('slug'))
+			->contain([
+                'Categories' => function($q) {
+                    return $q->select(['title', 'slug']);
+                },
+            ])
+			->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
 			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
 			->firstOrFail();
         
@@ -96,7 +101,12 @@ class PagesController extends AppController {
     public function preview($slug = NULL) {
 		$page = $this->Pages->find()
 			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-			->where(compact('slug'))
+			->contain([
+                'Categories' => function($q) {
+                    return $q->select(['title', 'slug']);
+                },
+            ])
+			->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
 			->firstOrFail();
         
         $this->set(compact('page'));

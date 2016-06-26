@@ -55,7 +55,7 @@ class TagsTable extends AppTable {
             'targetForeignKey' => 'post_id',
             'joinTable' => 'posts_tags',
             'className' => 'MeCms.Posts',
-			'through' => 'MeCms.PostsTags'
+			'through' => 'MeCms.PostsTags',
         ]);
         
         $this->addBehavior('Timestamp');
@@ -80,9 +80,12 @@ class TagsTable extends AppTable {
 	 */
 	public function queryFromFilter(Query $query, array $data = []) {
 		//"Name" field
-		if(!empty($data['name']) && strlen($data['name']) > 2)
-			$query->where([sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name'])]);
-		
+		if(!empty($data['name']) && strlen($data['name']) > 2) {
+			$query->where([
+                sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name']),
+            ]);
+        }
+        
 		return $query;
 	}
 	

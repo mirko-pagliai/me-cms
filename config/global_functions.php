@@ -31,9 +31,10 @@ if(!function_exists('config')) {
 	 * @return mixed Configuration value
 	 */
 	function config($key = NULL) {		
-		if($key !== NULL && Configure::check(sprintf('MeCms.%s', $key)))
+		if($key !== NULL && Configure::check(sprintf('MeCms.%s', $key))) {
 			return Configure::read(sprintf('MeCms.%s', $key));
-		
+        }
+        
 		return Configure::read($key);
 	}
 }
@@ -44,8 +45,9 @@ if(!function_exists('is_localhost')) {
 	 * @return bool
 	 */
     function is_localhost() {
-        if(empty($_SERVER['REMOTE_ADDR']))
+        if(empty($_SERVER['REMOTE_ADDR'])) {
             return FALSE;
+        }
         
 		return in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
 	}

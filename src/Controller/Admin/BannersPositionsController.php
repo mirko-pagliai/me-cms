@@ -64,11 +64,11 @@ class BannersPositionsController extends AppController {
             $position = $this->BannersPositions->patchEntity($position, $this->request->data);
 			
             if($this->BannersPositions->save($position)) {
-                $this->Flash->success(__d('me_cms', 'The banners position has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 				return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The banners position could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -86,11 +86,11 @@ class BannersPositionsController extends AppController {
             $position = $this->BannersPositions->patchEntity($position, $this->request->data);
 			
             if($this->BannersPositions->save($position)) {
-                $this->Flash->success(__d('me_cms', 'The banners position has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The banners position could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -108,14 +108,14 @@ class BannersPositionsController extends AppController {
 		//Before deleting, it checks if the position has some banners
 		if(!$position->banner_count) {
 			if($this->BannersPositions->delete($position)) {
-				$this->Flash->success(__d('me_cms', 'The banners position has been deleted'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
             }
 			else {
-				$this->Flash->error(__d('me_cms', 'The banners position could not be deleted'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 		}
 		else {
-			$this->Flash->alert(__d('me_cms', 'Before you delete this position, you have to delete its banners or assign them to another position'));
+			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
         
         return $this->redirect(['action' => 'index']);

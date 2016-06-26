@@ -66,11 +66,11 @@ class BackupsController extends AppController {
 		if($this->request->is('post')) {
 			//Creates the backup
 			if($backup->execute($this->request->data)) {
-				$this->Flash->success(__d('me_cms', 'The backup has been created'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 				return $this->redirect(['action' => 'index']);
 			}
 			else {
-				$this->Flash->error(__d('me_cms', 'The backup has not been created'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 		}
 		
@@ -86,10 +86,10 @@ class BackupsController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
 		
 		if(Backup::delete(urldecode($filename))) {
-			$this->Flash->success(__d('me_cms', 'The backup has been deleted'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
 		else {
-			$this->Flash->error(__d('me_cms', 'The backup could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
         
         return $this->redirect(['action' => 'index']);
@@ -121,10 +121,10 @@ class BackupsController extends AppController {
             //Clears the cache
             Cache::clearAll();
             
-			$this->Flash->success(__d('me_cms', 'The backup has been restored'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
 		else {
-			$this->Flash->error(__d('me_cms', 'The backup could not be restored'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
         
         return $this->redirect(['action' => 'index']);

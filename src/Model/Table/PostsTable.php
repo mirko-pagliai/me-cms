@@ -100,10 +100,14 @@ class PostsTable extends AppTable {
 		
 		//For each tag, it searches if the tag already exists in the database.
 		//If a tag exists in the database, it sets that tag as ID
-		foreach($tags as $k => $tag)
-			if(is_int($id = array_search($tag['tag'], $tagsFromDb)))
+		foreach($tags as $k => $tag) {
+            $id = array_search($tag['tag'], $tagsFromDb);
+            
+			if(is_int($id)) {
 				$tags[$k] = compact('id');
-		
+            }
+        }
+        
 		return am($requestData, compact('tags'));
 	}
     
@@ -113,6 +117,7 @@ class PostsTable extends AppTable {
      * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
      * @return Cake\ORM\Query The query builder
      * @uses setNextToBePublished()
+     * @uses $cache
      */
     public function find($type = 'all', $options = []) {
         //Gets from cache the timestamp of the next record to be published
@@ -137,8 +142,9 @@ class PostsTable extends AppTable {
 	 * @return array Related posts, array of entities
 	 */
 	public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5, $images = TRUE) {
-		if(empty($post->tags))
+		if(empty($post->tags)) {
 			return;
+        }
 		
 		//Tries to gets related posts from cache
 		$related = Cache::read($cache = sprintf('related_%s_posts_for_%s', $limit, $post->id), $this->cache);
@@ -150,9 +156,10 @@ class PostsTable extends AppTable {
 			usort($tags, function($a, $b) { return $b['post_count'] - $a['post_count']; });
 
 			//Limits tags
-			if(count($tags) > $limit)
+			if(count($tags) > $limit) {
 				$tags = array_slice($tags, 0 , $limit);
-
+            }
+            
 			//This array will be contain the ID to be excluded
 			$exclude = [$post->id];
 
@@ -162,13 +169,20 @@ class PostsTable extends AppTable {
 				$post = $this->find('active')
 					->select(['id', 'title', 'slug', 'text'])
 					->matching('Tags', function($q) use($tag) {
-						return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
+						return $q->where([
+                            sprintf('%s.id', $this->Tags->alias()) => $tag->id,
+                        ]);
 					})
-					->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
+					->where([
+                        sprintf('%s.id NOT IN', $this->alias()) => $exclude,
+                    ]);
 
-				if($images)			
-					$post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);		
-					
+				if($images) {	
+					$post->where([
+                        sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img'),
+                    ]);		
+                }
+                
 				$post = $post->first();
 
 				//Adds the post to the related posts and its ID to the IDs to be excluded for the next query
@@ -198,23 +212,26 @@ class PostsTable extends AppTable {
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.PostsCategories'
+            'className' => 'MeCms.PostsCategories',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.Users'
+            'className' => 'MeCms.Users',
         ]);
         $this->belongsToMany('Tags', [
             'foreignKey' => 'post_id',
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'posts_tags',
             'className' => 'MeCms.Tags',
-			'through' => 'MeCms.PostsTags'
+			'through' => 'MeCms.PostsTags',
         ]);
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Categories' => ['post_count'], 'Users' => ['post_count']]);
+        $this->addBehavior('CounterCache', [
+            'Categories' => ['post_count'],
+            'Users' => ['post_count'],
+        ]);
     }
 	
 	/**
@@ -228,11 +245,14 @@ class PostsTable extends AppTable {
 		$query = parent::queryFromFilter($query, $data);
 		
 		//"Tag" field
-		if(!empty($data['tag']) && strlen($data['tag']) > 2)
+		if(!empty($data['tag']) && strlen($data['tag']) > 2) {
 			$query->matching('Tags', function($q) use ($data) {
-				return $q->where([sprintf('%s.tag', $this->Tags->alias()) => $data['tag']]);
+				return $q->where([
+                    sprintf('%s.tag', $this->Tags->alias()) => $data['tag'],
+                ]);
 			});
-		
+        }
+        
 		return $query;
 	}
 	
@@ -247,12 +267,14 @@ class PostsTable extends AppTable {
 			->select('created')
 			->where([
 				sprintf('%s.active', $this->alias()) => TRUE,
-				sprintf('%s.created >', $this->alias()) => new Time()
+				sprintf('%s.created >', $this->alias()) => new Time(),
 			])
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
+        $next = empty($next->created) ? FALSE : $next->created->toUnixString();
+        
+		Cache::write('next_to_be_published', $next, $this->cache);
 	}
 
     /**

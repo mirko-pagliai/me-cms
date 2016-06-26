@@ -28,7 +28,7 @@
     }
     
 	$this->extend('/Common/widget');
-	$this->assign('title', count($posts) > 1 ? __d('me_cms', 'Latest {0} posts', count($posts)) : __d('me_cms', 'Latest post'));
+	$this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', count($posts), count($posts)));
     
     $posts = array_map(function($post) {
 		return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);

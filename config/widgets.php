@@ -3,6 +3,7 @@
 return ['Widgets' => [
 	//General widgets
 	'general' => [
+		'MeCms.Pages::categories' => ['render' => 'form'],
 		'MeCms.Pages::pages',
         'MeCms.Photos::albums' => ['render' => 'form'],
 		'MeCms.Photos::latest' => ['limit' => 1],

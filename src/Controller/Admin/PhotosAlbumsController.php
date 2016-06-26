@@ -69,11 +69,11 @@ class PhotosAlbumsController extends AppController {
             $album = $this->PhotosAlbums->patchEntity($album, $this->request->data);
 			
             if($this->PhotosAlbums->save($album)) {
-                $this->Flash->success(__d('me_cms', 'The photos album has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 				return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The photos album could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -91,11 +91,11 @@ class PhotosAlbumsController extends AppController {
             $album = $this->PhotosAlbums->patchEntity($album, $this->request->data);
 			
             if($this->PhotosAlbums->save($album)) {
-                $this->Flash->success(__d('me_cms', 'The photos album has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The photos album could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -113,14 +113,14 @@ class PhotosAlbumsController extends AppController {
 		//Before deleting, it checks if the album has some photos
 		if(!$album->photo_count) {
 			if($this->PhotosAlbums->delete($album)) {
-				$this->Flash->success(__d('me_cms', 'The photos album has been deleted'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
             }
             else {
-				$this->Flash->error(__d('me_cms', 'The photos album could not be deleted'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
 		}
 		else {
-			$this->Flash->alert(__d('me_cms', 'Before you delete this album, you have to delete its photos or assign them to another album'));
+			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
         
         return $this->redirect(['action' => 'index']);

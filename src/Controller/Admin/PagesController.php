@@ -32,8 +32,43 @@ use MeCms\Utility\StaticPage;
  */
 class PagesController extends AppController {
 	/**
-	 * Called after the controller action is run, but before the view is rendered.
-	 * You can use this method to perform logic or set view variables that are required on every request.
+	 * Called before the controller action. 
+	 * You can use this method to perform logic that needs to happen before 
+     *  each controller action.
+	 * @param \Cake\Event\Event $event An Event instance
+	 * @uses MeCms\Controller\AppController::beforeFilter()
+	 * @uses MeCms\Model\Table\PagesCategoriesTable::getList()
+	 * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+	 * @uses MeCms\Model\Table\UsersTable::getActiveList()
+	 * @uses MeCms\Model\Table\UsersTable::getList()
+	 * @uses MeTools\Network\Request::isAction()
+	 */
+	public function beforeFilter(\Cake\Event\Event $event) {
+		parent::beforeFilter($event);
+		
+		if($this->request->isAction('index')) {
+			$categories = $this->Pages->Categories->getList();
+		}
+		elseif($this->request->isAction(['add', 'edit'])) {
+			$categories = $this->Pages->Categories->getTreeList();
+		}
+		
+		//Checks for categories
+		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
+			$this->Flash->alert(__d('me_cms', 'You must first create a category'));
+			return $this->redirect(['controller' => 'PagesCategories', 'action' => 'index']);
+		}
+		
+		if(!empty($categories)) {
+			$this->set(compact('categories'));
+        }
+	}
+    
+	/**
+	 * Called after the controller action is run, but before the view is 
+     *  rendered.
+	 * You can use this method to perform logic or set view variables that are 
+     *  required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses MeCms\Controller\AppController::beforeRender()
@@ -49,7 +84,8 @@ class PagesController extends AppController {
 	
 	/**
 	 * Check if the provided user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
+	 * @param array $user The user to check the authorization of. If empty the 
+     *  user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeTools\Network\Request::isAction()
@@ -75,10 +111,15 @@ class PagesController extends AppController {
      */
     public function index() {
 		$query = $this->Pages->find()
-            ->select(['id', 'title', 'slug', 'priority', 'active', 'created']);
+            ->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
+			->contain([
+                'Categories' => function($q) {
+                    return $q->select(['id', 'title']);
+                }
+            ]);
 		
-		$this->paginate['order'] = ['title' => 'ASC'];
-		$this->paginate['sortWhitelist'] = ['title', 'priority', 'created'];
+		$this->paginate['order'] = ['Pages.created' => 'DESC'];
+		$this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'priority', 'Pages.created'];
 		
         $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->query));
         
@@ -107,11 +148,11 @@ class PagesController extends AppController {
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
-                $this->Flash->success(__d('me_cms', 'The page has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The page could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -131,11 +172,11 @@ class PagesController extends AppController {
             $page = $this->Pages->patchEntity($page, $this->request->data);
 			
             if($this->Pages->save($page)) {
-                $this->Flash->success(__d('me_cms', 'The page has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index']);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The page could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -151,10 +192,10 @@ class PagesController extends AppController {
         $page = $this->Pages->get($id);
 		
         if($this->Pages->delete($page)) {
-            $this->Flash->success(__d('me_cms', 'The page has been deleted'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
         else {
-            $this->Flash->error(__d('me_cms', 'The page could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
         
         return $this->redirect(['action' => 'index']);

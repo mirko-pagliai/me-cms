@@ -28,8 +28,15 @@ use Cake\Routing\Router;
 /**
  * Application view class for all views, except the admin views
  */
-class AppView extends BaseView {	
-	/**
+class AppView extends BaseView {
+    /**
+     * Internal property to set the userbar elements
+     * @var array
+     * @see userbar()
+     */
+    protected $userbar = [];
+    
+    /**
 	 * Adds Facebook tags
 	 * @uses MeCms\View\View\BaseView::_getTitleForLayout()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
@@ -102,6 +109,7 @@ class AppView extends BaseView {
 	 * @uses MeTools\View\Helper\LibraryHelper::analytics()
 	 * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
 	 * @uses _addFacebookTags()
+     * @uses $userbar
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Adds the "theme color" (the toolbar color for some mobile browser)
@@ -127,6 +135,20 @@ class AppView extends BaseView {
 		//Adds Facebook's tags
 		$this->_addFacebookTags();
 		
+        //Assign the userbar
+        $this->assign('userbar', implode(PHP_EOL, array_map(function($element) {
+            return $this->Html->li($element);
+        }, $this->userbar)));
+        
 		return parent::renderLayout($content, $layout);
 	}
+    
+    /**
+     * Sets one or more userbar elements
+     * @param string|array $element
+     * @uses $userbar
+     */
+    public function userbar($element) {
+        $this->userbar = am($this->userbar, (array) $element);
+    }
 }

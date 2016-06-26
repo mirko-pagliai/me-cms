@@ -62,7 +62,7 @@ class UsersTable extends AppTable {
 	public function findActive(Query $query, array $options) {
         $query->where([
 			sprintf('%s.active', $this->alias()) => TRUE,
-			sprintf('%s.banned', $this->alias()) => FALSE
+			sprintf('%s.banned', $this->alias()) => FALSE,
 		]);
 		
         return $query;
@@ -75,7 +75,9 @@ class UsersTable extends AppTable {
 	 * @return Query Query object
 	 */
 	public function findBanned(Query $query, array $options) {
-        $query->where([sprintf('%s.banned', $this->alias()) => TRUE]);
+        $query->where([
+            sprintf('%s.banned', $this->alias()) => TRUE,
+        ]);
 		
         return $query;
     }
@@ -89,7 +91,7 @@ class UsersTable extends AppTable {
 	public function findPending(Query $query, array $options) {
         $query->where([
 			sprintf('%s.active', $this->alias()) => FALSE,
-			sprintf('%s.banned', $this->alias()) => FALSE
+			sprintf('%s.banned', $this->alias()) => FALSE,
 		]);
 		
         return $query;
@@ -102,7 +104,9 @@ class UsersTable extends AppTable {
 	 */
 	public function getActiveList() {
 		return $this->find('list')
-			->where(['active' => TRUE])
+			->where([
+                sprintf('%s.active', $this->alias()) => TRUE,
+            ])
 			->cache('active_users_list', $this->cache)
 			->toArray();
 	}
@@ -132,11 +136,11 @@ class UsersTable extends AppTable {
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.UsersGroups'
+            'className' => 'MeCms.UsersGroups',
         ]);
         $this->hasMany('Posts', [
             'foreignKey' => 'user_id',
-            'className' => 'MeCms.Posts'
+            'className' => 'MeCms.Posts',
         ]);
 
         $this->addBehavior('Timestamp');
@@ -154,27 +158,37 @@ class UsersTable extends AppTable {
 		$query = parent::queryFromFilter($query, $data);
 		
 		//"Username" field
-		if(!empty($data['username']) && strlen($data['username']) > 2)
-			$query->where([sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username'])]);
-		
+		if(!empty($data['username']) && strlen($data['username']) > 2) {
+			$query->where([
+                sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username']),
+            ]);
+        }
+        
 		//"Group" field
-		if(!empty($data['group']) && preg_match('/^[1-9]\d*$/', $data['group']))
-			$query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
-		
+		if(!empty($data['group']) && preg_match('/^[1-9]\d*$/', $data['group'])) {
+			$query->where([
+                sprintf('%s.group_id', $this->alias()) => $data['group'],
+            ]);
+        }
+        
 		//"Status" field
 		if(!empty($data['status']) && in_array($data['status'], ['active', 'pending', 'banned']))
 			switch($data['status']) {
 				case 'active':
 					$query->where([
 						sprintf('%s.active', $this->alias()) => TRUE,
-						sprintf('%s.banned', $this->alias()) => FALSE
+						sprintf('%s.banned', $this->alias()) => FALSE,
 					]);
 					break;
 				case 'pending':
-					$query->where([sprintf('%s.active', $this->alias()) => FALSE]);					
+					$query->where([
+                        sprintf('%s.active', $this->alias()) => FALSE,
+                    ]);					
 					break;
 				case 'banned':
-					$query->where([sprintf('%s.banned', $this->alias()) => TRUE]);		
+					$query->where([
+                        sprintf('%s.banned', $this->alias()) => TRUE,
+                    ]);		
 					break;
 			}
 		
@@ -203,8 +217,9 @@ class UsersTable extends AppTable {
 		$validator->remove('username', 'unique')->remove('email', 'unique');
 		
 		//No field is required
-		foreach($validator->getIterator() as $field => $value)
+		foreach($validator->getIterator() as $field => $value) {
 			$validator->requirePresence($field, FALSE);
+        }
 		
 		return $validator;
 	}

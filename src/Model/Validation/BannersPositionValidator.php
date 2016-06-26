@@ -37,18 +37,18 @@ class BannersPositionValidator extends AppValidator {
 		//Name
 		$this->add('name', [
 			'lengthBetween' => [
-				'message'	=> __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-				'rule'		=> ['lengthBetween', 3, 100]
+				'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+				'rule' => ['lengthBetween', 3, 100],
 			],
 			'slug' => [
-				'message'	=> sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
-				'rule'		=> [$this, 'slug']
+				'message' => sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters, numbers, dash')),
+				'rule' => [$this, 'slug'],
 			],
 			'unique' => [
-				'message'	=> __d('me_cms', 'This value is already used'),
-				'provider'	=> 'table',
-				'rule'		=> 'validateUnique'
-			]
+				'message' => __d('me_cms', 'This value is already used'),
+				'provider' => 'table',
+				'rule' => 'validateUnique',
+			],
 		])->requirePresence('name', 'create');
 		
         return $this;

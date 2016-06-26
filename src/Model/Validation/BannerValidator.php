@@ -35,27 +35,31 @@ class BannerValidator extends AppValidator {
         parent::__construct();
 		
 		//Filename
-		$this->add('filename', ['extension' => [
-			'message'	=> __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-			'rule'		=> ['extension', ['gif', 'jpg', 'jpeg', 'png']]
-		]])->requirePresence('filename', 'create');
+		$this->add('filename', [
+            'extension' => [
+                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
+                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
+            ],
+        ])->requirePresence('filename', 'create');
 		
 		//Position
-		$this->add('position_id', ['naturalNumber' => [
-			'message'	=> __d('me_cms', 'You have to select a valid option'),
-			'rule'		=> 'naturalNumber'
-		]])->requirePresence('position_id', 'create');
+		$this->add('position_id', [
+            'naturalNumber' => [
+                'message' => __d('me_cms', 'You have to select a valid option'),
+                'rule' => 'naturalNumber',
+            ],
+        ])->requirePresence('position_id', 'create');
 		
 		//Target
 		$this->add('target', [
 			'maxLength' => [
-				'message'	=> __d('me_cms', 'Must be at most {0} chars', 255),
-				'rule'		=> ['maxLength', 255]
+				'message' => __d('me_cms', 'Must be at most {0} chars', 255),
+				'rule' => ['maxLength', 255],
 			],
 			'url' => [
-				'message'	=> __d('me_cms', 'Must be a valid url'),
-				'rule'		=> ['url', TRUE]
-			]
+				'message' => __d('me_cms', 'Must be a valid url'),
+				'rule' => ['url', TRUE],
+			],
 		])->allowEmpty('target');
 
         return $this;

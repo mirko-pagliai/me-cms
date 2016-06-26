@@ -37,19 +37,15 @@ class PagesTable extends AppTable {
 	 * @var string|array
 	 */
 	public $cache = 'pages';
-	
+
     /**
-     * Initialize method
-     * @param array $config The configuration for the table
+     * Returns a rules checker object that will be used for validating application integrity
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
+     * @return \Cake\ORM\RulesChecker
      */
-    public function initialize(array $config) {
-        parent::initialize($config);
-
-        $this->table('pages');
-        $this->displayField('title');
-        $this->primaryKey('id');
-
-        $this->addBehavior('Timestamp');
+    public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+        return $rules;
     }
     
     /**
@@ -58,6 +54,7 @@ class PagesTable extends AppTable {
      * @param array|ArrayAccess $options An array that will be passed to Query::applyOptions()
      * @return Cake\ORM\Query The query builder
      * @uses setNextToBePublished()
+	 * @uses $cache
      */
     public function find($type = 'all', $options = []) {
         //Gets from cache the timestamp of the next record to be published
@@ -74,10 +71,30 @@ class PagesTable extends AppTable {
         return parent::find($type, $options);
     }
 	
+    /**
+     * Initialize method
+     * @param array $config The configuration for the table
+     */
+    public function initialize(array $config) {
+        parent::initialize($config);
+
+        $this->table('pages');
+        $this->displayField('title');
+        $this->primaryKey('id');
+
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER',
+            'className' => 'MeCms.PagesCategories',
+        ]);
+        
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);
+    }
+	
 	/**
 	 * Sets to cache the timestamp of the next record to be published.
 	 * This value can be used to check if the cache is valid
-	 * @uses Cake\I18n\Time::toUnixString()
 	 * @uses $cache
 	 */
 	public function setNextToBePublished() {		
@@ -85,12 +102,14 @@ class PagesTable extends AppTable {
 			->select('created')
 			->where([
 				sprintf('%s.active', $this->alias()) => TRUE,
-				sprintf('%s.created >', $this->alias()) => new Time()
+				sprintf('%s.created >', $this->alias()) => new Time(),
 			])
 			->order([sprintf('%s.created', $this->alias()) => 'ASC'])
 			->first();
+        
+        $next = empty($next->created) ? FALSE : $next->created->toUnixString();
 		
-		Cache::write('next_to_be_published', empty($next->created) ? FALSE : $next->created->toUnixString(), $this->cache);
+		Cache::write('next_to_be_published', $next, $this->cache);
 	}
 
     /**

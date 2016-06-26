@@ -47,7 +47,7 @@ class PhotosController extends AppController {
 			
 			//Checks for albums
 			if(empty($albums) && !$this->request->isAction('index')) {
-				$this->Flash->alert(__d('me_cms', 'Before you can manage photos, you have to create at least an album'));
+				$this->Flash->alert(__d('me_cms', 'You must first create an album'));
 				return $this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
 			}
             
@@ -168,11 +168,11 @@ class PhotosController extends AppController {
             $photo = $this->Photos->patchEntity($photo, $this->request->data);
 			
             if($this->Photos->save($photo)) {
-                $this->Flash->success(__d('me_cms', 'The photo has been saved'));
+                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
                 return $this->redirect(['action' => 'index', $photo->album_id]);
             } 
 			else {
-                $this->Flash->error(__d('me_cms', 'The photo could not be saved'));
+                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
 
@@ -198,10 +198,10 @@ class PhotosController extends AppController {
         $photo = $this->Photos->get($id);
 		
         if($this->Photos->delete($photo)) {
-            $this->Flash->success(__d('me_cms', 'The photo has been deleted'));
+			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
         else {
-            $this->Flash->error(__d('me_cms', 'The photo could not be deleted'));
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 			
         return $this->redirect(['action' => 'index', $photo->album_id]);

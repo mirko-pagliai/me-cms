@@ -41,7 +41,7 @@ class Sitemap extends SitemapBuilder {
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */
     public static function pages() {
-        $table = TableRegistry::get('MeCms.Pages');
+        $table = TableRegistry::get('MeCms.PagesCategories');
         
         $url = Cache::read('sitemap', $table->cache);
         
@@ -49,25 +49,30 @@ class Sitemap extends SitemapBuilder {
             return $url;
         }
         
-        $pages = $table->find('active')
-            ->select(['slug', 'modified']);
+        $categories = $table->find('active')
+            ->select(['id', 'slug'])
+            ->contain(['Pages' => function($q) use($table) {
+                return $q
+                    ->select(['id', 'category_id', 'slug', 'modified'])
+                    ->order([sprintf('%s.modified', $table->Pages->alias()) => 'DESC']);
+            }]);
         
-        if($pages->isEmpty()) {
+        if($categories->isEmpty()) {
             return [];
         }
         
-        $latest = $table->find('active')
-            ->select(['modified'])
-            ->order(['Pages.modified' => 'DESC'])
-            ->firstOrFail();
+        //Adds categories index
+        $url[] = self::parse(['_name' => 'pages_categories']);
         
-        //Adds pages index
-        $url = [self::parse(['_name' => 'pages'], ['lastmod' => $latest->modified])];
-
-        //Adds all pages
-        $url = am($url, array_map(function($page) {
-            return self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
-        }, $pages->toArray()));
+        foreach($categories as $category) {
+            //Adds the category
+            $url[] = self::parse(['_name' => 'pages_category', $category->slug], ['lastmod' => $category->pages[0]->modified]);
+            
+            //Adds the pages
+            $url = am($url, array_map(function($page) {
+                return self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
+            }, $category->pages));
+        }
         
         Cache::write('sitemap', $url, $table->cache);
         
@@ -90,10 +95,10 @@ class Sitemap extends SitemapBuilder {
         
         $albums = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Photos' => function($q) {
+            ->contain(['Photos' => function($q) use($table) {
                 return $q
                     ->select(['id', 'album_id', 'modified'])
-                    ->order(['Photos.modified' => 'DESC']);
+                    ->order([sprintf('%s.modified', $table->Photos->alias()) => 'DESC']);
             }]);
         
         if($albums->isEmpty()) {
@@ -102,7 +107,7 @@ class Sitemap extends SitemapBuilder {
         
         $latest = $table->Photos->find('active')
             ->select(['modified'])
-            ->order(['Photos.modified' => 'DESC'])
+            ->order([sprintf('%s.modified', $table->Photos->alias()) => 'DESC'])
             ->firstOrFail();
         
         //Adds albums index
@@ -139,10 +144,10 @@ class Sitemap extends SitemapBuilder {
         
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Posts' => function($q) {
+            ->contain(['Posts' => function($q) use($table) {
                 return $q
                     ->select(['category_id', 'slug', 'modified'])
-                    ->order(['Posts.modified' => 'DESC']);
+                    ->order([sprintf('%s.modified', $table->Posts->alias()) => 'DESC']);
             }]);
         
         if($categories->isEmpty()) {
@@ -151,7 +156,7 @@ class Sitemap extends SitemapBuilder {
         
         $latest = $table->Posts->find('active')
             ->select(['modified'])
-            ->order(['Posts.modified' => 'DESC'])
+            ->order([sprintf('%s.modified', $table->Posts->alias()) => 'DESC'])
             ->firstOrFail();
         
         //Adds posts index, categories index and posts search
@@ -201,7 +206,7 @@ class Sitemap extends SitemapBuilder {
         
         $latest = $table->find()
             ->select(['modified'])
-            ->order(['Tags.modified' => 'DESC'])
+            ->order(['modified' => 'DESC'])
             ->firstOrFail();
         
         //Adds the tags index
@@ -243,8 +248,9 @@ class Sitemap extends SitemapBuilder {
         $url = [];
         
         //Contact form
-        if(config('frontend.contact_form'))
+        if(config('frontend.contact_form')) {
             $url[] = self::parse(['_name' => 'contact_form']);
+        }
         
         return $url;
     }

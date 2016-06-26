@@ -70,7 +70,9 @@ class BannersTable extends AppTable {
 	 * @return Query Query object
 	 */
 	public function findActive(Query $query, array $options) {		
-        $query->where([sprintf('%s.active', $this->alias()) => TRUE]);
+        $query->where([
+            sprintf('%s.active', $this->alias()) => TRUE,
+        ]);
 		
         return $query;
     }
@@ -89,7 +91,7 @@ class BannersTable extends AppTable {
         $this->belongsTo('Positions', [
             'foreignKey' => 'position_id',
             'joinType' => 'INNER',
-            'className' => 'MeCms.BannersPositions'
+            'className' => 'MeCms.BannersPositions',
         ]);
 		
         $this->addBehavior('Timestamp');
@@ -107,9 +109,12 @@ class BannersTable extends AppTable {
 		$query = parent::queryFromFilter($query, $data);
 		
 		//"Position" field
-		if(!empty($data['position']) && preg_match('/^[1-9]\d*$/', $data['position']))
-			$query->where([sprintf('%s.position_id', $this->alias()) => $data['position']]);
-		
+		if(!empty($data['position']) && preg_match('/^[1-9]\d*$/', $data['position'])) {
+			$query->where([
+                sprintf('%s.position_id', $this->alias()) => $data['position'],
+            ]);
+        }
+        
 		return $query;
 	}
 

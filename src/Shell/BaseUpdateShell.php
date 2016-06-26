@@ -66,7 +66,30 @@ class BaseUpdateShell extends Shell {
         }, $columns);
     }
     
-	/**
+    /**
+     * Checks if a table exists
+     * @param string $table
+     * @return bool
+     * @uses _tables()
+     */
+    protected function _tableExists($table) {
+        return in_array($table, $this->_tables());
+    }
+    
+    /**
+     * Gets the tables list
+     * @return array
+     * @uses $connection
+     */
+    protected function _tables() {
+        $tables = $this->connection->execute(sprintf('SHOW TABLES;'))->fetchAll();
+        
+        return array_map(function($table) {
+            return array_values($table)[0];
+        }, $tables);
+    }
+
+    /**
 	 * Gets the option parser instance and configures it.
 	 * @return ConsoleOptionParser
 	 */

@@ -26,8 +26,9 @@
     $this->extend('/Admin/Common/index');
     $this->assign('title', __d('me_cms', 'Pages'));
     $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-    
-	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
+	$this->append('actions', $this->Html->button(__d('me_cms', 'Add category'), ['controller' => 'PagesCategories', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
+
+    $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
 <?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
@@ -43,6 +44,10 @@
                 'default' => $this->request->query('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
+            ]);
+            echo $this->Form->input('category', [
+                'default' => $this->request->query('category'),
+                'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
             ]);
             echo $this->Form->input('priority', [
                 'default' => $this->request->query('priority'),
@@ -63,6 +68,7 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
             <th class="min-width text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
             <th class="min-width text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
         </tr>
@@ -105,6 +111,9 @@
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
+                </td>
+                <td class="min-width text-center">
+                    <?= $this->Html->link($page->category->title, ['?' => ['category' => $page->category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
                 </td>
                 <td class="min-width text-center">
                     <?php

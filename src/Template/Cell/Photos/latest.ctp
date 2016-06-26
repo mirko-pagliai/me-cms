@@ -28,7 +28,7 @@
     }
     
 	$this->extend('/Common/widget');
-	$this->assign('title', count($photos) > 1 ? __d('me_cms', 'Latest {0} photos', count($photos)) : __d('me_cms', 'Latest photo'));
+	$this->assign('title', __dn('me_cms', 'Latest photo', 'Latest {0} photos', count($photos), count($photos)));
 	
 	foreach($photos as $photo) {
 		echo $this->Html->link($this->Thumb->image($photo->path, ['side' => 253]), ['_name' => 'albums'], ['class' => 'thumbnail']);

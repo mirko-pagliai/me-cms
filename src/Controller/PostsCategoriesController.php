@@ -66,9 +66,10 @@ class PostsCategoriesController extends AppController {
 		//If the data are not available from the cache
 		if(empty($posts) || empty($paging)) {
 			$query = $this->PostsCategories->Posts->find('active')
+				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->contain([
                     'Categories' => function($q) {
-                        return $q->select(['title', 'slug']);
+                        return $q->select(['id', 'title', 'slug']);
                     },
                     'Tags' => function($q) {
                         return $q->order(['tag' => 'ASC']);
@@ -77,7 +78,6 @@ class PostsCategoriesController extends AppController {
                         return $q->select(['first_name', 'last_name']);
                     },
 				])
-				->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
 				->where(['Categories.slug' => $slug])
 				->order([sprintf('%s.created', $this->PostsCategories->Posts->alias()) => 'DESC']);
 					
@@ -99,7 +99,7 @@ class PostsCategoriesController extends AppController {
         }
         
 		$this->set(am([
-            'category' => $posts[0]->category->title,
+            'category' => $posts[0]->category,
         ], compact('posts')));
 	}
 }

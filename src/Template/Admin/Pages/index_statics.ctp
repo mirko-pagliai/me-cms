@@ -30,7 +30,7 @@
 <table class="table table-striped">
     <tr>
         <th><?= __d('me_cms', 'Filename') ?></th>
-        <th><?= __d('me_cms', 'Title') ?></th>
+        <th class="text-center"><?= __d('me_cms', 'Title') ?></th>
         <th><?= __d('me_cms', 'Path') ?></th>
     </tr>
     <?php foreach($pages as $page): ?>
@@ -45,11 +45,11 @@
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </td>
-            <td>
+            <td class="text-center">
                 <?= $page->title ?>
             </td>
             <td>
-                <?= $page->path ?>
+                <samp><?= $page->path ?></samp>
             </td>
         </tr>
     <?php endforeach; ?>

@@ -33,6 +33,10 @@
 <?= $this->Form->create($page); ?>
 <div class='float-form'>
     <?php
+        echo $this->Form->input('category_id', [
+            'default' => count($categories) < 2 ? fv($categories) : NULL,
+            'label' => __d('me_cms', 'Category'),
+        ]);
         echo $this->Form->datetimepicker('created', [
             'label'	=> __d('me_cms', 'Date'),
             'tip' => [

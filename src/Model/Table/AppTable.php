@@ -37,11 +37,12 @@ class AppTable extends Table {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses clearCache()
+     * @uses $cache
 	 */
 	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		if(!empty($this->cache))
-			$this->clearCache($this->cache);
+		if(!empty($this->cache)) {
+			Cache::clear(FALSE, $this->cache);
+        }
 	}
 	
 	/**
@@ -49,21 +50,12 @@ class AppTable extends Table {
 	 * @param \Cake\Event\Event $event Event object
 	 * @param \Cake\ORM\Entity $entity Entity object
 	 * @param \ArrayObject $options Options
-	 * @uses clearCache()
+     * @uses $cache
 	 */
 	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		if(!empty($this->cache))
-			$this->clearCache($this->cache);
-	}
-	
-	/**
-	 * Clears the cache
-	 * @param string|array $config Name of the configuration to clear
-	 */
-	public function clearCache($config) {
-		array_walk(is_array($config) ? $config : [$config], function($config) {
-			Cache::clear(FALSE, $config);		
-		});
+		if(!empty($this->cache)) {
+			Cache::clear(FALSE, $this->cache);
+        }
 	}
 	
 	/**
@@ -71,12 +63,11 @@ class AppTable extends Table {
 	 * @param Query $query Query object
 	 * @param array $options Options
 	 * @return Query Query object
-	 * @uses Cake\I18n\Time::i18nFormat()
 	 */
 	public function findActive(Query $query, array $options) {
         $query->where([
             sprintf('%s.active', $this->alias()) => TRUE,
-			sprintf('%s.created <=', $this->alias()) => new Time()
+			sprintf('%s.created <=', $this->alias()) => new Time(),
         ]);
 		
         return $query;
@@ -87,13 +78,13 @@ class AppTable extends Table {
 	 * @param Query $query Query object
 	 * @param array $options Options
 	 * @return Query Query object
-	 * @uses Cake\I18n\Time::i18nFormat()
 	 */
 	public function findRandom(Query $query, array $options) {
 		$query->order('rand()');
 		
-		if(!$query->clause('limit'))
+		if(!$query->clause('limit')) {
 			$query->limit(1);
+        }
 		
         return $query;
     }
@@ -107,15 +98,18 @@ class AppTable extends Table {
 	 * $posts->isOwnedBy(2, 4);
 	 * </code>
 	 * checks if the posts with ID 2 belongs to the user with ID 4.
-	 * @param int $id Object id
-	 * @param int $user_id User id
-	 * @return bool TRUE if it belongs to the user, otherwise FALSE
+	 * @param int $id Object ID
+	 * @param int $user_id User ID
+	 * @return bool
 	 */
 	public function isOwnedBy($id, $user_id = NULL) {
-		if(empty($user_id))
+		if(empty($user_id)) {
 			return FALSE;
+        }
 		
-		return (bool) $this->find('all')->where(compact('id', 'user_id'))->count();
+		return (bool) $this->find('all')
+            ->where(compact('id', 'user_id'))
+            ->count();
 	}
 	
 	/**
@@ -126,39 +120,58 @@ class AppTable extends Table {
 	 */
 	public function queryFromFilter(Query $query, array $data = []) {
 		//"Title" field
-		if(!empty($data['title']) && strlen($data['title']) > 2)
-			$query->where([sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title'])]);
-		
-		//"Filename" field
-		if(!empty($data['filename']) && strlen($data['filename']) > 2)
-			$query->where([sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename'])]);
-		
-		//"User" (author) field
-		if(!empty($data['user']) && preg_match('/^[1-9]\d*$/', $data['user']))
-			$query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
-		
-		//"Category" field
-		if(!empty($data['category']) && preg_match('/^[1-9]\d*$/', $data['category']))
-			$query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
-		
-		//"Active" field
-		if(!empty($data['active']))
-			if($data['active'] === 'yes')
-				$query->where([sprintf('%s.active', $this->alias()) => TRUE]);
-			elseif($data['active'] === 'no')
-				$query->where([sprintf('%s.active', $this->alias()) => FALSE]);
-		
-		//"Priority" field
-		if(!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority']))
-			$query->where([sprintf('%s.priority', $this->alias()) => $data['priority']]);
-		
-		//"Created" field
-		if(!empty($data['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $data['created']))
+		if(!empty($data['title']) && strlen($data['title']) > 2) {
 			$query->where([
-				sprintf('%s.created >=', $this->alias()) => new Time($created = sprintf('%s-01', $data['created'])),
-				sprintf('%s.created <', $this->alias()) => (new Time($created))->addMonth(1)
+                sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title']),
+            ]);
+        }
+        
+		//"Filename" field
+		if(!empty($data['filename']) && strlen($data['filename']) > 2) {
+			$query->where(
+                [sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename']),
+            ]);
+        }
+        
+		//"User" (author) field
+		if(!empty($data['user']) && preg_match('/^[1-9]\d*$/', $data['user'])) {
+			$query->where([
+                sprintf('%s.user_id', $this->alias()) => $data['user'],
+            ]);
+        }
+        
+		//"Category" field
+		if(!empty($data['category']) && preg_match('/^[1-9]\d*$/', $data['category'])) {
+			$query->where([
+                sprintf('%s.category_id', $this->alias()) => $data['category'],
+            ]);
+        }
+        
+		//"Active" field
+		if(!empty($data['active'])) {
+            $query->where([
+                sprintf('%s.active', $this->alias()) => $data['active'] === 'yes',
+            ]);
+        }
+        
+		//"Priority" field
+		if(!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority'])) {
+			$query->where([
+                sprintf('%s.priority', $this->alias()) => $data['priority'],
+            ]);
+        }
+        
+		//"Created" field
+		if(!empty($data['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $data['created'])) {
+            $start = new Time(sprintf('%s-01', $data['created']));
+            $end = (new Time($start))->addMonth(1);
+            
+			$query->where([
+				sprintf('%s.created >=', $this->alias()) => $start,
+				sprintf('%s.created <', $this->alias()) => $end,
 			]);
-		
+        }
+        
 		return $query;
 	}
 }

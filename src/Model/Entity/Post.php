@@ -23,6 +23,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use MeTools\Utility\Youtube;
 
@@ -90,6 +91,6 @@ class Post extends Entity {
 	 * @uses MeCms\Model\Table\TagsTable::tagsAsString()
 	 */
 	protected function _getTagsAsString() {
-		return \Cake\ORM\TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
+		return TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
 	}
 }

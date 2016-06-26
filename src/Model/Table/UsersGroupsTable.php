@@ -61,7 +61,7 @@ class UsersGroupsTable extends AppTable {
 		
         $this->hasMany('Users', [
             'foreignKey' => 'group_id',
-            'className' => 'MeCms.Users'
+            'className' => 'MeCms.Users',
         ]);
         
         $this->addBehavior('Timestamp');

@@ -24,5 +24,7 @@
 
 <?php
     $this->extend('/Posts/index');
-    $this->assign('title', __d('me_cms', 'Tag {0}', $tag));
+    $this->assign('title', __d('me_cms', 'Tag {0}', $tag->tag));
+    
+    $this->userbar($this->Html->link(__d('me_cms', 'Edit tag'), ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => 'admin', $tag->id], ['icon' => 'pencil', 'target' => '_blank']));
 ?>

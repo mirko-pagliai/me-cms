@@ -35,16 +35,20 @@ class PhotoValidator extends AppValidator {
         parent::__construct();
 		
 		//Filename
-		$this->add('filename', ['extension' => [
-			'message'	=> __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-			'rule'		=> ['extension', ['gif', 'jpg', 'jpeg', 'png']]
-		]])->requirePresence('filename', 'create');
+		$this->add('filename', [
+            'extension' => [
+                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
+                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
+            ],
+        ])->requirePresence('filename', 'create');
 		
 		//Album
-        $this->add('album_id', ['naturalNumber' => [
-			'message'	=> __d('me_cms', 'You have to select a valid option'),
-			'rule'		=> 'naturalNumber'
-		]])->requirePresence('album_id', 'create');
+        $this->add('album_id', [
+            'naturalNumber' => [
+                'message' => __d('me_cms', 'You have to select a valid option'),
+                'rule' => 'naturalNumber',
+            ],
+        ])->requirePresence('album_id', 'create');
 
         return $this;
 	}
