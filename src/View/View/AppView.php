@@ -69,6 +69,7 @@ class AppView extends BaseView {
 		parent::initialize();
 		
 		//Loads helpers
+		$this->loadHelper('MeTools.Breadcrumb');
 		$this->loadHelper('MeTools.BBCode');
 		$this->loadHelper('MeTools.Recaptcha');
 		$this->loadHelper('MeCms.Widget');

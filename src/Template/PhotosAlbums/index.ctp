@@ -24,7 +24,12 @@
 
 <?php
     $this->extend('/Common/index');
-    $this->assign('title', __d('me_cms', 'Photos'));
+    $this->assign('title', $title = __d('me_cms', 'Photos'));
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add($title, ['_name' => 'albums']);
 ?>
 
 <div class="clearfix">

@@ -24,7 +24,12 @@
 
 <?php
     $this->extend('/Common/index');
-    $this->assign('title', __d('me_cms', 'Posts categories'));
+    $this->assign('title', $title = __d('me_cms', 'Posts categories'));
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add($title, ['_name' => 'posts_categories']);
     
     $categories = array_map(function($category) {
         return $this->Html->link($category->title, ['_name' => 'posts_category', $category->slug]);

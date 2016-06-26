@@ -26,6 +26,9 @@
     $this->extend('/Common/view');
     $this->assign('title', $post->title);
     
+    /**
+     * Userbar
+     */
     if(!$post->active) {
        $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning'])); 
     }
@@ -39,14 +42,36 @@
         $this->Form->postLink(__d('me_cms', 'Delete post'), ['action' => 'delete', $post->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
     ]);
     
-	//Set some tags
+    /**
+     * Breadcrumb
+     */
+    if(config('post.category')) {
+        $this->Breadcrumb->add($post->category->title, ['_name' => 'posts_category', $post->category->slug]);
+    }
+    $this->Breadcrumb->add($post->title, ['_name' => 'post', $post->slug]);
+    
+    /**
+     * Meta tags
+     */
     if($this->request->isAction('view', 'Posts')) {
-        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-        $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
+        $this->Html->meta([
+            'content' => 'article',
+            'property' => 'og:type',
+        ]);
+        $this->Html->meta([
+            'content' => $post->modified->toUnixString(),
+            'property' => 'og:updated_time',
+        ]);
 
         if(!empty($post->preview)) {
-            $this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-            $this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+            $this->Html->meta([
+                'href' => $post->preview,
+                'rel' => 'image_src',
+            ]);
+            $this->Html->meta([
+                'content' => $post->preview,
+                'property' => 'og:image',
+            ]);
         }
 
         if(!empty($post->text)) {

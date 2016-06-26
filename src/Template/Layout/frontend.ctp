@@ -62,9 +62,10 @@
 					$logo = $this->Html->h1(config('main.title'));
 
 					//Check if the logo image exists
-					if(is_readable(WWW_ROOT.'img'.DS.config('frontend.logo')))
+					if(is_readable(WWW_ROOT.'img'.DS.config('frontend.logo'))) {
 						$logo = $this->Html->img(config('frontend.logo'));
-
+                    }
+                    
 					echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);		
 				?>
 			</div>
@@ -74,6 +75,7 @@
 			<div class="row">
 				<div id="content" class="col-sm-8 col-md-9">
 					<?= $this->Flash->render() ?>
+                    <?= $this->Breadcrumb->get() ?>
 					<?= $this->fetch('content') ?>
 				</div>
 				<div id="sidebar" class="col-sm-4 col-md-3">
@@ -82,10 +84,8 @@
 				</div>
 			</div>
 		</div>
-		<?php
-			echo $this->element('MeCms.frontend/footer', [], ['cache' => ['key' => 'footer', 'config' => 'frontend']]);
-			echo $this->fetch('css_bottom');
-			echo $this->fetch('script_bottom');
-		?>
+		<?= $this->element('MeCms.frontend/footer', [], ['cache' => ['key' => 'footer', 'config' => 'frontend']]) ?>
+		<?= $this->fetch('css_bottom') ?>
+		<?= $this->fetch('script_bottom') ?>
 	</body>
 </html>

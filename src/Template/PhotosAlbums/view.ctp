@@ -24,12 +24,15 @@
 
 <?php
     $this->extend('/Common/view');
-    $this->assign('title', __d('me_cms', 'Album {0}', $album->title));
+    $this->assign('title', $title = $album->title);
     
 	if(config('frontend.fancybox')) {
 		$this->Library->fancybox();
     }
     
+    /**
+     * Userbar
+     */
     if(!$album->active) {
         $this->userbar($this->Html->span(__d('me_cms', 'Not published'), ['class' => 'label label-warning']));
     }
@@ -38,6 +41,12 @@
         $this->Html->link(__d('me_cms', 'Edit album'), ['action' => 'edit', $album->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']),
         $this->Form->postLink(__d('me_cms', 'Delete album'), ['action' => 'delete', $album->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
     ]);
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
+    $this->Breadcrumb->add($title, ['_name' => 'album', $album->slug]);
 ?>
 
 <div class="clearfix">

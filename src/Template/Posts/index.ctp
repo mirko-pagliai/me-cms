@@ -32,4 +32,3 @@
 
         echo $this->element('MeTools.paginator');
     }
-?>

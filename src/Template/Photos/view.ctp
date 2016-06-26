@@ -24,8 +24,11 @@
 
 <?php
     $this->extend('/Common/view');
-    $this->assign('title', __d('me_cms', 'Photo {0}', $photo->filename));
+    $this->assign('title', $title = $photo->filename);
     
+    /**
+     * Userbar
+     */
     if(!$photo->active) {
         $this->userbar($this->Html->span(__d('me_cms', 'Not published'), ['class' => 'label label-warning']));
     }
@@ -34,6 +37,13 @@
         $this->Html->link(__d('me_cms', 'Edit photo'), ['action' => 'edit', $photo->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']),
         $this->Form->postLink(__d('me_cms', 'Delete photo'), ['action' => 'delete', $photo->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
     ]);
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
+    $this->Breadcrumb->add($photo->album->title, ['_name' => 'album', $photo->album->slug]);
+    $this->Breadcrumb->add($title, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id]);
 ?>
 
 <?= $this->Thumb->resize($photo->path, ['width' => 848]) ?>

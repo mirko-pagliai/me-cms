@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.11 branch
 ### 2.11.0
+* added breadcrumb;
 * pages index has been removed.
 
 ## 2.10 branch

@@ -24,7 +24,12 @@
 
 <?php
     $this->extend('/Common/index');
-    $this->assign('title', __d('me_cms', 'Search posts'));
+    $this->assign('title', $title = __d('me_cms', 'Search posts'));
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add($title, ['_name' => 'posts_search']);
 ?>
 
 <?php

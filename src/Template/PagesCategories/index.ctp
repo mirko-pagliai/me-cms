@@ -24,11 +24,15 @@
 
 <?php
     $this->extend('/Common/index');
-    $this->assign('title', __d('me_cms', 'Pages categories'));
+    $this->assign('title', $title = __d('me_cms', 'Pages categories'));
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add($title, ['_name' => 'pages_categories']);
     
     $categories = array_map(function($category) {
         return $this->Html->link($category->title, ['_name' => 'pages_category', $category->slug]);
     }, $categories->toArray());
 
     echo $this->Html->ul($categories, ['icon' => 'caret-right']);
-?>
