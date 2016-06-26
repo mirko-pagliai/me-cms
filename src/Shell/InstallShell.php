@@ -114,8 +114,11 @@ class InstallShell extends BaseInstallShell {
 		
 		if($this->param('force')) {
 			$this->fixKcfinder();
-            $this->_run_other_plugins();
-			
+            
+            if($this->_get_other_plugins()) {
+                $this->_run_other_plugins();
+            }
+            
 			return;
 		}
 		
