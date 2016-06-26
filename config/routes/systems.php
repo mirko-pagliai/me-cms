@@ -21,25 +21,27 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-/**
- * Systems controller
- */
+//Accept cookies
 $routes->connect('/accept/cookies',
     ['controller' => 'Systems', 'action' => 'accept_cookies'],
     ['_name' => 'accept_cookies']
 );
+//Contact form
 $routes->connect('/contact/form',
     ['controller' => 'Systems', 'action' => 'contact_form'],
     ['_name' => 'contact_form']
 );
+//Offline page
 $routes->connect('/offline',
     ['controller' => 'Systems', 'action' => 'offline'],
     ['_name' => 'offline']
 );
+//Sitemap
 $routes->connect('/sitemap:ext',
     ['controller' => 'Systems', 'action' => 'sitemap'],
     ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
 );
+//Unallowed page
 $routes->connect('/unallowed',
     ['controller' => 'Systems', 'action' => 'ip_not_allowed'],
     ['_name' => 'ip_not_allowed']

@@ -21,30 +21,29 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-/**
- * PagesCategories controller
- */
+//Categories
 $routes->connect('/pages/categories',
     ['controller' => 'PagesCategories', 'action' => 'index'],
     ['_name' => 'pages_categories']
 );
+//Category
 $routes->connect('/pages/category/:slug',
     ['controller' => 'PagesCategories', 'action' => 'view'],
     ['_name' => 'pages_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 );
 
-/**
- * Pages controller
- */
+//Pages
+$routes->connect('/pages',
+    ['controller' => 'Pages', 'action' => 'index'],
+    ['_name' => 'pages']
+);
+//Page
 $routes->connect('/page/:slug',
     ['controller' => 'Pages', 'action' => 'view'],
     ['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
 );
+//Page preview
 $routes->connect('/page/preview/:slug',
     ['controller' => 'Pages', 'action' => 'preview'],
     ['_name' => 'pages_preview', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
-);
-$routes->connect('/pages',
-    ['controller' => 'Pages', 'action' => 'index'],
-    ['_name' => 'pages']
 );

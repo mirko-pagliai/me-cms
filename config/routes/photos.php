@@ -21,29 +21,28 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-/**
- * PhotosAlbums controller
- */
+//Albums
 $routes->connect('/albums',
     ['controller' => 'PhotosAlbums', 'action' => 'index'],
     ['_name' => 'albums']
 );
+//Album
 $routes->connect('/album/:slug',
     ['controller' => 'PhotosAlbums', 'action' => 'view'],
     ['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 );
+//Album preview
 $routes->connect('/album/preview/:slug',
     ['controller' => 'PhotosAlbums', 'action' => 'preview'],
     ['_name' => 'albums_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 );
 
-/**
- * Photos controller
- */
+//Photo
 $routes->connect('/photo/:slug/:id',
     ['controller' => 'Photos', 'action' => 'view'],
     ['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
 );
+//Photo preview
 $routes->connect('/photo/preview/:id',
     ['controller' => 'Photos', 'action' => 'preview'],
     ['_name' => 'photos_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['id']]

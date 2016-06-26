@@ -21,9 +21,7 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-/**
- * Banners controller
- */
+//Banner
 $routes->connect('/banner/:id',
     ['controller' => 'Banners', 'action' => 'open'],
     ['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
