@@ -24,7 +24,7 @@
 
 <div class="page-container content-container">
 	<div class="content-header">
-        <?php if(config('page.category')): ?>
+        <?php if(config('page.category') && !empty($page->category)): ?>
             <h5 class="content-category">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pages_category', $page->category->slug]) ?>
             </h5>
