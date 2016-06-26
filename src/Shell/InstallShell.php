@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Datasource\ConnectionManager;
 use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
 
@@ -105,6 +106,7 @@ class InstallShell extends BaseInstallShell {
      * @uses _get_other_plugins()
      * @uses _run_other_plugins()
 	 * @uses createAdmin()
+	 * @uses createGroups()
 	 * @uses fixKcfinder()
 	 */
 	public function all() {
@@ -120,6 +122,11 @@ class InstallShell extends BaseInstallShell {
 		$ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
 		if(in_array($ask, ['Y', 'y'])) {
 			$this->fixKcfinder();
+        }
+		
+		$ask = $this->in(__d('me_cms', 'Create the user groups?'), ['y', 'N'], 'N');
+		if(in_array($ask, ['Y', 'y'])) {
+			$this->createGroups();
         }
 		
 		$ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
@@ -142,6 +149,33 @@ class InstallShell extends BaseInstallShell {
 	public function createAdmin() {
 		$this->dispatchShell('MeCms.user', 'add', '--group', 1);
 	}
+    
+    /**
+     * Creates the user groups
+     */
+    public function createGroups() {
+		$this->loadModel('MeCms.UsersGroups');
+        
+        $groups = $this->UsersGroups->find('all');
+        
+        if($groups->isEmpty()) {
+            //Truncates the table. This resets IDs
+            ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table()));
+            
+            $entities = $this->UsersGroups->newEntities([
+                ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
+                ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
+                ['id' => 3, 'name' => 'user', 'label' => 'User'],
+            ]);
+            
+            if($this->UsersGroups->saveMany($entities)) {
+				$this->verbose(__d('me_cms', 'The user groups have been created'));
+            }
+            else {
+				$this->err(__d('me_cms', 'The user groups have not been created'));
+            }
+        }
+    }
 		
 	/**
 	 * Fixes KCFinder.
@@ -174,6 +208,7 @@ class InstallShell extends BaseInstallShell {
 		
 		return $parser->addSubcommands([
 			'createAdmin' => ['help' => __d('me_cms', 'Creates an admin user')],
+			'createGroups' => ['help' => __d('me_cms', 'Creates the user groups')],
 			'fixKcfinder' => ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')],
 		]);
 	}
