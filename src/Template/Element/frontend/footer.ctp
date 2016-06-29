@@ -30,9 +30,10 @@
 			$this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss')
 		];
 		
-		if(config('frontend.contact_form'))
+		if(config('frontend.contact_form')) {
 			$links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contact_form']);
-		
+        }
+        
 		echo $this->Html->ul($links);
 	?>
 	
