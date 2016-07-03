@@ -2,7 +2,8 @@
 ## 2.11 branch
 ### 2.11.0
 * added breadcrumb;
-* pages index has been removed.
+* pages index has been removed;
+* now you can hide the userbar.
 
 ## 2.10 branch
 ### 2.10.1
