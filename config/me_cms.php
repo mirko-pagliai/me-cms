@@ -3,7 +3,8 @@ return ['MeCms' => [
 	//Backend
 	'backend' => [
 		//Layout you want to use for the backend
-		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
+		//If you want to use a layout from your application (eg. 
+        //  `default.ctp`), change this value without extension
 		'layout' => 'MeCms.backend',
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
@@ -25,7 +26,8 @@ return ['MeCms' => [
 		//It shows the alert for the cookie policy
 		'cookies_policy' => TRUE,
 		//Layout you want to use for the frontend
-		//If you want to use a layout from your application (eg. `default.ctp`), change this value without extension
+		//If you want to use a layout from your application (eg. 
+        //  `default.ctp`), change this value without extension
 		'layout' => 'MeCms.frontend',
 		//Contact form (enabled or disabled).
 		'contact_form' => TRUE,
@@ -49,11 +51,13 @@ return ['MeCms' => [
 		'rss_meta' => TRUE,
 		//Theme. Must be located in `APP/plugins/`
 		'theme' => FALSE,
-		//For some mobile browsers you can choose a color for the browser bar. Must be a valid HEX color or FALSE to disable
+		//For some mobile browsers you can choose a color for the browser bar. 
+        //  Must be a valid HEX color or FALSE to disable
 		//See https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android
 		'toolbar_color' => FALSE,
 		//Number of characters to truncate a text. `0` or `FALSE` to disable
-		//Note that you can use the "<!-- read-more -->" tag to indicate manually where to truncate a text
+		//Note that you can use the "<!-- read-more -->" tag to indicate 
+        //  manually where to truncate a text
 		'truncate_to' => 1000,
 	],
 	//KCFinder
@@ -104,7 +108,8 @@ return ['MeCms' => [
 		//Displays the page created datetime
 		'created' => FALSE,
 		//Displays the Shareaholic social buttons
-		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
+		//Remember you have to set app and site IDs. See `shareaholic.app_id` 
+        //  and `shareaholic.site_id`
 		'shareaholic' => FALSE,
 	],
 	//Posts
@@ -126,21 +131,23 @@ return ['MeCms' => [
 			'images' => TRUE,
 		],
 		//Displays the Shareaholic social buttons
-		//Remember you have to set app and site IDs. See `shareaholic.app_id` and `shareaholic.site_id`
+		//Remember you have to set app and site IDs. See `shareaholic.app_id` 
+        //  and `shareaholic.site_id`
 		'shareaholic' => FALSE,
 		//Displays the post tags
 		'tags' => TRUE,
 	],
 	//Security
 	'security' => [
-		//Link for "IP map". The `{IP}` string will be replaced with the IP address
+		//Link for "IP map". The `{IP}` string will be replaced
 		'ip_map' => 'http://www.traceip.net/?query={IP}',
-		//Link for "IP who is". The `{IP}` string will be replaced with the IP address
+		//Link for "IP who is". The `{IP}` string will be replaced
 		'ip_whois' => 'http://www.traceip.net/whois/{IP}',
 		//reCAPTCHA (enabled or disabled).
-		//It will be used for some actions, such as signup or reset the password
+		//It will be used for some actions, such as signup or password reset
 		'recaptcha' => FALSE,
-		//Interval between searches, in seconds. Set to `0` or `FALSE` to disable
+		//Interval between searches, in seconds.
+        //Set to `0` or `FALSE` to disable
 		'search_interval' => 10,
 	],
 	//Shareaholic
