@@ -265,8 +265,19 @@ body header #topbar .navbar-collapse li.open > a {
 	margin-bottom: 20px;
 }
 
-/* Widget, list, element list, link */
-.widget ul li a {
+/* Widget, title */
+.widget .widget-title {
+	margin: 0 0 10px;
+}
+
+
+/* Widget, content, last child */
+.widget .widget-content :last-child {
+	margin-bottom: 0;
+}
+
+/* Widget, content, element list, link */
+.widget .widget-content li a {
 	display: block;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;

@@ -78,7 +78,7 @@ class PagesCell extends Cell {
 	 */
 	public function pages() {
 		//Returns on pages index
-		if($this->request->isHere(['_name' => 'pages'])) {
+		if($this->request->isHere(['_name' => 'pages_categories'])) {
 			return;
         }
 

@@ -26,10 +26,18 @@
     $this->extend('/Common/index');
     $this->assign('title', $category->title);
     
+    /**
+     * Userbar
+     */
     $this->userbar([
         $this->Html->link(__d('me_cms', 'Edit category'), ['action' => 'edit', $category->id, 'prefix' => 'admin'], ['icon' => 'pencil', 'target' => '_blank']),
         $this->Form->postLink(__d('me_cms', 'Delete category'), ['action' => 'delete', $category->id, 'prefix' => 'admin'], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
     ]);
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add($category->title, ['_name' => 'pages_category', $category->title]);
     
     $pages = array_map(function($page) {
         return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);

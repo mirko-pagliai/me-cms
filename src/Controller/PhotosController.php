@@ -55,6 +55,11 @@ class PhotosController extends AppController {
         
         $photo = $this->Photos->find('active')
 			->select(['id', 'album_id', 'filename', 'active'])
+            ->contain([
+                'Albums' => function($q) {
+                    return $q->select(['id', 'title', 'slug']);
+                }
+            ])
 			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
 			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
 			->firstOrFail();
@@ -70,6 +75,11 @@ class PhotosController extends AppController {
     public function preview($id = NULL) {        
         $photo = $this->Photos->find()
 			->select(['id', 'album_id', 'filename'])
+            ->contain([
+                'Albums' => function($q) {
+                    return $q->select(['id', 'title', 'slug']);
+                }
+            ])
 			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
 			->firstOrFail();
         
