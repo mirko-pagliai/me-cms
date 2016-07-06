@@ -24,7 +24,15 @@
 
 <?php
     $this->extend('/Posts/index');
-    $this->assign('title', __d('me_cms', 'Tag {0}', $tag->tag));
+    $this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->tag));
     
+    /**
+     * Userbar
+     */
     $this->userbar($this->Html->link(__d('me_cms', 'Edit tag'), ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => 'admin', $tag->id], ['icon' => 'pencil', 'target' => '_blank']));
-?>
+    
+    /**
+     * Breadcrumb
+     */
+    $this->Breadcrumb->add(__d('me_cms', 'Tags'), ['_name' => 'posts_tags']);
+    $this->Breadcrumb->add($title, ['_name' => 'posts_tag', $tag->slug]);

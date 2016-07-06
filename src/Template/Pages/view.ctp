@@ -26,6 +26,9 @@
     $this->extend('/Common/view');
     $this->assign('title', $page->title);
     
+    /**
+     * Userbar
+     */
     if(!$page->active) {
         $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
     }
@@ -39,23 +42,45 @@
         $this->Form->postLink(__d('me_cms', 'Delete page'), ['action' => 'delete', $page->id, 'prefix' => 'admin'], ['icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?'), 'target' => '_blank']),
     ]);
     
-	//Set some tags
+    /**
+     * Breadcrumb
+     */
+    if(config('page.category')) {
+        $this->Breadcrumb->add($page->category->title, ['_name' => 'pages_category', $page->category->slug]);
+    }
+    $this->Breadcrumb->add($page->title, ['_name' => 'page', $page->slug]);
+    
+    /**
+     * Meta tags
+     */
     if($this->request->isAction('view', 'Pages')) {
-        $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-        $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
+        $this->Html->meta([
+            'content' => 'article',
+            'property' => 'og:type',
+        ]);
+        $this->Html->meta([
+            'content' => $page->modified->toUnixString(),
+            'property' => 'og:updated_time',
+        ]);
         
         if(!empty($page->preview)) {
-            $this->Html->meta(['href' => $page->preview, 'rel' => 'image_src']);
-            $this->Html->meta(['content' => $page->preview, 'property' => 'og:image']);
+            $this->Html->meta([
+                'href' => $page->preview,
+                'rel' => 'image_src',
+            ]);
+            $this->Html->meta([
+                'content' => $page->preview,
+                'property' => 'og:image',
+            ]);
         }
 
         if(!empty($page->text)) {
             $this->Html->meta([
                 'content' => $this->Text->truncate($this->BBCode->remove($page->text), 100, ['html' => TRUE]),
-                'property' => 'og:description'
+                'property' => 'og:description',
             ]);
         }
     }
-    
-    echo $this->element('frontend/views/page', compact('page'));
 ?>
+  
+<?= $this->element('frontend/views/page', compact('page')) ?>

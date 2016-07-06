@@ -23,6 +23,10 @@
 ?>
 
 <?php
+    if(!config('users.userbar')) {
+        return;
+    }
+    
     if(!$this->Auth->isLogged()) {
         return;
     }

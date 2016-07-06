@@ -29,11 +29,5 @@
 ?>
 
 <div class="index">
-    <?php
-        if($this->fetch('title')) {
-            echo $this->Html->h2($this->fetch('title'));
-        }
-        
-        echo $this->fetch('content');
-    ?>
+    <?=$this->fetch('content') ?>
 </div>

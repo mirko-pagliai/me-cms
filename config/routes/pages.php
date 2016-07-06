@@ -32,11 +32,6 @@ $routes->connect('/pages/category/:slug',
     ['_name' => 'pages_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 );
 
-//Pages
-$routes->connect('/pages',
-    ['controller' => 'Pages', 'action' => 'index'],
-    ['_name' => 'pages']
-);
 //Page
 $routes->connect('/page/:slug',
     ['controller' => 'Pages', 'action' => 'view'],

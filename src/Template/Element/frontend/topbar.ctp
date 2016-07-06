@@ -38,10 +38,10 @@
 		<div class="collapse navbar-collapse" id="frontend-topbar-collapse">
 			<?= 
 				$this->Html->ul([
-					$this->Html->link(__d('me_cms', 'Home'),		['_name' => 'homepage'], ['icon' => 'home']),
-					$this->Html->link(__d('me_cms', 'Categories'),	['_name' => 'posts_categories']),
-					$this->Html->link(__d('me_cms', 'Pages'),		['_name' => 'pages']),
-					$this->Html->link(__d('me_cms', 'Photos'),		['_name' => 'albums'])
+					$this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['icon' => 'home']),
+					$this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'posts_categories']),
+					$this->Html->link(__d('me_cms', 'Pages'), ['_name' => 'pages_categories']),
+					$this->Html->link(__d('me_cms', 'Photos'), ['_name' => 'albums'])
 				], ['class' => 'nav navbar-nav'])
 			?>
 		</div><!-- /.navbar-collapse -->

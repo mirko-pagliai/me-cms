@@ -42,16 +42,6 @@ class PagesController extends AppController {
         
         $this->Auth->deny('preview');
     }
-    
-	/**
-     * Lists pages
-     */
-    public function index() {
-		$this->set('pages', $this->Pages->find('active')
-			->select(['title', 'slug'])
-			->cache('index', $this->Pages->cache)
-			->all());
-    }
 	
 	/**
      * Views page.
