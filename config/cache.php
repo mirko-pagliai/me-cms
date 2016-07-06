@@ -21,30 +21,28 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-if(!defined('ME_CMS_CACHE'))
+if(!defined('ME_CMS_CACHE')) {
     define('ME_CMS_CACHE', CACHE.'me_cms'.DS);
+}
 
 //Default options (with File engine)
 $options = [
     'className' => 'File',
-	'duration'	=> '+999 days',
-	'path'		=> ME_CMS_CACHE,
-	'prefix'	=> '',
-	'mask'		=> 0777
+	'duration' => '+999 days',
+	'path' => ME_CMS_CACHE,
+	'prefix' => '',
+	'mask' => 0777,
 ];
 
 return ['Cache' => [
-	//App default configuration
-	'default'	=> am($options, ['path' => CACHE]),
-	
-	//Backend and frontend configurations
-	'backend'	=> am($options, ['path' => ME_CMS_CACHE.'backend']),
-	'frontend'	=> am($options, ['path' => ME_CMS_CACHE.'frontend']),
+	//Default and backend configurations
+	'default' => am($options, ['path' => ME_CMS_CACHE.'default']),
+	'backend' => am($options, ['path' => ME_CMS_CACHE.'backend']),
 	
 	//Groups
-	'banners'	=> am($options, ['path' => ME_CMS_CACHE.'banners']),
-	'pages'		=> am($options, ['path' => ME_CMS_CACHE.'pages']),
-	'photos'	=> am($options, ['path' => ME_CMS_CACHE.'photos']),
-	'posts'		=> am($options, ['path' => ME_CMS_CACHE.'posts']),
-	'users'		=> am($options, ['path' => ME_CMS_CACHE.'users'])
+	'banners' => am($options, ['path' => ME_CMS_CACHE.'banners']),
+	'pages' => am($options, ['path' => ME_CMS_CACHE.'pages']),
+	'photos' => am($options, ['path' => ME_CMS_CACHE.'photos']),
+	'posts' => am($options, ['path' => ME_CMS_CACHE.'posts']),
+	'users' => am($options, ['path' => ME_CMS_CACHE.'users']),
 ]];

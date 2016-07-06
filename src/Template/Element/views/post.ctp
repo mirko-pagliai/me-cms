@@ -68,8 +68,8 @@
 				echo $truncated_text = $this->Text->truncate($post->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
             }
 			//Truncates the text if requested by the configuration
-			elseif(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to')) {
-				echo $truncated_text = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			elseif(!$this->request->isAction('view', 'Posts') && config('default.truncate_to')) {
+				echo $truncated_text = $this->Text->truncate($post->text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
             }
 			else {
 				echo $post->text;
@@ -118,7 +118,7 @@
 			<div class="hidden-xs row">
 				<?php foreach($related as $post): ?>
 					<div class="col-sm-6 col-md-3">
-						<?= $this->element('frontend/views/post-preview', compact('post')) ?>
+						<?= $this->element('views/post-preview', compact('post')) ?>
 					</div>
 				<?php endforeach; ?>
 			</div>

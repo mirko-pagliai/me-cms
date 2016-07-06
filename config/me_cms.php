@@ -19,16 +19,12 @@ return ['MeCms' => [
 		//recipient for the email sent by users
 		'webmaster' => 'email@example.com',
 	],
-	//Frontend
-	'frontend' => [
+	//Default layout
+	'default' => [
 		//Google Analytics ID or FALSE
 		'analytics' => FALSE,
 		//It shows the alert for the cookie policy
 		'cookies_policy' => TRUE,
-		//Layout you want to use for the frontend
-		//If you want to use a layout from your application (eg. 
-        //  `default.ctp`), change this value without extension
-		'layout' => 'MeCms.frontend',
 		//Contact form (enabled or disabled).
 		'contact_form' => TRUE,
 		//Facebook app ID or FALSE

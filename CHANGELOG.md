@@ -1,4 +1,9 @@
 # 2.x branch
+## 2.12 branch
+### 2.12.0
+* the view will automatically choose which layout is to be used;
+* "frontend" is now called "default".
+
 ## 2.11 branch
 ### 2.11.0
 * added breadcrumb;

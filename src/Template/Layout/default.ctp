@@ -34,42 +34,42 @@
 			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
 			echo $this->Asset->css([
 				'/vendor/font-awesome/css/font-awesome.min',
-				'MeCms.frontend/bootstrap.min',
+				'MeCms.bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
-				'MeCms.frontend/layout',
-				'MeCms.frontend/contents',
-				'MeCms.frontend/photos'
+				'MeCms.layout',
+				'MeCms.contents',
+				'MeCms.photos'
 			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
-				'MeCms.frontend/bootstrap.min',
+				'MeCms.bootstrap.min',
 				'/vendor/js-cookie/js.cookie',
 				'MeTools.default',
-				'MeCms.frontend/layout'
+				'MeCms.layout'
 			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.frontend/userbar') ?>
-		<?= $this->element('MeCms.frontend/cookies_policy') ?>
+		<?= $this->element('MeCms.userbar') ?>
+		<?= $this->element('MeCms.cookies_policy') ?>
 		<header>
 			<div class="container">
 				<?php
 					$logo = $this->Html->h1(config('main.title'));
 
 					//Check if the logo image exists
-					if(is_readable(WWW_ROOT.'img'.DS.config('frontend.logo'))) {
-						$logo = $this->Html->img(config('frontend.logo'));
+					if(is_readable(WWW_ROOT.'img'.DS.config('default.logo'))) {
+						$logo = $this->Html->img(config('default.logo'));
                     }
                     
 					echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);		
 				?>
 			</div>
-			<?= $this->element('MeCms.frontend/topbar', [], ['cache' => ['key' => 'topbar', 'config' => 'frontend']]) ?>
+			<?= $this->element('MeCms.topbar', [], ['cache' => ['key' => 'topbar']]) ?>
 		</header>
 		<div class="container">
 			<div class="row">
@@ -84,7 +84,7 @@
 				</div>
 			</div>
 		</div>
-		<?= $this->element('MeCms.frontend/footer', [], ['cache' => ['key' => 'footer', 'config' => 'frontend']]) ?>
+		<?= $this->element('MeCms.footer', [], ['cache' => ['key' => 'footer']]) ?>
 		<?= $this->fetch('css_bottom') ?>
 		<?= $this->fetch('script_bottom') ?>
 	</body>

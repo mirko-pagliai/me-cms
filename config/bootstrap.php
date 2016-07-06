@@ -79,7 +79,7 @@ Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
 /**
  * Loads theme plugin
  */
-$theme = config('frontend.theme');
+$theme = config('default.theme');
 
 if($theme && !Plugin::loaded($theme)) {
 	Plugin::load($theme);

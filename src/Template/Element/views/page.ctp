@@ -54,8 +54,8 @@
 				echo $truncated_text = $this->Text->truncate($page->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
             }
 			//Truncates the text if requested by the configuration
-			elseif(!$this->request->isAction('view', 'Pages') && config('frontend.truncate_to')) {
-				echo $truncated_text = $this->Text->truncate($page->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			elseif(!$this->request->isAction('view', 'Pages') && config('default.truncate_to')) {
+				echo $truncated_text = $this->Text->truncate($page->text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
             }
 			else {
 				echo $page->text;

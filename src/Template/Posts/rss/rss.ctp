@@ -46,8 +46,8 @@
 			$text = $this->Text->truncate($text, $strpos, ['exact' => TRUE, 'html' => FALSE]);
         }
 		//Truncates the text if requested by the configuration
-		elseif(config('frontend.truncate_to')) {
-			$text = $this->Text->truncate($text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+		elseif(config('default.truncate_to')) {
+			$text = $this->Text->truncate($text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
         }
         
 		//Strips tags

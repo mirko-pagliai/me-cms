@@ -28,11 +28,11 @@
 
 <div class="text-center">
 	<?php
-		if(!config('frontend.offline_text')) {
+		if(!config('default.offline_text')) {
 			echo __d('me_cms', 'The website is temporarily offline');
         }
         else {
-			echo config('frontend.offline_text');
+			echo config('default.offline_text');
         }
 	?>
 </div>
