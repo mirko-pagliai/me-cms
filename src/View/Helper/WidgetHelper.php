@@ -43,6 +43,10 @@ class WidgetHelper extends Helper {
 		else {
 			$widgets = config('Widgets.general');
         }
+        
+        if(empty($widgets)) {
+            return;
+        }
 
 		foreach($widgets as $name => $args) {
 			$widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
