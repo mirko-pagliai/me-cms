@@ -37,6 +37,9 @@
 				'MeCms.bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
+				'MeCms.userbar',
+				'MeCms.cookies',
+				'MeCms.widgets',
 				'MeCms.layout',
 				'MeCms.contents',
 				'MeCms.photos'

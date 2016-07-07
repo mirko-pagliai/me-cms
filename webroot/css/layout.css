@@ -74,61 +74,6 @@ body {
 }
 
 /* -------------------------------- */
-/*				Userbar				*/
-/* -------------------------------- */
-/* Userbar */
-#userbar {
-	box-shadow: 0 -3px 4px 6px rgba(50, 50, 50, .3);
-	margin: 0;
-}
-
-/* Userbar, navigation links */
-#userbar .navbar-nav > li > a {
-    font-family: Arial,sans-serif;
-    font-size: 110%;
-    font-weight: bold;
-	padding: 15px 10px;
-}
-
-/* Userbar, labels */
-#userbar .navbar-nav > li > span.label {
-	display: inline-block;
-	font-size: 100%;
-	margin: 13px 0 13px 10px;
-	padding: .3em .6em .4em;
-}
-
-/* Userbar, last label */
-#userbar .navbar-nav > li > span.label:last-child {
-	margin-right: 13px;
-}
-
-/* Userbar, dropdown, links on hover */
-#userbar .navbar-nav > li .dropdown-menu a:hover {
-	background: #eee;
-}
-
-/* -------------------------------- */
-/*			Cookies policy			*/
-/* -------------------------------- */
-/* Cookies policy */
-#cookies-policy {
-	background: #000;
-	color: #fff;
-	font-size: 13px;
-	padding: 8px 0;
-	position: fixed;
-	width: 100%;
-	z-index: 9999999;
-}
-
-/* Cookies policy, links */
-#cookies-policy a {
-	font-size: 13px;
-	margin-left: 6px;
-}
-
-/* -------------------------------- */
 /*				Header				*/
 /* -------------------------------- */
 /* Header */
@@ -255,34 +200,6 @@ body header #topbar .navbar-collapse li.open > a {
 	background: #888;
 	border-color: #888;
 	color: #ddd;
-}
-
-/* -------------------------------- */
-/*			Sidebar widgets			*/
-/* -------------------------------- */
-/* Widget */
-.widget {
-	margin-bottom: 20px;
-}
-
-/* Widget, title */
-.widget .widget-title {
-	margin: 0 0 10px;
-}
-
-
-/* Widget, content, last child */
-.widget .widget-content :last-child {
-	margin-bottom: 0;
-}
-
-/* Widget, content, element list, link */
-.widget .widget-content li a {
-	display: block;
-	/* No wrap, text truncated with ellipses */
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 /* -------------------------------- */
