@@ -39,7 +39,7 @@ return ['MeCms' => [
         //  Must be a valid HEX color or FALSE to disable
 		//See https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android
 		'toolbar_color' => FALSE,
-		//Number of characters to truncate a text. `0` or `FALSE` to disable
+		//Number of characters to truncate a text. `0` or `FALSE` to disable.
 		//Note that you can use the "<!-- read-more -->" tag to indicate 
         //  manually where to truncate a text
 		'truncate_to' => 1000,
@@ -114,9 +114,10 @@ return ['MeCms' => [
 		'created' => TRUE,
 		//Adds post tags as keywords meta-tag
 		'keywords' => TRUE,
-		//Related posts
+		//Related posts.
+        //`FALSE` to disable
 		'related' => [
-			//Limit of related posts to get for each post. Use `0` to disable.
+			//Limit of related posts to get for each post.
 			//If you use images, it recommended a multiple of 4 
 			'limit' => 4,
 			//Gets only related posts with images

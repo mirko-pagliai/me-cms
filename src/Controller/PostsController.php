@@ -293,7 +293,7 @@ class PostsController extends AppController {
         $this->set(compact('post'));
         
 		//Gets related posts
-		if(config('post.related.limit')) {
+		if(config('post.related') && config('post.related.limit')) {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
         }
 	}
@@ -324,7 +324,7 @@ class PostsController extends AppController {
         $this->set(compact('post'));
         
 		//Gets related posts
-		if(config('post.related.limit')) {
+		if(config('post.related') && config('post.related.limit')) {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
         }
         
