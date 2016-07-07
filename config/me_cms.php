@@ -77,9 +77,6 @@ return ['MeCms' => [
 		],
 		//Forces debug on localhost (enabled or disabled)
 		'debug_on_localhost' => TRUE,
-		//Interface language.
-		//With "auto" value, it will try to use the browser language
-		'language' => 'auto',
         //Sitemap expiration. Must be a valid strtotime string
         'sitemap_expiration' => '+24 hours',
 		//Time formats
