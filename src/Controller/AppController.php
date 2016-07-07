@@ -109,7 +109,14 @@ class AppController extends BaseController {
 		
 		//Sets the paginate limit and the maximum paginate limit
 		//See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-		$this->paginate['limit'] = $this->paginate['maxLimit'] = $this->request->isAdmin() ? config('admin.records') : config('default.records');
+        if($this->request->isAdmin()) {
+            $this->paginate['limit'] = config('admin.records');
+        }
+        else {
+            $this->paginate['limit'] = config('default.records');
+        }
+        
+		$this->paginate['maxLimit'] = $this->paginate['limit'];
 		
 		parent::beforeFilter($event);
 	}
@@ -124,13 +131,18 @@ class AppController extends BaseController {
 	 * @uses App\Controller\AppController::beforeRender()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
-		//Ajax layout
+		//Layout for ajax requests
 		if($this->request->is('ajax')) {
 			$this->viewBuilder()->layout('MeCms.ajax');
         }
 		
 		//Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-        $this->viewBuilder()->className($this->request->isAdmin() ? 'MeCms.View/Admin' : 'MeCms.View/App');
+        if($this->request->isAdmin()) {
+            $this->viewBuilder()->className('MeCms.View/Admin');
+        }
+        else {
+            $this->viewBuilder()->className('MeCms.View/App');
+        }
         
         //Loads the `Auth` helper.
         //The `helper is loaded here (instead of the view) to pass user data
