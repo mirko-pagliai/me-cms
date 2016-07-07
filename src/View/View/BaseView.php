@@ -48,7 +48,7 @@ class BaseView extends AppView {
 			return $this->title;
         }
         
-		//Gets the main title assigned by the configuration
+		//Gets the main title setted by the configuration
 		$title = config('main.title');
 		
 		//For homepage, it uses only the main title
@@ -56,11 +56,11 @@ class BaseView extends AppView {
 			return $title;
         }
 		
-		//If exists, it adds the title assigned by the controller
+		//If exists, it adds the title setted by the controller
 		if($this->get('title')) {
 			$title = sprintf('%s - %s', $this->get('title'), $title);
         }
-		//Else, if exists, it adds the title assigned by the current view
+		//Else, if exists, it adds the title setted by the current view
 		elseif($this->fetch('title')) {
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
         }
@@ -96,8 +96,8 @@ class BaseView extends AppView {
 	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
-		//Assigns the title for layout
-		$this->assign('title', $this->_getTitleForLayout());
+		//Sets the title for layout
+		$this->set('title', $this->_getTitleForLayout());
 		
 		//Adds the favicon
 		if(is_readable(WWW_ROOT.'favicon.ico')) {
