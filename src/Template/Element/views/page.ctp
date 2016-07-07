@@ -47,18 +47,23 @@
 	<div class="content-text">
 		<?php
 			//Executes BBCode on the text
-			$page->text = $this->BBCode->parser($page->text);
+			$text = $this->BBCode->parser($page->text);
+            //Autolink
+            $text = $this->Text->autoLink($text, [
+                'escape' => FALSE,
+                'target' => '_blank',
+            ]);
 			
 			//Truncates the text if the "<!-- read-more -->" tag is present
-			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($page->text, '<!-- read-more -->')) {
-				echo $truncated_text = $this->Text->truncate($page->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
+			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($text, '<!-- read-more -->')) {
+				echo $truncated_text = $this->Text->truncate($text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
             }
 			//Truncates the text if requested by the configuration
 			elseif(!$this->request->isAction('view', 'Pages') && config('default.truncate_to')) {
-				echo $truncated_text = $this->Text->truncate($page->text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+				echo $truncated_text = $this->Text->truncate($text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
             }
 			else {
-				echo $page->text;
+				echo $text;
             }
 		?>
 	</div>

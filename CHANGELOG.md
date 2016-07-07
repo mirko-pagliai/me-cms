@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.12 branch
 ### 2.12.0
+* added autolinks for posts and pages;
 * the view will automatically choose which layout is to be used;
 * from now, "frontend" is "default" and "backend" is "admin".
 
