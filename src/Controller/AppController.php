@@ -31,22 +31,25 @@ use Cake\Network\Exception\InternalErrorException;
 class AppController extends BaseController {
 	/**
      * Checks if the latest search has been executed out of the minimum interval
+     * @param string $query_id Query
 	 * @return bool
 	 */
-	protected function _checkLastSearch($query_id = NULL) {
+	protected function _checkLastSearch($query_id = FALSE) {
         $interval = config('security.search_interval');
 		
-        if(empty($interval)) {
+        if(!$interval) {
             return TRUE;
         }
-		
-		$query_id = empty($query_id) ? NULL : md5($query_id);
+        
+        if($query_id) {
+            $query_id = md5($query_id);
+        }
 		
 		$last_search = $this->request->session()->read('last_search');
 		
-		if(!empty($last_search)) {
+		if($last_search) {
 			//Checks if it's the same search
-			if(!empty($query_id) && !empty($last_search['id']) && $query_id === $last_search['id']) {
+			if($query_id && !empty($last_search['id']) && $query_id === $last_search['id']) {
 				return TRUE;
             }
 			//Checks if the interval has not yet expired
@@ -55,7 +58,10 @@ class AppController extends BaseController {
             }
 		}
 		
-		$this->request->session()->write('last_search', ['id' => $query_id, 'time' => time()]);
+		$this->request->session()->write('last_search', [
+            'id' => $query_id,
+            'time' => time(),
+        ]);
 		
 		return TRUE;
 	}
