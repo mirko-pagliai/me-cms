@@ -7,14 +7,6 @@ return ['MeCms' => [
 		//Number of records to show per page
 		'records' => 10,
 	 ],
-	//Email
-	'email' => [
-		//EmailTransport configuration
-		'config' => 'default',
-		//Address used as the sender for emails sent to users and as a 
-		//recipient for the email sent by users
-		'webmaster' => 'email@example.com',
-	],
 	//Default layout
 	'default' => [
 		//Google Analytics ID or FALSE
@@ -51,6 +43,14 @@ return ['MeCms' => [
 		//Note that you can use the "<!-- read-more -->" tag to indicate 
         //  manually where to truncate a text
 		'truncate_to' => 1000,
+	],
+	//Email
+	'email' => [
+		//EmailTransport configuration
+		'config' => 'default',
+		//Address used as the sender for emails sent to users and as a 
+		//recipient for the email sent by users
+		'webmaster' => 'email@example.com',
 	],
 	//KCFinder
 	'kcfinder' => [
