@@ -23,7 +23,7 @@
 ?>
 
 <?php
-	$this->Asset->css('MeCms.backend/uploader', ['block' => 'css_bottom']);
+	$this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
     $this->Asset->js('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
 

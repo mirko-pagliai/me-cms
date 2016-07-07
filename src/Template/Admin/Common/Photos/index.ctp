@@ -60,7 +60,7 @@
     </fieldset>
 <?= $this->Form->end() ?>
 
-<?= $this->element('backend/list-grid-buttons') ?>
+<?= $this->element('admin/list-grid-buttons') ?>
 
 <?= $this->fetch('content') ?>
 

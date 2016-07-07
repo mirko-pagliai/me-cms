@@ -41,18 +41,16 @@ class AdminView extends BaseView {
 	}
 	
 	/**
-	 * Renders view for given view file and layout
-	 * @param string|NULL $view Name of view file to use
-	 * @param string|NULL $layout Layout to use
-	 * @return string|NULL Rendered content or NULL if content already 
-     *  rendered and returned earlier
-	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_render
+	 * Renders a layout. Returns output from _render(). Returns false on error. 
+     *  Several variables are created for use in layout
+	 * @param string $content Content to render in a view, wrapped by the 
+     *  surrounding layout
+	 * @param string|null $layout Layout name
+	 * @return mixed Rendered output, or false on error
+	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
 	 */
-	public function render($view = NULL, $layout = NULL) {
-		//Sets the layout
-		if($this->layout() === 'default') {
-			$this->layout(config('backend.layout'));
-        }
+	public function renderLayout($content, $layout = NULL) {
+		$layout = 'MeCms.admin';
         
 		//Sets some view vars
 		$this->set('priorities', [
@@ -62,7 +60,7 @@ class AdminView extends BaseView {
 			'4' => sprintf('4 - %s', __d('me_cms', 'High')),
 			'5' => sprintf('5 - %s', __d('me_cms', 'Very high'))
 		]);
-		
-		return parent::render($view, $layout);
+        
+		return parent::renderLayout($content, $layout);
 	}
 }

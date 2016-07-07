@@ -28,7 +28,7 @@
 	$this->Library->ckeditor();
 	$this->Library->datetimepicker();
 	$this->Library->slugify();
-	$this->Asset->js('MeCms.backend/tags', ['block' => 'script_bottom']);
+	$this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
 ?>
 
 <?= $this->Form->create($post); ?>
@@ -113,7 +113,7 @@
             'rows' => 10,
         ]);
     ?>
-    <?= $this->element('backend/bbcode') ?>
+    <?= $this->element('admin/bbcode') ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

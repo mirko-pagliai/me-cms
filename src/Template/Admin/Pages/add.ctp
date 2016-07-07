@@ -74,7 +74,7 @@
             'rows' => 10,
         ]);
     ?>
-    <?= $this->element('backend/bbcode') ?>
+    <?= $this->element('admin/bbcode') ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

@@ -2,7 +2,7 @@
 ## 2.12 branch
 ### 2.12.0
 * the view will automatically choose which layout is to be used;
-* "frontend" is now called "default".
+* from now, "frontend" is "default" and "backend" is "admin".
 
 ## 2.11 branch
 ### 2.11.0

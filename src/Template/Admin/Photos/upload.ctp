@@ -44,6 +44,6 @@
 
 <?php
     if($this->request->query('album')) {
-        echo $this->element('backend/uploader');
+        echo $this->element('admin/uploader');
     }
 ?>

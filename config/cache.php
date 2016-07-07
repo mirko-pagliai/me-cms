@@ -35,9 +35,9 @@ $options = [
 ];
 
 return ['Cache' => [
-	//Default and backend configurations
+	//Default and admin configurations
 	'default' => am($options, ['path' => ME_CMS_CACHE.'default']),
-	'backend' => am($options, ['path' => ME_CMS_CACHE.'backend']),
+	'admin' => am($options, ['path' => ME_CMS_CACHE.'admin']),
 	
 	//Groups
 	'banners' => am($options, ['path' => ME_CMS_CACHE.'banners']),

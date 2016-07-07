@@ -1,11 +1,7 @@
 <?php
 return ['MeCms' => [
-	//Backend
-	'backend' => [
-		//Layout you want to use for the backend
-		//If you want to use a layout from your application (eg. 
-        //  `default.ctp`), change this value without extension
-		'layout' => 'MeCms.backend',
+	//Admin layout
+	'admin' => [
 		//Number of photos to show per page. This must be a multiple of 4
 		'photos' => 12,
 		//Number of records to show per page

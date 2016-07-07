@@ -34,30 +34,40 @@
 			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
 			echo $this->Asset->css([
 				'/vendor/font-awesome/css/font-awesome.min',
-				'MeCms.backend/bootstrap.min',
+				'MeCms.admin/bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
-				'MeCms.backend/layout',
-				'MeCms.backend/photos',
+				'MeCms.admin/layout',
+				'MeCms.admin/photos',
 			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
-				'MeCms.backend/bootstrap.min',
+				'MeCms.admin/bootstrap.min',
 				'/vendor/js-cookie/js.cookie',
 				'MeTools.default',
-				'MeCms.backend/layout',
+				'MeCms.admin/layout',
 			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.backend/topbar', [], ['cache' => ['key' => sprintf('topbar_user_%s', $this->Auth->user('id')), 'config' => 'backend']]) ?>
+		<?= $this->element('MeCms.admin/topbar', [], [
+            'cache' => [
+                'key' => sprintf('topbar_user_%s', $this->Auth->user('id')),
+                'config' => 'admin',
+            ],
+        ]) ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
-					<?= $this->element('MeCms.backend/sidebar', [], ['cache' => ['key' => sprintf('sidebar_user_%s', $this->Auth->user('id')), 'config' => 'backend']]) ?>
+					<?= $this->element('MeCms.admin/sidebar', [], [
+                        'cache' => [
+                            'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
+                            'config' => 'admin',
+                        ],
+                    ]) ?>
 				</div>
 				<div id="content" class="col-md-offset-3 col-lg-offset-2">
 					<?= $this->Flash->render() ?>

@@ -27,7 +27,7 @@ use Cake\View\Helper;
 /**
  * MenuBuilder Helper
  * 
- * An helper to generate the backend menus.
+ * An helper to generate the admin menus.
  */
 class MenuBuilderHelper extends Helper {
 	/**
