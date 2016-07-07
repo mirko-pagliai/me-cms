@@ -168,5 +168,5 @@ return ['MeCms' => [
         'userbar' => TRUE,
 		//Signup (enabled or disabled)
 		'signup' => TRUE,
-	]
+	],
 ]];
