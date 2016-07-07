@@ -99,7 +99,7 @@ class BaseView extends AppView {
 	 */
 	public function renderLayout($content, $layout = NULL) {
 		//Sets the title for layout
-		$this->set('title', $this->_getTitleForLayout());
+		$this->assign('title', $this->_getTitleForLayout());
 		
 		//Adds the favicon
 		if(is_readable(WWW_ROOT.'favicon.ico')) {
