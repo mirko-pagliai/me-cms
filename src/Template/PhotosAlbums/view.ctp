@@ -26,7 +26,7 @@
     $this->extend('/Common/view');
     $this->assign('title', $title = $album->title);
     
-	if(config('frontend.fancybox')) {
+	if(config('default.fancybox')) {
 		$this->Library->fancybox();
     }
     
@@ -65,7 +65,7 @@
                     ];
                     
                     //If Fancybox is enabled, adds some options
-                    if(config('frontend.fancybox')) {
+                    if(config('default.fancybox')) {
                         $options = am($options, [
                             'class' => 'fancybox thumbnail',
                             'data-fancybox-href' => $this->Thumb->url($photo->path, ['height' => 1280]),

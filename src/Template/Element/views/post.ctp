@@ -31,7 +31,7 @@
 
 <div class="post-container content-container">
 	<div class="content-header">
-        <?php if(config('post.category')): ?>
+        <?php if(config('post.category') && !empty($post->category->title) && !empty($post->category->slug)): ?>
             <h5 class="content-category">
                 <?= $this->Html->link($post->category->title, ['_name' => 'posts_category', $post->category->slug]) ?>
             </h5>
@@ -61,29 +61,43 @@
 	<div class="content-text clearfix">
 		<?php
 			//Executes BBCode on the text
-			$post->text = $this->BBCode->parser($post->text);
+			$text = $this->BBCode->parser($post->text);
+            //Autolink
+            $text = $this->Text->autoLink($text, [
+                'escape' => FALSE,
+                'target' => '_blank',
+            ]);
 			
 			//Truncates the text if the "<!-- read-more -->" tag is present
-			if(!$this->request->isAction('view', 'Posts') && $strpos = strpos($post->text, '<!-- read-more -->')) {
-				echo $truncated_text = $this->Text->truncate($post->text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
+            $strpos = strpos($text, '<!-- read-more -->');
+            
+			if(!$this->request->isAction('view', 'Posts') && $strpos) {
+				echo $truncated_text = $this->Text->truncate($text, $strpos, [
+                    'ellipsis' => FALSE,
+                    'exact' => TRUE,
+                    'html' => FALSE,
+                ]);
             }
 			//Truncates the text if requested by the configuration
-			elseif(!$this->request->isAction('view', 'Posts') && config('frontend.truncate_to')) {
-				echo $truncated_text = $this->Text->truncate($post->text, config('frontend.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
+			elseif(!$this->request->isAction('view', 'Posts') && config('default.truncate_to')) {
+				echo $truncated_text = $this->Text->truncate($text, config('default.truncate_to'), [
+                    'exact' => FALSE,
+                    'html' => TRUE,
+                ]);
             }
 			else {
-				echo $post->text;
+				echo $text;
             }
 		?>
 	</div>
     
-    <?php
-        if(config('post.tags') && $post->tags) {
-            echo $this->Html->div('content-tags', implode(PHP_EOL, array_map(function($tag) {
-                return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']);
-            }, $post->tags)));
-        }
-    ?>
+    <?php if(config('post.tags') && $post->tags): ?>
+        <div class="content-tags">
+            <?php foreach($post->tags as $tag): ?>
+                <?= $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']) ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     
 	<div class="content-buttons">
 		<?php
@@ -118,7 +132,7 @@
 			<div class="hidden-xs row">
 				<?php foreach($related as $post): ?>
 					<div class="col-sm-6 col-md-3">
-						<?= $this->element('frontend/views/post-preview', compact('post')) ?>
+						<?= $this->element('views/post-preview', compact('post')) ?>
 					</div>
 				<?php endforeach; ?>
 			</div>

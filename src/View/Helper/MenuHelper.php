@@ -28,7 +28,8 @@ use Cake\View\Helper;
 /**
  * Menu Helper.
  * 
- * This helper contains methods that will be called automatically to generate the menu of the backend.
+ * This helper contains methods that will be called automatically to generate 
+ * the menu of the admin layout.
  * You do not need to call these methods manually.
  */
 class MenuHelper extends Helper {

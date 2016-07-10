@@ -34,38 +34,61 @@
 			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
 			echo $this->Asset->css([
 				'/vendor/font-awesome/css/font-awesome.min',
-				'MeCms.backend/bootstrap.min',
+				'MeCms.bootstrap.min',
 				'MeTools.default',
 				'MeTools.forms',
-				'MeCms.backend/layout',
-				'MeCms.backend/photos',
+				'MeCms.userbar',
+				'MeCms.cookies',
+				'MeCms.widgets',
+				'MeCms.layout',
+				'MeCms.contents',
+				'MeCms.photos'
 			], ['block' => TRUE]);
 			echo $this->fetch('css');
 			
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
-				'MeCms.backend/bootstrap.min',
 				'/vendor/js-cookie/js.cookie',
+				'MeCms.bootstrap.min',
 				'MeTools.default',
-				'MeCms.backend/layout',
+				'MeCms.layout'
 			], ['block' => TRUE]);
 			echo $this->fetch('script');
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.backend/topbar', [], ['cache' => ['key' => sprintf('topbar_user_%s', $this->Auth->user('id')), 'config' => 'backend']]) ?>
-		<div class="container-fluid">
+		<?= $this->element('MeCms.userbar') ?>
+		<?= $this->element('MeCms.cookies_policy') ?>
+		<header>
+			<div class="container">
+				<?php
+					$logo = $this->Html->h1(config('main.title'));
+
+					//Check if the logo image exists
+					if(is_readable(WWW_ROOT.'img'.DS.config('default.logo'))) {
+						$logo = $this->Html->img(config('default.logo'));
+                    }
+                    
+					echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);		
+				?>
+			</div>
+			<?= $this->element('MeCms.topbar', [], ['cache' => ['key' => 'topbar']]) ?>
+		</header>
+		<div class="container">
 			<div class="row">
-				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
-					<?= $this->element('MeCms.backend/sidebar', [], ['cache' => ['key' => sprintf('sidebar_user_%s', $this->Auth->user('id')), 'config' => 'backend']]) ?>
-				</div>
-				<div id="content" class="col-md-offset-3 col-lg-offset-2">
+				<div id="content" class="col-sm-8 col-md-9">
 					<?= $this->Flash->render() ?>
-					<?=	$this->fetch('content') ?>
+                    <?= $this->Breadcrumb->get() ?>
+					<?= $this->fetch('content') ?>
+				</div>
+				<div id="sidebar" class="col-sm-4 col-md-3">
+					<?= $this->fetch('sidebar') ?>
+					<?= $this->Widget->all() ?>
 				</div>
 			</div>
 		</div>
+		<?= $this->element('MeCms.footer', [], ['cache' => ['key' => 'footer']]) ?>
 		<?= $this->fetch('css_bottom') ?>
-		<?=	$this->fetch('script_bottom') ?>
+		<?= $this->fetch('script_bottom') ?>
 	</body>
 </html>

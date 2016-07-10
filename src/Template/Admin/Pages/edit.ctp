@@ -72,7 +72,7 @@
             'label' => __d('me_cms', 'Text'),
         ]);
     ?>
-    <?= $this->element('backend/bbcode') ?>
+    <?= $this->element('admin/bbcode') ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

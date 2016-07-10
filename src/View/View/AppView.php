@@ -23,6 +23,7 @@
 namespace MeCms\View\View;
 
 use MeCms\View\View\BaseView;
+use MeTools\Core\Plugin;
 use Cake\Routing\Router;
 
 /**
@@ -52,9 +53,9 @@ class AppView extends BaseView {
         ]);
 		
 		//Adds the app ID
-		if(config('frontend.facebook_app_id')) {
+		if(config('default.facebook_app_id')) {
 			$this->Html->meta([
-                'content' => config('frontend.facebook_app_id'),
+                'content' => config('default.facebook_app_id'),
                 'property' => 'fb:app_id',
             ]);
         }
@@ -76,28 +77,6 @@ class AppView extends BaseView {
     }
 	
 	/**
-	 * Renders view for given view file and layout
-	 * @param string|NULL $view Name of view file to use
-	 * @param string|NULL $layout Layout to use
-	 * @return string|NULL Rendered content or NULL if content already 
-     *  rendered and returned earlier
-	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_render
-	 */
-	public function render($view = NULL, $layout = NULL) {
-		//Sets the theme
-		if(config('frontend.theme') && !$this->theme()) {
-			$this->theme(config('frontend.theme'));
-        }
-        
-		//Sets the layout
-		if($this->layout() === 'default') {
-			$this->layout(config('frontend.layout'));
-        }
-        
-		return parent::render($view, $layout);
-	}
-	
-	/**
 	 * Renders a layout. Returns output from _render(). Returns false on 
      *  error. Several variables are created for use in layout
 	 * @param string $content Content to render in a view, wrapped by the 
@@ -106,6 +85,7 @@ class AppView extends BaseView {
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
      * @uses MeCms\View\View\BaseView::renderLayout()
+     * @uses MeTools\Core\Plugin::path()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
 	 * @uses MeTools\View\Helper\LibraryHelper::analytics()
 	 * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
@@ -113,19 +93,41 @@ class AppView extends BaseView {
      * @uses $userbar
 	 */
 	public function renderLayout($content, $layout = NULL) {
+        if($this->layoutPath()) {
+            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$this->layoutPath().DS.$layout.'.ctp';
+        }
+        else {
+            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$layout.'.ctp';
+        }
+        
+        //Uses the APP layout, if exists
+        if(is_readable(ROOT.DS.$path)) {
+            $this->plugin = FALSE;
+        }
+        
+		//Sets the theme
+		if(config('default.theme') && !$this->theme()) {
+			$this->theme(config('default.theme'));
+            
+            //Uses the theme layout, if exists
+            if(is_readable(Plugin::path($this->theme()).$path)) {
+                $this->plugin = $this->theme();
+            }
+        }
+        
 		//Adds the "theme color" (the toolbar color for some mobile browser)
-		if(config('frontend.toolbar_color')) {
-			$this->Html->meta('theme-color', config('frontend.toolbar_color'));
+		if(config('default.toolbar_color')) {
+			$this->Html->meta('theme-color', config('default.toolbar_color'));
         }
         
 		//Adds the meta tag for RSS posts
-		if(config('frontend.rss_meta')) {
+		if(config('default.rss_meta')) {
 			$this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
         }
         
 		//Adds Google Analytics
-		if(config('frontend.analytics')) {
-			echo $this->Library->analytics(config('frontend.analytics'));
+		if(config('default.analytics')) {
+			echo $this->Library->analytics(config('default.analytics'));
         }
         
 		//Adds Shareaholic

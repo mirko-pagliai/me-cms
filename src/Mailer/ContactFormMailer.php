@@ -21,7 +21,6 @@
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Mailer;
-
 use MeCms\Mailer\Mailer;
 
 /**
@@ -36,7 +35,8 @@ class ContactFormMailer extends Mailer {
      * @see MeCms\Form\ContactForm::_execute()
      */
     public function contact_form_mail($data) {
-        $this->from([$data['email'] => sprintf('%s %s', $data['first_name'], $data['last_name'])])
+        $this->from($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
+            ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
 			->to(config('email.webmaster'))
 			->subject(__d('me_cms', 'Email from {0}', config('main.title')))
 			->template('MeCms.Systems/contact_form')

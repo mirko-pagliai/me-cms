@@ -142,10 +142,10 @@
 <h2>Domande</h2>
 <p>
 	Se hai qualsiasi domanda sull'uso dei nostri cookie, clicca 
-	<?= $this->Html->link('qui', config('frontend.contact_form') ? ['_name' => 'contact_form'] : $this->Recaptcha->mailUrl(config('email.webmaster'))) ?>.
+	<?= $this->Html->link('qui', config('default.contact_form') ? ['_name' => 'contact_form'] : $this->Recaptcha->mailUrl(config('email.webmaster'))) ?>.
 </p>
 
 <?php
 	$page->text = ob_get_clean();
-	echo $this->Html->div('pages view', $this->element('frontend/views/page', compact('page')));
+	echo $this->Html->div('pages view', $this->element('views/page', compact('page')));
 ?>

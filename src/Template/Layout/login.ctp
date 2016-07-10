@@ -49,8 +49,8 @@
 				$logo = $this->Html->h1(config('main.title'), ['id' => 'logo']);
 			
 				//Check if the logo image exists
-				if(is_readable(WWW_ROOT.'img'.DS.config('frontend.logo'))) {
-					$logo = $this->Html->img(config('frontend.logo'), ['id' => 'logo']);
+				if(is_readable(WWW_ROOT.'img'.DS.config('default.logo'))) {
+					$logo = $this->Html->img(config('default.logo'), ['id' => 'logo']);
                 }
                 
 				echo $logo;

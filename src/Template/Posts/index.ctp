@@ -27,7 +27,7 @@
     
     if(!empty($posts)) {
         foreach($posts as $post) {
-            echo $this->element('frontend/views/post', compact('post'));
+            echo $this->element('views/post', compact('post'));
         }
 
         echo $this->element('MeTools.paginator');

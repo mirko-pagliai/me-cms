@@ -202,13 +202,11 @@ class PostsController extends AppController {
         
         $posts = $this->Posts->find('active')
 			->select(['title', 'slug', 'text', 'created'])
-			->limit(config('frontend.records_for_rss'))
+			->limit(config('default.records_for_rss'))
 			->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
 			->cache('rss', $this->Posts->cache);
         
         $this->set(compact('posts'));
-		
-		$this->viewBuilder()->layout('MeCms.frontend');
 	}
 	
 	/**
@@ -222,7 +220,7 @@ class PostsController extends AppController {
 			//Checks if the pattern is at least 4 characters long
 			if(strlen($pattern) >= 4) {
 				if($this->_checkLastSearch($pattern)) {
-					$this->paginate['limit'] = config('frontend.records_for_searches');
+					$this->paginate['limit'] = config('default.records_for_searches');
 					
 					//Sets the initial cache name
 					$cache = sprintf('search_%s', md5($pattern));
@@ -295,7 +293,7 @@ class PostsController extends AppController {
         $this->set(compact('post'));
         
 		//Gets related posts
-		if(config('post.related.limit')) {
+		if(config('post.related') && config('post.related.limit')) {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
         }
 	}
@@ -326,7 +324,7 @@ class PostsController extends AppController {
         $this->set(compact('post'));
         
 		//Gets related posts
-		if(config('post.related.limit')) {
+		if(config('post.related') && config('post.related.limit')) {
 			$this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
         }
         

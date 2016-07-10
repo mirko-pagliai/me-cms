@@ -83,4 +83,4 @@
     }
 ?>
 
-<?= $this->element('frontend/views/post', compact('post')) ?>
+<?= $this->element('views/post', compact('post')) ?>

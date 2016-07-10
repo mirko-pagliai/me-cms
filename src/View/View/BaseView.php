@@ -48,7 +48,7 @@ class BaseView extends AppView {
 			return $this->title;
         }
         
-		//Gets the main title assigned by the configuration
+		//Gets the main title setted by the configuration
 		$title = config('main.title');
 		
 		//For homepage, it uses only the main title
@@ -56,11 +56,11 @@ class BaseView extends AppView {
 			return $title;
         }
 		
-		//If exists, it adds the title assigned by the controller
+		//If exists, it adds the title setted by the controller
 		if($this->get('title')) {
 			$title = sprintf('%s - %s', $this->get('title'), $title);
         }
-		//Else, if exists, it adds the title assigned by the current view
+		//Else, if exists, it adds the title setted by the current view
 		elseif($this->fetch('title')) {
 			$title = sprintf('%s - %s', $this->fetch('title'), $title);
         }
@@ -87,8 +87,10 @@ class BaseView extends AppView {
     }
 	
 	/**
-	 * Renders a layout. Returns output from _render(). Returns false on error. Several variables are created for use in layout
-	 * @param string $content Content to render in a view, wrapped by the surrounding layout
+	 * Renders a layout. Returns output from _render(). Returns false on error. 
+     *  Several variables are created for use in layout
+	 * @param string $content Content to render in a view, wrapped by the 
+     *  surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
 	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
@@ -96,7 +98,7 @@ class BaseView extends AppView {
 	 * @uses _getTitleForLayout()
 	 */
 	public function renderLayout($content, $layout = NULL) {
-		//Assigns the title for layout
+		//Sets the title for layout
 		$this->assign('title', $this->_getTitleForLayout());
 		
 		//Adds the favicon

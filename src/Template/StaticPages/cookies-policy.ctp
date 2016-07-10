@@ -140,5 +140,5 @@
 
 <?php
 	$page->text = ob_get_clean();
-	echo $this->Html->div('pages view', $this->element('frontend/views/page', compact('page')));
+	echo $this->Html->div('pages view', $this->element('views/page', compact('page')));
 ?>

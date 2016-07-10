@@ -51,7 +51,7 @@ class SystemsController extends AppController {
 	 */
 	public function contact_form() {
 		//Checks if the contact form is enabled
-		if(!config('frontend.contact_form')) {
+		if(!config('default.contact_form')) {
 			$this->Session->Error(__d('me_cms', 'Disabled'));
 			return $this->redirect(['_name' => 'homepage']);
 		}
@@ -69,8 +69,9 @@ class SystemsController extends AppController {
 					$this->Flash->success(__d('me_cms', 'The email has been sent'));
 					return $this->redirect(['_name' => 'homepage']);
 				} 
-				else
+				else {
 					$this->Flash->error(__d('me_cms', 'The email was not sent'));
+                }
 			}
         }
 		
@@ -94,7 +95,7 @@ class SystemsController extends AppController {
 	 */
 	public function offline() {
 		//If the site has not been taken offline
-		if(!config('frontend.offline')) {
+		if(!config('default.offline')) {
 			return $this->redirect(['_name' => 'homepage']);
         }
         

@@ -26,7 +26,7 @@
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#backend-topbar-collapse">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topbar-collapse">
 				<span class="sr-only"><?= __d('me_cms', 'Toggle navigation') ?></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -35,7 +35,7 @@
 		</div>
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="backend-topbar-collapse">
+		<div class="collapse navbar-collapse" id="topbar-collapse">
 			<ul class="nav navbar-nav hidden-xs hidden-sm">
 				<?=	$this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], ['icon' => 'home', 'target' => '_blank'])) ?>
 			</ul>

@@ -1,4 +1,11 @@
 # 2.x branch
+## 2.12 branch
+### 2.12.0
+* added autolinks for posts and pages;
+* the view will automatically choose which layout is to be used;
+* splitted some frontend (default) css files;
+* from now, "frontend" is "default" and "backend" is "admin".
+
 ## 2.11 branch
 ### 2.11.0
 * added breadcrumb;

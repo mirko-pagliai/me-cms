@@ -83,4 +83,4 @@
     }
 ?>
   
-<?= $this->element('frontend/views/page', compact('page')) ?>
+<?= $this->element('views/page', compact('page')) ?>

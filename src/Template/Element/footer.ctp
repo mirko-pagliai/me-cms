@@ -22,22 +22,21 @@
  */
 ?>
 
-<?php
-    //Returns for logged user
-    if($this->Auth->isLogged()) {
-        return;
-    }
-    
-    //Returns if disabled or already checked
-    if(!config('frontend.cookies_policy') || !empty($_COOKIE['cookies-policy'])) {
-        return;
-    }
-?>
-
-<div id="cookies-policy">
-    <div class="container">
-        <?= __d('me_cms', 'By continuing, you consent to our use of Cookies, ok?') ?>
-        <?= $this->Html->button(__d('me_cms', 'Ok'), ['_name' => 'accept_cookies'], ['class' => 'btn-xs btn-success', 'id' => 'cookies-policy-accept']) ?>
-        <?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', 'cookies-policy'], ['class' => 'btn-xs btn-primary']) ?>
-    </div>
-</div>
+<footer class="navbar-fixed-bottom">
+	<?php
+		$links = [
+			$this->Html->link(__d('me_cms', 'Search'), ['_name' => 'posts_search']),
+			$this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
+			$this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss')
+		];
+		
+		if(config('default.contact_form')) {
+			$links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contact_form']);
+        }
+        
+		echo $this->Html->ul($links);
+	?>
+	
+	<p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')) ?></p>
+	<p><?= __d('me_cms', 'Developed by {0} for {1}', 'Mirko Pagliai', $this->Html->link('Nova Atlantis LTD', 'http://novatlantis.it', ['target' => '_blank'])) ?></p>
+</footer>
