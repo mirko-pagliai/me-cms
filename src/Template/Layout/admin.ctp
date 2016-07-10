@@ -44,8 +44,8 @@
 			
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
-				'MeCms.admin/bootstrap.min',
 				'/vendor/js-cookie/js.cookie',
+				'MeCms.admin/bootstrap.min',
 				'MeTools.default',
 				'MeCms.admin/layout',
 			], ['block' => TRUE]);

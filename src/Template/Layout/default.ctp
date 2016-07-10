@@ -48,8 +48,8 @@
 			
 			echo $this->Asset->js([
 				'/vendor/jquery/jquery.min',
-				'MeCms.bootstrap.min',
 				'/vendor/js-cookie/js.cookie',
+				'MeCms.bootstrap.min',
 				'MeTools.default',
 				'MeCms.layout'
 			], ['block' => TRUE]);
