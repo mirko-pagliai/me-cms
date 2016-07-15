@@ -33,7 +33,7 @@
                 </div>
                 <div class="photo-album">
                     <?= __d('me_cms', 'Album') ?>: 
-                    <?= $this->Html->link($photo->album->title, ['?' => ['position' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                    <?= $this->Html->link($photo->album->title, ['?' => ['album' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
                 </div>
                 <div class="photo-created">
                     (<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)
