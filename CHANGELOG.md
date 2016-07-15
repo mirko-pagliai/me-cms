@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.1
+* improved photos index as grid.
+
 ### 2.12.0
 * added autolinks for posts and pages;
 * the view will automatically choose which layout is to be used;
