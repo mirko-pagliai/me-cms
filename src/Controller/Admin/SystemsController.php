@@ -23,6 +23,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\MethodNotAllowedException;
@@ -136,7 +137,7 @@ class SystemsController extends AppController {
         
         $checkup['backups'] = [
             'path' => rtr(BACKUPS),
-            'writeable'	=> folder_is_writable(BACKUPS),
+            'writeable'	=> folder_is_writeable(BACKUPS),
         ];
         
         $checkup['cache'] = Cache::enabled();
@@ -167,12 +168,18 @@ class SystemsController extends AppController {
         
         //Checks for temporary directories
         foreach([CACHE, LOGS, THUMBS, TMP] as $path) {
-            $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+            $checkup['temporary'][] = [
+                'path' => rtr($path),
+                'writeable' => folder_is_writeable($path),
+            ];
         }
         
         //Checks for webroot directories
         foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path) {
-            $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+            $checkup['webroot'][] = [
+                'path' => rtr($path),
+                'writeable' => folder_is_writeable($path),
+            ];
         }
         
         array_walk($checkup, function($value, $key) {
@@ -197,7 +204,7 @@ class SystemsController extends AppController {
             return TRUE;
         }
         
-        return (new \Cake\Filesystem\File(SITEMAP))->delete();
+        return (new File(SITEMAP))->delete();
     }
 
     /**
