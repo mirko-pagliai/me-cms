@@ -93,12 +93,13 @@ class AppView extends BaseView {
      * @uses $userbar
 	 */
 	public function renderLayout($content, $layout = NULL) {
+        $path = 'src'.DS.'Template'.DS.'Layout'.DS;
+        
         if($this->layoutPath()) {
-            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$this->layoutPath().DS.$layout.'.ctp';
+            $path .= $this->layoutPath().DS;
         }
-        else {
-            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$layout.'.ctp';
-        }
+        
+        $path .= $layout.'.ctp';
         
         //Uses the APP layout, if exists
         if(is_readable(ROOT.DS.$path)) {
