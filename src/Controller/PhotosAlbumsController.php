@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Cache\Cache;
 use MeCms\Controller\AppController;
 
 /**
@@ -66,25 +67,49 @@ class PhotosAlbumsController extends AppController {
 			return $this->redirect([$this->request->query('q')]);
         }
         
+        //Gets album ID and title
 		$album = $this->PhotosAlbums->find('active')
-			->select(['id', 'slug', 'title', 'active'])
-			->contain([
-                'Photos' => function($q) {
-                    return $q->select(['id', 'album_id', 'filename', 'description'])
-                        ->where([
-                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => TRUE,
-                        ])
-                        ->order([
-                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
-                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
-                        ]);
-                }
-             ])
+			->select(['id', 'title'])
 			->where(compact('slug'))
-			->cache(sprintf('albums_view_%s', md5($slug)), $this->PhotosAlbums->cache)
+			->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->cache)
 			->firstOrFail();
-             
-        $this->set(compact('album'));
+        
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $this->paginate['limit'] = $this->paginate['maxLimit'] = config('default.photos');
+        
+		//Sets the cache name
+		$cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
+        
+		//Tries to get data from the cache
+		list($photos, $paging) = array_values(Cache::readMany([
+            $cache,
+            sprintf('%s_paging', $cache),
+        ], $this->PhotosAlbums->cache));
+        
+		//If the data are not available from the cache
+		if(empty($photos) || empty($paging)) {
+            $query = $this->PhotosAlbums->Photos->find('active')
+                ->select(['id', 'album_id', 'filename', 'description'])
+                ->where(['album_id' => $album->id])
+                ->order([
+                    sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                    sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                ]);
+            
+            $photos = $this->paginate($query)->toArray();
+						
+			//Writes on cache
+			Cache::writeMany([
+                $cache => $photos,
+                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+            ], $this->PhotosAlbums->cache);
+        }
+		//Else, sets the paging parameter
+		else {
+			$this->request->params['paging'] = $paging;
+        }
+        
+        $this->set(compact('album', 'photos'));
 	}
     
     /**

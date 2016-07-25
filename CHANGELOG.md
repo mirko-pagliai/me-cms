@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.12 branch
 ### 2.12.1
+* added pagination for photos;
 * improved photos index as grid;
 * fixed bug on photos filter (for albums).
 
