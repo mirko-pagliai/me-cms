@@ -33,7 +33,11 @@
         if($this->fetch('title')) {
             echo $this->Html->h2($this->fetch('title'));
         }
-
+        
+        if($this->fetch('actions')) {
+            echo $this->fetch('actions');
+        }
+        
         echo $this->fetch('content');
     ?>
 </div>

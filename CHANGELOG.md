@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.2
+* you can download/delete logs from the log view.
+
 ### 2.12.1
 * added pagination for photos;
 * improved photos index as grid;
