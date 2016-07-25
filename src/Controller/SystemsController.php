@@ -69,8 +69,9 @@ class SystemsController extends AppController {
 					$this->Flash->success(__d('me_cms', 'The email has been sent'));
 					return $this->redirect(['_name' => 'homepage']);
 				} 
-				else
+				else {
 					$this->Flash->error(__d('me_cms', 'The email was not sent'));
+                }
 			}
         }
 		
