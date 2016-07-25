@@ -92,7 +92,10 @@ class PhotosController extends AppController {
                 },
             ]);
 		
-		$this->paginate['order'] = ['Photos.created' => 'DESC'];
+		$this->paginate['order'] = [
+            sprintf('%s.created', $this->Photos->alias()) => 'DESC',
+            sprintf('%s.id', $this->Photos->alias()) => 'DESC',
+        ];
 		$this->paginate['sortWhitelist'] = ['filename', 'Albums.title', 'Photos.created'];
 		
 		//Sets the paginate limit and the maximum paginate limit

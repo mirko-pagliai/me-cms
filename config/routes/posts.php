@@ -48,7 +48,7 @@ $routes->connect('/posts',
     ['controller' => 'Posts', 'action' => 'index'],
     ['_name' => 'posts']
 );
-//Posts (RSS)
+//Posts as RSS
 $routes->connect('/posts/rss',
     ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
     ['_name' => 'posts_rss']
@@ -91,8 +91,14 @@ $routes->connect('/posts/page::page/*',
 );
 
 /**
- * Fallback for RSS
+ * Fallbacks
  */
+$routes->connect('/tags',
+    ['controller' => 'PostsTags', 'action' => 'index']
+);
 $routes->connect('/rss',
     ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']
+);
+$routes->connect('/search',
+    ['controller' => 'Posts', 'action' => 'search']
 );

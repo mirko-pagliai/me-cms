@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.1
+* added pagination for photos;
+* improved photos index as grid;
+* now you can empty logs from the logs index;
+* fixed bug on photos filter (for albums).
+
 ### 2.12.0
 * added autolinks for posts and pages;
 * the view will automatically choose which layout is to be used;

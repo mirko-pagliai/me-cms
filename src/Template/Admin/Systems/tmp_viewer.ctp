@@ -53,7 +53,7 @@
     <?= $this->Html->h4(__d('me_cms', 'Assets')) ?>
     <p><?= __d('me_cms', 'Assets size: {0}', $this->Number->toReadableSize($assets_size)) ?></p>
     <?php if($assets_size): ?>
-        <?= $this->Form->postButton(__d('me_cms', 'Clear assets'), ['action' => 'tmp_cleaner', 'assets'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+        <?= $this->Form->postButton(__d('me_cms', 'Clear all assets'), ['action' => 'tmp_cleaner', 'assets'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
     <?php endif; ?>
 </div>
 
@@ -63,7 +63,7 @@
 
     <?php if($this->Auth->isGroup('admin')): //Only admins can clear logs ?>
         <?php if($logs_size): ?>
-            <?= $this->Form->postButton(__d('me_cms', 'Clear logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+            <?= $this->Form->postButton(__d('me_cms', 'Clear all logs'), ['action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
         <?php endif; ?>
     <?php endif; ?>
 </div>
@@ -88,6 +88,6 @@
             <?= __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. '
                 . 'You should clear thumbnails only when they have reached a large size or when many images are no longer used') ?>
         </p>
-    <?= $this->Form->postButton(__d('me_cms', 'Clear thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
+    <?= $this->Form->postButton(__d('me_cms', 'Clear all thumbnails'), ['action' => 'tmp_cleaner', 'thumbs'], ['class' => 'btn-success', 'icon' => 'trash-o']) ?>
     <?php endif; ?>
 </div>

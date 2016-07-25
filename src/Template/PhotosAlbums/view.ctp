@@ -50,8 +50,8 @@
 ?>
 
 <div class="clearfix">
-    <?php foreach($album->photos as $photo): ?>
-        <div class="col-sm-6 col-md-4">
+    <?php foreach($photos as $photo): ?>
+        <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="photo-box">
                 <?php
                     $text = implode(PHP_EOL, [
@@ -79,3 +79,5 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+<?= $this->element('MeTools.paginator') ?>

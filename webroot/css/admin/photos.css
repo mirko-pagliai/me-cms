@@ -12,17 +12,15 @@
 .photo-box {
 	background: #e8e8e8;
     margin-bottom: 10px;
-	/*max-width: 400px;*/
     padding: 10px;
 }
 
-/* Photo box, title */
-.photo-box .photo-title {
+/* Photo box, all children elements */
+.photo-box > * {
 	background: #fff;
     font-size: 13px;
-    font-weight: bold;
 	margin-bottom: 3px;
-	padding: 4px;
+	padding: 3px 4px;
 	text-align: center;
 	/* No wrap, text truncated with ellipses */
 	overflow: hidden;
@@ -30,31 +28,29 @@
     white-space: nowrap;
 }
 
+/* Photo box, title */
+.photo-box .photo-title {
+    font-weight: bold;
+}
+
 /* Photo box, created date */
 .photo-box .photo-created {
-	background: #fff;
 	font-size: 12px;
-	margin-bottom: 5px;
-	padding: 2px 4px;
-	text-align: center;
 }
 
-/* Photo box, images wrapper */
+/* Photo box, image wrapper */
 .photo-box .photo-image {
-	background: #fff;
+	padding: 0;
 }
 
-/* Photo box, images wrapper, image */
+/* Photo box, image wrapper, image */
 .photo-box .photo-image img {
 	margin: 0 auto;
 }
 
 /* Photo box, actions */
 .photo-box .actions {
-    background: #fff;
-	margin: 5px 0 0;
 	padding: 6px;
-    text-align: center;
 }
 
 /* Photo box, actions, element list */
