@@ -23,6 +23,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
@@ -252,13 +253,17 @@ class SystemsController extends AppController {
         $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
         
         $this->set([
-			'cache_size' => dirsize(CACHE),
+			'cache_size' => (new Folder($path))->dirsize(CACHE),
 			'cache_status' => Cache::enabled(),
-			'assets_size' => dirsize(ASSETS),
-			'logs_size' => dirsize(LOGS),
+			'assets_size' => (new Folder($path))->dirsize(ASSETS),
+			'logs_size' => (new Folder($path))->dirsize(LOGS),
             'sitemap_size' => $sitemap,
-			'thumbs_size' => dirsize(THUMBS),
-			'total_size' => dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + $sitemap + dirsize(THUMBS),
+			'thumbs_size' => (new Folder($path))->dirsize(THUMBS),
+			'total_size' => (new Folder($path))->dirsize(CACHE) + 
+                (new Folder($path))->dirsize(ASSETS) + 
+                (new Folder($path))->dirsize(LOGS) + 
+                $sitemap + 
+                (new Folder($path))->dirsize(THUMBS),
         ]);
 	}
 }
