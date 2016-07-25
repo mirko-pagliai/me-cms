@@ -47,7 +47,7 @@ class PostsController extends AppController {
 	/**
      * Lists posts
 	 */
-    public function index() {		
+    public function index() {
 		//Sets the cache name
 		$cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
 		

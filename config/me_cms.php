@@ -25,6 +25,9 @@ return ['MeCms' => [
 		'offline' => FALSE,
 		//Text to display when the site is offline or `FALSE`
 		'offline_text' => FALSE,
+		//Number of photos to show per page.
+        //This must be a multiple of 4
+		'photos' => 20,
 		//Number of records to show per page
 		'records' => 10,
 		//Number of records to show on RSS
