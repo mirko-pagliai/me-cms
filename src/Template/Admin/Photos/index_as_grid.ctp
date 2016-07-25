@@ -29,7 +29,11 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="photo-box">
                 <div class="photo-title">
-                    <?= $photo->filename ?>
+                    <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
+                </div>
+                <div class="photo-album">
+                    <?= __d('me_cms', 'Album') ?>: 
+                    <?= $this->Html->link($photo->album->title, ['?' => ['album' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
                 </div>
                 <div class="photo-created">
                     (<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)

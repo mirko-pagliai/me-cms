@@ -66,7 +66,7 @@
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $this->Html->link($photo->album->title, ['?' => ['position' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                    <?= $this->Html->link($photo->album->title, ['?' => ['album' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
                 </td>
                 <td class="text-center">
                     <?= $photo->description ?>
