@@ -24,6 +24,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
@@ -201,13 +202,14 @@ class SystemsController extends AppController {
     /**
 	 * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
 	 * @param string $type Type
+     * @throws MethodNotAllowedException
      * @throws InternalErrorException
      * @uses clear_cache()
      * @uses clear_sitemap()
 	 */
 	public function tmp_cleaner($type) {
 		if(!$this->request->is(['post', 'delete'])) {
-			return $this->redirect(['action' => 'tmp_viewer']);
+			throw new MethodNotAllowedException();
         }
 		
 		switch($type) {
