@@ -3,6 +3,7 @@
 ### 2.12.1
 * added pagination for photos;
 * improved photos index as grid;
+* now you can empty logs from the logs index;
 * fixed bug on photos filter (for albums).
 
 ### 2.12.0

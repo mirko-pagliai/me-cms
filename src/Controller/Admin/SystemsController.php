@@ -242,7 +242,7 @@ class SystemsController extends AppController {
 			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 		
-		return $this->redirect(['action' => 'tmp_viewer']);
+		return $this->redirect($this->referer(['action' => 'tmp_viewer']));
 	}
 	
 	/**
