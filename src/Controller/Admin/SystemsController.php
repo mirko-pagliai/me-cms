@@ -260,17 +260,17 @@ class SystemsController extends AppController {
         $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
         
         $this->set([
-			'cache_size' => (new Folder($path))->dirsize(CACHE),
+			'cache_size' => (new Folder(CACHE))->dirsize(),
 			'cache_status' => Cache::enabled(),
-			'assets_size' => (new Folder($path))->dirsize(ASSETS),
-			'logs_size' => (new Folder($path))->dirsize(LOGS),
+			'assets_size' => (new Folder(ASSETS))->dirsize(),
+			'logs_size' => (new Folder(LOGS))->dirsize(),
             'sitemap_size' => $sitemap,
-			'thumbs_size' => (new Folder($path))->dirsize(THUMBS),
-			'total_size' => (new Folder($path))->dirsize(CACHE) + 
-                (new Folder($path))->dirsize(ASSETS) + 
-                (new Folder($path))->dirsize(LOGS) + 
+			'thumbs_size' => (new Folder(THUMBS))->dirsize(),
+			'total_size' => (new Folder(CACHE))->dirsize() + 
+                (new Folder(ASSETS))->dirsize() + 
+                (new Folder(LOGS))->dirsize() + 
                 $sitemap + 
-                (new Folder($path))->dirsize(THUMBS),
+                (new Folder(THUMBS))->dirsize(),
         ]);
 	}
 }
