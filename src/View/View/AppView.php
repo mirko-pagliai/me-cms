@@ -94,10 +94,10 @@ class AppView extends BaseView {
 	 */
 	public function renderLayout($content, $layout = NULL) {
         if($this->layoutPath()) {
-            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$this->layoutPath().DS.'default.ctp';
+            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$this->layoutPath().DS.$layout.'.ctp';
         }
         else {
-            $path = 'src'.DS.'Template'.DS.'Layout'.DS.'default.ctp';
+            $path = 'src'.DS.'Template'.DS.'Layout'.DS.$layout.'.ctp';
         }
         
         //Uses the APP layout, if exists
