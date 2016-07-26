@@ -106,11 +106,10 @@ class AppView extends BaseView {
             $this->plugin = FALSE;
         }
         
-		//Sets the theme
+		//Sets the theme and uses the theme layout, if exists
 		if(config('default.theme') && !$this->theme()) {
 			$this->theme(config('default.theme'));
             
-            //Uses the theme layout, if exists
             if(is_readable(Plugin::path($this->theme()).$path)) {
                 $this->plugin = $this->theme();
             }
