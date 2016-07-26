@@ -31,6 +31,9 @@
                 <div class="photo-title">
                     <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
                 </div>
+                <div class="photo-id">
+                    <?= __d('me_cms', 'ID') ?> <code><?= $photo->id ?></code>
+                </div>
                 <div class="photo-album">
                     <?= __d('me_cms', 'Album') ?>: 
                     <?= $this->Html->link($photo->album->title, ['?' => ['album' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>

@@ -25,6 +25,8 @@
 <?php
     $this->extend('/Admin/Common/view');
     $this->assign('title', __d('me_cms', 'Log {0}', $log->filename));
+    $this->append('actions', $this->Html->button(__d('me_cms', 'Download'), ['action' => 'download', $log->filename], ['class' => 'btn-success', 'icon' => 'download']));
+    $this->append('actions', $this->Form->postButton(__d('me_cms', 'Delete'), ['action' => 'delete', $log->filename], ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]));
 ?>
 
 <?php if(!empty($log->content)): ?>

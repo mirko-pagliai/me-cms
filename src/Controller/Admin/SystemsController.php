@@ -23,6 +23,8 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
@@ -135,7 +137,7 @@ class SystemsController extends AppController {
         
         $checkup['backups'] = [
             'path' => rtr(BACKUPS),
-            'writeable'	=> folder_is_writable(BACKUPS),
+            'writeable'	=> folder_is_writeable(BACKUPS),
         ];
         
         $checkup['cache'] = Cache::enabled();
@@ -166,12 +168,18 @@ class SystemsController extends AppController {
         
         //Checks for temporary directories
         foreach([CACHE, LOGS, THUMBS, TMP] as $path) {
-            $checkup['temporary'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+            $checkup['temporary'][] = [
+                'path' => rtr($path),
+                'writeable' => folder_is_writeable($path),
+            ];
         }
         
         //Checks for webroot directories
         foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path) {
-            $checkup['webroot'][] = ['path' => rtr($path), 'writeable' => folder_is_writable($path)];
+            $checkup['webroot'][] = [
+                'path' => rtr($path),
+                'writeable' => folder_is_writeable($path),
+            ];
         }
         
         array_walk($checkup, function($value, $key) {
@@ -196,7 +204,7 @@ class SystemsController extends AppController {
             return TRUE;
         }
         
-        return (new \Cake\Filesystem\File(SITEMAP))->delete();
+        return (new File(SITEMAP))->delete();
     }
 
     /**
@@ -252,13 +260,17 @@ class SystemsController extends AppController {
         $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
         
         $this->set([
-			'cache_size' => dirsize(CACHE),
+			'cache_size' => (new Folder(CACHE))->dirsize(),
 			'cache_status' => Cache::enabled(),
-			'assets_size' => dirsize(ASSETS),
-			'logs_size' => dirsize(LOGS),
+			'assets_size' => (new Folder(ASSETS))->dirsize(),
+			'logs_size' => (new Folder(LOGS))->dirsize(),
             'sitemap_size' => $sitemap,
-			'thumbs_size' => dirsize(THUMBS),
-			'total_size' => dirsize(CACHE) + dirsize(ASSETS) + dirsize(LOGS) + $sitemap + dirsize(THUMBS),
+			'thumbs_size' => (new Folder(THUMBS))->dirsize(),
+			'total_size' => (new Folder(CACHE))->dirsize() + 
+                (new Folder(ASSETS))->dirsize() + 
+                (new Folder(LOGS))->dirsize() + 
+                $sitemap + 
+                (new Folder(THUMBS))->dirsize(),
         ]);
 	}
 }

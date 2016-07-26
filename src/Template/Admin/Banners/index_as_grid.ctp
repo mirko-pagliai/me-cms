@@ -29,7 +29,14 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="photo-box">
                 <div class="photo-title">
-                    <?= $banner->filename ?>
+                    <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
+                </div>
+                <div class="photo-id">
+                    <?= __d('me_cms', 'ID') ?> <code><?= $banner->id ?></code>
+                </div>
+                <div class="photo-album">
+                    <?= __d('me_cms', 'Position') ?>: 
+                    <?= $this->Html->link($banner->position->name, ['?' => ['position' => $banner->position->name]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
                 </div>
                 <div class="photo-created">
                     (<?= $banner->created->i18nFormat(config('main.datetime.long')) ?>)
