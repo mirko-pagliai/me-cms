@@ -32,6 +32,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+            <th class="text-center"><?= __d('me_cms', 'ID') ?></th>
             <th><?= __d('me_cms', 'Title') ?></th>
             <th class="min-width text-center"><?= __d('me_cms', 'Parent') ?></th>
             <th class="min-width text-center"><?= __d('me_cms', 'Pages') ?></th>
@@ -40,6 +41,9 @@
     <tbody>
         <?php foreach($categories as $category): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $category->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
                     <?php

@@ -27,6 +27,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?= $this->Paginator->sort('filename', __d('me_cms', 'Filename')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Positions.name', __d('me_cms', 'Position')) ?></th>
             <th class="text-center hidden-xs"><?= __d('me_cms', 'Url') ?></th>
@@ -38,6 +39,9 @@
     <tbody>
         <?php foreach($banners as $banner): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $banner->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
                     <?php

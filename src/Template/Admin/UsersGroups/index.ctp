@@ -32,6 +32,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?= $this->Paginator->sort('name', __d('me_cms', 'Name')) ?></th>
             <th><?= $this->Paginator->sort('label', __d('me_cms', 'Label')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('user_count', __d('me_cms', 'Users')) ?></th>
@@ -40,6 +41,9 @@
     <tbody>
         <?php foreach($groups as $group): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $group->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?></strong>
                     <?php

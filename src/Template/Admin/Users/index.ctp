@@ -66,7 +66,8 @@
 
 <table class="table table-hover">
     <thead>
-        <tr>				
+        <tr>
+            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?php echo $this->Paginator->sort('username', __d('me_cms', 'Username')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('first_name', __d('me_cms', 'Name')) ?></th>
             <th class="text-center hidden-xs"><?= $this->Paginator->sort('email', __d('me_cms', 'Email')) ?></th>
@@ -78,6 +79,9 @@
     <tbody>
         <?php foreach($users as $user): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $user->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
                     <?php

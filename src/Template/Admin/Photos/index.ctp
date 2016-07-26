@@ -27,6 +27,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?= $this->Paginator->sort('filename', __d('me_cms', 'Filename')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Albums.title', __d('me_cms', 'Album')) ?></th>
             <th class="text-center"><?= __d('me_cms', 'Description') ?></th>
@@ -36,6 +37,9 @@
     <tbody>
         <?php foreach($photos as $photo): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $photo->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?></strong>
                     <?php

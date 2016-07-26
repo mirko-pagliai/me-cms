@@ -67,6 +67,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
+            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
             <th class="min-width text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
@@ -76,6 +77,9 @@
     <tbody>
         <?php foreach($pages as $page): ?>
             <tr>
+                <td class="min-width text-center">
+                    <code><?= $page->id ?></code>
+                </td>
                 <td>
                     <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
                     <?php
