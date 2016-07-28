@@ -91,7 +91,7 @@ class AppController extends BaseController {
 	 * @uses MeTools\Network\Request::isAction()
 	 * @uses isOffline()
 	 */
-	public function beforeFilter(\Cake\Event\Event $event) {        
+	public function beforeFilter(\Cake\Event\Event $event) {     
 		//Checks if the site is offline
 		if($this->isOffline()) {
 			return $this->redirect(['_name' => 'offline']);
