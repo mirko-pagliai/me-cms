@@ -38,17 +38,3 @@ if(!function_exists('config')) {
 		return Configure::read($key);
 	}
 }
-
-if(!function_exists('is_localhost')) {
-	/**
-	 * Checks if is localhost
-	 * @return bool
-	 */
-    function is_localhost() {
-        if(empty($_SERVER['REMOTE_ADDR'])) {
-            return FALSE;
-        }
-        
-		return in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
-	}
-}
