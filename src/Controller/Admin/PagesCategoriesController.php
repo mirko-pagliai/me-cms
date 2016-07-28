@@ -36,12 +36,11 @@ class PagesCategoriesController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
         
-		if($this->request->isAction(['add', 'edit'])) {
+		if($this->request->is('action', ['add', 'edit'])) {
 			$this->set('categories', $this->PagesCategories->getTreeList());
         }
 	}
@@ -52,11 +51,10 @@ class PagesCategoriesController extends AppController {
      *  the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins can delete pages categories
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup('admin');
         }
         

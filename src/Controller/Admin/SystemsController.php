@@ -42,11 +42,10 @@ class SystemsController extends AppController {
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {		
 		//Only admins can clear all temporary files or logs
-		if($this->request->isAction('tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs'])) {
+		if($this->request->is('action', 'tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs'])) {
 			return $this->Auth->isGroup('admin');
         }
 		

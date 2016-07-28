@@ -30,7 +30,7 @@ use Cake\Core\Plugin;
 use Cake\Log\Log;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\DispatcherFactory;
-use MeTools\Network\Request;
+use Cake\Network\Request;
 
 require_once 'constants.php';
 require_once 'global_functions.php';

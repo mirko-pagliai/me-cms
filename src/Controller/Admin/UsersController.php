@@ -37,16 +37,15 @@ class UsersController extends AppController {
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Every user can change his password
-		if($this->request->isAction('change_password')) {
+		if($this->request->is('action', 'change_password')) {
 			return TRUE;
         }
 		
 		//Only admins can activate account and delete users
-		if($this->request->isAction(['activate', 'delete'])) {
+		if($this->request->is('action', ['activate', 'delete'])) {
 			return $this->Auth->isGroup('admin');
         }
 		
@@ -60,12 +59,11 @@ class UsersController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeCms\Model\Table\UsersGroupsTable::getList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction(['index', 'add', 'edit'])) {
+		if($this->request->is('action', ['index', 'add', 'edit'])) {
 			$this->set('groups', $this->Users->Groups->getList());
         }
 	}

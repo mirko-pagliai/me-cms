@@ -36,17 +36,16 @@ class PhotosController extends AppController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
 	 * @uses MeCms\Model\Table\PhotosAlbums::getList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction(['index', 'edit', 'upload'])) {
+		if($this->request->is('action', ['index', 'edit', 'upload'])) {
 			//Gets albums
             $albums = $this->Photos->Albums->getList();
 			
 			//Checks for albums
-			if(empty($albums) && !$this->request->isAction('index')) {
+			if(empty($albums) && !$this->request->is('action', 'index')) {
 				$this->Flash->alert(__d('me_cms', 'You must first create an album'));
 				return $this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
 			}
@@ -60,11 +59,10 @@ class PhotosController extends AppController {
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {		
 		//Only admins and managers can delete photos
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
         }
         

@@ -55,11 +55,11 @@
             ]);
 			
 			//Truncates the text if the "<!-- read-more -->" tag is present
-			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($text, '<!-- read-more -->')) {
+			if(!$this->request->is('action', 'view', 'Pages') && $strpos = strpos($text, '<!-- read-more -->')) {
 				echo $truncated_text = $this->Text->truncate($text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
             }
 			//Truncates the text if requested by the configuration
-			elseif(!$this->request->isAction('view', 'Pages') && config('default.truncate_to')) {
+			elseif(!$this->request->is('action', 'view', 'Pages') && config('default.truncate_to')) {
 				echo $truncated_text = $this->Text->truncate($text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
             }
 			else {
@@ -76,7 +76,7 @@
 		?>
 	</div>
 	<?php
-		if(config('page.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Pges') && !$this->request->isAjax()) {
+		if(config('page.shareaholic') && config('shareaholic.app_id') && $this->request->is('action', 'view', 'Pges') && !$this->request->isAjax()) {
             echo $this->Html->shareaholic(config('shareaholic.app_id'));
         }
 	?>

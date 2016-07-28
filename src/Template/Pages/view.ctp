@@ -53,7 +53,7 @@
     /**
      * Meta tags
      */
-    if($this->request->isAction('view', 'Pages')) {
+    if($this->request->is('action', 'view', 'Pages')) {
         $this->Html->meta([
             'content' => 'article',
             'property' => 'og:type',

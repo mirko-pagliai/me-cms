@@ -88,7 +88,6 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::isAction()
 	 * @uses isOffline()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {        
@@ -98,7 +97,7 @@ class AppController extends BaseController {
         }
 		
 		//Checks if the user's IP address is banned
-		if($this->request->isBanned() && !$this->request->isAction('ip_not_allowed', 'Systems')) {
+		if($this->request->isBanned() && !$this->request->is('action', 'ip_not_allowed', 'Systems')) {
 			return $this->redirect(['_name' => 'ip_not_allowed']);
         }
 		
@@ -186,7 +185,6 @@ class AppController extends BaseController {
 	/**
 	 * Checks if the site is offline
 	 * @return bool
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	protected function isOffline() {
 		if(!config('default.offline')) {
@@ -199,7 +197,7 @@ class AppController extends BaseController {
         }
 		
 		//Always online for these actions
-		if($this->request->isAction(['offline', 'login', 'logout'])) {
+		if($this->request->is('action', ['offline', 'login', 'logout'])) {
 			return FALSE;
         }
 		
