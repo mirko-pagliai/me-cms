@@ -28,8 +28,6 @@
 ?>
 
 <?php if(!empty($loginLog)): ?>
-    <h4><?= __d('me_cms', 'Last login') ?></h4>
-
     <table class="table table-hover">
         <tr>
             <th class="text-center"><?= __d('me_cms', 'Time') ?></th>
