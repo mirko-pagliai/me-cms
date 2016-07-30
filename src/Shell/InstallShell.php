@@ -56,6 +56,7 @@ class InstallShell extends BaseInstallShell {
 		]);
 		
 		$this->packages = am($this->packages, [
+            'donatj/phpuseragentparser',
             'enyo/dropzone',
             'js-cookie/js-cookie:dev-master',
 			'sunhater/kcfinder:dev-master',
@@ -68,6 +69,7 @@ class InstallShell extends BaseInstallShell {
             BANNERS,
             PHOTOS,
 			THUMBS,
+            TMP.'login',
 		]);
 	}
     

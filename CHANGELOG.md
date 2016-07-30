@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.3
+* for each user, the login log is saved.
+
 ### 2.12.2
 * you can download/delete logs from the log view;
 * admin indexes display ID for all elements;

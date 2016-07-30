@@ -24,6 +24,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\AppController;
+use MeCms\Utility\LoginLogger;
 
 /**
  * Users controller
@@ -94,6 +95,7 @@ class UsersController extends AppController {
     /**
      * Views user
      * @param string $id User ID
+     * @uses MeCms\Utility\LoginLogger::get()
      */
     public function view($id = NULL) {
         $user = $this->Users->find()
@@ -102,7 +104,9 @@ class UsersController extends AppController {
 			->where(['Users.id' => $id])
 			->firstOrFail();
         
-        $this->set(compact('user'));
+        $this->set(am([
+            'loginLog' => (new LoginLogger($id))->get(),
+        ], compact('user')));
     }
 
     /**
