@@ -246,14 +246,18 @@ class UsersController extends AppController {
                     
 					return $this->_logout();
 				}
+                
+				$this->Auth->setUser($user);
 				
 				//Saves the login data in a cookie, if it was requested
 				if($this->request->data('remember_me')) {
 					$this->Cookie->config(['expires' => '+365 days'])
-						->write('login', ['username' => $this->request->data('username'), 'password' => $this->request->data('password')]);
+						->write('login', [
+                            'username' => $this->request->data('username'),
+                            'password' => $this->request->data('password'),
+                        ]);
                 }
                 
-				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
 			else {
