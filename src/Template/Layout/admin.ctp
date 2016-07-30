@@ -53,12 +53,7 @@
 		?>
 	</head>
 	<body>
-		<?= $this->element('MeCms.admin/topbar', [], [
-            'cache' => [
-                'key' => sprintf('topbar_user_%s', $this->Auth->user('id')),
-                'config' => 'admin',
-            ],
-        ]) ?>
+		<?= $this->element('MeCms.admin/topbar') ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
