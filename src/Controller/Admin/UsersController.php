@@ -104,9 +104,9 @@ class UsersController extends AppController {
 			->where(['Users.id' => $id])
 			->firstOrFail();
         
-        $this->set(am([
-            'loginLog' => (new LoginLogger($id))->get(),
-        ], compact('user')));
+        $loginLog = (new LoginLogger($id))->get();
+        
+        $this->set(compact('loginLog', 'user'));
     }
 
     /**
@@ -248,4 +248,14 @@ class UsersController extends AppController {
 
 		$this->set(compact('user'));
 	}
+    
+    /**
+     * Displays the login log
+     * @uses MeCms\Utility\LoginLogger::get()
+     */
+    public function last_login() {
+        $loginLog = (new LoginLogger($this->Auth->user('id')))->get();
+        
+        $this->set(compact('loginLog'));
+    }
 }
