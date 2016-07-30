@@ -86,8 +86,8 @@ class LoginLogger {
             'time' => new Time(),
         ], parse_user_agent(), compact('agent')));
         
-        //Keeps only the first 20 records
-        $data = array_slice($data, 0, 20);
+        //Keeps only the first records
+        $data = array_slice($data, 0, config('users.login_log'));
         
         //Serializes
         $data = serialize($data);

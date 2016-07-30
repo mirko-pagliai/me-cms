@@ -51,14 +51,21 @@
 						echo $this->MenuBuilder->generate($plugin, 'dropdown');
                     }
                     
-					echo $menu = $this->Html->li($this->Dropdown->menu($this->Auth->user('full_name'), ['icon' => 'user'], [
-                        $this->Html->link(__d('me_cms', 'Last login'), ['controller' => 'Users', 'action' => 'last_login', 'plugin' => MECMS]),
-						$this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => MECMS]),
-						$this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']),
-					]),	['class' => 'dropdown']);
+                    $menu = [];
+                    
+                    if(config('users.login_log')) {
+                        $menu[] = $this->Html->link(__d('me_cms', 'Last login'), ['controller' => 'Users', 'action' => 'last_login', 'plugin' => MECMS]);
+                    }
+                    
+                    $menu[] = $this->Html->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'change_password', 'plugin' => MECMS]);
+					$menu[] = $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']);
+                    
+					echo $this->Html->li($this->Dropdown->menu($this->Auth->user('full_name'), ['icon' => 'user'], $menu), ['class' => 'dropdown']);
 				?>
 			</ul>
-			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm"><?= $menu; ?></ul>
+			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+                <?= $this->Html->li($this->Dropdown->menu($this->Auth->user('full_name'), ['icon' => 'user'], $menu), ['class' => 'dropdown']) ?>
+            </ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
