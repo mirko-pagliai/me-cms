@@ -27,6 +27,7 @@ use Cake\Mailer\MailerAwareTrait;
 use Cake\Log\Log;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
+use MeCms\Utility\LoginLogger;
 
 /**
  * Users controller
@@ -54,6 +55,7 @@ class UsersController extends AppController {
 	/**
 	 * Internal function to login with cookie
 	 * @return mixed
+     * @uses MeCms\Utility\LoginLogger::save()
 	 * @uses _logout()
 	 */
 	protected function _loginWithCookie() {
@@ -69,6 +71,9 @@ class UsersController extends AppController {
             $user = $this->Auth->identify();
             
 			if($user && $user['active'] && !$user['banned']) {
+                //Saves the login log
+                (new LoginLogger($user['id']))->save();
+                
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
@@ -223,6 +228,7 @@ class UsersController extends AppController {
 	/**
 	 * Login
 	 * @return boolean
+     * @uses MeCms\Utility\LoginLogger::save()
 	 * @uses _loginWithCookie()
 	 */
 	public function login() {
@@ -246,14 +252,21 @@ class UsersController extends AppController {
                     
 					return $this->_logout();
 				}
-				
+                
+                //Saves the login log
+                (new LoginLogger($user['id']))->save();
+                
 				//Saves the login data in a cookie, if it was requested
 				if($this->request->data('remember_me')) {
 					$this->Cookie->config(['expires' => '+365 days'])
-						->write('login', ['username' => $this->request->data('username'), 'password' => $this->request->data('password')]);
+						->write('login', [
+                            'username' => $this->request->data('username'),
+                            'password' => $this->request->data('password'),
+                        ]);
                 }
                 
 				$this->Auth->setUser($user);
+                
 				return $this->redirect($this->Auth->redirectUrl());
 			}
 			else {

@@ -20,21 +20,15 @@
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
  */
+?>
 
-use Cake\Core\Configure;
+<?php
+    $this->extend('/Admin/Common/view');
+    $this->assign('title', $title = __d('me_cms', 'Last login'));
+?>
 
-if(!function_exists('config')) {
-	/**
-	 * Gets config values stored in the configuration.
-	 * It will first look in the MeCms configuration, then in the application configuration
-	 * @param string|NULL $key Configuration key
-	 * @return mixed Configuration value
-	 */
-	function config($key = NULL) {		
-		if($key !== NULL && Configure::check(sprintf('MeCms.%s', $key))) {
-			return Configure::read(sprintf('MeCms.%s', $key));
-        }
-        
-		return Configure::read($key);
-	}
-}
+<?php
+    if(!empty($loginLog)) {
+        echo $this->element('admin/login-log');
+    }
+?>

@@ -161,6 +161,8 @@ return ['MeCms' => [
 		'cookies_login' => TRUE,
 		//Default users group (ID)
 		'default_group' => 3,
+        //Number of login log per user. `0` or `FALSE` to disable
+        'login_log' => 40,
 		//Reset password (enabled or disabled)
 		'reset_password' => TRUE,
 		//Signup (enabled or disabled)

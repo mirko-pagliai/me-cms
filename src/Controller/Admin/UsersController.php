@@ -24,6 +24,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\AppController;
+use MeCms\Utility\LoginLogger;
 
 /**
  * Users controller
@@ -94,6 +95,7 @@ class UsersController extends AppController {
     /**
      * Views user
      * @param string $id User ID
+     * @uses MeCms\Utility\LoginLogger::get()
      */
     public function view($id = NULL) {
         $user = $this->Users->find()
@@ -103,6 +105,12 @@ class UsersController extends AppController {
 			->firstOrFail();
         
         $this->set(compact('user'));
+        
+        if(config('users.login_log')) {
+            $loginLog = (new LoginLogger($id))->get();
+            
+            $this->set(compact('loginLog'));
+        }
     }
 
     /**
@@ -244,4 +252,20 @@ class UsersController extends AppController {
 
 		$this->set(compact('user'));
 	}
+    
+    /**
+     * Displays the login log
+     * @uses MeCms\Utility\LoginLogger::get()
+     */
+    public function last_login() {
+		//Checks if login logs are enabled
+		if(!config('users.login_log')) {
+			$this->Flash->error(__d('me_cms', 'Disabled'));
+			return $this->redirect(['_name' => 'admin']);
+		}
+        
+        $loginLog = (new LoginLogger($this->Auth->user('id')))->get();
+        
+        $this->set(compact('loginLog'));
+    }
 }

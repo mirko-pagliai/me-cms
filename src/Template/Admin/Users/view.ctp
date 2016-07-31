@@ -24,25 +24,18 @@
 
 <?php
     $this->extend('/Admin/Common/view');
-    $this->assign('title', __d('me_cms', 'User {0}', $user->full_name));
-?>
-
-<?php
-    $actions = [
-        $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['icon' => 'pencil']),
-    ];
+    $this->assign('title', $user->full_name);
+    $this->append('actions', $this->Html->button(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-success', 'icon' => 'pencil']));
 
     //Only admins can activate accounts and delete users
     if($this->Auth->isGroup('admin')) {
         //If the user is not active (pending)
         if(!$user->active) {
-            $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate_account', $user->id], ['icon' => 'user-plus', 'confirm' => __d('me_cms', 'Are you sure you want to activate this account?')]);
+            $this->append('actions', $this->Form->postButton(__d('me_cms', 'Activate'), ['action' => 'activate_account', $user->id], ['class' => 'btn-success', 'icon' => 'user-plus', 'confirm' => __d('me_cms', 'Are you sure you want to activate this account?')]));
         }
         
-        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $user->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+        $this->append('actions', $this->Form->postButton(__d('me_cms', 'Delete'), ['action' => 'delete', $user->id], ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]));
     }
-
-    echo $this->Html->ul($actions, ['class' => 'actions']);
 ?>
 
 <dl class="dl-horizontal">
@@ -83,3 +76,9 @@
         echo $this->Html->dd($user->created->i18nFormat(config('main.datetime.long')));
     ?>
 </dl>
+
+<?php if(!empty($loginLog)): ?>
+    <h4><?= __d('me_cms', 'Last login') ?></h4>
+
+    <?= $this->element('admin/login-log') ?>
+<?php endif; ?>

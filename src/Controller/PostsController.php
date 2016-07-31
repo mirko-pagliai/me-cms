@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Network\Exception\ForbiddenException;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
@@ -197,7 +198,7 @@ class PostsController extends AppController {
 	public function rss() {
 		//This method works only for RSS
 		if(!$this->RequestHandler->isRss()) {
-            throw new \Cake\Network\Exception\ForbiddenException();
+            throw new ForbiddenException();
         }
         
         $posts = $this->Posts->find('active')
