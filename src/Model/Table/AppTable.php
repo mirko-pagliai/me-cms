@@ -119,6 +119,13 @@ class AppTable extends Table {
 	 * @return Query $query Query object
 	 */
 	public function queryFromFilter(Query $query, array $data = []) {
+        //"ID" field
+        if(!empty($data['id']) && is_positive($data['id'])) {
+			$query->where([
+                sprintf('%s.id', $this->alias()) => $data['id'],
+            ]);
+        }
+        
 		//"Title" field
 		if(!empty($data['title']) && strlen($data['title']) > 2) {
 			$query->where([
