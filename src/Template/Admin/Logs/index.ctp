@@ -25,7 +25,7 @@
 <?php
     $this->extend('/Admin/Common/index');
     $this->assign('title', __d('me_cms', 'Logs'));
-    $this->append('actions', $this->Form->postButton(__d('me_cms', 'Clear all logs'), ['controller' => 'Systems', 'action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-success', 'icon' => 'plus']));
+    $this->append('actions', $this->Form->postButton(__d('me_cms', 'Clear all logs'), ['controller' => 'Systems', 'action' => 'tmp_cleaner', 'logs'], ['class' => 'btn-danger', 'icon' => 'trash']));
 ?>
 
 <table class="table table-striped">
