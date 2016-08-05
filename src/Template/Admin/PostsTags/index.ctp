@@ -66,13 +66,15 @@
     <?php foreach($tags as $tag): ?>
         <div class="col-sm-3">
             <div>
-                <small>
-                    <code><?= $tag->id ?></code>
-                </small> 
-                <?= $this->Html->link($this->Html->strong($tag->tag), ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]) ?> 
-                <small>
+                <div class="small">
+                    <?= __d('me_cms', 'ID') ?> <code><?= $tag->id ?></code>
+                </div>
+                <div class="no-wrap">
+                    <?= $this->Html->link($this->Html->strong($tag->tag), ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]) ?>
+                </div>
+                <div class="small">
                     (<?= $this->Html->link(__dn('me_cms', '{0} post', '{0} posts', $tag->post_count, $tag->post_count), ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]], ['title' => __d('me_cms', 'View items that belong to this element')]) ?>)
-                </small>
+                </div>
                 <?php
                     $actions = [];
 
