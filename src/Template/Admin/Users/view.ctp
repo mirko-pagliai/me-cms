@@ -69,7 +69,7 @@
         
         if($user->post_count) {
             echo $this->Html->dt(__d('me_cms', 'Posts'));
-            echo $this->Html->dd($user->post_count);
+            echo $this->Html->dd($this->Html->link($user->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]));
         }
 
         echo $this->Html->dt(__d('me_cms', 'Created'));
