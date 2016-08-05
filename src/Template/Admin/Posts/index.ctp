@@ -35,6 +35,11 @@
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
+            echo $this->Form->input('id', [
+                'default' => $this->request->query('id'),
+                'placeholder' => __d('me_cms', 'ID'),
+                'size' => 2,
+            ]);
             echo $this->Form->input('title', [
                 'default' => $this->request->query('title'),
                 'placeholder' => __d('me_cms', 'title'),

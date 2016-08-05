@@ -79,6 +79,8 @@ class TagsTable extends AppTable {
 	 * @return Query $query Query object
 	 */
 	public function queryFromFilter(Query $query, array $data = []) {
+		$query = parent::queryFromFilter($query, $data);
+        
 		//"Name" field
 		if(!empty($data['name']) && strlen($data['name']) > 2) {
 			$query->where([

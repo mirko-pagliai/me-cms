@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.4
+* filter forms can now use records ID;
+* fixed bug rendering admin views.
+
 ### 2.12.3
 * for each user, the login log is saved. Each user can view his logs.
 

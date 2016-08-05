@@ -83,7 +83,7 @@ class AppView extends BaseView {
      *  surrounding layout
 	 * @param string|null $layout Layout name
 	 * @return mixed Rendered output, or false on error
-	 * @see http://api.cakephp.org/3.2/source-class-Cake.View.View.html#477-513
+	 * @see http://api.cakephp.org/3.2/class-Cake.View.View.html#_renderLayout
      * @uses MeCms\View\View\BaseView::renderLayout()
      * @uses MeTools\Core\Plugin::path()
 	 * @uses MeTools\View\Helper\HtmlHelper::meta()
