@@ -32,8 +32,8 @@ if(!defined('FORMAT_FOR_MYSQL')) {
 }
 
 //Sets the default login log directory
-if(!defined('LOGIN_LOG')) {
-    define('LOGIN_LOG', TMP.'login');
+if(!defined('LOGIN_LOGS')) {
+    define('LOGIN_LOGS', TMP.'login');
 }
 
 //Sets the default MeCms name

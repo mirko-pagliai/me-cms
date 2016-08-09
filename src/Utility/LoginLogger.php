@@ -39,7 +39,7 @@ class LoginLogger {
      * @uses $file
      */
     public function __construct($id) {
-        $this->file = new File(LOGIN_LOG.DS.'user_'.$id.'.log', TRUE);
+        $this->file = new File(LOGIN_LOGS.DS.'user_'.$id.'.log', TRUE);
     }
     
     /**
