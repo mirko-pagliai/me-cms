@@ -30,13 +30,13 @@ use Cake\View\Cell;
 class PagesCell extends Cell {
 	/**
 	 * Constructor
-	 * @param \MeTools\Network\Request $request The request to use in the cell
+	 * @param \Cake\Network\Request $request The request to use in the cell
 	 * @param \Cake\Network\Response $response The request to use in the cell
 	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
 	 * @param array $cellOptions Cell options to apply
 	 * @uses Cake\View\Cell::__construct()
 	 */
-	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
+	public function __construct(\Cake\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
 		
 		//Loads the Photos model
@@ -46,11 +46,10 @@ class PagesCell extends Cell {
 	/**
 	 * Categories widget
      * @param string $render Render type (`form` or `list`)
-	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function categories($render = 'form') {
 		//Returns on categories index
-		if($this->request->isHere(['_name' => 'pages_categories'])) {
+		if($this->request->is('here', ['_name' => 'pages_categories'])) {
 			return;
         }
         
@@ -74,11 +73,10 @@ class PagesCell extends Cell {
 	
 	/**
 	 * Pages list widget
-	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function pages() {
 		//Returns on pages index
-		if($this->request->isHere(['_name' => 'pages_categories'])) {
+		if($this->request->is('here', ['_name' => 'pages_categories'])) {
 			return;
         }
 

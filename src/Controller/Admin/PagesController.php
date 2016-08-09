@@ -41,20 +41,19 @@ class PagesController extends AppController {
 	 * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
 	 * @uses MeCms\Model\Table\UsersTable::getActiveList()
 	 * @uses MeCms\Model\Table\UsersTable::getList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction('index')) {
+		if($this->request->is('action', 'index')) {
 			$categories = $this->Pages->Categories->getList();
 		}
-		elseif($this->request->isAction(['add', 'edit'])) {
+		elseif($this->request->is('action', ['add', 'edit'])) {
 			$categories = $this->Pages->Categories->getTreeList();
 		}
 		
 		//Checks for categories
-		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
+		if(isset($categories) && empty($categories) && !$this->request->is('action', 'index')) {
 			$this->Flash->alert(__d('me_cms', 'You must first create a category'));
 			return $this->redirect(['controller' => 'PagesCategories', 'action' => 'index']);
 		}
@@ -88,16 +87,15 @@ class PagesController extends AppController {
      *  user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Everyone can list pages and static pages
-		if($this->request->isAction(['index', 'index_statics'])) {
+		if($this->request->is('action', ['index', 'index_statics'])) {
 			return TRUE;
         }
         
 		//Only admins can delete pages
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup('admin');
         }
         

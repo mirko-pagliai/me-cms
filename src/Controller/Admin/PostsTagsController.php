@@ -34,11 +34,10 @@ class PostsTagsController extends AppController {
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit tags
-		if($this->request->isAction('edit')) {
+		if($this->request->is('action', 'edit')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
         }
         

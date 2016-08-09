@@ -34,11 +34,10 @@ class PhotosAlbumsController extends AppController {
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {		
 		//Only admins can delete albums
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup('admin');
         }
         

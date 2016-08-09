@@ -39,22 +39,21 @@ class PostsController extends AppController {
 	 * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
 	 * @uses MeCms\Model\Table\UsersTable::getActiveList()
 	 * @uses MeCms\Model\Table\UsersTable::getList()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
-		if($this->request->isAction('index')) {
+		if($this->request->is('action', 'index')) {
 			$categories = $this->Posts->Categories->getList();
 			$users = $this->Posts->Users->getList();
 		}
-		elseif($this->request->isAction(['add', 'edit'])) {
+		elseif($this->request->is('action', ['add', 'edit'])) {
 			$categories = $this->Posts->Categories->getTreeList();
 			$users = $this->Posts->Users->getActiveList();
 		}
 		
 		//Checks for categories
-		if(isset($categories) && empty($categories) && !$this->request->isAction('index')) {
+		if(isset($categories) && empty($categories) && !$this->request->is('action', 'index')) {
 			$this->Flash->alert(__d('me_cms', 'You must first create a category'));
 			return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
 		}
@@ -90,17 +89,16 @@ class PostsController extends AppController {
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
 	 * @uses MeCms\Model\Table\AppTable::isOwnedBy()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function isAuthorized($user = NULL) {
 		//Only admins and managers can edit all posts.
 		//Users can edit only their own posts
-		if($this->request->isAction('edit')) {
+		if($this->request->is('action', 'edit')) {
 			return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
         }
         
 		//Only admins and managers can delete posts
-		if($this->request->isAction('delete')) {
+		if($this->request->is('action', 'delete')) {
 			return $this->Auth->isGroup(['admin', 'manager']);
         }
         

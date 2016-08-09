@@ -31,13 +31,13 @@ use Cake\View\Cell;
 class PostsTagsCell extends Cell {
 	/**
 	 * Constructor. It loads the model
-	 * @param \MeTools\Network\Request $request The request to use in the cell
+	 * @param \Cake\Network\Request $request The request to use in the cell
 	 * @param \Cake\Network\Response $response The request to use in the cell
 	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
 	 * @param array $cellOptions Cell options to apply
 	 * @uses Cake\View\Cell::__construct()
 	 */
-	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
+	public function __construct(\Cake\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
 		
 		$this->loadModel('MeCms.Tags');
@@ -50,11 +50,10 @@ class PostsTagsCell extends Cell {
      * @param string $render Render type (`cloud`, `form` or `list`)
 	 * @param bool $shuffle Shuffles tags
 	 * @param array|bool $style Applies style to tags
-	 * @uses MeTools\Network\Request::isHere()
 	 */
 	public function popular($limit = 10, $prefix = '#', $render = 'cloud', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
 		//Returns on tags index
-		if($this->request->isHere(['_name' => 'posts_tags'])) {
+		if($this->request->is('here', ['_name' => 'posts_tags'])) {
 			return;
         }
 		

@@ -31,13 +31,13 @@ use Cake\View\Cell;
 class PhotosCell extends Cell {
 	/**
 	 * Constructor
-	 * @param \MeTools\Network\Request $request The request to use in the cell
+	 * @param \Cake\Network\Request $request The request to use in the cell
 	 * @param \Cake\Network\Response $response The request to use in the cell
 	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
 	 * @param array $cellOptions Cell options to apply
 	 * @uses Cake\View\Cell::__construct()
 	 */
-	public function __construct(\MeTools\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
+	public function __construct(\Cake\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
 		parent::__construct($request, $response, $eventManager, $cellOptions);
 		
 		//Loads the Photos model
@@ -47,11 +47,10 @@ class PhotosCell extends Cell {
 	/**
 	 * Albums widget
      * @param string $render Render type (`form` or `list`)
-	 * @uses MeTools\Network\Request::isHere()
      */
 	public function albums($render = 'form') {
 		//Returns on albums index
-		if($this->request->isHere(['_name' => 'albums'])) {
+		if($this->request->is('here', ['_name' => 'albums'])) {
 			return;
         }
         
@@ -76,11 +75,10 @@ class PhotosCell extends Cell {
 	/**
 	 * Latest widget
 	 * @param int $limit Limit
-	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function latest($limit = 1) {
 		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums'])) {
+		if($this->request->is('controller', ['Photos', 'PhotosAlbums'])) {
 			return;
         }
         
@@ -97,11 +95,10 @@ class PhotosCell extends Cell {
 	/**
 	 * Random widget
 	 * @param int $limit Limit
-	 * @uses MeTools\Network\Request::isController()
 	 */
 	public function random($limit = 1) {
 		//Returns on the same controllers
-		if($this->request->isController(['Photos', 'PhotosAlbums'])) {
+		if($this->request->is('controller', ['Photos', 'PhotosAlbums'])) {
 			return;
         }
 		

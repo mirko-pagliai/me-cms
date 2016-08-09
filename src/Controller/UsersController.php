@@ -41,13 +41,12 @@ class UsersController extends AppController {
 	 * You can use this method to perform logic that needs to happen before each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeTools\Network\Request::isAction()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		parent::beforeFilter($event);
 		
 		//Checks if the user is already logged in
-		if(!$this->request->isAction('logout') && $this->Auth->isLogged()) {
+		if(!$this->request->is('action', 'logout') && $this->Auth->isLogged()) {
 			return $this->redirect(['_name' => 'dashboard']);
         }
 	}
