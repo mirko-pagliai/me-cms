@@ -199,7 +199,7 @@ form.filter-form legend .fa {
 
 /* Filter form, fieldset, all children but not the legend */
 form.filter-form fieldset > :not(legend) {
-	margin-top: 8px;
+	margin-top: 8px !important;
 }
 
 /* -------------------------------- */
