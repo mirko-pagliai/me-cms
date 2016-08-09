@@ -73,7 +73,7 @@
 
     //Plugins version
     foreach($plugins['plugins'] as $plugin => $version) {
-        $text = $this->Html->para($infoClasses, __d('me_cms', '{0} plugin version: {1}', $this->Html->strong($plugin), $version));
+        $text = $this->Html->para($infoClasses, __d('me_cms', '{0} version: {1}', $this->Html->strong($plugin), $version));
         echo $this->Html->div('col-sm-6', $text);
     }
 
