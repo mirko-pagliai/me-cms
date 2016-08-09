@@ -54,9 +54,13 @@ class Tag extends Entity {
 	
 	/**
 	 * Gets the tag slug (virtual field)
-	 * @return string
+	 * @return string|NULL
 	 */
 	protected function _getSlug() {
+        if(empty($this->_properties['tag'])) {
+            return NULL;
+        }
+        
 		return Text::slug($this->_properties['tag']);
 	}
 }

@@ -62,12 +62,16 @@ class Post extends Entity {
     protected $_virtual = ['preview', 'tags_as_string'];
 	
 	/**
-	 * Gets the post preview (virtual field)
-	 * @return string Url to preview
+	 * Gets the image preview (virtual field)
+	 * @return string|NULL
 	 * @uses MeTools\Utility\Youtube::getId()
 	 * @uses MeTools\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
+        if(empty($this->_properties['text'])) {
+            return NULL;
+        }
+        
 		//Checks for the first image in the text
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
 		
@@ -82,15 +86,19 @@ class Post extends Entity {
 			return Youtube::getPreview(is_url($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
         }
         
-		return;
+		return NULL;
     }
 	
 	/**
 	 * Gets tags as string, separated by a comma and a space (virtual field)
-	 * @return string Tags
+	 * @return string|NULL
 	 * @uses MeCms\Model\Table\TagsTable::tagsAsString()
 	 */
 	protected function _getTagsAsString() {
+        if(empty($this->_properties['tags'])) {
+            return NULL;
+        }
+        
 		return TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
 	}
 }

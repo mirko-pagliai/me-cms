@@ -62,9 +62,13 @@ class User extends Entity {
 	
 	/**
 	 * Gets the full name (virtual field)
-	 * @return string|NULL Full name
+	 * @return string|NULL
 	 */
 	protected function _getFullName() {
+        if(empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
+            return NULL;
+        }
+        
 		return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
     }
 	

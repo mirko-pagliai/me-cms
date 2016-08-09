@@ -56,9 +56,13 @@ class Banner extends Entity {
 	
 	/**
 	 * Gets the banner path (virtual field)
-	 * @return string Path
+	 * @return string|NULL
 	 */
 	protected function _getPath() {
+        if(empty($this->_properties['filename'])) {
+            return NULL;
+        }
+        
         return BANNERS.DS.$this->_properties['filename'];
     }
 }

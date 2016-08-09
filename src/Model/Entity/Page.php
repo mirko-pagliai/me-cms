@@ -56,12 +56,16 @@ class Page extends Entity {
     protected $_virtual = ['preview'];
     
 	/**
-	 * Gets the post preview (virtual field)
-	 * @return string Url to preview
+	 * Gets the image preview (virtual field)
+	 * @return string|NULL
 	 * @uses MeTools\Utility\Youtube::getId()
 	 * @uses MeTools\Utility\Youtube::getPreview()
 	 */
 	protected function _getPreview() {
+        if(empty($this->_properties['text'])) {
+            return NULL;
+        }
+        
 		//Checks for the first image in the text
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
 		
@@ -76,6 +80,6 @@ class Page extends Entity {
 			return Youtube::getPreview(is_url($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
         }
         
-		return;
+		return NULL;
     }
 }

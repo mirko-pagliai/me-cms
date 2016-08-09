@@ -53,9 +53,13 @@ class Photo extends Entity {
 	
 	/**
 	 * Gets the photo path (virtual field)
-	 * @return string Path
+	 * @return string|NULL
 	 */
 	protected function _getPath() {
+        if(empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
+            return NULL;
+        }
+        
         return PHOTOS.DS.$this->_properties['album_id'].DS.$this->_properties['filename'];
     }
 }
