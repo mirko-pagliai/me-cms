@@ -56,28 +56,15 @@ class SystemsController extends AppController {
 	
 	/**
 	 * Media browser with KCFinder
-	 * @throws InternalErrorException
-	 * @uses MeCms\Controller\Component\KcFinderComponent::checkKcfinder()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::checkFiles()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::getFilesPath()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::getKcfinderPath()
 	 * @uses MeCms\Controller\Component\KcFinderComponent::getTypes()
+	 * @uses MeCms\Controller\Component\KcFinderComponent::startup()
 	 */
 	public function browser() {
-		//Loads the KcFinder component
+		//Loads KcFinderComponent
 		$this->loadComponent('MeCms.KcFinder');
+		$this->KcFinder->startup(new \Cake\Event\Event(NULL));
 		
-		//Checks for KCFinder
-		if(!$this->KcFinder->checkKcfinder()) {
-			throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
-        }
-        
-		//Checks for the files directory (`APP/webroot/files`)
-		if(!$this->KcFinder->checkFiles()) {
-			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($this->KcFinder->getFilesPath())));
-        }
-		
-		//Gets the supperted types from configuration
+		//Gets the supported types
 		$types = $this->KcFinder->getTypes();
 		
 		//If there's only one type, it automatically sets the query value
@@ -88,11 +75,13 @@ class SystemsController extends AppController {
 		//Gets the type from the query and the types from configuration
 		$type = $this->request->query('type');
 		
-		$locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
-		
 		//Checks the type, then sets the KCFinder path
 		if($type && array_key_exists($type, $types)) {
-			$this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', TRUE), empty($locale) ? 'en' : $locale, $type));
+            //Sets locale
+            $locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
+            $locale = empty($locale) ? 'en' : $locale;
+            
+			$this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', TRUE), $locale, $type));
         }
 		
 		$this->set('types', array_combine(array_keys($types), array_keys($types)));

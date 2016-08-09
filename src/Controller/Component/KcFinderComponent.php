@@ -19,11 +19,13 @@
  * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         http://kcfinder.sunhater.com/install
  */
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Filesystem\Folder;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 
 /**
@@ -35,33 +37,15 @@ class KcFinderComponent extends Component {
 	 * @var array
 	 */
     public $components = ['MeCms.Auth'];
-
-	/**
-	 * Checks for KCFinder
-	 * @return bool
-	 * @uses getKcfinderPath()
-	 */
-	public function checkKcfinder() {
-		return is_readable($this->getKcfinderPath().DS.'index.php');
-	}
-	
-	/**
-	 * Checks if the files directory is writeable
-	 * @return bool
-	 * @uses getFilesPath()
-	 */
-	public function checkFiles() {
-		return folder_is_writeable($this->getFilesPath());
-	}
 	
 	/**
 	 * Sets the configuration for KCFinder.
-	 * It's automatically called by `beforeRender()` when the component is 
-     *  loaded.
+     * 
+	 * This method will automatically call by `beforeRender()` when the 
+     *  component is loaded.
 	 * @return bool
-	 * @see beforeRender()
+     * @see http://kcfinder.sunhater.com/install
 	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses getFilesPath()
 	 * @uses getTypes()
 	 */
 	public function configure() {
@@ -70,14 +54,14 @@ class KcFinderComponent extends Component {
         }
 		
 		//Default configuration
-		$default = [
+		$options = [
 			'denyExtensionRename' => TRUE,
 			'denyUpdateCheck' => TRUE,
 			'dirnameChangeChars' => [' ' => '_', ':' => '_'],
 			'disabled' => FALSE,
 			'filenameChangeChars' => [' ' => '_', ':' => '_'],
 			'jpegQuality' => 100,
-			'uploadDir' => $this->getFilesPath(),
+			'uploadDir' => UPLOADED,
 			'uploadURL' => Router::url('/files', TRUE),
 			'types' => $this->getTypes(),
 		];
@@ -85,13 +69,13 @@ class KcFinderComponent extends Component {
 		//If the user is not and admin
 		if(!$this->Auth->isGroup(['admin'])) {
 			//Only admins can delete or rename directories
-			$default['access']['dirs'] = [
+			$options['access']['dirs'] = [
                 'create' => TRUE,
                 'delete' => FALSE,
                 'rename' => FALSE,
             ];
 			//Only admins can delete, move or rename files
-			$default['access']['files'] = [
+			$options['access']['files'] = [
 				'upload' => TRUE,
 				'delete' => FALSE,
 				'copy' => TRUE,
@@ -100,48 +84,22 @@ class KcFinderComponent extends Component {
 			];
 		}
 		
-		//Gets values from configuration
-		$config = config('kcfinder');
-		
-		//Merges options from the configuration
-		$options = am($default, empty($config) ? [] : $config);
+		//Merges default options with the options from configuration
+		$options = am($options, config('kcfinder'));
 
 		return $this->request->session()->write('KCFINDER', $options);
 	}
 	
 	/**
-	 * Gets the files path
-	 * @return string
-	 */
-	public function getFilesPath() {
-		return WWW_ROOT.'files';
-	}
-	
-	/**
-	 * Gets the folders list
-	 * @return array
-	 * @uses getFilesPath()
-	 */
-	public function getFolders() {
-		return array_values((new Folder($this->getFilesPath()))->read(TRUE, TRUE))[0];
-	}
-	
-	/**
-	 * Gets the KCFinder path
-	 * @return string
-	 */
-	public function getKcfinderPath() {
-		return WWW_ROOT.'vendor'.DS.'kcfinder';
-	}
-	
-	/**
 	 * Gets the file types supported by KCFinder
 	 * @return array
-	 * @uses getFolders()
 	 */
 	public function getTypes() {
-		//Each folder is a type
-		foreach($this->getFolders() as $type) {
+        //Gets the folders list
+        $folders = array_values((new Folder(UPLOADED))->read(TRUE, TRUE))[0];
+        
+		//Each folder is a file type supported by KCFinder
+		foreach($folders as $type) {
 			$types[$type] = '';
         }
 		
@@ -151,15 +109,32 @@ class KcFinderComponent extends Component {
 		return $types;
 	}
 	
+    /**
+     * Called after the controller's `beforeFilter()` method, but before the 
+     *  controller executes the current action handler
+	 * @param \Cake\Event\Event $event Event instance
+     * @throws InternalErrorException
+     */
+    public function startup(\Cake\Event\Event $event) {
+		//Checks for KCFinder
+		if(!is_readable(WWW_ROOT.'vendor'.DS.'kcfinder'.DS.'index.php')) {
+			throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
+        }
+        
+		//Checks for the files directory (`APP/webroot/files`)
+		if(!folder_is_writeable(UPLOADED)) {
+			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
+        }
+    }
+    
 	/**
 	 * Called after the controller action is run, but before the view is 
      *  rendered.
-	 * 
-	 * Configures KCFinder.
-	 * @param \Cake\Event\Event $event An Event instance
+	 * @param \Cake\Event\Event $event Event instance
 	 * @uses configure()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {
+        //Configures KCFinder
 		$this->configure();
 	}
 }

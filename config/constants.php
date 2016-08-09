@@ -44,3 +44,8 @@ if(!defined('PHOTOS')) {
 if(!defined('SITEMAP')) {
 	define('SITEMAP', TMP.'sitemap.xml.gz');
 }
+
+//Sets the default directory for uploaded files
+if(!defined('UPLOADED')) {
+	define('UPLOADED', WWW_ROOT.'files');
+}
