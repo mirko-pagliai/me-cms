@@ -31,6 +31,11 @@ if(!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
 }
 
+//Sets the default login log directory
+if(!defined('LOGIN_LOG')) {
+    define('LOGIN_LOG', TMP.'login');
+}
+
 //Sets the default MeCms name
 if(!defined('MECMS')) {
     define('MECMS', 'MeCms');
