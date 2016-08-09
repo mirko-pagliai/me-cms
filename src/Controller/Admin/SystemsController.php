@@ -38,6 +38,19 @@ use MeTools\Utility\Apache;
  */
 class SystemsController extends AppController {
 	/**
+	 * Initialization hook method
+	 * @uses MeCms\Controller\AppController::initialize()
+	 */
+	public function initialize() {
+        parent::initialize();
+        
+        //Loads KcFinderComponent
+        if($this->request->is('action', 'browser')) {
+            $this->loadComponent('MeCms.KcFinder');
+        }
+    }
+    
+	/**
 	 * Check if the provided user is authorized for the request
 	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
 	 * @return bool TRUE if the user is authorized, otherwise FALSE
@@ -54,15 +67,12 @@ class SystemsController extends AppController {
 	}
 	
 	/**
-	 * Media browser with KCFinder
+	 * Media browser with KCFinder.
+     * 
+     * The KCFinder component is loaded by the `initialize()` method.
 	 * @uses MeCms\Controller\Component\KcFinderComponent::getTypes()
-	 * @uses MeCms\Controller\Component\KcFinderComponent::startup()
 	 */
-	public function browser() {
-		//Loads KcFinderComponent
-		$this->loadComponent('MeCms.KcFinder');
-		$this->KcFinder->startup(new \Cake\Event\Event(NULL));
-		
+	public function browser() {		
 		//Gets the supported types
 		$types = $this->KcFinder->getTypes();
 		

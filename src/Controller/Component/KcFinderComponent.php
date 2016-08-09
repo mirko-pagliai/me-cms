@@ -41,7 +41,7 @@ class KcFinderComponent extends Component {
 	/**
 	 * Sets the configuration for KCFinder.
      * 
-	 * This method will automatically call by `beforeRender()` when the 
+	 * This method will automatically call by `startup()` when the 
      *  component is loaded.
 	 * @return bool
      * @see http://kcfinder.sunhater.com/install
@@ -113,6 +113,7 @@ class KcFinderComponent extends Component {
      * Called after the controller's `beforeFilter()` method, but before the 
      *  controller executes the current action handler
 	 * @param \Cake\Event\Event $event Event instance
+     * @uses configure()
      * @throws InternalErrorException
      */
     public function startup(\Cake\Event\Event $event) {
@@ -125,16 +126,8 @@ class KcFinderComponent extends Component {
 		if(!folder_is_writeable(UPLOADED)) {
 			throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
-    }
-    
-	/**
-	 * Called after the controller action is run, but before the view is 
-     *  rendered.
-	 * @param \Cake\Event\Event $event Event instance
-	 * @uses configure()
-	 */
-	public function beforeRender(\Cake\Event\Event $event) {
+        
         //Configures KCFinder
 		$this->configure();
-	}
+    }
 }
