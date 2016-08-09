@@ -165,7 +165,7 @@ class SystemsController extends AppController {
         }
         
         //Checks for temporary directories
-        foreach([CACHE, LOGS, THUMBS, TMP] as $path) {
+        foreach([CACHE, LOGIN_LOGS, LOGS, THUMBS, TMP] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
                 'writeable' => folder_is_writeable($path),
