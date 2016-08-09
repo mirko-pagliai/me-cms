@@ -43,7 +43,7 @@ class AuthHelper extends Helper {
      * Constructor hook method
      * @param array $config The configuration settings provided to this helper
      * @uses $user
-     * @see http://api.cakephp.org/3.2/class-Cake.View.Helper.html#_initialize
+     * @see http://api.cakephp.org/3.3/class-Cake.View.Helper.html#_initialize
      */
     public function initialize(array $config) {
         $this->user = $config;

@@ -86,7 +86,7 @@ class AppController extends BaseController {
 	 * You can use this method to perform logic that needs to happen before 
      *  each controller action.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeFilter
+	 * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
 	 * @uses isOffline()
 	 */
@@ -126,7 +126,7 @@ class AppController extends BaseController {
 	 * You can use this method to perform logic or set view variables that are 
      *  required on every request.
 	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.2/class-Cake.Controller.Controller.html#_beforeRender
+	 * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeRender
 	 * @uses App\Controller\AppController::beforeRender()
 	 */
 	public function beforeRender(\Cake\Event\Event $event) {

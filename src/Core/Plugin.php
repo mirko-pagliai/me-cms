@@ -27,7 +27,7 @@ use MeTools\Core\Plugin as BasePlugin;
 /**
  * An utility to handle plugins.
  * 
- * Rewrites {@link http://api.cakephp.org/3.2/class-Cake.Core.Plugin.html Plugin}.
+ * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.Core.Plugin.html Plugin}.
  */
 class Plugin extends BasePlugin {    
     /**

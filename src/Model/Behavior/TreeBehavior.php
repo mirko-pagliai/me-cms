@@ -29,7 +29,7 @@ use Cake\ORM\Behavior\TreeBehavior as CakeTreeBehavior;
  *  provides methods  for managing and retrieving information out of the 
  *  derived hierarchical structure.
  * 
- * Rewrites {@link http://api.cakephp.org/3.2/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
+ * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
  * 
  * To add to your table:
  * <code>
@@ -45,7 +45,7 @@ class TreeBehavior extends CakeTreeBehavior {
 	 * @param \Cake\ORM\Query $query Query
 	 * @param array $options Options
 	 * @return Cake\ORM\Query Query
-	 * @see http://api.cakephp.org/3.2/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
+	 * @see http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
 	 * @uses Cake\ORM\Behavior\TreeBehavior::findTreeList()
 	 */
 	public function findTreeList(\Cake\ORM\Query $query, array $options) {
