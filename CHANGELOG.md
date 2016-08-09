@@ -2,6 +2,7 @@
 ## 2.12 branch
 ### 2.12.5
 * improved the `KcFinderComponent`;
+* removed auto-links for posts and pages. It caused too many problems;
 * updated for CakePHP 3.3.
 
 ### 2.12.4

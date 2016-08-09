@@ -62,11 +62,6 @@
 		<?php
 			//Executes BBCode on the text
 			$text = $this->BBCode->parser($post->text);
-            //Autolink
-            $text = $this->Text->autoLink($text, [
-                'escape' => FALSE,
-                'target' => '_blank',
-            ]);
 			
 			//Truncates the text if the "<!-- read-more -->" tag is present
             $strpos = strpos($text, '<!-- read-more -->');
