@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.12 branch
 ### 2.12.5
-* improved the `KcFinderComponent`.
+* improved the `KcFinderComponent`;
+* updated for CakePHP 3.3.
 
 ### 2.12.4
 * filter forms can now use records ID;
