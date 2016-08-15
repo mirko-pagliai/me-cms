@@ -29,11 +29,11 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
 use Cake\Network\Exception\InternalErrorException;
-use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
 
 require_once 'constants.php';
 require_once 'global_functions.php';
+require_once 'detectors.php';
 
 /**
  * Loads MeTools plugins
@@ -134,39 +134,3 @@ Log::config('users', [
 
 //CakePHP will automatically set the locale based on the current user
 DispatcherFactory::add('LocaleSelector');
-
-/**
- * Adds `isAdmin()` detector
- */
-Request::addDetector('admin', function($request) {
-    return $request->param('prefix') === 'admin';
-});
-
-/**
- * Adds `isBanned()` detector.
- * It checks if the user's IP address is banned.
- */
-Request::addDetector('banned', function($request) {
-    $banned = config('Banned');
-
-    /**
-     * The IP address is allowed if:
-     *  - the list of banned IP is empty;
-     *  - is localhost;
-     *  - the IP address has already been verified.
-     */
-    if(!$banned || is_localhost() || $request->session()->read('allowed_ip')) {
-        return FALSE;
-    }
-    
-	//Replaces asteriskes
-    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array) $banned));
-
-    if(preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
-        return TRUE;
-    }
-		
-    //In any other case, saves the result in the session
-    $request->session()->write('allowed_ip', TRUE);
-    return FALSE;
-});
