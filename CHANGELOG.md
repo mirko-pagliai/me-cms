@@ -4,7 +4,8 @@
 * improved the `KcFinderComponent`;
 * the system checkup checks for login logs;
 * removed auto-links for posts and pages. It caused too many problems;
-* updated for CakePHP 3.3.
+* updated for CakePHP 3.3;
+* fixed several typos for page views.
 
 ### 2.12.4
 * filter forms can now use records ID;

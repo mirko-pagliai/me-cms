@@ -66,12 +66,12 @@
 		<?php
 			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
 			if(!empty($truncated_text) && $truncated_text !== $page->text) {
-				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $page->slug], ['class' => ' readmore']);
+				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', $page->slug], ['class' => ' readmore']);
             }
 		?>
 	</div>
 	<?php
-		if(config('page.shareaholic') && config('shareaholic.app_id') && $this->request->is('action', 'view', 'Pges') && !$this->request->isAjax()) {
+		if(config('page.shareaholic') && config('shareaholic.app_id') && $this->request->is('action', 'view', 'Pages') && !$this->request->isAjax()) {
             echo $this->Html->shareaholic(config('shareaholic.app_id'));
         }
 	?>
