@@ -36,7 +36,7 @@
     <?php foreach($pages as $page): ?>
         <tr>
             <td>
-                <strong><?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug]) ?></strong>
+                <strong><?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug], ['target' => '_blank']) ?></strong>
                 <?php
                     $actions = [
                         $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'page', $page->slug], ['icon' => 'external-link', 'target' => '_blank']),
