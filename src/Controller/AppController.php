@@ -88,11 +88,10 @@ class AppController extends BaseController {
 	 * @param \Cake\Event\Event $event An Event instance
 	 * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeFilter
 	 * @uses App\Controller\AppController::beforeFilter()
-	 * @uses isOffline()
 	 */
 	public function beforeFilter(\Cake\Event\Event $event) {
 		//Checks if the site is offline
-		if($this->isOffline()) {
+		if($this->request->isOffline()) {
 			return $this->redirect(['_name' => 'offline']);
         }
 		
@@ -180,27 +179,5 @@ class AppController extends BaseController {
 	public function isAuthorized($user = NULL) {		
 		//By default, admins and managers can access all actions
 		return $this->Auth->isGroup(['admin', 'manager']);
-	}
-	
-	/**
-	 * Checks if the site is offline
-	 * @return bool
-	 */
-	protected function isOffline() {
-		if(!config('default.offline')) {
-			return FALSE;
-        }
-		
-		//Always online for admin requests
-		if($this->request->isAdmin()) {
-			return FALSE;
-        }
-		
-		//Always online for these actions
-		if($this->request->is('action', ['offline', 'login', 'logout'])) {
-			return FALSE;
-        }
-		
-		return TRUE;
 	}
 }

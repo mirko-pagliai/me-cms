@@ -58,3 +58,24 @@ Request::addDetector('banned', function($request) {
     $request->session()->write('allowed_ip', TRUE);
     return FALSE;
 });
+
+/**
+ * Adds `isOffline()` detector
+ */
+Request::addDetector('offline', function($request) {
+    if(!config('default.offline')) {
+        return FALSE;
+    }
+
+    //Always online for admin requests
+    if($request->is('admin')) {
+        return FALSE;
+    }
+
+    //Always online for some actions
+    if($request->is('action', ['offline', 'login', 'logout'])) {
+        return FALSE;
+    }
+
+    return TRUE;
+});

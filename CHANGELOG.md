@@ -3,6 +3,7 @@
 ### 2.12.5
 * improved the `KcFinderComponent`;
 * the system checkup checks for login logs;
+* `isOffline()` is now a detector (`$this->request->is('offline')`);
 * removed auto-links for posts and pages. It caused too many problems;
 * updated for CakePHP 3.3;
 * fixed several typos for page views.
