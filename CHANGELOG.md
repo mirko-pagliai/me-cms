@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.12 branch
+### 2.12.5
+* removed auto-links for posts and pages. It caused too many problems.
+
 ### 2.12.4
 * filter forms can now use records ID;
 * fixed bug rendering admin views.
