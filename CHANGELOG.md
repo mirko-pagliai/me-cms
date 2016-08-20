@@ -1,6 +1,6 @@
 # 2.x branch
-## 2.12 branch
-### 2.12.6
+## 2.13 branch
+### 2.13.0
 * improved the `KcFinderComponent`;
 * the system checkup checks for login logs;
 * `isOffline()` is now a detector (`$this->request->is('offline')`);
@@ -9,6 +9,7 @@
 * fixed code for CakePHP Code Sniffer;
 * fixed several typos for page views.
 
+## 2.12 branch
 ### 2.12.5
 * removed auto-links for posts and pages. It caused too many problems.
 
