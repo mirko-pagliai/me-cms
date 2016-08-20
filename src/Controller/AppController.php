@@ -103,7 +103,9 @@ class AppController extends BaseController
         }
 
         //Checks if the user's IP address is banned
-        if ($this->request->isBanned() && !$this->request->is('action', 'ipNotAllowed', 'Systems')) {
+        if ($this->request->isBanned() &&
+            !$this->request->is('action', 'ipNotAllowed', 'Systems')
+        ) {
             return $this->redirect(['_name' => 'ipNotAllowed']);
         }
 
