@@ -125,8 +125,10 @@ class SerializedLog extends FileLog
         $mask = $this->_config['mask'];
 
         //Gets the content of the existing logs and unserializes
-        $logs = unserialize(file_get_contents($pathname));
-
+        if (is_readable($pathname)) {
+            $logs = unserialize(file_get_contents($pathname));
+        }
+        
         if (empty($logs) || !is_array($logs)) {
             $logs = [];
         }

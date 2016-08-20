@@ -6,6 +6,7 @@
 * `isOffline()` is now a detector (`$this->request->is('offline')`);
 * removed auto-links for posts and pages. It caused too many problems;
 * updated for CakePHP 3.3;
+* fixed bug for `SerializedLog` when log file doesn't exist;
 * fixed code for CakePHP Code Sniffer;
 * fixed several typos for page views.
 
