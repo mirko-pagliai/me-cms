@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Form;
 
@@ -27,51 +27,54 @@ use Cake\Mailer\MailerAwareTrait;
 
 /**
  * ContactForm class.
- * 
- * It is used by `MeCms\Controller\SystemsController::contact_form()`.
+ *
+ * It is used by `MeCms\Controller\SystemsController::contactForm()`.
  */
-class ContactForm extends Form {
-	use MailerAwareTrait;
-    
+class ContactForm extends Form
+{
+    use MailerAwareTrait;
+
     /**
-	 * Defines the validator using the methods on Cake\Validation\Validator or 
-	 * loads a pre-defined validator from a concrete class.
-	 * @param \Cake\Validation\Validator $validator Validator instance
-	 * @return \MeCms\Model\Validation\AppValidator
-	 */
-    protected function _buildValidator(\Cake\Validation\Validator $validator) {
-		$validator = new \MeCms\Model\Validation\AppValidator();
-				
-		//First name
-		$validator->requirePresence('first_name');
-		
-		//Last name
-		$validator->requirePresence('last_name');
-		
-		//Email
-		$validator->requirePresence('email');
-		
-		//Message
-		$validator->requirePresence('message')
-			->add('message', [
+     * Defines the validator using the methods on Cake\Validation\Validator or
+     * loads a pre-defined validator from a concrete class.
+     * @param \Cake\Validation\Validator $validator Validator instance
+     * @return \MeCms\Model\Validation\AppValidator
+     */
+    protected function _buildValidator(\Cake\Validation\Validator $validator)
+    {
+        $validator = new \MeCms\Model\Validation\AppValidator();
+
+        //First name
+        $validator->requirePresence('first_name');
+
+        //Last name
+        $validator->requirePresence('last_name');
+
+        //Email
+        $validator->requirePresence('email');
+
+        //Message
+        $validator->requirePresence('message')
+            ->add('message', [
                 'lengthBetween' => [
                     'message' => __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
                     'rule' => ['lengthBetween', 10, 1000],
                 ],
             ]);
-		
+
         return $validator;
     }
 
-	/**
-	 * Used by `execute()` to execute the form's action
-	 * @param array $data Form data
-	 * @return boolean
-     * @see MeCms\Mailer\ContactFormMailer::contact_form_mail()
-	 */
-    protected function _execute(array $data) {
+    /**
+     * Used by `execute()` to execute the form's action
+     * @param array $data Form data
+     * @return bool
+     * @see MeCms\Mailer\ContactFormMailer::contactFormMail()
+     */
+    protected function _execute(array $data)
+    {
         //Sends email
-		return $this->getMailer('MeCms.ContactForm')
-			->send('contact_form_mail', [$data]);
+        return $this->getMailer('MeCms.ContactForm')
+            ->send('contactFormMail', [$data]);
     }
 }

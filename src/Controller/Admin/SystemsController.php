@@ -15,13 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
@@ -30,248 +31,262 @@ use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
-use Cake\Cache\Cache;
 use MeTools\Utility\Apache;
 
 /**
  * Systems controller
  */
-class SystemsController extends AppController {
-	/**
-	 * Initialization hook method
-	 * @uses MeCms\Controller\AppController::initialize()
-	 */
-	public function initialize() {
+class SystemsController extends AppController
+{
+    /**
+     * Initialization hook method
+     * @return void
+     * @uses MeCms\Controller\AppController::initialize()
+     */
+    public function initialize()
+    {
         parent::initialize();
-        
+
         //Loads KcFinderComponent
-        if($this->request->is('action', 'browser')) {
+        if ($this->request->is('action', 'browser')) {
             $this->loadComponent('MeCms.KcFinder');
         }
     }
-    
-	/**
-	 * Check if the provided user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
-	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 */
-	public function isAuthorized($user = NULL) {		
-		//Only admins can clear all temporary files or logs
-		if($this->request->is('action', 'tmp_cleaner') && in_array($this->request->param('pass.0'), ['all', 'logs'])) {
-			return $this->Auth->isGroup('admin');
+
+    /**
+     * Check if the provided user is authorized for the request
+     * @param array $user The user to check the authorization of. If empty
+     *  the user in the session will be used
+     * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     */
+    public function isAuthorized($user = null)
+    {
+        //Only admins can clear all temporary files or logs
+        if ($this->request->is('action', 'tmpCleaner') && in_array($this->request->param('pass.0'), ['all', 'logs'])) {
+            return $this->Auth->isGroup('admin');
         }
-		
-		//Admins and managers can access other actions
-		return $this->Auth->isGroup(['admin', 'manager']);
-	}
-	
-	/**
-	 * Media browser with KCFinder.
-     * 
+
+        //Admins and managers can access other actions
+        return $this->Auth->isGroup(['admin', 'manager']);
+    }
+
+    /**
+     * Media browser with KCFinder.
+     *
      * The KCFinder component is loaded by the `initialize()` method.
-	 * @uses MeCms\Controller\Component\KcFinderComponent::getTypes()
-	 */
-	public function browser() {		
-		//Gets the supported types
-		$types = $this->KcFinder->getTypes();
-		
-		//If there's only one type, it automatically sets the query value
-		if(!$this->request->query('type') && count($types) < 2) {
-			$this->request->query['type'] = fk($types);
+     * @return void
+     * @uses MeCms\Controller\Component\KcFinderComponent::getTypes()
+     */
+    public function browser()
+    {
+        //Gets the supported types
+        $types = $this->KcFinder->getTypes();
+
+        //If there's only one type, it automatically sets the query value
+        if (!$this->request->query('type') && count($types) < 2) {
+            $this->request->query['type'] = fk($types);
         }
-		
-		//Gets the type from the query and the types from configuration
-		$type = $this->request->query('type');
-		
-		//Checks the type, then sets the KCFinder path
-		if($type && array_key_exists($type, $types)) {
+
+        //Gets the type from the query and the types from configuration
+        $type = $this->request->query('type');
+
+        //Checks the type, then sets the KCFinder path
+        if ($type && array_key_exists($type, $types)) {
             //Sets locale
             $locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
             $locale = empty($locale) ? 'en' : $locale;
-            
-			$this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', TRUE), $locale, $type));
-        }
-		
-		$this->set('types', array_combine(array_keys($types), array_keys($types)));
-	}
 
-	/**
-	 * Changelogs viewer
+            $this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', true), $locale, $type));
+        }
+
+        $this->set('types', array_combine(array_keys($types), array_keys($types)));
+    }
+
+    /**
+     * Changelogs viewer
+     * @return void
      * @uses MeCms\Core\Plugin:all()
      * @uses MeCms\Core\Plugin:path()
-	 */
-	public function changelogs() {
-        foreach(Plugin::all() as $plugin) {
-            $files[$plugin] = rtr(Plugin::path($plugin, 'CHANGELOG.md', TRUE));
+     */
+    public function changelogs()
+    {
+        foreach (Plugin::all() as $plugin) {
+            $files[$plugin] = rtr(Plugin::path($plugin, 'CHANGELOG.md', true));
         }
-		
-		//If a changelog file has been specified
-		if($this->request->query('file') && $this->request->is('get')) {
-			//Loads the Markdown helper
-			$this->helpers[] = 'MeTools.Markdown';
-            
-            $path = ROOT.DS.$files[$this->request->query('file')];
-			
-			$this->set('changelog', file_get_contents($path));
-		}
-		
-		$this->set(compact('files'));
-	}
-	
-	/**
-	 * System checkup
-	 * @uses MeCms\Core\Plugin::all()
-	 * @uses MeCms\Core\Plugin::path()
-	 * @uses MeTools\Utility\Apache::module()
-	 * @uses MeTools\Utility\Apache::version()
-	 */
-	public function checkup() {
+
+        //If a changelog file has been specified
+        if ($this->request->query('file') && $this->request->is('get')) {
+            //Loads the Markdown helper
+            $this->helpers[] = 'MeTools.Markdown';
+
+            $path = ROOT . DS . $files[$this->request->query('file')];
+
+            $this->set('changelog', file_get_contents($path));
+        }
+
+        $this->set(compact('files'));
+    }
+
+    /**
+     * System checkup
+     * @return void
+     * @uses MeCms\Core\Plugin::all()
+     * @uses MeCms\Core\Plugin::path()
+     * @uses MeTools\Utility\Apache::module()
+     * @uses MeTools\Utility\Apache::version()
+     */
+    public function checkup()
+    {
         $checkup['apache'] = [
             'expires' => Apache::module('mod_expires'),
             'rewrite' => Apache::module('mod_rewrite'),
             'version' => Apache::version(),
         ];
-        
+
         $checkup['backups'] = [
             'path' => rtr(BACKUPS),
-            'writeable'	=> folder_is_writeable(BACKUPS),
+            'writeable' => folderIsWriteable(BACKUPS),
         ];
-        
+
         $checkup['cache'] = Cache::enabled();
-        
+
         $checkup['executables'] = [
             'clean-css' => which('cleancss'),
             'UglifyJS 2' => which('uglifyjs'),
         ];
-        
+
         //Checks for PHP's extensions
-        foreach(['exif', 'imagick', 'mcrypt', 'zip'] as $extension) {
-            $checkup['php_extensions'][$extension] = extension_loaded($extension);
+        foreach (['exif', 'imagick', 'mcrypt', 'zip'] as $extension) {
+            $checkup['phpExtensions'][$extension] = extension_loaded($extension);
         }
-        
+
         $checkup['plugins'] = [
             'cakephp' => Configure::version(),
-            'mecms'	=> trim(file_get_contents(Plugin::path(MECMS, 'version'))),
+            'mecms' => trim(file_get_contents(Plugin::path(MECMS, 'version'))),
         ];
-        
+
         //Gets plugins versions
-        foreach(Plugin::all(['exclude' => MECMS]) as $plugin) {
-            $file = Plugin::path($plugin, 'version', TRUE);
-            
-            if($file) {
+        foreach (Plugin::all(['exclude' => MECMS]) as $plugin) {
+            $file = Plugin::path($plugin, 'version', true);
+
+            if ($file) {
                 $checkup['plugins']['plugins'][$plugin] = trim(file_get_contents($file));
-            }
-            else {
+            } else {
                 $checkup['plugins']['plugins'][$plugin] = __d('me_cms', 'n.a.');
             }
         }
-        
+
         //Checks for temporary directories
-        foreach([CACHE, LOGIN_LOGS, LOGS, THUMBS, TMP] as $path) {
+        foreach ([CACHE, LOGIN_LOGS, LOGS, THUMBS, TMP] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
-                'writeable' => folder_is_writeable($path),
+                'writeable' => folderIsWriteable($path),
             ];
         }
-        
+
         //Checks for webroot directories
-        foreach([ASSETS, BANNERS, PHOTOS, WWW_ROOT.'files', WWW_ROOT.'fonts'] as $path) {
+        foreach ([ASSETS, BANNERS, PHOTOS, WWW_ROOT . 'files', WWW_ROOT . 'fonts'] as $path) {
             $checkup['webroot'][] = [
                 'path' => rtr($path),
-                'writeable' => folder_is_writeable($path),
+                'writeable' => folderIsWriteable($path),
             ];
         }
-        
-        array_walk($checkup, function($value, $key) {
+
+        array_walk($checkup, function ($value, $key) {
             $this->set($key, $value);
         });
-	}
-    
+    }
+
     /**
      * Internal function to clear the cache
      * @return bool
      */
-    protected function clear_cache() {
-        return !array_search(FALSE, Cache::clearAll(), TRUE);
+    protected function clearCache()
+    {
+        return !array_search(false, Cache::clearAll(), true);
     }
 
     /**
      * Internal function to clear the sitemap
      * @return bool
      */
-    protected function clear_sitemap() {
-        if(!is_readable(SITEMAP)) {
-            return TRUE;
+    protected function clearSitemap()
+    {
+        if (!is_readable(SITEMAP)) {
+            return true;
         }
-        
+
         return (new File(SITEMAP))->delete();
     }
 
     /**
-	 * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
-	 * @param string $type Type
+     * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
+     * @param string $type Type
+     * @return \Cake\Network\Response|null|void
      * @throws MethodNotAllowedException
      * @throws InternalErrorException
-     * @uses clear_cache()
-     * @uses clear_sitemap()
-	 */
-	public function tmp_cleaner($type) {
-		if(!$this->request->is(['post', 'delete'])) {
-			throw new MethodNotAllowedException();
+     * @uses clearCache()
+     * @uses clearSitemap()
+     */
+    public function tmpCleaner($type)
+    {
+        if (!$this->request->is(['post', 'delete'])) {
+            throw new MethodNotAllowedException();
         }
-		
-		switch($type) {
-			case 'all':
-				$success = clear_dir(ASSETS) && clear_dir(LOGS) && self::clear_cache() && self::clear_sitemap() && clear_dir(THUMBS);
-				break;
-			case 'cache':
-				$success = self::clear_cache();
-				break;
-			case 'assets':
-				$success = clear_dir(ASSETS);
-				break;
-			case 'logs':
-				$success = clear_dir(LOGS);
-				break;
-            case 'sitemap':
-                $success = self::clear_sitemap();
+
+        switch ($type) {
+            case 'all':
+                $success = clearDir(ASSETS) && clearDir(LOGS) && self::clearCache() && self::clearSitemap() && clearDir(THUMBS);
                 break;
-			case 'thumbs':
-				$success = clear_dir(THUMBS);
-				break;
+            case 'cache':
+                $success = self::clearCache();
+                break;
+            case 'assets':
+                $success = clearDir(ASSETS);
+                break;
+            case 'logs':
+                $success = clearDir(LOGS);
+                break;
+            case 'sitemap':
+                $success = self::clearSitemap();
+                break;
+            case 'thumbs':
+                $success = clearDir(THUMBS);
+                break;
             default:
                 throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
-		}
-		
-		if(!empty($success)) {
-			$this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
-		else {
-			$this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+
+        if (!empty($success)) {
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        } else {
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
-		
-		return $this->redirect($this->referer(['action' => 'tmp_viewer']));
-	}
-	
-	/**
-	 * Temporary viewer (assets, cache, logs, sitemap and thumbnails)
-	 */
-	public function tmp_viewer() {
+
+        return $this->redirect($this->referer(['action' => 'tmpViewer']));
+    }
+
+    /**
+     * Temporary viewer (assets, cache, logs, sitemap and thumbnails)
+     * @return void
+     */
+    public function tmpViewer()
+    {
         $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        
+
         $this->set([
-			'cache_size' => (new Folder(CACHE))->dirsize(),
-			'cache_status' => Cache::enabled(),
-			'assets_size' => (new Folder(ASSETS))->dirsize(),
-			'logs_size' => (new Folder(LOGS))->dirsize(),
-            'sitemap_size' => $sitemap,
-			'thumbs_size' => (new Folder(THUMBS))->dirsize(),
-			'total_size' => (new Folder(CACHE))->dirsize() + 
-                (new Folder(ASSETS))->dirsize() + 
-                (new Folder(LOGS))->dirsize() + 
-                $sitemap + 
+            'cacheSize' => (new Folder(CACHE))->dirsize(),
+            'cacheStatus' => Cache::enabled(),
+            'assetsSize' => (new Folder(ASSETS))->dirsize(),
+            'logsSize' => (new Folder(LOGS))->dirsize(),
+            'sitemapSize' => $sitemap,
+            'thumbsSize' => (new Folder(THUMBS))->dirsize(),
+            'totalSize' => (new Folder(CACHE))->dirsize() +
+                (new Folder(ASSETS))->dirsize() +
+                (new Folder(LOGS))->dirsize() +
+                $sitemap +
                 (new Folder(THUMBS))->dirsize(),
         ]);
-	}
+    }
 }

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 use Cake\Network\Request;
@@ -26,7 +26,7 @@ use Cake\Network\Request;
 /**
  * Adds `isAdmin()` detector
  */
-Request::addDetector('admin', function($request) {
+Request::addDetector('admin', function ($request) {
     return $request->param('prefix') === 'admin';
 });
 
@@ -34,7 +34,7 @@ Request::addDetector('admin', function($request) {
  * Adds `isBanned()` detector.
  * It checks if the user's IP address is banned.
  */
-Request::addDetector('banned', function($request) {
+Request::addDetector('banned', function ($request) {
     $banned = config('Banned');
 
     /**
@@ -43,39 +43,40 @@ Request::addDetector('banned', function($request) {
      *  - is localhost;
      *  - the IP address has already been verified.
      */
-    if(!$banned || is_localhost() || $request->session()->read('allowed_ip')) {
-        return FALSE;
+    if (!$banned || isLocalhost() || $request->session()->read('allowed_ip')) {
+        return false;
     }
-    
-	//Replaces asteriskes
-    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array) $banned));
 
-    if(preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
-        return TRUE;
+    //Replaces asteriskes
+    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array)$banned));
+
+    if (preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
+        return true;
     }
-		
+
     //In any other case, saves the result in the session
-    $request->session()->write('allowed_ip', TRUE);
-    return FALSE;
+    $request->session()->write('allowed_ip', true);
+
+    return false;
 });
 
 /**
  * Adds `isOffline()` detector
  */
-Request::addDetector('offline', function($request) {
-    if(!config('default.offline')) {
-        return FALSE;
+Request::addDetector('offline', function ($request) {
+    if (!config('default.offline')) {
+        return false;
     }
 
     //Always online for admin requests
-    if($request->is('admin')) {
-        return FALSE;
+    if ($request->is('admin')) {
+        return false;
     }
 
     //Always online for some actions
-    if($request->is('action', ['offline', 'login', 'logout'])) {
-        return FALSE;
+    if ($request->is('action', ['offline', 'login', 'logout'])) {
+        return false;
     }
 
-    return TRUE;
+    return true;
 });

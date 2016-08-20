@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 use Cake\Routing\Router;
 
@@ -28,8 +28,8 @@ Router::extensions('rss');
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
-	/**
+Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
+    /**
      * Includes routes
      */
     include_once 'routes/admins.php';
@@ -39,20 +39,22 @@ Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
     include_once 'routes/posts.php';
     include_once 'routes/systems.php';
     include_once 'routes/users.php';
-    
-	/**
-	 * Default home page
-	 * For not create incompatibility with `/posts`, this route has to be at the bottom
-	 */
-	$routes->connect('/',
+
+    /**
+     * Default home page
+     * For not create incompatibility with `/posts`, this route has to be at the bottom
+     */
+    $routes->connect(
+        '/',
         ['controller' => 'Posts', 'action' => 'index'],
         ['_name' => 'homepage']
     );
-	$routes->connect('/homepage',
+    $routes->connect(
+        '/homepage',
         ['controller' => 'Posts', 'action' => 'index']
     );
 });
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function($routes) {
-	$routes->fallbacks('InflectedRoute');
+Router::plugin('MeCms', ['path' => '/me-cms'], function ($routes) {
+    $routes->fallbacks('InflectedRoute');
 });

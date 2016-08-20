@@ -15,34 +15,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-if(!defined('ME_CMS_CACHE')) {
-    define('ME_CMS_CACHE', CACHE.'me_cms'.DS);
+if (!defined('ME_CMS_CACHE')) {
+    define('ME_CMS_CACHE', CACHE . 'me_cms' . DS);
 }
 
 //Default options (with File engine)
 $options = [
     'className' => 'File',
-	'duration' => '+999 days',
-	'path' => ME_CMS_CACHE,
-	'prefix' => '',
-	'mask' => 0777,
+    'duration' => '+999 days',
+    'path' => ME_CMS_CACHE,
+    'prefix' => '',
+    'mask' => 0777,
 ];
 
 return ['Cache' => [
-	//Default and admin configurations
-	'default' => am($options, ['path' => ME_CMS_CACHE.'default']),
-	'admin' => am($options, ['path' => ME_CMS_CACHE.'admin']),
-	
-	//Groups
-	'banners' => am($options, ['path' => ME_CMS_CACHE.'banners']),
-	'pages' => am($options, ['path' => ME_CMS_CACHE.'pages']),
-	'photos' => am($options, ['path' => ME_CMS_CACHE.'photos']),
-	'posts' => am($options, ['path' => ME_CMS_CACHE.'posts']),
-	'users' => am($options, ['path' => ME_CMS_CACHE.'users']),
+    //Default and admin configurations
+    'default' => am($options, ['path' => ME_CMS_CACHE . 'default']),
+    'admin' => am($options, ['path' => ME_CMS_CACHE . 'admin']),
+
+    //Groups
+    'banners' => am($options, ['path' => ME_CMS_CACHE . 'banners']),
+    'pages' => am($options, ['path' => ME_CMS_CACHE . 'pages']),
+    'photos' => am($options, ['path' => ME_CMS_CACHE . 'photos']),
+    'posts' => am($options, ['path' => ME_CMS_CACHE . 'posts']),
+    'users' => am($options, ['path' => ME_CMS_CACHE . 'users']),
 ]];

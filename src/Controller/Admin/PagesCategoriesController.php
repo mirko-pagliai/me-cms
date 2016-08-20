@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller\Admin;
 
@@ -28,82 +28,91 @@ use MeCms\Controller\AppController;
  * PagesCategories controller
  * @property \MeCms\Model\Table\PagesCategoriesTable $PagesCategories
  */
-class PagesCategoriesController extends AppController {
-	/**
-	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before 
+class PagesCategoriesController extends AppController
+{
+    /**
+     * Called before the controller action.
+     * You can use this method to perform logic that needs to happen before
      *  each controller action.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
-	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
-		parent::beforeFilter($event);
-        
-		if($this->request->is('action', ['add', 'edit'])) {
-			$this->set('categories', $this->PagesCategories->getTreeList());
-        }
-	}
-	
-	/**
-	 * Checks if the provided user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty 
-     *  the user in the session will be used
-	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 */
-	public function isAuthorized($user = NULL) {
-		//Only admins can delete pages categories
-		if($this->request->is('action', 'delete')) {
-			return $this->Auth->isGroup('admin');
-        }
-        
-		//Admins and managers can access other actions
-		return $this->Auth->isGroup(['admin', 'manager']);
-	}
-	
-	/**
-     * Lists pages categories
-	 * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     * @param \Cake\Event\Event $event An Event instance
+     * @return void
+     * @uses MeCms\Controller\AppController::beforeFilter()
+     * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
-    public function index() {
-		$categories = $this->PagesCategories->find('all')
-			->select(['id', 'title', 'slug', 'page_count'])
-			->contain([
-                'Parents' => function($q) {
+    public function beforeFilter(\Cake\Event\Event $event)
+    {
+        parent::beforeFilter($event);
+
+        if ($this->request->is('action', ['add', 'edit'])) {
+            $this->set('categories', $this->PagesCategories->getTreeList());
+        }
+    }
+
+    /**
+     * Checks if the provided user is authorized for the request
+     * @param array $user The user to check the authorization of. If empty
+     *  the user in the session will be used
+     * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     */
+    public function isAuthorized($user = null)
+    {
+        //Only admins can delete pages categories
+        if ($this->request->is('action', 'delete')) {
+            return $this->Auth->isGroup('admin');
+        }
+
+        //Admins and managers can access other actions
+        return $this->Auth->isGroup(['admin', 'manager']);
+    }
+
+    /**
+     * Lists pages categories
+     * @return void
+     * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     */
+    public function index()
+    {
+        $categories = $this->PagesCategories->find('all')
+            ->select(['id', 'title', 'slug', 'page_count'])
+            ->contain([
+                'Parents' => function ($q) {
                     return $q->select(['title']);
                 },
             ])
-			->order(['PagesCategories.lft' => 'ASC'])
-			->toArray();
-        
+            ->order(['PagesCategories.lft' => 'ASC'])
+            ->toArray();
+
         //Gets categories as tree list
         $treeList = $this->PagesCategories->getTreeList();
-		
-		//Changes the category titles, replacing them with the titles of the 
+
+        //Changes the category titles, replacing them with the titles of the
         //  tree list
-        $categories = array_map(function($category) use($treeList) {
+        $categories = array_map(function ($category) use ($treeList) {
             $category->title = $treeList[$category->id];
+            
             return $category;
         }, $categories);
-		
+
         $this->set(compact('categories'));
     }
 
     /**
      * Adds pages category
+     * @return \Cake\Network\Response|null|void
      */
-    public function add() {
+    public function add()
+    {
         $category = $this->PagesCategories->newEntity();
-		
-        if($this->request->is('post')) {
+
+        if ($this->request->is('post')) {
             $category = $this->PagesCategories->patchEntity($category, $this->request->data);
-			
-            if($this->PagesCategories->save($category)) {
+
+            if ($this->PagesCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+
                 return $this->redirect(['action' => 'index']);
-            } 
-			else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
@@ -114,18 +123,20 @@ class PagesCategoriesController extends AppController {
     /**
      * Edits pages category
      * @param string $id Pages category ID
+     * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = NULL)  {
+    public function edit($id = null)
+    {
         $category = $this->PagesCategories->get($id);
-		
-        if($this->request->is(['patch', 'post', 'put'])) {
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->PagesCategories->patchEntity($category, $this->request->data);
-			
-            if($this->PagesCategories->save($category)) {
+
+            if ($this->PagesCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+
                 return $this->redirect(['action' => 'index']);
-            } 
-			else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
@@ -135,25 +146,25 @@ class PagesCategoriesController extends AppController {
     /**
      * Deletes pages category
      * @param string $id Pages category ID
+     * @return \Cake\Network\Response|null
      */
-    public function delete($id = NULL) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
-		
+
         $category = $this->PagesCategories->get($id);
-		
-		//Before deleting, it checks if the category has some pages
-		if(!$category->page_count) {
-			if($this->PagesCategories->delete($category)) {
+
+        //Before deleting, it checks if the category has some pages
+        if (!$category->page_count) {
+            if ($this->PagesCategories->delete($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            }
-			else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
-		}
-		else {
-			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+        } else {
+            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
-        
+
         return $this->redirect(['action' => 'index']);
     }
 }

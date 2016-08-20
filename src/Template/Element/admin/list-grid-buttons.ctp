@@ -15,16 +15,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <div class="margin-20">
     <div class="btn-group btn-group-sm" role="group">
-        <?= $this->Html->button(__d('me_cms', 'Show as list'), ['?' => am($this->request->query, ['render' => 'list'])], ['class' => 'btn-primary', 'icon' => 'align-justify']) ?>
-        <?= $this->Html->button(__d('me_cms', 'Show as grid'), ['?' => am($this->request->query, ['render' => 'grid'])], ['class' => 'btn-primary', 'icon' => 'th-large']) ?>
+        <?php
+            echo $this->Html->button(
+                __d('me_cms', 'Show as list'),
+                ['?' => am($this->request->query, ['render' => 'list'])],
+                ['class' => 'btn-primary', 'icon' => 'align-justify']
+            );
+            echo $this->Html->button(
+                __d('me_cms', 'Show as grid'),
+                ['?' => am($this->request->query, ['render' => 'grid'])],
+                ['class' => 'btn-primary', 'icon' => 'th-large']
+            );
+        ?>
     </div>
 </div>

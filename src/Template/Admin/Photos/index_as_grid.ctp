@@ -15,17 +15,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php $this->extend('/Admin/Common/Photos/index'); ?>
+$this->extend('/Admin/Common/Photos/index');
+?>
     
 <div class='clearfix'>
-    <?php foreach($photos as $photo): ?>
+    <?php foreach ($photos as $photo) : ?>
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="photo-box">
                 <div class="photo-title">
@@ -36,32 +36,75 @@
                 </div>
                 <div class="photo-album">
                     <?= __d('me_cms', 'Album') ?>: 
-                    <?= $this->Html->link($photo->album->title, ['?' => ['album' => $photo->album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                    <?php
+                        echo $this->Html->link(
+                            $photo->album->title,
+                            ['?' => ['album' => $photo->album->id]],
+                            ['title' => __d('me_cms', 'View items that belong to this category')]
+                        );
+                    ?>
                 </div>
                 <div class="photo-created">
                     (<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)
                 </div>
                 <div class="photo-image">
-                    <?= $this->Thumb->image($photo->path, ['side' => 400, 'force' => TRUE]) ?>
+                    <?php
+                        echo $this->Thumb->image(
+                            $photo->path,
+                            ['side' => 400, 'force' => true]
+                        );
+                    ?>
                 </div>
 
                 <?php
                     $actions = [
-                        $this->Html->link(NULL, ['action' => 'edit', $photo->id], ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]),
-                        $this->Html->link(NULL, ['action' => 'download', $photo->id], ['icon' => 'download', 'title' => __d('me_cms', 'Download')]),
+                        $this->Html->link(
+                            null,
+                            ['action' => 'edit', $photo->id],
+                            ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
+                        ),
+                        $this->Html->link(
+                            null,
+                            ['action' => 'download', $photo->id],
+                            ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
+                        ),
                     ];
 
                     //Only admins can delete photos
-                    if($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(NULL, ['action' => 'delete', $photo->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'title' => __d('me_cms', 'Delete'), 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
+                    if ($this->Auth->isGroup('admin')) {
+                        $actions[] = $this->Form->postLink(
+                            null,
+                            ['action' => 'delete', $photo->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'title' => __d('me_cms', 'Delete'),
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
                     }
                         
                     //If the photo is active
-                    if($photo->active) {
-                        $actions[] = $this->Html->link(NULL, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id], ['icon' => 'external-link', 'target' => '_blank', 'title' => __d('me_cms', 'Open')]);
-                    }
-                    else {
-                        $actions[] = $this->Html->link(NULL, ['_name' => 'photos_preview', $photo->id], ['icon' => 'external-link', 'target' => '_blank', 'title' => __d('me_cms', 'Preview')]);
+                    if ($photo->active) {
+                        $actions[] = $this->Html->link(
+                            null,
+                            ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
+                            [
+                                'icon' => 'external-link',
+                                'target' => '_blank',
+                                'title' => __d('me_cms', 'Open'),
+                            ]
+                        );
+                    } else {
+                        $actions[] = $this->Html->link(
+                            null,
+                            ['_name' => 'photos_preview', $photo->id],
+                            [
+                                'icon' => 'external-link',
+                                'target' => '_blank',
+                                'title' => __d('me_cms', 'Preview'),
+                            ]
+                        );
                     }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);

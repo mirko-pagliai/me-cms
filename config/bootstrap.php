@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 /**
@@ -38,13 +38,13 @@ require_once 'detectors.php';
 /**
  * Loads MeTools plugins
  */
-Plugin::load('MeTools', ['bootstrap' => TRUE]);
+Plugin::load('MeTools', ['bootstrap' => true]);
 
-if(!is_writeable(BANNERS)) {
+if (!is_writeable(BANNERS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
 }
 
-if(!folder_is_writeable(PHOTOS)) {
+if (!folderIsWriteable(PHOTOS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
 }
 
@@ -54,35 +54,35 @@ if(!folder_is_writeable(PHOTOS)) {
 Configure::load('MeCms.me_cms');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'me_cms.php')) {
-	Configure::load('me_cms');
+if (is_readable(CONFIG . 'me_cms.php')) {
+    Configure::load('me_cms');
 }
 
 /**
  * Forces debug and loads DebugKit on localhost, if required
  */
-if(is_localhost() && config('main.debug_on_localhost') && !config('debug')) {
-	Configure::write('debug', TRUE);
-	
-    if(!Plugin::loaded('DebugKit')) {
-        Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+if (isLocalhost() && config('main.debug_on_localhost') && !config('debug')) {
+    Configure::write('debug', true);
+
+    if (!Plugin::loaded('DebugKit')) {
+        Plugin::load('DebugKit', ['bootstrap' => true]);
     }
 }
 
 /**
  * Loads plugins
  */
-Plugin::load('Assets', ['bootstrap' => TRUE]);
-Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
-Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
+Plugin::load('Assets', ['bootstrap' => true]);
+Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 
 /**
  * Loads theme plugin
  */
 $theme = config('default.theme');
 
-if($theme && !Plugin::loaded($theme)) {
-	Plugin::load($theme);
+if ($theme && !Plugin::loaded($theme)) {
+    Plugin::load($theme);
 }
 
 /**
@@ -91,25 +91,25 @@ if($theme && !Plugin::loaded($theme)) {
 Configure::load('MeCms.cache');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'cache.php')) {
-	Configure::load('cache');
+if (is_readable(CONFIG . 'cache.php')) {
+    Configure::load('cache');
 }
-    
+
 //Adds all cache configurations
-foreach(Configure::consume('Cache') as $key => $config) {
-	//Drops cache configurations that already exist
-	if(Cache::config($key)) {
-		Cache::drop($key);
+foreach (Configure::consume('Cache') as $key => $config) {
+    //Drops cache configurations that already exist
+    if (Cache::config($key)) {
+        Cache::drop($key);
     }
-	
-	Cache::config($key, $config);
+
+    Cache::config($key, $config);
 }
 
 /**
  * Loads the banned ip configuration
  */
-if(is_readable(CONFIG.'banned_ip.php')) {
-	Configure::load('banned_ip');
+if (is_readable(CONFIG . 'banned_ip.php')) {
+    Configure::load('banned_ip');
 }
 
 /**
@@ -118,8 +118,8 @@ if(is_readable(CONFIG.'banned_ip.php')) {
 Configure::load('MeCms.widgets');
 
 //Overwrites with the configuration from application, if exists
-if(is_readable(CONFIG.'widgets.php')) {
-	Configure::load('widgets', 'default', FALSE);
+if (is_readable(CONFIG . 'widgets.php')) {
+    Configure::load('widgets', 'default', false);
 }
 
 //Adds log for users actions
@@ -129,7 +129,7 @@ Log::config('users', [
     'levels' => [],
     'file' => 'users.log',
     'scopes' => ['users'],
-    'url' => env('LOG_DEBUG_URL', NULL),
+    'url' => env('LOG_DEBUG_URL', null),
 ]);
 
 //CakePHP will automatically set the locale based on the current user

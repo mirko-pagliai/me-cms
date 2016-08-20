@@ -15,29 +15,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	if(empty($tags)) {
-		return;
-    }
+if (empty($tags)) {
+    return;
+}
+
+$this->extend('/Common/widget');
+$this->assign('title', __d('me_cms', 'Popular tags'));
+
+foreach ($tags as $tag) {
+    $text = empty($prefix) ? $tag->tag : sprintf('%s%s', $prefix, $tag->tag);
     
-	$this->extend('/Common/widget');
-	$this->assign('title', __d('me_cms', 'Popular tags'));
-?>
+    $options = [];
+    
+    if (!empty($tag->size)) {
+        $options = ['style' => sprintf('font-size:%spx;', $tag->size)];
+    }
 
-<?php foreach($tags as $tag): ?>
-	<div>
-		<?php
-			$text = empty($prefix) ? $tag->tag : sprintf('%s%s', $prefix, $tag->tag);
-			$options = empty($tag->size) ? [] : ['style' => sprintf('font-size:%spx;', $tag->size)];
-			
-			echo $this->Html->link($text, ['_name' => 'posts_tag', $tag->slug], $options);
-		?>
-	</div>
-<?php endforeach; ?>
+    echo $this->Html->div(null, $this->Html->link(
+        $text,
+        ['_name' => 'posts_tag', $tag->slug],
+        $options
+    ));
+}

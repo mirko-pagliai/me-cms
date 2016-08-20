@@ -15,23 +15,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+$this->extend('/Admin/Common/index');
+$this->assign('title', __d('me_cms', 'Banners'));
+
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Upload'),
+    ['action' => 'upload'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add position'),
+    ['controller' => 'BannersPositions', 'action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+
+$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
-<?php
-    $this->extend('/Admin/Common/index');
-    $this->assign('title', __d('me_cms', 'Banners'));
-    $this->append('actions', $this->Html->button(__d('me_cms', 'Upload'), ['action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']));
-    $this->append('actions', $this->Html->button(__d('me_cms', 'Add position'), ['controller' => 'BannersPositions', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-    
-	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
-?>
-
-<?= $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']) ?>
+<?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
@@ -48,7 +55,10 @@
             echo $this->Form->input('active', [
                 'default' => $this->request->query('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only not published')],
+                'options' => [
+                    'yes' => __d('me_cms', 'Only published'),
+                    'no' => __d('me_cms', 'Only not published'),
+                ],
             ]);
             echo $this->Form->input('position', [
                 'default' => $this->request->query('position'),
@@ -60,7 +70,7 @@
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
-            echo $this->Form->submit(NULL, ['icon' => 'search']);
+            echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
     </fieldset>
 <?= $this->Form->end() ?>

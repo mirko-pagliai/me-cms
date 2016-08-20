@@ -15,30 +15,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Add page'));
-	$this->Library->ckeditor();
-	$this->Library->datetimepicker();
-	$this->Library->slugify();
+$this->extend('/Admin/Common/form');
+$this->assign('title', $title = __d('me_cms', 'Add page'));
+$this->Library->ckeditor();
+$this->Library->datetimepicker();
+$this->Library->slugify();
 ?>
 
 <?= $this->Form->create($page); ?>
 <div class='float-form'>
     <?php
         echo $this->Form->input('category_id', [
-            'default' => count($categories) < 2 ? fv($categories) : NULL,
+            'default' => count($categories) < 2 ? fv($categories) : null,
             'label' => __d('me_cms', 'Category'),
         ]);
         echo $this->Form->datetimepicker('created', [
-            'label'	=> __d('me_cms', 'Date'),
+            'label' => __d('me_cms', 'Date'),
             'tip' => [
                 __d('me_cms', 'If blank, the current date and time will be used'),
                 __d('me_cms', 'You can delay the publication by entering a future date'),
@@ -49,7 +47,7 @@
             'label' => __d('me_cms', 'Priority'),
         ]);
         echo $this->Form->input('active', [
-            'checked' => TRUE,
+            'checked' => true,
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
             'tip' => __d('me_cms', 'Disable this option to save as a draft'),
         ]);
@@ -59,7 +57,7 @@
     <?php
         echo $this->Form->input('title', [
             'id' => 'title',
-            'label'	=> __d('me_cms', 'Title'),
+            'label' => __d('me_cms', 'Title'),
         ]);
         echo $this->Form->input('subtitle', [
             'label' => __d('me_cms', 'Subtitle'),
@@ -67,7 +65,9 @@
         echo $this->Form->input('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'tip' => __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically'),
+            'tip' => __d('me_cms', 'The slug is a string identifying a ' .
+                'resource. If you do not have special needs, let it be ' .
+                'generated automatically'),
         ]);
         echo $this->Form->ckeditor('text', [
             'label' => __d('me_cms', 'Text'),

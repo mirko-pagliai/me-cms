@@ -15,25 +15,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+if ($banner->position->name) {
+    $class = sprintf('banner-%s', $banner->position->name);
+} else {
+    $class = null;
+}
 ?>
 
-<div class="banner <?= $banner->position->name ? sprintf('banner-%s', $banner->position->name) : NULL ?>">
-	<?php
-		$image = $this->Html->img($banner->path);
-		
-		if($banner->target) {
-			echo $this->Html->link($image, ['_name' => 'banner', $banner->id], [
-				'target' => '_blank',
-				'title' => $banner->description ? $banner->description : NULL,
-			]);
-        }
-		else {
-			echo $image;
-        }
-	?>
+<div class="banner <?= $class ?>">
+    <?php
+    if ($banner->target) {
+        echo $this->Html->link(
+            $this->Html->img($banner->path),
+            ['_name' => 'banner', $banner->id],
+            [
+                'target' => '_blank',
+                'title' => $banner->description ? $banner->description : null,
+            ]
+        );
+    } else {
+        echo $this->Html->img($banner->path);
+    }
+    ?>
 </div>

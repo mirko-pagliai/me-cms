@@ -15,23 +15,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+$this->extend('/Admin/Common/index');
+$this->assign('title', __d('me_cms', 'Users'));
+
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add'),
+    ['action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add group'),
+    ['controller' => 'UsersGroups', 'action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+
+$this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'years']);
 ?>
 
-<?php
-    $this->extend('/Admin/Common/index');
-    $this->assign('title', __d('me_cms', 'Users'));
-    $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-	$this->append('actions', $this->Html->button(__d('me_cms', 'Add group'), ['controller' => 'UsersGroups', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-    
-	$this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'years']);
-?>
-
-<?php echo $this->Form->createInline(NULL, ['class' => 'filter-form', 'type' => 'get']); ?>
+<?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
@@ -64,7 +71,7 @@
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
-            echo $this->Form->submit(NULL, ['icon' => 'search']);
+            echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
     </fieldset>
 <?php echo $this->Form->end(); ?>
@@ -82,39 +89,75 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($users as $user): ?>
+        <?php foreach ($users as $user) : ?>
             <tr>
                 <td class="min-width text-center">
                     <code><?= $user->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
+                    <strong>
+                        <?php
+                            echo $this->Html->link(
+                                $user->username,
+                                ['action' => 'view', $user->id]
+                            );
+                        ?>
+                    </strong>
                     <?php
-                        //If the user is banned
-                        if($user->banned) {
-                            echo $this->Html->span(__d('me_cms', 'Banned'), ['class' => 'record-label record-label-danger']);
-                        }
-                        //Else, if the user is not active (pending)
-                        elseif(!$user->active) {
-                            echo $this->Html->span(__d('me_cms', 'Pending'), ['class' => 'record-label record-label-warning']);
+                    //If the user is banned
+                    if ($user->banned) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'Banned'),
+                            ['class' => 'record-label record-label-danger']
+                        );
+                    //Else, if the user is not active (pending)
+                    } elseif (!$user->active) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'Pending'),
+                            ['class' => 'record-label record-label-warning']
+                        );
+                    }
+
+                    $actions = [
+                        $this->Html->link(
+                            __d('me_cms', 'View'),
+                            ['action' => 'view', $user->id],
+                            ['icon' => 'eye']
+                        ),
+                        $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $user->id],
+                            ['icon' => 'pencil']
+                        ),
+                    ];
+
+                    //Only admins can activate accounts and delete users
+                    if ($this->Auth->isGroup('admin')) {
+                        //If the user is not active (pending)
+                        if (!$user->active) {
+                            $actions[] = $this->Form->postLink(
+                                __d('me_cms', 'Activate'),
+                                ['action' => 'activate', $user->id],
+                                [
+                                    'icon' => 'user-plus',
+                                    'confirm' => __d('me_cms', 'Are you sure ' .
+                                        'you want to activate this account?'),
+                                ]
+                            );
                         }
 
-                        $actions = [
-                            $this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->id], ['icon' => 'eye']),
-                            $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['icon' => 'pencil']),
-                        ];
+                        $actions[] = $this->Form->postLink(
+                            __d('me_cms', 'Delete'),
+                            ['action' => 'delete', $user->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
+                    }
 
-                        //Only admins can activate accounts and delete users
-                        if($this->Auth->isGroup('admin')) {
-                            //If the user is not active (pending)
-                            if(!$user->active) {
-                                $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->id], ['icon' => 'user-plus', 'confirm' => __d('me_cms', 'Are you sure you want to activate this account?')]);
-                            }
-                            
-                            $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $user->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-                        }
-
-                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
                 <td class="text-center">
@@ -124,16 +167,29 @@
                     <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
                 </td>
                 <td class="text-center">
-                    <?= $this->Html->link($user->group->label, ['?' => ['group' => $user->group->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                    <?php
+                        echo $this->Html->link(
+                            $user->group->label,
+                            ['?' => ['group' => $user->group->id]],
+                            ['title' => __d('me_cms', 'View items that belong to this category')]
+                        );
+                    ?>
                 </td>
                 <td class="min-width text-center">
                     <?php
-                        if($user->post_count) {
-                            echo $this->Html->link($user->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]);
-                        }
-                        else {
-                            echo $user->post_count;
-                        }
+                    if ($user->post_count) {
+                        echo $this->Html->link(
+                            $user->post_count,
+                            [
+                                'controller' => 'Posts',
+                                'action' => 'index',
+                                '?' => ['user' => $user->id],
+                            ],
+                            ['title' => __d('me_cms', 'View items that belong to this user')]
+                        );
+                    } else {
+                        echo $user->post_count;
+                    }
                     ?>
                 </td>
                 <td class="min-width text-center">
@@ -149,4 +205,5 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
 <?= $this->element('MeTools.paginator') ?>

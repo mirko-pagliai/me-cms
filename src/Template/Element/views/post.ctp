@@ -15,122 +15,182 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	//Adds tags as keywords meta-tag
-	if(config('post.keywords') && $this->request->is('action', 'view', 'Posts') && !empty($post->tags_as_string)) {
-		$this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
-    }
+//Adds tags as keywords meta-tag
+if (config('post.keywords') &&
+    $this->request->is('action', 'view', 'Posts') &&
+    !empty($post->tags_as_string)
+) {
+    $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
+}
 ?>
 
 <div class="post-container content-container">
-	<div class="content-header">
-        <?php if(config('post.category') && !empty($post->category->title) && !empty($post->category->slug)): ?>
+    <div class="content-header">
+        <?php if (config('post.category') && !empty($post->category->title) && !empty($post->category->slug)) : ?>
             <h5 class="content-category">
-                <?= $this->Html->link($post->category->title, ['_name' => 'posts_category', $post->category->slug]) ?>
+                <?php
+                    echo $this->Html->link(
+                        $post->category->title,
+                        ['_name' => 'posts_category', $post->category->slug]
+                    );
+                ?>
             </h5>
         <?php endif; ?>
-        
+
         <h3 class="content-title">
-            <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
+            <?php
+                echo $this->Html->link(
+                    $post->title,
+                    ['_name' => 'post', $post->slug]
+                );
+            ?>
         </h3>
-        
-        <?php if($post->subtitle): ?>
+
+        <?php if ($post->subtitle) : ?>
             <h4 class="content-subtitle">
-                <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
+                <?php
+                    echo $this->Html->link(
+                        $post->subtitle,
+                        ['_name' => 'post', $post->slug]
+                    );
+                ?>
             </h4>
         <?php endif; ?>
-        
-		<div class="content-info">
-            <?php if(config('post.author')): ?>
-                <?= $this->Html->div('content-author', __d('me_cms', 'Posted by {0}', $post->user->full_name), ['icon' => 'user']) ?>
-            <?php endif; ?>
-            
-            <?php if(config('post.created')): ?>
-                <?= $this->Html->div('content-date', __d('me_cms', 'Posted on {0}', $post->created->i18nFormat(config('main.datetime.long'))), ['icon' => 'clock-o']) ?>
-            <?php endif; ?>
-		</div>
-	</div>
-    
-	<div class="content-text clearfix">
-		<?php
-			//Executes BBCode on the text
-			$text = $this->BBCode->parser($post->text);
-			
-			//Truncates the text if the "<!-- read-more -->" tag is present
-            $strpos = strpos($text, '<!-- read-more -->');
-            
-			if(!$this->request->is('action', 'view', 'Posts') && $strpos) {
-				echo $truncated_text = $this->Text->truncate($text, $strpos, [
-                    'ellipsis' => FALSE,
-                    'exact' => TRUE,
-                    'html' => FALSE,
-                ]);
+
+        <div class="content-info">
+            <?php
+            if (config('post.author')) {
+                echo $this->Html->div(
+                    'content-author',
+                    __d('me_cms', 'Posted by {0}', $post->user->full_name),
+                    ['icon' => 'user']
+                );
             }
-			//Truncates the text if requested by the configuration
-			elseif(!$this->request->is('action', 'view', 'Posts') && config('default.truncate_to')) {
-				echo $truncated_text = $this->Text->truncate($text, config('default.truncate_to'), [
-                    'exact' => FALSE,
-                    'html' => TRUE,
-                ]);
+
+            if (config('post.created')) {
+                echo $this->Html->div(
+                    'content-date',
+                    __d(
+                        'me_cms',
+                        'Posted on {0}',
+                        $post->created->i18nFormat(config('main.datetime.long'))
+                    ),
+                    ['icon' => 'clock-o']
+                );
             }
-			else {
-				echo $text;
-            }
-		?>
-	</div>
-    
-    <?php if(config('post.tags') && $post->tags): ?>
+            ?>
+        </div>
+    </div>
+
+    <div class="content-text clearfix">
+        <?php
+        //Executes BBCode on the text
+        $text = $this->BBCode->parser($post->text);
+
+        //Truncates the text if the "<!-- read-more -->" tag is present
+        $strpos = strpos($text, '<!-- read-more -->');
+
+        if (!$this->request->is('action', 'view', 'Posts') && $strpos) {
+            echo $truncatedText = $this->Text->truncate($text, $strpos, [
+                'ellipsis' => false,
+                'exact' => true,
+                'html' => false,
+            ]);
+        //Truncates the text if requested by the configuration
+        } elseif (!$this->request->is('action', 'view', 'Posts') &&
+            config('default.truncate_to')
+        ) {
+            echo $truncatedText = $this->Text->truncate($text, config('default.truncate_to'), [
+                'exact' => false,
+                'html' => true,
+            ]);
+        } else {
+            echo $text;
+        }
+        ?>
+    </div>
+
+    <?php if (config('post.tags') && $post->tags) : ?>
         <div class="content-tags">
-            <?php foreach($post->tags as $tag): ?>
-                <?= $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug], ['icon' => 'tags']) ?>
-            <?php endforeach; ?>
+            <?php
+            foreach ($post->tags as $tag) {
+                echo $this->Html->link(
+                    $tag->tag,
+                    ['_name' => 'posts_tag', $tag->slug],
+                    ['icon' => 'tags']
+                );
+            }
+            ?>
         </div>
     <?php endif; ?>
-    
-	<div class="content-buttons">
-		<?php
-			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
-			if(!empty($truncated_text) && $truncated_text !== $post->text) {
-				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
-            }
-		?>
-	</div>
-    
-	<?php
-		if(config('post.shareaholic') && config('shareaholic.app_id') && $this->request->is('action', 'view', 'Posts') && !$this->request->isAjax()) {
-			echo $this->Html->shareaholic(config('shareaholic.app_id'));
+
+    <div class="content-buttons">
+        <?php
+        //If it was requested to truncate the text and that has been
+        //truncated, it shows the "Read more" link
+        if (!empty($truncatedText) && $truncatedText !== $post->text) {
+            echo $this->Html->button(
+                __d('me_cms', 'Read more'),
+                ['_name' => 'post', $post->slug],
+                ['class' => ' readmore']
+            );
         }
-	?>
+        ?>
+    </div>
+
+    <?php
+    if (config('post.shareaholic') &&
+        config('shareaholic.app_id') &&
+        $this->request->is('action', 'view', 'Posts')
+        && !$this->request->isAjax()
+    ) {
+        echo $this->Html->shareaholic(config('shareaholic.app_id'));
+    }
+    ?>
 </div>
 
-<?php if(!empty($related)): ?>
-	<div class="related-contents">
-		<?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
-		<?php if(!config('post.related.images')): ?>
-			<?= $this->Html->ul(array_map(function($post) {
-					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-				}, $related), ['icon' => 'caret-right']) ?>
-		<?php else: ?>
-			<div class="visible-xs">
-				<?= $this->Html->ul(array_map(function($post) {
-					return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-				}, $related), ['icon' => 'caret-right']) ?>
-			</div>
-		
-			<div class="hidden-xs row">
-				<?php foreach($related as $post): ?>
-					<div class="col-sm-6 col-md-3">
-						<?= $this->element('views/post-preview', compact('post')) ?>
-					</div>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
-	</div>
+<?php if (!empty($related)) : ?>
+    <div class="related-contents">
+        <?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
+        <?php if (!config('post.related.images')) : ?>
+            <?php
+                echo $this->Html->ul(array_map(function ($post) {
+                    return $this->Html->link(
+                        $post->title,
+                        ['_name' => 'post', $post->slug]
+                    );
+                }, $related), ['icon' => 'caret-right']);
+            ?>
+        <?php else : ?>
+            <div class="visible-xs">
+                <?php
+                    echo $this->Html->ul(array_map(function ($post) {
+                        return $this->Html->link(
+                            $post->title,
+                            ['_name' => 'post', $post->slug]
+                        );
+                    }, $related), ['icon' => 'caret-right']);
+                ?>
+            </div>
+
+            <div class="hidden-xs row">
+                <?php foreach ($related as $post) : ?>
+                    <div class="col-sm-6 col-md-3">
+                        <?php
+                            echo $this->element(
+                                'views/post-preview',
+                                compact('post')
+                            );
+                        ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
 <?php endif; ?>

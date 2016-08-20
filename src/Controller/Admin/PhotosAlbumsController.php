@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller\Admin;
 
@@ -28,50 +28,57 @@ use MeCms\Controller\AppController;
  * PhotosAlbums controller
  * @property \MeCms\Model\Table\PhotosAlbumsTable $PhotosAlbums
  */
-class PhotosAlbumsController extends AppController {
-	/**
-	 * Check if the provided user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
-	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 */
-	public function isAuthorized($user = NULL) {		
-		//Only admins can delete albums
-		if($this->request->is('action', 'delete')) {
-			return $this->Auth->isGroup('admin');
-        }
-        
-		return TRUE;
-	}
-	
-	/**
-     * Lists albums
+class PhotosAlbumsController extends AppController
+{
+    /**
+     * Check if the provided user is authorized for the request
+     * @param array $user The user to check the authorization of. If empty
+     *   the user in the session will be used
+     * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function index() {
-		$this->paginate['order'] = ['title' => 'ASC'];
-		
+    public function isAuthorized($user = null)
+    {
+        //Only admins can delete albums
+        if ($this->request->is('action', 'delete')) {
+            return $this->Auth->isGroup('admin');
+        }
+
+        return true;
+    }
+
+    /**
+     * Lists albums
+     * @return void
+     */
+    public function index()
+    {
+        $this->paginate['order'] = ['title' => 'ASC'];
+
         $albums = $this->paginate(
-			$this->PhotosAlbums->find()
+            $this->PhotosAlbums->find()
                 ->select(['id', 'slug', 'title', 'photo_count', 'active'])
-		);
-        
-		$this->set(compact('albums'));
+        );
+
+        $this->set(compact('albums'));
     }
 
     /**
      * Adds photos album
+     * @return \Cake\Network\Response|null|void
      */
-    public function add() {		
+    public function add()
+    {
         $album = $this->PhotosAlbums->newEntity();
-		
-        if($this->request->is('post')) {
+
+        if ($this->request->is('post')) {
             $album = $this->PhotosAlbums->patchEntity($album, $this->request->data);
-			
-            if($this->PhotosAlbums->save($album)) {
+
+            if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-				return $this->redirect(['action' => 'index']);
-            } 
-			else {
+
+                return $this->redirect(['action' => 'index']);
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
@@ -82,18 +89,20 @@ class PhotosAlbumsController extends AppController {
     /**
      * Edits photos album
      * @param string $id Photos Album ID
+     * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = NULL)  {
+    public function edit($id = null)
+    {
         $album = $this->PhotosAlbums->get($id);
-		
-        if($this->request->is(['patch', 'post', 'put'])) {
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $album = $this->PhotosAlbums->patchEntity($album, $this->request->data);
-			
-            if($this->PhotosAlbums->save($album)) {
+
+            if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+
                 return $this->redirect(['action' => 'index']);
-            } 
-			else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
@@ -103,25 +112,25 @@ class PhotosAlbumsController extends AppController {
     /**
      * Deletes photos album
      * @param string $id Photos Album ID
+     * @return \Cake\Network\Response|null
      */
-    public function delete($id = NULL) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
-		
+
         $album = $this->PhotosAlbums->get($id);
-		
-		//Before deleting, it checks if the album has some photos
-		if(!$album->photo_count) {
-			if($this->PhotosAlbums->delete($album)) {
+
+        //Before deleting, it checks if the album has some photos
+        if (!$album->photo_count) {
+            if ($this->PhotosAlbums->delete($album)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            }
-            else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
-		}
-		else {
-			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+        } else {
+            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
-        
+
         return $this->redirect(['action' => 'index']);
     }
 }

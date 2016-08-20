@@ -15,16 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Add backup'));
+$this->extend('/Admin/Common/form');
+$this->assign('title', $title = __d('me_cms', 'Add backup'));
 ?>
 
 <?= $this->Form->create($backup); ?>
@@ -49,25 +47,33 @@
     </thead>
     <tbody>
         <tr>
-            <td class="min-width"><code>{$DATABASE}</code></td>
+            <td class="min-width">
+                <code>{$DATABASE}</code>
+            </td>
             <td>
                 <?= __d('me_cms', 'Database name') ?>.
             </td>
         </tr>
         <tr>
-            <td class="min-width"><code>{$DATETIME}</code></td>
+            <td class="min-width">
+                <code>{$DATETIME}</code>
+            </td>
             <td>
                 <?= __d('me_cms', 'Datetime. This is the equivalent of {0}', $this->Html->code('date(\'YmdHis\')')) ?>
             </td>
         </tr>
         <tr>
-            <td class="min-width"><code>{$HOSTNAME}</code></td>
+            <td class="min-width"
+                ><code>{$HOSTNAME}</code>
+            </td>
             <td>
                 <?= __d('me_cms', 'Database hostname') ?>
             </td>
         </tr>
         <tr>
-            <td class="min-width"><code>{$TIMESTAMP}</code></td>
+            <td class="min-width">
+                <code>{$TIMESTAMP}</code>
+            </td>
             <td>
                 <?= __d('me_cms', 'Timestamp. This is the equivalent of {0}', $this->Html->code('time()')) ?>
             </td>

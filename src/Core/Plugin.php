@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Core;
 
@@ -26,39 +26,41 @@ use MeTools\Core\Plugin as BasePlugin;
 
 /**
  * An utility to handle plugins.
- * 
+ *
  * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.Core.Plugin.html Plugin}.
  */
-class Plugin extends BasePlugin {    
+class Plugin extends BasePlugin
+{
     /**
      * Gets all loaded plugins.
-     * 
+     *
      * Available options are:
-     *  - `core`, if `FALSE` exclude the core plugins;
+     *  - `core`, if `false` exclude the core plugins;
      *  - `exclude`, a plugin as string or an array of plugins to be excluded;
-     *  - `order`, if `TRUE` the plugins will be sorted.
+     *  - `order`, if `true` the plugins will be sorted.
      * @param array $options Options
      * @return array Plugins
-	 * @uses MeTools\Core\Plugin::all()
+     * @uses MeTools\Core\Plugin::all()
      */
-    public static function all(array $options = []) {
+    public static function all(array $options = [])
+    {
         $options = am([
-            'core' => FALSE,
+            'core' => false,
             'except' => [],
-            'order' => TRUE,
+            'order' => true,
         ], $options);
         
-		$plugins = parent::all($options);
+        $plugins = parent::all($options);
         
-        if($options['order']) {
+        if ($options['order']) {
             $key = array_search(MECMS, $plugins);
             
-            if($key) {
+            if ($key) {
                 unset($plugins[$key]);
                 array_unshift($plugins, MECMS);
             }
         }
         
-        return $plugins;        
+        return $plugins;
     }
 }

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Entity;
 
@@ -38,48 +38,50 @@ use MeTools\Utility\Youtube;
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */
-class Page extends Entity {
+class Page extends Entity
+{
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
      */
     protected $_accessible = [
-        '*' => TRUE,
-        'id' => FALSE,
-		'modified' => FALSE,
+        '*' => true,
+        'id' => false,
+        'modified' => false,
     ];
-	
-	/**
-	 * Virtual fields that should be exposed
-	 * @var array
-	 */
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
     protected $_virtual = ['preview'];
-    
-	/**
-	 * Gets the image preview (virtual field)
-	 * @return string|NULL
-	 * @uses MeTools\Utility\Youtube::getId()
-	 * @uses MeTools\Utility\Youtube::getPreview()
-	 */
-	protected function _getPreview() {
-        if(empty($this->_properties['text'])) {
-            return NULL;
+
+    /**
+     * Gets the image preview (virtual field)
+     * @return string|null
+     * @uses MeTools\Utility\Youtube::getId()
+     * @uses MeTools\Utility\Youtube::getPreview()
+     */
+    protected function _getPreview()
+    {
+        if (empty($this->_properties['text'])) {
+            return null;
         }
-        
-		//Checks for the first image in the text
-		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
-		
-		if(!empty($matches[2])) {
-			return Router::url($matches[2], TRUE);
+
+        //Checks for the first image in the text
+        preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
+
+        if (!empty($matches[2])) {
+            return Router::url($matches[2], true);
         }
-        
-		//Checks for a YouTube video and its preview
-		preg_match('/\[youtube](.+?)\[\/youtube]/', $this->_properties['text'], $matches);
-		
-		if(!empty($matches[1])) {
-			return Youtube::getPreview(is_url($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
+
+        //Checks for a YouTube video and its preview
+        preg_match('/\[youtube](.+?)\[\/youtube]/', $this->_properties['text'], $matches);
+
+        if (!empty($matches[1])) {
+            return Youtube::getPreview(isUrl($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
         }
-        
-		return NULL;
+
+        return null;
     }
 }

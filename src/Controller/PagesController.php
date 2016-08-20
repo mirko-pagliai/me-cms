@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
 
@@ -29,78 +29,86 @@ use MeCms\Utility\StaticPage;
  * Pages controller
  * @property \MeCms\Model\Table\PagesTable $Pages
  */
-class PagesController extends AppController {
-	/**
-	 * Called before the controller action. 
-	 * You can use this method to perform logic that needs to happen before each controller action.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeFilter
-	 * @uses MeCms\Controller\AppController::beforeFilter()
-	 */
-	public function beforeFilter(\Cake\Event\Event $event) {
+class PagesController extends AppController
+{
+    /**
+     * Called before the controller action.
+     * You can use this method to perform logic that needs to happen before
+     *  each controller action.
+     * @param \Cake\Event\Event $event An Event instance
+     * @return void
+     * @see http://api.cakephp.org/3.3/class-Cake.Controller.Controller.html#_beforeFilter
+     * @uses MeCms\Controller\AppController::beforeFilter()
+     */
+    public function beforeFilter(\Cake\Event\Event $event)
+    {
         parent::beforeFilter($event);
-        
+
         $this->Auth->deny('preview');
     }
-	
-	/**
+
+    /**
      * Views page.
-	 * 
-	 * It first checks if there's a static page, using all the passed 
+     *
+     * It first checks if there's a static page, using all the passed
      *  arguments.
-	 * Otherwise, it checks for the page in the database, using that slug.
-	 * 
-	 * Static pages must be located in `APP/View/StaticPages/`.
-	 * @param string $slug Page slug
-	 * @uses MeCms\Utility\StaticPage::get()
-	 * @uses MeCms\Utility\StaticPage::title()
-	 */
-    public function view($slug = NULL) {
-		//Checks if there exists a static page
-		$static = StaticPage::get($slug);
-		
-		if($static) {
-            $page = (object) am([
+     * Otherwise, it checks for the page in the database, using that slug.
+     *
+     * Static pages must be located in `APP/View/StaticPages/`.
+     * @param string $slug Page slug
+     * @return \Cake\Network\Response|void
+     * @uses MeCms\Utility\StaticPage::get()
+     * @uses MeCms\Utility\StaticPage::title()
+     */
+    public function view($slug = null)
+    {
+        //Checks if there exists a static page
+        $static = StaticPage::get($slug);
+
+        if ($static) {
+            $page = (object)am([
                 'title' => StaticPage::title($slug),
             ], compact('slug'));
-			
-			$this->set(compact('page'));
-			
-			return $this->render($static);
-		}
-		
-		$page = $this->Pages->find('active')
-			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-			->contain([
-                'Categories' => function($q) {
+
+            $this->set(compact('page'));
+
+            return $this->render($static);
+        }
+
+        $page = $this->Pages->find('active')
+            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->contain([
+                'Categories' => function ($q) {
                     return $q->select(['title', 'slug']);
                 },
             ])
-			->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
-			->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
-			->firstOrFail();
-        
+            ->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
+            ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
+            ->firstOrFail();
+
         $this->set(compact('page'));
     }
-    
+
     /**
      * Preview for pages.
      * It uses the `view` template.
-	 * @param string $slug Page slug
+     * @param string $slug Page slug
+     * @return void
      */
-    public function preview($slug = NULL) {
-		$page = $this->Pages->find()
-			->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-			->contain([
-                'Categories' => function($q) {
+    public function preview($slug = null)
+    {
+        $page = $this->Pages->find()
+            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->contain([
+                'Categories' => function ($q) {
                     return $q->select(['title', 'slug']);
                 },
             ])
-			->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
-			->firstOrFail();
-        
+            ->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
+            ->firstOrFail();
+
         $this->set(compact('page'));
-        
+
         $this->render('view');
     }
 }

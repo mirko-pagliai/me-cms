@@ -15,99 +15,114 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
 use Cake\View\Cell;
 
 /**
  * Posts cell
  */
-class PostsTagsCell extends Cell {
-	/**
-	 * Constructor. It loads the model
-	 * @param \Cake\Network\Request $request The request to use in the cell
-	 * @param \Cake\Network\Response $response The request to use in the cell
-	 * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
-	 * @param array $cellOptions Cell options to apply
-	 * @uses Cake\View\Cell::__construct()
-	 */
-	public function __construct(\Cake\Network\Request $request = NULL, \Cake\Network\Response $response = NULL, \Cake\Event\EventManager $eventManager = NULL, array $cellOptions = []) {
-		parent::__construct($request, $response, $eventManager, $cellOptions);
-		
-		$this->loadModel('MeCms.Tags');
-	}
-	
-	/**
-	 * Popular tags widgets
-	 * @param int $limit Limit
-	 * @param string $prefix Prefix for each tag
+class PostsTagsCell extends Cell
+{
+    /**
+     * Constructor. It loads the model
+     * @param \Cake\Network\Request $request The request to use in the cell
+     * @param \Cake\Network\Response $response The request to use in the cell
+     * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
+     * @param array $cellOptions Cell options to apply
+     * @uses Cake\View\Cell::__construct()
+     */
+    public function __construct(
+        \Cake\Network\Request $request = null,
+        \Cake\Network\Response $response = null,
+        \Cake\Event\EventManager $eventManager = null,
+        array $cellOptions = []
+    ) {
+        parent::__construct($request, $response, $eventManager, $cellOptions);
+
+        $this->loadModel('MeCms.Tags');
+    }
+
+    /**
+     * Popular tags widgets
+     * @param int $limit Limit
+     * @param string $prefix Prefix for each tag
      * @param string $render Render type (`cloud`, `form` or `list`)
-	 * @param bool $shuffle Shuffles tags
-	 * @param array|bool $style Applies style to tags
-	 */
-	public function popular($limit = 10, $prefix = '#', $render = 'cloud', $shuffle = TRUE, array $style = ['maxFont' => 40, 'minFont' => 12]) {
-		//Returns on tags index
-		if($this->request->is('here', ['_name' => 'posts_tags'])) {
-			return;
+     * @param bool $shuffle Shuffles tags
+     * @param array|bool $style Applies style to tags
+     * @return void
+     */
+    public function popular(
+        $limit = 10,
+        $prefix = '#',
+        $render = 'cloud',
+        $shuffle = true,
+        array $style = ['maxFont' => 40, 'minFont' => 12]
+    ) {
+        //Returns on tags index
+        if ($this->request->is('here', ['_name' => 'posts_tags'])) {
+            return;
         }
-		
-		//Sets the initial cache name
-		$cache = sprintf('widget_tags_popular_%s', $limit);
-		
-		//Updates the cache name
-		if(!empty($style['maxFont']) || !empty($style['minFont'])) {
-			//Maximum font size we want to use
-			$maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
-			//Minimum font size we want to use
-			$minFont = empty($style['minFont']) ? 12 : $style['minFont'];
-			
-			$cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
-		}
-        
+
+        //Sets the initial cache name
+        $cache = sprintf('widget_tags_popular_%s', $limit);
+
+        //Updates the cache name
+        if (!empty($style['maxFont']) || !empty($style['minFont'])) {
+            //Maximum font size we want to use
+            $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
+            //Minimum font size we want to use
+            $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+
+            $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
+        }
+
         $tags = $this->Tags->find()
             ->select(['tag', 'post_count'])
             ->limit($limit)
             ->order(['post_count' => 'DESC'])
             ->cache($cache, $this->Tags->Posts->cache)
             ->toArray();
-        
-        if(empty($tags)) {
+
+        if (empty($tags)) {
             return;
         }
 
-		if(!empty($style['maxFont']) || !empty($style['minFont'])) {
+        if (!empty($style['maxFont']) || !empty($style['minFont'])) {
             //Number of occurrences of the tag with the highest number of occurrences
             $maxCount = $tags[0]->post_count;
             //Number of occurrences of the tag with the lowest number of occurrences
             $minCount = end($tags)->post_count;
 
             //Adds the proportional font size to each tag
-            $tags = array_map(function($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
-                $tag->size = round((($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)) + $minFont);
+            $tags = array_map(function ($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
+                $tag->size = round((
+                    ($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)
+                ) + $minFont);
+                
                 return $tag;
             }, $tags);
         }
-		
-		if($shuffle) {
-			shuffle($tags);
+
+        if ($shuffle) {
+            shuffle($tags);
         }
-        
+
         //Takes place here, because shuffle() re-indexes
-        foreach($tags as $k => $tag) {
+        foreach ($tags as $k => $tag) {
             $tags[$tag->slug] = $tag;
             unset($tags[$k]);
         }
-        
-		$this->set(compact('prefix', 'tags'));
-        
-        if($render !== 'cloud') {
+
+        $this->set(compact('prefix', 'tags'));
+
+        if ($render !== 'cloud') {
             $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
         }
-	}
+    }
 }

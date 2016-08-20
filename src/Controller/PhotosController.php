@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller;
 
@@ -28,63 +28,66 @@ use MeCms\Controller\AppController;
  * Photos controller
  * @property \MeCms\Model\Table\PhotosTable $Photos
  */
-class PhotosController extends AppController {
+class PhotosController extends AppController
+{
     /**
      * Views a photo
      * @param string $slug Album slug
      * @param string $id Photo ID
+     * @return \Cake\Network\Response|null|void
      */
-    public function view($slug = NULL, $id = NULL) {
-        /**
-         * This allows backward compatibility for URLs like:
-         * <pre>/photo/11</pre>
-         */
-        if(empty($slug)) {
+    public function view($slug = null, $id = null)
+    {
+        //This allows backward compatibility for URLs like:
+        //<pre>/photo/11</pre>
+        if (empty($slug)) {
             $photo = $this->Photos->find('active')
                 ->select(['album_id'])
                 ->contain([
-                    'Albums' => function($q) {
+                    'Albums' => function ($q) {
                         return $q->select(['id', 'slug']);
                     }
                 ])
                 ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
                 ->firstOrFail();
-                
+
             return $this->redirect(am(['slug' => $photo->album->slug], compact('id')), 301);
         }
-        
+
         $photo = $this->Photos->find('active')
-			->select(['id', 'album_id', 'filename', 'active'])
+            ->select(['id', 'album_id', 'filename', 'active'])
             ->contain([
-                'Albums' => function($q) {
+                'Albums' => function ($q) {
                     return $q->select(['id', 'title', 'slug']);
                 }
             ])
-			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
-			->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
-			->firstOrFail();
-        
+            ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+            ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
+            ->firstOrFail();
+
         $this->set(compact('photo'));
     }
-    
+
     /**
      * Preview for photos.
      * It uses the `view` template.
      * @param string $id Photo ID
+     * @return \Cake\Network\Response
      */
-    public function preview($id = NULL) {        
+    public function preview($id = null)
+    {
         $photo = $this->Photos->find()
-			->select(['id', 'album_id', 'filename'])
+            ->select(['id', 'album_id', 'filename'])
             ->contain([
-                'Albums' => function($q) {
+                'Albums' => function ($q) {
                     return $q->select(['id', 'title', 'slug']);
                 }
             ])
-			->where([sprintf('%s.id', $this->Photos->alias()) => $id])
-			->firstOrFail();
-        
+            ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+            ->firstOrFail();
+
         $this->set(compact('photo'));
-        
+
         $this->render('view');
     }
 }

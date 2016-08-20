@@ -15,31 +15,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Mailer;
+
 use MeCms\Mailer\Mailer;
 
 /**
  * ContactFormMailer class
  */
-class ContactFormMailer extends Mailer {
+class ContactFormMailer extends Mailer
+{
     /**
      * Email for the contact form
      * @param array $data Data
-     * @see MeCms\Controller\SystemsController::contact_form()
-	 * @see MeCms\Form\ContactForm
+     * @return void
+     * @see MeCms\Controller\SystemsController::contactForm()
+     * @see MeCms\Form\ContactForm
      * @see MeCms\Form\ContactForm::_execute()
      */
-    public function contact_form_mail($data) {
+    public function contactFormMail($data)
+    {
         $this->from($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
-			->to(config('email.webmaster'))
-			->subject(__d('me_cms', 'Email from {0}', config('main.title')))
-			->template('MeCms.Systems/contact_form')
+            ->to(config('email.webmaster'))
+            ->subject(__d('me_cms', 'Email from {0}', config('main.title')))
+            ->template('MeCms.Systems/contact_form')
             ->set($data);
     }
 }

@@ -15,44 +15,61 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 //Resend activation
-$routes->connect('/activation/resend',
-    ['controller' => 'Users', 'action' => 'resend_activation'],
-    ['_name' => 'resend_activation']
+$routes->connect(
+    '/activation/resend',
+    ['controller' => 'Users', 'action' => 'resendActivation'],
+    ['_name' => 'resendActivation']
 );
 //Activate account
-$routes->connect('/activation/:id/:token',
-    ['controller' => 'Users', 'action' => 'activate_account'],
-    ['_name' => 'activate_account', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
+$routes->connect(
+    '/activation/:id/:token',
+    ['controller' => 'Users', 'action' => 'activateAccount'],
+    [
+        '_name' => 'activateAccount',
+        'id' => '\d+',
+        'token' => '[\d\w]+',
+        'pass' => ['id', 'token'],
+    ]
 );
 //Login
-$routes->connect('/login',
+$routes->connect(
+    '/login',
     ['controller' => 'Users', 'action' => 'login'],
     ['_name' => 'login']
 );
 //Logout
-$routes->connect('/logout',
+$routes->connect(
+    '/logout',
     ['controller' => 'Users', 'action' => 'logout'],
     ['_name' => 'logout']
 );
 //Forgot password
-$routes->connect('/password/forgot',
-    ['controller' => 'Users', 'action' => 'forgot_password'],
-    ['_name' => 'forgot_password']
+$routes->connect(
+    '/password/forgot',
+    ['controller' => 'Users', 'action' => 'forgotPassword'],
+    ['_name' => 'forgotPassword']
 );
 //Reset password
-$routes->connect('/password/reset/:id/:token',
-    ['controller' => 'Users', 'action' => 'reset_password'],
-    ['_name' => 'reset_password', 'id' => '\d+', 'token' => '[\d\w]+', 'pass' => ['id', 'token']]
+$routes->connect(
+    '/password/reset/:id/:token',
+    ['controller' => 'Users', 'action' => 'resetPassword'],
+    [
+        '_name' => 'resetPassword',
+        'id' => '\d+',
+        'token' => '[\d\w]+',
+        'pass' => ['id', 'token'],
+    ]
 );
 //Signup
-$routes->connect('/signup',
+$routes->connect(
+    '/signup',
     ['controller' => 'Users', 'action' => 'signup'],
     ['_name' => 'signup']
 );

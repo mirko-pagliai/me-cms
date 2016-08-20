@@ -15,35 +15,51 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <nav id="topbar" class="navbar navbar-default" role="navigation">
-	<div class="container">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topbar-collapse">
-				<span class="sr-only"><?= __d('me_cms', 'Toggle navigation') ?></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-		</div>
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topbar-collapse">
+                <span class="sr-only"><?= __d('me_cms', 'Toggle navigation') ?></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="topbar-collapse">
-			<?= 
-				$this->Html->ul([
-					$this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['icon' => 'home']),
-					$this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'posts_categories']),
-					$this->Html->link(__d('me_cms', 'Pages'), ['_name' => 'pages_categories']),
-					$this->Html->link(__d('me_cms', 'Photos'), ['_name' => 'albums'])
-				], ['class' => 'nav navbar-nav'])
-			?>
-		</div><!-- /.navbar-collapse -->
-	</div><!-- /.container-fluid -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="topbar-collapse">
+            <?php
+                echo $this->Html->ul(
+                    [
+                        $this->Html->link(
+                            __d('me_cms', 'Home'),
+                            ['_name' => 'homepage'],
+                            ['icon' => 'home']
+                        ),
+                        $this->Html->link(
+                            __d('me_cms', 'Categories'),
+                            ['_name' => 'posts_categories']
+                        ),
+                        $this->Html->link(
+                            __d('me_cms', 'Pages'),
+                            ['_name' => 'pages_categories']
+                        ),
+                        $this->Html->link(
+                            __d('me_cms', 'Photos'),
+                            ['_name' => 'albums']
+                        ),
+                    ],
+                    ['class' => 'nav navbar-nav']
+                );
+            ?>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>

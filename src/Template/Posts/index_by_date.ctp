@@ -15,38 +15,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Posts/index');
-    
-    $date = new \Cake\I18n\Time();
-    $date->year($year)
-        ->month(empty($month) ? 1 : $month)
-        ->day(empty($day) ? 1 : $day);
-    
-    if($year && $month && $day) {        
-		if($date->isToday()) {
-			$title = __d('me_cms', 'Posts of today');
-        }
-		elseif($date->isYesterday()) {
-			$title = __d('me_cms', 'Posts of yesterday');
-        }
-		else {
-			$title = __dx('me_cms', 'posts of day', 'Posts of {0}', $date->i18nFormat(config('main.date.long')));
-        }
+$this->extend('/Posts/index');
+
+$date = new \Cake\I18n\Time();
+$date->year($year)
+    ->month(empty($month) ? 1 : $month)
+    ->day(empty($day) ? 1 : $day);
+
+if ($year && $month && $day) {
+    if ($date->isToday()) {
+        $title = __d('me_cms', 'Posts of today');
+    } elseif ($date->isYesterday()) {
+        $title = __d('me_cms', 'Posts of yesterday');
+    } else {
+        $title = __dx(
+            'me_cms',
+            'posts of day',
+            'Posts of {0}',
+            $date->i18nFormat(config('main.date.long'))
+        );
     }
-    elseif($year && $month) {
-        $title = __dx('me_cms', 'posts of month', 'Posts of {0}', $date->i18nFormat('MMMM y'));
-    }
-    else {
-        $title = __dx('me_cms', 'posts of year', 'Posts of {0}', $date->i18nFormat('y'));
-    }
-    
-    $this->assign('title', $title);
-    $this->Breadcrumb->add($title);
+} elseif ($year && $month) {
+    $title = __dx('me_cms', 'posts of month', 'Posts of {0}', $date->i18nFormat('MMMM y'));
+} else {
+    $title = __dx('me_cms', 'posts of year', 'Posts of {0}', $date->i18nFormat('y'));
+}
+
+$this->assign('title', $title);
+$this->Breadcrumb->add($title);

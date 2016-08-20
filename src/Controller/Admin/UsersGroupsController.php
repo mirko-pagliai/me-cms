@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Controller\Admin;
 
@@ -28,46 +28,53 @@ use MeCms\Controller\AppController;
  * UsersGroups controller
  * @property \MeCms\Model\Table\UsersGroupsTable $UsersGroups
  */
-class UsersGroupsController extends AppController {
-	/**
-	 * Check if the provided user is authorized for the request
-	 * @param array $user The user to check the authorization of. If empty the user in the session will be used
-	 * @return bool TRUE if the user is authorized, otherwise FALSE
-	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 */
-	public function isAuthorized($user = NULL) {
-		//Only admins can access this controller
-		return $this->Auth->isGroup('admin');
-	}
-	
-	/**
-     * Lists usersGroups
+class UsersGroupsController extends AppController
+{
+    /**
+     * Check if the provided user is authorized for the request
+     * @param array $user The user to check the authorization of. If empty
+     *  the user in the session will be used
+     * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function index() {
-		$this->paginate['order'] = ['name' => 'ASC'];
-		
+    public function isAuthorized($user = null)
+    {
+        //Only admins can access this controller
+        return $this->Auth->isGroup('admin');
+    }
+
+    /**
+     * Lists usersGroups
+     * @return void
+     */
+    public function index()
+    {
+        $this->paginate['order'] = ['name' => 'ASC'];
+
         $groups = $this->paginate(
-			$this->UsersGroups->find()
+            $this->UsersGroups->find()
                 ->select(['id', 'name', 'label', 'user_count'])
-		);
-        
-		$this->set(compact('groups'));
+        );
+
+        $this->set(compact('groups'));
     }
 
     /**
      * Adds users group
+     * @return \Cake\Network\Response|null|void
      */
-    public function add() {
+    public function add()
+    {
         $group = $this->UsersGroups->newEntity();
-		
-        if($this->request->is('post')) {
+
+        if ($this->request->is('post')) {
             $group = $this->UsersGroups->patchEntity($group, $this->request->data);
-			
-            if($this->UsersGroups->save($group)) {
+
+            if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-				return $this->redirect(['action' => 'index']);
-            } 
-			else {
+
+                return $this->redirect(['action' => 'index']);
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
@@ -78,18 +85,20 @@ class UsersGroupsController extends AppController {
     /**
      * Edits users group
      * @param string $id Users Group ID
+     * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = NULL)  {
+    public function edit($id = null)
+    {
         $group = $this->UsersGroups->get($id);
-		
-        if($this->request->is(['patch', 'post', 'put'])) {
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $group = $this->UsersGroups->patchEntity($group, $this->request->data);
-			
-            if($this->UsersGroups->save($group)) {
+
+            if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+
                 return $this->redirect(['action' => 'index']);
-            } 
-			else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         }
@@ -99,28 +108,27 @@ class UsersGroupsController extends AppController {
     /**
      * Deletes users group
      * @param string $id Users Group ID
+     * @return \Cake\Network\Response|null
      */
-    public function delete($id = NULL) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
-		
+
         $group = $this->UsersGroups->get($id);
-		
-		//Before deleting, checks if the group is a necessary group or if the group has some users
-		if($id > 3 && !$group->user_count) {
-			if($this->UsersGroups->delete($group)) {
+
+        //Before deleting, checks if the group is a necessary group or if the group has some users
+        if ($id > 3 && !$group->user_count) {
+            if ($this->UsersGroups->delete($group)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            }
-			else {
+            } else {
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
-		}
-		elseif($id <= 3) {
-			$this->Flash->alert(__d('me_cms', 'You cannot delete this users group'));
+        } elseif ($id <= 3) {
+            $this->Flash->alert(__d('me_cms', 'You cannot delete this users group'));
+        } else {
+            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
-		else {
-			$this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
-        }
-        
+
         return $this->redirect(['action' => 'index']);
     }
 }

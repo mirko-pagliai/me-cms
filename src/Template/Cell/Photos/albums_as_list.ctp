@@ -15,24 +15,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	if(empty($albums) || count($albums) < 2) {
-		return;
-    }
-    
-	$this->extend('/Common/widget');
-	$this->assign('title', __d('me_cms', 'Albums'));
-	
-    $albums = array_map(function($album) {
-		return $this->Html->link($album->title, ['_name' => 'album', $album->slug]);
-	}, $albums);
-    
-	echo $this->Html->ul($albums, ['icon' => 'caret-right']);
-?>
+if (empty($albums) || count($albums) < 2) {
+    return;
+}
+
+$this->extend('/Common/widget');
+$this->assign('title', __d('me_cms', 'Albums'));
+
+$albums = array_map(function ($album) {
+    return $this->Html->link(
+        $album->title,
+        ['_name' => 'album', $album->slug]
+    );
+}, $albums);
+
+echo $this->Html->ul($albums, ['icon' => 'caret-right']);

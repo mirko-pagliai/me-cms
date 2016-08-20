@@ -1,11 +1,14 @@
 /*!
  * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @see			http://www.script-tutorials.com/html5-drag-and-drop-multiple-file-uploader
  */
 
+/* -------------------------------- */
+/*          Dropzone               */
+/* -------------------------------- */
 /* Main wrapper */
 .dropzone {
     font-family: sans-serif;
@@ -16,7 +19,7 @@
 /* Message */
 .dropzone .dz-message {
     background-color: #eee;
-	cursor: pointer;
+    cursor: pointer;
     font-size: 20px;
     margin-bottom: 10px;
     padding: 30px 20px;
@@ -24,28 +27,28 @@
 
 /* Message, icon */
 .dropzone .dz-message::before {
-	content: "\f0ee";
-	font-family: FontAwesome;
+    content: "\f0ee";
+    font-family: FontAwesome;
     font-weight: normal;
-	margin-right: 4px;
+    margin-right: 4px;
 }
 
 /* Preview */
 .dropzone .dz-preview {
-	margin: 10px 0;
-	min-height: 277px;
+    margin: 10px 0;
+    min-height: 277px;
 }
 
 /* Preview, first div */
 .dropzone .dz-preview > div {
-	background-color: #eee;
-	padding: 10px;
+    background-color: #eee;
+    padding: 10px;
 }
 
 
 /* Preview, details */
 .dropzone .dz-preview .dz-details {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 /* Preview, details, filename and size */
@@ -61,26 +64,26 @@
 
 /* Preview, details, size */
 .dropzone .dz-preview .dz-details .dz-size {
-	margin-bottom: 10px !important;
+    margin-bottom: 10px !important;
 }
 
 /* Preview, details, image */
 .dropzone .dz-preview .dz-details img {
-	background: #fff;
-	max-height: 120px;
+    background: #fff;
+    max-height: 120px;
     max-width: 100%;
 }
 
 /* Preview, progress bar */
 .dropzone .dz-preview .dz-progress {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 /* Preview, error message */
 .dropzone .dz-preview .dz-error-message {
-	color: #d9534f;
-	display: none;
-	font-size: 11px;
+    color: #d9534f;
+    display: none;
+    font-size: 11px;
     margin-top: 10px;
 }
 
@@ -88,13 +91,13 @@
 .dropzone .dz-preview.dz-error .dz-error-message,
 .dropzone .dz-preview.dz-error .dz-error-mark,
 .dropzone .dz-preview.dz-success .dz-success-mark {
-	display: block;
+    display: block;
 }
 
 /* Preview,  error mark and success mark */
 .dropzone .dz-preview .dz-error-mark,
 .dropzone .dz-preview .dz-success-mark {
-	display: none;
+    display: none;
 }
 
 /* Preview,  error mark and success mark, icons */
@@ -109,11 +112,11 @@
 
 /* Preview,  error mark, icon */
 .dropzone .dz-preview .dz-error-mark .fa {
-	background: #d9534f;
+    background: #d9534f;
 }
 
 /* Preview,  success mark, icon */
 .dropzone .dz-preview .dz-success-mark .fa {
-	background: #5cb85c;
+    background: #5cb85c;
 }
-	
+

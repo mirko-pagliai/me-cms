@@ -1,31 +1,31 @@
 /*!
  * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
 /* -------------------------------- */
-/*				HTML				*/
+/*              HTML                */
 /* -------------------------------- */
 /* Links on hover and on focus */
 a:hover, a:focus {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 /* Body */
 body {
     font-family: Roboto,sans-serif;
-	padding-top: 50px;
+    padding-top: 50px;
 }
 
 /* -------------------------------- */
-/*				Header				*/
+/*              Header              */
 /* -------------------------------- */
 /* Topbar */
 #topbar {
-	box-shadow: 0 -3px 4px 6px rgba(50, 50, 50, .3);
-	margin: 0;
+    box-shadow: 0 -3px 4px 6px rgba(50, 50, 50, .3);
+    margin: 0;
 }
 
 /* Topbar, navigation links */
@@ -33,37 +33,37 @@ body {
     font-family: Arial,sans-serif;
     font-size: 110%;
     font-weight: bold;
-	padding: 15px 10px;
+    padding: 15px 10px;
 }
 
 /* Topbar, dropdown, links on hover */
 #topbar .navbar-nav > li .dropdown-menu a:hover {
-	background: #eee;
+    background: #eee;
 }
 
 /* -------------------------------- */
-/*				Sidebar				*/
+/*              Sidebar             */
 /* -------------------------------- */
 /* Sidebar */
 #sidebar {
     background: none repeat scroll 0 0 #f5f5f5;
     box-shadow: -3px 0 6px -6px rgba(50, 50, 50, .75) inset;
-	min-height: 100%;
+    min-height: 100%;
     padding: 20px 12px;
     position: fixed;
 }
 
 /* Sidebar, links */
 #sidebar a {
-	display: block;
-	outline: none;
-	padding: 10px;
-	text-decoration: none;
+    display: block;
+    outline: none;
+    padding: 10px;
+    text-decoration: none;
 }
 
 /* Sidebar, h6 elements */
 #sidebar h6 {
-	color: #555;
+    color: #555;
     font-size: 13px;
     font-weight: bold;
     margin: 20px 0 10px 15px;
@@ -72,19 +72,19 @@ body {
 
 /* Sidebar, panel */
 #sidebar .panel {
-	border-radius: 0;
-	margin-bottom: 6px;
+    border-radius: 0;
+    margin-bottom: 6px;
 }
 
 /* Sidebar, panel, last panel */
 #sidebar .panel:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* Sidebar, panel, main links on hover and main links not collapsed */
 #sidebar .panel > a:hover, #sidebar .panel > a:not(.collapsed) {
-	background: #337ab7;
-	color: #fff;
+    background: #337ab7;
+    color: #fff;
 }
 
 /* Sidebar, panel, main links, icon */
@@ -96,22 +96,22 @@ body {
 
 /* Sidebar, panel, collapsed wrap, links on hover */
 #sidebar .panel > .collapse > a:hover {
-	background: #e9e9e9;
+    background: #e9e9e9;
 }
 
 /* -------------------------------- */
-/*				Content				*/
+/*              Content             */
 /* -------------------------------- */
 /* Content */
 #content {
-	padding: 30px 15px;
+    padding: 30px 15px;
 }
 
 /* Content, title */
 #content > div > h2 {
-	font-size: 24px;
-	display: inline-block;
-	margin: 0 0 20px;
+    font-size: 24px;
+    display: inline-block;
+    margin: 0 0 20px;
 }
 
 /* Content, buttons after page title ("add new") */
@@ -124,12 +124,12 @@ body {
 
 /* Content, buttons after page title ("add new"), first button */
 #content > div > .btn:first-of-type {
-	margin-left: 15px;
+    margin-left: 15px;
 }
 
 /* Content, button after page title ("add new"), icon */
 #content > div > .btn > .fa {
-	font-size: 10px;
+    font-size: 10px;
     margin-right: 2px;
 }
 
@@ -141,7 +141,7 @@ body {
 }
 
 /* -------------------------------- */
-/*			Filter forms			*/
+/*          Filter forms            */
 /* -------------------------------- */
 /* Filter form */
 form.filter-form {
@@ -152,7 +152,7 @@ form.filter-form {
 
 /* Filter form, checkboxes wrapper */
 form.filter-form .checkbox {
-	background: #fff;
+    background: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset;
@@ -160,7 +160,7 @@ form.filter-form .checkbox {
 
 /* Filter form, checkboxes wrapper, label */
 form.filter-form .checkbox label {
-	color: #555;
+    color: #555;
     font-size: 14px;
     font-weight: normal;
     line-height: 31px;
@@ -169,57 +169,57 @@ form.filter-form .checkbox label {
 
 /* Filter form, checkboxes wrapper, label, icon */
 form.filter-form .checkbox label::before {
-	color: #888;
-	font-size: 17px;
+    color: #888;
+    font-size: 17px;
 }
 
 /* Filter form, legend */
 form.filter-form legend {
     border: 0;
-	color: #666;
-	cursor: pointer;
-	font-family: Arial;
+    color: #666;
+    cursor: pointer;
+    font-family: Arial;
     font-size: 14px;
     font-weight: bold;
-	line-height: 1;
-	margin: 0;
-	padding: 0 2px;
+    line-height: 1;
+    margin: 0;
+    padding: 0 2px;
     text-transform: uppercase;
 }
 
 /* Filter form, legend */
 form.filter-form legend:hover {
-	color: #444;
+    color: #444;
 }
 
 /* Filter form, legend, icon */
 form.filter-form legend .fa {
-	font-size: 16px;
+    font-size: 16px;
 }
 
 /* Filter form, fieldset, all children but not the legend */
 form.filter-form fieldset > :not(legend) {
-	margin-top: 8px !important;
+    margin-top: 8px !important;
 }
 
 /* -------------------------------- */
-/*				Tables				*/
+/*              Tables              */
 /* -------------------------------- */
 /* Table header, header cells */
 .table > thead > tr > th {
-	background: #f9f9f9;
-	border-width: 1px 0 !important;
-	border-style: solid !important;
-	border-color: #ddd !important;
-	color: #444;
+    background: #f9f9f9;
+    border-width: 1px 0 !important;
+    border-style: solid !important;
+    border-color: #ddd !important;
+    color: #444;
 }
 
 /* -------------------------------- */
-/*			Actions links			*/
+/*          Actions links           */
 /* -------------------------------- */
 /* Actions links */
 ul.actions {
-	margin: 5px 0 0;
+    margin: 5px 0 0;
     padding-left: 10px;
 }
 
@@ -239,7 +239,7 @@ ul.actions > li:last-child {
 }
 
 /* -------------------------------- */
-/*			Record labels			*/
+/*          Record labels           */
 /* -------------------------------- */
 /* Record label */
 .record-label {
@@ -249,23 +249,23 @@ ul.actions > li:last-child {
     font-size: 11px;
     line-height: 17px;
     margin-left: 6px;
-	padding: 0 3px;
+    padding: 0 3px;
     vertical-align: top;
 }
 
 /* Record label, danger label */
 .record-label.record-label-danger {
-	background-color: #d9534f;
+    background-color: #d9534f;
 }
 
 /* Record label, primary label */
 .record-label.record-label-primary {
-	background-color: #337ab7;
+    background-color: #337ab7;
 }
 
 /* Record label, success label */
 .record-label.record-label-success {
-	background-color: #5cb85c;
+    background-color: #5cb85c;
 }
 
 /* Record label, warning label */
@@ -274,10 +274,14 @@ ul.actions > li:last-child {
 }
 
 /* -------------------------------- */
-/*			Priority badges			*/
+/*          Priority badges         */
 /* -------------------------------- */
 /* All priority badges */
-.priority-verylow, .priority-low, .priority-normal, .priority-high, .priority-veryhigh {
+.priority-verylow,
+.priority-low,
+.priority-normal,
+.priority-high,
+.priority-veryhigh {
     border-radius: 12px;
     font-size: 13px;
     line-height: 24px;
@@ -287,12 +291,12 @@ ul.actions > li:last-child {
 
 /* Priority badge, very low */
 .priority-verylow {
-	background: #A4E0A3;
+    background: #A4E0A3;
 }
 
 /* Priority badge, low */
 .priority-low {
-	background: #6fde6f;
+    background: #6fde6f;
 }
 
 /* Priority badge, normal */
@@ -302,21 +306,21 @@ ul.actions > li:last-child {
 
 /* Priority badge, high */
 .priority-high {
-	background: #499149;
+    background: #499149;
 }
 
 /* Priority badge, very high */
 .priority-veryhigh {
-	background: #366b36;
+    background: #366b36;
 }
 
 /* -------------------------------- */
-/*				Tags				*/
+/*              Tags                */
 /* -------------------------------- */
 /* Preview */
 #tags-preview {
-	font-weight: bold;
-	margin-bottom: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 /* Preview, tags */
@@ -334,7 +338,7 @@ ul.actions > li:last-child {
 /* Preview, tags, remove button */
 #tags-preview > div .tag-remove {
     background: #aaa;
-	border: 0;
+    border: 0;
     border-radius: 10px;
     color: #eee;
     font-size: 14px;
@@ -344,38 +348,38 @@ ul.actions > li:last-child {
 
 /* Preview, tags, remove button on hover */
 #tags-preview > div .tag-remove:hover {
-	background: #888;
+    background: #888;
 }
 
 /* -------------------------------- */
-/*			Changelogs page			*/
+/*          Changelogs page         */
 /* -------------------------------- */
 /* Changelog, h1 */
 #changelog > h1 {
     font-size: 22px;
-	margin: 0 0 10px;
+    margin: 0 0 10px;
 }
 
 /* Changelog, h2 */
 #changelog > h2 {
     font-size: 18px;
-	margin: 0 0 10px 10px;
+    margin: 0 0 10px 10px;
 }
 
 /* Changelog, h3 */
 #changelog > h3 {
     font-size: 16px;
-	margin: 0 0 0 20px;
+    margin: 0 0 0 20px;
 }
 
 /* Changelog, lists */
 #changelog > ul {
     list-style: decimal outside none;
-	margin: 0 0 15px 20px;
+    margin: 0 0 15px 20px;
 }
 
 /* -------------------------------- */
-/*			CKeditor content		*/
+/*          CKeditor content        */
 /* -------------------------------- */
 /* CKeditor content */
 .cke_wysiwyg_div {
@@ -384,25 +388,25 @@ ul.actions > li:last-child {
 
 /* CKeditor content, last paragraph */
 .cke_wysiwyg_div p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* CKeditor content, images */
 .cke_wysiwyg_div img {
-	display: block;
-	margin-bottom: 16px;
+    display: block;
+    margin-bottom: 16px;
 }
 
 /* CKeditor content, images pulled on left */
 .cke_wysiwyg_div img.pull-left,
 .cke_wysiwyg_div img[style~="float:left"],
 .cke_wysiwyg_div .pull-left img {
-	margin: 2px 16px 8px 0;
+    margin: 2px 16px 8px 0;
 }
 
 /* CKeditor content, images pulled on right */
 .cke_wysiwyg_div img.pull-right,
 .cke_wysiwyg_div img[style~="float:right"],
 .cke_wysiwyg_div .pull-right img {
-	margin: 2px 0 8px 16px;
+    margin: 2px 0 8px 16px;
 }

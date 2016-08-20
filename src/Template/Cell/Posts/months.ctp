@@ -15,28 +15,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	if(empty($months) || count($months) < 2) {
-		return;
-    }
-    
-	$this->extend('/Common/widget');
-	$this->assign('title', __d('me_cms', 'Posts by month'));
-    
-	echo $this->Form->create(FALSE, ['type' => 'get', 'url' => ['_name' => 'posts_by_date', sprintf('%s/%s', date('Y'), date('m'))]]);
-	echo $this->Form->input('q', [
-		'label' => FALSE,
-		'onchange' => 'send_form(this)',
-		'options' => array_map(function($month) {
-            return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->post_count);
-        }, $months),
-	]);
-	echo $this->Form->end();
-?>
+if (empty($months) || count($months) < 2) {
+    return;
+}
+
+$this->extend('/Common/widget');
+$this->assign('title', __d('me_cms', 'Posts by month'));
+
+echo $this->Form->create(false, [
+    'type' => 'get',
+    'url' => ['_name' => 'posts_by_date', sprintf('%s/%s', date('Y'), date('m'))],
+]);
+echo $this->Form->input('q', [
+    'label' => false,
+    'onchange' => 'send_form(this)',
+    'options' => array_map(function ($month) {
+        return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->post_count);
+    }, $months),
+]);
+echo $this->Form->end();

@@ -15,39 +15,38 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+$this->extend('/Common/form');
+$this->assign('title', $title = __d('me_cms', 'Login'));
 ?>
 
-<?php
-    $this->extend('/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Login'));
-?>
-	
 <div id="login">
-	<?= $this->Form->create('User') ?>
-	<fieldset>
-		<?php
-			echo $this->Form->input('username', [
-				'autofocus' => TRUE,
-				'label' => FALSE,
-				'placeholder' => __d('me_cms', 'Username'),
-			]);
-			echo $this->Form->input('password', [
-				'label' => FALSE,
-				'placeholder' => __d('me_cms', 'Password'),
-			]);
-			echo $this->Form->input('remember_me', [
-				'label'	=> __d('me_cms', 'Remember me'),
-				'tip' => __d('me_cms', 'Don\'t use on public computers'),
-				'type' => 'checkbox',
-			]);
-		?>
-	</fieldset>
-	<?= $this->Form->submit($title, ['class' => 'btn-block btn-lg btn-primary']) ?>
-	<?= $this->Form->end() ?>
-	<?= $this->element('login/menu'); ?>
+    <?= $this->Form->create('User') ?>
+    <fieldset>
+        <?php
+            echo $this->Form->input('username', [
+                'autofocus' => true,
+                'label' => false,
+                'placeholder' => __d('me_cms', 'Username'),
+            ]);
+            echo $this->Form->input('password', [
+                'label' => false,
+                'placeholder' => __d('me_cms', 'Password'),
+            ]);
+            echo $this->Form->input('remember_me', [
+                'label' => __d('me_cms', 'Remember me'),
+                'tip' => __d('me_cms', 'Don\'t use on public computers'),
+                'type' => 'checkbox',
+            ]);
+        ?>
+    </fieldset>
+    <?= $this->Form->submit($title, ['class' => 'btn-block btn-lg btn-primary']) ?>
+    <?= $this->Form->end() ?>
+
+    <?= $this->element('login/menu'); ?>
 </div>

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  * @see         MeCms\Utility\SitemapBuilder
  */
 namespace MeCms\Utility;
@@ -26,7 +26,8 @@ namespace MeCms\Utility;
 use Cake\Filesystem\File;
 use Cake\I18n\Time;
 
-class LoginLogger {
+class LoginLogger
+{
     /**
      * File resource
      * @var object
@@ -36,62 +37,68 @@ class LoginLogger {
     /**
      * Construct
      * @param int $id User ID
+     * @return void
      * @uses $file
      */
-    public function __construct($id) {
-        $this->file = new File(LOGIN_LOGS.DS.'user_'.$id.'.log', TRUE);
+    public function __construct($id)
+    {
+        $this->file = new File(LOGIN_LOGS . DS . 'user_' . $id . '.log', true);
     }
-    
+
     /**
      * Gets data
      * @return array
      * @uses $file
      */
-    public function get() {
+    public function get()
+    {
         $data = $this->file->read();
-        
-        if(empty($data)) {
+
+        if (empty($data)) {
             return [];
         }
-        
+
         //Unserializes
         return unserialize($data);
     }
-    
+
     /**
      * Saves data
+     * @return bool
      * @uses get()
      * @uses $file
      */
-    public function save() {
+    public function save()
+    {
         //Gets existing data
         $data = $this->get();
-        
+
         $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-        $ip = get_client_ip();
-        
-        //Clears the first log (last in order of time), if it has been saved 
+        $ip = getClientIp();
+
+        //Clears the first log (last in order of time), if it has been saved
         //  less than an hour ago and the user agent and the IP address are
         //  the same
-        if(!empty($data[0]) &&
-            (new Time($data[0]->time))->modify('+1 hour')->isFuture() && 
-            $data[0]->agent === $agent && 
-            $data[0]->ip === $ip) {
+        if (!empty($data[0]) &&
+            (new Time($data[0]->time))->modify('+1 hour')->isFuture() &&
+            $data[0]->agent === $agent &&
+            $data[0]->ip === $ip
+        ) {
                 unset($data[0]);
         }
-        
+
         //Adds log for current request
-        array_unshift($data, (object) am([
-            'ip' => get_client_ip(),
+        array_unshift($data, (object)am([
+            'ip' => getClientIp(),
             'time' => new Time(),
         ], parse_user_agent(), compact('agent')));
-        
+
         //Keeps only the first records
         $data = array_slice($data, 0, config('users.login_log'));
-        
+
         //Serializes
         $data = serialize($data);
-        
+
         return $this->file->write($data);
     }
 }

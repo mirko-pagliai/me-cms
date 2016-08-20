@@ -1,68 +1,68 @@
 /*!
  * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
 /* -------------------------------- */
-/*				HTML				*/
+/*              HTML                */
 /* -------------------------------- */
 /* Body */
 body {
-	background: #e2e2e2;
-	font-family: Roboto, sans-serif;
-	padding: 60px 0 40px;
+    background: #e2e2e2;
+    font-family: Roboto, sans-serif;
+    padding: 60px 0 40px;
 }
 
 /* Extra small devices */
 @media (max-width: 767px) {
-	/* Body */
-	body {
-		background: #fff;
-		padding: 0;
-	}
+    /* Body */
+    body {
+        background: #fff;
+        padding: 0;
+    }
 }
 
 /* -------------------------------- */
-/*				Content				*/
+/*              Content             */
 /* -------------------------------- */
 /* Content */
 #content {
-	background: #fff;
-	border-radius: 8px;
+    background: #fff;
+    border-radius: 8px;
     box-shadow: 0 3px 6px -6px #000;
-	font-size: 16px;
-	margin: 20px auto;
-	overflow: hidden;
+    font-size: 16px;
+    margin: 20px auto;
+    overflow: hidden;
     padding: 20px;
 }
 
 /* Extra small devices */
 @media (max-width: 767px) {
-	/* Content */
-	#content {
-		box-shadow: none;
-		margin: 0 auto;
-		width: auto;
-	}
+    /* Content */
+    #content {
+        box-shadow: none;
+        margin: 0 auto;
+        width: auto;
+    }
 }
 
 /* Min width content */
 @media (min-width: 470px) {
-	/* Content */
-	#content {
-		width: 450px;
-	}
+    /* Content */
+    #content {
+        width: 450px;
+    }
 }
 
 /* Content, logo */
 #content > #logo {
-	margin: 10px auto 20px;
-	max-width: 100%;
-	text-align: center;
-	/* No wrap, text truncated with ellipses */
-	overflow: hidden;
+    margin: 10px auto 20px;
+    max-width: 100%;
+    text-align: center;
+    /* No wrap, text truncated with ellipses */
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -89,7 +89,7 @@ body {
 }
 
 /* -------------------------------- */
-/*				Alerts				*/
+/*              Alerts              */
 /* -------------------------------- */
 /* Alert */
 #content .alert {
@@ -102,15 +102,15 @@ body {
 
 /* Alert, close button */
 #content .alert button.close {
-	display: none;
+    display: none;
 }
 
 /* -------------------------------- */
-/*				Forms				*/
+/*              Forms               */
 /* -------------------------------- */
 /* Form, error message */
 form .error-message {
-	font-size: 80%;
+    font-size: 80%;
     padding: 4px 6px;
 }
 

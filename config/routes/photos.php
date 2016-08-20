@@ -15,35 +15,40 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 //Albums
-$routes->connect('/albums',
+$routes->connect(
+    '/albums',
     ['controller' => 'PhotosAlbums', 'action' => 'index'],
     ['_name' => 'albums']
 );
 //Album
-$routes->connect('/album/:slug',
+$routes->connect(
+    '/album/:slug',
     ['controller' => 'PhotosAlbums', 'action' => 'view'],
     ['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 );
 //Album preview
-$routes->connect('/album/preview/:slug',
+$routes->connect(
+    '/album/preview/:slug',
     ['controller' => 'PhotosAlbums', 'action' => 'preview'],
     ['_name' => 'albums_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
 );
 
 //Photo
-$routes->connect('/photo/:slug/:id',
+$routes->connect(
+    '/photo/:slug/:id',
     ['controller' => 'Photos', 'action' => 'view'],
     ['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
 );
 //Photo preview
-$routes->connect('/photo/preview/:id',
+$routes->connect(
+    '/photo/preview/:id',
     ['controller' => 'Photos', 'action' => 'preview'],
     ['_name' => 'photos_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['id']]
 );
@@ -54,7 +59,8 @@ $routes->connect('/photo/preview/:id',
  * These URLs will become:
  * <pre>/photo/album-name/1</pre>
  */
-$routes->connect('/photo/:id',
-    ['controller' => 'Photos', 'action' => 'view', 'slug' => FALSE],
+$routes->connect(
+    '/photo/:id',
+    ['controller' => 'Photos', 'action' => 'view', 'slug' => false],
     ['id' => '\d+', 'pass' => ['slug', 'id']]
 );

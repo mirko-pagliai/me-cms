@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
-<?php if(!empty($loginLog)): ?>
+<?php if (!empty($loginLog)) : ?>
     <table class="table table-hover">
         <tr>
             <th class="text-center"><?= __d('me_cms', 'Time') ?></th>
@@ -30,7 +30,7 @@
             <th class="text-center"><?= __d('me_cms', 'Browser') ?></th>
             <th><?= __d('me_cms', 'Client') ?></th>
         </tr>
-        <?php foreach($loginLog as $log): ?>
+        <?php foreach ($loginLog as $log) : ?>
             <tr>
                 <td class="text-center">
                     <?= $log->time ?>
@@ -39,7 +39,14 @@
                     <?= $log->ip ?>
                 </td>
                 <td class="text-center">
-                    <?= __d('me_cms', '{0} on {1}', $log->browser, $log->platform) ?>
+                    <?php
+                        echo __d(
+                            'me_cms',
+                            '{0} on {1}',
+                            $log->browser,
+                            $log->platform
+                        );
+                    ?>
                 </td>
                 <td>
                     <?= $log->agent ?>
