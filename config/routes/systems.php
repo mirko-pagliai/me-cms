@@ -22,32 +22,46 @@
  */
 
 //Accept cookies
-$routes->connect(
-    '/accept/cookies',
-    ['controller' => 'Systems', 'action' => 'acceptCookies'],
-    ['_name' => 'acceptCookies']
-);
+if (!routeNameExists('acceptCookies')) {
+    $routes->connect(
+        '/accept/cookies',
+        ['controller' => 'Systems', 'action' => 'acceptCookies'],
+        ['_name' => 'acceptCookies']
+    );
+}
+
 //Contact form
-$routes->connect(
-    '/contact/form',
-    ['controller' => 'Systems', 'action' => 'contactForm'],
-    ['_name' => 'contactForm']
-);
+if (!routeNameExists('contactForm')) {
+    $routes->connect(
+        '/contact/form',
+        ['controller' => 'Systems', 'action' => 'contactForm'],
+        ['_name' => 'contactForm']
+    );
+}
+
 //Offline page
-$routes->connect(
-    '/offline',
-    ['controller' => 'Systems', 'action' => 'offline'],
-    ['_name' => 'offline']
-);
+if (!routeNameExists('offline')) {
+    $routes->connect(
+        '/offline',
+        ['controller' => 'Systems', 'action' => 'offline'],
+        ['_name' => 'offline']
+    );
+}
+
 //Sitemap
-$routes->connect(
-    '/sitemap:ext',
-    ['controller' => 'Systems', 'action' => 'sitemap'],
-    ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
-);
+if (!routeNameExists('sitemap')) {
+    $routes->connect(
+        '/sitemap:ext',
+        ['controller' => 'Systems', 'action' => 'sitemap'],
+        ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
+    );
+}
+
 //Unallowed page
-$routes->connect(
-    '/unallowed',
-    ['controller' => 'Systems', 'action' => 'ipNotAllowed'],
-    ['_name' => 'ipNotAllowed']
-);
+if (!routeNameExists('ipNotAllowed')) {
+    $routes->connect(
+        '/unallowed',
+        ['controller' => 'Systems', 'action' => 'ipNotAllowed'],
+        ['_name' => 'ipNotAllowed']
+    );
+}

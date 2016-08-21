@@ -22,54 +22,74 @@
  */
 
 //Resend activation
-$routes->connect(
-    '/activation/resend',
-    ['controller' => 'Users', 'action' => 'resendActivation'],
-    ['_name' => 'resendActivation']
-);
+if (!routeNameExists('resendActivation')) {
+    $routes->connect(
+        '/activation/resend',
+        ['controller' => 'Users', 'action' => 'resendActivation'],
+        ['_name' => 'resendActivation']
+    );
+}
+
 //Activate account
-$routes->connect(
-    '/activation/:id/:token',
-    ['controller' => 'Users', 'action' => 'activateAccount'],
-    [
-        '_name' => 'activateAccount',
-        'id' => '\d+',
-        'token' => '[\d\w]+',
-        'pass' => ['id', 'token'],
-    ]
-);
+if (!routeNameExists('activateAccount')) {
+    $routes->connect(
+        '/activation/:id/:token',
+        ['controller' => 'Users', 'action' => 'activateAccount'],
+        [
+            '_name' => 'activateAccount',
+            'id' => '\d+',
+            'token' => '[\d\w]+',
+            'pass' => ['id', 'token'],
+        ]
+    );
+}
+
 //Login
-$routes->connect(
-    '/login',
-    ['controller' => 'Users', 'action' => 'login'],
-    ['_name' => 'login']
-);
+if (!routeNameExists('login')) {
+    $routes->connect(
+        '/login',
+        ['controller' => 'Users', 'action' => 'login'],
+        ['_name' => 'login']
+    );
+}
+
 //Logout
-$routes->connect(
-    '/logout',
-    ['controller' => 'Users', 'action' => 'logout'],
-    ['_name' => 'logout']
-);
+if (!routeNameExists('logout')) {
+    $routes->connect(
+        '/logout',
+        ['controller' => 'Users', 'action' => 'logout'],
+        ['_name' => 'logout']
+    );
+}
+
 //Forgot password
-$routes->connect(
-    '/password/forgot',
-    ['controller' => 'Users', 'action' => 'forgotPassword'],
-    ['_name' => 'forgotPassword']
-);
+if (!routeNameExists('forgotPassword')) {
+    $routes->connect(
+        '/password/forgot',
+        ['controller' => 'Users', 'action' => 'forgotPassword'],
+        ['_name' => 'forgotPassword']
+    );
+}
+
 //Reset password
-$routes->connect(
-    '/password/reset/:id/:token',
-    ['controller' => 'Users', 'action' => 'resetPassword'],
-    [
-        '_name' => 'resetPassword',
-        'id' => '\d+',
-        'token' => '[\d\w]+',
-        'pass' => ['id', 'token'],
-    ]
-);
+if (!routeNameExists('resetPassword')) {
+    $routes->connect(
+        '/password/reset/:id/:token',
+        ['controller' => 'Users', 'action' => 'resetPassword'],
+        [
+            '_name' => 'resetPassword',
+            'id' => '\d+',
+            'token' => '[\d\w]+',
+            'pass' => ['id', 'token'],
+        ]
+    );
+}
+
 //Signup
-$routes->connect(
-    '/signup',
-    ['controller' => 'Users', 'action' => 'signup'],
-    ['_name' => 'signup']
-);
+if (!routeNameExists('signup')) {
+    $routes->connect(
+        '/signup',
+        ['controller' => 'Users', 'action' => 'signup'],
+        ['_name' => 'signup']
+    );
+}

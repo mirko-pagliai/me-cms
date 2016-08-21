@@ -22,8 +22,10 @@
  */
 
 //Banner
-$routes->connect(
-    '/banner/:id',
-    ['controller' => 'Banners', 'action' => 'open'],
-    ['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
-);
+if (!routeNameExists('banner')) {
+    $routes->connect(
+        '/banner/:id',
+        ['controller' => 'Banners', 'action' => 'open'],
+        ['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
+    );
+}

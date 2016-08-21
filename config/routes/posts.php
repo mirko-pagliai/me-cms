@@ -22,71 +22,98 @@
  */
 
 //Categories
-$routes->connect(
-    '/posts/categories',
-    ['controller' => 'PostsCategories', 'action' => 'index'],
-    ['_name' => 'posts_categories']
-);
+if (!routeNameExists('posts_categories')) {
+    $routes->connect(
+        '/posts/categories',
+        ['controller' => 'PostsCategories', 'action' => 'index'],
+        ['_name' => 'posts_categories']
+    );
+}
+
 //Category
-$routes->connect(
-    '/posts/category/:slug',
-    ['controller' => 'PostsCategories', 'action' => 'view'],
-    ['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-);
+if (!routeNameExists('posts_category')) {
+    $routes->connect(
+        '/posts/category/:slug',
+        ['controller' => 'PostsCategories', 'action' => 'view'],
+        ['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+    );
+}
 
 //Tags
-$routes->connect(
-    '/posts/tags',
-    ['controller' => 'PostsTags', 'action' => 'index'],
-    ['_name' => 'posts_tags']
-);
+if (!routeNameExists('posts_tags')) {
+    $routes->connect(
+        '/posts/tags',
+        ['controller' => 'PostsTags', 'action' => 'index'],
+        ['_name' => 'posts_tags']
+    );
+}
+
 //Tag
-$routes->connect(
-    '/posts/tag/:tag',
-    ['controller' => 'PostsTags', 'action' => 'view'],
-    ['_name' => 'posts_tag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
-);
+if (!routeNameExists('posts_tag')) {
+    $routes->connect(
+        '/posts/tag/:tag',
+        ['controller' => 'PostsTags', 'action' => 'view'],
+        ['_name' => 'posts_tag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
+    );
+}
 
 //Posts
-$routes->connect(
-    '/posts',
-    ['controller' => 'Posts', 'action' => 'index'],
-    ['_name' => 'posts']
-);
+if (!routeNameExists('posts')) {
+    $routes->connect(
+        '/posts',
+        ['controller' => 'Posts', 'action' => 'index'],
+        ['_name' => 'posts']
+    );
+}
+
 //Posts as RSS
-$routes->connect(
-    '/posts/rss',
-    ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
-    ['_name' => 'posts_rss']
-);
+if (!routeNameExists('posts_rss')) {
+    $routes->connect(
+        '/posts/rss',
+        ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
+        ['_name' => 'posts_rss']
+    );
+}
+
 //Posts search
-$routes->connect(
-    '/posts/search',
-    ['controller' => 'Posts', 'action' => 'search'],
-    ['_name' => 'posts_search']
-);
-//Posts by date
-$routes->connect(
-    '/posts/:date',
-    ['controller' => 'Posts', 'action' => 'indexByDate'],
-    [
-        '_name' => 'posts_by_date',
-        'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-        'pass' => ['date'],
-    ]
-);
+if (!routeNameExists('posts_search')) {
+    $routes->connect(
+        '/posts/search',
+        ['controller' => 'Posts', 'action' => 'search'],
+        ['_name' => 'posts_search']
+    );
+}
+
+if (!routeNameExists('posts_by_date')) {
+    //Posts by date
+    $routes->connect(
+        '/posts/:date',
+        ['controller' => 'Posts', 'action' => 'indexByDate'],
+        [
+            '_name' => 'posts_by_date',
+            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+            'pass' => ['date'],
+        ]
+    );
+}
+
 //Post
-$routes->connect(
-    '/post/:slug',
-    ['controller' => 'Posts', 'action' => 'view'],
-    ['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-);
+if (!routeNameExists('post')) {
+    $routes->connect(
+        '/post/:slug',
+        ['controller' => 'Posts', 'action' => 'view'],
+        ['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+    );
+}
+
 //Post preview
-$routes->connect(
-    '/post/preview/:slug',
-    ['controller' => 'Posts', 'action' => 'preview'],
-    ['_name' => 'posts_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-);
+if (!routeNameExists('posts_preview')) {
+    $routes->connect(
+        '/post/preview/:slug',
+        ['controller' => 'Posts', 'action' => 'preview'],
+        ['_name' => 'posts_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+    );
+}
 
 /**
  * This allows backward compatibility for URLs like:

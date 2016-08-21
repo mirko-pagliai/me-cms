@@ -25,13 +25,28 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('InflectedRoute');
 Router::extensions('rss');
 
+//Gets existing routes name
+$GLOBALS['existingRoutesNames'] = array_filter(
+    array_map(function ($route) {
+        return empty($route->options['_name']) ? false : $route->options['_name'];
+    }, Router::routes())
+);
+
+/**
+ * Checks whether the name of a route already exists
+ * @param string $name Name
+ * @return bool
+ */
+function routeNameExists($name)
+{
+    return in_array($name, $GLOBALS['existingRoutesNames']);
+}
+
 /**
  * MeCms routes
  */
 Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
-    /**
-     * Includes routes
-     */
+    //Includes routes
     include_once 'routes/admins.php';
     include_once 'routes/banners.php';
     include_once 'routes/pages.php';
@@ -40,15 +55,16 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
     include_once 'routes/systems.php';
     include_once 'routes/users.php';
 
-    /**
-     * Default home page
-     * For not create incompatibility with `/posts`, this route has to be at the bottom
-     */
-    $routes->connect(
-        '/',
-        ['controller' => 'Posts', 'action' => 'index'],
-        ['_name' => 'homepage']
-    );
+    //Default home page
+    //To avoid conflicts with `/posts`, this route has to be at the bottom
+    if (!routeNameExists('homepage')) {
+        $routes->connect(
+            '/',
+            ['controller' => 'Posts', 'action' => 'index'],
+            ['_name' => 'homepage']
+        );
+    }
+    
     $routes->connect(
         '/homepage',
         ['controller' => 'Posts', 'action' => 'index']

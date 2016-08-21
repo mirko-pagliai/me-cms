@@ -25,18 +25,16 @@
  * Admin routes
  */
 $routes->prefix('admin', function ($routes) {
-    /**
-     * Admin home page
-     */
-    $routes->connect(
-        '/',
-        ['controller' => 'Posts', 'action' => 'index'],
-        ['_name' => 'dashboard']
-    );
-
-    /**
-     * Other admin routes
-     */
+    //Admin home page
+    if (!routeNameExists('dashboard')) {
+        $routes->connect(
+            '/',
+            ['controller' => 'Posts', 'action' => 'index'],
+            ['_name' => 'dashboard']
+        );
+    }
+    
+    //Other admin routes
     $controllers = sprintf('(%s)', implode('|', [
         'backups',
         'banners',
