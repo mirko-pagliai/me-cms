@@ -152,7 +152,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     } else {
                         $actions[] = $this->Html->link(
                             __d('me_cms', 'Preview'),
-                            ['_name' => 'pages_preview', $page->slug],
+                            ['_name' => 'pagesPreview', $page->slug],
                             ['icon' => 'external-link', 'target' => '_blank']
                         );
                     }

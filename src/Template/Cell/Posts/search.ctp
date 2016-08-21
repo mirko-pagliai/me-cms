@@ -22,7 +22,7 @@
  */
 
 //Returns on search
-if ($this->request->is('here', ['_name' => 'posts_search'])) {
+if ($this->request->is('here', ['_name' => 'postsSearch'])) {
     return;
 }
 
@@ -31,7 +31,7 @@ $this->assign('title', __d('me_cms', 'Search posts'));
 
 echo $this->Form->createInline(false, [
     'type' => 'get',
-    'url' => ['_name' => 'posts_search'],
+    'url' => ['_name' => 'postsSearch'],
 ]);
 echo $this->Form->input('p', [
     'button' => $this->Form->button(null, ['class' => 'btn-primary', 'icon' => 'search']),

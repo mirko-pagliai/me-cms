@@ -110,7 +110,7 @@ $this->append('actions', $this->Html->button(
             } else {
                 $actions[] = $this->Html->link(
                     __d('me_cms', 'Preview'),
-                    ['_name' => 'albums_preview', $album->slug],
+                    ['_name' => 'albumsPreview', $album->slug],
                     ['icon' => 'external-link', 'target' => '_blank']
                 );
             }

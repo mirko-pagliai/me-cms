@@ -50,5 +50,5 @@ $this->userbar([
  */
 $this->Breadcrumb->add(
     $category->title,
-    ['_name' => 'posts_category', $category->title]
+    ['_name' => 'postsCategory', $category->title]
 );

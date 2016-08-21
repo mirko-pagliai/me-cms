@@ -22,38 +22,42 @@
  */
 
 //Categories
-if (!routeNameExists('posts_categories')) {
+if (!routeNameExists('postsCategories')) {
     $routes->connect(
         '/posts/categories',
         ['controller' => 'PostsCategories', 'action' => 'index'],
-        ['_name' => 'posts_categories']
+        ['_name' => 'postsCategories']
     );
 }
 
 //Category
-if (!routeNameExists('posts_category')) {
+if (!routeNameExists('postsCategory')) {
     $routes->connect(
         '/posts/category/:slug',
         ['controller' => 'PostsCategories', 'action' => 'view'],
-        ['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+        [
+            '_name' => 'postsCategory',
+            'slug' => '[a-z0-9\-]+',
+            'pass' => ['slug'],
+        ]
     );
 }
 
 //Tags
-if (!routeNameExists('posts_tags')) {
+if (!routeNameExists('postsTags')) {
     $routes->connect(
         '/posts/tags',
         ['controller' => 'PostsTags', 'action' => 'index'],
-        ['_name' => 'posts_tags']
+        ['_name' => 'postsTags']
     );
 }
 
 //Tag
-if (!routeNameExists('posts_tag')) {
+if (!routeNameExists('postsTag')) {
     $routes->connect(
         '/posts/tag/:tag',
         ['controller' => 'PostsTags', 'action' => 'view'],
-        ['_name' => 'posts_tag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
+        ['_name' => 'postsTag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
     );
 }
 
@@ -67,30 +71,30 @@ if (!routeNameExists('posts')) {
 }
 
 //Posts as RSS
-if (!routeNameExists('posts_rss')) {
+if (!routeNameExists('postsRss')) {
     $routes->connect(
         '/posts/rss',
         ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
-        ['_name' => 'posts_rss']
+        ['_name' => 'postsRss']
     );
 }
 
 //Posts search
-if (!routeNameExists('posts_search')) {
+if (!routeNameExists('postsSearch')) {
     $routes->connect(
         '/posts/search',
         ['controller' => 'Posts', 'action' => 'search'],
-        ['_name' => 'posts_search']
+        ['_name' => 'postsSearch']
     );
 }
 
-if (!routeNameExists('posts_by_date')) {
+if (!routeNameExists('postsByDate')) {
     //Posts by date
     $routes->connect(
         '/posts/:date',
         ['controller' => 'Posts', 'action' => 'indexByDate'],
         [
-            '_name' => 'posts_by_date',
+            '_name' => 'postsByDate',
             'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
             'pass' => ['date'],
         ]
@@ -107,11 +111,11 @@ if (!routeNameExists('post')) {
 }
 
 //Post preview
-if (!routeNameExists('posts_preview')) {
+if (!routeNameExists('postsPreview')) {
     $routes->connect(
         '/post/preview/:slug',
         ['controller' => 'Posts', 'action' => 'preview'],
-        ['_name' => 'posts_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+        ['_name' => 'postsPreview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
     );
 }
 

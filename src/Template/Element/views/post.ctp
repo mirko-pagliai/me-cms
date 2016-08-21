@@ -37,7 +37,7 @@ if (config('post.keywords') &&
                 <?php
                     echo $this->Html->link(
                         $post->category->title,
-                        ['_name' => 'posts_category', $post->category->slug]
+                        ['_name' => 'postsCategory', $post->category->slug]
                     );
                 ?>
             </h5>
@@ -122,7 +122,7 @@ if (config('post.keywords') &&
             foreach ($post->tags as $tag) {
                 echo $this->Html->link(
                     $tag->tag,
-                    ['_name' => 'posts_tag', $tag->slug],
+                    ['_name' => 'postsTag', $tag->slug],
                     ['icon' => 'tags']
                 );
             }

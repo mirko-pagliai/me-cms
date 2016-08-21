@@ -50,7 +50,7 @@ $this->userbar([
  */
 $this->Breadcrumb->add(
     $category->title,
-    ['_name' => 'pages_category', $category->title]
+    ['_name' => 'pagesCategory', $category->title]
 );
 
 $pages = array_map(function ($page) {

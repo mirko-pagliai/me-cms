@@ -64,12 +64,12 @@ class Sitemap extends SitemapBuilder
         }
 
         //Adds categories index
-        $url[] = self::parse(['_name' => 'pages_categories']);
+        $url[] = self::parse(['_name' => 'pagesCategories']);
 
         foreach ($categories as $category) {
             //Adds the category
             $url[] = self::parse(
-                ['_name' => 'pages_category', $category->slug],
+                ['_name' => 'pagesCategory', $category->slug],
                 ['lastmod' => $category->pages[0]->modified]
             );
 
@@ -180,14 +180,14 @@ class Sitemap extends SitemapBuilder
         //Adds posts index, categories index and posts search
         $url = [
             self::parse(['_name' => 'posts'], ['lastmod' => $latest->modified]),
-            self::parse(['_name' => 'posts_categories']),
-            self::parse(['_name' => 'posts_search'], ['priority' => '0.2']),
+            self::parse(['_name' => 'postsCategories']),
+            self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']),
         ];
 
         foreach ($categories as $category) {
             //Adds the category
             $url[] = self::parse(
-                ['_name' => 'posts_category', $category->slug],
+                ['_name' => 'postsCategory', $category->slug],
                 ['lastmod' => $category->posts[0]->modified]
             );
 
@@ -236,14 +236,14 @@ class Sitemap extends SitemapBuilder
 
         //Adds the tags index
         $url[] = self::parse(
-            ['_name' => 'posts_tags'],
+            ['_name' => 'postsTags'],
             ['lastmod' => $latest->modified]
         );
 
         //Adds all tags
         $url = am($url, array_map(function ($tag) {
             return self::parse(
-                ['_name' => 'posts_tag', $tag->slug],
+                ['_name' => 'postsTag', $tag->slug],
                 ['lastmod' => $tag->modified]
             );
         }, $tags->toArray()));

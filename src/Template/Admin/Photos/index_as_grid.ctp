@@ -98,7 +98,7 @@ $this->extend('/Admin/Common/Photos/index');
                     } else {
                         $actions[] = $this->Html->link(
                             null,
-                            ['_name' => 'photos_preview', $photo->id],
+                            ['_name' => 'photosPreview', $photo->id],
                             [
                                 'icon' => 'external-link',
                                 'target' => '_blank',

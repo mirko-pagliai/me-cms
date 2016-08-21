@@ -29,7 +29,7 @@ $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Popular tags'));
 
 $tags = array_map(function ($tag) {
-    return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
+    return $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug]);
 }, $tags);
 
 echo $this->Html->ul($tags, ['icon' => 'caret-right']);

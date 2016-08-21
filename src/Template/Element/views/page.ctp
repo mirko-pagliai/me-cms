@@ -29,7 +29,7 @@
                 <?php
                     echo $this->Html->link(
                         $page->category->title,
-                        ['_name' => 'pages_category', $page->category->slug]
+                        ['_name' => 'pagesCategory', $page->category->slug]
                     );
                 ?>
             </h5>

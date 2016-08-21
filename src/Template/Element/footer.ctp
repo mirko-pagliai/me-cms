@@ -27,7 +27,7 @@
         $links = [
             $this->Html->link(
                 __d('me_cms', 'Search'),
-                ['_name' => 'posts_search']
+                ['_name' => 'postsSearch']
             ),
             $this->Html->link(
                 __d('me_cms', 'Cookies policy'),

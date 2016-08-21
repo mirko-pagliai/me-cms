@@ -65,7 +65,7 @@ class PostsTagsCell extends Cell
         array $style = ['maxFont' => 40, 'minFont' => 12]
     ) {
         //Returns on tags index
-        if ($this->request->is('here', ['_name' => 'posts_tags'])) {
+        if ($this->request->is('here', ['_name' => 'postsTags'])) {
             return;
         }
 

@@ -58,7 +58,7 @@ class PagesCell extends Cell
     public function categories($render = 'form')
     {
         //Returns on categories index
-        if ($this->request->is('here', ['_name' => 'pages_categories'])) {
+        if ($this->request->is('here', ['_name' => 'pagesCategories'])) {
             return;
         }
 
@@ -87,7 +87,7 @@ class PagesCell extends Cell
     public function pages()
     {
         //Returns on pages index
-        if ($this->request->is('here', ['_name' => 'pages_categories'])) {
+        if ($this->request->is('here', ['_name' => 'pagesCategories'])) {
             return;
         }
 

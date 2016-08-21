@@ -64,7 +64,7 @@ $this->userbar([
 if (config('post.category')) {
     $this->Breadcrumb->add(
         $post->category->title,
-        ['_name' => 'posts_category', $post->category->slug]
+        ['_name' => 'postsCategory', $post->category->slug]
     );
 }
 $this->Breadcrumb->add($post->title, ['_name' => 'post', $post->slug]);

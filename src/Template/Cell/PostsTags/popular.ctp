@@ -39,7 +39,7 @@ foreach ($tags as $tag) {
 
     echo $this->Html->div(null, $this->Html->link(
         $text,
-        ['_name' => 'posts_tag', $tag->slug],
+        ['_name' => 'postsTag', $tag->slug],
         $options
     ));
 }

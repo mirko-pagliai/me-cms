@@ -27,12 +27,12 @@ $this->assign('title', $title = __d('me_cms', 'Pages categories'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'pages_categories']);
+$this->Breadcrumb->add($title, ['_name' => 'pagesCategories']);
 
 $categories = array_map(function ($category) {
     return $this->Html->link(
         $category->title,
-        ['_name' => 'pages_category', $category->slug]
+        ['_name' => 'pagesCategory', $category->slug]
     );
 }, $categories->toArray());
 

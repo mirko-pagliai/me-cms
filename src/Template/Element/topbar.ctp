@@ -46,11 +46,11 @@
                         ),
                         $this->Html->link(
                             __d('me_cms', 'Categories'),
-                            ['_name' => 'posts_categories']
+                            ['_name' => 'postsCategories']
                         ),
                         $this->Html->link(
                             __d('me_cms', 'Pages'),
-                            ['_name' => 'pages_categories']
+                            ['_name' => 'pagesCategories']
                         ),
                         $this->Html->link(
                             __d('me_cms', 'Photos'),

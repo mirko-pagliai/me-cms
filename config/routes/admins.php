@@ -38,19 +38,19 @@ $routes->prefix('admin', function ($routes) {
     $controllers = sprintf('(%s)', implode('|', [
         'backups',
         'banners',
-        'banners_positions',
+        'bannersPositions',
         'logs',
-        'pages_categories',
+        'pagesCategories',
         'pages',
-        'photos_albums',
+        'photosAlbums',
         'photos',
-        'posts_categories',
-        'posts_tags',
+        'postsCategories',
+        'postsTags',
         'posts',
         'systems',
         'tags',
         'users',
-        'users_groups',
+        'usersGroups',
     ]));
 
     $routes->connect('/:controller', [], ['controller' => $controllers]);

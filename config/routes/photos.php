@@ -40,11 +40,15 @@ if (!routeNameExists('album')) {
 }
 
 //Album preview
-if (!routeNameExists('albums_preview')) {
+if (!routeNameExists('albumsPreview')) {
     $routes->connect(
         '/album/preview/:slug',
         ['controller' => 'PhotosAlbums', 'action' => 'preview'],
-        ['_name' => 'albums_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+        [
+            '_name' => 'albumsPreview',
+            'slug' => '[a-z0-9\-]+',
+            'pass' => ['slug'],
+        ]
     );
 }
 
@@ -53,16 +57,25 @@ if (!routeNameExists('photo')) {
     $routes->connect(
         '/photo/:slug/:id',
         ['controller' => 'Photos', 'action' => 'view'],
-        ['_name' => 'photo', 'slug' => '[a-z0-9\-]+', 'id' => '\d+', 'pass' => ['slug', 'id']]
+        [
+            '_name' => 'photo',
+            'slug' => '[a-z0-9\-]+',
+            'id' => '\d+',
+            'pass' => ['slug', 'id'],
+        ]
     );
 }
 
 //Photo preview
-if (!routeNameExists('photos_preview')) {
+if (!routeNameExists('photosPreview')) {
     $routes->connect(
         '/photo/preview/:id',
         ['controller' => 'Photos', 'action' => 'preview'],
-        ['_name' => 'photos_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['id']]
+        [
+            '_name' => 'photosPreview',
+            'slug' => '[a-z0-9\-]+',
+            'pass' => ['id'],
+        ]
     );
 }
 

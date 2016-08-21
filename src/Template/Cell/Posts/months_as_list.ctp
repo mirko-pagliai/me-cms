@@ -32,7 +32,7 @@ $months = array_map(function ($month) {
     return $this->Html->link(
         $month->month->i18nFormat('MMMM Y'),
         [
-            '_name' => 'posts_by_date',
+            '_name' => 'postsByDate',
             sprintf('%s/%s', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')),
         ]
     );

@@ -30,7 +30,7 @@ $this->assign('title', __d('me_cms', 'Popular tags'));
 
 echo $this->Form->create(false, [
     'type' => 'get',
-    'url' => ['_name' => 'posts_tag', 'tag'],
+    'url' => ['_name' => 'postsTag', 'tag'],
 ]);
 echo $this->Form->input('q', [
     'label' => false,

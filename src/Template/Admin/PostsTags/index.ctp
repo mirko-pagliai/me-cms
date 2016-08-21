@@ -102,7 +102,7 @@ $this->append('actions', $this->Html->button(
 
                 $actions[] = $this->Html->link(
                     __d('me_cms', 'Open'),
-                    ['_name' => 'posts_tag', $tag->slug],
+                    ['_name' => 'postsTag', $tag->slug],
                     ['icon' => 'external-link', 'target' => '_blank']
                 );
 

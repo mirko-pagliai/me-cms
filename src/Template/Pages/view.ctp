@@ -64,7 +64,7 @@ $this->userbar([
 if (config('page.category')) {
     $this->Breadcrumb->add(
         $page->category->title,
-        ['_name' => 'pages_category', $page->category->slug]
+        ['_name' => 'pagesCategory', $page->category->slug]
     );
 }
 $this->Breadcrumb->add($page->title, ['_name' => 'page', $page->slug]);

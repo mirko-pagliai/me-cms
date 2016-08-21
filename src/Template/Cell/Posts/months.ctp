@@ -30,13 +30,20 @@ $this->assign('title', __d('me_cms', 'Posts by month'));
 
 echo $this->Form->create(false, [
     'type' => 'get',
-    'url' => ['_name' => 'posts_by_date', sprintf('%s/%s', date('Y'), date('m'))],
+    'url' => [
+        '_name' => 'postsByDate',
+        sprintf('%s/%s', date('Y'), date('m')),
+    ],
 ]);
 echo $this->Form->input('q', [
     'label' => false,
     'onchange' => 'send_form(this)',
     'options' => array_map(function ($month) {
-        return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->post_count);
+        return sprintf(
+            '%s (%s)',
+            $month->month->i18nFormat('MMMM Y'),
+            $month->post_count
+        );
     }, $months),
 ]);
 echo $this->Form->end();

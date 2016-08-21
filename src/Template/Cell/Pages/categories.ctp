@@ -30,7 +30,7 @@ $this->assign('title', __d('me_cms', 'Pages categories'));
 
 echo $this->Form->create(false, [
     'type' => 'get',
-    'url' => ['_name' => 'pages_category', 'category'],
+    'url' => ['_name' => 'pagesCategory', 'category'],
 ]);
 echo $this->Form->input('q', [
     'label' => false,

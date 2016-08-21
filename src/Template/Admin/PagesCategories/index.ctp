@@ -85,7 +85,7 @@ $this->append('actions', $this->Html->button(
                         if ($category->page_count) {
                             $actions[] = $this->Html->link(
                                 __d('me_cms', 'Open'),
-                                ['_name' => 'pages_category', $category->slug],
+                                ['_name' => 'pagesCategory', $category->slug],
                                 ['icon' => 'external-link', 'target' => '_blank']
                             );
                         }

@@ -22,20 +22,24 @@
  */
 
 //Categories
-if (!routeNameExists('pages_categories')) {
+if (!routeNameExists('pagesCategories')) {
     $routes->connect(
         '/pages/categories',
         ['controller' => 'PagesCategories', 'action' => 'index'],
-        ['_name' => 'pages_categories']
+        ['_name' => 'pagesCategories']
     );
 }
 
 //Category
-if (!routeNameExists('pages_category')) {
+if (!routeNameExists('pagesCategory')) {
     $routes->connect(
         '/pages/category/:slug',
         ['controller' => 'PagesCategories', 'action' => 'view'],
-        ['_name' => 'pages_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+        [
+            '_name' => 'pagesCategory',
+            'slug' => '[a-z0-9\-]+',
+            'pass' => ['slug'],
+        ]
     );
 }
 
@@ -44,15 +48,23 @@ if (!routeNameExists('page')) {
     $routes->connect(
         '/page/:slug',
         ['controller' => 'Pages', 'action' => 'view'],
-        ['_name' => 'page', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+        [
+            '_name' => 'page',
+            'slug' => '[a-z0-9\-\/]+',
+            'pass' => ['slug'],
+        ]
     );
 }
 
 //Page preview
-if (!routeNameExists('pages_preview')) {
+if (!routeNameExists('pagesPreview')) {
     $routes->connect(
         '/page/preview/:slug',
         ['controller' => 'Pages', 'action' => 'preview'],
-        ['_name' => 'pages_preview', 'slug' => '[a-z0-9\-\/]+', 'pass' => ['slug']]
+        [
+            '_name' => 'pagesPreview',
+            'slug' => '[a-z0-9\-\/]+',
+            'pass' => ['slug'],
+        ]
     );
 }

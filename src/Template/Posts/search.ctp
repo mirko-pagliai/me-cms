@@ -27,11 +27,11 @@ $this->assign('title', $title = __d('me_cms', 'Search posts'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'posts_search']);
+$this->Breadcrumb->add($title, ['_name' => 'postsSearch']);
 
 echo $this->Form->create(null, [
     'type' => 'get',
-    'url' => ['_name' => 'posts_search']
+    'url' => ['_name' => 'postsSearch']
 ]);
 echo $this->Form->input('p', [
     'default' => $this->request->query('p'),

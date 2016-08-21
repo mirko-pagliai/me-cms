@@ -31,7 +31,7 @@ $this->assign('title', __d('me_cms', 'Posts categories'));
 $categories = array_map(function ($category) {
     return $this->Html->link(
         $category->title,
-        ['_name' => 'posts_category', $category->slug]
+        ['_name' => 'postsCategory', $category->slug]
     );
 }, $categories);
 

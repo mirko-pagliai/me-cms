@@ -86,7 +86,7 @@ $this->append('actions', $this->Html->button(
                         if ($category->post_count) {
                             $actions[] = $this->Html->link(
                                 __d('me_cms', 'Open'),
-                                ['_name' => 'posts_category', $category->slug],
+                                ['_name' => 'postsCategory', $category->slug],
                                 ['icon' => 'external-link', 'target' => '_blank']
                             );
                         }
