@@ -44,6 +44,15 @@ if (!routeNameExists('activateAccount')) {
     );
 }
 
+//Change password
+if (!routeNameExists('changePassword')) {
+    $routes->connect(
+        '/change/password',
+        ['controller' => 'Users', 'action' => 'changePassword'],
+        ['_name' => 'changePassword']
+    );
+}
+
 //Login
 if (!routeNameExists('login')) {
     $routes->connect(

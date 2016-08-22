@@ -62,11 +62,7 @@ if (!$this->Auth->isLogged()) {
                         [
                             $this->Html->link(
                                 __d('me_cms', 'Change password'),
-                                [
-                                    'controller' => 'Users',
-                                    'action' => 'changePassword',
-                                    'plugin' => MECMS,
-                                ]
+                                ['_name' => 'changePassword']
                             ),
                             $this->Html->link(
                                 __d('me_cms', 'Logout'),
