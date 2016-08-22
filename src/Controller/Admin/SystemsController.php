@@ -85,7 +85,7 @@ class SystemsController extends AppController
 
         //If there's only one type, it automatically sets the query value
         if (!$this->request->query('type') && count($types) < 2) {
-            $this->request->query['type'] = fk($types);
+            $this->request->query['type'] = first_key($types);
         }
 
         //Gets the type from the query and the types from configuration

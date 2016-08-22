@@ -136,7 +136,7 @@ class PhotosController extends AppController
 
         //If there's only one album, it automatically sets the query value
         if (!$album && count($this->viewVars['albums']) < 2) {
-            $this->request->query['album'] = fk($this->viewVars['albums']);
+            $this->request->query['album'] = first_key($this->viewVars['albums']);
         }
 
         if ($this->request->data('file')) {
