@@ -22,7 +22,7 @@
  */
 use Cake\Routing\Router;
 
-Router::defaultRouteClass('InflectedRoute');
+Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
 //Gets existing routes name
@@ -45,9 +45,8 @@ function routeNameExists($name)
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
+Router::scope('/', ['plugin' => MECMS], function ($routes) {
     //Includes routes
-    include_once 'routes/admins.php';
     include_once 'routes/banners.php';
     include_once 'routes/pages.php';
     include_once 'routes/photos.php';
@@ -69,8 +68,38 @@ Router::scope('/', ['plugin' => 'MeCms'], function ($routes) {
         '/homepage',
         ['controller' => 'Posts', 'action' => 'index']
     );
-});
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function ($routes) {
-    $routes->fallbacks('InflectedRoute');
+    //Admin routes
+    $routes->prefix('admin', function ($routes) {
+        //Admin home page
+        if (!routeNameExists('dashboard')) {
+            $routes->connect(
+                '/',
+                ['controller' => 'Posts', 'action' => 'index'],
+                ['_name' => 'dashboard']
+            );
+        }
+
+        //Other admin routes
+        $controllers = sprintf('(%s)', implode('|', [
+            'backups',
+            'banners',
+            'banners-positions',
+            'logs',
+            'pages-categories',
+            'pages',
+            'photos-albums',
+            'photos',
+            'posts-categories',
+            'posts-tags',
+            'posts',
+            'systems',
+            'tags',
+            'users',
+            'users-groups',
+        ]));
+
+        $routes->connect('/:controller', [], []);
+        $routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
+    });
 });

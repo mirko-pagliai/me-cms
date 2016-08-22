@@ -6,6 +6,7 @@
 * `isOffline()` is now a detector (`$this->request->is('offline')`);
 * removed auto-links for posts and pages. It caused too many problems;
 * updated for CakePHP 3.3;
+* improved routes. Now `DashedRoute` is the default route class;
 * fixed bug for `SerializedLog` when log file doesn't exist;
 * checks if there are already routes with the same name, before declaring new;
 * fixed code for CakePHP Code Sniffer;
