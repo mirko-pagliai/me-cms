@@ -44,11 +44,11 @@ class StaticPage
     {
         //Adds all plugins to paths, adding first MeCms
         $paths = array_map(function ($plugin) {
-            return array_values(App::path('Template', $plugin))[0] . 'StaticPages';
+            return firstValue(App::path('Template', $plugin)) . 'StaticPages';
         }, Plugin::all());
 
         //Adds APP to paths
-        array_unshift($paths, array_values(App::path('Template'))[0] . 'StaticPages');
+        array_unshift($paths, firstValue(App::path('Template')) . 'StaticPages');
 
         $pages = [];
 
@@ -92,7 +92,7 @@ class StaticPage
 
         //Checks if the page exists in APP
         foreach ($patterns as $pattern) {
-            $file = array_values(App::path('Template'))[0] . 'StaticPages' . DS . $pattern . '.ctp';
+            $file = firstValue(App::path('Template')) . 'StaticPages' . DS . $pattern . '.ctp';
             
             if (is_readable($file)) {
                 return 'StaticPages' . DS . $pattern;
@@ -102,7 +102,7 @@ class StaticPage
         //Checks if the page exists in all plugins, beginning with MeCms
         foreach (Plugin::all() as $plugin) {
             foreach ($patterns as $pattern) {
-                $file = array_values(App::path('Template', $plugin))[0] . 'StaticPages' . DS . $pattern . '.ctp';
+                $file = firstValue(App::path('Template', $plugin)) . 'StaticPages' . DS . $pattern . '.ctp';
                 
                 if (is_readable($file)) {
                     return sprintf('%s.%s', $plugin, 'StaticPages' . DS . $pattern);

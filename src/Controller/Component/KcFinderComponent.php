@@ -99,7 +99,7 @@ class KcFinderComponent extends Component
     public function getTypes()
     {
         //Gets the folders list
-        $folders = array_values((new Folder(UPLOADED))->read(true, true))[0];
+        $folders = firstValue((new Folder(UPLOADED))->read(true, true));
 
         //Each folder is a file type supported by KCFinder
         foreach ($folders as $type) {
