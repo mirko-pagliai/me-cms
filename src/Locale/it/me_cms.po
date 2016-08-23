@@ -1865,7 +1865,7 @@ msgstr "qui"
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/forgot_password.ctp:31
 msgid "If you have not made this request, please contact an administrator"
 msgstr ""
-"se non hai effettuato tu questa richiesta, per favore contatta un "
+"Se non hai effettuato tu questa richiesta, per favore contatta un "
 "amministratore"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/change_password.ctp:27
