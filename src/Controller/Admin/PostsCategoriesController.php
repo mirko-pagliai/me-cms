@@ -58,7 +58,7 @@ class PostsCategoriesController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete posts categories
-        if ($this->request->isAction('delete')) {
+        if ($this->request->isDelete()) {
             return $this->Auth->isGroup('admin');
         }
 

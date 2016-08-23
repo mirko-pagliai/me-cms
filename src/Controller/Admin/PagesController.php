@@ -48,14 +48,14 @@ class PagesController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction('index')) {
+        if ($this->request->isIndex()) {
             $categories = $this->Pages->Categories->getList();
         } elseif ($this->request->isAction(['add', 'edit'])) {
             $categories = $this->Pages->Categories->getTreeList();
         }
 
         //Checks for categories
-        if (isset($categories) && empty($categories) && !$this->request->isAction('index')) {
+        if (isset($categories) && empty($categories) && !$this->request->isIndex()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PagesCategories', 'action' => 'index']);
@@ -96,7 +96,7 @@ class PagesController extends AppController
         }
 
         //Only admins can delete pages
-        if ($this->request->isAction('delete')) {
+        if ($this->request->isDelete()) {
             return $this->Auth->isGroup('admin');
         }
 

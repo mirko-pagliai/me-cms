@@ -24,6 +24,18 @@
 use Cake\Network\Request;
 
 /**
+ * Adds `is('add')`, `is('delete')`, `is('edit')`, `is('index')` and
+ *  `is('view')` detectors.
+ *
+ * They check if the specified action is the current action.
+ */
+foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
+    Request::addDetector($action, function ($request) use ($action) {
+        return $request->is('action', $action);
+    });
+}
+
+/**
  * Adds `is('admin')` detector.
  *
  * It checks if the specified prefix has the `admin` prefix.
