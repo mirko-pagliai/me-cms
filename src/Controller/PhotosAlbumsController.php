@@ -86,10 +86,12 @@ class PhotosAlbumsController extends AppController
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($photos, $paging) = array_values(Cache::readMany([
-            $cache,
-            sprintf('%s_paging', $cache),
-        ], $this->PhotosAlbums->cache));
+        list($photos, $paging) = array_values(
+            Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->PhotosAlbums->cache
+            )
+        );
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
