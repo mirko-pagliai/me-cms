@@ -15,21 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Common/view');
-    $this->assign('title', __d('me_cms', 'Contact us'));
+$this->extend('/Common/view');
+$this->assign('title', __d('me_cms', 'Contact us'));
 ?>
 
 <?= $this->Form->create($contact) ?>
 <fieldset>
-    <?php			
+    <?php
         echo $this->Form->input('first_name', [
             'label' => __d('me_cms', 'First name'),
         ]);
@@ -37,7 +35,7 @@
             'label' => __d('me_cms', 'Last name'),
         ]);
         echo $this->Form->input('email', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Email'),
             'tip' => __d('me_cms', 'Enter your email'),
         ]);
@@ -47,7 +45,7 @@
             'type' => 'textarea',
         ]);
 
-        if(config('security.recaptcha')) {
+        if (config('security.recaptcha')) {
             echo $this->Recaptcha->recaptcha();
         }
     ?>

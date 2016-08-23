@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 /**
@@ -30,21 +30,21 @@ use Cake\Core\Plugin;
 use Cake\Log\Log;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\DispatcherFactory;
-use MeTools\Network\Request;
 
 require_once 'constants.php';
 require_once 'global_functions.php';
+require_once 'detectors.php';
 
 /**
  * Loads MeTools plugins
  */
-Plugin::load('MeTools', ['bootstrap' => TRUE]);
+Plugin::load('MeTools', ['bootstrap' => true]);
 
-if(!is_writeable(BANNERS)) {
+if (!is_writeable(BANNERS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
 }
 
-if(!folder_is_writeable(PHOTOS)) {
+if (!folderIsWriteable(PHOTOS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
 }
 
@@ -54,35 +54,35 @@ if(!folder_is_writeable(PHOTOS)) {
 Configure::load('MeCms.me_cms');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'me_cms.php')) {
-	Configure::load('me_cms');
+if (is_readable(CONFIG . 'me_cms.php')) {
+    Configure::load('me_cms');
 }
 
 /**
  * Forces debug and loads DebugKit on localhost, if required
  */
-if(is_localhost() && config('main.debug_on_localhost') && !config('debug')) {
-	Configure::write('debug', TRUE);
-	
-    if(!Plugin::loaded('DebugKit')) {
-        Plugin::load('DebugKit', ['bootstrap' => TRUE]);
+if (isLocalhost() && config('main.debug_on_localhost') && !config('debug')) {
+    Configure::write('debug', true);
+
+    if (!Plugin::loaded('DebugKit')) {
+        Plugin::load('DebugKit', ['bootstrap' => true]);
     }
 }
 
 /**
  * Loads plugins
  */
-Plugin::load('Assets', ['bootstrap' => TRUE]);
-Plugin::load('Thumbs', ['bootstrap' => TRUE, 'routes' => TRUE]);
-Plugin::load('DatabaseBackup', ['bootstrap' => TRUE]);
+Plugin::load('Assets', ['bootstrap' => true]);
+Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 
 /**
  * Loads theme plugin
  */
 $theme = config('default.theme');
 
-if($theme && !Plugin::loaded($theme)) {
-	Plugin::load($theme);
+if ($theme && !Plugin::loaded($theme)) {
+    Plugin::load($theme);
 }
 
 /**
@@ -91,25 +91,25 @@ if($theme && !Plugin::loaded($theme)) {
 Configure::load('MeCms.cache');
 
 //Merges with the configuration from application, if exists
-if(is_readable(CONFIG.'cache.php')) {
-	Configure::load('cache');
+if (is_readable(CONFIG . 'cache.php')) {
+    Configure::load('cache');
 }
-    
+
 //Adds all cache configurations
-foreach(Configure::consume('Cache') as $key => $config) {
-	//Drops cache configurations that already exist
-	if(Cache::config($key)) {
-		Cache::drop($key);
+foreach (Configure::consume('Cache') as $key => $config) {
+    //Drops cache configurations that already exist
+    if (Cache::config($key)) {
+        Cache::drop($key);
     }
-	
-	Cache::config($key, $config);
+
+    Cache::config($key, $config);
 }
 
 /**
  * Loads the banned ip configuration
  */
-if(is_readable(CONFIG.'banned_ip.php')) {
-	Configure::load('banned_ip');
+if (is_readable(CONFIG . 'banned_ip.php')) {
+    Configure::load('banned_ip');
 }
 
 /**
@@ -118,8 +118,8 @@ if(is_readable(CONFIG.'banned_ip.php')) {
 Configure::load('MeCms.widgets');
 
 //Overwrites with the configuration from application, if exists
-if(is_readable(CONFIG.'widgets.php')) {
-	Configure::load('widgets', 'default', FALSE);
+if (is_readable(CONFIG . 'widgets.php')) {
+    Configure::load('widgets', 'default', false);
 }
 
 //Adds log for users actions
@@ -129,44 +129,8 @@ Log::config('users', [
     'levels' => [],
     'file' => 'users.log',
     'scopes' => ['users'],
-    'url' => env('LOG_DEBUG_URL', NULL),
+    'url' => env('LOG_DEBUG_URL', null),
 ]);
 
 //CakePHP will automatically set the locale based on the current user
 DispatcherFactory::add('LocaleSelector');
-
-/**
- * Adds `isAdmin()` detector
- */
-Request::addDetector('admin', function($request) {
-    return $request->param('prefix') === 'admin';
-});
-
-/**
- * Adds `isBanned()` detector.
- * It checks if the user's IP address is banned.
- */
-Request::addDetector('banned', function($request) {
-    $banned = config('Banned');
-
-    /**
-     * The IP address is allowed if:
-     *  - the list of banned IP is empty;
-     *  - is localhost;
-     *  - the IP address has already been verified.
-     */
-    if(!$banned || is_localhost() || $request->session()->read('allowed_ip')) {
-        return FALSE;
-    }
-    
-	//Replaces asteriskes
-    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array) $banned));
-
-    if(preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
-        return TRUE;
-    }
-		
-    //In any other case, saves the result in the session
-    $request->session()->write('allowed_ip', TRUE);
-    return FALSE;
-});

@@ -1,80 +1,80 @@
 /*!
  * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
 /* -------------------------------- */
-/*				HTML				*/
+/*              HTML                */
 /* -------------------------------- */
 /* Blockquote */
 blockquote {
-	background: #eee;
-	border: 0;
-	margin-top: 20px;
-	padding: 20px 60px;
-	position: relative;
+    background: #eee;
+    border: 0;
+    margin-top: 20px;
+    padding: 20px 60px;
+    position: relative;
 }
 
 /* Blockquote, icons */
 blockquote:before, blockquote:after {
     font-size: 25px;
     position: absolute;
-	font-family: FontAwesome;
+    font-family: FontAwesome;
     font-weight: normal;
-	opacity: .5;
+    opacity: .5;
 }
 
 /* Blockquote, left (before) icon */
 blockquote:before {
     content: "\f10d";
-	left: 20px;
+    left: 20px;
     top: 10px;
 }
 
 /* Blockquote, right (after) icon */
 blockquote:after {
-	bottom: 10px;
+    bottom: 10px;
     content: "\f10e";
     right: 20px;
 }
 
 /* Extra small and small devices */
 @media (max-width: 992px) {
-	/* Blockquote */
-	blockquote {
-		font-size: 14px;
-		line-height: 1.3;
-		padding: 32px 15px;
-	}
-	
-	/* Blockquote, icons */
-	blockquote:before, blockquote:after {
-		font-size: 15px !important;
-	}
+    /* Blockquote */
+    blockquote {
+        font-size: 14px;
+        line-height: 1.3;
+        padding: 32px 15px;
+    }
 
-	/* Blockquote, left (before) icon */
-	blockquote:before {
-		left: 16px !important;
-		top: 8px !important;
-	}
+    /* Blockquote, icons */
+    blockquote:before, blockquote:after {
+        font-size: 15px !important;
+    }
 
-	/* Blockquote, right (after) icon */
-	blockquote:after {
-		bottom: 8px !important;
-		right: 16px !important;
-	}
+    /* Blockquote, left (before) icon */
+    blockquote:before {
+        left: 16px !important;
+        top: 8px !important;
+    }
+
+    /* Blockquote, right (after) icon */
+    blockquote:after {
+        bottom: 8px !important;
+        right: 16px !important;
+    }
 }
 
 /* Body */
 body {
     font-family: Roboto,sans-serif;
-	padding-bottom: 84px;
+    padding-bottom: 84px;
 }
 
 /* -------------------------------- */
-/*				Header				*/
+/*              Header              */
 /* -------------------------------- */
 /* Header */
 body header {
@@ -82,12 +82,12 @@ body header {
 }
 
 /* -------------------------------- */
-/*			Header, logo			*/
+/*          Header, logo            */
 /* -------------------------------- */
 /* Header, logo */
 body header #logo {
     display: inline-block;
-	max-width: 100%;
+    max-width: 100%;
     text-decoration: none;
 }
 
@@ -100,110 +100,110 @@ body header #logo h1 {
 
 /* Header, logo (as text) on hover */
 body header #logo:hover h1 {
-	color: #333;
+    color: #333;
 }
 
 /* Header, logo (as image) */
 body header #logo img {
-	padding: 40px 0;
+    padding: 40px 0;
 }
 
 /* -------------------------------- */
-/*			Header, topbar			*/
+/*          Header, topbar          */
 /* -------------------------------- */
 /* Header, topbar */
 body header #topbar {
     background: #eee;
     border: 0;
-	border-radius: 0;
-	margin-bottom: 30px;
+    border-radius: 0;
+    margin-bottom: 30px;
 }
 
 /* Header, topbar, all links */
 body header #topbar .navbar-collapse a {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 /* Header, topbar, all links on hover */
 body header #topbar .navbar-collapse a:hover {
-	background: #d1d1d1;
-	color: #444;
+    background: #d1d1d1;
+    color: #444;
 }
-	
+
 /* Header, topbar, open elements, link */
 body header #topbar .navbar-collapse li.open > a {
-	color: #333;
-	background: #e7e7e7;
+    color: #333;
+    background: #e7e7e7;
 }
 
 /* Navbar NOT collapsed */
 @media (min-width: 768px) {
-	/* Header, topbar, navbar element */
-	body header #topbar .navbar-collapse {
-		padding: 0;
-	}
+    /* Header, topbar, navbar element */
+    body header #topbar .navbar-collapse {
+        padding: 0;
+    }
 
-	/* Header, topbar, all links */
-	body header #topbar .navbar-collapse a {
-		font-size: 16px;
-		/* Transition for "background" and "color" proprieties */
-		transition: background .25s ease-in-out, color .25s ease-in-out;
-		-moz-transition: background .25s ease-in-out, color .25s ease-in-out;
-		-webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
-	}
-	
-	/* Header, topbar, dropdown menu, links */
-	body header #topbar .navbar-collapse .dropdown-menu a {
-		color: #777;
-		padding: 6px 20px;
-	}
-	
-	/* Header, topbar, dropdown menu, links on hover */
-	body header #topbar .navbar-collapse .dropdown-menu a:hover {
-		background: #d1d1d1;
-		color: #444;
-	}
+    /* Header, topbar, all links */
+    body header #topbar .navbar-collapse a {
+        font-size: 16px;
+        /* Transition for "background" and "color" proprieties */
+        transition: background .25s ease-in-out, color .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out, color .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out, color .25s ease-in-out;
+    }
+
+    /* Header, topbar, dropdown menu, links */
+    body header #topbar .navbar-collapse .dropdown-menu a {
+        color: #777;
+        padding: 6px 20px;
+    }
+
+    /* Header, topbar, dropdown menu, links on hover */
+    body header #topbar .navbar-collapse .dropdown-menu a:hover {
+        background: #d1d1d1;
+        color: #444;
+    }
 }
 
 /* -------------------------------- */
-/*				Content				*/
+/*              Content             */
 /* -------------------------------- */
 /* Content, index and view actions, title */
 #content .index > h2,
 #content .view > h2 {
-	border-left: 4px solid #777;
-	color: #555;
-	font-size: 24px;    
-	margin: 0 0 10px;
+    border-left: 4px solid #777;
+    color: #555;
+    font-size: 24px;
+    margin: 0 0 10px;
     padding: 5px 0 8px 10px;
 }
 
 /* -------------------------------- */
-/*			Pagination				*/
+/*          Pagination              */
 /* -------------------------------- */
 /* Pagination, links and texts */
 .pagination > li > a,
 .pagination > li > span {
-	color: #666;
+    color: #666;
 }
 
 /* Pagination, links and texts on hover */
 .pagination > li > a:hover, .pagination > li > a:focus,
 .pagination > li > span:hover, .pagination > li > span:focus {
-	background: #ddd;
-	color: #666;
+    background: #ddd;
+    color: #666;
 }
 
 /* Pagination, active links and texts */
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
 .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
-	background: #888;
-	border-color: #888;
-	color: #ddd;
+    background: #888;
+    border-color: #888;
+    color: #ddd;
 }
 
 /* -------------------------------- */
-/*				Footer				*/
+/*              Footer              */
 /* -------------------------------- */
 /* Footer element */
 body > footer {
@@ -215,7 +215,7 @@ body > footer {
 
 /* Footer, links */
 body > footer a {
-	border-bottom: 1px dashed;
+    border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
 }
@@ -234,20 +234,20 @@ body > footer p {
 
 /* Footer, lists */
 body > footer ul {
-	list-style: none;
-	padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 /* Footer, lists, list elements */
 body > footer > ul li {
-	border-right: 1px solid #aaa;
-	display: inline-block;
-	padding: 0 10px;
+    border-right: 1px solid #aaa;
+    display: inline-block;
+    padding: 0 10px;
 }
 
 /* Footer, lists, last list elements */
 body > footer > ul li:last-child {
-	border-right: 0;
+    border-right: 0;
 }
 
 /* Footer, lists, list elements, links */

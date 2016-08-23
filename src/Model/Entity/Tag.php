@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Entity;
 
@@ -34,29 +34,35 @@ use Cake\Utility\Text;
  * @property \Cake\I18n\Time $modified
  * @property \MeCms\Model\Entity\Post[] $posts
  */
-class Tag extends Entity {
+class Tag extends Entity
+{
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
      */
     protected $_accessible = [
-        '*' => TRUE,
-        'id' => FALSE,
-		'post_count' => FALSE,
-		'modified' => FALSE,
+        '*' => true,
+        'id' => false,
+        'post_count' => false,
+        'modified' => false,
     ];
-	
-	/**
-	 * Virtual fields that should be exposed
-	 * @var array
-	 */
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
     protected $_virtual = ['slug'];
-	
-	/**
-	 * Gets the tag slug (virtual field)
-	 * @return string
-	 */
-	protected function _getSlug() {
-		return Text::slug($this->_properties['tag']);
-	}
+
+    /**
+     * Gets the tag slug (virtual field)
+     * @return string|null
+     */
+    protected function _getSlug()
+    {
+        if (empty($this->_properties['tag'])) {
+            return null;
+        }
+
+        return Text::slug($this->_properties['tag']);
+    }
 }

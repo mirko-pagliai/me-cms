@@ -15,29 +15,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    if($this->fetch('title')) {
-        $this->assign('title', $this->fetch('title'));
-    }
+if ($this->fetch('title')) {
+    $this->assign('title', $this->fetch('title'));
+}
 ?>
 
 <div class="view">
     <?php
-        if($this->fetch('title')) {
-            echo $this->Html->h2($this->fetch('title'));
-        }
-        
-        if($this->fetch('actions')) {
-            echo $this->fetch('actions');
-        }
-        
-        echo $this->fetch('content');
+    if ($this->fetch('title')) {
+        echo $this->Html->h2($this->fetch('title'));
+    }
+
+    if ($this->fetch('actions')) {
+        echo $this->fetch('actions');
+    }
+
+    echo $this->fetch('content');
     ?>
 </div>

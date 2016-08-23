@@ -15,44 +15,91 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 use Cake\Routing\Router;
 
-Router::defaultRouteClass('InflectedRoute');
+Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
+
+//Gets existing routes name
+$GLOBALS['existingRoutesNames'] = array_filter(
+    array_map(function ($route) {
+        return empty($route->options['_name']) ? false : $route->options['_name'];
+    }, Router::routes())
+);
+
+/**
+ * Checks whether the name of a route already exists
+ * @param string $name Name
+ * @return bool
+ */
+function routeNameExists($name)
+{
+    return in_array($name, $GLOBALS['existingRoutesNames']);
+}
 
 /**
  * MeCms routes
  */
-Router::scope('/', ['plugin' => 'MeCms'], function($routes) {
-	/**
-     * Includes routes
-     */
-    include_once 'routes/admins.php';
+Router::scope('/', ['plugin' => MECMS], function ($routes) {
+    //Includes routes
     include_once 'routes/banners.php';
     include_once 'routes/pages.php';
     include_once 'routes/photos.php';
     include_once 'routes/posts.php';
     include_once 'routes/systems.php';
     include_once 'routes/users.php';
+
+    //Default home page
+    //To avoid conflicts with `/posts`, this route has to be at the bottom
+    if (!routeNameExists('homepage')) {
+        $routes->connect(
+            '/',
+            ['controller' => 'Posts', 'action' => 'index'],
+            ['_name' => 'homepage']
+        );
+    }
     
-	/**
-	 * Default home page
-	 * For not create incompatibility with `/posts`, this route has to be at the bottom
-	 */
-	$routes->connect('/',
-        ['controller' => 'Posts', 'action' => 'index'],
-        ['_name' => 'homepage']
-    );
-	$routes->connect('/homepage',
+    $routes->connect(
+        '/homepage',
         ['controller' => 'Posts', 'action' => 'index']
     );
-});
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function($routes) {
-	$routes->fallbacks('InflectedRoute');
+    //Admin routes
+    $routes->prefix('admin', function ($routes) {
+        //Admin home page
+        if (!routeNameExists('dashboard')) {
+            $routes->connect(
+                '/',
+                ['controller' => 'Posts', 'action' => 'index'],
+                ['_name' => 'dashboard']
+            );
+        }
+
+        //Other admin routes
+        $controllers = sprintf('(%s)', implode('|', [
+            'backups',
+            'banners',
+            'banners-positions',
+            'logs',
+            'pages-categories',
+            'pages',
+            'photos-albums',
+            'photos',
+            'posts-categories',
+            'posts-tags',
+            'posts',
+            'systems',
+            'tags',
+            'users',
+            'users-groups',
+        ]));
+
+        $routes->connect('/:controller', [], []);
+        $routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
+    });
 });

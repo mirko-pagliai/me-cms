@@ -15,30 +15,38 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $menu = [];
-    
-	if(!$this->request->isHere($url = ['_name' => 'login']))
-		$menu[] = $this->Html->link(__d('me_cms', 'Login'), $url);
+$menu = [];
 
-	//If signup is enabled
-	if(config('users.signup') && !$this->request->isHere($url = ['_name' => 'signup']))
-		$menu[] = $this->Html->link(__d('me_cms', 'Sign up'), $url);
+if (!$this->request->isUrl($url = ['_name' => 'login'])) {
+    $menu[] = $this->Html->link(__d('me_cms', 'Login'), $url);
+}
 
-	//If signup is enabled and if accounts will be enabled by the user via email
-	if(config('users.signup') && config('users.activation') === 1 && !$this->request->isHere($url = ['_name' => 'resend_activation']))
-		$menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), $url);
+//If signup is enabled
+if (config('users.signup') &&
+    !$this->request->isUrl($url = ['_name' => 'signup'])
+) {
+    $menu[] = $this->Html->link(__d('me_cms', 'Sign up'), $url);
+}
 
-	//If reset password is enabled
-	if(config('users.reset_password') && !$this->request->isHere($url = ['_name' => 'forgot_password']))
-		$menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
+//If signup is enabled and if accounts will be enabled by the user via email
+if (config('users.signup') &&
+    config('users.activation') === 1 &&
+    !$this->request->isUrl($url = ['_name' => 'resendActivation'])
+) {
+    $menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), $url);
+}
 
-	echo $this->Html->ul($menu, ['class' => 'actions']);
-?>
+//If reset password is enabled
+if (config('users.reset_password') &&
+    !$this->request->isUrl($url = ['_name' => 'forgotPassword'])
+) {
+    $menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
+}
+
+echo $this->Html->ul($menu, ['class' => 'actions']);

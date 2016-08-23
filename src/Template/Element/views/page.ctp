@@ -15,64 +15,105 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <div class="page-container content-container">
-	<div class="content-header">
-        <?php if(config('page.category') && !empty($page->category)): ?>
+    <div class="content-header">
+        <?php if (config('page.category') && !empty($page->category)) : ?>
             <h5 class="content-category">
-                <?= $this->Html->link($page->category->title, ['_name' => 'pages_category', $page->category->slug]) ?>
+                <?php
+                    echo $this->Html->link(
+                        $page->category->title,
+                        ['_name' => 'pagesCategory', $page->category->slug]
+                    );
+                ?>
             </h5>
         <?php endif; ?>
-        
+
         <h3 class="content-title">
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>
-        
-        <?php if(!empty($page->subtitle)): ?>
-            <h4 class="content-subtitle"><?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?></h4>
+
+        <?php if (!empty($page->subtitle)) : ?>
+            <h4 class="content-subtitle">
+                <?php
+                    echo $this->Html->link(
+                        $page->subtitle,
+                        ['_name' => 'page', $page->slug]
+                    );
+                ?>
+            </h4>
         <?php endif; ?>
-            
-		<div class="content-info">
-			<?php if(config('page.created')): ?>
-				<?= $this->Html->div('content-date', __d('me_cms', 'Posted on {0}', $page->created->i18nFormat(config('main.datetime.long'))), ['icon' => 'clock-o']) ?>
-			<?php endif; ?>
-		</div>
-	</div>
-	<div class="content-text">
-		<?php
-			//Executes BBCode on the text
-			$text = $this->BBCode->parser($page->text);
-			
-			//Truncates the text if the "<!-- read-more -->" tag is present
-			if(!$this->request->isAction('view', 'Pages') && $strpos = strpos($text, '<!-- read-more -->')) {
-				echo $truncated_text = $this->Text->truncate($text, $strpos, ['ellipsis' => FALSE, 'exact' => TRUE, 'html' => FALSE]);
-            }
-			//Truncates the text if requested by the configuration
-			elseif(!$this->request->isAction('view', 'Pages') && config('default.truncate_to')) {
-				echo $truncated_text = $this->Text->truncate($text, config('default.truncate_to'), ['exact' => FALSE, 'html' => TRUE]);
-            }
-			else {
-				echo $text;
-            }
-		?>
-	</div>
-	<div class="content-buttons">
-		<?php
-			//If it was requested to truncate the text and that has been truncated, it shows the "Read more" link
-			if(!empty($truncated_text) && $truncated_text !== $page->text) {
-				echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $page->slug], ['class' => ' readmore']);
-            }
-		?>
-	</div>
-	<?php
-		if(config('page.shareaholic') && config('shareaholic.app_id') && $this->request->isAction('view', 'Pges') && !$this->request->isAjax()) {
-            echo $this->Html->shareaholic(config('shareaholic.app_id'));
+
+        <div class="content-info">
+            <?php if (config('page.created')) : ?>
+                <?php
+                    echo $this->Html->div(
+                        'content-date',
+                        __d(
+                            'me_cms',
+                            'Posted on {0}',
+                            $page->created->i18nFormat(config('main.datetime.long'))
+                        ),
+                        ['icon' => 'clock-o']
+                    );
+                ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="content-text">
+        <?php
+        //Executes BBCode on the text
+        $text = $this->BBCode->parser($page->text);
+
+        //Truncates the text if the "<!-- read-more -->" tag is present
+        if (!$this->request->isAction('view', 'Pages') &&
+            $strpos = strpos($text, '<!-- read-more -->')
+        ) {
+            echo $truncatedText = $this->Text->truncate(
+                $text,
+                $strpos,
+                ['ellipsis' => false, 'exact' => true, 'html' => false]
+            );
+        //Truncates the text if requested by the configuration
+        } elseif (!$this->request->isAction('view', 'Pages') &&
+            config('default.truncate_to')
+        ) {
+            echo $truncatedText = $this->Text->truncate(
+                $text,
+                config('default.truncate_to'),
+                ['exact' => false, 'html' => true]
+            );
+        } else {
+            echo $text;
         }
-	?>
+        ?>
+    </div>
+    <div class="content-buttons">
+        <?php
+        //If it was requested to truncate the text and that has been
+        //truncated, it shows the "Read more" link
+        if (!empty($truncatedText) && $truncatedText !== $page->text) {
+            echo $this->Html->button(
+                __d('me_cms', 'Read more'),
+                ['_name' => 'page', $page->slug],
+                ['class' => ' readmore']
+            );
+        }
+        ?>
+    </div>
+    <?php
+    if (config('page.shareaholic') &&
+        config('shareaholic.app_id') &&
+        $this->request->isAction('view', 'Pages') &&
+        !$this->request->isAjax()
+    ) {
+        echo $this->Html->shareaholic(config('shareaholic.app_id'));
+    }
+    ?>
 </div>

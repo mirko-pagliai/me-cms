@@ -15,24 +15,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	if(empty($posts)) {
-		return;
-    }
-    
-	$this->extend('/Common/widget');
-	$this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', count($posts), count($posts)));
-    
-    $posts = array_map(function($post) {
-		return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-	}, $posts);
-    
-	echo $this->Html->ul($posts, ['icon' => 'caret-right']);
-?>
+if (empty($posts)) {
+    return;
+}
+
+$this->extend('/Common/widget');
+$this->assign('title', __dn(
+    'me_cms',
+    'Latest post',
+    'Latest {0} posts',
+    count($posts),
+    count($posts)
+));
+
+$posts = array_map(function ($post) {
+    return $this->Html->link(
+        $post->title,
+        ['_name' => 'post', $post->slug]
+    );
+}, $posts);
+
+echo $this->Html->ul($posts, ['icon' => 'caret-right']);

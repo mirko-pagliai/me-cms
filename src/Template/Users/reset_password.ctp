@@ -15,29 +15,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
- * @package		MeCms\View\Profiles
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Reset password'));
+$this->extend('/Common/form');
+$this->assign('title', $title = __d('me_cms', 'Reset password'));
 ?>
 
 <?= $this->Form->create($user) ?>
 <fieldset>
     <?php
         echo $this->Form->input('password', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Password'),
             'tip' => __d('me_cms', 'Enter your new password'),
         ]);
         echo $this->Form->input('password_repeat', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Repeat password'),
             'tip' => __d('me_cms', 'Repeat your new password'),
         ]);
@@ -45,4 +42,5 @@
 </fieldset>
 <?= $this->Form->submit($title, ['class' => 'btn-block btn-lg btn-primary']) ?>
 <?= $this->Form->end() ?>
+
 <?= $this->element('login/menu'); ?>

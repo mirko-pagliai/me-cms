@@ -15,60 +15,69 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
 
-class UsersGroupValidator extends AppValidator {
-	/**
-	 * Construct.
-	 * 
-	 * Adds some validation rules.
-	 * @uses MeCms\Model\Validation\AppValidator::__construct()
-	 */
-    public function __construct() {
+/**
+ * UsersGroup validator class
+ */
+class UsersGroupValidator extends AppValidator
+{
+    /**
+     * Construct.
+     *
+     * Adds some validation rules.
+     * @uses MeCms\Model\Validation\AppValidator::__construct()
+     */
+    public function __construct()
+    {
         parent::__construct();
-		
-		//Name
-		$this->add('name', [
-			'blank' => [
-				'message' => __d('me_cms', 'Can not be changed'),
-				'on' => 'update',
-				'rule' => 'blank',
-			],
-			'lengthBetween' => [
-				'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-				'rule' => ['lengthBetween', 3, 100],
-			],
-			'unique' => [
-				'message' => __d('me_cms', 'This value is already used'),
-				'provider' => 'table',
-				'rule' => 'validateUnique',
-			],
-			'valid' => [
-				'message' => sprintf('%s: %s', __d('me_cms', 'Allowed chars'), __d('me_cms', 'lowercase letters')),
-				'rule' => [$this, 'lowercaseLetters'],
-			],
-		])->requirePresence('name', 'create');
-		
-		//Label
-		$this->add('label', [
-			'lengthBetween' => [
-				'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-				'rule' => ['lengthBetween', 3, 100],
-			],
-			'unique' => [
-				'message' => __d('me_cms', 'This value is already used'),
-				'provider' => 'table',
-				'rule' => 'validateUnique',
-			],
-		])->requirePresence('label', 'create');
+
+        //Name
+        $this->add('name', [
+            'blank' => [
+                'message' => __d('me_cms', 'Can not be changed'),
+                'on' => 'update',
+                'rule' => 'blank',
+            ],
+            'lengthBetween' => [
+                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+                'rule' => ['lengthBetween', 3, 100],
+            ],
+            'unique' => [
+                'message' => __d('me_cms', 'This value is already used'),
+                'provider' => 'table',
+                'rule' => 'validateUnique',
+            ],
+            'valid' => [
+                'message' => sprintf(
+                    '%s: %s',
+                    __d('me_cms', 'Allowed chars'),
+                    __d('me_cms', 'lowercase letters')
+                ),
+                'rule' => [$this, 'lowercaseLetters'],
+            ],
+        ])->requirePresence('name', 'create');
+
+        //Label
+        $this->add('label', [
+            'lengthBetween' => [
+                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+                'rule' => ['lengthBetween', 3, 100],
+            ],
+            'unique' => [
+                'message' => __d('me_cms', 'This value is already used'),
+                'provider' => 'table',
+                'rule' => 'validateUnique',
+            ],
+        ])->requirePresence('label', 'create');
 
         return $this;
-	}
+    }
 }

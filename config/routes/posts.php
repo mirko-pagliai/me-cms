@@ -15,68 +15,109 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 //Categories
-$routes->connect('/posts/categories',
-    ['controller' => 'PostsCategories', 'action' => 'index'],
-    ['_name' => 'posts_categories']
-);
+if (!routeNameExists('postsCategories')) {
+    $routes->connect(
+        '/posts/categories',
+        ['controller' => 'PostsCategories', 'action' => 'index'],
+        ['_name' => 'postsCategories']
+    );
+}
+
 //Category
-$routes->connect('/posts/category/:slug',
-    ['controller' => 'PostsCategories', 'action' => 'view'],
-    ['_name' => 'posts_category', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-);
+if (!routeNameExists('postsCategory')) {
+    $routes->connect(
+        '/posts/category/:slug',
+        ['controller' => 'PostsCategories', 'action' => 'view'],
+        [
+            '_name' => 'postsCategory',
+            'slug' => '[a-z0-9\-]+',
+            'pass' => ['slug'],
+        ]
+    );
+}
 
 //Tags
-$routes->connect('/posts/tags',
-    ['controller' => 'PostsTags', 'action' => 'index'],
-    ['_name' => 'posts_tags']
-);
+if (!routeNameExists('postsTags')) {
+    $routes->connect(
+        '/posts/tags',
+        ['controller' => 'PostsTags', 'action' => 'index'],
+        ['_name' => 'postsTags']
+    );
+}
+
 //Tag
-$routes->connect('/posts/tag/:tag',
-    ['controller' => 'PostsTags', 'action' => 'view'],
-    ['_name' => 'posts_tag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
-);
+if (!routeNameExists('postsTag')) {
+    $routes->connect(
+        '/posts/tag/:tag',
+        ['controller' => 'PostsTags', 'action' => 'view'],
+        ['_name' => 'postsTag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
+    );
+}
 
 //Posts
-$routes->connect('/posts',
-    ['controller' => 'Posts', 'action' => 'index'],
-    ['_name' => 'posts']
-);
+if (!routeNameExists('posts')) {
+    $routes->connect(
+        '/posts',
+        ['controller' => 'Posts', 'action' => 'index'],
+        ['_name' => 'posts']
+    );
+}
+
 //Posts as RSS
-$routes->connect('/posts/rss',
-    ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
-    ['_name' => 'posts_rss']
-);
+if (!routeNameExists('postsRss')) {
+    $routes->connect(
+        '/posts/rss',
+        ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
+        ['_name' => 'postsRss']
+    );
+}
+
 //Posts search
-$routes->connect('/posts/search',
-    ['controller' => 'Posts', 'action' => 'search'],
-    ['_name' => 'posts_search']
-);
-//Posts by date
-$routes->connect('/posts/:date',
-    ['controller' => 'Posts', 'action' => 'index_by_date'], 
-    [
-        '_name'	=> 'posts_by_date',
-        'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-        'pass' => ['date']
-    ]
-);
+if (!routeNameExists('postsSearch')) {
+    $routes->connect(
+        '/posts/search',
+        ['controller' => 'Posts', 'action' => 'search'],
+        ['_name' => 'postsSearch']
+    );
+}
+
+if (!routeNameExists('postsByDate')) {
+    //Posts by date
+    $routes->connect(
+        '/posts/:date',
+        ['controller' => 'Posts', 'action' => 'indexByDate'],
+        [
+            '_name' => 'postsByDate',
+            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+            'pass' => ['date'],
+        ]
+    );
+}
+
 //Post
-$routes->connect('/post/:slug',
-    ['controller' => 'Posts', 'action' => 'view'],
-    ['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-);
+if (!routeNameExists('post')) {
+    $routes->connect(
+        '/post/:slug',
+        ['controller' => 'Posts', 'action' => 'view'],
+        ['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+    );
+}
+
 //Post preview
-$routes->connect('/post/preview/:slug',
-    ['controller' => 'Posts', 'action' => 'preview'],
-    ['_name' => 'posts_preview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-);
+if (!routeNameExists('postsPreview')) {
+    $routes->connect(
+        '/post/preview/:slug',
+        ['controller' => 'Posts', 'action' => 'preview'],
+        ['_name' => 'postsPreview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
+    );
+}
 
 /**
  * This allows backward compatibility for URLs like:
@@ -85,20 +126,24 @@ $routes->connect('/post/preview/:slug',
  * These URLs will become:
  * /posts?page=3
  */
-$routes->connect('/posts/page::page/*',
-    ['controller' => 'Posts', 'action' => 'index_compatibility'],
+$routes->connect(
+    '/posts/page::page/*',
+    ['controller' => 'Posts', 'action' => 'indexCompatibility'],
     ['page' => '\d+', 'pass' => ['page']]
 );
 
 /**
  * Fallbacks
  */
-$routes->connect('/tags',
+$routes->connect(
+    '/tags',
     ['controller' => 'PostsTags', 'action' => 'index']
 );
-$routes->connect('/rss',
+$routes->connect(
+    '/rss',
     ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']
 );
-$routes->connect('/search',
+$routes->connect(
+    '/search',
     ['controller' => 'Posts', 'action' => 'search']
 );

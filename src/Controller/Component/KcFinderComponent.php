@@ -15,151 +15,124 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         http://kcfinder.sunhater.com/install
  */
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Filesystem\Folder;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 
 /**
  * A component to handle KCFinder
  */
-class KcFinderComponent extends Component {
-	/**
-	 * Components
-	 * @var array
-	 */
+class KcFinderComponent extends Component
+{
+    /**
+     * Components
+     * @var array
+     */
     public $components = ['MeCms.Auth'];
 
-	/**
-	 * Checks for KCFinder
-	 * @return bool
-	 * @uses getKcfinderPath()
-	 */
-	public function checkKcfinder() {
-		return is_readable($this->getKcfinderPath().DS.'index.php');
-	}
-	
-	/**
-	 * Checks if the files directory is writeable
-	 * @return bool
-	 * @uses getFilesPath()
-	 */
-	public function checkFiles() {
-		return folder_is_writeable($this->getFilesPath());
-	}
-	
-	/**
-	 * Sets the configuration for KCFinder.
-	 * It's automatically called by `beforeRender()` when the component is 
-     *  loaded.
-	 * @return bool
-	 * @see beforeRender()
-	 * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-	 * @uses getFilesPath()
-	 * @uses getTypes()
-	 */
-	public function configure() {
-		if($this->request->session()->check('KCFINDER')) {
-			return TRUE;
+    /**
+     * Sets the configuration for KCFinder.
+     *
+     * This method will automatically call by `startup()` when the
+     *  component is loaded.
+     * @return bool
+     * @see http://kcfinder.sunhater.com/install
+     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses getTypes()
+     */
+    public function configure()
+    {
+        if ($this->request->session()->check('KCFINDER')) {
+            return true;
         }
-		
-		//Default configuration
-		$default = [
-			'denyExtensionRename' => TRUE,
-			'denyUpdateCheck' => TRUE,
-			'dirnameChangeChars' => [' ' => '_', ':' => '_'],
-			'disabled' => FALSE,
-			'filenameChangeChars' => [' ' => '_', ':' => '_'],
-			'jpegQuality' => 100,
-			'uploadDir' => $this->getFilesPath(),
-			'uploadURL' => Router::url('/files', TRUE),
-			'types' => $this->getTypes(),
-		];
-		
-		//If the user is not and admin
-		if(!$this->Auth->isGroup(['admin'])) {
-			//Only admins can delete or rename directories
-			$default['access']['dirs'] = [
-                'create' => TRUE,
-                'delete' => FALSE,
-                'rename' => FALSE,
-            ];
-			//Only admins can delete, move or rename files
-			$default['access']['files'] = [
-				'upload' => TRUE,
-				'delete' => FALSE,
-				'copy' => TRUE,
-				'move' => FALSE,
-				'rename' => FALSE,
-			];
-		}
-		
-		//Gets values from configuration
-		$config = config('kcfinder');
-		
-		//Merges options from the configuration
-		$options = am($default, empty($config) ? [] : $config);
 
-		return $this->request->session()->write('KCFINDER', $options);
-	}
-	
-	/**
-	 * Gets the files path
-	 * @return string
-	 */
-	public function getFilesPath() {
-		return WWW_ROOT.'files';
-	}
-	
-	/**
-	 * Gets the folders list
-	 * @return array
-	 * @uses getFilesPath()
-	 */
-	public function getFolders() {
-		return array_values((new Folder($this->getFilesPath()))->read(TRUE, TRUE))[0];
-	}
-	
-	/**
-	 * Gets the KCFinder path
-	 * @return string
-	 */
-	public function getKcfinderPath() {
-		return WWW_ROOT.'vendor'.DS.'kcfinder';
-	}
-	
-	/**
-	 * Gets the file types supported by KCFinder
-	 * @return array
-	 * @uses getFolders()
-	 */
-	public function getTypes() {
-		//Each folder is a type
-		foreach($this->getFolders() as $type) {
-			$types[$type] = '';
+        //Default configuration
+        $options = [
+            'denyExtensionRename' => true,
+            'denyUpdateCheck' => true,
+            'dirnameChangeChars' => [' ' => '_', ':' => '_'],
+            'disabled' => false,
+            'filenameChangeChars' => [' ' => '_', ':' => '_'],
+            'jpegQuality' => 100,
+            'uploadDir' => UPLOADED,
+            'uploadURL' => Router::url('/files', true),
+            'types' => $this->getTypes(),
+        ];
+
+        //If the user is not and admin
+        if (!$this->Auth->isGroup(['admin'])) {
+            //Only admins can delete or rename directories
+            $options['access']['dirs'] = [
+                'create' => true,
+                'delete' => false,
+                'rename' => false,
+            ];
+            //Only admins can delete, move or rename files
+            $options['access']['files'] = [
+                'upload' => true,
+                'delete' => false,
+                'copy' => true,
+                'move' => false,
+                'rename' => false,
+            ];
         }
-		
-		//Adds the "images" type by default
-		$types['images'] = '*img';
-		
-		return $types;
-	}
-	
-	/**
-	 * Called after the controller action is run, but before the view is 
-     *  rendered.
-	 * 
-	 * Configures KCFinder.
-	 * @param \Cake\Event\Event $event An Event instance
-	 * @uses configure()
-	 */
-	public function beforeRender(\Cake\Event\Event $event) {
-		$this->configure();
-	}
+
+        //Merges default options with the options from configuration
+        $options = am($options, config('kcfinder'));
+
+        return $this->request->session()->write('KCFINDER', $options);
+    }
+
+    /**
+     * Gets the file types supported by KCFinder
+     * @return array
+     */
+    public function getTypes()
+    {
+        //Gets the folders list
+        $folders = array_values((new Folder(UPLOADED))->read(true, true))[0];
+
+        //Each folder is a file type supported by KCFinder
+        foreach ($folders as $type) {
+            $types[$type] = '';
+        }
+
+        //Adds the "images" type by default
+        $types['images'] = '*img';
+
+        return $types;
+    }
+
+    /**
+     * Called after the controller's `beforeFilter()` method, but before the
+     *  controller executes the current action handler
+     * @param \Cake\Event\Event $event Event instance
+     * @return void
+     * @uses configure()
+     * @throws InternalErrorException
+     */
+    public function startup(\Cake\Event\Event $event)
+    {
+        //Checks for KCFinder
+        if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php')) {
+            throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
+        }
+
+        //Checks for the files directory (`APP/webroot/files`)
+        if (!folderIsWriteable(UPLOADED)) {
+            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
+        }
+
+        //Configures KCFinder
+        $this->configure();
+    }
 }

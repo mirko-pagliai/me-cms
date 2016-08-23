@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Entity;
 
@@ -39,7 +39,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $modified
  * @property \App\Model\Entity\PagesCategory[] $child_pages_categories
  */
-class PagesCategory extends Entity {
+class PagesCategory extends Entity
+{
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -50,9 +51,9 @@ class PagesCategory extends Entity {
      * @var array
      */
     protected $_accessible = [
-        '*' => TRUE,
-        'id' => FALSE,
-		'page_count' => FALSE,
-		'modified' => FALSE,
+        '*' => true,
+        'id' => false,
+        'page_count' => false,
+        'modified' => false,
     ];
 }

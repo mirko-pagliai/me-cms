@@ -1,26 +1,26 @@
 /*!
  * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
 /* -------------------------------- */
-/*			Cookies policy			*/
+/*          Cookies policy          */
 /* -------------------------------- */
 /* Cookies policy */
 #cookies-policy {
-	background: #000;
-	color: #fff;
-	font-size: 13px;
-	padding: 8px 0;
-	position: fixed;
-	width: 100%;
-	z-index: 9999999;
+    background: #000;
+    color: #fff;
+    font-size: 13px;
+    padding: 8px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 9999999;
 }
 
 /* Cookies policy, links */
 #cookies-policy a {
-	font-size: 13px;
-	margin-left: 6px;
+    font-size: 13px;
+    margin-left: 6px;
 }

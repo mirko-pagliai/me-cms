@@ -15,14 +15,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 //Banner
-$routes->connect('/banner/:id',
-    ['controller' => 'Banners', 'action' => 'open'],
-    ['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
-);
+if (!routeNameExists('banner')) {
+    $routes->connect(
+        '/banner/:id',
+        ['controller' => 'Banners', 'action' => 'open'],
+        ['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
+    );
+}

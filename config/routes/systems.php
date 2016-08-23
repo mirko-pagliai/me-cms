@@ -15,34 +15,53 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 //Accept cookies
-$routes->connect('/accept/cookies',
-    ['controller' => 'Systems', 'action' => 'accept_cookies'],
-    ['_name' => 'accept_cookies']
-);
+if (!routeNameExists('acceptCookies')) {
+    $routes->connect(
+        '/accept/cookies',
+        ['controller' => 'Systems', 'action' => 'acceptCookies'],
+        ['_name' => 'acceptCookies']
+    );
+}
+
 //Contact form
-$routes->connect('/contact/form',
-    ['controller' => 'Systems', 'action' => 'contact_form'],
-    ['_name' => 'contact_form']
-);
+if (!routeNameExists('contactForm')) {
+    $routes->connect(
+        '/contact/form',
+        ['controller' => 'Systems', 'action' => 'contactForm'],
+        ['_name' => 'contactForm']
+    );
+}
+
 //Offline page
-$routes->connect('/offline',
-    ['controller' => 'Systems', 'action' => 'offline'],
-    ['_name' => 'offline']
-);
+if (!routeNameExists('offline')) {
+    $routes->connect(
+        '/offline',
+        ['controller' => 'Systems', 'action' => 'offline'],
+        ['_name' => 'offline']
+    );
+}
+
 //Sitemap
-$routes->connect('/sitemap:ext',
-    ['controller' => 'Systems', 'action' => 'sitemap'],
-    ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
-);
+if (!routeNameExists('sitemap')) {
+    $routes->connect(
+        '/sitemap:ext',
+        ['controller' => 'Systems', 'action' => 'sitemap'],
+        ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
+    );
+}
+
 //Unallowed page
-$routes->connect('/unallowed',
-    ['controller' => 'Systems', 'action' => 'ip_not_allowed'],
-    ['_name' => 'ip_not_allowed']
-);
+if (!routeNameExists('ipNotAllowed')) {
+    $routes->connect(
+        '/unallowed',
+        ['controller' => 'Systems', 'action' => 'ipNotAllowed'],
+        ['_name' => 'ipNotAllowed']
+    );
+}

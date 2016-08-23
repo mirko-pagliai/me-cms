@@ -1,4 +1,17 @@
 # 2.x branch
+## 2.13 branch
+### 2.13.0
+* improved the `KcFinderComponent`;
+* the system checkup checks for login logs;
+* `isOffline()` is now a detector (`$this->request->is('offline')`);
+* removed auto-links for posts and pages. It caused too many problems;
+* updated for CakePHP 3.3;
+* improved routes. Now `DashedRoute` is the default route class;
+* fixed bug for `SerializedLog` when log file doesn't exist;
+* checks if there are already routes with the same name, before declaring new;
+* fixed code for CakePHP Code Sniffer;
+* fixed several typos for page views.
+
 ## 2.12 branch
 ### 2.12.5
 * removed auto-links for posts and pages. It caused too many problems.

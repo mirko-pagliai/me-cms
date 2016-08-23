@@ -15,24 +15,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Pages categories'));
-    
-    /**
-     * Breadcrumb
-     */
-    $this->Breadcrumb->add($title, ['_name' => 'pages_categories']);
-    
-    $categories = array_map(function($category) {
-        return $this->Html->link($category->title, ['_name' => 'pages_category', $category->slug]);
-    }, $categories->toArray());
+$this->extend('/Common/index');
+$this->assign('title', $title = __d('me_cms', 'Pages categories'));
 
-    echo $this->Html->ul($categories, ['icon' => 'caret-right']);
+/**
+ * Breadcrumb
+ */
+$this->Breadcrumb->add($title, ['_name' => 'pagesCategories']);
+
+$categories = array_map(function ($category) {
+    return $this->Html->link(
+        $category->title,
+        ['_name' => 'pagesCategory', $category->slug]
+    );
+}, $categories->toArray());
+
+echo $this->Html->ul($categories, ['icon' => 'caret-right']);

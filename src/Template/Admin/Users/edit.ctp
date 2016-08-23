@@ -15,16 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/form');
-    $this->assign('title', $title = __d('me_cms', 'Edit user'));
+$this->extend('/Admin/Common/form');
+$this->assign('title', $title = __d('me_cms', 'Edit user'));
 ?>
 
 <?= $this->Form->create($user); ?>
@@ -38,31 +36,33 @@
 <fieldset>
     <?php
         echo $this->Form->input('username', [
-            'disabled' => TRUE,
+            'disabled' => true,
             'label' => __d('me_cms', 'Username'),
         ]);
         echo $this->Form->input('email', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Email'),
         ]);
         echo $this->Form->input('password', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Password'),
-            'required' => FALSE,
-            'tip' => __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty'),
+            'required' => false,
+            'tip' => __d('me_cms', 'If you want to change the password just ' .
+                'type a new one. Otherwise, leave the field empty'),
         ]);
         echo $this->Form->input('password_repeat', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Repeat password'),
-            'required' => FALSE,
-            'tip' => __d('me_cms', 'If you want to change the password just type a new one. Otherwise, leave the field empty'),
+            'required' => false,
+            'tip' => __d('me_cms', 'If you want to change the password just ' .
+                'type a new one. Otherwise, leave the field empty'),
         ]);
         echo $this->Form->input('first_name', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'First name'),
         ]);
         echo $this->Form->input('last_name', [
-            'autocomplete' => FALSE,
+            'autocomplete' => false,
             'label' => __d('me_cms', 'Last name'),
         ]);
     ?>

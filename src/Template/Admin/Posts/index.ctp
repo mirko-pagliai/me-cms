@@ -15,23 +15,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+$this->extend('/Admin/Common/index');
+$this->assign('title', __d('me_cms', 'Posts'));
+
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add'),
+    ['action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add category'),
+    ['controller' => 'PostsCategories', 'action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+
+$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
-<?php
-    $this->extend('/Admin/Common/index');
-    $this->assign('title', __d('me_cms', 'Posts'));
-    $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-	$this->append('actions', $this->Html->button(__d('me_cms', 'Add category'), ['controller' => 'PostsCategories', 'action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-    
-	$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
-?>
-
-<?= $this->Form->createInline(FALSE, ['class' => 'filter-form', 'type' => 'get']) ?>
+<?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
@@ -48,7 +55,10 @@
             echo $this->Form->input('active', [
                 'default' => $this->request->query('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                'options' => ['yes' => __d('me_cms', 'Only published'), 'no' => __d('me_cms', 'Only drafts')],
+                'options' => [
+                    'yes' => __d('me_cms', 'Only published'),
+                    'no' => __d('me_cms', 'Only drafts'),
+                ],
             ]);
             echo $this->Form->input('user', [
                 'default' => $this->request->query('user'),
@@ -73,7 +83,7 @@
                 'placeholder' => __d('me_cms', 'tag'),
                 'size' => 10,
             ]);
-            echo $this->Form->submit(NULL, ['icon' => 'search']);
+            echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
     </fieldset>
 <?= $this->Form->end() ?>
@@ -90,78 +100,147 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($posts as $post): ?>
+        <?php foreach ($posts as $post) : ?>
             <tr>
                 <td class="min-width text-center">
                     <code><?= $post->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?></strong>
+                    <strong>
+                        <?php
+                            echo $this->Html->link(
+                                $post->title,
+                                ['action' => 'edit', $post->id]
+                            );
+                        ?>
+                    </strong>
                     <?php
-                        //If the post is not active (it's a draft)
-                        if(!$post->active) {
-                            echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
-                        }
+                    //If the post is not active (it's a draft)
+                    if (!$post->active) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'Draft'),
+                            ['class' => 'record-label record-label-warning']
+                        );
+                    }
 
-                        //If the post is scheduled
-                        if($post->created->isFuture()) {
-                            echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
-                        }
+                    //If the post is scheduled
+                    if ($post->created->isFuture()) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'Scheduled'),
+                            ['class' => 'record-label record-label-warning']
+                        );
+                    }
 
-                        if(!empty($post->tags)) {
-                            echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function($tag) {
-                                return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], ['icon' => 'tag', 'title' => __d('me_cms', 'View items that belong to this category')]);
-                            }, $post->tags)));
-                        }
+                    if (!empty($post->tags)) {
+                        echo $this->Html->div(
+                            'margin-top-5 small',
+                            implode(PHP_EOL, array_map(function ($tag) {
+                                return $this->Html->link(
+                                    $tag->tag,
+                                    ['?' => ['tag' => $tag->tag]],
+                                    [
+                                        'icon' => 'tag',
+                                        'title' => __d('me_cms', 'View items that belong to this category'),
+                                    ]
+                                );
+                            }, $post->tags))
+                        );
+                    }
 
-                        $actions = [];
+                    $actions = [];
 
-                        //Only admins and managers can edit all posts. Users can edit only their own posts
-                        if($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                            $actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $post->id], ['icon' => 'pencil']);					
-                        }
+                    //Only admins and managers can edit all posts. Users can edit only their own posts
+                    if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $post->id],
+                            ['icon' => 'pencil']
+                        );
+                    }
 
-                        //Only admins and managers can delete posts
-                        if($this->Auth->isGroup(['admin', 'manager'])) {
-                            $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $post->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-                        }
+                    //Only admins and managers can delete posts
+                    if ($this->Auth->isGroup(['admin', 'manager'])) {
+                        $actions[] = $this->Form->postLink(
+                            __d('me_cms', 'Delete'),
+                            ['action' => 'delete', $post->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
+                    }
 
-                        //If the post is active and is not scheduled
-                        if($post->active && !$post->created->isFuture()) {
-                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'post', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
-                        }
-                        else {
-                            $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'posts_preview', $post->slug], ['icon' => 'external-link', 'target' => '_blank']);
-                        }
+                    //If the post is active and is not scheduled
+                    if ($post->active && !$post->created->isFuture()) {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Open'),
+                            ['_name' => 'post', $post->slug],
+                            ['icon' => 'external-link', 'target' => '_blank']
+                        );
+                    } else {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Preview'),
+                            ['_name' => 'postsPreview', $post->slug],
+                            ['icon' => 'external-link', 'target' => '_blank']
+                        );
+                    }
 
-                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <?= $this->Html->link($post->category->title, ['?' => ['category' => $post->category->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
-                </td>
-                <td class="min-width text-center">
-                    <?= $this->Html->link($post->user->full_name, ['?' => ['user' => $post->user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]) ?>
+                    <?php
+                    echo $this->Html->link(
+                        $post->category->title,
+                        ['?' => ['category' => $post->category->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    );
+                    ?>
                 </td>
                 <td class="min-width text-center">
                     <?php
-                        switch($post->priority) {
-                            case '1':
-                                echo $this->Html->badge('1', ['class' => 'priority-verylow', 'tooltip' => __d('me_cms', 'Very low')]);
-                                break;
-                            case '2':
-                                echo $this->Html->badge('2', ['class' => 'priority-low', 'tooltip' => __d('me_cms', 'Low')]);
-                                break;
-                            case '4':	
-                                echo $this->Html->badge('4', ['class' => 'priority-high', 'tooltip' => __d('me_cms', 'High')]);
-                                break;
-                            case '5':
-                                echo $this->Html->badge('5', ['class' => 'priority-veryhigh', 'tooltip' => __d('me_cms', 'Very high')]);
-                                break;
-                            default:
-                                echo $this->Html->badge('3', ['class' => 'priority-normal', 'tooltip' => __d('me_cms', 'Normal')]);
-                                break;
-                        }
+                        echo $this->Html->link(
+                            $post->user->full_name,
+                            ['?' => ['user' => $post->user->id]],
+                            ['title' => __d('me_cms', 'View items that belong to this user')]
+                        );
+                    ?>
+                </td>
+                <td class="min-width text-center">
+                    <?php
+                    switch ($post->priority) {
+                        case '1':
+                            echo $this->Html->badge('1', [
+                                'class' => 'priority-verylow',
+                                'tooltip' => __d('me_cms', 'Very low'),
+                            ]);
+                            break;
+                        case '2':
+                            echo $this->Html->badge('2', [
+                                'class' => 'priority-low',
+                                'tooltip' => __d('me_cms', 'Low'),
+                            ]);
+                            break;
+                        case '4':
+                            echo $this->Html->badge('4', [
+                                'class' => 'priority-high',
+                                'tooltip' => __d('me_cms', 'High'),
+                            ]);
+                            break;
+                        case '5':
+                            echo $this->Html->badge('5', [
+                                'class' => 'priority-veryhigh',
+                                'tooltip' => __d('me_cms', 'Very high'),
+                            ]);
+                            break;
+                        default:
+                            echo $this->Html->badge('3', [
+                                'class' => 'priority-normal',
+                                'tooltip' => __d('me_cms', 'Normal'),
+                            ]);
+                            break;
+                    }
                     ?>
                 </td>
                 <td class="min-width text-center">
@@ -177,4 +256,5 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
 <?= $this->element('MeTools.paginator') ?>

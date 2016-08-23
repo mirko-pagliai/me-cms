@@ -15,24 +15,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-	if(empty($months) || count($months) < 2) {
-		return;
-    }
-    
-	$this->extend('/Common/widget');
-	$this->assign('title', __d('me_cms', 'Posts by month'));
-	
-    $months = array_map(function($month) {
-        return $this->Html->link($month->month->i18nFormat('MMMM Y'), ['_name' => 'posts_by_date', sprintf('%s/%s', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM'))]);
-	}, $months);
-    
-	echo $this->Html->ul($months, ['icon' => 'caret-right']);
-?>
+if (empty($months) || count($months) < 2) {
+    return;
+}
+
+$this->extend('/Common/widget');
+$this->assign('title', __d('me_cms', 'Posts by month'));
+
+$months = array_map(function ($month) {
+    return $this->Html->link(
+        $month->month->i18nFormat('MMMM Y'),
+        [
+            '_name' => 'postsByDate',
+            sprintf('%s/%s', $month->month->i18nFormat('YYYY'), $month->month->i18nFormat('MM')),
+        ]
+    );
+}, $months);
+
+echo $this->Html->ul($months, ['icon' => 'caret-right']);

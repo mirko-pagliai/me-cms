@@ -1,47 +1,47 @@
 /*!
  * This file is part of MeCms.
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  */
 
 /* -------------------------------- */
-/*			Container				*/
+/*          Container               */
 /* -------------------------------- */
 /* Container */
 .content-container {
-	margin-bottom: 20px;
-	overflow: hidden;
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 
 /* -------------------------------- */
-/*			Content header			*/
+/*          Content header          */
 /* -------------------------------- */
 /* Header */
 .content-container .content-header {
-	border-color: #777;
-	border-style: solid;
-	border-width: 0 0 0 4px;
+    border-color: #777;
+    border-style: solid;
+    border-width: 0 0 0 4px;
     margin: 0 0 20px;
     padding: 0 0 0 10px;
 }
 
 /* Header, links */
 .content-container .content-header a {
-	color: #555;
-	display: block;
+    color: #555;
+    display: block;
     line-height: 1.2;
     max-width: 100%;
     text-decoration: none;
-	/* No wrap, text truncated with ellipses */
-	overflow: hidden;
+    /* No wrap, text truncated with ellipses */
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 /* Header, links on hover */
 .content-container .content-header a:hover {
-	color: #333;
+    color: #333;
 }
 
 /* Header, category */
@@ -65,41 +65,41 @@
 /* Header, info (author, date, etc) */
 .content-container .content-header .content-info {
     color: #666;
-	font-size: 14px;
-	margin-top: 4px;
+    font-size: 14px;
+    margin-top: 4px;
 }
 
 /* Header, info (author, date, etc), icons */
 .content-container .content-header .content-info .fa {
-	margin-right: 4px;
-	width: 14px;
+    margin-right: 4px;
+    width: 14px;
 }
 
 /* Extra small and small devices */
 @media (max-width: 992px) {
-	/* Header, category */
-	.content-container .content-header .content-category {
-		font-size: 15px;
-	}
-	
-	/* Header, title */
-	.content-container .content-header .content-title {
-		font-size: 18px;
-	}
+    /* Header, category */
+    .content-container .content-header .content-category {
+        font-size: 15px;
+    }
 
-	/* Header, subtitle */
-	.content-container .content-header .content-subtitle {
-		font-size: 16px;
-	}
+    /* Header, title */
+    .content-container .content-header .content-title {
+        font-size: 18px;
+    }
 
-	/* Header, info (author, date, etc) */
-	.content-container .content-header .content-info {
-		font-size: 12px;
-	}
+    /* Header, subtitle */
+    .content-container .content-header .content-subtitle {
+        font-size: 16px;
+    }
+
+    /* Header, info (author, date, etc) */
+    .content-container .content-header .content-info {
+        font-size: 12px;
+    }
 }
 
 /* -------------------------------- */
-/*			Content text			*/
+/*          Content text            */
 /* -------------------------------- */
 /* Content text */
 .content-container .content-text {
@@ -109,47 +109,47 @@
 
 /* Content text, last paragraph */
 .content-container .content-text p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* Content text, images */
 .content-container .content-text img {
-	display: block;
-	height: auto;
-	margin-bottom: 16px;
-	max-width: 100%;
+    display: block;
+    height: auto;
+    margin-bottom: 16px;
+    max-width: 100%;
 }
 
 /* Content text, images pulled on left */
 .content-container .content-text img.pull-left,
 .content-container .content-text img[style~="float:left"] {
-	margin: 2px 16px 8px 0;
+    margin: 2px 16px 8px 0;
 }
 
 /* Content text, images pulled on right */
 .content-container .content-text img.pull-right,
 .content-container .content-text img[style~="float:right"] {
-	margin: 2px 0 8px 16px;
+    margin: 2px 0 8px 16px;
 }
 
 /* Extra small devices */
 @media (max-width: 767px) {
-	/* Content text, images pulled on right and on left */
-	.content-container .content-text img.pull-left,
-	.content-container .content-text img[style~="float:left"],
-	.content-container .content-text img.pull-right,
-	.content-container .content-text img[style~="float:right"] {
-		height: auto;
-		max-width: 40%;
-	}
+    /* Content text, images pulled on right and on left */
+    .content-container .content-text img.pull-left,
+    .content-container .content-text img[style~="float:left"],
+    .content-container .content-text img.pull-right,
+    .content-container .content-text img[style~="float:right"] {
+        height: auto;
+        max-width: 40%;
+    }
 }
 
 /* -------------------------------- */
-/*			Content buttons			*/
+/*          Content buttons         */
 /* -------------------------------- */
 /* Content buttons */
 .content-container .content-buttons {
-	float: right;
+    float: right;
 }
 
 /* Content buttons, links */
@@ -159,122 +159,122 @@
     border-width: 0 0 3px;
     color: #777;
     font-size: 14px;
-	font-weight: bold;
-	line-height: 1;
-	margin-top: 15px;
+    font-weight: bold;
+    line-height: 1;
+    margin-top: 15px;
     padding: 10px;
-	/* Transition for "color" propriety */
-	transition: color .5s ease-in-out;
-	-moz-transition: color .5s ease-in-out;
-	-webkit-transition: color .5s ease-in-out;
+    /* Transition for "color" propriety */
+    transition: color .5s ease-in-out;
+    -moz-transition: color .5s ease-in-out;
+    -webkit-transition: color .5s ease-in-out;
 }
 
 /* Content buttons, links on hover */
 .content-container .content-buttons a:hover {
-	color: #444;
+    color: #444;
 }
 
 /* Content buttons, "read more" button, icon */
 .content-container .content-buttons a.readmore:after {
-	content: "\f178";
-	font-family: FontAwesome;
-	font-size: 12px;
-	margin-left: 6px;
+    content: "\f178";
+    font-family: FontAwesome;
+    font-size: 12px;
+    margin-left: 6px;
 }
 
 /* -------------------------------- */
-/*			Content tags			*/
+/*          Content tags            */
 /* -------------------------------- */
 /* Tags */
 .content-container .content-tags {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 /* Tags, tag */
 .content-container .content-tags a {
-	display: inline-block;
-	margin-right: 6px;
-	text-decoration: none;
+    display: inline-block;
+    margin-right: 6px;
+    text-decoration: none;
 }
 
 /* Tags, tag, icon */
 .content-container .content-tags a .fa {
-	margin-right: 2px;
+    margin-right: 2px;
 }
 
 /* -------------------------------- */
-/*			Content preview			*/
+/*          Content preview         */
 /* -------------------------------- */
 /* Content preview */
 .content-preview {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 /* Content preview, link */
 .content-preview > a {
-	color: #fff;
-	display: block;
-	position: relative;
-	text-align: center;
+    color: #fff;
+    display: block;
+    position: relative;
+    text-align: center;
 }
 
 /* Content preview, link, image */
 .content-preview > a > img {
-	width: 100%;
+    width: 100%;
 }
 
 /* Content preview, link, main wrapper */
 .content-preview > a > div {
-	background: rgba(44, 90, 160, .66);
-	height: 100%;
-	opacity: 0;
-	padding: 10px;
-	position: absolute;
-	/* Transition for "opacity" propriety */
-	transition: opacity 1s ease-in-out;
-	-moz-transition: opacity 1s ease-in-out;
-	-webkit-transition: opacity 1s ease-in-out;
+    background: rgba(44, 90, 160, .66);
+    height: 100%;
+    opacity: 0;
+    padding: 10px;
+    position: absolute;
+    /* Transition for "opacity" propriety */
+    transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
 }
 
 /* Content preview, link, main wrapper on hover */
 .content-preview > a > div:hover {
-	opacity: 1;
+    opacity: 1;
 }
 
 /* Content preview, link, main wrapper, centered wrapper */
 .content-preview > a > div > div {
-	margin-top: 50%;
-	/* Vertical align: middle */
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
+    margin-top: 50%;
+    /* Vertical align: middle */
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 /* Content preview, content title */
 .content-preview .content-title {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 /* -------------------------------- */
-/*			Shareaholic				*/
+/*          Shareaholic             */
 /* -------------------------------- */
 /* Shareaholic wrapper */
 .shareaholic-canvas {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 /* -------------------------------- */
-/*		Related contents			*/
+/*      Related contents            */
 /* -------------------------------- */
 /* Related contents */
 .related-contents {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 /* Related contents, links */
 .related-contents a {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

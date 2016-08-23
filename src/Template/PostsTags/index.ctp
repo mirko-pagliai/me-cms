@@ -15,24 +15,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Common/index');
-    $this->assign('title', $title = __d('me_cms', 'Posts tags'));
-    
-    /**
-     * Breadcrumb
-     */
-    $this->Breadcrumb->add($title, ['_name' => 'posts_tags']);
-    
-    $tags = array_map(function($tag) {
-        return $this->Html->link($tag->tag, ['_name' => 'posts_tag', $tag->slug]);
-    }, $tags->toArray());
+$this->extend('/Common/index');
+$this->assign('title', $title = __d('me_cms', 'Posts tags'));
 
-    echo $this->Html->ul($tags, ['icon' => 'caret-right']);
+/**
+ * Breadcrumb
+ */
+$this->Breadcrumb->add($title, ['_name' => 'postsTags']);
+
+$tags = array_map(function ($tag) {
+    return $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug]);
+}, $tags->toArray());
+
+echo $this->Html->ul($tags, ['icon' => 'caret-right']);

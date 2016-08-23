@@ -15,80 +15,86 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<?php
-			echo $this->Html->charset();
-			echo $this->Html->viewport();
-			echo $this->Html->title($this->fetch('title'));
-			echo $this->fetch('meta');
-			
-			echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => TRUE]);
-			echo $this->Asset->css([
-				'/vendor/font-awesome/css/font-awesome.min',
-				'MeCms.bootstrap.min',
-				'MeTools.default',
-				'MeTools.forms',
-				'MeCms.userbar',
-				'MeCms.cookies',
-				'MeCms.widgets',
-				'MeCms.layout',
-				'MeCms.contents',
-				'MeCms.photos'
-			], ['block' => TRUE]);
-			echo $this->fetch('css');
-			
-			echo $this->Asset->js([
-				'/vendor/jquery/jquery.min',
-				'/vendor/js-cookie/js.cookie',
-				'MeCms.bootstrap.min',
-				'MeTools.default',
-				'MeCms.layout'
-			], ['block' => TRUE]);
-			echo $this->fetch('script');
-		?>
-	</head>
-	<body>
-		<?= $this->element('MeCms.userbar') ?>
-		<?= $this->element('MeCms.cookies_policy') ?>
-		<header>
-			<div class="container">
-				<?php
-					$logo = $this->Html->h1(config('main.title'));
+    <head>
+        <?php
+            echo $this->Html->charset();
+            echo $this->Html->viewport();
+            echo $this->Html->title($this->fetch('title'));
+            echo $this->fetch('meta');
 
-					//Check if the logo image exists
-					if(is_readable(WWW_ROOT.'img'.DS.config('default.logo'))) {
-						$logo = $this->Html->img(config('default.logo'));
-                    }
-                    
-					echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);		
-				?>
-			</div>
-			<?= $this->element('MeCms.topbar', [], ['cache' => ['key' => 'topbar']]) ?>
-		</header>
-		<div class="container">
-			<div class="row">
-				<div id="content" class="col-sm-8 col-md-9">
-					<?= $this->Flash->render() ?>
+            echo $this->Html->css(
+                'https://fonts.googleapis.com/css?family=Roboto',
+                ['block' => true]
+            );
+            echo $this->Asset->css([
+                '/vendor/font-awesome/css/font-awesome.min',
+                'MeCms.bootstrap.min',
+                'MeTools.default',
+                'MeTools.forms',
+                'MeCms.userbar',
+                'MeCms.cookies',
+                'MeCms.widgets',
+                'MeCms.layout',
+                'MeCms.contents',
+                'MeCms.photos'
+            ], ['block' => true]);
+            echo $this->fetch('css');
+
+            echo $this->Asset->js([
+                '/vendor/jquery/jquery.min',
+                '/vendor/js-cookie/js.cookie',
+                'MeCms.bootstrap.min',
+                'MeTools.default',
+                'MeCms.layout'
+            ], ['block' => true]);
+            echo $this->fetch('script');
+        ?>
+    </head>
+    <body>
+        <?= $this->element('MeCms.userbar') ?>
+        <?= $this->element('MeCms.cookies_policy') ?>
+        <header>
+            <div class="container">
+                <?php
+                $logo = $this->Html->h1(config('main.title'));
+
+                //Check if the logo image exists
+                if (is_readable(WWW_ROOT . 'img' . DS . config('default.logo'))) {
+                    $logo = $this->Html->img(config('default.logo'));
+                }
+
+                echo $this->Html->link($logo, '/', [
+                    'id' => 'logo',
+                    'title' => __d('me_cms', 'Homepage'),
+                ]);
+                ?>
+            </div>
+            <?= $this->element('MeCms.topbar', [], ['cache' => ['key' => 'topbar']]) ?>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col-sm-8 col-md-9">
+                    <?= $this->Flash->render() ?>
                     <?= $this->Breadcrumb->get() ?>
-					<?= $this->fetch('content') ?>
-				</div>
-				<div id="sidebar" class="col-sm-4 col-md-3">
-					<?= $this->fetch('sidebar') ?>
-					<?= $this->Widget->all() ?>
-				</div>
-			</div>
-		</div>
-		<?= $this->element('MeCms.footer', [], ['cache' => ['key' => 'footer']]) ?>
-		<?= $this->fetch('css_bottom') ?>
-		<?= $this->fetch('script_bottom') ?>
-	</body>
+                    <?= $this->fetch('content') ?>
+                </div>
+                <div id="sidebar" class="col-sm-4 col-md-3">
+                    <?= $this->fetch('sidebar') ?>
+                    <?= $this->Widget->all() ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->element('MeCms.footer', [], ['cache' => ['key' => 'footer']]) ?>
+        <?= $this->fetch('css_bottom') ?>
+        <?= $this->fetch('script_bottom') ?>
+    </body>
 </html>

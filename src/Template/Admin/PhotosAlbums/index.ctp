@@ -15,18 +15,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/index');
-    $this->assign('title', __d('me_cms', 'Albums'));
-    $this->append('actions', $this->Html->button(__d('me_cms', 'Add'), ['action' => 'add'], ['class' => 'btn-success', 'icon' => 'plus']));
-	$this->append('actions', $this->Html->button(__d('me_cms', 'Upload photos'), ['controller' => 'Photos', 'action' => 'upload'], ['class' => 'btn-success', 'icon' => 'plus']));
+$this->extend('/Admin/Common/index');
+$this->assign('title', __d('me_cms', 'Albums'));
+
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add'),
+    ['action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Upload photos'),
+    ['controller' => 'Photos', 'action' => 'upload'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
 ?>
 
 <table class="table table-hover">
@@ -39,53 +46,101 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($albums as $album): ?>
+        <?php foreach ($albums as $album) : ?>
             <tr>
                 <td class="min-width text-center">
                     <code><?= $album->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($album->title, ['action' => 'edit', $album->id]) ?></strong>
+                    <strong>
+                        <?php
+                            echo $this->Html->link(
+                                $album->title,
+                                ['action' => 'edit', $album->id]
+                            );
+                        ?>
+                    </strong>
                     <?php
-                        //If the album is not active (not published)
-                        if(!$album->active) {
-                            echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
-                        }
+                    //If the album is not active (not published)
+                    if (!$album->active) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'Not published'),
+                            ['class' => 'record-label record-label-warning']
+                        );
+                    }
 
-                        $actions = [
-                            $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $album->id], ['icon' => 'pencil']),
-                        ];
+                    $actions = [
+                        $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $album->id],
+                            ['icon' => 'pencil']
+                        ),
+                    ];
 
-                        //Only admins  can delete albums
-                        if($this->Auth->isGroup('admin')) {
-                            $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $album->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-                        }
-                        
-                        $actions[] = $this->Html->link(__d('me_cms', 'Upload'), ['controller' => 'Photos', 'action' => 'upload', '?' => ['album' => $album->id]], ['icon' => 'upload']);
-                        
-                        //If the the is active
-                        if($album->active) {
-                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), ['_name' => 'album', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
-                        }
-                        else {
-                            $actions[] = $this->Html->link(__d('me_cms', 'Preview'), ['_name' => 'albums_preview', $album->slug], ['icon' => 'external-link', 'target' => '_blank']);
-                        }
-                        
-                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    //Only admins  can delete albums
+                    if ($this->Auth->isGroup('admin')) {
+                        $actions[] = $this->Form->postLink(
+                            __d('me_cms', 'Delete'),
+                            ['action' => 'delete', $album->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
+                    }
+
+                    $actions[] = $this->Html->link(
+                        __d('me_cms', 'Upload'),
+                        [
+                            'controller' => 'Photos',
+                            'action' => 'upload',
+                            '?' => ['album' => $album->id],
+                        ],
+                        ['icon' => 'upload']
+                    );
+
+            //If the the is active
+            if ($album->active) {
+                $actions[] = $this->Html->link(
+                    __d('me_cms', 'Open'),
+                    ['_name' => 'album', $album->slug],
+                    ['icon' => 'external-link', 'target' => '_blank']
+                );
+            } else {
+                $actions[] = $this->Html->link(
+                    __d('me_cms', 'Preview'),
+                    ['_name' => 'albumsPreview', $album->slug],
+                    ['icon' => 'external-link', 'target' => '_blank']
+                );
+            }
+
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
                 <td class="text-center">
                     <?= $album->description ?>
                 </td>
                 <td class="min-width text-center">
-                    <?php if($album->photo_count): ?>
-                        <?= $this->Html->link($album->photo_count, ['controller' => 'Photos', 'action' => 'index', '?' => ['album' => $album->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
-                    <?php else: ?>
-                        <?= $album->photo_count ?>
-                    <?php endif; ?>
+                    <?php
+                    if ($album->photo_count) {
+                        echo $this->Html->link(
+                            $album->photo_count,
+                            [
+                                'controller' => 'Photos',
+                                'action' => 'index',
+                                '?' => ['album' => $album->id],
+                            ],
+                            ['title' => __d('me_cms', 'View items that belong to this category')]
+                        );
+                    } else {
+                        echo $album->photo_count;
+                    }
+                    ?>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+
 <?= $this->element('MeTools.paginator') ?>

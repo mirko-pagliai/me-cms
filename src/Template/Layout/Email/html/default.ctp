@@ -15,39 +15,55 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<?= $this->Html->title(config('main.title')) ?>
-	</head>
-	<body>
-		<?php
-			foreach(explode("\n", trim($this->fetch('content'))) as $line)
-				echo $line.'<br />'.PHP_EOL;
-		?>
-		<br />
-        
-		<small>
-			<?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(config('main.title'), $this->Url->build('/', TRUE))) ?>
-		</small>
-        
+    <head>
+        <?= $this->Html->title(config('main.title')) ?>
+    </head>
+    <body>
+        <?php
+        foreach (explode("\n", trim($this->fetch('content'))) as $line) {
+            echo $line . '<br />' . PHP_EOL;
+        }
+        ?>
         <br />
-        
-		<small>
-            <?= __d('me_cms', 'The request has been sent from the IP {0}', $ip_address) ?>
+
+        <small>
+            <?php
+                echo __d(
+                    'me_cms',
+                    'This email was sent automatically from {0}',
+                    $this->Html->link(
+                        config('main.title'),
+                        $this->Url->build('/', true)
+                    )
+                );
+            ?>
         </small>
-        
+
         <br />
-        
-		<small>
+
+        <small>
+            <?php
+                echo __d(
+                    'me_cms',
+                    'The request has been sent from the IP {0}',
+                    $ip_address
+                );
+            ?>
+        </small>
+
+        <br />
+
+        <small>
             <?= __d('me_cms', 'Please, don\'t reply to this email') ?>
-        </small>		
-	</body>
+        </small>
+    </body>
 </html>

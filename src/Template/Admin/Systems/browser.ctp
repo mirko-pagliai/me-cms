@@ -15,23 +15,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/index');
-    $this->assign('title', __d('me_cms', 'Media browser'));
-    
-	$this->Asset->js('MeCms.admin/kcfinder', ['block' => 'script_bottom']);
+$this->extend('/Admin/Common/index');
+$this->assign('title', __d('me_cms', 'Media browser'));
+
+$this->Asset->js('MeCms.admin/kcfinder', ['block' => 'script_bottom']);
 ?>
 
 <div class="well">
-    <?php 
-        echo $this->Form->createInline(FALSE, ['type' => 'get']);
+    <?php
+        echo $this->Form->createInline(false, ['type' => 'get']);
         echo $this->Form->label('type', __d('me_cms', 'Type'));
         echo $this->Form->input('type', [
             'default' => $this->request->query('type'),
@@ -42,6 +40,10 @@
     ?>
 </div>
 
-<?php if(!empty($kcfinder)): ?>
-    <?= $this->Html->iframe($kcfinder, ['id' => 'kcfinder', 'width' => '100%']) ?>
-<?php endif; ?>
+<?php
+if (!empty($kcfinder)) {
+    echo $this->Html->iframe(
+        $kcfinder,
+        ['id' => 'kcfinder', 'width' => '100%']
+    );
+}

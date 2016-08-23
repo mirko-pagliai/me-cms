@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php $this->extend('/Admin/Common/Banners/index'); ?>
+$this->extend('/Admin/Common/Banners/index');
+?>
 
 <table class="table table-hover">
     <thead>
@@ -37,46 +37,83 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($banners as $banner): ?>
+        <?php foreach ($banners as $banner) : ?>
             <tr>
                 <td class="min-width text-center">
                     <code><?= $banner->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?></strong>
+                    <strong>
+                        <?php
+                            echo $this->Html->link(
+                                $banner->filename,
+                                ['action' => 'edit', $banner->id]
+                            );
+                        ?>
+                    </strong>
+                    
                     <?php
-                        //If the banner is not active (not published)
-                        if(!$banner->active) {
-                            echo $this->Html->span(__d('me_cms', 'Not published'), ['class' => 'record-label record-label-warning']);
-                        }
+                    //If the banner is not active (not published)
+                    if (!$banner->active) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'Not published'),
+                            ['class' => 'record-label record-label-warning']
+                        );
+                    }
 
-                        $actions = [
-                            $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
-                        ];
+                    $actions = [
+                        $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $banner->id],
+                            ['icon' => 'pencil']
+                        ),
+                    ];
 
-                        if($banner->target) {
-                            $actions[] = $this->Html->link(__d('me_cms', 'Open'), $banner->target, ['icon' => 'external-link', 'target' => '_blank']);
-                        }
+                    if ($banner->target) {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Open'),
+                            $banner->target,
+                            ['icon' => 'external-link', 'target' => '_blank']
+                        );
+                    }
 
-                        $actions[] = $this->Html->link(__d('me_cms', 'Download'), ['action' => 'download', $banner->id], ['icon' => 'download']);
+                    $actions[] = $this->Html->link(
+                        __d('me_cms', 'Download'),
+                        ['action' => 'download', $banner->id],
+                        ['icon' => 'download']
+                    );
 
-                        //Only admins can delete banners
-                        if($this->Auth->isGroup('admin')) {
-                            $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $banner->id], ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]);
-                        }
+            //Only admins can delete banners
+            if ($this->Auth->isGroup('admin')) {
+                $actions[] = $this->Form->postLink(
+                    __d('me_cms', 'Delete'),
+                    ['action' => 'delete', $banner->id],
+                    [
+                        'class' => 'text-danger',
+                        'icon' => 'trash-o',
+                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                    ]
+                );
+            }
 
-                        echo $this->Html->ul($actions, ['class' => 'actions']);								
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $this->Html->link($banner->position->name, ['?' => ['position' => $banner->position->id]], ['title' => __d('me_cms', 'View items that belong to this category')]) ?>
+                    <?php
+                        echo $this->Html->link(
+                            $banner->position->name,
+                            ['?' => ['position' => $banner->position->id]],
+                            ['title' => __d('me_cms', 'View items that belong to this category')]
+                        );
+                    ?>
                 </td>
                 <td class="text-center hidden-xs">
                     <?php
-                        if($banner->target) {
-                            $truncated = $this->Text->truncate($banner->target, 50, ['exact' => FALSE]);
-                            echo $this->Html->link($truncated, $banner->target, ['target' => '_blank']);
-                        }
+                    if ($banner->target) {
+                        $truncated = $this->Text->truncate($banner->target, 50, ['exact' => false]);
+                        echo $this->Html->link($truncated, $banner->target, ['target' => '_blank']);
+                    }
                     ?>
                 </td>
                 <td class="text-center">
@@ -86,7 +123,9 @@
                     <?= $banner->click_count ?>
                 </td>
                 <td class="min-width text-center">
-                    <div class="hidden-xs"><?= $banner->created->i18nFormat(config('main.datetime.long')) ?></div>
+                    <div class="hidden-xs">
+                        <?= $banner->created->i18nFormat(config('main.datetime.long')) ?>
+                    </div>
                     <div class="visible-xs">
                         <div><?= $banner->created->i18nFormat(config('main.date.short')) ?></div>
                         <div><?= $banner->created->i18nFormat(config('main.time.short')) ?></div>

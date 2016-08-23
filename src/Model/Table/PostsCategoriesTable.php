@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
@@ -32,75 +32,84 @@ use MeCms\Model\Table\AppTable;
  * @property \Cake\ORM\Association\BelongsTo $Parents
  * @property \Cake\ORM\Association\HasMany $Childs
  */
-class PostsCategoriesTable extends AppTable {
-	/**
-	 * Name of the configuration to use for this table
-	 * @var string|array
-	 */
-	public $cache = 'posts';
-	
+class PostsCategoriesTable extends AppTable
+{
     /**
-     * Returns a rules checker object that will be used for validating application integrity
+     * Name of the configuration to use for this table
+     * @var string|array
+     */
+    public $cache = 'posts';
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules) {
+    public function buildRules(RulesChecker $rules)
+    {
         $rules->add($rules->existsIn(['parent_id'], 'Parents'));
+        
         return $rules;
     }
-	
-	/**
-	 * "Active" find method
-	 * @param Query $query Query object
-	 * @param array $options Options
-	 * @return Query Query object
-	 */
-	public function findActive(Query $query, array $options) {
+
+    /**
+     * "Active" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findActive(Query $query, array $options)
+    {
         $query->where([
             sprintf('%s.post_count >', $this->alias()) => 0,
         ]);
-		
+
         return $query;
     }
-	
-	/**
-	 * Gets the categories list
-	 * @return array List
-	 * @uses $cache
-	 */
-	public function getList() {
-		return $this->find('list')
-			->cache('categories_list', $this->cache)
-			->toArray();
-	}
-	
-	/**
-	 * Gets the categories tree list
-	 * @return array List
-	 * @uses $cache
-	 */
-	public function getTreeList() {
-		return $this->find('treeList')
-			->cache('categories_tree_list', $this->cache)
-			->toArray();
-	}
-	
+
+    /**
+     * Gets the categories list
+     * @return array List
+     * @uses $cache
+     */
+    public function getList()
+    {
+        return $this->find('list')
+            ->cache('categories_list', $this->cache)
+            ->toArray();
+    }
+
+    /**
+     * Gets the categories tree list
+     * @return array List
+     * @uses $cache
+     */
+    public function getTreeList()
+    {
+        return $this->find('treeList')
+            ->cache('categories_tree_list', $this->cache)
+            ->toArray();
+    }
+
     /**
      * Initialize method
      * @param array $config The configuration for the table
+     * @return void
      */
-    public function initialize(array $config) {
+    public function initialize(array $config)
+    {
         parent::initialize($config);
 
         $this->table('posts_categories');
         $this->displayField('title');
         $this->primaryKey('id');
-		
-		$this->belongsTo('Parents', [
+
+        $this->belongsTo('Parents', [
             'className' => 'MeCms.PostsCategories',
             'foreignKey' => 'parent_id',
         ]);
-		$this->hasMany('Childs', [
+        $this->hasMany('Childs', [
             'className' => 'MeCms.PostsCategories',
             'foreignKey' => 'parent_id',
         ]);
@@ -108,7 +117,7 @@ class PostsCategoriesTable extends AppTable {
             'className' => 'MeCms.Posts',
             'foreignKey' => 'category_id',
         ]);
-		
+
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');
     }
@@ -116,9 +125,10 @@ class PostsCategoriesTable extends AppTable {
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-	 * @return \MeCms\Model\Validation\PostsCategoryValidator
-	 */
-    public function validationDefault(\Cake\Validation\Validator $validator) {
-		return new \MeCms\Model\Validation\PostsCategoryValidator;
+     * @return \MeCms\Model\Validation\PostsCategoryValidator
+     */
+    public function validationDefault(\Cake\Validation\Validator $validator)
+    {
+        return new \MeCms\Model\Validation\PostsCategoryValidator;
     }
 }

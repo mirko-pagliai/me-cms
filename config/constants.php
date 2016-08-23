@@ -15,32 +15,43 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
 //Sets the default banners directory
-if(!defined('BANNERS')) {
-	define('BANNERS', WWW_ROOT.'img'.DS.'banners');
+if (!defined('BANNERS')) {
+    define('BANNERS', WWW_ROOT . 'img' . DS . 'banners');
 }
 
 //Sets the datetime format for MySql
-if(!defined('FORMAT_FOR_MYSQL')) {
+if (!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
 }
 
+//Sets the default login log directory
+if (!defined('LOGIN_LOGS')) {
+    define('LOGIN_LOGS', TMP . 'login');
+}
+
 //Sets the default MeCms name
-if(!defined('MECMS')) {
+if (!defined('MECMS')) {
     define('MECMS', 'MeCms');
 }
 
 //Sets the default photos directory
-if(!defined('PHOTOS')) {
-	define('PHOTOS', WWW_ROOT.'img'.DS.'photos');
-} 
+if (!defined('PHOTOS')) {
+    define('PHOTOS', WWW_ROOT . 'img' . DS . 'photos');
+}
+
 //Sets the default sitemap path
-if(!defined('SITEMAP')) {
-	define('SITEMAP', TMP.'sitemap.xml.gz');
+if (!defined('SITEMAP')) {
+    define('SITEMAP', TMP . 'sitemap.xml.gz');
+}
+
+//Sets the default directory for uploaded files
+if (!defined('UPLOADED')) {
+    define('UPLOADED', WWW_ROOT . 'files');
 }

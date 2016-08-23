@@ -15,21 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/form');
-    $this->assign('title', __d('me_cms', 'Upload banners'));
+$this->extend('/Admin/Common/form');
+$this->assign('title', __d('me_cms', 'Upload banners'));
 ?>
 
 <div class="well">
     <?php
-        echo $this->Form->createInline(NULL, ['type' => 'get']);
+        echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
         echo $this->Form->input('position', [
             'default' => $this->request->query('position'),
@@ -43,7 +41,7 @@
 </div>
 
 <?php
-    if($this->request->query('position')) {
-        echo $this->element('admin/uploader');
-    }
+if ($this->request->query('position')) {
+    echo $this->element('admin/uploader');
+}
 ?>

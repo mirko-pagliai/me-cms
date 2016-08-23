@@ -15,70 +15,105 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-?>
 
-<?php
-    $this->extend('/Admin/Common/view');
-    $this->assign('title', $user->full_name);
-    $this->append('actions', $this->Html->button(__d('me_cms', 'Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-success', 'icon' => 'pencil']));
+$this->extend('/Admin/Common/view');
+$this->assign('title', $user->full_name);
 
-    //Only admins can activate accounts and delete users
-    if($this->Auth->isGroup('admin')) {
-        //If the user is not active (pending)
-        if(!$user->active) {
-            $this->append('actions', $this->Form->postButton(__d('me_cms', 'Activate'), ['action' => 'activate_account', $user->id], ['class' => 'btn-success', 'icon' => 'user-plus', 'confirm' => __d('me_cms', 'Are you sure you want to activate this account?')]));
-        }
-        
-        $this->append('actions', $this->Form->postButton(__d('me_cms', 'Delete'), ['action' => 'delete', $user->id], ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => __d('me_cms', 'Are you sure you want to delete this?')]));
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Edit'),
+    ['action' => 'edit', $user->id],
+    ['class' => 'btn-success', 'icon' => 'pencil']
+));
+
+//Only admins can activate accounts and delete users
+if ($this->Auth->isGroup('admin')) {
+    //If the user is not active (pending)
+    if (!$user->active) {
+        $this->append('actions', $this->Form->postButton(
+            __d('me_cms', 'Activate'),
+            ['action' => 'activateAccount', $user->id],
+            [
+                'class' => 'btn-success',
+                'icon' => 'user-plus',
+                'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
+            ]
+        ));
     }
+
+    $this->append('actions', $this->Form->postButton(
+        __d('me_cms', 'Delete'),
+        ['action' => 'delete', $user->id],
+        [
+            'class' => 'btn-danger',
+            'icon' => 'trash-o',
+            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+        ]
+    ));
+}
 ?>
 
 <dl class="dl-horizontal">
     <?php
-        echo $this->Html->dt(__d('me_cms', 'Username'));
-        echo $this->Html->dd($user->username);
+    echo $this->Html->dt(__d('me_cms', 'Username'));
+    echo $this->Html->dd($user->username);
 
-        echo $this->Html->dt(__d('me_cms', 'Email'));
-        echo $this->Html->dd($user->email);
+    echo $this->Html->dt(__d('me_cms', 'Email'));
+    echo $this->Html->dd($user->email);
 
-        echo $this->Html->dt(__d('me_cms', 'Name'));
-        echo $this->Html->dd($user->full_name);
+    echo $this->Html->dt(__d('me_cms', 'Name'));
+    echo $this->Html->dd($user->full_name);
 
-        echo $this->Html->dt(__d('me_cms', 'Group'));
-        echo $this->Html->dd($user->group->label);
+    echo $this->Html->dt(__d('me_cms', 'Group'));
+    echo $this->Html->dd($user->group->label);
 
-        echo $this->Html->dt(__d('me_cms', 'Status'));
+    echo $this->Html->dt(__d('me_cms', 'Status'));
 
-        //If the user is banned
-        if($user->banned) {
-            echo $this->Html->dd(__d('me_cms', 'Banned'), ['class' => 'text-danger']);
-        }
-        //Else, if the user is pending (not active)
-        elseif(!$user->active) {
-            echo $this->Html->dd(__d('me_cms', 'Pending'), ['class' => 'text-warning']);
-        }
-        //Else, if the user is active
-        else {
-            echo $this->Html->dd(__d('me_cms', 'Active'), ['class' => 'text-success']);
-        }
-        
-        if($user->post_count) {
-            echo $this->Html->dt(__d('me_cms', 'Posts'));
-            echo $this->Html->dd($this->Html->link($user->post_count, ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]], ['title' => __d('me_cms', 'View items that belong to this user')]));
-        }
+    //If the user is banned
+    if ($user->banned) {
+        echo $this->Html->dd(
+            __d('me_cms', 'Banned'),
+            ['class' => 'text-danger']
+        );
+    //Else, if the user is pending (not active)
+    } elseif (!$user->active) {
+        echo $this->Html->dd(
+            __d('me_cms', 'Pending'),
+            ['class' => 'text-warning']
+        );
+    //Else, if the user is active
+    } else {
+        echo $this->Html->dd(
+            __d('me_cms', 'Active'),
+            ['class' => 'text-success']
+        );
+    }
 
-        echo $this->Html->dt(__d('me_cms', 'Created'));
-        echo $this->Html->dd($user->created->i18nFormat(config('main.datetime.long')));
+    if ($user->post_count) {
+        echo $this->Html->dt(__d('me_cms', 'Posts'));
+        echo $this->Html->dd($this->Html->link(
+            $user->post_count,
+            [
+                'controller' => 'Posts',
+                'action' => 'index',
+                '?' => ['user' => $user->id],
+            ],
+            ['title' => __d('me_cms', 'View items that belong to this user')]
+        ));
+    }
+
+    echo $this->Html->dt(__d('me_cms', 'Created'));
+    echo $this->Html->dd($user->created->i18nFormat(config('main.datetime.long')));
     ?>
 </dl>
 
-<?php if(!empty($loginLog)): ?>
-    <h4><?= __d('me_cms', 'Last login') ?></h4>
+<?php
+if (!empty($loginLog)) {
+    echo $this->Html->h4(__d('me_cms', 'Last login'));
 
-    <?= $this->element('admin/login-log') ?>
-<?php endif; ?>
+    echo $this->element('admin/login-log');
+}

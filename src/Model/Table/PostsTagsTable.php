@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
@@ -33,35 +33,41 @@ use MeCms\Model\Table\AppTable;
  * @property \Cake\ORM\Association\BelongsTo $Tags
  * @property \Cake\ORM\Association\BelongsTo $Posts
  */
-class PostsTagsTable extends AppTable {
-	/**
-	 * Name of the configuration to use for this table
-	 * @var string|array
-	 */
-	public $cache = 'posts';
-	
+class PostsTagsTable extends AppTable
+{
     /**
-     * Returns a rules checker object that will be used for validating application integrity
+     * Name of the configuration to use for this table
+     * @var string|array
+     */
+    public $cache = 'posts';
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules) {
+    public function buildRules(RulesChecker $rules)
+    {
         $rules->add($rules->existsIn(['tag_id'], 'Tags'));
         $rules->add($rules->existsIn(['post_id'], 'Posts'));
+        
         return $rules;
     }
-	
+
     /**
      * Initialize method
      * @param array $config The configuration for the table
+     * @return void
      */
-    public function initialize(array $config) {
+    public function initialize(array $config)
+    {
         parent::initialize($config);
 
         $this->table('posts_tags');
         $this->displayField('id');
         $this->primaryKey('id');
-		
+
         $this->belongsTo('Tags', [
             'foreignKey' => 'tag_id',
             'joinType' => 'INNER',
@@ -72,7 +78,7 @@ class PostsTagsTable extends AppTable {
             'joinType' => 'INNER',
             'className' => 'MeCms.Posts',
         ]);
-		
+
         $this->addBehavior('CounterCache', ['Tags' => ['post_count']]);
     }
 
@@ -81,7 +87,8 @@ class PostsTagsTable extends AppTable {
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator) {
+    public function validationDefault(Validator $validator)
+    {
         return $validator;
     }
 }

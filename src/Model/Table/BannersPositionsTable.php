@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
@@ -30,50 +30,55 @@ use MeCms\Model\Table\AppTable;
 /**
  * BannersPositions model
  */
-class BannersPositionsTable extends AppTable {
-	/**
-	 * Name of the configuration to use for this table
-	 * @var string|array
-	 */
-	public $cache = 'banners';
-	
-	/**
-	 * Gets the positions list
-	 * @return array List
-	 * @uses $cache
-	 */
-	public function getList() {
-		return $this->find('list')
+class BannersPositionsTable extends AppTable
+{
+    /**
+     * Name of the configuration to use for this table
+     * @var string|array
+     */
+    public $cache = 'banners';
+
+    /**
+     * Gets the positions list
+     * @return array List
+     * @uses $cache
+     */
+    public function getList()
+    {
+        return $this->find('list')
             ->order(['name' => 'ASC'])
-			->cache('positions_list', $this->cache)
-			->toArray();
-	}
-	
+            ->cache('positions_list', $this->cache)
+            ->toArray();
+    }
+
     /**
      * Initialize method
      * @param array $config The configuration for the table
+     * @return void
      */
-    public function initialize(array $config) {
+    public function initialize(array $config)
+    {
         parent::initialize($config);
 
         $this->table('banners_positions');
         $this->displayField('name');
         $this->primaryKey('id');
-		
+
         $this->hasMany('Banners', [
             'foreignKey' => 'position_id',
             'className' => 'MeCms.Banners',
         ]);
-        
+
         $this->addBehavior('Timestamp');
     }
 
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-	 * @return \MeCms\Model\Validation\BannersPositionValidator
-	 */
-    public function validationDefault(\Cake\Validation\Validator $validator) {
-		return new \MeCms\Model\Validation\BannersPositionValidator;
+     * @return \MeCms\Model\Validation\BannersPositionValidator
+     */
+    public function validationDefault(\Cake\Validation\Validator $validator)
+    {
+        return new \MeCms\Model\Validation\BannersPositionValidator;
     }
 }

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Entity;
 
@@ -42,39 +42,46 @@ use Cake\ORM\Entity;
  * @property \MeCms\Model\Entity\Post[] $posts
  * @property \MeCms\Model\Entity\Token[] $tokens
  */
-class User extends Entity {
+class User extends Entity
+{
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
      */
     protected $_accessible = [
-        '*' => TRUE,
-        'id' => FALSE,
-		'post_count' => FALSE,
-		'modified' => FALSE,
+        '*' => true,
+        'id' => false,
+        'post_count' => false,
+        'modified' => false,
     ];
-	
-	/**
-	 * Virtual fields that should be exposed
-	 * @var array
-	 */
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
     protected $_virtual = ['full_name'];
-	
-	/**
-	 * Gets the full name (virtual field)
-	 * @return string|NULL Full name
-	 */
-	protected function _getFullName() {
-		return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
+
+    /**
+     * Gets the full name (virtual field)
+     * @return string|null
+     */
+    protected function _getFullName()
+    {
+        if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
+            return null;
+        }
+
+        return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
     }
-	
-	/**
-	 * Sets the password
-	 * @param string $password Password
-	 * @return string Hash
-	 * @uses Cake\Auth\DefaultPasswordHasher::hash()
-	 */
-	protected function _setPassword($password) {
+
+    /**
+     * Sets the password
+     * @param string $password Password
+     * @return string Hash
+     * @uses Cake\Auth\DefaultPasswordHasher::hash()
+     */
+    protected function _setPassword($password)
+    {
         return (new \Cake\Auth\DefaultPasswordHasher)->hash($password);
     }
 }

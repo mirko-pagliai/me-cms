@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Table;
 
@@ -31,95 +31,111 @@ use MeCms\Model\Table\AppTable;
 /**
  * PhotosAlbums model
  */
-class PhotosAlbumsTable extends AppTable {
-	/**
-	 * Name of the configuration to use for this table
-	 * @var string|array
-	 */
-	public $cache = 'photos';
-	
-	/**
-	 * Called after an entity has been deleted
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses MeCms\Model\Table\AppTable::afterDelete()
-	 */
-	public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		//Deletes the folder
-        (new Folder(PHOTOS.DS.$entity->id))->delete();
-		
-		parent::afterDelete($event, $entity, $options);
-	}
-	
-	/**
-	 * Called after an entity is saved
-	 * @param \Cake\Event\Event $event Event object
-	 * @param \Cake\ORM\Entity $entity Entity object
-	 * @param \ArrayObject $options Options
-	 * @uses MeCms\Model\Table\AppTable::afterSave()
-	 */
-	public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
-		//Creates the folder
-		if($entity->isNew()) {
-           (new Folder())->create(PHOTOS.DS.$entity->id, 0777);
+class PhotosAlbumsTable extends AppTable
+{
+    /**
+     * Name of the configuration to use for this table
+     * @var string|array
+     */
+    public $cache = 'photos';
+
+    /**
+     * Called after an entity has been deleted
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::afterDelete()
+     */
+    public function afterDelete(
+        \Cake\Event\Event $event,
+        \Cake\ORM\Entity $entity,
+        \ArrayObject $options
+    ) {
+        //Deletes the folder
+        (new Folder(PHOTOS . DS . $entity->id))->delete();
+
+        parent::afterDelete($event, $entity, $options);
+    }
+
+    /**
+     * Called after an entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::afterSave()
+     */
+    public function afterSave(
+        \Cake\Event\Event $event,
+        \Cake\ORM\Entity $entity,
+        \ArrayObject $options
+    ) {
+        //Creates the folder
+        if ($entity->isNew()) {
+            (new Folder())->create(PHOTOS . DS . $entity->id, 0777);
         }
-        
-		parent::afterSave($event, $entity, $options);
-	}
-	
-	/**
-	 * "Active" find method
-	 * @param Query $query Query object
-	 * @param array $options Options
-	 * @return Query Query object
-	 */
-	public function findActive(Query $query, array $options) {
+
+        parent::afterSave($event, $entity, $options);
+    }
+
+    /**
+     * "Active" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findActive(Query $query, array $options)
+    {
         $query->where([
-			sprintf('%s.active', $this->alias()) => TRUE,
-			sprintf('%s.photo_count >', $this->alias())	=> 0,
-		]);
-		
+            sprintf('%s.active', $this->alias()) => true,
+            sprintf('%s.photo_count >', $this->alias()) => 0,
+        ]);
+
         return $query;
     }
 
-	/**
-	 * Gets the albums list
-	 * @return array List
-	 * @uses $cache
-	 */
-	public function getList() {
-		return $this->find('list')
+    /**
+     * Gets the albums list
+     * @return array List
+     * @uses $cache
+     */
+    public function getList()
+    {
+        return $this->find('list')
             ->order(['title' => 'ASC'])
-			->cache('albums_list', $this->cache)
-			->toArray();
-	}
-	
+            ->cache('albums_list', $this->cache)
+            ->toArray();
+    }
+
     /**
      * Initialize method
      * @param array $config The configuration for the table
+     * @return void
      */
-    public function initialize(array $config) {
+    public function initialize(array $config)
+    {
         parent::initialize($config);
 
         $this->table('photos_albums');
         $this->displayField('title');
         $this->primaryKey('id');
-		
+
         $this->hasMany('Photos', [
             'foreignKey' => 'album_id',
             'className' => 'MeCms.Photos',
         ]);
-        
+
         $this->addBehavior('Timestamp');
     }
 
     /**
      * Default validation rules
      * @param \Cake\Validation\Validator $validator Validator instance
-	 * @return \MeCms\Model\Validation\PhotosAlbumValidator
-	 */
-    public function validationDefault(\Cake\Validation\Validator $validator) {
-		return new \MeCms\Model\Validation\PhotosAlbumValidator;
+     * @return \MeCms\Model\Validation\PhotosAlbumValidator
+     */
+    public function validationDefault(\Cake\Validation\Validator $validator)
+    {
+        return new \MeCms\Model\Validation\PhotosAlbumValidator;
     }
 }

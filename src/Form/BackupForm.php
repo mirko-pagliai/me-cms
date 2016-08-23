@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Form;
 
@@ -28,55 +28,60 @@ use DatabaseBackup\Utility\BackupExport;
 
 /**
  * BackupForm class.
- * 
+ *
  * It is used by `MeCms\Controller\Admin\BackupsController::add()`.
  */
-class BackupForm extends Form {
+class BackupForm extends Form
+{
     /**
-	 * Defines the validator using the methods on Cake\Validation\Validator or 
-	 * loads a pre-defined validator from a concrete class.
-	 * @param \Cake\Validation\Validator $validator Validator instance
-	 * @return \MeCms\Model\Validation\AppValidator
-	 */
-    protected function _buildValidator(\Cake\Validation\Validator $validator) {
-		$validator = new \MeCms\Model\Validation\AppValidator();
-				
-		//Filename
-		$validator->requirePresence('filename')
-			->remove('filename', 'validateUnique')
-			->add('filename', 'validExtension', [
-				'rule' => function($value, $context) {
-					$extensions = array_map(function($v) { return preg_quote($v, '/'); }, ['sql', 'sql.gz', 'sql.bz2']);
-					
-					return (bool) preg_match(sprintf('/\.(%s)$/i', implode('|', $extensions)), $value);
-				},
-				'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
-			])
-			->add('filename', [
-                    'lengthBetween' => [
+     * Defines the validator using the methods on Cake\Validation\Validator or
+     * loads a pre-defined validator from a concrete class.
+     * @param \Cake\Validation\Validator $validator Validator instance
+     * @return \MeCms\Model\Validation\AppValidator
+     */
+    protected function _buildValidator(\Cake\Validation\Validator $validator)
+    {
+        $validator = new \MeCms\Model\Validation\AppValidator();
+
+        //Filename
+        $validator->requirePresence('filename')
+            ->remove('filename', 'validateUnique')
+            ->add('filename', 'validExtension', [
+                'rule' => function ($value, $context) {
+                    $extensions = array_map(function ($v) {
+                        return preg_quote($v, '/');
+                    }, ['sql', 'sql.gz', 'sql.bz2']);
+
+                    return (bool)preg_match(sprintf('/\.(%s)$/i', implode('|', $extensions)), $value);
+                },
+                'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
+            ])
+            ->add('filename', [
+                'lengthBetween' => [
                     'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                     'rule' => ['lengthBetween', 3, 100],
                 ],
             ]);
-		
+
         return $validator;
     }
 
-	/**
-	 * Used by `execute()` to execute the form's action
-	 * @param array $data Form data
-	 * @return boolean
-	 * @uses DatabaseBackup\Utility\BackupExport::filename()
-	 * @uses DatabaseBackup\Utility\BackupExport::export()
-	 */
-    protected function _execute(array $data) {
-		try {
-			$backup = new BackupExport();
-			$backup->filename($data['filename']);
-			return $backup->export();
-		}
-		catch(InternalErrorException $e) {
-			return FALSE;
-		}
+    /**
+     * Used by `execute()` to execute the form's action
+     * @param array $data Form data
+     * @return bool
+     * @uses DatabaseBackup\Utility\BackupExport::filename()
+     * @uses DatabaseBackup\Utility\BackupExport::export()
+     */
+    protected function _execute(array $data)
+    {
+        try {
+            $backup = new BackupExport();
+            $backup->filename($data['filename']);
+            
+            return $backup->export();
+        } catch (InternalErrorException $e) {
+            return false;
+        }
     }
 }

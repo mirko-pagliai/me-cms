@@ -15,42 +15,44 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Model\Behavior;
 
 use Cake\ORM\Behavior\TreeBehavior as CakeTreeBehavior;
 
 /**
- * Makes the table to which this is attached to behave like a nested set and 
- *  provides methods  for managing and retrieving information out of the 
+ * Makes the table to which this is attached to behave like a nested set and
+ *  provides methods  for managing and retrieving information out of the
  *  derived hierarchical structure.
- * 
- * Rewrites {@link http://api.cakephp.org/3.2/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
- * 
+ *
+ * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
+ *
  * To add to your table:
  * <code>
  * $this->addBehavior('MeCms.Tree');
- * </code> 
+ * </code>
  */
-class TreeBehavior extends CakeTreeBehavior {
-	/**
-	 * Gets a representation of the elements in the tree as a flat list where 
-     *  the keys are the primary key for the table and the values are the 
-     *  display field for the table. Values are prefixed to visually indicate 
+class TreeBehavior extends CakeTreeBehavior
+{
+    /**
+     * Gets a representation of the elements in the tree as a flat list where
+     *  the keys are the primary key for the table and the values are the
+     *  display field for the table. Values are prefixed to visually indicate
      *  relative depth in the tree
-	 * @param \Cake\ORM\Query $query Query
-	 * @param array $options Options
-	 * @return Cake\ORM\Query Query
-	 * @see http://api.cakephp.org/3.2/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
-	 * @uses Cake\ORM\Behavior\TreeBehavior::findTreeList()
-	 */
-	public function findTreeList(\Cake\ORM\Query $query, array $options) {
-		$options['spacer'] = empty($options['spacer']) ? '—' : $options['spacer'];
-		
-		return parent::findTreeList($query, $options);
-	}
+     * @param \Cake\ORM\Query $query Query
+     * @param array $options Options
+     * @return Cake\ORM\Query Query
+     * @see http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
+     * @uses Cake\ORM\Behavior\TreeBehavior::findTreeList()
+     */
+    public function findTreeList(\Cake\ORM\Query $query, array $options)
+    {
+        $options['spacer'] = empty($options['spacer']) ? '—' : $options['spacer'];
+
+        return parent::findTreeList($query, $options);
+    }
 }

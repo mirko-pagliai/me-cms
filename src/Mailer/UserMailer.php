@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author		Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright	Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license		http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link		http://git.novatlantis.it Nova Atlantis Ltd
+ * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+ * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+ * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+ * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 namespace MeCms\Mailer;
 
@@ -27,41 +27,48 @@ use MeCms\Mailer\Mailer;
 /**
  * UserMailer class
  */
-class UserMailer extends Mailer {
-	/**
-	 * Email to activate the user account account (signup and resend activation)
-	 * @param array $user User data
-	 * @see MeCms\Controller\Admin\UsersController::resend_activation()
-	 * @see MeCms\Controller\Admin\UsersController::signup()
-	 */
-	public function activate_account($user) {
-		$this->to([$user->email => $user->full_name])
-			->set(['full_name' => $user->full_name])
-			->subject(__d('me_cms', 'Activate your account'))
-			->template('MeCms.Users/activate_account');
-	}
-	
-	/**
-	 * Email to change the user's password
-	 * @param array $user User data
-	 * @see MeCms\Controller\Admin\UsersController::change_password()
-	 */
-	public function change_password($user) {
-		$this->to([$user->email => $user->full_name])
-			->set(['full_name' => $user->full_name])
-			->subject(__d('me_cms', 'Your password has been changed'))
-			->template('MeCms.Users/change_password');
-	}
-	
-	/**
-	 * Email to ask a new password
-	 * @param array $user User data
-	 * @see MeCms\Controller\UsersController::forgot_password()
-	 */
-	public function forgot_password($user) {
+class UserMailer extends Mailer
+{
+    /**
+     * Email to activate the user account account (signup and resend activation)
+     * @param array $user User data
+     * @return void
+     * @see MeCms\Controller\Admin\UsersController::resendActivation()
+     * @see MeCms\Controller\Admin\UsersController::signup()
+     */
+    public function activateAccount($user)
+    {
         $this->to([$user->email => $user->full_name])
-			->set(['full_name' => $user->full_name])
+            ->set(['full_name' => $user->full_name])
+            ->subject(__d('me_cms', 'Activate your account'))
+            ->template('MeCms.Users/activate_account');
+    }
+
+    /**
+     * Email to change the user's password
+     * @param array $user User data
+     * @return void
+     * @see MeCms\Controller\Admin\UsersController::changePassword()
+     */
+    public function changePassword($user)
+    {
+        $this->to([$user->email => $user->full_name])
+            ->set(['full_name' => $user->full_name])
+            ->subject(__d('me_cms', 'Your password has been changed'))
+            ->template('MeCms.Users/change_password');
+    }
+
+    /**
+     * Email to ask a new password
+     * @param array $user User data
+     * @return void
+     * @see MeCms\Controller\UsersController::forgotPassword()
+     */
+    public function forgotPassword($user)
+    {
+        $this->to([$user->email => $user->full_name])
+            ->set(['full_name' => $user->full_name])
             ->subject(__d('me_cms', 'Reset your password'))
-			->template('MeCms.Users/forgot_password');
-	}
+            ->template('MeCms.Users/forgot_password');
+    }
 }
