@@ -352,33 +352,6 @@ ul.actions > li:last-child {
 }
 
 /* -------------------------------- */
-/*          Changelogs page         */
-/* -------------------------------- */
-/* Changelog, h1 */
-#changelog > h1 {
-    font-size: 22px;
-    margin: 0 0 10px;
-}
-
-/* Changelog, h2 */
-#changelog > h2 {
-    font-size: 18px;
-    margin: 0 0 10px 10px;
-}
-
-/* Changelog, h3 */
-#changelog > h3 {
-    font-size: 16px;
-    margin: 0 0 0 20px;
-}
-
-/* Changelog, lists */
-#changelog > ul {
-    list-style: decimal outside none;
-    margin: 0 0 15px 20px;
-}
-
-/* -------------------------------- */
 /*          CKeditor content        */
 /* -------------------------------- */
 /* CKeditor content */
