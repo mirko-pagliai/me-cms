@@ -43,7 +43,7 @@ class Mailer extends BaseMailer
 
         $this->_email->profile('default')
             ->helpers('MeTools.Html')
-            ->set('ip_address', getClientIp())
+            ->set('ipAddress', getClientIp())
             ->from(config('email.webmaster'), config('main.title'))
             ->sender(config('email.webmaster'), config('main.title'))
             ->emailFormat('html');

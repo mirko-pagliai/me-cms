@@ -22,6 +22,7 @@
  */
 namespace MeCms\Mailer;
 
+use Cake\Utility\Inflector;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -44,6 +45,11 @@ class ContactFormMailer extends Mailer
             ->to(config('email.webmaster'))
             ->subject(__d('me_cms', 'Email from {0}', config('main.title')))
             ->template('MeCms.Systems/contact_form')
-            ->set($data);
+            ->set([
+                'firstName' => $data['first_name'],
+                'lastName' => $data['last_name'],
+                'email' => $data['first_name'],
+                'message' => $data['message'],
+            ]);
     }
 }

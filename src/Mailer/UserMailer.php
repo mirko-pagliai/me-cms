@@ -39,7 +39,7 @@ class UserMailer extends Mailer
     public function activateAccount($user)
     {
         $this->to([$user->email => $user->full_name])
-            ->set(['full_name' => $user->full_name])
+            ->set(['fullName' => $user->full_name])
             ->subject(__d('me_cms', 'Activate your account'))
             ->template('MeCms.Users/activate_account');
     }
@@ -53,7 +53,7 @@ class UserMailer extends Mailer
     public function changePassword($user)
     {
         $this->to([$user->email => $user->full_name])
-            ->set(['full_name' => $user->full_name])
+            ->set(['fullName' => $user->full_name])
             ->subject(__d('me_cms', 'Your password has been changed'))
             ->template('MeCms.Users/change_password');
     }
@@ -67,7 +67,7 @@ class UserMailer extends Mailer
     public function forgotPassword($user)
     {
         $this->to([$user->email => $user->full_name])
-            ->set(['full_name' => $user->full_name])
+            ->set(['fullName' => $user->full_name])
             ->subject(__d('me_cms', 'Reset your password'))
             ->template('MeCms.Users/forgot_password');
     }
