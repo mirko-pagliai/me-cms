@@ -135,7 +135,7 @@ class BannersController extends AppController
 
         //If there's only one position, it automatically sets the query value
         if (!$position && count($this->viewVars['positions']) < 2) {
-            $this->request->query['position'] = first_key($this->viewVars['positions']);
+            $this->request->query['position'] = firstKey($this->viewVars['positions']);
         }
 
         if ($this->request->data('file')) {
