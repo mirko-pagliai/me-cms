@@ -72,7 +72,7 @@
                     echo $this->element(
                         'MeCms.admin/sidebar',
                         [],
-                        ['cache' => empty($sidebarCache) ? false : $sidebarCache]
+                        ['cache' => empty($sidebarCache) ? null : $sidebarCache]
                     );
                     ?>
                 </div>
