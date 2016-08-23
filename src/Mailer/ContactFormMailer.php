@@ -22,7 +22,6 @@
  */
 namespace MeCms\Mailer;
 
-use Cake\Utility\Inflector;
 use MeCms\Mailer\Mailer;
 
 /**
