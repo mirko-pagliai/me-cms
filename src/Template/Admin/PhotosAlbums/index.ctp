@@ -100,20 +100,20 @@ $this->append('actions', $this->Html->button(
                         ['icon' => 'upload']
                     );
 
-            //If the the is active
-            if ($album->active) {
-                $actions[] = $this->Html->link(
-                    __d('me_cms', 'Open'),
-                    ['_name' => 'album', $album->slug],
-                    ['icon' => 'external-link', 'target' => '_blank']
-                );
-            } else {
-                $actions[] = $this->Html->link(
-                    __d('me_cms', 'Preview'),
-                    ['_name' => 'albumsPreview', $album->slug],
-                    ['icon' => 'external-link', 'target' => '_blank']
-                );
-            }
+                    //If the the is active
+                    if ($album->active) {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Open'),
+                            ['_name' => 'album', $album->slug],
+                            ['icon' => 'external-link', 'target' => '_blank']
+                        );
+                    } else {
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Preview'),
+                            ['_name' => 'albumsPreview', $album->slug],
+                            ['icon' => 'external-link', 'target' => '_blank']
+                        );
+                    }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
