@@ -1,5 +1,4 @@
 .directory
 *_old
 *.old.*
-API/
-tests/
+vendor/
