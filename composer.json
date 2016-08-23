@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "~3.3",
+        "cakephp/cakephp": "3.3.*",
         "js-cookie/js-cookie": "dev-master",
         "enyo/dropzone": "^4.3",
         "donatj/phpuseragentparser": "*",
