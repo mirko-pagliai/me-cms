@@ -57,7 +57,7 @@ class PostsCell extends Cell
     public function categories($render = 'form')
     {
         //Returns on categories index
-        if ($this->request->is('here', ['_name' => 'postsCategories'])) {
+        if ($this->request->isUrl(['_name' => 'postsCategories'])) {
             return;
         }
 
@@ -87,7 +87,7 @@ class PostsCell extends Cell
     public function latest($limit = 10)
     {
         //Returns on posts index, except for category
-        if ($this->request->is('here', ['_name' => 'posts'])) {
+        if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
         }
 
@@ -109,7 +109,7 @@ class PostsCell extends Cell
     public function months($render = 'form')
     {
         //Returns on posts index, except for category
-        if ($this->request->is('here', ['_name' => 'posts'])) {
+        if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
         }
 

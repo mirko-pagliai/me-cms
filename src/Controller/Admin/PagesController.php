@@ -48,14 +48,14 @@ class PagesController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->is('action', 'index')) {
+        if ($this->request->isAction('index')) {
             $categories = $this->Pages->Categories->getList();
-        } elseif ($this->request->is('action', ['add', 'edit'])) {
+        } elseif ($this->request->isAction(['add', 'edit'])) {
             $categories = $this->Pages->Categories->getTreeList();
         }
 
         //Checks for categories
-        if (isset($categories) && empty($categories) && !$this->request->is('action', 'index')) {
+        if (isset($categories) && empty($categories) && !$this->request->isAction('index')) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PagesCategories', 'action' => 'index']);
@@ -76,7 +76,7 @@ class PagesController extends AppController
         parent::initialize();
 
         //Loads KcFinderComponent
-        if ($this->request->is('action', ['add', 'edit'])) {
+        if ($this->request->isAction(['add', 'edit'])) {
             $this->loadComponent('MeCms.KcFinder');
         }
     }
@@ -91,12 +91,12 @@ class PagesController extends AppController
     public function isAuthorized($user = null)
     {
         //Everyone can list pages and static pages
-        if ($this->request->is('action', ['index', 'indexStatics'])) {
+        if ($this->request->isAction(['index', 'indexStatics'])) {
             return true;
         }
 
         //Only admins can delete pages
-        if ($this->request->is('action', 'delete')) {
+        if ($this->request->isAction('delete')) {
             return $this->Auth->isGroup('admin');
         }
 

@@ -22,7 +22,7 @@
  */
 
 //Returns on search
-if ($this->request->is('here', ['_name' => 'postsSearch'])) {
+if ($this->request->isUrl(['_name' => 'postsSearch'])) {
     return;
 }
 

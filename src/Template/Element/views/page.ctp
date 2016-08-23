@@ -72,7 +72,7 @@
         $text = $this->BBCode->parser($page->text);
 
         //Truncates the text if the "<!-- read-more -->" tag is present
-        if (!$this->request->is('action', 'view', 'Pages') &&
+        if (!$this->request->isAction('view', 'Pages') &&
             $strpos = strpos($text, '<!-- read-more -->')
         ) {
             echo $truncatedText = $this->Text->truncate(
@@ -81,7 +81,7 @@
                 ['ellipsis' => false, 'exact' => true, 'html' => false]
             );
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->is('action', 'view', 'Pages') &&
+        } elseif (!$this->request->isAction('view', 'Pages') &&
             config('default.truncate_to')
         ) {
             echo $truncatedText = $this->Text->truncate(
@@ -110,7 +110,7 @@
     <?php
     if (config('page.shareaholic') &&
         config('shareaholic.app_id') &&
-        $this->request->is('action', 'view', 'Pages') &&
+        $this->request->isAction('view', 'Pages') &&
         !$this->request->isAjax()
     ) {
         echo $this->Html->shareaholic(config('shareaholic.app_id'));

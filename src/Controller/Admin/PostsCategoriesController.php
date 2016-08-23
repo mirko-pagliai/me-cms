@@ -43,7 +43,7 @@ class PostsCategoriesController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->is('action', ['add', 'edit'])) {
+        if ($this->request->isAction(['add', 'edit'])) {
             $this->set('categories', $this->PostsCategories->getTreeList());
         }
     }
@@ -58,7 +58,7 @@ class PostsCategoriesController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete posts categories
-        if ($this->request->is('action', 'delete')) {
+        if ($this->request->isAction('delete')) {
             return $this->Auth->isGroup('admin');
         }
 

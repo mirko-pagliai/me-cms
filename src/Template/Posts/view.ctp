@@ -72,7 +72,7 @@ $this->Breadcrumb->add($post->title, ['_name' => 'post', $post->slug]);
 /**
  * Meta tags
  */
-if ($this->request->is('action', 'view', 'Posts')) {
+if ($this->request->isAction('view', 'Posts')) {
     $this->Html->meta([
         'content' => 'article',
         'property' => 'og:type',

@@ -54,7 +54,7 @@ class BaseView extends AppView
         $title = config('main.title');
 
         //For homepage, it uses only the main title
-        if ($this->request->is('here', ['_name' => 'homepage'])) {
+        if ($this->request->isUrl(['_name' => 'homepage'])) {
             return $title;
         }
 

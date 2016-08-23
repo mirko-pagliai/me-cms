@@ -47,16 +47,16 @@ class PostsController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->is('action', 'index')) {
+        if ($this->request->isAction('index')) {
             $categories = $this->Posts->Categories->getList();
             $users = $this->Posts->Users->getList();
-        } elseif ($this->request->is('action', ['add', 'edit'])) {
+        } elseif ($this->request->isAction(['add', 'edit'])) {
             $categories = $this->Posts->Categories->getTreeList();
             $users = $this->Posts->Users->getActiveList();
         }
 
         //Checks for categories
-        if (isset($categories) && empty($categories) && !$this->request->is('action', 'index')) {
+        if (isset($categories) && empty($categories) && !$this->request->isAction('index')) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
@@ -81,7 +81,7 @@ class PostsController extends AppController
         parent::initialize();
 
         //Loads KcFinderComponent
-        if ($this->request->is('action', ['add', 'edit'])) {
+        if ($this->request->isAction(['add', 'edit'])) {
             $this->loadComponent('MeCms.KcFinder');
         }
     }
@@ -98,12 +98,12 @@ class PostsController extends AppController
     {
         //Only admins and managers can edit all posts.
         //Users can edit only their own posts
-        if ($this->request->is('action', 'edit')) {
+        if ($this->request->isAction('edit')) {
             return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
         }
 
         //Only admins and managers can delete posts
-        if ($this->request->is('action', 'delete')) {
+        if ($this->request->isAction('delete')) {
             return $this->Auth->isGroup(['admin', 'manager']);
         }
 

@@ -44,12 +44,12 @@ class UsersController extends AppController
     public function isAuthorized($user = null)
     {
         //Every user can change his password
-        if ($this->request->is('action', 'changePassword')) {
+        if ($this->request->isAction('changePassword')) {
             return true;
         }
 
         //Only admins can activate account and delete users
-        if ($this->request->is('action', ['activate', 'delete'])) {
+        if ($this->request->isAction(['activate', 'delete'])) {
             return $this->Auth->isGroup('admin');
         }
 
@@ -70,7 +70,7 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->is('action', ['index', 'add', 'edit'])) {
+        if ($this->request->isAction(['index', 'add', 'edit'])) {
             $this->set('groups', $this->Users->Groups->getList());
         }
     }

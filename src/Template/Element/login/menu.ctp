@@ -23,13 +23,13 @@
 
 $menu = [];
 
-if (!$this->request->is('here', $url = ['_name' => 'login'])) {
+if (!$this->request->isUrl($url = ['_name' => 'login'])) {
     $menu[] = $this->Html->link(__d('me_cms', 'Login'), $url);
 }
 
 //If signup is enabled
 if (config('users.signup') &&
-    !$this->request->is('here', $url = ['_name' => 'signup'])
+    !$this->request->isUrl($url = ['_name' => 'signup'])
 ) {
     $menu[] = $this->Html->link(__d('me_cms', 'Sign up'), $url);
 }
@@ -37,14 +37,14 @@ if (config('users.signup') &&
 //If signup is enabled and if accounts will be enabled by the user via email
 if (config('users.signup') &&
     config('users.activation') === 1 &&
-    !$this->request->is('here', $url = ['_name' => 'resendActivation'])
+    !$this->request->isUrl($url = ['_name' => 'resendActivation'])
 ) {
     $menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), $url);
 }
 
 //If reset password is enabled
 if (config('users.reset_password') &&
-    !$this->request->is('here', $url = ['_name' => 'forgotPassword'])
+    !$this->request->isUrl($url = ['_name' => 'forgotPassword'])
 ) {
     $menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
 }

@@ -38,7 +38,7 @@ class WidgetHelper extends Helper
      */
     public function all()
     {
-        if ($this->request->is('here', ['_name' => 'homepage']) && config('Widgets.homepage')) {
+        if ($this->request->isUrl(['_name' => 'homepage']) && config('Widgets.homepage')) {
             $widgets = config('Widgets.homepage');
         } else {
             $widgets = config('Widgets.general');

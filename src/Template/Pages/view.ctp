@@ -72,7 +72,7 @@ $this->Breadcrumb->add($page->title, ['_name' => 'page', $page->slug]);
 /**
  * Meta tags
  */
-if ($this->request->is('action', 'view', 'Pages')) {
+if ($this->request->isAction('view', 'Pages')) {
     $this->Html->meta([
         'content' => 'article',
         'property' => 'og:type',

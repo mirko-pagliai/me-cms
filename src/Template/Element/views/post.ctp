@@ -23,7 +23,7 @@
 
 //Adds tags as keywords meta-tag
 if (config('post.keywords') &&
-    $this->request->is('action', 'view', 'Posts') &&
+    $this->request->isAction('view', 'Posts') &&
     !empty($post->tags_as_string)
 ) {
     $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
@@ -96,14 +96,14 @@ if (config('post.keywords') &&
         //Truncates the text if the "<!-- read-more -->" tag is present
         $strpos = strpos($text, '<!-- read-more -->');
 
-        if (!$this->request->is('action', 'view', 'Posts') && $strpos) {
+        if (!$this->request->isAction('view', 'Posts') && $strpos) {
             echo $truncatedText = $this->Text->truncate($text, $strpos, [
                 'ellipsis' => false,
                 'exact' => true,
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->is('action', 'view', 'Posts') &&
+        } elseif (!$this->request->isAction('view', 'Posts') &&
             config('default.truncate_to')
         ) {
             echo $truncatedText = $this->Text->truncate($text, config('default.truncate_to'), [
@@ -147,7 +147,7 @@ if (config('post.keywords') &&
     <?php
     if (config('post.shareaholic') &&
         config('shareaholic.app_id') &&
-        $this->request->is('action', 'view', 'Posts')
+        $this->request->isAction('view', 'Posts')
         && !$this->request->isAjax()
     ) {
         echo $this->Html->shareaholic(config('shareaholic.app_id'));

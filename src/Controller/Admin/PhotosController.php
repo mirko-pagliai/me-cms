@@ -44,12 +44,12 @@ class PhotosController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->is('action', ['index', 'edit', 'upload'])) {
+        if ($this->request->isAction(['index', 'edit', 'upload'])) {
             //Gets albums
             $albums = $this->Photos->Albums->getList();
 
             //Checks for albums
-            if (empty($albums) && !$this->request->is('action', 'index')) {
+            if (empty($albums) && !$this->request->isAction('index')) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an album'));
 
                 return $this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
@@ -69,7 +69,7 @@ class PhotosController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can delete photos
-        if ($this->request->is('action', 'delete')) {
+        if ($this->request->isAction('delete')) {
             return $this->Auth->isGroup(['admin', 'manager']);
         }
 

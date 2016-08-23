@@ -50,7 +50,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         //Checks if the user is already logged in
-        if (!$this->request->is('action', 'logout') && $this->Auth->isLogged()) {
+        if (!$this->request->isAction('logout') && $this->Auth->isLogged()) {
             return $this->redirect(['_name' => 'dashboard']);
         }
     }

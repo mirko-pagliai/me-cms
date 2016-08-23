@@ -58,7 +58,7 @@ class PhotosCell extends Cell
     public function albums($render = 'form')
     {
         //Returns on albums index
-        if ($this->request->is('here', ['_name' => 'albums'])) {
+        if ($this->request->isUrl(['_name' => 'albums'])) {
             return;
         }
 
@@ -88,7 +88,7 @@ class PhotosCell extends Cell
     public function latest($limit = 1)
     {
         //Returns on the same controllers
-        if ($this->request->is('controller', ['Photos', 'PhotosAlbums'])) {
+        if ($this->request->isController(['Photos', 'PhotosAlbums'])) {
             return;
         }
 
@@ -110,7 +110,7 @@ class PhotosCell extends Cell
     public function random($limit = 1)
     {
         //Returns on the same controllers
-        if ($this->request->is('controller', ['Photos', 'PhotosAlbums'])) {
+        if ($this->request->isController(['Photos', 'PhotosAlbums'])) {
             return;
         }
 

@@ -43,12 +43,12 @@ class BannersController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->is('action', ['index', 'edit', 'upload'])) {
+        if ($this->request->isAction(['index', 'edit', 'upload'])) {
             //Gets positions
             $positions = $this->Banners->Positions->getList();
 
             //Checks for positions
-            if (empty($positions) && !$this->request->is('action', 'index')) {
+            if (empty($positions) && !$this->request->isAction('index')) {
                 $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
 
                 return $this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
@@ -68,7 +68,7 @@ class BannersController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete banners
-        if ($this->request->is('action', 'delete')) {
+        if ($this->request->isAction('delete')) {
             return $this->Auth->isGroup('admin');
         }
 
