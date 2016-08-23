@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.13 branch
 ### 2.13.1
+* the admin sidebar is cached only if debugging is disabled;
 * fixed other code for CakePHP Code Sniffer.
 
 ### 2.13.0

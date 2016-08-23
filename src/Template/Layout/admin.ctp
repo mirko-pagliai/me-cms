@@ -61,12 +61,19 @@
             <div class="row">
                 <div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
                     <?php
-                        echo $this->element('MeCms.admin/sidebar', [], [
-                            'cache' => [
-                                'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
-                                'config' => 'admin',
-                            ],
-                        ]);
+                    //The sidebar is cached only if debugging is disabled
+                    if (!\Cake\Core\Configure::read('debug')) {
+                        $sidebarCache = [
+                            'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
+                            'config' => 'admin',
+                        ];
+                    }
+
+                    echo $this->element(
+                        'MeCms.admin/sidebar',
+                        [],
+                        ['cache' => empty($sidebarCache) ? false : $sidebarCache]
+                    );
                     ?>
                 </div>
                 <div id="content" class="col-md-offset-3 col-lg-offset-2">
