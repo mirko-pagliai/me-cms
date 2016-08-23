@@ -24,25 +24,36 @@
 use Cake\Network\Request;
 
 /**
- * Adds `isAdmin()` detector
+ * Adds `is('admin')` detector.
+ *
+ * It checks if the specified prefix has the `admin` prefix.
+ *
+ * Example:
+ * <code>
+ * $this->request->isAdmin();
+ * </code>
  */
 Request::addDetector('admin', function ($request) {
     return $request->param('prefix') === 'admin';
 });
 
 /**
- * Adds `isBanned()` detector.
+ * Adds `is('banned')` detector.
+ *
  * It checks if the user's IP address is banned.
+ *
+ * Example:
+ * <code>
+ * $this->request->isBanned();
+ * </code>
  */
 Request::addDetector('banned', function ($request) {
     $banned = config('Banned');
 
-    /**
-     * The IP address is allowed if:
-     *  - the list of banned IP is empty;
-     *  - is localhost;
-     *  - the IP address has already been verified.
-     */
+    //The IP address is allowed if:
+    //  - the list of banned IP is empty;
+    //  - is localhost;
+    //  - the IP address has already been verified.
     if (!$banned || isLocalhost() || $request->session()->read('allowed_ip')) {
         return false;
     }
@@ -61,7 +72,14 @@ Request::addDetector('banned', function ($request) {
 });
 
 /**
- * Adds `isOffline()` detector
+ * Adds `is('offline')` detector.
+ *
+ * It checks if the site is offline.
+ *
+ * Example:
+ * <code>
+ * $this->request->isOffline();
+ * </code>
  */
 Request::addDetector('offline', function ($request) {
     if (!config('default.offline')) {
