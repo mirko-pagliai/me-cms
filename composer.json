@@ -39,5 +39,8 @@
         "psr-4": {
             "MeCms\\": "src"
         }
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "2.*"
     }
 }
