@@ -26,11 +26,11 @@
             "type": "package",
             "package": {
                 "name": "js-cookie/js-cookie",
-                "version": "v2.1.1",
+                "version": "v2.1.2",
                 "source": {
                     "url": "https://github.com/js-cookie/js-cookie.git",
                     "type": "git",
-                    "reference": "v2.1.1"
+                    "reference": "v2.1.2"
                 }
             }
         }
