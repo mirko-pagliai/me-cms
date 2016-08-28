@@ -6,7 +6,7 @@
 * the admin sidebar is cached only if debugging is disabled;
 * improved admin routes. They are automatically handled by CakePHP;
 * fixed other code for CakePHP Code Sniffer;
-* updated for MeTools 2.8.1.
+* updated for MeTools 2.9.0.
 
 ### 2.13.0
 * improved the `KcFinderComponent`;
