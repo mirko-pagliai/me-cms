@@ -26,7 +26,6 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 ?>
 
 <?= $this->Html->cssStart() ?>
-<style type="text/css">
     /* Changelog, h1 */
     #changelog > h1 {
         font-size: 22px;
@@ -50,7 +49,6 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
         list-style: decimal outside none;
         margin: 0 0 15px 20px;
     }
-</style>
 <?= $this->Html->cssEnd() ?>
 
 <div class="well">
