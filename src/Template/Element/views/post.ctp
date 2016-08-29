@@ -96,14 +96,14 @@ if (config('post.keywords') &&
         //Truncates the text if the "<!-- read-more -->" tag is present
         $strpos = strpos($text, '<!-- read-more -->');
 
-        if (!$this->request->isAction('view', 'Posts') && $strpos) {
+        if (!$this->request->isAction(['view', 'preview']) && $strpos) {
             echo $truncatedText = $this->Text->truncate($text, $strpos, [
                 'ellipsis' => false,
                 'exact' => true,
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction('view', 'Posts') &&
+        } elseif (!$this->request->isAction(['view', 'preview']) &&
             config('default.truncate_to')
         ) {
             echo $truncatedText = $this->Text->truncate($text, config('default.truncate_to'), [
