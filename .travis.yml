@@ -1,7 +1,5 @@
 language: php
 
-dist: trusty
-
 php:
   - 5.5
   - 5.6
@@ -15,12 +13,13 @@ matrix:
     - php: 7.0
       env: PHPCS=1
 
-before_script:
-  - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp cakephp/cakephp-codesniffer:~2.1; fi
-  - if [[ $PHPCS != 1 ]]; then composer install; fi
+install:
+  - printf "\n" | pecl install imagick
+  - composer self-update
+  - composer install --prefer-dist --no-interaction
 
 script:
-  - if [[ $PHPCS != 1 ]]; then phpunit; fi
+  - phpunit
   - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php,ctp,js,css --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=*.min.css,*.min.js ./config ./src ./tests  ./webroot; fi
 
 notifications:
