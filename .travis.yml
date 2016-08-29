@@ -23,4 +23,4 @@ script:
   - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php,ctp,js,css --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=*.min.css,*.min.js ./config ./src ./tests  ./webroot; fi
 
 notifications:
-  email: true
+  email: false
