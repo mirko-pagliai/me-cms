@@ -31,18 +31,16 @@ $this->append('actions', $this->Html->button(
 ?>
 
 <?= $this->Html->cssStart() ?>
-    <style type="text/css">
-        .index > div > div {
-            margin-bottom: -10px;
-            padding: 10px 5px;
-        }
+    .index > div > div {
+        margin-bottom: -10px;
+        padding: 10px 5px;
+    }
 
-        .index > div > div > div {
-            background-color: #f9f9f9;
-            border-bottom: 1px solid #ddd;
-            padding: 15px 15px;
-        }
-    </style>
+    .index > div > div > div {
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ddd;
+        padding: 15px 15px;
+    }
 <?= $this->Html->cssEnd() ?>
 
 <?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>

@@ -47,7 +47,7 @@ class PostsController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction('index')) {
+        if ($this->request->isIndex()) {
             $categories = $this->Posts->Categories->getList();
             $users = $this->Posts->Users->getList();
         } elseif ($this->request->isAction(['add', 'edit'])) {
@@ -56,7 +56,7 @@ class PostsController extends AppController
         }
 
         //Checks for categories
-        if (isset($categories) && empty($categories) && !$this->request->isAction('index')) {
+        if (isset($categories) && empty($categories) && !$this->request->isIndex()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
@@ -98,12 +98,12 @@ class PostsController extends AppController
     {
         //Only admins and managers can edit all posts.
         //Users can edit only their own posts
-        if ($this->request->isAction('edit')) {
+        if ($this->request->isEdit()) {
             return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
         }
 
         //Only admins and managers can delete posts
-        if ($this->request->isAction('delete')) {
+        if ($this->request->isDelete()) {
             return $this->Auth->isGroup(['admin', 'manager']);
         }
 

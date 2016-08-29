@@ -22,10 +22,21 @@
  */
 ?>
 
-<?= __d('me_cms', 'Hello {0}', $full_name) ?>,
+<?= __d('me_cms', 'Hello {0}', $fullName) ?>,
 
 <?= __d('me_cms', 'you have signed on the site {0}', config('main.title')) ?>.
 
-<?= __d('me_cms', 'To activate your account, click {0}', $this->Html->link(__d('me_cms', 'here'), $url)) ?>.
+<?php
+    echo __d(
+        'me_cms',
+        'To activate your account, click {0}',
+        $this->Html->link(__d('me_cms', 'here'), $url)
+    );
+?>.
 
-<?= __d('me_cms', 'If you have not made this request, please contact an administrator') ?>.
+<?php
+    echo __d(
+        'me_cms',
+        'If you have not made this request, please contact an administrator'
+    );
+?>.

@@ -12,25 +12,25 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "~3.3",
+        "cakephp/cakephp": "3.3.*",
         "js-cookie/js-cookie": "dev-master",
         "enyo/dropzone": "^4.3",
         "donatj/phpuseragentparser": "*",
-        "mirko-pagliai/assets": ">=1.0.1",
-        "mirko-pagliai/database-backup": ">=1.1.1",
-        "mirko-pagliai/me-tools": ">=2.8.0",
-        "mirko-pagliai/thumbs": ">=1.0.6"
+        "mirko-pagliai/assets": "1.0.*",
+        "mirko-pagliai/database-backup": "1.1.*",
+        "mirko-pagliai/me-tools": "2.9.*",
+        "mirko-pagliai/thumbs": "1.0.*"
     },
     "repositories": [
         {
             "type": "package",
             "package": {
                 "name": "js-cookie/js-cookie",
-                "version": "v2.1.1",
+                "version": "v2.1.2",
                 "source": {
                     "url": "https://github.com/js-cookie/js-cookie.git",
                     "type": "git",
-                    "reference": "v2.1.1"
+                    "reference": "v2.1.2"
                 }
             }
         }
@@ -39,5 +39,8 @@
         "psr-4": {
             "MeCms\\": "src"
         }
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "2.*"
     }
 }

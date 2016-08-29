@@ -50,7 +50,7 @@
     ?>
 
     <p>
-        <?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')) ?>
+        <?= __d('me_cms', 'Powered by {0}. Copyright {1}', MECMS, date('Y')) ?>
     </p>
     <p>
         <?php

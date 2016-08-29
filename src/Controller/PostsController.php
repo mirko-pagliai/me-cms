@@ -55,11 +55,18 @@ class PostsController extends AppController
      */
     public function index()
     {
+        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        
         //Sets the cache name
-        $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->request->query('page') ? $this->request->query('page') : 1);
+        $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
+        list($posts, $paging) = array_values(
+            Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->Posts->cache
+            )
+        );
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
@@ -158,7 +165,12 @@ class PostsController extends AppController
         $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
+        list($posts, $paging) = array_values(
+            Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->Posts->cache
+            )
+        );
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
@@ -232,15 +244,22 @@ class PostsController extends AppController
                 if ($this->_checkLastSearch($pattern)) {
                     $this->paginate['limit'] = config('default.records_for_searches');
 
+                    $page = $this->request->query('page') ? $this->request->query('page') : 1;
+                    
                     //Sets the initial cache name
                     $cache = sprintf('search_%s', md5($pattern));
 
                     //Updates the cache name with the query limit and the number of the page
                     $cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-                    $cache = sprintf('%s_page_%s', $cache, $this->request->query('page') ? $this->request->query('page') : 1);
+                    $cache = sprintf('%s_page_%s', $cache, $page);
 
                     //Tries to get data from the cache
-                    list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->Posts->cache));
+                    list($posts, $paging) = array_values(
+                        Cache::readMany(
+                            [$cache, sprintf('%s_paging', $cache)],
+                            $this->Posts->cache
+                        )
+                    );
 
                     //If the data are not available from the cache
                     if (empty($posts) || empty($paging)) {

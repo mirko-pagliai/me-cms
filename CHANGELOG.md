@@ -1,5 +1,14 @@
 # 2.x branch
 ## 2.13 branch
+### 2.13.1
+* added `is('add')`, `is('delete')`, `is('edit')`, `is('index')` and
+    `is('view')` detectors;
+* the admin sidebar is cached only if debugging is disabled;
+* improved admin routes. They are automatically handled by CakePHP;
+* fixed bug, posts were also cut ("read more") in the preview;
+* fixed other code for CakePHP Code Sniffer;
+* updated for MeTools 2.9.0.
+
 ### 2.13.0
 * improved the `KcFinderComponent`;
 * the system checkup checks for login logs;

@@ -42,9 +42,6 @@ function routeNameExists($name)
     return in_array($name, $GLOBALS['existingRoutesNames']);
 }
 
-/**
- * MeCms routes
- */
 Router::scope('/', ['plugin' => MECMS], function ($routes) {
     //Includes routes
     include_once 'routes/banners.php';
@@ -79,27 +76,19 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
                 ['_name' => 'dashboard']
             );
         }
+    });
+});
 
-        //Other admin routes
-        $controllers = sprintf('(%s)', implode('|', [
-            'backups',
-            'banners',
-            'banners-positions',
-            'logs',
-            'pages-categories',
-            'pages',
-            'photos-albums',
-            'photos',
-            'posts-categories',
-            'posts-tags',
-            'posts',
-            'systems',
-            'tags',
-            'users',
-            'users-groups',
-        ]));
-
-        $routes->connect('/:controller', [], []);
-        $routes->connect('/:controller/:action/*', [], ['controller' => $controllers]);
+Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
+    //Admin routes
+    $routes->prefix('admin', function ($routes) {
+        //Route `/me-cms/admin`
+        $routes->connect(
+            '/',
+            ['controller' => 'Posts', 'action' => 'index']
+        );
+        
+        //All others admin routes
+        $routes->fallbacks('DashedRoute');
     });
 });

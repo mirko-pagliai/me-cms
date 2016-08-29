@@ -67,7 +67,12 @@ class PostsTagsController extends AppController
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($tag), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany([$cache, sprintf('%s_paging', $cache)], $this->PostsTags->cache));
+        list($posts, $paging) = array_values(
+            Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->PostsTags->cache
+            )
+        );
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {

@@ -65,7 +65,7 @@ class BaseUpdateShell extends Shell
         $columns = $this->connection->execute(sprintf('SHOW COLUMNS FROM %s;', $table))->fetchAll();
 
         return array_map(function ($column) {
-            return array_values($column)[0];
+            return firstValue($column);
         }, $columns);
     }
 
@@ -90,7 +90,7 @@ class BaseUpdateShell extends Shell
         $tables = $this->connection->execute(sprintf('SHOW TABLES;'))->fetchAll();
 
         return array_map(function ($table) {
-            return array_values($table)[0];
+            return firstValue($table);
         }, $tables);
     }
 

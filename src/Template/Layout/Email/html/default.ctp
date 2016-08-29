@@ -55,7 +55,7 @@
                 echo __d(
                     'me_cms',
                     'The request has been sent from the IP {0}',
-                    $ip_address
+                    $ipAddress
                 );
             ?>
         </small>

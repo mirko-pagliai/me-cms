@@ -42,14 +42,14 @@ class MenuBuilderHelper extends Helper
 
     /**
      * Internal function to render a menu as "collapse"
+     * @param array $menu Menu
      * @param string $title The content to be wrapped by <a> tags
      * @param array $options Array of options and HTML attributes
-     * @param array $menu Menu
      * @return string Html code
      * @uses MeTools\View\Helper\HtmlHelper::div()
      * @uses MeTools\View\Helper\HtmlHelper::link()
      */
-    protected function renderAsCollapse($title, array $options = [], $menu)
+    protected function renderAsCollapse($menu, $title, array $options = [])
     {
         //Sets the collapse name
         $collapseName = sprintf('collapse-%s', strtolower($title));
@@ -75,26 +75,26 @@ class MenuBuilderHelper extends Helper
 
     /**
      * Internal function to render a menu as "dropdown"
+     * @param array $menu Menu
      * @param string $title The content to be wrapped by <a> tags
      * @param array $options Array of options and HTML attributes
-     * @param array $menu Menu
      * @return string Html code
      * @uses MeTools\View\Helper\DropdownHelper::menu()
      */
-    protected function renderAsDropdown($title, array $options = [], $menu)
+    protected function renderAsDropdown($menu, $title, array $options = [])
     {
         return $this->Html->li($this->Dropdown->menu($title, $options, $menu));
     }
 
     /**
      * Internal function to render a menu as "list"
+     * @param array $menu Menu
      * @param string $title The content to be wrapped by <a> tags
      * @param array $options Array of options and HTML attributes
-     * @param array $menu Menu
      * @return string Html code
      * @uses MeTools\View\Helper\HtmlHelper::ul()
      */
-    protected function renderAsList($title, array $options = [], $menu)
+    protected function renderAsList($menu, $title, array $options = [])
     {
         return $this->Html->ul($menu);
     }
@@ -125,7 +125,10 @@ class MenuBuilderHelper extends Helper
         $helper = sprintf('%sMenu', $plugin);
 
         //Loads the helper
-        $this->{$helper} = $this->_View->loadHelper($helper, ['className' => sprintf('%s.Menu', $plugin)]);
+        $this->{$helper} = $this->_View->loadHelper(
+            $helper,
+            ['className' => sprintf('%s.Menu', $plugin)]
+        );
 
         $menus = [];
 
@@ -133,12 +136,12 @@ class MenuBuilderHelper extends Helper
             //Calls dynamically the method from the menu helper
             list($menu, $title, $options) = $this->{$helper}->{$method}();
 
-            if (empty($menu) || empty($title) || empty($options)) {
+            if (empty($menu) || empty($title)) {
                 continue;
             }
 
             //Calls dynamically the internal render method
-            $menus[] = $this->{sprintf('renderAs%s', ucfirst($type))}($title, $options, $menu);
+            $menus[] = $this->{sprintf('renderAs%s', ucfirst($type))}($menu, $title, $options);
         }
 
         return implode(PHP_EOL, $menus);
