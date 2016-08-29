@@ -40,6 +40,11 @@
             "MeCms\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "MeCms\\Test\\": "tests"
+        }
+    },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "2.*"
     }
