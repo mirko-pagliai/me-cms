@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.13 branch
+### 2.13.2
+* fixed bug adding tags on admin layout.
+
 ### 2.13.1
 * added `is('add')`, `is('delete')`, `is('edit')`, `is('index')` and
     `is('view')` detectors;
