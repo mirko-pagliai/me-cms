@@ -65,7 +65,7 @@ $(function () {
             var from = "àáäâèéëêìíïîıòóöôùúüûñç·/_,:;-";
             var to = "aaaaeeeeiiiiioooouuuunc       ";
             var fromLength = from.length;
-            for (var i = 0, fromLength; i < l; i++) {
+            for (var i = 0; i < fromLength; i++) {
                 tag = tag.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
             }
             
