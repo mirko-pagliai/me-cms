@@ -42,7 +42,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MeCms\\Test\\": "tests"
+            "MeCms\\Test\\": "tests",
+            "TestPlugin\\": "tests/test_app/Plugin/TestPlugin/src"
         }
     },
     "require-dev": {
