@@ -22,6 +22,7 @@
  */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -95,3 +96,5 @@ $config = [
 
 // Use the test connection for 'debug_kit' as well.
 ConnectionManager::config('test', $config);
+
+Plugin::load('MeCms', ['path' => ROOT]);
