@@ -100,26 +100,42 @@ class MenuBuilderHelper extends Helper
     }
 
     /**
+     * Gets all menu methods from a plugin
+     * @param string $plugin Plugin name
+     * @return array|null
+     */
+    public function getMenuMethods($plugin)
+    {
+        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
+        $methods = get_class_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+        
+        if (empty($methods)) {
+            return null;
+        }
+
+        //Each class `MenuHelper` extends `Cake\View\Helper`. So it calculates
+        //  the difference between the methods of the two classes
+        $methods = array_diff($methods, get_class_methods('Cake\View\Helper'));
+        
+        //Removes invalid methods
+        $methods = preg_grep('/^(?!_).+$/', $methods);
+        
+        return array_values($methods);
+    }
+    
+    /**
      * Generates all menus for a plugin
      * @param string $plugin Plugin name
      * @param string $type Type (`collapse`, `dropdown` or `list`)
      * @return string|null Html code
+     * @uses getMenuMethods()
      * @uses renderAsCollapse()
      * @uses renderAsDropdown()
      * @uses renderAsList()
      */
     public function generate($plugin, $type = 'collapse')
     {
-        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper` class
-        $methods = get_class_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
-
-        if (empty($methods)) {
-            return null;
-        }
-
-        //Because each class is an extension of `\Cake\View\Helper`,
-        //  it calculates the difference between the methods of the two classes
-        $methods = array_diff($methods, get_class_methods('\Cake\View\Helper'));
+        $methods = $this->getMenuMethods($plugin);
 
         //Sets the helper name
         $helper = sprintf('%sMenu', $plugin);

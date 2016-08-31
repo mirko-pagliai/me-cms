@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.14 branch
+### 2.14.0
+* added `MenuBuilderHelper::getMenuMethods()` method.
+
 ## 2.13 branch
 ### 2.13.2
 * fixed bug adding tags on admin layout.
