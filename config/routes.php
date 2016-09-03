@@ -91,4 +91,7 @@ Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
         //All others admin routes
         $routes->fallbacks('DashedRoute');
     });
+    
+    //All others routes
+    $routes->fallbacks('DashedRoute');
 });
