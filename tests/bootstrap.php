@@ -46,6 +46,20 @@ define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP);
 
+//For plugins
+define('BACKUPS', APP_DIR . DS . 'backups');
+define('THUMBS', TMP . 'thumbs');
+
+//@codingStandardsIgnoreStart
+@mkdir(LOGS);
+@mkdir(SESSIONS);
+@mkdir(CACHE);
+@mkdir(CACHE . 'views');
+@mkdir(CACHE . 'models');
+@mkdir(BACKUPS);
+@mkdir(THUMBS);
+//@codingStandardsIgnoreEnd
+
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 Configure::write('debug', true);
@@ -97,4 +111,4 @@ $config = [
 // Use the test connection for 'debug_kit' as well.
 ConnectionManager::config('test', $config);
 
-Plugin::load('MeCms', ['path' => ROOT]);
+Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
