@@ -47,7 +47,7 @@ define('CACHE', TMP);
 define('LOGS', TMP);
 
 //For plugins
-define('BACKUPS', APP_DIR . DS . 'backups');
+define('BACKUPS', TMP . 'backups');
 define('THUMBS', TMP . 'thumbs');
 
 //@codingStandardsIgnoreStart
