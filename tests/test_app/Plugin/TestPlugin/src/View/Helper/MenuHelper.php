@@ -26,6 +26,16 @@ use Cake\View\Helper;
 
 class MenuHelper extends Helper
 {
+    public function _invalidMethod()
+    {
+        
+    }
+    
+    public function __otherInvalidMethod()
+    {
+        
+    }
+    
     public function articles()
     {
         
