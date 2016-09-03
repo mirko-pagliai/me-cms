@@ -37,9 +37,11 @@ $GLOBALS['existingRoutesNames'] = array_filter(
  * @param string $name Name
  * @return bool
  */
-function routeNameExists($name)
-{
-    return in_array($name, $GLOBALS['existingRoutesNames']);
+if (!function_exists('routeNameExists')) {
+    function routeNameExists($name)
+    {
+        return in_array($name, $GLOBALS['existingRoutesNames']);
+    }
 }
 
 Router::scope('/', ['plugin' => MECMS], function ($routes) {
