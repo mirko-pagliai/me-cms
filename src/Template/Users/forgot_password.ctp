@@ -29,12 +29,12 @@ $this->assign('title', $title = __d('me_cms', 'Request new password'));
 <fieldset>
     <?php
         echo $this->Form->input('email', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
             'tip' => __d('me_cms', 'Enter your email'),
         ]);
         echo $this->Form->input('email_repeat', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
             'tip' => __d('me_cms', 'Repeat your email'),
         ]);

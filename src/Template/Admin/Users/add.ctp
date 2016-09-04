@@ -42,31 +42,31 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
 <fieldset>
     <?php
         echo $this->Form->input('username', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Username'),
         ]);
         echo $this->Form->input('email', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
         ]);
         echo $this->Form->input('email_repeat', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
         ]);
         echo $this->Form->input('password', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Password'),
         ]);
         echo $this->Form->input('password_repeat', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat password'),
         ]);
         echo $this->Form->input('first_name', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'First name'),
         ]);
         echo $this->Form->input('last_name', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Last name'),
         ]);
     ?>
