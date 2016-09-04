@@ -32,12 +32,12 @@ $GLOBALS['existingRoutesNames'] = array_filter(
     }, Router::routes())
 );
 
-/**
- * Checks whether the name of a route already exists
- * @param string $name Name
- * @return bool
- */
 if (!function_exists('routeNameExists')) {
+    /**
+     * Checks whether the name of a route already exists
+     * @param string $name Name
+     * @return bool
+     */
     function routeNameExists($name)
     {
         return in_array($name, $GLOBALS['existingRoutesNames']);
