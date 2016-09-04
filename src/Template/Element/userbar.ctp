@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-    
+
 if (!config('users.userbar')) {
     return;
 }
@@ -44,21 +44,19 @@ if (!$this->Auth->isLogged()) {
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="userbar-collapse">
-            <ul class="nav navbar-nav">
-                <?php
-                    echo $this->Html->li($this->Html->link(
+            <?php
+                echo $this->Html->ul([
+                    $this->Html->link(
                         __d('me_cms', 'Dashboard'),
                         ['_name' => 'dashboard'],
                         ['icon' => 'dashboard']
-                    ));
-                    echo $this->fetch('userbar');
-                ?>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <?php
-                    echo $this->Html->li($this->Dropdown->menu(
+                    ),
+                    $this->fetch('userbar'),
+                ], ['class' => 'nav navbar-nav']);
+
+                echo $this->Html->ul([
+                    $this->Dropdown->menu(
                         $this->Auth->user('full_name'),
-                        ['icon' => 'user'],
                         [
                             $this->Html->link(
                                 __d('me_cms', 'Change password'),
@@ -68,10 +66,11 @@ if (!$this->Auth->isLogged()) {
                                 __d('me_cms', 'Logout'),
                                 ['_name' => 'logout']
                             ),
-                        ]
-                    ), ['class' => 'dropdown']);
-                ?>
-            </ul>
+                        ],
+                        ['icon' => 'user']
+                    ),
+                ], ['class' => 'nav navbar-nav navbar-right']);
+            ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

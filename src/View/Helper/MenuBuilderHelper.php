@@ -22,6 +22,7 @@
  */
 namespace MeCms\View\Helper;
 
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
 
 /**
@@ -41,66 +42,44 @@ class MenuBuilderHelper extends Helper
     ];
 
     /**
-     * Internal function to render a menu as "collapse"
-     * @param array $menu Menu
-     * @param string $title The content to be wrapped by <a> tags
-     * @param array $options Array of options and HTML attributes
-     * @return string Html code
-     * @uses MeTools\View\Helper\HtmlHelper::div()
-     * @uses MeTools\View\Helper\HtmlHelper::link()
+     * Generates all menus for a plugin
+     * @param string $plugin Plugin name
+     * @return string|null Html code
+     * @uses getMenuMethods()
      */
-    protected function renderAsCollapse($menu, $title, array $options = [])
+    public function generate($plugin)
     {
-        //Sets the collapse name
-        $collapseName = sprintf('collapse-%s', strtolower($title));
+        //Gets all menu name methods
+        $methods = $this->getMenuMethods($plugin);
 
-        return $this->Html->div('panel', implode(PHP_EOL, [
-            $this->Html->link(
-                $title,
-                sprintf('#%s', $collapseName),
-                am($options, [
-                    'aria-controls' => $collapseName,
-                    'aria-expanded' => 'false',
-                    'class' => 'collapsed',
-                    'data-toggle' => 'collapse',
-                ])
-            ),
-            $this->Html->div(
-                'collapse',
-                implode(PHP_EOL, $menu),
-                ['id' => $collapseName]
-            )
-        ]));
+        if (empty($methods)) {
+            return [];
+        }
+
+        //Loads the helper
+        $helper = $this->_View->loadHelper(
+            sprintf('%s.Menu', $plugin),
+            ['className' => sprintf('%s.Menu', $plugin)]
+        );
+
+        $menus = [];
+
+        //Calls dynamically each method
+        foreach ($methods as $method) {
+            list($menu, $title, $titleOptions) = call_user_func([$helper, $method]);
+
+            if (empty($menu) || empty($title)) {
+                continue;
+            }
+
+            $menus[sprintf('%s.%s', $plugin, $method)] = compact('menu', 'title', 'titleOptions');
+        }
+
+        return $menus;
     }
 
     /**
-     * Internal function to render a menu as "dropdown"
-     * @param array $menu Menu
-     * @param string $title The content to be wrapped by <a> tags
-     * @param array $options Array of options and HTML attributes
-     * @return string Html code
-     * @uses MeTools\View\Helper\DropdownHelper::menu()
-     */
-    protected function renderAsDropdown($menu, $title, array $options = [])
-    {
-        return $this->Html->li($this->Dropdown->menu($title, $options, $menu));
-    }
-
-    /**
-     * Internal function to render a menu as "list"
-     * @param array $menu Menu
-     * @param string $title The content to be wrapped by <a> tags
-     * @param array $options Array of options and HTML attributes
-     * @return string Html code
-     * @uses MeTools\View\Helper\HtmlHelper::ul()
-     */
-    protected function renderAsList($menu, $title, array $options = [])
-    {
-        return $this->Html->ul($menu);
-    }
-
-    /**
-     * Gets all menu methods from a plugin
+     * Gets all menu name methods from a plugin
      * @param string $plugin Plugin name
      * @return array|null
      */
@@ -108,58 +87,78 @@ class MenuBuilderHelper extends Helper
     {
         //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
         $methods = get_class_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
-        
+
         if (empty($methods)) {
             return null;
         }
 
-        //Each class `MenuHelper` extends `Cake\View\Helper`. So it calculates
+        //Each class menu class extends `Cake\View\Helper`. So it calculates
         //  the difference between the methods of the two classes
         $methods = array_diff($methods, get_class_methods('Cake\View\Helper'));
-        
-        //Removes invalid methods
+
+        //Filters invalid name methods
         $methods = preg_grep('/^(?!_).+$/', $methods);
-        
+
         return array_values($methods);
     }
-    
+
     /**
-     * Generates all menus for a plugin
+     * Renders a menu as "collapse"
      * @param string $plugin Plugin name
-     * @param string $type Type (`collapse`, `dropdown` or `list`)
-     * @return string|null Html code
-     * @uses getMenuMethods()
-     * @uses renderAsCollapse()
-     * @uses renderAsDropdown()
-     * @uses renderAsList()
+     * @return string
+     * @uses generate()
      */
-    public function generate($plugin, $type = 'collapse')
+    public function renderAsCollapse($plugin)
     {
-        $methods = $this->getMenuMethods($plugin);
+        //Gets menus
+        $menus = $this->generate($plugin);
 
-        //Sets the helper name
-        $helper = sprintf('%sMenu', $plugin);
+        $menus = array_map(function ($menu) {
+            //Sets the collapse name
+            $collapseName = sprintf(
+                'collapse-%s',
+                strtolower(Inflector::slug($menu['title']))
+            );
 
-        //Loads the helper
-        $this->{$helper} = $this->_View->loadHelper(
-            $helper,
-            ['className' => sprintf('%s.Menu', $plugin)]
-        );
-
-        $menus = [];
-
-        foreach ($methods as $method) {
-            //Calls dynamically the method from the menu helper
-            list($menu, $title, $options) = $this->{$helper}->{$method}();
-
-            if (empty($menu) || empty($title)) {
-                continue;
-            }
-
-            //Calls dynamically the internal render method
-            $menus[] = $this->{sprintf('renderAs%s', ucfirst($type))}($menu, $title, $options);
-        }
+            return $this->Html->div('panel', implode(PHP_EOL, [
+                $this->Html->link(
+                    $menu['title'],
+                    sprintf('#%s', $collapseName),
+                    am($menu['titleOptions'], [
+                        'aria-controls' => $collapseName,
+                        'aria-expanded' => 'false',
+                        'class' => 'collapsed',
+                        'data-toggle' => 'collapse',
+                    ])
+                ),
+                $this->Html->div(
+                    'collapse',
+                    implode(PHP_EOL, $menu['menu']),
+                    ['id' => $collapseName]
+                )
+            ]));
+        }, $menus);
 
         return implode(PHP_EOL, $menus);
+    }
+
+    /**
+     * Renders a menu as "dropdown"
+     * @param string $plugin Plugin name
+     * @return array
+     * @uses generate()
+     */
+    public function renderAsDropdown($plugin)
+    {
+        //Gets menus
+        $menus = $this->generate($plugin);
+
+        return array_map(function ($menu) {
+            return $this->Dropdown->menu(
+                $menu['title'],
+                $menu['menu'],
+                $menu['titleOptions']
+            );
+        }, $menus);
     }
 }

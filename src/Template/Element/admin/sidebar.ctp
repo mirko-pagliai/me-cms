@@ -22,14 +22,16 @@
  */
 
 //Renders menus for MeCms
-echo $this->MenuBuilder->generate(MECMS);
+echo $this->MenuBuilder->renderAsCollapse(MECMS);
 
-//Renders menus for all others plugin
-foreach (\MeCms\Core\Plugin::all(['exclude' => MECMS]) as $plugin) {
-    $menu = $this->MenuBuilder->generate($plugin);
+//Renders menus for each plugin
+foreach (\MeCms\Core\Plugin::all([
+    'exclude' => [MECMS, 'MeTools', 'Assets', 'DatabaseBackup', 'Thumbs'],
+    ]) as $plugin) {
+    $menus = $this->MenuBuilder->renderAsCollapse($plugin);
 
-    if (!empty($menu)) {
+    if (!empty($menus)) {
         echo $this->Html->h6($plugin);
-        echo $menu;
+        echo $menus;
     }
 }

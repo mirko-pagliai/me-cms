@@ -1,7 +1,10 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.0
-* added `MenuBuilderHelper::getMenuMethods()` method.
+* `MenuBuilderHelper` class has been completely rewritten and now provides
+    `generate()`, `getMenuMethods()`, `renderAsCollapse()` and
+    `renderAsDropdown()` methods;
+* added tests for `MenuBuilderHelper` class.
 
 ## 2.13 branch
 ### 2.13.2
