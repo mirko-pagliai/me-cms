@@ -13,7 +13,7 @@ function setKcfinderHeight()
     if (!$('#kcfinder').length) {
         return;
     }
-    
+
     //For now, the maximum height is the maximum height available
     var maxHeight = getAvailableHeight();
 

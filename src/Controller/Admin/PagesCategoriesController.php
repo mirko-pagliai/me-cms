@@ -90,7 +90,7 @@ class PagesCategoriesController extends AppController
         //  tree list
         $categories = array_map(function ($category) use ($treeList) {
             $category->title = $treeList[$category->id];
-            
+
             return $category;
         }, $categories);
 

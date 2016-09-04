@@ -82,7 +82,7 @@ $this->Breadcrumb->add($title, ['_name' => 'album', $album->slug]);
                         'class' => 'thumbnail',
                         'title' => $photo->description,
                     ];
-                    
+
                     //If Fancybox is enabled, adds some options
                     if (config('default.fancybox')) {
                         $options = am($options, [

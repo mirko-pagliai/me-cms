@@ -52,47 +52,47 @@ $this->extend('/Admin/Common/Banners/index');
                 </div>
 
                 <?php
-                    $actions = [
-                        $this->Html->link(
-                            null,
-                            ['action' => 'edit', $banner->id],
-                            ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
-                        ),
-                    ];
+                $actions = [
+                    $this->Html->link(
+                        null,
+                        ['action' => 'edit', $banner->id],
+                        ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
+                    ),
+                ];
 
-                    if ($banner->target) {
-                        $actions[] = $this->Html->link(
-                            null,
-                            $banner->target,
-                            [
-                                'icon' => 'external-link',
-                                'title' => __d('me_cms', 'Open'),
-                                'target' => '_blank'
-                            ]
-                        );
-                    }
-
+                if ($banner->target) {
                     $actions[] = $this->Html->link(
                         null,
-                        ['action' => 'download', $banner->id],
-                        ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
+                        $banner->target,
+                        [
+                            'icon' => 'external-link',
+                            'title' => __d('me_cms', 'Open'),
+                            'target' => '_blank'
+                        ]
                     );
+                }
 
-                    //Only admins can delete banners
-                    if ($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(
-                            null,
-                            ['action' => 'delete', $banner->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'title' => __d('me_cms', 'Delete'),
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                            ]
-                        );
-                    }
+                $actions[] = $this->Html->link(
+                    null,
+                    ['action' => 'download', $banner->id],
+                    ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
+                );
 
-                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                //Only admins can delete banners
+                if ($this->Auth->isGroup('admin')) {
+                    $actions[] = $this->Form->postLink(
+                        null,
+                        ['action' => 'delete', $banner->id],
+                        [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'title' => __d('me_cms', 'Delete'),
+                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                        ]
+                    );
+                }
+
+                echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </div>
         </div>

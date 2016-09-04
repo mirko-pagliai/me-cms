@@ -48,7 +48,8 @@ class StaticPage
         }, Plugin::all());
 
         //Adds APP to paths
-        array_unshift($paths, firstValue(App::path('Template')) . 'StaticPages');
+        array_unshift($paths, firstValue(App::path('Template')) .
+            'StaticPages');
 
         $pages = [];
 
@@ -92,8 +93,9 @@ class StaticPage
 
         //Checks if the page exists in APP
         foreach ($patterns as $pattern) {
-            $file = firstValue(App::path('Template')) . 'StaticPages' . DS . $pattern . '.ctp';
-            
+            $file = firstValue(App::path('Template')) . 'StaticPages' . DS .
+                $pattern . '.ctp';
+
             if (is_readable($file)) {
                 return 'StaticPages' . DS . $pattern;
             }
@@ -102,10 +104,12 @@ class StaticPage
         //Checks if the page exists in all plugins, beginning with MeCms
         foreach (Plugin::all() as $plugin) {
             foreach ($patterns as $pattern) {
-                $file = firstValue(App::path('Template', $plugin)) . 'StaticPages' . DS . $pattern . '.ctp';
-                
+                $file = firstValue(App::path('Template', $plugin)) .
+                    'StaticPages' . DS . $pattern . '.ctp';
+
                 if (is_readable($file)) {
-                    return sprintf('%s.%s', $plugin, 'StaticPages' . DS . $pattern);
+                    return sprintf('%s.%s', $plugin, 'StaticPages' . DS .
+                        $pattern);
                 }
             }
         }
@@ -122,7 +126,7 @@ class StaticPage
     {
         $slug = af(explode('/', $slug));
         $slug = str_replace('-', '_', $slug[count($slug) - 1]);
-        
+
         return Inflector::humanize($slug);
     }
 }

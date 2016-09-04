@@ -49,18 +49,18 @@ class Plugin extends BasePlugin
             'except' => [],
             'order' => true,
         ], $options);
-        
+
         $plugins = parent::all($options);
-        
+
         if ($options['order']) {
             $key = array_search(MECMS, $plugins);
-            
+
             if ($key) {
                 unset($plugins[$key]);
                 array_unshift($plugins, MECMS);
             }
         }
-        
+
         return $plugins;
     }
 }

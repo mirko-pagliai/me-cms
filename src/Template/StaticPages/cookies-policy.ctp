@@ -182,4 +182,3 @@
         'pages view',
         $this->element('views/page', compact('page'))
     );
-    

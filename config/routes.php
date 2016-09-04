@@ -62,7 +62,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
             ['_name' => 'homepage']
         );
     }
-    
+
     $routes->connect(
         '/homepage',
         ['controller' => 'Posts', 'action' => 'index']
@@ -89,11 +89,11 @@ Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
             '/',
             ['controller' => 'Posts', 'action' => 'index']
         );
-        
+
         //All others admin routes
         $routes->fallbacks('DashedRoute');
     });
-    
+
     //All others routes
     $routes->fallbacks('DashedRoute');
 });

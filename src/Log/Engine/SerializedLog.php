@@ -128,7 +128,7 @@ class SerializedLog extends FileLog
         if (is_readable($pathname)) {
             $logs = unserialize(file_get_contents($pathname));
         }
-        
+
         if (empty($logs) || !is_array($logs)) {
             $logs = [];
         }

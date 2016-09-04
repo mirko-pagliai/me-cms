@@ -51,7 +51,7 @@ class PagesCategoriesTable extends AppTable
         $rules->add($rules->isUnique(['title']));
         $rules->add($rules->isUnique(['slug']));
         $rules->add($rules->existsIn(['parent_id'], 'Parents'));
-        
+
         return $rules;
     }
 

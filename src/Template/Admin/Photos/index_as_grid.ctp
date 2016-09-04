@@ -83,7 +83,7 @@ $this->extend('/Admin/Common/Photos/index');
                             ]
                         );
                     }
-                        
+
                     //If the photo is active
                     if ($photo->active) {
                         $actions[] = $this->Html->link(

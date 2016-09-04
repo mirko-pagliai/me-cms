@@ -56,7 +56,7 @@ class PostsController extends AppController
     public function index()
     {
         $page = $this->request->query('page') ? $this->request->query('page') : 1;
-        
+
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 
@@ -245,7 +245,7 @@ class PostsController extends AppController
                     $this->paginate['limit'] = config('default.records_for_searches');
 
                     $page = $this->request->query('page') ? $this->request->query('page') : 1;
-                    
+
                     //Sets the initial cache name
                     $cache = sprintf('search_%s', md5($pattern));
 
