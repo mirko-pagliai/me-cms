@@ -38,8 +38,8 @@ $this->extend('/Admin/Common/Banners/index');
                     <?= __d('me_cms', 'Position') ?>: 
                     <?php
                         echo $this->Html->link(
-                            $banner->position->name,
-                            ['?' => ['position' => $banner->position->name]],
+                            $banner->position->title,
+                            ['?' => ['position' => $banner->position->id]],
                             ['title' => __d('me_cms', 'View items that belong to this category')]
                         );
                     ?>

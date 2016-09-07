@@ -40,7 +40,7 @@ class BannersPositionValidator extends AppValidator
         parent::__construct();
 
         //Name
-        $this->add('name', [
+        $this->add('title', [
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
@@ -58,6 +58,6 @@ class BannersPositionValidator extends AppValidator
                 'provider' => 'table',
                 'rule' => 'validateUnique',
             ],
-        ])->requirePresence('name', 'create');
+        ])->requirePresence('title', 'create');
     }
 }

@@ -6,6 +6,7 @@
     `generate()`, `getMenuMethods()`, `renderAsCollapse()` and
     `renderAsDropdown()` methods;
 * added tests for `MenuBuilderHelper` class;
+* the `name` field of the `banners_positions` table has been renames as `title`;
 * updated for MeTools 2.10.0.
 
 ## 2.13 branch
