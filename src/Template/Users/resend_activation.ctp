@@ -31,12 +31,12 @@ $this->assign('title', $title = __d('me_cms', 'Resend activation email'));
         echo $this->Form->input('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
-            'tip' => __d('me_cms', 'Enter your email'),
+            'help' => __d('me_cms', 'Enter your email'),
         ]);
         echo $this->Form->input('email_repeat', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
-            'tip' => __d('me_cms', 'Repeat your email'),
+            'help' => __d('me_cms', 'Repeat your email'),
         ]);
 
         if (config('security.recaptcha')) {

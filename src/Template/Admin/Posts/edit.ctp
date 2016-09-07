@@ -47,7 +47,7 @@ $this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
     ]);
     echo $this->Form->datetimepicker('created', [
         'label' => __d('me_cms', 'Date'),
-        'tip' => [
+        'help' => [
             __d('me_cms', 'If blank, the current date and time will be used'),
             __d('me_cms', 'You can delay the publication by entering a future date'),
         ],
@@ -58,7 +58,7 @@ $this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
     ]);
     echo $this->Form->input('active', [
         'label' => sprintf('%s?', __d('me_cms', 'Published')),
-        'tip' => __d('me_cms', 'Disable this option to save as a draft'),
+        'help' => __d('me_cms', 'Disable this option to save as a draft'),
     ]);
     ?>
 </div>
@@ -74,7 +74,7 @@ $this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
         echo $this->Form->input('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'tip' => __d('me_cms', 'The slug is a string identifying a ' .
+            'help' => __d('me_cms', 'The slug is a string identifying a ' .
                 'resource. If you do not have special needs, let it be ' .
                 'generated automatically'),
         ]);
@@ -85,7 +85,7 @@ $this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
                 'id' => 'tags-output-text',
                 'label' => __d('me_cms', 'Tags'),
                 'rows' => 2,
-                'tip' => __d('me_cms', 'Tags must be at least 3 chars and ' .
+                'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
                     'separated by a comma or a comma and a space. Only ' .
                     'lowercase letters, numbers, hyphen, space'),
                 'value' => $this->request->data('tags') ? $this->request->data('tags') : $post->tags_as_string,
@@ -105,7 +105,7 @@ $this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
                 ]),
                 'id' => 'tags-input-text',
                 'label' => false,
-                'tip' => __d('me_cms', 'Tags must be at least 3 chars and ' .
+                'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
                     'separated by a comma or a comma and a space. Only ' .
                     'lowercase letters, numbers, hyphen, space'),
             ]);

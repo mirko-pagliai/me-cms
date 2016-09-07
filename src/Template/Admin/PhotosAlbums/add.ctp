@@ -44,7 +44,7 @@ $this->Library->slugify();
         echo $this->Form->input('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'tip' => __d('me_cms', 'The slug is a string identifying a ' .
+            'help' => __d('me_cms', 'The slug is a string identifying a ' .
                 'resource. If you do not have special needs, let it be ' .
                 'generated automatically'),
         ]);

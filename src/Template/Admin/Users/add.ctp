@@ -35,7 +35,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
         echo $this->Form->input('active', [
             'checked' => true,
             'label' => sprintf('%s?', __d('me_cms', 'Active')),
-            'tip' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
+            'help' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
         ]);
     ?>
 </div>

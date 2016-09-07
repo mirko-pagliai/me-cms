@@ -37,7 +37,7 @@ $this->assign('title', __d('me_cms', 'Contact us'));
         echo $this->Form->input('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
-            'tip' => __d('me_cms', 'Enter your email'),
+            'help' => __d('me_cms', 'Enter your email'),
         ]);
         echo $this->Form->input('message', [
             'label' => __d('me_cms', 'Message'),

@@ -36,7 +36,7 @@ $this->assign('title', $title = __d('me_cms', 'Reset password'));
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
             'label' => __d('me_cms', 'Password'),
-            'tip' => __d('me_cms', 'Enter your new password'),
+            'help' => __d('me_cms', 'Enter your new password'),
         ]);
         echo $this->Form->input('password_repeat', [
             'autocomplete' => 'off',
@@ -46,7 +46,7 @@ $this->assign('title', $title = __d('me_cms', 'Reset password'));
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
             'label' => __d('me_cms', 'Repeat password'),
-            'tip' => __d('me_cms', 'Repeat your new password'),
+            'help' => __d('me_cms', 'Repeat your new password'),
         ]);
     ?>
 </fieldset>

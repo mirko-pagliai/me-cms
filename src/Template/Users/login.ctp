@@ -45,7 +45,7 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
             ]);
             echo $this->Form->input('remember_me', [
                 'label' => __d('me_cms', 'Remember me'),
-                'tip' => __d('me_cms', 'Don\'t use on public computers'),
+                'help' => __d('me_cms', 'Don\'t use on public computers'),
                 'type' => 'checkbox',
             ]);
         ?>

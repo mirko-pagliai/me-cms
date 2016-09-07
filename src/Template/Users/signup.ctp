@@ -35,12 +35,12 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
         echo $this->Form->input('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
-            'tip' => __d('me_cms', 'Enter your email'),
+            'help' => __d('me_cms', 'Enter your email'),
         ]);
         echo $this->Form->input('email_repeat', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
-            'tip' => __d('me_cms', 'Repeat your email'),
+            'help' => __d('me_cms', 'Repeat your email'),
         ]);
         echo $this->Form->input('password', [
             'autocomplete' => 'off',
@@ -50,7 +50,7 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
             'label' => __d('me_cms', 'Password'),
-            'tip' => __d('me_cms', 'Enter your password'),
+            'help' => __d('me_cms', 'Enter your password'),
         ]);
         echo $this->Form->input('password_repeat', [
             'autocomplete' => 'off',
@@ -60,7 +60,7 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
             'label' => __d('me_cms', 'Repeat password'),
-            'tip' => __d('me_cms', 'Repeat your password'),
+            'help' => __d('me_cms', 'Repeat your password'),
         ]);
         echo $this->Form->input('first_name', [
             'autocomplete' => 'off',

@@ -50,7 +50,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
         ]);
         echo $this->Form->input('target', [
             'label' => __d('me_cms', 'Web address'),
-            'tip' => __d('me_cms', 'The address should begin with {0}', $this->Html->em('http://')),
+            'help' => __d('me_cms', 'The address should begin with {0}', $this->Html->em('http://')),
         ]);
         echo $this->Form->input('description', [
             'label' => __d('me_cms', 'Description'),

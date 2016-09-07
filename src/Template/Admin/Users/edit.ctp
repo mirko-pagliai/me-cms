@@ -47,14 +47,14 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Password'),
             'required' => false,
-            'tip' => __d('me_cms', 'If you want to change the password just ' .
+            'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
         ]);
         echo $this->Form->input('password_repeat', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat password'),
             'required' => false,
-            'tip' => __d('me_cms', 'If you want to change the password just ' .
+            'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
         ]);
         echo $this->Form->input('first_name', [

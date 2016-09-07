@@ -5,7 +5,8 @@
 * `MenuBuilderHelper` class has been completely rewritten and now provides
     `generate()`, `getMenuMethods()`, `renderAsCollapse()` and
     `renderAsDropdown()` methods;
-* added tests for `MenuBuilderHelper` class.
+* added tests for `MenuBuilderHelper` class;
+* updated for MeTools 2.10.0.
 
 ## 2.13 branch
 ### 2.13.2
