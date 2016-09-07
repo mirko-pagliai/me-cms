@@ -125,3 +125,9 @@ form .form-group input {
     height: auto;
     padding: 10px;
 }
+
+/* Form, input div, button group, button */
+form .form-group .input-group-btn .btn {
+    line-height: 220%;
+    padding: 6px 14px;
+}

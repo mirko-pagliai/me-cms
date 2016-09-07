@@ -51,6 +51,7 @@
                 'MeCms.admin/bootstrap.min',
                 'MeTools.default',
                 'MeCms.admin/layout',
+                'MeCms.display-password',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>

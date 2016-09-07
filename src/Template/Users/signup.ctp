@@ -29,35 +29,45 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
 <fieldset>
     <?php
         echo $this->Form->input('username', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Username'),
         ]);
         echo $this->Form->input('email', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
-            'tip' => __d('me_cms', 'Enter your email'),
+            'help' => __d('me_cms', 'Enter your email'),
         ]);
         echo $this->Form->input('email_repeat', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
-            'tip' => __d('me_cms', 'Repeat your email'),
+            'help' => __d('me_cms', 'Repeat your email'),
         ]);
         echo $this->Form->input('password', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
+            'button' => $this->Html->button(null, '#', [
+                'class' => 'display-password',
+                'icon' => 'eye',
+                'title' => __d('me_cms', 'Show/hide password'),
+             ]),
             'label' => __d('me_cms', 'Password'),
-            'tip' => __d('me_cms', 'Enter your password'),
+            'help' => __d('me_cms', 'Enter your password'),
         ]);
         echo $this->Form->input('password_repeat', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
+            'button' => $this->Html->button(null, '#', [
+                'class' => 'display-password',
+                'icon' => 'eye',
+                'title' => __d('me_cms', 'Show/hide password'),
+             ]),
             'label' => __d('me_cms', 'Repeat password'),
-            'tip' => __d('me_cms', 'Repeat your password'),
+            'help' => __d('me_cms', 'Repeat your password'),
         ]);
         echo $this->Form->input('first_name', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'First name'),
         ]);
         echo $this->Form->input('last_name', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Last name'),
         ]);
 

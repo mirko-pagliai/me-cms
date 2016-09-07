@@ -49,7 +49,7 @@ class PostsCategoriesTable extends AppTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['parent_id'], 'Parents'));
-        
+
         return $rules;
     }
 

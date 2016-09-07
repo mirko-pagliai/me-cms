@@ -30,6 +30,25 @@ use MeCms\Shell\BaseUpdateShell;
 class UpdateShell extends BaseUpdateShell
 {
     /**
+     * Updates to 2.14.0 version
+     * @return void
+     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     */
+    public function to2v14v0()
+    {
+        $this->loadModel('MeCms.BannersPositions');
+
+        //Renames the "name" column as "title"
+        if ($this->_checkColumn('name', $this->BannersPositions->table())) {
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` CHANGE `name` `title` VARCHAR(100) NOT NULL;',
+                $this->BannersPositions->table()
+            ));
+        }
+    }
+
+    /**
      * Updates to 2.10.1 version
      * @return void
      * @uses MeCms\Shell\BaseUpdateShell::$connection

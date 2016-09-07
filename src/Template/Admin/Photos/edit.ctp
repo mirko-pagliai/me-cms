@@ -43,7 +43,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
             $photo->path,
             ['class' => 'img-thumbnail margin-15', 'width' => 1186]
         );
-        
+
         echo $this->Form->input('filename', [
             'disabled' => true,
             'label' => __d('me_cms', 'Filename'),

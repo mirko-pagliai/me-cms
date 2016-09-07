@@ -51,7 +51,7 @@ class PostsTagsTable extends AppTable
     {
         $rules->add($rules->existsIn(['tag_id'], 'Tags'));
         $rules->add($rules->existsIn(['post_id'], 'Posts'));
-        
+
         return $rules;
     }
 

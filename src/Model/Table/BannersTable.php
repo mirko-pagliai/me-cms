@@ -68,7 +68,7 @@ class BannersTable extends AppTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['position_id'], 'Positions'));
-        
+
         return $rules;
     }
 

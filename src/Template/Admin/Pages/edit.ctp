@@ -38,7 +38,7 @@ $this->Library->slugify();
         ]);
         echo $this->Form->datetimepicker('created', [
             'label' => __d('me_cms', 'Date'),
-            'tip' => [
+            'help' => [
                 __d('me_cms', 'If blank, the current date and time will be used'),
                 __d('me_cms', 'You can delay the publication by entering a future date'),
             ],
@@ -49,7 +49,7 @@ $this->Library->slugify();
         ]);
         echo $this->Form->input('active', [
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
-            'tip' => __d('me_cms', 'Disable this option to save as a draft'),
+            'help' => __d('me_cms', 'Disable this option to save as a draft'),
         ]);
     ?>
 </div>
@@ -65,8 +65,8 @@ $this->Library->slugify();
         echo $this->Form->input('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'tip' => __d('me_cms', 'The slug is a string identifying a ' .
-                '.resource. If you do not have special needs, let it be ' .
+            'help' => __d('me_cms', 'The slug is a string identifying a ' .
+                'resource. If you do not have special needs, let it be ' .
                 'generated automatically'),
         ]);
         echo $this->Form->ckeditor('text', [

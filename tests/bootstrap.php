@@ -22,6 +22,7 @@
  */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -44,6 +45,21 @@ define('TMP', sys_get_temp_dir() . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP);
+define('SESSIONS', TMP . 'sessions' . DS);
+
+//For plugins
+define('BACKUPS', TMP . 'backups');
+define('THUMBS', TMP . 'thumbs');
+
+//@codingStandardsIgnoreStart
+@mkdir(LOGS);
+@mkdir(SESSIONS);
+@mkdir(CACHE);
+@mkdir(CACHE . 'views');
+@mkdir(CACHE . 'models');
+@mkdir(BACKUPS);
+@mkdir(THUMBS);
+//@codingStandardsIgnoreEnd
 
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
@@ -83,7 +99,7 @@ Cache::config([
         'serialize' => true,
     ],
 ]);
-    
+
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
     putenv('db_dsn=sqlite://127.0.0.1/' . TMP . 'debug_kit_test.sqlite');
@@ -95,3 +111,5 @@ $config = [
 
 // Use the test connection for 'debug_kit' as well.
 ConnectionManager::config('test', $config);
+
+Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);

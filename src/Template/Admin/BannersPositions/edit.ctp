@@ -28,8 +28,8 @@ $this->assign('title', $title = __d('me_cms', 'Edit banners position'));
 <?= $this->Form->create($position); ?>
 <fieldset>
     <?php
-        echo $this->Form->input('name', [
-            'label' => __d('me_cms', 'Name'),
+        echo $this->Form->input('title', [
+            'label' => __d('me_cms', 'Title'),
         ]);
         echo $this->Form->input('description', [
             'label' => __d('me_cms', 'Description'),

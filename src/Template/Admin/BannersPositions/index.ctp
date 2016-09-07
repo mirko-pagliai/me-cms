@@ -40,7 +40,7 @@ $this->append('actions', $this->Html->button(
     <thead>
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
-            <th><?= $this->Paginator->sort('name', __d('me_cms', 'Name')) ?></th>
+            <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
             <th><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('banner_count', __d('me_cms', 'Banners')) ?></th>
         </tr>
@@ -52,7 +52,7 @@ $this->append('actions', $this->Html->button(
                     <code><?= $position->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($position->name, ['action' => 'edit', $position->id]) ?></strong>
+                    <strong><?= $this->Html->link($position->title, ['action' => 'edit', $position->id]) ?></strong>
                     <?php
                         $actions = [
                             $this->Html->link(

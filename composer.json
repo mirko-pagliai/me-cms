@@ -18,7 +18,7 @@
         "donatj/phpuseragentparser": "*",
         "mirko-pagliai/assets": "1.0.*",
         "mirko-pagliai/database-backup": "1.1.*",
-        "mirko-pagliai/me-tools": "2.9.*",
+        "mirko-pagliai/me-tools": "2.10.*",
         "mirko-pagliai/thumbs": "1.0.*"
     },
     "repositories": [
@@ -42,7 +42,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MeCms\\Test\\": "tests"
+            "MeCms\\Test\\": "tests",
+            "TestPlugin\\": "tests/test_app/Plugin/TestPlugin/src",
+            "TestPluginTwo\\": "tests/test_app/Plugin/TestPluginTwo/src"
         }
     },
     "require-dev": {

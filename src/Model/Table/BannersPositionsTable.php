@@ -46,7 +46,7 @@ class BannersPositionsTable extends AppTable
     public function getList()
     {
         return $this->find('list')
-            ->order(['name' => 'ASC'])
+            ->order(['title' => 'ASC'])
             ->cache('positions_list', $this->cache)
             ->toArray();
     }
@@ -61,7 +61,7 @@ class BannersPositionsTable extends AppTable
         parent::initialize($config);
 
         $this->table('banners_positions');
-        $this->displayField('name');
+        $this->displayField('title');
         $this->primaryKey('id');
 
         $this->hasMany('Banners', [

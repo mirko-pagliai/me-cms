@@ -59,7 +59,7 @@ class SystemsController extends AppController
         //Checks if the contact form is enabled
         if (!config('default.contact_form')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
-            
+
             return $this->redirect(['_name' => 'homepage']);
         }
 

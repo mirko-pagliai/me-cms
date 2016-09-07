@@ -33,14 +33,14 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
             'All temporary files size: {0}',
             $this->Number->toReadableSize($totalSize)
         ));
-        
+
         //Only admins can clear all temporary files
         if ($this->Auth->isGroup('admin')) {
             echo $this->Html->para(null, __d(
                 'me_cms',
                 'This command clear all temporary files: cache, assets, logs and thumbnails'
             ));
-            
+
             echo $this->Form->postButton(
                 __d('me_cms', 'Clear all temporary files'),
                 ['action' => 'tmpCleaner', 'all'],
@@ -86,13 +86,13 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
 <div class="margin-20">
     <?php
         echo $this->Html->h4(__d('me_cms', 'Assets'));
-        
+
         echo $this->Html->para(null, __d(
             'me_cms',
             'Assets size: {0}',
             $this->Number->toReadableSize($assetsSize)
         ));
-        
+
         if ($assetsSize) {
             echo $this->Form->postButton(
                 __d('me_cms', 'Clear all assets'),
@@ -111,7 +111,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
             'Logs size: {0}',
             $this->Number->toReadableSize($logsSize)
         ));
-        
+
         //Only admins can clear logs
         if ($this->Auth->isGroup('admin')) {
             if ($logsSize) {
@@ -133,7 +133,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
             'Sitemap size: {0}',
             $this->Number->toReadableSize($sitemapSize)
         ));
-        
+
         //Only admins can clear sitemap
         if ($this->Auth->isGroup('admin')) {
             if ($sitemapSize) {
@@ -142,7 +142,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
                     'Note: you should not need to clear the sitemap, unless ' .
                     'you have recently changed many records'
                 ));
-                
+
                 echo $this->Form->postButton(
                     __d('me_cms', 'Clear sitemap'),
                     ['action' => 'tmpCleaner', 'sitemap'],
@@ -161,7 +161,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
             'Thumbnails size: {0}',
             $this->Number->toReadableSize($thumbsSize)
         ));
-        
+
         if ($thumbsSize) {
             echo $this->Html->para(null, __d(
                 'me_cms',
@@ -171,7 +171,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
                 'have reached a large size or when many images are no longer ' .
                 'used'
             ));
-            
+
             echo $this->Form->postButton(
                 __d('me_cms', 'Clear all thumbnails'),
                 ['action' => 'tmpCleaner', 'thumbs'],

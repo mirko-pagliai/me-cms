@@ -32,13 +32,13 @@ $(function () {
     function tag_exist(tag)
     {
         var listOfTagsLength = listOfTags.length;
-        
+
         for (var i = 0; i < listOfTagsLength; i++) {
             if (listOfTags[i].value === tag) {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -53,12 +53,12 @@ $(function () {
             if (tag.length <= 3) {
                 return;
             }
-            
+
             //Returns, if the tag already exists
             if (tag_exist(tag)) {
                 return;
             }
-            
+
             tag = tag.toLowerCase(); //Lowercase
 
             //Changes invalid chars
@@ -68,7 +68,7 @@ $(function () {
             for (var i = 0; i < fromLength; i++) {
                 tag = tag.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
             }
-            
+
             //Removes invalid chars
             tag = tag.replace(/[^a-z0-9\ ]/g, '')
 
@@ -94,7 +94,7 @@ $(function () {
     function remove_tag(id)
     {
         var listOfTagsLength = listOfTags.length;
-        
+
         for (var i = 0; i < listOfTagsLength; i++) {
             if (listOfTags[i].key === parseInt(id)) {
                 //Removes the tag from the list of tag
@@ -106,7 +106,7 @@ $(function () {
                 break;
             }
         }
-        
+
         //At the end, updates the output text
         update_output_text();
     }
@@ -140,7 +140,7 @@ $(function () {
         if (!inputValue.length) {
             return false;
         }
-        
+
         //Resets the input text
         inputText.val('');
 

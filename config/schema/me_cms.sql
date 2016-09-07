@@ -21,7 +21,7 @@ CREATE TABLE `banners` (
 
 CREATE TABLE `banners_positions` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `banner_count` int(11) NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `photos_albums` (
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT '1',
   `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,

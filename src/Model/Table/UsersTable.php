@@ -53,7 +53,7 @@ class UsersTable extends AppTable
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['group_id'], 'Groups'));
-        
+
         return $rules;
     }
 
@@ -204,7 +204,7 @@ class UsersTable extends AppTable
                     break;
             }
         }
-        
+
         return $query;
     }
 

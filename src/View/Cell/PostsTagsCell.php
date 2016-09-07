@@ -100,11 +100,21 @@ class PostsTagsCell extends Cell
             $minCount = end($tags)->post_count;
 
             //Adds the proportional font size to each tag
-            $tags = array_map(function ($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
-                $tag->size = round((
-                    ($tag->post_count - $minCount) / ($maxCount - $minCount) * ($maxFont - $minFont)
-                ) + $minFont);
-                
+            $tags = array_map(function ($tag) use (
+                $maxCount,
+                $minCount,
+                $maxFont,
+                $minFont
+            ) {
+                $tag->size = round(
+                    (
+                        ($tag->post_count - $minCount) /
+                        ($maxCount - $minCount) *
+                        ($maxFont - $minFont)
+                    ) +
+                    $minFont
+                );
+
                 return $tag;
             }, $tags);
         }

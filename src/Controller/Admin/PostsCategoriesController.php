@@ -89,7 +89,7 @@ class PostsCategoriesController extends AppController
         //Changes the category titles, replacing them with the titles of the tree list
         $categories = array_map(function ($category) use ($treeList) {
             $category->title = $treeList[$category->id];
-            
+
             return $category;
         }, $categories);
 

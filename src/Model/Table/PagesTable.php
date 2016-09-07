@@ -48,7 +48,7 @@ class PagesTable extends AppTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
-        
+
         return $rules;
     }
 

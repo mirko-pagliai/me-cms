@@ -54,7 +54,7 @@ class BackupsController extends AppController
     {
         $backups = array_map(function ($backup) {
             $backup->slug = urlencode($backup->filename);
-            
+
             return $backup;
         }, Backup::index());
 

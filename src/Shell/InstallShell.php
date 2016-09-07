@@ -204,7 +204,7 @@ class InstallShell extends BaseInstallShell
         //Checks for KCFinder
         if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder')) {
             $this->err(__d('me_tools', '{0} is not available', 'KCFinder'));
-            
+
             return;
         }
 

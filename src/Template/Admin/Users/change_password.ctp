@@ -29,20 +29,35 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
     <fieldset>
         <?php
             echo $this->Form->input('password_old', [
-                'autocomplete' => false,
+                'autocomplete' => 'off',
+                'button' => $this->Html->button(null, '#', [
+                    'class' => 'display-password',
+                    'icon' => 'eye',
+                    'title' => __d('me_cms', 'Show/hide password'),
+                 ]),
                 'label' => __d('me_cms', 'Old password'),
-                'tip' => __d('me_cms', 'Enter your old password'),
+                'help' => __d('me_cms', 'Enter your old password'),
                 'type' => 'password',
             ]);
             echo $this->Form->input('password', [
-                'autocomplete' => false,
+                'autocomplete' => 'off',
+                'button' => $this->Html->button(null, '#', [
+                    'class' => 'display-password',
+                    'icon' => 'eye',
+                    'title' => __d('me_cms', 'Show/hide password'),
+                 ]),
                 'label' => __d('me_cms', 'Password'),
-                'tip' => __d('me_cms', 'Enter your new password'),
+                'help' => __d('me_cms', 'Enter your new password'),
             ]);
             echo $this->Form->input('password_repeat', [
-                'autocomplete' => false,
+                'autocomplete' => 'off',
+                'button' => $this->Html->button(null, '#', [
+                    'class' => 'display-password',
+                    'icon' => 'eye',
+                    'title' => __d('me_cms', 'Show/hide password'),
+                 ]),
                 'label' => __d('me_cms', 'Repeat password'),
-                'tip' => __d('me_cms', 'Repeat your new password'),
+                'help' => __d('me_cms', 'Repeat your new password'),
             ]);
         ?>
     </fieldset>

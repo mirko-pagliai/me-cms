@@ -32,14 +32,16 @@ $GLOBALS['existingRoutesNames'] = array_filter(
     }, Router::routes())
 );
 
-/**
- * Checks whether the name of a route already exists
- * @param string $name Name
- * @return bool
- */
-function routeNameExists($name)
-{
-    return in_array($name, $GLOBALS['existingRoutesNames']);
+if (!function_exists('routeNameExists')) {
+    /**
+     * Checks whether the name of a route already exists
+     * @param string $name Name
+     * @return bool
+     */
+    function routeNameExists($name)
+    {
+        return in_array($name, $GLOBALS['existingRoutesNames']);
+    }
 }
 
 Router::scope('/', ['plugin' => MECMS], function ($routes) {
@@ -60,7 +62,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
             ['_name' => 'homepage']
         );
     }
-    
+
     $routes->connect(
         '/homepage',
         ['controller' => 'Posts', 'action' => 'index']
@@ -87,8 +89,11 @@ Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
             '/',
             ['controller' => 'Posts', 'action' => 'index']
         );
-        
+
         //All others admin routes
         $routes->fallbacks('DashedRoute');
     });
+
+    //All others routes
+    $routes->fallbacks('DashedRoute');
 });

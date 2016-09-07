@@ -78,7 +78,7 @@ class BackupForm extends Form
         try {
             $backup = new BackupExport();
             $backup->filename($data['filename']);
-            
+
             return $backup->export();
         } catch (InternalErrorException $e) {
             return false;

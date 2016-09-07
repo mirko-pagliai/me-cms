@@ -36,79 +36,64 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="topbar-collapse">
-            <ul class="nav navbar-nav hidden-xs hidden-sm">
-                <?php
-                    echo $this->Html->li($this->Html->link(
-                        __d('me_cms', 'Homepage'),
-                        ['_name' => 'homepage'],
-                        ['icon' => 'home', 'target' => '_blank']
-                    ));
-                ?>
-            </ul>
-            <ul class="nav navbar-nav visible-xs visible-sm">
-                <?php
-                    echo $this->Html->li($this->Html->link(
-                        null,
-                        ['_name' => 'homepage'],
-                        ['icon' => 'home', 'target' => '_blank']
-                    ));
+            <?php
+                $menus = [];
 
-                    //Renders menus for MeCms
-                    echo $this->MenuBuilder->generate(MECMS, 'dropdown');
+                $menus[] = $this->Html->link(
+                    __d('me_cms', 'Homepage'),
+                    ['_name' => 'homepage'],
+                    ['icon' => 'home', 'target' => '_blank']
+                );
 
-                    //Renders menus for all others plugin
-                    foreach (MeCms\Core\Plugin::all(['exclude' => MECMS]) as $plugin) {
-                        echo $this->MenuBuilder->generate($plugin, 'dropdown');
-                    }
+                echo $this->Html->ul(
+                    $menus,
+                    ['class' => 'nav navbar-nav hidden-xs hidden-sm']
+                );
 
-                    $menu = [];
+                //Renders menus for each plugin
+                foreach (\MeCms\Core\Plugin::all([
+                    'exclude' => ['MeTools', 'Assets', 'DatabaseBackup', 'Thumbs'],
+                    ]) as $plugin) {
+                    $menus += $this->MenuBuilder->renderAsDropdown($plugin);
+                }
+
+                echo $this->Html->ul(
+                    $menus,
+                    ['class' => 'nav navbar-nav visible-xs visible-sm']
+                );
+
+                $userMenu[] = call_user_func(function () {
+                    $this->Dropdown->start(
+                        $this->Auth->user('full_name'),
+                        ['icon' => 'user']
+                    );
 
                     if (config('users.login_log')) {
-                        $menu[] = $this->Html->link(
-                            __d('me_cms', 'Last login'),
-                            [
-                                'controller' => 'Users',
-                                'action' => 'lastLogin',
-                                'plugin' => MECMS,
-                            ]
-                        );
+                        echo $this->Html->link(__d('me_cms', 'Last login'), [
+                            'controller' => 'Users',
+                            'action' => 'lastLogin',
+                            'plugin' => MECMS,
+                        ]);
                     }
 
-                    $menu[] = $this->Html->link(
-                        __d('me_cms', 'Change password'),
-                        [
-                            'controller' => 'Users',
-                            'action' => 'changePassword',
-                            'plugin' => MECMS,
-                        ]
-                    );
-                    $menu[] = $this->Html->link(
-                        __d('me_cms', 'Logout'),
-                        ['_name' => 'logout']
-                    );
+                    echo $this->Html->link(__d('me_cms', 'Change password'), [
+                        'controller' => 'Users',
+                        'action' => 'changePassword',
+                        'plugin' => MECMS,
+                    ]);
 
-                    echo $this->Html->li(
-                        $this->Dropdown->menu(
-                            $this->Auth->user('full_name'),
-                            ['icon' => 'user'],
-                            $menu
-                        ),
-                        ['class' => 'dropdown']
-                    );
-                ?>
-            </ul>
-            <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
-                <?php
-                    echo $this->Html->li(
-                        $this->Dropdown->menu(
-                            $this->Auth->user('full_name'),
-                            ['icon' => 'user'],
-                            $menu
-                        ),
-                        ['class' => 'dropdown']
-                    );
-                ?>
-            </ul>
+                    echo $this->Html->link(__d('me_cms', 'Logout'), [
+                        '_name' => 'logout',
+                    ]);
+
+                    return $this->Dropdown->end();
+                });
+
+                echo $this->Html->ul(
+                    $userMenu,
+                    ['class' => 'nav navbar-nav  navbar-right']
+                );
+            ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

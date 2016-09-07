@@ -40,29 +40,29 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
             'label' => __d('me_cms', 'Username'),
         ]);
         echo $this->Form->input('email', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
         ]);
         echo $this->Form->input('password', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Password'),
             'required' => false,
-            'tip' => __d('me_cms', 'If you want to change the password just ' .
+            'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
         ]);
         echo $this->Form->input('password_repeat', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat password'),
             'required' => false,
-            'tip' => __d('me_cms', 'If you want to change the password just ' .
+            'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
         ]);
         echo $this->Form->input('first_name', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'First name'),
         ]);
         echo $this->Form->input('last_name', [
-            'autocomplete' => false,
+            'autocomplete' => 'off',
             'label' => __d('me_cms', 'Last name'),
         ]);
     ?>

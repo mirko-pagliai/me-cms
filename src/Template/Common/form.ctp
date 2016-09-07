@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-    
+
 if ($this->fetch('title')) {
     $this->assign('title', $this->fetch('title'));
 }

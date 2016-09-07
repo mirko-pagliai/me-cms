@@ -70,7 +70,7 @@ $(function () {
 
         var obj = {};
         obj[value[0]] = value[1];
-        
+
         return obj;
     });
 

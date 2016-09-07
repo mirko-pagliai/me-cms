@@ -35,12 +35,17 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
                 'placeholder' => __d('me_cms', 'Username'),
             ]);
             echo $this->Form->input('password', [
+                'button' => $this->Html->button(null, '#', [
+                    'class' => 'display-password',
+                    'icon' => 'eye',
+                    'title' => __d('me_cms', 'Show/hide password'),
+                 ]),
                 'label' => false,
                 'placeholder' => __d('me_cms', 'Password'),
             ]);
             echo $this->Form->input('remember_me', [
                 'label' => __d('me_cms', 'Remember me'),
-                'tip' => __d('me_cms', 'Don\'t use on public computers'),
+                'help' => __d('me_cms', 'Don\'t use on public computers'),
                 'type' => 'checkbox',
             ]);
         ?>

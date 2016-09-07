@@ -1,4 +1,14 @@
 # 2.x branch
+## 2.14 branch
+### 2.14.0
+* added a button to show/hide passwords;
+* `MenuBuilderHelper` class has been completely rewritten and now provides
+    `generate()`, `getMenuMethods()`, `renderAsCollapse()` and
+    `renderAsDropdown()` methods;
+* added tests for `MenuBuilderHelper` class;
+* the `name` field of the `banners_positions` table has been renames as `title`;
+* updated for MeTools 2.10.0.
+
 ## 2.13 branch
 ### 2.13.2
 * fixed bug adding tags on admin layout.
