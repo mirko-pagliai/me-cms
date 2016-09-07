@@ -148,7 +148,11 @@ class UpdateShell extends BaseUpdateShell
     {
         $this->dispatchShell('MeCms.install', 'createVendorsLinks');
 
-        unlink(WWW_ROOT . 'vendor' . DS . 'jquery-cookie');
+        $path = WWW_ROOT . 'vendor' . DS . 'jquery-cookie';
+            
+        if (is_link($path)) {
+            unlink($path);
+        }
     }
 
     /**
