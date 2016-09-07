@@ -388,8 +388,9 @@
     "forms.less",
     "buttons.less",
     "responsive-utilities.less",
+    "input-groups.less",
     "alerts.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=654c37ef09771ff8cfa85a12198aebea"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=eb20334f4d30e92e59c1a375ed61344f"
 }

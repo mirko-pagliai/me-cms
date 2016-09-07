@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.0
+* added a button to show/hide passwords;
 * `MenuBuilderHelper` class has been completely rewritten and now provides
     `generate()`, `getMenuMethods()`, `renderAsCollapse()` and
     `renderAsDropdown()` methods;
