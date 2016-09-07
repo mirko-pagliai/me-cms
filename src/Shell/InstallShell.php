@@ -86,7 +86,11 @@ class InstallShell extends BaseInstallShell
 
         //Returns only the plugins that have the `InstallShell` class
         return af(array_map(function ($plugin) {
-            return Plugin::path($plugin, 'src' . DS . 'Shell' . DS . 'InstallShell.php', true) ? $plugin : false;
+            return Plugin::path(
+                $plugin,
+                'src' . DS . 'Shell' . DS . 'InstallShell.php',
+                true
+            ) ? $plugin : false;
         }, $plugins));
     }
 
@@ -131,23 +135,39 @@ class InstallShell extends BaseInstallShell
             return;
         }
 
-        $ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
+        $ask = $this->in(
+            __d('me_tools', 'Fix {0}?', 'KCFinder'),
+            ['Y', 'n'],
+            'Y'
+        );
         if (in_array($ask, ['Y', 'y'])) {
             $this->fixKcfinder();
         }
 
-        $ask = $this->in(__d('me_cms', 'Create the user groups?'), ['y', 'N'], 'N');
+        $ask = $this->in(
+            __d('me_cms', 'Create the user groups?'),
+            ['y', 'N'],
+            'N'
+        );
         if (in_array($ask, ['Y', 'y'])) {
             $this->createGroups();
         }
 
-        $ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
+        $ask = $this->in(
+            __d('me_cms', 'Create an admin user?'),
+            ['y', 'N'],
+            'N'
+        );
         if (in_array($ask, ['Y', 'y'])) {
             $this->createAdmin();
         }
 
         if ($this->_getOtherPlugins()) {
-            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
+            $ask = $this->in(
+                __d('me_cms', 'Run the installer of the other plugins?'),
+                ['Y', 'n'],
+                'Y'
+            );
             if (in_array($ask, ['Y', 'y'])) {
                 $this->_runOtherPlugins();
             }
@@ -176,7 +196,9 @@ class InstallShell extends BaseInstallShell
 
         if ($groups->isEmpty()) {
             //Truncates the table. This resets IDs
-            ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table()));
+            ConnectionManager::get('default')->execute(
+                sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table())
+            );
 
             $entities = $this->UsersGroups->newEntities([
                 ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
@@ -185,9 +207,15 @@ class InstallShell extends BaseInstallShell
             ]);
 
             if ($this->UsersGroups->saveMany($entities)) {
-                $this->verbose(__d('me_cms', 'The user groups have been created'));
+                $this->verbose(__d(
+                    'me_cms',
+                    'The user groups have been created'
+                ));
             } else {
-                $this->err(__d('me_cms', 'The user groups have not been created'));
+                $this->err(__d(
+                    'me_cms',
+                    'The user groups have not been created'
+                ));
             }
         }
     }
@@ -230,9 +258,15 @@ class InstallShell extends BaseInstallShell
         $parser = parent::getOptionParser();
 
         return $parser->addSubcommands([
-            'createAdmin' => ['help' => __d('me_cms', 'Creates an admin user')],
-            'createGroups' => ['help' => __d('me_cms', 'Creates the user groups')],
-            'fixKcfinder' => ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')],
+            'createAdmin' => [
+                'help' => __d('me_cms', 'Creates an admin user'),
+            ],
+            'createGroups' => [
+                'help' => __d('me_cms', 'Creates the user groups'),
+            ],
+            'fixKcfinder' => [
+                'help' => __d('me_tools', 'Fixes {0}', 'KCFinder'),
+            ],
         ]);
     }
 }
