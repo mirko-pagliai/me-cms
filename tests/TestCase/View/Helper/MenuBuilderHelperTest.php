@@ -106,10 +106,18 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->getMenuMethods('TestPlugin');
         $expected = ['articles', 'other_items'];
         $this->assertEquals($expected, $result);
+    }
 
-        //This plugin has no menu methods
-        $result = $this->MenuBuilder->getMenuMethods('TestPluginTwo');
-        $this->assertNull($result);
+    /**
+     * Tests for `getMenuMethods()` method whit plugin that does not have the
+     *  class `MenuHelper`
+     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @return void
+     * @test
+     */
+    public function testGetMenuMethodsClassNotExisting()
+    {
+        $this->MenuBuilder->getMenuMethods('TestPluginTwo');
     }
 
     /**
@@ -175,6 +183,18 @@ class MenuBuilderHelperTest extends TestCase
     }
 
     /**
+     * Tests for `generate()` method whit plugin that does not have the class
+     *  `MenuHelper`
+     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @return void
+     * @test
+     */
+    public function testGenerateClassNotExisting()
+    {
+        $this->MenuBuilder->generate('TestPluginTwo');
+    }
+
+    /**
      * Tests for `renderAsCollapse()` method
      * @return void
      * @test
@@ -236,22 +256,32 @@ class MenuBuilderHelperTest extends TestCase
     }
 
     /**
+     * Tests for `renderAsCollapse()` method whit plugin that does not have the
+     *  class `MenuHelper`
+     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @return void
+     * @test
+     */
+    public function testRenderAsCollapseClassNotExisting()
+    {
+        $this->MenuBuilder->renderAsCollapse('TestPluginTwo');
+    }
+
+    /**
      * Tests for `renderAsDropdown()` method
      * @return void
      * @test
      */
     public function testRenderAsDropdown()
     {
-        $result = $this->MenuBuilder->renderAsDropdown('TestPlugin');
-
         //Checks array keys (menu names)
+        $result = $this->MenuBuilder->renderAsDropdown('TestPlugin');
         $this->assertEquals(
             ['TestPlugin.articles', 'TestPlugin.other_items'],
             array_keys($result)
         );
 
         $result = implode(PHP_EOL, $result);
-
         $expected = [
             ['a' => [
                 'href' => '#',
@@ -315,5 +345,17 @@ class MenuBuilderHelperTest extends TestCase
             '/ul',
         ];
         $this->assertHtml($expected, $result);
+    }
+
+    /**
+     * Tests for `renderAsDropdown()` method whit plugin that does not have the
+     *  class `MenuHelper`
+     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @return void
+     * @test
+     */
+    public function testRenderAsDropdownClassNotExisting()
+    {
+        $this->MenuBuilder->renderAsDropdown('TestPluginTwo');
     }
 }

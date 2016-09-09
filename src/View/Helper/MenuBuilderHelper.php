@@ -22,6 +22,7 @@
  */
 namespace MeCms\View\Helper;
 
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
 
@@ -82,11 +83,21 @@ class MenuBuilderHelper extends Helper
      * Gets all menu name methods from a plugin
      * @param string $plugin Plugin name
      * @return array|null
+     * @throws InternalErrorException
      */
     public function getMenuMethods($plugin)
     {
-        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = get_class_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+        //Sets the class name (`$PLUGIN\View\Helper\MenuHelper`)
+        $class = sprintf('\%s\View\Helper\MenuHelper', $plugin);
+
+        if (!class_exists($class)) {
+            throw new InternalErrorException(
+                __d('Class {0} doesn\'t exists', $class)
+            );
+        }
+
+        //Gets all methods from the class
+        $methods = get_class_methods($class);
 
         if (empty($methods)) {
             return null;
