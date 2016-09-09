@@ -2,7 +2,9 @@
 ## 2.14 branch
 ### 2.14.1
 * added `all` and `latest` subcommands to the `update` shell. Added
-    `_getAllUpdateMethods()` to `BaseUpdateShell` class.
+    `_getAllUpdateMethods()` to `BaseUpdateShell` class;
+* some view elements (eg. topbars, sidebars, footers) are cached only if
+    debugging is disabled.
 
 ### 2.14.0
 * added a button to show/hide passwords;
