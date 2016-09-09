@@ -2,8 +2,7 @@
 ## 2.14 branch
 ### 2.14.1
 * added `all` and `latest` subcommands to the `update` shell. Added
-    `_getAllUpdateMethods()` to `BaseUpdateShell` class;
-* fixed little bug for `MenuBuilderHelper` class.
+    `_getAllUpdateMethods()` to `BaseUpdateShell` class.
 
 ### 2.14.0
 * added a button to show/hide passwords;
