@@ -5,6 +5,7 @@
     `_getAllUpdateMethods()` to `BaseUpdateShell` class;
 * some view elements (eg. topbars, sidebars, footers) are cached only if
     debugging is disabled;
+* fixed little bug on css code for photos block;
 * updated for MeTools 2.10.1.
 
 ### 2.14.0
