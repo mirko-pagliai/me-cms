@@ -62,10 +62,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _getAllUpdateMethods()
     {
-        $methods = array_diff(
-            get_class_methods(get_called_class()),
-            get_class_methods(__CLASS__)
-        );
+        $methods = getChildMethods(get_called_class());
 
         return af(array_map(function ($method) {
             //Filters invalid method names

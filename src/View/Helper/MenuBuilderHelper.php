@@ -86,15 +86,13 @@ class MenuBuilderHelper extends Helper
     public function getMenuMethods($plugin)
     {
         //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = get_class_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+        $methods = getChildMethods(
+            sprintf('\%s\View\Helper\MenuHelper', $plugin)
+        );
 
         if (empty($methods)) {
             return null;
         }
-
-        //Each class menu class extends `Cake\View\Helper`. So it calculates
-        //  the difference between the methods of the two classes
-        $methods = array_diff($methods, get_class_methods('Cake\View\Helper'));
 
         //Filters invalid name methods
         $methods = preg_grep('/^(?!_).+$/', $methods);
