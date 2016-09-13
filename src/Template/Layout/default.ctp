@@ -20,6 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +79,18 @@
                 ]);
                 ?>
             </div>
-            <?= $this->element('MeCms.topbar', [], ['cache' => ['key' => 'topbar']]) ?>
+            <?php
+            //Topbar is cached only if debugging is disabled
+            $topbarCache = null;
+
+            if (!Configure::read('debug')) {
+                $topbarCache = ['key' => 'topbar'];
+            }
+
+            echo $this->element('MeCms.topbar', [], [
+                'cache' => $topbarCache,
+            ]);
+            ?>
         </header>
         <div class="container">
             <div class="row">
@@ -93,8 +105,20 @@
                 </div>
             </div>
         </div>
-        <?= $this->element('MeCms.footer', [], ['cache' => ['key' => 'footer']]) ?>
-        <?= $this->fetch('css_bottom') ?>
-        <?= $this->fetch('script_bottom') ?>
+        <?php
+        //Footer is cached only if debugging is disabled
+        $footerCache = null;
+
+        if (!Configure::read('debug')) {
+            $footerCache = ['key' => 'footer'];
+        }
+
+        echo $this->element('MeCms.footer', [], [
+            'cache' => $footerCache,
+        ]);
+
+        echo $this->fetch('css_bottom');
+        echo $this->fetch('script_bottom');
+        ?>
     </body>
 </html>

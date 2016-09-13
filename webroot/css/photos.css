@@ -8,10 +8,16 @@
 /* -------------------------------- */
 /*          Photos box              */
 /* -------------------------------- */
+/* Photo box */
+.photo-box {
+    text-align: center;
+}
+
 /* Photo box, link */
 .photo-box a {
-    display: block;
+    display: inline-block;
     margin-bottom: 20px;
+    max-width: 100%;
     position: relative;
 }
 

@@ -18,7 +18,7 @@
         "donatj/phpuseragentparser": "*",
         "mirko-pagliai/assets": "1.0.*",
         "mirko-pagliai/database-backup": "1.1.*",
-        "mirko-pagliai/me-tools": "2.10.*",
+        "mirko-pagliai/me-tools": ">=2.10.1",
         "mirko-pagliai/thumbs": "1.0.*"
     },
     "repositories": [
@@ -35,6 +35,9 @@
             }
         }
     ],
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "2.*"
+    },
     "autoload": {
         "psr-4": {
             "MeCms\\": "src"
@@ -46,8 +49,5 @@
             "TestPlugin\\": "tests/test_app/Plugin/TestPlugin/src",
             "TestPluginTwo\\": "tests/test_app/Plugin/TestPluginTwo/src"
         }
-    },
-    "require-dev": {
-        "cakephp/cakephp-codesniffer": "2.*"
     }
 }

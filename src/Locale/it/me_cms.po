@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-09-07 11:34+0200\n"
-"PO-Revision-Date: 2016-09-07 11:35+0100\n"
+"POT-Creation-Date: 2016-09-13 18:50+0200\n"
+"PO-Revision-Date: 2016-09-13 19:06+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -336,35 +336,47 @@ msgstr "La vecchia password è errata"
 msgid "lowercase letters"
 msgstr "lettere minuscole"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/BaseUpdateShell.php:110
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/BaseUpdateShell.php:137;155
+msgid "Upgrading to {0}"
+msgstr "Aggiornando a {0}"
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/BaseUpdateShell.php:173
+msgid "Performs all available updates"
+msgstr "Esegue tutti gli aggiornamenti disponibili"
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/BaseUpdateShell.php:176
+msgid "Performs the latest update available"
+msgstr "Esegue l'ultimo aggiornamento disponibile"
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/BaseUpdateShell.php:185
 msgid "Updates to {0} version"
 msgstr "Aggiorna alla versione {0}"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:139
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:148
 msgid "Create the user groups?"
 msgstr "Create i gruppi utente?"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:144
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:157
 msgid "Create an admin user?"
 msgstr "Creare un utente amministratore?"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:150
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:167
 msgid "Run the installer of the other plugins?"
 msgstr "Eseguire l'installer degli altri plugin?"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:188
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:210
 msgid "The user groups have been created"
 msgstr "I gruppi utente sono stati creati"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:190
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:215
 msgid "The user groups have not been created"
 msgstr "I gruppi utente non sono stati creati"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:233
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:262
 msgid "Creates an admin user"
 msgstr "Crea un utente amministratore"
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:234
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:265
 msgid "Creates the user groups"
 msgstr "Crea i gruppi utente"
 
@@ -477,9 +489,6 @@ msgid "ID"
 msgstr "ID"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:139;173
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/add.ctp:32
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/edit.ctp:32
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:43
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:84
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:68
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/add.ctp:32
@@ -833,6 +842,28 @@ msgstr "Seleziona"
 msgid "Add banners position"
 msgstr "Aggiungi posizione dei banner"
 
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/add.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/edit.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:43
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:60
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:60
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:86
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index_statics.ctp:31
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/add.ctp:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/edit.ctp:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/index.ctp:43
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/add.ctp:42
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/edit.ctp:41
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:43
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:70
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:69
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:95
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/add.ctp:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/edit.ctp:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:43
+msgid "Title"
+msgstr "Titolo"
+
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/edit.ctp:25
 msgid "Edit banners position"
 msgstr "Modifica posizione dei banner"
@@ -1027,25 +1058,6 @@ msgstr "Priorità"
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:61
 msgid "Disable this option to save as a draft"
 msgstr "Disabilita questa opzione per salvare come bozza"
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:60
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:60
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:86
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index_statics.ctp:31
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/add.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/edit.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/index.ctp:43
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/add.ctp:42
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/edit.ctp:41
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:43
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:70
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/edit.ctp:69
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:95
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/add.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/edit.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:43
-msgid "Title"
-msgstr "Titolo"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:63
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:63
@@ -1812,7 +1824,7 @@ msgid "{0} on {1}"
 msgstr "{0} su {1}"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:43
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Layout/default.ctp:77
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Layout/default.ctp:78
 msgid "Homepage"
 msgstr "Homepage"
 

@@ -20,6 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
@@ -57,24 +58,41 @@
         ?>
     </head>
     <body>
-        <?= $this->element('MeCms.admin/topbar') ?>
+        <?php
+        //Topbar is cached only if debugging is disabled
+        $topbarCache = null;
+
+        if (!Configure::read('debug')) {
+            $topbarCache = [
+                'config' => 'admin',
+                'key' => sprintf('topbar_user_%s', $this->Auth->user('id')),
+            ];
+        }
+
+        echo $this->element('MeCms.admin/topbar', [], [
+           'cache' => $topbarCache,
+        ]);
+        ?>
         <div class="container-fluid">
             <div class="row">
                 <div id="sidebar" class="col-md-3 col-lg-2 hidden-xs hidden-sm affix-top">
                     <?php
-                    //The sidebar is cached only if debugging is disabled
-                    if (!\Cake\Core\Configure::read('debug')) {
+                    //Sidebar is cached only if debugging is disabled
+                    $sidebarCache = null;
+
+                    if (!Configure::read('debug')) {
                         $sidebarCache = [
-                            'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
                             'config' => 'admin',
+                            'key' => sprintf(
+                                'sidebar_user_%s',
+                                $this->Auth->user('id')
+                            ),
                         ];
                     }
 
-                    echo $this->element(
-                        'MeCms.admin/sidebar',
-                        [],
-                        ['cache' => empty($sidebarCache) ? null : $sidebarCache]
-                    );
+                    echo $this->element('MeCms.admin/sidebar', [], [
+                        'cache' => $sidebarCache,
+                    ]);
                     ?>
                 </div>
                 <div id="content" class="col-md-offset-3 col-lg-offset-2">

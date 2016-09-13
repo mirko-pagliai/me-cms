@@ -72,15 +72,11 @@ class SitemapBuilder
             $class = sprintf('\%s\Utility\Sitemap', $plugin);
 
             //Gets all methods from `$PLUGIN\Utility\Sitemap` class
-            $methods = get_class_methods($class);
+            $methods = getChildMethods($class);
 
             if (empty($methods)) {
                 continue;
             }
-
-            //Because each class may be an extension of this, it calculates
-            //  the difference between the methods of the two classes
-            $methods = array_diff($methods, get_class_methods(__CLASS__));
 
             //Calls all methods
             foreach ($methods as $method) {

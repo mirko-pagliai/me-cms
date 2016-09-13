@@ -55,6 +55,35 @@ class BaseUpdateShell extends Shell
     }
 
     /**
+     * Gets all update methods.
+     *
+     * Each value contains the name method and the version number.
+     * @return array
+     */
+    protected function _getAllUpdateMethods()
+    {
+        $methods = getChildMethods(get_called_class());
+
+        return af(array_map(function ($method) {
+            //Filters invalid method names
+            if (!preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
+                return false;
+            }
+
+            //Returns array with the name method and the version number
+            return [
+                'name' => $method,
+                'version' => sprintf(
+                    '%s.%s.%s',
+                    $matches[1],
+                    $matches[2],
+                    $matches[3]
+                ),
+            ];
+        }, $methods));
+    }
+
+    /**
      * Gets the table columns
      * @param string $table Table name
      * @return array
@@ -95,21 +124,66 @@ class BaseUpdateShell extends Shell
     }
 
     /**
+     * Performs all available updates
+     * @return void
+     * @uses _getAllUpdateMethods()
+     */
+    public function all()
+    {
+        $methods = array_reverse($this->_getAllUpdateMethods());
+
+        foreach ($methods as $method) {
+            $this->verbose(
+                __d('me_cms', 'Upgrading to {0}', $method['version'])
+            );
+
+            //Calls dynamically each method
+            $this->{$method['name']}();
+        }
+    }
+
+    /**
+     * Performs the latest update available
+     * @return void
+     * @uses _getAllUpdateMethods()
+     */
+    public function latest()
+    {
+        $method = firstValue($this->_getAllUpdateMethods());
+
+        $this->verbose(
+            __d('me_cms', 'Upgrading to {0}', $method['version'])
+        );
+
+        //Calls dynamically the method
+        $this->{$method['name']}();
+    }
+
+    /**
      * Gets the option parser instance and configures it.
      * @return ConsoleOptionParser
+     * @uses _getAllUpdateMethods()
      */
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
 
-        //Scans all methods of the class and adds to the parser all valid
-        //  subcommands
-        foreach (get_class_methods($this) as $method) {
-            if (preg_match('/^to(\d+v\d+v\d+(v(RC|alpha|beta)\d+)?)$/', $method, $matches)) {
-                $parser->addSubcommand($method, [
-                    'help' => __d('me_cms', 'Updates to {0} version', str_replace('v', '.', $matches[1])),
-                ]);
-            }
+        $parser->addSubcommands([
+            'all' => [
+                'help' => __d('me_cms', 'Performs all available updates'),
+            ],
+            'latest' => [
+                'help' => __d('me_cms', 'Performs the latest update available'),
+            ],
+        ]);
+
+        $methods = $this->_getAllUpdateMethods();
+
+        //Adds all update methods to the parser
+        foreach ($methods as $method) {
+            $parser->addSubcommand($method['name'], [
+                'help' => __d('me_cms', 'Updates to {0} version', $method['version']),
+            ]);
         }
 
         return $parser;
