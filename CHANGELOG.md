@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.2
+* fixed little bug.
+
 ### 2.14.1
 * added `all` and `latest` subcommands to the `update` shell. Added
     `_getAllUpdateMethods()` to `BaseUpdateShell` class;
