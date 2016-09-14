@@ -96,7 +96,7 @@ if ($this->request->isAction('view', 'Posts')) {
     if (!empty($post->text)) {
         $this->Html->meta([
             'content' => $this->Text->truncate(
-                $this->BBCode->remove($post->text),
+                trim(strip_tags($this->BBCode->remove($post->text))),
                 100,
                 ['html' => true]
             ),
