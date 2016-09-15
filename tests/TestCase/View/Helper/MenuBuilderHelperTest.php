@@ -45,15 +45,8 @@ class MenuBuilderHelperTest extends TestCase
         $this->View = new View();
         $this->MenuBuilder = new MenuBuilderHelper($this->View);
 
-        Plugin::load(
-            'TestPlugin',
-            ['path' => 'tests/test_app/Plugin/TestPlugin/src']
-        );
-
-        Plugin::load(
-            'TestPluginTwo',
-            ['path' => 'tests/test_app/Plugin/TestPluginTwo/src']
-        );
+        Plugin::load('TestPlugin');
+        Plugin::load('TestPluginTwo');
     }
 
     /**

@@ -63,6 +63,9 @@ define('THUMBS', TMP . 'thumbs');
 
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+date_default_timezone_set('UTC');
+mb_internal_encoding('UTF-8');
+
 Configure::write('debug', true);
 Configure::write('App', [
     'namespace' => 'App',
@@ -77,6 +80,7 @@ Configure::write('App', [
     'jsBaseUrl' => 'js/',
     'cssBaseUrl' => 'css/',
     'paths' => [
+        'plugins' => [APP . 'Plugin' . DS],
         'templates' => [APP . 'Template' . DS],
         'locales' => [APP . 'Locale' . DS],
     ]
@@ -111,5 +115,9 @@ $config = [
 
 // Use the test connection for 'debug_kit' as well.
 ConnectionManager::config('test', $config);
+
+Configure::write('Session', [
+    'defaults' => 'php'
+]);
 
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
