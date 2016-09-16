@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.3
+* added `WyriHaximus/MinifyHtml` plugin.
+
 ### 2.14.2
 * fixed little bug.
 

@@ -62,6 +62,7 @@ class InstallShell extends BaseInstallShell
             'enyo/dropzone',
             'js-cookie/js-cookie:dev-master',
             'sunhater/kcfinder:dev-master',
+            'wyrihaximus/minify-html',
         ]);
 
         //Merges paths to be created and made writable

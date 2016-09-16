@@ -81,6 +81,9 @@ if (!Plugin::loaded('Thumbs')) {
 if (!Plugin::loaded('DatabaseBackup')) {
     Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 }
+if (!Plugin::loaded('WyriHaximus/MinifyHtml')) {
+    Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
+}
 
 /**
  * Loads theme plugin
