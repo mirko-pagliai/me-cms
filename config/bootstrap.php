@@ -32,8 +32,6 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\DispatcherFactory;
 
 require_once 'constants.php';
-require_once 'global_functions.php';
-require_once 'detectors.php';
 
 /**
  * Loads MeTools plugins

@@ -41,7 +41,11 @@
     "autoload": {
         "psr-4": {
             "MeCms\\": "src"
-        }
+        },
+        "files": [
+            "src/Core/global_functions.php",
+            "src/Core/request_detectors.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
