@@ -36,7 +36,9 @@ require_once 'constants.php';
 /**
  * Loads MeTools plugins
  */
-Plugin::load('MeTools', ['bootstrap' => true]);
+if (!Plugin::loaded('MeTools')) {
+    Plugin::load('MeTools', ['bootstrap' => true]);
+}
 
 if (!is_writeable(BANNERS)) {
     throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
@@ -68,11 +70,17 @@ if (isLocalhost() && config('main.debug_on_localhost') && !config('debug')) {
 }
 
 /**
- * Loads plugins
+ * Loads other plugins
  */
-Plugin::load('Assets', ['bootstrap' => true]);
-Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
-Plugin::load('DatabaseBackup', ['bootstrap' => true]);
+if (!Plugin::loaded('Assets')) {
+    Plugin::load('Assets', ['bootstrap' => true]);
+}
+if (!Plugin::loaded('Thumbs')) {
+    Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
+}
+if (!Plugin::loaded('DatabaseBackup')) {
+    Plugin::load('DatabaseBackup', ['bootstrap' => true]);
+}
 
 /**
  * Loads theme plugin

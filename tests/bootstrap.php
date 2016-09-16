@@ -33,8 +33,9 @@ if (!defined('DS')) {
 
 // Path constants to a few helpful things.
 define('ROOT', dirname(__DIR__) . DS);
-define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
-define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
+define('VENDOR', ROOT . 'vendor' . DS);
+define('CAKE_CORE_INCLUDE_PATH', VENDOR . 'cakephp' . DS . 'cakephp');
+define('CORE_PATH', VENDOR . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 define('TESTS', ROOT . 'tests');
 define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
@@ -120,4 +121,28 @@ Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
+/**
+ * Loads other plugins
+ */
+Plugin::load('MeTools', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
+]);
+Plugin::load('Assets', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+]);
+Plugin::load('Thumbs', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'thumbs' . DS,
+    'routes' => true,
+]);
+Plugin::load('DatabaseBackup', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'database-backup' . DS,
+]);
+
+/**
+ * Loads MeCms plugins
+ */
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
