@@ -141,6 +141,10 @@ Plugin::load('DatabaseBackup', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'database-backup' . DS,
 ]);
+Plugin::load('WyriHaximus/MinifyHtml', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'wyrihaximus' . DS . 'minify-html' . DS,
+]);
 
 /**
  * Loads MeCms plugins
