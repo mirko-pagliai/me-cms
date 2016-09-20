@@ -27,7 +27,7 @@ $this->assign('title', $title = __d('me_cms', 'Add post'));
 $this->Library->ckeditor();
 $this->Library->datetimepicker();
 $this->Library->slugify();
-$this->Asset->js('MeCms.admin/tags', ['block' => 'script_bottom']);
+$this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
 ?>
 
 <?= $this->Form->create($post); ?>
