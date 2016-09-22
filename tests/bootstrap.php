@@ -153,6 +153,9 @@ Plugin::load('WyriHaximus/MinifyHtml', [
     'bootstrap' => true,
     'path' => VENDOR . 'wyrihaximus' . DS . 'minify-html' . DS,
 ]);
+Plugin::load('Gourmet/CommonMark', [
+    'path' => VENDOR . 'gourmet' . DS . 'common-mark' . DS,
+]);
 
 /**
  * Loads MeCms plugins

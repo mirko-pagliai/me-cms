@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.4
+* added `Gourmet/CommonMark` plugin.
+
 ### 2.14.3
 * added `WyriHaximus/MinifyHtml` plugin;
 * updated for Assets 1.1.0.

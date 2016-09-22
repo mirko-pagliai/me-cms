@@ -84,6 +84,9 @@ if (!Plugin::loaded('DatabaseBackup')) {
 if (!Plugin::loaded('WyriHaximus/MinifyHtml')) {
     Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 }
+if (!Plugin::loaded('Gourmet/CommonMark')) {
+    Plugin::load('Gourmet/CommonMark');
+}
 
 /**
  * Loads theme plugin
