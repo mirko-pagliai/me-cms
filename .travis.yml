@@ -15,8 +15,6 @@ matrix:
 
 install:
   - printf "\n" | pecl install imagick
-  - npm install -g clean-css
-  - npm install -g uglify-js
   - composer self-update
   - composer install --prefer-dist --no-interaction
 

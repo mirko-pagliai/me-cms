@@ -151,11 +151,6 @@ class SystemsController extends AppController
 
         $checkup['cache'] = Cache::enabled();
 
-        $checkup['executables'] = [
-            'clean-css' => which('cleancss'),
-            'UglifyJS 2' => which('uglifyjs'),
-        ];
-
         //Checks for PHP's extensions
         foreach (['exif', 'imagick', 'mcrypt', 'zip'] as $extension) {
             $checkup['phpExtensions'][$extension] = extension_loaded($extension);
@@ -186,7 +181,13 @@ class SystemsController extends AppController
         }
 
         //Checks for webroot directories
-        foreach ([ASSETS, BANNERS, PHOTOS, WWW_ROOT . 'files', WWW_ROOT . 'fonts'] as $path) {
+        foreach ([
+            Configure::read('Assets.target'),
+            BANNERS,
+            PHOTOS,
+            WWW_ROOT . 'files',
+            WWW_ROOT . 'fonts'
+        ] as $path) {
             $checkup['webroot'][] = [
                 'path' => rtr($path),
                 'writeable' => folderIsWriteable($path),
@@ -237,13 +238,14 @@ class SystemsController extends AppController
 
         switch ($type) {
             case 'all':
-                $success = clearDir(ASSETS) && clearDir(LOGS) && self::clearCache() && self::clearSitemap() && clearDir(THUMBS);
+                $success = clearDir(Configure::read('Assets.target')) && clearDir(LOGS)
+                    && self::clearCache() && self::clearSitemap() && clearDir(THUMBS);
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $success = clearDir(ASSETS);
+                $success = clearDir(Configure::read('Assets.target'));
                 break;
             case 'logs':
                 $success = clearDir(LOGS);
@@ -278,12 +280,12 @@ class SystemsController extends AppController
         $this->set([
             'cacheSize' => (new Folder(CACHE))->dirsize(),
             'cacheStatus' => Cache::enabled(),
-            'assetsSize' => (new Folder(ASSETS))->dirsize(),
+            'assetsSize' => (new Folder(Configure::read('Assets.target')))->dirsize(),
             'logsSize' => (new Folder(LOGS))->dirsize(),
             'sitemapSize' => $sitemap,
             'thumbsSize' => (new Folder(THUMBS))->dirsize(),
             'totalSize' => (new Folder(CACHE))->dirsize() +
-                (new Folder(ASSETS))->dirsize() +
+                (new Folder(Configure::read('Assets.target')))->dirsize() +
                 (new Folder(LOGS))->dirsize() +
                 $sitemap +
                 (new Folder(THUMBS))->dirsize(),

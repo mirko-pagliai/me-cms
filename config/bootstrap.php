@@ -73,7 +73,7 @@ if (isLocalhost() && config('main.debug_on_localhost') && !config('debug')) {
  * Loads other plugins
  */
 if (!Plugin::loaded('Assets')) {
-    Plugin::load('Assets', ['bootstrap' => true]);
+    Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
 }
 if (!Plugin::loaded('Thumbs')) {
     Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);

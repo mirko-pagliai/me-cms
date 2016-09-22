@@ -119,23 +119,6 @@ foreach ($phpExtensions as $extension => $exists) {
 echo $this->Html->div('clearfix');
 
 /* -------------------------------- */
-/*			Executables				*/
-/* -------------------------------- */
-echo $this->Html->h4(__d('me_cms', 'Executables'));
-
-foreach ($executables as $name => $exists) {
-    if ($exists) {
-        $text = $this->Html->para($successClasses, __d('me_cms', '{0} is available', $this->Html->strong($name)), $successOptions);
-    } else {
-        $text = $this->Html->para($errorClasses, __d('me_tools', '{0} is not available', $this->Html->strong($name)), $errorOptions);
-    }
-
-    echo $this->Html->div('col-sm-6', $text);
-}
-
-echo $this->Html->div('clearfix');
-
-/* -------------------------------- */
 /*				Backups				*/
 /* -------------------------------- */
 echo $this->Html->h4(__d('me_cms', 'Backups'));

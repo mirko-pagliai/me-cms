@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.3
-* added `WyriHaximus/MinifyHtml` plugin.
+* added `WyriHaximus/MinifyHtml` plugin;
+* updated for Assets 1.1.0.
 
 ### 2.14.2
 * fixed little bug.
