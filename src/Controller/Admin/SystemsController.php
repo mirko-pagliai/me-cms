@@ -117,9 +117,6 @@ class SystemsController extends AppController
 
         //If a changelog file has been specified
         if ($this->request->query('file') && $this->request->is('get')) {
-            //Loads the Markdown helper
-            $this->helpers[] = 'MeTools.Markdown';
-
             $path = ROOT . DS . $files[$this->request->query('file')];
 
             $this->set('changelog', file_get_contents($path));
