@@ -46,7 +46,7 @@ use Cake\Core\Configure;
             ], ['block' => true]);
             echo $this->fetch('css');
 
-            echo $this->Asset->js([
+            echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
                 'MeCms.admin/bootstrap.min',

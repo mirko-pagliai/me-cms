@@ -43,7 +43,7 @@
             ], ['block' => true]);
             echo $this->fetch('css');
 
-            echo $this->Asset->js([
+            echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
                 'MeCms.display-password',
             ], ['block' => true]);

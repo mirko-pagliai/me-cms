@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
@@ -61,12 +62,14 @@ class InstallShell extends BaseInstallShell
             'donatj/phpuseragentparser',
             'enyo/dropzone',
             'js-cookie/js-cookie:dev-master',
+            'matthiasmullie/minify',
             'sunhater/kcfinder:dev-master',
+            'wyrihaximus/minify-html',
         ]);
 
         //Merges paths to be created and made writable
         $this->paths = am($this->paths, [
-            ASSETS,
+            Configure::read('Assets.target'),
             BACKUPS,
             BANNERS,
             PHOTOS,

@@ -24,6 +24,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
+use Cake\Routing\DispatcherFactory;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -33,8 +34,9 @@ if (!defined('DS')) {
 
 // Path constants to a few helpful things.
 define('ROOT', dirname(__DIR__) . DS);
-define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
-define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
+define('VENDOR', ROOT . 'vendor' . DS);
+define('CAKE_CORE_INCLUDE_PATH', VENDOR . 'cakephp' . DS . 'cakephp');
+define('CORE_PATH', VENDOR . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 define('TESTS', ROOT . 'tests');
 define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
@@ -63,6 +65,9 @@ define('THUMBS', TMP . 'thumbs');
 
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+date_default_timezone_set('UTC');
+mb_internal_encoding('UTF-8');
+
 Configure::write('debug', true);
 Configure::write('App', [
     'namespace' => 'App',
@@ -77,8 +82,8 @@ Configure::write('App', [
     'jsBaseUrl' => 'js/',
     'cssBaseUrl' => 'css/',
     'paths' => [
-        'templates' => [APP . 'Template' . DS],
-        'locales' => [APP . 'Locale' . DS],
+        'plugins' => [APP . 'Plugin' . DS],
+        'templates' => [APP . 'TestApp' . DS . 'Template' . DS],
     ]
 ]);
 
@@ -112,4 +117,47 @@ $config = [
 // Use the test connection for 'debug_kit' as well.
 ConnectionManager::config('test', $config);
 
+Configure::write('Session', [
+    'defaults' => 'php'
+]);
+
+Configure::write('Assets.force', true);
+Configure::write('Assets.target', TMP . 'assets');
+
+//@codingStandardsIgnoreStart
+@mkdir(Configure::read('Assets.target'));
+//@codingStandardsIgnoreEnd
+
+/**
+ * Loads other plugins
+ */
+Plugin::load('MeTools', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
+]);
+Plugin::load('Assets', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+    'routes' => true,
+]);
+Plugin::load('Thumbs', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'thumbs' . DS,
+    'routes' => true,
+]);
+Plugin::load('DatabaseBackup', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'database-backup' . DS,
+]);
+Plugin::load('WyriHaximus/MinifyHtml', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'wyrihaximus' . DS . 'minify-html' . DS,
+]);
+
+/**
+ * Loads MeCms plugins
+ */
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
+
+DispatcherFactory::add('Routing');
+DispatcherFactory::add('ControllerFactory');

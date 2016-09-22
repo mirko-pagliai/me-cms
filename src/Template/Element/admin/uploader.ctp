@@ -22,7 +22,7 @@
  */
 
 $this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
-$this->Asset->js('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
+$this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
 
 <?= $this->Html->scriptStart(); ?>

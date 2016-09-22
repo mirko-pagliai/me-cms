@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Core\Configure;
 use MeCms\Shell\BaseUpdateShell;
 
 /**
@@ -29,6 +30,31 @@ use MeCms\Shell\BaseUpdateShell;
  */
 class UpdateShell extends BaseUpdateShell
 {
+    /**
+     * Updates to 2.14.3 version
+     * @return void
+     */
+    public function to2v14v3()
+    {
+        $dir = WWW_ROOT . 'assets';
+
+        //Deletes `APP/webroot/assets`
+        if (file_exists($dir)) {
+            foreach (glob($dir . DS . '*', GLOB_NOSORT) as $file) {
+                //@codingStandardsIgnoreLine
+                @unlink($file);
+            }
+
+            //@codingStandardsIgnoreLine
+            @\rmdir($dir);
+        }
+
+        //Creates `APP/tmp/assets`
+        if (!file_exists(Configure::read('Assets.target'))) {
+            mkdir(Configure::read('Assets.target'), 0777, true);
+        }
+    }
+
     /**
      * Updates to 2.14.0 version
      * @return void
@@ -151,7 +177,8 @@ class UpdateShell extends BaseUpdateShell
         $path = WWW_ROOT . 'vendor' . DS . 'jquery-cookie';
 
         if (is_link($path)) {
-            unlink($path);
+            //@codingStandardsIgnoreLine
+            @unlink($path);
         }
     }
 
