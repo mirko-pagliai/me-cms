@@ -62,6 +62,7 @@ class InstallShell extends BaseInstallShell
             'donatj/phpuseragentparser',
             'enyo/dropzone',
             'js-cookie/js-cookie:dev-master',
+            'matthiasmullie/minify',
             'sunhater/kcfinder:dev-master',
             'wyrihaximus/minify-html',
         ]);
