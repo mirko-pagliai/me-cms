@@ -121,6 +121,13 @@ Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
+Configure::write('Assets.force', true);
+Configure::write('Assets.target', TMP . 'assets');
+
+//@codingStandardsIgnoreStart
+@mkdir(Configure::read('Assets.target'));
+//@codingStandardsIgnoreEnd
+
 /**
  * Loads other plugins
  */
