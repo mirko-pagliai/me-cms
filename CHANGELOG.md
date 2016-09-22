@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.4
+* fixed bootstrap code, also for tests;
 * added `Gourmet/CommonMark` plugin.
 
 ### 2.14.3

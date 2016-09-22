@@ -24,125 +24,31 @@
 /**
  * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Log\Log;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\DispatcherFactory;
 
-require_once 'constants.php';
+/**
+ * Requires the base of bootstrap
+ */
+require_once __DIR__ . DS . 'bootstrap_base.php';
 
 /**
- * Loads MeTools plugins
+ * Loads DebugKit on localhost, if required
  */
-if (!Plugin::loaded('MeTools')) {
-    Plugin::load('MeTools', ['bootstrap' => true]);
-}
-
-if (!is_writeable(BANNERS)) {
-    throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
-}
-
-if (!folderIsWriteable(PHOTOS)) {
-    throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
-}
-
-/**
- * Loads the MeCms configuration
- */
-Configure::load('MeCms.me_cms');
-
-//Merges with the configuration from application, if exists
-if (is_readable(CONFIG . 'me_cms.php')) {
-    Configure::load('me_cms');
-}
-
-/**
- * Forces debug and loads DebugKit on localhost, if required
- */
-if (isLocalhost() && config('main.debug_on_localhost') && !config('debug')) {
-    Configure::write('debug', true);
-
-    if (!Plugin::loaded('DebugKit')) {
-        Plugin::load('DebugKit', ['bootstrap' => true]);
-    }
+if (isLocalhost() && config('main.debug_on_localhost')
+    && !config('debug') && !Plugin::loaded('DebugKit')
+) {
+    Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
 /**
  * Loads other plugins
  */
-if (!Plugin::loaded('Assets')) {
-    Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
-}
-if (!Plugin::loaded('Thumbs')) {
-    Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
-}
-if (!Plugin::loaded('DatabaseBackup')) {
-    Plugin::load('DatabaseBackup', ['bootstrap' => true]);
-}
-if (!Plugin::loaded('WyriHaximus/MinifyHtml')) {
-    Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
-}
-if (!Plugin::loaded('Gourmet/CommonMark')) {
-    Plugin::load('Gourmet/CommonMark');
-}
-
-/**
- * Loads theme plugin
- */
-$theme = config('default.theme');
-
-if ($theme && !Plugin::loaded($theme)) {
-    Plugin::load($theme);
-}
-
-/**
- * Loads the cache configuration
- */
-Configure::load('MeCms.cache');
-
-//Merges with the configuration from application, if exists
-if (is_readable(CONFIG . 'cache.php')) {
-    Configure::load('cache');
-}
-
-//Adds all cache configurations
-foreach (Configure::consume('Cache') as $key => $config) {
-    //Drops cache configurations that already exist
-    if (Cache::config($key)) {
-        Cache::drop($key);
-    }
-
-    Cache::config($key, $config);
-}
-
-/**
- * Loads the banned ip configuration
- */
-if (is_readable(CONFIG . 'banned_ip.php')) {
-    Configure::load('banned_ip');
-}
-
-/**
- * Loads the widgets configuration
- */
-Configure::load('MeCms.widgets');
-
-//Overwrites with the configuration from application, if exists
-if (is_readable(CONFIG . 'widgets.php')) {
-    Configure::load('widgets', 'default', false);
-}
-
-//Adds log for users actions
-Log::config('users', [
-    'className' => 'MeCms\Log\Engine\SerializedLog',
-    'path' => LOGS,
-    'levels' => [],
-    'file' => 'users.log',
-    'scopes' => ['users'],
-    'url' => env('LOG_DEBUG_URL', null),
-]);
+Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('DatabaseBackup', ['bootstrap' => true]);
+Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
+Plugin::load('Gourmet/CommonMark');
 
 //CakePHP will automatically set the locale based on the current user
 DispatcherFactory::add('LocaleSelector');

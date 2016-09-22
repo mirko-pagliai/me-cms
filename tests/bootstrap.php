@@ -121,46 +121,20 @@ Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
-Configure::write('Assets.force', true);
-Configure::write('Assets.target', TMP . 'assets');
-
-//@codingStandardsIgnoreStart
-@mkdir(Configure::read('Assets.target'));
-//@codingStandardsIgnoreEnd
-
 /**
- * Loads other plugins
+ * Loads plugins
  */
 Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
-Plugin::load('Assets', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+Plugin::load('MeCms', [
+    'bootstrap' => false, //Doesn't load the bootstrap
+    'path' => ROOT,
     'routes' => true,
-]);
-Plugin::load('Thumbs', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'thumbs' . DS,
-    'routes' => true,
-]);
-Plugin::load('DatabaseBackup', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'database-backup' . DS,
-]);
-Plugin::load('WyriHaximus/MinifyHtml', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'wyrihaximus' . DS . 'minify-html' . DS,
-]);
-Plugin::load('Gourmet/CommonMark', [
-    'path' => VENDOR . 'gourmet' . DS . 'common-mark' . DS,
 ]);
 
-/**
- * Loads MeCms plugins
- */
-Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
+require_once ROOT . 'config' . DS . 'bootstrap_base.php';
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
