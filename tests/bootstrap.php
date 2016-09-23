@@ -49,18 +49,12 @@ define('CACHE', TMP);
 define('LOGS', TMP);
 define('SESSIONS', TMP . 'sessions' . DS);
 
-//For plugins
-define('BACKUPS', TMP . 'backups');
-define('THUMBS', TMP . 'thumbs');
-
 //@codingStandardsIgnoreStart
 @mkdir(LOGS);
 @mkdir(SESSIONS);
 @mkdir(CACHE);
 @mkdir(CACHE . 'views');
 @mkdir(CACHE . 'models');
-@mkdir(BACKUPS);
-@mkdir(THUMBS);
 //@codingStandardsIgnoreEnd
 
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
