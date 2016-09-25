@@ -22,7 +22,7 @@
  */
 
 //Categories
-if (!routeNameExists('postsCategories')) {
+if (!$routes->nameExists('postsCategories')) {
     $routes->connect(
         '/posts/categories',
         ['controller' => 'PostsCategories', 'action' => 'index'],
@@ -31,7 +31,7 @@ if (!routeNameExists('postsCategories')) {
 }
 
 //Category
-if (!routeNameExists('postsCategory')) {
+if (!$routes->nameExists('postsCategory')) {
     $routes->connect(
         '/posts/category/:slug',
         ['controller' => 'PostsCategories', 'action' => 'view'],
@@ -44,7 +44,7 @@ if (!routeNameExists('postsCategory')) {
 }
 
 //Tags
-if (!routeNameExists('postsTags')) {
+if (!$routes->nameExists('postsTags')) {
     $routes->connect(
         '/posts/tags',
         ['controller' => 'PostsTags', 'action' => 'index'],
@@ -53,7 +53,7 @@ if (!routeNameExists('postsTags')) {
 }
 
 //Tag
-if (!routeNameExists('postsTag')) {
+if (!$routes->nameExists('postsTag')) {
     $routes->connect(
         '/posts/tag/:tag',
         ['controller' => 'PostsTags', 'action' => 'view'],
@@ -62,7 +62,7 @@ if (!routeNameExists('postsTag')) {
 }
 
 //Posts
-if (!routeNameExists('posts')) {
+if (!$routes->nameExists('posts')) {
     $routes->connect(
         '/posts',
         ['controller' => 'Posts', 'action' => 'index'],
@@ -71,7 +71,7 @@ if (!routeNameExists('posts')) {
 }
 
 //Posts as RSS
-if (!routeNameExists('postsRss')) {
+if (!$routes->nameExists('postsRss')) {
     $routes->connect(
         '/posts/rss',
         ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
@@ -80,7 +80,7 @@ if (!routeNameExists('postsRss')) {
 }
 
 //Posts search
-if (!routeNameExists('postsSearch')) {
+if (!$routes->nameExists('postsSearch')) {
     $routes->connect(
         '/posts/search',
         ['controller' => 'Posts', 'action' => 'search'],
@@ -88,7 +88,7 @@ if (!routeNameExists('postsSearch')) {
     );
 }
 
-if (!routeNameExists('postsByDate')) {
+if (!$routes->nameExists('postsByDate')) {
     //Posts by date
     $routes->connect(
         '/posts/:date',
@@ -102,7 +102,7 @@ if (!routeNameExists('postsByDate')) {
 }
 
 //Post
-if (!routeNameExists('post')) {
+if (!$routes->nameExists('post')) {
     $routes->connect(
         '/post/:slug',
         ['controller' => 'Posts', 'action' => 'view'],
@@ -111,7 +111,7 @@ if (!routeNameExists('post')) {
 }
 
 //Post preview
-if (!routeNameExists('postsPreview')) {
+if (!$routes->nameExists('postsPreview')) {
     $routes->connect(
         '/post/preview/:slug',
         ['controller' => 'Posts', 'action' => 'preview'],

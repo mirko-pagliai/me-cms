@@ -22,7 +22,7 @@
  */
 
 //Albums
-if (!routeNameExists('albums')) {
+if (!$routes->nameExists('albums')) {
     $routes->connect(
         '/albums',
         ['controller' => 'PhotosAlbums', 'action' => 'index'],
@@ -31,7 +31,7 @@ if (!routeNameExists('albums')) {
 }
 
 //Album
-if (!routeNameExists('album')) {
+if (!$routes->nameExists('album')) {
     $routes->connect(
         '/album/:slug',
         ['controller' => 'PhotosAlbums', 'action' => 'view'],
@@ -40,7 +40,7 @@ if (!routeNameExists('album')) {
 }
 
 //Album preview
-if (!routeNameExists('albumsPreview')) {
+if (!$routes->nameExists('albumsPreview')) {
     $routes->connect(
         '/album/preview/:slug',
         ['controller' => 'PhotosAlbums', 'action' => 'preview'],
@@ -53,7 +53,7 @@ if (!routeNameExists('albumsPreview')) {
 }
 
 //Photo
-if (!routeNameExists('photo')) {
+if (!$routes->nameExists('photo')) {
     $routes->connect(
         '/photo/:slug/:id',
         ['controller' => 'Photos', 'action' => 'view'],
@@ -67,7 +67,7 @@ if (!routeNameExists('photo')) {
 }
 
 //Photo preview
-if (!routeNameExists('photosPreview')) {
+if (!$routes->nameExists('photosPreview')) {
     $routes->connect(
         '/photo/preview/:id',
         ['controller' => 'Photos', 'action' => 'preview'],

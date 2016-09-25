@@ -2,7 +2,8 @@
 ## 2.14 branch
 ### 2.14.4
 * fixed bootstrap code, also for tests;
-* added `Gourmet/CommonMark` plugin.
+* added `Gourmet/CommonMark` plugin;
+* updated for CakePHP 3.3.4.
 
 ### 2.14.3
 * added `WyriHaximus/MinifyHtml` plugin;
