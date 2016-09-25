@@ -22,7 +22,7 @@
  */
 
 //Categories
-if (!routeNameExists('pagesCategories')) {
+if (!$routes->nameExists('pagesCategories')) {
     $routes->connect(
         '/pages/categories',
         ['controller' => 'PagesCategories', 'action' => 'index'],
@@ -31,7 +31,7 @@ if (!routeNameExists('pagesCategories')) {
 }
 
 //Category
-if (!routeNameExists('pagesCategory')) {
+if (!$routes->nameExists('pagesCategory')) {
     $routes->connect(
         '/pages/category/:slug',
         ['controller' => 'PagesCategories', 'action' => 'view'],
@@ -44,7 +44,7 @@ if (!routeNameExists('pagesCategory')) {
 }
 
 //Page
-if (!routeNameExists('page')) {
+if (!$routes->nameExists('page')) {
     $routes->connect(
         '/page/:slug',
         ['controller' => 'Pages', 'action' => 'view'],
@@ -57,7 +57,7 @@ if (!routeNameExists('page')) {
 }
 
 //Page preview
-if (!routeNameExists('pagesPreview')) {
+if (!$routes->nameExists('pagesPreview')) {
     $routes->connect(
         '/page/preview/:slug',
         ['controller' => 'Pages', 'action' => 'preview'],

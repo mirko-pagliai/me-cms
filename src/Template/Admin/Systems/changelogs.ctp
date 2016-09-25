@@ -72,7 +72,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 if (!empty($changelog)) {
     echo $this->Html->div(
         null,
-        $this->Markdown->toHtml($changelog),
+        $this->CommonMark->convertToHtml($changelog),
         ['id' => 'changelog']
     );
 }

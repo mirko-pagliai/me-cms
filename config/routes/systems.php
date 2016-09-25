@@ -22,7 +22,7 @@
  */
 
 //Accept cookies
-if (!routeNameExists('acceptCookies')) {
+if (!$routes->nameExists('acceptCookies')) {
     $routes->connect(
         '/accept/cookies',
         ['controller' => 'Systems', 'action' => 'acceptCookies'],
@@ -31,7 +31,7 @@ if (!routeNameExists('acceptCookies')) {
 }
 
 //Contact form
-if (!routeNameExists('contactForm')) {
+if (!$routes->nameExists('contactForm')) {
     $routes->connect(
         '/contact/form',
         ['controller' => 'Systems', 'action' => 'contactForm'],
@@ -40,7 +40,7 @@ if (!routeNameExists('contactForm')) {
 }
 
 //Offline page
-if (!routeNameExists('offline')) {
+if (!$routes->nameExists('offline')) {
     $routes->connect(
         '/offline',
         ['controller' => 'Systems', 'action' => 'offline'],
@@ -49,7 +49,7 @@ if (!routeNameExists('offline')) {
 }
 
 //Sitemap
-if (!routeNameExists('sitemap')) {
+if (!$routes->nameExists('sitemap')) {
     $routes->connect(
         '/sitemap:ext',
         ['controller' => 'Systems', 'action' => 'sitemap'],
@@ -58,7 +58,7 @@ if (!routeNameExists('sitemap')) {
 }
 
 //Unallowed page
-if (!routeNameExists('ipNotAllowed')) {
+if (!$routes->nameExists('ipNotAllowed')) {
     $routes->connect(
         '/unallowed',
         ['controller' => 'Systems', 'action' => 'ipNotAllowed'],

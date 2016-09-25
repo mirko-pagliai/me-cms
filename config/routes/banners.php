@@ -22,7 +22,7 @@
  */
 
 //Banner
-if (!routeNameExists('banner')) {
+if (!$routes->nameExists('banner')) {
     $routes->connect(
         '/banner/:id',
         ['controller' => 'Banners', 'action' => 'open'],

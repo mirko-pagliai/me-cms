@@ -22,7 +22,7 @@
  */
 
 //Resend activation
-if (!routeNameExists('resendActivation')) {
+if (!$routes->nameExists('resendActivation')) {
     $routes->connect(
         '/activation/resend',
         ['controller' => 'Users', 'action' => 'resendActivation'],
@@ -31,7 +31,7 @@ if (!routeNameExists('resendActivation')) {
 }
 
 //Activate account
-if (!routeNameExists('activateAccount')) {
+if (!$routes->nameExists('activateAccount')) {
     $routes->connect(
         '/activation/:id/:token',
         ['controller' => 'Users', 'action' => 'activateAccount'],
@@ -45,7 +45,7 @@ if (!routeNameExists('activateAccount')) {
 }
 
 //Change password
-if (!routeNameExists('changePassword')) {
+if (!$routes->nameExists('changePassword')) {
     $routes->connect(
         '/change/password',
         ['controller' => 'Users', 'action' => 'changePassword'],
@@ -54,7 +54,7 @@ if (!routeNameExists('changePassword')) {
 }
 
 //Login
-if (!routeNameExists('login')) {
+if (!$routes->nameExists('login')) {
     $routes->connect(
         '/login',
         ['controller' => 'Users', 'action' => 'login'],
@@ -63,7 +63,7 @@ if (!routeNameExists('login')) {
 }
 
 //Logout
-if (!routeNameExists('logout')) {
+if (!$routes->nameExists('logout')) {
     $routes->connect(
         '/logout',
         ['controller' => 'Users', 'action' => 'logout'],
@@ -72,7 +72,7 @@ if (!routeNameExists('logout')) {
 }
 
 //Forgot password
-if (!routeNameExists('forgotPassword')) {
+if (!$routes->nameExists('forgotPassword')) {
     $routes->connect(
         '/password/forgot',
         ['controller' => 'Users', 'action' => 'forgotPassword'],
@@ -81,7 +81,7 @@ if (!routeNameExists('forgotPassword')) {
 }
 
 //Reset password
-if (!routeNameExists('resetPassword')) {
+if (!$routes->nameExists('resetPassword')) {
     $routes->connect(
         '/password/reset/:id/:token',
         ['controller' => 'Users', 'action' => 'resetPassword'],
@@ -95,7 +95,7 @@ if (!routeNameExists('resetPassword')) {
 }
 
 //Signup
-if (!routeNameExists('signup')) {
+if (!$routes->nameExists('signup')) {
     $routes->connect(
         '/signup',
         ['controller' => 'Users', 'action' => 'signup'],

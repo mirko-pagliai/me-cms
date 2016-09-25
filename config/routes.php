@@ -25,25 +25,6 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
-//Gets existing routes name
-$GLOBALS['existingRoutesNames'] = array_filter(
-    array_map(function ($route) {
-        return empty($route->options['_name']) ? false : $route->options['_name'];
-    }, Router::routes())
-);
-
-if (!function_exists('routeNameExists')) {
-    /**
-     * Checks whether the name of a route already exists
-     * @param string $name Name
-     * @return bool
-     */
-    function routeNameExists($name)
-    {
-        return in_array($name, $GLOBALS['existingRoutesNames']);
-    }
-}
-
 Router::scope('/', ['plugin' => MECMS], function ($routes) {
     //Includes routes
     include_once 'routes/banners.php';
@@ -55,7 +36,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
 
     //Default home page
     //To avoid conflicts with `/posts`, this route has to be at the bottom
-    if (!routeNameExists('homepage')) {
+    if (!$routes->nameExists('homepage')) {
         $routes->connect(
             '/',
             ['controller' => 'Posts', 'action' => 'index'],
@@ -71,7 +52,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
     //Admin routes
     $routes->prefix('admin', function ($routes) {
         //Admin home page
-        if (!routeNameExists('dashboard')) {
+        if (!$routes->nameExists('dashboard')) {
             $routes->connect(
                 '/',
                 ['controller' => 'Posts', 'action' => 'index'],

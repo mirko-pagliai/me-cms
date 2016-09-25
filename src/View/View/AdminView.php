@@ -41,6 +41,7 @@ class AdminView extends BaseView
 
         //Loads helpers
         $this->loadHelper('MeCms.MenuBuilder');
+        $this->loadHelper('Gourmet/CommonMark.CommonMark');
     }
 
     /**
