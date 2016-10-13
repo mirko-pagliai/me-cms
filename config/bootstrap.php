@@ -45,7 +45,7 @@ if (isLocalhost() && config('main.debug_on_localhost')
  * Loads other plugins
  */
 Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
-Plugin::load('Thumbs', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
 Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 Plugin::load('Gourmet/CommonMark');

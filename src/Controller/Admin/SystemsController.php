@@ -170,7 +170,13 @@ class SystemsController extends AppController
         }
 
         //Checks for temporary directories
-        foreach ([CACHE, LOGIN_LOGS, LOGS, THUMBS, TMP] as $path) {
+        foreach ([
+            CACHE,
+            LOGIN_LOGS,
+            LOGS,
+            Configure::read('Thumbs.target'),
+            TMP,
+        ] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
                 'writeable' => folderIsWriteable($path),
@@ -183,7 +189,7 @@ class SystemsController extends AppController
             BANNERS,
             PHOTOS,
             WWW_ROOT . 'files',
-            WWW_ROOT . 'fonts'
+            WWW_ROOT . 'fonts',
         ] as $path) {
             $checkup['webroot'][] = [
                 'path' => rtr($path),
@@ -236,7 +242,8 @@ class SystemsController extends AppController
         switch ($type) {
             case 'all':
                 $success = clearDir(Configure::read('Assets.target')) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap() && clearDir(THUMBS);
+                    && self::clearCache() && self::clearSitemap()
+                    && clearDir(Configure::read('Thumbs.target'));
                 break;
             case 'cache':
                 $success = self::clearCache();
@@ -251,7 +258,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir(THUMBS);
+                $success = clearDir(Configure::read('Thumbs.target'));
                 break;
             default:
                 throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
@@ -280,12 +287,12 @@ class SystemsController extends AppController
             'assetsSize' => (new Folder(Configure::read('Assets.target')))->dirsize(),
             'logsSize' => (new Folder(LOGS))->dirsize(),
             'sitemapSize' => $sitemap,
-            'thumbsSize' => (new Folder(THUMBS))->dirsize(),
+            'thumbsSize' => (new Folder(Configure::read('Thumbs.target')))->dirsize(),
             'totalSize' => (new Folder(CACHE))->dirsize() +
                 (new Folder(Configure::read('Assets.target')))->dirsize() +
                 (new Folder(LOGS))->dirsize() +
                 $sitemap +
-                (new Folder(THUMBS))->dirsize(),
+                (new Folder(Configure::read('Thumbs.target')))->dirsize(),
         ]);
     }
 }

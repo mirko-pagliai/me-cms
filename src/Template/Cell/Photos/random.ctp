@@ -36,7 +36,7 @@ $this->assign('title', __dn(
 
 foreach ($photos as $photo) {
     echo $this->Html->link(
-        $this->Thumb->image($photo->path, ['side' => 253]),
+        $this->Thumb->crop($photo->path, ['width' => 253]),
         ['_name' => 'albums'],
         ['class' => 'thumbnail']
     );

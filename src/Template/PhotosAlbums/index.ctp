@@ -38,7 +38,7 @@ $this->Breadcrumb->add($title, ['_name' => 'albums']);
         <div class="col-sm-6 col-md-4">
             <div class="photo-box">
                 <a href="<?= $url ?>" class="thumbnail" title="<?= $album->title ?>">
-                    <?= $this->Thumb->image($album->photos[0]->path, ['side' => 275]) ?>
+                    <?= $this->Thumb->crop($album->photos[0]->path, ['width' => 275]) ?>
                     <div class="photo-info">
                         <div>
                             <p><strong><?= $album->title ?></strong></p>

@@ -73,7 +73,7 @@ class InstallShell extends BaseInstallShell
             BACKUPS,
             BANNERS,
             PHOTOS,
-            THUMBS,
+            Configure::read('Thumbs.target'),
             TMP . 'login',
         ]);
     }

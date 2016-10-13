@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.5
+* added `cakephp-thumber` plugin instead of `thumbs` plugin;
 * updated for DatabaseBackup 1.1.4.
 
 ### 2.14.4
