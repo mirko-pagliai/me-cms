@@ -171,11 +171,12 @@ class SystemsController extends AppController
 
         //Checks for temporary directories
         foreach ([
+            LOGS,
+            TMP,
+            Configure::read('Assets.target'),
             CACHE,
             LOGIN_LOGS,
-            LOGS,
             Configure::read('Thumbs.target'),
-            TMP,
         ] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
@@ -185,7 +186,6 @@ class SystemsController extends AppController
 
         //Checks for webroot directories
         foreach ([
-            Configure::read('Assets.target'),
             BANNERS,
             PHOTOS,
             WWW_ROOT . 'files',
@@ -279,20 +279,18 @@ class SystemsController extends AppController
      */
     public function tmpViewer()
     {
-        $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
+        $assetsSize = (new Folder(Configure::read('Assets.target')))->dirsize();
+        $cacheSize = (new Folder(CACHE))->dirsize();
+        $logsSize = (new Folder(LOGS))->dirsize();
+        $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
+        $thumbsSize = (new Folder(Configure::read('Thumbs.target')))->dirsize();
 
-        $this->set([
-            'cacheSize' => (new Folder(CACHE))->dirsize(),
+        $this->set(am(
+            [
             'cacheStatus' => Cache::enabled(),
-            'assetsSize' => (new Folder(Configure::read('Assets.target')))->dirsize(),
-            'logsSize' => (new Folder(LOGS))->dirsize(),
-            'sitemapSize' => $sitemap,
-            'thumbsSize' => (new Folder(Configure::read('Thumbs.target')))->dirsize(),
-            'totalSize' => (new Folder(CACHE))->dirsize() +
-                (new Folder(Configure::read('Assets.target')))->dirsize() +
-                (new Folder(LOGS))->dirsize() +
-                $sitemap +
-                (new Folder(Configure::read('Thumbs.target')))->dirsize(),
-        ]);
+            'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
+            ],
+            compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize')
+        ));
     }
 }
