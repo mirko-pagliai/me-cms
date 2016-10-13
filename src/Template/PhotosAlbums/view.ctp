@@ -68,10 +68,7 @@ $this->Breadcrumb->add($title, ['_name' => 'album', $album->slug]);
             <div class="photo-box">
                 <?php
                     $text = implode(PHP_EOL, [
-                        $this->Thumb->square(
-                            $photo->path,
-                            ['side' => 275, 'force' => true]
-                        ),
+                        $this->Thumb->crop($photo->path, ['width' => 275]),
                         $this->Html->div('photo-info', $this->Html->div(
                             null,
                             $this->Html->para('small', $photo->description)
@@ -87,10 +84,7 @@ $this->Breadcrumb->add($title, ['_name' => 'album', $album->slug]);
                     if (config('default.fancybox')) {
                         $options = am($options, [
                             'class' => 'fancybox thumbnail',
-                            'data-fancybox-href' => $this->Thumb->url(
-                                $photo->path,
-                                ['height' => 1280]
-                            ),
+                            'data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280]),
                             'rel' => 'group',
                         ]);
                     }

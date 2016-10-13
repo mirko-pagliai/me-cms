@@ -170,7 +170,14 @@ class SystemsController extends AppController
         }
 
         //Checks for temporary directories
-        foreach ([CACHE, LOGIN_LOGS, LOGS, THUMBS, TMP] as $path) {
+        foreach ([
+            LOGS,
+            TMP,
+            Configure::read('Assets.target'),
+            CACHE,
+            LOGIN_LOGS,
+            Configure::read('Thumbs.target'),
+        ] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
                 'writeable' => folderIsWriteable($path),
@@ -179,11 +186,10 @@ class SystemsController extends AppController
 
         //Checks for webroot directories
         foreach ([
-            Configure::read('Assets.target'),
             BANNERS,
             PHOTOS,
             WWW_ROOT . 'files',
-            WWW_ROOT . 'fonts'
+            WWW_ROOT . 'fonts',
         ] as $path) {
             $checkup['webroot'][] = [
                 'path' => rtr($path),
@@ -236,7 +242,8 @@ class SystemsController extends AppController
         switch ($type) {
             case 'all':
                 $success = clearDir(Configure::read('Assets.target')) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap() && clearDir(THUMBS);
+                    && self::clearCache() && self::clearSitemap()
+                    && clearDir(Configure::read('Thumbs.target'));
                 break;
             case 'cache':
                 $success = self::clearCache();
@@ -251,7 +258,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir(THUMBS);
+                $success = clearDir(Configure::read('Thumbs.target'));
                 break;
             default:
                 throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
@@ -267,25 +274,23 @@ class SystemsController extends AppController
     }
 
     /**
-     * Temporary viewer (assets, cache, logs, sitemap and thumbnails)
+     * Temporary files viewer (assets, cache, logs, sitemap and thumbnails)
      * @return void
      */
     public function tmpViewer()
     {
-        $sitemap = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
+        $assetsSize = (new Folder(Configure::read('Assets.target')))->dirsize();
+        $cacheSize = (new Folder(CACHE))->dirsize();
+        $logsSize = (new Folder(LOGS))->dirsize();
+        $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
+        $thumbsSize = (new Folder(Configure::read('Thumbs.target')))->dirsize();
 
-        $this->set([
-            'cacheSize' => (new Folder(CACHE))->dirsize(),
+        $this->set(am(
+            [
             'cacheStatus' => Cache::enabled(),
-            'assetsSize' => (new Folder(Configure::read('Assets.target')))->dirsize(),
-            'logsSize' => (new Folder(LOGS))->dirsize(),
-            'sitemapSize' => $sitemap,
-            'thumbsSize' => (new Folder(THUMBS))->dirsize(),
-            'totalSize' => (new Folder(CACHE))->dirsize() +
-                (new Folder(Configure::read('Assets.target')))->dirsize() +
-                (new Folder(LOGS))->dirsize() +
-                $sitemap +
-                (new Folder(THUMBS))->dirsize(),
-        ]);
+            'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
+            ],
+            compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize')
+        ));
     }
 }

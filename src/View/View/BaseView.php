@@ -86,7 +86,7 @@ class BaseView extends AppView
         $this->loadHelper('MeTools.Library');
         $this->loadHelper('MeTools.Paginator');
         $this->loadHelper('Assets.Asset');
-        $this->loadHelper('Thumbs.Thumb');
+        $this->loadHelper('Thumber.Thumb');
         $this->loadHelper('WyriHaximus/MinifyHtml.MinifyHtml');
     }
 

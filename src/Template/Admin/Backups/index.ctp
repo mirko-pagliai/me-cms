@@ -35,6 +35,7 @@ $this->append('actions', $this->Html->button(
     <tr>
         <th><?= __d('me_cms', 'Filename') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
+        <th class="min-width text-center"><?= __d('me_cms', 'Size') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Date') ?></th>
     </tr>
     <?php foreach ($backups as $backup) : ?>
@@ -72,6 +73,9 @@ $this->append('actions', $this->Html->button(
             </td>
             <td class="min-width text-center">
                 <?= $backup->compression ?>
+            </td>
+            <td class="min-width text-center">
+                <?= $this->Number->toReadableSize($backup->size) ?>
             </td>
             <td class="min-width text-center">
                 <?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?>
