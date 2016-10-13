@@ -274,7 +274,7 @@ class SystemsController extends AppController
     }
 
     /**
-     * Temporary viewer (assets, cache, logs, sitemap and thumbnails)
+     * Temporary files viewer (assets, cache, logs, sitemap and thumbnails)
      * @return void
      */
     public function tmpViewer()
