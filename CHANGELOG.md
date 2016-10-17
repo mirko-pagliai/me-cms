@@ -1,10 +1,8 @@
 # 2.x branch
 ## 2.14 branch
-### 2.14.7
-* fixed bug for Font Awesome on admin and login layouts.
-
 ### 2.14.6
 * to generate thumbnails, uses the `fit()` method instead of `crop()`.
+* fixed bug for Font Awesome on admin and login layouts.
 
 ### 2.14.5
 * added `cakephp-thumber` plugin instead of `thumbs` plugin;
