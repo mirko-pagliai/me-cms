@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.6
+* to generate thumbnails, uses the `fit()` method instead of `crop()`.
+
 ### 2.14.5
 * added `cakephp-thumber` plugin instead of `thumbs` plugin;
 * updated for DatabaseBackup 1.1.4.
