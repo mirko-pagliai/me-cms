@@ -48,7 +48,7 @@ $this->extend('/Admin/Common/Banners/index');
                     (<?= $banner->created->i18nFormat(config('main.datetime.long')) ?>)
                 </div>
                 <div class="photo-image">
-                    <?= $this->Thumb->crop($banner->path, ['width' => 400]) ?>
+                    <?= $this->Thumb->fit($banner->path, ['width' => 400]) ?>
                 </div>
 
                 <?php

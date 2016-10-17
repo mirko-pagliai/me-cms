@@ -48,7 +48,7 @@ $this->extend('/Admin/Common/Photos/index');
                     (<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)
                 </div>
                 <div class="photo-image">
-                    <?= $this->Thumb->crop($photo->path, ['width' => 400]); ?>
+                    <?= $this->Thumb->fit($photo->path, ['width' => 400]); ?>
                 </div>
 
                 <?php
