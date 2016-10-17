@@ -30,12 +30,11 @@
             echo $this->Html->title($this->fetch('title'));
             echo $this->fetch('meta');
 
-            echo $this->Html->css(
-                'https://fonts.googleapis.com/css?family=Roboto',
-                ['block' => true]
-            );
-            echo $this->Asset->css([
+            echo $this->Html->css([
+                'https://fonts.googleapis.com/css?family=Roboto|Abel',
                 '/vendor/font-awesome/css/font-awesome.min',
+            ], ['block' => true]);
+            echo $this->Asset->css([
                 'MeCms.login/bootstrap.min',
                 'MeTools.default',
                 'MeTools.forms',
