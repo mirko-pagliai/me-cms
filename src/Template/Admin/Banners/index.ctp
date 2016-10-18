@@ -61,6 +61,14 @@ $this->extend('/Admin/Common/Banners/index');
                         );
                     }
 
+                    //If the banner is not displayed as a thumbnail
+                    if (!$banner->thumbnail) {
+                        echo $this->Html->span(
+                            __d('me_cms', 'No thumbnail'),
+                            ['class' => 'record-label record-label-warning']
+                        );
+                    }
+
                     $actions = [
                         $this->Html->link(
                             __d('me_cms', 'Edit'),

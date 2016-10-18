@@ -12,6 +12,7 @@ CREATE TABLE `banners` (
   `target` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
+  `thumbnail` tinyint(1) NOT NULL DEFAULT '1',
   `click_count` int(11) NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -171,4 +172,4 @@ CREATE TABLE `users_groups` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
--- 2016-10-17 12:08:42
+-- 2016-10-17 18:41:01

@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.7
+* you can choose whether the banners should be displayed with a thumbnail or
+    not. This allows you to view animated gif unchanged.
+
 ### 2.14.6
 * to generate thumbnails, uses the `fit()` method instead of `crop()`.
 * fixed bug for Font Awesome on admin and login layouts.

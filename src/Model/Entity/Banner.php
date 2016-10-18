@@ -28,14 +28,15 @@ use Cake\ORM\Entity;
  * Banner entity
  * @property int $id
  * @property int $position_id
- * @property \MeCms\Model\Entity\Position $position
  * @property string $filename
  * @property string $target
  * @property string $description
  * @property bool $active
+ * @property bool $thumbnail
  * @property int $click_count
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \MeCms\Model\Entity\Position $position
  */
 class Banner extends Entity
 {
@@ -56,7 +57,7 @@ class Banner extends Entity
     protected $_virtual = ['path'];
 
     /**
-     * Gets the banner path (virtual field)
+     * Gets the banner full path (virtual field)
      * @return string|null
      */
     protected function _getPath()

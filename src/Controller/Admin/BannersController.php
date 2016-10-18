@@ -94,7 +94,7 @@ class BannersController extends AppController
         }
 
         $query = $this->Banners->find()
-            ->select(['id', 'filename', 'target', 'description', 'active', 'click_count', 'created'])
+            ->select(['id', 'filename', 'target', 'description', 'active', 'thumbnail', 'click_count', 'created'])
             ->contain([
                 'Positions' => function ($q) {
                     return $q->select(['id', 'title']);
