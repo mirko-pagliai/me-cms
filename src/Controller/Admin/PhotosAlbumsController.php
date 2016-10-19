@@ -55,10 +55,7 @@ class PhotosAlbumsController extends AppController
     {
         $this->paginate['order'] = ['title' => 'ASC'];
 
-        $albums = $this->paginate(
-            $this->PhotosAlbums->find()
-                ->select(['id', 'slug', 'title', 'photo_count', 'active'])
-        );
+        $albums = $this->paginate($this->PhotosAlbums->find());
 
         $this->set(compact('albums'));
     }
