@@ -52,7 +52,7 @@ $this->extend('/Admin/Common/Banners/index');
                     if ($banner->thumbnail) {
                         echo $this->Thumb->resize($banner->path, ['width' => 400]);
                     } else {
-                        echo $this->Html->img('banners/' . $banner->filename);
+                        echo $this->Html->img($banner->www);
                     }
                     ?>
                 </div>

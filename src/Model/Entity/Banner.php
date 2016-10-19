@@ -54,7 +54,7 @@ class Banner extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path'];
+    protected $_virtual = ['path', 'www'];
 
     /**
      * Gets the banner full path (virtual field)
@@ -67,5 +67,18 @@ class Banner extends Entity
         }
 
         return BANNERS . DS . $this->_properties['filename'];
+    }
+
+    /**
+     * Gets the banner web address (virtual field)
+     * @return string|null
+     */
+    protected function _getWww()
+    {
+        if (empty($this->_properties['filename'])) {
+            return null;
+        }
+
+        return sprintf('%s/%s', BANNERS_WWW, $this->_properties['filename']);
     }
 }

@@ -26,6 +26,11 @@ if (!defined('BANNERS')) {
     define('BANNERS', WWW_ROOT . 'img' . DS . 'banners');
 }
 
+//Sets the default banners web address
+if (!defined('BANNERS_WWW')) {
+    define('BANNERS_WWW', 'banners');
+}
+
 //Sets the datetime format for MySql
 if (!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');

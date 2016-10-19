@@ -51,10 +51,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
             ['class' => 'img-thumbnail margin-15']
         );
     } else {
-        echo $this->Html->img(
-            'banners/' . $banner->filename,
-            ['class' => 'img-thumbnail margin-15']
-        );
+        echo $this->Html->img($banner->www, ['class' => 'img-thumbnail margin-15']);
     }
 
     echo $this->Form->input('filename', [
