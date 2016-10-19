@@ -31,6 +31,25 @@ use MeCms\Shell\BaseUpdateShell;
 class UpdateShell extends BaseUpdateShell
 {
     /**
+     * Updates to 2.14.7 version
+     * @return void
+     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     */
+    public function to2v14v7()
+    {
+        $this->loadModel('MeCms.Banners');
+
+        //Adds "thumbnail" field to the banner table
+        if (!$this->_checkColumn('thumbnail', $this->Banners->table())) {
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` ADD `thumbnail` BOOLEAN NOT null DEFAULT true AFTER `active`;',
+                $this->Banners->table()
+            ));
+        }
+    }
+
+    /**
      * Updates to 2.14.3 version
      * @return void
      */

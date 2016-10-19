@@ -73,8 +73,7 @@ class PostsCategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->PostsCategories->find('all')
-            ->select(['id', 'title', 'slug', 'post_count'])
+        $categories = $this->PostsCategories->find()
             ->contain([
                 'Parents' => function ($q) {
                     return $q->select(['title']);

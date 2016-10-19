@@ -117,19 +117,17 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $query = $this->Posts->find()
-            ->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
-            ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['id', 'title']);
-                },
-                'Tags' => function ($q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
-                'Users' => function ($q) {
-                    return $q->select(['id', 'first_name', 'last_name']);
-                },
-            ]);
+        $query = $this->Posts->find()->contain([
+            'Categories' => function ($q) {
+                return $q->select(['id', 'title']);
+            },
+            'Tags' => function ($q) {
+                return $q->order(['tag' => 'ASC']);
+            },
+            'Users' => function ($q) {
+                return $q->select(['id', 'first_name', 'last_name']);
+            },
+        ]);
 
         $this->paginate['order'] = ['Posts.created' => 'DESC'];
         $this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'Users.first_name', 'priority', 'Posts.created'];

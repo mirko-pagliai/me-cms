@@ -51,10 +51,7 @@ class UsersGroupsController extends AppController
     {
         $this->paginate['order'] = ['name' => 'ASC'];
 
-        $groups = $this->paginate(
-            $this->UsersGroups->find()
-                ->select(['id', 'name', 'label', 'user_count'])
-        );
+        $groups = $this->paginate($this->UsersGroups->find());
 
         $this->set(compact('groups'));
     }

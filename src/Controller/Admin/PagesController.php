@@ -111,13 +111,11 @@ class PagesController extends AppController
      */
     public function index()
     {
-        $query = $this->Pages->find()
-            ->select(['id', 'title', 'slug', 'priority', 'active', 'created'])
-            ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['id', 'title']);
-                }
-            ]);
+        $query = $this->Pages->find()->contain([
+            'Categories' => function ($q) {
+                return $q->select(['id', 'title']);
+            }
+        ]);
 
         $this->paginate['order'] = ['Pages.created' => 'DESC'];
         $this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'priority', 'Pages.created'];

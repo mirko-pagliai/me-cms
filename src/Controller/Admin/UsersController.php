@@ -82,13 +82,11 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $query = $this->Users->find()
-            ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-            ->contain([
-                'Groups' => function ($q) {
-                    return $q->select(['id', 'label']);
-                },
-            ]);
+        $query = $this->Users->find()->contain([
+            'Groups' => function ($q) {
+                return $q->select(['id', 'label']);
+            },
+        ]);
 
         $this->paginate['order'] = ['Users.username' => 'ASC'];
         $this->paginate['sortWhitelist'] = ['Users.username', 'first_name', 'email', 'Groups.label', 'post_count', 'created'];

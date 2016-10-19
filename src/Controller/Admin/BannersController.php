@@ -93,13 +93,11 @@ class BannersController extends AppController
             ]);
         }
 
-        $query = $this->Banners->find()
-            ->select(['id', 'filename', 'target', 'description', 'active', 'click_count', 'created'])
-            ->contain([
-                'Positions' => function ($q) {
-                    return $q->select(['id', 'title']);
-                },
-            ]);
+        $query = $this->Banners->find()->contain([
+            'Positions' => function ($q) {
+                return $q->select(['id', 'title']);
+            },
+        ]);
 
         $this->paginate['order'] = ['Banners.created' => 'DESC'];
         $this->paginate['sortWhitelist'] = ['Banners.filename', 'Positions.title', 'description', 'click_count', 'Banners.created'];

@@ -66,5 +66,13 @@ class BannerValidator extends AppValidator
                 'rule' => ['url', true],
             ],
         ])->allowEmpty('target');
+
+        //Thumbnail
+        $this->add('thumbnail', [
+            'boolean' => [
+                'message' => __d('me_cms', 'You have to select a valid option'),
+                'rule' => 'boolean',
+            ],
+        ]);
     }
 }

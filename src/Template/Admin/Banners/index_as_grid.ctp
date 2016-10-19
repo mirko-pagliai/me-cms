@@ -48,7 +48,13 @@ $this->extend('/Admin/Common/Banners/index');
                     (<?= $banner->created->i18nFormat(config('main.datetime.long')) ?>)
                 </div>
                 <div class="photo-image">
-                    <?= $this->Thumb->fit($banner->path, ['width' => 400]) ?>
+                    <?php
+                    if ($banner->thumbnail) {
+                        echo $this->Thumb->resize($banner->path, ['width' => 400]);
+                    } else {
+                        echo $this->Html->img($banner->www);
+                    }
+                    ?>
                 </div>
 
                 <?php

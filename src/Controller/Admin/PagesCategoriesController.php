@@ -74,7 +74,6 @@ class PagesCategoriesController extends AppController
     public function index()
     {
         $categories = $this->PagesCategories->find('all')
-            ->select(['id', 'title', 'slug', 'page_count'])
             ->contain([
                 'Parents' => function ($q) {
                     return $q->select(['title']);

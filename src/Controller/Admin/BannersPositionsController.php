@@ -51,10 +51,7 @@ class BannersPositionsController extends AppController
     {
         $this->paginate['order'] = ['title' => 'ASC'];
 
-        $positions = $this->paginate(
-            $this->BannersPositions->find()
-                ->select(['id', 'title', 'description', 'banner_count'])
-        );
+        $positions = $this->paginate($this->BannersPositions->find());
 
         $this->set(compact('positions'));
     }
