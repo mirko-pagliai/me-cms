@@ -52,7 +52,8 @@
                         </tr>
                         <tr>
                             <td class="min-width">
-                                <code>[img]http://example.com/mypic.gif[/img]</code>
+                                <p><code>[img]mypic.gif[/img]</code></p>
+                                <p><code>[img]http://example.com/mypic.gif[/img]</code></p>
                             </td>
                             <td>
                                 <?= __d('me_cms', 'Adds an image') ?>
