@@ -142,8 +142,8 @@ class SystemsController extends AppController
         ];
 
         $checkup['backups'] = [
-            'path' => rtr(BACKUPS),
-            'writeable' => folderIsWriteable(BACKUPS),
+            'path' => rtr(Configure::read('MysqlBackup.target')),
+            'writeable' => folderIsWriteable(Configure::read('MysqlBackup.target')),
         ];
 
         $checkup['cache'] = Cache::enabled();
