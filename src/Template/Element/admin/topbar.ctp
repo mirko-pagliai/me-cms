@@ -52,7 +52,7 @@
 
                 //Renders menus for each plugin
                 foreach (\MeCms\Core\Plugin::all([
-                    'exclude' => [METOOLS, 'Assets', 'MysqlBackup', 'Thumbs'],
+                    'exclude' => [METOOLS, 'Assets', 'MysqlBackup', 'Thumber'],
                     ]) as $plugin) {
                     $menus += $this->MenuBuilder->renderAsDropdown($plugin);
                 }
