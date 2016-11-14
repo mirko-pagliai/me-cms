@@ -79,11 +79,11 @@ $this->append('actions', $this->Html->button(
             </td>
             <td class="min-width text-center">
                 <?php
-                    if (isset($backup->compression) && !$backup->compression) {
-                        $backup->compression = __d('mysql_backup', 'none');
-                    }
-                    
-                    echo $backup->compression;
+                if (isset($backup->compression) && !$backup->compression) {
+                    $backup->compression = __d('mysql_backup', 'none');
+                }
+
+                echo $backup->compression;
                 ?>
             </td>
             <td class="min-width text-center">
