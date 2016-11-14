@@ -46,7 +46,7 @@ if (isLocalhost() && config('main.debug_on_localhost')
  */
 Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
 Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
-Plugin::load('DatabaseBackup', ['bootstrap' => true]);
+Plugin::load('MysqlBackup', ['bootstrap' => true]);
 Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 Plugin::load('Gourmet/CommonMark');
 

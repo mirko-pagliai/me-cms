@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.8
+* added `cakephp-mysql-backup` plugin instead of `DatabaseBackup` plugin.
+
 ### 2.14.7
 * you can choose whether the banners should be displayed with a thumbnail or
     not. This allows you to view animated gif unchanged;

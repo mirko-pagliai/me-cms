@@ -23,8 +23,9 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
-use DatabaseBackup\Utility\Backup;
-use DatabaseBackup\Utility\BackupImport;
+use Cake\Core\Configure;
+use MysqlBackup\Utility\BackupManager;
+use MysqlBackup\Utility\BackupImport;
 use MeCms\Controller\AppController;
 
 /**
@@ -48,7 +49,7 @@ class BackupsController extends AppController
     /**
      * Lists backup files
      * @return void
-     * @uses DatabaseBackup\Utility\Backup::index()
+     * @uses MysqlBackup\Utility\BackupManager::index()
      */
     public function index()
     {
@@ -56,7 +57,7 @@ class BackupsController extends AppController
             $backup->slug = urlencode($backup->filename);
 
             return $backup;
-        }, Backup::index());
+        }, BackupManager::index());
 
         $this->set(compact('backups'));
     }
@@ -89,13 +90,13 @@ class BackupsController extends AppController
      * Deletes a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses DatabaseBackup\Utility\Backup::delete()
+     * @uses MysqlBackup\Utility\BackupManager::delete()
      */
     public function delete($filename)
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        if (Backup::delete(urldecode($filename))) {
+        if (BackupManager::delete(urldecode($filename))) {
             $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         } else {
             $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
@@ -112,19 +113,19 @@ class BackupsController extends AppController
      */
     public function download($filename)
     {
-        return $this->_download(BACKUPS . DS . urldecode($filename));
+        return $this->_download(Configure::read('MysqlBackup.target') . DS . urldecode($filename));
     }
 
     /**
      * Restores a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses DatabaseBackup\Utility\BackupImport::filename()
-     * @uses DatabaseBackup\Utility\BackupImport::import()
+     * @uses MysqlBackup\Utility\BackupImport::filename()
+     * @uses MysqlBackup\Utility\BackupImport::import()
      */
     public function restore($filename)
     {
-        $filename = BACKUPS . DS . urldecode($filename);
+        $filename = Configure::read('MysqlBackup.target') . DS . urldecode($filename);
 
         $backup = new BackupImport();
         $backup->filename($filename);

@@ -26,7 +26,7 @@ echo $this->MenuBuilder->renderAsCollapse(MECMS);
 
 //Renders menus for each plugin
 foreach (\MeCms\Core\Plugin::all([
-    'exclude' => [MECMS, METOOLS, 'Assets', 'DatabaseBackup', 'Thumbs'],
+    'exclude' => [MECMS, METOOLS, 'Assets', 'MysqlBackup', 'Thumbs'],
     ]) as $plugin) {
     $menus = $this->MenuBuilder->renderAsCollapse($plugin);
 
