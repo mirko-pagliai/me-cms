@@ -52,6 +52,23 @@
                         </tr>
                         <tr>
                             <td class="min-width">
+                                <p><code>[img]mypic.gif[/img]</code></p>
+                                <p><code>[img]http://example.com/mypic.gif[/img]</code></p>
+                            </td>
+                            <td>
+                                <?= __d('me_cms', 'Adds an image') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="min-width">
+                                <code>[url="http://example.com"]my link[/url]</code>
+                            </td>
+                            <td>
+                                <?= __d('me_cms', 'Adds a link') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="min-width">
                                 <p><code>[youtube]https://youtu.be/bL_CJKq9rIw[/youtube]</code></p>
                                 <p><code>[youtube]bL_CJKq9rIw[/youtube]</code></p>
                             </td>

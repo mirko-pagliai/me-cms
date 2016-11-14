@@ -34,6 +34,7 @@ $this->append('actions', $this->Html->button(
 <table class="table table-striped">
     <tr>
         <th><?= __d('me_cms', 'Filename') ?></th>
+        <th class="min-width text-center"><?= __d('me_cms', 'Extension') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Size') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Date') ?></th>
@@ -41,7 +42,9 @@ $this->append('actions', $this->Html->button(
     <?php foreach ($backups as $backup) : ?>
         <tr>
             <td>
-                <strong><?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?></strong>
+                <strong>
+                    <?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?>
+                </strong>
                 <?php
                     $actions = [
                         $this->Html->link(
@@ -72,7 +75,16 @@ $this->append('actions', $this->Html->button(
                 ?>
             </td>
             <td class="min-width text-center">
-                <?= $backup->compression ?>
+                <?= $backup->extension ?>
+            </td>
+            <td class="min-width text-center">
+                <?php
+                if (isset($backup->compression) && !$backup->compression) {
+                    $backup->compression = __d('mysql_backup', 'none');
+                }
+
+                echo $backup->compression;
+                ?>
             </td>
             <td class="min-width text-center">
                 <?= $this->Number->toReadableSize($backup->size) ?>
