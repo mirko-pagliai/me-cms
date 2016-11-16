@@ -115,9 +115,20 @@ Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
+Configure::write('Assets.force', true);
+Configure::write('Assets.target', TMP . 'assets');
+
+//@codingStandardsIgnoreStart
+@mkdir(Configure::read('Assets.target'));
+//@codingStandardsIgnoreEnd
+
 /**
  * Loads plugins
  */
+Plugin::load('Assets', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+]);
 Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
