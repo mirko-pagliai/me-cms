@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.8
-* added `cakephp-mysql-backup` plugin instead of `DatabaseBackup` plugin.
+* added `cakephp-mysql-backup` plugin instead of `DatabaseBackup` plugin;
+* fixed for MeTools 2.10.4.
 
 ### 2.14.7
 * you can choose whether the banners should be displayed with a thumbnail or
