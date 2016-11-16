@@ -62,7 +62,7 @@ foreach ($posts as $post) {
     //Adds the preview image
     if (!empty($post->preview)) {
         $text = $this->Thumb->resize($post->preview, ['width' => 200]) .
-            $this->Html->br() .
+            $this->Html->br(null) .
             $text;
     }
 
