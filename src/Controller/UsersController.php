@@ -25,6 +25,7 @@ namespace MeCms\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\LoginLogger;
@@ -110,6 +111,7 @@ class UsersController extends AppController
      * Internal function to send the activation mail
      * @param object $user Users entity
      * @return bool
+     * @throws InternalErrorException
      * @uses MeCms\Mailer\UserMailer::activateAccount()
      * @uses MeCms\Network\Email\Email
      */
@@ -117,6 +119,10 @@ class UsersController extends AppController
     {
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
+
+        if (empty($token)) {
+            throw new InternalErrorException(__d('me_cms', 'Failure when creating the token'));
+        }
 
         //Sends email
         return $this->getMailer('MeCms.User')
@@ -172,6 +178,7 @@ class UsersController extends AppController
     /**
      * Requests a new password
      * @return \Cake\Network\Response|null|void
+     * @throws InternalErrorException
      * @uses MeCms\Mailer\UserMailer::forgotPassword()
      * @uses MeTools\Controller\Component\Recaptcha::check()
      * @uses MeTools\Controller\Component\Recaptcha::getError()
@@ -201,6 +208,10 @@ class UsersController extends AppController
                     //Creates the token
                     $token = $this->Token->create($user->email, ['type' => 'forgot_password', 'user_id' => $user->id]);
 
+                    if (empty($token)) {
+                        throw new InternalErrorException(__d('me_cms', 'Failure when creating the token'));
+                    }
+                    
                     //Sends email
                     $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'resetPassword', $user->id, $token], true))
