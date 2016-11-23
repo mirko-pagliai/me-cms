@@ -5,6 +5,7 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `banners`;
 CREATE TABLE `banners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `position_id` int(11) NOT NULL,
@@ -12,7 +13,6 @@ CREATE TABLE `banners` (
   `target` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `thumbnail` tinyint(1) NOT NULL DEFAULT '1',
   `click_count` int(11) NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE `banners` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `banners_positions`;
 CREATE TABLE `banners_positions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
@@ -32,8 +33,10 @@ CREATE TABLE `banners_positions` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `subtitle` varchar(150) DEFAULT NULL,
   `slug` varchar(100) NOT NULL,
@@ -46,6 +49,25 @@ CREATE TABLE `pages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `pages_categories`;
+CREATE TABLE `pages_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL,
+  `lft` int(11) DEFAULT NULL,
+  `rght` int(11) DEFAULT NULL,
+  `title` varchar(100) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `page_count` int(11) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `title` (`title`),
+  UNIQUE KEY `slug` (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `photos`;
 CREATE TABLE `photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `album_id` int(11) NOT NULL,
@@ -60,6 +82,7 @@ CREATE TABLE `photos` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `photos_albums`;
 CREATE TABLE `photos_albums` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
@@ -73,6 +96,7 @@ CREATE TABLE `photos_albums` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL DEFAULT '1',
@@ -92,6 +116,7 @@ CREATE TABLE `posts` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `posts_categories`;
 CREATE TABLE `posts_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
@@ -109,6 +134,7 @@ CREATE TABLE `posts_categories` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `posts_tags`;
 CREATE TABLE `posts_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tag_id` int(11) NOT NULL,
@@ -119,6 +145,7 @@ CREATE TABLE `posts_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `tags`;
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(30) NOT NULL,
@@ -129,17 +156,21 @@ CREATE TABLE `tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE `tokens` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
   `token` varchar(25) NOT NULL,
-  `data` text,
+  `type` varchar(255) DEFAULT NULL,
+  `extra` text,
   `expiry` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
@@ -159,6 +190,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `users_groups`;
 CREATE TABLE `users_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -172,4 +204,4 @@ CREATE TABLE `users_groups` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
--- 2016-10-17 18:41:01
+-- 2016-11-23 17:07:47
