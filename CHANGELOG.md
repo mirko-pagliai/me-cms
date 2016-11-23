@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.9
+* added `cakephp-tokens` plugin for handling tokens.
+
 ### 2.14.8
 * added `cakephp-mysql-backup` plugin instead of `DatabaseBackup` plugin;
 * fixed for MeTools 2.10.4.
