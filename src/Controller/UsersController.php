@@ -211,7 +211,7 @@ class UsersController extends AppController
                     if (empty($token)) {
                         throw new InternalErrorException(__d('me_cms', 'Failure when creating the token'));
                     }
-                    
+
                     //Sends email
                     $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'resetPassword', $user->id, $token], true))
