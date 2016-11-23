@@ -31,6 +31,30 @@ use MeCms\Shell\BaseUpdateShell;
 class UpdateShell extends BaseUpdateShell
 {
     /**
+     * Updates to 2.14.8 version
+     * @return void
+     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     */
+    public function to2v14v8()
+    {
+        //Drops `tokens` table
+        $this->connection->execute(
+            'DROP TABLE IF EXISTS `tokens`;
+            CREATE TABLE `tokens` (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              `user_id` int(11) DEFAULT NULL,
+              `token` varchar(25) NOT NULL,
+              `type` varchar(255) DEFAULT NULL,
+              `extra` text,
+              `expiry` datetime DEFAULT NULL,
+              PRIMARY KEY (`id`),
+              KEY `user_id` (`user_id`),
+              KEY `type` (`type`)
+            );'
+        );
+    }
+
+    /**
      * Updates to 2.14.7 version
      * @return void
      * @uses MeCms\Shell\BaseUpdateShell::$connection
