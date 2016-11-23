@@ -444,10 +444,7 @@ class UsersController extends AppController
                 switch (config('users.activation')) {
                     //The account will be enabled by an administrator
                     case 2:
-                        $this->Flash->success(__d(
-                            'me_cms',
-                            'The account has been created, but it needs to be activated by an admin'
-                        ));
+                        $this->Flash->success(__d('me_cms', 'The account has been created, but it needs to be activated by an admin'));
                         break;
                     //The account will be enabled by the user via email
                     //  (default)
@@ -463,7 +460,7 @@ class UsersController extends AppController
                         break;
                 }
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['_name' => 'homepage']);
             } else {
                 $this->Flash->error(__d('me_cms', 'The account has not been created'));
             }
