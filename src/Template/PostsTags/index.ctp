@@ -27,7 +27,7 @@ $this->assign('title', $title = __d('me_cms', 'Posts tags'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'postsTags']);
+$this->Breadcrumbs->add($title, ['_name' => 'postsTags']);
 
 $tags = array_map(function ($tag) {
     return $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug]);

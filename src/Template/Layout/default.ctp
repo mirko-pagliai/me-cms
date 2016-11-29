@@ -87,17 +87,22 @@ use Cake\Core\Configure;
                 $topbarCache = ['key' => 'topbar'];
             }
 
-            echo $this->element('MeCms.topbar', [], [
-                'cache' => $topbarCache,
-            ]);
+            echo $this->element('MeCms.topbar', [], ['cache' => $topbarCache]);
             ?>
         </header>
         <div class="container">
             <div class="row">
                 <div id="content" class="col-sm-8 col-md-9">
-                    <?= $this->Flash->render() ?>
-                    <?= $this->Breadcrumb->get() ?>
-                    <?= $this->fetch('content') ?>
+                    <?php
+                    echo $this->Flash->render();
+
+                    if ($this->Breadcrumbs->render()) {
+                        $this->Breadcrumbs->prepend(__d('me_cms', 'Home'), '/');
+                        echo $this->Breadcrumbs->render();
+                    }
+
+                    echo $this->fetch('content');
+                    ?>
                 </div>
                 <div id="sidebar" class="col-sm-4 col-md-3">
                     <?= $this->fetch('sidebar') ?>
@@ -113,10 +118,7 @@ use Cake\Core\Configure;
             $footerCache = ['key' => 'footer'];
         }
 
-        echo $this->element('MeCms.footer', [], [
-            'cache' => $footerCache,
-        ]);
-
+        echo $this->element('MeCms.footer', [], ['cache' => $footerCache]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

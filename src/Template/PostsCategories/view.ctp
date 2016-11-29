@@ -48,7 +48,7 @@ $this->userbar([
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add(
+$this->Breadcrumbs->add(
     $category->title,
     ['_name' => 'postsCategory', $category->title]
 );
