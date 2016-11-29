@@ -153,6 +153,10 @@ class UsersTable extends AppTable
             'foreignKey' => 'user_id',
             'className' => 'MeCms.Posts',
         ]);
+        $this->hasMany('Tokens', [
+            'foreignKey' => 'user_id',
+            'className' => 'Tokens.Tokens',
+        ]);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);

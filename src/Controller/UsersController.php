@@ -25,6 +25,7 @@ namespace MeCms\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\LoginLogger;
@@ -71,9 +72,7 @@ class UsersController extends AppController
         $this->request->data = $this->Cookie->read('login');
 
         //Tries to login
-        if (!empty($this->request->data['username']) &&
-            !empty($this->request->data['password'])
-        ) {
+        if (!empty($this->request->data['username']) && !empty($this->request->data['password'])) {
             $user = $this->Auth->identify();
 
             if ($user && $user['active'] && !$user['banned']) {
@@ -112,24 +111,22 @@ class UsersController extends AppController
      * Internal function to send the activation mail
      * @param object $user Users entity
      * @return bool
+     * @throws InternalErrorException
      * @uses MeCms\Mailer\UserMailer::activateAccount()
      * @uses MeCms\Network\Email\Email
-     * @uses MeTools\Controller\Component\Token::create()
      */
     protected function _sendActivationMail($user)
     {
-        //Gets the token
-        $token = $this->Token->create($user->email, [
-            'type' => 'signup',
-            'user_id' => $user->id,
-        ]);
+        //Creates the token
+        $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
+
+        if (empty($token)) {
+            throw new InternalErrorException(__d('me_cms', 'Failure when creating the token'));
+        }
 
         //Sends email
         return $this->getMailer('MeCms.User')
-            ->set('url', Router::url(
-                ['_name' => 'activateAccount', $user->id, $token],
-                true
-            ))
+            ->set('url', Router::url(['_name' => 'activateAccount', $user->id, $token], true))
             ->send('activateAccount', [$user]);
     }
 
@@ -142,7 +139,7 @@ class UsersController extends AppController
         parent::initialize();
 
         $this->loadComponent('Cookie');
-        $this->loadComponent('MeTools.Token');
+        $this->loadComponent('Tokens.Token');
     }
 
     /**
@@ -151,16 +148,11 @@ class UsersController extends AppController
      * @param string $token Token
      * @return \Cake\Network\Response|null
      * @throws RecordNotFoundException
-     * @uses MeTools\Controller\Component\Token::check()
-     * @uses MeTools\Controller\Component\Token::delete()
      */
     public function activateAccount($id, $token)
     {
         //Checks for token
-        if (!$this->Token->check($token, [
-            'type' => 'signup',
-            'user_id' => $id
-        ])) {
+        if (!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id])) {
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
         }
 
@@ -172,19 +164,13 @@ class UsersController extends AppController
         $user->active = true;
 
         if ($this->Users->save($user)) {
-            //Deletes the token
-            $this->Token->delete($token);
-
-            $this->Flash->success(__d(
-                'me_cms',
-                'The account has been activated'
-            ));
+            $this->Flash->success(__d('me_cms', 'The account has been activated'));
         } else {
-            $this->Flash->error(__d(
-                'me_cms',
-                'The account has not been activated'
-            ));
+            $this->Flash->error(__d('me_cms', 'The account has not been activated'));
         }
+
+        //Deletes the token
+        $this->Token->delete($token);
 
         return $this->redirect(['_name' => 'login']);
     }
@@ -192,10 +178,10 @@ class UsersController extends AppController
     /**
      * Requests a new password
      * @return \Cake\Network\Response|null|void
+     * @throws InternalErrorException
      * @uses MeCms\Mailer\UserMailer::forgotPassword()
      * @uses MeTools\Controller\Component\Recaptcha::check()
      * @uses MeTools\Controller\Component\Recaptcha::getError()
-     * @uses MeTools\Controller\Component\Token::create()
      */
     public function forgotPassword()
     {
@@ -207,10 +193,7 @@ class UsersController extends AppController
         }
 
         if ($this->request->is('post')) {
-            $entity = $this->Users->newEntity(
-                $this->request->data(),
-                ['validate' => 'NotUnique']
-            );
+            $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'NotUnique']);
 
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
@@ -222,24 +205,19 @@ class UsersController extends AppController
                     ->first();
 
                 if ($user) {
-                    //Gets the token
-                    $token = $this->Token->create(
-                        $user->email,
-                        ['type' => 'forgot_password', 'user_id' => $user->id]
-                    );
+                    //Creates the token
+                    $token = $this->Token->create($user->email, ['type' => 'forgot_password', 'user_id' => $user->id]);
+
+                    if (empty($token)) {
+                        throw new InternalErrorException(__d('me_cms', 'Failure when creating the token'));
+                    }
 
                     //Sends email
                     $this->getMailer('MeCms.User')
-                        ->set('url', Router::url(
-                            ['_name' => 'resetPassword', $user->id, $token],
-                            true
-                        ))
+                        ->set('url', Router::url(['_name' => 'resetPassword', $user->id, $token], true))
                         ->send('forgotPassword', [$user]);
 
-                    $this->Flash->success(__d(
-                        'me_cms',
-                        'We have sent you an email to reset your password'
-                    ));
+                    $this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 
                     return $this->redirect(['_name' => 'login']);
                 } else {
@@ -253,16 +231,10 @@ class UsersController extends AppController
                     $this->Flash->error(__d('me_cms', 'No account found'));
                 }
             } else {
-                $this->Flash->error(__d(
-                    'me_cms',
-                    'The form has not been filled in correctly'
-                ));
+                $this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
             }
         } else {
-            $entity = $this->Users->newEntity(
-                null,
-                ['validate' => 'NotUnique']
-            );
+            $entity = $this->Users->newEntity(null, ['validate' => 'NotUnique']);
         }
 
         $this->set('user', $entity);
@@ -291,15 +263,9 @@ class UsersController extends AppController
                 //  should still be enabled)
                 if ($user['banned'] || !$user['active']) {
                     if ($user['banned']) {
-                        $this->Flash->error(__d(
-                            'me_cms',
-                            'Your account has been banned by an admin'
-                        ));
+                        $this->Flash->error(__d('me_cms', 'Your account has been banned by an admin'));
                     } elseif (!$user['active']) {
-                        $this->Flash->error(__d(
-                            'me_cms',
-                            'Your account has not been activated yet'
-                        ));
+                        $this->Flash->error(__d('me_cms', 'Your account has not been activated yet'));
                     }
 
                     return $this->_logout();
@@ -329,10 +295,7 @@ class UsersController extends AppController
                     $this->request->data('password')
                 ), 'users');
 
-                $this->Flash->error(__d(
-                    'me_cms',
-                    'Invalid username or password'
-                ));
+                $this->Flash->error(__d('me_cms', 'Invalid username or password'));
             }
         }
 
@@ -369,10 +332,7 @@ class UsersController extends AppController
         }
 
         if ($this->request->is('post')) {
-            $entity = $this->Users->newEntity(
-                $this->request->data(),
-                ['validate' => 'NotUnique']
-            );
+            $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'NotUnique']);
 
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
@@ -387,10 +347,7 @@ class UsersController extends AppController
                     //Sends the activation mail
                     $this->_sendActivationMail($user);
 
-                    $this->Flash->success(__d(
-                        'me_cms',
-                        'We send you an email to activate your account'
-                    ));
+                    $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 
                     return $this->redirect(['_name' => 'login']);
                 } else {
@@ -404,16 +361,10 @@ class UsersController extends AppController
                     $this->Flash->error(__d('me_cms', 'No account found'));
                 }
             } else {
-                $this->Flash->error(__d(
-                    'me_cms',
-                    'The form has not been filled in correctly'
-                ));
+                $this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
             }
         } else {
-            $entity = $this->Users->newEntity(
-                null,
-                ['validate' => 'OnlyCheck']
-            );
+            $entity = $this->Users->newEntity(null, ['validate' => 'OnlyCheck']);
         }
 
         $this->set('user', $entity);
@@ -427,16 +378,11 @@ class UsersController extends AppController
      * @param string $token Token
      * @return \Cake\Network\Response|null|void
      * @throws RecordNotFoundException
-     * @uses MeTools\Controller\Component\Token::check()
-     * @uses MeTools\Controller\Component\Token::delete()
      */
     public function resetPassword($id, $token)
     {
         //Checks for token
-        if (!$this->Token->check($token, [
-            'type' => 'forgot_password',
-            'user_id' => $id
-        ])) {
+        if (!$this->Token->check($token, ['type' => 'forgot_password', 'user_id' => $id])) {
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
         }
 
@@ -449,21 +395,15 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
 
             if ($this->Users->save($user)) {
-                //Deletes the token
-                $this->Token->delete($token);
-
-                $this->Flash->success(__d(
-                    'me_cms',
-                    'The password has been edited'
-                ));
+                $this->Flash->success(__d('me_cms', 'The password has been edited'));
 
                 return $this->redirect(['_name' => 'login']);
             } else {
-                $this->Flash->error(__d(
-                    'me_cms',
-                    'The password has not been edited'
-                ));
+                $this->Flash->error(__d('me_cms', 'The password has not been edited'));
             }
+
+            //Deletes the token
+            $this->Token->delete($token);
         }
 
         $this->set(compact('user'));
@@ -504,11 +444,7 @@ class UsersController extends AppController
                 switch (config('users.activation')) {
                     //The account will be enabled by an administrator
                     case 2:
-                        $this->Flash->success(__d(
-                            'me_cms',
-                            'The account has been created, but it needs to ' .
-                            'be activated by an admin'
-                        ));
+                        $this->Flash->success(__d('me_cms', 'The account has been created, but it needs to be activated by an admin'));
                         break;
                     //The account will be enabled by the user via email
                     //  (default)
@@ -516,26 +452,17 @@ class UsersController extends AppController
                         //Sends the activation mail
                         $this->_sendActivationMail($user);
 
-                        $this->Flash->success(__d(
-                            'me_cms',
-                            'We send you an email to activate your account'
-                        ));
+                        $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
                         break;
                     //No activation required, the account is immediately active
                     default:
-                        $this->Flash->success(__d(
-                            'me_cms',
-                            'Account created. Now you can login'
-                        ));
+                        $this->Flash->success(__d('me_cms', 'Account created. Now you can login'));
                         break;
                 }
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['_name' => 'homepage']);
             } else {
-                $this->Flash->error(__d(
-                    'me_cms',
-                    'The account has not been created'
-                ));
+                $this->Flash->error(__d('me_cms', 'The account has not been created'));
             }
         }
 

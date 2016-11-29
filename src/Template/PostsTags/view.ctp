@@ -41,5 +41,5 @@ $this->userbar($this->Html->link(
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add(__d('me_cms', 'Tags'), ['_name' => 'postsTags']);
-$this->Breadcrumb->add($title, ['_name' => 'postsTag', $tag->slug]);
+$this->Breadcrumbs->add(__d('me_cms', 'Tags'), ['_name' => 'postsTags']);
+$this->Breadcrumbs->add($title, ['_name' => 'postsTag', $tag->slug]);

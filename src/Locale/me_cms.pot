@@ -4,7 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-11-03 14:43+0100\n"
+"POT-Creation-Date: 2016-11-23 18:16+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -27,7 +27,7 @@ msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:61
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:204;366;485
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:190;329;425
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:277
 msgid "Disabled"
 msgstr ""
@@ -40,71 +40,75 @@ msgstr ""
 msgid "The email was not sent"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:164;440
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:124;212
+msgid "Failure when creating the token"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:156;386
 msgid "Invalid token"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:178
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:167
 msgid "The account has been activated"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:183
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:169
 msgid "The account has not been activated"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:239
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:220
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:253;404
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:231;361
 msgid "No account found"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:256;407
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:234;364
 msgid "The form has not been filled in correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:294
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:266
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:299
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:268
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:332
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:298
 msgid "Invalid username or password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:349
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:312
 msgid "You are successfully logged out"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:390;519
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:350;455
 msgid "We send you an email to activate your account"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:455
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:398
 msgid "The password has been edited"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:462
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:402
 msgid "The password has not been edited"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:507
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:447
 msgid "The account has been created, but it needs to be activated by an admin"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:526
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:459
 msgid "Account created. Now you can login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:535
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:465
 msgid "The account has not been created"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:77;99;136
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:78;100;137
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:182;216
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:71;95;119
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:186
@@ -121,7 +125,7 @@ msgstr ""
 msgid "The operation has been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:81;101;138
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:82;102;139
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:186;218
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:75;99;121
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:188
@@ -527,7 +531,7 @@ msgid "Status"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:177
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:39
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:40
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:36
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:39
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/edit.ctp:40
@@ -645,15 +649,19 @@ msgid "Add"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:37
-msgid "Compression"
+msgid "Extension"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:38
+msgid "Compression"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:39
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:37
 msgid "Size"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:48
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:51
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:89
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:84
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:63
@@ -664,15 +672,15 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:53
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:56
 msgid "Restore"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:57
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:60
 msgid "This will overwrite the current database and some data may be lost. Are you sure?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:61
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:64
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:97
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:95
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:64
@@ -692,7 +700,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:66
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/index.ctp:69
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:102
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index_as_grid.ctp:96
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:69
@@ -1752,15 +1760,15 @@ msgstr ""
 msgid "If this is not present, the system can still cut the text, for example after a certain number of characters"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/bbcode.ctp:58
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/bbcode.ctp:59
 msgid "Adds an image"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/bbcode.ctp:66
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/bbcode.ctp:67
 msgid "Adds a link"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/bbcode.ctp:75
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/bbcode.ctp:76
 msgid "Adds a {0} video. You may indicate the ID or the url of the video"
 msgstr ""
 

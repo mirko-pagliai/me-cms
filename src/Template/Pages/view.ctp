@@ -62,12 +62,12 @@ $this->userbar([
  * Breadcrumb
  */
 if (config('page.category')) {
-    $this->Breadcrumb->add(
+    $this->Breadcrumbs->add(
         $page->category->title,
         ['_name' => 'pagesCategory', $page->category->slug]
     );
 }
-$this->Breadcrumb->add($page->title, ['_name' => 'page', $page->slug]);
+$this->Breadcrumbs->add($page->title, ['_name' => 'page', $page->slug]);
 
 /**
  * Meta tags

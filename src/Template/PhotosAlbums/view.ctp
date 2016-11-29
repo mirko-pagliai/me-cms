@@ -58,8 +58,8 @@ $this->userbar([
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
-$this->Breadcrumb->add($title, ['_name' => 'album', $album->slug]);
+$this->Breadcrumbs->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
+$this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
 ?>
 
 <div class="clearfix">

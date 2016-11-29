@@ -54,12 +54,12 @@ $this->userbar([
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
-$this->Breadcrumb->add(
+$this->Breadcrumbs->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
+$this->Breadcrumbs->add(
     $photo->album->title,
     ['_name' => 'album', $photo->album->slug]
 );
-$this->Breadcrumb->add(
+$this->Breadcrumbs->add(
     $title,
     ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id]
 );

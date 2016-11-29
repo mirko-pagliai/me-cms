@@ -18,7 +18,8 @@
         "donatj/phpuseragentparser": "*",
         "mirko-pagliai/cakephp-mysql-backup": ">=1.0.0",
         "mirko-pagliai/cakephp-thumber": ">=1.0.0",
-        "mirko-pagliai/me-tools": ">=2.10.4",
+        "mirko-pagliai/cakephp-tokens": "*",
+        "mirko-pagliai/me-tools": ">=2.11.0",
         "wyrihaximus/minify-html": "^1.1",
         "gourmet/common-mark": "~1.0"
     },

@@ -27,7 +27,7 @@ $this->assign('title', $title = __d('me_cms', 'Search posts'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'postsSearch']);
+$this->Breadcrumbs->add($title, ['_name' => 'postsSearch']);
 
 echo $this->Form->create(null, [
     'type' => 'get',

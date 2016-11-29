@@ -27,7 +27,7 @@ $this->assign('title', $title = __d('me_cms', 'Posts categories'));
 /**
  * Breadcrumb
  */
-$this->Breadcrumb->add($title, ['_name' => 'postsCategories']);
+$this->Breadcrumbs->add($title, ['_name' => 'postsCategories']);
 
 $categories = array_map(function ($category) {
     return $this->Html->link(
