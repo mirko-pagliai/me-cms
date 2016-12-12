@@ -84,12 +84,10 @@ class SitemapBuilder
             }
         }
 
-        $xml = Xml::fromArray([
-            'urlset' => [
-                'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
-                'url' => $url,
-            ],
-         ], ['pretty' => true]);
+        $xml = Xml::fromArray(['urlset' => [
+            'xmlns:' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
+            'url' => $url,
+        ]], ['pretty' => true]);
 
         return $xml->asXML();
     }

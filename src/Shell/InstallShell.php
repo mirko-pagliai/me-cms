@@ -183,7 +183,7 @@ class InstallShell extends BaseInstallShell
             if ($this->UsersGroups->saveMany($entities)) {
                 $this->verbose(__d('me_cms', 'The user groups have been created'));
             } else {
-                $this->err(__d('me_cms','The user groups have not been created'));
+                $this->err(__d('me_cms', 'The user groups have not been created'));
             }
         }
     }
