@@ -29,6 +29,11 @@ $this->append('actions', $this->Html->button(
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
+$this->append('actions', $this->Form->postButton(
+    __d('me_cms', 'Delete all'),
+    ['action' => 'delete-all'],
+    ['class' => 'btn-danger', 'icon' => 'trash']
+));
 ?>
 
 <table class="table table-striped">
