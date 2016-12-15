@@ -34,15 +34,15 @@ class InstallShell extends BaseInstallShell
 {
     /**
      * Construct
-     * @uses MeTools\Shell\InstallShell::__construct()
+     * @param \Cake\Console\ConsoleIo|null $io An io instance
      * @uses $config
      * @uses $links
-     * @uses $packages
      * @uses $paths
+     * @uses MeTools\Shell\InstallShell::__construct()
      */
-    public function __construct()
+    public function __construct(\Cake\Console\ConsoleIo $io = null)
     {
-        parent::__construct();
+        parent::__construct($io);
 
         //Configuration files to be copied
         $this->config = am($this->config, [
@@ -56,15 +56,6 @@ class InstallShell extends BaseInstallShell
             'js-cookie/js-cookie/src' => 'js-cookie',
             'sunhater/kcfinder' => 'kcfinder',
             'enyo/dropzone/dist' => 'dropzone',
-        ]);
-
-        $this->packages = am($this->packages, [
-            'donatj/phpuseragentparser',
-            'enyo/dropzone',
-            'js-cookie/js-cookie:dev-master',
-            'matthiasmullie/minify',
-            'sunhater/kcfinder:dev-master',
-            'wyrihaximus/minify-html',
         ]);
 
         //Merges paths to be created and made writable
@@ -89,11 +80,11 @@ class InstallShell extends BaseInstallShell
 
         //Returns only the plugins that have the `InstallShell` class
         return af(array_map(function ($plugin) {
-            return Plugin::path(
-                $plugin,
-                'src' . DS . 'Shell' . DS . 'InstallShell.php',
-                true
-            ) ? $plugin : false;
+            if (!Plugin::path($plugin, 'src' . DS . 'Shell' . DS . 'InstallShell.php', true)) {
+                return false;
+            }
+
+            return $plugin;
         }, $plugins));
     }
 
@@ -104,9 +95,7 @@ class InstallShell extends BaseInstallShell
      */
     protected function _runOtherPlugins()
     {
-        $plugins = $this->_getOtherPlugins();
-
-        foreach ($plugins as $plugin) {
+        foreach ($this->_getOtherPlugins() as $plugin) {
             $this->dispatchShell([
                 'command' => sprintf('%s.install all', $plugin),
                 'extra' => $this->params,
@@ -138,39 +127,23 @@ class InstallShell extends BaseInstallShell
             return;
         }
 
-        $ask = $this->in(
-            __d('me_tools', 'Fix {0}?', 'KCFinder'),
-            ['Y', 'n'],
-            'Y'
-        );
+        $ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
         if (in_array($ask, ['Y', 'y'])) {
             $this->fixKcfinder();
         }
 
-        $ask = $this->in(
-            __d('me_cms', 'Create the user groups?'),
-            ['y', 'N'],
-            'N'
-        );
+        $ask = $this->in(__d('me_cms', 'Create the user groups?'), ['y', 'N'], 'N');
         if (in_array($ask, ['Y', 'y'])) {
             $this->createGroups();
         }
 
-        $ask = $this->in(
-            __d('me_cms', 'Create an admin user?'),
-            ['y', 'N'],
-            'N'
-        );
+        $ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
         if (in_array($ask, ['Y', 'y'])) {
             $this->createAdmin();
         }
 
         if ($this->_getOtherPlugins()) {
-            $ask = $this->in(
-                __d('me_cms', 'Run the installer of the other plugins?'),
-                ['Y', 'n'],
-                'Y'
-            );
+            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
             if (in_array($ask, ['Y', 'y'])) {
                 $this->_runOtherPlugins();
             }
@@ -199,9 +172,7 @@ class InstallShell extends BaseInstallShell
 
         if ($groups->isEmpty()) {
             //Truncates the table. This resets IDs
-            ConnectionManager::get('default')->execute(
-                sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table())
-            );
+            ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table()));
 
             $entities = $this->UsersGroups->newEntities([
                 ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
@@ -210,15 +181,9 @@ class InstallShell extends BaseInstallShell
             ]);
 
             if ($this->UsersGroups->saveMany($entities)) {
-                $this->verbose(__d(
-                    'me_cms',
-                    'The user groups have been created'
-                ));
+                $this->verbose(__d('me_cms', 'The user groups have been created'));
             } else {
-                $this->err(__d(
-                    'me_cms',
-                    'The user groups have not been created'
-                ));
+                $this->err(__d('me_cms', 'The user groups have not been created'));
             }
         }
     }
@@ -260,16 +225,10 @@ class InstallShell extends BaseInstallShell
     {
         $parser = parent::getOptionParser();
 
-        return $parser->addSubcommands([
-            'createAdmin' => [
-                'help' => __d('me_cms', 'Creates an admin user'),
-            ],
-            'createGroups' => [
-                'help' => __d('me_cms', 'Creates the user groups'),
-            ],
-            'fixKcfinder' => [
-                'help' => __d('me_tools', 'Fixes {0}', 'KCFinder'),
-            ],
-        ]);
+        $parser->addSubcommand('createAdmin', ['help' => __d('me_tools', 'Creates an admin user')]);
+        $parser->addSubcommand('createGroups', ['help' => __d('me_tools', 'Creates the user groups')]);
+        $parser->addSubcommand('fixKcfinder', ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')]);
+
+        return $parser;
     }
 }

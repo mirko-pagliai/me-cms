@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.11
+* added a button to delete all backup files;
+* subcommand `installPackages` provided by `InstallShell` is no longer
+    available. Instead, use suggested packages by Composer;
+* updated for MeTools 2.11.1.
+
 ### 2.14.10
 * updated for MeTools 2.11.0.
 

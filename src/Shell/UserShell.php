@@ -99,6 +99,7 @@ class UserShell extends Shell
             //Saves the user
             if ($this->Users->save($this->Users->newEntity($user))) {
                 $this->success(__d('me_cms', 'The user has been saved'));
+
                 break;
             } else {
                 $this->err(__d('me_cms', 'An error occurred, try again'));
@@ -129,7 +130,7 @@ class UserShell extends Shell
                 $group['id'],
                 $group['name'],
                 $group['label'],
-                $group['user_count']
+                $group['user_count'],
             ];
         }, $groups);
 
@@ -154,11 +155,9 @@ class UserShell extends Shell
         //Gets users
         $users = $this->Users->find()
             ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-            ->contain([
-                'Groups' => function ($q) {
-                    return $q->select(['label']);
-                },
-            ])
+            ->contain(['Groups' => function ($q) {
+                return $q->select(['label']);
+            }])
             ->toArray();
 
         //Checks for users

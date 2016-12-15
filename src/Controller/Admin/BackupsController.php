@@ -106,6 +106,24 @@ class BackupsController extends AppController
     }
 
     /**
+     * Deletes all backup files
+     * @return \Cake\Network\Response|null
+     * @uses MysqlBackup\Utility\BackupManager::deleteAll()
+     */
+    public function deleteAll()
+    {
+        $this->request->allowMethod(['post', 'delete']);
+
+        if (BackupManager::deleteAll()) {
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        } else {
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
      * Downloads a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response
