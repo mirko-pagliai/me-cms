@@ -32,13 +32,13 @@ if (trim($this->fetch('class'))) {
     <div class="<?= $class ?>">
         <?php
         if (trim($this->fetch('title'))) {
-            echo $this->Html->h4(
-                trim($this->fetch('title')),
-                ['class' => 'widget-title']
-            );
+            echo $this->Html->h4(trim($this->fetch('title')), ['class' => 'widget-title']);
         }
-
-        echo $this->Html->div('widget-content', trim($this->fetch('content')));
         ?>
+
+        <div class="widget-content">
+            <?= trim($this->fetch('content')) ?>
+
+        </div>
     </div>
 <?php endif; ?>
