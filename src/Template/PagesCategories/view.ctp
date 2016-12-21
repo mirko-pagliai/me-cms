@@ -30,12 +30,12 @@ $this->assign('title', $category->title);
 $this->userbar([
     $this->Html->link(
         __d('me_cms', 'Edit category'),
-        ['action' => 'edit', $category->id, 'prefix' => 'admin'],
+        ['action' => 'edit', $category->id, 'prefix' => ADMIN_PREFIX],
         ['icon' => 'pencil', 'target' => '_blank']
     ),
     $this->Form->postLink(
         __d('me_cms', 'Delete category'),
-        ['action' => 'delete', $category->id, 'prefix' => 'admin'],
+        ['action' => 'delete', $category->id, 'prefix' => ADMIN_PREFIX],
         [
             'class' => 'text-danger',
             'icon' => 'trash-o',

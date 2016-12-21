@@ -46,7 +46,7 @@ foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
  * </code>
  */
 Request::addDetector('admin', function ($request) {
-    return $request->param('prefix') === 'admin';
+    return $request->param('prefix') === ADMIN_PREFIX;
 });
 
 /**

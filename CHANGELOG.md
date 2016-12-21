@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.12
+* added the `ADMIN_PREFIX` constant.
+
 ### 2.14.11
 * added a button to delete all backup files;
 * subcommand `installPackages` provided by `InstallShell` is no longer
