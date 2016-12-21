@@ -55,8 +55,8 @@
     "autoload-dev": {
         "psr-4": {
             "MeCms\\Test\\": "tests",
-            "TestPlugin\\": "tests/test_app/Plugin/TestPlugin/src",
-            "TestPluginTwo\\": "tests/test_app/Plugin/TestPluginTwo/src"
+            "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src",
+            "TestPluginTwo\\": "tests/test_app/TestApp/Plugin/TestPluginTwo/src"
         }
     }
 }

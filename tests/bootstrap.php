@@ -38,9 +38,10 @@ define('VENDOR', ROOT . 'vendor' . DS);
 define('CAKE_CORE_INCLUDE_PATH', VENDOR . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', VENDOR . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
-define('TESTS', ROOT . 'tests');
-define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
-define('APP_DIR', 'test_app');
+define('TESTS', ROOT . 'tests' . DS);
+define('TEST_APP', TESTS . 'test_app' . DS);
+define('APP', TEST_APP . 'TestApp' . DS);
+define('APP_DIR', 'TestApp');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS);
@@ -115,7 +116,6 @@ Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
-Configure::write('Assets.force', true);
 Configure::write('Assets.target', TMP . 'assets');
 
 //@codingStandardsIgnoreStart
