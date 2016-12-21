@@ -189,14 +189,11 @@ class MenuHelper extends Helper
                 'action' => 'index',
                 'plugin' => MECMS,
             ]);
-            $menu[] = $this->Html->link(
-                __d('me_cms', 'Add position'),
-                [
-                    'controller' => 'BannersPositions',
-                    'action' => 'add',
-                    'plugin' => MECMS,
-                ]
-            );
+            $menu[] = $this->Html->link(__d('me_cms', 'Add position'), [
+                'controller' => 'BannersPositions',
+                'action' => 'add',
+                'plugin' => MECMS,
+            ]);
         }
 
         return [$menu, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart']];
