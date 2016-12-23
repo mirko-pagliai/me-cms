@@ -141,6 +141,8 @@ class MenuBuilderHelperTest extends TestCase
                 $this->assertHtml($expected, $link);
             }
         }
+
+        $this->assertEmpty($this->MenuBuilder->generate('TestPluginTwo'));
     }
 
     /**
