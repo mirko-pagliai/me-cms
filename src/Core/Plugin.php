@@ -44,11 +44,7 @@ class Plugin extends BasePlugin
      */
     public static function all(array $options = [])
     {
-        $options = am([
-            'core' => false,
-            'except' => [],
-            'order' => true,
-        ], $options);
+        $options = array_merge(['order' => true], $options);
 
         $plugins = parent::all($options);
 
