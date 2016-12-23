@@ -59,7 +59,7 @@ class KcFinderComponentTest extends TestCase
         $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
 
         //@codingStandardsIgnoreStart
-        @mkdir(dirname($file));
+        @mkdir(dirname($file), 0777, true);
         @mkdir(UPLOADED);
         //@codingStandardsIgnoreEnd
 
