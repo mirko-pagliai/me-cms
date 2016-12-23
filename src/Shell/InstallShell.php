@@ -127,10 +127,7 @@ class InstallShell extends BaseInstallShell
 
         if ($this->param('force')) {
             $this->fixKcfinder();
-
-            if ($this->_getOtherPlugins()) {
-                $this->_runOtherPlugins();
-            }
+            $this->_runOtherPlugins();
 
             return;
         }
@@ -212,16 +209,13 @@ class InstallShell extends BaseInstallShell
             return;
         }
 
-        $this->createFile(
-            WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
-            '<IfModule mod_php5.c>
-                php_value session.cache_limiter must-revalidate
-                php_value session.cookie_httponly On
-                php_value session.cookie_lifetime 14400
-                php_value session.gc_maxlifetime 14400
-                php_value session.name CAKEPHP
-            </IfModule>'
-        );
+        $this->createFile(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess', '<IfModule mod_php5.c>' . PHP_EOL .
+            '   php_value session.cache_limiter must-revalidate' . PHP_EOL .
+            '   php_value session.cookie_httponly On' . PHP_EOL .
+            '   php_value session.cookie_lifetime 14400' . PHP_EOL .
+            '   php_value session.gc_maxlifetime 14400' . PHP_EOL .
+            '   php_value session.name CAKEPHP' . PHP_EOL .
+            '</IfModule>');
     }
 
     /**
