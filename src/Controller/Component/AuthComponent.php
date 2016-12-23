@@ -47,7 +47,7 @@ class AuthComponent extends CakeAuthComponent
         //Sets config
         $config = am([
             'authenticate' => [
-                'Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users']
+                'Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users'],
             ],
             'authError' => __d('me_cms', 'You are not authorized for this action'),
             'authorize' => 'Controller',
