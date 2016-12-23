@@ -48,6 +48,5 @@ class GlobalFunctionsTest extends TestCase
         Configure::write('MeCms.exampleKey', 'MeCmsExampleValue');
 
         $this->assertEquals('MeCmsExampleValue', config('exampleKey'));
-
     }
 }
