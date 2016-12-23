@@ -143,3 +143,5 @@ require_once ROOT . 'config' . DS . 'bootstrap_base.php';
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
+
+ini_set('intl.default_locale', 'en_US');

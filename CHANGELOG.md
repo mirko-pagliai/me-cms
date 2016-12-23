@@ -4,8 +4,9 @@
 * added a button to delete all backup files;
 * subcommand `installPackages` provided by `InstallShell` is no longer
     available. Instead, use suggested packages by Composer;
-* added the `ADMIN_PREFIX` constant.
-* updated for MeTools 2.11.1.
+* added the `ADMIN_PREFIX` constant;
+* updated for MeTools 2.11.1;
+* added test for `MenuHelper` class.
 
 ### 2.14.10
 * updated for MeTools 2.11.0.
