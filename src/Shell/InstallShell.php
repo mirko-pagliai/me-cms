@@ -78,14 +78,16 @@ class InstallShell extends BaseInstallShell
         //Gets all plugins
         $plugins = Plugin::all(['exclude' => [METOOLS, MECMS]]);
 
-        //Returns only the plugins that have the `InstallShell` class
-        return af(array_map(function ($plugin) {
+        //Gets only the plugins that have the `InstallShell` class
+        $plugins = array_map(function ($plugin) {
             if (!Plugin::path($plugin, 'src' . DS . 'Shell' . DS . 'InstallShell.php', true)) {
                 return false;
             }
 
             return $plugin;
-        }, $plugins));
+        }, $plugins);
+
+        return array_values(af($plugins));
     }
 
     /**
