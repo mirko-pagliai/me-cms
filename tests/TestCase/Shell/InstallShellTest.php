@@ -197,6 +197,7 @@ class InstallShellTest extends TestCase
         @mkdir(dirname($file), 0777, true);
 
         $this->InstallShell->fixKcfinder();
+        $this->assertFileExists($file);
 
         $this->assertEquals('<IfModule mod_php5.c>' . PHP_EOL .
             '   php_value session.cache_limiter must-revalidate' . PHP_EOL .
@@ -206,11 +207,7 @@ class InstallShellTest extends TestCase
             '   php_value session.name CAKEPHP' . PHP_EOL .
             '</IfModule>', file_get_contents($file));
 
-        $this->assertEquals([
-            '',
-            'Creating file /home/mirko/Libs/Plugins/MeCms/tests/test_app/TestApp/webroot/vendor/kcfinder/.htaccess',
-            '<success>Wrote</success> `/home/mirko/Libs/Plugins/MeCms/tests/test_app/TestApp/webroot/vendor/kcfinder/.htaccess`',
-        ], $this->out->messages());
+        $this->assertNotEmpty($this->out->messages());
         $this->assertEquals([
             '<error>KCFinder is not available</error>',
         ], $this->err->messages());
