@@ -25,7 +25,6 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\AuthComponent;
 
