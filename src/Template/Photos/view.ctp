@@ -37,12 +37,12 @@ if (!$photo->active) {
 $this->userbar([
     $this->Html->link(
         __d('me_cms', 'Edit photo'),
-        ['action' => 'edit', $photo->id, 'prefix' => 'admin'],
+        ['action' => 'edit', $photo->id, 'prefix' => ADMIN_PREFIX],
         ['icon' => 'pencil', 'target' => '_blank']
     ),
     $this->Form->postLink(
         __d('me_cms', 'Delete photo'),
-        ['action' => 'delete', $photo->id, 'prefix' => 'admin'],
+        ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
         [
             'icon' => 'trash-o',
             'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),

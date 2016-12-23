@@ -44,12 +44,12 @@ if ($post->created->isFuture()) {
 $this->userbar([
     $this->Html->link(
         __d('me_cms', 'Edit post'),
-        ['action' => 'edit', $post->id, 'prefix' => 'admin'],
+        ['action' => 'edit', $post->id, 'prefix' => ADMIN_PREFIX],
         ['icon' => 'pencil', 'target' => '_blank']
     ),
     $this->Form->postLink(
         __d('me_cms', 'Delete post'),
-        ['action' => 'delete', $post->id, 'prefix' => 'admin'],
+        ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
         [
             'icon' => 'trash-o',
             'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),

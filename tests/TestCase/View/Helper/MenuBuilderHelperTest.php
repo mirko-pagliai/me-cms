@@ -61,7 +61,6 @@ class MenuBuilderHelperTest extends TestCase
 
     /**
      * Tests for `getMenuMethods()` method
-     * @return void
      * @test
      */
     public function testGetMenuMethods()
@@ -95,7 +94,6 @@ class MenuBuilderHelperTest extends TestCase
 
     /**
      * Tests for `generate()` method
-     * @return void
      * @test
      */
     public function testGenerate()
@@ -141,11 +139,12 @@ class MenuBuilderHelperTest extends TestCase
                 $this->assertHtml($expected, $link);
             }
         }
+
+        $this->assertEmpty($this->MenuBuilder->generate('TestPluginTwo'));
     }
 
     /**
      * Tests for `renderAsCollapse()` method
-     * @return void
      * @test
      */
     public function testRenderAsCollapse()
@@ -206,7 +205,6 @@ class MenuBuilderHelperTest extends TestCase
 
     /**
      * Tests for `renderAsDropdown()` method
-     * @return void
      * @test
      */
     public function testRenderAsDropdown()

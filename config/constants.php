@@ -21,6 +21,11 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+//Sets the admin prefix
+if (!defined('ADMIN_PREFIX')) {
+    define('ADMIN_PREFIX', 'admin');
+}
+
 //Sets the default banners directory
 if (!defined('BANNERS')) {
     define('BANNERS', WWW_ROOT . 'img' . DS . 'banners');

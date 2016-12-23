@@ -32,7 +32,7 @@ $this->userbar($this->Html->link(
     [
         'controller' => 'PostsTags',
         'action' => 'edit',
-        'prefix' => 'admin',
+        'prefix' => ADMIN_PREFIX,
         $tag->id
     ],
     ['icon' => 'pencil', 'target' => '_blank']

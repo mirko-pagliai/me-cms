@@ -50,7 +50,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
     );
 
     //Admin routes
-    $routes->prefix('admin', function ($routes) {
+    $routes->prefix(ADMIN_PREFIX, function ($routes) {
         //Admin home page
         if (!$routes->nameExists('dashboard')) {
             $routes->connect(
@@ -64,7 +64,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
 
 Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
     //Admin routes
-    $routes->prefix('admin', function ($routes) {
+    $routes->prefix(ADMIN_PREFIX, function ($routes) {
         //Route `/me-cms/admin`
         $routes->connect(
             '/',

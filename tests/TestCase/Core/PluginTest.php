@@ -20,23 +20,42 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Core\Configure;
+namespace MeCms\Test\TestCase\Core;
 
-if (!function_exists('config')) {
+use Cake\TestSuite\TestCase;
+use MeCms\Core\Plugin;
+
+/**
+ * PluginTest class.
+ */
+class PluginTest extends TestCase
+{
     /**
-     * Gets config values stored in the configuration.
-     * It will first look in the MeCms configuration, then in the application configuration
-     * @param string|null $key Configuration key
-     * @return mixed Configuration value
+     * Tests for `all()` method
+     * @test
      */
-    function config($key = null)
+    public function testAll()
     {
-        $value = Configure::read(sprintf('MeCms.%s', $key));
+        $this->assertEquals([
+            'MeCms',
+            'MeTools',
+            'Assets',
+        ], Plugin::all());
 
-        if ($value) {
-            return $value;
-        }
+        Plugin::load('TestPlugin');
 
-        return Configure::read($key);
+        $this->assertEquals([
+            'MeCms',
+            'MeTools',
+            'Assets',
+            'TestPlugin',
+        ], Plugin::all());
+
+        $this->assertEquals([
+            'Assets',
+            'MeCms',
+            'MeTools',
+            'TestPlugin',
+        ], Plugin::all(['order' => false]));
     }
 }

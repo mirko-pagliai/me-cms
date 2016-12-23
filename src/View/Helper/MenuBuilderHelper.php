@@ -56,11 +56,10 @@ class MenuBuilderHelper extends Helper
             return [];
         }
 
+        $className = sprintf('%s.Menu', $plugin);
+
         //Loads the helper
-        $helper = $this->_View->loadHelper(
-            sprintf('%s.Menu', $plugin),
-            ['className' => sprintf('%s.Menu', $plugin)]
-        );
+        $helper = $this->_View->loadHelper($className, compact('className'));
 
         $menus = [];
 
@@ -86,9 +85,7 @@ class MenuBuilderHelper extends Helper
     public function getMenuMethods($plugin)
     {
         //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = getChildMethods(
-            sprintf('\%s\View\Helper\MenuHelper', $plugin)
-        );
+        $methods = getChildMethods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
 
         if (empty($methods)) {
             return null;
@@ -113,27 +110,16 @@ class MenuBuilderHelper extends Helper
 
         $menus = array_map(function ($menu) {
             //Sets the collapse name
-            $collapseName = sprintf(
-                'collapse-%s',
-                strtolower(Inflector::slug($menu['title']))
-            );
+            $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
 
             return $this->Html->div('panel', implode(PHP_EOL, [
-                $this->Html->link(
-                    $menu['title'],
-                    sprintf('#%s', $collapseName),
-                    am($menu['titleOptions'], [
-                        'aria-controls' => $collapseName,
-                        'aria-expanded' => 'false',
-                        'class' => 'collapsed',
-                        'data-toggle' => 'collapse',
-                    ])
-                ),
-                $this->Html->div(
-                    'collapse',
-                    implode(PHP_EOL, $menu['menu']),
-                    ['id' => $collapseName]
-                )
+                $this->Html->link($menu['title'], '#' . $collapseName, am($menu['titleOptions'], [
+                    'aria-controls' => $collapseName,
+                    'aria-expanded' => 'false',
+                    'class' => 'collapsed',
+                    'data-toggle' => 'collapse',
+                ])),
+                $this->Html->div('collapse', implode(PHP_EOL, $menu['menu']), ['id' => $collapseName])
             ]));
         }, $menus);
 
@@ -152,11 +138,7 @@ class MenuBuilderHelper extends Helper
         $menus = $this->generate($plugin);
 
         return array_map(function ($menu) {
-            return $this->Dropdown->menu(
-                $menu['title'],
-                $menu['menu'],
-                $menu['titleOptions']
-            );
+            return $this->Dropdown->menu($menu['title'], $menu['menu'], $menu['titleOptions']);
         }, $menus);
     }
 }
