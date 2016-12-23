@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 use Cake\Core\Configure;
 
 if (!function_exists('config')) {
@@ -32,8 +31,10 @@ if (!function_exists('config')) {
      */
     function config($key = null)
     {
-        if ($key !== null && Configure::check(sprintf('MeCms.%s', $key))) {
-            return Configure::read(sprintf('MeCms.%s', $key));
+        $value = Configure::read(sprintf('MeCms.%s', $key));
+
+        if ($value) {
+            return $value;
         }
 
         return Configure::read($key);
