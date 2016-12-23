@@ -6,7 +6,8 @@
     available. Instead, use suggested packages by Composer;
 * added the `ADMIN_PREFIX` constant;
 * updated for MeTools 2.11.1;
-* added test for `AuthHelper`, `MenuHelper` and `Plugin` classes.
+* added tests for `AuthHelper`, `MenuHelper` and `Plugin` classes;
+* added tests for global functions.
 
 ### 2.14.10
 * updated for MeTools 2.11.0.
