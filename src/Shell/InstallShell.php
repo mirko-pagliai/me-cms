@@ -99,7 +99,7 @@ class InstallShell extends BaseInstallShell
             $this->dispatchShell([
                 'command' => sprintf('%s.install all', $plugin),
                 'extra' => $this->params,
-             ]);
+            ]);
         }
     }
 
