@@ -76,15 +76,17 @@ class InstallShell extends BaseInstallShell
     protected function _getOtherPlugins()
     {
         //Gets all plugins
-        $plugins = Plugin::all(['exclude' => [METOOLS, MECMS]]);
+        $plugins = Plugin::all(['exclude' => [METOOLS, MECMS], 'order' => false]);
 
         //Gets only the plugins that have the `InstallShell` class
         $plugins = array_map(function ($plugin) {
-            if (!Plugin::path($plugin, 'src' . DS . 'Shell' . DS . 'InstallShell.php', true)) {
-                return false;
+            $class = '\\' . $plugin . '\Shell\InstallShell';
+
+            if (class_exists($class) && method_exists($class, 'all')) {
+                return $plugin;
             }
 
-            return $plugin;
+            return false;
         }, $plugins);
 
         return array_values(af($plugins));
@@ -92,17 +94,21 @@ class InstallShell extends BaseInstallShell
 
     /**
      * Runs  the `InstallShell` class from other plugins
-     * @return void
+     * @return array. Array of the cli command exit code. 0 is success
      * @uses _getOtherPlugins()
      */
     protected function _runOtherPlugins()
     {
+        $executed = [];
+
         foreach ($this->_getOtherPlugins() as $plugin) {
-            $this->dispatchShell([
-                'command' => sprintf('%s.install all', $plugin),
+            $executed[$plugin] = $this->dispatchShell([
+                'command' => [sprintf('%s.install', $plugin), 'all'],
                 'extra' => $this->params,
             ]);
         }
+
+        return $executed;
     }
 
     /**
