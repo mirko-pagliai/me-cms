@@ -34,6 +34,11 @@ use MeCms\Controller\Component\AuthComponent;
 class AuthComponentTest extends TestCase
 {
     /**
+     * @var \MeCms\Controller\Component\AuthComponent
+     */
+    public $Auth;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
