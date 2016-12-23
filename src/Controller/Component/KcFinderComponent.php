@@ -133,6 +133,6 @@ class KcFinderComponent extends Component
         }
 
         //Configures KCFinder
-        $this->configure();
+        return $this->configure();
     }
 }
