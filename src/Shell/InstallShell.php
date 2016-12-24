@@ -76,31 +76,39 @@ class InstallShell extends BaseInstallShell
     protected function _getOtherPlugins()
     {
         //Gets all plugins
-        $plugins = Plugin::all(['exclude' => [METOOLS, MECMS]]);
+        $plugins = Plugin::all(['exclude' => [METOOLS, MECMS], 'order' => false]);
 
-        //Returns only the plugins that have the `InstallShell` class
-        return af(array_map(function ($plugin) {
-            if (!Plugin::path($plugin, 'src' . DS . 'Shell' . DS . 'InstallShell.php', true)) {
-                return false;
+        //Gets only the plugins that have the `InstallShell` class
+        $plugins = array_map(function ($plugin) {
+            $class = '\\' . $plugin . '\Shell\InstallShell';
+
+            if (class_exists($class) && method_exists($class, 'all')) {
+                return $plugin;
             }
 
-            return $plugin;
-        }, $plugins));
+            return false;
+        }, $plugins);
+
+        return array_values(af($plugins));
     }
 
     /**
      * Runs  the `InstallShell` class from other plugins
-     * @return void
+     * @return array. Array of the cli command exit code. 0 is success
      * @uses _getOtherPlugins()
      */
     protected function _runOtherPlugins()
     {
+        $executed = [];
+
         foreach ($this->_getOtherPlugins() as $plugin) {
-            $this->dispatchShell([
-                'command' => sprintf('%s.install all', $plugin),
+            $executed[$plugin] = $this->dispatchShell([
+                'command' => [sprintf('%s.install', $plugin), 'all'],
                 'extra' => $this->params,
-             ]);
+            ]);
         }
+
+        return $executed;
     }
 
     /**
@@ -119,10 +127,7 @@ class InstallShell extends BaseInstallShell
 
         if ($this->param('force')) {
             $this->fixKcfinder();
-
-            if ($this->_getOtherPlugins()) {
-                $this->_runOtherPlugins();
-            }
+            $this->_runOtherPlugins();
 
             return;
         }
@@ -204,16 +209,13 @@ class InstallShell extends BaseInstallShell
             return;
         }
 
-        $this->createFile(
-            WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
-            '<IfModule mod_php5.c>
-                php_value session.cache_limiter must-revalidate
-                php_value session.cookie_httponly On
-                php_value session.cookie_lifetime 14400
-                php_value session.gc_maxlifetime 14400
-                php_value session.name CAKEPHP
-            </IfModule>'
-        );
+        $this->createFile(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess', '<IfModule mod_php5.c>' . PHP_EOL .
+            '   php_value session.cache_limiter must-revalidate' . PHP_EOL .
+            '   php_value session.cookie_httponly On' . PHP_EOL .
+            '   php_value session.cookie_lifetime 14400' . PHP_EOL .
+            '   php_value session.gc_maxlifetime 14400' . PHP_EOL .
+            '   php_value session.name CAKEPHP' . PHP_EOL .
+            '</IfModule>');
     }
 
     /**

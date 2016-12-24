@@ -116,7 +116,7 @@ class KcFinderComponent extends Component
      * Called after the controller's `beforeFilter()` method, but before the
      *  controller executes the current action handler
      * @param \Cake\Event\Event $event Event instance
-     * @return void
+     * @return bool
      * @uses configure()
      * @throws InternalErrorException
      */
@@ -133,6 +133,6 @@ class KcFinderComponent extends Component
         }
 
         //Configures KCFinder
-        $this->configure();
+        return $this->configure();
     }
 }
