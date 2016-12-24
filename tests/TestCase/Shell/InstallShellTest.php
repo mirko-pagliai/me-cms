@@ -223,11 +223,14 @@ class InstallShellTest extends TestCase
         //A group already exists
         $this->assertFalse($this->InstallShell->createGroups());
 
-        $this->UsersGroups = TableRegistry::get('MeCms.UsersGroups');
+        $groups = TableRegistry::get('MeCms.UsersGroups');
 
-        $this->assertNotEquals(0, $this->UsersGroups->deleteAll(['id >=' => '1']));
+        $this->assertNotEquals(0, $groups->deleteAll(['id >=' => '1']));
 
+        $this->assertEmpty($groups->find()->toArray());
         $this->assertTrue($this->InstallShell->createGroups());
+        $this->assertNotEmpty($groups->find()->toArray());
+        $this->assertEquals(3, count($groups->find()->toArray()));
 
         $this->assertEquals(['The user groups have been created'], $this->out->messages());
         $this->assertEquals(['<error>Some user groups already exist</error>'], $this->err->messages());
