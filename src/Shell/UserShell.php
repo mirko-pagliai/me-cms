@@ -116,11 +116,10 @@ class UserShell extends Shell
     {
         //Gets user groups
         $groups = $this->Users->Groups->find()
-            ->select(['id', 'name', 'label', 'user_count'])
-            ->toArray();
+            ->select(['id', 'name', 'label', 'user_count']);
 
         //Checks for user groups
-        if (empty($groups)) {
+        if (!$groups->count()) {
             $this->err(__d('me_cms', 'There are no user groups'));
 
             return;
@@ -129,12 +128,12 @@ class UserShell extends Shell
         //Formats groups
         $groups = array_map(function ($group) {
             return [
-                $group['id'],
-                $group['name'],
-                $group['label'],
-                $group['user_count'],
+                $group->id,
+                $group->name,
+                $group->label,
+                $group->user_count,
             ];
-        }, $groups);
+        }, $groups->toArray());
 
         //Sets header
         $header = [
@@ -159,18 +158,20 @@ class UserShell extends Shell
             ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
             ->contain(['Groups' => function ($q) {
                 return $q->select(['label']);
-            }])
-            ->toArray();
+            }]);
 
         //Checks for users
-        if (empty($users)) {
-            $this->abort(__d('me_cms', 'There are no users'));
+        if (!$users->count()) {
+            $this->err(__d('me_cms', 'There are no users'));
+
+            return;
         }
 
         //Sets header
         $header = [
             __d('me_cms', 'ID'),
             __d('me_cms', 'Username'),
+            __d('me_cms', 'Group'),
             __d('me_cms', 'Name'),
             __d('me_cms', 'Email'),
             __d('me_cms', 'Posts'),
@@ -181,24 +182,25 @@ class UserShell extends Shell
         //Formats users
         $users = array_map(function ($user) {
             //Sets the user status
-            if ($user['banned']) {
-                $user['status'] = __d('me_cms', 'Banned');
-            } elseif (!$user['active']) {
-                $user['status'] = __d('me_cms', 'Pending');
+            if ($user->banned) {
+                $user->status = __d('me_cms', 'Banned');
+            } elseif (!$user->active) {
+                $user->status = __d('me_cms', 'Pending');
             } else {
-                $user['status'] = __d('me_cms', 'Active');
+                $user->status = __d('me_cms', 'Active');
             }
 
             return [
-                $user['id'],
-                $user['username'],
-                $user['full_name'],
-                $user['email'],
-                $user['post_count'],
-                $user['status'],
-                $user['created'],
+                $user->id,
+                $user->username,
+                $user->group->label,
+                $user->full_name,
+                $user->email,
+                $user->post_count,
+                $user->status,
+                $user->created,
             ];
-        }, $users);
+        }, $users->toArray());
 
         //Prints as table
         $this->helper('table')->output(am([$header], $users));
