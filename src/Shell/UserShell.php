@@ -121,7 +121,9 @@ class UserShell extends Shell
 
         //Checks for user groups
         if (empty($groups)) {
-            $this->abort(__d('me_cms', 'There are no user groups'));
+            $this->err(__d('me_cms', 'There are no user groups'));
+
+            return;
         }
 
         //Formats groups
@@ -203,7 +205,7 @@ class UserShell extends Shell
     }
 
     /**
-     * Gets the option parser instance and configures it.
+     * Gets the option parser instance and configures it
      * @return ConsoleOptionParser
      * @uses MeTools\Shell\InstallShell::getOptionParser()
      */
@@ -211,18 +213,20 @@ class UserShell extends Shell
     {
         $parser = parent::getOptionParser();
 
-        return $parser->addSubcommands([
-            'add' => [
-                'help' => __d('me_cms', 'Adds an user'),
-                'parser' => [ 'options' => [
-                    'group' => [
-                        'short' => 'g',
-                        'help' => __d('me_cms', 'Group ID'),
-                    ],
-                ]],
-            ],
-            'groups' => ['help' => __d('me_cms', 'Lists user groups')],
-            'users' => ['help' => __d('me_cms', 'Lists users')],
+        $parser->description(__d('me_cms', 'Shell to handle users and user groups'));
+
+        $parser->addSubcommand('add', [
+            'help' => __d('me_cms', 'Adds an user'),
+            'parser' => ['options' => [
+                'group' => [
+                    'short' => 'g',
+                    'help' => __d('me_cms', 'Group ID'),
+                ],
+            ]],
         ]);
+        $parser->addSubcommand('groups', ['help' => __d('me_cms', 'Lists user groups')]);
+        $parser->addSubcommand('users', ['help' => __d('me_cms', 'Lists users')]);
+
+        return $parser;
     }
 }
