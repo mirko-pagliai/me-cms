@@ -142,9 +142,7 @@ class InstallShellTest extends TestCase
             ->getMock();
 
         $this->InstallShell->method('in')
-            ->will($this->returnCallback(function () {
-                return 'y';
-            }));
+            ->will($this->returnValue('y'));
 
         //Stubs all methods
         foreach ($methodsToStub as $method) {
