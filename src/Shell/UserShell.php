@@ -91,7 +91,7 @@ class UserShell extends Shell
                 }
             }
 
-            //Checks the group IDS
+            //Checks the group IDs
             if (!array_key_exists($user['group_id'], $groups)) {
                 $this->abort(__d('me_cms', 'Invalid group ID'));
             }
