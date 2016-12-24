@@ -225,6 +225,7 @@ class InstallShellTest extends TestCase
 
         $groups = TableRegistry::get('MeCms.UsersGroups');
 
+        //Deletes all groups
         $this->assertNotEquals(0, $groups->deleteAll(['id >=' => '1']));
 
         $this->assertEmpty($groups->find()->toArray());
