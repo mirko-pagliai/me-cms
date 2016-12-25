@@ -293,7 +293,7 @@ class UserShellTest extends TestCase
 
         $this->UserShell->users();
 
-        $this->assertEquals([
+        $this->assertTextEquals([
             '+----+----------+---------+--------------+----------------+-------+---------+-------------------+',
             '| <info>ID</info> | <info>Username</info> | <info>Group</info>   | <info>Name</info>         | <info>Email</info>          | <info>Posts</info> | <info>Status</info>  | <info>Date</info>              |',
             '+----+----------+---------+--------------+----------------+-------+---------+-------------------+',
