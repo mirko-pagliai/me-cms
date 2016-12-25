@@ -295,13 +295,13 @@ class UserShellTest extends TestCase
 
         $this->assertEquals([
             '+----+----------+---------+--------------+----------------+-------+---------+-------------------+',
-            '| <info>ID</info> | <info>Username</info> | <info>Group</info>   | <info>Name</info>         | <info>Email</info>          | <info>Posts</info> | <info>Status</info>  | <info>Date</info>              |',
+            '| <info>ID</info> | <info>Username</info> | <info>Group</info> | <info>Name</info> | <info>Email</info> | <info>Posts</info> | <info>Status</info> | <info>Date</info> |',
             '+----+----------+---------+--------------+----------------+-------+---------+-------------------+',
-            '| 1  | alfa     | Admin   | Alfa Beta    | alfa@test.com  | 3     | Active  | 12/24/16, 5:00 PM |',
-            '| 2  | gamma    | Manager | Gamma Delta  | gamma@test.com | 0     | Pending | 12/24/16, 5:01 PM |',
-            '| 3  | ypsilon  | User    | Ypsilon Zeta | ypsilon.com    | 1     | Banned  | 12/24/16, 5:02 PM |',
+            '| 1 | alfa | Admin | Alfa Beta | alfa@test.com | 3 | Active | 12/24/16, 5:00 PM |',
+            '| 2 | gamma | Manager | Gamma Delta | gamma@test.com | 0 | Pending | 12/24/16, 5:01 PM |',
+            '| 3 | ypsilon | User | Ypsilon Zeta | ypsilon.com | 1 | Banned | 12/24/16, 5:02 PM |',
             '+----+----------+---------+--------------+----------------+-------+---------+-------------------+',
-        ], $this->out->messages());
+        ], preg_replace('/\s+/', ' ', $this->out->messages()));
         $this->assertEquals(['<error>There are no users</error>'], $this->err->messages());
     }
 
