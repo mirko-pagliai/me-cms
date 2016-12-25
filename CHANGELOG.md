@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.11
+* fixed a several bug for `UserShell::add()` method. The method has been
+    generally improved;
 * added a button to delete all backup files;
 * subcommand `installPackages` provided by `InstallShell` is no longer
     available. Instead, use suggested packages by Composer;

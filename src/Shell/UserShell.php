@@ -43,7 +43,7 @@ class UserShell extends Shell
 
     /**
      * Adds an user
-     * @return void
+     * @return int|bool User ID or `false` on failure
      */
     public function add()
     {
@@ -52,60 +52,77 @@ class UserShell extends Shell
 
         //Checks for user groups
         if (empty($groups)) {
-            $this->abort(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
+            $this->err(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
+
+            return false;
         }
 
-        while (1) {
-            $user = [];
+        $user = [];
 
-            //Asks for some fields
-            $user['username'] = $this->in(__d('me_cms', 'Username'));
-            $user['password'] = $this->in(__d('me_cms', 'Password'));
-            $user['password_repeat'] = $this->in(__d('me_cms', 'Repeat password'));
-            $user['email'] = $this->in(__d('me_cms', 'Email'));
-            $user['first_name'] = $this->in(__d('me_cms', 'First name'));
-            $user['last_name'] = $this->in(__d('me_cms', 'Last name'));
+        //Asks for some fields
+        $user['username'] = $this->in(__d('me_cms', 'Username'));
+        $user['password'] = $this->in(__d('me_cms', 'Password'));
+        $user['password_repeat'] = $this->in(__d('me_cms', 'Repeat password'));
+        $user['email'] = $this->in(__d('me_cms', 'Email'));
+        $user['first_name'] = $this->in(__d('me_cms', 'First name'));
+        $user['last_name'] = $this->in(__d('me_cms', 'Last name'));
 
-            //Asks for group, if not passed as option
-            if (empty($this->params['group'])) {
-                //Formats groups
-                $groups = array_map(function ($group, $id) {
-                    return [$id, $group];
-                }, $groups, array_keys($groups));
-
-                //Sets header
-                $header = ['ID', 'Name'];
-
-                //Prints as table
-                $this->helper('table')->output(am([$header], $groups));
-
-                $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
-            } else {
-                $user['group_id'] = $this->params['group'];
+        //Asks for group, if not passed as option
+        if (empty($this->params['group'])) {
+            //Formats groups
+            foreach ($groups as $id => $group) {
+                $groups[$id] = [$id, $group];
             }
 
-            //Checks fields
-            foreach ($user as $value) {
-                if (empty($value)) {
-                    $this->abort(__d('me_cms', 'Some fields are missing. Try again'));
+            //Sets header
+            $header = ['ID', 'Name'];
+
+            //Prints as table
+            $this->helper('table')->output(am([$header], $groups));
+
+            $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
+        } else {
+            $user['group_id'] = $this->params['group'];
+        }
+
+        //Checks fields
+        foreach ($user as $key => $value) {
+            if (empty($value)) {
+                $this->err(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
+
+                return false;
+            }
+        }
+
+        //Checks the group IDs
+        if (!array_key_exists($user['group_id'], $groups)) {
+            $this->err(__d('me_cms', 'Invalid group ID'));
+
+            return false;
+        }
+
+        $user = $this->Users->newEntity($user);
+
+        //Saves the user
+        if (!$this->Users->save($user)) {
+            $this->err(__d('me_cms', 'An error occurred, try again'));
+            $this->err(__d('me_cms', 'The user could not be saved'));
+
+            //With verbose, shows errors for each field
+            if ($this->param('verbose')) {
+                foreach ($user->errors() as $field => $errors) {
+                    foreach ($errors as $error) {
+                        $this->err(__d('me_cms', 'Field `{0}`: {1}', $field, lcfirst($error)));
+                    }
                 }
             }
 
-            //Checks the group IDs
-            if (!array_key_exists($user['group_id'], $groups)) {
-                $this->abort(__d('me_cms', 'Invalid group ID'));
-            }
-
-            //Saves the user
-            if ($this->Users->save($this->Users->newEntity($user))) {
-                $this->success(__d('me_cms', 'The user has been saved'));
-
-                break;
-            } else {
-                $this->err(__d('me_cms', 'An error occurred, try again'));
-                $this->err(__d('me_cms', 'The user could not be saved'));
-            }
+            return false;
         }
+
+        $this->success(__d('me_cms', 'The user has been saved'));
+
+        return $user->id;
     }
 
     /**
