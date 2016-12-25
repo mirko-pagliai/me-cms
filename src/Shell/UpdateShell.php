@@ -23,7 +23,7 @@
 namespace MeCms\Shell;
 
 use Cake\Core\Configure;
-use MeCms\Shell\BaseUpdateShell;
+use MeCms\Console\BaseUpdateShell;
 
 /**
  * Applies updates
@@ -33,7 +33,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.14.8 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::$connection
      */
     public function to2v14v8()
     {
@@ -57,8 +57,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.14.7 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v14v7()
     {
@@ -101,8 +101,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.14.0 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v14v0()
     {
@@ -120,10 +120,10 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.10.1 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::$now
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
-     * @uses MeCms\Shell\BaseUpdateShell::_tableExists()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::$now
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::_tableExists()
      */
     public function to2v10v1()
     {
@@ -192,8 +192,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.10.0 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v10v0()
     {
@@ -228,8 +228,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.6.0 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v6v0()
     {
@@ -333,7 +333,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.2.1 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::$connection
      */
     public function to2v2v1()
     {
@@ -351,8 +351,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.1.9 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v1v9()
     {
@@ -390,8 +390,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.1.8 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
-     * @uses MeCms\Shell\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
      */
     public function to2v1v8()
     {
@@ -422,7 +422,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.1.7 version
      * @return void
-     * @uses MeCms\Shell\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateShell::$connection
      */
     public function to2v1v7()
     {
