@@ -23,6 +23,7 @@
 namespace MeCms\Test\TestCase\Shell;
 
 use Cake\Console\ConsoleIo;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
 use MeCms\Core\Plugin;
@@ -40,6 +41,12 @@ class InstallShellTest extends TestCase
      * @var \MeCms\Shell\InstallShell
      */
     protected $InstallShell;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = ['plugin.me_cms.users_groups'];
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -135,9 +142,7 @@ class InstallShellTest extends TestCase
             ->getMock();
 
         $this->InstallShell->method('in')
-            ->will($this->returnCallback(function () {
-                return 'y';
-            }));
+            ->will($this->returnValue('y'));
 
         //Stubs all methods
         foreach ($methodsToStub as $method) {
@@ -180,6 +185,54 @@ class InstallShellTest extends TestCase
             'called `_runOtherPlugins`',
         ], $this->out->messages());
         $this->assertEmpty($this->err->messages());
+    }
+
+    /**
+     * Test for `createAdmin()` method
+     * @test
+     */
+    public function testCreateAdmin()
+    {
+        $this->InstallShell = $this->getMockBuilder(InstallShell::class)
+            ->setMethods(['in', '_stop', 'dispatchShell'])
+            ->setConstructorArgs([$this->io])
+            ->getMock();
+
+        $this->InstallShell->method('dispatchShell')
+            ->will($this->returnCallback(function () {
+                return [
+                    'method' => 'dispatchShell',
+                    'args' => func_get_args(),
+                ];
+            }));
+
+        $this->assertEquals([
+            'method' => 'dispatchShell',
+            'args' => ['MeCms.user', 'add', '--group', 1],
+        ], $this->InstallShell->createAdmin());
+    }
+
+    /**
+     * Test for `createGroups()` method
+     * @test
+     */
+    public function testCreateGroups()
+    {
+        //A group already exists
+        $this->assertFalse($this->InstallShell->createGroups());
+
+        $groups = TableRegistry::get('MeCms.UsersGroups');
+
+        //Deletes all groups
+        $this->assertNotEquals(0, $groups->deleteAll(['id >=' => '1']));
+
+        $this->assertEmpty($groups->find()->toArray());
+        $this->assertTrue($this->InstallShell->createGroups());
+        $this->assertNotEmpty($groups->find()->toArray());
+        $this->assertEquals(3, count($groups->find()->toArray()));
+
+        $this->assertEquals(['The user groups have been created'], $this->out->messages());
+        $this->assertEquals(['<error>Some user groups already exist</error>'], $this->err->messages());
     }
 
     /**

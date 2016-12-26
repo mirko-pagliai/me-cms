@@ -94,7 +94,7 @@ class InstallShell extends BaseInstallShell
 
     /**
      * Runs  the `InstallShell` class from other plugins
-     * @return array. Array of the cli command exit code. 0 is success
+     * @return array Array of the cli command exit code. 0 is success
      * @uses _getOtherPlugins()
      */
     protected function _runOtherPlugins()
@@ -157,40 +157,41 @@ class InstallShell extends BaseInstallShell
 
     /**
      * Creates and admin user
-     * @return void
+     * @return int Cli command exit code. 0 is success
      * @see MeCms\Shell\User::add()
      */
     public function createAdmin()
     {
-        $this->dispatchShell('MeCms.user', 'add', '--group', 1);
+        return $this->dispatchShell('MeCms.user', 'add', '--group', 1);
     }
 
     /**
-     * Creates the user groups
-     * @return void
+     * Creates default user groups
+     * @return bool
      */
     public function createGroups()
     {
         $this->loadModel('MeCms.UsersGroups');
 
-        $groups = $this->UsersGroups->find('all');
+        if (!$this->UsersGroups->find('all')->isEmpty()) {
+            $this->err(__d('me_cms', 'Some user groups already exist'));
 
-        if ($groups->isEmpty()) {
-            //Truncates the table. This resets IDs
-            ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table()));
-
-            $entities = $this->UsersGroups->newEntities([
-                ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
-                ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
-                ['id' => 3, 'name' => 'user', 'label' => 'User'],
-            ]);
-
-            if ($this->UsersGroups->saveMany($entities)) {
-                $this->verbose(__d('me_cms', 'The user groups have been created'));
-            } else {
-                $this->err(__d('me_cms', 'The user groups have not been created'));
-            }
+            return false;
         }
+
+        //Truncates the table. This resets IDs
+        ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table()));
+
+        $entities = $this->UsersGroups->newEntities([
+            ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
+            ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
+            ['id' => 3, 'name' => 'user', 'label' => 'User'],
+        ]);
+
+        $this->UsersGroups->saveMany($entities);
+        $this->verbose(__d('me_cms', 'The user groups have been created'));
+
+        return true;
     }
 
     /**

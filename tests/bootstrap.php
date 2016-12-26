@@ -102,15 +102,11 @@ Cache::config([
 
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite://127.0.0.1/' . TMP . 'debug_kit_test.sqlite');
+    putenv('db_dsn=mysql://travis@localhost/test');
 }
-$config = [
-    'url' => getenv('db_dsn'),
-    'timezone' => 'UTC',
-];
 
-// Use the test connection for 'debug_kit' as well.
-ConnectionManager::config('test', $config);
+ConnectionManager::config('test', ['url' => getenv('db_dsn')]);
+ConnectionManager::config('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
 
 Configure::write('Session', [
     'defaults' => 'php'

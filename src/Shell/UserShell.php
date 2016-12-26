@@ -43,7 +43,7 @@ class UserShell extends Shell
 
     /**
      * Adds an user
-     * @return void
+     * @return int|bool User ID or `false` on failure
      */
     public function add()
     {
@@ -52,60 +52,77 @@ class UserShell extends Shell
 
         //Checks for user groups
         if (empty($groups)) {
-            $this->abort(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
+            $this->err(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
+
+            return false;
         }
 
-        while (1) {
-            $user = [];
+        $user = [];
 
-            //Asks for some fields
-            $user['username'] = $this->in(__d('me_cms', 'Username'));
-            $user['password'] = $this->in(__d('me_cms', 'Password'));
-            $user['password_repeat'] = $this->in(__d('me_cms', 'Repeat password'));
-            $user['email'] = $this->in(__d('me_cms', 'Email'));
-            $user['first_name'] = $this->in(__d('me_cms', 'First name'));
-            $user['last_name'] = $this->in(__d('me_cms', 'Last name'));
+        //Asks for some fields
+        $user['username'] = $this->in(__d('me_cms', 'Username'));
+        $user['password'] = $this->in(__d('me_cms', 'Password'));
+        $user['password_repeat'] = $this->in(__d('me_cms', 'Repeat password'));
+        $user['email'] = $this->in(__d('me_cms', 'Email'));
+        $user['first_name'] = $this->in(__d('me_cms', 'First name'));
+        $user['last_name'] = $this->in(__d('me_cms', 'Last name'));
 
-            //Asks for group, if not passed as option
-            if (empty($this->params['group'])) {
-                //Formats groups
-                $groups = array_map(function ($group, $id) {
-                    return [$id, $group];
-                }, $groups, array_keys($groups));
-
-                //Sets header
-                $header = ['ID', 'Name'];
-
-                //Prints as table
-                $this->helper('table')->output(am([$header], $groups));
-
-                $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
-            } else {
-                $user['group_id'] = $this->params['group'];
+        //Asks for group, if not passed as option
+        if (empty($this->params['group'])) {
+            //Formats groups
+            foreach ($groups as $id => $group) {
+                $groups[$id] = [$id, $group];
             }
 
-            //Checks fields
-            foreach ($user as $value) {
-                if (empty($value)) {
-                    $this->abort(__d('me_cms', 'Some fields are missing. Try again'));
+            //Sets header
+            $header = ['ID', 'Name'];
+
+            //Prints as table
+            $this->helper('table')->output(am([$header], $groups));
+
+            $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
+        } else {
+            $user['group_id'] = $this->params['group'];
+        }
+
+        //Checks fields
+        foreach ($user as $key => $value) {
+            if (empty($value)) {
+                $this->err(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
+
+                return false;
+            }
+        }
+
+        //Checks the group IDs
+        if (!array_key_exists($user['group_id'], $groups)) {
+            $this->err(__d('me_cms', 'Invalid group ID'));
+
+            return false;
+        }
+
+        $user = $this->Users->newEntity($user);
+
+        //Saves the user
+        if (!$this->Users->save($user)) {
+            $this->err(__d('me_cms', 'An error occurred, try again'));
+            $this->err(__d('me_cms', 'The user could not be saved'));
+
+            //With verbose, shows errors for each field
+            if ($this->param('verbose')) {
+                foreach ($user->errors() as $field => $errors) {
+                    foreach ($errors as $error) {
+                        $this->err(__d('me_cms', 'Field `{0}`: {1}', $field, lcfirst($error)));
+                    }
                 }
             }
 
-            //Checks the group IDS
-            if (!array_key_exists($user['group_id'], $groups)) {
-                $this->abort(__d('me_cms', 'Invalid group ID'));
-            }
-
-            //Saves the user
-            if ($this->Users->save($this->Users->newEntity($user))) {
-                $this->success(__d('me_cms', 'The user has been saved'));
-
-                break;
-            } else {
-                $this->err(__d('me_cms', 'An error occurred, try again'));
-                $this->err(__d('me_cms', 'The user could not be saved'));
-            }
+            return false;
         }
+
+        $this->success(__d('me_cms', 'The user has been saved'));
+
+        return $user->id;
     }
 
     /**
@@ -116,23 +133,24 @@ class UserShell extends Shell
     {
         //Gets user groups
         $groups = $this->Users->Groups->find()
-            ->select(['id', 'name', 'label', 'user_count'])
-            ->toArray();
+            ->select(['id', 'name', 'label', 'user_count']);
 
         //Checks for user groups
-        if (empty($groups)) {
-            $this->abort(__d('me_cms', 'There are no user groups'));
+        if (!$groups->count()) {
+            $this->err(__d('me_cms', 'There are no user groups'));
+
+            return;
         }
 
         //Formats groups
         $groups = array_map(function ($group) {
             return [
-                $group['id'],
-                $group['name'],
-                $group['label'],
-                $group['user_count'],
+                $group->id,
+                $group->name,
+                $group->label,
+                $group->user_count,
             ];
-        }, $groups);
+        }, $groups->toArray());
 
         //Sets header
         $header = [
@@ -157,18 +175,20 @@ class UserShell extends Shell
             ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
             ->contain(['Groups' => function ($q) {
                 return $q->select(['label']);
-            }])
-            ->toArray();
+            }]);
 
         //Checks for users
-        if (empty($users)) {
-            $this->abort(__d('me_cms', 'There are no users'));
+        if (!$users->count()) {
+            $this->err(__d('me_cms', 'There are no users'));
+
+            return;
         }
 
         //Sets header
         $header = [
             __d('me_cms', 'ID'),
             __d('me_cms', 'Username'),
+            __d('me_cms', 'Group'),
             __d('me_cms', 'Name'),
             __d('me_cms', 'Email'),
             __d('me_cms', 'Posts'),
@@ -179,31 +199,32 @@ class UserShell extends Shell
         //Formats users
         $users = array_map(function ($user) {
             //Sets the user status
-            if ($user['banned']) {
-                $user['status'] = __d('me_cms', 'Banned');
-            } elseif (!$user['active']) {
-                $user['status'] = __d('me_cms', 'Pending');
+            if ($user->banned) {
+                $user->status = __d('me_cms', 'Banned');
+            } elseif (!$user->active) {
+                $user->status = __d('me_cms', 'Pending');
             } else {
-                $user['status'] = __d('me_cms', 'Active');
+                $user->status = __d('me_cms', 'Active');
             }
 
             return [
-                $user['id'],
-                $user['username'],
-                $user['full_name'],
-                $user['email'],
-                $user['post_count'],
-                $user['status'],
-                $user['created'],
+                $user->id,
+                $user->username,
+                $user->group->label,
+                $user->full_name,
+                $user->email,
+                $user->post_count,
+                $user->status,
+                $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
             ];
-        }, $users);
+        }, $users->toArray());
 
         //Prints as table
         $this->helper('table')->output(am([$header], $users));
     }
 
     /**
-     * Gets the option parser instance and configures it.
+     * Gets the option parser instance and configures it
      * @return ConsoleOptionParser
      * @uses MeTools\Shell\InstallShell::getOptionParser()
      */
@@ -211,18 +232,20 @@ class UserShell extends Shell
     {
         $parser = parent::getOptionParser();
 
-        return $parser->addSubcommands([
-            'add' => [
-                'help' => __d('me_cms', 'Adds an user'),
-                'parser' => [ 'options' => [
-                    'group' => [
-                        'short' => 'g',
-                        'help' => __d('me_cms', 'Group ID'),
-                    ],
-                ]],
-            ],
-            'groups' => ['help' => __d('me_cms', 'Lists user groups')],
-            'users' => ['help' => __d('me_cms', 'Lists users')],
+        $parser->description(__d('me_cms', 'Shell to handle users and user groups'));
+
+        $parser->addSubcommand('add', [
+            'help' => __d('me_cms', 'Adds an user'),
+            'parser' => ['options' => [
+                'group' => [
+                    'short' => 'g',
+                    'help' => __d('me_cms', 'Group ID'),
+                ],
+            ]],
         ]);
+        $parser->addSubcommand('groups', ['help' => __d('me_cms', 'Lists user groups')]);
+        $parser->addSubcommand('users', ['help' => __d('me_cms', 'Lists users')]);
+
+        return $parser;
     }
 }

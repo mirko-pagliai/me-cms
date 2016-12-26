@@ -1,13 +1,16 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.11
+* fixed a several bug for `UserShell::add()` method. The method has been
+    generally improved;
 * added a button to delete all backup files;
 * subcommand `installPackages` provided by `InstallShell` is no longer
     available. Instead, use suggested packages by Composer;
 * added the `ADMIN_PREFIX` constant;
 * updated for MeTools 2.11.1;
-* added tests for `AuthComponent`, `AuthHelper`, `KcFinderComponent`,
-    `InstallShell`, `MenuHelper` and `Plugin` classes;
+* added tests for `AuthComponent`, `AuthHelper`, `BaseUpdateShell`,
+    `KcFinderComponent`, `InstallShell`, `MenuHelper`, `Plugin` and `UserShell`
+    classes;
 * added tests for global functions and request detectors.
 
 ### 2.14.10
