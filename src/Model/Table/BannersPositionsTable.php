@@ -34,7 +34,7 @@ class BannersPositionsTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'banners';
 
@@ -45,8 +45,11 @@ class BannersPositionsTable extends AppTable
      */
     public function getList()
     {
-        return $this->find('list')
-            ->order(['title' => 'ASC'])
+        return $this->find('list', [
+                'keyField' => 'id',
+                'valueField' => 'name',
+            ])
+            ->order(['name' => 'ASC'])
             ->cache('positions_list', $this->cache)
             ->toArray();
     }
