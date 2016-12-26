@@ -215,7 +215,7 @@ class UserShell extends Shell
                 $user->email,
                 $user->post_count,
                 $user->status,
-                $user->created,
+                $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
             ];
         }, $users->toArray());
 
