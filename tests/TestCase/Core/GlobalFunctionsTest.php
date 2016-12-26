@@ -58,6 +58,11 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertFalse(firstImageFromText('Text'));
 
+        $this->assertEquals('image.jpg', firstImageFromText('<img src=\'image.jpg\'>'));
+        $this->assertEquals('/image.jpg', firstImageFromText('<img src=\'/image.jpg\'>'));
+        $this->assertEquals('subdir/image.jpg', firstImageFromText('<img src=\'subdir/image.jpg\'>'));
+        $this->assertEquals('/subdir/image.jpg', firstImageFromText('<img src=\'/subdir/image.jpg\'>'));
+
         $expected = 'http://example.com/image.jpg';
 
         $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\'>'));
