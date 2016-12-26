@@ -25,7 +25,6 @@ namespace MeCms\Model\Table;
 use Cake\Filesystem\File;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\Banner;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -36,7 +35,7 @@ class BannersTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'banners';
 
@@ -48,11 +47,7 @@ class BannersTable extends AppTable
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options) {
         //Deletes the file
         (new File(BANNERS . DS . $entity->filename))->delete();
 
@@ -80,9 +75,7 @@ class BannersTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-        ]);
+        $query->where([sprintf('%s.active', $this->alias()) => true]);
 
         return $query;
     }
@@ -97,7 +90,7 @@ class BannersTable extends AppTable
         parent::initialize($config);
 
         $this->table('banners');
-        $this->displayField('id');
+        $this->displayField('filename');
         $this->primaryKey('id');
 
         $this->belongsTo('Positions', [
@@ -122,10 +115,8 @@ class BannersTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Position" field
-        if (!empty($data['position']) && preg_match('/^[1-9]\d*$/', $data['position'])) {
-            $query->where([
-                sprintf('%s.position_id', $this->alias()) => $data['position'],
-            ]);
+        if (!empty($data['position']) && isPositive($data['position'])) {
+            $query->where([sprintf('%s.position_id', $this->alias()) => $data['position']]);
         }
 
         return $query;
