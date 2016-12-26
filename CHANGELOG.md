@@ -8,8 +8,9 @@
     available. Instead, use suggested packages by Composer;
 * added the `ADMIN_PREFIX` constant;
 * updated for MeTools 2.11.1;
-* added tests for `AuthComponent`, `AuthHelper`, `KcFinderComponent`,
-    `InstallShell`, `MenuHelper`, `Plugin` and `UserShell` classes;
+* added tests for `AuthComponent`, `AuthHelper`, `BaseUpdateShell`,
+    `KcFinderComponent`, `InstallShell`, `MenuHelper`, `Plugin` and `UserShell`
+    classes;
 * added tests for global functions and request detectors.
 
 ### 2.14.10
