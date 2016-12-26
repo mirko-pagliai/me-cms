@@ -49,4 +49,24 @@ class GlobalFunctionsTest extends TestCase
 
         $this->assertEquals('MeCmsExampleValue', config('exampleKey'));
     }
+
+    /**
+     * Test for `firstImageFromText()` global function
+     * @test
+     */
+    public function testFirstImageFromText()
+    {
+        $this->assertFalse(firstImageFromText('Text'));
+
+        $expected = 'http://example.com/image.jpg';
+
+        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\'>'));
+        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\' />'));
+        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\' />Text'));
+        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\' /> Text'));
+
+        $this->assertEquals('ftp://example.com/image.jpg', firstImageFromText('<img src=\'ftp://example.com/image.jpg\'>'));
+        $this->assertEquals('https://example.com/image.jpg', firstImageFromText('<img src=\'https://example.com/image.jpg\'>'));
+        $this->assertEquals('http://www.example.com/image.jpg', firstImageFromText('<img src=\'http://www.example.com/image.jpg\'>'));
+    }
 }

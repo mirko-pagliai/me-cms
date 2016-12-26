@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.12
+* added `firstImageFromText()` global function.
+
 ### 2.14.11
 * fixed a several bug for `UserShell::add()` method. The method has been
     generally improved;
