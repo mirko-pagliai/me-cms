@@ -23,7 +23,6 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Routing\Router;
 use MeTools\Utility\Youtube;
 
 /**
@@ -68,11 +67,10 @@ class Page extends Entity
             return null;
         }
 
-        //Checks for the first image in the text
-        preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $this->_properties['text'], $matches);
+        $preview = firstImageFromText($this->_properties['text']);
 
-        if (!empty($matches[2])) {
-            return Router::url($matches[2], true);
+        if ($preview) {
+            return $preview;
         }
 
         //Checks for a YouTube video and its preview
@@ -82,6 +80,6 @@ class Page extends Entity
             return Youtube::getPreview(isUrl($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
         }
 
-        return null;
+        return false;
     }
 }
