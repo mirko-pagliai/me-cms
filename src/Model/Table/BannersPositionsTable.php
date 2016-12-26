@@ -22,9 +22,6 @@
  */
 namespace MeCms\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\BannersPosition;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -45,11 +42,8 @@ class BannersPositionsTable extends AppTable
      */
     public function getList()
     {
-        return $this->find('list', [
-                'keyField' => 'id',
-                'valueField' => 'name',
-            ])
-            ->order(['name' => 'ASC'])
+        return $this->find('list')
+            ->order(['title' => 'ASC'])
             ->cache('positions_list', $this->cache)
             ->toArray();
     }
