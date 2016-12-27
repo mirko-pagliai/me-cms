@@ -90,7 +90,7 @@ class PagesTable extends AppTable
      * @param string $type The type of query to perform
      * @param array|ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
-     * @return Cake\ORM\Query The query builder
+     * @return \Cake\ORM\Query The query builder
      * @uses $cache
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */

@@ -23,10 +23,8 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -39,7 +37,7 @@ class PostsTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'posts';
 
@@ -52,11 +50,8 @@ class PostsTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterDelete(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
         parent::afterDelete($event, $entity, $options);
 
         //Sets the next post to be published
@@ -64,7 +59,7 @@ class PostsTable extends AppTable
     }
 
     /**
-     * Called after an entity is saved.
+     * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
@@ -72,11 +67,8 @@ class PostsTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterSave()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterSave(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
         parent::afterSave($event, $entity, $options);
 
         //Sets the next post to be published
@@ -132,7 +124,7 @@ class PostsTable extends AppTable
      * @param string $type The type of query to perform
      * @param array|ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
-     * @return Cake\ORM\Query The query builder
+     * @return \Cake\ORM\Query The query builder
      * @uses $cache
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
@@ -159,11 +151,8 @@ class PostsTable extends AppTable
      * @param bool $images If true, gets only posts with images
      * @return array|void Related posts, array of entities
      */
-    public function getRelated(
-        \MeCms\Model\Entity\Post $post,
-        $limit = 5,
-        $images = true
-    ) {
+    public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5, $images = true)
+    {
         if (empty($post->tags)) {
             return [];
         }
@@ -188,28 +177,24 @@ class PostsTable extends AppTable
             $exclude = [$post->id];
 
             //Gets a related post for each tag
-            //Reveres the tags order, because the tags less popular have less chance to find a related post
+            //Reveres the tags order, because the tags less popular have less
+            //  chance to find a related post
             foreach (array_reverse($tags) as $tag) {
                 $post = $this->find('active')
                     ->select(['id', 'title', 'slug', 'text'])
                     ->matching('Tags', function ($q) use ($tag) {
-                        return $q->where([
-                            sprintf('%s.id', $this->Tags->alias()) => $tag->id,
-                        ]);
+                        return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
                     })
-                    ->where([
-                        sprintf('%s.id NOT IN', $this->alias()) => $exclude,
-                    ]);
+                    ->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
 
                 if ($images) {
-                    $post->where([
-                        sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img'),
-                    ]);
+                    $post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);
                 }
 
                 $post = $post->first();
 
-                //Adds the post to the related posts and its ID to the IDs to be excluded for the next query
+                //Adds the post to the related posts and its ID to the IDs to
+                //  be excluded for the next query
                 if (!empty($post->id)) {
                     $related[] = $post;
                     $exclude[] = $post->id;
@@ -274,9 +259,7 @@ class PostsTable extends AppTable
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
             $query->matching('Tags', function ($q) use ($data) {
-                return $q->where([
-                    sprintf('%s.tag', $this->Tags->alias()) => $data['tag'],
-                ]);
+                return $q->where([sprintf('%s.tag', $this->Tags->alias()) => $data['tag']]);
             });
         }
 

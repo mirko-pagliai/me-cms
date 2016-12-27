@@ -24,7 +24,6 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\User;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -38,7 +37,7 @@ class UsersTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'users';
 
@@ -81,9 +80,7 @@ class UsersTable extends AppTable
      */
     public function findBanned(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.banned', $this->alias()) => true,
-        ]);
+        $query->where([sprintf('%s.banned', $this->alias()) => true]);
 
         return $query;
     }
@@ -112,9 +109,7 @@ class UsersTable extends AppTable
     public function getActiveList()
     {
         return $this->find('list')
-            ->where([
-                sprintf('%s.active', $this->alias()) => true,
-            ])
+            ->where([sprintf('%s.active', $this->alias()) => true])
             ->cache('active_users_list', $this->cache)
             ->toArray();
     }
@@ -175,16 +170,12 @@ class UsersTable extends AppTable
 
         //"Username" field
         if (!empty($data['username']) && strlen($data['username']) > 2) {
-            $query->where([
-                sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username']),
-            ]);
+            $query->where([sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username'])]);
         }
 
         //"Group" field
         if (!empty($data['group']) && preg_match('/^[1-9]\d*$/', $data['group'])) {
-            $query->where([
-                sprintf('%s.group_id', $this->alias()) => $data['group'],
-            ]);
+            $query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
         }
 
         //"Status" field
@@ -195,16 +186,15 @@ class UsersTable extends AppTable
                         sprintf('%s.active', $this->alias()) => true,
                         sprintf('%s.banned', $this->alias()) => false,
                     ]);
+
                     break;
                 case 'pending':
-                    $query->where([
-                        sprintf('%s.active', $this->alias()) => false,
-                    ]);
+                    $query->where([sprintf('%s.active', $this->alias()) => false]);
+
                     break;
                 case 'banned':
-                    $query->where([
-                        sprintf('%s.banned', $this->alias()) => true,
-                    ]);
+                    $query->where([sprintf('%s.banned', $this->alias()) => true]);
+
                     break;
             }
         }
