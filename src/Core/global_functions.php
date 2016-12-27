@@ -40,3 +40,21 @@ if (!function_exists('config')) {
         return Configure::read($key);
     }
 }
+
+if (!function_exists('firstImageFromText')) {
+    /**
+     * Performs a regex match on a text and returns the first image
+     * @param string $text Text
+     * @return string|bool Image or `false` if there's no image on the text
+     */
+    function firstImageFromText($text)
+    {
+        preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $text, $matches);
+
+        if (empty($matches[2])) {
+            return false;
+        }
+
+        return $matches[2];
+    }
+}

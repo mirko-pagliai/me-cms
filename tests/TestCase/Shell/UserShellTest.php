@@ -35,7 +35,6 @@ use MeCms\Shell\UserShell;
 class UserShellTest extends TestCase
 {
     /**
-     *
      * @var \MeCms\Model\Table\UsersTable
      */
     protected $Users;

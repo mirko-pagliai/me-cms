@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.12
+* fixed bug for `BannersPositionsTable::getList()` method;
+* fixed a little bug on tag slugs. Slug are now lower case;
+* added `firstImageFromText()` global function;
+* added tests for all entity classes.
+
 ### 2.14.11
 * fixed a several bug for `UserShell::add()` method. The method has been
     generally improved;

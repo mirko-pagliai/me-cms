@@ -20,49 +20,36 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Model\Entity;
+namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\ORM\Entity;
-use Cake\Utility\Inflector;
+use Cake\TestSuite\TestCase;
+use MeCms\Model\Entity\PhotosAlbum;
 
 /**
- * Tag entity
- * @property int $id
- * @property string $tag
- * @property int $post_count
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property \MeCms\Model\Entity\Post[] $posts
+ * PhotosAlbumTest class
  */
-class Tag extends Entity
+class PhotosAlbumTest extends TestCase
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
-     * @var array
+     * Test for `__construct()` method
+     * @test
      */
-    protected $_accessible = [
-        '*' => true,
-        'id' => false,
-        'post_count' => false,
-        'modified' => false,
-    ];
-
-    /**
-     * Virtual fields that should be exposed
-     * @var array
-     */
-    protected $_virtual = ['slug'];
-
-    /**
-     * Gets the tag slug (virtual field)
-     * @return string|null
-     */
-    protected function _getSlug()
+    public function testConstruct()
     {
-        if (empty($this->_properties['tag'])) {
-            return null;
-        }
+        $this->assertEquals('MeCms\Model\Entity\PhotosAlbum', get_class(new PhotosAlbum));
+    }
 
-        return strtolower(Inflector::slug($this->_properties['tag']));
+    /**
+     * Test for fields that cannot be mass assigned using newEntity() or
+     *  patchEntity()
+     * @test
+     */
+    public function testNoAccessibleProperties()
+    {
+        $entity = new PhotosAlbum();
+
+        $this->assertFalse($entity->accessible('id'));
+        $this->assertFalse($entity->accessible('photo_count'));
+        $this->assertFalse($entity->accessible('modified'));
     }
 }
