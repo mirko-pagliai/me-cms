@@ -25,7 +25,6 @@ namespace MeCms\Model\Table;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 
 /**
@@ -195,5 +194,29 @@ class AppTable extends Table
         }
 
         return $query;
+    }
+
+    /**
+     * Sets to cache the timestamp of the next record to be published.
+     * This value can be used to check if the cache is valid
+     * @return string|bool Timestamp or `false`
+     * @uses $cache
+     */
+    public function setNextToBePublished()
+    {
+        $next = $this->find()
+            ->where([
+                sprintf('%s.active', $this->alias()) => true,
+                sprintf('%s.created >', $this->alias()) => new Time,
+            ])
+            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
+            ->extract('created')
+            ->first();
+
+        $next = empty($next) ? false : $next->toUnixString();
+
+        Cache::write('next_to_be_published', $next, $this->cache);
+
+        return $next;
     }
 }
