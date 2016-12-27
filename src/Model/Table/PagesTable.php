@@ -50,7 +50,7 @@ class PagesTable extends AppTable
     {
         parent::afterDelete($event, $entity, $options);
 
-        //Sets the next page to be published
+        //Sets the next record to be published
         $this->setNextToBePublished();
     }
 
@@ -67,7 +67,7 @@ class PagesTable extends AppTable
     {
         parent::afterSave($event, $entity, $options);
 
-        //Sets the next page to be published
+        //Sets the next record to be published
         $this->setNextToBePublished();
     }
 
@@ -92,18 +92,19 @@ class PagesTable extends AppTable
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses $cache
+     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
         //Gets from cache the timestamp of the next record to be published
-        $next = Cache::read('next_to_be_published', $this->cache);
+        $next = $this->getNextToBePublished();
 
-        //If the cache is not valid, it empties the cache
+        //If the cache is invalid, it clears the cache and sets the next record
+        //  to be published
         if ($next && time() >= $next) {
             Cache::clear(false, $this->cache);
 
-            //Sets the next record to be published
             $this->setNextToBePublished();
         }
 
