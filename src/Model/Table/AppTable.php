@@ -42,8 +42,6 @@ class AppTable extends Table
      */
     public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
-        parent::afterDelete($event, $entity, $options);
-
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
         }
@@ -59,8 +57,6 @@ class AppTable extends Table
      */
     public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
-        parent::afterSave($event, $entity, $options);
-
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
         }
@@ -97,6 +93,16 @@ class AppTable extends Table
         }
 
         return $query;
+    }
+
+    /**
+     * Gets from cache the timestamp of the next record to be published.
+     * This value can be used to check if the cache is valid
+     * @return string|bool Timestamp or `false`
+     */
+    public function getNextToBePublished()
+    {
+        return Cache::read('next_to_be_published', $this->cache);
     }
 
     /**
