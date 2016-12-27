@@ -125,4 +125,16 @@ class BannersPositionsTableTest extends TestCase
             1 => 'top',
         ], $positions);
     }
+
+    /**
+     * Test for `validationDefault()` method
+     * @test
+     */
+    public function testValidationDefault()
+    {
+        $this->assertEquals(
+            'MeCms\Model\Validation\BannersPositionValidator',
+            get_class($this->BannersPositions->validationDefault(new \Cake\Validation\Validator))
+        );
+    }
 }
