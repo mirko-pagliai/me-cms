@@ -23,9 +23,7 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\Page;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -35,7 +33,7 @@ class PagesTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'pages';
 
