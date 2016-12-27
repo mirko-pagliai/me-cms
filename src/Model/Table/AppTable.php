@@ -40,11 +40,10 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterDelete(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        parent::afterDelete($event, $entity, $options);
+
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
         }
@@ -58,11 +57,10 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterSave(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        parent::afterSave($event, $entity, $options);
+
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
         }
@@ -78,7 +76,7 @@ class AppTable extends Table
     {
         $query->where([
             sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.created <=', $this->alias()) => new Time(),
+            sprintf('%s.created <=', $this->alias()) => new Time,
         ]);
 
         return $query;
@@ -135,51 +133,37 @@ class AppTable extends Table
     {
         //"ID" field
         if (!empty($data['id']) && isPositive($data['id'])) {
-            $query->where([
-                sprintf('%s.id', $this->alias()) => $data['id'],
-            ]);
+            $query->where([sprintf('%s.id', $this->alias()) => $data['id']]);
         }
 
         //"Title" field
         if (!empty($data['title']) && strlen($data['title']) > 2) {
-            $query->where([
-                sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title']),
-            ]);
+            $query->where([sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title'])]);
         }
 
         //"Filename" field
         if (!empty($data['filename']) && strlen($data['filename']) > 2) {
-            $query->where([
-                sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename']),
-            ]);
+            $query->where([sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename'])]);
         }
 
         //"User" (author) field
         if (!empty($data['user']) && preg_match('/^[1-9]\d*$/', $data['user'])) {
-            $query->where([
-                sprintf('%s.user_id', $this->alias()) => $data['user'],
-            ]);
+            $query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
         }
 
         //"Category" field
         if (!empty($data['category']) && preg_match('/^[1-9]\d*$/', $data['category'])) {
-            $query->where([
-                sprintf('%s.category_id', $this->alias()) => $data['category'],
-            ]);
+            $query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
         }
 
         //"Active" field
         if (!empty($data['active'])) {
-            $query->where([
-                sprintf('%s.active', $this->alias()) => $data['active'] === 'yes',
-            ]);
+            $query->where([sprintf('%s.active', $this->alias()) => $data['active'] === 'yes']);
         }
 
         //"Priority" field
         if (!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority'])) {
-            $query->where([
-                sprintf('%s.priority', $this->alias()) => $data['priority'],
-            ]);
+            $query->where([sprintf('%s.priority', $this->alias()) => $data['priority']]);
         }
 
         //"Created" field
