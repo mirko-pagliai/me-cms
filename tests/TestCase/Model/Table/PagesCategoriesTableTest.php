@@ -110,7 +110,8 @@ class PagesCategoriesTableTest extends TestCase
      * Test for the `belongsTo` association with `PagesCategory` parents
      * @test
      */
-    public function testBelongsToParents() {
+    public function testBelongsToParents()
+    {
         $category = $this->PagesCategories->findById(4)->contain(['Parents'])->first();
 
         $this->assertNotEmpty($category->parent);
@@ -128,7 +129,8 @@ class PagesCategoriesTableTest extends TestCase
      * Test for the `hasMany` association with `PagesCategory` childs
      * @test
      */
-    public function testHasManyChilds() {
+    public function testHasManyChilds()
+    {
         $category = $this->PagesCategories->findById(1)->contain(['Childs'])->first();
 
         $this->assertNotEmpty($category->childs);

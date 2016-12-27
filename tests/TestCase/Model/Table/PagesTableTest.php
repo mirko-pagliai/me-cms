@@ -164,11 +164,11 @@ class PagesTableTest extends TestCase
 
         $this->Pages->expects($this->at(0))
             ->method('getNextToBePublished')
-            ->will($this->returnValue(time()+3600));
+            ->will($this->returnValue(time() + 3600));
 
         $this->Pages->expects($this->at(1))
             ->method('getNextToBePublished')
-            ->will($this->returnValue(time()-3600));
+            ->will($this->returnValue(time() - 3600));
 
         $this->Pages->expects($this->at(2))
             ->method('setNextToBePublished');
