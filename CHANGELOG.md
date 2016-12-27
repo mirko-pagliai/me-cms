@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.12
+* fixed bug for pages, now the next page to be published is set correctly;
 * fixed bug for `BannersPositionsTable::getList()` method;
 * fixed a little bug on tag slugs. Slug are now lower case;
 * added `firstImageFromText()` global function;

@@ -38,6 +38,40 @@ class PagesTable extends AppTable
     public $cache = 'pages';
 
     /**
+     * Called after an entity has been deleted
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::afterDelete()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     */
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        parent::afterDelete($event, $entity, $options);
+
+        //Sets the next page to be published
+        $this->setNextToBePublished();
+    }
+
+    /**
+     * Called after an entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::afterSave()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     */
+    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        parent::afterSave($event, $entity, $options);
+
+        //Sets the next page to be published
+        $this->setNextToBePublished();
+    }
+
+    /**
      * Returns a rules checker object that will be used for validating
      *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
