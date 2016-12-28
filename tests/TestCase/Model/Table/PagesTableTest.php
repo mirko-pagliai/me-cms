@@ -26,15 +26,12 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Reflection\ReflectionTrait;
 
 /**
  * PagesTableTest class
  */
 class PagesTableTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Model\Table\PagesTable
      */
