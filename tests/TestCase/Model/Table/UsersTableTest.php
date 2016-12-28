@@ -113,7 +113,12 @@ class UsersTableTest extends TestCase
      */
     public function testBelongsToUsersGroups()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $user = $this->Users->findById(4)->contain(['Groups'])->first();
+
+        $this->assertNotEmpty($user->group);
+
+        $this->assertEquals('MeCms\Model\Entity\UsersGroup', get_class($user->group));
+        $this->assertEquals(3, $user->group->id);
     }
 
     /**
