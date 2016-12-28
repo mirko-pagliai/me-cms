@@ -52,4 +52,19 @@ class PhotosAlbumTest extends TestCase
         $this->assertFalse($entity->accessible('photo_count'));
         $this->assertFalse($entity->accessible('modified'));
     }
+
+    /**
+     * Test for `_getPath()` method
+     * @test
+     */
+    public function testPathGetMutator()
+    {
+        $entity = new PhotosAlbum();
+
+        $this->assertNull($entity->path);
+
+        $entity->id = 1;
+
+        $this->assertEquals(PHOTOS . DS . '1', $entity->path);
+    }
 }
