@@ -152,6 +152,7 @@ class PhotosAlbumsTableTest extends TestCase
             $this->assertEquals(1, $photo->album_id);
         }
     }
+
     /**
      * Test for `findActive()` method
      * @test
