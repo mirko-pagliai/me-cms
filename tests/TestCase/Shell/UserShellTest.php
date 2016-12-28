@@ -293,13 +293,14 @@ class UserShellTest extends TestCase
         $this->UserShell->users();
 
         $this->assertTextEquals([
-            '+----+----------+---------+--------------+----------------+-------+---------+------------------+',
-            '| <info>ID</info> | <info>Username</info> | <info>Group</info>   | <info>Name</info>         | <info>Email</info>          | <info>Posts</info> | <info>Status</info>  | <info>Date</info>             |',
-            '+----+----------+---------+--------------+----------------+-------+---------+------------------+',
-            '| 1  | alfa     | Admin   | Alfa Beta    | alfa@test.com  | 3     | Active  | 2016/12/24 17:00 |',
-            '| 2  | gamma    | Manager | Gamma Delta  | gamma@test.com | 0     | Pending | 2016/12/24 17:01 |',
-            '| 3  | ypsilon  | User    | Ypsilon Zeta | ypsilon.com    | 1     | Banned  | 2016/12/24 17:02 |',
-            '+----+----------+---------+--------------+----------------+-------+---------+------------------+',
+            '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
+            '| <info>ID</info> | <info>Username</info> | <info>Group</info>   | <info>Name</info>         | <info>Email</info>            | <info>Posts</info> | <info>Status</info>  | <info>Date</info>             |',
+            '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
+            '| 1  | alfa     | Admin   | Alfa Beta    | alfa@test.com    | 3     | Active  | 2016/12/24 17:00 |',
+            '| 2  | gamma    | Manager | Gamma Delta  | gamma@test.com   | 0     | Pending | 2016/12/24 17:01 |',
+            '| 3  | ypsilon  | User    | Ypsilon Zeta | ypsilon@?est.com | 1     | Banned  | 2016/12/24 17:02 |',
+            '| 4  | abc      | User    | Abc Def      | abc@example.com  | 0     | Active  | 2016/12/24 17:03 |',
+            '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
         ], $this->out->messages());
         $this->assertEquals(['<error>There are no users</error>'], $this->err->messages());
     }

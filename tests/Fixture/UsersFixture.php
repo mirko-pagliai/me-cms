@@ -92,7 +92,7 @@ class UsersFixture extends TestFixture
             'id' => 3,
             'group_id' => 3,
             'username' => 'ypsilon',
-            'email' => 'ypsilon.com',
+            'email' => 'ypsilon@ŧest.com',
             'password' => '',
             'first_name' => 'Ypsilon',
             'last_name' => 'Zeta',
@@ -100,6 +100,19 @@ class UsersFixture extends TestFixture
             'banned' => 1,
             'post_count' => 1,
             'created' => '2016-12-24 17:02:10',
+        ],
+        [
+            'id' => 4,
+            'group_id' => 3,
+            'username' => 'abc',
+            'email' => 'abc@example.com',
+            'password' => '',
+            'first_name' => 'Abc',
+            'last_name' => 'Def',
+            'active' => 1,
+            'banned' => 0,
+            'post_count' => 0,
+            'created' => '2016-12-24 17:03:10',
         ],
     ];
 }
