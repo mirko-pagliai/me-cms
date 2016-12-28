@@ -143,11 +143,11 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testHasManyPhotos()
     {
-        $albums = $this->PhotosAlbums->findById(1)->contain(['Photos'])->first();
+        $album = $this->PhotosAlbums->findById(1)->contain(['Photos'])->first();
 
-        $this->assertNotEmpty($albums->photos);
+        $this->assertNotEmpty($album->photos);
 
-        foreach ($albums->photos as $photo) {
+        foreach ($album->photos as $photo) {
             $this->assertEquals('MeCms\Model\Entity\Photo', get_class($photo));
             $this->assertEquals(1, $photo->album_id);
         }
