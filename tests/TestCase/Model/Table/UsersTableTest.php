@@ -42,6 +42,7 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.posts',
         'plugin.me_cms.tokens',
         'plugin.me_cms.users',
         'plugin.me_cms.users_groups',
@@ -129,7 +130,14 @@ class UsersTableTest extends TestCase
      */
     public function testHasManyPosts()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $user = $this->Users->findById(1)->contain(['Posts'])->first();
+
+        $this->assertNotEmpty($user->posts);
+
+        foreach ($user->posts as $post) {
+            $this->assertEquals('MeCms\Model\Entity\Post', get_class($post));
+            $this->assertEquals(1, $post->user_id);
+        }
     }
 
     /**
