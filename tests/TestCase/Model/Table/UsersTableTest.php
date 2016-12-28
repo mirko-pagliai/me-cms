@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
+use App\Utility\Token;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -41,6 +42,7 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.tokens',
         'plugin.me_cms.users',
         'plugin.me_cms.users_groups',
     ];
@@ -136,7 +138,16 @@ class UsersTableTest extends TestCase
      */
     public function testHasManyTokens()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        //Creates a token
+        $token = (new Token)->create('testToken', ['user_id' => 4]);
+
+        $user = $this->Users->findById(4)->contain(['Tokens'])->first();
+
+        $this->assertEquals(1, count($user->tokens));
+
+        $this->assertEquals('Tokens\Model\Entity\Token', get_class($user->tokens[0]));
+        $this->assertEquals(4, $user->tokens[0]->user_id);
+        $this->assertEquals($token, $user->tokens[0]->token);
     }
 
     /**
