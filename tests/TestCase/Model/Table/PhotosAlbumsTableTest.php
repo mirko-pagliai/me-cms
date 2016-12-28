@@ -141,7 +141,7 @@ class PhotosAlbumsTableTest extends TestCase
      * Test for the `hasMany` association with `Photos`
      * @test
      */
-    public function testHasManyBanners()
+    public function testHasManyPhotos()
     {
         $albums = $this->PhotosAlbums->findById(1)->contain(['Photos'])->first();
 
