@@ -72,7 +72,7 @@ class UsersFixture extends TestFixture
             'last_name' => 'Beta',
             'active' => 1,
             'banned' => 0,
-            'post_count' => 3,
+            'post_count' => 2,
             'created' => '2016-12-24 17:00:05',
         ],
         [
@@ -98,7 +98,7 @@ class UsersFixture extends TestFixture
             'last_name' => 'Zeta',
             'active' => 1,
             'banned' => 1,
-            'post_count' => 1,
+            'post_count' => 0,
             'created' => '2016-12-24 17:02:10',
         ],
         [
@@ -111,7 +111,7 @@ class UsersFixture extends TestFixture
             'last_name' => 'Def',
             'active' => 1,
             'banned' => 0,
-            'post_count' => 0,
+            'post_count' => 1,
             'created' => '2016-12-24 17:03:10',
         ],
     ];
