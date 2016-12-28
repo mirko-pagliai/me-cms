@@ -47,8 +47,10 @@ class PhotosAlbumsTable extends AppTable
      */
     public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
-        //Deletes the folder
-        (new Folder(PHOTOS . DS . $entity->id))->delete();
+        //Deletes the directory
+        if (file_exists($entity->path)) {
+            rmdir($entity->path);
+        }
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -64,8 +66,8 @@ class PhotosAlbumsTable extends AppTable
     public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
         //Creates the folder
-        if ($entity->isNew()) {
-            (new Folder())->create(PHOTOS . DS . $entity->id, 0777);
+        if (!file_exists($entity->path)) {
+            (new Folder())->create($entity->path, 0777);
         }
 
         parent::afterSave($event, $entity, $options);

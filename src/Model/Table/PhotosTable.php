@@ -22,7 +22,6 @@
  */
 namespace MeCms\Model\Table;
 
-use Cake\Filesystem\File;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -50,7 +49,9 @@ class PhotosTable extends AppTable
     public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
         //Deletes the file
-        (new File(PHOTOS . DS . $entity->album_id . DS . $entity->filename))->delete();
+        if (file_exists($entity->path) && is_writable($entity->path)) {
+            unlink($entity->path);
+        }
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -94,7 +95,7 @@ class PhotosTable extends AppTable
         parent::initialize($config);
 
         $this->table('photos');
-        $this->displayField('id');
+        $this->displayField('filename');
         $this->primaryKey('id');
 
         $this->belongsTo('Albums', [
@@ -119,7 +120,7 @@ class PhotosTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Album" field
-        if (!empty($data['album']) && preg_match('/^[1-9]\d*$/', $data['album'])) {
+        if (!empty($data['album']) && isPositive($data['album'])) {
             $query->where([sprintf('%s.album_id', $this->alias()) => $data['album']]);
         }
 
