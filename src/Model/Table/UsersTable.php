@@ -111,6 +111,7 @@ class UsersTable extends AppTable
         return $this->find('list')
             ->where([sprintf('%s.active', $this->alias()) => true])
             ->cache('active_users_list', $this->cache)
+            ->order(['username' => 'ASC'])
             ->toArray();
     }
 
@@ -136,7 +137,7 @@ class UsersTable extends AppTable
         parent::initialize($config);
 
         $this->table('users');
-        $this->displayField('full_name');
+        $this->displayField('username');
         $this->primaryKey('id');
 
         $this->belongsTo('Groups', [
@@ -174,12 +175,12 @@ class UsersTable extends AppTable
         }
 
         //"Group" field
-        if (!empty($data['group']) && preg_match('/^[1-9]\d*$/', $data['group'])) {
+        if (!empty($data['group']) && isPositive($data['group'])) {
             $query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
         }
 
         //"Status" field
-        if (!empty($data['status']) && in_array($data['status'], ['active', 'pending', 'banned'])) {
+        if (!empty($data['status'])) {
             switch ($data['status']) {
                 case 'active':
                     $query->where([
