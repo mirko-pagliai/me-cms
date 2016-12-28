@@ -162,10 +162,9 @@ class PhotosTableTest extends TestCase
      */
     public function testQueryFromFilter()
     {
-        $baseQuery = $this->Photos->find();
         $data = ['album' => 1];
 
-        $query = $this->Photos->queryFromFilter($baseQuery, $data);
+        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
         $this->assertEquals('Cake\ORM\Query', get_class($query));
         $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
     }
