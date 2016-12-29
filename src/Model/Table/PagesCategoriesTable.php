@@ -128,6 +128,6 @@ class PagesCategoriesTable extends AppTable
      */
     public function validationDefault(\Cake\Validation\Validator $validator)
     {
-        return new \MeCms\Model\Validation\PostsCategoryValidator;
+        return new \MeCms\Model\Validation\PagesCategoryValidator;
     }
 }
