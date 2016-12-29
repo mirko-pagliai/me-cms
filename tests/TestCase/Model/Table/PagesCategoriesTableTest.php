@@ -107,7 +107,7 @@ class PagesCategoriesTableTest extends TestCase
     }
 
     /**
-     * Test for the `belongsTo` association with `PagesCategory` parents
+     * Test for the `belongsTo` association with `PagesCategories` parents
      * @test
      */
     public function testBelongsToParents()
@@ -126,7 +126,7 @@ class PagesCategoriesTableTest extends TestCase
     }
 
     /**
-     * Test for the `hasMany` association with `PagesCategory` childs
+     * Test for the `hasMany` association with `PagesCategories` childs
      * @test
      */
     public function testHasManyChilds()
