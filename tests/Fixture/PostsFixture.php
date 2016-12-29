@@ -64,7 +64,7 @@ class PostsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'category_id' => 1,
+            'category_id' => 4,
             'user_id' => 1,
             'title' => 'First post',
             'slug' => 'first-post',
@@ -77,7 +77,7 @@ class PostsFixture extends TestFixture
         ],
         [
             'id' => 2,
-            'category_id' => 1,
+            'category_id' => 4,
             'user_id' => 4,
             'title' => 'Second post',
             'slug' => 'second-post',
@@ -90,7 +90,7 @@ class PostsFixture extends TestFixture
         ],
         [
             'id' => 3,
-            'category_id' => 1,
+            'category_id' => 2,
             'user_id' => 1,
             'title' => 'Third post',
             'slug' => 'third-post',
