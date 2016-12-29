@@ -191,10 +191,10 @@ class PagesCategoriesTableTest extends TestCase
     {
         $categories = $this->PagesCategories->getList();
         $this->assertEquals([
-            2 => 'Another category',
-            1 => 'First category',
-            3 => 'Sub category',
-            4 => 'Sub sub category',
+            2 => 'Another page category',
+            1 => 'First page category',
+            3 => 'Sub page category',
+            4 => 'Sub sub page category',
         ], $categories);
     }
 
@@ -206,10 +206,10 @@ class PagesCategoriesTableTest extends TestCase
     {
         $categories = $this->PagesCategories->getTreeList();
         $this->assertEquals([
-            1 => 'First category',
-            3 => '—Sub category',
-            4 => '——Sub sub category',
-            2 => 'Another category'
+            1 => 'First page category',
+            3 => '—Sub page category',
+            4 => '——Sub sub page category',
+            2 => 'Another page category',
         ], $categories);
     }
 
