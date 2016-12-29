@@ -149,12 +149,12 @@ class AppTable extends Table
         }
 
         //"User" (author) field
-        if (!empty($data['user']) && preg_match('/^[1-9]\d*$/', $data['user'])) {
+        if (!empty($data['user']) && isPositive($data['user'])) {
             $query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
         }
 
         //"Category" field
-        if (!empty($data['category']) && preg_match('/^[1-9]\d*$/', $data['category'])) {
+        if (!empty($data['category']) && isPositive($data['category'])) {
             $query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
         }
 
