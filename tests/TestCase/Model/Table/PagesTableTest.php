@@ -23,7 +23,6 @@
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -174,48 +173,6 @@ class PagesTableTest extends TestCase
         $this->Pages->find();
 
         $this->markTestIncomplete('This test has not been implemented yet');
-    }
-
-    /**
-     * Test for `setNextToBePublished()` method
-     * @test
-     */
-    public function testSetNextToBePublished()
-    {
-        $this->assertFalse($this->Pages->setNextToBePublished());
-
-        //Creates a page with a future publication time (1 hours)
-        $created = new Time('+1 hours');
-
-        $entity = $this->Pages->newEntity([
-            'category_id' => 1,
-            'title' => 'Test page',
-            'slug' => 'test-page',
-            'text' => 'Example test',
-            'created' => $created,
-        ]);
-
-        $this->assertNotEmpty($this->Pages->save($entity));
-
-        $this->assertEquals($created->toUnixString(), $this->Pages->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), Cache::read('next_to_be_published', $this->Pages->cache));
-
-        //Creates another page with a future publication time (30 minuts)
-        //This page takes precedence over the previous
-        $created = new Time('+30 minutes');
-
-        $entity = $this->Pages->newEntity([
-            'category_id' => 1,
-            'title' => 'Another test page',
-            'slug' => 'another-test-page',
-            'text' => 'Example test',
-            'created' => $created,
-        ]);
-
-        $this->assertNotEmpty($this->Pages->save($entity));
-
-        $this->assertEquals($created->toUnixString(), $this->Pages->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), Cache::read('next_to_be_published', $this->Pages->cache));
     }
 
     /**
