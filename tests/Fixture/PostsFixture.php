@@ -90,7 +90,7 @@ class PostsFixture extends TestFixture
         ],
         [
             'id' => 3,
-            'category_id' => 2,
+            'category_id' => 1,
             'user_id' => 1,
             'title' => 'Third post',
             'slug' => 'third-post',

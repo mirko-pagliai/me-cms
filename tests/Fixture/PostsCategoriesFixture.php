@@ -78,7 +78,7 @@ class PostsCategoriesFixture extends TestFixture
             'title' => 'Another post category',
             'slug' => 'another-post-category',
             'description' => 'Description of another category',
-            'post_count' => 1,
+            'post_count' => 0,
             'created' => '2016-12-26 21:25:32',
             'modified' => '2016-12-26 21:25:32',
         ],
