@@ -106,7 +106,7 @@ class AppTable extends Table
     }
 
     /**
-     * Checks whether an object (a record) belongs to an user.
+     * Checks whether a record belongs to an user.
      *
      * For example:
      * <code>
@@ -114,19 +114,15 @@ class AppTable extends Table
      * $posts->isOwnedBy(2, 4);
      * </code>
      * checks if the posts with ID 2 belongs to the user with ID 4.
-     * @param int $id Object ID
+     * @param int $id Record ID
      * @param int $userId User ID
      * @return bool
      */
     public function isOwnedBy($id, $userId = null)
     {
-        if (empty($userId)) {
-            return false;
-        }
-
-        return (bool)$this->find('all')
-            ->where(compact('id', 'user_id'))
-            ->count();
+        return (bool)$this->find()
+            ->where(am(compact('id'), ['user_id' => $userId]))
+            ->first();
     }
 
     /**
