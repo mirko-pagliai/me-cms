@@ -70,6 +70,7 @@ class TagsTable extends AppTable
     public function getList()
     {
         return $this->find('list')
+            ->order(['tag' => 'ASC'])
             ->cache('tags_list', $this->cache)
             ->toArray();
     }
