@@ -217,4 +217,16 @@ class PagesTableTest extends TestCase
         $this->assertEquals($created->toUnixString(), $this->Pages->setNextToBePublished());
         $this->assertEquals($created->toUnixString(), Cache::read('next_to_be_published', $this->Pages->cache));
     }
+
+    /**
+     * Test for `validationDefault()` method
+     * @test
+     */
+    public function testValidationDefault()
+    {
+        $this->assertEquals(
+            'MeCms\Model\Validation\PageValidator',
+            get_class($this->Pages->validationDefault(new \Cake\Validation\Validator))
+        );
+    }
 }

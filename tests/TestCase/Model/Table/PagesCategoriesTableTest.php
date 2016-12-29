@@ -212,4 +212,16 @@ class PagesCategoriesTableTest extends TestCase
             2 => 'Another category'
         ], $categories);
     }
+
+    /**
+     * Test for `validationDefault()` method
+     * @test
+     */
+    public function testValidationDefault()
+    {
+        $this->assertEquals(
+            'MeCms\Model\Validation\PagesCategoryValidator',
+            get_class($this->PagesCategories->validationDefault(new \Cake\Validation\Validator))
+        );
+    }
 }
