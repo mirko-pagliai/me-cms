@@ -209,26 +209,22 @@ class PostsTableTest extends TestCase
      */
     public function testFind()
     {
-        $this->Posts = $this->getMockBuilder(get_class($this->Posts))
-            ->setMethods(['getNextToBePublished', 'setNextToBePublished'])
-            ->setConstructorArgs([['table' => $this->Posts->table(), 'connection' => $this->Posts->connection()]])
-            ->getMock();
+        $query = $this->Posts->find();
+        $this->assertEquals('Cake\ORM\Query', get_class($query));
 
-        $this->Posts->expects($this->at(0))
-            ->method('getNextToBePublished')
-            ->will($this->returnValue(time() + 3600));
+        //Writes `next_to_be_published` and some data on cache
+        Cache::write('next_to_be_published', time() - 3600, $this->Posts->cache);
+        Cache::write('someData', 'someValue', $this->Posts->cache);
 
-        $this->Posts->expects($this->at(1))
-            ->method('getNextToBePublished')
-            ->will($this->returnValue(time() - 3600));
+        $this->assertNotEmpty(Cache::read('next_to_be_published', $this->Posts->cache));
+        $this->assertNotEmpty(Cache::read('someData', $this->Posts->cache));
 
-        $this->Posts->expects($this->at(2))
-            ->method('setNextToBePublished');
+        //The cache will now be cleared
+        $query = $this->Posts->find();
+        $this->assertEquals('Cake\ORM\Query', get_class($query));
 
-        $this->Posts->find();
-        $this->Posts->find();
-
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $this->assertEmpty(Cache::read('next_to_be_published', $this->Posts->cache));
+        $this->assertEmpty(Cache::read('someData', $this->Posts->cache));
     }
 
     /**
