@@ -23,9 +23,7 @@
 namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
-use MeCms\Model\Entity\Tag;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -36,7 +34,7 @@ class TagsTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'posts';
 
@@ -72,6 +70,7 @@ class TagsTable extends AppTable
     public function getList()
     {
         return $this->find('list')
+            ->order(['tag' => 'ASC'])
             ->cache('tags_list', $this->cache)
             ->toArray();
     }
@@ -88,9 +87,7 @@ class TagsTable extends AppTable
 
         //"Name" field
         if (!empty($data['name']) && strlen($data['name']) > 2) {
-            $query->where([
-                sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name']),
-            ]);
+            $query->where([sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name'])]);
         }
 
         return $query;

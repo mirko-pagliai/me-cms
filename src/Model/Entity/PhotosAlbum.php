@@ -47,4 +47,23 @@ class PhotosAlbum extends Entity
         'photo_count' => false,
         'modified' => false,
     ];
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
+    protected $_virtual = ['path'];
+
+    /**
+     * Gets the album full path (virtual field)
+     * @return string|null
+     */
+    protected function _getPath()
+    {
+        if (empty($this->_properties['id'])) {
+            return null;
+        }
+
+        return PHOTOS . DS . $this->_properties['id'];
+    }
 }

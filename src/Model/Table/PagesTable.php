@@ -23,9 +23,7 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\Page;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -35,9 +33,43 @@ class PagesTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'pages';
+
+    /**
+     * Called after an entity has been deleted
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::afterDelete()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     */
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        parent::afterDelete($event, $entity, $options);
+
+        //Sets the next record to be published
+        $this->setNextToBePublished();
+    }
+
+    /**
+     * Called after an entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::afterSave()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     */
+    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
+        parent::afterSave($event, $entity, $options);
+
+        //Sets the next record to be published
+        $this->setNextToBePublished();
+    }
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -58,20 +90,21 @@ class PagesTable extends AppTable
      * @param string $type The type of query to perform
      * @param array|ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
-     * @return Cake\ORM\Query The query builder
-     * @uses setNextToBePublished()
+     * @return \Cake\ORM\Query The query builder
      * @uses $cache
+     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
+     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
         //Gets from cache the timestamp of the next record to be published
-        $next = Cache::read('next_to_be_published', $this->cache);
+        $next = $this->getNextToBePublished();
 
-        //If the cache is not valid, it empties the cache
+        //If the cache is invalid, it clears the cache and sets the next record
+        //  to be published
         if ($next && time() >= $next) {
             Cache::clear(false, $this->cache);
 
-            //Sets the next record to be published
             $this->setNextToBePublished();
         }
 
@@ -99,28 +132,6 @@ class PagesTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);
-    }
-
-    /**
-     * Sets to cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return void
-     * @uses $cache
-     */
-    public function setNextToBePublished()
-    {
-        $next = $this->find()
-            ->select('created')
-            ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time(),
-            ])
-            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-            ->first();
-
-        $next = empty($next->created) ? false : $next->created->toUnixString();
-
-        Cache::write('next_to_be_published', $next, $this->cache);
     }
 
     /**

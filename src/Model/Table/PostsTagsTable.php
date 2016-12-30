@@ -22,10 +22,8 @@
  */
 namespace MeCms\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
-use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -37,7 +35,7 @@ class PostsTagsTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'posts';
 

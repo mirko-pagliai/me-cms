@@ -48,6 +48,14 @@ if (!folderIsWriteable(PHOTOS)) {
 }
 
 /**
+ * Sets config for the Tokens plugin
+ */
+Configure::write('Tokens.usersClassOptions', [
+    'foreignKey' => 'user_id',
+    'className' => 'Users',
+]);
+
+/**
  * Loads the MeCms configuration
  */
 Configure::load('MeCms.me_cms');

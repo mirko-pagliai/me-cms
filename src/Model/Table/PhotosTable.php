@@ -22,10 +22,8 @@
  */
 namespace MeCms\Model\Table;
 
-use Cake\Filesystem\File;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\Photo;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -36,7 +34,7 @@ class PhotosTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'photos';
 
@@ -48,19 +46,19 @@ class PhotosTable extends AppTable
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
         //Deletes the file
-        (new File(PHOTOS . DS . $entity->album_id . DS . $entity->filename))->delete();
+        if (file_exists($entity->path) && is_writable($entity->path)) {
+            unlink($entity->path);
+        }
 
         parent::afterDelete($event, $entity, $options);
     }
 
     /**
-     * Returns a rules checker object that will be used for validating application integrity
+     * Returns a rules checker object that will be used for validating
+     *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
@@ -79,13 +77,9 @@ class PhotosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-        ]);
+        $query->where([sprintf('%s.active', $this->alias()) => true]);
         $query->matching('Albums', function ($q) {
-            return $q->where([
-                sprintf('%s.active', $this->Albums->alias()) => true,
-            ]);
+            return $q->where([sprintf('%s.active', $this->Albums->alias()) => true]);
         });
 
         return $query;
@@ -101,7 +95,7 @@ class PhotosTable extends AppTable
         parent::initialize($config);
 
         $this->table('photos');
-        $this->displayField('id');
+        $this->displayField('filename');
         $this->primaryKey('id');
 
         $this->belongsTo('Albums', [
@@ -126,10 +120,8 @@ class PhotosTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Album" field
-        if (!empty($data['album']) && preg_match('/^[1-9]\d*$/', $data['album'])) {
-            $query->where([
-                sprintf('%s.album_id', $this->alias()) => $data['album'],
-            ]);
+        if (!empty($data['album']) && isPositive($data['album'])) {
+            $query->where([sprintf('%s.album_id', $this->alias()) => $data['album']]);
         }
 
         return $query;

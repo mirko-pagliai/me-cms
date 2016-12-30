@@ -24,7 +24,6 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Entity\PostsCategory;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -36,7 +35,7 @@ class PostsCategoriesTable extends AppTable
 {
     /**
      * Name of the configuration to use for this table
-     * @var string|array
+     * @var string
      */
     public $cache = 'posts';
 
@@ -61,9 +60,7 @@ class PostsCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.post_count >', $this->alias()) => 0,
-        ]);
+        $query->where([sprintf('%s.post_count >', $this->alias()) => 0]);
 
         return $query;
     }

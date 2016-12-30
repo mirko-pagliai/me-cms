@@ -27,22 +27,22 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * BannersPositionsTableTest class
+ * UsersGroupsTableTest class
  */
-class BannersPositionsTableTest extends TestCase
+class UsersGroupsTableTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\BannersPositionsTable
+     * @var \MeCms\Model\Table\UsersGroupsTable
      */
-    protected $BannersPositions;
+    protected $UsersGroups;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.banners',
-        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.users',
+        'plugin.me_cms.users_groups',
     ];
 
     /**
@@ -55,9 +55,9 @@ class BannersPositionsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
+        $this->UsersGroups = TableRegistry::get('MeCms.UsersGroups');
 
-        Cache::clear(false, $this->BannersPositions->cache);
+        Cache::clear(false, $this->UsersGroups->cache);
     }
 
     /**
@@ -68,7 +68,7 @@ class BannersPositionsTableTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->BannersPositions);
+        unset($this->UsersGroups);
     }
 
     /**
@@ -77,7 +77,7 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('banners', $this->BannersPositions->cache);
+        $this->assertEquals('users', $this->UsersGroups->cache);
     }
 
     /**
@@ -86,30 +86,30 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('banners_positions', $this->BannersPositions->table());
-        $this->assertEquals('title', $this->BannersPositions->displayField());
-        $this->assertEquals('id', $this->BannersPositions->primaryKey());
+        $this->assertEquals('users_groups', $this->UsersGroups->table());
+        $this->assertEquals('label', $this->UsersGroups->displayField());
+        $this->assertEquals('id', $this->UsersGroups->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->BannersPositions->Banners));
-        $this->assertEquals('position_id', $this->BannersPositions->Banners->foreignKey());
-        $this->assertEquals('MeCms.Banners', $this->BannersPositions->Banners->className());
+        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->UsersGroups->Users));
+        $this->assertEquals('group_id', $this->UsersGroups->Users->foreignKey());
+        $this->assertEquals('MeCms.Users', $this->UsersGroups->Users->className());
 
-        $this->assertTrue($this->BannersPositions->hasBehavior('Timestamp'));
+        $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
     }
 
     /**
-     * Test for the `hasMany` association with `Banners`
+     * Test for the `hasMany` association with `Users`
      * @test
      */
-    public function testHasManyBanners()
+    public function testHasManyUsers()
     {
-        $positions = $this->BannersPositions->findById(1)->contain(['Banners'])->first();
+        $group = $this->UsersGroups->findById(3)->contain(['Users'])->first();
 
-        $this->assertNotEmpty($positions->banners);
+        $this->assertNotEmpty($group->users);
 
-        foreach ($positions->banners as $banner) {
-            $this->assertEquals('MeCms\Model\Entity\Banner', get_class($banner));
-            $this->assertEquals(1, $banner->position_id);
+        foreach ($group->users as $user) {
+            $this->assertEquals('MeCms\Model\Entity\User', get_class($user));
+            $this->assertEquals(3, $user->group_id);
         }
     }
 
@@ -119,11 +119,12 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testGetList()
     {
-        $positions = $this->BannersPositions->getList();
+        $groups = $this->UsersGroups->getList();
         $this->assertEquals([
-            2 => 'left',
-            1 => 'top',
-        ], $positions);
+            1 => 'Admin',
+            2 => 'Manager',
+            3 => 'User',
+        ], $groups);
     }
 
     /**
@@ -133,8 +134,8 @@ class BannersPositionsTableTest extends TestCase
     public function testValidationDefault()
     {
         $this->assertEquals(
-            'MeCms\Model\Validation\BannersPositionValidator',
-            get_class($this->BannersPositions->validationDefault(new \Cake\Validation\Validator))
+            'MeCms\Model\Validation\UsersGroupValidator',
+            get_class($this->UsersGroups->validationDefault(new \Cake\Validation\Validator))
         );
     }
 }

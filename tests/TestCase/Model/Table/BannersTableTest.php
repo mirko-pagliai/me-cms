@@ -81,6 +81,24 @@ class BannersTableTest extends TestCase
     }
 
     /**
+     * Test for `afterDelete()` method
+     * @test
+     */
+    public function testAfterDelete()
+    {
+        $banner = $this->Banners->get(1);
+
+        //Creates the file
+        file_put_contents($banner->path, null);
+
+        $this->assertFileExists($banner->path);
+
+        //Deletes the banner
+        $this->assertTrue($this->Banners->delete($banner));
+        $this->assertFileNotExists($banner->path);
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */
@@ -114,25 +132,6 @@ class BannersTableTest extends TestCase
     }
 
     /**
-     * Test for `afterDelete()` method
-     * @test
-     */
-    public function testAfterDelete()
-    {
-        $banner = $this->Banners->get(1);
-
-        //Creates the file
-        file_put_contents($banner->path, null);
-
-        $this->assertFileExists($banner->path);
-
-        //Deletes the banner
-        $this->assertTrue($this->Banners->delete($banner));
-
-        $this->assertFileNotExists($banner->path);
-    }
-
-    /**
      * Test for `findActive()` method
      * @test
      */
@@ -141,8 +140,12 @@ class BannersTableTest extends TestCase
         $this->assertTrue($this->Banners->hasFinder('active'));
 
         $query = $this->Banners->find('active');
+        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.active = :c0', $query->sql());
 
-        $this->assertEquals(2, $query->count());
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+
+        $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $banner) {
             $this->assertTrue($banner->active);
@@ -155,11 +158,24 @@ class BannersTableTest extends TestCase
      */
     public function testQueryFromFilter()
     {
-        $baseQuery = $this->Banners->find();
-        $data = ['position' => 1];
+        $data = ['position' => 2];
 
-        $query = $this->Banners->queryFromFilter($baseQuery, $data);
+        $query = $this->Banners->queryFromFilter($this->Banners->find(), $data);
         $this->assertEquals('Cake\ORM\Query', get_class($query));
         $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
+
+        $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
+    }
+
+    /**
+     * Test for `validationDefault()` method
+     * @test
+     */
+    public function testValidationDefault()
+    {
+        $this->assertEquals(
+            'MeCms\Model\Validation\BannerValidator',
+            get_class($this->Banners->validationDefault(new \Cake\Validation\Validator))
+        );
     }
 }

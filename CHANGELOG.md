@@ -1,10 +1,15 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.12
+* now the `PhotosAlbum` entity has the `path` virtual field;
+* fixed a serious bug in the association of tokens with users;
+* fixed a serious bug for the `AppTable::isOwnedBy()` method;
+* fixed bug for validator for pages categories;
+* fixed bug for pages, now the next page to be published is set correctly;
 * fixed bug for `BannersPositionsTable::getList()` method;
 * fixed a little bug on tag slugs. Slug are now lower case;
 * added `firstImageFromText()` global function;
-* added tests for all entity classes.
+* added tests for all entity and all tables classes.
 
 ### 2.14.11
 * fixed a several bug for `UserShell::add()` method. The method has been

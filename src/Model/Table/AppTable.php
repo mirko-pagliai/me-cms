@@ -25,7 +25,6 @@ namespace MeCms\Model\Table;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 
 /**
@@ -41,11 +40,8 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterDelete(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
         }
@@ -59,11 +55,8 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterSave(
-        \Cake\Event\Event $event,
-        \Cake\ORM\Entity $entity,
-        \ArrayObject $options
-    ) {
+    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    {
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
         }
@@ -79,7 +72,7 @@ class AppTable extends Table
     {
         $query->where([
             sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.created <=', $this->alias()) => new Time(),
+            sprintf('%s.created <=', $this->alias()) => new Time,
         ]);
 
         return $query;
@@ -103,7 +96,17 @@ class AppTable extends Table
     }
 
     /**
-     * Checks whether an object (a record) belongs to an user.
+     * Gets from cache the timestamp of the next record to be published.
+     * This value can be used to check if the cache is valid
+     * @return string|bool Timestamp or `false`
+     */
+    public function getNextToBePublished()
+    {
+        return Cache::read('next_to_be_published', $this->cache);
+    }
+
+    /**
+     * Checks whether a record belongs to an user.
      *
      * For example:
      * <code>
@@ -111,19 +114,15 @@ class AppTable extends Table
      * $posts->isOwnedBy(2, 4);
      * </code>
      * checks if the posts with ID 2 belongs to the user with ID 4.
-     * @param int $id Object ID
+     * @param int $id Record ID
      * @param int $userId User ID
      * @return bool
      */
     public function isOwnedBy($id, $userId = null)
     {
-        if (empty($userId)) {
-            return false;
-        }
-
-        return (bool)$this->find('all')
-            ->where(compact('id', 'user_id'))
-            ->count();
+        return (bool)$this->find()
+            ->where(am(compact('id'), ['user_id' => $userId]))
+            ->first();
     }
 
     /**
@@ -136,51 +135,37 @@ class AppTable extends Table
     {
         //"ID" field
         if (!empty($data['id']) && isPositive($data['id'])) {
-            $query->where([
-                sprintf('%s.id', $this->alias()) => $data['id'],
-            ]);
+            $query->where([sprintf('%s.id', $this->alias()) => $data['id']]);
         }
 
         //"Title" field
         if (!empty($data['title']) && strlen($data['title']) > 2) {
-            $query->where([
-                sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title']),
-            ]);
+            $query->where([sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title'])]);
         }
 
         //"Filename" field
         if (!empty($data['filename']) && strlen($data['filename']) > 2) {
-            $query->where([
-                sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename']),
-            ]);
+            $query->where([sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename'])]);
         }
 
         //"User" (author) field
-        if (!empty($data['user']) && preg_match('/^[1-9]\d*$/', $data['user'])) {
-            $query->where([
-                sprintf('%s.user_id', $this->alias()) => $data['user'],
-            ]);
+        if (!empty($data['user']) && isPositive($data['user'])) {
+            $query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
         }
 
         //"Category" field
-        if (!empty($data['category']) && preg_match('/^[1-9]\d*$/', $data['category'])) {
-            $query->where([
-                sprintf('%s.category_id', $this->alias()) => $data['category'],
-            ]);
+        if (!empty($data['category']) && isPositive($data['category'])) {
+            $query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
         }
 
         //"Active" field
         if (!empty($data['active'])) {
-            $query->where([
-                sprintf('%s.active', $this->alias()) => $data['active'] === 'yes',
-            ]);
+            $query->where([sprintf('%s.active', $this->alias()) => $data['active'] === 'yes']);
         }
 
         //"Priority" field
         if (!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority'])) {
-            $query->where([
-                sprintf('%s.priority', $this->alias()) => $data['priority'],
-            ]);
+            $query->where([sprintf('%s.priority', $this->alias()) => $data['priority']]);
         }
 
         //"Created" field
@@ -195,5 +180,29 @@ class AppTable extends Table
         }
 
         return $query;
+    }
+
+    /**
+     * Sets to cache the timestamp of the next record to be published.
+     * This value can be used to check if the cache is valid
+     * @return string|bool Timestamp or `false`
+     * @uses $cache
+     */
+    public function setNextToBePublished()
+    {
+        $next = $this->find()
+            ->where([
+                sprintf('%s.active', $this->alias()) => true,
+                sprintf('%s.created >', $this->alias()) => new Time,
+            ])
+            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
+            ->extract('created')
+            ->first();
+
+        $next = empty($next) ? false : $next->toUnixString();
+
+        Cache::write('next_to_be_published', $next, $this->cache);
+
+        return $next;
     }
 }
