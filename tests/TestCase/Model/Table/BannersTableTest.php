@@ -95,7 +95,6 @@ class BannersTableTest extends TestCase
 
         //Deletes the banner
         $this->assertTrue($this->Banners->delete($banner));
-
         $this->assertFileNotExists($banner->path);
     }
 
@@ -142,8 +141,11 @@ class BannersTableTest extends TestCase
 
         $query = $this->Banners->find('active');
         $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.active = :c0', $query->sql());
 
-        $this->assertEquals(2, $query->count());
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+
+        $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $banner) {
             $this->assertTrue($banner->active);
@@ -156,11 +158,13 @@ class BannersTableTest extends TestCase
      */
     public function testQueryFromFilter()
     {
-        $data = ['position' => 1];
+        $data = ['position' => 2];
 
         $query = $this->Banners->queryFromFilter($this->Banners->find(), $data);
         $this->assertEquals('Cake\ORM\Query', get_class($query));
         $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
+
+        $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
     }
 
     /**

@@ -96,7 +96,6 @@ class PhotosAlbumsTableTest extends TestCase
 
         //Deletes the album
         $this->assertTrue($this->PhotosAlbums->delete($album));
-
         $this->assertFileNotExists($album->path);
     }
 
@@ -163,8 +162,18 @@ class PhotosAlbumsTableTest extends TestCase
 
         $query = $this->PhotosAlbums->find('active');
         $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertEquals('SELECT PhotosAlbums.id AS `PhotosAlbums__id`, PhotosAlbums.title AS `PhotosAlbums__title`, PhotosAlbums.slug AS `PhotosAlbums__slug`, PhotosAlbums.description AS `PhotosAlbums__description`, PhotosAlbums.active AS `PhotosAlbums__active`, PhotosAlbums.photo_count AS `PhotosAlbums__photo_count`, PhotosAlbums.created AS `PhotosAlbums__created`, PhotosAlbums.modified AS `PhotosAlbums__modified` FROM photos_albums PhotosAlbums WHERE (PhotosAlbums.active = :c0 AND PhotosAlbums.photo_count > :c1)', $query->sql());
 
-        $this->assertEquals(2, $query->count());
+        $params = array_map(function ($v) {
+            return $v['value'];
+        }, $query->valueBinder()->bindings());
+
+        $this->assertEquals([
+            ':c0' => true,
+            ':c1' => 0,
+        ], $params);
+
+        $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $album) {
             $this->assertTrue($album->active);

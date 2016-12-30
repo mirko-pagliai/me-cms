@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
@@ -174,8 +173,12 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertTrue($this->PostsCategories->hasFinder('active'));
 
         $query = $this->PostsCategories->find('active');
+        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertEquals('SELECT PostsCategories.id AS `PostsCategories__id`, PostsCategories.parent_id AS `PostsCategories__parent_id`, PostsCategories.lft AS `PostsCategories__lft`, PostsCategories.rght AS `PostsCategories__rght`, PostsCategories.title AS `PostsCategories__title`, PostsCategories.slug AS `PostsCategories__slug`, PostsCategories.description AS `PostsCategories__description`, PostsCategories.post_count AS `PostsCategories__post_count`, PostsCategories.created AS `PostsCategories__created`, PostsCategories.modified AS `PostsCategories__modified` FROM posts_categories PostsCategories WHERE PostsCategories.post_count > :c0', $query->sql());
 
-        $this->assertEquals(3, $query->count());
+        $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
+
+        $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $category) {
             $this->assertNotEquals(0, $category->post_count);
