@@ -231,7 +231,7 @@ class AppTableTest extends TestCase
 
         $params = array_map(function ($v) {
             if (is_object($v['value']) && get_class($v['value']) === 'Cake\I18n\Time') {
-                return ($v['value']->nice());
+                return ($v['value']->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             }
 
             return $v['value'];
@@ -244,8 +244,8 @@ class AppTableTest extends TestCase
             ':c3' => 4,
             ':c4' => true,
             ':c5' => 3,
-            ':c6' => 'Dec 1, 2016, 12:00 AM',
-            ':c7' => 'Jan 1, 2017, 12:00 AM',
+            ':c6' => '2016-12-01 00:00:00',
+            ':c7' => '2017-01-01 00:00:00',
         ], $params);
 
         $data['active'] = 'no';
