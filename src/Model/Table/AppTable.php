@@ -126,7 +126,7 @@ class AppTable extends Table
     public function getTreeList()
     {
         return $this->find('treeList')
-            ->cache(sprintf('%s_list', $this->table()), $this->cache)
+            ->cache(sprintf('%s_treelist', $this->table()), $this->cache)
             ->toArray();
     }
 
