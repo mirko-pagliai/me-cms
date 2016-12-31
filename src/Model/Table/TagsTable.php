@@ -63,19 +63,6 @@ class TagsTable extends AppTable
     }
 
     /**
-     * Gets the tags list
-     * @return array List
-     * @uses $cache
-     */
-    public function getList()
-    {
-        return $this->find('list')
-            ->order(['tag' => 'ASC'])
-            ->cache('tags_list', $this->cache)
-            ->toArray();
-    }
-
-    /**
      * Build query from filter data
      * @param Query $query Query object
      * @param array $data Filter data ($this->request->query)

@@ -182,20 +182,6 @@ class PhotosAlbumsTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $albums = $this->PhotosAlbums->getList();
-        $this->assertEquals([
-            3 => 'A no active album test',
-            2 => 'Another album test',
-            1 => 'Test album',
-        ], $albums);
-    }
-
-    /**
      * Test for `validationDefault()` method
      * @test
      */

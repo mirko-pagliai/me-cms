@@ -188,36 +188,6 @@ class PagesCategoriesTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $categories = $this->PagesCategories->getList();
-        $this->assertEquals([
-            2 => 'Another page category',
-            1 => 'First page category',
-            3 => 'Sub page category',
-            4 => 'Sub sub page category',
-        ], $categories);
-    }
-
-    /**
-     * Test for `getTreeList()` method
-     * @test
-     */
-    public function testGetTreeList()
-    {
-        $categories = $this->PagesCategories->getTreeList();
-        $this->assertEquals([
-            1 => 'First page category',
-            3 => '—Sub page category',
-            4 => '——Sub sub page category',
-            2 => 'Another page category',
-        ], $categories);
-    }
-
-    /**
      * Test for `validationDefault()` method
      * @test
      */

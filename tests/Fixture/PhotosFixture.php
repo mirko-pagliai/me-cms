@@ -69,7 +69,7 @@ class PhotosFixture extends TestFixture
         [
             'id' => 2,
             'album_id' => 2,
-            'filename' => 'photo2.jpg',
+            'filename' => 'photoa.jpg',
             'description' => 'Another photo',
             'active' => 1,
             'created' => '2016-12-28 10:39:42',

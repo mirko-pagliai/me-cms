@@ -43,6 +43,11 @@ class AppTableTest extends TestCase
     protected $Posts;
 
     /**
+     * @var \MeCms\Model\Table\PostsCategoriesTable
+     */
+    protected $PostsCategories;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -65,6 +70,7 @@ class AppTableTest extends TestCase
 
         $this->Photos = TableRegistry::get('MeCms.Photos');
         $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->PostsCategories = TableRegistry::get('MeCms.PostsCategories');
 
         Cache::clear(false, $this->Photos->cache);
         Cache::clear(false, $this->Posts->cache);
@@ -78,7 +84,7 @@ class AppTableTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Photos, $this->Posts);
+        unset($this->Photos, $this->Posts, $this->PostsCategories);
     }
 
     /**
@@ -193,6 +199,51 @@ class AppTableTest extends TestCase
         $this->assertNotEmpty($this->Posts->save($entity));
         $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
         $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
+    }
+
+    /**
+     * Test for `getList()` method
+     * @test
+     */
+    public function testGetList()
+    {
+        $this->assertEquals([
+            1 => 'photo1.jpg',
+            3 => 'photo3.jpg',
+            4 => 'photo4.jpg',
+            2 => 'photoa.jpg',
+        ], $this->Photos->getList());
+
+        $this->assertEquals([
+            2 => 'Another post category',
+            1 => 'First post category',
+            3 => 'Sub post category',
+            4 => 'Sub sub post category',
+        ], $this->PostsCategories->getList());
+    }
+
+    /**
+     * Test for `getTreeList()` method
+     * @test
+     */
+    public function testGetTreeList()
+    {
+        $this->assertEquals([
+            1 => 'First post category',
+            3 => '—Sub post category',
+            4 => '——Sub sub post category',
+            2 => 'Another post category',
+        ], $this->PostsCategories->getTreeList());
+    }
+
+    /**
+     * Test for `getTreeList()` method, with a model that does not have a tree
+     * @expectedException BadMethodCallException
+     * @expectedExceptionMessage  Unknown finder method "treeList"
+     */
+    public function testGetTreeListModelDoesNotHaveTree()
+    {
+        $this->Posts->getTreeList();
     }
 
     /**

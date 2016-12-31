@@ -103,21 +103,6 @@ class TagsTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $tags = $this->Tags->getList();
-
-        $this->assertEquals([
-            3 => 'Bird',
-            1 => 'Cat',
-            2 => 'Dog',
-        ], $tags);
-    }
-
-    /**
      * Test for `queryFromFilter()` method
      * @test
      */

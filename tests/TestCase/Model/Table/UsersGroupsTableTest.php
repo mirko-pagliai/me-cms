@@ -114,20 +114,6 @@ class UsersGroupsTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $groups = $this->UsersGroups->getList();
-        $this->assertEquals([
-            1 => 'Admin',
-            2 => 'Manager',
-            3 => 'User',
-        ], $groups);
-    }
-
-    /**
      * Test for `validationDefault()` method
      * @test
      */
