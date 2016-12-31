@@ -207,19 +207,31 @@ class AppTableTest extends TestCase
      */
     public function testGetList()
     {
+        $cacheKey = sprintf('%s_list', $this->Photos->table());
+        $this->assertEquals($cacheKey, 'photos_list');
+        $this->assertFalse(Cache::read($cacheKey, $this->Photos->cache));
+
+        $list = $this->Photos->getList();
         $this->assertEquals([
             1 => 'photo1.jpg',
             3 => 'photo3.jpg',
             4 => 'photo4.jpg',
             2 => 'photoa.jpg',
-        ], $this->Photos->getList());
+        ], $list);
+        $this->assertEquals($list, Cache::read($cacheKey, $this->Photos->cache)->toArray());
 
+        $cacheKey = sprintf('%s_list', $this->PostsCategories->table());
+        $this->assertEquals($cacheKey, 'posts_categories_list');
+        $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
+
+        $list = $this->PostsCategories->getList();
         $this->assertEquals([
             2 => 'Another post category',
             1 => 'First post category',
             3 => 'Sub post category',
             4 => 'Sub sub post category',
-        ], $this->PostsCategories->getList());
+        ], $list);
+        $this->assertEquals($list, Cache::read($cacheKey, $this->PostsCategories->cache)->toArray());
     }
 
     /**
@@ -228,12 +240,18 @@ class AppTableTest extends TestCase
      */
     public function testGetTreeList()
     {
+        $cacheKey = sprintf('%s_tree_list', $this->PostsCategories->table());
+        $this->assertEquals($cacheKey, 'posts_categories_tree_list');
+        $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
+
+        $list = $this->PostsCategories->getTreeList();
         $this->assertEquals([
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
-        ], $this->PostsCategories->getTreeList());
+        ], $list);
+        $this->assertEquals($list, Cache::read($cacheKey, $this->PostsCategories->cache)->toArray());
     }
 
     /**
