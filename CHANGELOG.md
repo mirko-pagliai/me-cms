@@ -6,6 +6,7 @@
     each model has these methods;
 * fixed a serious bug in the association of tokens with users;
 * fixed a serious bug for the `AppTable::isOwnedBy()` method;
+* fixed the `.htaccess` for KCFinder to work also with PHP 7;
 * fixed bug for validator for pages categories;
 * fixed bug for pages, now the next page to be published is set correctly;
 * fixed bug for `BannersPositionsTable::getList()` method;
