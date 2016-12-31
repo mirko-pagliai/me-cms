@@ -41,7 +41,7 @@ $this->append('actions', $this->Html->button(
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
             <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-            <th><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('banner_count', __d('me_cms', 'Banners')) ?></th>
         </tr>
     </thead>
@@ -83,7 +83,7 @@ $this->append('actions', $this->Html->button(
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td>
+                <td class="text-center">
                     <?= $position->description ?>
                 </td>
                 <td class="min-width text-center">
