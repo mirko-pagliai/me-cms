@@ -35,38 +35,52 @@ use MeCms\Core\Plugin;
 class StaticPage
 {
     /**
-     * Gets all static pages
-     * @return array Static pages
+     * Internal method to get all paths for static pages
      * @uses MeCms\Core\Plugin::all()
-     * @uses title()
+     * @return array
      */
-    public static function all()
+    protected static function _getPaths()
     {
+        $plugins = Plugin::all();
+
         //Adds all plugins to paths, adding first MeCms
         $paths = array_map(function ($plugin) {
             return firstValue(App::path('Template', $plugin)) . 'StaticPages';
-        }, Plugin::all());
+        }, $plugins);
 
         //Adds APP to paths
         array_unshift($paths, firstValue(App::path('Template')) . 'StaticPages');
 
-        $pages = [];
+        return $paths;
+    }
 
+    /**
+     * Gets all static pages
+     * @return array Static pages
+     * @uses _getPaths()
+     * @uses title()
+     */
+    public static function all()
+    {
         //Gets all static pages
-        foreach ($paths as $path) {
-            $pages = am($pages, array_map(function ($file) use ($path) {
-                return (object)[
+        foreach (self::_getPaths() as $path) {
+            //Gets all file for each path
+            $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
+
+            foreach ($files as $file) {
+                $slug = preg_replace([
+                    sprintf('/^%s/', preg_quote($path . DS, DS)),
+                    '/\.ctp$/',
+                ], null, $file);
+
+                $pages[] = (object)[
                     'filename' => pathinfo($file, PATHINFO_FILENAME),
                     'path' => rtr($file),
-                    'slug' => preg_replace(
-                        '/\.ctp$/',
-                        '',
-                        preg_replace(sprintf('/^%s/', preg_quote($path . DS, DS)), null, $file)
-                    ),
+                    'slug' => $slug,
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
                     'modified' => new FrozenTime(filemtime($file)),
                 ];
-            }, (new Folder($path))->findRecursive('^.+\.ctp$', true)));
+            }
         }
 
         return $pages;
@@ -75,32 +89,35 @@ class StaticPage
     /**
      * Gets a static page
      * @param string $slug Slug
-     * @return string|bool Static page or false
+     * @return string|bool Static page or `false`
      * @uses MeCms\Core\Plugin::all()
      */
     public static function get($slug)
     {
-        //Sets the file (partial) name
-        $file = implode(DS, af(explode('/', $slug)));
+        //Sets the (partial) filename
+        $filename = implode(DS, af(explode('/', $slug)));
 
-        //Sets the file patterns
-        $patterns = [sprintf('%s-%s', $file, I18n::locale()), $file];
+        //Sets the filename patterns
+        $patterns = [
+            sprintf('%s-%s', $filename, I18n::locale()),
+            $filename,
+        ];
 
         //Checks if the page exists in APP
         foreach ($patterns as $pattern) {
-            $file = firstValue(App::path('Template')) . 'StaticPages' . DS . $pattern . '.ctp';
+            $filename = firstValue(App::path('Template')) . 'StaticPages' . DS . $pattern . '.ctp';
 
-            if (is_readable($file)) {
+            if (is_readable($filename)) {
                 return 'StaticPages' . DS . $pattern;
             }
         }
 
-        //Checks if the page exists in all plugins, beginning with MeCms
+        //Checks if the page exists in each plugin
         foreach (Plugin::all() as $plugin) {
             foreach ($patterns as $pattern) {
-                $file = firstValue(App::path('Template', $plugin)) . 'StaticPages' . DS . $pattern . '.ctp';
+                $filename = firstValue(App::path('Template', $plugin)) . 'StaticPages' . DS . $pattern . '.ctp';
 
-                if (is_readable($file)) {
+                if (is_readable($filename)) {
                     return sprintf('%s.%s', $plugin, 'StaticPages' . DS . $pattern);
                 }
             }
@@ -110,15 +127,19 @@ class StaticPage
     }
 
     /**
-     * Gets the title for a static page
-     * @param string $slug Slug
+     * Gets the title for a static page from its slug or path
+     * @param string $slugOrPath Slug or path
      * @return string
      */
-    public static function title($slug)
+    public static function title($slugOrPath)
     {
-        $slug = af(explode('/', $slug));
-        $slug = str_replace('-', '_', $slug[count($slug) - 1]);
+        //Gets only the filename (without extension)
+        $slugOrPath = pathinfo($slugOrPath, PATHINFO_FILENAME);
 
-        return Inflector::humanize($slug);
+        //Turns dashes into underscores (because `Inflector::humanize` will
+        //  remove only underscores)
+        $slugOrPath = str_replace('-', '_', $slugOrPath);
+
+        return Inflector::humanize($slugOrPath);
     }
 }

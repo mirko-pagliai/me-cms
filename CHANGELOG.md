@@ -4,6 +4,7 @@
 * now the `PhotosAlbum` entity has the `path` virtual field;
 * `getList()` and `getTreeList()` methods moved to `AppModel` class. So now
     each model has these methods;
+* improved `StaticPage` class;
 * fixed a serious bug in the association of tokens with users;
 * fixed a serious bug for the `AppTable::isOwnedBy()` method;
 * fixed the `.htaccess` for KCFinder to work also with PHP 7;
