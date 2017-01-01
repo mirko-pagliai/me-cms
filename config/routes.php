@@ -26,13 +26,13 @@ Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
 Router::scope('/', ['plugin' => MECMS], function ($routes) {
-    //Includes routes
-    include_once 'routes/banners.php';
-    include_once 'routes/pages.php';
-    include_once 'routes/photos.php';
-    include_once 'routes/posts.php';
-    include_once 'routes/systems.php';
-    include_once 'routes/users.php';
+    //Requires other routes
+    require_once 'routes/banners.php';
+    require_once 'routes/pages.php';
+    require_once 'routes/photos.php';
+    require_once 'routes/posts.php';
+    require_once 'routes/systems.php';
+    require_once 'routes/users.php';
 
     //Default home page
     //To avoid conflicts with `/posts`, this route has to be at the bottom
