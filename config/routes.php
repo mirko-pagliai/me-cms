@@ -27,12 +27,12 @@ Router::extensions('rss');
 
 Router::scope('/', ['plugin' => MECMS], function ($routes) {
     //Requires other routes
-    require_once 'routes/banners.php';
-    require_once 'routes/pages.php';
-    require_once 'routes/photos.php';
-    require_once 'routes/posts.php';
-    require_once 'routes/systems.php';
-    require_once 'routes/users.php';
+    require 'routes' . DS . 'banners.php';
+    require 'routes' . DS . 'pages.php';
+    require 'routes' . DS . 'photos.php';
+    require 'routes' . DS . 'posts.php';
+    require 'routes' . DS . 'systems.php';
+    require 'routes' . DS . 'users.php';
 
     //Default home page
     //To avoid conflicts with `/posts`, this route has to be at the bottom
