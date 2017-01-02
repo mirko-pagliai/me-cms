@@ -58,7 +58,7 @@ class SitemapTest extends TestCase
     {
         parent::setUp();
 
-        Cache::disable();
+        Cache::clearAll();
 
         Plugin::load('TestPlugin');
     }
@@ -80,7 +80,7 @@ class SitemapTest extends TestCase
      */
     public function testPages()
     {
-        $this->assertEquals([
+        $expected = [
             [
                 'loc' => 'http://localhost/pages/categories',
                 'priority' => '0.5',
@@ -95,8 +95,25 @@ class SitemapTest extends TestCase
                 'lastmod' => '2016-12-26T17:29:20+00:00',
                 'priority' => '0.5',
             ],
-        ], Sitemap::pages());
+        ];
 
+        $table = TableRegistry::get('MeCms.PagesCategories');
+
+        $this->assertEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::pages());
+
+        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::pages());
+    }
+
+    /**
+     * Test for `pages()` method, with no records
+     * @test
+     */
+    public function testPagesNoRecords()
+    {
         //Deletes all records
         TableRegistry::get('MeCms.PagesCategories')->deleteAll(['id >=' => 1]);
 
@@ -109,7 +126,7 @@ class SitemapTest extends TestCase
      */
     public function testPhotos()
     {
-        $this->assertEquals([
+        $expected = [
             [
                 'loc' => 'http://localhost/albums',
                 'lastmod' => '2016-12-28T10:40:42+00:00',
@@ -145,8 +162,25 @@ class SitemapTest extends TestCase
                 'lastmod' => '2016-12-28T10:39:42+00:00',
                 'priority' => '0.5',
             ],
-        ], Sitemap::photos());
+        ];
 
+        $table = TableRegistry::get('MeCms.PhotosAlbums');
+
+        $this->assertEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::photos());
+
+        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::photos());
+    }
+
+    /**
+     * Test for `photos()` method, with no records
+     * @test
+     */
+    public function testPhotosNoRecords()
+    {
         //Deletes all records
         TableRegistry::get('MeCms.PhotosAlbums')->deleteAll(['id >=' => 1]);
 
@@ -159,7 +193,7 @@ class SitemapTest extends TestCase
      */
     public function testPosts()
     {
-        $this->assertEquals([
+        $expected = [
             [
                 'loc' => 'http://localhost/posts',
                 'lastmod' => '2016-12-28T18:55:19+00:00',
@@ -198,8 +232,25 @@ class SitemapTest extends TestCase
                 'lastmod' => '2016-12-28T18:55:19+00:00',
                 'priority' => '0.5',
             ],
-        ], Sitemap::posts());
+        ];
 
+        $table = TableRegistry::get('MeCms.PostsCategories');
+
+        $this->assertEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::posts());
+
+        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::posts());
+    }
+
+    /**
+     * Test for `posts()` method, with no records
+     * @test
+     */
+    public function testPostsNoRecords()
+    {
         //Deletes all records
         TableRegistry::get('MeCms.PostsCategories')->deleteAll(['id >=' => 1]);
 
@@ -212,7 +263,7 @@ class SitemapTest extends TestCase
      */
     public function testPostsTags()
     {
-        $this->assertEquals([
+        $expected = [
             [
                 'loc' => 'http://localhost/posts/tags',
                 'lastmod' => '2016-12-29T11:15:31+00:00',
@@ -233,8 +284,25 @@ class SitemapTest extends TestCase
                 'lastmod' => '2016-12-29T11:14:31+00:00',
                 'priority' => '0.5',
             ],
-        ], Sitemap::postsTags());
+        ];
 
+        $table = TableRegistry::get('MeCms.Tags');
+
+        $this->assertEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::postsTags());
+
+        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+
+        $this->assertEquals($expected, Sitemap::postsTags());
+    }
+
+    /**
+     * Test for `postsTags()` method, with no records
+     * @test
+     */
+    public function testPostsTagsNoRecords()
+    {
         //Deletes all records
         TableRegistry::get('MeCms.Tags')->deleteAll(['id >=' => 1]);
 
