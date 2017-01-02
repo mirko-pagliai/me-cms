@@ -25,6 +25,7 @@ namespace MeCms\Test\TestCase\Utility;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
@@ -315,33 +316,37 @@ class SitemapTest extends TestCase
      */
     public function testStaticPages()
     {
+        $map = Sitemap::staticPages();
+
+        //It checks here the `lastmod` value and removes it from the array
+        foreach ($map as $k => $url) {
+            $this->assertEquals($url['lastmod'], (new FrozenTime($url['lastmod']))->format('c'));
+
+            unset($map[$k]['lastmod']);
+        }
+
         $this->assertEquals([
             [
                 'loc' => 'http://localhost/page/cookies-policy-it',
-                'lastmod' => '2016-11-03T11:05:38+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/page/cookies-policy',
-                'lastmod' => '2016-11-03T11:05:38+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/page/test',
-                'lastmod' => '2017-01-01T15:28:16+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/page/first-folder/page-on-first',
-                'lastmod' => '2017-01-01T15:28:13+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/page/first-folder/second_folder/page_on_second',
-                'lastmod' => '2017-01-01T15:27:36+00:00',
                 'priority' => '0.5',
             ],
-        ], Sitemap::staticPages());
+        ], $map);
     }
 
     /**
