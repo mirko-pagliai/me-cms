@@ -40,7 +40,7 @@ class SitemapBuilder
      */
     protected static function parse($url, array $options = [])
     {
-        if (!empty($options['lastmod'])) {
+        if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
             $options['lastmod'] = $options['lastmod']->format('c');
         }
 
