@@ -39,10 +39,9 @@ class PostsTagsController extends AppController
      */
     public function index()
     {
-        $tags = $this->PostsTags->Tags->find()
+        $tags = $this->PostsTags->Tags->find('active')
             ->order(['tag' => 'ASC'])
-            ->where(['post_count >' => 0])
-            ->cache('tag_index', $this->PostsTags->Posts->cache)
+            ->cache('tag_index', $this->PostsTags->cache)
             ->all();
 
         $this->set(compact('tags'));
@@ -67,12 +66,10 @@ class PostsTagsController extends AppController
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($tag), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->PostsTags->cache
-            )
-        );
+        list($posts, $paging) = array_values(Cache::readMany([
+            $cache,
+            sprintf('%s_paging', $cache),
+        ], $this->PostsTags->cache));
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
