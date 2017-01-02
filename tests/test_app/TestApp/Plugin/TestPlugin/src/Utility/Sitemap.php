@@ -5,15 +5,15 @@ use MeCms\Utility\SitemapBuilder;
 
 class Sitemap extends SitemapBuilder
 {
-    protected function _ignoredMethod()
+    protected static function _ignoredMethod()
     {
     }
 
-    public function urlMethod1()
+    public static function urlMethod1()
     {
     }
 
-    public function urlMethod2()
+    public static function urlMethod2()
     {
     }
 }
