@@ -23,7 +23,9 @@
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
 
@@ -94,6 +96,11 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ], Sitemap::pages());
+
+        //Deletes all records
+        TableRegistry::get('MeCms.PagesCategories')->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty(Sitemap::pages());
     }
 
     /**
@@ -139,6 +146,11 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ], Sitemap::photos());
+
+        //Deletes all records
+        TableRegistry::get('MeCms.PhotosAlbums')->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty(Sitemap::photos());
     }
 
     /**
@@ -187,6 +199,11 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ], Sitemap::posts());
+
+        //Deletes all records
+        TableRegistry::get('MeCms.PostsCategories')->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty(Sitemap::posts());
     }
 
     /**
@@ -217,6 +234,11 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ], Sitemap::postsTags());
+
+        //Deletes all records
+        TableRegistry::get('MeCms.Tags')->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty(Sitemap::postsTags());
     }
 
     /**
@@ -266,5 +288,10 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ], Sitemap::systems());
+
+        //Disabled contact form
+        Configure::write('MeCms.default.contact_form', false);
+
+        $this->assertEmpty(Sitemap::systems());
     }
 }
