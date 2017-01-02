@@ -84,7 +84,7 @@ class SitemapBuilder
      * @uses _getMethods()
      * @uses parse()
      */
-    public function generate()
+    public static function generate()
     {
         //Adds the homepage
         $url[] = self::parse('/');
