@@ -32,6 +32,28 @@ use MeCms\Core\Plugin;
 class SitemapBuilder
 {
     /**
+     * Internal method to get methods from `Sitemap` classes
+     * @param string $plugin Plugin
+     * @return array Array with classes and methods names
+     */
+    protected static function _getMethods($plugin)
+    {
+        //Sets the class name
+        $class = sprintf('\%s\Utility\Sitemap', $plugin);
+
+        //Gets all methods from the `Sitemap` class of the plugin
+        $methods = getChildMethods($class);
+
+        if (empty($methods)) {
+            return [];
+        }
+
+        return array_map(function ($method) use ($class) {
+            return ['class' => $class, 'name' => $method];
+        }, $methods);
+    }
+
+    /**
      * Parses url
      * @param string|array|null $url Url
      * @param array $options Options, for example `lastmod` or `priority`
@@ -40,7 +62,7 @@ class SitemapBuilder
      */
     protected static function parse($url, array $options = [])
     {
-        if (!empty($options['lastmod'])) {
+        if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
             $options['lastmod'] = $options['lastmod']->format('c');
         }
 
@@ -54,33 +76,26 @@ class SitemapBuilder
     /**
      * Generate the sitemap.
      *
-     * For each plugin, it calls dynamically all methods from class
-     * `$PLUGIN\Utility\Sitemap`.
+     * For each plugin, calls dynamically all methods from the `Sitemap` class.
      * Each method must be return an array or urls to add to the sitemap.
      * @return string
      * @see MeCms\Utility\Sitemap
      * @uses MeCms\Core\Plugin::all()
+     * @uses _getMethods()
      * @uses parse()
      */
-    public function generate()
+    public static function generate()
     {
         //Adds the homepage
-        $url = [self::parse('/')];
+        $url[] = self::parse('/');
 
         foreach (Plugin::all() as $plugin) {
-            //Sets the class name
-            $class = sprintf('\%s\Utility\Sitemap', $plugin);
+            //Gets all methods from `Sitemap` class of the plugin
+            $methods = self::_getMethods($plugin);
 
-            //Gets all methods from `$PLUGIN\Utility\Sitemap` class
-            $methods = getChildMethods($class);
-
-            if (empty($methods)) {
-                continue;
-            }
-
-            //Calls all methods
+            //Calls each method
             foreach ($methods as $method) {
-                $url = am($url, call_user_func([$class, $method]));
+                $url = am($url, call_user_func([$method['class'], $method['name']]));
             }
         }
 
@@ -89,6 +104,6 @@ class SitemapBuilder
             'url' => $url,
         ]], ['pretty' => true]);
 
-        return $xml->asXML();
+        return trim($xml->asXML());
     }
 }

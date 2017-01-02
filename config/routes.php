@@ -37,27 +37,16 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
     //Default home page
     //To avoid conflicts with `/posts`, this route has to be at the bottom
     if (!$routes->nameExists('homepage')) {
-        $routes->connect(
-            '/',
-            ['controller' => 'Posts', 'action' => 'index'],
-            ['_name' => 'homepage']
-        );
+        $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'homepage']);
     }
 
-    $routes->connect(
-        '/homepage',
-        ['controller' => 'Posts', 'action' => 'index']
-    );
+    $routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 
     //Admin routes
     $routes->prefix(ADMIN_PREFIX, function ($routes) {
         //Admin home page
         if (!$routes->nameExists('dashboard')) {
-            $routes->connect(
-                '/',
-                ['controller' => 'Posts', 'action' => 'index'],
-                ['_name' => 'dashboard']
-            );
+            $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
         }
     });
 });
@@ -66,10 +55,7 @@ Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
     //Admin routes
     $routes->prefix(ADMIN_PREFIX, function ($routes) {
         //Route `/me-cms/admin`
-        $routes->connect(
-            '/',
-            ['controller' => 'Posts', 'action' => 'index']
-        );
+        $routes->connect('/', ['controller' => 'Posts', 'action' => 'index']);
 
         //All others admin routes
         $routes->fallbacks('DashedRoute');
