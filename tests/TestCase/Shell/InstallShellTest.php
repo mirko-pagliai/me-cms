@@ -252,13 +252,14 @@ class InstallShellTest extends TestCase
         $this->InstallShell->fixKcfinder();
         $this->assertFileExists($file);
 
-        $this->assertEquals('<IfModule mod_php5.c>' . PHP_EOL .
-            '   php_value session.cache_limiter must-revalidate' . PHP_EOL .
-            '   php_value session.cookie_httponly On' . PHP_EOL .
-            '   php_value session.cookie_lifetime 14400' . PHP_EOL .
-            '   php_value session.gc_maxlifetime 14400' . PHP_EOL .
-            '   php_value session.name CAKEPHP' . PHP_EOL .
-            '</IfModule>', file_get_contents($file));
+        $this->assertEquals(
+            'php_value session.cache_limiter must-revalidate' . PHP_EOL .
+            'php_value session.cookie_httponly On' . PHP_EOL .
+            'php_value session.cookie_lifetime 14400' . PHP_EOL .
+            'php_value session.gc_maxlifetime 14400' . PHP_EOL .
+            'php_value session.name CAKEPHP',
+            file_get_contents($file)
+        );
 
         $this->assertNotEmpty($this->out->messages());
         $this->assertEquals([

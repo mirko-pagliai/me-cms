@@ -241,22 +241,6 @@ class UsersTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $users = $this->Users->getList();
-
-        $this->assertEquals([
-            4 => 'abc',
-            1 => 'alfa',
-            2 => 'gamma',
-            3 => 'ypsilon',
-        ], $users);
-    }
-
-    /**
      * Test for `queryFromFilter()` method
      * @test
      */

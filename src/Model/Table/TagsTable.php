@@ -39,6 +39,19 @@ class TagsTable extends AppTable
     public $cache = 'posts';
 
     /**
+     * "Active" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findActive(Query $query, array $options)
+    {
+        $query->where([sprintf('%s.post_count >', $this->alias()) => 0]);
+
+        return $query;
+    }
+
+    /**
      * Initialize method
      * @param array $config The configuration for the table
      * @return void
@@ -60,19 +73,6 @@ class TagsTable extends AppTable
         ]);
 
         $this->addBehavior('Timestamp');
-    }
-
-    /**
-     * Gets the tags list
-     * @return array List
-     * @uses $cache
-     */
-    public function getList()
-    {
-        return $this->find('list')
-            ->order(['tag' => 'ASC'])
-            ->cache('tags_list', $this->cache)
-            ->toArray();
     }
 
     /**

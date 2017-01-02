@@ -26,6 +26,7 @@ namespace MeCms\Utility;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use MeCms\Utility\SitemapBuilder;
+use MeCms\Utility\StaticPage;
 
 /**
  * This class contains methods called by the `SitemapBuilder`.
@@ -37,7 +38,7 @@ use MeCms\Utility\SitemapBuilder;
 class Sitemap extends SitemapBuilder
 {
     /**
-     * Method that returns pages urls
+     * Returns pages urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */
@@ -53,10 +54,11 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Pages' => function ($q) use ($table) {
-                return $q
-                    ->select(['id', 'category_id', 'slug', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Pages->alias()) => 'DESC']);
+            ->contain(['Pages' => function ($query) use ($table) {
+                $query->select(['category_id', 'slug', 'modified']);
+                $query->order([sprintf('%s.modified', $table->Pages->alias()) => 'DESC']);
+
+                return $query;
             }]);
 
         if ($categories->isEmpty()) {
@@ -73,13 +75,13 @@ class Sitemap extends SitemapBuilder
                 ['lastmod' => $category->pages[0]->modified]
             );
 
-            //Adds the pages
-            $url = am($url, array_map(function ($page) {
-                return self::parse(
+            //Adds each page
+            foreach ($category->pages as $page) {
+                $url[] = self::parse(
                     ['_name' => 'page', $page->slug],
                     ['lastmod' => $page->modified]
                 );
-            }, $category->pages));
+            }
         }
 
         Cache::write('sitemap', $url, $table->cache);
@@ -88,7 +90,7 @@ class Sitemap extends SitemapBuilder
     }
 
     /**
-     * Method that returns photos urls
+     * Returns photos urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */
@@ -104,10 +106,11 @@ class Sitemap extends SitemapBuilder
 
         $albums = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Photos' => function ($q) use ($table) {
-                return $q
-                    ->select(['id', 'album_id', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Photos->alias()) => 'DESC']);
+            ->contain(['Photos' => function ($query) use ($table) {
+                $query->select(['id', 'album_id', 'modified']);
+                $query->order([sprintf('%s.modified', $table->Photos->alias()) => 'DESC']);
+
+                return $query;
             }]);
 
         if ($albums->isEmpty()) {
@@ -120,9 +123,7 @@ class Sitemap extends SitemapBuilder
             ->firstOrFail();
 
         //Adds albums index
-        $url = [
-            self::parse(['_name' => 'albums'], ['lastmod' => $latest->modified])
-        ];
+        $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->modified]);
 
         foreach ($albums->toArray() as $album) {
             //Adds the album
@@ -131,13 +132,13 @@ class Sitemap extends SitemapBuilder
                 ['lastmod' => $album->photos[0]->modified]
             );
 
-            //Adds the photos
-            $url = am($url, array_map(function ($photo) use ($album) {
-                return self::parse(
+            //Adds each photo
+            foreach ($album->photos as $photo) {
+                $url[] = self::parse(
                     ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id],
                     ['lastmod' => $photo->modified]
                 );
-            }, $album->photos));
+            }
         }
 
         Cache::write('sitemap', $url, $table->cache);
@@ -146,7 +147,7 @@ class Sitemap extends SitemapBuilder
     }
 
     /**
-     * Method that returns posts urls
+     * Returns posts urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */
@@ -162,10 +163,11 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Posts' => function ($q) use ($table) {
-                return $q
-                    ->select(['category_id', 'slug', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Posts->alias()) => 'DESC']);
+            ->contain(['Posts' => function ($query) use ($table) {
+                $query->select(['category_id', 'slug', 'modified']);
+                $query->order([sprintf('%s.modified', $table->Posts->alias()) => 'DESC']);
+
+                return $query;
             }]);
 
         if ($categories->isEmpty()) {
@@ -178,11 +180,9 @@ class Sitemap extends SitemapBuilder
             ->firstOrFail();
 
         //Adds posts index, categories index and posts search
-        $url = [
-            self::parse(['_name' => 'posts'], ['lastmod' => $latest->modified]),
-            self::parse(['_name' => 'postsCategories']),
-            self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']),
-        ];
+        $url[] = self::parse(['_name' => 'posts'], ['lastmod' => $latest->modified]);
+        $url[] = self::parse(['_name' => 'postsCategories']);
+        $url[] = self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']);
 
         foreach ($categories as $category) {
             //Adds the category
@@ -191,13 +191,13 @@ class Sitemap extends SitemapBuilder
                 ['lastmod' => $category->posts[0]->modified]
             );
 
-            //Adds the posts
-            $url = am($url, array_map(function ($post) {
-                return self::parse(
+            //Adds each post
+            foreach ($category->posts as $post) {
+                $url[] = self::parse(
                     ['_name' => 'post', $post->slug],
                     ['lastmod' => $post->modified]
                 );
-            }, $category->posts));
+            }
         }
 
         Cache::write('sitemap', $url, $table->cache);
@@ -206,7 +206,7 @@ class Sitemap extends SitemapBuilder
     }
 
     /**
-     * Method that returns posts tags urls
+     * Returns posts tags urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */
@@ -220,10 +220,9 @@ class Sitemap extends SitemapBuilder
             return $url;
         }
 
-        $tags = $table->find('all')
+        $tags = $table->find('active')
             ->select(['tag', 'modified'])
-            ->order(['tag' => 'ASC'])
-            ->where(['post_count >' => 0]);
+            ->order(['tag' => 'ASC']);
 
         if ($tags->isEmpty()) {
             return [];
@@ -240,13 +239,13 @@ class Sitemap extends SitemapBuilder
             ['lastmod' => $latest->modified]
         );
 
-        //Adds all tags
-        $url = am($url, array_map(function ($tag) {
-            return self::parse(
+        //Adds each tag
+        foreach ($tags as $tag) {
+            $url[] = self::parse(
                 ['_name' => 'postsTag', $tag->slug],
                 ['lastmod' => $tag->modified]
             );
-        }, $tags->toArray()));
+        }
 
         Cache::write('sitemap', $url, $table->cache);
 
@@ -254,28 +253,28 @@ class Sitemap extends SitemapBuilder
     }
 
     /**
-     * Method that returns static pages urls
+     * Returns static pages urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      * @uses MeCms\Utility\StaticPage::all()
      */
     public static function staticPages()
     {
-        $statics = \MeCms\Utility\StaticPage::all();
+        $pages = StaticPage::all();
 
-        //Adds static pages
-        $url = array_map(function ($page) {
-            return self::parse(
+        //Adds each static page
+        foreach ($pages as $page) {
+            $url[] = self::parse(
                 ['_name' => 'page', $page->slug],
                 ['lastmod' => $page->modified]
             );
-        }, $statics);
+        }
 
         return $url;
     }
 
     /**
-     * Method that returns systems urls.
+     * Returns systems urls
      * @return array
      * @uses MeCms\Utility\SitemapBuilder::parse()
      */

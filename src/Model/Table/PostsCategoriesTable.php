@@ -66,30 +66,6 @@ class PostsCategoriesTable extends AppTable
     }
 
     /**
-     * Gets the categories list
-     * @return array List
-     * @uses $cache
-     */
-    public function getList()
-    {
-        return $this->find('list')
-            ->cache('categories_list', $this->cache)
-            ->toArray();
-    }
-
-    /**
-     * Gets the categories tree list
-     * @return array List
-     * @uses $cache
-     */
-    public function getTreeList()
-    {
-        return $this->find('treeList')
-            ->cache('categories_tree_list', $this->cache)
-            ->toArray();
-    }
-
-    /**
      * Initialize method
      * @param array $config The configuration for the table
      * @return void

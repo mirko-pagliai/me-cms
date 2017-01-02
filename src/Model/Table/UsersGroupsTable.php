@@ -36,18 +36,6 @@ class UsersGroupsTable extends AppTable
     public $cache = 'users';
 
     /**
-     * Gets the groups list
-     * @return array List
-     * @uses $cache
-     */
-    public function getList()
-    {
-        return $this->find('list')
-            ->cache('groups_list', $this->cache)
-            ->toArray();
-    }
-
-    /**
      * Initialize method
      * @param array $config The configuration for the table
      * @return void

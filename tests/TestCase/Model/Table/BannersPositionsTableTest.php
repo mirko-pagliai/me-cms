@@ -114,19 +114,6 @@ class BannersPositionsTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $positions = $this->BannersPositions->getList();
-        $this->assertEquals([
-            2 => 'left',
-            1 => 'top',
-        ], $positions);
-    }
-
-    /**
      * Test for `validationDefault()` method
      * @test
      */

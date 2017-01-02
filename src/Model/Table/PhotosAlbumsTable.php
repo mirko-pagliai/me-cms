@@ -90,19 +90,6 @@ class PhotosAlbumsTable extends AppTable
     }
 
     /**
-     * Gets the albums list
-     * @return array List
-     * @uses $cache
-     */
-    public function getList()
-    {
-        return $this->find('list')
-            ->order(['title' => 'ASC'])
-            ->cache('albums_list', $this->cache)
-            ->toArray();
-    }
-
-    /**
      * Initialize method
      * @param array $config The configuration for the table
      * @return void

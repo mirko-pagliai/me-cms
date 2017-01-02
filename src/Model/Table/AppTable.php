@@ -106,6 +106,31 @@ class AppTable extends Table
     }
 
     /**
+     * Gets the categories list
+     * @return array
+     * @uses $cache
+     */
+    public function getList()
+    {
+        return $this->find('list')
+            ->order([$this->displayField() => 'ASC'])
+            ->cache(sprintf('%s_list', $this->table()), $this->cache)
+            ->toArray();
+    }
+
+    /**
+     * Gets the categories tree list
+     * @return array
+     * @uses $cache
+     */
+    public function getTreeList()
+    {
+        return $this->find('treeList')
+            ->cache(sprintf('%s_tree_list', $this->table()), $this->cache)
+            ->toArray();
+    }
+
+    /**
      * Checks whether a record belongs to an user.
      *
      * For example:

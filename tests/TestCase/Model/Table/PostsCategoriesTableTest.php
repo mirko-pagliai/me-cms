@@ -186,36 +186,6 @@ class PostsCategoriesTableTest extends TestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @test
-     */
-    public function testGetList()
-    {
-        $categories = $this->PostsCategories->getList();
-        $this->assertEquals([
-            2 => 'Another post category',
-            1 => 'First post category',
-            3 => 'Sub post category',
-            4 => 'Sub sub post category',
-        ], $categories);
-    }
-
-    /**
-     * Test for `getTreeList()` method
-     * @test
-     */
-    public function testGetTreeList()
-    {
-        $categories = $this->PostsCategories->getTreeList();
-        $this->assertEquals([
-            1 => 'First post category',
-            3 => '—Sub post category',
-            4 => '——Sub sub post category',
-            2 => 'Another post category',
-        ], $categories);
-    }
-
-    /**
      * Test for `validationDefault()` method
      * @test
      */

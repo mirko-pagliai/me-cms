@@ -2,13 +2,19 @@
 ## 2.14 branch
 ### 2.14.12
 * now the `PhotosAlbum` entity has the `path` virtual field;
+* `getList()` and `getTreeList()` methods moved to `AppModel` class. So now
+    each model has these methods;
+* added `findActive()` method for `TagsTable`;
+* improved `StaticPage` class;
 * fixed a serious bug in the association of tokens with users;
 * fixed a serious bug for the `AppTable::isOwnedBy()` method;
+* fixed the `.htaccess` for KCFinder to work also with PHP 7;
 * fixed bug for validator for pages categories;
 * fixed bug for pages, now the next page to be published is set correctly;
 * fixed bug for `BannersPositionsTable::getList()` method;
 * fixed a little bug on tag slugs. Slug are now lower case;
 * added `firstImageFromText()` global function;
+* added tests for `Sitemap` and `StaticPage` classes;
 * added tests for all entity and all tables classes.
 
 ### 2.14.11

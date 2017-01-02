@@ -90,7 +90,7 @@ class PostsCategoriesFixture extends TestFixture
             'title' => 'Sub post category',
             'slug' => 'sub-post-category',
             'description' => 'Description of sub category',
-            'post_count' => 1,
+            'post_count' => 0,
             'created' => '2016-12-26 21:26:32',
             'modified' => '2016-12-26 21:26:32',
         ],
