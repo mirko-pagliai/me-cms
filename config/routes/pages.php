@@ -50,7 +50,7 @@ if (!$routes->nameExists('page')) {
         ['controller' => 'Pages', 'action' => 'view'],
         [
             '_name' => 'page',
-            'slug' => '[a-z0-9\-\/]+',
+            'slug' => '[a-z0-9\-\_\/]+',
             'pass' => ['slug'],
         ]
     );
