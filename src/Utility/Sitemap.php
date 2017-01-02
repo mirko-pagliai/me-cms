@@ -220,10 +220,9 @@ class Sitemap extends SitemapBuilder
             return $url;
         }
 
-        $tags = $table->find('all')
+        $tags = $table->find('active')
             ->select(['tag', 'modified'])
-            ->order(['tag' => 'ASC'])
-            ->where(['post_count >' => 0]);
+            ->order(['tag' => 'ASC']);
 
         if ($tags->isEmpty()) {
             return [];

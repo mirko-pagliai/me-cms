@@ -103,6 +103,27 @@ class TagsTableTest extends TestCase
     }
 
     /**
+     * Test for `findActive()` method
+     * @test
+     */
+    public function testFindActive()
+    {
+        $this->assertTrue($this->Tags->hasFinder('active'));
+
+        $query = $this->Tags->find('active');
+        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertEquals('SELECT Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM tags Tags WHERE Tags.post_count > :c0', $query->sql());
+
+        $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
+
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $tag) {
+            $this->assertNotEquals(0, $tag->post_count);
+        }
+    }
+
+    /**
      * Test for `queryFromFilter()` method
      * @test
      */

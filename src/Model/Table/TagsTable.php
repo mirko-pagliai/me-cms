@@ -39,6 +39,19 @@ class TagsTable extends AppTable
     public $cache = 'posts';
 
     /**
+     * "Active" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findActive(Query $query, array $options)
+    {
+        $query->where([sprintf('%s.post_count >', $this->alias()) => 0]);
+
+        return $query;
+    }
+
+    /**
      * Initialize method
      * @param array $config The configuration for the table
      * @return void
