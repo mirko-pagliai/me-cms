@@ -14,7 +14,7 @@
 * fixed bug for `BannersPositionsTable::getList()` method;
 * fixed a little bug on tag slugs. Slug are now lower case;
 * added `firstImageFromText()` global function;
-* added tests for `Sitemap` and `StaticPage` classes;
+* added tests for `Sitemap`, `SitemapBuilder` and `StaticPage` classes;
 * added tests for all entity and all tables classes.
 
 ### 2.14.11
