@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.13
+* fixed bug for sorting records in the admin panel.
+
 ### 2.14.12
 * now the `PhotosAlbum` entity has the `path` virtual field;
 * `getList()` and `getTreeList()` methods moved to `AppModel` class. So now
