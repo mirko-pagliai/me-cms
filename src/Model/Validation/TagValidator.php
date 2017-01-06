@@ -65,7 +65,7 @@ class TagValidator extends AppValidator
      */
     public function validTag($value, $context)
     {
-        //Checks if the tag has only lowercase letters, numbers, hyphen, space
+        //Checks if the tag has only lowercase letters, numbers, space
         return (bool)preg_match('/^[a-z0-9\ ]+$/', $value);
     }
 }
