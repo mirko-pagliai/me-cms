@@ -57,6 +57,28 @@ class BannerValidatorTest extends TestCase
     }
 
     /**
+     * Test validation for `position_id` property
+     * @test
+     */
+    public function testValidationForPositionId()
+    {
+        $entity = $this->Banners->newEntity([
+            'position_id' => 1,
+            'filename' => 'pic.jpg',
+        ]);
+        $this->assertEmpty($entity->errors());
+
+        $entity = $this->Banners->newEntity(['filename' => 'pic.jpg']);
+        $this->assertEquals(['position_id' => ['_required' => 'This field is required']], $entity->errors());
+
+        $entity = $this->Banners->newEntity([
+            'filename' => 'pic.jpg',
+            'position_id' => 'string',
+        ]);
+        $this->assertEquals(['position_id' => ['naturalNumber' => 'You have to select a valid option']], $entity->errors());
+    }
+
+    /**
      * Test validation for `filename` property
      * @test
      */
@@ -84,28 +106,6 @@ class BannerValidatorTest extends TestCase
             'filename' => 'text.txt',
         ]);
         $this->assertEquals($expected, $entity->errors());
-    }
-
-    /**
-     * Test validation for `position_id` property
-     * @test
-     */
-    public function testValidationForPositionId()
-    {
-        $entity = $this->Banners->newEntity([
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-        ]);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->Banners->newEntity(['filename' => 'pic.jpg']);
-        $this->assertEquals(['position_id' => ['_required' => 'This field is required']], $entity->errors());
-
-        $entity = $this->Banners->newEntity([
-            'filename' => 'pic.jpg',
-            'position_id' => 'string',
-        ]);
-        $this->assertEquals(['position_id' => ['naturalNumber' => 'You have to select a valid option']], $entity->errors());
     }
 
     /**
