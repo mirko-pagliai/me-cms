@@ -63,8 +63,8 @@ class BannerValidatorTest extends TestCase
     public function testValidationForFilename()
     {
         $entity = $this->Banners->newEntity([
-            'filename' => 'pic.jpg',
             'position_id' => 1,
+            'filename' => 'pic.jpg',
         ]);
         $this->assertEmpty($entity->errors());
 
@@ -74,14 +74,14 @@ class BannerValidatorTest extends TestCase
         $expected = ['filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png']];
 
         $entity = $this->Banners->newEntity([
-            'filename' => 'pic',
             'position_id' => 1,
+            'filename' => 'pic',
         ]);
         $this->assertEquals($expected, $entity->errors());
 
         $entity = $this->Banners->newEntity([
-            'filename' => 'text.txt',
             'position_id' => 1,
+            'filename' => 'text.txt',
         ]);
         $this->assertEquals($expected, $entity->errors());
     }
@@ -93,8 +93,8 @@ class BannerValidatorTest extends TestCase
     public function testValidationForPositionId()
     {
         $entity = $this->Banners->newEntity([
-            'filename' => 'pic.jpg',
             'position_id' => 1,
+            'filename' => 'pic.jpg',
         ]);
         $this->assertEmpty($entity->errors());
 
@@ -115,8 +115,8 @@ class BannerValidatorTest extends TestCase
     public function testValidationForTarget()
     {
         $data = [
-            'filename' => 'pic.jpg',
             'position_id' => 1,
+            'filename' => 'pic.jpg',
             'target' => 'http://example.com',
         ];
 
@@ -143,8 +143,8 @@ class BannerValidatorTest extends TestCase
     public function testValidationForThumbnail()
     {
         $data = [
-            'filename' => 'pic.jpg',
             'position_id' => 1,
+            'filename' => 'pic.jpg',
             'thumbnail' => true,
         ];
 
