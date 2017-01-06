@@ -39,14 +39,6 @@ class BannerValidator extends AppValidator
     {
         parent::__construct();
 
-        //Filename
-        $this->add('filename', [
-            'extension' => [
-                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
-            ],
-        ])->requirePresence('filename', 'create');
-
         //Position
         $this->add('position_id', [
             'naturalNumber' => [
@@ -54,6 +46,14 @@ class BannerValidator extends AppValidator
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('position_id', 'create');
+
+        //Filename
+        $this->add('filename', [
+            'extension' => [
+                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
+                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
+            ],
+        ])->requirePresence('filename', 'create');
 
         //Target
         $this->add('target', [
