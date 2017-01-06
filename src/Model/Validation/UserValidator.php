@@ -52,11 +52,6 @@ class UserValidator extends AppValidator
 
         //Username
         $this->add('username', [
-            'blank' => [
-                'message' => __d('me_cms', 'Can not be changed'),
-                'on' => 'update',
-                'rule' => 'blank',
-            ],
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 4, 40),
                 'rule' => ['lengthBetween', 4, 40],
@@ -75,7 +70,7 @@ class UserValidator extends AppValidator
                 'rule' => 'validateUnique',
             ],
             'usernameNotReserved' => [
-                'message' => __d('me_cms', 'This value is reserved'),
+                'message' => __d('me_cms', 'This value contains a reserved word'),
                 'rule' => function ($value, $context) {
                     return (bool)!preg_match('/(admin|manager|root|supervisor|moderator)/i', $value);
                 },
