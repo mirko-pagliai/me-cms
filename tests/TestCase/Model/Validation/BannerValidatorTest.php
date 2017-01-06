@@ -127,11 +127,11 @@ class BannerValidatorTest extends TestCase
         $entity = $this->Banners->newEntity($data);
         $this->assertEquals(['target' => ['url' => 'Must be a valid url']], $entity->errors());
 
-        $data['target'] = 'http://example.com/'. str_repeat('a', 237);
+        $data['target'] = 'http://example.com/' . str_repeat('a', 237);
         $entity = $this->Banners->newEntity($data);
         $this->assertEquals(['target' => ['maxLength' => 'Must be at most 255 chars']], $entity->errors());
 
-        $data['target'] = 'http://example.com/'. str_repeat('a', 236);
+        $data['target'] = 'http://example.com/' . str_repeat('a', 236);
         $entity = $this->Banners->newEntity($data);
         $this->assertEmpty($entity->errors());
     }

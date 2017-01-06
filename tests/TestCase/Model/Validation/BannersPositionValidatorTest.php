@@ -86,4 +86,3 @@ class BannersPositionValidatorTest extends TestCase
         $this->assertEmpty($entity->errors());
     }
 }
-
