@@ -63,10 +63,10 @@ class PageValidatorTest extends TestCase
     public function testValidationForCategoryId()
     {
         $data = [
+            'category_id' => 1,
             'title' => 'My title',
             'slug' => 'my-slug',
             'text' => 'My text',
-            'category_id' => 1,
         ];
 
         $entity = $this->Pages->newEntity($data);
@@ -88,10 +88,10 @@ class PageValidatorTest extends TestCase
     public function testValidationForTitle()
     {
         $data = [
+            'category_id' => 1,
             'title' => 'My title',
             'slug' => 'my-slug',
             'text' => 'My text',
-            'category_id' => 1,
         ];
 
         $entity = $this->Pages->newEntity($data);
@@ -109,10 +109,10 @@ class PageValidatorTest extends TestCase
     public function testValidationForSlug()
     {
         $data = [
+            'category_id' => 1,
             'title' => 'My title',
             'slug' => 'my-slug',
             'text' => 'My text',
-            'category_id' => 1,
         ];
 
         $entity = $this->Pages->newEntity($data);
@@ -130,10 +130,10 @@ class PageValidatorTest extends TestCase
     public function testValidationForText()
     {
         $data = [
+            'category_id' => 1,
             'title' => 'My title',
             'slug' => 'my-slug',
             'text' => 'My text',
-            'category_id' => 1,
         ];
 
         $entity = $this->Pages->newEntity($data);
