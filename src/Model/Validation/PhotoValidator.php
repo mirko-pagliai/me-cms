@@ -39,14 +39,6 @@ class PhotoValidator extends AppValidator
     {
         parent::__construct();
 
-        //Filename
-        $this->add('filename', [
-            'extension' => [
-                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
-            ],
-        ])->requirePresence('filename', 'create');
-
         //Album
         $this->add('album_id', [
             'naturalNumber' => [
@@ -54,5 +46,13 @@ class PhotoValidator extends AppValidator
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('album_id', 'create');
+
+        //Filename
+        $this->add('filename', [
+            'extension' => [
+                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
+                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
+            ],
+        ])->requirePresence('filename', 'create');
     }
 }
