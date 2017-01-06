@@ -36,6 +36,12 @@ class BannersPositionValidatorTest extends TestCase
     protected $BannersPositions;
 
     /**
+     * Example data
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -54,6 +60,30 @@ class BannersPositionValidatorTest extends TestCase
         parent::setUp();
 
         $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
+
+        $this->example = [
+            'title' => 'my-title',
+        ];
+    }
+
+    /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @test
+     */
+    public function testValidationExampleData()
+    {
+        $errors = $this->BannersPositions->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
+
+        foreach ($this->example as $key => $value) {
+            //Create a copy of the example data and removes the current value
+            $copy = $this->example;
+            unset($copy[$key]);
+
+            $errors = $this->BannersPositions->newEntity($copy)->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+        }
     }
 
     /**
@@ -62,27 +92,23 @@ class BannersPositionValidatorTest extends TestCase
      */
     public function testValidatorForTitle()
     {
-        $entity = $this->BannersPositions->newEntity(['title' => 'my-title']);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->BannersPositions->newEntity([]);
-        $this->assertEquals(['title' => ['_required' => 'This field is required']], $entity->errors());
-
-        $entity = $this->BannersPositions->newEntity(['title' => 'ab']);
+        $this->example['title'] = 'ab';
+        $errors = $this->BannersPositions->newEntity($this->example)->errors();
         $this->assertEquals([
             'title' => [
                 'lengthBetween' => 'Must be between 3 and 100 chars',
                 'slug' => 'Allowed chars: lowercase letters, numbers, dash',
             ],
-        ], $entity->errors());
+        ], $errors);
 
-        $entity = $this->BannersPositions->newEntity(['title' => str_repeat('a', 101)]);
-        $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $entity->errors());
+        $this->example['title'] = str_repeat('a', 101);
+        $errors = $this->BannersPositions->newEntity($this->example)->errors();
+        $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
 
-        $entity = $this->BannersPositions->newEntity(['title' => 'abc']);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->BannersPositions->newEntity(['title' => str_repeat('a', 100)]);
-        $this->assertEmpty($entity->errors());
+        foreach (['abc', str_repeat('a', 100)] as $value) {
+            $this->example['title'] = $value;
+            $errors = $this->BannersPositions->newEntity($this->example)->errors();
+            $this->assertEmpty($errors);
+        }
     }
 }

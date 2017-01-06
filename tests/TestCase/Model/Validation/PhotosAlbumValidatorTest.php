@@ -36,6 +36,12 @@ class PhotosAlbumValidatorTest extends TestCase
     protected $PhotosAlbums;
 
     /**
+     * Example data
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -54,43 +60,30 @@ class PhotosAlbumValidatorTest extends TestCase
         parent::setUp();
 
         $this->PhotosAlbums = TableRegistry::get('MeCms.PhotosAlbums');
-    }
 
-    /**
-     * Test validation for `title` property
-     * @test
-     */
-    public function testValidationForTitle()
-    {
-        $data = [
+        $this->example = [
             'title' => 'My title',
             'slug' => 'my-slug',
         ];
-
-        $entity = $this->PhotosAlbums->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        unset($data['title']);
-        $entity = $this->PhotosAlbums->newEntity($data);
-        $this->assertEquals(['title' => ['_required' => 'This field is required']], $entity->errors());
     }
 
     /**
-     * Test validation for `slug` property
+     * Test validation.
+     * It tests the proper functioning of the example data.
      * @test
      */
-    public function testValidationForSlug()
+    public function testValidationExampleData()
     {
-        $data = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $errors = $this->PhotosAlbums->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
 
-        $entity = $this->PhotosAlbums->newEntity($data);
-        $this->assertEmpty($entity->errors());
+        foreach ($this->example as $key => $value) {
+            //Create a copy of the example data and removes the current value
+            $copy = $this->example;
+            unset($copy[$key]);
 
-        unset($data['slug']);
-        $entity = $this->PhotosAlbums->newEntity($data);
-        $this->assertEquals(['slug' => ['_required' => 'This field is required']], $entity->errors());
+            $errors = $this->PhotosAlbums->newEntity($copy)->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+        }
     }
 }

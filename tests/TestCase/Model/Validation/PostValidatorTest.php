@@ -36,6 +36,12 @@ class PostValidatorTest extends TestCase
     protected $Posts;
 
     /**
+     * Example data
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -54,6 +60,34 @@ class PostValidatorTest extends TestCase
         parent::setUp();
 
         $this->Posts = TableRegistry::get('MeCms.Posts');
+
+        $this->example = [
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+        ];
+    }
+
+    /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @test
+     */
+    public function testValidationExampleData()
+    {
+        $errors = $this->Posts->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
+
+        foreach ($this->example as $key => $value) {
+            //Create a copy of the example data and removes the current value
+            $copy = $this->example;
+            unset($copy[$key]);
+
+            $errors = $this->Posts->newEntity($copy)->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+        }
     }
 
     /**
@@ -62,112 +96,9 @@ class PostValidatorTest extends TestCase
      */
     public function testValidationForCategoryId()
     {
-        $data = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        $data['category_id'] = 'string';
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEquals(['category_id' => ['naturalNumber' => 'You have to select a valid option']], $entity->errors());
-
-        unset($data['category_id']);
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEquals(['category_id' => ['_required' => 'This field is required']], $entity->errors());
-    }
-
-    /**
-     * Test validation for `user_id` property
-     * @test
-     */
-    public function testValidationForUserId()
-    {
-        $data = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        unset($data['user_id']);
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEquals(['user_id' => ['_required' => 'This field is required']], $entity->errors());
-    }
-
-    /**
-     * Test validation for `title` property
-     * @test
-     */
-    public function testValidationForTitle()
-    {
-        $data = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        unset($data['title']);
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEquals(['title' => ['_required' => 'This field is required']], $entity->errors());
-    }
-
-    /**
-     * Test validation for `slug` property
-     * @test
-     */
-    public function testValidationForSlug()
-    {
-        $data = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        unset($data['slug']);
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEquals(['slug' => ['_required' => 'This field is required']], $entity->errors());
-    }
-
-    /**
-     * Test validation for `text` property
-     * @test
-     */
-    public function testValidationForText()
-    {
-        $data = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        unset($data['text']);
-        $entity = $this->Posts->newEntity($data);
-        $this->assertEquals(['text' => ['_required' => 'This field is required']], $entity->errors());
+        $this->example['category_id'] = 'string';
+        $errors = $this->Posts->newEntity($this->example)->errors();
+        $this->assertEquals(['category_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
     }
 
     /**

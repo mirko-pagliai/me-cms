@@ -36,6 +36,12 @@ class PhotoValidatorTest extends TestCase
     protected $Photos;
 
     /**
+     * Example data
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -54,6 +60,31 @@ class PhotoValidatorTest extends TestCase
         parent::setUp();
 
         $this->Photos = TableRegistry::get('MeCms.Photos');
+
+        $this->example = [
+            'album_id' => 1,
+            'filename' => 'pic.jpg',
+        ];
+    }
+
+    /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @test
+     */
+    public function testValidationExampleData()
+    {
+        $errors = $this->Photos->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
+
+        foreach ($this->example as $key => $value) {
+            //Create a copy of the example data and removes the current value
+            $copy = $this->example;
+            unset($copy[$key]);
+
+            $errors = $this->Photos->newEntity($copy)->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+        }
     }
 
     /**
@@ -62,20 +93,9 @@ class PhotoValidatorTest extends TestCase
      */
     public function testValidationForAlbumId()
     {
-        $entity = $this->Photos->newEntity([
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ]);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->Photos->newEntity(['filename' => 'pic.jpg']);
-        $this->assertEquals(['album_id' => ['_required' => 'This field is required']], $entity->errors());
-
-        $entity = $this->Photos->newEntity([
-            'album_id' => 'string',
-            'filename' => 'pic.jpg',
-        ]);
-        $this->assertEquals(['album_id' => ['naturalNumber' => 'You have to select a valid option']], $entity->errors());
+        $this->example['album_id'] = 'string';
+        $errors = $this->Photos->newEntity($this->example)->errors();
+        $this->assertEquals(['album_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
     }
 
     /**
@@ -84,27 +104,12 @@ class PhotoValidatorTest extends TestCase
      */
     public function testValidationForFilename()
     {
-        $entity = $this->Photos->newEntity([
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ]);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->Photos->newEntity(['album_id' => 1]);
-        $this->assertEquals(['filename' => ['_required' => 'This field is required']], $entity->errors());
-
         $expected = ['filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png']];
 
-        $entity = $this->Photos->newEntity([
-            'album_id' => 1,
-            'filename' => 'pic',
-        ]);
-        $this->assertEquals($expected, $entity->errors());
-
-        $entity = $this->Photos->newEntity([
-            'album_id' => 1,
-            'filename' => 'text.txt',
-        ]);
-        $this->assertEquals($expected, $entity->errors());
+        foreach (['pic', 'text.txt'] as $value) {
+            $this->example['filename'] = $value;
+            $errors = $this->Photos->newEntity($this->example)->errors();
+            $this->assertEquals($expected, $errors);
+        }
     }
 }

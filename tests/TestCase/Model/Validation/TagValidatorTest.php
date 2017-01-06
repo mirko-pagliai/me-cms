@@ -36,6 +36,12 @@ class TagValidatorTest extends TestCase
     protected $Tags;
 
     /**
+     * Example data
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -54,6 +60,19 @@ class TagValidatorTest extends TestCase
         parent::setUp();
 
         $this->Tags = TableRegistry::get('MeCms.Tags');
+
+        $this->example = [];
+    }
+
+    /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @test
+     */
+    public function testValidationExampleData()
+    {
+        $errors = $this->Tags->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
     }
 
     /**
@@ -62,35 +81,22 @@ class TagValidatorTest extends TestCase
      */
     public function testValidationForTag()
     {
-        $entity = $this->Tags->newEntity([]);
-        $this->assertEmpty($entity->errors());
+        foreach (['abc', str_repeat('a', 30)] as $value) {
+            $this->example['tag'] = $value;
+            $errors = $this->Tags->newEntity($this->example)->errors();
+            $this->assertEmpty($errors);
+        }
 
-        $entity = $this->Tags->newEntity(['tag' => 'abc']);
-        $this->assertEmpty($entity->errors());
+        foreach (['ab', str_repeat('a', 31)] as $value) {
+            $this->example['tag'] = $value;
+            $errors = $this->Tags->newEntity($this->example)->errors();
+            $this->assertEquals(['tag' => ['lengthBetween' => 'Must be between 3 and 30 chars']], $errors);
+        }
 
-        $entity = $this->Tags->newEntity(['tag' => str_repeat('a', 30)]);
-        $this->assertEmpty($entity->errors());
-
-        $expected = ['tag' => ['lengthBetween' => 'Must be between 3 and 30 chars']];
-
-        $entity = $this->Tags->newEntity(['tag' => 'ab']);
-        $this->assertEquals($expected, $entity->errors());
-
-        $entity = $this->Tags->newEntity(['tag' => str_repeat('a', 31)]);
-        $this->assertEquals($expected, $entity->errors());
-
-        $expected = ['tag' => ['validTag' => 'Allowed chars: lowercase letters, numbers, space']];
-
-        $entity = $this->Tags->newEntity(['tag' => 'AbC']);
-        $this->assertEquals($expected, $entity->errors());
-
-        $entity = $this->Tags->newEntity(['tag' => 'ab_c']);
-        $this->assertEquals($expected, $entity->errors());
-
-        $entity = $this->Tags->newEntity(['tag' => 'ab-c']);
-        $this->assertEquals($expected, $entity->errors());
-
-        $entity = $this->Tags->newEntity(['tag' => 'abc$']);
-        $this->assertEquals($expected, $entity->errors());
+        foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $value) {
+            $this->example['tag'] = $value;
+            $errors = $this->Tags->newEntity($this->example)->errors();
+            $this->assertEquals(['tag' => ['validTag' => 'Allowed chars: lowercase letters, numbers, space']], $errors);
+        }
     }
 }

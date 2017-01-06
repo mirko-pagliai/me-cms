@@ -36,6 +36,12 @@ class BannerValidatorTest extends TestCase
     protected $Banners;
 
     /**
+     * Example data
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -54,6 +60,31 @@ class BannerValidatorTest extends TestCase
         parent::setUp();
 
         $this->Banners = TableRegistry::get('MeCms.Banners');
+
+        $this->example = [
+            'position_id' => 1,
+            'filename' => 'pic.jpg',
+        ];
+    }
+
+    /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @test
+     */
+    public function testValidationExampleData()
+    {
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
+
+        foreach ($this->example as $key => $value) {
+            //Create a copy of the example data and removes the current value
+            $copy = $this->example;
+            unset($copy[$key]);
+
+            $errors = $this->Banners->newEntity($copy)->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+        }
     }
 
     /**
@@ -62,20 +93,9 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationForPositionId()
     {
-        $entity = $this->Banners->newEntity([
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-        ]);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->Banners->newEntity(['filename' => 'pic.jpg']);
-        $this->assertEquals(['position_id' => ['_required' => 'This field is required']], $entity->errors());
-
-        $entity = $this->Banners->newEntity([
-            'filename' => 'pic.jpg',
-            'position_id' => 'string',
-        ]);
-        $this->assertEquals(['position_id' => ['naturalNumber' => 'You have to select a valid option']], $entity->errors());
+        $this->example['position_id'] = 'string';
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEquals(['position_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
     }
 
     /**
@@ -84,28 +104,13 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationForFilename()
     {
-        $entity = $this->Banners->newEntity([
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-        ]);
-        $this->assertEmpty($entity->errors());
-
-        $entity = $this->Banners->newEntity(['position_id' => 1]);
-        $this->assertEquals(['filename' => ['_required' => 'This field is required']], $entity->errors());
-
         $expected = ['filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png']];
 
-        $entity = $this->Banners->newEntity([
-            'position_id' => 1,
-            'filename' => 'pic',
-        ]);
-        $this->assertEquals($expected, $entity->errors());
-
-        $entity = $this->Banners->newEntity([
-            'position_id' => 1,
-            'filename' => 'text.txt',
-        ]);
-        $this->assertEquals($expected, $entity->errors());
+        foreach (['pic', 'text.txt'] as $value) {
+            $this->example['filename'] = $value;
+            $errors = $this->Banners->newEntity($this->example)->errors();
+            $this->assertEquals($expected, $errors);
+        }
     }
 
     /**
@@ -114,26 +119,21 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationForTarget()
     {
-        $data = [
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-            'target' => 'http://example.com',
-        ];
+        $this->example['target'] = 'http://example.com';
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
 
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEmpty($entity->errors());
+        $this->example['target'] = 'string';
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEquals(['target' => ['url' => 'Must be a valid url']], $errors);
 
-        $data['target'] = 'string';
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEquals(['target' => ['url' => 'Must be a valid url']], $entity->errors());
+        $this->example['target'] = 'http://example.com/' . str_repeat('a', 237);
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEquals(['target' => ['maxLength' => 'Must be at most 255 chars']], $errors);
 
-        $data['target'] = 'http://example.com/' . str_repeat('a', 237);
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEquals(['target' => ['maxLength' => 'Must be at most 255 chars']], $entity->errors());
-
-        $data['target'] = 'http://example.com/' . str_repeat('a', 236);
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEmpty($entity->errors());
+        $this->example['target'] = 'http://example.com/' . str_repeat('a', 236);
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEmpty($errors);
     }
 
     /**
@@ -142,21 +142,14 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationForThumbnail()
     {
-        $data = [
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-            'thumbnail' => true,
-        ];
+        foreach ([true, false] as $value) {
+            $this->example['thumbnail'] = $value;
+            $errors = $this->Banners->newEntity($this->example)->errors();
+            $this->assertEmpty($errors);
+        }
 
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        $data['thumbnail'] = false;
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEmpty($entity->errors());
-
-        $data['thumbnail'] = 'string';
-        $entity = $this->Banners->newEntity($data);
-        $this->assertEquals(['thumbnail' => ['boolean' => 'You have to select a valid option']], $entity->errors());
+        $this->example['thumbnail'] = 'string';
+        $errors = $this->Banners->newEntity($this->example)->errors();
+        $this->assertEquals(['thumbnail' => ['boolean' => 'You have to select a valid option']], $errors);
     }
 }
