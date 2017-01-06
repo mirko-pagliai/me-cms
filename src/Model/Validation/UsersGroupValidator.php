@@ -41,11 +41,6 @@ class UsersGroupValidator extends AppValidator
 
         //Name
         $this->add('name', [
-            'blank' => [
-                'message' => __d('me_cms', 'Can not be changed'),
-                'on' => 'update',
-                'rule' => 'blank',
-            ],
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
