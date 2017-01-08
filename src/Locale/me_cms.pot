@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-12-26 13:36+0100\n"
+"POT-Creation-Date: 2017-01-08 15:40+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -31,7 +31,7 @@ msgid "Updates to {0} version"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsCategoriesController.php:95
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsTagsController.php:100
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsTagsController.php:97
 msgid "Record not found"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:111;135;159
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:154;180;202
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:75;99;123
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:183;217
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:180;214
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:110;134;158
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:164;208;230
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:82
@@ -149,7 +149,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:115;139;161
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:158;184;204
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:79;103;125
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:187;219
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:184;216
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:114;138;160
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:168;212;232
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:86
@@ -189,11 +189,11 @@ msgstr ""
 msgid "You must first create an album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:142
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:139
 msgid "Missing album ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:161
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:158
 msgid "The photo could not be saved"
 msgstr ""
 
@@ -222,19 +222,19 @@ msgid "You are not authorized for this action"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Form/BackupForm.php:57
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:53
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:53
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/add.ctp:34
 msgid "Valid extensions: {0}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Form/BackupForm.php:61
 #: /home/mirko/Libs/Plugins/MeCms/src/Form/ContactForm.php:60
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:71;79;96;113;144;152
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:75;92;109;125
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:46
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/TagValidator.php:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:61
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:50;71
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:56
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:45;61
 msgid "Must be between {0} and {1} chars"
 msgstr ""
 
@@ -255,62 +255,71 @@ msgstr ""
 msgid "Reset your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:59;176;192
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:53;73
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PageValidator.php:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:53
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:45
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:48;158
-msgid "You have to select a valid option"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:67;200
-msgid "You have to enter a valid value"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:85;102;158
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:51
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:71
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/TagValidator.php:51
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:67
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:61
-msgid "Allowed chars"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:86;103
-msgid "letters, apostrophe, space"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:87;104
-msgid "Has to begin with a capital letter"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:117;135;164
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:57
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:73;88
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:54;75
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/BannersPositionsTable.php:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/BannersTable.php:67
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PagesCategoriesTable.php:51;52
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PagesTable.php:83;84
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PhotosAlbumsTable.php:85;86
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PhotosTable.php:68
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsCategoriesTable.php:51;52
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:88;89
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/TagsTable.php:50
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/UsersGroupsTable.php:47;48
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/UsersTable.php:53;54
 msgid "This value is already used"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:126
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:56
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:45
-msgid "Can not be changed"
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/BannersTable.php:66
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PagesCategoriesTable.php:50
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PagesTable.php:82
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PhotosTable.php:67
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsCategoriesTable.php:50
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:86;87
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTagsTable.php:50;51
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/UsersTable.php:52
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:55;152;168
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:45;73
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PageValidator.php:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PhotoValidator.php:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:45
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:48;143
+msgid "You have to select a valid option"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:131;184
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:63;176
+msgid "You have to enter a valid value"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:67;117;133;160
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannerValidator.php:61
 msgid "Must be at most {0} chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:159
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:81;98;139
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:52
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:71
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/TagValidator.php:51
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:62
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:51
+msgid "Allowed chars"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:82;99
+msgid "letters, apostrophe, space"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:83;100
+msgid "Has to begin with a capital letter"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:140
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/BannersPositionValidator.php:53
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/PostValidator.php:72
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:68
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:63
 msgid "lowercase letters, numbers, dash"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:171
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:147
 msgid "This field can not be empty"
 msgstr ""
 
@@ -326,31 +335,31 @@ msgstr ""
 msgid "lowercase letters, numbers, space"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:78
-msgid "This value is reserved"
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:68
+msgid "This value contains a reserved word"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:97
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:81
 msgid "Email addresses don't match"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:105
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:90
 msgid "Must be at least {0} chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:109
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:94
 msgid "The password should contain letters, numbers and symbols"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:123
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:108
 msgid "Passwords don't match"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:131
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UserValidator.php:116
 msgid "The old password is wrong"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:62
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/UsersGroupValidator.php:52
 msgid "lowercase letters"
 msgstr ""
 
@@ -505,7 +514,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:160
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/index.ctp:45
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:240
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:262
 msgid "Users"
 msgstr ""
 
@@ -524,7 +533,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:45
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:87
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:97
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:85
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:90
 msgid "Posts"
 msgstr ""
 
@@ -582,7 +591,7 @@ msgid "Lists users"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Backups/add.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:260
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:283
 msgid "Add backup"
 msgstr ""
 
@@ -852,7 +861,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/upload.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:179
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:194
 msgid "Upload banners"
 msgstr ""
 
@@ -903,7 +912,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:45
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Common/Banners/index.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:199
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:217
 msgid "Banners"
 msgstr ""
 
@@ -915,7 +924,7 @@ msgid "Upload"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Common/Banners/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:192
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:209
 msgid "Add position"
 msgstr ""
 
@@ -971,12 +980,12 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Photos/view.ctp:57
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/PhotosAlbums/index.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/PhotosAlbums/view.ctp:61
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:158
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:172
 msgid "Photos"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Common/Photos/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:152
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:165
 msgid "Add album"
 msgstr ""
 
@@ -1041,7 +1050,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/add.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:104
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:110
 msgid "Add page"
 msgstr ""
 
@@ -1133,13 +1142,13 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/index.ctp:45
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/Pages/pages.ctp:29
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/topbar.ctp:52
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:127
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:137
 msgid "Pages"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index.ctp:33
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:72;114
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:75;122
 msgid "Add category"
 msgstr ""
 
@@ -1262,7 +1271,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/upload.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:142
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:153
 msgid "Upload photos"
 msgstr ""
 
@@ -1286,7 +1295,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Posts/add.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PostsCategories/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:59
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:60
 msgid "Add post"
 msgstr ""
 
@@ -1366,7 +1375,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/browser.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:302
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:329
 msgid "Media browser"
 msgstr ""
 
@@ -1375,7 +1384,7 @@ msgid "Type"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/changelogs.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:307
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:335
 msgid "Changelogs"
 msgstr ""
 
@@ -1384,7 +1393,7 @@ msgid "Changelog"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:297
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:323
 msgid "System checkup"
 msgstr ""
 
@@ -1426,7 +1435,7 @@ msgid "The {0} extension is not enabled"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:124
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:266
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:290
 msgid "Backups"
 msgstr ""
 
@@ -1443,7 +1452,7 @@ msgid "Temporary directories"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:282
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:306
 msgid "Temporary files"
 msgstr ""
 
@@ -1529,7 +1538,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/UsersGroups/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:220
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:239
 msgid "Add user"
 msgstr ""
 
@@ -1587,7 +1596,7 @@ msgid "If you want to change the password just type a new one. Otherwise, leave 
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:233
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:254
 msgid "Add group"
 msgstr ""
 
@@ -2032,55 +2041,55 @@ msgstr ""
 msgid "List posts"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:67;109
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:69;116
 msgid "List categories"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:79
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:83
 msgid "List tags"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:96
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:101
 msgid "List pages"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:121
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:130
 msgid "List static pages"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:137
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:147
 msgid "List photos"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:147
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:159
 msgid "List albums"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:174
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:188
 msgid "List banners"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:187
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:203
 msgid "List positions"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:215
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:233
 msgid "List users"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:228
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:248
 msgid "List groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:255
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:277
 msgid "List backups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:290
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:315
 msgid "Log management"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:313
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:342
 msgid "System"
 msgstr ""
 
