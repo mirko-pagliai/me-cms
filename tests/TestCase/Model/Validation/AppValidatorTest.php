@@ -215,24 +215,6 @@ class AppValidatorTest extends TestCase
      * Test validation for `filename` property
      * @test
      */
-    public function testValidationForFilenameOnUpdate()
-    {
-
-//        $entity = $this->Banners->get(1);
-//        debug($entity->filename);
-
-//        $entity->filename = 'new-filename.jpg';
-//        debug($entity->filename);
-
-//        debug($entity->errors());
-//        debug($this->Banners->save($entity));
-//        debug($entity->isNew());
-    }
-
-    /**
-     * Test validation for `filename` property
-     * @test
-     */
     public function testValidationForSubtitle()
     {
         foreach (['ab', str_repeat('a', 151)] as $value) {
