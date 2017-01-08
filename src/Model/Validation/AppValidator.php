@@ -49,10 +49,6 @@ class AppValidator extends Validator
     {
         parent::__construct();
 
-        //ID
-        $this->add('id', 'valid', ['rule' => 'naturalNumber'])
-            ->allowEmpty('id', 'create');
-
         //User (author)
         $this->add('user_id', [
             'naturalNumber' => [
