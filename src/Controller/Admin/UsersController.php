@@ -88,7 +88,7 @@ class UsersController extends AppController
             },
         ]);
 
-        $this->paginate['order'] = ['Users.username' => 'ASC'];
+        $this->paginate['order'] = ['username' => 'ASC'];
         $this->paginate['sortWhitelist'] = ['id', 'username', 'first_name', 'email', 'Groups.label', 'post_count', 'created'];
 
         $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->query));

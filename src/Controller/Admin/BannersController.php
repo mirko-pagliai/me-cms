@@ -99,7 +99,7 @@ class BannersController extends AppController
             },
         ]);
 
-        $this->paginate['order'] = ['Banners.created' => 'DESC'];
+        $this->paginate['order'] = ['created' => 'DESC'];
         $this->paginate['sortWhitelist'] = ['id', 'filename', 'Positions.title', 'description', 'click_count', 'created'];
 
         //Sets the paginate limit and the maximum paginate limit
