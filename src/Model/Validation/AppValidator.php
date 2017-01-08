@@ -67,9 +67,9 @@ class AppValidator extends Validator
                 'message' => __d('me_cms', 'You have to enter a valid value'),
                 'rule' => 'email',
             ],
-            'lengthBetween' => [
-                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-                'rule' => ['lengthBetween', 3, 100],
+            'maxLength' => [
+                'message' => __d('me_cms', 'Must be at most {0} chars', 100),
+                'rule' => ['maxLength', 100],
             ],
         ]);
 
@@ -122,11 +122,6 @@ class AppValidator extends Validator
 
         //Filename
         $this->add('filename', [
-            'blank' => [
-                'message' => __d('me_cms', 'Can not be changed'),
-                'on' => 'update',
-                'rule' => 'blank',
-            ],
             'maxLength' => [
                 'message' => __d('me_cms', 'Must be at most {0} chars', 255),
                 'rule' => ['maxLength', 255],
@@ -148,9 +143,9 @@ class AppValidator extends Validator
 
         //Slug
         $this->add('slug', [
-            'lengthBetween' => [
-                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-                'rule' => ['lengthBetween', 3, 100],
+            'maxLength' => [
+                'message' => __d('me_cms', 'Must be at most {0} chars', 100),
+                'rule' => ['maxLength', 100],
             ],
             'slug' => [
                 'message' => sprintf(
