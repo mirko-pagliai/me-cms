@@ -38,4 +38,16 @@ class PostsTagTest extends TestCase
     {
         $this->assertEquals('MeCms\Model\Entity\PostsTag', get_class(new PostsTag));
     }
+
+    /**
+     * Test for fields that cannot be mass assigned using newEntity() or
+     *  patchEntity()
+     * @test
+     */
+    public function testNoAccessibleProperties()
+    {
+        $entity = new PostsTag();
+
+        $this->assertFalse($entity->accessible('id'));
+    }
 }
