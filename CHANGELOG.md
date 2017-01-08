@@ -1,7 +1,9 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.13
-* fixed bug for sorting records in the admin panel.
+* fixed bug for sorting records in the admin panel;
+* improved some validation rules;
+* added tests for all validation classes.
 
 ### 2.14.12
 * now the `PhotosAlbum` entity has the `path` virtual field;
