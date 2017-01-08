@@ -232,7 +232,7 @@ class AppValidator extends Validator
      */
     public function slug($value, $context)
     {
-        //Lowercase letters, numbers, dash.
+        //Lowercase letters, numbers, dash. At least three chars.
         //It must contain at least one letter and must begin and end with a letter or a number.
         return (bool)preg_match('/[a-z]/', $value) &&
             (bool)preg_match('/^[a-z0-9][a-z0-9\-]+[a-z0-9]$/', $value);

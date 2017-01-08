@@ -167,12 +167,7 @@ class UserValidatorTest extends TestCase
     {
         $this->example['password'] = $this->example['password_repeat'] = 'ab';
         $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEquals([
-            'password' => [
-                'minLength' => 'Must be at least 8 chars',
-                'passwordIsStrong' => 'The password should contain letters, numbers and symbols',
-            ],
-        ], $errors);
+        $this->assertEquals(['password' => ['minLength' => 'Must be at least 8 chars']], $errors);
 
         foreach (['abcdefgh', '12345678', '!!!!!!!!', 'abcd1234', 'abcd!!!!', '1234!!!!'] as $value) {
             $this->example['password'] = $this->example['password_repeat'] = $value;

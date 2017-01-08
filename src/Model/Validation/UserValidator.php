@@ -97,6 +97,7 @@ class UserValidator extends AppValidator
         //Password
         $this->add('password', [
             'minLength' => [
+                'last' => true,
                 'message' => __d('me_cms', 'Must be at least {0} chars', 8),
                 'rule' => ['minLength', 8],
             ],

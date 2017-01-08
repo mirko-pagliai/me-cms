@@ -94,12 +94,7 @@ class BannersPositionValidatorTest extends TestCase
     {
         $this->example['title'] = 'ab';
         $errors = $this->BannersPositions->newEntity($this->example)->errors();
-        $this->assertEquals([
-            'title' => [
-                'lengthBetween' => 'Must be between 3 and 100 chars',
-                'slug' => 'Allowed chars: lowercase letters, numbers, dash',
-            ],
-        ], $errors);
+        $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
 
         $this->example['title'] = str_repeat('a', 101);
         $errors = $this->BannersPositions->newEntity($this->example)->errors();
