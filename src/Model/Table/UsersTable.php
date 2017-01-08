@@ -49,7 +49,7 @@ class UsersTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['group_id'], 'Groups'));
+        $rules->add($rules->existsIn(['group_id'], 'Groups', __d('me_cms', 'You have to select a valid option')));
         $rules->add($rules->isUnique(['email'], __d('me_cms', 'This value is already used')));
         $rules->add($rules->isUnique(['username'], __d('me_cms', 'This value is already used')));
 

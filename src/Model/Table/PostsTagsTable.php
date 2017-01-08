@@ -47,8 +47,8 @@ class PostsTagsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['tag_id'], 'Tags'));
-        $rules->add($rules->existsIn(['post_id'], 'Posts'));
+        $rules->add($rules->existsIn(['tag_id'], 'Tags', __d('me_cms', 'You have to select a valid option')));
+        $rules->add($rules->existsIn(['post_id'], 'Posts', __d('me_cms', 'You have to select a valid option')));
 
         return $rules;
     }

@@ -79,6 +79,42 @@ class PostsCategoriesTableTest extends TestCase
     {
         $this->assertEquals('posts', $this->PostsCategories->cache);
     }
+
+    /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'title' => 'My title',
+            'slug' => 'my-slug',
+        ];
+
+        $entity = $this->PostsCategories->newEntity($example);
+        $this->assertNotEmpty($this->PostsCategories->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->PostsCategories->newEntity($example);
+        $this->assertFalse($this->PostsCategories->save($entity));
+        $this->assertEquals([
+            'slug' => [
+                '_isUnique' => 'This value is already used',
+            ],
+            'title' => [
+                '_isUnique' => 'This value is already used',
+            ],
+        ], $entity->errors());
+
+        $entity = $this->PostsCategories->newEntity([
+            'parent_id' => 999,
+            'title' => 'My title 2',
+            'slug' => 'my-slug-2',
+        ]);
+        $this->assertFalse($this->PostsCategories->save($entity));
+        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+    }
+
     /**
      * Test for `initialize()` method
      * @test

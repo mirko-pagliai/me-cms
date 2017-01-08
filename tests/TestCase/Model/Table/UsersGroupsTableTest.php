@@ -81,6 +81,29 @@ class UsersGroupsTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'name' => 'group',
+            'label' => 'Group label',
+        ];
+
+        $entity = $this->UsersGroups->newEntity($example);
+        $this->assertNotEmpty($this->UsersGroups->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->UsersGroups->newEntity($example);
+        $this->assertFalse($this->UsersGroups->save($entity));
+        $this->assertEquals([
+            'name' => ['_isUnique' => 'This value is already used'],
+            'label' => ['_isUnique' => 'This value is already used'],
+        ], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

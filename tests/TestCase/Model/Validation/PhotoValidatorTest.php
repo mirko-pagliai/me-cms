@@ -47,7 +47,6 @@ class PhotoValidatorTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
     ];
 
     /**
@@ -112,20 +111,5 @@ class PhotoValidatorTest extends TestCase
             $errors = $this->Photos->newEntity($this->example)->errors();
             $this->assertEquals($expected, $errors);
         }
-    }
-
-    /**
-     * Test validation for `filename` property, testing that is unique
-     * @test
-     */
-    public function testValidationForFilenameIsUnique()
-    {
-        $entity = $this->Photos->newEntity($this->example);
-        $this->assertNotEmpty($this->Photos->save($entity));
-
-        //Saves again the same entity
-        $entity = $this->Photos->newEntity($this->example);
-        $this->assertFalse($this->Photos->save($entity));
-        $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->errors());
     }
 }

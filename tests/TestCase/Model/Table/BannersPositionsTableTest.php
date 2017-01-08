@@ -81,6 +81,25 @@ class BannersPositionsTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'title' => 'my-title',
+        ];
+
+        $entity = $this->BannersPositions->newEntity($example);
+        $this->assertNotEmpty($this->BannersPositions->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->BannersPositions->newEntity($example);
+        $this->assertFalse($this->BannersPositions->save($entity));
+        $this->assertEquals(['title' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

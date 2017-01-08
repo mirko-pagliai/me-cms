@@ -104,22 +104,6 @@ class UsersGroupValidatorTest extends TestCase
     }
 
     /**
-     * Test validation for `name` property, testing that is unique
-     * @test
-     */
-    public function testValidationForNameIsUnique()
-    {
-        $entity = $this->UsersGroups->newEntity($this->example);
-        $this->assertNotEmpty($this->UsersGroups->save($entity));
-
-        //Saves again the same entity
-        $this->example['label'] = 'newlabel';
-        $entity = $this->UsersGroups->newEntity($this->example);
-        $this->assertFalse($this->UsersGroups->save($entity));
-        $this->assertEquals(['name' => ['_isUnique' => 'This value is already used']], $entity->errors());
-    }
-
-    /**
      * Test validation for `label` property
      * @test
      */
@@ -143,21 +127,5 @@ class UsersGroupValidatorTest extends TestCase
                 ],
             ], $errors);
         }
-    }
-
-    /**
-     * Test validation for `label` property, testing that is unique
-     * @test
-     */
-    public function testValidationForLabelIsUnique()
-    {
-        $entity = $this->UsersGroups->newEntity($this->example);
-        $this->assertNotEmpty($this->UsersGroups->save($entity));
-
-        //Saves again the same entity
-        $this->example['name'] = 'newname';
-        $entity = $this->UsersGroups->newEntity($this->example);
-        $this->assertFalse($this->UsersGroups->save($entity));
-        $this->assertEquals(['label' => ['_isUnique' => 'This value is already used']], $entity->errors());
     }
 }

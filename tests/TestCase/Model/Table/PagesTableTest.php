@@ -121,6 +121,44 @@ class PagesTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'category_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+        ];
+
+        $entity = $this->Pages->newEntity($example);
+        $this->assertNotEmpty($this->Pages->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Pages->newEntity($example);
+        $this->assertFalse($this->Pages->save($entity));
+        $this->assertEquals([
+            'slug' => [
+                '_isUnique' => 'This value is already used',
+            ],
+            'title' => [
+                '_isUnique' => 'This value is already used',
+            ],
+        ], $entity->errors());
+
+        $entity = $this->Pages->newEntity([
+            'category_id' => 999,
+            'title' => 'My title 2',
+            'slug' => 'my-slug-2',
+            'text' => 'My text',
+        ]);
+        $this->assertFalse($this->Pages->save($entity));
+        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */
