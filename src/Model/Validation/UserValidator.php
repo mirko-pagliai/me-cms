@@ -64,11 +64,6 @@ class UserValidator extends AppValidator
                 ),
                 'rule' => [$this, 'slug'],
             ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
-            ],
             'usernameNotReserved' => [
                 'message' => __d('me_cms', 'This value contains a reserved word'),
                 'rule' => function ($value, $context) {
@@ -78,13 +73,7 @@ class UserValidator extends AppValidator
         ])->requirePresence('username', 'create');
 
         //Email
-        $this->add('email', [
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
-            ],
-        ])->requirePresence('email', 'create');
+        $this->requirePresence('email', 'create');
 
         //Email repeat
         $this->add('email_repeat', [

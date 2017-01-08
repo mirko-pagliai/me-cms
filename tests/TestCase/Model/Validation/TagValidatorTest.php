@@ -61,7 +61,9 @@ class TagValidatorTest extends TestCase
 
         $this->Tags = TableRegistry::get('MeCms.Tags');
 
-        $this->example = [];
+        $this->example = [
+            'tag' => 'my tag',
+        ];
     }
 
     /**
@@ -98,5 +100,20 @@ class TagValidatorTest extends TestCase
             $errors = $this->Tags->newEntity($this->example)->errors();
             $this->assertEquals(['tag' => ['validTag' => 'Allowed chars: lowercase letters, numbers, space']], $errors);
         }
+    }
+
+    /**
+     * Test validation for `tag` property, testing that is unique
+     * @test
+     */
+    public function testValidationForTagIsUnique()
+    {
+        $entity = $this->Tags->newEntity($this->example);
+        $this->assertNotEmpty($this->Tags->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Tags->newEntity($this->example);
+        $this->assertFalse($this->Tags->save($entity));
+        $this->assertEquals(['tag' => ['_isUnique' => 'This value is already used']], $entity->errors());
     }
 }

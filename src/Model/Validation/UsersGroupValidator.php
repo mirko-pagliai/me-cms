@@ -45,11 +45,6 @@ class UsersGroupValidator extends AppValidator
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
             ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
-            ],
             'valid' => [
                 'message' => sprintf(
                     '%s: %s',
@@ -65,11 +60,6 @@ class UsersGroupValidator extends AppValidator
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
-            ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
             ],
         ])->requirePresence('label', 'create');
 

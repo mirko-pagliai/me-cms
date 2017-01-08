@@ -85,6 +85,8 @@ class PostsTable extends AppTable
     {
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->isUnique(['slug'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->isUnique(['title'], __d('me_cms', 'This value is already used')));
 
         return $rules;
     }

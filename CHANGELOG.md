@@ -2,6 +2,7 @@
 ## 2.14 branch
 ### 2.14.13
 * fixed bug for sorting records in the admin panel;
+* fixed bugs and improved code for fields that must be unique;
 * improved some validation rules;
 * added tests for all validation classes.
 

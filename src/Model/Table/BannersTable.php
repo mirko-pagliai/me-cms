@@ -64,6 +64,7 @@ class BannersTable extends AppTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['position_id'], 'Positions'));
+        $rules->add($rules->isUnique(['filename'], __d('me_cms', 'This value is already used')));
 
         return $rules;
     }

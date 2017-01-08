@@ -47,6 +47,7 @@ class PageValidatorTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.pages',
+        'plugin.me_cms.pages_categories',
     ];
 
     /**
@@ -98,5 +99,37 @@ class PageValidatorTest extends TestCase
         $this->example['category_id'] = 'string';
         $errors = $this->Pages->newEntity($this->example)->errors();
         $this->assertEquals(['category_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
+    }
+
+    /**
+     * Test validation for `slug` property, testing that is unique
+     * @test
+     */
+    public function testValidationForSlugIsUnique()
+    {
+        $entity = $this->Pages->newEntity($this->example);
+        $this->assertNotEmpty($this->Pages->save($entity));
+
+        //Saves again the same entity
+        $this->example['title'] = 'New title';
+        $entity = $this->Pages->newEntity($this->example);
+        $this->assertFalse($this->Pages->save($entity));
+        $this->assertEquals(['slug' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
+
+    /**
+     * Test validation for `title` property, testing that is unique
+     * @test
+     */
+    public function testValidationForTitleIsUnique()
+    {
+        $entity = $this->Pages->newEntity($this->example);
+        $this->assertNotEmpty($this->Pages->save($entity));
+
+        //Saves again the same entity
+        $this->example['slug'] = 'new-slug';
+        $entity = $this->Pages->newEntity($this->example);
+        $this->assertFalse($this->Pages->save($entity));
+        $this->assertEquals(['title' => ['_isUnique' => 'This value is already used']], $entity->errors());
     }
 }

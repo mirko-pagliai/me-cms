@@ -54,11 +54,6 @@ class BannersPositionValidator extends AppValidator
                 ),
                 'rule' => [$this, 'slug'],
             ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
-            ],
         ])->requirePresence('title', 'create');
     }
 }

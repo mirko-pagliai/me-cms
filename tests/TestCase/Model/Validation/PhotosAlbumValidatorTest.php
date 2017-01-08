@@ -86,4 +86,36 @@ class PhotosAlbumValidatorTest extends TestCase
             $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
         }
     }
+
+    /**
+     * Test validation for `slug` property, testing that is unique
+     * @test
+     */
+    public function testValidationForSlugIsUnique()
+    {
+        $entity = $this->PhotosAlbums->newEntity($this->example);
+        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
+
+        //Saves again the same entity
+        $this->example['title'] = 'New title';
+        $entity = $this->PhotosAlbums->newEntity($this->example);
+        $this->assertFalse($this->PhotosAlbums->save($entity));
+        $this->assertEquals(['slug' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
+
+    /**
+     * Test validation for `title` property, testing that is unique
+     * @test
+     */
+    public function testValidationForTitleIsUnique()
+    {
+        $entity = $this->PhotosAlbums->newEntity($this->example);
+        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
+
+        //Saves again the same entity
+        $this->example['slug'] = 'new-slug';
+        $entity = $this->PhotosAlbums->newEntity($this->example);
+        $this->assertFalse($this->PhotosAlbums->save($entity));
+        $this->assertEquals(['title' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
 }

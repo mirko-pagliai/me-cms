@@ -47,6 +47,7 @@ class UserValidatorTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.users',
+        'plugin.me_cms.users_groups',
     ];
 
     /**
@@ -142,6 +143,38 @@ class UserValidatorTest extends TestCase
             $errors = $this->Users->newEntity($this->example)->errors();
             $this->assertEquals($expected, $errors);
         }
+    }
+
+    /**
+     * Test validation for `username` property, testing that is unique
+     * @test
+     */
+    public function testValidationForUsernameIsUnique()
+    {
+        $entity = $this->Users->newEntity($this->example);
+        $this->assertNotEmpty($this->Users->save($entity));
+
+        //Saves again the same entity
+        $this->example['email'] = 'newmail@example.com';
+        $entity = $this->Users->newEntity($this->example);
+        $this->assertFalse($this->Users->save($entity));
+        $this->assertEquals(['username' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
+
+    /**
+     * Test validation for `email` property, testing that is unique
+     * @test
+     */
+    public function testValidationForEmailIsUnique()
+    {
+        $entity = $this->Users->newEntity($this->example);
+        $this->assertNotEmpty($this->Users->save($entity));
+
+        //Saves again the same entity
+        $this->example['username'] = 'new-username';
+        $entity = $this->Users->newEntity($this->example);
+        $this->assertFalse($this->Users->save($entity));
+        $this->assertEquals(['email' => ['_isUnique' => 'This value is already used']], $entity->errors());
     }
 
     /**

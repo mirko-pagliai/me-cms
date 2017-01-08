@@ -106,4 +106,19 @@ class BannersPositionValidatorTest extends TestCase
             $this->assertEmpty($errors);
         }
     }
+
+    /**
+     * Test validation for `title` property, testing that is unique
+     * @test
+     */
+    public function testValidationForTitleIsUnique()
+    {
+        $entity = $this->BannersPositions->newEntity($this->example);
+        $this->assertNotEmpty($this->BannersPositions->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->BannersPositions->newEntity($this->example);
+        $this->assertFalse($this->BannersPositions->save($entity));
+        $this->assertEquals(['title' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
 }

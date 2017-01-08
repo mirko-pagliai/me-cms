@@ -22,6 +22,7 @@
  */
 namespace MeCms\Model\Table;
 
+use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -34,6 +35,19 @@ class BannersPositionsTable extends AppTable
      * @var string
      */
     public $cache = 'banners';
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     *  application integrity
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['title'], __d('me_cms', 'This value is already used')));
+
+        return $rules;
+    }
 
     /**
      * Initialize method

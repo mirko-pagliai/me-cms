@@ -65,6 +65,7 @@ class PhotosTable extends AppTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['album_id'], 'Albums'));
+        $rules->add($rules->isUnique(['filename'], __d('me_cms', 'This value is already used')));
 
         return $rules;
     }

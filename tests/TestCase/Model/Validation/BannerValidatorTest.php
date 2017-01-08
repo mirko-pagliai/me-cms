@@ -47,6 +47,7 @@ class BannerValidatorTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.banners',
+        'plugin.me_cms.banners_positions',
     ];
 
     /**
@@ -111,6 +112,21 @@ class BannerValidatorTest extends TestCase
             $errors = $this->Banners->newEntity($this->example)->errors();
             $this->assertEquals($expected, $errors);
         }
+    }
+
+    /**
+     * Test validation for `filename` property, testing that is unique
+     * @test
+     */
+    public function testValidationForFilenameIsUnique()
+    {
+        $entity = $this->Banners->newEntity($this->example);
+        $this->assertNotEmpty($this->Banners->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Banners->newEntity($this->example);
+        $this->assertFalse($this->Banners->save($entity));
+        $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->errors());
     }
 
     /**

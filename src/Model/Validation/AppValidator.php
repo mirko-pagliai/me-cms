@@ -113,11 +113,6 @@ class AppValidator extends Validator
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
             ],
-            'validateUnique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
-            ],
         ]);
 
         //Filename
@@ -125,11 +120,6 @@ class AppValidator extends Validator
             'maxLength' => [
                 'message' => __d('me_cms', 'Must be at most {0} chars', 255),
                 'rule' => ['maxLength', 255],
-            ],
-            'validateUnique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
             ],
         ]);
 
@@ -154,11 +144,6 @@ class AppValidator extends Validator
                     __d('me_cms', 'lowercase letters, numbers, dash')
                 ),
                 'rule' => [$this, 'slug'],
-            ],
-            'validateUnique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
             ],
         ]);
 
