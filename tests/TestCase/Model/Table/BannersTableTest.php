@@ -99,6 +99,33 @@ class BannersTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'position_id' => 1,
+            'filename' => 'pic.jpg',
+        ];
+
+        $entity = $this->Banners->newEntity($example);
+        $this->assertNotEmpty($this->Banners->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Banners->newEntity($example);
+        $this->assertFalse($this->Banners->save($entity));
+        $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->errors());
+
+        $entity = $this->Banners->newEntity([
+            'position_id' => 999,
+            'filename' => 'pic2.jpg',
+        ]);
+        $this->assertFalse($this->Banners->save($entity));
+        $this->assertEquals(['position_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

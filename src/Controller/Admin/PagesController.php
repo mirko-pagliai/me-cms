@@ -117,8 +117,8 @@ class PagesController extends AppController
             }
         ]);
 
-        $this->paginate['order'] = ['Pages.created' => 'DESC'];
-        $this->paginate['sortWhitelist'] = ['title', 'Categories.title', 'priority', 'Pages.created'];
+        $this->paginate['order'] = ['created' => 'DESC'];
+        $this->paginate['sortWhitelist'] = ['id', 'title', 'Categories.title', 'priority', 'created'];
 
         $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->query));
 

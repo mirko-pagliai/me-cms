@@ -47,9 +47,9 @@ class PagesCategoriesTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['title']));
-        $rules->add($rules->isUnique(['slug']));
-        $rules->add($rules->existsIn(['parent_id'], 'Parents'));
+        $rules->add($rules->existsIn(['parent_id'], 'Parents', __d('me_cms', 'You have to select a valid option')));
+        $rules->add($rules->isUnique(['slug'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->isUnique(['title'], __d('me_cms', 'This value is already used')));
 
         return $rules;
     }

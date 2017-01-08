@@ -82,6 +82,25 @@ class TagsTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'tag' => 'my tag',
+        ];
+
+        $entity = $this->Tags->newEntity($example);
+        $this->assertNotEmpty($this->Tags->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Tags->newEntity($example);
+        $this->assertFalse($this->Tags->save($entity));
+        $this->assertEquals(['tag' => ['_isUnique' => 'This value is already used']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

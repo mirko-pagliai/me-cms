@@ -120,6 +120,33 @@ class PhotosAlbumsTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'title' => 'My title',
+            'slug' => 'my-slug',
+        ];
+
+        $entity = $this->PhotosAlbums->newEntity($example);
+        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->PhotosAlbums->newEntity($example);
+        $this->assertFalse($this->PhotosAlbums->save($entity));
+        $this->assertEquals([
+            'slug' => [
+                '_isUnique' => 'This value is already used',
+            ],
+            'title' => [
+                '_isUnique' => 'This value is already used',
+            ],
+        ], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

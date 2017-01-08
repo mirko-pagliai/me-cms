@@ -84,6 +84,46 @@ class UsersTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'group_id' => 1,
+            'email' => 'example@test.com',
+            'first_name' => 'Alfa',
+            'last_name' => 'Beta',
+            'username' => 'myusername',
+            'password' => 'mypassword1!',
+            'password_repeat' => 'mypassword1!',
+        ];
+
+        $entity = $this->Users->newEntity($example);
+        $this->assertNotEmpty($this->Users->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Users->newEntity($example);
+        $this->assertFalse($this->Users->save($entity));
+        $this->assertEquals([
+            'email' => ['_isUnique' => 'This value is already used'],
+            'username' => ['_isUnique' => 'This value is already used'],
+        ], $entity->errors());
+
+        $entity = $this->Users->newEntity([
+            'group_id' => 999,
+            'email' => 'example2@test.com',
+            'first_name' => 'Alfa',
+            'last_name' => 'Beta',
+            'username' => 'myusername2',
+            'password' => 'mypassword1!',
+            'password_repeat' => 'mypassword1!',
+        ]);
+        $this->assertFalse($this->Users->save($entity));
+        $this->assertEquals(['group_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

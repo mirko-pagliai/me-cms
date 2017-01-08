@@ -176,7 +176,6 @@ class UserShellTest extends TestCase
             '<error>Field `first_name`: allowed chars: letters, apostrophe, space. Has to begin with a capital letter</error>',
             '<error>Field `last_name`: allowed chars: letters, apostrophe, space. Has to begin with a capital letter</error>',
             '<error>Field `password`: must be at least 8 chars</error>',
-            '<error>Field `password`: the password should contain letters, numbers and symbols</error>',
         ], $this->err->messages());
     }
 

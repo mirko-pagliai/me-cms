@@ -42,6 +42,7 @@ class BannersPositionValidator extends AppValidator
         //Name
         $this->add('title', [
             'lengthBetween' => [
+                'last' => true,
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
             ],
@@ -52,11 +53,6 @@ class BannersPositionValidator extends AppValidator
                     __d('me_cms', 'lowercase letters, numbers, dash')
                 ),
                 'rule' => [$this, 'slug'],
-            ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
             ],
         ])->requirePresence('title', 'create');
     }

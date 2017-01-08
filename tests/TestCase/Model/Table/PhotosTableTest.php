@@ -104,6 +104,33 @@ class PhotosTableTest extends TestCase
     }
 
     /**
+     * Test for `buildRules()` method
+     * @test
+     */
+    public function testBuildRules()
+    {
+        $example = [
+            'album_id' => 1,
+            'filename' => 'pic.jpg',
+        ];
+
+        $entity = $this->Photos->newEntity($example);
+        $this->assertNotEmpty($this->Photos->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Photos->newEntity($example);
+        $this->assertFalse($this->Photos->save($entity));
+        $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->errors());
+
+        $entity = $this->Photos->newEntity([
+            'album_id' => 999,
+            'filename' => 'pic2.jpg',
+        ]);
+        $this->assertFalse($this->Photos->save($entity));
+        $this->assertEquals(['album_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+    }
+
+    /**
      * Test for `initialize()` method
      * @test
      */

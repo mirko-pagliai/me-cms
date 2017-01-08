@@ -27,22 +27,23 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * UsersGroupsTableTest class
+ * PostsTableTest class
  */
-class UsersGroupsTableTest extends TestCase
+class PostsTagsTableTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\UsersGroupsTable
+     * @var \MeCms\Model\Table\PostsTagsTable
      */
-    protected $UsersGroups;
+    protected $PostsTags;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
     ];
 
     /**
@@ -55,9 +56,9 @@ class UsersGroupsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->UsersGroups = TableRegistry::get('MeCms.UsersGroups');
+        $this->PostsTags = TableRegistry::get('MeCms.PostsTags');
 
-        Cache::clear(false, $this->UsersGroups->cache);
+        Cache::clear(false, $this->PostsTags->cache);
     }
 
     /**
@@ -68,7 +69,7 @@ class UsersGroupsTableTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->UsersGroups);
+        unset($this->PostsTags);
     }
 
     /**
@@ -77,7 +78,7 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('users', $this->UsersGroups->cache);
+        $this->assertEquals('posts', $this->PostsTags->cache);
     }
 
     /**
@@ -86,20 +87,15 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'name' => 'group',
-            'label' => 'Group label',
-        ];
+        $entity = $this->PostsTags->newEntity([
+            'tag_id' => 999,
+            'post_id' => 999,
+        ]);
+        $this->assertFalse($this->PostsTags->save($entity));
 
-        $entity = $this->UsersGroups->newEntity($example);
-        $this->assertNotEmpty($this->UsersGroups->save($entity));
-
-        //Saves again the same entity
-        $entity = $this->UsersGroups->newEntity($example);
-        $this->assertFalse($this->UsersGroups->save($entity));
         $this->assertEquals([
-            'name' => ['_isUnique' => 'This value is already used'],
-            'label' => ['_isUnique' => 'This value is already used'],
+            'tag_id' => ['_existsIn' => 'You have to select a valid option'],
+            'post_id' => ['_existsIn' => 'You have to select a valid option'],
         ], $entity->errors());
     }
 
@@ -109,31 +105,21 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('users_groups', $this->UsersGroups->table());
-        $this->assertEquals('label', $this->UsersGroups->displayField());
-        $this->assertEquals('id', $this->UsersGroups->primaryKey());
+        $this->assertEquals('posts_tags', $this->PostsTags->table());
+        $this->assertEquals('id', $this->PostsTags->displayField());
+        $this->assertEquals('id', $this->PostsTags->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->UsersGroups->Users));
-        $this->assertEquals('group_id', $this->UsersGroups->Users->foreignKey());
-        $this->assertEquals('MeCms.Users', $this->UsersGroups->Users->className());
+        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->PostsTags->Posts));
+        $this->assertEquals('post_id', $this->PostsTags->Posts->foreignKey());
+        $this->assertEquals('INNER', $this->PostsTags->Posts->joinType());
+        $this->assertEquals('MeCms.Posts', $this->PostsTags->Posts->className());
 
-        $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
-    }
+        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->PostsTags->Tags));
+        $this->assertEquals('tag_id', $this->PostsTags->Tags->foreignKey());
+        $this->assertEquals('INNER', $this->PostsTags->Tags->joinType());
+        $this->assertEquals('MeCms.Tags', $this->PostsTags->Tags->className());
 
-    /**
-     * Test for the `hasMany` association with `Users`
-     * @test
-     */
-    public function testHasManyUsers()
-    {
-        $group = $this->UsersGroups->findById(3)->contain(['Users'])->first();
-
-        $this->assertNotEmpty($group->users);
-
-        foreach ($group->users as $user) {
-            $this->assertEquals('MeCms\Model\Entity\User', get_class($user));
-            $this->assertEquals(3, $user->group_id);
-        }
+        $this->assertTrue($this->PostsTags->hasBehavior('CounterCache'));
     }
 
     /**
@@ -143,8 +129,8 @@ class UsersGroupsTableTest extends TestCase
     public function testValidationDefault()
     {
         $this->assertEquals(
-            'MeCms\Model\Validation\UsersGroupValidator',
-            get_class($this->UsersGroups->validationDefault(new \Cake\Validation\Validator))
+            'Cake\Validation\Validator',
+            get_class($this->PostsTags->validationDefault(new \Cake\Validation\Validator))
         );
     }
 }

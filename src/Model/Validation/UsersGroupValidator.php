@@ -41,19 +41,9 @@ class UsersGroupValidator extends AppValidator
 
         //Name
         $this->add('name', [
-            'blank' => [
-                'message' => __d('me_cms', 'Can not be changed'),
-                'on' => 'update',
-                'rule' => 'blank',
-            ],
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
-            ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
             ],
             'valid' => [
                 'message' => sprintf(
@@ -70,11 +60,6 @@ class UsersGroupValidator extends AppValidator
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
-            ],
-            'unique' => [
-                'message' => __d('me_cms', 'This value is already used'),
-                'provider' => 'table',
-                'rule' => 'validateUnique',
             ],
         ])->requirePresence('label', 'create');
 
