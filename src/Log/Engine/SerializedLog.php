@@ -80,11 +80,11 @@ class SerializedLog extends FileLog
 
         //Sets the trace
         if (preg_match('/(Stack )?Trace:\n(.+)$/is', $message, $matches)) {
-            $serialized['trace'] = $matches[2];
+            $serialized['trace'] = trim($matches[2]);
         }
 
         //Adds the full log
-        $serialized['full'] = sprintf('%s %s: %s', date('Y-m-d H:i:s'), ucfirst($level), $message);
+        $serialized['full'] = trim(sprintf('%s %s: %s', date('Y-m-d H:i:s'), ucfirst($level), $message));
 
         return $serialized;
     }
@@ -108,13 +108,16 @@ class SerializedLog extends FileLog
         //First of all, it normally writes log
         parent::log($level, $message, $context);
 
-        //Now, it writes the serialized log
-        $message = $this->_format(trim($message), $context);
+        /**
+         * Now, it writes the serialized log
+         */
 
+        $message = $this->_format(trim($message), $context);
         $filename = $this->_getFilename($level);
 
-        //It sets a new filename, adding the `_serialized` suffix
-        //For example, if the log is `error.log`, the serialized log will be `error_serialized.log`
+        //It sets a new filename, adding the `_serialized` suffix.
+        //For example, if the log is `error.log`, the serialized log will be
+        //  `error_serialized.log`
         $filename = sprintf('%s_serialized.log', pathinfo($filename, PATHINFO_FILENAME));
 
         if (!empty($this->_size)) {
