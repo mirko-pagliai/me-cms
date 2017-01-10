@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.14
-* improved the `SerializedLog` class.
+* improved the `SerializedLog` class;
+* added tests for `SerializedLog` class.
 
 ### 2.14.13
 * fixed bug for sorting records in the admin panel;
