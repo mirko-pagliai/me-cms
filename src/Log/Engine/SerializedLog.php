@@ -108,7 +108,7 @@ class SerializedLog extends FileLog
         //First of all, it normally writes log
         parent::log($level, $message, $context);
 
-        /**
+        /*
          * Now, it writes the serialized log
          */
 
