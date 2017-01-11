@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.14
+* fixed bugs and improved code for the `LoginLogger` class;
 * improved the `SerializedLog` class;
 * added tests for `SerializedLog` class.
 

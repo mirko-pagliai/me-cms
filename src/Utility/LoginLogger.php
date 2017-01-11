@@ -23,14 +23,18 @@
  */
 namespace MeCms\Utility;
 
-use Cake\Filesystem\File;
+use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 
+/**
+ * This utility allows you to save and retrieve user login, through a special
+ *  register for each user
+ */
 class LoginLogger
 {
     /**
-     * File resource
-     * @var object
+     * File path
+     * @var string
      */
     protected $file;
 
@@ -42,7 +46,17 @@ class LoginLogger
      */
     public function __construct($id)
     {
-        $this->file = new File(LOGIN_LOGS . DS . 'user_' . $id . '.log', true);
+        $this->file = LOGIN_LOGS . 'user_' . $id . '.log';
+    }
+
+    /**
+     * Internal method to parses and gets the user agent
+     * @return array
+     * @see https://github.com/donatj/PhpUserAgent
+     */
+    protected function _getUserAgent()
+    {
+        return parse_user_agent();
     }
 
     /**
@@ -52,7 +66,11 @@ class LoginLogger
      */
     public function get()
     {
-        $data = $this->file->read();
+        if (!is_readable($this->file)) {
+            return [];
+        }
+
+        $data = file_get_contents($this->file);
 
         if (empty($data)) {
             return [];
@@ -65,8 +83,9 @@ class LoginLogger
     /**
      * Saves data
      * @return bool
-     * @uses get()
      * @uses $file
+     * @uses _getUserAgent()
+     * @uses get()
      */
     public function save()
     {
@@ -75,30 +94,28 @@ class LoginLogger
 
         $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
         $ip = getClientIp();
+        $time = new FrozenTime;
+        list($platform, $browser, $version) = array_values($this->_getUserAgent());
 
-        //Clears the first log (last in order of time), if it has been saved
-        //  less than an hour ago and the user agent and the IP address are
-        //  the same
-        if (!empty($data[0]) &&
-            (new Time($data[0]->time))->modify('+1 hour')->isFuture() &&
-            $data[0]->agent === $agent &&
-            $data[0]->ip === $ip
+        //Removes the first record (last in order of time), if it has been saved
+        //  less than an hour ago and if the user agent data are the same
+        if (!empty($data[0]) && (new Time($data[0]->time))->modify('+1 hour')->isFuture()
+            && $data[0]->agent === $agent && $data[0]->ip === $ip
+            && $data[0]->platform === $platform && $data[0]->browser === $browser
+            && $data[0]->version === $version
         ) {
-                unset($data[0]);
+            unset($data[0]);
         }
 
-        //Adds log for current request
-        array_unshift($data, (object)am([
-            'ip' => getClientIp(),
-            'time' => new Time(),
-        ], parse_user_agent(), compact('agent')));
+        $current = (object)compact('agent', 'ip', 'time', 'platform', 'browser', 'version');
 
-        //Keeps only the first records
+        //Adds the current request
+        array_unshift($data, $current);
+
+        //Keeps only a specified number of records
         $data = array_slice($data, 0, config('users.login_log'));
 
-        //Serializes
-        $data = serialize($data);
-
-        return $this->file->write($data);
+        //Serializes and writes
+        return (bool)file_put_contents($this->file, serialize($data));
     }
 }
