@@ -25,6 +25,7 @@ namespace MeCms\Utility;
 
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
+use SerializedArray\SerializedArray;
 
 /**
  * This utility allows you to save and retrieve user login, through a special
@@ -33,20 +34,20 @@ use Cake\I18n\Time;
 class LoginLogger
 {
     /**
-     * File path
-     * @var string
+     * SerializedArray instance
+     * @var \MeTools\Utility\SerializedArray
      */
-    protected $file;
+    protected $SerializedArray;
 
     /**
      * Construct
      * @param int $id User ID
      * @return void
-     * @uses $file
+     * @uses $SerializedArray
      */
     public function __construct($id)
     {
-        $this->file = LOGIN_LOGS . 'user_' . $id . '.log';
+        $this->SerializedArray = new SerializedArray(LOGIN_LOGS . 'user_' . $id . '.log');
     }
 
     /**
@@ -62,28 +63,17 @@ class LoginLogger
     /**
      * Gets data
      * @return array
-     * @uses $file
+     * @uses $SerializedArray
      */
     public function get()
     {
-        if (!is_readable($this->file)) {
-            return [];
-        }
-
-        $data = file_get_contents($this->file);
-
-        if (empty($data)) {
-            return [];
-        }
-
-        //Unserializes
-        return unserialize($data);
+        return $this->SerializedArray->read();
     }
 
     /**
      * Saves data
      * @return bool
-     * @uses $file
+     * @uses $SerializedArray
      * @uses _getUserAgent()
      * @uses get()
      */
@@ -107,15 +97,13 @@ class LoginLogger
             unset($data[0]);
         }
 
-        $current = (object)compact('agent', 'ip', 'time', 'platform', 'browser', 'version');
-
         //Adds the current request
-        array_unshift($data, $current);
+        array_unshift($data, (object)compact('agent', 'ip', 'time', 'platform', 'browser', 'version'));
 
         //Keeps only a specified number of records
         $data = array_slice($data, 0, config('users.login_log'));
 
-        //Serializes and writes
-        return (bool)file_put_contents($this->file, serialize($data));
+        //Writes
+        return $this->SerializedArray->write($data);
     }
 }

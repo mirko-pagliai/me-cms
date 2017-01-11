@@ -39,6 +39,12 @@ class LoginLoggerTest extends TestCase
     protected $LoginLogger;
 
     /**
+     * File path
+     * @var string
+     */
+    protected $file;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -47,6 +53,8 @@ class LoginLoggerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->file = LOGIN_LOGS . 'user_1.log';
 
         $this->LoginLogger = $this->getMockBuilder(LoginLogger::class)
             ->setMethods(['_getUserAgent'])
@@ -71,10 +79,8 @@ class LoginLoggerTest extends TestCase
 
         unset($this->LoginLogger);
 
-        //Deletes all login logs
-        foreach (glob(LOGIN_LOGS . '*') as $file) {
-            unlink($file);
-        }
+        //Deletes the file
+        @unlink($this->file);
     }
 
     /**
@@ -83,7 +89,9 @@ class LoginLoggerTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals(LOGIN_LOGS . 'user_1.log', $this->getProperty($this->LoginLogger, 'file'));
+        $SerializedArray = $this->getProperty($this->LoginLogger, 'SerializedArray');
+        $this->assertEquals('SerializedArray\SerializedArray', get_class($SerializedArray));
+        $this->assertEquals($this->file, $this->getProperty($SerializedArray, 'file'));
     }
 
     /**
@@ -105,7 +113,7 @@ class LoginLoggerTest extends TestCase
         $this->assertTrue(is_array($result));
 
         //Creates an empty file. Now is always empty
-        file_put_contents($this->getProperty($this->LoginLogger, 'file'), null);
+        file_put_contents($this->file, null);
         $result = $this->LoginLogger->get();
         $this->assertEmpty($result);
         $this->assertTrue(is_array($result));
