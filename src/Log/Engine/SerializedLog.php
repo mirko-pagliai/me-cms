@@ -23,6 +23,7 @@
 namespace MeCms\Log\Engine;
 
 use Cake\Log\Engine\FileLog;
+use SerializedArray\SerializedArray;
 
 /**
  * File Storage stream for Logging. Writes logs to different files based on
@@ -106,7 +107,7 @@ class SerializedLog extends FileLog
     public function log($level, $message, array $context = [])
     {
         //First of all, it normally writes log
-        parent::log($level, $message, $context);
+        $parent = parent::log($level, $message, $context);
 
         /*
          * Now, it writes the serialized log
@@ -127,25 +128,14 @@ class SerializedLog extends FileLog
         $pathname = $this->_path . $filename;
         $mask = $this->_config['mask'];
 
-        $logs = [];
-
-        //Gets the content of the existing logs and unserializes
-        if (is_readable($pathname)) {
-            $logs = unserialize(file_get_contents($pathname));
-        }
-
-        //Adds the current log at the beginning
-        array_unshift($logs, $this->_getLogAsObject($level, $message));
-
-        //Serializes logs
-        $output = serialize($logs);
+        $data = $this->_getLogAsObject($level, $message);
 
         if (empty($mask)) {
-            return file_put_contents($pathname, $output);
+            return $parent && (new SerializedArray($pathname))->prepend($data);
         }
 
         $exists = file_exists($pathname);
-        $result = file_put_contents($pathname, $output);
+        $result = (new SerializedArray($pathname))->prepend($data);
         static $selfError = false;
 
         if (!$selfError && !$exists && !chmod($pathname, (int)$mask)) {
@@ -157,6 +147,6 @@ class SerializedLog extends FileLog
             $selfError = false;
         }
 
-        return $result;
+        return $parent && $result;
     }
 }
