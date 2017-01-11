@@ -111,7 +111,7 @@ if ($this->Auth->isGroup('admin')) {
     ?>
 </dl>
 
-<?php if (!empty($loginLog)): ?>
+<?php if (!empty($loginLog)) : ?>
     <h4> <?= __d('me_cms', 'Last login') ?></h4>
     <?= $this->element('admin/last-logins') ?>
 <?php endif; ?>
