@@ -23,20 +23,20 @@
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\TestSuite\TestCase;
-use MeCms\Utility\LoginLogger;
+use MeCms\Utility\LoginRecorder;
 use Reflection\ReflectionTrait;
 
 /**
- * LoginLoggerTest class
+ * LoginRecorderTest class
  */
-class LoginLoggerTest extends TestCase
+class LoginRecorderTest extends TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @var \MeCms\Utility\LoginLogger
+     * @var \MeCms\Utility\LoginRecorder
      */
-    protected $LoginLogger;
+    protected $LoginRecorder;
 
     /**
      * File path
@@ -56,12 +56,12 @@ class LoginLoggerTest extends TestCase
 
         $this->file = LOGIN_LOGS . 'user_1.log';
 
-        $this->LoginLogger = $this->getMockBuilder(LoginLogger::class)
+        $this->LoginRecorder = $this->getMockBuilder(LoginRecorder::class)
             ->setMethods(['_getUserAgent'])
             ->setConstructorArgs([1])
             ->getMock();
 
-        $this->LoginLogger->method('_getUserAgent')
+        $this->LoginRecorder->method('_getUserAgent')
             ->will($this->returnValue([
                 'platform' => 'Linux',
                 'browser' => 'Chrome',
@@ -77,7 +77,7 @@ class LoginLoggerTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->LoginLogger);
+        unset($this->LoginRecorder);
 
         //Deletes the file
         //@codingStandardsIgnoreLine
@@ -90,7 +90,7 @@ class LoginLoggerTest extends TestCase
      */
     public function testConstruct()
     {
-        $SerializedArray = $this->getProperty($this->LoginLogger, 'SerializedArray');
+        $SerializedArray = $this->getProperty($this->LoginRecorder, 'SerializedArray');
         $this->assertEquals('SerializedArray\SerializedArray', get_class($SerializedArray));
         $this->assertEquals($this->file, $this->getProperty($SerializedArray, 'file'));
     }
@@ -102,20 +102,20 @@ class LoginLoggerTest extends TestCase
     public function testGet()
     {
         //For now is empty
-        $result = $this->LoginLogger->read();
+        $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
         $this->assertTrue(is_array($result));
 
-        $this->assertTrue($this->LoginLogger->write());
+        $this->assertTrue($this->LoginRecorder->write());
 
         //After save, is not empty
-        $result = $this->LoginLogger->read();
+        $result = $this->LoginRecorder->read();
         $this->assertNotEmpty($result);
         $this->assertTrue(is_array($result));
 
         //Creates an empty file. Now is always empty
         file_put_contents($this->file, null);
-        $result = $this->LoginLogger->read();
+        $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
         $this->assertTrue(is_array($result));
     }
@@ -126,9 +126,9 @@ class LoginLoggerTest extends TestCase
      */
     public function testSave()
     {
-        $this->assertTrue($this->LoginLogger->write());
+        $this->assertTrue($this->LoginRecorder->write());
 
-        $first = $this->LoginLogger->read();
+        $first = $this->LoginRecorder->read();
         $this->assertEquals(1, count($first));
         $this->assertEquals('stdClass', get_class($first[0]));
         $this->assertEquals(false, $first[0]->ip);
@@ -142,8 +142,8 @@ class LoginLoggerTest extends TestCase
 
         //Calls again, as if the user had logged in again from the same client.
         //In this case, the previous record is deleted and a new one is written
-        $this->assertTrue($this->LoginLogger->write());
-        $second = $this->LoginLogger->read();
+        $this->assertTrue($this->LoginRecorder->write());
+        $second = $this->LoginRecorder->read();
         $this->assertEquals(1, count($second));
         $this->assertEquals('stdClass', get_class($second[0]));
         $this->assertNotEquals($second, $first);
@@ -151,12 +151,12 @@ class LoginLoggerTest extends TestCase
         //Calls again, with different user agent data, as if the user had logged
         //  in again, but from a different client. In this case, the previous
         //  record is not deleted
-        $this->LoginLogger = $this->getMockBuilder(LoginLogger::class)
+        $this->LoginRecorder = $this->getMockBuilder(LoginRecorder::class)
             ->setMethods(['_getUserAgent'])
             ->setConstructorArgs([1])
             ->getMock();
 
-        $this->LoginLogger->method('_getUserAgent')
+        $this->LoginRecorder->method('_getUserAgent')
             ->will($this->returnValue([
                 'platform' => 'Windows',
                 'browser' => 'Firefox',
@@ -165,8 +165,8 @@ class LoginLoggerTest extends TestCase
 
         sleep(1);
 
-        $this->assertTrue($this->LoginLogger->write());
-        $third = $this->LoginLogger->read();
+        $this->assertTrue($this->LoginRecorder->write());
+        $third = $this->LoginRecorder->read();
         $this->assertEquals(2, count($third));
         $this->assertEquals($second[0], $third[1]);
         $this->assertGreaterThan($third[1]->time, $third[0]->time);

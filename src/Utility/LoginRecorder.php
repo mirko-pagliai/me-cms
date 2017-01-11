@@ -31,7 +31,7 @@ use SerializedArray\SerializedArray;
  * This utility allows you to save and retrieve user login, through a special
  *  register for each user
  */
-class LoginLogger
+class LoginRecorder
 {
     /**
      * SerializedArray instance
