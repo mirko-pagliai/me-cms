@@ -80,6 +80,7 @@ class LoginLoggerTest extends TestCase
         unset($this->LoginLogger);
 
         //Deletes the file
+        //@codingStandardsIgnoreLine
         @unlink($this->file);
     }
 
