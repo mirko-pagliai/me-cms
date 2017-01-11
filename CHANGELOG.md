@@ -3,7 +3,7 @@
 ### 2.14.14
 * fixed bugs and improved code for the `LoginLogger` class;
 * improved the `SerializedLog` class;
-* added tests for `SerializedLog` class.
+* added tests for `SerializedLog` and `LoginLogger` classes.
 
 ### 2.14.13
 * fixed bug for sorting records in the admin panel;
