@@ -64,7 +64,7 @@ class InstallShell extends BaseInstallShell
             Configure::read('MysqlBackup.target'),
             Configure::read('Thumbs.target'),
             BANNERS,
-            LOGIN_LOGS,
+            LOGIN_RECORDS,
             PHOTOS,
             UPLOADED,
             TMP . 'login',

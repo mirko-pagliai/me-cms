@@ -54,7 +54,7 @@ class LoginRecorderTest extends TestCase
     {
         parent::setUp();
 
-        $this->file = LOGIN_LOGS . 'user_1.log';
+        $this->file = LOGIN_RECORDS . 'user_1.log';
 
         $this->LoginRecorder = $this->getMockBuilder(LoginRecorder::class)
             ->setMethods(['_getUserAgent'])

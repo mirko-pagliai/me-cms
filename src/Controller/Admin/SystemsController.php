@@ -175,7 +175,7 @@ class SystemsController extends AppController
             TMP,
             Configure::read('Assets.target'),
             CACHE,
-            LOGIN_LOGS,
+            LOGIN_RECORDS,
             Configure::read('Thumbs.target'),
         ] as $path) {
             $checkup['temporary'][] = [

@@ -129,9 +129,9 @@ Plugin::load('MeTools', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
 
-define('LOGIN_LOGS', TMP . 'login' . DS);
+define('LOGIN_RECORDS', TMP . 'login' . DS);
 //@codingStandardsIgnoreLine
-@mkdir(LOGIN_LOGS);
+@mkdir(LOGIN_RECORDS);
 
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 //@codingStandardsIgnoreLine

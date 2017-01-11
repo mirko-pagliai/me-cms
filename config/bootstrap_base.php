@@ -42,8 +42,8 @@ if (!is_writeable(BANNERS)) {
     trigger_error(sprintf('Directory %s not writeable', BANNERS), E_USER_ERROR);
 }
 
-if (!is_writeable(LOGIN_LOGS)) {
-    trigger_error(sprintf('Directory %s not writeable', LOGIN_LOGS), E_USER_ERROR);
+if (!is_writeable(LOGIN_RECORDS)) {
+    trigger_error(sprintf('Directory %s not writeable', LOGIN_RECORDS), E_USER_ERROR);
 }
 
 if (!is_writeable(PHOTOS)) {

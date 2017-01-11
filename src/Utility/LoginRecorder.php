@@ -47,7 +47,7 @@ class LoginRecorder
      */
     public function __construct($id)
     {
-        $this->SerializedArray = new SerializedArray(LOGIN_LOGS . 'user_' . $id . '.log');
+        $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $id . '.log');
     }
 
     /**
