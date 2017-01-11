@@ -3,9 +3,11 @@
 ### 2.14.14
 * the "last logins" table now shows the browser version and links to track the
     IP addresses;
+* renamed the `LoginLogger` class as `LoginRecorder`. The  class has been
+    completely rewritten and several bugs have been fixed;
 * fixed bugs and improved code for the `LoginLogger` class;
 * improved the `SerializedLog` class;
-* added tests for `SerializedLog` and `LoginLogger` classes.
+* added tests for `LoginRecorder` and `SerializedLog` classes.
 
 ### 2.14.13
 * fixed bug for sorting records in the admin panel;
