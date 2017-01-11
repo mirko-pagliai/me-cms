@@ -63,7 +63,6 @@ class BaseUpdateShellTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
     ];
 
     /**
@@ -200,8 +199,17 @@ class BaseUpdateShellTest extends TestCase
     public function testTables()
     {
         $this->assertEquals([
+            'banners',
+            'banners_positions',
+            'pages',
+            'pages_categories',
+            'photos',
+            'photos_albums',
+            'posts',
+            'posts_categories',
+            'posts_tags',
+            'tags',
             'users',
-            'users_groups',
         ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
     }
 
