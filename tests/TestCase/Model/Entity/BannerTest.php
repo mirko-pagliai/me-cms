@@ -64,7 +64,7 @@ class BannerTest extends TestCase
 
         $entity->filename = 'example.gif';
 
-        $this->assertEquals(BANNERS . DS . 'example.gif', $entity->path);
+        $this->assertEquals(BANNERS . 'example.gif', $entity->path);
     }
 
     /**
@@ -79,6 +79,6 @@ class BannerTest extends TestCase
 
         $entity->filename = 'example.gif';
 
-        $this->assertEquals(sprintf('%s/%s', BANNERS_WWW, 'example.gif'), $entity->www);
+        $this->assertEquals(BANNERS_WWW . 'example.gif', $entity->www);
     }
 }

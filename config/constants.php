@@ -28,12 +28,12 @@ if (!defined('ADMIN_PREFIX')) {
 
 //Sets the default banners directory
 if (!defined('BANNERS')) {
-    define('BANNERS', WWW_ROOT . 'img' . DS . 'banners');
+    define('BANNERS', WWW_ROOT . 'img' . DS . 'banners' . DS);
 }
 
 //Sets the default banners web address
 if (!defined('BANNERS_WWW')) {
-    define('BANNERS_WWW', 'banners');
+    define('BANNERS_WWW', 'banners/');
 }
 
 //Sets the datetime format for MySql
@@ -53,7 +53,7 @@ if (!defined('MECMS')) {
 
 //Sets the default photos directory
 if (!defined('PHOTOS')) {
-    define('PHOTOS', WWW_ROOT . 'img' . DS . 'photos');
+    define('PHOTOS', WWW_ROOT . 'img' . DS . 'photos' . DS);
 }
 
 //Sets the default sitemap path
@@ -63,5 +63,5 @@ if (!defined('SITEMAP')) {
 
 //Sets the default directory for uploaded files
 if (!defined('UPLOADED')) {
-    define('UPLOADED', WWW_ROOT . 'files');
+    define('UPLOADED', WWW_ROOT . 'files' . DS);
 }

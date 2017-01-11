@@ -133,6 +133,10 @@ define('LOGIN_LOGS', TMP . 'login' . DS);
 //@codingStandardsIgnoreLine
 @mkdir(LOGIN_LOGS);
 
+define('UPLOADED', WWW_ROOT . 'files' . DS);
+//@codingStandardsIgnoreLine
+@mkdir(UPLOADED);
+
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap
     'path' => ROOT,
