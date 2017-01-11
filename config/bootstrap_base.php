@@ -28,7 +28,6 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
-use Cake\Network\Exception\InternalErrorException;
 
 require_once __DIR__ . DS . 'constants.php';
 
@@ -40,11 +39,19 @@ if (!Plugin::loaded('MeTools')) {
 }
 
 if (!is_writeable(BANNERS)) {
-    throw new InternalErrorException(sprintf('File or directory %s not writeable', BANNERS));
+    trigger_error(sprintf('Directory %s not writeable', BANNERS), E_USER_ERROR);
 }
 
-if (!folderIsWriteable(PHOTOS)) {
-    throw new InternalErrorException(sprintf('File or directory %s not writeable', PHOTOS));
+if (!is_writeable(LOGIN_LOGS)) {
+    trigger_error(sprintf('Directory %s not writeable', LOGIN_LOGS), E_USER_ERROR);
+}
+
+if (!is_writeable(PHOTOS)) {
+    trigger_error(sprintf('Directory %s not writeable', PHOTOS), E_USER_ERROR);
+}
+
+if (!is_writeable(UPLOADED)) {
+    trigger_error(sprintf('Directory %s not writeable', UPLOADED), E_USER_ERROR);
 }
 
 /**

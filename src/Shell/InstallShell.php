@@ -62,9 +62,11 @@ class InstallShell extends BaseInstallShell
         $this->paths = am($this->paths, [
             Configure::read('Assets.target'),
             Configure::read('MysqlBackup.target'),
-            BANNERS,
-            PHOTOS,
             Configure::read('Thumbs.target'),
+            BANNERS,
+            LOGIN_LOGS,
+            PHOTOS,
+            UPLOADED,
             TMP . 'login',
         ]);
     }

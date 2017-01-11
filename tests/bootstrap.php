@@ -114,9 +114,8 @@ Configure::write('Session', [
 
 Configure::write('Assets.target', TMP . 'assets');
 
-//@codingStandardsIgnoreStart
+//@codingStandardsIgnoreLine
 @mkdir(Configure::read('Assets.target'));
-//@codingStandardsIgnoreEnd
 
 /**
  * Loads plugins
@@ -129,6 +128,11 @@ Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
+
+define('LOGIN_LOGS', TMP . 'login' . DS);
+//@codingStandardsIgnoreLine
+@mkdir(LOGIN_LOGS);
+
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap
     'path' => ROOT,
