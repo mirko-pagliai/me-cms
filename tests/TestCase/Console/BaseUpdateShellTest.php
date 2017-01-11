@@ -23,7 +23,6 @@
  */
 namespace MeCms\Test\TestCase\Console;
 
-use Cake\Cache\Cache;
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
@@ -76,8 +75,6 @@ class BaseUpdateShellTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        Cache::disable();
 
         $this->BaseUpdateShell = new BaseUpdateShell;
         $this->UpdateShell = new UpdateShell;
