@@ -59,7 +59,7 @@ class UsersController extends AppController
     /**
      * Internal function to login with cookie
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginLogger::save()
+     * @uses MeCms\Utility\LoginLogger::write()
      * @uses _logout()
      */
     protected function _loginWithCookie()
@@ -77,7 +77,7 @@ class UsersController extends AppController
 
             if ($user && $user['active'] && !$user['banned']) {
                 //Saves the login log
-                (new LoginLogger($user['id']))->save();
+                (new LoginLogger($user['id']))->write();
 
                 $this->Auth->setUser($user);
 
@@ -245,7 +245,7 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginLogger::save()
+     * @uses MeCms\Utility\LoginLogger::write()
      * @uses _loginWithCookie()
      */
     public function login()
@@ -272,7 +272,7 @@ class UsersController extends AppController
                 }
 
                 //Saves the login log
-                (new LoginLogger($user['id']))->save();
+                (new LoginLogger($user['id']))->write();
 
                 //Saves the login data in a cookie, if it was requested
                 if ($this->request->data('remember_me')) {

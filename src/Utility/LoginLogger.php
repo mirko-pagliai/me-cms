@@ -65,7 +65,7 @@ class LoginLogger
      * @return array
      * @uses $SerializedArray
      */
-    public function get()
+    public function read()
     {
         return $this->SerializedArray->read();
     }
@@ -75,12 +75,12 @@ class LoginLogger
      * @return bool
      * @uses $SerializedArray
      * @uses _getUserAgent()
-     * @uses get()
+     * @uses read()
      */
-    public function save()
+    public function write()
     {
         //Gets existing data
-        $data = $this->get();
+        $data = $this->read();
 
         $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
         $ip = getClientIp();

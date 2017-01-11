@@ -100,7 +100,7 @@ class UsersController extends AppController
      * Views user
      * @param string $id User ID
      * @return void
-     * @uses MeCms\Utility\LoginLogger::get()
+     * @uses MeCms\Utility\LoginLogger::read()
      */
     public function view($id = null)
     {
@@ -113,7 +113,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
 
         if (config('users.login_log')) {
-            $loginLog = (new LoginLogger($id))->get();
+            $loginLog = (new LoginLogger($id))->read();
 
             $this->set(compact('loginLog'));
         }
@@ -268,7 +268,7 @@ class UsersController extends AppController
     /**
      * Displays the login log
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginLogger::get()
+     * @uses MeCms\Utility\LoginLogger::read()
      */
     public function lastLogin()
     {
@@ -279,7 +279,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'admin']);
         }
 
-        $loginLog = (new LoginLogger($this->Auth->user('id')))->get();
+        $loginLog = (new LoginLogger($this->Auth->user('id')))->read();
 
         $this->set(compact('loginLog'));
     }

@@ -96,39 +96,39 @@ class LoginLoggerTest extends TestCase
     }
 
     /**
-     * Test for `get()` method
+     * Test for `read()` method
      * @test
      */
     public function testGet()
     {
         //For now is empty
-        $result = $this->LoginLogger->get();
+        $result = $this->LoginLogger->read();
         $this->assertEmpty($result);
         $this->assertTrue(is_array($result));
 
-        $this->assertTrue($this->LoginLogger->save());
+        $this->assertTrue($this->LoginLogger->write());
 
         //After save, is not empty
-        $result = $this->LoginLogger->get();
+        $result = $this->LoginLogger->read();
         $this->assertNotEmpty($result);
         $this->assertTrue(is_array($result));
 
         //Creates an empty file. Now is always empty
         file_put_contents($this->file, null);
-        $result = $this->LoginLogger->get();
+        $result = $this->LoginLogger->read();
         $this->assertEmpty($result);
         $this->assertTrue(is_array($result));
     }
 
     /**
-     * Test for `save()` method
+     * Test for `write()` method
      * @test
      */
     public function testSave()
     {
-        $this->assertTrue($this->LoginLogger->save());
+        $this->assertTrue($this->LoginLogger->write());
 
-        $first = $this->LoginLogger->get();
+        $first = $this->LoginLogger->read();
         $this->assertEquals(1, count($first));
         $this->assertEquals('stdClass', get_class($first[0]));
         $this->assertEquals(false, $first[0]->ip);
@@ -142,8 +142,8 @@ class LoginLoggerTest extends TestCase
 
         //Calls again, as if the user had logged in again from the same client.
         //In this case, the previous record is deleted and a new one is written
-        $this->assertTrue($this->LoginLogger->save());
-        $second = $this->LoginLogger->get();
+        $this->assertTrue($this->LoginLogger->write());
+        $second = $this->LoginLogger->read();
         $this->assertEquals(1, count($second));
         $this->assertEquals('stdClass', get_class($second[0]));
         $this->assertNotEquals($second, $first);
@@ -165,8 +165,8 @@ class LoginLoggerTest extends TestCase
 
         sleep(1);
 
-        $this->assertTrue($this->LoginLogger->save());
-        $third = $this->LoginLogger->get();
+        $this->assertTrue($this->LoginLogger->write());
+        $third = $this->LoginLogger->read();
         $this->assertEquals(2, count($third));
         $this->assertEquals($second[0], $third[1]);
         $this->assertGreaterThan($third[1]->time, $third[0]->time);
