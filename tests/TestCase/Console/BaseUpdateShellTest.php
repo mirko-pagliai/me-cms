@@ -23,6 +23,7 @@
  */
 namespace MeCms\Test\TestCase\Console;
 
+use Cake\Cache\Cache;
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
@@ -63,6 +64,7 @@ class BaseUpdateShellTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.users',
+        'plugin.me_cms.users_groups',
     ];
 
     /**
@@ -74,6 +76,8 @@ class BaseUpdateShellTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        Cache::disable();
 
         $this->BaseUpdateShell = new BaseUpdateShell;
         $this->UpdateShell = new UpdateShell;
@@ -199,17 +203,8 @@ class BaseUpdateShellTest extends TestCase
     public function testTables()
     {
         $this->assertEquals([
-            'banners',
-            'banners_positions',
-            'pages',
-            'pages_categories',
-            'photos',
-            'photos_albums',
-            'posts',
-            'posts_categories',
-            'posts_tags',
-            'tags',
             'users',
+            'users_groups',
         ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
     }
 
