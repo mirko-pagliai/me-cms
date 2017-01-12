@@ -231,9 +231,9 @@ class InstallShell extends BaseInstallShell
     {
         $parser = parent::getOptionParser();
 
-        $parser->addSubcommand('createAdmin', ['help' => __d('me_tools', 'Creates an admin user')]);
-        $parser->addSubcommand('createGroups', ['help' => __d('me_tools', 'Creates the user groups')]);
-        $parser->addSubcommand('fixKcfinder', ['help' => __d('me_tools', 'Fixes {0}', 'KCFinder')]);
+        $parser->addSubcommand('createAdmin', ['help' => __d('me_cms', 'Creates an admin user')]);
+        $parser->addSubcommand('createGroups', ['help' => __d('me_cms', 'Creates the user groups')]);
+        $parser->addSubcommand('fixKcfinder', ['help' => __d('me_cms', 'Fixes {0}', 'KCFinder')]);
 
         return $parser;
     }
