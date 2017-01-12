@@ -65,6 +65,6 @@ class PhotosAlbumTest extends TestCase
 
         $entity->id = 1;
 
-        $this->assertEquals(PHOTOS . DS . '1', $entity->path);
+        $this->assertEquals(PHOTOS . '1', $entity->path);
     }
 }

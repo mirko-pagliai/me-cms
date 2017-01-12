@@ -23,6 +23,7 @@
 namespace MeCms\Log\Engine;
 
 use Cake\Log\Engine\FileLog;
+use SerializedArray\SerializedArray;
 
 /**
  * File Storage stream for Logging. Writes logs to different files based on
@@ -37,56 +38,56 @@ use Cake\Log\Engine\FileLog;
 class SerializedLog extends FileLog
 {
     /**
-     * Gets the log as an array. It splits the log information from the
+     * Gets the log as an object. It splits the log information from the
      *  message, using regex
      * @param string $level The severity level of the message being written.
      *  See Cake\Log\Log::$_levels for list of possible levels.
      * @param string $message The message you want to log.
-     * @return array
+     * @return object
      */
-    protected function _getLogAsArray($level, $message)
+    protected function _getLogAsObject($level, $message)
     {
-        $serialized['level'] = $level;
-        $serialized['datetime'] = date('Y-m-d H:i:s');
+        $log['level'] = $level;
+        $log['datetime'] = date('Y-m-d H:i:s');
 
         //Sets exception type and message
         if (preg_match('/^(\[([^\]]+)\]\s)?(.+)/', $message, $matches)) {
             if (!empty($matches[2])) {
-                $serialized['exception'] = $matches[2];
+                $log['exception'] = $matches[2];
             }
 
-            $serialized['message'] = $matches[3];
+            $log['message'] = $matches[3];
         }
 
         //Sets the exception attributes
         if (preg_match('/Exception Attributes:\s((.(?!Request URL|Referer URL|Client IP|Stack Trace|Trace))+)/is', $message, $matches)) {
-            $serialized['attributes'] = $matches[1];
+            $log['attributes'] = $matches[1];
         }
 
         //Sets the request URL
         if (preg_match('/^Request URL:\s(.+)$/mi', $message, $matches)) {
-            $serialized['request'] = $matches[1];
+            $log['request'] = $matches[1];
         }
 
         //Sets the referer URL
         if (preg_match('/^Referer URL:\s(.+)$/mi', $message, $matches)) {
-            $serialized['referer'] = $matches[1];
+            $log['referer'] = $matches[1];
         }
 
         //Sets the client IP
         if (preg_match('/^Client IP:\s(.+)$/mi', $message, $matches)) {
-            $serialized['ip'] = $matches[1];
+            $log['ip'] = $matches[1];
         }
 
         //Sets the trace
         if (preg_match('/(Stack )?Trace:\n(.+)$/is', $message, $matches)) {
-            $serialized['trace'] = $matches[2];
+            $log['trace'] = trim($matches[2]);
         }
 
         //Adds the full log
-        $serialized['full'] = sprintf('%s %s: %s', date('Y-m-d H:i:s'), ucfirst($level), $message);
+        $log['full'] = trim(sprintf('%s %s: %s', date('Y-m-d H:i:s'), ucfirst($level), $message));
 
-        return $serialized;
+        return (object)$log;
     }
 
     /**
@@ -101,20 +102,23 @@ class SerializedLog extends FileLog
      * @param string $message The message you want to log.
      * @param array $context Additional information about the logged message
      * @return bool success of write
-     * @uses _getLogAsArray()
+     * @uses _getLogAsObject()
      */
     public function log($level, $message, array $context = [])
     {
         //First of all, it normally writes log
-        parent::log($level, $message, $context);
+        $parent = parent::log($level, $message, $context);
 
-        //Now, it writes the serialized log
+        /*
+         * Now, it writes the serialized log
+         */
+
         $message = $this->_format(trim($message), $context);
-
         $filename = $this->_getFilename($level);
 
-        //It sets a new filename, adding the `_serialized` suffix
-        //For example, if the log is `error.log`, the serialized log will be `error_serialized.log`
+        //It sets a new filename, adding the `_serialized` suffix.
+        //For example, if the log is `error.log`, the serialized log will be
+        //  `error_serialized.log`
         $filename = sprintf('%s_serialized.log', pathinfo($filename, PATHINFO_FILENAME));
 
         if (!empty($this->_size)) {
@@ -124,27 +128,14 @@ class SerializedLog extends FileLog
         $pathname = $this->_path . $filename;
         $mask = $this->_config['mask'];
 
-        //Gets the content of the existing logs and unserializes
-        if (is_readable($pathname)) {
-            $logs = unserialize(file_get_contents($pathname));
-        }
-
-        if (empty($logs) || !is_array($logs)) {
-            $logs = [];
-        }
-
-        //Adds the current log at the beginning
-        array_unshift($logs, (object)$this->_getLogAsArray($level, $message));
-
-        //Serializes logs
-        $output = serialize($logs);
+        $data = $this->_getLogAsObject($level, $message);
 
         if (empty($mask)) {
-            return file_put_contents($pathname, $output);
+            return $parent && (new SerializedArray($pathname))->prepend($data);
         }
 
         $exists = file_exists($pathname);
-        $result = file_put_contents($pathname, $output);
+        $result = (new SerializedArray($pathname))->prepend($data);
         static $selfError = false;
 
         if (!$selfError && !$exists && !chmod($pathname, (int)$mask)) {
@@ -156,6 +147,6 @@ class SerializedLog extends FileLog
             $selfError = false;
         }
 
-        return $result;
+        return $parent && $result;
     }
 }

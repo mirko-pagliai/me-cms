@@ -28,7 +28,7 @@ use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
-use MeCms\Utility\LoginLogger;
+use MeCms\Utility\LoginRecorder;
 
 /**
  * Users controller
@@ -59,7 +59,7 @@ class UsersController extends AppController
     /**
      * Internal function to login with cookie
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginLogger::save()
+     * @uses MeCms\Utility\LoginRecorder::write()
      * @uses _logout()
      */
     protected function _loginWithCookie()
@@ -77,7 +77,7 @@ class UsersController extends AppController
 
             if ($user && $user['active'] && !$user['banned']) {
                 //Saves the login log
-                (new LoginLogger($user['id']))->save();
+                (new LoginRecorder($user['id']))->write();
 
                 $this->Auth->setUser($user);
 
@@ -245,7 +245,7 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginLogger::save()
+     * @uses MeCms\Utility\LoginRecorder::write()
      * @uses _loginWithCookie()
      */
     public function login()
@@ -272,7 +272,7 @@ class UsersController extends AppController
                 }
 
                 //Saves the login log
-                (new LoginLogger($user['id']))->save();
+                (new LoginRecorder($user['id']))->write();
 
                 //Saves the login data in a cookie, if it was requested
                 if ($this->request->data('remember_me')) {

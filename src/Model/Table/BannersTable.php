@@ -50,7 +50,7 @@ class BannersTable extends AppTable
     public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
     {
         //Deletes the file
-        (new File(BANNERS . DS . $entity->filename))->delete();
+        (new File(BANNERS . $entity->filename))->delete();
 
         parent::afterDelete($event, $entity, $options);
     }

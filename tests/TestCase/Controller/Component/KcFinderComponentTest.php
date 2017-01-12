@@ -128,7 +128,7 @@ class KcFinderComponentTest extends TestCase
         ], $this->KcFinder->getTypes());
 
         //@codingStandardsIgnoreLine
-        @mkdir(UPLOADED . DS . 'docs');
+        @mkdir(UPLOADED . 'docs');
 
         $this->assertEquals([
             'docs' => '',
@@ -136,7 +136,7 @@ class KcFinderComponentTest extends TestCase
         ], $this->KcFinder->getTypes());
 
         //@codingStandardsIgnoreLine
-        @rmdir(UPLOADED . DS . 'docs');
+        @rmdir(UPLOADED . 'docs');
     }
 
     public function testStartup()
@@ -157,7 +157,7 @@ class KcFinderComponentTest extends TestCase
     /**
      * Test for `startup()` method, with `uploaded` dir not writable
      * @expectedException \Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File or directory tests/test_app/TestApp/webroot/files not writeable
+     * @expectedExceptionMessage File or directory tests/test_app/TestApp/webroot/files/ not writeable
      */
     public function testStartupDirNotWritable()
     {

@@ -64,6 +64,6 @@ class PhotosAlbum extends Entity
             return null;
         }
 
-        return PHOTOS . DS . $this->_properties['id'];
+        return PHOTOS . $this->_properties['id'];
     }
 }

@@ -66,7 +66,7 @@ class Banner extends Entity
             return null;
         }
 
-        return BANNERS . DS . $this->_properties['filename'];
+        return BANNERS . $this->_properties['filename'];
     }
 
     /**
@@ -79,6 +79,6 @@ class Banner extends Entity
             return null;
         }
 
-        return sprintf('%s/%s', BANNERS_WWW, $this->_properties['filename']);
+        return BANNERS_WWW . $this->_properties['filename'];
     }
 }

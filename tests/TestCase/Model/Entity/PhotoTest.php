@@ -68,7 +68,7 @@ class PhotoTest extends TestCase
 
         $entity->filename = 'photo.jpg';
 
-        $this->assertEquals(PHOTOS . DS . '1' . DS . 'photo.jpg', $entity->path);
+        $this->assertEquals(PHOTOS . '1' . DS . 'photo.jpg', $entity->path);
 
         unset($entity->album_id);
 

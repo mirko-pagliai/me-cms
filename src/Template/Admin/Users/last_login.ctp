@@ -25,5 +25,5 @@ $this->extend('/Admin/Common/view');
 $this->assign('title', $title = __d('me_cms', 'Last login'));
 
 if (!empty($loginLog)) {
-    echo $this->element('admin/login-log');
+    echo $this->element('admin/last-logins');
 }

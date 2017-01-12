@@ -47,7 +47,7 @@ define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
-define('LOGS', TMP);
+define('LOGS', TMP . 'cakephp_log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 
 //@codingStandardsIgnoreStart
@@ -114,9 +114,8 @@ Configure::write('Session', [
 
 Configure::write('Assets.target', TMP . 'assets');
 
-//@codingStandardsIgnoreStart
+//@codingStandardsIgnoreLine
 @mkdir(Configure::read('Assets.target'));
-//@codingStandardsIgnoreEnd
 
 /**
  * Loads plugins
@@ -129,6 +128,15 @@ Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
+
+define('LOGIN_RECORDS', TMP . 'login' . DS);
+//@codingStandardsIgnoreLine
+@mkdir(LOGIN_RECORDS);
+
+define('UPLOADED', WWW_ROOT . 'files' . DS);
+//@codingStandardsIgnoreLine
+@mkdir(UPLOADED);
+
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap
     'path' => ROOT,
