@@ -52,12 +52,14 @@ class LoginRecorder
 
     /**
      * Internal method to parses and gets the user agent
+     * @param string|null $userAgent User agent string to parse or `null` to
+     *  use `$_SERVER['HTTP_USER_AGENT']`
      * @return array
      * @see https://github.com/donatj/PhpUserAgent
      */
-    protected function _getUserAgent()
+    protected function _getUserAgent($userAgent = null)
     {
-        return parse_user_agent();
+        return parse_user_agent($userAgent);
     }
 
     /**

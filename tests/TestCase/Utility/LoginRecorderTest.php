@@ -96,6 +96,23 @@ class LoginRecorderTest extends TestCase
     }
 
     /**
+     * Test for `_getUserAgent()` method
+     * @test
+     */
+    public function testGetUserAgent()
+    {
+        $userAgent = 'Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0';
+
+        $LoginRecorder = new LoginRecorder(1);
+        $result = $this->invokeMethod($LoginRecorder, '_getUserAgent', [$userAgent]);
+        $this->assertEquals([
+            'platform' => 'Windows',
+            'browser' => 'Firefox',
+            'version' => '16.0',
+        ], $result);
+    }
+
+    /**
      * Test for `read()` method
      * @test
      */
