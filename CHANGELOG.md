@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.15
+* now the password can be shown/hidden even adding/editing a user.
+
 ### 2.14.14
 * the "last logins" table now shows the browser version and links to track the
     IP addresses;
