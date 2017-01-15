@@ -100,7 +100,6 @@ class BannersController extends AppController
         ]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
-        $this->paginate['sortWhitelist'] = ['id', 'filename', 'Positions.title', 'description', 'click_count', 'created'];
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched

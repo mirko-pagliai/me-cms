@@ -106,46 +106,24 @@ class InstallShellTest extends TestCase
         $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->InstallShell, '_getOtherPlugins'));
     }
 
-    /**
-     * Test for `_runOtherPlugins()` method
-     * @test
-     */
-    public function testRunOtherPlugins()
-    {
-        $this->assertEmpty($this->invokeMethod($this->InstallShell, '_runOtherPlugins'));
-
-        Plugin::load('TestPlugin');
-
-        $this->assertEquals(['TestPlugin' => 0], $this->invokeMethod($this->InstallShell, '_runOtherPlugins'));
-    }
-
     public function testAll()
     {
-        $methodsToStub = [
-            '_runOtherPlugins',
-            'createAdmin',
-            'createGroups',
-            'fixKcfinder',
-            //From MeTools
-            'createDirectories',
-            'setPermissions',
-            'copyConfig',
-            'createRobots',
-            'fixComposerJson',
-            'createVendorsLinks',
-            'copyFonts',
-        ];
+        //Gets all methods from `InstallShell`
+        $methods = array_diff(am(
+            getChildMethods('MeTools\Shell\InstallShell'),
+            getChildMethods(InstallShell::class)
+        ), ['all']);
 
         $this->InstallShell = $this->getMockBuilder(InstallShell::class)
-            ->setMethods(array_merge(['in', '_stop'], $methodsToStub))
+            ->setMethods(array_merge(['in', '_stop'], $methods))
             ->setConstructorArgs([$this->io])
             ->getMock();
 
         $this->InstallShell->method('in')
             ->will($this->returnValue('y'));
 
-        //Stubs all methods
-        foreach ($methodsToStub as $method) {
+        //Sets a callback for each method
+        foreach ($methods as $method) {
             $this->InstallShell->method($method)
                 ->will($this->returnCallback(function () use ($method) {
                     $this->out->write(sprintf('called `%s`', $method));
@@ -158,32 +136,32 @@ class InstallShellTest extends TestCase
         $this->InstallShell->params['force'] = true;
         $this->InstallShell->all();
 
+        $expectedMethodsCalledInOrder = [
+            'called `createDirectories`',
+            'called `setPermissions`',
+            'called `copyConfig`',
+            'called `createRobots`',
+            'called `fixComposerJson`',
+            'called `createPluginsLinks`',
+            'called `createVendorsLinks`',
+            'called `copyFonts`',
+            'called `fixKcfinder`',
+            'called `runFromOtherPlugins`',
+        ];
+
+        $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
+
+        //Resets out messages()
+        $this->setProperty($this->out, '_out', []);
+
         //Calls with no interactive mode
         unset($this->InstallShell->params['force']);
         $this->InstallShell->all();
 
-        $this->assertEquals([
-            'called `createDirectories`',
-            'called `setPermissions`',
-            'called `copyConfig`',
-            'called `createRobots`',
-            'called `fixComposerJson`',
-            'called `createVendorsLinks`',
-            'called `copyFonts`',
-            'called `fixKcfinder`',
-            'called `_runOtherPlugins`',
-            'called `createDirectories`',
-            'called `setPermissions`',
-            'called `copyConfig`',
-            'called `createRobots`',
-            'called `fixComposerJson`',
-            'called `createVendorsLinks`',
-            'called `copyFonts`',
-            'called `fixKcfinder`',
+        $this->assertEquals(am($expectedMethodsCalledInOrder, [
             'called `createGroups`',
             'called `createAdmin`',
-            'called `_runOtherPlugins`',
-        ], $this->out->messages());
+        ]), $this->out->messages());
         $this->assertEmpty($this->err->messages());
     }
 
@@ -273,6 +251,19 @@ class InstallShellTest extends TestCase
     }
 
     /**
+     * Test for `runFromOtherPlugins()` method
+     * @test
+     */
+    public function testRunFromOtherPlugins()
+    {
+        $this->assertEmpty($this->InstallShell->runFromOtherPlugins());
+
+        Plugin::load('TestPlugin');
+
+        $this->assertEquals(['TestPlugin' => 0], $this->InstallShell->runFromOtherPlugins());
+    }
+
+    /**
      * Test for `getOptionParser()` method
      * @test
      */
@@ -288,10 +279,12 @@ class InstallShellTest extends TestCase
             'createAdmin',
             'createDirectories',
             'createGroups',
+            'createPluginsLinks',
             'createRobots',
             'createVendorsLinks',
             'fixComposerJson',
             'fixKcfinder',
+            'runFromOtherPlugins',
             'setPermissions',
         ], array_keys($parser->subcommands()));
         $this->assertEquals('Executes some tasks to make the system ready to work', $parser->description());
