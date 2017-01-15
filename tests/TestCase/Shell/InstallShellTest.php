@@ -106,19 +106,6 @@ class InstallShellTest extends TestCase
         $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->InstallShell, '_getOtherPlugins'));
     }
 
-    /**
-     * Test for `_runOtherPlugins()` method
-     * @test
-     */
-    public function testRunOtherPlugins()
-    {
-        $this->assertEmpty($this->invokeMethod($this->InstallShell, '_runOtherPlugins'));
-
-        Plugin::load('TestPlugin');
-
-        $this->assertEquals(['TestPlugin' => 0], $this->invokeMethod($this->InstallShell, '_runOtherPlugins'));
-    }
-
     public function testAll()
     {
         //Gets all methods from `InstallShell`
@@ -159,6 +146,7 @@ class InstallShellTest extends TestCase
             'called `createVendorsLinks`',
             'called `copyFonts`',
             'called `fixKcfinder`',
+            'called `runFromOtherPlugins`',
         ];
 
         $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
@@ -263,6 +251,19 @@ class InstallShellTest extends TestCase
     }
 
     /**
+     * Test for `runFromOtherPlugins()` method
+     * @test
+     */
+    public function testRunFromOtherPlugins()
+    {
+        $this->assertEmpty($this->InstallShell->runFromOtherPlugins());
+
+        Plugin::load('TestPlugin');
+
+        $this->assertEquals(['TestPlugin' => 0], $this->InstallShell->runFromOtherPlugins());
+    }
+
+    /**
      * Test for `getOptionParser()` method
      * @test
      */
@@ -283,6 +284,7 @@ class InstallShellTest extends TestCase
             'createVendorsLinks',
             'fixComposerJson',
             'fixKcfinder',
+            'runFromOtherPlugins',
             'setPermissions',
         ], array_keys($parser->subcommands()));
         $this->assertEquals('Executes some tasks to make the system ready to work', $parser->description());

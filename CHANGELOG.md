@@ -2,7 +2,9 @@
 ## 2.14 branch
 ### 2.14.15
 * fixed (perhaps forever...) bug for sorting records in the admin panel;
-* now the password can be shown/hidden even adding/editing a user.
+* now the password can be shown/hidden even adding/editing a user;
+* `_runOtherPlugins()` from `InstallShell` renamed as `runFromOtherPlugins` and
+    now it's a public shell which can be run from the shell.
 
 ### 2.14.14
 * the "last logins" table now shows the browser version and links to track the

@@ -95,33 +95,14 @@ class InstallShell extends BaseInstallShell
     }
 
     /**
-     * Runs  the `InstallShell` class from other plugins
-     * @return array Array of the cli command exit code. 0 is success
-     * @uses _getOtherPlugins()
-     */
-    protected function _runOtherPlugins()
-    {
-        $executed = [];
-
-        foreach ($this->_getOtherPlugins() as $plugin) {
-            $executed[$plugin] = $this->dispatchShell([
-                'command' => [sprintf('%s.install', $plugin), 'all'],
-                'extra' => $this->params,
-            ]);
-        }
-
-        return $executed;
-    }
-
-    /**
      * Executes all available tasks
      * @return void
      * @uses MeTools\Shell\InstallShell::all()
      * @uses _getOtherPlugins()
-     * @uses _runOtherPlugins()
      * @uses createAdmin()
      * @uses createGroups()
      * @uses fixKcfinder()
+     * @uses runFromOtherPlugins()
      */
     public function all()
     {
@@ -129,7 +110,7 @@ class InstallShell extends BaseInstallShell
 
         if ($this->param('force')) {
             $this->fixKcfinder();
-            $this->_runOtherPlugins();
+            $this->runFromOtherPlugins();
 
             return;
         }
@@ -137,6 +118,13 @@ class InstallShell extends BaseInstallShell
         $ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
         if (in_array($ask, ['Y', 'y'])) {
             $this->fixKcfinder();
+        }
+
+        if ($this->_getOtherPlugins()) {
+            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
+            if (in_array($ask, ['Y', 'y'])) {
+                $this->runFromOtherPlugins();
+            }
         }
 
         $ask = $this->in(__d('me_cms', 'Create the user groups?'), ['y', 'N'], 'N');
@@ -147,13 +135,6 @@ class InstallShell extends BaseInstallShell
         $ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
         if (in_array($ask, ['Y', 'y'])) {
             $this->createAdmin();
-        }
-
-        if ($this->_getOtherPlugins()) {
-            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
-            if (in_array($ask, ['Y', 'y'])) {
-                $this->_runOtherPlugins();
-            }
         }
     }
 
@@ -234,7 +215,27 @@ class InstallShell extends BaseInstallShell
         $parser->addSubcommand('createAdmin', ['help' => __d('me_cms', 'Creates an admin user')]);
         $parser->addSubcommand('createGroups', ['help' => __d('me_cms', 'Creates the user groups')]);
         $parser->addSubcommand('fixKcfinder', ['help' => __d('me_cms', 'Fixes {0}', 'KCFinder')]);
+        $parser->addSubcommand('runFromOtherPlugins', ['help' => __d('me_cms', 'Runs the installer from other plugins')]);
 
         return $parser;
+    }
+
+    /**
+     * Runs the `InstallShell::all()` method from other plugins
+     * @return array Array of the cli command exit code. 0 is success
+     * @uses _getOtherPlugins()
+     */
+    public function runFromOtherPlugins()
+    {
+        $executed = [];
+
+        foreach ($this->_getOtherPlugins() as $plugin) {
+            $executed[$plugin] = $this->dispatchShell([
+                'command' => [sprintf('%s.install', $plugin), 'all'],
+                'extra' => $this->params,
+            ]);
+        }
+
+        return $executed;
     }
 }
