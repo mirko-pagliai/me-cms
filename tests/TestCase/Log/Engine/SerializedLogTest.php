@@ -35,6 +35,27 @@ class SerializedLogTest extends TestCase
     use ReflectionTrait;
 
     /**
+     * Internal method to delete all log files
+     */
+    protected function _deleteAll()
+    {
+        //Deletes all logs
+        foreach (glob(LOGS . '*') as $file) {
+            //@codingStandardsIgnoreLine
+            @unlink($file);
+        }
+    }
+
+    /**
+     * Internal method to write some logs
+     */
+    protected function _writeSomeLogs()
+    {
+        Log::write('error', 'This is an error message');
+        Log::write('critical', 'This is a critical message');
+    }
+
+    /**
      * Teardown any static object changes and restore them
      * @return void
      */
@@ -43,9 +64,7 @@ class SerializedLogTest extends TestCase
         parent::tearDown();
 
         //Deletes all logs
-        foreach (glob(LOGS . '*') as $file) {
-            unlink($file);
-        }
+        $this->_deleteAll();
     }
 
     /**
@@ -124,30 +143,30 @@ class SerializedLogTest extends TestCase
     }
 
     /**
-     * Test for `_getLogAsArray()` method
+     * Test for `log()` method
      * @test
      */
     public function testLog()
     {
-        Log::config('error', [
+        $config = [
             'className' => 'MeCms\Log\Engine\SerializedLog',
             'path' => LOGS,
             'file' => 'error',
-            'mask' => 0777,
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
             'url' => env('LOG_ERROR_URL', null),
-        ]);
+        ];
 
-        //Writes 2 logs
-        Log::write('error', 'This is an error message');
-        Log::write('critical', 'This is a critical message');
+        Log::config('error', $config);
 
-        //Tests the plain log exists and is not empty
-        $this->assertFileExists(LOGS . 'error.log');
+        //Writes some logs
+        $this->_writeSomeLogs();
+
+        //Tests the plain log is not empty
         $this->assertNotEmpty(trim(file_get_contents(LOGS . 'error.log')));
 
-        //Gets the serialized log
+        //Tests the serialized log is not empty
         $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
+        $this->assertNotEmpty($logs);
 
         $this->assertEquals('stdClass', get_class($logs[0]));
         $this->assertEquals('critical', $logs[0]->level);
@@ -160,5 +179,28 @@ class SerializedLogTest extends TestCase
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $logs[1]->datetime);
         $this->assertEquals('This is an error message', $logs[1]->message);
         $this->assertRegExp('/^[\d-:\s]{19} Error: This is an error message$/', $logs[1]->full);
+
+        //Checks for fileperms
+        $this->assertEquals('0644', substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4));
+        $this->assertEquals('0644', substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4));
+
+        //Deletes all logs, drops and reconfigure, adding `mask`
+        $this->_deleteAll();
+        Log::drop('error');
+        Log::config('error', am($config, ['mask' => 0777]));
+
+        //Writes some logs
+        $this->_writeSomeLogs();
+
+        //Tests the plain log is not empty
+        $this->assertNotEmpty(trim(file_get_contents(LOGS . 'error.log')));
+
+        //Tests the serialized log is not empty
+        $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
+        $this->assertNotEmpty($logs);
+
+        //Checks for fileperms
+        $this->assertEquals('0777', substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4));
+        $this->assertEquals('0777', substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4));
     }
 }
