@@ -63,6 +63,8 @@ class SerializedLogTest extends TestCase
     {
         parent::tearDown();
 
+        Log::drop('error');
+
         //Deletes all logs
         $this->_deleteAll();
     }
