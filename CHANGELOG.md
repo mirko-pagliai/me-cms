@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.15
+* fixed (perhaps forever...) bug for sorting records in the admin panel;
 * now the password can be shown/hidden even adding/editing a user.
 
 ### 2.14.14
