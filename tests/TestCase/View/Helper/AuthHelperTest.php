@@ -19,7 +19,6 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
- * @see         MeCms\View\Helper\MenuBuilderHelper
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
