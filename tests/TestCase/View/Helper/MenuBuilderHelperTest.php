@@ -56,7 +56,11 @@ class MenuBuilderHelperTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+
         unset($this->MenuBuilder, $this->Html, $this->View);
+
+        Plugin::unload('TestPlugin');
+        Plugin::unload('TestPluginTwo');
     }
 
     /**
