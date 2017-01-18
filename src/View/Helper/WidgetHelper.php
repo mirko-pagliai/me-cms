@@ -32,11 +32,10 @@ use Cake\View\Helper;
 class WidgetHelper extends Helper
 {
     /**
-     * Renders all widgets, reading from configuration
-     * @return string|null Html code
-     * @uses widget()
+     * Internal method to get all widgets
+     * @return array
      */
-    public function all()
+    protected function _getAll()
     {
         if ($this->request->isUrl(['_name' => 'homepage']) && config('Widgets.homepage')) {
             $widgets = config('Widgets.homepage');
@@ -44,22 +43,52 @@ class WidgetHelper extends Helper
             $widgets = config('Widgets.general');
         }
 
+        if (empty($widgets) || !is_array($widgets)) {
+            return [];
+        }
+
+        $widgetsCopy = [];
+
+        //For widgets with no arguments, the widget name is the value of the
+        //  array. For widgets with arguments, the widget name is the array key
+        //  and the arguments are the array value
+        foreach ($widgets as $name => $args) {
+            if (is_int($name) && is_string($args)) {
+                $widgetsCopy[$args] = [];
+            } else {
+                $widgetsCopy[$name] = $args;
+            }
+        }
+
+        return $widgetsCopy;
+    }
+
+    /**
+     * Renders all widgets
+     * @return string|null Html code
+     * @uses _getAll()
+     * @uses widget()
+     */
+    public function all()
+    {
+        $widgets = $this->_getAll();
+
         if (empty($widgets)) {
             return null;
         }
 
         foreach ($widgets as $name => $args) {
-            $widgets[$name] = is_array($args) ? $this->widget($name, $args) : $this->widget($args);
+            $widgets[$name] = $this->widget($name, $args);
         }
 
-        return implode(PHP_EOL, $widgets);
+        return trim(implode(PHP_EOL, $widgets));
     }
 
     /**
      * Returns a widget
-     * @param string $name Widget name
-     * @param array $data Widget arguments
-     * @param array $options Widget options
+     * @param string $name Cell name
+     * @param array $data Additional arguments for cell method
+     * @param array $options Options for Cell's constructor
      * @return Cake\View\Cell The cell instance
      * @uses Cake\View\CellTrait::cell()
      */
