@@ -25,8 +25,8 @@ namespace MeCms\Test\TestCase\View\Helper;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\TestSuite\TestCase;
-use MeCms\View\View\AppView as View;
 use MeCms\View\Helper\WidgetHelper;
+use MeCms\View\View\AppView as View;
 use Reflection\ReflectionTrait;
 
 /**
@@ -123,7 +123,7 @@ class WidgetHelperTest extends TestCase
         Configure::write('Widgets.general', ['Example', 'TestPlugin.PluginExample']);
 
         $result = $this->Widget->all();
-        $this->assertEquals('An example widget' . PHP_EOL . PHP_EOL . 'An example widget from a plugin', $result);
+        $this->assertEquals('An example widget' . PHP_EOL . 'An example widget from a plugin', $result);
 
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {

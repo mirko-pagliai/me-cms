@@ -1,1 +1,2 @@
-An example widget
+<?php
+    echo 'An example widget';
