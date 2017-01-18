@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.16
-* improved `WidgetHelper` class.
+* improved `WidgetHelper` class;
+* added tests for `WidgetHelper` class.
 
 ### 2.14.15
 * fixed (perhaps forever...) bug for sorting records in the admin panel;
