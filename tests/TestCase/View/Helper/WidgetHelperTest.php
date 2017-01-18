@@ -111,6 +111,15 @@ class WidgetHelperTest extends TestCase
             $result = $this->invokeMethod($this->Widget, '_getAll');
             $this->assertEquals([], $result);
         }
+
+        //Sets some widgets for the homepage
+        Configure::write('Widgets.homepage', ['ExampleForHomepage']);
+
+        $result = $this->invokeMethod($this->Widget, '_getAll');
+        $this->assertEquals(['ExampleForHomepage'], array_keys($result));
+
+        //Resets
+        Configure::write('Widgets.homepage', []);
     }
 
     /**
