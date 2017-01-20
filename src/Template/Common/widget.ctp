@@ -29,16 +29,16 @@ if (trim($this->fetch('class'))) {
 ?>
 
 <?php if (trim($this->fetch('content'))) : ?>
-    <div class="<?= $class ?>">
-        <?php
-        if (trim($this->fetch('title'))) {
-            echo $this->Html->h4(trim($this->fetch('title')), ['class' => 'widget-title']);
-        }
-        ?>
+<div class="<?= $class ?>">
+    <?php
+    if (trim($this->fetch('title'))) {
+        echo $this->Html->h4(trim($this->fetch('title')), ['class' => 'widget-title']);
+    }
+    ?>
 
-        <div class="widget-content">
-            <?= trim($this->fetch('content')) ?>
+    <div class="widget-content">
+        <?= trim($this->fetch('content')) ?>
 
-        </div>
     </div>
+</div>
 <?php endif; ?>
