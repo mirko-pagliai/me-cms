@@ -75,7 +75,7 @@ class PagesCell extends Cell
 
         $this->set(compact('categories'));
 
-        if ($render !== 'form') {
+        if ($render === 'list') {
             $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
         }
     }
