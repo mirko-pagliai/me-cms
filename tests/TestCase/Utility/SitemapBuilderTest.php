@@ -178,7 +178,9 @@ class SitemapBuilderTest extends TestCase
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
 
-        $this->assertEquals(30, count($mapAsArray));
+        $countWithoutPlugin = count($mapAsArray);
+
+        $this->assertGreaterThan(0, $countWithoutPlugin);
 
         foreach ($mapAsArray as $url) {
             $this->assertNotEmpty($url['loc']);
@@ -199,6 +201,6 @@ class SitemapBuilderTest extends TestCase
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
 
-        $this->assertEquals(33, count($mapAsArray));
+        $this->assertEquals($countWithoutPlugin + 3, count($mapAsArray));
     }
 }

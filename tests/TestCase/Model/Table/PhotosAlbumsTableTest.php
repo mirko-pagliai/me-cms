@@ -86,17 +86,18 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $album = $this->PhotosAlbums->get(1);
+        $entity = $this->PhotosAlbums->newEntity([
+            'title' => 'new album',
+            'slug' => 'new-album',
+        ]);
 
-        //Creates the dir
-        //@codingStandardsIgnoreLine
-        @mkdir($album->path);
+        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
 
-        $this->assertFileExists($album->path);
+        $this->assertFileExists($entity->path);
 
         //Deletes the album
-        $this->assertTrue($this->PhotosAlbums->delete($album));
-        $this->assertFileNotExists($album->path);
+        $this->assertTrue($this->PhotosAlbums->delete($entity));
+        $this->assertFileNotExists($entity->path);
     }
 
     /**
@@ -137,12 +138,8 @@ class PhotosAlbumsTableTest extends TestCase
         $entity = $this->PhotosAlbums->newEntity($example);
         $this->assertFalse($this->PhotosAlbums->save($entity));
         $this->assertEquals([
-            'slug' => [
-                '_isUnique' => 'This value is already used',
-            ],
-            'title' => [
-                '_isUnique' => 'This value is already used',
-            ],
+            'slug' => ['_isUnique' => 'This value is already used'],
+            'title' => ['_isUnique' => 'This value is already used'],
         ], $entity->errors());
     }
 
