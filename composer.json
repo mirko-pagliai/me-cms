@@ -20,7 +20,7 @@
         "mirko-pagliai/cakephp-mysql-backup": ">=1.0.1",
         "mirko-pagliai/cakephp-thumber": ">=1.0.0",
         "mirko-pagliai/cakephp-tokens": "*",
-        "mirko-pagliai/me-tools": ">=2.11.1",
+        "mirko-pagliai/me-tools": ">=2.11.4",
         "mirko-pagliai/serialized-array": "^1.0",
         "wyrihaximus/minify-html": "^1.1"
     },
