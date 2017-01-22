@@ -142,7 +142,7 @@ class PhotosCellTest extends TestCase
         ];
         $this->assertHtml($expected, $result);
 
-        //Empty on on albums index
+        //Empty on albums index
         $request = new Request(Router::url(['_name' => 'albums']));
         $this->View = new View($request);
         $result = $this->View->cell(MECMS . '.Photos::albums')->render();
