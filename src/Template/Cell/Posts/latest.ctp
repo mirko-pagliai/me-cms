@@ -35,10 +35,7 @@ $this->assign('title', __dn(
 ));
 
 $posts = array_map(function ($post) {
-    return $this->Html->link(
-        $post->title,
-        ['_name' => 'post', $post->slug]
-    );
+    return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
 }, $posts);
 
 echo $this->Html->ul($posts, ['icon' => 'caret-right']);

@@ -74,7 +74,7 @@ class PostsCell extends Cell
 
         $this->set(compact('categories'));
 
-        if ($render !== 'form') {
+        if ($render === 'list') {
             $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
         }
     }
@@ -86,7 +86,7 @@ class PostsCell extends Cell
      */
     public function latest($limit = 10)
     {
-        //Returns on posts index, except for category
+        //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
         }
@@ -108,7 +108,7 @@ class PostsCell extends Cell
      */
     public function months($render = 'form')
     {
-        //Returns on posts index, except for category
+        //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
         }
@@ -123,7 +123,7 @@ class PostsCell extends Cell
             ->cache('widget_months', $this->Posts->cache)
             ->toArray();
 
-        foreach ($months as $oldKey => $month) {
+        foreach ($months as $key => $month) {
             $exploded = explode('-', $month->month);
             $newKey = sprintf('%s/%s', $exploded[1], $exploded[0]);
 
@@ -131,12 +131,12 @@ class PostsCell extends Cell
             $months[$newKey]->month = (new FrozenDate())
                 ->year($exploded[1])
                 ->month($exploded[0]);
-            unset($months[$oldKey]);
+            unset($months[$key]);
         }
 
         $this->set(compact('months'));
 
-        if ($render !== 'form') {
+        if ($render === 'list') {
             $this->viewBuilder()->template(sprintf('months_as_%s', $render));
         }
     }
