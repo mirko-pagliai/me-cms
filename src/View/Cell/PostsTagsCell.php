@@ -94,26 +94,18 @@ class PostsTagsCell extends Cell
         }
 
         if (!empty($style['maxFont']) || !empty($style['minFont'])) {
-            //Number of occurrences of the tag with the highest number of occurrences
+            //Highest number of occurrences
             $maxCount = $tags[0]->post_count;
-            //Number of occurrences of the tag with the lowest number of occurrences
+            //Lowest number of occurrences
             $minCount = end($tags)->post_count;
 
             //Adds the proportional font size to each tag
-            $tags = array_map(function ($tag) use (
-                $maxCount,
-                $minCount,
-                $maxFont,
-                $minFont
-            ) {
-                $tag->size = round(
-                    (
-                        ($tag->post_count - $minCount) /
-                        ($maxCount - $minCount) *
-                        ($maxFont - $minFont)
-                    ) +
-                    $minFont
-                );
+            $tags = array_map(function ($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
+                $tag->size = round((
+                    ($tag->post_count - $minCount) /
+                    ($maxCount - $minCount) *
+                    ($maxFont - $minFont)
+                ) + $minFont);
 
                 return $tag;
             }, $tags);
@@ -131,7 +123,7 @@ class PostsTagsCell extends Cell
 
         $this->set(compact('prefix', 'tags'));
 
-        if ($render !== 'cloud') {
+        if ($render === 'form' || $render === 'list') {
             $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
         }
     }
