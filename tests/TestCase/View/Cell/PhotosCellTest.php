@@ -261,4 +261,3 @@ class PhotosCellTest extends TestCase
         }
     }
 }
-
