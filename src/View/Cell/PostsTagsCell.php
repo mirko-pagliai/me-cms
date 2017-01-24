@@ -54,7 +54,8 @@ class PostsTagsCell extends Cell
      * @param string $prefix Prefix for each tag
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array|bool $style Applies style to tags
+     * @param array|bool $style Applies style to tags. Array with `maxFont` and
+     *  `minFont` keys or `false` to disable
      * @return void
      */
     public function popular(
@@ -62,7 +63,7 @@ class PostsTagsCell extends Cell
         $prefix = '#',
         $render = 'cloud',
         $shuffle = true,
-        array $style = ['maxFont' => 40, 'minFont' => 12]
+        $style = ['maxFont' => 40, 'minFont' => 12]
     ) {
         //Returns on tags index
         if ($this->request->isUrl(['_name' => 'postsTags'])) {
