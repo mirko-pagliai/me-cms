@@ -29,17 +29,13 @@ $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Popular tags'));
 
 foreach ($tags as $tag) {
-    $text = empty($prefix) ? $tag->tag : sprintf('%s%s', $prefix, $tag->tag);
+    $text = empty($prefix) ? $tag->tag : $prefix . $tag->tag;
 
-    $options = [];
+    $options = ['title' => $tag->tag];
 
     if (!empty($tag->size)) {
-        $options = ['style' => sprintf('font-size:%spx;', $tag->size)];
+        $options['style'] = sprintf('font-size:%spx;', $tag->size);
     }
 
-    echo $this->Html->div(null, $this->Html->link(
-        $text,
-        ['_name' => 'postsTag', $tag->slug],
-        $options
-    ));
+    echo $this->Html->div(null, $this->Html->link($text, ['_name' => 'postsTag', $tag->slug], $options));
 }

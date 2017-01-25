@@ -25,7 +25,7 @@ namespace MeCms\View\Cell;
 use Cake\View\Cell;
 
 /**
- * Posts cell
+ * PostsTags cell
  */
 class PostsTagsCell extends Cell
 {
@@ -51,7 +51,7 @@ class PostsTagsCell extends Cell
     /**
      * Popular tags widgets
      * @param int $limit Limit
-     * @param string $prefix Prefix for each tag
+     * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
      * @param array|bool $style Applies style to tags. Array with `maxFont` and
@@ -73,20 +73,22 @@ class PostsTagsCell extends Cell
         //Sets the initial cache name
         $cache = sprintf('widget_tags_popular_%s', $limit);
 
-        //Updates the cache name
         if (!empty($style['maxFont']) || !empty($style['minFont'])) {
-            //Maximum font size we want to use
+            //Maximum and minimun font sizes we want to use
             $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
-            //Minimum font size we want to use
             $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
 
+            //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
         }
 
         $tags = $this->Tags->find()
             ->select(['tag', 'post_count'])
             ->limit($limit)
-            ->order(['post_count' => 'DESC'])
+            ->order([
+                'post_count' => 'DESC',
+                'tag' => 'ASC',
+            ])
             ->cache($cache, $this->Tags->Posts->cache)
             ->toArray();
 
@@ -94,32 +96,31 @@ class PostsTagsCell extends Cell
             return;
         }
 
-        if (!empty($style['maxFont']) || !empty($style['minFont'])) {
-            //Highest number of occurrences
+        //Adds the proportional font size to each tag
+        if ($render === 'cloud' && !empty($maxFont) && !empty($minFont)) {
+            //Highest and lowest numbers of occurrences
             $maxCount = $tags[0]->post_count;
-            //Lowest number of occurrences
             $minCount = end($tags)->post_count;
 
-            //Adds the proportional font size to each tag
-            $tags = array_map(function ($tag) use ($maxCount, $minCount, $maxFont, $minFont) {
+            foreach ($tags as $tag) {
                 $tag->size = round((
                     ($tag->post_count - $minCount) /
                     ($maxCount - $minCount) *
                     ($maxFont - $minFont)
                 ) + $minFont);
-
-                return $tag;
-            }, $tags);
+            }
         }
 
-        if ($shuffle) {
+        if ($shuffle && $limit > 1) {
             shuffle($tags);
         }
 
-        //Takes place here, because shuffle() re-indexes
-        foreach ($tags as $k => $tag) {
-            $tags[$tag->slug] = $tag;
-            unset($tags[$k]);
+        if ($render === 'form') {
+            //Takes place here, because shuffle() re-indexes
+            foreach ($tags as $k => $tag) {
+                $tags[$tag->slug] = $tag;
+                unset($tags[$k]);
+            }
         }
 
         $this->set(compact('prefix', 'tags'));

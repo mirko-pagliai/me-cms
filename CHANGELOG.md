@@ -2,7 +2,7 @@
 ## 2.14 branch
 ### 2.14.16
 * improved `WidgetHelper` class;
-* fixed bug for disabling style in the widget of popular tags;
+* fixed some bugs for the widget of popular tags;
 * added tests for `WidgetHelper` class.
 
 ### 2.14.15
