@@ -23,7 +23,9 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
+use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
 
@@ -240,6 +242,12 @@ class PostsTagsCellTest extends TestCase
             '/div',
         ];
         $this->assertHtml($expected, $result);
+
+        //Empty on tags index
+        $request = new Request(Router::url(['_name' => 'postsTags']));
+        $this->View = new View($request);
+        $result = $this->View->cell(MECMS . '.PostsTags::popular')->render();
+        $this->assertEmpty($result);
     }
 
     /**
@@ -262,6 +270,30 @@ class PostsTagsCellTest extends TestCase
         ];
 
         $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+    }
+
+    /**
+     * Test for `popular()` method, with no tags
+     * @test
+     */
+    public function testPopularWithNoTags()
+    {
+        //Deletes all tags
+        $this->Tags->deleteAll(['id >=' => 1]);
+
+        $options = [
+            'limit' => 2,
+            'prefix' => '#',
+            'render' => 'cloud',
+            'shuffle' => false,
+            'style' => [
+                'maxFont' => 40,
+                'minFont' => 12,
+            ],
+        ];
+
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+        $this->assertEmpty($result);
     }
 
     /**
