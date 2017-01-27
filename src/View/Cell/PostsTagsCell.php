@@ -104,16 +104,17 @@ class PostsTagsCell extends Cell
 
         //Adds the proportional font size to each tag
         if ($render === 'cloud' && !empty($maxFont) && !empty($minFont)) {
-            //Highest and lowest numbers of occurrences
+            //Highest and lowest numbers of occurrences and their difference
             $maxCount = $tags[0]->post_count;
             $minCount = end($tags)->post_count;
+            $diffCount = $maxCount - $minCount;
 
             foreach ($tags as $tag) {
-                $tag->size = round((
-                    ($tag->post_count - $minCount) /
-                    ($maxCount - $minCount) *
-                    ($maxFont - $minFont)
-                ) + $minFont);
+                if ($diffCount) {
+                    $tag->size = round((($tag->post_count - $minCount) / $diffCount * ($maxFont - $minFont)) + $minFont);
+                } else {
+                    $tag->size = $maxFont;
+                }
             }
         }
 

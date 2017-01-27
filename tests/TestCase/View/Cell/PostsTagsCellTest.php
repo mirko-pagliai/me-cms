@@ -23,6 +23,7 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
 
@@ -35,6 +36,11 @@ class PostsTagsCellTest extends TestCase
      * @var \MeCms\View\View\AppView
      */
     protected $View;
+
+    /**
+     * @var \MeCms\Model\Table\TagsTable
+     */
+    protected $Tags;
 
     /**
      * Fixtures
@@ -55,6 +61,7 @@ class PostsTagsCellTest extends TestCase
         Cache::disable();
 
         $this->View = new View;
+        $this->Tags = TableRegistry::get('Tags');
     }
 
     /**
@@ -255,5 +262,61 @@ class PostsTagsCellTest extends TestCase
         ];
 
         $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+    }
+
+    /**
+     * Test for `popular()` method, with tags that have the same `post_count`
+     *  value
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Invalid values
+     * @test
+     */
+    public function testPopularWithTagsSamePostCount()
+    {
+        //Adds some tag, with the same `post_count`
+        foreach ([
+            ['tag' => 'Example1', 'post_count' => 999],
+            ['tag' => 'Example2', 'post_count' => 999],
+        ] as $data) {
+            $entity = $this->Tags->newEntity($data);
+            $this->assertNotFalse($this->Tags->save($entity));
+        }
+
+        $options = [
+            'limit' => 2,
+            'prefix' => '#',
+            'render' => 'cloud',
+            'shuffle' => false,
+            'style' => [
+                'maxFont' => 40,
+                'minFont' => 12,
+            ],
+        ];
+
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+
+        //Removes all tabs, including tabs created with multiple spaces
+        $result = trim(preg_replace('/\s{2,}/', null, $result));
+
+        $expected = [
+            ['div' => ['class' => 'widget']],
+            'h4' => ['class' => 'widget-title'],
+            'Popular tags',
+            '/h4',
+            ['div' => ['class' => 'widget-content']],
+            ['div' => true],
+            ['a' => ['href' => '/posts/tag/example1', 'style' => 'font-size:40px;', 'title' => 'Example1']],
+            '#Example1',
+            '/a',
+            '/div',
+            ['div' => true],
+            ['a' => ['href' => '/posts/tag/example2', 'style' => 'font-size:40px;', 'title' => 'Example2']],
+            '#Example2',
+            '/a',
+            '/div',
+            '/div',
+            '/div',
+        ];
+        $this->assertHtml($expected, $result);
     }
 }
