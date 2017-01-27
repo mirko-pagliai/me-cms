@@ -100,7 +100,6 @@ class PostsTagsCellTest extends TestCase
      */
     public function testPopular()
     {
-
         //Tries using the style (`maxFont` and `minFont`)
         $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
 
