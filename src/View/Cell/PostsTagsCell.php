@@ -22,6 +22,7 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Cache\Cache;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Cell;
 
@@ -104,34 +105,37 @@ class PostsTagsCell extends Cell
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
         }
 
-        $tags = $this->Tags->find()
-            ->select(['tag', 'post_count'])
-            ->limit($limit)
-            ->order([
-                'post_count' => 'DESC',
-                'tag' => 'ASC',
-            ])
-            ->cache($cache, $this->Tags->Posts->cache)
-            ->toArray();
+        //Tries to get from cache
+        $tags = Cache::read($cache, $this->Tags->Posts->cache);
 
         if (empty($tags)) {
-            return;
-        }
+            $tags = $this->Tags->find()
+                ->select(['tag', 'post_count'])
+                ->limit($limit)
+                ->order([
+                    'post_count' => 'DESC',
+                    'tag' => 'ASC',
+                ])
+                ->cache($cache, $this->Tags->Posts->cache)
+                ->toArray();
 
-        //Adds the proportional font size to each tag
-        if ($render === 'cloud' && $style) {
-            //Highest and lowest numbers of occurrences and their difference
-            $maxCount = $tags[0]->post_count;
-            $minCount = end($tags)->post_count;
-            $diffCount = $maxCount - $minCount;
+            //Adds the proportional font size to each tag
+            if ($render === 'cloud' && $style) {
+                //Highest and lowest numbers of occurrences and their difference
+                $maxCount = $tags[0]->post_count;
+                $minCount = end($tags)->post_count;
+                $diffCount = $maxCount - $minCount;
 
-            foreach ($tags as $tag) {
-                if ($diffCount) {
-                    $tag->size = round((($tag->post_count - $minCount) / $diffCount * ($maxFont - $minFont)) + $minFont);
-                } else {
-                    $tag->size = $maxFont;
+                foreach ($tags as $tag) {
+                    if ($diffCount) {
+                        $tag->size = round((($tag->post_count - $minCount) / $diffCount * ($maxFont - $minFont)) + $minFont);
+                    } else {
+                        $tag->size = $maxFont;
+                    }
                 }
             }
+
+            Cache::write($cache, $tags, $this->Tags->Posts->cache);
         }
 
         if ($shuffle && $limit > 1) {
