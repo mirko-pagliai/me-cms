@@ -27,22 +27,31 @@ use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
+use MeCms\View\Cell\PostsTagsCell;
 use MeCms\View\View\AppView as View;
+use Reflection\ReflectionTrait;
 
 /**
  * PostsTagsCellTest class
  */
 class PostsTagsCellTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
-     * @var \MeCms\View\View\AppView
+     * @var \MeCms\View\Cell\PostsTagsCell
      */
-    protected $View;
+    protected $PostsTagsCell;
 
     /**
      * @var \MeCms\Model\Table\TagsTable
      */
     protected $Tags;
+
+    /**
+     * @var \MeCms\View\View\AppView
+     */
+    protected $View;
 
     /**
      * Options
@@ -68,8 +77,9 @@ class PostsTagsCellTest extends TestCase
     {
         Cache::disable();
 
-        $this->View = new View;
+        $this->PostsTagsCell = new PostsTagsCell();
         $this->Tags = TableRegistry::get('Tags');
+        $this->View = new View;
 
         $this->options = [
             'limit' => 2,
@@ -91,7 +101,37 @@ class PostsTagsCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->View);
+        unset($this->PostsTagsCell, $this->Tags, $this->View);
+    }
+
+    /**
+     * Test for `_getFontSizes()` method
+     * @test
+     */
+    public function testGetFontSizes()
+    {
+        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [[]]);
+        $this->assertEquals([40, 12], $result);
+
+        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['maxFont' => 20]]);
+        $this->assertEquals([20, 12], $result);
+
+        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['minFont' => 20]]);
+        $this->assertEquals([40, 20], $result);
+
+        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
+        $this->assertEquals([30, 20], $result);
+    }
+
+    /**
+     * Test for `_getFontSizes()` method, with invalid values
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Invalid values
+     * @test
+     */
+    public function testGetFontSizesWithInvalidValues()
+    {
+        $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
     /**
@@ -266,30 +306,11 @@ class PostsTagsCellTest extends TestCase
         $this->View = new View($request);
         $result = $this->View->cell(MECMS . '.PostsTags::popular')->render();
         $this->assertEmpty($result);
-    }
 
-    /**
-     * Test for `popular()` method, with invalid font sizes
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid values
-     * @test
-     */
-    public function testPopularWithInvalidFontSizes()
-    {
-        $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, ['style' => [
-            'maxFont' => 10,
-        ]]))->render();
-    }
-
-    /**
-     * Test for `popular()` method, with no tags
-     * @test
-     */
-    public function testPopularWithNoTags()
-    {
         //Deletes all tags
         $this->Tags->deleteAll(['id >=' => 1]);
 
+        //Empty with no tags
         $result = $this->View->cell(MECMS . '.PostsTags::popular')->render();
         $this->assertEmpty($result);
     }

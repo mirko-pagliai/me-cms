@@ -50,15 +50,35 @@ class PostsTagsCell extends Cell
     }
 
     /**
+     * Internal method to get the font sizes
+     * @param array|bool $style Style for tags. Array with `maxFont` and
+     *  `minFont` keys or `false` to disable
+     * @return array
+     * @throws InternalErrorException
+     */
+    protected function _getFontSizes(array $style)
+    {
+        //Maximum and minimun font sizes we want to use
+        $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
+        $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+
+        if ($maxFont <= $minFont) {
+            throw new InternalErrorException(__d('me_cms', 'Invalid values'));
+        }
+
+        return [$maxFont, $minFont];
+    }
+
+    /**
      * Popular tags widgets
      * @param int $limit Limit
      * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array|bool $style Applies style to tags. Array with `maxFont` and
+     * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return void
-     * @throws InternalErrorException
+     * @uses _getFontSizes()
      */
     public function popular(
         $limit = 10,
@@ -75,14 +95,10 @@ class PostsTagsCell extends Cell
         //Sets the initial cache name
         $cache = sprintf('widget_tags_popular_%s', $limit);
 
-        if (!empty($style['maxFont']) || !empty($style['minFont'])) {
+        if ($style && is_array($style)) {
             //Maximum and minimun font sizes we want to use
-            $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
-            $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
-
-            if ($maxFont <= $minFont) {
-                throw new InternalErrorException(__d('me_cms', 'Invalid values'));
-            }
+            list($maxFont, $minFont) = $this->_getFontSizes($style);
+            $style = true;
 
             //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
@@ -103,7 +119,7 @@ class PostsTagsCell extends Cell
         }
 
         //Adds the proportional font size to each tag
-        if ($render === 'cloud' && !empty($maxFont) && !empty($minFont)) {
+        if ($render === 'cloud' && $style) {
             //Highest and lowest numbers of occurrences and their difference
             $maxCount = $tags[0]->post_count;
             $minCount = end($tags)->post_count;
