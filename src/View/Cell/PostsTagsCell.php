@@ -58,6 +58,7 @@ class PostsTagsCell extends Cell
      * @param array|bool $style Applies style to tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return void
+     * @throws InternalErrorException
      */
     public function popular(
         $limit = 10,
