@@ -3,7 +3,8 @@
 ### 2.14.16
 * improved `WidgetHelper` class;
 * fixed some bugs for the widget of popular tags;
-* added tests for `WidgetHelper` class.
+* added tests for `WidgetHelper` class;
+* added tests for all cell classes.
 
 ### 2.14.15
 * fixed (perhaps forever...) bug for sorting records in the admin panel;
