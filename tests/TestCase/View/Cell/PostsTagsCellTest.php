@@ -267,8 +267,6 @@ class PostsTagsCellTest extends TestCase
     /**
      * Test for `popular()` method, with tags that have the same `post_count`
      *  value
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid values
      * @test
      */
     public function testPopularWithTagsSamePostCount()
