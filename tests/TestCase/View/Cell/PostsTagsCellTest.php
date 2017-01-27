@@ -234,4 +234,26 @@ class PostsTagsCellTest extends TestCase
         ];
         $this->assertHtml($expected, $result);
     }
+
+    /**
+     * Test for `popular()` method, with invalid font sizes
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Invalid values
+     * @test
+     */
+    public function testPopularWithInvalidFontSizes()
+    {
+        $options = [
+            'limit' => 2,
+            'prefix' => '#',
+            'render' => 'cloud',
+            'shuffle' => false,
+            'style' => [
+                'maxFont' => 10,
+                'minFont' => 12,
+            ],
+        ];
+
+        $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+    }
 }

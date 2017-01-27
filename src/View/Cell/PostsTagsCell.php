@@ -22,6 +22,7 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Cell;
 
 /**
@@ -77,6 +78,10 @@ class PostsTagsCell extends Cell
             //Maximum and minimun font sizes we want to use
             $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
             $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+
+            if ($maxFont <= $minFont) {
+                throw new InternalErrorException(__d('me_cms', 'Invalid values'));
+            }
 
             //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
