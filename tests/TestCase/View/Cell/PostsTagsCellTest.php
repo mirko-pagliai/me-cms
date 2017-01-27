@@ -45,6 +45,12 @@ class PostsTagsCellTest extends TestCase
     protected $Tags;
 
     /**
+     * Options
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -64,6 +70,17 @@ class PostsTagsCellTest extends TestCase
 
         $this->View = new View;
         $this->Tags = TableRegistry::get('Tags');
+
+        $this->options = [
+            'limit' => 2,
+            'prefix' => '#',
+            'render' => 'cloud',
+            'shuffle' => false,
+            'style' => [
+                'maxFont' => 40,
+                'minFont' => 12,
+            ],
+        ];
     }
 
     /**
@@ -83,16 +100,39 @@ class PostsTagsCellTest extends TestCase
      */
     public function testPopular()
     {
-        $options = [
-            'limit' => 2,
-            'prefix' => '#',
-            'render' => 'cloud',
-            'shuffle' => false,
-            'style' => false,
+
+        //Tries using the style (`maxFont` and `minFont`)
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
+
+        //Removes all tabs, including tabs created with multiple spaces
+        $result = trim(preg_replace('/\s{2,}/', null, $result));
+
+        $expected = [
+            ['div' => ['class' => 'widget']],
+            'h4' => ['class' => 'widget-title'],
+            'Popular tags',
+            '/h4',
+            ['div' => ['class' => 'widget-content']],
+            ['div' => true],
+            ['a' => ['href' => '/posts/tag/cat', 'style' => 'font-size:40px;', 'title' => 'Cat']],
+            '#Cat',
+            '/a',
+            '/div',
+            ['div' => true],
+            ['a' => ['href' => '/posts/tag/dog', 'style' => 'font-size:12px;', 'title' => 'Dog']],
+            '#Dog',
+            '/a',
+            '/div',
+            '/div',
+            '/div',
         ];
+        $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($options, ['prefix' => '-']))->render();
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+            'prefix' => '-',
+            'style' => false,
+        ]))->render();
 
         //Removes all tabs, including tabs created with multiple spaces
         $result = trim(preg_replace('/\s{2,}/', null, $result));
@@ -119,7 +159,10 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($options, ['render' => 'form']))->render();
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+            'render' => 'form',
+            'style' => false,
+        ]))->render();
 
         //Removes all tabs, including tabs created with multiple spaces
         $result = trim(preg_replace('/\s{2,}/', null, $result));
@@ -150,7 +193,10 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as list
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($options, ['render' => 'list']))->render();
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+            'render' => 'list',
+            'style' => false,
+        ]))->render();
 
         //Removes all tabs, including tabs created with multiple spaces
         $result = trim(preg_replace('/\s{2,}/', null, $result));
@@ -187,7 +233,10 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with shuffle
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($options, ['shuffle' => true]))->render();
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+            'shuffle' => true,
+            'style' => false,
+        ]))->render();
 
         //Removes all tabs, including tabs created with multiple spaces
         $result = trim(preg_replace('/\s{2,}/', null, $result));
@@ -206,36 +255,6 @@ class PostsTagsCellTest extends TestCase
             ['div' => true],
             ['a' => ['href' => 'preg:/\/posts\/tag\/(cat|dog)/', 'title' => 'preg:/(Cat|Dog)/']],
             'preg:/#(Cat|Dog)/',
-            '/a',
-            '/div',
-            '/div',
-            '/div',
-        ];
-        $this->assertHtml($expected, $result);
-
-        //Tries using the style (`maxFont` and `minFont`)
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($options, ['style' => [
-            'maxFont' => 40,
-            'minFont' => 12,
-        ]]))->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
-        $expected = [
-            ['div' => ['class' => 'widget']],
-            'h4' => ['class' => 'widget-title'],
-            'Popular tags',
-            '/h4',
-            ['div' => ['class' => 'widget-content']],
-            ['div' => true],
-            ['a' => ['href' => '/posts/tag/cat', 'style' => 'font-size:40px;', 'title' => 'Cat']],
-            '#Cat',
-            '/a',
-            '/div',
-            ['div' => true],
-            ['a' => ['href' => '/posts/tag/dog', 'style' => 'font-size:12px;', 'title' => 'Dog']],
-            '#Dog',
             '/a',
             '/div',
             '/div',
@@ -258,18 +277,9 @@ class PostsTagsCellTest extends TestCase
      */
     public function testPopularWithInvalidFontSizes()
     {
-        $options = [
-            'limit' => 2,
-            'prefix' => '#',
-            'render' => 'cloud',
-            'shuffle' => false,
-            'style' => [
-                'maxFont' => 10,
-                'minFont' => 12,
-            ],
-        ];
-
-        $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+        $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, ['style' => [
+            'maxFont' => 10,
+        ]]))->render();
     }
 
     /**
@@ -281,18 +291,7 @@ class PostsTagsCellTest extends TestCase
         //Deletes all tags
         $this->Tags->deleteAll(['id >=' => 1]);
 
-        $options = [
-            'limit' => 2,
-            'prefix' => '#',
-            'render' => 'cloud',
-            'shuffle' => false,
-            'style' => [
-                'maxFont' => 40,
-                'minFont' => 12,
-            ],
-        ];
-
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+        $result = $this->View->cell(MECMS . '.PostsTags::popular')->render();
         $this->assertEmpty($result);
     }
 
@@ -312,18 +311,7 @@ class PostsTagsCellTest extends TestCase
             $this->assertNotFalse($this->Tags->save($entity));
         }
 
-        $options = [
-            'limit' => 2,
-            'prefix' => '#',
-            'render' => 'cloud',
-            'shuffle' => false,
-            'style' => [
-                'maxFont' => 40,
-                'minFont' => 12,
-            ],
-        ];
-
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', $options)->render();
+        $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
 
         //Removes all tabs, including tabs created with multiple spaces
         $result = trim(preg_replace('/\s{2,}/', null, $result));
