@@ -152,7 +152,7 @@ class PostsTagsCell extends Cell
 
         $this->set(compact('prefix', 'tags'));
 
-        if ($render === 'form' || $render === 'list') {
+        if (in_array($render, ['form', 'list'])) {
             $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
         }
     }
