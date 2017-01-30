@@ -35,6 +35,8 @@ echo $this->Form->createInline(false, [
 ]);
 echo $this->Form->input('p', [
     'button' => $this->Form->button(null, ['class' => 'btn-primary', 'icon' => 'search']),
+    'id' => false,
+    'label' => false,
     'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),
 ]);
 echo $this->Form->end();

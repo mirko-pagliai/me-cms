@@ -78,6 +78,7 @@ class StaticPageTest extends TestCase
             'vendor/mirko-pagliai/me-tools/src/Template/StaticPages',
             'vendor/mirko-pagliai/assets/src/Template/StaticPages',
             'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages',
+            'vendor/mirko-pagliai/cakephp-thumber/src/Template/StaticPages',
         ], $paths);
     }
 

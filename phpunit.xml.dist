@@ -8,7 +8,7 @@
 	>
 
 	<testsuites>
-		<testsuite name="me-cms-youtube Test Cases">
+		<testsuite name="me-cms Test Cases">
 			<directory>./tests/TestCase</directory>
 		</testsuite>
 	</testsuites>

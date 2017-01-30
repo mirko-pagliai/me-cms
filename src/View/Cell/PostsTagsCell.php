@@ -22,10 +22,12 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Cache\Cache;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Cell;
 
 /**
- * Posts cell
+ * PostsTags cell
  */
 class PostsTagsCell extends Cell
 {
@@ -49,20 +51,42 @@ class PostsTagsCell extends Cell
     }
 
     /**
+     * Internal method to get the font sizes
+     * @param array|bool $style Style for tags. Array with `maxFont` and
+     *  `minFont` keys or `false` to disable
+     * @return array
+     * @throws InternalErrorException
+     */
+    protected function _getFontSizes(array $style)
+    {
+        //Maximum and minimun font sizes we want to use
+        $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
+        $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+
+        if ($maxFont <= $minFont) {
+            throw new InternalErrorException(__d('me_cms', 'Invalid values'));
+        }
+
+        return [$maxFont, $minFont];
+    }
+
+    /**
      * Popular tags widgets
      * @param int $limit Limit
-     * @param string $prefix Prefix for each tag
+     * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array|bool $style Applies style to tags
+     * @param array|bool $style Style for tags. Array with `maxFont` and
+     *  `minFont` keys or `false` to disable
      * @return void
+     * @uses _getFontSizes()
      */
     public function popular(
         $limit = 10,
         $prefix = '#',
         $render = 'cloud',
         $shuffle = true,
-        array $style = ['maxFont' => 40, 'minFont' => 12]
+        $style = ['maxFont' => 40, 'minFont' => 12]
     ) {
         //Returns on tags index
         if ($this->request->isUrl(['_name' => 'postsTags'])) {
@@ -72,66 +96,63 @@ class PostsTagsCell extends Cell
         //Sets the initial cache name
         $cache = sprintf('widget_tags_popular_%s', $limit);
 
-        //Updates the cache name
-        if (!empty($style['maxFont']) || !empty($style['minFont'])) {
-            //Maximum font size we want to use
-            $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
-            //Minimum font size we want to use
-            $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+        if ($style && is_array($style)) {
+            //Maximum and minimun font sizes we want to use
+            list($maxFont, $minFont) = $this->_getFontSizes($style);
+            $style = true;
 
+            //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
         }
 
-        $tags = $this->Tags->find()
-            ->select(['tag', 'post_count'])
-            ->limit($limit)
-            ->order(['post_count' => 'DESC'])
-            ->cache($cache, $this->Tags->Posts->cache)
-            ->toArray();
+        //Tries to get from cache
+        $tags = Cache::read($cache, $this->Tags->Posts->cache);
 
         if (empty($tags)) {
-            return;
-        }
-
-        if (!empty($style['maxFont']) || !empty($style['minFont'])) {
-            //Number of occurrences of the tag with the highest number of occurrences
-            $maxCount = $tags[0]->post_count;
-            //Number of occurrences of the tag with the lowest number of occurrences
-            $minCount = end($tags)->post_count;
+            $tags = $this->Tags->find()
+                ->select(['tag', 'post_count'])
+                ->limit($limit)
+                ->order([
+                    'post_count' => 'DESC',
+                    'tag' => 'ASC',
+                ])
+                ->cache($cache, $this->Tags->Posts->cache)
+                ->toArray();
 
             //Adds the proportional font size to each tag
-            $tags = array_map(function ($tag) use (
-                $maxCount,
-                $minCount,
-                $maxFont,
-                $minFont
-            ) {
-                $tag->size = round(
-                    (
-                        ($tag->post_count - $minCount) /
-                        ($maxCount - $minCount) *
-                        ($maxFont - $minFont)
-                    ) +
-                    $minFont
-                );
+            if ($render === 'cloud' && $style) {
+                //Highest and lowest numbers of occurrences and their difference
+                $maxCount = $tags[0]->post_count;
+                $minCount = end($tags)->post_count;
+                $diffCount = $maxCount - $minCount;
 
-                return $tag;
-            }, $tags);
+                foreach ($tags as $tag) {
+                    if ($diffCount) {
+                        $tag->size = round((($tag->post_count - $minCount) / $diffCount * ($maxFont - $minFont)) + $minFont);
+                    } else {
+                        $tag->size = $maxFont;
+                    }
+                }
+            }
+
+            Cache::write($cache, $tags, $this->Tags->Posts->cache);
         }
 
-        if ($shuffle) {
+        if ($shuffle && $limit > 1) {
             shuffle($tags);
         }
 
-        //Takes place here, because shuffle() re-indexes
-        foreach ($tags as $k => $tag) {
-            $tags[$tag->slug] = $tag;
-            unset($tags[$k]);
+        if ($render === 'form') {
+            //Takes place here, because shuffle() re-indexes
+            foreach ($tags as $k => $tag) {
+                $tags[$tag->slug] = $tag;
+                unset($tags[$k]);
+            }
         }
 
         $this->set(compact('prefix', 'tags'));
 
-        if ($render !== 'cloud') {
+        if (in_array($render, ['form', 'list'])) {
             $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
         }
     }

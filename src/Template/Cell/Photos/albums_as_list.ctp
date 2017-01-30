@@ -29,10 +29,7 @@ $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Albums'));
 
 $albums = array_map(function ($album) {
-    return $this->Html->link(
-        $album->title,
-        ['_name' => 'album', $album->slug]
-    );
+    return $this->Html->link($album->title, ['_name' => 'album', $album->slug]);
 }, $albums);
 
 echo $this->Html->ul($albums, ['icon' => 'caret-right']);

@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.14 branch
+### 2.14.16
+* improved `WidgetHelper` class;
+* fixed some bugs for the widget of popular tags;
+* added tests for `WidgetHelper` class;
+* added tests for all cell classes.
+
 ### 2.14.15
 * fixed (perhaps forever...) bug for sorting records in the admin panel;
 * now the password can be shown/hidden even adding/editing a user;
@@ -9,7 +15,7 @@
 ### 2.14.14
 * the "last logins" table now shows the browser version and links to track the
     IP addresses;
-* renamed the `LoginLogger` class as `LoginRecorder`. The  class has been
+* renamed the `LoginLogger` class as `LoginRecorder`. The class has been
     completely rewritten and several bugs have been fixed;
 * fixed bugs and improved code for the `LoginLogger` class;
 * improved the `SerializedLog` class;

@@ -98,12 +98,8 @@ class PostsCategoriesTableTest extends TestCase
         $entity = $this->PostsCategories->newEntity($example);
         $this->assertFalse($this->PostsCategories->save($entity));
         $this->assertEquals([
-            'slug' => [
-                '_isUnique' => 'This value is already used',
-            ],
-            'title' => [
-                '_isUnique' => 'This value is already used',
-            ],
+            'slug' => ['_isUnique' => 'This value is already used'],
+            'title' => ['_isUnique' => 'This value is already used'],
         ], $entity->errors());
 
         $entity = $this->PostsCategories->newEntity([

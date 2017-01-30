@@ -33,6 +33,7 @@ echo $this->Form->create(false, [
     'url' => ['_name' => 'album', 'album'],
 ]);
 echo $this->Form->input('q', [
+    'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
     'options' => array_map(function ($album) {

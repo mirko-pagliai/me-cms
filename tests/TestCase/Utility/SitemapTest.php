@@ -87,12 +87,22 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
             [
+                'loc' => 'http://localhost/pages/category/first-page-category',
+                'lastmod' => '2016-12-26T17:30:20+00:00',
+                'priority' => '0.5',
+            ],
+            [
+                'loc' => 'http://localhost/page/second-page',
+                'lastmod' => '2016-12-26T17:30:20+00:00',
+                'priority' => '0.5',
+            ],
+            [
                 'loc' => 'http://localhost/pages/category/sub-sub-page-category',
                 'lastmod' => '2016-12-26T17:29:20+00:00',
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/title-example',
+                'loc' => 'http://localhost/page/first-page',
                 'lastmod' => '2016-12-26T17:29:20+00:00',
                 'priority' => '0.5',
             ],
@@ -224,13 +234,13 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/post/first-post',
+                'loc' => 'http://localhost/post/second-post',
                 'lastmod' => '2016-12-28T18:55:19+00:00',
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/post/second-post',
-                'lastmod' => '2016-12-28T18:55:19+00:00',
+                'loc' => 'http://localhost/post/first-post',
+                'lastmod' => '2016-11-28T18:55:19+00:00',
                 'priority' => '0.5',
             ],
         ];

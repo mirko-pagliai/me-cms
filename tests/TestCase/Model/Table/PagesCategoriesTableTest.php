@@ -98,12 +98,8 @@ class PagesCategoriesTableTest extends TestCase
         $entity = $this->PagesCategories->newEntity($example);
         $this->assertFalse($this->PagesCategories->save($entity));
         $this->assertEquals([
-            'slug' => [
-                '_isUnique' => 'This value is already used',
-            ],
-            'title' => [
-                '_isUnique' => 'This value is already used',
-            ],
+            'slug' => ['_isUnique' => 'This value is already used'],
+            'title' => ['_isUnique' => 'This value is already used'],
         ], $entity->errors());
 
         $entity = $this->PagesCategories->newEntity([

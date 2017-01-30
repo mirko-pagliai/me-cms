@@ -29,10 +29,7 @@ $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Posts categories'));
 
 $categories = array_map(function ($category) {
-    return $this->Html->link(
-        $category->title,
-        ['_name' => 'postsCategory', $category->slug]
-    );
+    return $this->Html->link($category->title, ['_name' => 'postsCategory', $category->slug]);
 }, $categories);
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

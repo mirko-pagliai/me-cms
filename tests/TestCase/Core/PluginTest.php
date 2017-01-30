@@ -40,6 +40,7 @@ class PluginTest extends TestCase
             'MeCms',
             'MeTools',
             'Assets',
+            'Thumber',
         ], Plugin::all());
 
         Plugin::load('TestPlugin');
@@ -49,6 +50,7 @@ class PluginTest extends TestCase
             'MeTools',
             'Assets',
             'TestPlugin',
+            'Thumber',
         ], Plugin::all());
 
         $this->assertEquals([
@@ -56,6 +58,7 @@ class PluginTest extends TestCase
             'MeCms',
             'MeTools',
             'TestPlugin',
+            'Thumber',
         ], Plugin::all(['order' => false]));
     }
 }
