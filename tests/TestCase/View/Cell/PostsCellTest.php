@@ -79,9 +79,6 @@ class PostsCellTest extends TestCase
     {
         $result = $this->View->cell(MECMS . '.Posts::categories')->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -109,9 +106,6 @@ class PostsCellTest extends TestCase
 
         //Renders as list
         $result = $this->View->cell(MECMS . '.Posts::categories', ['render' => 'list'])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -158,9 +152,6 @@ class PostsCellTest extends TestCase
         //Tries with a limit of 1
         $result = $this->View->cell(MECMS . '.Posts::latest', ['limit' => 1])->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -185,9 +176,6 @@ class PostsCellTest extends TestCase
 
         //Tries with a limit of 2
         $result = $this->View->cell(MECMS . '.Posts::latest', ['limit' => 2])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -235,9 +223,6 @@ class PostsCellTest extends TestCase
     {
         $result = $this->View->cell(MECMS . '.Posts::months')->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -265,9 +250,6 @@ class PostsCellTest extends TestCase
 
         //Renders as list
         $result = $this->View->cell(MECMS . '.Posts::months', ['render' => 'list'])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -312,9 +294,6 @@ class PostsCellTest extends TestCase
     public function testSearch()
     {
         $result = $this->View->cell(MECMS . '.Posts::search')->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],

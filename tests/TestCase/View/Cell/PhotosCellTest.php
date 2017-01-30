@@ -79,9 +79,6 @@ class PhotosCellTest extends TestCase
     {
         $result = $this->View->cell(MECMS . '.Photos::albums')->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -109,9 +106,6 @@ class PhotosCellTest extends TestCase
 
         //Renders as list
         $result = $this->View->cell(MECMS . '.Photos::albums', ['render' => 'list'])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -157,9 +151,6 @@ class PhotosCellTest extends TestCase
     {
         $result = $this->View->cell(MECMS . '.Photos::latest')->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -176,9 +167,6 @@ class PhotosCellTest extends TestCase
 
         //Tries another limit
         $result = $this->View->cell(MECMS . '.Photos::latest', ['limit' => 2])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -213,9 +201,6 @@ class PhotosCellTest extends TestCase
     {
         $result = $this->View->cell(MECMS . '.Photos::random')->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -232,9 +217,6 @@ class PhotosCellTest extends TestCase
 
         //Tries another limit
         $result = $this->View->cell(MECMS . '.Photos::random', ['limit' => 2])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],

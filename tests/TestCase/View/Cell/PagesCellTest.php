@@ -79,9 +79,6 @@ class PagesCellTest extends TestCase
     {
         $result = $this->View->cell(MECMS . '.Pages::categories')->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -109,9 +106,6 @@ class PagesCellTest extends TestCase
 
         //Renders as list
         $result = $this->View->cell(MECMS . '.Pages::categories', ['render' => 'list'])->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -156,9 +150,6 @@ class PagesCellTest extends TestCase
     public function testPages()
     {
         $result = $this->View->cell(MECMS . '.Pages::pages')->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],

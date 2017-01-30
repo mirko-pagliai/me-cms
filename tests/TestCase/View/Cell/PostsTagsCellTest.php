@@ -143,9 +143,6 @@ class PostsTagsCellTest extends TestCase
         //Tries using the style (`maxFont` and `minFont`)
         $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -173,9 +170,6 @@ class PostsTagsCellTest extends TestCase
             'style' => false,
         ]))->render();
 
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -202,9 +196,6 @@ class PostsTagsCellTest extends TestCase
             'render' => 'form',
             'style' => false,
         ]))->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -236,9 +227,6 @@ class PostsTagsCellTest extends TestCase
             'render' => 'list',
             'style' => false,
         ]))->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -276,9 +264,6 @@ class PostsTagsCellTest extends TestCase
             'shuffle' => true,
             'style' => false,
         ]))->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -332,9 +317,6 @@ class PostsTagsCellTest extends TestCase
         }
 
         $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
-
-        //Removes all tabs, including tabs created with multiple spaces
-        $result = trim(preg_replace('/\s{2,}/', null, $result));
 
         $expected = [
             ['div' => ['class' => 'widget']],
