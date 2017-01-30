@@ -183,8 +183,8 @@ class SerializedLogTest extends TestCase
         $this->assertRegExp('/^[\d-:\s]{19} Error: This is an error message$/', $logs[1]->full);
 
         //Checks for fileperms
-        $this->assertEquals('0644', substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4));
-        $this->assertEquals('0644', substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4));
+        $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4), ['0644', '0664']);
+        $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4), ['0644', '0664']);
 
         //Deletes all logs, drops and reconfigure, adding `mask`
         $this->_deleteAll();
