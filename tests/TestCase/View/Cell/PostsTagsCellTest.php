@@ -310,7 +310,7 @@ class PostsTagsCellTest extends TestCase
     public function testPopularWithTagsSamePostCount()
     {
         $widget = MECMS . '.PostsTags::popular';
-        
+
         //Adds some tag, with the same `post_count`
         foreach ([
             ['tag' => 'Example1', 'post_count' => 999],
