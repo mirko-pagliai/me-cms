@@ -77,7 +77,9 @@ class PagesCellTest extends TestCase
      */
     public function testCategories()
     {
-        $result = $this->View->cell(MECMS . '.Pages::categories')->render();
+        $widget = MECMS . '.Pages::categories';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -105,7 +107,7 @@ class PagesCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell(MECMS . '.Pages::categories', ['render' => 'list'])->render();
+        $result = $this->View->cell($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -139,7 +141,7 @@ class PagesCellTest extends TestCase
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'pagesCategories']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Pages::categories')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -149,7 +151,9 @@ class PagesCellTest extends TestCase
      */
     public function testPages()
     {
-        $result = $this->View->cell(MECMS . '.Pages::pages')->render();
+        $widget = MECMS . '.Pages::pages';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -183,7 +187,7 @@ class PagesCellTest extends TestCase
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'pagesCategories']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Pages::pages')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 }

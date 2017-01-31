@@ -128,9 +128,7 @@ class PostsCell extends Cell
             $newKey = sprintf('%s/%s', $exploded[1], $exploded[0]);
 
             $months[$newKey] = $month;
-            $months[$newKey]->month = (new FrozenDate())
-                ->year($exploded[1])
-                ->month($exploded[0]);
+            $months[$newKey]->month = (new FrozenDate())->day(1)->month($exploded[0])->year($exploded[1]);
             unset($months[$key]);
         }
 

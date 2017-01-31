@@ -140,8 +140,10 @@ class PostsTagsCellTest extends TestCase
      */
     public function testPopular()
     {
+        $widget = MECMS . '.PostsTags::popular';
+
         //Tries using the style (`maxFont` and `minFont`)
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
+        $result = $this->View->cell($widget, $this->options)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -165,7 +167,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+        $result = $this->View->cell($widget, am($this->options, [
             'prefix' => '-',
             'style' => false,
         ]))->render();
@@ -192,7 +194,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+        $result = $this->View->cell($widget, am($this->options, [
             'render' => 'form',
             'style' => false,
         ]))->render();
@@ -223,7 +225,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as list
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+        $result = $this->View->cell($widget, am($this->options, [
             'render' => 'list',
             'style' => false,
         ]))->render();
@@ -260,7 +262,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with shuffle
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', am($this->options, [
+        $result = $this->View->cell($widget, am($this->options, [
             'shuffle' => true,
             'style' => false,
         ]))->render();
@@ -289,14 +291,14 @@ class PostsTagsCellTest extends TestCase
         //Empty on tags index
         $request = new Request(Router::url(['_name' => 'postsTags']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.PostsTags::popular')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
 
         //Deletes all tags
         $this->Tags->deleteAll(['id >=' => 1]);
 
         //Empty with no tags
-        $result = $this->View->cell(MECMS . '.PostsTags::popular')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -307,6 +309,8 @@ class PostsTagsCellTest extends TestCase
      */
     public function testPopularWithTagsSamePostCount()
     {
+        $widget = MECMS . '.PostsTags::popular';
+
         //Adds some tag, with the same `post_count`
         foreach ([
             ['tag' => 'Example1', 'post_count' => 999],
@@ -316,7 +320,7 @@ class PostsTagsCellTest extends TestCase
             $this->assertNotFalse($this->Tags->save($entity));
         }
 
-        $result = $this->View->cell(MECMS . '.PostsTags::popular', $this->options)->render();
+        $result = $this->View->cell($widget, $this->options)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],

@@ -77,7 +77,9 @@ class PostsCellTest extends TestCase
      */
     public function testCategories()
     {
-        $result = $this->View->cell(MECMS . '.Posts::categories')->render();
+        $widget = MECMS . '.Posts::categories';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -105,7 +107,7 @@ class PostsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell(MECMS . '.Posts::categories', ['render' => 'list'])->render();
+        $result = $this->View->cell($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -139,7 +141,7 @@ class PostsCellTest extends TestCase
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'postsCategories']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Posts::categories')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -149,8 +151,10 @@ class PostsCellTest extends TestCase
      */
     public function testLatest()
     {
+        $widget = MECMS . '.Posts::latest';
+
         //Tries with a limit of 1
-        $result = $this->View->cell(MECMS . '.Posts::latest', ['limit' => 1])->render();
+        $result = $this->View->cell($widget, ['limit' => 1])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -175,7 +179,7 @@ class PostsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a limit of 2
-        $result = $this->View->cell(MECMS . '.Posts::latest', ['limit' => 2])->render();
+        $result = $this->View->cell($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -211,7 +215,7 @@ class PostsCellTest extends TestCase
         //Empty on posts index
         $request = new Request(Router::url(['_name' => 'posts']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Posts::latest')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -221,7 +225,9 @@ class PostsCellTest extends TestCase
      */
     public function testMonths()
     {
-        $result = $this->View->cell(MECMS . '.Posts::months')->render();
+        $widget = MECMS . '.Posts::months';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -249,7 +255,7 @@ class PostsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell(MECMS . '.Posts::months', ['render' => 'list'])->render();
+        $result = $this->View->cell($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -283,7 +289,7 @@ class PostsCellTest extends TestCase
         //Empty on posts index
         $request = new Request(Router::url(['_name' => 'posts']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Posts::latest')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -293,7 +299,9 @@ class PostsCellTest extends TestCase
      */
     public function testSearch()
     {
-        $result = $this->View->cell(MECMS . '.Posts::search')->render();
+        $widget = MECMS . '.Posts::search';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -323,7 +331,7 @@ class PostsCellTest extends TestCase
         //Empty on search
         $request = new Request(Router::url(['_name' => 'postsSearch']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Posts::search')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 }

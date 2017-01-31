@@ -77,7 +77,9 @@ class PhotosCellTest extends TestCase
      */
     public function testAlbums()
     {
-        $result = $this->View->cell(MECMS . '.Photos::albums')->render();
+        $widget = MECMS . '.Photos::albums';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -105,7 +107,7 @@ class PhotosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell(MECMS . '.Photos::albums', ['render' => 'list'])->render();
+        $result = $this->View->cell($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -139,7 +141,7 @@ class PhotosCellTest extends TestCase
         //Empty on albums index
         $request = new Request(Router::url(['_name' => 'albums']));
         $this->View = new View($request);
-        $result = $this->View->cell(MECMS . '.Photos::albums')->render();
+        $result = $this->View->cell($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -149,7 +151,9 @@ class PhotosCellTest extends TestCase
      */
     public function testLatest()
     {
-        $result = $this->View->cell(MECMS . '.Photos::latest')->render();
+        $widget = MECMS . '.Photos::latest';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -166,7 +170,7 @@ class PhotosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries another limit
-        $result = $this->View->cell(MECMS . '.Photos::latest', ['limit' => 2])->render();
+        $result = $this->View->cell($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -188,7 +192,7 @@ class PhotosCellTest extends TestCase
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
             $this->View->request->params['controller'] = $controller;
-            $result = $this->View->cell(MECMS . '.Photos::latest')->render();
+            $result = $this->View->cell($widget)->render();
             $this->assertEmpty($result);
         }
     }
@@ -199,7 +203,9 @@ class PhotosCellTest extends TestCase
      */
     public function testRandom()
     {
-        $result = $this->View->cell(MECMS . '.Photos::random')->render();
+        $widget = MECMS . '.Photos::random';
+
+        $result = $this->View->cell($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -216,7 +222,7 @@ class PhotosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries another limit
-        $result = $this->View->cell(MECMS . '.Photos::random', ['limit' => 2])->render();
+        $result = $this->View->cell($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -238,7 +244,7 @@ class PhotosCellTest extends TestCase
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
             $this->View->request->params['controller'] = $controller;
-            $result = $this->View->cell(MECMS . '.Photos::random')->render();
+            $result = $this->View->cell($widget)->render();
             $this->assertEmpty($result);
         }
     }
