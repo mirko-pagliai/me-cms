@@ -125,11 +125,6 @@ Plugin::load('Assets', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
 ]);
 
-Plugin::load('MeTools', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
-]);
-
 Configure::write('Thumbs.target', TMP . 'thumbs');
 
 //@codingStandardsIgnoreLine
@@ -139,6 +134,11 @@ Plugin::load('Thumber', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-thumber' . DS,
     'routes' => true,
+]);
+
+Plugin::load('MeTools', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
 
 define('LOGIN_RECORDS', TMP . 'login' . DS);
