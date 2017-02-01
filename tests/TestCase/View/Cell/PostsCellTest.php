@@ -235,7 +235,7 @@ class PostsCellTest extends TestCase
             'Posts by month',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/2017/01'],
+            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/' . date('Y/m')],
             ['div' => ['class' => 'form-group input select']],
             'select' => ['name' => 'q', 'onchange' => 'send_form(this)', 'class' => 'form-control'],
             ['option' => ['value' => '']],
