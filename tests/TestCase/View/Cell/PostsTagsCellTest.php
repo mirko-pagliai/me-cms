@@ -75,7 +75,7 @@ class PostsTagsCellTest extends TestCase
      */
     public function setUp()
     {
-        Cache::disable();
+        Cache::clearAll();
 
         $this->PostsTagsCell = new PostsTagsCell();
         $this->Tags = TableRegistry::get('Tags');

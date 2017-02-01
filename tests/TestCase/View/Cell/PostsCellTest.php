@@ -55,7 +55,7 @@ class PostsCellTest extends TestCase
      */
     public function setUp()
     {
-        Cache::disable();
+        Cache::clearAll();
 
         $this->View = new View;
     }
