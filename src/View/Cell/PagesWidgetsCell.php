@@ -56,6 +56,8 @@ class PagesWidgetsCell extends Cell
      */
     public function categories($render = 'form')
     {
+        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'pagesCategories'])) {
             return;
@@ -71,8 +73,6 @@ class PagesWidgetsCell extends Cell
             ->toArray();
 
         $this->set(compact('categories'));
-
-        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
     }
 
     /**

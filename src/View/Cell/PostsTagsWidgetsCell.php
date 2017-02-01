@@ -87,6 +87,8 @@ class PostsTagsWidgetsCell extends Cell
         $shuffle = true,
         $style = ['maxFont' => 40, 'minFont' => 12]
     ) {
+        $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
+
         //Returns on tags index
         if ($this->request->isUrl(['_name' => 'postsTags'])) {
             return;
@@ -145,7 +147,5 @@ class PostsTagsWidgetsCell extends Cell
         $tags = $tags->toArray();
 
         $this->set(compact('prefix', 'tags'));
-
-        $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
     }
 }

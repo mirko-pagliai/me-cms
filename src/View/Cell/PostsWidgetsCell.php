@@ -56,6 +56,8 @@ class PostsWidgetsCell extends Cell
      */
     public function categories($render = 'form')
     {
+        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'postsCategories'])) {
             return;
@@ -71,8 +73,6 @@ class PostsWidgetsCell extends Cell
             ->toArray();
 
         $this->set(compact('categories'));
-
-        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
     }
 
     /**
@@ -104,6 +104,8 @@ class PostsWidgetsCell extends Cell
      */
     public function months($render = 'form')
     {
+        $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+        
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
@@ -129,8 +131,6 @@ class PostsWidgetsCell extends Cell
             ->toArray();
 
         $this->set(compact('months'));
-
-        $this->viewBuilder()->template(sprintf('months_as_%s', $render));
     }
 
     /**

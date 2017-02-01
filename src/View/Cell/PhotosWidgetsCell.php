@@ -55,6 +55,8 @@ class PhotosWidgetsCell extends Cell
      */
     public function albums($render = 'form')
     {
+        $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
+        
         //Returns on albums index
         if ($this->request->isUrl(['_name' => 'albums'])) {
             return;
@@ -70,8 +72,6 @@ class PhotosWidgetsCell extends Cell
             ->toArray();
 
         $this->set(compact('albums'));
-
-        $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
     }
 
     /**
