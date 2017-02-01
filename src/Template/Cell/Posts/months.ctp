@@ -37,7 +37,7 @@ echo $this->Form->input('q', [
     'label' => false,
     'onchange' => 'send_form(this)',
     'options' => array_map(function ($month) {
-        return sprintf('%s (%s)', $month->month->i18nFormat('MMMM Y'), $month->post_count);
+        return sprintf('%s (%s)', $month->month->i18nFormat('MMMM yyyy'), $month->post_count);
     }, $months),
 ]);
 echo $this->Form->end();
