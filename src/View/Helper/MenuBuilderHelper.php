@@ -88,7 +88,7 @@ class MenuBuilderHelper extends Helper
         $methods = getChildMethods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
 
         if (empty($methods)) {
-            return null;
+            return;
         }
 
         //Filters invalid name methods
