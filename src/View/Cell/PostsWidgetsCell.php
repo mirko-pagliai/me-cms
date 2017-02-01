@@ -26,9 +26,9 @@ use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
 /**
- * Posts cell
+ * PostsWidgets cell
  */
-class PostsCell extends Cell
+class PostsWidgetsCell extends Cell
 {
     /**
      * Constructor. It loads the model

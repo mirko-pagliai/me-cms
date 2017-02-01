@@ -26,9 +26,9 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Cell;
 
 /**
- * PostsTags cell
+ * PostsTagsWidgets cell
  */
-class PostsTagsCell extends Cell
+class PostsTagsWidgetsCell extends Cell
 {
     /**
      * Constructor. It loads the model

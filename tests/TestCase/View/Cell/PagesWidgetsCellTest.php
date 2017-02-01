@@ -31,9 +31,9 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
- * PagesCellTest class
+ * PagesWidgetsCellTest class
  */
-class PagesCellTest extends TestCase
+class PagesWidgetsCellTest extends TestCase
 {
     /**
      * @var \MeCms\Model\Table\PagesTable

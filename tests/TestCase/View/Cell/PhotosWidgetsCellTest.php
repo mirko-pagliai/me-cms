@@ -31,9 +31,9 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
- * PhotosCellTest class
+ * PhotosWidgetsCellTest class
  */
-class PhotosCellTest extends TestCase
+class PhotosWidgetsCellTest extends TestCase
 {
     /**
      * @var \MeCms\Model\Table\PhotosTable

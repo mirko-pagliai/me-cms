@@ -31,9 +31,9 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
- * PostsCellTest class
+ * PostsWidgetsCellTest class
  */
-class PostsCellTest extends TestCase
+class PostsWidgetsCellTest extends TestCase
 {
     /**
      * @var \MeCms\Model\Table\PostsTable
