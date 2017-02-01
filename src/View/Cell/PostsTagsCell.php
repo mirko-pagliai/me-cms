@@ -22,7 +22,6 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Cell;
 
@@ -93,62 +92,57 @@ class PostsTagsCell extends Cell
             return;
         }
 
+        //Sets default maximum and minimun font sizes we want to use
+        $maxFont = $minFont = 0;
+
         //Sets the initial cache name
         $cache = sprintf('widget_tags_popular_%s', $limit);
 
         if ($style && is_array($style)) {
-            //Maximum and minimun font sizes we want to use
+            //Updates maximum and minimun font sizes we want to use
             list($maxFont, $minFont) = $this->_getFontSizes($style);
-            $style = true;
 
             //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
         }
 
-        //Tries to get from cache
-        $tags = Cache::read($cache, $this->Tags->Posts->cache);
+        $tags = $this->Tags->find()
+            ->select(['tag', 'post_count'])
+            ->limit($limit)
+            ->order([
+                sprintf('%s.post_count', $this->Tags->alias()) => 'DESC',
+                sprintf('%s.tag', $this->Tags->alias()) => 'ASC',
+            ])
+            ->formatResults(function ($results) use ($style, $maxFont, $minFont) {
+                $results = $results->indexBy('slug');
 
-        if (empty($tags)) {
-            $tags = $this->Tags->find()
-                ->select(['tag', 'post_count'])
-                ->limit($limit)
-                ->order([
-                    'post_count' => 'DESC',
-                    'tag' => 'ASC',
-                ])
-                ->cache($cache, $this->Tags->Posts->cache)
-                ->toArray();
-
-            //Adds the proportional font size to each tag
-            if ($render === 'cloud' && $style) {
-                //Highest and lowest numbers of occurrences and their difference
-                $maxCount = $tags[0]->post_count;
-                $minCount = end($tags)->post_count;
-                $diffCount = $maxCount - $minCount;
-
-                foreach ($tags as $tag) {
-                    if ($diffCount) {
-                        $tag->size = round((($tag->post_count - $minCount) / $diffCount * ($maxFont - $minFont)) + $minFont);
-                    } else {
-                        $tag->size = $maxFont;
-                    }
+                if (!$style || !$maxFont || !$minFont) {
+                    return $results;
                 }
-            }
 
-            Cache::write($cache, $tags, $this->Tags->Posts->cache);
+                //Highest and lowest numbers of occurrences and their difference
+                $maxCount = $results->first()->post_count;
+                $minCount = $results->last()->post_count;
+                $diffCount = $maxCount - $minCount;
+                $diffFont = $maxFont - $minFont;
+
+                return $results->map(function ($value) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont) {
+                    if ($diffCount) {
+                        $value->size = round((($value->post_count - $minCount) / $diffCount * $diffFont) + $minFont);
+                    } else {
+                        $value->size = $maxFont;
+                    }
+
+                    return $value;
+                });
+            })
+            ->cache($cache, $this->Tags->Posts->cache);
+
+        if ($shuffle) {
+            $tags = $tags->shuffle();
         }
 
-        if ($shuffle && $limit > 1) {
-            shuffle($tags);
-        }
-
-        if ($render === 'form') {
-            //Takes place here, because shuffle() re-indexes
-            foreach ($tags as $k => $tag) {
-                $tags[$tag->slug] = $tag;
-                unset($tags[$k]);
-            }
-        }
+        $tags = $tags->toArray();
 
         $this->set(compact('prefix', 'tags'));
 

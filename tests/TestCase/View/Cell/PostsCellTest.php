@@ -24,6 +24,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Network\Request;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
@@ -34,6 +35,11 @@ use MeCms\View\View\AppView as View;
  */
 class PostsCellTest extends TestCase
 {
+    /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected $Posts;
+
     /**
      * @var \MeCms\View\Helper\WidgetHelper
      */
@@ -58,6 +64,8 @@ class PostsCellTest extends TestCase
     {
         Cache::clearAll();
 
+        $this->Posts = TableRegistry::get('MeCms.Posts');
+
         $this->Widget = new WidgetHelper(new View);
     }
 
@@ -69,7 +77,7 @@ class PostsCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Widget);
+        unset($this->Posts, $this->Widget);
     }
 
     /**
@@ -144,6 +152,14 @@ class PostsCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_categories', $this->Posts->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'first-post-category',
+            'sub-sub-post-category',
+        ], array_keys($fromCache->toArray()));
     }
 
     /**
@@ -218,6 +234,13 @@ class PostsCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_latest_1', $this->Posts->cache);
+        $this->assertEquals(1, $fromCache->count());
+
+        $fromCache = Cache::read('widget_latest_2', $this->Posts->cache);
+        $this->assertEquals(2, $fromCache->count());
     }
 
     /**
@@ -292,6 +315,19 @@ class PostsCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_months', $this->Posts->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            '2016/12',
+            '2016/11',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $key => $entity) {
+            $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
+            $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
+        }
     }
 
     /**

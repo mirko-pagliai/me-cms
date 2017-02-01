@@ -55,18 +55,18 @@ class PostsTagsCellTest extends TestCase
     protected $Widget;
 
     /**
-     * Options
-     * @var array
-     */
-    protected $options;
-
-    /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
         'plugin.me_cms.tags',
     ];
+
+    /**
+     * Default options
+     * @var array
+     */
+    protected $options;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -80,7 +80,7 @@ class PostsTagsCellTest extends TestCase
 
         $this->PostsTagsCell = new PostsTagsCell();
 
-        $this->Tags = TableRegistry::get('Tags');
+        $this->Tags = TableRegistry::get('MeCms.Tags');
 
         $this->Widget = new WidgetHelper(new View);
 
@@ -104,7 +104,7 @@ class PostsTagsCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->PostsTagsCell, $this->Tags, $this->Widget);
+        unset($this->PostsTagsCell, $this->Tags, $this->Widget, $this->options);
     }
 
     /**
@@ -155,13 +155,13 @@ class PostsTagsCellTest extends TestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             ['div' => true],
-            ['a' => ['href' => '/posts/tag/cat', 'style' => 'font-size:40px;', 'title' => 'Cat']],
-            '#Cat',
+            ['a' => ['href' => '/posts/tag/cat', 'style' => 'font-size:40px;', 'title' => 'cat']],
+            '#cat',
             '/a',
             '/div',
             ['div' => true],
-            ['a' => ['href' => '/posts/tag/dog', 'style' => 'font-size:12px;', 'title' => 'Dog']],
-            '#Dog',
+            ['a' => ['href' => '/posts/tag/dog', 'style' => 'font-size:12px;', 'title' => 'dog']],
+            '#dog',
             '/a',
             '/div',
             '/div',
@@ -182,13 +182,13 @@ class PostsTagsCellTest extends TestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             ['div' => true],
-            ['a' => ['href' => '/posts/tag/cat', 'title' => 'Cat']],
-            '-Cat',
+            ['a' => ['href' => '/posts/tag/cat', 'title' => 'cat']],
+            '-cat',
             '/a',
             '/div',
             ['div' => true],
-            ['a' => ['href' => '/posts/tag/dog', 'title' => 'Dog']],
-            '-Dog',
+            ['a' => ['href' => '/posts/tag/dog', 'title' => 'dog']],
+            '-dog',
             '/a',
             '/div',
             '/div',
@@ -214,10 +214,10 @@ class PostsTagsCellTest extends TestCase
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'cat']],
-            'Cat (3)',
+            'cat (3)',
             '/option',
             ['option' => ['value' => 'dog']],
-            'Dog (2)',
+            'dog (2)',
             '/option',
             '/select',
             '/div',
@@ -245,8 +245,8 @@ class PostsTagsCellTest extends TestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/posts/tag/cat', 'title' => 'Cat']],
-            'Cat',
+            ['a' => ['href' => '/posts/tag/cat', 'title' => 'cat']],
+            'cat',
             '/a',
             '/li',
             ['li' => true],
@@ -254,8 +254,8 @@ class PostsTagsCellTest extends TestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/posts/tag/dog', 'title' => 'Dog']],
-            'Dog',
+            ['a' => ['href' => '/posts/tag/dog', 'title' => 'dog']],
+            'dog',
             '/a',
             '/li',
             '/ul',
@@ -277,13 +277,13 @@ class PostsTagsCellTest extends TestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             ['div' => true],
-            ['a' => ['href' => 'preg:/\/posts\/tag\/(cat|dog)/', 'title' => 'preg:/(Cat|Dog)/']],
-            'preg:/#(Cat|Dog)/',
+            ['a' => ['href' => 'preg:/\/posts\/tag\/(cat|dog)/', 'title' => 'preg:/(cat|dog)/']],
+            'preg:/#(cat|dog)/',
             '/a',
             '/div',
             ['div' => true],
-            ['a' => ['href' => 'preg:/\/posts\/tag\/(cat|dog)/', 'title' => 'preg:/(Cat|Dog)/']],
-            'preg:/#(Cat|Dog)/',
+            ['a' => ['href' => 'preg:/\/posts\/tag\/(cat|dog)/', 'title' => 'preg:/(cat|dog)/']],
+            'preg:/#(cat|dog)/',
             '/a',
             '/div',
             '/div',
@@ -296,6 +296,29 @@ class PostsTagsCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_tags_popular_2', $this->Tags->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'cat',
+            'dog',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $entity) {
+            $this->assertNull($entity->size);
+        }
+
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Tags->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'cat',
+            'dog',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $entity) {
+            $this->assertGreaterThan(0, $entity->size);
+        }
 
         //Deletes all tags
         $this->Tags->deleteAll(['id >=' => 1]);
@@ -316,10 +339,10 @@ class PostsTagsCellTest extends TestCase
 
         //Adds some tag, with the same `post_count`
         foreach ([
-            ['tag' => 'Example1', 'post_count' => 999],
-            ['tag' => 'Example2', 'post_count' => 999],
+            ['tag' => 'example1', 'post_count' => 999],
+            ['tag' => 'example2', 'post_count' => 999],
         ] as $data) {
-            $entity = $this->Tags->newEntity($data);
+            $entity = $this->Tags->newEntity($data, ['accessibleFields' => ['post_count' => true]]);
             $this->assertNotFalse($this->Tags->save($entity));
         }
 
@@ -332,18 +355,30 @@ class PostsTagsCellTest extends TestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             ['div' => true],
-            ['a' => ['href' => '/posts/tag/example1', 'style' => 'font-size:40px;', 'title' => 'Example1']],
-            '#Example1',
+            ['a' => ['href' => '/posts/tag/example1', 'style' => 'font-size:40px;', 'title' => 'example1']],
+            '#example1',
             '/a',
             '/div',
             ['div' => true],
-            ['a' => ['href' => '/posts/tag/example2', 'style' => 'font-size:40px;', 'title' => 'Example2']],
-            '#Example2',
+            ['a' => ['href' => '/posts/tag/example2', 'style' => 'font-size:40px;', 'title' => 'example2']],
+            '#example2',
             '/a',
             '/div',
             '/div',
             '/div',
         ];
         $this->assertHtml($expected, $result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Tags->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'example1',
+            'example2',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $entity) {
+            $this->assertEquals(40, $entity->size);
+        }
     }
 }

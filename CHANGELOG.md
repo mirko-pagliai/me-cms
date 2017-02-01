@@ -1,8 +1,9 @@
 # 2.x branch
 ## 2.14 branch
 ### 2.14.16
+* the whole of the widget code has been rewritten and improved, making it more
+    uniform and consistent;
 * improved `WidgetHelper` class;
-* fixed some bugs for the widget of popular tags;
 * added tests for `WidgetHelper` class;
 * added tests for all cell classes.
 

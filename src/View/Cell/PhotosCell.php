@@ -46,7 +46,6 @@ class PhotosCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        //Loads the Photos model
         $this->loadModel('MeCms.Photos');
     }
 
@@ -63,15 +62,13 @@ class PhotosCell extends Cell
         }
 
         $albums = $this->Photos->Albums->find('active')
-            ->select(['title', 'slug', 'photo_count'])
+            ->order([sprintf('%s.title', $this->Photos->Albums->alias()) => 'ASC'])
             ->order(['title' => 'ASC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('slug');
+            })
             ->cache('widget_albums', $this->Photos->cache)
             ->toArray();
-
-        foreach ($albums as $k => $album) {
-            $albums[$album->slug] = $album;
-            unset($albums[$k]);
-        }
 
         $this->set(compact('albums'));
 
@@ -117,21 +114,11 @@ class PhotosCell extends Cell
             return;
         }
 
-        //Returns, if there are no records available
-        if (Cache::read($cache = 'no_photos', $this->Photos->cache)) {
-            return;
-        }
-
         $photos = $this->Photos->find('active')
             ->select(['album_id', 'filename'])
-            ->limit($limit)
-            ->order('rand()')
+            ->cache(sprintf('widget_random_%d', $limit), $this->Photos->cache)
+            ->sample($limit)
             ->toArray();
-
-        //Writes on cache, if there are no records available
-        if (empty($photos)) {
-            Cache::write($cache, true, $this->Photos->cache);
-        }
 
         $this->set(compact('photos'));
     }

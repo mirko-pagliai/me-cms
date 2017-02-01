@@ -46,7 +46,6 @@ class PagesCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        //Loads the Photos model
         $this->loadModel('MeCms.Pages');
     }
 
@@ -64,14 +63,12 @@ class PagesCell extends Cell
 
         $categories = $this->Pages->Categories->find('active')
             ->select(['title', 'slug', 'page_count'])
-            ->order(['title' => 'ASC'])
+            ->order([sprintf('%s.title', $this->Pages->Categories->alias()) => 'ASC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('slug');
+            })
             ->cache('widget_categories', $this->Pages->cache)
             ->toArray();
-
-        foreach ($categories as $k => $category) {
-            $categories[$category->slug] = $category;
-            unset($categories[$k]);
-        }
 
         $this->set(compact('categories'));
 
@@ -93,7 +90,7 @@ class PagesCell extends Cell
 
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
-            ->order(['title' => 'ASC'])
+            ->order([sprintf('%s.title', $this->Pages->alias()) => 'ASC'])
             ->cache(sprintf('widget_list'), $this->Pages->cache)
             ->toArray();
 

@@ -24,6 +24,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Network\Request;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
@@ -34,6 +35,11 @@ use MeCms\View\View\AppView as View;
  */
 class PagesCellTest extends TestCase
 {
+    /**
+     * @var \MeCms\Model\Table\PagesTable
+     */
+    protected $Pages;
+
     /**
      * @var \MeCms\View\Helper\WidgetHelper
      */
@@ -58,6 +64,8 @@ class PagesCellTest extends TestCase
     {
         Cache::clearAll();
 
+        $this->Pages = TableRegistry::get('MeCms.Pages');
+
         $this->Widget = new WidgetHelper(new View);
     }
 
@@ -69,7 +77,7 @@ class PagesCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Widget);
+        unset($this->Pages, $this->Widget);
     }
 
     /**
@@ -144,6 +152,14 @@ class PagesCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_categories', $this->Pages->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'first-page-category',
+            'sub-sub-page-category',
+        ], array_keys($fromCache->toArray()));
     }
 
     /**
@@ -190,5 +206,9 @@ class PagesCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_list', $this->Pages->cache);
+        $this->assertEquals(2, $fromCache->count());
     }
 }

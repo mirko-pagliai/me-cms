@@ -24,6 +24,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Network\Request;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
@@ -34,6 +35,11 @@ use MeCms\View\View\AppView as View;
  */
 class PhotosCellTest extends TestCase
 {
+    /**
+     * @var \MeCms\Model\Table\PhotosTable
+     */
+    protected $Photos;
+
     /**
      * @var \MeCms\View\Helper\WidgetHelper
      */
@@ -58,6 +64,8 @@ class PhotosCellTest extends TestCase
     {
         Cache::clearAll();
 
+        $this->Photos = TableRegistry::get('MeCms.Photos');
+
         $this->Widget = new WidgetHelper(new View);
     }
 
@@ -69,7 +77,7 @@ class PhotosCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Widget);
+        unset($this->Photos, $this->Widget);
     }
 
     /**
@@ -144,6 +152,14 @@ class PhotosCellTest extends TestCase
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_albums', $this->Photos->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'another-album-test',
+            'test-album',
+        ], array_keys($fromCache->toArray()));
     }
 
     /**
@@ -198,6 +214,13 @@ class PhotosCellTest extends TestCase
             $result = $this->Widget->widget($widget)->render();
             $this->assertEmpty($result);
         }
+
+        //Tests cache
+        $fromCache = Cache::read('widget_latest_1', $this->Photos->cache);
+        $this->assertEquals(1, $fromCache->count());
+
+        $fromCache = Cache::read('widget_latest_2', $this->Photos->cache);
+        $this->assertEquals(2, $fromCache->count());
     }
 
     /**
@@ -252,5 +275,12 @@ class PhotosCellTest extends TestCase
             $result = $this->Widget->widget($widget)->render();
             $this->assertEmpty($result);
         }
+
+        //Tests cache
+        $fromCache = Cache::read('widget_random_1', $this->Photos->cache);
+        $this->assertEquals(3, $fromCache->count());
+
+        $fromCache = Cache::read('widget_random_2', $this->Photos->cache);
+        $this->assertEquals(3, $fromCache->count());
     }
 }
