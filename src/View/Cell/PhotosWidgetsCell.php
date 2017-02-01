@@ -71,9 +71,7 @@ class PhotosWidgetsCell extends Cell
 
         $this->set(compact('albums'));
 
-        if ($render === 'list') {
-            $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
-        }
+        $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
     }
 
     /**

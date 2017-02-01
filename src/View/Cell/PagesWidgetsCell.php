@@ -72,9 +72,7 @@ class PagesWidgetsCell extends Cell
 
         $this->set(compact('categories'));
 
-        if ($render === 'list') {
-            $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
-        }
+        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
     }
 
     /**
