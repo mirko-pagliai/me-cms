@@ -54,10 +54,11 @@ class WidgetHelper extends Helper
         //  and the arguments are the array value
         foreach ($widgets as $name => $args) {
             if (is_int($name) && is_string($args)) {
-                $widgetsCopy[$args] = [];
-            } else {
-                $widgetsCopy[$name] = $args;
+                $name = $args;
+                $args = [];
             }
+
+            $widgetsCopy[$name] = $args;
         }
 
         return $widgetsCopy;
@@ -71,14 +72,12 @@ class WidgetHelper extends Helper
      */
     public function all()
     {
-        $widgets = $this->_getAll();
-
-        if (empty($widgets)) {
-            return null;
+        foreach ($this->_getAll() as $name => $args) {
+            $widgets[$name] = $this->widget($name, $args);
         }
 
-        foreach ($widgets as $name => $args) {
-            $widgets[$name] = $this->widget($name, $args);
+        if (empty($widgets)) {
+            return;
         }
 
         return trim(implode(PHP_EOL, $widgets));
