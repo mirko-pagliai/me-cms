@@ -144,7 +144,7 @@ class StaticPageTest extends TestCase
 
         //Checks modified times
         foreach ($pages as $page) {
-            $this->assertEquals('Cake\I18n\FrozenTime', get_class($page->modified));
+            $this->assertInstanceOf('Cake\I18n\FrozenTime', $page->modified);
         }
     }
 

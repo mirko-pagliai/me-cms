@@ -36,7 +36,7 @@ class PostsTagTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\PostsTag', get_class(new PostsTag));
+        $this->assertInstanceOf('MeCms\Model\Entity\PostsTag', new PostsTag);
     }
 
     /**

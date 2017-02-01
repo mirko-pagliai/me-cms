@@ -109,12 +109,12 @@ class PostsTagsTableTest extends TestCase
         $this->assertEquals('id', $this->PostsTags->displayField());
         $this->assertEquals('id', $this->PostsTags->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->PostsTags->Posts));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Posts);
         $this->assertEquals('post_id', $this->PostsTags->Posts->foreignKey());
         $this->assertEquals('INNER', $this->PostsTags->Posts->joinType());
         $this->assertEquals('MeCms.Posts', $this->PostsTags->Posts->className());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->PostsTags->Tags));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Tags);
         $this->assertEquals('tag_id', $this->PostsTags->Tags->foreignKey());
         $this->assertEquals('INNER', $this->PostsTags->Tags->joinType());
         $this->assertEquals('MeCms.Tags', $this->PostsTags->Tags->className());
@@ -128,9 +128,9 @@ class PostsTagsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'Cake\Validation\Validator',
-            get_class($this->PostsTags->validationDefault(new \Cake\Validation\Validator))
+            $this->PostsTags->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

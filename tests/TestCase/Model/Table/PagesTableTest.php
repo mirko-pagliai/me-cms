@@ -164,7 +164,7 @@ class PagesTableTest extends TestCase
         $this->assertEquals('title', $this->Pages->displayField());
         $this->assertEquals('id', $this->Pages->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Pages->Categories));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Pages->Categories);
         $this->assertEquals('category_id', $this->Pages->Categories->foreignKey());
         $this->assertEquals('INNER', $this->Pages->Categories->joinType());
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->className());
@@ -183,7 +183,7 @@ class PagesTableTest extends TestCase
 
         $this->assertNotEmpty($page->category);
 
-        $this->assertEquals('MeCms\Model\Entity\PagesCategory', get_class($page->category));
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $page->category);
         $this->assertEquals(4, $page->category->id);
     }
 
@@ -194,7 +194,7 @@ class PagesTableTest extends TestCase
     public function testFind()
     {
         $query = $this->Pages->find();
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', time() - 3600, $this->Pages->cache);
@@ -205,7 +205,7 @@ class PagesTableTest extends TestCase
 
         //The cache will now be cleared
         $query = $this->Pages->find();
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
         $this->assertEmpty(Cache::read('someData', $this->Pages->cache));
@@ -217,9 +217,9 @@ class PagesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\PageValidator',
-            get_class($this->Pages->validationDefault(new \Cake\Validation\Validator))
+            $this->Pages->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

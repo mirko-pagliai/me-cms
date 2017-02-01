@@ -121,15 +121,15 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertEquals('title', $this->PostsCategories->displayField());
         $this->assertEquals('id', $this->PostsCategories->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->PostsCategories->Parents));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsCategories->Parents);
         $this->assertEquals('parent_id', $this->PostsCategories->Parents->foreignKey());
         $this->assertEquals('MeCms.PostsCategories', $this->PostsCategories->Parents->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->PostsCategories->Childs));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Childs);
         $this->assertEquals('parent_id', $this->PostsCategories->Childs->foreignKey());
         $this->assertEquals('MeCms.PostsCategories', $this->PostsCategories->Childs->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->PostsCategories->Posts));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Posts);
         $this->assertEquals('category_id', $this->PostsCategories->Posts->foreignKey());
         $this->assertEquals('MeCms.Posts', $this->PostsCategories->Posts->className());
 
@@ -146,12 +146,12 @@ class PostsCategoriesTableTest extends TestCase
 
         $this->assertNotEmpty($category->parent);
 
-        $this->assertEquals('MeCms\Model\Entity\PostsCategory', get_class($category->parent));
+        $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
         $category = $this->PostsCategories->findById($category->parent->id)->contain(['Parents'])->first();
 
-        $this->assertEquals('MeCms\Model\Entity\PostsCategory', get_class($category->parent));
+        $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
     }
 
@@ -166,7 +166,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertNotEmpty($category->childs);
 
         foreach ($category->childs as $children) {
-            $this->assertEquals('MeCms\Model\Entity\PostsCategory', get_class($children));
+            $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $children);
             $this->assertEquals(1, $children->parent_id);
 
             $category = $this->PostsCategories->findById($children->id)->contain(['Childs'])->first();
@@ -174,7 +174,7 @@ class PostsCategoriesTableTest extends TestCase
             $this->assertNotEmpty($category->childs);
 
             foreach ($category->childs as $children) {
-                $this->assertEquals('MeCms\Model\Entity\PostsCategory', get_class($children));
+                $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $children);
                 $this->assertEquals(3, $children->parent_id);
             }
         }
@@ -191,7 +191,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertNotEmpty($category->posts);
 
         foreach ($category->posts as $post) {
-            $this->assertEquals('MeCms\Model\Entity\Post', get_class($post));
+            $this->assertInstanceOf('MeCms\Model\Entity\Post', $post);
             $this->assertEquals(4, $post->category_id);
         }
     }
@@ -205,7 +205,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertTrue($this->PostsCategories->hasFinder('active'));
 
         $query = $this->PostsCategories->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT PostsCategories.id AS `PostsCategories__id`, PostsCategories.parent_id AS `PostsCategories__parent_id`, PostsCategories.lft AS `PostsCategories__lft`, PostsCategories.rght AS `PostsCategories__rght`, PostsCategories.title AS `PostsCategories__title`, PostsCategories.slug AS `PostsCategories__slug`, PostsCategories.description AS `PostsCategories__description`, PostsCategories.post_count AS `PostsCategories__post_count`, PostsCategories.created AS `PostsCategories__created`, PostsCategories.modified AS `PostsCategories__modified` FROM posts_categories PostsCategories WHERE PostsCategories.post_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
@@ -223,9 +223,9 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\PostsCategoryValidator',
-            get_class($this->PostsCategories->validationDefault(new \Cake\Validation\Validator))
+            $this->PostsCategories->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

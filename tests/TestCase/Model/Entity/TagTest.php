@@ -36,7 +36,7 @@ class TagTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\Tag', get_class(new Tag));
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', new Tag);
     }
 
     /**

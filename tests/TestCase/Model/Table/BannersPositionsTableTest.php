@@ -109,7 +109,7 @@ class BannersPositionsTableTest extends TestCase
         $this->assertEquals('title', $this->BannersPositions->displayField());
         $this->assertEquals('id', $this->BannersPositions->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->BannersPositions->Banners));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->BannersPositions->Banners);
         $this->assertEquals('position_id', $this->BannersPositions->Banners->foreignKey());
         $this->assertEquals('MeCms.Banners', $this->BannersPositions->Banners->className());
 
@@ -127,7 +127,7 @@ class BannersPositionsTableTest extends TestCase
         $this->assertNotEmpty($positions->banners);
 
         foreach ($positions->banners as $banner) {
-            $this->assertEquals('MeCms\Model\Entity\Banner', get_class($banner));
+            $this->assertInstanceOf('MeCms\Model\Entity\Banner', $banner);
             $this->assertEquals(1, $banner->position_id);
         }
     }
@@ -138,9 +138,9 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\BannersPositionValidator',
-            get_class($this->BannersPositions->validationDefault(new \Cake\Validation\Validator))
+            $this->BannersPositions->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

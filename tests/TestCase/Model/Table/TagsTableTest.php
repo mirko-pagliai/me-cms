@@ -110,7 +110,7 @@ class TagsTableTest extends TestCase
         $this->assertEquals('tag', $this->Tags->displayField());
         $this->assertEquals('id', $this->Tags->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsToMany', get_class($this->Tags->Posts));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Tags->Posts);
         $this->assertEquals('tag_id', $this->Tags->Posts->foreignKey());
         $this->assertEquals('post_id', $this->Tags->Posts->targetForeignKey());
         $this->assertEquals('MeCms.Posts', $this->Tags->Posts->className());
@@ -130,7 +130,7 @@ class TagsTableTest extends TestCase
         $this->assertTrue($this->Tags->hasFinder('active'));
 
         $query = $this->Tags->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM tags Tags WHERE Tags.post_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
@@ -151,7 +151,7 @@ class TagsTableTest extends TestCase
         $data = ['name' => 'test'];
 
         $query = $this->Tags->queryFromFilter($this->Tags->find(), $data);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
 
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
@@ -181,9 +181,9 @@ class TagsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\TagValidator',
-            get_class($this->Tags->validationDefault(new \Cake\Validation\Validator))
+            $this->Tags->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

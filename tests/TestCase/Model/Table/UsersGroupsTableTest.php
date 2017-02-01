@@ -113,7 +113,7 @@ class UsersGroupsTableTest extends TestCase
         $this->assertEquals('label', $this->UsersGroups->displayField());
         $this->assertEquals('id', $this->UsersGroups->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->UsersGroups->Users));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->UsersGroups->Users);
         $this->assertEquals('group_id', $this->UsersGroups->Users->foreignKey());
         $this->assertEquals('MeCms.Users', $this->UsersGroups->Users->className());
 
@@ -131,7 +131,7 @@ class UsersGroupsTableTest extends TestCase
         $this->assertNotEmpty($group->users);
 
         foreach ($group->users as $user) {
-            $this->assertEquals('MeCms\Model\Entity\User', get_class($user));
+            $this->assertInstanceOf('MeCms\Model\Entity\User', $user);
             $this->assertEquals(3, $user->group_id);
         }
     }
@@ -142,9 +142,9 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\UsersGroupValidator',
-            get_class($this->UsersGroups->validationDefault(new \Cake\Validation\Validator))
+            $this->UsersGroups->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

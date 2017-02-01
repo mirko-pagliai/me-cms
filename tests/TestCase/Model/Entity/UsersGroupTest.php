@@ -36,7 +36,7 @@ class UsersGroupTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\UsersGroup', get_class(new UsersGroup));
+        $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', new UsersGroup);
     }
 
     /**

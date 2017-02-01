@@ -133,16 +133,16 @@ class UsersTableTest extends TestCase
         $this->assertEquals('username', $this->Users->displayField());
         $this->assertEquals('id', $this->Users->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Users->Groups));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Users->Groups);
         $this->assertEquals('group_id', $this->Users->Groups->foreignKey());
         $this->assertEquals('INNER', $this->Users->Groups->joinType());
         $this->assertEquals('MeCms.UsersGroups', $this->Users->Groups->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->Users->Posts));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->Users->Posts);
         $this->assertEquals('user_id', $this->Users->Posts->foreignKey());
         $this->assertEquals('MeCms.Posts', $this->Users->Posts->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->Users->Tokens));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->Users->Tokens);
         $this->assertEquals('user_id', $this->Users->Tokens->foreignKey());
         $this->assertEquals('Tokens.Tokens', $this->Users->Tokens->className());
 
@@ -160,7 +160,7 @@ class UsersTableTest extends TestCase
 
         $this->assertNotEmpty($user->group);
 
-        $this->assertEquals('MeCms\Model\Entity\UsersGroup', get_class($user->group));
+        $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', $user->group);
         $this->assertEquals(3, $user->group->id);
     }
 
@@ -175,7 +175,7 @@ class UsersTableTest extends TestCase
         $this->assertNotEmpty($user->posts);
 
         foreach ($user->posts as $post) {
-            $this->assertEquals('MeCms\Model\Entity\Post', get_class($post));
+            $this->assertInstanceOf('MeCms\Model\Entity\Post', $post);
             $this->assertEquals(1, $post->user_id);
         }
     }
@@ -193,7 +193,7 @@ class UsersTableTest extends TestCase
 
         $this->assertEquals(1, count($user->tokens));
 
-        $this->assertEquals('Tokens\Model\Entity\Token', get_class($user->tokens[0]));
+        $this->assertInstanceOf('Tokens\Model\Entity\Token', $user->tokens[0]);
         $this->assertEquals(4, $user->tokens[0]->user_id);
         $this->assertEquals($token, $user->tokens[0]->token);
     }
@@ -207,7 +207,7 @@ class UsersTableTest extends TestCase
         $this->assertTrue($this->Users->hasFinder('active'));
 
         $query = $this->Users->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
@@ -230,7 +230,7 @@ class UsersTableTest extends TestCase
         $this->assertTrue($this->Users->hasFinder('banned'));
 
         $query = $this->Users->find('banned');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE Users.banned = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
@@ -251,7 +251,7 @@ class UsersTableTest extends TestCase
         $this->assertTrue($this->Users->hasFinder('pending'));
 
         $query = $this->Users->find('pending');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
 
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
@@ -293,7 +293,7 @@ class UsersTableTest extends TestCase
         ];
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
 
         $params = array_map(function ($v) {
@@ -362,9 +362,9 @@ class UsersTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\UserValidator',
-            get_class($this->Users->validationDefault(new \Cake\Validation\Validator))
+            $this->Users->validationDefault(new \Cake\Validation\Validator)
         );
     }
 

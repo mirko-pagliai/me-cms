@@ -36,7 +36,7 @@ class PhotosAlbumTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\PhotosAlbum', get_class(new PhotosAlbum));
+        $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', new PhotosAlbum);
     }
 
     /**

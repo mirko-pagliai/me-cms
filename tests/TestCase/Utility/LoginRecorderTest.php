@@ -91,7 +91,7 @@ class LoginRecorderTest extends TestCase
     public function testConstruct()
     {
         $SerializedArray = $this->getProperty($this->LoginRecorder, 'SerializedArray');
-        $this->assertEquals('SerializedArray\SerializedArray', get_class($SerializedArray));
+        $this->assertInstanceOf('SerializedArray\SerializedArray', $SerializedArray);
         $this->assertEquals($this->file, $this->getProperty($SerializedArray, 'file'));
     }
 
@@ -147,9 +147,9 @@ class LoginRecorderTest extends TestCase
 
         $first = $this->LoginRecorder->read();
         $this->assertEquals(1, count($first));
-        $this->assertEquals('stdClass', get_class($first[0]));
+        $this->assertInstanceOf('stdClass', $first[0]);
         $this->assertEquals(false, $first[0]->ip);
-        $this->assertEquals('Cake\I18n\FrozenTime', get_class($first[0]->time));
+        $this->assertInstanceOf('Cake\I18n\FrozenTime', $first[0]->time);
         $this->assertEquals('Linux', $first[0]->platform);
         $this->assertEquals('Chrome', $first[0]->browser);
         $this->assertEquals('55.0.2883.87', $first[0]->version);
@@ -162,7 +162,7 @@ class LoginRecorderTest extends TestCase
         $this->assertTrue($this->LoginRecorder->write());
         $second = $this->LoginRecorder->read();
         $this->assertEquals(1, count($second));
-        $this->assertEquals('stdClass', get_class($second[0]));
+        $this->assertInstanceOf('stdClass', $second[0]);
         $this->assertNotEquals($second, $first);
 
         //Calls again, with different user agent data, as if the user had logged

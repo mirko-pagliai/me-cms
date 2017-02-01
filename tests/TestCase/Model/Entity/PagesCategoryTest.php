@@ -36,7 +36,7 @@ class PagesCategoryTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\PagesCategory', get_class(new PagesCategory));
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', new PagesCategory);
     }
 
     /**

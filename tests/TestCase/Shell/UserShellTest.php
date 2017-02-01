@@ -312,7 +312,7 @@ class UserShellTest extends TestCase
     {
         $parser = $this->UserShell->getOptionParser();
 
-        $this->assertEquals('Cake\Console\ConsoleOptionParser', get_class($parser));
+        $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
         $this->assertEquals([
             'add',
             'groups',

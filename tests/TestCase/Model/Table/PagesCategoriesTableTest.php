@@ -121,15 +121,15 @@ class PagesCategoriesTableTest extends TestCase
         $this->assertEquals('title', $this->PagesCategories->displayField());
         $this->assertEquals('id', $this->PagesCategories->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->PagesCategories->Parents));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PagesCategories->Parents);
         $this->assertEquals('parent_id', $this->PagesCategories->Parents->foreignKey());
         $this->assertEquals('MeCms.PagesCategories', $this->PagesCategories->Parents->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->PagesCategories->Childs));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PagesCategories->Childs);
         $this->assertEquals('parent_id', $this->PagesCategories->Childs->foreignKey());
         $this->assertEquals('MeCms.PagesCategories', $this->PagesCategories->Childs->className());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->PagesCategories->Pages));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PagesCategories->Pages);
         $this->assertEquals('category_id', $this->PagesCategories->Pages->foreignKey());
         $this->assertEquals('MeCms.Pages', $this->PagesCategories->Pages->className());
 
@@ -147,12 +147,12 @@ class PagesCategoriesTableTest extends TestCase
 
         $this->assertNotEmpty($category->parent);
 
-        $this->assertEquals('MeCms\Model\Entity\PagesCategory', get_class($category->parent));
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
         $category = $this->PagesCategories->findById($category->parent->id)->contain(['Parents'])->first();
 
-        $this->assertEquals('MeCms\Model\Entity\PagesCategory', get_class($category->parent));
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
     }
 
@@ -167,7 +167,7 @@ class PagesCategoriesTableTest extends TestCase
         $this->assertNotEmpty($category->childs);
 
         foreach ($category->childs as $children) {
-            $this->assertEquals('MeCms\Model\Entity\PagesCategory', get_class($children));
+            $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $children);
             $this->assertEquals(1, $children->parent_id);
 
             $category = $this->PagesCategories->findById($children->id)->contain(['Childs'])->first();
@@ -175,7 +175,7 @@ class PagesCategoriesTableTest extends TestCase
             $this->assertNotEmpty($category->childs);
 
             foreach ($category->childs as $children) {
-                $this->assertEquals('MeCms\Model\Entity\PagesCategory', get_class($children));
+                $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $children);
                 $this->assertEquals(3, $children->parent_id);
             }
         }
@@ -192,7 +192,7 @@ class PagesCategoriesTableTest extends TestCase
         $this->assertNotEmpty($category->pages);
 
         foreach ($category->pages as $page) {
-            $this->assertEquals('MeCms\Model\Entity\Page', get_class($page));
+            $this->assertInstanceOf('MeCms\Model\Entity\Page', $page);
             $this->assertEquals(4, $page->category_id);
         }
     }
@@ -206,7 +206,7 @@ class PagesCategoriesTableTest extends TestCase
         $this->assertTrue($this->PagesCategories->hasFinder('active'));
 
         $query = $this->PagesCategories->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT PagesCategories.id AS `PagesCategories__id`, PagesCategories.parent_id AS `PagesCategories__parent_id`, PagesCategories.lft AS `PagesCategories__lft`, PagesCategories.rght AS `PagesCategories__rght`, PagesCategories.title AS `PagesCategories__title`, PagesCategories.slug AS `PagesCategories__slug`, PagesCategories.description AS `PagesCategories__description`, PagesCategories.page_count AS `PagesCategories__page_count`, PagesCategories.created AS `PagesCategories__created`, PagesCategories.modified AS `PagesCategories__modified` FROM pages_categories PagesCategories WHERE PagesCategories.page_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
@@ -224,9 +224,9 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\PagesCategoryValidator',
-            get_class($this->PagesCategories->validationDefault(new \Cake\Validation\Validator))
+            $this->PagesCategories->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }
