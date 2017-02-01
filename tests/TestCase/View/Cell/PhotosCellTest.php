@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\Network\Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
+use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
@@ -34,9 +35,9 @@ use MeCms\View\View\AppView as View;
 class PhotosCellTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AppView
+     * @var \MeCms\View\Helper\WidgetHelper
      */
-    protected $View;
+    protected $Widget;
 
     /**
      * Fixtures
@@ -57,7 +58,7 @@ class PhotosCellTest extends TestCase
     {
         Cache::clearAll();
 
-        $this->View = new View;
+        $this->Widget = new WidgetHelper(new View);
     }
 
     /**
@@ -68,7 +69,7 @@ class PhotosCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->View);
+        unset($this->Widget);
     }
 
     /**
@@ -79,7 +80,7 @@ class PhotosCellTest extends TestCase
     {
         $widget = MECMS . '.Photos::albums';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -107,7 +108,7 @@ class PhotosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell($widget, ['render' => 'list'])->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -140,8 +141,8 @@ class PhotosCellTest extends TestCase
 
         //Empty on albums index
         $request = new Request(Router::url(['_name' => 'albums']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -153,7 +154,7 @@ class PhotosCellTest extends TestCase
     {
         $widget = MECMS . '.Photos::latest';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -170,7 +171,7 @@ class PhotosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries another limit
-        $result = $this->View->cell($widget, ['limit' => 2])->render();
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -191,8 +192,10 @@ class PhotosCellTest extends TestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $this->View->request->params['controller'] = $controller;
-            $result = $this->View->cell($widget)->render();
+            $request = new Request;
+            $request->params['controller'] = $controller;
+            $this->Widget = new WidgetHelper(new View($request));
+            $result = $this->Widget->widget($widget)->render();
             $this->assertEmpty($result);
         }
     }
@@ -205,7 +208,7 @@ class PhotosCellTest extends TestCase
     {
         $widget = MECMS . '.Photos::random';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -222,7 +225,7 @@ class PhotosCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries another limit
-        $result = $this->View->cell($widget, ['limit' => 2])->render();
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -243,8 +246,10 @@ class PhotosCellTest extends TestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $this->View->request->params['controller'] = $controller;
-            $result = $this->View->cell($widget)->render();
+            $request = new Request;
+            $request->params['controller'] = $controller;
+            $this->Widget = new WidgetHelper(new View($request));
+            $result = $this->Widget->widget($widget)->render();
             $this->assertEmpty($result);
         }
     }

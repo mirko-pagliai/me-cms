@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\Network\Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
+use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
@@ -34,9 +35,9 @@ use MeCms\View\View\AppView as View;
 class PagesCellTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AppView
+     * @var \MeCms\View\Helper\WidgetHelper
      */
-    protected $View;
+    protected $Widget;
 
     /**
      * Fixtures
@@ -57,7 +58,7 @@ class PagesCellTest extends TestCase
     {
         Cache::clearAll();
 
-        $this->View = new View;
+        $this->Widget = new WidgetHelper(new View);
     }
 
     /**
@@ -68,7 +69,7 @@ class PagesCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->View);
+        unset($this->Widget);
     }
 
     /**
@@ -79,7 +80,7 @@ class PagesCellTest extends TestCase
     {
         $widget = MECMS . '.Pages::categories';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -107,7 +108,7 @@ class PagesCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell($widget, ['render' => 'list'])->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -140,8 +141,8 @@ class PagesCellTest extends TestCase
 
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'pagesCategories']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -153,7 +154,7 @@ class PagesCellTest extends TestCase
     {
         $widget = MECMS . '.Pages::pages';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -186,8 +187,8 @@ class PagesCellTest extends TestCase
 
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'pagesCategories']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
     }
 }

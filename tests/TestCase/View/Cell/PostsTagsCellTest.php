@@ -28,6 +28,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use MeCms\View\Cell\PostsTagsCell;
+use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 use Reflection\ReflectionTrait;
 
@@ -49,9 +50,9 @@ class PostsTagsCellTest extends TestCase
     protected $Tags;
 
     /**
-     * @var \MeCms\View\View\AppView
+     * @var \MeCms\View\Helper\WidgetHelper
      */
-    protected $View;
+    protected $Widget;
 
     /**
      * Options
@@ -78,8 +79,10 @@ class PostsTagsCellTest extends TestCase
         Cache::clearAll();
 
         $this->PostsTagsCell = new PostsTagsCell();
+
         $this->Tags = TableRegistry::get('Tags');
-        $this->View = new View;
+
+        $this->Widget = new WidgetHelper(new View);
 
         $this->options = [
             'limit' => 2,
@@ -101,7 +104,7 @@ class PostsTagsCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->PostsTagsCell, $this->Tags, $this->View);
+        unset($this->PostsTagsCell, $this->Tags, $this->Widget);
     }
 
     /**
@@ -143,7 +146,7 @@ class PostsTagsCellTest extends TestCase
         $widget = MECMS . '.PostsTags::popular';
 
         //Tries using the style (`maxFont` and `minFont`)
-        $result = $this->View->cell($widget, $this->options)->render();
+        $result = $this->Widget->widget($widget, $this->options)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -167,7 +170,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
-        $result = $this->View->cell($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, am($this->options, [
             'prefix' => '-',
             'style' => false,
         ]))->render();
@@ -194,7 +197,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
-        $result = $this->View->cell($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, am($this->options, [
             'render' => 'form',
             'style' => false,
         ]))->render();
@@ -225,7 +228,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as list
-        $result = $this->View->cell($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, am($this->options, [
             'render' => 'list',
             'style' => false,
         ]))->render();
@@ -262,7 +265,7 @@ class PostsTagsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with shuffle
-        $result = $this->View->cell($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, am($this->options, [
             'shuffle' => true,
             'style' => false,
         ]))->render();
@@ -290,15 +293,15 @@ class PostsTagsCellTest extends TestCase
 
         //Empty on tags index
         $request = new Request(Router::url(['_name' => 'postsTags']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
 
         //Deletes all tags
         $this->Tags->deleteAll(['id >=' => 1]);
 
         //Empty with no tags
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
     }
 
@@ -320,7 +323,7 @@ class PostsTagsCellTest extends TestCase
             $this->assertNotFalse($this->Tags->save($entity));
         }
 
-        $result = $this->View->cell($widget, $this->options)->render();
+        $result = $this->Widget->widget($widget, $this->options)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
