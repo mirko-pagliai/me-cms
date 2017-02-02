@@ -43,7 +43,7 @@ class StaticPage
     {
         $plugins = Plugin::all();
 
-        //Adds all plugins to paths, adding first MeCms
+        //Adds all plugins to paths
         $paths = array_map(function ($plugin) {
             return firstValue(App::path('Template', $plugin)) . 'StaticPages';
         }, $plugins);
@@ -62,9 +62,10 @@ class StaticPage
      */
     public static function all()
     {
-        //Gets all static pages
+        $pages = [];
+
         foreach (self::_getPaths() as $path) {
-            //Gets all file for each path
+            //Gets all files for each path
             $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
 
             foreach ($files as $file) {
