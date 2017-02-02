@@ -44,8 +44,6 @@ class StaticPageTest extends TestCase
     {
         parent::setUp();
 
-        ini_set('intl.default_locale', 'en_US');
-
         Plugin::load('TestPlugin');
     }
 
@@ -56,6 +54,8 @@ class StaticPageTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+
+        ini_set('intl.default_locale', 'en_US');
 
         Plugin::unload('TestPlugin');
     }
@@ -91,9 +91,7 @@ class StaticPageTest extends TestCase
         $pages = StaticPage::all();
 
         //Checks filenames
-        $filenames = array_map(function ($page) {
-            return $page->filename;
-        }, $pages);
+        $filenames = collection($pages)->extract(function ($page) { return $page->filename; })->toArray();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -104,9 +102,7 @@ class StaticPageTest extends TestCase
         ], $filenames);
 
         //Checks paths
-        $paths = array_map(function ($page) {
-            return rtr($page->path);
-        }, $pages);
+        $paths = collection($pages)->extract(function ($page) { return $page->path; })->toArray();
 
         $this->assertEquals([
             'src/Template/StaticPages/cookies-policy-it.ctp',
@@ -117,9 +113,7 @@ class StaticPageTest extends TestCase
         ], $paths);
 
         //Checks slugs
-        $slugs = (array_map(function ($page) {
-            return $page->slug;
-        }, $pages));
+        $slugs = collection($pages)->extract(function ($page) { return $page->slug; })->toArray();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -130,9 +124,7 @@ class StaticPageTest extends TestCase
         ], $slugs);
 
         //Checks titles
-        $titles = (array_map(function ($page) {
-            return $page->title;
-        }, $pages));
+        $titles = collection($pages)->extract(function ($page) { return $page->title; })->toArray();
 
         $this->assertEquals([
             'Cookies Policy It',
