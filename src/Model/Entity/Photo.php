@@ -59,7 +59,7 @@ class Photo extends Entity
     protected function _getPath()
     {
         if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
-            return null;
+            return;
         }
 
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];

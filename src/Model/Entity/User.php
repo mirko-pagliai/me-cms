@@ -22,6 +22,7 @@
  */
 namespace MeCms\Model\Entity;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -68,7 +69,7 @@ class User extends Entity
     protected function _getFullName()
     {
         if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
-            return null;
+            return;
         }
 
         return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
@@ -78,10 +79,9 @@ class User extends Entity
      * Sets the password
      * @param string $password Password
      * @return string Hash
-     * @uses Cake\Auth\DefaultPasswordHasher::hash()
      */
     protected function _setPassword($password)
     {
-        return (new \Cake\Auth\DefaultPasswordHasher)->hash($password);
+        return (new DefaultPasswordHasher)->hash($password);
     }
 }

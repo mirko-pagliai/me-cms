@@ -60,7 +60,7 @@ class Tag extends Entity
     protected function _getSlug()
     {
         if (empty($this->_properties['tag'])) {
-            return null;
+            return;
         }
 
         return strtolower(Inflector::slug($this->_properties['tag']));

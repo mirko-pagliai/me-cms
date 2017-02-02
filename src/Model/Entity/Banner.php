@@ -63,7 +63,7 @@ class Banner extends Entity
     protected function _getPath()
     {
         if (empty($this->_properties['filename'])) {
-            return null;
+            return;
         }
 
         return BANNERS . $this->_properties['filename'];
@@ -76,7 +76,7 @@ class Banner extends Entity
     protected function _getWww()
     {
         if (empty($this->_properties['filename'])) {
-            return null;
+            return;
         }
 
         return BANNERS_WWW . $this->_properties['filename'];

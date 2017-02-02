@@ -64,7 +64,7 @@ class Page extends Entity
     protected function _getPreview()
     {
         if (empty($this->_properties['text'])) {
-            return null;
+            return;
         }
 
         $preview = firstImageFromText($this->_properties['text']);

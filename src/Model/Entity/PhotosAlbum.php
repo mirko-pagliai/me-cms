@@ -61,7 +61,7 @@ class PhotosAlbum extends Entity
     protected function _getPath()
     {
         if (empty($this->_properties['id'])) {
-            return null;
+            return;
         }
 
         return PHOTOS . $this->_properties['id'];
