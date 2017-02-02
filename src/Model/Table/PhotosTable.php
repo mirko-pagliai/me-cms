@@ -50,7 +50,8 @@ class PhotosTable extends AppTable
     {
         //Deletes the file
         if (file_exists($entity->path) && is_writable($entity->path)) {
-            unlink($entity->path);
+            //@codingStandardsIgnoreLine
+            @unlink($entity->path);
         }
 
         parent::afterDelete($event, $entity, $options);
