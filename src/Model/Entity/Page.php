@@ -57,7 +57,7 @@ class Page extends Entity
 
     /**
      * Gets the image preview (virtual field)
-     * @return string|null
+     * @return string|void
      * @uses MeTools\Utility\Youtube::getId()
      * @uses MeTools\Utility\Youtube::getPreview()
      */

@@ -66,7 +66,7 @@ class WidgetHelper extends Helper
 
     /**
      * Renders all widgets
-     * @return string|null Html code
+     * @return string|void Html code
      * @uses _getAll()
      * @uses widget()
      */

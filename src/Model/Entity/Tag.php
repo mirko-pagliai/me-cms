@@ -55,7 +55,7 @@ class Tag extends Entity
 
     /**
      * Gets the tag slug (virtual field)
-     * @return string|null
+     * @return string|void
      */
     protected function _getSlug()
     {

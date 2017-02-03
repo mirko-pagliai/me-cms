@@ -64,7 +64,7 @@ class User extends Entity
 
     /**
      * Gets the full name (virtual field)
-     * @return string|null
+     * @return string|void
      */
     protected function _getFullName()
     {

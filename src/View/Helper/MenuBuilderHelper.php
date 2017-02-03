@@ -80,7 +80,7 @@ class MenuBuilderHelper extends Helper
     /**
      * Gets all menu name methods from a plugin
      * @param string $plugin Plugin name
-     * @return array|null
+     * @return array
      */
     public function getMenuMethods($plugin)
     {
@@ -88,7 +88,7 @@ class MenuBuilderHelper extends Helper
         $methods = getChildMethods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
 
         if (empty($methods)) {
-            return;
+            return [];
         }
 
         //Filters invalid name methods

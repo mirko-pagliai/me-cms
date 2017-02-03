@@ -63,7 +63,7 @@ class Post extends Entity
 
     /**
      * Gets the image preview (virtual field)
-     * @return string|null
+     * @return string|void
      * @uses MeTools\Utility\Youtube::getId()
      * @uses MeTools\Utility\Youtube::getPreview()
      */
@@ -91,7 +91,7 @@ class Post extends Entity
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
-     * @return string|null
+     * @return string|void
      * @uses MeCms\Model\Table\TagsTable::tagsAsString()
      */
     protected function _getTagsAsString()

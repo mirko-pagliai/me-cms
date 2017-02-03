@@ -91,7 +91,9 @@ class StaticPageTest extends TestCase
         $pages = StaticPage::all();
 
         //Checks filenames
-        $filenames = collection($pages)->extract(function ($page) { return $page->filename; })->toArray();
+        $filenames = collection($pages)->extract(function ($page) {
+            return $page->filename;
+        })->toArray();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -102,7 +104,9 @@ class StaticPageTest extends TestCase
         ], $filenames);
 
         //Checks paths
-        $paths = collection($pages)->extract(function ($page) { return $page->path; })->toArray();
+        $paths = collection($pages)->extract(function ($page) {
+            return $page->path;
+        })->toArray();
 
         $this->assertEquals([
             'src/Template/StaticPages/cookies-policy-it.ctp',
@@ -113,7 +117,9 @@ class StaticPageTest extends TestCase
         ], $paths);
 
         //Checks slugs
-        $slugs = collection($pages)->extract(function ($page) { return $page->slug; })->toArray();
+        $slugs = collection($pages)->extract(function ($page) {
+            return $page->slug;
+        })->toArray();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -124,7 +130,9 @@ class StaticPageTest extends TestCase
         ], $slugs);
 
         //Checks titles
-        $titles = collection($pages)->extract(function ($page) { return $page->title; })->toArray();
+        $titles = collection($pages)->extract(function ($page) {
+            return $page->title;
+        })->toArray();
 
         $this->assertEquals([
             'Cookies Policy It',

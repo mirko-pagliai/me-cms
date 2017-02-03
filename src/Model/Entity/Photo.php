@@ -54,7 +54,7 @@ class Photo extends Entity
 
     /**
      * Gets the photo path (virtual field)
-     * @return string|null
+     * @return string|void
      */
     protected function _getPath()
     {

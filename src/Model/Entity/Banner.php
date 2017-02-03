@@ -58,7 +58,7 @@ class Banner extends Entity
 
     /**
      * Gets the banner full path (virtual field)
-     * @return string|null
+     * @return string|void
      */
     protected function _getPath()
     {
@@ -71,7 +71,7 @@ class Banner extends Entity
 
     /**
      * Gets the banner web address (virtual field)
-     * @return string|null
+     * @return string|void
      */
     protected function _getWww()
     {

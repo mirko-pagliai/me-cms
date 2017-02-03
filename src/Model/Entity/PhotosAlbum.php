@@ -56,7 +56,7 @@ class PhotosAlbum extends Entity
 
     /**
      * Gets the album full path (virtual field)
-     * @return string|null
+     * @return string|void
      */
     protected function _getPath()
     {
