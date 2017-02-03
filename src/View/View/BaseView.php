@@ -32,41 +32,43 @@ use App\View\AppView as AppView;
 class BaseView extends AppView
 {
     /**
-     * It will contain the page title.
+     * Title for layout.
      * To get the title, you should use the `_getTitleForLayout()` method
      * @see _getTitleForLayout()
      * @var string
      */
-    protected $title;
+    protected $titleForLayout;
 
     /**
      * Gets the title for layout
      * @return string Title
-     * @uses title
+     * @uses $titleForLayout
      */
     protected function _getTitleForLayout()
     {
-        if (!empty($this->title)) {
-            return $this->title;
+        if (!empty($this->titleForLayout)) {
+            return $this->titleForLayout;
         }
 
         //Gets the main title setted by the configuration
         $title = config('main.title');
 
-        //For homepage, it uses only the main title
+        //For homepage, it returns only the main title
         if ($this->request->isUrl(['_name' => 'homepage'])) {
             return $title;
         }
 
-        //If exists, it adds the title setted by the controller
+        //If exists, it adds the title setted by the controller, as if it has
+        //  been set via `$this->View->set()`
         if ($this->get('title')) {
             $title = sprintf('%s - %s', $this->get('title'), $title);
-        //Else, if exists, it adds the title setted by the current view
+        //Else, if exists, it adds the title setted by the current view, as if
+        //  it has been set via `$this->View->Blocks->set()`
         } elseif ($this->fetch('title')) {
             $title = sprintf('%s - %s', $this->fetch('title'), $title);
         }
 
-        return $this->title = $title;
+        return $this->titleForLayout = $title;
     }
 
     /**
