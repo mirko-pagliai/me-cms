@@ -136,8 +136,8 @@ class BaseViewTest extends TestCase
     public function testRenderLayout()
     {
         //Loads some other helpers
-        $this->View->loadHelper('MeCms.Widget');
         $this->View->loadHelper('MeCms.Auth');
+        $this->View->loadHelper('MeCms.Widget');
 
         //Disable widgets
         Configure::write('Widgets.general', []);
