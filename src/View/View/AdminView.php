@@ -22,12 +22,12 @@
  */
 namespace MeCms\View\View;
 
-use MeCms\View\View\BaseView;
+use MeCms\View\View;
 
 /**
  * Application view class for admin views
  */
-class AdminView extends BaseView
+class AdminView extends View
 {
     /**
      * The name of the layout file to render the template inside of

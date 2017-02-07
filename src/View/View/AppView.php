@@ -23,13 +23,13 @@
 namespace MeCms\View\View;
 
 use Cake\Routing\Router;
-use MeCms\View\View\BaseView;
+use MeCms\View\View;
 use MeTools\Core\Plugin;
 
 /**
  * Application view class for all views, except the admin views
  */
-class AppView extends BaseView
+class AppView extends View
 {
     /**
      * Internal property to set the userbar elements

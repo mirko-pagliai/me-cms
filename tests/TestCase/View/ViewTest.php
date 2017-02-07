@@ -20,19 +20,19 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Test\TestCase\View\View;
+namespace MeCms\Test\TestCase\View;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
-use MeCms\View\View\BaseView as View;
+use MeCms\View\View;
 use Reflection\ReflectionTrait;
 
 /**
- * BaseViewTest class
+ * ViewTest class
  */
-class BaseViewTest extends TestCase
+class ViewTest extends TestCase
 {
     use ReflectionTrait;
 
