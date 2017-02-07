@@ -39,13 +39,37 @@ class AppView extends BaseView
     protected $userbar = [];
 
     /**
-     * Adds Facebook tags
+     * Internal method to set some blocks
      * @return void
+     * @uses $userbar
      * @uses MeCms\View\View\BaseView::_getTitleForLayout()
      * @uses MeTools\View\Helper\HtmlHelper::meta()
+     * @uses MeTools\View\Helper\LibraryHelper::analytics()
+     * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
      */
-    protected function _addFacebookTags()
+    protected function _setBlocks()
     {
+        //Sets the "theme color" (the toolbar color for some mobile browser)
+        if (config('default.toolbar_color')) {
+            $this->Html->meta('theme-color', config('default.toolbar_color'));
+        }
+
+        //Sets the meta tag for RSS posts
+        if (config('default.rss_meta')) {
+            $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
+        }
+
+        //Sets scripts for Google Analytics
+        if (config('default.analytics')) {
+            echo $this->Library->analytics(config('default.analytics'));
+        }
+
+        //Sets scripts for Shareaholic
+        if (config('shareaholic.site_id')) {
+            echo $this->Library->shareaholic(config('shareaholic.site_id'));
+        }
+
+        //Sets some Facebook's tags
         $this->Html->meta([
             'content' => $this->_getTitleForLayout(),
             'property' => 'og:title',
@@ -55,7 +79,7 @@ class AppView extends BaseView
             'property' => 'og:url',
         ]);
 
-        //Adds the app ID
+        //Sets the app ID for Facebook
         if (config('default.facebook_app_id')) {
             $this->Html->meta([
                 'content' => config('default.facebook_app_id'),
@@ -91,11 +115,8 @@ class AppView extends BaseView
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_renderLayout
      * @uses MeCms\View\View\BaseView::renderLayout()
      * @uses MeTools\Core\Plugin::path()
-     * @uses MeTools\View\Helper\HtmlHelper::meta()
-     * @uses MeTools\View\Helper\LibraryHelper::analytics()
-     * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
-     * @uses _addFacebookTags()
-     * @uses $userbar
+     * @uses _setBlocks()
+     * @uses userbar()
      */
     public function renderLayout($content, $layout = null)
     {
@@ -107,59 +128,41 @@ class AppView extends BaseView
 
         $path .= $layout . '.ctp';
 
+        $this->plugin = MECMS;
+
         //Uses the APP layout, if exists
-        if (is_readable(ROOT . DS . $path)) {
+        if (is_readable(APP . $path)) {
             $this->plugin = false;
         }
 
         //Sets the theme and uses the theme layout, if exists
-        if (config('default.theme') && !$this->theme()) {
-            $this->theme(config('default.theme'));
-
-            if (is_readable(Plugin::path($this->theme()) . $path)) {
-                $this->plugin = $this->theme();
-            }
+        if ($this->theme() && is_readable(Plugin::path($this->theme()) . $path)) {
+            $this->plugin = $this->theme();
         }
 
-        //Adds the "theme color" (the toolbar color for some mobile browser)
-        if (config('default.toolbar_color')) {
-            $this->Html->meta('theme-color', config('default.toolbar_color'));
-        }
-
-        //Adds the meta tag for RSS posts
-        if (config('default.rss_meta')) {
-            $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
-        }
-
-        //Adds Google Analytics
-        if (config('default.analytics')) {
-            echo $this->Library->analytics(config('default.analytics'));
-        }
-
-        //Adds Shareaholic
-        if (config('shareaholic.site_id')) {
-            echo $this->Library->shareaholic(config('shareaholic.site_id'));
-        }
-
-        //Adds Facebook's tags
-        $this->_addFacebookTags();
+        $this->_setBlocks();
 
         //Assign the userbar
         $this->assign('userbar', implode(PHP_EOL, array_map(function ($element) {
             return $this->Html->li($element);
-        }, $this->userbar)));
+        }, $this->userbar())));
 
         return parent::renderLayout($content, $layout);
     }
 
     /**
-     * Sets one or more userbar elements
-     * @param string|array $element Element
-     * @return void
+     * Sets one or more userbar contents.
+     * @param string|array|null $content Contents. It can be a string or an
+     *  array of contents. If `null`, returns an array of current contents
+     * @return array|void
      * @uses $userbar
      */
-    public function userbar($element)
+    public function userbar($content = null)
     {
-        $this->userbar = am($this->userbar, (array)$element);
+        if ($content === null) {
+            return $this->userbar;
+        }
+
+        $this->userbar = am($this->userbar, (array)$content);
     }
 }
