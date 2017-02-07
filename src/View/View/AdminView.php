@@ -30,6 +30,12 @@ use MeCms\View\View\BaseView;
 class AdminView extends BaseView
 {
     /**
+     * The name of the layout file to render the template inside of
+     * @var string
+     */
+    public $layout = 'MeCms.admin';
+
+    /**
      * Initialization hook method
      * @return void
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_initialize
@@ -62,8 +68,6 @@ class AdminView extends BaseView
             '4' => sprintf('4 - %s', __d('me_cms', 'High')),
             '5' => sprintf('5 - %s', __d('me_cms', 'Very high'))
         ]);
-
-        $this->layout('MeCms.admin');
 
         return parent::render($view, $layout);
     }
