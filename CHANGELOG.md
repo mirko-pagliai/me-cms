@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.15 branch
 ### 2.15.0
-* the cells that act as widgets now have "Widgets" in the name, for the classes
+* the cells that act as widgets now have "Widgets" in the name, for class files
     and the template directory;
 * the `BaseView` class has been renamed as `View`. This creates less confusion.
 
