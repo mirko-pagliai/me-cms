@@ -68,9 +68,10 @@ class StaticPageTest extends TestCase
     {
         $object = new StaticPage;
 
-        $paths = array_map(function ($path) {
+        $paths = $this->invokeMethod($object, '_getPaths');
+        $paths = collection($paths)->extract(function ($path) {
             return rtr($path);
-        }, $this->invokeMethod($object, '_getPaths'));
+        })->toArray();
 
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages',
