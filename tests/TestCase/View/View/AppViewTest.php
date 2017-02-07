@@ -178,4 +178,3 @@ class AppViewTest extends TestCase
 <li>nestled</li>', $this->View->fetch('userbar'));
     }
 }
-
