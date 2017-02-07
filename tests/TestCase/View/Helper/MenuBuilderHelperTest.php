@@ -93,7 +93,7 @@ class MenuBuilderHelperTest extends TestCase
 
         //This plugin has no menu methods
         $result = $this->MenuBuilder->getMenuMethods('TestPluginTwo');
-        $this->assertNull($result);
+        $this->assertEmpty($result);
     }
 
     /**

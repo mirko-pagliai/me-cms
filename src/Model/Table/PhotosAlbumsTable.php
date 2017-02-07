@@ -50,7 +50,8 @@ class PhotosAlbumsTable extends AppTable
     {
         //Deletes the directory
         if (file_exists($entity->path)) {
-            rmdir($entity->path);
+            //@codingStandardsIgnoreLine
+            @rmdir($entity->path);
         }
 
         parent::afterDelete($event, $entity, $options);

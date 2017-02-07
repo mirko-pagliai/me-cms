@@ -24,7 +24,6 @@ namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use MeTools\Utility\Youtube;
 
 /**
@@ -64,14 +63,14 @@ class Post extends Entity
 
     /**
      * Gets the image preview (virtual field)
-     * @return string|null
+     * @return string|void
      * @uses MeTools\Utility\Youtube::getId()
      * @uses MeTools\Utility\Youtube::getPreview()
      */
     protected function _getPreview()
     {
         if (empty($this->_properties['text'])) {
-            return null;
+            return;
         }
 
         $preview = firstImageFromText($this->_properties['text']);
@@ -92,13 +91,13 @@ class Post extends Entity
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
-     * @return string|null
+     * @return string|void
      * @uses MeCms\Model\Table\TagsTable::tagsAsString()
      */
     protected function _getTagsAsString()
     {
         if (empty($this->_properties['tags'])) {
-            return null;
+            return;
         }
 
         return TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);

@@ -19,6 +19,7 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html
  */
 namespace MeCms\Model\Behavior;
 
@@ -29,7 +30,7 @@ use Cake\ORM\Behavior\TreeBehavior as CakeTreeBehavior;
  *  provides methods  for managing and retrieving information out of the
  *  derived hierarchical structure.
  *
- * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html TreeBehavior}.
+ * This behavior rewrites the `TreeBehavior` class provided by CakePHP.
  *
  * To add to your table:
  * <code>

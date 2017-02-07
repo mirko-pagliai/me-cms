@@ -44,8 +44,6 @@ class StaticPageTest extends TestCase
     {
         parent::setUp();
 
-        ini_set('intl.default_locale', 'en_US');
-
         Plugin::load('TestPlugin');
     }
 
@@ -56,6 +54,8 @@ class StaticPageTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+
+        ini_set('intl.default_locale', 'en_US');
 
         Plugin::unload('TestPlugin');
     }
@@ -68,12 +68,13 @@ class StaticPageTest extends TestCase
     {
         $object = new StaticPage;
 
-        $paths = array_map(function ($path) {
+        $paths = $this->invokeMethod($object, '_getPaths');
+        $paths = collection($paths)->extract(function ($path) {
             return rtr($path);
-        }, $this->invokeMethod($object, '_getPaths'));
+        })->toArray();
 
         $this->assertEquals([
-            'tests/test_app/TestApp/TestApp/Template/StaticPages',
+            'tests/test_app/TestApp/Template/StaticPages',
             'src/Template/StaticPages',
             'vendor/mirko-pagliai/me-tools/src/Template/StaticPages',
             'vendor/mirko-pagliai/assets/src/Template/StaticPages',
@@ -91,9 +92,9 @@ class StaticPageTest extends TestCase
         $pages = StaticPage::all();
 
         //Checks filenames
-        $filenames = array_map(function ($page) {
+        $filenames = collection($pages)->extract(function ($page) {
             return $page->filename;
-        }, $pages);
+        })->toArray();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -104,9 +105,9 @@ class StaticPageTest extends TestCase
         ], $filenames);
 
         //Checks paths
-        $paths = array_map(function ($page) {
-            return rtr($page->path);
-        }, $pages);
+        $paths = collection($pages)->extract(function ($page) {
+            return $page->path;
+        })->toArray();
 
         $this->assertEquals([
             'src/Template/StaticPages/cookies-policy-it.ctp',
@@ -117,9 +118,9 @@ class StaticPageTest extends TestCase
         ], $paths);
 
         //Checks slugs
-        $slugs = (array_map(function ($page) {
+        $slugs = collection($pages)->extract(function ($page) {
             return $page->slug;
-        }, $pages));
+        })->toArray();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -130,9 +131,9 @@ class StaticPageTest extends TestCase
         ], $slugs);
 
         //Checks titles
-        $titles = (array_map(function ($page) {
+        $titles = collection($pages)->extract(function ($page) {
             return $page->title;
-        }, $pages));
+        })->toArray();
 
         $this->assertEquals([
             'Cookies Policy It',

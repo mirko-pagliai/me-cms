@@ -8,8 +8,8 @@
 ### 2.14.16
 * the whole of the widget code has been rewritten and improved, making it more
     uniform and consistent;
-* improved `WidgetHelper` class;
-* added tests for `WidgetHelper` class;
+* improved `AppView` and `WidgetHelper` classes;
+* added tests for `AdminView`, `AppView`, `BaseView` and `WidgetHelper` classes;
 * added tests for all cell classes.
 
 ### 2.14.15
