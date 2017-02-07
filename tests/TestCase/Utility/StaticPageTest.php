@@ -73,7 +73,7 @@ class StaticPageTest extends TestCase
         }, $this->invokeMethod($object, '_getPaths'));
 
         $this->assertEquals([
-            'tests/test_app/TestApp/TestApp/Template/StaticPages',
+            'tests/test_app/TestApp/Template/StaticPages',
             'src/Template/StaticPages',
             'vendor/mirko-pagliai/me-tools/src/Template/StaticPages',
             'vendor/mirko-pagliai/assets/src/Template/StaticPages',
