@@ -105,7 +105,7 @@ class PostsWidgetsCell extends Cell
     public function months($render = 'form')
     {
         $this->viewBuilder()->template(sprintf('months_as_%s', $render));
-        
+
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
