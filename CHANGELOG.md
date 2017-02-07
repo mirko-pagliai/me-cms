@@ -4,7 +4,7 @@
 * the whole of the widget code has been rewritten and improved, making it more
     uniform and consistent;
 * improved `AppView` and `WidgetHelper` classes;
-* added tests for `BaseView` and `WidgetHelper` classes;
+* added tests for `AppView`, `BaseView` and `WidgetHelper` classes;
 * added tests for all cell classes.
 
 ### 2.14.15
