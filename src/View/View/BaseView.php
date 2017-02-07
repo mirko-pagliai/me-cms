@@ -40,6 +40,28 @@ class BaseView extends AppView
     protected $titleForLayout;
 
     /**
+     * Constructor
+     * @param \Cake\Network\Request|null $request Request instance
+     * @param \Cake\Network\Response|null $response Response instance
+     * @param \Cake\Event\EventManager|null $eventManager Event manager instance
+     * @param array $viewOptions View options. See View::$_passedVars for list of
+     *   options which get set as class properties
+     */
+    public function __construct(
+        \Cake\Network\Request $request = null,
+        \Cake\Network\Response $response = null,
+        \Cake\Event\EventManager $eventManager = null,
+        array $viewOptions = []
+    ) {
+        parent::__construct($request, $response, $eventManager, $viewOptions);
+
+        //Sets the theme from configuration
+        if (config('default.theme')) {
+            $this->theme(config('default.theme'));
+        }
+    }
+
+    /**
      * Gets the title for layout
      * @return string Title
      * @uses $titleForLayout

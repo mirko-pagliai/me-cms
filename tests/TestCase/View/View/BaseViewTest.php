@@ -23,6 +23,7 @@
 namespace MeCms\Test\TestCase\View\View;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
 use MeCms\View\View\BaseView as View;
@@ -59,7 +60,28 @@ class BaseViewTest extends TestCase
     {
         parent::tearDown();
 
+        Plugin::unload('TestPlugin');
+
         unset($this->View);
+    }
+
+    /**
+     * Tests for `__construct()` method
+     * @test
+     */
+    public function testConstruct()
+    {
+        $this->assertNull($this->View->theme());
+
+        //Loads the `TestPlugin` and sets it as a theme
+        $theme = 'TestPlugin';
+        Plugin::load($theme);
+        Configure::write(MECMS . '.default.theme', $theme);
+
+        //Reloads the View
+        $this->View = new View(new Request);
+
+        $this->assertEquals($theme, $this->View->theme());
     }
 
     /**
