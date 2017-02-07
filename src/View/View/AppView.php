@@ -120,7 +120,7 @@ class AppView extends BaseView
      */
     public function renderLayout($content, $layout = null)
     {
-        $path = 'src' . DS . 'Template' . DS . 'Layout' . DS;
+        $path = 'Template' . DS . 'Layout' . DS;
 
         if ($this->layoutPath()) {
             $path .= $this->layoutPath() . DS;
@@ -136,7 +136,7 @@ class AppView extends BaseView
         }
 
         //Sets the theme and uses the theme layout, if exists
-        if ($this->theme() && is_readable(Plugin::path($this->theme()) . $path)) {
+        if ($this->theme() && is_readable(Plugin::path($this->theme()) . 'src' . DS . $path)) {
             $this->plugin = $this->theme();
         }
 
