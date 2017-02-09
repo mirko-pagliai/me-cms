@@ -39,7 +39,7 @@ class AdminView extends View
      * Initialization hook method
      * @return void
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_initialize
-     * @uses MeCms\View\View\BaseView::initialize()
+     * @uses MeCms\View\View::initialize()
      */
     public function initialize()
     {

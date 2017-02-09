@@ -41,7 +41,7 @@ class AppView extends View
      * Internal method to set some blocks
      * @return void
      * @uses $userbar
-     * @uses MeCms\View\View\BaseView::_getTitleForLayout()
+     * @uses MeCms\View\View::_getTitleForLayout()
      * @uses MeTools\View\Helper\HtmlHelper::meta()
      * @uses MeTools\View\Helper\LibraryHelper::analytics()
      * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
@@ -91,7 +91,7 @@ class AppView extends View
      * Initialization hook method
      * @return void
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_initialize
-     * @uses MeCms\View\View\BaseView::initialize()
+     * @uses MeCms\View\View::initialize()
      */
     public function initialize()
     {
@@ -112,7 +112,7 @@ class AppView extends View
      * @param string|null $layout Layout name
      * @return mixed Rendered output, or false on error
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_renderLayout
-     * @uses MeCms\View\View\BaseView::renderLayout()
+     * @uses MeCms\View\View::renderLayout()
      * @uses _setBlocks()
      * @uses userbar()
      */
