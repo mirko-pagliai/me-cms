@@ -24,7 +24,6 @@ namespace MeCms\View\View;
 
 use Cake\Routing\Router;
 use MeCms\View\View;
-use MeTools\Core\Plugin;
 
 /**
  * Application view class for all views, except the admin views
@@ -114,32 +113,11 @@ class AppView extends View
      * @return mixed Rendered output, or false on error
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_renderLayout
      * @uses MeCms\View\View\BaseView::renderLayout()
-     * @uses MeTools\Core\Plugin::path()
      * @uses _setBlocks()
      * @uses userbar()
      */
     public function renderLayout($content, $layout = null)
     {
-        $path = 'Template' . DS . 'Layout' . DS;
-
-        if ($this->layoutPath()) {
-            $path .= $this->layoutPath() . DS;
-        }
-
-        $path .= $layout . '.ctp';
-
-        $this->plugin = MECMS;
-
-        //Uses the APP layout, if exists
-        if (is_readable(APP . $path)) {
-            $this->plugin = false;
-        }
-
-        //Sets the theme and uses the theme layout, if exists
-        if ($this->theme() && is_readable(Plugin::path($this->theme()) . 'src' . DS . $path)) {
-            $this->plugin = $this->theme();
-        }
-
         $this->_setBlocks();
 
         //Assign the userbar
