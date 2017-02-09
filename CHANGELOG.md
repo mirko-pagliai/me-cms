@@ -3,6 +3,8 @@
 ### 2.15.0
 * the cells that act as widgets now have "Widgets" in the name, for class files
     and the template directory;
+* added the `HtmlWidgetCell` class, with `display()` method. This method only
+    renders a template file;
 * the `BaseView` class has been renamed as `View`. This creates less confusion.
 
 ## 2.14 branch
