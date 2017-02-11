@@ -103,10 +103,10 @@ class BaseUpdateShellTest extends TestCase
     public function testConstruct()
     {
         $connection = $this->getProperty($this->BaseUpdateShell, 'connection');
-        $this->assertEquals('Cake\Database\Connection', get_class($connection));
+        $this->assertInstanceOf('Cake\Database\Connection', $connection);
 
         $now = $this->getProperty($this->BaseUpdateShell, 'now');
-        $this->assertEquals('Cake\I18n\Time', get_class($now));
+        $this->assertInstanceOf('Cake\I18n\Time', $now);
     }
 
     /**
@@ -291,7 +291,7 @@ class BaseUpdateShellTest extends TestCase
 
         $methods = am(['all', 'latest'], $methods);
 
-        $this->assertEquals('Cake\Console\ConsoleOptionParser', get_class($parser));
+        $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
         $this->assertEquals($methods, array_keys($parser->subcommands()));
     }
 }

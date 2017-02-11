@@ -135,7 +135,7 @@ class BannersTableTest extends TestCase
         $this->assertEquals('filename', $this->Banners->displayField());
         $this->assertEquals('id', $this->Banners->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Banners->Positions));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Banners->Positions);
         $this->assertEquals('position_id', $this->Banners->Positions->foreignKey());
         $this->assertEquals('INNER', $this->Banners->Positions->joinType());
         $this->assertEquals('MeCms.BannersPositions', $this->Banners->Positions->className());
@@ -154,7 +154,7 @@ class BannersTableTest extends TestCase
 
         $this->assertNotEmpty($banner->position);
 
-        $this->assertEquals('MeCms\Model\Entity\BannersPosition', get_class($banner->position));
+        $this->assertInstanceOf('MeCms\Model\Entity\BannersPosition', $banner->position);
         $this->assertEquals(1, $banner->position->id);
     }
 
@@ -167,7 +167,7 @@ class BannersTableTest extends TestCase
         $this->assertTrue($this->Banners->hasFinder('active'));
 
         $query = $this->Banners->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.active = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
@@ -188,7 +188,7 @@ class BannersTableTest extends TestCase
         $data = ['position' => 2];
 
         $query = $this->Banners->queryFromFilter($this->Banners->find(), $data);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
 
         $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
@@ -200,9 +200,9 @@ class BannersTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\BannerValidator',
-            get_class($this->Banners->validationDefault(new \Cake\Validation\Validator))
+            $this->Banners->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

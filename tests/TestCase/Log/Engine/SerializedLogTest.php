@@ -170,13 +170,13 @@ class SerializedLogTest extends TestCase
         $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
         $this->assertNotEmpty($logs);
 
-        $this->assertEquals('stdClass', get_class($logs[0]));
+        $this->assertInstanceOf('stdClass', $logs[0]);
         $this->assertEquals('critical', $logs[0]->level);
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $logs[0]->datetime);
         $this->assertEquals('This is a critical message', $logs[0]->message);
         $this->assertRegExp('/^[\d-:\s]{19} Critical: This is a critical message$/', $logs[0]->full);
 
-        $this->assertEquals('stdClass', get_class($logs[1]));
+        $this->assertInstanceOf('stdClass', $logs[1]);
         $this->assertEquals('error', $logs[1]->level);
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $logs[1]->datetime);
         $this->assertEquals('This is an error message', $logs[1]->message);

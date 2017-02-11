@@ -63,14 +63,12 @@ class PostsCell extends Cell
 
         $categories = $this->Posts->Categories->find('active')
             ->select(['title', 'slug', 'post_count'])
-            ->order(['title' => 'ASC'])
+            ->order([sprintf('%s.title', $this->Posts->Categories->alias()) => 'ASC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('slug');
+            })
             ->cache('widget_categories', $this->Posts->cache)
             ->toArray();
-
-        foreach ($categories as $k => $category) {
-            $categories[$category->slug] = $category;
-            unset($categories[$k]);
-        }
 
         $this->set(compact('categories'));
 
@@ -94,7 +92,7 @@ class PostsCell extends Cell
         $posts = $this->Posts->find('active')
             ->select(['title', 'slug'])
             ->limit($limit)
-            ->order(['created' => 'DESC'])
+            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
             ->toArray();
 
@@ -113,24 +111,24 @@ class PostsCell extends Cell
             return;
         }
 
-        $months = $this->Posts->find('active')
-            ->select([
-                'month' => 'DATE_FORMAT(created, "%m-%Y")',
-                'post_count' => 'COUNT(DATE_FORMAT(created, "%m-%Y"))',
+        $query = $this->Posts->find('active');
+        $time = $query->func()->date_format(['created' => 'identifier', "'%Y/%m'" => 'literal']);
+        $months = $query->select([
+                'month' => $time,
+                'post_count' => $query->func()->count($time),
             ])
             ->distinct(['month'])
-            ->order(['created' => 'DESC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('month')->map(function ($row) {
+                    list($year, $month) = explode('/', $row->month);
+                    $row->month = (new FrozenDate())->day(1)->month($month)->year($year);
+
+                    return $row;
+                });
+            })
+            ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Posts->cache)
             ->toArray();
-
-        foreach ($months as $key => $month) {
-            $exploded = explode('-', $month->month);
-            $newKey = sprintf('%s/%s', $exploded[1], $exploded[0]);
-
-            $months[$newKey] = $month;
-            $months[$newKey]->month = (new FrozenDate())->day(1)->month($exploded[0])->year($exploded[1]);
-            unset($months[$key]);
-        }
 
         $this->set(compact('months'));
 

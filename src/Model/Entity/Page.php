@@ -57,14 +57,14 @@ class Page extends Entity
 
     /**
      * Gets the image preview (virtual field)
-     * @return string|null
+     * @return string|void
      * @uses MeTools\Utility\Youtube::getId()
      * @uses MeTools\Utility\Youtube::getPreview()
      */
     protected function _getPreview()
     {
         if (empty($this->_properties['text'])) {
-            return null;
+            return;
         }
 
         $preview = firstImageFromText($this->_properties['text']);

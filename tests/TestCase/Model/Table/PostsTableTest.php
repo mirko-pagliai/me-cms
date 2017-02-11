@@ -166,17 +166,17 @@ class PostsTableTest extends TestCase
         $this->assertEquals('title', $this->Posts->displayField());
         $this->assertEquals('id', $this->Posts->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Posts->Categories));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Categories);
         $this->assertEquals('category_id', $this->Posts->Categories->foreignKey());
         $this->assertEquals('INNER', $this->Posts->Categories->joinType());
         $this->assertEquals('MeCms.PostsCategories', $this->Posts->Categories->className());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Posts->Users));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Users);
         $this->assertEquals('user_id', $this->Posts->Users->foreignKey());
         $this->assertEquals('INNER', $this->Posts->Users->joinType());
         $this->assertEquals('MeCms.Users', $this->Posts->Users->className());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsToMany', get_class($this->Posts->Tags));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Posts->Tags);
         $this->assertEquals('post_id', $this->Posts->Tags->foreignKey());
         $this->assertEquals('tag_id', $this->Posts->Tags->targetForeignKey());
         $this->assertEquals('MeCms.Tags', $this->Posts->Tags->className());
@@ -199,8 +199,8 @@ class PostsTableTest extends TestCase
         $this->assertNotEmpty($post->tags);
 
         foreach ($post->tags as $tag) {
-            $this->assertEquals('MeCms\Model\Entity\Tag', get_class($tag));
-            $this->assertEquals('MeCms\Model\Entity\PostsTag', get_class($tag->_joinData));
+            $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tag);
+            $this->assertInstanceOf('MeCms\Model\Entity\PostsTag', $tag->_joinData);
             $this->assertEquals(2, $tag->_joinData->post_id);
         }
     }
@@ -215,7 +215,7 @@ class PostsTableTest extends TestCase
 
         $this->assertNotEmpty($post->category);
 
-        $this->assertEquals('MeCms\Model\Entity\PostsCategory', get_class($post->category));
+        $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $post->category);
         $this->assertEquals(4, $post->category->id);
     }
 
@@ -229,7 +229,7 @@ class PostsTableTest extends TestCase
 
         $this->assertNotEmpty($post->user);
 
-        $this->assertEquals('MeCms\Model\Entity\User', get_class($post->user));
+        $this->assertInstanceOf('MeCms\Model\Entity\User', $post->user);
         $this->assertEquals(4, $post->user->id);
     }
 
@@ -249,7 +249,7 @@ class PostsTableTest extends TestCase
     public function testFind()
     {
         $query = $this->Posts->find();
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', time() - 3600, $this->Posts->cache);
@@ -260,7 +260,7 @@ class PostsTableTest extends TestCase
 
         //The cache will now be cleared
         $query = $this->Posts->find();
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Posts->cache));
         $this->assertEmpty(Cache::read('someData', $this->Posts->cache));
@@ -284,7 +284,7 @@ class PostsTableTest extends TestCase
         $data = ['tag' => 'test'];
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active`, PostsTags.id AS `PostsTags__id`, PostsTags.tag_id AS `PostsTags__tag_id`, PostsTags.post_id AS `PostsTags__post_id`, Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
 
         $this->assertEquals('test', $query->valueBinder()->bindings()[':c0']['value']);
@@ -296,9 +296,9 @@ class PostsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\PostValidator',
-            get_class($this->Posts->validationDefault(new \Cake\Validation\Validator))
+            $this->Posts->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

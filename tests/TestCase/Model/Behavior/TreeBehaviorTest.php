@@ -47,7 +47,7 @@ class TreeBehaviorTest extends TestCase
         $table = TableRegistry::get('MeCms.PostsCategories');
 
         $query = $table->find('treeList');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals([
             1 => 'First post category',
             3 => '—Sub post category',

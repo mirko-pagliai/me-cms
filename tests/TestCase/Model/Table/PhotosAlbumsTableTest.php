@@ -153,7 +153,7 @@ class PhotosAlbumsTableTest extends TestCase
         $this->assertEquals('title', $this->PhotosAlbums->displayField());
         $this->assertEquals('id', $this->PhotosAlbums->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\HasMany', get_class($this->PhotosAlbums->Photos));
+        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PhotosAlbums->Photos);
         $this->assertEquals('album_id', $this->PhotosAlbums->Photos->foreignKey());
         $this->assertEquals('MeCms.Photos', $this->PhotosAlbums->Photos->className());
 
@@ -171,7 +171,7 @@ class PhotosAlbumsTableTest extends TestCase
         $this->assertNotEmpty($album->photos);
 
         foreach ($album->photos as $photo) {
-            $this->assertEquals('MeCms\Model\Entity\Photo', get_class($photo));
+            $this->assertInstanceOf('MeCms\Model\Entity\Photo', $photo);
             $this->assertEquals(1, $photo->album_id);
         }
     }
@@ -185,7 +185,7 @@ class PhotosAlbumsTableTest extends TestCase
         $this->assertTrue($this->PhotosAlbums->hasFinder('active'));
 
         $query = $this->PhotosAlbums->find('active');
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT PhotosAlbums.id AS `PhotosAlbums__id`, PhotosAlbums.title AS `PhotosAlbums__title`, PhotosAlbums.slug AS `PhotosAlbums__slug`, PhotosAlbums.description AS `PhotosAlbums__description`, PhotosAlbums.active AS `PhotosAlbums__active`, PhotosAlbums.photo_count AS `PhotosAlbums__photo_count`, PhotosAlbums.created AS `PhotosAlbums__created`, PhotosAlbums.modified AS `PhotosAlbums__modified` FROM photos_albums PhotosAlbums WHERE (PhotosAlbums.active = :c0 AND PhotosAlbums.photo_count > :c1)', $query->sql());
 
         $params = array_map(function ($v) {
@@ -211,9 +211,9 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\PhotosAlbumValidator',
-            get_class($this->PhotosAlbums->validationDefault(new \Cake\Validation\Validator))
+            $this->PhotosAlbums->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

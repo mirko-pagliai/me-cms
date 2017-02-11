@@ -139,7 +139,7 @@ class PhotosTableTest extends TestCase
         $this->assertEquals('filename', $this->Photos->displayField());
         $this->assertEquals('id', $this->Photos->primaryKey());
 
-        $this->assertEquals('Cake\ORM\Association\BelongsTo', get_class($this->Photos->Albums));
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Photos->Albums);
         $this->assertEquals('album_id', $this->Photos->Albums->foreignKey());
         $this->assertEquals('INNER', $this->Photos->Albums->joinType());
         $this->assertEquals('MeCms.PhotosAlbums', $this->Photos->Albums->className());
@@ -158,7 +158,7 @@ class PhotosTableTest extends TestCase
 
         $this->assertNotEmpty($photo->album);
 
-        $this->assertEquals('MeCms\Model\Entity\PhotosAlbum', get_class($photo->album));
+        $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $photo->album);
         $this->assertEquals(2, $photo->album->id);
     }
 
@@ -171,7 +171,7 @@ class PhotosTableTest extends TestCase
         $this->assertTrue($this->Photos->hasFinder('active'));
 
         $query = $this->Photos->find('active')->contain(['Albums']);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified`, Albums.id AS `Albums__id`, Albums.title AS `Albums__title`, Albums.slug AS `Albums__slug`, Albums.description AS `Albums__description`, Albums.active AS `Albums__active`, Albums.photo_count AS `Albums__photo_count`, Albums.created AS `Albums__created`, Albums.modified AS `Albums__modified` FROM photos Photos INNER JOIN photos_albums Albums ON (Albums.active = :c0 AND Albums.id = (Photos.album_id)) WHERE Photos.active = :c1', $query->sql());
 
         $params = array_map(function ($v) {
@@ -200,7 +200,7 @@ class PhotosTableTest extends TestCase
         $data = ['album' => 2];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
-        $this->assertEquals('Cake\ORM\Query', get_class($query));
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
 
         $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
@@ -212,9 +212,9 @@ class PhotosTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->assertEquals(
+        $this->assertInstanceOf(
             'MeCms\Model\Validation\PhotoValidator',
-            get_class($this->Photos->validationDefault(new \Cake\Validation\Validator))
+            $this->Photos->validationDefault(new \Cake\Validation\Validator)
         );
     }
 }

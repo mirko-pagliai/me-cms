@@ -37,7 +37,7 @@ class PageTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\Page', get_class(new Page));
+        $this->assertInstanceOf('MeCms\Model\Entity\Page', new Page);
     }
 
     /**

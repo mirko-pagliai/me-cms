@@ -37,7 +37,7 @@ class PostTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\Post', get_class(new Post));
+        $this->assertInstanceOf('MeCms\Model\Entity\Post', new Post);
     }
 
     /**

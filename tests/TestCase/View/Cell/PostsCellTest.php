@@ -24,8 +24,10 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Network\Request;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
+use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
@@ -34,9 +36,14 @@ use MeCms\View\View\AppView as View;
 class PostsCellTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AppView
+     * @var \MeCms\Model\Table\PostsTable
      */
-    protected $View;
+    protected $Posts;
+
+    /**
+     * @var \MeCms\View\Helper\WidgetHelper
+     */
+    protected $Widget;
 
     /**
      * Fixtures
@@ -55,9 +62,11 @@ class PostsCellTest extends TestCase
      */
     public function setUp()
     {
-        Cache::disable();
+        Cache::clearAll();
 
-        $this->View = new View;
+        $this->Posts = TableRegistry::get('MeCms.Posts');
+
+        $this->Widget = new WidgetHelper(new View);
     }
 
     /**
@@ -68,7 +77,7 @@ class PostsCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->View);
+        unset($this->Posts, $this->Widget);
     }
 
     /**
@@ -79,7 +88,7 @@ class PostsCellTest extends TestCase
     {
         $widget = MECMS . '.Posts::categories';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -107,7 +116,7 @@ class PostsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell($widget, ['render' => 'list'])->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -140,9 +149,17 @@ class PostsCellTest extends TestCase
 
         //Empty on categories index
         $request = new Request(Router::url(['_name' => 'postsCategories']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_categories', $this->Posts->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            'first-post-category',
+            'sub-sub-post-category',
+        ], array_keys($fromCache->toArray()));
     }
 
     /**
@@ -154,7 +171,7 @@ class PostsCellTest extends TestCase
         $widget = MECMS . '.Posts::latest';
 
         //Tries with a limit of 1
-        $result = $this->View->cell($widget, ['limit' => 1])->render();
+        $result = $this->Widget->widget($widget, ['limit' => 1])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -179,7 +196,7 @@ class PostsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a limit of 2
-        $result = $this->View->cell($widget, ['limit' => 2])->render();
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -214,9 +231,16 @@ class PostsCellTest extends TestCase
 
         //Empty on posts index
         $request = new Request(Router::url(['_name' => 'posts']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_latest_1', $this->Posts->cache);
+        $this->assertEquals(1, $fromCache->count());
+
+        $fromCache = Cache::read('widget_latest_2', $this->Posts->cache);
+        $this->assertEquals(2, $fromCache->count());
     }
 
     /**
@@ -227,7 +251,7 @@ class PostsCellTest extends TestCase
     {
         $widget = MECMS . '.Posts::months';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -235,7 +259,7 @@ class PostsCellTest extends TestCase
             'Posts by month',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/2017/01'],
+            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/' . date('Y/m')],
             ['div' => ['class' => 'form-group input select']],
             'select' => ['name' => 'q', 'onchange' => 'send_form(this)', 'class' => 'form-control'],
             ['option' => ['value' => '']],
@@ -255,7 +279,7 @@ class PostsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->View->cell($widget, ['render' => 'list'])->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -288,9 +312,22 @@ class PostsCellTest extends TestCase
 
         //Empty on posts index
         $request = new Request(Router::url(['_name' => 'posts']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
+
+        //Tests cache
+        $fromCache = Cache::read('widget_months', $this->Posts->cache);
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals([
+            '2016/12',
+            '2016/11',
+        ], array_keys($fromCache->toArray()));
+
+        foreach ($fromCache as $key => $entity) {
+            $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
+            $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
+        }
     }
 
     /**
@@ -301,7 +338,7 @@ class PostsCellTest extends TestCase
     {
         $widget = MECMS . '.Posts::search';
 
-        $result = $this->View->cell($widget)->render();
+        $result = $this->Widget->widget($widget)->render();
 
         $expected = [
             ['div' => ['class' => 'widget']],
@@ -330,8 +367,8 @@ class PostsCellTest extends TestCase
 
         //Empty on search
         $request = new Request(Router::url(['_name' => 'postsSearch']));
-        $this->View = new View($request);
-        $result = $this->View->cell($widget)->render();
+        $this->Widget = new WidgetHelper(new View($request));
+        $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
     }
 }

@@ -36,7 +36,7 @@ class BannerTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\Banner', get_class(new Banner));
+        $this->assertInstanceOf('MeCms\Model\Entity\Banner', new Banner);
     }
 
     /**

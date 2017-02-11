@@ -53,21 +53,21 @@ class TagsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'tag' => 'Cat',
+            'tag' => 'cat',
             'post_count' => 3,
             'created' => '2016-12-29 11:13:31',
             'modified' => '2016-12-29 11:13:31',
         ],
         [
             'id' => 2,
-            'tag' => 'Dog',
+            'tag' => 'dog',
             'post_count' => 2,
             'created' => '2016-12-29 11:14:31',
             'modified' => '2016-12-29 11:14:31',
         ],
         [
             'id' => 3,
-            'tag' => 'Bird',
+            'tag' => 'bird',
             'post_count' => 1,
             'created' => '2016-12-29 11:15:31',
             'modified' => '2016-12-29 11:15:31',

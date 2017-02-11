@@ -297,7 +297,7 @@ class UserShellTest extends TestCase
             '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
             '| 1  | alfa     | Admin   | Alfa Beta    | alfa@test.com    | 2     | Active  | 2016/12/24 17:00 |',
             '| 2  | gamma    | Manager | Gamma Delta  | gamma@test.com   | 0     | Pending | 2016/12/24 17:01 |',
-            '| 3  | ypsilon  | User    | Ypsilon Zeta | ypsilon@?est.com | 0     | Banned  | 2016/12/24 17:02 |',
+            '| 3  | ypsilon  | User    | Ypsilon Zeta | ypsilon@test.com | 0     | Banned  | 2016/12/24 17:02 |',
             '| 4  | abc      | User    | Abc Def      | abc@example.com  | 1     | Active  | 2016/12/24 17:03 |',
             '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
         ], $this->out->messages());
@@ -312,7 +312,7 @@ class UserShellTest extends TestCase
     {
         $parser = $this->UserShell->getOptionParser();
 
-        $this->assertEquals('Cake\Console\ConsoleOptionParser', get_class($parser));
+        $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
         $this->assertEquals([
             'add',
             'groups',

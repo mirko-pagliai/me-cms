@@ -36,7 +36,7 @@ class PhotoTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms\Model\Entity\Photo', get_class(new Photo));
+        $this->assertInstanceOf('MeCms\Model\Entity\Photo', new Photo);
     }
 
     /**
