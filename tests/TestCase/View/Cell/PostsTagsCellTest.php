@@ -329,6 +329,21 @@ class PostsTagsCellTest extends TestCase
     }
 
     /**
+     * Test for `popular()` method, with no tags
+     * @test
+     */
+    public function testPopularWithNoTags()
+    {
+        //Deletes all tags
+        $this->Tags->deleteAll(['id >=' => 1]);
+
+        $widget = MECMS . '.PostsTags::popular';
+        $result = $this->Widget->widget($widget, $this->options)->render();
+
+        $this->assertEmpty($result);
+    }
+
+    /**
      * Test for `popular()` method, with tags that have the same `post_count`
      *  value
      * @test

@@ -114,6 +114,10 @@ class PostsTagsCell extends Cell
                 sprintf('%s.tag', $this->Tags->alias()) => 'ASC',
             ])
             ->formatResults(function ($results) use ($style, $maxFont, $minFont) {
+                if (!$results->count()) {
+                    return $results;
+                }
+
                 $results = $results->indexBy('slug');
 
                 if (!$style || !$maxFont || !$minFont) {
