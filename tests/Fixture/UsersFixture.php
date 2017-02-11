@@ -92,7 +92,7 @@ class UsersFixture extends TestFixture
             'id' => 3,
             'group_id' => 3,
             'username' => 'ypsilon',
-            'email' => 'ypsilon@ŧest.com',
+            'email' => 'ypsilon@test.com',
             'password' => '',
             'first_name' => 'Ypsilon',
             'last_name' => 'Zeta',
