@@ -84,8 +84,8 @@ class PostsFixture extends TestFixture
             'subtitle' => 'Subtitle for second post',
             'text' => 'Text of the second post',
             'priority' => 1,
-            'created' => '2016-12-28 18:55:19',
-            'modified' => '2016-12-28 18:55:19',
+            'created' => '2016-12-28 18:56:19',
+            'modified' => '2016-12-28 18:56:19',
             'active' => 1
         ],
         [
@@ -97,8 +97,8 @@ class PostsFixture extends TestFixture
             'subtitle' => 'Subtitle for third post',
             'text' => 'Text of the third post',
             'priority' => 1,
-            'created' => '2016-12-28 18:55:19',
-            'modified' => '2016-12-28 18:55:19',
+            'created' => '2016-12-28 18:57:19',
+            'modified' => '2016-12-28 18:57:19',
             'active' => 1
         ],
     ];

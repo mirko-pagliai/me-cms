@@ -126,7 +126,7 @@ class PostsCell extends Cell
                     return $row;
                 });
             })
-            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+            ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Posts->cache)
             ->toArray();
 
