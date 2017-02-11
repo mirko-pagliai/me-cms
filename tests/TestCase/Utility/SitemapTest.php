@@ -207,7 +207,7 @@ class SitemapTest extends TestCase
         $expected = [
             [
                 'loc' => 'http://localhost/posts',
-                'lastmod' => '2016-12-28T18:55:19+00:00',
+                'lastmod' => '2016-12-28T18:57:19+00:00',
                 'priority' => '0.5',
             ],
             [
@@ -220,22 +220,22 @@ class SitemapTest extends TestCase
             ],
             [
                 'loc' => 'http://localhost/posts/category/first-post-category',
-                'lastmod' => '2016-12-28T18:55:19+00:00',
+                'lastmod' => '2016-12-28T18:57:19+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/post/third-post',
-                'lastmod' => '2016-12-28T18:55:19+00:00',
+                'lastmod' => '2016-12-28T18:57:19+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/posts/category/sub-sub-post-category',
-                'lastmod' => '2016-12-28T18:55:19+00:00',
+                'lastmod' => '2016-12-28T18:56:19+00:00',
                 'priority' => '0.5',
             ],
             [
                 'loc' => 'http://localhost/post/second-post',
-                'lastmod' => '2016-12-28T18:55:19+00:00',
+                'lastmod' => '2016-12-28T18:56:19+00:00',
                 'priority' => '0.5',
             ],
             [
