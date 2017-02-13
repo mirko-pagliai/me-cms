@@ -22,11 +22,11 @@
  */
 
 //Renders menus for MeCms
-echo $this->MenuBuilder->renderAsCollapse(MECMS);
+echo $this->MenuBuilder->renderAsCollapse(ME_CMS);
 
 //Renders menus for each plugin
 foreach (\MeCms\Core\Plugin::all([
-    'exclude' => [MECMS, METOOLS, 'Assets', 'MysqlBackup', 'Thumber'],
+    'exclude' => [ME_CMS, METOOLS, 'Assets', 'MysqlBackup', 'Thumber'],
     ]) as $plugin) {
     $menus = $this->MenuBuilder->renderAsCollapse($plugin);
 

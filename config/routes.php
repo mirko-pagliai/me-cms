@@ -25,7 +25,7 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('DashedRoute');
 Router::extensions('rss');
 
-Router::scope('/', ['plugin' => MECMS], function ($routes) {
+Router::scope('/', ['plugin' => ME_CMS], function ($routes) {
     //Requires other routes
     require 'routes' . DS . 'banners.php';
     require 'routes' . DS . 'pages.php';
@@ -51,7 +51,7 @@ Router::scope('/', ['plugin' => MECMS], function ($routes) {
     });
 });
 
-Router::plugin(MECMS, ['path' => '/me-cms'], function ($routes) {
+Router::plugin(ME_CMS, ['path' => '/me-cms'], function ($routes) {
     //Admin routes
     $routes->prefix(ADMIN_PREFIX, function ($routes) {
         //Route `/me-cms/admin`

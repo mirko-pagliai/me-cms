@@ -31,9 +31,9 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
- * PostsCellTest class
+ * PostsWidgetsCellTest class
  */
-class PostsCellTest extends TestCase
+class PostsWidgetsCellTest extends TestCase
 {
     /**
      * @var \MeCms\Model\Table\PostsTable
@@ -86,7 +86,7 @@ class PostsCellTest extends TestCase
      */
     public function testCategories()
     {
-        $widget = MECMS . '.Posts::categories';
+        $widget = ME_CMS . '.Posts::categories';
 
         $result = $this->Widget->widget($widget)->render();
 
@@ -168,7 +168,7 @@ class PostsCellTest extends TestCase
      */
     public function testLatest()
     {
-        $widget = MECMS . '.Posts::latest';
+        $widget = ME_CMS . '.Posts::latest';
 
         //Tries with a limit of 1
         $result = $this->Widget->widget($widget, ['limit' => 1])->render();
@@ -249,7 +249,7 @@ class PostsCellTest extends TestCase
      */
     public function testMonths()
     {
-        $widget = MECMS . '.Posts::months';
+        $widget = ME_CMS . '.Posts::months';
 
         $result = $this->Widget->widget($widget)->render();
 
@@ -336,7 +336,7 @@ class PostsCellTest extends TestCase
      */
     public function testSearch()
     {
-        $widget = MECMS . '.Posts::search';
+        $widget = ME_CMS . '.Posts::search';
 
         $result = $this->Widget->widget($widget)->render();
 

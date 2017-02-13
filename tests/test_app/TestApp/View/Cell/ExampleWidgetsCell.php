@@ -3,7 +3,7 @@ namespace App\View\Cell;
 
 use Cake\View\Cell;
 
-class ExampleCell extends Cell
+class ExampleWidgetsCell extends Cell
 {
     public function display()
     {

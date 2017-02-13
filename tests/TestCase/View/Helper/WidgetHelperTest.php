@@ -152,19 +152,19 @@ class WidgetHelperTest extends TestCase
         $this->assertEquals('display', $cell->action);
         $this->assertEquals([], $cell->args);
         $this->assertEquals('display', $cell->template);
-        $this->assertInstanceOf('App\View\Cell\ExampleCell', $cell);
+        $this->assertInstanceOf('App\View\Cell\ExampleWidgetsCell', $cell);
 
         $cell = $this->Widget->widget('Example', ['example of value']);
         $this->assertEquals('display', $cell->action);
         $this->assertEquals([0 => 'example of value'], $cell->args);
         $this->assertEquals('display', $cell->template);
-        $this->assertInstanceOf('App\View\Cell\ExampleCell', $cell);
+        $this->assertInstanceOf('App\View\Cell\ExampleWidgetsCell', $cell);
 
         //From plugin
         $cell = $this->Widget->widget('TestPlugin.PluginExample');
         $this->assertEquals('display', $cell->action);
         $this->assertEquals([], $cell->args);
         $this->assertEquals('display', $cell->template);
-        $this->assertInstanceOf('TestPlugin\View\Cell\PluginExampleCell', $cell);
+        $this->assertInstanceOf('TestPlugin\View\Cell\PluginExampleWidgetsCell', $cell);
     }
 }

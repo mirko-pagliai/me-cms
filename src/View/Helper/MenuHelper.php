@@ -54,13 +54,13 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List posts'), [
             'controller' => 'Posts',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Add post'), [
             'controller' => 'Posts',
             'action' => 'add',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -69,13 +69,13 @@ class MenuHelper extends Helper
             $menu[] = $this->Html->link(__d('me_cms', 'List categories'), [
                 'controller' => 'PostsCategories',
                 'action' => 'index',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
                 'controller' => 'PostsCategories',
                 'action' => 'add',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
         }
@@ -83,7 +83,7 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List tags'), [
             'controller' => 'PostsTags',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -101,7 +101,7 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List pages'), [
             'controller' => 'Pages',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -110,19 +110,19 @@ class MenuHelper extends Helper
             $menu[] = $this->Html->link(__d('me_cms', 'Add page'), [
                 'controller' => 'Pages',
                 'action' => 'add',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'List categories'), [
                 'controller' => 'PagesCategories',
                 'action' => 'index',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add category'), [
                 'controller' => 'PagesCategories',
                 'action' => 'add',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
         }
@@ -130,7 +130,7 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List static pages'), [
             'controller' => 'Pages',
             'action' => 'indexStatics',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -147,25 +147,25 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List photos'), [
             'controller' => 'Photos',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Upload photos'), [
             'controller' => 'Photos',
             'action' => 'upload',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'List albums'), [
             'controller' => 'PhotosAlbums',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Add album'), [
             'controller' => 'PhotosAlbums',
             'action' => 'add',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -188,13 +188,13 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List banners'), [
             'controller' => 'Banners',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Upload banners'), [
             'controller' => 'Banners',
             'action' => 'upload',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -203,13 +203,13 @@ class MenuHelper extends Helper
             $menu[] = $this->Html->link(__d('me_cms', 'List positions'), [
                 'controller' => 'BannersPositions',
                 'action' => 'index',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add position'), [
                 'controller' => 'BannersPositions',
                 'action' => 'add',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
         }
@@ -233,13 +233,13 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List users'), [
             'controller' => 'Users',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Add user'), [
             'controller' => 'Users',
             'action' => 'add',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -248,13 +248,13 @@ class MenuHelper extends Helper
             $menu[] = $this->Html->link(__d('me_cms', 'List groups'), [
                 'controller' => 'UsersGroups',
                 'action' => 'index',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
             $menu[] = $this->Html->link(__d('me_cms', 'Add group'), [
                 'controller' => 'UsersGroups',
                 'action' => 'add',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
         }
@@ -277,13 +277,13 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'List backups'), [
             'controller' => 'Backups',
             'action' => 'index',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Add backup'), [
             'controller' => 'Backups',
             'action' => 'add',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -306,7 +306,7 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'Temporary files'), [
             'controller' => 'Systems',
             'action' => 'tmpViewer',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 
@@ -315,7 +315,7 @@ class MenuHelper extends Helper
             $menu[] = $this->Html->link(__d('me_cms', 'Log management'), [
                 'controller' => 'Logs',
                 'action' => 'index',
-                'plugin' => MECMS,
+                'plugin' => ME_CMS,
                 'prefix' => ADMIN_PREFIX,
             ]);
         }
@@ -323,19 +323,19 @@ class MenuHelper extends Helper
         $menu[] = $this->Html->link(__d('me_cms', 'System checkup'), [
             'controller' => 'Systems',
             'action' => 'checkup',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Media browser'), [
             'controller' => 'Systems',
             'action' => 'browser',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
         $menu[] = $this->Html->link(__d('me_cms', 'Changelogs'), [
             'controller' => 'Systems',
             'action' => 'changelogs',
-            'plugin' => MECMS,
+            'plugin' => ME_CMS,
             'prefix' => ADMIN_PREFIX,
         ]);
 

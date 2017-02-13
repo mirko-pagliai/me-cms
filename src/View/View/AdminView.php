@@ -22,12 +22,12 @@
  */
 namespace MeCms\View\View;
 
-use MeCms\View\View\BaseView;
+use MeCms\View\View;
 
 /**
  * Application view class for admin views
  */
-class AdminView extends BaseView
+class AdminView extends View
 {
     /**
      * The name of the layout file to render the template inside of
@@ -39,7 +39,7 @@ class AdminView extends BaseView
      * Initialization hook method
      * @return void
      * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_initialize
-     * @uses MeCms\View\View\BaseView::initialize()
+     * @uses MeCms\View\View::initialize()
      */
     public function initialize()
     {

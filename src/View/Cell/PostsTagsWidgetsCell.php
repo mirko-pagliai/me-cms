@@ -26,9 +26,9 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\View\Cell;
 
 /**
- * PostsTags cell
+ * PostsTagsWidgets cell
  */
-class PostsTagsCell extends Cell
+class PostsTagsWidgetsCell extends Cell
 {
     /**
      * Constructor. It loads the model
@@ -87,6 +87,8 @@ class PostsTagsCell extends Cell
         $shuffle = true,
         $style = ['maxFont' => 40, 'minFont' => 12]
     ) {
+        $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
+
         //Returns on tags index
         if ($this->request->isUrl(['_name' => 'postsTags'])) {
             return;
@@ -149,9 +151,5 @@ class PostsTagsCell extends Cell
         $tags = $tags->toArray();
 
         $this->set(compact('prefix', 'tags'));
-
-        if (in_array($render, ['form', 'list'])) {
-            $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
-        }
     }
 }
