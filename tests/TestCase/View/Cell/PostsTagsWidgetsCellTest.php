@@ -77,7 +77,7 @@ class PostsTagsWidgetsCellTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        
+
         Cache::clearAll();
 
         $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell();
