@@ -86,7 +86,7 @@ class PhotosWidgetsCellTest extends TestCase
      */
     public function testAlbums()
     {
-        $widget = MECMS . '.Photos::albums';
+        $widget = ME_CMS . '.Photos::albums';
 
         $result = $this->Widget->widget($widget)->render();
 
@@ -168,7 +168,7 @@ class PhotosWidgetsCellTest extends TestCase
      */
     public function testLatest()
     {
-        $widget = MECMS . '.Photos::latest';
+        $widget = ME_CMS . '.Photos::latest';
 
         $result = $this->Widget->widget($widget)->render();
 
@@ -229,7 +229,7 @@ class PhotosWidgetsCellTest extends TestCase
      */
     public function testRandom()
     {
-        $widget = MECMS . '.Photos::random';
+        $widget = ME_CMS . '.Photos::random';
 
         $result = $this->Widget->widget($widget)->render();
 

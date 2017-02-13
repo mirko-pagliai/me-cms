@@ -143,7 +143,7 @@ class PostsTagsWidgetsCellTest extends TestCase
      */
     public function testPopular()
     {
-        $widget = MECMS . '.PostsTags::popular';
+        $widget = ME_CMS . '.PostsTags::popular';
 
         //Tries using the style (`maxFont` and `minFont`)
         $result = $this->Widget->widget($widget, $this->options)->render();
@@ -335,7 +335,7 @@ class PostsTagsWidgetsCellTest extends TestCase
      */
     public function testPopularWithTagsSamePostCount()
     {
-        $widget = MECMS . '.PostsTags::popular';
+        $widget = ME_CMS . '.PostsTags::popular';
 
         //Adds some tag, with the same `post_count`
         foreach ([

@@ -49,11 +49,11 @@ class Plugin extends BasePlugin
         $plugins = parent::all($options);
 
         if ($options['order']) {
-            $key = array_search(MECMS, $plugins);
+            $key = array_search(ME_CMS, $plugins);
 
             if ($key) {
                 unset($plugins[$key]);
-                array_unshift($plugins, MECMS);
+                array_unshift($plugins, ME_CMS);
             }
         }
 

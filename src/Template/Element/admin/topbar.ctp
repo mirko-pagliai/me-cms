@@ -72,14 +72,14 @@
                         echo $this->Html->link(__d('me_cms', 'Last login'), [
                             'controller' => 'Users',
                             'action' => 'lastLogin',
-                            'plugin' => MECMS,
+                            'plugin' => ME_CMS,
                         ]);
                     }
 
                     echo $this->Html->link(__d('me_cms', 'Change password'), [
                         'controller' => 'Users',
                         'action' => 'changePassword',
-                        'plugin' => MECMS,
+                        'plugin' => ME_CMS,
                     ]);
 
                     echo $this->Html->link(__d('me_cms', 'Logout'), [

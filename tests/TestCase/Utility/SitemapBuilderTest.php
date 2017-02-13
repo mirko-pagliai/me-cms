@@ -70,7 +70,7 @@ class SitemapBuilderTest extends TestCase
     {
         $object = new SitemapBuilder;
 
-        $methods = $this->invokeMethod($object, '_getMethods', [MECMS]);
+        $methods = $this->invokeMethod($object, '_getMethods', [ME_CMS]);
         $this->assertEquals([
             [
                 'class' => '\MeCms\Utility\Sitemap',

@@ -76,7 +76,7 @@ class ViewTest extends TestCase
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
         Plugin::load($theme);
-        Configure::write(MECMS . '.default.theme', $theme);
+        Configure::write(ME_CMS . '.default.theme', $theme);
 
         //Reloads the View
         $this->View = new View(new Request);
@@ -92,7 +92,7 @@ class ViewTest extends TestCase
     {
         //Writes the main title on configuration
         $mainTitle = 'main title';
-        Configure::write(MECMS . '.main.title', $mainTitle);
+        Configure::write(ME_CMS . '.main.title', $mainTitle);
 
         $result = $this->invokeMethod($this->View, '_getTitleForLayout');
         $this->assertEquals($result, $mainTitle);

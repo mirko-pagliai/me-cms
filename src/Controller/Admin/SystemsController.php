@@ -155,11 +155,11 @@ class SystemsController extends AppController
 
         $checkup['plugins'] = [
             'cakephp' => Configure::version(),
-            'mecms' => trim(file_get_contents(Plugin::path(MECMS, 'version'))),
+            'mecms' => trim(file_get_contents(Plugin::path(ME_CMS, 'version'))),
         ];
 
         //Gets plugins versions
-        foreach (Plugin::all(['exclude' => MECMS]) as $plugin) {
+        foreach (Plugin::all(['exclude' => ME_CMS]) as $plugin) {
             $file = Plugin::path($plugin, 'version', true);
 
             if ($file) {

@@ -86,7 +86,7 @@ class PagesWidgetsCellTest extends TestCase
      */
     public function testCategories()
     {
-        $widget = MECMS . '.Pages::categories';
+        $widget = ME_CMS . '.Pages::categories';
 
         $result = $this->Widget->widget($widget)->render();
 
@@ -168,7 +168,7 @@ class PagesWidgetsCellTest extends TestCase
      */
     public function testPages()
     {
-        $widget = MECMS . '.Pages::pages';
+        $widget = ME_CMS . '.Pages::pages';
 
         $result = $this->Widget->widget($widget)->render();
 

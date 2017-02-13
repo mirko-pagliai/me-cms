@@ -8,7 +8,8 @@
     and the template directory;
 * added the `HtmlWidgetCell` class, with `display()` method. This method only
     renders a template file;
-* the `BaseView` class has been renamed as `View`. This creates less confusion.
+* the `BaseView` class has been renamed as `View`. This creates less confusion;
+* renamed `MECMS` as `ME_CMS` constant.
 
 ## 2.14 branch
 ### 2.14.16

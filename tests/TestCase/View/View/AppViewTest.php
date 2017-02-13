@@ -48,10 +48,10 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
 
         //Disable any theme
-        Configure::write(MECMS . '.default.theme', false);
+        Configure::write(ME_CMS . '.default.theme', false);
 
         $this->View = new View(new Request);
-        $this->View->plugin = MECMS;
+        $this->View->plugin = ME_CMS;
     }
 
     /**
@@ -74,10 +74,10 @@ class AppViewTest extends TestCase
     public function testSetBlocks()
     {
         //Writes some configuration values
-        Configure::write(MECMS . '.default.toolbar_color', '#ffffff');
-        Configure::write(MECMS . '.default.analytics', 'analytics-id');
-        Configure::write(MECMS . '.shareaholic.site_id', 'shareaholic-id');
-        Configure::write(MECMS . '.default.facebook_app_id', 'facebook-id');
+        Configure::write(ME_CMS . '.default.toolbar_color', '#ffffff');
+        Configure::write(ME_CMS . '.default.analytics', 'analytics-id');
+        Configure::write(ME_CMS . '.shareaholic.site_id', 'shareaholic-id');
+        Configure::write(ME_CMS . '.default.facebook_app_id', 'facebook-id');
 
         $result = $this->View->render(false);
 
@@ -143,7 +143,7 @@ class AppViewTest extends TestCase
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
         Plugin::load($theme);
-        Configure::write(MECMS . '.default.theme', $theme);
+        Configure::write(ME_CMS . '.default.theme', $theme);
 
         //Reloads the View
         $this->View = new View(new Request);
@@ -161,7 +161,7 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromApp()
     {
         //Creates a layout
-        $layoutFromApp = array_values(App::path('Template/Plugin/' . MECMS . '/Layout'))[0] . 'default.ctp';
+        $layoutFromApp = array_values(App::path('Template/Plugin/' . ME_CMS . '/Layout'))[0] . 'default.ctp';
         file_put_contents($layoutFromApp, 'This is a layout from app');
 
         $result = $this->View->render(false);
@@ -171,7 +171,7 @@ class AppViewTest extends TestCase
 
         $this->assertEquals('This is a layout from app', $result);
         $this->assertEquals('default', $this->View->layout());
-        $this->assertEquals(MECMS, $this->View->plugin);
+        $this->assertEquals(ME_CMS, $this->View->plugin);
         $this->assertEquals(null, $this->View->theme());
     }
 
