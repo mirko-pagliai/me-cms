@@ -79,8 +79,8 @@ class BaseUpdateShellTest extends TestCase
         $this->BaseUpdateShell = new BaseUpdateShell;
         $this->UpdateShell = new UpdateShell;
 
-        $this->out = new ConsoleOutput();
-        $this->err = new ConsoleOutput();
+        $this->out = new ConsoleOutput;
+        $this->err = new ConsoleOutput;
         $this->io = new ConsoleIo($this->out, $this->err);
         $this->io->level(2);
     }

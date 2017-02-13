@@ -76,6 +76,8 @@ class PostsTagsWidgetsCellTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+        
         Cache::clearAll();
 
         $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell();
@@ -337,7 +339,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         //Deletes all tags
         $this->Tags->deleteAll(['id >=' => 1]);
 
-        $widget = MECMS . '.PostsTags::popular';
+        $widget = ME_CMS . '.PostsTags::popular';
         $result = $this->Widget->widget($widget, $this->options)->render();
 
         $this->assertEmpty($result);
