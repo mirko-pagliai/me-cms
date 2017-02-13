@@ -70,11 +70,26 @@ class HtmlWidgetsCellTest extends TestCase
         $this->assertEquals('A custom widget', $result);
 
         $result = $this->Widget->widget($widget, ['template' => 'custom_html2'])->render();
-        $result = preg_replace('/(\s{2}|\n)/', null, $result);
-        $this->assertEquals('<div class="widget"><div class="widget-content"> A custom widget </div></div>', trim($result));
+        $expected = [
+            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget-content']],
+            'A custom widget',
+            '/div',
+            '/div',
+        ];
+        $this->assertHtml($expected, $result);
 
         $result = $this->Widget->widget($widget, ['template' => 'custom_html3'])->render();
-        $result = preg_replace('/(\s{2}|\n)/', null, $result);
-        $this->assertEquals('<div class="widget"> <h4 class="widget-title">Custom title</h4> <div class="widget-content"> A custom widget </div></div>', trim($result));
+        $expected = [
+            ['div' => ['class' => 'widget']],
+            'h4' => ['class' => 'widget-title'],
+            'Custom title',
+            '/h4',
+            ['div' => ['class' => 'widget-content']],
+            'A custom widget',
+            '/div',
+            '/div',
+        ];
+        $this->assertHtml($expected, $result);
     }
 }
