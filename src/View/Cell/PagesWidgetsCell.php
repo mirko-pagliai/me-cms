@@ -22,13 +22,12 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Cache\Cache;
 use Cake\View\Cell;
 
 /**
- * Photos cell
+ * PagesWidgets cell
  */
-class PhotosCell extends Cell
+class PagesWidgetsCell extends Cell
 {
     /**
      * Constructor
@@ -36,6 +35,7 @@ class PhotosCell extends Cell
      * @param \Cake\Network\Response $response The request to use in the cell
      * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
      * @param array $cellOptions Cell options to apply
+     * @return void
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
@@ -46,80 +46,52 @@ class PhotosCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel('MeCms.Photos');
+        $this->loadModel('MeCms.Pages');
     }
 
     /**
-     * Albums widget
+     * Categories widget
      * @param string $render Render type (`form` or `list`)
      * @return void
      */
-    public function albums($render = 'form')
+    public function categories($render = 'form')
     {
-        //Returns on albums index
-        if ($this->request->isUrl(['_name' => 'albums'])) {
+        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+
+        //Returns on categories index
+        if ($this->request->isUrl(['_name' => 'pagesCategories'])) {
             return;
         }
 
-        $albums = $this->Photos->Albums->find('active')
-            ->order([sprintf('%s.title', $this->Photos->Albums->alias()) => 'ASC'])
-            ->order(['title' => 'ASC'])
+        $categories = $this->Pages->Categories->find('active')
+            ->select(['title', 'slug', 'page_count'])
+            ->order([sprintf('%s.title', $this->Pages->Categories->alias()) => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_albums', $this->Photos->cache)
+            ->cache('widget_categories', $this->Pages->cache)
             ->toArray();
 
-        $this->set(compact('albums'));
-
-        if ($render === 'list') {
-            $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
-        }
+        $this->set(compact('categories'));
     }
 
     /**
-     * Latest widget
-     * @param int $limit Limit
+     * Pages list widget
      * @return void
      */
-    public function latest($limit = 1)
+    public function pages()
     {
-        //Returns on the same controllers
-        if ($this->request->isController(['Photos', 'PhotosAlbums'])) {
+        //Returns on pages index
+        if ($this->request->isUrl(['_name' => 'pagesCategories'])) {
             return;
         }
 
-        $photos = $this->Photos->find('active')
-            ->select(['album_id', 'filename'])
-            ->limit($limit)
-            ->order([
-                sprintf('%s.created', $this->Photos->alias()) => 'DESC',
-                sprintf('%s.id', $this->Photos->alias()) => 'DESC',
-            ])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
+        $pages = $this->Pages->find('active')
+            ->select(['title', 'slug'])
+            ->order([sprintf('%s.title', $this->Pages->alias()) => 'ASC'])
+            ->cache(sprintf('widget_list'), $this->Pages->cache)
             ->toArray();
 
-        $this->set(compact('photos'));
-    }
-
-    /**
-     * Random widget
-     * @param int $limit Limit
-     * @return void
-     */
-    public function random($limit = 1)
-    {
-        //Returns on the same controllers
-        if ($this->request->isController(['Photos', 'PhotosAlbums'])) {
-            return;
-        }
-
-        $photos = $this->Photos->find('active')
-            ->select(['album_id', 'filename'])
-            ->cache(sprintf('widget_random_%d', $limit), $this->Photos->cache)
-            ->sample($limit)
-            ->toArray();
-
-        $this->set(compact('photos'));
+        $this->set(compact('pages'));
     }
 }

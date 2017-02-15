@@ -20,16 +20,16 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\View\View;
+namespace MeCms\View;
 
-use App\View\AppView as AppView;
+use App\View\AppView;
 
 /**
- * Base application view class.
+ * Base view class.
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
  */
-class BaseView extends AppView
+class View extends AppView
 {
     /**
      * Title for layout.

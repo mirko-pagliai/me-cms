@@ -1,4 +1,16 @@
 # 2.x branch
+## 2.15 branch
+### 2.15.0
+* the layout is exclusively controlled by CakePHP. So, to override the layout
+    provided by MeCms, you have to use the 
+    `src/Template/Plugin/MeCms/Layout/default.ctp` file;
+* the cells that act as widgets now have "Widgets" in the name, for class files
+    and the template directory;
+* added the `HtmlWidgetCell` class, with `display()` method. This method only
+    renders a template file;
+* the `BaseView` class has been renamed as `View`. This creates less confusion;
+* renamed `MECMS` as `ME_CMS` constant.
+
 ## 2.14 branch
 ### 2.14.16
 * the whole of the widget code has been rewritten and improved, making it more

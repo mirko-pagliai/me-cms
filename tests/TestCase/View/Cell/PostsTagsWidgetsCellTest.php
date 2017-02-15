@@ -27,22 +27,22 @@ use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
-use MeCms\View\Cell\PostsTagsCell;
+use MeCms\View\Cell\PostsTagsWidgetsCell;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 use Reflection\ReflectionTrait;
 
 /**
- * PostsTagsCellTest class
+ * PostsTagsWidgetsCellTest class
  */
-class PostsTagsCellTest extends TestCase
+class PostsTagsWidgetsCellTest extends TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @var \MeCms\View\Cell\PostsTagsCell
+     * @var \MeCms\View\Cell\PostsTagsWidgetsCell
      */
-    protected $PostsTagsCell;
+    protected $PostsTagsWidgetsCell;
 
     /**
      * @var \MeCms\Model\Table\TagsTable
@@ -76,9 +76,11 @@ class PostsTagsCellTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         Cache::clearAll();
 
-        $this->PostsTagsCell = new PostsTagsCell();
+        $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell();
 
         $this->Tags = TableRegistry::get('MeCms.Tags');
 
@@ -104,7 +106,7 @@ class PostsTagsCellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->PostsTagsCell, $this->Tags, $this->Widget, $this->options);
+        unset($this->PostsTagsWidgetsCell, $this->Tags, $this->Widget, $this->options);
     }
 
     /**
@@ -113,16 +115,16 @@ class PostsTagsCellTest extends TestCase
      */
     public function testGetFontSizes()
     {
-        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [[]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [[]]);
         $this->assertEquals([40, 12], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['maxFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 20]]);
         $this->assertEquals([20, 12], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['minFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['minFont' => 20]]);
         $this->assertEquals([40, 20], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
         $this->assertEquals([30, 20], $result);
     }
 
@@ -134,7 +136,7 @@ class PostsTagsCellTest extends TestCase
      */
     public function testGetFontSizesWithInvalidValues()
     {
-        $this->invokeMethod($this->PostsTagsCell, '_getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
+        $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
     /**
@@ -143,7 +145,7 @@ class PostsTagsCellTest extends TestCase
      */
     public function testPopular()
     {
-        $widget = MECMS . '.PostsTags::popular';
+        $widget = ME_CMS . '.PostsTags::popular';
 
         //Tries using the style (`maxFont` and `minFont`)
         $result = $this->Widget->widget($widget, $this->options)->render();
@@ -329,13 +331,28 @@ class PostsTagsCellTest extends TestCase
     }
 
     /**
+     * Test for `popular()` method, with no tags
+     * @test
+     */
+    public function testPopularWithNoTags()
+    {
+        //Deletes all tags
+        $this->Tags->deleteAll(['id >=' => 1]);
+
+        $widget = ME_CMS . '.PostsTags::popular';
+        $result = $this->Widget->widget($widget, $this->options)->render();
+
+        $this->assertEmpty($result);
+    }
+
+    /**
      * Test for `popular()` method, with tags that have the same `post_count`
      *  value
      * @test
      */
     public function testPopularWithTagsSamePostCount()
     {
-        $widget = MECMS . '.PostsTags::popular';
+        $widget = ME_CMS . '.PostsTags::popular';
 
         //Adds some tag, with the same `post_count`
         foreach ([

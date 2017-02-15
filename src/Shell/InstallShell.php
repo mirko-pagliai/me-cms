@@ -78,7 +78,7 @@ class InstallShell extends BaseInstallShell
     protected function _getOtherPlugins()
     {
         //Gets all plugins
-        $plugins = Plugin::all(['exclude' => [METOOLS, MECMS], 'order' => false]);
+        $plugins = Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]);
 
         //Gets only the plugins that have the `InstallShell` class
         $plugins = array_map(function ($plugin) {

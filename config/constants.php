@@ -47,8 +47,8 @@ if (!defined('LOGIN_RECORDS')) {
 }
 
 //Sets the default MeCms name
-if (!defined('MECMS')) {
-    define('MECMS', 'MeCms');
+if (!defined('ME_CMS')) {
+    define('ME_CMS', 'MeCms');
 }
 
 //Sets the default photos directory

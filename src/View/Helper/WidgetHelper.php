@@ -89,10 +89,17 @@ class WidgetHelper extends Helper
      * @param array $data Additional arguments for cell method
      * @param array $options Options for Cell's constructor
      * @return Cake\View\Cell The cell instance
-     * @uses Cake\View\CellTrait::cell()
      */
     public function widget($name, array $data = [], array $options = [])
     {
+        $parts = explode('::', $name);
+
+        $name = $parts[0] . 'Widgets';
+
+        if (!empty($parts[1])) {
+            $name = sprintf('%s::%s', $name, $parts[1]);
+        }
+
         return $this->_View->cell($name, $data, $options);
     }
 }

@@ -19,44 +19,24 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @since       2.15.0
  */
-namespace MeCms\Core;
+namespace MeCms\View\Cell;
 
-use MeTools\Core\Plugin as BasePlugin;
+use Cake\View\Cell;
 
 /**
- * An utility to handle plugins.
- *
- * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.Core.Plugin.html Plugin}.
+ * HtmlWidgets cell
  */
-class Plugin extends BasePlugin
+class HtmlWidgetsCell extends Cell
 {
     /**
-     * Gets all loaded plugins.
-     *
-     * Available options are:
-     *  - `core`, if `false` exclude the core plugins;
-     *  - `exclude`, a plugin as string or an array of plugins to be excluded;
-     *  - `order`, if `true` the plugins will be sorted.
-     * @param array $options Options
-     * @return array Plugins
-     * @uses MeTools\Core\Plugin::all()
+     * Display method. It only renders a template file
+     * @param string $template Template name
+     * @return void
      */
-    public static function all(array $options = [])
+    public function display($template)
     {
-        $options = array_merge(['order' => true], $options);
-
-        $plugins = parent::all($options);
-
-        if ($options['order']) {
-            $key = array_search(ME_CMS, $plugins);
-
-            if ($key) {
-                unset($plugins[$key]);
-                array_unshift($plugins, ME_CMS);
-            }
-        }
-
-        return $plugins;
+        $this->viewBuilder()->template($template);
     }
 }

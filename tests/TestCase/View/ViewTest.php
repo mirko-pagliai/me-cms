@@ -20,19 +20,19 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Test\TestCase\View\View;
+namespace MeCms\Test\TestCase\View;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
-use MeCms\View\View\BaseView as View;
+use MeCms\View\View;
 use Reflection\ReflectionTrait;
 
 /**
- * BaseViewTest class
+ * ViewTest class
  */
-class BaseViewTest extends TestCase
+class ViewTest extends TestCase
 {
     use ReflectionTrait;
 
@@ -76,7 +76,7 @@ class BaseViewTest extends TestCase
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
         Plugin::load($theme);
-        Configure::write(MECMS . '.default.theme', $theme);
+        Configure::write(ME_CMS . '.default.theme', $theme);
 
         //Reloads the View
         $this->View = new View(new Request);
@@ -92,7 +92,7 @@ class BaseViewTest extends TestCase
     {
         //Writes the main title on configuration
         $mainTitle = 'main title';
-        Configure::write(MECMS . '.main.title', $mainTitle);
+        Configure::write(ME_CMS . '.main.title', $mainTitle);
 
         $result = $this->invokeMethod($this->View, '_getTitleForLayout');
         $this->assertEquals($result, $mainTitle);

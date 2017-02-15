@@ -69,7 +69,7 @@ class MenuBuilderHelperTest extends TestCase
      */
     public function testGetMenuMethods()
     {
-        $result = $this->MenuBuilder->getMenuMethods(MECMS);
+        $result = $this->MenuBuilder->getMenuMethods(ME_CMS);
         $expected = [
             'posts',
             'pages',
@@ -102,7 +102,7 @@ class MenuBuilderHelperTest extends TestCase
      */
     public function testGenerate()
     {
-        $result = $this->MenuBuilder->generate(MECMS);
+        $result = $this->MenuBuilder->generate(ME_CMS);
 
         //Checks array keys (menu names)
         $this->assertEquals(['MeCms.posts', 'MeCms.pages', 'MeCms.photos'], array_keys($result));

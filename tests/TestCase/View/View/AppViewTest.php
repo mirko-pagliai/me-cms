@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\View\View;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
@@ -46,7 +47,11 @@ class AppViewTest extends TestCase
         //Disable widgets
         Configure::write('Widgets.general', []);
 
+        //Disable any theme
+        Configure::write(ME_CMS . '.default.theme', false);
+
         $this->View = new View(new Request);
+        $this->View->plugin = ME_CMS;
     }
 
     /**
@@ -69,10 +74,10 @@ class AppViewTest extends TestCase
     public function testSetBlocks()
     {
         //Writes some configuration values
-        Configure::write('MeCms.default.toolbar_color', '#ffffff');
-        Configure::write('MeCms.default.analytics', 'analytics-id');
-        Configure::write('MeCms.shareaholic.site_id', 'shareaholic-id');
-        Configure::write('MeCms.default.facebook_app_id', 'facebook-id');
+        Configure::write(ME_CMS . '.default.toolbar_color', '#ffffff');
+        Configure::write(ME_CMS . '.default.analytics', 'analytics-id');
+        Configure::write(ME_CMS . '.shareaholic.site_id', 'shareaholic-id');
+        Configure::write(ME_CMS . '.default.facebook_app_id', 'facebook-id');
 
         $result = $this->View->render(false);
 
@@ -126,7 +131,6 @@ class AppViewTest extends TestCase
         $result = $this->View->render(false);
         $this->assertNotEmpty($result);
         $this->assertEquals('default', $this->View->layout());
-        $this->assertEquals(MECMS, $this->View->plugin);
         $this->assertEquals(null, $this->View->theme());
     }
 
@@ -139,7 +143,7 @@ class AppViewTest extends TestCase
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
         Plugin::load($theme);
-        Configure::write(MECMS . '.default.theme', $theme);
+        Configure::write(ME_CMS . '.default.theme', $theme);
 
         //Reloads the View
         $this->View = new View(new Request);
@@ -147,8 +151,28 @@ class AppViewTest extends TestCase
         $result = $this->View->render(false);
         $this->assertEquals('This is a layout from TestPlugin', $result);
         $this->assertEquals('default', $this->View->layout());
-        $this->assertEquals($theme, $this->View->plugin);
         $this->assertEquals($theme, $this->View->theme());
+    }
+
+    /**
+     * Tests for `renderLayout()` method, with a layout from the app
+     * @test
+     */
+    public function testRenderLayoutFromApp()
+    {
+        //Creates a layout
+        $layoutFromApp = array_values(App::path('Template/Plugin/' . ME_CMS . '/Layout'))[0] . 'default.ctp';
+        file_put_contents($layoutFromApp, 'This is a layout from app');
+
+        $result = $this->View->render(false);
+
+        //@codingStandardsIgnoreLine
+        @unlink($layoutFromApp);
+
+        $this->assertEquals('This is a layout from app', $result);
+        $this->assertEquals('default', $this->View->layout());
+        $this->assertEquals(ME_CMS, $this->View->plugin);
+        $this->assertEquals(null, $this->View->theme());
     }
 
     /**

@@ -31,9 +31,9 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
- * PagesCellTest class
+ * PagesWidgetsCellTest class
  */
-class PagesCellTest extends TestCase
+class PagesWidgetsCellTest extends TestCase
 {
     /**
      * @var \MeCms\Model\Table\PagesTable
@@ -86,7 +86,7 @@ class PagesCellTest extends TestCase
      */
     public function testCategories()
     {
-        $widget = MECMS . '.Pages::categories';
+        $widget = ME_CMS . '.Pages::categories';
 
         $result = $this->Widget->widget($widget)->render();
 
@@ -168,7 +168,7 @@ class PagesCellTest extends TestCase
      */
     public function testPages()
     {
-        $widget = MECMS . '.Pages::pages';
+        $widget = ME_CMS . '.Pages::pages';
 
         $result = $this->Widget->widget($widget)->render();
 

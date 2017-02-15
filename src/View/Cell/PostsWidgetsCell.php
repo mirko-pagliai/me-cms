@@ -26,9 +26,9 @@ use Cake\I18n\FrozenDate;
 use Cake\View\Cell;
 
 /**
- * Posts cell
+ * PostsWidgets cell
  */
-class PostsCell extends Cell
+class PostsWidgetsCell extends Cell
 {
     /**
      * Constructor. It loads the model
@@ -56,6 +56,8 @@ class PostsCell extends Cell
      */
     public function categories($render = 'form')
     {
+        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'postsCategories'])) {
             return;
@@ -71,10 +73,6 @@ class PostsCell extends Cell
             ->toArray();
 
         $this->set(compact('categories'));
-
-        if ($render === 'list') {
-            $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
-        }
     }
 
     /**
@@ -106,6 +104,8 @@ class PostsCell extends Cell
      */
     public function months($render = 'form')
     {
+        $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {
             return;
@@ -131,10 +131,6 @@ class PostsCell extends Cell
             ->toArray();
 
         $this->set(compact('months'));
-
-        if ($render === 'list') {
-            $this->viewBuilder()->template(sprintf('months_as_%s', $render));
-        }
     }
 
     /**
