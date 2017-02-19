@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.15 branch
+### 2.15.1
+* updated for CakePHP 3.4.
+
 ### 2.15.0
 * the layout is exclusively controlled by CakePHP. So, to override the layout
     provided by MeCms, you have to use the 
