@@ -25,6 +25,7 @@ namespace MeCms\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\UserValidator;
 
 /**
  * Users model
@@ -198,7 +199,7 @@ class UsersTable extends AppTable
      */
     public function validationDefault(\Cake\Validation\Validator $validator)
     {
-        return new \MeCms\Model\Validation\UserValidator;
+        return new UserValidator;
     }
 
     /**
@@ -209,7 +210,7 @@ class UsersTable extends AppTable
      */
     public function validationNotUnique(\Cake\Validation\Validator $validator)
     {
-        $validator = new \MeCms\Model\Validation\UserValidator;
+        $validator = new UserValidator;
 
         //Username and email don't have to be unique
         $validator->remove('username', 'unique')->remove('email', 'unique');
@@ -230,9 +231,9 @@ class UsersTable extends AppTable
      */
     public function validationEmptyPassword(\Cake\Validation\Validator $validator)
     {
-        $validator = new \MeCms\Model\Validation\UserValidator;
+        $validator = new UserValidator;
 
-        //Allow empty passwords
+        //Allows empty passwords
         $validator->allowEmpty('password');
         $validator->allowEmpty('password_repeat');
 
