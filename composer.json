@@ -28,9 +28,9 @@
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7|^6.0",
         "cakephp/cakephp-codesniffer": "2.*",
-        "mirko-pagliai/reflection": "^1.0"
+        "mirko-pagliai/reflection": "^1.0",
+        "phpunit/phpunit": "^5.7|^6.0"
     },
     "autoload": {
         "psr-4": {
