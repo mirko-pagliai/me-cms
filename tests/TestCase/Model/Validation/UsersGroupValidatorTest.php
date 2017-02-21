@@ -73,33 +73,25 @@ class UsersGroupValidatorTest extends TestCase
      */
     public function testValidationForName()
     {
-        $errors = $this->UsersGroups->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['name'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
         }
 
         foreach (['ab', str_repeat('a', 101)] as $value) {
             $this->example['name'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->errors();
             $this->assertEquals([
-                'name' => [
-                    'lengthBetween' => 'Must be between 3 and 100 chars',
-                ],
-            ], $errors);
+                'name' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
+            ], $this->UsersGroups->newEntity($this->example)->errors());
         }
 
         foreach (['Abc', 'ab1', 'ab-c', 'ab$'] as $value) {
             $this->example['name'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->errors();
             $this->assertEquals([
-                'name' => [
-                    'valid' => 'Allowed chars: lowercase letters',
-                ],
-            ], $errors);
+                'name' => ['valid' => 'Allowed chars: lowercase letters'],
+            ], $this->UsersGroups->newEntity($this->example)->errors());
         }
     }
 
@@ -109,23 +101,18 @@ class UsersGroupValidatorTest extends TestCase
      */
     public function testValidationForLabel()
     {
-        $errors = $this->UsersGroups->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['label'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
         }
 
         foreach (['ab', str_repeat('a', 101)] as $value) {
             $this->example['label'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->errors();
             $this->assertEquals([
-                'label' => [
-                    'lengthBetween' => 'Must be between 3 and 100 chars',
-                ],
-            ], $errors);
+                'label' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
+            ], $this->UsersGroups->newEntity($this->example)->errors());
         }
     }
 }

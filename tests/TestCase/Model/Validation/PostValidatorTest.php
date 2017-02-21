@@ -77,16 +77,16 @@ class PostValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->Posts->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Posts->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->Posts->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->Posts->newEntity($copy)->errors());
         }
     }
 
@@ -97,8 +97,9 @@ class PostValidatorTest extends TestCase
     public function testValidationForCategoryId()
     {
         $this->example['category_id'] = 'string';
-        $errors = $this->Posts->newEntity($this->example)->errors();
-        $this->assertEquals(['category_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'category_id' => ['naturalNumber' => 'You have to select a valid option'],
+        ], $this->Posts->newEntity($this->example)->errors());
     }
 
     /**

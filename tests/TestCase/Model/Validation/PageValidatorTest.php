@@ -76,16 +76,16 @@ class PageValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->Pages->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Pages->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->Pages->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->Pages->newEntity($copy)->errors());
         }
     }
 
@@ -96,7 +96,8 @@ class PageValidatorTest extends TestCase
     public function testValidationForCategoryId()
     {
         $this->example['category_id'] = 'string';
-        $errors = $this->Pages->newEntity($this->example)->errors();
-        $this->assertEquals(['category_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'category_id' => ['naturalNumber' => 'You have to select a valid option'],
+        ], $this->Pages->newEntity($this->example)->errors());
     }
 }

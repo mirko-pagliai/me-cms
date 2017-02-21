@@ -73,16 +73,16 @@ class BannersPositionValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->BannersPositions->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->BannersPositions->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->BannersPositions->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->BannersPositions->newEntity($copy)->errors());
         }
     }
 
@@ -92,18 +92,16 @@ class BannersPositionValidatorTest extends TestCase
      */
     public function testValidatorForTitle()
     {
-        $this->example['title'] = 'ab';
-        $errors = $this->BannersPositions->newEntity($this->example)->errors();
-        $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
-
-        $this->example['title'] = str_repeat('a', 101);
-        $errors = $this->BannersPositions->newEntity($this->example)->errors();
-        $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
+        foreach (['ab', str_repeat('a', 101)] as $value) {
+            $this->example['title'] = $value;
+            $this->assertEquals([
+                'title' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
+            ], $this->BannersPositions->newEntity($this->example)->errors());
+        }
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['title'] = $value;
-            $errors = $this->BannersPositions->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->BannersPositions->newEntity($this->example)->errors());
         }
     }
 }

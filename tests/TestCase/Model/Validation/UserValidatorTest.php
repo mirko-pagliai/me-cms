@@ -80,8 +80,7 @@ class UserValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Users->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             if ($key === 'password') {
@@ -92,8 +91,9 @@ class UserValidatorTest extends TestCase
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->Users->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->Users->newEntity($copy)->errors());
         }
     }
 
@@ -104,8 +104,9 @@ class UserValidatorTest extends TestCase
     public function testValidationForGroupId()
     {
         $this->example['group_id'] = 'string';
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEquals(['group_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'group_id' => ['naturalNumber' => 'You have to select a valid option'],
+        ], $this->Users->newEntity($this->example)->errors());
     }
 
     /**
@@ -116,32 +117,31 @@ class UserValidatorTest extends TestCase
     {
         foreach (['abcd', str_repeat('a', 40)] as $value) {
             $this->example['username'] = $value;
-            $errors = $this->Users->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->Users->newEntity($this->example)->errors());
         }
 
         foreach (['ab1', str_repeat('a', 41)] as $value) {
             $this->example['username'] = $value;
-            $errors = $this->Users->newEntity($this->example)->errors();
-            $this->assertEquals(['username' => ['lengthBetween' => 'Must be between 4 and 40 chars']], $errors);
+            $this->assertEquals([
+                'username' => ['lengthBetween' => 'Must be between 4 and 40 chars'],
+            ], $this->Users->newEntity($this->example)->errors());
         }
 
         foreach (['Abcd', 'ab_cd', 'abcd$'] as $value) {
             $this->example['username'] = $value;
-            $errors = $this->Users->newEntity($this->example)->errors();
-            $this->assertEquals(['username' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash']], $errors);
+            $this->assertEquals([
+                'username' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash'],
+            ], $this->Users->newEntity($this->example)->errors());
         }
 
         $expected = ['username' => ['usernameNotReserved' => 'This value contains a reserved word']];
 
         foreach (['admin', 'manager', 'root', 'supervisor', 'moderator'] as $value) {
             $this->example['username'] = $value;
-            $errors = $this->Users->newEntity($this->example)->errors();
-            $this->assertEquals($expected, $errors);
+            $this->assertEquals($expected, $this->Users->newEntity($this->example)->errors());
 
             $this->example['username'] = 'a' . $value . 'b';
-            $errors = $this->Users->newEntity($this->example)->errors();
-            $this->assertEquals($expected, $errors);
+            $this->assertEquals($expected, $this->Users->newEntity($this->example)->errors());
         }
     }
 
@@ -152,12 +152,12 @@ class UserValidatorTest extends TestCase
     public function testValidationForEmailRepeat()
     {
         $this->example['email_repeat'] = $this->example['email'];
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Users->newEntity($this->example)->errors());
 
         $this->example['email_repeat'] = 'a_different_email@email.it';
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEquals(['email_repeat' => ['compareWith' => 'Email addresses don\'t match']], $errors);
+        $this->assertEquals([
+            'email_repeat' => ['compareWith' => 'Email addresses don\'t match'],
+        ], $this->Users->newEntity($this->example)->errors());
     }
 
     /**
@@ -167,25 +167,22 @@ class UserValidatorTest extends TestCase
     public function testValidationForPassword()
     {
         $this->example['password'] = $this->example['password_repeat'] = 'ab';
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEquals(['password' => ['minLength' => 'Must be at least 8 chars']], $errors);
+        $this->assertEquals([
+            'password' => ['minLength' => 'Must be at least 8 chars'],
+        ], $this->Users->newEntity($this->example)->errors());
 
         foreach (['abcdefgh', '12345678', '!!!!!!!!', 'abcd1234', 'abcd!!!!', '1234!!!!'] as $value) {
             $this->example['password'] = $this->example['password_repeat'] = $value;
-            $errors = $this->Users->newEntity($this->example)->errors();
             $this->assertEquals([
-                'password' => [
-                    'passwordIsStrong' => 'The password should contain letters, numbers and symbols',
-                ],
-            ], $errors);
+                'password' => ['passwordIsStrong' => 'The password should contain letters, numbers and symbols'],
+            ], $this->Users->newEntity($this->example)->errors());
         }
 
         unset($this->example['password'], $this->example['password_repeat']);
-        $errors = $this->Users->newEntity($this->example)->errors();
         $this->assertEquals([
             'password' => ['_required' => 'This field is required'],
             'password_repeat' => ['_required' => 'This field is required'],
-        ], $errors);
+        ], $this->Users->newEntity($this->example)->errors());
     }
 
     /**
@@ -195,12 +192,12 @@ class UserValidatorTest extends TestCase
     public function testValidationForPasswordRepeat()
     {
         $this->example['password_repeat'] = $this->example['password'];
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Users->newEntity($this->example)->errors());
 
         $this->example['password_repeat'] = 'aDifferentPassword';
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEquals(['password_repeat' => ['compareWith' => 'Passwords don\'t match']], $errors);
+        $this->assertEquals([
+            'password_repeat' => ['compareWith' => 'Passwords don\'t match']
+        ], $this->Users->newEntity($this->example)->errors());
     }
 
     /**
@@ -230,12 +227,12 @@ class UserValidatorTest extends TestCase
     {
         foreach ([true, false] as $value) {
             $this->example['banned'] = $value;
-            $errors = $this->Users->newEntity($this->example)->errors();
-            $this->assertEmpty($errors);
+            $this->assertEmpty($this->Users->newEntity($this->example)->errors());
         }
 
         $this->example['banned'] = 'string';
-        $errors = $this->Users->newEntity($this->example)->errors();
-        $this->assertEquals(['banned' => ['boolean' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'banned' => ['boolean' => 'You have to select a valid option'],
+        ], $this->Users->newEntity($this->example)->errors());
     }
 }
