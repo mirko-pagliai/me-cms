@@ -179,10 +179,9 @@ class PostsTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Posts->Tags);
         $this->assertEquals('post_id', $this->Posts->Tags->foreignKey());
         $this->assertEquals('tag_id', $this->Posts->Tags->targetForeignKey());
+        $this->assertEquals('posts_tags', $this->Posts->Tags->junction()->getTable());
         $this->assertEquals('MeCms.Tags', $this->Posts->Tags->className());
-
-        //Missing checks for `joinTable` and `through` options
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $this->assertEquals('MeCms.PostsTags', $this->Posts->Tags->getThrough());
 
         $this->assertTrue($this->Posts->hasBehavior('Timestamp'));
         $this->assertTrue($this->Posts->hasBehavior('CounterCache'));
