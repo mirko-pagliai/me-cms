@@ -203,20 +203,18 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Validation "not unique"
+     * Validation "do not require presence".
+     *
+     * This validator doesn't require the presence of fields.
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \MeCms\Model\Validation\UserValidator
-     * @see MeCms\Controller\UsersController::forgotPassword()
      */
-    public function validationNotUnique(\Cake\Validation\Validator $validator)
+    public function validationDoNotRequirePresence(\Cake\Validation\Validator $validator)
     {
         $validator = new UserValidator;
 
-        //Username and email don't have to be unique
-        $validator->remove('username', 'unique')->remove('email', 'unique');
-
         //No field is required
-        foreach ($validator->getIterator() as $field => $value) {
+        foreach ($validator->getIterator() as $field => $rules) {
             $validator->requirePresence($field, false);
         }
 
@@ -224,10 +222,11 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Validation "empty password"
+     * Validation "empty password".
+     *
+     * This validator allows passwords are empty.
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \MeCms\Model\Validation\UserValidator
-     * @see MeCms\Controller\Admin\UsersController::edit()
      */
     public function validationEmptyPassword(\Cake\Validation\Validator $validator)
     {

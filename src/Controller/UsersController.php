@@ -192,9 +192,9 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        if ($this->request->is('post')) {
-            $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'NotUnique']);
+        $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'DoNotRequirePresence']);
 
+        if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
@@ -233,12 +233,9 @@ class UsersController extends AppController
             } else {
                 $this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
             }
-        } else {
-            $entity = $this->Users->newEntity(null, ['validate' => 'NotUnique']);
         }
 
         $this->set('user', $entity);
-
         $this->viewBuilder()->layout('login');
     }
 
@@ -331,9 +328,9 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'login']);
         }
 
-        if ($this->request->is('post')) {
-            $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'NotUnique']);
+        $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'DoNotRequirePresence']);
 
+        if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
@@ -363,12 +360,9 @@ class UsersController extends AppController
             } else {
                 $this->Flash->error(__d('me_cms', 'The form has not been filled in correctly'));
             }
-        } else {
-            $entity = $this->Users->newEntity(null, ['validate' => 'OnlyCheck']);
         }
 
         $this->set('user', $entity);
-
         $this->viewBuilder()->layout('login');
     }
 
