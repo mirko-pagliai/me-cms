@@ -383,6 +383,18 @@ class UsersTableTest extends TestCase
      */
     public function testValidationEmptyPassword()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $example = [
+            'group_id' => 1,
+            'email' => 'example@test.com',
+            'first_name' => 'Alfa',
+            'last_name' => 'Beta',
+            'username' => 'myusername',
+            'password' => '',
+            'password_repeat' => '',
+        ];
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'EmptyPassword']);
+        $this->assertNotEmpty($this->Users->save($entity));
+        $this->assertEmpty($entity->errors());
     }
 }
