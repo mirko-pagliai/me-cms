@@ -369,12 +369,32 @@ class UsersTableTest extends TestCase
     }
 
     /**
-     * Test for `validationNotUnique()` method
+     * Test for `validationDoNotRequirePresence()` method
      * @test
      */
-    public function testValidationNotUnique()
+    public function testValidationDoNotRequirePresence()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $example = [
+            'email' => 'example@test.com',
+        ];
+
+        $entity = $this->Users->newEntity($example);
+        $this->assertNotEmpty($entity->errors());
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEmpty($entity->errors());
+
+        $example['email_repeat'] = $example['email'];
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEmpty($entity->errors());
+
+        $example['email_repeat'] = $example['email'] . 'aaa';
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEquals([
+            'email_repeat' => ['compareWith' => 'Email addresses don\'t match'],
+        ], $entity->errors());
     }
 
     /**
@@ -393,8 +413,13 @@ class UsersTableTest extends TestCase
             'password_repeat' => '',
         ];
 
+        $entity = $this->Users->newEntity($example);
+        $this->assertEquals([
+            'password' => ['_empty' => 'This field cannot be left empty'],
+            'password_repeat' => ['_empty' => 'This field cannot be left empty'],
+        ], $entity->errors());
+
         $entity = $this->Users->newEntity($example, ['validate' => 'EmptyPassword']);
-        $this->assertNotEmpty($this->Users->save($entity));
         $this->assertEmpty($entity->errors());
     }
 }
