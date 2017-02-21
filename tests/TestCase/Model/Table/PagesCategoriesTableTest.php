@@ -135,6 +135,8 @@ class PagesCategoriesTableTest extends TestCase
 
         $this->assertTrue($this->PagesCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PagesCategories->hasBehavior('Tree'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\PagesCategoryValidator', $this->PagesCategories->validator());
     }
 
     /**
@@ -216,17 +218,5 @@ class PagesCategoriesTableTest extends TestCase
         foreach ($query->toArray() as $category) {
             $this->assertNotEquals(0, $category->page_count);
         }
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\PagesCategoryValidator',
-            $this->PagesCategories->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

@@ -78,15 +78,7 @@ class PostsTagsTable extends AppTable
         ]);
 
         $this->addBehavior('CounterCache', ['Tags' => ['post_count']]);
-    }
 
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        return $validator;
+        $this->_validatorClass = '\MeCms\Model\Validation\PostsTagValidator';
     }
 }

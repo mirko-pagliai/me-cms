@@ -68,15 +68,7 @@ class BannersPositionsTable extends AppTable
         ]);
 
         $this->addBehavior('Timestamp');
-    }
 
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\BannersPositionValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCms\Model\Validation\BannersPositionValidator;
+        $this->_validatorClass = '\MeCms\Model\Validation\BannersPositionValidator';
     }
 }

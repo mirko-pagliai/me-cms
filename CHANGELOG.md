@@ -2,6 +2,7 @@
 ## 2.15 branch
 ### 2.15.1
 * fixed some minor bugs for `Users` validation and added tests;
+* some minor improvements for table classes;
 * updated for CakePHP 3.4.
 
 ### 2.15.0

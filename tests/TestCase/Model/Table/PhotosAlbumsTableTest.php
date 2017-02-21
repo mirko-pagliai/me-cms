@@ -158,6 +158,8 @@ class PhotosAlbumsTableTest extends TestCase
         $this->assertEquals('MeCms.Photos', $this->PhotosAlbums->Photos->className());
 
         $this->assertTrue($this->PhotosAlbums->hasBehavior('Timestamp'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\PhotosAlbumValidator', $this->PhotosAlbums->validator());
     }
 
     /**
@@ -203,17 +205,5 @@ class PhotosAlbumsTableTest extends TestCase
             $this->assertTrue($album->active);
             $this->assertGreaterThan(0, $album->photo_count);
         }
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\PhotosAlbumValidator',
-            $this->PhotosAlbums->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

@@ -87,6 +87,8 @@ class TagsTable extends AppTable
         ]);
 
         $this->addBehavior('Timestamp');
+
+        $this->_validatorClass = '\MeCms\Model\Validation\TagValidator';
     }
 
     /**
@@ -129,15 +131,5 @@ class TagsTable extends AppTable
         return implode(', ', array_map(function ($tag) {
             return $tag['tag'];
         }, $tags));
-    }
-
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\TagValidator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        return new \MeCms\Model\Validation\TagValidator;
     }
 }

@@ -148,6 +148,8 @@ class UsersTableTest extends TestCase
 
         $this->assertTrue($this->Users->hasBehavior('Timestamp'));
         $this->assertTrue($this->Users->hasBehavior('CounterCache'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\UserValidator', $this->Users->validator());
     }
 
     /**
@@ -354,18 +356,6 @@ class UsersTableTest extends TestCase
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertEquals($expected, $query->sql());
         $this->assertEmpty($query->valueBinder()->bindings());
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\UserValidator',
-            $this->Users->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 
     /**

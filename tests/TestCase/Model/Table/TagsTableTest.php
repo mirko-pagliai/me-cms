@@ -119,6 +119,8 @@ class TagsTableTest extends TestCase
         $this->markTestIncomplete('This test has not been implemented yet');
 
         $this->assertTrue($this->Tags->hasBehavior('Timestamp'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', $this->Tags->validator());
     }
 
     /**
@@ -173,17 +175,5 @@ class TagsTableTest extends TestCase
     public function testTagsAsString()
     {
         $this->markTestIncomplete('This test has not been implemented yet');
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\TagValidator',
-            $this->Tags->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

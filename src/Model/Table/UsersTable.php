@@ -145,6 +145,8 @@ class UsersTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
+
+        $this->_validatorClass = '\MeCms\Model\Validation\UserValidator';
     }
 
     /**
@@ -193,26 +195,14 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UserValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new UserValidator;
-    }
-
-    /**
      * Validation "do not require presence".
      *
      * This validator doesn't require the presence of fields.
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UserValidator
+     * @param UserValidator $validator Validator instance
+     * @return UserValidator
      */
-    public function validationDoNotRequirePresence(\Cake\Validation\Validator $validator)
+    public function validationDoNotRequirePresence(UserValidator $validator)
     {
-        $validator = new UserValidator;
-
         //No field is required
         foreach ($validator->getIterator() as $field => $rules) {
             $validator->requirePresence($field, false);
@@ -225,13 +215,11 @@ class UsersTable extends AppTable
      * Validation "empty password".
      *
      * This validator allows passwords are empty.
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UserValidator
+     * @param UserValidator $validator Validator instance
+     * @return UserValidator
      */
-    public function validationEmptyPassword(\Cake\Validation\Validator $validator)
+    public function validationEmptyPassword(UserValidator $validator)
     {
-        $validator = new UserValidator;
-
         //Allows empty passwords
         $validator->allowEmpty('password');
         $validator->allowEmpty('password_repeat');

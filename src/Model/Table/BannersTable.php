@@ -103,6 +103,8 @@ class BannersTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
+
+        $this->_validatorClass = '\MeCms\Model\Validation\BannerValidator';
     }
 
     /**
@@ -122,15 +124,5 @@ class BannersTable extends AppTable
         }
 
         return $query;
-    }
-
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\BannerValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCms\Model\Validation\BannerValidator;
     }
 }

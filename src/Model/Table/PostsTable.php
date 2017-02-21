@@ -246,6 +246,8 @@ class PostsTable extends AppTable
             'Categories' => ['post_count'],
             'Users' => ['post_count'],
         ]);
+
+        $this->_validatorClass = '\MeCms\Model\Validation\PostValidator';
     }
 
     /**
@@ -267,15 +269,5 @@ class PostsTable extends AppTable
         }
 
         return $query;
-    }
-
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\PostValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCms\Model\Validation\PostValidator;
     }
 }
