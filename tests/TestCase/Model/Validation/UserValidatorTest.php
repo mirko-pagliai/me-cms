@@ -47,6 +47,7 @@ class UserValidatorTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.users',
+        'plugin.me_cms.users_groups',
     ];
 
     /**
@@ -208,7 +209,17 @@ class UserValidatorTest extends TestCase
      */
     public function testValidationForOldPassword()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        //Saves the entity
+        $entity = $this->Users->newEntity($this->example);
+        $this->assertNotEmpty($this->Users->save($entity));
+
+        $this->example['password_old'] = $this->example['password'];
+        $this->assertEmpty($this->Users->patchEntity($entity, $this->example)->errors());
+
+        $this->example['password_old'] = $this->example['password'] . 'aaa';
+        $this->assertEquals([
+            'password_old' => ['oldPasswordIsRight' => 'The old password is wrong'],
+        ], $this->Users->patchEntity($entity, $this->example)->errors());
     }
 
     /**

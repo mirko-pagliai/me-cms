@@ -22,6 +22,7 @@
  */
 namespace MeCms\Model\Validation;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\TableRegistry;
 use MeCms\Model\Validation\AppValidator;
 
@@ -116,17 +117,13 @@ class UserValidator extends AppValidator
                 'message' => __d('me_cms', 'The old password is wrong'),
                 'rule' => function ($value, $context) {
                     //Gets the old password
-                    $password = TableRegistry::get('Users')
-                        ->find()->select(['password'])
-                        ->where(['id' => $context['data']['id']])
-                        ->first()->toArray()['password'];
-
-                    if (empty($password)) {
-                        return false;
-                    }
+                    $user = TableRegistry::get('Users')
+                        ->findById($context['data']['id'])
+                        ->select(['password'])
+                        ->firstOrFail();
 
                     //Checks if the password matches
-                    return (new \Cake\Auth\DefaultPasswordHasher)->check($value, $password);
+                    return (new DefaultPasswordHasher)->check($value, $user->password);
                 },
             ],
         ]);
