@@ -23,6 +23,7 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -149,62 +150,68 @@ class PostsTable extends AppTable
 
     /**
      * Gets the related posts for a post
-     * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `Tags`
+     * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If true, gets only posts with images
-     * @return array|void Related posts, array of entities
+     * @return array|null Related posts, array of entities
+     * @throws InternalErrorException
+     * @uses $cache
      */
     public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5, $images = true)
     {
-        if (empty($post->tags)) {
-            return [];
+        if (empty($post->id) || !isset($post->tags)) {
+            throw new InternalErrorException(__d('me_cms', 'ID or tags of the post are missing'));
         }
 
-        //Tries to gets related posts from cache
-        $related = Cache::read($cache = sprintf('related_%s_posts_for_%s', $limit, $post->id), $this->cache);
+        $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
+
+        if ($images) {
+            $cache .= '_with_images';
+        }
+
+        //Tries to gets related posts from cache.
+        //A `null` value means that there are no related post
+        $related = Cache::read($cache, $this->cache);
 
         if (empty($related) && !is_null($related)) {
-            $tags = $post->tags;
+            if (!empty($post->tags)) {
+                //Sorts and takes tags by `post_count` field
+                $tags = collection($post->tags)->sortBy('post_count')->take($limit)->toList();
 
-            //Re-orders tags, using the "post_count" field, then based on the popularity of tags
-            usort($tags, function ($a, $b) {
-                return $b['post_count'] - $a['post_count'];
-            });
+                //This array will be contain the ID to be excluded
+                $exclude[] = $post->id;
 
-            //Limits tags
-            if (count($tags) > $limit) {
-                $tags = array_slice($tags, 0, $limit);
-            }
+                //For each tag, gets a related post.
+                //It reverses the tags order, because the tags less popular have
+                //  less chance to find a related post
+                foreach (array_reverse($tags) as $tag) {
+                    $post = $this->find('active')
+                        ->select(['id', 'title', 'slug', 'text'])
+                        ->matching('Tags', function ($q) use ($tag) {
+                            return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
+                        })
+                        ->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
 
-            //This array will be contain the ID to be excluded
-            $exclude = [$post->id];
+                    if ($images) {
+                        $post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);
+                    }
 
-            //Gets a related post for each tag
-            //Reveres the tags order, because the tags less popular have less
-            //  chance to find a related post
-            foreach (array_reverse($tags) as $tag) {
-                $post = $this->find('active')
-                    ->select(['id', 'title', 'slug', 'text'])
-                    ->matching('Tags', function ($q) use ($tag) {
-                        return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
-                    })
-                    ->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
+                    $post = $post->first();
 
-                if ($images) {
-                    $post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);
-                }
-
-                $post = $post->first();
-
-                //Adds the post to the related posts and its ID to the IDs to
-                //  be excluded for the next query
-                if (!empty($post->id)) {
-                    $related[] = $post;
-                    $exclude[] = $post->id;
+                    //Adds the current post to the related posts and its ID to the
+                    //  IDs to be excluded for the next query
+                    if (!empty($post)) {
+                        $related[] = $post;
+                        $exclude[] = $post->id;
+                    }
                 }
             }
 
-            Cache::write($cache, $related ? $related : null, $this->cache);
+            if (empty($related)) {
+                $related = null;
+            }
+
+            Cache::write($cache, $related, $this->cache);
         }
 
         return $related;

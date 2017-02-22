@@ -273,7 +273,64 @@ class PostsTableTest extends TestCase
      */
     public function testGetRelated()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        //Gets a post from which to search the related posts.
+        //Note that the tags of this post are sorted in ascending order
+        $post = $this->Posts->findById(1)
+            ->contain(['Tags' => function ($q) {
+                return $q->order(['post_count' => 'ASC']);
+            }])
+            ->first();
+        $this->assertNotEmpty($post->tags);
+
+        $relatedPosts = $this->Posts->getRelated($post, 2, false);
+
+        $this->assertCount(2, $relatedPosts);
+        $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Posts->cache));
+
+        foreach ($relatedPosts as $related) {
+            $this->assertNotEmpty($related->id);
+            $this->assertNotEmpty($related->title);
+            $this->assertNotEmpty($related->slug);
+            $this->assertNotEmpty($related->text);
+            $this->assertInstanceOf('MeCms\Model\Entity\Post', $related);
+        }
+
+        //Gets related posts with image
+        $related = $this->Posts->getRelated($post, 2, true);
+
+        $this->assertCount(1, $related);
+        $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Posts->cache));
+
+        $this->assertEquals(2, $related[0]->id);
+        $this->assertNotEmpty($related[0]->title);
+        $this->assertNotEmpty($related[0]->slug);
+        $this->assertContains('<img src="img.gif" />', $related[0]->text);
+        $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
+
+        //This post has no tags
+        $post = $this->Posts->findById(4)->contain(['Tags'])->first();
+        $this->assertEquals([], $post->tags);
+
+        //Related posts are `null`
+        $this->assertNull($this->Posts->getRelated($post));
+        $this->assertNull(Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
+
+        //This post has one tag, but this is not related to any other post
+        $post = $this->Posts->findById(5)->contain(['Tags'])->first();
+        $this->assertCount(1, $post->tags);
+
+        $this->assertNull($this->Posts->getRelated($post));
+        $this->assertNull(Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));
+    }
+
+    /**
+     * Test for `getRelated()` method, with an entity with no `tags` property
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage ID or tags of the post are missing
+     */
+    public function testGetRelatedNoTagsProperty()
+    {
+        $this->Posts->getRelated($this->Posts->get(1));
     }
 
     /**
