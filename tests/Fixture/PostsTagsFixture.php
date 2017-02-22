@@ -84,5 +84,10 @@ class PostsTagsFixture extends TestFixture
             'tag_id' => 1,
             'post_id' => 3,
         ],
+        [
+            'id' => 7,
+            'tag_id' => 4,
+            'post_id' => 5,
+        ],
     ];
 }
