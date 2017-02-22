@@ -74,16 +74,16 @@ class PhotosAlbumValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->PhotosAlbums->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->PhotosAlbums->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->PhotosAlbums->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->PhotosAlbums->newEntity($copy)->errors());
         }
     }
 }

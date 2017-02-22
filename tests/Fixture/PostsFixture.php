@@ -73,7 +73,7 @@ class PostsFixture extends TestFixture
             'priority' => 1,
             'created' => '2016-11-28 18:55:19',
             'modified' => '2016-11-28 18:55:19',
-            'active' => 1
+            'active' => 1,
         ],
         [
             'id' => 2,
@@ -82,11 +82,11 @@ class PostsFixture extends TestFixture
             'title' => 'Second post',
             'slug' => 'second-post',
             'subtitle' => 'Subtitle for second post',
-            'text' => 'Text of the second post',
+            'text' => '<img src="img.gif" />Text of the second post',
             'priority' => 1,
             'created' => '2016-12-28 18:56:19',
             'modified' => '2016-12-28 18:56:19',
-            'active' => 1
+            'active' => 1,
         ],
         [
             'id' => 3,
@@ -99,7 +99,33 @@ class PostsFixture extends TestFixture
             'priority' => 1,
             'created' => '2016-12-28 18:57:19',
             'modified' => '2016-12-28 18:57:19',
-            'active' => 1
+            'active' => 1,
+        ],
+        [
+            'id' => 4,
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'Fourth post',
+            'slug' => 'fourth-post',
+            'subtitle' => 'Subtitle for fourth post',
+            'text' => 'Text of the fourth post',
+            'priority' => 1,
+            'created' => '2016-12-28 18:58:19',
+            'modified' => '2016-12-28 18:58:19',
+            'active' => 1,
+        ],
+        [
+            'id' => 5,
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'Fifth post',
+            'slug' => 'fifth-post',
+            'subtitle' => 'Subtitle for fifth post',
+            'text' => 'Text of the fifth post',
+            'priority' => 1,
+            'created' => '2016-12-28 18:59:19',
+            'modified' => '2016-12-28 18:59:19',
+            'active' => 1,
         ],
     ];
 }

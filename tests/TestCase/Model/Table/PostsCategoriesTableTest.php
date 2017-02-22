@@ -135,6 +135,8 @@ class PostsCategoriesTableTest extends TestCase
 
         $this->assertTrue($this->PostsCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PostsCategories->hasBehavior('Tree'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\PostsCategoryValidator', $this->PostsCategories->validator());
     }
     /**
      * Test for the `belongsTo` association with `PostsCategories` parents
@@ -215,17 +217,5 @@ class PostsCategoriesTableTest extends TestCase
         foreach ($query->toArray() as $category) {
             $this->assertNotEquals(0, $category->post_count);
         }
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\PostsCategoryValidator',
-            $this->PostsCategories->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

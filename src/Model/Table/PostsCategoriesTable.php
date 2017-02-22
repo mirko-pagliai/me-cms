@@ -95,15 +95,7 @@ class PostsCategoriesTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');
-    }
 
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\PostsCategoryValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCms\Model\Validation\PostsCategoryValidator;
+        $this->_validatorClass = '\MeCms\Model\Validation\PostsCategoryValidator';
     }
 }

@@ -179,13 +179,14 @@ class PostsTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Posts->Tags);
         $this->assertEquals('post_id', $this->Posts->Tags->foreignKey());
         $this->assertEquals('tag_id', $this->Posts->Tags->targetForeignKey());
+        $this->assertEquals('posts_tags', $this->Posts->Tags->junction()->getTable());
         $this->assertEquals('MeCms.Tags', $this->Posts->Tags->className());
-
-        //Missing checks for `joinTable` and `through` options
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $this->assertEquals('MeCms.PostsTags', $this->Posts->Tags->getThrough());
 
         $this->assertTrue($this->Posts->hasBehavior('Timestamp'));
         $this->assertTrue($this->Posts->hasBehavior('CounterCache'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\PostValidator', $this->Posts->validator());
     }
 
     /**
@@ -272,7 +273,64 @@ class PostsTableTest extends TestCase
      */
     public function testGetRelated()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        //Gets a post from which to search the related posts.
+        //Note that the tags of this post are sorted in ascending order
+        $post = $this->Posts->findById(1)
+            ->contain(['Tags' => function ($q) {
+                return $q->order(['post_count' => 'ASC']);
+            }])
+            ->first();
+        $this->assertNotEmpty($post->tags);
+
+        $relatedPosts = $this->Posts->getRelated($post, 2, false);
+
+        $this->assertCount(2, $relatedPosts);
+        $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Posts->cache));
+
+        foreach ($relatedPosts as $related) {
+            $this->assertNotEmpty($related->id);
+            $this->assertNotEmpty($related->title);
+            $this->assertNotEmpty($related->slug);
+            $this->assertNotEmpty($related->text);
+            $this->assertInstanceOf('MeCms\Model\Entity\Post', $related);
+        }
+
+        //Gets related posts with image
+        $related = $this->Posts->getRelated($post, 2, true);
+
+        $this->assertCount(1, $related);
+        $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Posts->cache));
+
+        $this->assertEquals(2, $related[0]->id);
+        $this->assertNotEmpty($related[0]->title);
+        $this->assertNotEmpty($related[0]->slug);
+        $this->assertContains('<img src="img.gif" />', $related[0]->text);
+        $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
+
+        //This post has no tags
+        $post = $this->Posts->findById(4)->contain(['Tags'])->first();
+        $this->assertEquals([], $post->tags);
+
+        //Related posts are `null`
+        $this->assertNull($this->Posts->getRelated($post));
+        $this->assertNull(Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
+
+        //This post has one tag, but this is not related to any other post
+        $post = $this->Posts->findById(5)->contain(['Tags'])->first();
+        $this->assertCount(1, $post->tags);
+
+        $this->assertNull($this->Posts->getRelated($post));
+        $this->assertNull(Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));
+    }
+
+    /**
+     * Test for `getRelated()` method, with an entity with no `tags` property
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage ID or tags of the post are missing
+     */
+    public function testGetRelatedNoTagsProperty()
+    {
+        $this->Posts->getRelated($this->Posts->get(1));
     }
 
     /**
@@ -288,17 +346,5 @@ class PostsTableTest extends TestCase
         $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active`, PostsTags.id AS `PostsTags__id`, PostsTags.tag_id AS `PostsTags__tag_id`, PostsTags.post_id AS `PostsTags__post_id`, Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
 
         $this->assertEquals('test', $query->valueBinder()->bindings()[':c0']['value']);
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\PostValidator',
-            $this->Posts->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

@@ -108,6 +108,8 @@ class PhotosTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
+
+        $this->_validatorClass = '\MeCms\Model\Validation\PhotoValidator';
     }
 
     /**
@@ -127,15 +129,5 @@ class PhotosTable extends AppTable
         }
 
         return $query;
-    }
-
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\PhotoValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCms\Model\Validation\PhotoValidator;
     }
 }

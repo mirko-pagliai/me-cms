@@ -146,6 +146,8 @@ class PhotosTableTest extends TestCase
 
         $this->assertTrue($this->Photos->hasBehavior('Timestamp'));
         $this->assertTrue($this->Photos->hasBehavior('CounterCache'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\PhotoValidator', $this->Photos->validator());
     }
 
     /**
@@ -204,17 +206,5 @@ class PhotosTableTest extends TestCase
         $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
 
         $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\PhotoValidator',
-            $this->Photos->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

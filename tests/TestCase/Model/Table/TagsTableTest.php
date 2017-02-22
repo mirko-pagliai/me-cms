@@ -113,12 +113,13 @@ class TagsTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Tags->Posts);
         $this->assertEquals('tag_id', $this->Tags->Posts->foreignKey());
         $this->assertEquals('post_id', $this->Tags->Posts->targetForeignKey());
+        $this->assertEquals('posts_tags', $this->Tags->Posts->junction()->getTable());
         $this->assertEquals('MeCms.Posts', $this->Tags->Posts->className());
-
-        //Missing checks for `joinTable` and `through` options
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $this->assertEquals('MeCms.PostsTags', $this->Tags->Posts->getThrough());
 
         $this->assertTrue($this->Tags->hasBehavior('Timestamp'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', $this->Tags->validator());
     }
 
     /**
@@ -173,17 +174,5 @@ class TagsTableTest extends TestCase
     public function testTagsAsString()
     {
         $this->markTestIncomplete('This test has not been implemented yet');
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\TagValidator',
-            $this->Tags->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

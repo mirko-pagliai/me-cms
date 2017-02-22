@@ -114,6 +114,8 @@ class BannersPositionsTableTest extends TestCase
         $this->assertEquals('MeCms.Banners', $this->BannersPositions->Banners->className());
 
         $this->assertTrue($this->BannersPositions->hasBehavior('Timestamp'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\BannersPositionValidator', $this->BannersPositions->validator());
     }
 
     /**
@@ -130,17 +132,5 @@ class BannersPositionsTableTest extends TestCase
             $this->assertInstanceOf('MeCms\Model\Entity\Banner', $banner);
             $this->assertEquals(1, $banner->position_id);
         }
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\BannersPositionValidator',
-            $this->BannersPositions->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

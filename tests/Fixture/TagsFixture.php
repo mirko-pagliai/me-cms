@@ -72,5 +72,12 @@ class TagsFixture extends TestFixture
             'created' => '2016-12-29 11:15:31',
             'modified' => '2016-12-29 11:15:31',
         ],
+        [
+            'id' => 4,
+            'tag' => 'lion',
+            'post_count' => 1,
+            'created' => '2016-12-29 11:16:31',
+            'modified' => '2016-12-29 11:16:31',
+        ],
     ];
 }

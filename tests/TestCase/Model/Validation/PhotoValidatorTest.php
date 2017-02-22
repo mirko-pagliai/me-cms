@@ -74,16 +74,16 @@ class PhotoValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $errors = $this->Photos->newEntity($this->example)->errors();
-        $this->assertEmpty($errors);
+        $this->assertEmpty($this->Photos->newEntity($this->example)->errors());
 
         foreach ($this->example as $key => $value) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $errors = $this->Photos->newEntity($copy)->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->Photos->newEntity($copy)->errors());
         }
     }
 
@@ -94,8 +94,9 @@ class PhotoValidatorTest extends TestCase
     public function testValidationForAlbumId()
     {
         $this->example['album_id'] = 'string';
-        $errors = $this->Photos->newEntity($this->example)->errors();
-        $this->assertEquals(['album_id' => ['naturalNumber' => 'You have to select a valid option']], $errors);
+        $this->assertEquals([
+            'album_id' => ['naturalNumber' => 'You have to select a valid option'],
+        ], $this->Photos->newEntity($this->example)->errors());
     }
 
     /**
@@ -104,12 +105,11 @@ class PhotoValidatorTest extends TestCase
      */
     public function testValidationForFilename()
     {
-        $expected = ['filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png']];
-
         foreach (['pic', 'text.txt'] as $value) {
             $this->example['filename'] = $value;
-            $errors = $this->Photos->newEntity($this->example)->errors();
-            $this->assertEquals($expected, $errors);
+            $this->assertEquals([
+                'filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png'],
+            ], $this->Photos->newEntity($this->example)->errors());
         }
     }
 }

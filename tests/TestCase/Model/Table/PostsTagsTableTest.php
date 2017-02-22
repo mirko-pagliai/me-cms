@@ -120,17 +120,7 @@ class PostsTagsTableTest extends TestCase
         $this->assertEquals('MeCms.Tags', $this->PostsTags->Tags->className());
 
         $this->assertTrue($this->PostsTags->hasBehavior('CounterCache'));
-    }
 
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'Cake\Validation\Validator',
-            $this->PostsTags->validationDefault(new \Cake\Validation\Validator)
-        );
+        $this->assertInstanceOf('MeCms\Model\Validation\PostsTagValidator', $this->PostsTags->validator());
     }
 }

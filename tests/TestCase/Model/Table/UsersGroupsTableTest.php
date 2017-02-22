@@ -118,6 +118,8 @@ class UsersGroupsTableTest extends TestCase
         $this->assertEquals('MeCms.Users', $this->UsersGroups->Users->className());
 
         $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\UsersGroupValidator', $this->UsersGroups->validator());
     }
 
     /**
@@ -134,17 +136,5 @@ class UsersGroupsTableTest extends TestCase
             $this->assertInstanceOf('MeCms\Model\Entity\User', $user);
             $this->assertEquals(3, $user->group_id);
         }
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\UsersGroupValidator',
-            $this->UsersGroups->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

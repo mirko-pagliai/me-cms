@@ -171,6 +171,8 @@ class PagesTableTest extends TestCase
 
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));
         $this->assertTrue($this->Pages->hasBehavior('CounterCache'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Pages->validator());
     }
 
     /**
@@ -209,17 +211,5 @@ class PagesTableTest extends TestCase
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
         $this->assertEmpty(Cache::read('someData', $this->Pages->cache));
-    }
-
-    /**
-     * Test for `validationDefault()` method
-     * @test
-     */
-    public function testValidationDefault()
-    {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\PageValidator',
-            $this->Pages->validationDefault(new \Cake\Validation\Validator)
-        );
     }
 }

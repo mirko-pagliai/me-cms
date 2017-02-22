@@ -148,6 +148,8 @@ class UsersTableTest extends TestCase
 
         $this->assertTrue($this->Users->hasBehavior('Timestamp'));
         $this->assertTrue($this->Users->hasBehavior('CounterCache'));
+
+        $this->assertInstanceOf('MeCms\Model\Validation\UserValidator', $this->Users->validator());
     }
 
     /**
@@ -357,24 +359,32 @@ class UsersTableTest extends TestCase
     }
 
     /**
-     * Test for `validationDefault()` method
+     * Test for `validationDoNotRequirePresence()` method
      * @test
      */
-    public function testValidationDefault()
+    public function testValidationDoNotRequirePresence()
     {
-        $this->assertInstanceOf(
-            'MeCms\Model\Validation\UserValidator',
-            $this->Users->validationDefault(new \Cake\Validation\Validator)
-        );
-    }
+        $example = [
+            'email' => 'example@test.com',
+        ];
 
-    /**
-     * Test for `validationNotUnique()` method
-     * @test
-     */
-    public function testValidationNotUnique()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $entity = $this->Users->newEntity($example);
+        $this->assertNotEmpty($entity->errors());
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEmpty($entity->errors());
+
+        $example['email_repeat'] = $example['email'];
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEmpty($entity->errors());
+
+        $example['email_repeat'] = $example['email'] . 'aaa';
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEquals([
+            'email_repeat' => ['compareWith' => 'Email addresses don\'t match'],
+        ], $entity->errors());
     }
 
     /**
@@ -383,6 +393,23 @@ class UsersTableTest extends TestCase
      */
     public function testValidationEmptyPassword()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $example = [
+            'group_id' => 1,
+            'email' => 'example@test.com',
+            'first_name' => 'Alfa',
+            'last_name' => 'Beta',
+            'username' => 'myusername',
+            'password' => '',
+            'password_repeat' => '',
+        ];
+
+        $entity = $this->Users->newEntity($example);
+        $this->assertEquals([
+            'password' => ['_empty' => 'This field cannot be left empty'],
+            'password_repeat' => ['_empty' => 'This field cannot be left empty'],
+        ], $entity->errors());
+
+        $entity = $this->Users->newEntity($example, ['validate' => 'EmptyPassword']);
+        $this->assertEmpty($entity->errors());
     }
 }

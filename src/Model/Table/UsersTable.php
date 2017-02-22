@@ -25,6 +25,7 @@ namespace MeCms\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\UserValidator;
 
 /**
  * Users model
@@ -144,6 +145,8 @@ class UsersTable extends AppTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
+
+        $this->_validatorClass = '\MeCms\Model\Validation\UserValidator';
     }
 
     /**
@@ -192,30 +195,16 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UserValidator
+     * Validation "do not require presence".
+     *
+     * This validator doesn't require the presence of fields.
+     * @param UserValidator $validator Validator instance
+     * @return UserValidator
      */
-    public function validationDefault(\Cake\Validation\Validator $validator)
+    public function validationDoNotRequirePresence(UserValidator $validator)
     {
-        return new \MeCms\Model\Validation\UserValidator;
-    }
-
-    /**
-     * Validation "not unique"
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UserValidator
-     * @see MeCms\Controller\UsersController::forgotPassword()
-     */
-    public function validationNotUnique(\Cake\Validation\Validator $validator)
-    {
-        $validator = new \MeCms\Model\Validation\UserValidator;
-
-        //Username and email don't have to be unique
-        $validator->remove('username', 'unique')->remove('email', 'unique');
-
         //No field is required
-        foreach ($validator->getIterator() as $field => $value) {
+        foreach ($validator->getIterator() as $field => $rules) {
             $validator->requirePresence($field, false);
         }
 
@@ -223,16 +212,15 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Validation "empty password"
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UserValidator
-     * @see MeCms\Controller\Admin\UsersController::edit()
+     * Validation "empty password".
+     *
+     * This validator allows passwords are empty.
+     * @param UserValidator $validator Validator instance
+     * @return UserValidator
      */
-    public function validationEmptyPassword(\Cake\Validation\Validator $validator)
+    public function validationEmptyPassword(UserValidator $validator)
     {
-        $validator = new \MeCms\Model\Validation\UserValidator;
-
-        //Allow empty passwords
+        //Allows empty passwords
         $validator->allowEmpty('password');
         $validator->allowEmpty('password_repeat');
 

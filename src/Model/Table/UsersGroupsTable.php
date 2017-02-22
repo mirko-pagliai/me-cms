@@ -69,15 +69,7 @@ class UsersGroupsTable extends AppTable
         ]);
 
         $this->addBehavior('Timestamp');
-    }
 
-    /**
-     * Default validation rules
-     * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\UsersGroupValidator
-     */
-    public function validationDefault(\Cake\Validation\Validator $validator)
-    {
-        return new \MeCms\Model\Validation\UsersGroupValidator;
+        $this->_validatorClass = '\MeCms\Model\Validation\UsersGroupValidator';
     }
 }
