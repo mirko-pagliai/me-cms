@@ -24,7 +24,6 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
 use MeCms\Model\Table\AppTable;
 
 /**
