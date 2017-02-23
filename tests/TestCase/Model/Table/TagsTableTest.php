@@ -166,13 +166,4 @@ class TagsTableTest extends TestCase
     {
         $this->markTestIncomplete('This test has not been implemented yet');
     }
-
-    /**
-     * Test for `tagsAsString()` method
-     * @test
-     */
-    public function testTagsAsString()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet');
-    }
 }

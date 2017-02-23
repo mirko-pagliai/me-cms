@@ -24,7 +24,6 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
 use MeCms\Model\Table\AppTable;
 
 /**
@@ -119,17 +118,5 @@ class TagsTable extends AppTable
         return af(array_map(function ($tag) {
             return trim($tag) ? compact('tag') : null;
         }, preg_split('/\s*,+\s*/', $tags)));
-    }
-
-    /**
-     * Changes tags from array to string
-     * @param array $tags Tags
-     * @return string Tags
-     */
-    public function tagsAsString(array $tags)
-    {
-        return implode(', ', array_map(function ($tag) {
-            return $tag['tag'];
-        }, $tags));
     }
 }

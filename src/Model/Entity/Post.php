@@ -23,7 +23,6 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
 use MeTools\Utility\Youtube;
 
 /**
@@ -92,7 +91,6 @@ class Post extends Entity
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
      * @return string|void
-     * @uses MeCms\Model\Table\TagsTable::tagsAsString()
      */
     protected function _getTagsAsString()
     {
@@ -100,6 +98,6 @@ class Post extends Entity
             return;
         }
 
-        return TableRegistry::get('MeCms.Tags')->tagsAsString($this->_properties['tags']);
+        return implode(', ', collection($this->_properties['tags'])->extract('tag')->toList());
     }
 }
