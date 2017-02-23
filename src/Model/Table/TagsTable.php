@@ -119,16 +119,4 @@ class TagsTable extends AppTable
             return trim($tag) ? compact('tag') : null;
         }, preg_split('/\s*,+\s*/', $tags)));
     }
-
-    /**
-     * Changes tags from array to string
-     * @param array $tags Tags
-     * @return string Tags
-     */
-    public function tagsAsString(array $tags)
-    {
-        return implode(', ', array_map(function ($tag) {
-            return $tag['tag'];
-        }, $tags));
-    }
 }

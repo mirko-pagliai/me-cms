@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Post;
 use MeTools\Utility\Youtube;
@@ -31,6 +33,47 @@ use MeTools\Utility\Youtube;
  */
 class PostTest extends TestCase
 {
+    /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected $Posts;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
+    ];
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Posts = TableRegistry::get('MeCms.Posts');
+
+        Cache::clear(false, $this->Posts->cache);
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Posts);
+    }
+
     /**
      * Test for `__construct()` method
      * @test
@@ -87,6 +130,13 @@ class PostTest extends TestCase
      */
     public function testTagsAsStringGetMutator()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $post = $this->Posts->findById(1)->contain(['Tags'])->first();
+        $this->assertEquals('cat, dog, bird', $post->tags_as_string);
+
+        $post = $this->Posts->findById(3)->contain(['Tags'])->first();
+        $this->assertEquals('cat', $post->tags_as_string);
+
+        $post = $this->Posts->findById(4)->contain(['Tags'])->first();
+        $this->assertNull($post->tags_as_string);
     }
 }
