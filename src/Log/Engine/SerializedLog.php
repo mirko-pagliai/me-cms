@@ -29,7 +29,7 @@ use SerializedArray\SerializedArray;
  * File Storage stream for Logging. Writes logs to different files based on
  *  the level of log it is.
  *
- * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.Log.Engine.FileLog.html FileLog}.
+ * Rewrites {@link http://api.cakephp.org/3.4/class-Cake.Log.Engine.FileLog.html FileLog}.
  *
  * This adapter writes writes the normal log (using the `FileLog::log`
  *  method) and a serialized copy of the log.

@@ -38,7 +38,7 @@ class AdminView extends View
     /**
      * Initialization hook method
      * @return void
-     * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_initialize
+     * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_initialize
      * @uses MeCms\View\View::initialize()
      */
     public function initialize()
@@ -56,7 +56,7 @@ class AdminView extends View
      * @param string|null $layout Layout to use
      * @return Rendered content or null if content already rendered and
      *  returned earlier
-     * @see http://api.cakephp.org/3.3/class-Cake.View.View.html#_render
+     * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_render
      */
     public function render($view = null, $layout = null)
     {

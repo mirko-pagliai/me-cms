@@ -19,7 +19,7 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
- * @see         http://api.cakephp.org/3.3/class-Cake.Controller.Component.AuthComponent.html
+ * @see         http://api.cakephp.org/3.4/class-Cake.Controller.Component.AuthComponent.html
  */
 namespace MeCms\Controller\Component;
 
@@ -31,7 +31,7 @@ use Cake\Controller\Component\AuthComponent as CakeAuthComponent;
  *
  * Binds access control with user authentication and session management.
  *
- * Rewrites {@link http://api.cakephp.org/3.3/class-Cake.Controller.Component.AuthComponent.html AuthComponent}.
+ * Rewrites {@link http://api.cakephp.org/3.4/class-Cake.Controller.Component.AuthComponent.html AuthComponent}.
  */
 class AuthComponent extends CakeAuthComponent
 {
@@ -66,7 +66,7 @@ class AuthComponent extends CakeAuthComponent
      * @param array $config The configuration settings provided to this
      *  component
      * @return void
-     * @see http://api.cakephp.org/3.3/class-Cake.Controller.Component.html#_initialize
+     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Component.html#_initialize
      */
     public function initialize(array $config)
     {

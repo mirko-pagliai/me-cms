@@ -19,7 +19,7 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
- * @see         http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html
+ * @see         http://api.cakephp.org/3.4/class-Cake.ORM.Behavior.TreeBehavior.html
  */
 namespace MeCms\Model\Behavior;
 
@@ -47,7 +47,7 @@ class TreeBehavior extends CakeTreeBehavior
      * @param \Cake\ORM\Query $query Query
      * @param array $options Options
      * @return Cake\ORM\Query Query
-     * @see http://api.cakephp.org/3.3/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
+     * @see http://api.cakephp.org/3.4/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
      * @uses Cake\ORM\Behavior\TreeBehavior::findTreeList()
      */
     public function findTreeList(\Cake\ORM\Query $query, array $options)
