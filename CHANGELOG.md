@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.15 branch
+### 2.15.2
+* fixed bug, the tags of 3 characters were not accepted.
+
 ### 2.15.1
 * fixed some minor bugs for `Users` validation and added tests;
 * fixed `PostsTable::getRelated()` method and added tests;
