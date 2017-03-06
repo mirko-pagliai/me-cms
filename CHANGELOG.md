@@ -3,6 +3,7 @@
 ### 2.15.2
 * added `beforeMarshal()` method do `PostsTable` class. Removed
     `buildTagsForRequestData()`;
+* fixed some little bugs for validation tags as string related to posts;
 * fixed bug, the tags of 3 characters were not accepted.
 
 ### 2.15.1
