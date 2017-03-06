@@ -22,7 +22,10 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -97,7 +100,7 @@ class PostsTableTest extends TestCase
         $this->Posts->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Posts->afterDelete(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -114,7 +117,7 @@ class PostsTableTest extends TestCase
         $this->Posts->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Posts->afterSave(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
