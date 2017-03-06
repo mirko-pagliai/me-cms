@@ -88,7 +88,7 @@ class PostValidator extends AppValidator
     {
         foreach ($value as $tag) {
             //Checks if the tag has between 3 and 30 chars
-            if (empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag'] > 30)) {
+            if (empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag']) > 30) {
                 return false;
             }
         }
