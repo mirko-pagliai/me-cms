@@ -130,8 +130,9 @@ class AppValidator extends Validator
         //Slug
         $this->add('slug', [
             'maxLength' => [
-                'message' => __d('me_cms', 'Must be at most {0} chars', 100),
-                'rule' => ['maxLength', 100],
+                'last' => true,
+                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
+                'rule' => ['lengthBetween', 3, 100],
             ],
             'slug' => [
                 'message' => sprintf(

@@ -237,7 +237,7 @@ class AppValidatorTest extends TestCase
     {
         $this->example['Posts']['slug'] = str_repeat('a', 101);
         $this->assertEquals([
-            'slug' => ['maxLength' => 'Must be at most 100 chars'],
+            'slug' => ['maxLength' => 'Must be between 3 and 100 chars'],
         ], $this->Posts->newEntity($this->example['Posts'])->errors());
 
         foreach (['abc', str_repeat('a', 100)] as $value) {

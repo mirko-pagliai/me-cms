@@ -22,7 +22,10 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -97,7 +100,7 @@ class PostsTableTest extends TestCase
         $this->Posts->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Posts->afterDelete(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -114,7 +117,42 @@ class PostsTableTest extends TestCase
         $this->Posts->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Posts->afterSave(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
+    }
+
+    /**
+     * Test for `beforeMarshal()` method
+     * @test
+     */
+    public function testBeforeMarshal()
+    {
+        $example = [
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+            'tags_as_string' => 'first tag, second tag',
+        ];
+
+        $tags = $this->Posts->newEntity($example)->tags;
+
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
+        $this->assertEquals('first tag', $tags[0]->tag);
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[1]);
+        $this->assertEquals('second tag', $tags[1]->tag);
+
+        //In this case, the `dog` tag already exists
+        $example['tags_as_string'] = 'first tag, dog';
+
+        $tags = $this->Posts->newEntity($example)->tags;
+
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
+        $this->assertEmpty($tags[0]->id);
+        $this->assertEquals('first tag', $tags[0]->tag);
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
+        $this->assertEquals(2, $tags[1]->id);
+        $this->assertEquals('dog', $tags[1]->tag);
     }
 
     /**
@@ -232,15 +270,6 @@ class PostsTableTest extends TestCase
 
         $this->assertInstanceOf('MeCms\Model\Entity\User', $post->user);
         $this->assertEquals(4, $post->user->id);
-    }
-
-    /**
-     * Test for `buildTagsForRequestData()` method
-     * @test
-     */
-    public function testBuildTagsForRequestData()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet');
     }
 
     /**

@@ -50,7 +50,7 @@ $(function () {
     {
         $.each(tags, function (index, tag) {
             //Checks for length
-            if (tag.length <= 3) {
+            if (tag.length < 3) {
                 return;
             }
 

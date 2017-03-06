@@ -19,44 +19,36 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @since       2.15.2
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Model\Validation\AppValidator;
-use MeCms\Model\Validation\TagValidatorTrait;
-
 /**
- * Tag validator class
+ * Tag validator trait class.
+ *
+ * It provides some methods shared by the validation classes.
  */
-class TagValidator extends AppValidator
+trait TagValidatorTrait
 {
-    use TagValidatorTrait;
+    /**
+     * Checks if the tag has a valid length
+     * @param string $value Field value
+     * @param array $context Field context
+     * @return bool
+     */
+    public function validTagLength($value, $context)
+    {
+        return strlen($value) >= 3 && strlen($value) <= 30;
+    }
 
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Model\Validation\AppValidator::__construct()
+     * Checks if the tag has a valid syntax (lowercase letters, numbers, space)
+     * @param string $value Field value
+     * @param array $context Field context
+     * @return bool
      */
-    public function __construct()
+    public function validTagChars($value, $context)
     {
-        parent::__construct();
-
-        //Tag
-        $this->add('tag', [
-            'validTagLength' => [
-                'last' => true,
-                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 30),
-                'rule' => [$this, 'validTagLength'],
-            ],
-            'validTagChars' => [
-                'message' => sprintf(
-                    '%s: %s',
-                    __d('me_cms', 'Allowed chars'),
-                    __d('me_cms', 'lowercase letters, numbers, space')
-                ),
-                'rule' => [$this, 'validTagChars'],
-            ],
-        ]);
+        return (bool)preg_match('/^[a-z0-9\ ]+$/', $value);
     }
 }

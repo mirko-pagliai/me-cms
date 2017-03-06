@@ -81,14 +81,13 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
     ?>
     <div class="form-group to-be-hidden">
         <?php
-            echo $this->Form->input('tags', [
+            echo $this->Form->input('tags_as_string', [
                 'id' => 'tags-output-text',
                 'label' => __d('me_cms', 'Tags'),
                 'rows' => 2,
                 'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
                     'separated by a comma or a comma and a space. Only ' .
                     'lowercase letters, numbers, hyphen, space'),
-                'value' => $this->request->data('tags') ? $this->request->data('tags') : $post->tags_as_string,
             ]);
         ?>
     </div>
@@ -101,7 +100,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
                 'button' => $this->Form->button(null, [
                     'class' => 'btn-success',
                     'icon' => 'plus',
-                    'id' => 'tags-input-button'
+                    'id' => 'tags-input-button',
                 ]),
                 'id' => 'tags-input-text',
                 'label' => false,
