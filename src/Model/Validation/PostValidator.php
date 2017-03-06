@@ -70,7 +70,7 @@ class PostValidator extends AppValidator
                 'message' => sprintf(
                     '%s: %s',
                     __d('me_cms', 'Allowed chars'),
-                    __d('me_cms', 'lowercase letters, numbers, dash')
+                    __d('me_cms', 'lowercase letters, numbers, space')
                 ),
                 'rule' => [$this, 'validTagsChars'],
             ],
