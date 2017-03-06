@@ -97,7 +97,7 @@ class TagValidatorTest extends TestCase
         foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $value) {
             $this->example['tag'] = $value;
             $this->assertEquals([
-                'tag' => ['validTag' => 'Allowed chars: lowercase letters, numbers, space'],
+                'tag' => ['validTagChars' => 'Allowed chars: lowercase letters, numbers, space'],
             ], $this->Tags->newEntity($this->example)->errors());
         }
     }

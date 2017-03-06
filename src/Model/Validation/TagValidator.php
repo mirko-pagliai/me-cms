@@ -51,7 +51,7 @@ class TagValidator extends AppValidator
                     __d('me_cms', 'Allowed chars'),
                     __d('me_cms', 'lowercase letters, numbers, space')
                 ),
-                'rule' => [$this, 'validTag'],
+                'rule' => [$this, 'validTagChars'],
             ],
         ]);
     }
@@ -63,7 +63,7 @@ class TagValidator extends AppValidator
      * @param array $context Field context
      * @return bool
      */
-    public function validTag($value, $context)
+    public function validTagChars($value, $context)
     {
         //Checks if the tag has only lowercase letters, numbers, space
         return (bool)preg_match('/^[a-z0-9\ ]+$/', $value);
