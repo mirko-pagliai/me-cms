@@ -23,6 +23,7 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
+use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
 
 /**
@@ -95,7 +96,7 @@ class AppController extends BaseController
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses App\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         //Checks if the site is offline
         if ($this->request->isOffline()) {
@@ -142,7 +143,7 @@ class AppController extends BaseController
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeRender
      * @uses App\Controller\AppController::beforeRender()
      */
-    public function beforeRender(\Cake\Event\Event $event)
+    public function beforeRender(Event $event)
     {
         //Layout for ajax requests
         if ($this->request->is('ajax')) {
