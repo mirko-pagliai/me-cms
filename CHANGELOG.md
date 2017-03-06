@@ -3,6 +3,8 @@
 ### 2.15.2
 * added `beforeMarshal()` method do `PostsTable` class. Removed
     `buildTagsForRequestData()`;
+* added `TagValidatorTrait` class. It provides some methods shared by the
+    validation classes;
 * fixed some little bugs for validation tags as string related to posts;
 * fixed bug, the tags of 3 characters were not accepted.
 

@@ -23,12 +23,15 @@
 namespace MeCms\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
+use MeCms\Model\Validation\TagValidatorTrait;
 
 /**
  * Post validator class
  */
 class PostValidator extends AppValidator
 {
+    use TagValidatorTrait;
+
     /**
      * Construct.
      *
@@ -79,16 +82,17 @@ class PostValidator extends AppValidator
 
     /**
      * Tags validation method (length).
-     * For each tag, it checks if the tag has a valid lenght
+     * For each tag, it checks if the tag has a valid length
      * @param string $value Field value
      * @param array $context Field context
      * @return bool
+     * @use \MeCms\Model\Validation\TagValidatorTrait::validTagLength()
      */
     public function validTagsLength($value, $context)
     {
         foreach ($value as $tag) {
-            //Checks if the tag has between 3 and 30 chars
-            if (empty($tag['tag']) || strlen($tag['tag']) < 3 || strlen($tag['tag']) > 30) {
+            //Checks if each tag has has a valid length
+            if (empty($tag['tag']) || !$this->validTagLength($tag['tag'], $context)) {
                 return false;
             }
         }
@@ -102,12 +106,13 @@ class PostValidator extends AppValidator
      * @param string $value Field value
      * @param array $context Field context
      * @return bool
+     * @use \MeCms\Model\Validation\TagValidatorTrait::validTagChars()
      */
     public function validTagsChars($value, $context)
     {
         foreach ($value as $tag) {
-            //Checks if the tag has only lowercase letters, numbers, hyphen, space
-            if (empty($tag['tag']) || !(bool)preg_match('/^[a-z0-9\ ]+$/', $tag['tag'])) {
+            //Checks if the tag has a valid syntax
+            if (empty($tag['tag']) || !$this->validTagChars($tag['tag'], $context)) {
                 return false;
             }
         }

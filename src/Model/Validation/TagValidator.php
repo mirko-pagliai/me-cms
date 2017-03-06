@@ -23,12 +23,15 @@
 namespace MeCms\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
+use MeCms\Model\Validation\TagValidatorTrait;
 
 /**
  * Tag validator class
  */
 class TagValidator extends AppValidator
 {
+    use TagValidatorTrait;
+
     /**
      * Construct.
      *
@@ -41,11 +44,12 @@ class TagValidator extends AppValidator
 
         //Tag
         $this->add('tag', [
-            'lengthBetween' => [
+            'validTagLength' => [
+                'last' => true,
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 30),
-                'rule' => ['lengthBetween', 3, 30],
+                'rule' => [$this, 'validTagLength'],
             ],
-            'validTag' => [
+            'validTagChars' => [
                 'message' => sprintf(
                     '%s: %s',
                     __d('me_cms', 'Allowed chars'),
@@ -54,18 +58,5 @@ class TagValidator extends AppValidator
                 'rule' => [$this, 'validTagChars'],
             ],
         ]);
-    }
-
-    /**
-     * Tag validation method.
-     * Checks if the tag is a valid syntax.
-     * @param string $value Field value
-     * @param array $context Field context
-     * @return bool
-     */
-    public function validTagChars($value, $context)
-    {
-        //Checks if the tag has only lowercase letters, numbers, space
-        return (bool)preg_match('/^[a-z0-9\ ]+$/', $value);
     }
 }

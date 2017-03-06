@@ -90,7 +90,7 @@ class TagValidatorTest extends TestCase
         foreach (['ab', str_repeat('a', 31)] as $value) {
             $this->example['tag'] = $value;
             $this->assertEquals([
-                'tag' => ['lengthBetween' => 'Must be between 3 and 30 chars'],
+                'tag' => ['validTagLength' => 'Must be between 3 and 30 chars'],
             ], $this->Tags->newEntity($this->example)->errors());
         }
 
