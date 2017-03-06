@@ -77,6 +77,36 @@ class PostsTable extends AppTable
     }
 
     /**
+     * Called before request data is converted into entities
+     * @param \Cake\Event\Event $event Event object
+     * @param \ArrayObject $data Request data
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.15.2
+     */
+    public function beforeMarshal(\Cake\Event\Event $event, \ArrayObject $data, \ArrayObject $options)
+    {
+        if (!empty($data['tags_as_string'])) {
+            //Gets existing tags
+            $existingTags = $this->Tags->getList();
+
+            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
+
+            //For each tag, it searches if the tag already exists.
+            //If a tag exists in the database, it sets also the tag ID
+            foreach ($tags as $k => $tag) {
+                $id = array_search($tag, $existingTags);
+
+                if ($id) {
+                    $data['tags'][$k]['id'] = $id;
+                }
+
+                $data['tags'][$k]['tag'] = $tag;
+            }
+        }
+    }
+
+    /**
      * Returns a rules checker object that will be used for validating
      *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -90,35 +120,6 @@ class PostsTable extends AppTable
         $rules->add($rules->isUnique(['title'], __d('me_cms', 'This value is already used')));
 
         return $rules;
-    }
-
-    /**
-     * Builds tags for the request data.
-     * For each tag, it searches if the tag already exists in the database.
-     * If a tag exists in the database, it sets that tag as ID
-     * @param array $requestData Request data from form (`$this->request->data`)
-     * @return array Request data
-     * @uses MeCms\Model\Table\TagsTable::getList()
-     * @uses MeCms\Model\Table\TagsTable::tagsAsArray()
-     */
-    public function buildTagsForRequestData($requestData)
-    {
-        $tags = $this->Tags->tagsAsArray($requestData['tags']);
-
-        //Gets tags from database
-        $tagsFromDb = $this->Tags->getList();
-
-        //For each tag, it searches if the tag already exists in the database.
-        //If a tag exists in the database, it sets that tag as ID
-        foreach ($tags as $k => $tag) {
-            $id = array_search($tag['tag'], $tagsFromDb);
-
-            if (is_int($id)) {
-                $tags[$k] = compact('id');
-            }
-        }
-
-        return am($requestData, compact('tags'));
     }
 
     /**

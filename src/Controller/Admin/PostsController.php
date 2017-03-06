@@ -140,7 +140,6 @@ class PostsController extends AppController
      * Adds post
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      */
     public function add()
     {
@@ -154,10 +153,7 @@ class PostsController extends AppController
 
             $this->request->data['created'] = new Time($this->request->data('created'));
 
-            //Sets the request data with tags
-            $data = $this->Posts->buildTagsForRequestData($this->request->data);
-
-            $post = $this->Posts->patchEntity($post, $data, ['associated' => ['Tags' => ['validate' => false]]]);
+            $post = $this->Posts->patchEntity($post, $this->request->data);
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -176,7 +172,6 @@ class PostsController extends AppController
      * @param string $id Post ID
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\PostsTable::buildTagsForRequestData()
      */
     public function edit($id = null)
     {
@@ -196,12 +191,7 @@ class PostsController extends AppController
 
             $this->request->data['created'] = new Time($this->request->data('created'));
 
-            //Sets the request data with tags
-            $data = $this->Posts->buildTagsForRequestData($this->request->data);
-
-            $post = $this->Posts->patchEntity($post, $data, [
-                'associated' => ['Tags' => ['validate' => false]],
-            ]);
+            $post = $this->Posts->patchEntity($post, $this->request->data);
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

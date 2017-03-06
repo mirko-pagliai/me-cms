@@ -118,6 +118,15 @@ class PostsTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeMarshal()` method
+     * @test
+     */
+    public function testBeforeMarshal()
+    {
+        $this->markTestIncomplete('This test has not been implemented yet');
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */
@@ -232,15 +241,6 @@ class PostsTableTest extends TestCase
 
         $this->assertInstanceOf('MeCms\Model\Entity\User', $post->user);
         $this->assertEquals(4, $post->user->id);
-    }
-
-    /**
-     * Test for `buildTagsForRequestData()` method
-     * @test
-     */
-    public function testBuildTagsForRequestData()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet');
     }
 
     /**

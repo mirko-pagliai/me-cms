@@ -157,13 +157,4 @@ class TagsTableTest extends TestCase
 
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
     }
-
-    /**
-     * Test for `tagsAsArray()` method
-     * @test
-     */
-    public function testTagsAsArray()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet');
-    }
 }

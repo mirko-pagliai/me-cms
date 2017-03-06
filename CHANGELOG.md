@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.15 branch
 ### 2.15.2
+* added `beforeMarshal()` method do `PostsTable` class. Removed
+    `buildTagsForRequestData()`;
 * fixed bug, the tags of 3 characters were not accepted.
 
 ### 2.15.1
