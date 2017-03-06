@@ -126,7 +126,33 @@ class PostsTableTest extends TestCase
      */
     public function testBeforeMarshal()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $example = [
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+            'tags_as_string' => 'first tag, second tag',
+        ];
+
+        $tags = $this->Posts->newEntity($example)->tags;
+
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
+        $this->assertEquals('first tag', $tags[0]->tag);
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[1]);
+        $this->assertEquals('second tag', $tags[1]->tag);
+
+        //In this case, the `dog` tag already exists
+        $example['tags_as_string'] = 'first tag, dog';
+
+        $tags = $this->Posts->newEntity($example)->tags;
+
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
+        $this->assertEmpty($tags[0]->id);
+        $this->assertEquals('first tag', $tags[0]->tag);
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
+        $this->assertEquals(2, $tags[1]->id);
+        $this->assertEquals('dog', $tags[1]->tag);
     }
 
     /**
