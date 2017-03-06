@@ -47,6 +47,7 @@ class PostValidatorTest extends TestCase
      */
     public $fixtures = [
         'plugin.me_cms.posts',
+        'plugin.me_cms.tags',
     ];
 
     /**
@@ -108,6 +109,38 @@ class PostValidatorTest extends TestCase
      */
     public function testValidationForTags()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        foreach ([
+            'first, second',
+            'first,  second',
+            'first , second',
+            'first ,second',
+            'first  ,second',
+            'first,second',
+            ' first, second',
+            'first, second ',
+            ' first, second ',
+            ' first , second ',
+        ] as $value) {
+            $this->assertEmpty($this->Posts->newEntity($this->example)->errors());
+        }
+
+        foreach (['abc', str_repeat('a', 30)] as $value) {
+            $this->example['tags_as_string'] = $value;
+            $this->assertEmpty($this->Posts->newEntity($this->example)->errors());
+        }
+
+        foreach (['ab', str_repeat('a', 31)] as $value) {
+            $this->example['tags_as_string'] = $value;
+            $this->assertEquals([
+                'tags' => ['validTagsLength' => 'Each tag must be between 3 and 30 chars'],
+            ], $this->Posts->newEntity($this->example)->errors());
+        }
+
+        foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $value) {
+            $this->example['tags_as_string'] = $value;
+            $this->assertEquals([
+                'tags' => ['validTagsChars' => 'Allowed chars: lowercase letters, numbers, space'],
+            ], $this->Posts->newEntity($this->example)->errors());
+        }
     }
 }
