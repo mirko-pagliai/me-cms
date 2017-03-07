@@ -95,18 +95,18 @@ class AppController extends BaseController
      * @return \Cake\Network\Response|null|void
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses App\Controller\AppController::beforeFilter()
+     * @uses isBanned()
+     * @uses isOffline()
      */
     public function beforeFilter(Event $event)
     {
         //Checks if the site is offline
-        if ($this->request->isOffline()) {
+        if ($this->isOffline()) {
             return $this->redirect(['_name' => 'offline']);
         }
 
         //Checks if the user's IP address is banned
-        if ($this->request->isBanned() &&
-            !$this->request->isAction('ipNotAllowed', 'Systems')
-        ) {
+        if ($this->isBanned()) {
             return $this->redirect(['_name' => 'ipNotAllowed']);
         }
 
@@ -122,10 +122,10 @@ class AppController extends BaseController
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
+        $this->paginate['limit'] = config('default.records');
+
         if ($this->request->isAdmin()) {
             $this->paginate['limit'] = config('admin.records');
-        } else {
-            $this->paginate['limit'] = config('default.records');
         }
 
         $this->paginate['maxLimit'] = $this->paginate['limit'];
@@ -150,11 +150,11 @@ class AppController extends BaseController
             $this->viewBuilder()->layout('MeCms.ajax');
         }
 
+        $this->viewBuilder()->className('MeCms.View/App');
+
         //Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
         if ($this->request->isAdmin()) {
             $this->viewBuilder()->className('MeCms.View/Admin');
-        } else {
-            $this->viewBuilder()->className('MeCms.View/App');
         }
 
         //Loads the `Auth` helper.
@@ -197,5 +197,25 @@ class AppController extends BaseController
     {
         //By default, admins and managers can access all actions
         return $this->Auth->isGroup(['admin', 'manager']);
+    }
+
+    /**
+     * Checks if the user's IP address is banned
+     * @return bool
+     * @since 2.15.2
+     */
+    public function isBanned()
+    {
+        return $this->request->isBanned() && !$this->request->isAction('ipNotAllowed', 'Systems');
+    }
+
+    /**
+     * Checks if the site is offline
+     * @return bool
+     * @since 2.15.2
+     */
+    public function isOffline()
+    {
+        return $this->request->isOffline();
     }
 }

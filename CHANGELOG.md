@@ -5,6 +5,7 @@
     `buildTagsForRequestData()`;
 * added `TagValidatorTrait` class. It provides some methods shared by the
     validation classes;
+* added `isBanned()` and `isOffline()` methods to the `AppController` class;
 * fixed some little bugs for validation tags as string related to posts;
 * fixed bug, the tags of 3 characters were not accepted.
 
