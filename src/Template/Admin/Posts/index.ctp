@@ -107,68 +107,42 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $post->title,
-                                ['action' => 'edit', $post->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?>
                     </strong>
                     <?php
                     //If the post is not active (it's a draft)
                     if (!$post->active) {
-                        echo $this->Html->span(
-                            __d('me_cms', 'Draft'),
-                            ['class' => 'record-label record-label-warning']
-                        );
+                        echo $this->Html->span(__d('me_cms', 'Draft'), ['class' => 'record-label record-label-warning']);
                     }
 
                     //If the post is scheduled
                     if ($post->created->isFuture()) {
-                        echo $this->Html->span(
-                            __d('me_cms', 'Scheduled'),
-                            ['class' => 'record-label record-label-warning']
-                        );
+                        echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
                     }
 
                     if (!empty($post->tags)) {
-                        echo $this->Html->div(
-                            'margin-top-5 small',
-                            implode(PHP_EOL, array_map(function ($tag) {
-                                return $this->Html->link(
-                                    $tag->tag,
-                                    ['?' => ['tag' => $tag->tag]],
-                                    [
-                                        'icon' => 'tag',
-                                        'title' => __d('me_cms', 'View items that belong to this category'),
-                                    ]
-                                );
-                            }, $post->tags))
-                        );
+                        echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function ($tag) {
+                            return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
+                                'icon' => 'tag',
+                                'title' => __d('me_cms', 'View items that belong to this category'),
+                            ]);
+                        }, $post->tags)));
                     }
 
                     $actions = [];
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts
                     if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Edit'),
-                            ['action' => 'edit', $post->id],
-                            ['icon' => 'pencil']
-                        );
+                        $actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $post->id], ['icon' => 'pencil']);
                     }
 
                     //Only admins and managers can delete posts
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
-                            ['action' => 'delete', $post->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                            ]
-                        );
+                        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $post->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                        ]);
                     }
 
                     //If the post is active and is not scheduled
@@ -190,57 +164,50 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <?php
-                    echo $this->Html->link(
+                    <?= $this->Html->link(
                         $post->category->title,
                         ['?' => ['category' => $post->category->id]],
                         ['title' => __d('me_cms', 'View items that belong to this category')]
-                    );
-                    ?>
+                    ) ?>
                 </td>
                 <td class="min-width text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $post->user->full_name,
-                            ['?' => ['user' => $post->user->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this user')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $post->user->full_name,
+                        ['?' => ['user' => $post->user->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this user')]
+                    ) ?>
                 </td>
                 <td class="min-width text-center">
                     <?php
                     switch ($post->priority) {
                         case '1':
-                            echo $this->Html->badge('1', [
-                                'class' => 'priority-verylow',
-                                'tooltip' => __d('me_cms', 'Very low'),
-                            ]);
+                            $priority = 1;
+                            $class = 'priority-verylow';
+                            $tooltip = __d('me_cms', 'Very low');
                             break;
                         case '2':
-                            echo $this->Html->badge('2', [
-                                'class' => 'priority-low',
-                                'tooltip' => __d('me_cms', 'Low'),
-                            ]);
+                            $priority = 2;
+                            $class = 'priority-low';
+                            $tooltip = __d('me_cms', 'Low');
                             break;
                         case '4':
-                            echo $this->Html->badge('4', [
-                                'class' => 'priority-high',
-                                'tooltip' => __d('me_cms', 'High'),
-                            ]);
+                            $priority = 4;
+                            $class = 'priority-high';
+                            $tooltip = __d('me_cms', 'High');
                             break;
                         case '5':
-                            echo $this->Html->badge('5', [
-                                'class' => 'priority-veryhigh',
-                                'tooltip' => __d('me_cms', 'Very high'),
-                            ]);
+                            $priority = 5;
+                            $class = 'priority-veryhigh';
+                            $tooltip = __d('me_cms', 'Very high');
                             break;
                         default:
-                            echo $this->Html->badge('3', [
-                                'class' => 'priority-normal',
-                                'tooltip' => __d('me_cms', 'Normal'),
-                            ]);
+                            $priority = 3;
+                            $class = 'priority-normal';
+                            $tooltip = __d('me_cms', 'Normal');
                             break;
                     }
+
+                    echo $this->Html->badge($priority, compact('class', 'tooltip'));
                     ?>
                 </td>
                 <td class="min-width text-center">
