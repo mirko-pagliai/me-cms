@@ -7,7 +7,8 @@
     validation classes;
 * added `isBanned()` and `isOffline()` methods to the `AppController` class;
 * fixed some little bugs for validation tags as string related to posts;
-* fixed bug, the tags of 3 characters were not accepted.
+* fixed bug, the tags of 3 characters were not accepted;
+* added tests for `AppController` class.
 
 ### 2.15.1
 * fixed some minor bugs for `Users` validation and added tests;
