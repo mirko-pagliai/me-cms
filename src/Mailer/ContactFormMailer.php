@@ -47,7 +47,7 @@ class ContactFormMailer extends Mailer
             ->set([
                 'firstName' => $data['first_name'],
                 'lastName' => $data['last_name'],
-                'email' => $data['first_name'],
+                'email' => $data['email'],
                 'message' => $data['message'],
             ]);
     }
