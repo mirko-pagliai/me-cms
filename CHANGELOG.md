@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.15 branch
+### 2.15.3
+* added tests for `Mailer` class.
+
 ### 2.15.2
 * added `beforeMarshal()` method do `PostsTable` class. Removed
     `buildTagsForRequestData()`;
