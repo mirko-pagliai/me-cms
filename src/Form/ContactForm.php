@@ -24,6 +24,7 @@ namespace MeCms\Form;
 
 use Cake\Form\Form;
 use Cake\Mailer\MailerAwareTrait;
+use MeCms\Model\Validation\AppValidator;
 
 /**
  * ContactForm class.
@@ -42,7 +43,7 @@ class ContactForm extends Form
      */
     protected function _buildValidator(\Cake\Validation\Validator $validator)
     {
-        $validator = new \MeCms\Model\Validation\AppValidator();
+        $validator = new AppValidator;
 
         //First name
         $validator->requirePresence('first_name');
@@ -54,19 +55,21 @@ class ContactForm extends Form
         $validator->requirePresence('email');
 
         //Message
-        $validator->requirePresence('message')
-            ->add('message', [
-                'lengthBetween' => [
-                    'message' => __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
-                    'rule' => ['lengthBetween', 10, 1000],
-                ],
-            ]);
+        $validator->add('message', [
+            'lengthBetween' => [
+                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
+                'rule' => ['lengthBetween', 10, 1000],
+            ],
+        ])->requirePresence('message');
 
         return $validator;
     }
 
     /**
-     * Used by `execute()` to execute the form's action
+     * Used by `execute()` to execute the form's action.
+     *
+     * The `$data` array must contain the `email`, `first_name`, `last_name`
+     *  and `message` keys
      * @param array $data Form data
      * @return bool
      * @see MeCms\Mailer\ContactFormMailer::contactFormMail()
@@ -74,7 +77,11 @@ class ContactForm extends Form
     protected function _execute(array $data)
     {
         //Sends email
-        return $this->getMailer('MeCms.ContactForm')
-            ->send('contactFormMail', [$data]);
+        return $this->getMailer('MeCms.ContactForm')->send('contactFormMail', [
+            $data['email'],
+            $data['first_name'],
+            $data['last_name'],
+            $data['message'],
+        ]);
     }
 }

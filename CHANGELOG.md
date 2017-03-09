@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.15 branch
 ### 2.15.3
-* fixed a little bug in the contact form;
+* fixed code and a little bug for `ContactForm` and `ContactFormMailer` classes;
 * added tests for `Mailer` class.
 
 ### 2.15.2
