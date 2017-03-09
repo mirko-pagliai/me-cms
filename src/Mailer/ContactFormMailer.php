@@ -22,6 +22,7 @@
  */
 namespace MeCms\Mailer;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -37,9 +38,17 @@ class ContactFormMailer extends Mailer
      * @return void
      * @see MeCms\Controller\SystemsController::contactForm()
      * @see MeCms\Form\ContactForm
+     * @throws InternalErrorException
      */
     public function contactFormMail($data)
     {
+        //Checks that all required data is present
+        foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
+            if (empty($data[$key])) {
+                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` key from data', $key));
+            }
+        }
+
         $this->from($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->to(config('email.webmaster'))
