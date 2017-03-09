@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Mailer;
 
+use Cake\Mailer\Email;
 use Cake\TestSuite\TestCase;
 use MeCms\Mailer\ContactFormMailer;
 use Reflection\ReflectionTrait;
@@ -49,6 +50,8 @@ class ContactFormMailerTest extends TestCase
         parent::setUp();
 
         $this->ContactFormMailer = new ContactFormMailer;
+
+        Email::configTransport(['debug' => ['className' => 'Debug']]);
     }
 
     /**
@@ -59,6 +62,8 @@ class ContactFormMailerTest extends TestCase
     {
         parent::tearDown();
 
+        Email::dropTransport('debug');
+
         unset($this->ContactFormMailer);
     }
 
@@ -68,13 +73,20 @@ class ContactFormMailerTest extends TestCase
      */
     public function testContactFormMail()
     {
-        $this->ContactFormMailer->contactFormMail('test@test.it', 'First name', 'Last name', 'Message');
+        $data = [
+            'email' => 'test@test.com',
+            'first_name' => 'First name',
+            'last_name' => 'Last name',
+            'message' => 'Example of message',
+        ];
+
+        $this->ContactFormMailer->contactFormMail($data);
 
         //Gets `Email` instance
         $email = $this->getProperty($this->ContactFormMailer, '_email');
 
-        $this->assertEquals(['test@test.it' => 'First name Last name'], $email->from());
-        $this->assertEquals(['test@test.it' => 'First name Last name'], $email->replyTo());
+        $this->assertEquals(['test@test.com' => 'First name Last name'], $email->from());
+        $this->assertEquals(['test@test.com' => 'First name Last name'], $email->replyTo());
         $this->assertEquals(['email@example.com' => 'email@example.com'], $email->to());
         $this->assertEquals('Email from MeCms', $email->subject());
         $this->assertEquals([
@@ -83,11 +95,28 @@ class ContactFormMailerTest extends TestCase
         ], $email->template());
 
         $this->assertEquals([
-            'email' => 'test@test.it',
+            'email' => 'test@test.com',
+            'message' => 'Example of message',
+            'ipAddress' => false,
             'firstName' => 'First name',
             'lastName' => 'Last name',
-            'message' => 'Message',
-            'ipAddress' => false,
         ], $email->viewVars);
+
+
+        //Tries to send
+        $email->transport('debug');
+        $result = $this->ContactFormMailer->layout(false)->send('contactFormMail', [$data]);
+
+        //Checks headers
+        $this->assertContains('From: First name Last name <test@test.com>', $result['headers']);
+        $this->assertContains('Reply-To: First name Last name <test@test.com>', $result['headers']);
+        $this->assertContains('Sender: MeCms <email@example.com>', $result['headers']);
+        $this->assertContains('To: email@example.com', $result['headers']);
+        $this->assertContains('Subject: Email from MeCms', $result['headers']);
+        $this->assertContains('Content-Type: text/html; charset=UTF-8', $result['headers']);
+
+        //Checks the message
+        $this->assertContains('Email from First name Last name (test@test.com)', $result['message']);
+        $this->assertContains('Example of message', $result['message']);
     }
 }
