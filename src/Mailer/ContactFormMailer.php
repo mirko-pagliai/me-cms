@@ -38,7 +38,6 @@ class ContactFormMailer extends Mailer
      * @return void
      * @see MeCms\Controller\SystemsController::contactForm()
      * @see MeCms\Form\ContactForm
-     * @see MeCms\Form\ContactForm::_execute()
      */
     public function contactFormMail($email, $firstName, $lastName, $message)
     {
