@@ -40,6 +40,11 @@ class ContactFormMailerTest extends TestCase
     public $ContactFormMailer;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -52,6 +57,13 @@ class ContactFormMailerTest extends TestCase
         $this->ContactFormMailer = new ContactFormMailer;
 
         Email::configTransport(['debug' => ['className' => 'Debug']]);
+
+        $this->example = [
+            'email' => 'test@test.com',
+            'first_name' => 'First name',
+            'last_name' => 'Last name',
+            'message' => 'Example of message',
+        ];
     }
 
     /**
@@ -73,14 +85,7 @@ class ContactFormMailerTest extends TestCase
      */
     public function testContactFormMail()
     {
-        $data = [
-            'email' => 'test@test.com',
-            'first_name' => 'First name',
-            'last_name' => 'Last name',
-            'message' => 'Example of message',
-        ];
-
-        $this->ContactFormMailer->contactFormMail($data);
+        $this->ContactFormMailer->contactFormMail($this->example);
 
         //Gets `Email` instance
         $email = $this->getProperty($this->ContactFormMailer, '_email');
@@ -102,10 +107,9 @@ class ContactFormMailerTest extends TestCase
             'lastName' => 'Last name',
         ], $email->viewVars);
 
-
         //Tries to send
         $email->transport('debug');
-        $result = $this->ContactFormMailer->layout(false)->send('contactFormMail', [$data]);
+        $result = $this->ContactFormMailer->layout(false)->send('contactFormMail', [$this->example]);
 
         //Checks headers
         $this->assertContains('From: First name Last name <test@test.com>', $result['headers']);
@@ -118,5 +122,18 @@ class ContactFormMailerTest extends TestCase
         //Checks the message
         $this->assertContains('Email from First name Last name (test@test.com)', $result['message']);
         $this->assertContains('Example of message', $result['message']);
+    }
+
+    /**
+     * Tests for `contactFormMail()` method, with some missing data
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing `email` key from data
+     * @test
+     */
+    public function testContactFormMailMissingData()
+    {
+        unset($this->example['email']);
+
+        $this->ContactFormMailer->contactFormMail($this->example);
     }
 }
