@@ -30,22 +30,26 @@ use MeCms\Mailer\Mailer;
 class ContactFormMailer extends Mailer
 {
     /**
-     * Email for the contact form
-     * @param string $email Email address of the sender
-     * @param string $firstName First name of the sender
-     * @param string $lastName Last name of the sender
-     * @param string $message Message
+     * Email for the contact form.
+     *
+     * The `$data` array must contain the `email`, `first_name`, `last_name`.
+     * @param array $data Form data
      * @return void
      * @see MeCms\Controller\SystemsController::contactForm()
      * @see MeCms\Form\ContactForm
      */
-    public function contactFormMail($email, $firstName, $lastName, $message)
+    public function contactFormMail($data)
     {
-        $this->from($email, sprintf('%s %s', $firstName, $lastName))
-            ->replyTo($email, sprintf('%s %s', $firstName, $lastName))
+        $this->from($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
+            ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->to(config('email.webmaster'))
             ->subject(__d('me_cms', 'Email from {0}', config('main.title')))
             ->template('MeCms.Systems/contact_form')
-            ->set(compact('email', 'firstName', 'lastName', 'message'));
+            ->set([
+                'email' => $data['email'],
+                'firstName' => $data['first_name'],
+                'lastName' => $data['last_name'],
+                'message' => $data['message'],
+            ]);
     }
 }

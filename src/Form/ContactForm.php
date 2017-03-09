@@ -24,7 +24,6 @@ namespace MeCms\Form;
 
 use Cake\Form\Form;
 use Cake\Mailer\MailerAwareTrait;
-use Cake\Network\Exception\InternalErrorException;
 use MeCms\Model\Validation\AppValidator;
 
 /**
@@ -67,20 +66,17 @@ class ContactForm extends Form
     }
 
     /**
-     * Used by `execute()` to execute the form's action.
+     * Used by `execute()` to execute the form's action. This sends the email.
      *
-     * The `$data` array must contain the `email`, `first_name`, `last_name`
+     * The `$data` array must contain the `email`, `first_name`, `last_name`.
      *  and `message` keys
      * @param array $data Form data
      * @return bool
+     * @see MeCms\Controller\SystemsController::contactForm()
      * @see MeCms\Mailer\ContactFormMailer::contactFormMail()
      */
     protected function _execute(array $data)
     {
-        extract($data);
-
-        //Sends email
-        return $this->getMailer('MeCms.ContactForm')
-            ->send('contactFormMail', [$email, $first_name, $last_name, $message]);
+        return $this->getMailer('MeCms.ContactForm')->send('contactFormMail', [$data]);
     }
 }
