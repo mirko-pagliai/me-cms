@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of MeCms.
  *
@@ -163,7 +162,7 @@ class BaseUpdateShellTest extends TestCase
 
     /**
      * Test for `_getColumns()` method, with a no existing table
-     * @expectedException PDOException
+     * @expectedException Cake\Database\Exception
      * @expectedExceptionMessage SQLSTATE[42S02]: Base table or view not found: 1146 Table 'test.noExistingTable' doesn't exist
      */
     public function testGetColumnsNoExistingTable()
@@ -200,6 +199,16 @@ class BaseUpdateShellTest extends TestCase
     public function testTables()
     {
         $this->assertEquals([
+            'banners',
+            'banners_positions',
+            'pages',
+            'pages_categories',
+            'photos',
+            'photos_albums',
+            'posts',
+            'posts_categories',
+            'posts_tags',
+            'tags',
             'users',
             'users_groups',
         ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
