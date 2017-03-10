@@ -50,7 +50,7 @@ class ContactFormMailer extends Mailer
             }
         }
 
-        $this->from($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
+        $this->sender($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->to(config('email.webmaster'))
             ->subject(__d('me_cms', 'Email from {0}', config('main.title')))

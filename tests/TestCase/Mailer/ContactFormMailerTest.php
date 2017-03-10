@@ -90,7 +90,7 @@ class ContactFormMailerTest extends TestCase
         //Gets `Email` instance
         $email = $this->getProperty($this->ContactFormMailer, '_email');
 
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->from());
+        $this->assertEquals(['test@test.com' => 'James Blue'], $email->sender());
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->replyTo());
         $this->assertEquals(['email@example.com' => 'email@example.com'], $email->to());
         $this->assertEquals('Email from MeCms', $email->subject());
@@ -135,9 +135,9 @@ class ContactFormMailerTest extends TestCase
         extract($result);
 
         //Checks headers
-        $this->assertContains('From: James Blue <test@test.com>', $headers);
+        $this->assertContains('From: MeCms <email@example.com>', $headers);
         $this->assertContains('Reply-To: James Blue <test@test.com>', $headers);
-        $this->assertContains('Sender: MeCms <email@example.com>', $headers);
+        $this->assertContains('Sender: James Blue <test@test.com>', $headers);
         $this->assertContains('To: email@example.com', $headers);
         $this->assertContains('Subject: Email from MeCms', $headers);
         $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
