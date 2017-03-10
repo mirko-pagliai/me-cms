@@ -67,7 +67,7 @@ class UserValidator extends AppValidator
             ],
             'usernameNotReserved' => [
                 'message' => __d('me_cms', 'This value contains a reserved word'),
-                'rule' => function ($value, $context) {
+                'rule' => function ($value) {
                     return (bool)!preg_match('/(admin|manager|root|supervisor|moderator)/i', $value);
                 },
             ],
@@ -93,11 +93,11 @@ class UserValidator extends AppValidator
             ],
             'passwordIsStrong' => [
                 'message' => __d('me_cms', 'The password should contain letters, numbers and symbols'),
-                'rule' => function ($value, $context) {
+                'rule' => function ($value) {
                     return (bool)(
-                        preg_match('/[a-z]+/i', $value) &&
-                        preg_match('/[0-9]+/', $value) &&
-                        preg_match('/[^a-z0-9]+/i', $value)
+                        preg_match('/[A-z]+/', $value) &&
+                        preg_match('/\d+/', $value) &&
+                        preg_match('/[^A-z\d]+/', $value)
                     );
                 },
             ],
