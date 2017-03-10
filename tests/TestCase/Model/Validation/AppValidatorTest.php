@@ -135,12 +135,12 @@ class AppValidatorTest extends TestCase
             ], $this->Users->newEntity($this->example['Users'])->errors());
         }
 
-        $this->example['Users']['email'] = 'example' . str_repeat('a', 85) . '@test.com';
+        $this->example['Users']['email'] = str_repeat('a', 92) . '@test.com';
         $this->assertEquals([
             'email' => ['maxLength' => 'Must be at most 100 chars'],
         ], $this->Users->newEntity($this->example['Users'])->errors());
 
-        $this->example['Users']['email'] = 'example' . str_repeat('a', 84) . '@test.com';
+        $this->example['Users']['email'] = str_repeat('a', 91) . '@test.com';
         $this->assertEmpty($this->Users->newEntity($this->example['Users'])->errors());
     }
 
@@ -153,6 +153,13 @@ class AppValidatorTest extends TestCase
         $copy = $this->example['Users'];
 
         foreach (['first_name', 'last_name'] as $field) {
+            foreach (['abc', 'Ab-c', 'Ab$', 'abC'] as $value) {
+                $copy[$field] = $value;
+                $this->assertEquals([
+                    $field => ['personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'],
+                ], $this->Users->newEntity($copy)->errors());
+            }
+
             foreach (['Ab', 'A' . str_repeat('a', 40)] as $value) {
                 $copy[$field] = $value;
                 $this->assertEquals([
@@ -163,13 +170,6 @@ class AppValidatorTest extends TestCase
             foreach (['Abc', 'A' . str_repeat('a', 39)] as $value) {
                 $copy[$field] = $value;
                 $this->assertEmpty($this->Users->newEntity($copy)->errors());
-            }
-
-            foreach (['abc', 'Ab-c', 'Ab$', 'abC'] as $value) {
-                $copy[$field] = $value;
-                $this->assertEquals([
-                    $field => ['personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'],
-                ], $this->Users->newEntity($copy)->errors());
             }
 
             $copy[$field] = $this->example['Users'][$field];
@@ -235,6 +235,13 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForSlug()
     {
+        foreach (['Abc', 'ab_c', 'ab$'] as $value) {
+            $this->example['Posts']['slug'] = $value;
+            $this->assertEquals([
+                'slug' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash'],
+            ], $this->Posts->newEntity($this->example['Posts'])->errors());
+        }
+
         $this->example['Posts']['slug'] = str_repeat('a', 101);
         $this->assertEquals([
             'slug' => ['maxLength' => 'Must be between 3 and 100 chars'],
@@ -244,13 +251,6 @@ class AppValidatorTest extends TestCase
             $this->example['Posts']['slug'] = $value;
             $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
         }
-
-        foreach (['Abc', 'ab_c', 'ab$'] as $value) {
-            $this->example['Posts']['slug'] = $value;
-            $this->assertEquals([
-                'slug' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash'],
-            ], $this->Posts->newEntity($this->example['Posts'])->errors());
-        }
     }
 
     /**
@@ -259,16 +259,16 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForPriority()
     {
-        foreach (range(1, 5) as $value) {
-            $this->example['Posts']['priority'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
-        }
-
         foreach ([0, 6, 'string'] as $value) {
             $this->example['Posts']['priority'] = $value;
             $this->assertEquals([
                 'priority' => ['range' => 'You have to select a valid option'],
             ], $this->Posts->newEntity($this->example['Posts'])->errors());
+        }
+
+        foreach (range(1, 5) as $value) {
+            $this->example['Posts']['priority'] = $value;
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
         }
     }
 
@@ -293,15 +293,15 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForActive()
     {
-        foreach ([true, false] as $value) {
-            $this->example['Posts']['active'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
-        }
-
         $this->example['Posts']['active'] = 'string';
         $this->assertEquals([
             'active' => ['boolean' => 'You have to select a valid option'],
         ], $this->Posts->newEntity($this->example['Posts'])->errors());
+
+        foreach ([true, false] as $value) {
+            $this->example['Posts']['active'] = $value;
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+        }
     }
 
     /**

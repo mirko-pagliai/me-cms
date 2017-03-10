@@ -120,9 +120,6 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationForTarget()
     {
-        $this->example['target'] = 'http://example.com';
-        $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
-
         $this->example['target'] = 'string';
         $this->assertEquals([
             'target' => ['url' => 'Must be a valid url'],
@@ -135,6 +132,9 @@ class BannerValidatorTest extends TestCase
 
         $this->example['target'] = 'http://example.com/' . str_repeat('a', 236);
         $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
+
+        $this->example['target'] = 'http://example.com';
+        $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
     }
 
     /**
@@ -143,14 +143,14 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationForThumbnail()
     {
-        foreach ([true, false] as $value) {
-            $this->example['thumbnail'] = $value;
-            $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
-        }
-
         $this->example['thumbnail'] = 'string';
         $this->assertEquals([
             'thumbnail' => ['boolean' => 'You have to select a valid option'],
         ], $this->Banners->newEntity($this->example)->errors());
+
+        foreach ([true, false] as $value) {
+            $this->example['thumbnail'] = $value;
+            $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
+        }
     }
 }
