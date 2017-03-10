@@ -76,7 +76,7 @@ class PhotosAlbumValidatorTest extends TestCase
     {
         $this->assertEmpty($this->PhotosAlbums->newEntity($this->example)->errors());
 
-        foreach ($this->example as $key => $value) {
+        foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);

@@ -82,7 +82,7 @@ class UserValidatorTest extends TestCase
     {
         $this->assertEmpty($this->Users->newEntity($this->example)->errors());
 
-        foreach ($this->example as $key => $value) {
+        foreach (array_keys($this->example) as $key) {
             if ($key === 'password') {
                 continue;
             }
