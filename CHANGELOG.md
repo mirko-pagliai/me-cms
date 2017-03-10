@@ -3,7 +3,8 @@
 ### 2.15.3
 * fixed code for `BackupForm` class. Added `_getBackupExportInstance()` method;
 * fixed code and a little bug for `ContactForm` and `ContactFormMailer` classes;
-* added tests for `ContactForm`, `ContactFormMailer` and `Mailer` classes.
+* added tests for all `Form` classes;
+* added tests for `ContactFormMailer` and `Mailer` classes.
 
 ### 2.15.2
 * added `beforeMarshal()` method do `PostsTable` class. Removed
