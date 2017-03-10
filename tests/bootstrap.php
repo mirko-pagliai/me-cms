@@ -141,15 +141,13 @@ Plugin::load('MeTools', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
 ]);
 
+define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
 
-//@codingStandardsIgnoreLine
+//@codingStandardsIgnoreStart
 @mkdir(LOGIN_RECORDS);
-
-define('UPLOADED', WWW_ROOT . 'files' . DS);
-
-//@codingStandardsIgnoreLine
 @mkdir(UPLOADED);
+//@codingStandardsIgnoreEnd
 
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap

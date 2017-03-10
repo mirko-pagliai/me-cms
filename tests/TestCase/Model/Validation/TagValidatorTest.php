@@ -82,9 +82,11 @@ class TagValidatorTest extends TestCase
      */
     public function testValidationForTag()
     {
-        foreach (['abc', str_repeat('a', 30)] as $value) {
+        foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $value) {
             $this->example['tag'] = $value;
-            $this->assertEmpty($this->Tags->newEntity($this->example)->errors());
+            $this->assertEquals([
+                'tag' => ['validTagChars' => 'Allowed chars: lowercase letters, numbers, space'],
+            ], $this->Tags->newEntity($this->example)->errors());
         }
 
         foreach (['ab', str_repeat('a', 31)] as $value) {
@@ -94,11 +96,9 @@ class TagValidatorTest extends TestCase
             ], $this->Tags->newEntity($this->example)->errors());
         }
 
-        foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $value) {
+        foreach (['abc', str_repeat('a', 30)] as $value) {
             $this->example['tag'] = $value;
-            $this->assertEquals([
-                'tag' => ['validTagChars' => 'Allowed chars: lowercase letters, numbers, space'],
-            ], $this->Tags->newEntity($this->example)->errors());
+            $this->assertEmpty($this->Tags->newEntity($this->example)->errors());
         }
     }
 }

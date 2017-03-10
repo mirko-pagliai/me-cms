@@ -21,11 +21,11 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <?= $this->Html->title(config('main.title')) ?>
+
     </head>
     <body>
         <?php
@@ -34,36 +34,16 @@
         }
         ?>
         <br />
-
         <small>
-            <?php
-                echo __d(
-                    'me_cms',
-                    'This email was sent automatically from {0}',
-                    $this->Html->link(
-                        config('main.title'),
-                        $this->Url->build('/', true)
-                    )
-                );
-            ?>
-        </small>
+            <?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(
+                config('main.title'),
+                $this->Url->build('/', true)
+            )) ?>
 
+        </small>
         <br />
-
-        <small>
-            <?php
-                echo __d(
-                    'me_cms',
-                    'The request has been sent from the IP {0}',
-                    $ipAddress
-                );
-            ?>
-        </small>
-
+        <small><?= __d('me_cms', 'The request has been sent from the IP {0}', $ipAddress) ?></small>
         <br />
-
-        <small>
-            <?= __d('me_cms', 'Please, don\'t reply to this email') ?>
-        </small>
+        <small><?= __d('me_cms', 'Please, don\'t reply to this email') ?></small>
     </body>
 </html>

@@ -19,16 +19,17 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\Controller\SystemsController::contactForm()
+ * @see         MeCms\Mailer\ContactFormMailer
  */
 namespace MeCms\Form;
 
 use Cake\Form\Form;
 use Cake\Mailer\MailerAwareTrait;
+use MeCms\Model\Validation\AppValidator;
 
 /**
- * ContactForm class.
- *
- * It is used by `MeCms\Controller\SystemsController::contactForm()`.
+ * ContactForm class
  */
 class ContactForm extends Form
 {
@@ -42,7 +43,7 @@ class ContactForm extends Form
      */
     protected function _buildValidator(\Cake\Validation\Validator $validator)
     {
-        $validator = new \MeCms\Model\Validation\AppValidator();
+        $validator = new AppValidator;
 
         //First name
         $validator->requirePresence('first_name');
@@ -54,27 +55,26 @@ class ContactForm extends Form
         $validator->requirePresence('email');
 
         //Message
-        $validator->requirePresence('message')
-            ->add('message', [
-                'lengthBetween' => [
-                    'message' => __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
-                    'rule' => ['lengthBetween', 10, 1000],
-                ],
-            ]);
+        $validator->add('message', [
+            'lengthBetween' => [
+                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 10, 1000),
+                'rule' => ['lengthBetween', 10, 1000],
+            ],
+        ])->requirePresence('message');
 
         return $validator;
     }
 
     /**
-     * Used by `execute()` to execute the form's action
+     * Used by `execute()` to execute the form's action. This sends the email.
+     *
+     * The `$data` array must contain the `email`, `first_name`, `last_name`
+     *  and `message` keys
      * @param array $data Form data
      * @return bool
-     * @see MeCms\Mailer\ContactFormMailer::contactFormMail()
      */
     protected function _execute(array $data)
     {
-        //Sends email
-        return $this->getMailer('MeCms.ContactForm')
-            ->send('contactFormMail', [$data]);
+        return $this->getMailer('MeCms.ContactForm')->send('contactFormMail', [$data]);
     }
 }

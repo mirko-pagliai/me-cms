@@ -23,25 +23,36 @@
  */
 namespace MeCms\Mailer;
 
-use Cake\Mailer\Mailer as BaseMailer;
+use Cake\Mailer\Mailer as CakeMailer;
 
 /**
  * Mailer classes let you encapsulate related Email logic into a reusable.
  *
  * Rewrites {@link http://api.cakephp.org/3.4/class-Cake.Mailer.Mailer.html Mailer}.
  */
-class Mailer extends BaseMailer
+class Mailer extends CakeMailer
 {
+    /**
+     * Gets the Email instance
+     * @return \Cake\Mailer\Email Email instance
+     * @since 2.15.3
+     */
+    protected function getEmailInstance()
+    {
+        return $this->_email;
+    }
+
     /**
      * Constructor
      * @param \Cake\Mailer\Email|null $email Email instance
      * @uses Cake\Mailer\Mailer::__construct()
+     * @uses getEmailInstance()
      */
     public function __construct(\Cake\Mailer\Email $email = null)
     {
         parent::__construct($email);
 
-        $this->_email->profile('default')
+        $this->getEmailInstance()
             ->helpers('MeTools.Html')
             ->set('ipAddress', getClientIp())
             ->from(config('email.webmaster'), config('main.title'))

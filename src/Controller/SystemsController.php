@@ -25,6 +25,7 @@ namespace MeCms\Controller;
 use Cake\Filesystem\File;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
+use MeCms\Form\ContactForm;
 
 /**
  * Systems controller
@@ -49,8 +50,7 @@ class SystemsController extends AppController
      * Contact form
      * @return \Cake\Network\Response|null|void
      * @see MeCms\Form\ContactForm
-     * @see MeCms\Form\ContactForm::execute()
-     * @see MeCms\Mailer\ContactFormMailer::contactFormMail()
+     * @see MeCms\Mailer\ContactFormMailer
      * @uses MeTools\Controller\Component\Recaptcha::check()
      * @uses MeTools\Controller\Component\Recaptcha::getError()
      */
@@ -63,7 +63,7 @@ class SystemsController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $contact = new \MeCms\Form\ContactForm();
+        $contact = new ContactForm;
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
@@ -71,7 +71,7 @@ class SystemsController extends AppController
                 $this->Flash->error($this->Recaptcha->getError());
             } else {
                 //Sends the email
-                if ($contact->execute($this->request->data)) {
+                if ($contact->execute($this->request->data())) {
                     $this->Flash->success(__d('me_cms', 'The email has been sent'));
 
                     return $this->redirect(['_name' => 'homepage']);

@@ -19,9 +19,12 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\Controller\SystemsController::contactForm()
+ * @see         MeCms\Form\ContactForm
  */
 namespace MeCms\Mailer;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -30,24 +33,32 @@ use MeCms\Mailer\Mailer;
 class ContactFormMailer extends Mailer
 {
     /**
-     * Email for the contact form
-     * @param array $data Data
+     * Email for the contact form.
+     *
+     * The `$data` array must contain the `email`, `first_name`, `last_name`
+     *  and `message` keys
+     * @param array $data Form data
      * @return void
-     * @see MeCms\Controller\SystemsController::contactForm()
-     * @see MeCms\Form\ContactForm
-     * @see MeCms\Form\ContactForm::_execute()
+     * @throws InternalErrorException
      */
     public function contactFormMail($data)
     {
-        $this->from($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
+        //Checks that all required data is present
+        foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
+            if (empty($data[$key])) {
+                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` key from data', $key));
+            }
+        }
+
+        $this->sender($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->to(config('email.webmaster'))
             ->subject(__d('me_cms', 'Email from {0}', config('main.title')))
             ->template('MeCms.Systems/contact_form')
             ->set([
+                'email' => $data['email'],
                 'firstName' => $data['first_name'],
                 'lastName' => $data['last_name'],
-                'email' => $data['first_name'],
                 'message' => $data['message'],
             ]);
     }

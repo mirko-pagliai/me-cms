@@ -20,34 +20,23 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Test\TestCase\Model\Validation;
+namespace MeCms\Test\TestCase\Mailer;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use MeCms\Mailer\Mailer;
+use Reflection\ReflectionTrait;
 
 /**
- * PostsCategoryValidatorTest class
+ * MailerTest class
  */
-class PostsCategoryValidatorTest extends TestCase
+class MailerTest extends TestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
-     */
-    protected $PostsCategories;
+    use ReflectionTrait;
 
     /**
-     * Example data
-     * @var array
+     * @var \MeCms\Mailer\Mailer
      */
-    protected $example;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms.posts_categories',
-    ];
+    public $Mailer;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -59,31 +48,34 @@ class PostsCategoryValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->PostsCategories = TableRegistry::get('MeCms.PostsCategories');
-
-        $this->example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $this->Mailer = new Mailer;
     }
 
     /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Mailer);
+    }
+
+    /**
+     * Tests for `__construct()` method
      * @test
      */
-    public function testValidationExampleData()
+    public function testConstruct()
     {
-        $this->assertEmpty($this->PostsCategories->newEntity($this->example)->errors());
+        //Gets `Email` instance
+        $email = $this->invokeMethod($this->Mailer, 'getEmailInstance');
 
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
+        $this->assertEquals(['MeTools.Html'], $email->helpers());
+        $this->assertEquals(['email@example.com' => 'MeCms'], $email->sender());
+        $this->assertEquals(['email@example.com' => 'MeCms'], $email->from());
+        $this->assertEquals('html', $email->emailFormat());
 
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->PostsCategories->newEntity($copy)->errors());
-        }
+        $this->assertEquals(['ipAddress' => false], $email->viewVars);
     }
 }
