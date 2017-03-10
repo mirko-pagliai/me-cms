@@ -136,9 +136,7 @@ class ContactFormTest extends TestCase
             ->setMethods(['getMailer'])
             ->getMock();
 
-        $this->ContactForm->expects($this->once())
-            ->method('getMailer')
-            ->with('MeCms.ContactForm')
+        $this->ContactForm->method('getMailer')
             ->will($this->returnCallback(function ($data) {
                 return $this->getMailer($data)->transport('debug');
             }));
