@@ -106,22 +106,6 @@ class ContactFormMailerTest extends TestCase
             'firstName' => 'First name',
             'lastName' => 'Last name',
         ], $email->viewVars);
-
-        //Tries to send
-        $email->transport('debug');
-        $result = $this->ContactFormMailer->layout(false)->send('contactFormMail', [$this->example]);
-
-        //Checks headers
-        $this->assertContains('From: First name Last name <test@test.com>', $result['headers']);
-        $this->assertContains('Reply-To: First name Last name <test@test.com>', $result['headers']);
-        $this->assertContains('Sender: MeCms <email@example.com>', $result['headers']);
-        $this->assertContains('To: email@example.com', $result['headers']);
-        $this->assertContains('Subject: Email from MeCms', $result['headers']);
-        $this->assertContains('Content-Type: text/html; charset=UTF-8', $result['headers']);
-
-        //Checks the message
-        $this->assertContains('Email from First name Last name (test@test.com)', $result['message']);
-        $this->assertContains('Example of message', $result['message']);
     }
 
     /**
@@ -135,5 +119,31 @@ class ContactFormMailerTest extends TestCase
         unset($this->example['email']);
 
         $this->ContactFormMailer->contactFormMail($this->example);
+    }
+
+    /**
+     * Tests for `contactFormMail()` method, calling `send()` method
+     * @test
+     */
+    public function testContactFormMailWithSend()
+    {
+        $result = $this->ContactFormMailer->transport('debug')
+            ->layout(false)
+            ->send('contactFormMail', [$this->example]);
+
+        $headers = $message = null;
+        extract($result);
+
+        //Checks headers
+        $this->assertContains('From: First name Last name <test@test.com>', $headers);
+        $this->assertContains('Reply-To: First name Last name <test@test.com>', $headers);
+        $this->assertContains('Sender: MeCms <email@example.com>', $headers);
+        $this->assertContains('To: email@example.com', $headers);
+        $this->assertContains('Subject: Email from MeCms', $headers);
+        $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
+
+        //Checks the message
+        $this->assertContains('Email from First name Last name (test@test.com)', $message);
+        $this->assertContains('Example of message', $message);
     }
 }
