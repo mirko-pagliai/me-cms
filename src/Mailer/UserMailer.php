@@ -22,6 +22,7 @@
  */
 namespace MeCms\Mailer;
 
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -37,9 +38,17 @@ class UserMailer extends Mailer
      * @return void
      * @see MeCms\Controller\Admin\UsersController::resendActivation()
      * @see MeCms\Controller\Admin\UsersController::signup()
+     * @throws InternalErrorException
      */
     public function activateAccount($user)
     {
+        //Checks that all required data is present
+        foreach (['email', 'full_name'] as $property) {
+            if (empty($user->$property)) {
+                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` property from data', $property));
+            }
+        }
+
         $this->to([$user->email => $user->full_name])
             ->subject(__d('me_cms', 'Activate your account'))
             ->template('MeCms.Users/activate_account')
@@ -53,9 +62,17 @@ class UserMailer extends Mailer
      * @param object $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::changePassword()
+     * @throws InternalErrorException
      */
     public function changePassword($user)
     {
+        //Checks that all required data is present
+        foreach (['email', 'full_name'] as $property) {
+            if (empty($user->$property)) {
+                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` property from data', $property));
+            }
+        }
+
         $this->to([$user->email => $user->full_name])
             ->subject(__d('me_cms', 'Your password has been changed'))
             ->template('MeCms.Users/change_password')
@@ -69,9 +86,17 @@ class UserMailer extends Mailer
      * @param object $user User data
      * @return void
      * @see MeCms\Controller\UsersController::forgotPassword()
+     * @throws InternalErrorException
      */
     public function forgotPassword($user)
     {
+        //Checks that all required data is present
+        foreach (['email', 'full_name'] as $property) {
+            if (empty($user->$property)) {
+                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` property from data', $property));
+            }
+        }
+
         $this->to([$user->email => $user->full_name])
             ->subject(__d('me_cms', 'Reset your password'))
             ->template('MeCms.Users/forgot_password')
