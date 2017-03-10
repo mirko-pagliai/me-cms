@@ -19,6 +19,8 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\Controller\SystemsController::contactForm()
+ * @see         MeCms\Mailer\ContactFormMailer
  */
 namespace MeCms\Form;
 
@@ -27,9 +29,7 @@ use Cake\Mailer\MailerAwareTrait;
 use MeCms\Model\Validation\AppValidator;
 
 /**
- * ContactForm class.
- *
- * It is used by `MeCms\Controller\SystemsController::contactForm()`.
+ * ContactForm class
  */
 class ContactForm extends Form
 {
@@ -68,12 +68,10 @@ class ContactForm extends Form
     /**
      * Used by `execute()` to execute the form's action. This sends the email.
      *
-     * The `$data` array must contain the `email`, `first_name`, `last_name`.
+     * The `$data` array must contain the `email`, `first_name`, `last_name`
      *  and `message` keys
      * @param array $data Form data
      * @return bool
-     * @see MeCms\Controller\SystemsController::contactForm()
-     * @see MeCms\Mailer\ContactFormMailer::contactFormMail()
      */
     protected function _execute(array $data)
     {

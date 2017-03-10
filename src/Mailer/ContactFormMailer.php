@@ -19,6 +19,8 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         MeCms\Controller\SystemsController::contactForm()
+ * @see         MeCms\Form\ContactForm
  */
 namespace MeCms\Mailer;
 
@@ -33,11 +35,10 @@ class ContactFormMailer extends Mailer
     /**
      * Email for the contact form.
      *
-     * The `$data` array must contain the `email`, `first_name`, `last_name`.
+     * The `$data` array must contain the `email`, `first_name`, `last_name`
+     *  and `message` keys
      * @param array $data Form data
      * @return void
-     * @see MeCms\Controller\SystemsController::contactForm()
-     * @see MeCms\Form\ContactForm
      * @throws InternalErrorException
      */
     public function contactFormMail($data)
