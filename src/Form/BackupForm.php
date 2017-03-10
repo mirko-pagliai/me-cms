@@ -40,7 +40,7 @@ class BackupForm extends Form
 
     /**
      * Defines the validator using the methods on Cake\Validation\Validator or
-     * loads a pre-defined validator from a concrete class.
+     *  loads a pre-defined validator from a concrete class.
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \MeCms\Model\Validation\AppValidator
      */
