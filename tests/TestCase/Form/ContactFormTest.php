@@ -109,13 +109,6 @@ class ContactFormTest extends TestCase
      */
     public function testValidationForMessage()
     {
-        foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {
-            $this->example['message'] = $value;
-
-            $this->assertTrue($this->ContactForm->validate($this->example));
-            $this->assertEmpty($this->ContactForm->errors());
-        }
-
         foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $value) {
             $this->example['message'] = $value;
 
@@ -123,6 +116,13 @@ class ContactFormTest extends TestCase
             $this->assertEquals([
                 'message' => ['lengthBetween' => 'Must be between 10 and 1000 chars'],
             ], $this->ContactForm->errors());
+        }
+
+        foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {
+            $this->example['message'] = $value;
+
+            $this->assertTrue($this->ContactForm->validate($this->example));
+            $this->assertEmpty($this->ContactForm->errors());
         }
     }
 
