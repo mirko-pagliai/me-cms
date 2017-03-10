@@ -30,8 +30,10 @@ use MeCms\Mailer\Mailer;
 class UserMailer extends Mailer
 {
     /**
-     * Email to activate the user account account (signup and resend activation)
-     * @param array $user User data
+     * Email to activate the user account (signup and resend activation).
+     *
+     * The `$user` object must contain the `email` and `full_name` property
+     * @param object $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::resendActivation()
      * @see MeCms\Controller\Admin\UsersController::signup()
@@ -39,36 +41,40 @@ class UserMailer extends Mailer
     public function activateAccount($user)
     {
         $this->to([$user->email => $user->full_name])
-            ->set(['fullName' => $user->full_name])
             ->subject(__d('me_cms', 'Activate your account'))
-            ->template('MeCms.Users/activate_account');
+            ->template('MeCms.Users/activate_account')
+            ->set(['fullName' => $user->full_name]);
     }
 
     /**
-     * Email to change the user's password
-     * @param array $user User data
+     * Email to change the user's password.
+     *
+     * The `$user` object must contain the `email` and `full_name` property
+     * @param object $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::changePassword()
      */
     public function changePassword($user)
     {
         $this->to([$user->email => $user->full_name])
-            ->set(['fullName' => $user->full_name])
             ->subject(__d('me_cms', 'Your password has been changed'))
-            ->template('MeCms.Users/change_password');
+            ->template('MeCms.Users/change_password')
+            ->set(['fullName' => $user->full_name]);
     }
 
     /**
-     * Email to ask a new password
-     * @param array $user User data
+     * Email to ask a new password.
+     *
+     * The `$user` object must contain the `email` and `full_name` property
+     * @param object $user User data
      * @return void
      * @see MeCms\Controller\UsersController::forgotPassword()
      */
     public function forgotPassword($user)
     {
         $this->to([$user->email => $user->full_name])
-            ->set(['fullName' => $user->full_name])
             ->subject(__d('me_cms', 'Reset your password'))
-            ->template('MeCms.Users/forgot_password');
+            ->template('MeCms.Users/forgot_password')
+            ->set(['fullName' => $user->full_name]);
     }
 }
