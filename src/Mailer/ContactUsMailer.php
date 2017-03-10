@@ -19,8 +19,8 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
- * @see         MeCms\Controller\SystemsController::contactForm()
- * @see         MeCms\Form\ContactForm
+ * @see         MeCms\Controller\SystemsController::contactUs()
+ * @see         MeCms\Form\ContactUsForm
  */
 namespace MeCms\Mailer;
 
@@ -28,20 +28,20 @@ use Cake\Network\Exception\InternalErrorException;
 use MeCms\Mailer\Mailer;
 
 /**
- * ContactFormMailer class
+ * ContactUsMailer class
  */
-class ContactFormMailer extends Mailer
+class ContactUsMailer extends Mailer
 {
     /**
-     * Email for the contact form.
+     * Email for the "contact us" form.
      *
      * The `$data` array must contain the `email`, `first_name`, `last_name`
-     *  and `message` keys
+     *  and `message` keys.
      * @param array $data Form data
      * @return void
      * @throws InternalErrorException
      */
-    public function contactFormMail($data)
+    public function contactUsMail($data)
     {
         //Checks that all required data is present
         foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
@@ -54,7 +54,7 @@ class ContactFormMailer extends Mailer
             ->replyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->to(config('email.webmaster'))
             ->subject(__d('me_cms', 'Email from {0}', config('main.title')))
-            ->template('MeCms.Systems/contact_form')
+            ->template('MeCms.Systems/contact_us')
             ->set([
                 'email' => $data['email'],
                 'firstName' => $data['first_name'],

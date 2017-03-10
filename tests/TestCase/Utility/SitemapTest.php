@@ -388,7 +388,7 @@ class SitemapTest extends TestCase
         ], Sitemap::systems());
 
         //Disabled contact form
-        Configure::write('MeCms.default.contact_form', false);
+        Configure::write('MeCms.default.contact_us', false);
 
         $this->assertEmpty(Sitemap::systems());
     }

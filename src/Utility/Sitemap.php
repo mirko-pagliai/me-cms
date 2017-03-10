@@ -283,8 +283,8 @@ class Sitemap extends SitemapBuilder
         $url = [];
 
         //Contact form
-        if (config('default.contact_form')) {
-            $url[] = self::parse(['_name' => 'contactForm']);
+        if (config('default.contact_us')) {
+            $url[] = self::parse(['_name' => 'contactUs']);
         }
 
         return $url;

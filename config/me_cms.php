@@ -13,8 +13,8 @@ return [ME_CMS => [
         'analytics' => false,
         //Displays the alert for the cookie policy
         'cookies_policy' => true,
-        //Contact form (enabled or disabled)
-        'contact_form' => true,
+        //"Contact us" form (enabled or disabled)
+        'contact_us' => true,
         //Facebook app ID or `false`
         'facebook_app_id' => false,
         //Uses Fancybox for photos

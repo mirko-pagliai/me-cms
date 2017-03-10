@@ -21,29 +21,16 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-
 <footer class="navbar-fixed-bottom">
     <?php
         $links = [
-            $this->Html->link(
-                __d('me_cms', 'Search'),
-                ['_name' => 'postsSearch']
-            ),
-            $this->Html->link(
-                __d('me_cms', 'Cookies policy'),
-                ['_name' => 'page', 'cookies-policy']
-            ),
-            $this->Html->link(
-                __d('me_cms', 'Feed RSS'),
-                '/posts/rss'
-            ),
+            $this->Html->link(__d('me_cms', 'Search'), ['_name' => 'postsSearch']),
+            $this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
+            $this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss'),
         ];
 
-        if (config('default.contact_form')) {
-            $links[] = $this->Html->link(
-                __d('me_cms', 'Contact us'),
-                ['_name' => 'contactForm']
-            );
+        if (config('default.contact_us')) {
+            $links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contactUs']);
         }
 
         echo $this->Html->ul($links);
@@ -53,17 +40,10 @@
         <?= __d('me_cms', 'Powered by {0}. Copyright {1}', ME_CMS, date('Y')) ?>
     </p>
     <p>
-        <?php
-            echo __d(
-                'me_cms',
-                'Developed by {0} for {1}',
-                'Mirko Pagliai',
-                $this->Html->link(
-                    'Nova Atlantis LTD',
-                    'http://novatlantis.it',
-                    ['target' => '_blank']
-                )
-            );
-        ?>
+        <?= __d('me_cms', 'Developed by {0} for {1}', 'Mirko Pagliai', $this->Html->link(
+            'Nova Atlantis LTD',
+            'http://novatlantis.it',
+            ['target' => '_blank']
+        )) ?>
     </p>
 </footer>
