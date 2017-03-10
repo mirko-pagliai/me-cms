@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Mailer;
 
+use Cake\Mailer\Email;
 use Cake\TestSuite\TestCase;
 use MeCms\Mailer\ContactFormMailer;
 use Reflection\ReflectionTrait;
@@ -53,6 +54,8 @@ class ContactFormMailerTest extends TestCase
     {
         parent::setUp();
 
+        Email::configTransport(['debug' => ['className' => 'Debug']]);
+
         $this->ContactFormMailer = new ContactFormMailer;
 
         $this->example = [
@@ -70,6 +73,8 @@ class ContactFormMailerTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+
+        Email::dropTransport('debug');
 
         unset($this->ContactFormMailer);
     }

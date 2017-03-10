@@ -108,8 +108,6 @@ if (!getenv('db_dsn')) {
 ConnectionManager::config('test', ['url' => getenv('db_dsn')]);
 ConnectionManager::config('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
 
-\Cake\Mailer\Email::configTransport(['debug' => ['className' => 'Debug']]);
-
 Configure::write('Session', [
     'defaults' => 'php'
 ]);
