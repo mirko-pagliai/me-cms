@@ -5,6 +5,9 @@
     `ContactUsMailer`. This creates less confusion with the classes names.
 
 ## 2.15 branch
+### 2.15.4
+* improved code for `BaseUpdateShell` class.
+
 ### 2.15.3
 * fixed code for `BackupForm` class. Added `_getBackupExportInstance()` method;
 * fixed code and a little bug for `ContactForm` and `ContactFormMailer` classes;

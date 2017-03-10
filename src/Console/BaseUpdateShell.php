@@ -104,11 +104,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _getColumns($table)
     {
-        $columns = $this->connection->execute(sprintf('SHOW COLUMNS FROM %s;', $table))->fetchAll();
-
-        return array_map(function ($column) {
-            return firstValue($column);
-        }, $columns);
+        return $this->connection->schemaCollection()->describe($table)->columns();
     }
 
     /**
@@ -141,11 +137,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _tables()
     {
-        $tables = $this->connection->execute(sprintf('SHOW TABLES;'))->fetchAll();
-
-        return array_map(function ($table) {
-            return firstValue($table);
-        }, $tables);
+        return $this->connection->schemaCollection()->listTables();
     }
 
     /**
