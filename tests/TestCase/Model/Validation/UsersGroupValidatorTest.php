@@ -68,6 +68,26 @@ class UsersGroupValidatorTest extends TestCase
     }
 
     /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @test
+     */
+    public function testValidationExampleData()
+    {
+        $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
+
+        foreach (array_keys($this->example) as $key) {
+            //Create a copy of the example data and removes the current value
+            $copy = $this->example;
+            unset($copy[$key]);
+
+            $this->assertEquals([
+                $key => ['_required' => 'This field is required'],
+            ], $this->UsersGroups->newEntity($copy)->errors());
+        }
+    }
+
+    /**
      * Test validation for `name` property
      * @test
      */
