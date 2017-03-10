@@ -33,7 +33,8 @@ use Reflection\ReflectionTrait;
  */
 class ContactFormTest extends TestCase
 {
-    use MailerAwareTrait, ReflectionTrait;
+    use MailerAwareTrait;
+    use ReflectionTrait;
 
     /**
      * @var \MeCms\Form\ContactForm
@@ -98,7 +99,7 @@ class ContactFormTest extends TestCase
             $this->assertFalse($this->ContactForm->validate($copy));
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ] , $this->ContactForm->errors());
+            ], $this->ContactForm->errors());
         }
     }
 
@@ -138,7 +139,7 @@ class ContactFormTest extends TestCase
         $this->ContactForm->expects($this->once())
             ->method('getMailer')
             ->with('MeCms.ContactForm')
-            ->will($this->returnCallback(function($data) {
+            ->will($this->returnCallback(function ($data) {
                 return $this->getMailer($data)->transport('debug');
             }));
 
