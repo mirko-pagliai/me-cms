@@ -42,6 +42,12 @@ class BaseUpdateShellTest extends TestCase
     protected $BaseUpdateShell;
 
     /**
+     * Does not automatically load fixtures
+     * @var bool
+     */
+    public $autoFixtures = false;
+
+    /**
      * @var \Cake\TestSuite\Stub\ConsoleOutput
      */
     protected $err;
@@ -61,6 +67,17 @@ class BaseUpdateShellTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.banners',
+        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.pages',
+        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.photos',
+        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
+        'plugin.me_cms.tokens',
         'plugin.me_cms.users',
         'plugin.me_cms.users_groups',
     ];
@@ -198,6 +215,9 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testTables()
     {
+        $this->loadFixtures('Banners', 'BannersPositions', 'Pages', 'PagesCategories', 'Photos',
+            'PhotosAlbums', 'Posts', 'PostsCategories', 'PostsTags', 'Tags', 'Tokens', 'Users', 'UsersGroups');
+
         $this->assertEquals([
             'banners',
             'banners_positions',
@@ -209,6 +229,7 @@ class BaseUpdateShellTest extends TestCase
             'posts_categories',
             'posts_tags',
             'tags',
+            'tokens',
             'users',
             'users_groups',
         ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
