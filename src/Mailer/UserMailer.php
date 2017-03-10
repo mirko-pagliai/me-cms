@@ -32,7 +32,7 @@ class UserMailer extends Mailer
     /**
      * Email to activate the user account (signup and resend activation).
      *
-     * The `$user` object must contain the `email` and `full_name` property
+     * The `$user` object must contain the `email` and `full_name` properties
      * @param object $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::resendActivation()
@@ -49,7 +49,7 @@ class UserMailer extends Mailer
     /**
      * Email to change the user's password.
      *
-     * The `$user` object must contain the `email` and `full_name` property
+     * The `$user` object must contain the `email` and `full_name` properties
      * @param object $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::changePassword()
@@ -65,7 +65,7 @@ class UserMailer extends Mailer
     /**
      * Email to ask a new password.
      *
-     * The `$user` object must contain the `email` and `full_name` property
+     * The `$user` object must contain the `email` and `full_name` properties
      * @param object $user User data
      * @return void
      * @see MeCms\Controller\UsersController::forgotPassword()
