@@ -215,8 +215,21 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testTables()
     {
-        $this->loadFixtures('Banners', 'BannersPositions', 'Pages', 'PagesCategories', 'Photos',
-            'PhotosAlbums', 'Posts', 'PostsCategories', 'PostsTags', 'Tags', 'Tokens', 'Users', 'UsersGroups');
+        $this->loadFixtures(
+            'Banners',
+            'BannersPositions',
+            'Pages',
+            'PagesCategories',
+            'Photos',
+            'PhotosAlbums',
+            'Posts',
+            'PostsCategories',
+            'PostsTags',
+            'Tags',
+            'Tokens',
+            'Users',
+            'UsersGroups'
+        );
 
         $this->assertEquals([
             'banners',
