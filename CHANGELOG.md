@@ -2,7 +2,8 @@
 ## 2.16 branch
 ### 2.16.0
 * renamed `/ContactForm.php` as `ContactUsForm` and `ContactFormMailer` as
-    `ContactUsMailer`. This creates less confusion with the classes names.
+    `ContactUsMailer`. This creates less confusion with the classes names;
+* simplified the name of some methods of the `BaseUpdateShell` class.
 
 ## 2.15 branch
 ### 2.15.4
