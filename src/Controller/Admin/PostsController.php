@@ -99,7 +99,8 @@ class PostsController extends AppController
         //Only admins and managers can edit all posts.
         //Users can edit only their own posts
         if ($this->request->isEdit()) {
-            return $this->Auth->isGroup(['admin', 'manager']) || $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+            return $this->Auth->isGroup(['admin', 'manager']) ||
+                $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
         }
 
         //Only admins and managers can delete posts
