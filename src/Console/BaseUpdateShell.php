@@ -116,7 +116,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _latestUpdateMethod()
     {
-        return firstValue($this->_allUpdateMethods());
+        return collection($this->_allUpdateMethods())->first();
     }
 
     /**

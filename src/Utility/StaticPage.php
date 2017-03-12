@@ -45,11 +45,11 @@ class StaticPage
 
         //Adds all plugins to paths
         $paths = array_map(function ($plugin) {
-            return firstValue(App::path('Template', $plugin)) . 'StaticPages';
+            return collection(App::path('Template', $plugin))->first() . 'StaticPages';
         }, $plugins);
 
         //Adds APP to paths
-        array_unshift($paths, firstValue(App::path('Template')) . 'StaticPages');
+        array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');
 
         return $paths;
     }
@@ -106,7 +106,7 @@ class StaticPage
 
         //Checks if the page exists in APP
         foreach ($patterns as $pattern) {
-            $filename = firstValue(App::path('Template')) . 'StaticPages' . DS . $pattern . '.ctp';
+            $filename = collection(App::path('Template'))->first() . 'StaticPages' . DS . $pattern . '.ctp';
 
             if (is_readable($filename)) {
                 return 'StaticPages' . DS . $pattern;
@@ -116,7 +116,7 @@ class StaticPage
         //Checks if the page exists in each plugin
         foreach (Plugin::all() as $plugin) {
             foreach ($patterns as $pattern) {
-                $filename = firstValue(App::path('Template', $plugin)) . 'StaticPages' . DS . $pattern . '.ctp';
+                $filename = collection(App::path('Template', $plugin))->first() . 'StaticPages' . DS . $pattern . '.ctp';
 
                 if (is_readable($filename)) {
                     return sprintf('%s.%s', $plugin, 'StaticPages' . DS . $pattern);
