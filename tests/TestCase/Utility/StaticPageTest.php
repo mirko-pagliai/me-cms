@@ -84,6 +84,33 @@ class StaticPageTest extends TestCase
     }
 
     /**
+     * Test for `_getSlug()` method
+     * @test
+     */
+    public function testGetSlug()
+    {
+        $object = new StaticPage;
+
+        $files = [
+            'my-file',
+            'my-file.ctp',
+            '/first/second/my-file.ctp',
+            '/first/second/my-file.php',
+        ];
+
+        foreach ($files as $file) {
+            $this->assertEquals('my-file', $this->invokeMethod($object, '_getSlug', [$file, '/first/second']));
+            $this->assertEquals('my-file', $this->invokeMethod($object, '_getSlug', [$file, '/first/second/']));
+        }
+
+        $result = $this->invokeMethod($object, '_getSlug', ['first/my-file.ctp', '/first/second']);
+        $this->assertEquals('first/my-file', $result);
+
+        $result = $this->invokeMethod($object, '_getSlug', ['/first/second/third/my-file.ctp', '/first/second']);
+        $this->assertEquals('third/my-file', $result);
+    }
+
+    /**
      * Test for `all()` method
      * @test
      */

@@ -53,9 +53,26 @@ class StaticPage
     }
 
     /**
+     * Internal method to get the slug.
+     *
+     * It takes the full path and removes the relative path and the extension.
+     * @param string $path Path
+     * @param string $relativePath Relative path
+     * @return string
+     */
+    protected static function _getSlug($path, $relativePath)
+    {
+        return preg_replace([
+            sprintf('/^%s/', preg_quote(Folder::slashTerm($relativePath), DS)),
+            sprintf('/\.%s$/', pathinfo($path, PATHINFO_EXTENSION)),
+        ], null, $path);
+    }
+
+    /**
      * Gets all static pages
      * @return array Static pages
      * @uses _getPaths()
+     * @uses _getSlug()
      * @uses title()
      */
     public static function all()
@@ -67,15 +84,10 @@ class StaticPage
             $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
 
             foreach ($files as $file) {
-                $slug = preg_replace([
-                    sprintf('/^%s/', preg_quote($path . DS, DS)),
-                    '/\.ctp$/',
-                ], null, $file);
-
                 $pages[] = (object)[
                     'filename' => pathinfo($file, PATHINFO_FILENAME),
                     'path' => rtr($file),
-                    'slug' => $slug,
+                    'slug' => self::_getSlug($file, $path),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
                     'modified' => new FrozenTime(filemtime($file)),
                 ];
