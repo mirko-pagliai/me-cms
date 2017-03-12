@@ -131,6 +131,8 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testCheckColumn()
     {
+        $this->loadFixtures('Users');
+
         $this->assertTrue($this->invokeMethod($this->BaseUpdateShell, '_checkColumn', ['id', 'users']));
         $this->assertFalse($this->invokeMethod($this->BaseUpdateShell, '_checkColumn', ['noExistingColumn', 'users']));
     }
