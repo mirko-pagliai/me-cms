@@ -41,12 +41,10 @@ class StaticPage
      */
     protected static function _getPaths()
     {
-        $plugins = Plugin::all();
-
         //Adds all plugins to paths
-        $paths = array_map(function ($plugin) {
+        $paths = collection(Plugin::all())->map(function ($plugin) {
             return collection(App::path('Template', $plugin))->first() . 'StaticPages';
-        }, $plugins);
+        })->toList();
 
         //Adds APP to paths
         array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');
