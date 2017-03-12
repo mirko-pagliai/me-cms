@@ -42,7 +42,7 @@
 
         </small>
         <br />
-        <small><?= __d('me_cms', 'The request has been sent from the IP {0}', $ipAddress) ?></small>
+        <small><?= __d('me_cms', 'The request has been sent from the IP {0}', $this->request->clientIp()) ?></small>
         <br />
         <small><?= __d('me_cms', 'Please, don\'t reply to this email') ?></small>
     </body>

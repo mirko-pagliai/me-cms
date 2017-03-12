@@ -102,7 +102,6 @@ class ContactUsMailerTest extends TestCase
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',
-            'ipAddress' => false,
             'firstName' => 'James',
             'lastName' => 'Blue',
         ], $email->viewVars);

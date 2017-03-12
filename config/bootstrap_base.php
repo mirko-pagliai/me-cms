@@ -28,6 +28,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
+use Cake\Network\Request;
 
 require_once __DIR__ . DS . 'constants.php';
 
@@ -75,7 +76,10 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 /**
  * Forces debug on localhost, if required
  */
-if (isLocalhost() && config('main.debug_on_localhost') && !config('debug')) {
+if (!isset($request)) {
+    $request = new Request;
+}
+if ($request->is('localhost') && config('main.debug_on_localhost') && !config('debug')) {
     Configure::write('debug', true);
 }
 
