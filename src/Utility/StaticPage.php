@@ -107,10 +107,7 @@ class StaticPage
         $filename = implode(DS, af(explode('/', $slug)));
 
         //Sets the filename patterns
-        $patterns = [
-            sprintf('%s-%s', $filename, I18n::locale()),
-            $filename,
-        ];
+        $patterns = [sprintf('%s-%s', $filename, I18n::locale()), $filename];
 
         //Checks if the page exists in APP
         foreach ($patterns as $pattern) {
