@@ -382,7 +382,7 @@ class SitemapTest extends TestCase
     {
         $this->assertEquals([
             [
-                'loc' => 'http://localhost/contact/form',
+                'loc' => 'http://localhost/contact/us',
                 'priority' => '0.5',
             ],
         ], Sitemap::systems());
