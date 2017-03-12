@@ -2,7 +2,8 @@
 ## 2.16 branch
 ### 2.16.0
 * it uses `CollectionInterface::first()` instead of the global `firstValue()`;
-* added `StaticPage::_getSlug() method`;
+* added `StaticPage::slug()` method. Renamed `StaticPage::_getPaths()` as
+    `StaticPage::paths()`;
 * renamed `/ContactForm.php` as `ContactUsForm` and `ContactFormMailer` as
     `ContactUsMailer`. This creates less confusion with the classes names;
 * simplified the name of some methods of the `BaseUpdateShell` class.

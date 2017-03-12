@@ -39,7 +39,7 @@ class StaticPage
      * @uses MeCms\Core\Plugin::all()
      * @return array
      */
-    protected static function _getPaths()
+    protected static function paths()
     {
         //Adds all plugins to paths
         $paths = collection(Plugin::all())->map(function ($plugin) {
@@ -60,7 +60,7 @@ class StaticPage
      * @param string $relativePath Relative path
      * @return string
      */
-    protected static function _getSlug($path, $relativePath)
+    protected static function slug($path, $relativePath)
     {
         return preg_replace([
             sprintf('/^%s/', preg_quote(Folder::slashTerm($relativePath), DS)),
@@ -71,15 +71,13 @@ class StaticPage
     /**
      * Gets all static pages
      * @return array Static pages
-     * @uses _getPaths()
-     * @uses _getSlug()
+     * @uses paths()
+     * @uses slug()
      * @uses title()
      */
     public static function all()
     {
-        $pages = [];
-
-        foreach (self::_getPaths() as $path) {
+        foreach (self::paths() as $path) {
             //Gets all files for each path
             $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
 
@@ -87,7 +85,7 @@ class StaticPage
                 $pages[] = (object)[
                     'filename' => pathinfo($file, PATHINFO_FILENAME),
                     'path' => rtr($file),
-                    'slug' => self::_getSlug($file, $path),
+                    'slug' => self::slug($file, $path),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
                     'modified' => new FrozenTime(filemtime($file)),
                 ];
