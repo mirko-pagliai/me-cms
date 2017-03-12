@@ -66,7 +66,7 @@ Request::addDetector('banned', function ($request) {
     //  - the list of banned IP is empty;
     //  - is localhost;
     //  - the IP address has already been verified.
-    if (!$banned || isLocalhost() || $request->session()->read('allowed_ip')) {
+    if (!$banned || $request->is('localhost') || $request->session()->read('allowed_ip')) {
         return false;
     }
 

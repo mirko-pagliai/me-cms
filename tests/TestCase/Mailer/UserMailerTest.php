@@ -97,7 +97,6 @@ class UserMailerTest extends TestCase
 
         $this->assertEquals([
             'fullName' => 'James Blue',
-            'ipAddress' => false,
         ], $email->viewVars);
     }
 
@@ -161,7 +160,6 @@ class UserMailerTest extends TestCase
 
         $this->assertEquals([
             'fullName' => 'James Blue',
-            'ipAddress' => false,
         ], $email->viewVars);
     }
 
@@ -224,7 +222,6 @@ class UserMailerTest extends TestCase
 
         $this->assertEquals([
             'fullName' => 'James Blue',
-            'ipAddress' => false,
         ], $email->viewVars);
     }
 

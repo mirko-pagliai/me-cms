@@ -382,13 +382,13 @@ class SitemapTest extends TestCase
     {
         $this->assertEquals([
             [
-                'loc' => 'http://localhost/contact/form',
+                'loc' => 'http://localhost/contact/us',
                 'priority' => '0.5',
             ],
         ], Sitemap::systems());
 
         //Disabled contact form
-        Configure::write('MeCms.default.contact_form', false);
+        Configure::write('MeCms.default.contact_us', false);
 
         $this->assertEmpty(Sitemap::systems());
     }

@@ -22,6 +22,7 @@
  */
 namespace MeCms\Utility;
 
+use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use SerializedArray\SerializedArray;
@@ -84,7 +85,7 @@ class LoginRecorder
         $data = $this->read();
 
         $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-        $ip = getClientIp();
+        $ip = (new ServerRequest)->clientIp();
         $time = new FrozenTime;
         list($platform, $browser, $version) = array_values($this->_getUserAgent());
 

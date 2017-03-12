@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of MeCms.
  *
@@ -43,6 +42,12 @@ class BaseUpdateShellTest extends TestCase
     protected $BaseUpdateShell;
 
     /**
+     * Does not automatically load fixtures
+     * @var bool
+     */
+    public $autoFixtures = false;
+
+    /**
      * @var \Cake\TestSuite\Stub\ConsoleOutput
      */
     protected $err;
@@ -62,6 +67,17 @@ class BaseUpdateShellTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.banners',
+        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.pages',
+        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.photos',
+        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
+        'plugin.me_cms.tokens',
         'plugin.me_cms.users',
         'plugin.me_cms.users_groups',
     ];
@@ -115,35 +131,17 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testCheckColumn()
     {
+        $this->loadFixtures('Users');
+
         $this->assertTrue($this->invokeMethod($this->BaseUpdateShell, '_checkColumn', ['id', 'users']));
         $this->assertFalse($this->invokeMethod($this->BaseUpdateShell, '_checkColumn', ['noExistingColumn', 'users']));
     }
 
     /**
-     * Test for `_getAllUpdateMethods()` method
+     * Test for `_columns()` method
      * @test
      */
-    public function testGetAllUpdateMethods()
-    {
-        $methods = $this->invokeMethod($this->UpdateShell, '_getAllUpdateMethods');
-
-        foreach ($methods as $method) {
-            $this->assertRegExp('/^to[0-9]+v[0-9]+v.+$/', $method['name']);
-            $this->assertRegExp('/^[0-9]+\.[0-9]+\..+$/', $method['version']);
-
-            $this->assertTrue(method_exists($this->UpdateShell, $method['name']));
-
-            preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method['name'], $matches);
-
-            $this->assertEquals($method['version'], $matches[1] . '.' . $matches[2] . '.' . $matches[3]);
-        }
-    }
-
-    /**
-     * Test for `_getColumns()` method
-     * @test
-     */
-    public function testGetColumns()
+    public function testColumns()
     {
         $this->assertEquals([
             'id',
@@ -158,29 +156,17 @@ class BaseUpdateShellTest extends TestCase
             'post_count',
             'created',
             'modified',
-        ], $this->invokeMethod($this->BaseUpdateShell, '_getColumns', ['users']));
+        ], $this->invokeMethod($this->BaseUpdateShell, '_columns', ['users']));
     }
 
     /**
-     * Test for `_getColumns()` method, with a no existing table
-     * @expectedException PDOException
+     * Test for `_columns()` method, with a no existing table
+     * @expectedException Cake\Database\Exception
      * @expectedExceptionMessage SQLSTATE[42S02]: Base table or view not found: 1146 Table 'test.noExistingTable' doesn't exist
      */
-    public function testGetColumnsNoExistingTable()
+    public function testColumnsNoExistingTable()
     {
-        $this->invokeMethod($this->BaseUpdateShell, '_getColumns', ['noExistingTable']);
-    }
-
-    /**
-     * Test for `_getLatestUpdateMethod()` method
-     * @test
-     */
-    public function testGetLatest()
-    {
-        $latest = $this->invokeMethod($this->UpdateShell, '_getLatestUpdateMethod');
-        $methods = $this->invokeMethod($this->UpdateShell, '_getAllUpdateMethods');
-
-        $this->assertEquals($latest, $methods[0]);
+        $this->invokeMethod($this->BaseUpdateShell, '_columns', ['noExistingTable']);
     }
 
     /**
@@ -199,7 +185,34 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testTables()
     {
+        $this->loadFixtures(
+            'Banners',
+            'BannersPositions',
+            'Pages',
+            'PagesCategories',
+            'Photos',
+            'PhotosAlbums',
+            'Posts',
+            'PostsCategories',
+            'PostsTags',
+            'Tags',
+            'Tokens',
+            'Users',
+            'UsersGroups'
+        );
+
         $this->assertEquals([
+            'banners',
+            'banners_positions',
+            'pages',
+            'pages_categories',
+            'photos',
+            'photos_albums',
+            'posts',
+            'posts_categories',
+            'posts_tags',
+            'tags',
+            'tokens',
             'users',
             'users_groups',
         ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
@@ -211,7 +224,7 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testAll()
     {
-        $methods = $this->invokeMethod($this->UpdateShell, '_getAllUpdateMethods');
+        $methods = $this->invokeMethod($this->UpdateShell, '_allUpdateMethods');
 
         //Sets methods to stub and the expected out messages
         foreach (array_reverse($methods) as $method) {
@@ -222,11 +235,11 @@ class BaseUpdateShellTest extends TestCase
 
         //Mocks
         $this->UpdateShell = $this->getMockBuilder(UpdateShell::class)
-            ->setMethods(am(['in', '_stop', '_getAllUpdateMethods'], $methodsToStub))
+            ->setMethods(am(['in', '_stop', '_allUpdateMethods'], $methodsToStub))
             ->setConstructorArgs([$this->io])
             ->getMock();
 
-        $this->UpdateShell->method('_getAllUpdateMethods')
+        $this->UpdateShell->method('_allUpdateMethods')
             ->will($this->returnValue($methods));
 
         foreach ($methodsToStub as $method) {
@@ -243,20 +256,40 @@ class BaseUpdateShellTest extends TestCase
     }
 
     /**
+     * Test for `_allUpdateMethods()` method
+     * @test
+     */
+    public function testAllUpdateMethods()
+    {
+        $methods = $this->invokeMethod($this->UpdateShell, '_allUpdateMethods');
+
+        foreach ($methods as $method) {
+            $this->assertRegExp('/^to[0-9]+v[0-9]+v.+$/', $method['name']);
+            $this->assertRegExp('/^[0-9]+\.[0-9]+\..+$/', $method['version']);
+
+            $this->assertTrue(method_exists($this->UpdateShell, $method['name']));
+
+            preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method['name'], $matches);
+
+            $this->assertEquals($method['version'], $matches[1] . '.' . $matches[2] . '.' . $matches[3]);
+        }
+    }
+
+    /**
      * Test for `latest()` method
      * @test
      */
     public function testLatest()
     {
-        $latest = $this->invokeMethod($this->UpdateShell, '_getLatestUpdateMethod');
+        $latest = $this->invokeMethod($this->UpdateShell, '_latestUpdateMethod');
 
         //Mocks
         $this->UpdateShell = $this->getMockBuilder(UpdateShell::class)
-            ->setMethods(['in', '_stop', '_getLatestUpdateMethod', $latest['name']])
+            ->setMethods(['in', '_stop', '_latestUpdateMethod', $latest['name']])
             ->setConstructorArgs([$this->io])
             ->getMock();
 
-        $this->UpdateShell->method('_getLatestUpdateMethod')
+        $this->UpdateShell->method('_latestUpdateMethod')
             ->will($this->returnValue($latest));
 
         $this->UpdateShell->method($latest['name'])
@@ -274,6 +307,18 @@ class BaseUpdateShellTest extends TestCase
     }
 
     /**
+     * Test for `_latestUpdateMethod()` method
+     * @test
+     */
+    public function testLatestUpdateMethod()
+    {
+        $latest = $this->invokeMethod($this->UpdateShell, '_latestUpdateMethod');
+        $methods = $this->invokeMethod($this->UpdateShell, '_allUpdateMethods');
+
+        $this->assertEquals($latest, $methods[0]);
+    }
+
+    /**
      * Test for `getOptionParser()` method
      * @test
      */
@@ -281,7 +326,7 @@ class BaseUpdateShellTest extends TestCase
     {
         $parser = $this->UpdateShell->getOptionParser();
 
-        $methods = $this->invokeMethod($this->UpdateShell, '_getAllUpdateMethods');
+        $methods = $this->invokeMethod($this->UpdateShell, '_allUpdateMethods');
 
         $methods = array_map(function ($method) {
             return $method['name'];

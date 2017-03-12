@@ -24,20 +24,20 @@ namespace MeCms\Test\TestCase\Mailer;
 
 use Cake\Mailer\Email;
 use Cake\TestSuite\TestCase;
-use MeCms\Mailer\ContactFormMailer;
+use MeCms\Mailer\ContactUsMailer;
 use Reflection\ReflectionTrait;
 
 /**
- * ContactFormMailerTest class
+ * ContactUsMailerTest class
  */
-class ContactFormMailerTest extends TestCase
+class ContactUsMailerTest extends TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @var \MeCms\Mailer\ContactFormMailer
+     * @var \MeCms\Mailer\ContactUsMailer
      */
-    public $ContactFormMailer;
+    public $ContactUsMailer;
 
     /**
      * @var array
@@ -56,7 +56,7 @@ class ContactFormMailerTest extends TestCase
 
         Email::configTransport(['debug' => ['className' => 'Debug']]);
 
-        $this->ContactFormMailer = new ContactFormMailer;
+        $this->ContactUsMailer = new ContactUsMailer;
 
         $this->example = [
             'email' => 'test@test.com',
@@ -76,60 +76,59 @@ class ContactFormMailerTest extends TestCase
 
         Email::dropTransport('debug');
 
-        unset($this->ContactFormMailer);
+        unset($this->ContactUsMailer);
     }
 
     /**
-     * Tests for `contactFormMail()` method
+     * Tests for `contactUsMail()` method
      * @test
      */
-    public function testContactFormMail()
+    public function testContactUsMail()
     {
-        $this->ContactFormMailer->contactFormMail($this->example);
+        $this->ContactUsMailer->contactUsMail($this->example);
 
         //Gets `Email` instance
-        $email = $this->getProperty($this->ContactFormMailer, '_email');
+        $email = $this->getProperty($this->ContactUsMailer, '_email');
 
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->sender());
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->replyTo());
         $this->assertEquals(['email@example.com' => 'email@example.com'], $email->to());
         $this->assertEquals('Email from MeCms', $email->subject());
         $this->assertEquals([
-            'template' => 'MeCms.Systems/contact_form',
+            'template' => 'MeCms.Systems/contact_us',
             'layout' => 'default',
         ], $email->template());
 
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',
-            'ipAddress' => false,
             'firstName' => 'James',
             'lastName' => 'Blue',
         ], $email->viewVars);
     }
 
     /**
-     * Tests for `contactFormMail()` method, with some missing data
+     * Tests for `contactUsMail()` method, with some missing data
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Missing `email` key from data
      * @test
      */
-    public function testContactFormMailMissingData()
+    public function testContactUsMailMissingData()
     {
         unset($this->example['email']);
 
-        $this->ContactFormMailer->contactFormMail($this->example);
+        $this->ContactUsMailer->contactUsMail($this->example);
     }
 
     /**
-     * Tests for `contactFormMail()` method, calling `send()` method
+     * Tests for `contactUsMail()` method, calling `send()` method
      * @test
      */
-    public function testContactFormMailWithSend()
+    public function testContactUsMailWithSend()
     {
-        $result = $this->ContactFormMailer->transport('debug')
+        $result = $this->ContactUsMailer->transport('debug')
             ->layout(false)
-            ->send('contactFormMail', [$this->example]);
+            ->send('contactUsMail', [$this->example]);
 
         $headers = $message = null;
         extract($result);

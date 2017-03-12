@@ -30,14 +30,17 @@ if (!$routes->nameExists('acceptCookies')) {
     );
 }
 
-//Contact form
-if (!$routes->nameExists('contactForm')) {
+//"Contact us" form
+if (!$routes->nameExists('contactUs')) {
     $routes->connect(
-        '/contact/form',
-        ['controller' => 'Systems', 'action' => 'contactForm'],
-        ['_name' => 'contactForm']
+        '/contact/us',
+        ['controller' => 'Systems', 'action' => 'contactUs'],
+        ['_name' => 'contactUs']
     );
 }
+
+//Callback for the old address
+$routes->redirect('/contact/form', ['_name' => 'contactUs'], ['status' => 301]);
 
 //Offline page
 if (!$routes->nameExists('offline')) {

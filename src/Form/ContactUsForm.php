@@ -19,8 +19,8 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
- * @see         MeCms\Controller\SystemsController::contactForm()
- * @see         MeCms\Mailer\ContactFormMailer
+ * @see         MeCms\Controller\SystemsController::contactUs()
+ * @see         MeCms\Mailer\ContactUsMailer
  */
 namespace MeCms\Form;
 
@@ -29,15 +29,15 @@ use Cake\Mailer\MailerAwareTrait;
 use MeCms\Model\Validation\AppValidator;
 
 /**
- * ContactForm class
+ * ContactUsForm class
  */
-class ContactForm extends Form
+class ContactUsForm extends Form
 {
     use MailerAwareTrait;
 
     /**
      * Defines the validator using the methods on Cake\Validation\Validator or
-     * loads a pre-defined validator from a concrete class.
+     *  loads a pre-defined validator from a concrete class.
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \MeCms\Model\Validation\AppValidator
      */
@@ -69,12 +69,12 @@ class ContactForm extends Form
      * Used by `execute()` to execute the form's action. This sends the email.
      *
      * The `$data` array must contain the `email`, `first_name`, `last_name`
-     *  and `message` keys
+     *  and `message` keys.
      * @param array $data Form data
      * @return bool
      */
     protected function _execute(array $data)
     {
-        return $this->getMailer('MeCms.ContactForm')->send('contactFormMail', [$data]);
+        return $this->getMailer('MeCms.ContactUs')->send('contactUsMail', [$data]);
     }
 }

@@ -39,45 +39,53 @@ class StaticPage
      * @uses MeCms\Core\Plugin::all()
      * @return array
      */
-    protected static function _getPaths()
+    protected static function paths()
     {
-        $plugins = Plugin::all();
-
         //Adds all plugins to paths
-        $paths = array_map(function ($plugin) {
-            return firstValue(App::path('Template', $plugin)) . 'StaticPages';
-        }, $plugins);
+        $paths = collection(Plugin::all())->map(function ($plugin) {
+            return collection(App::path('Template', $plugin))->first() . 'StaticPages';
+        })->toList();
 
         //Adds APP to paths
-        array_unshift($paths, firstValue(App::path('Template')) . 'StaticPages');
+        array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');
 
         return $paths;
     }
 
     /**
+     * Internal method to get the slug.
+     *
+     * It takes the full path and removes the relative path and the extension.
+     * @param string $path Path
+     * @param string $relativePath Relative path
+     * @return string
+     */
+    protected static function slug($path, $relativePath)
+    {
+        return preg_replace([
+            sprintf('/^%s/', preg_quote(Folder::slashTerm($relativePath), DS)),
+            sprintf('/\.%s$/', pathinfo($path, PATHINFO_EXTENSION)),
+        ], null, $path);
+    }
+
+    /**
      * Gets all static pages
      * @return array Static pages
-     * @uses _getPaths()
+     * @uses paths()
+     * @uses slug()
      * @uses title()
      */
     public static function all()
     {
-        $pages = [];
-
-        foreach (self::_getPaths() as $path) {
+        foreach (self::paths() as $path) {
             //Gets all files for each path
             $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
 
             foreach ($files as $file) {
-                $slug = preg_replace([
-                    sprintf('/^%s/', preg_quote($path . DS, DS)),
-                    '/\.ctp$/',
-                ], null, $file);
-
                 $pages[] = (object)[
                     'filename' => pathinfo($file, PATHINFO_FILENAME),
                     'path' => rtr($file),
-                    'slug' => $slug,
+                    'slug' => self::slug($file, $path),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
                     'modified' => new FrozenTime(filemtime($file)),
                 ];
@@ -99,14 +107,11 @@ class StaticPage
         $filename = implode(DS, af(explode('/', $slug)));
 
         //Sets the filename patterns
-        $patterns = [
-            sprintf('%s-%s', $filename, I18n::locale()),
-            $filename,
-        ];
+        $patterns = [sprintf('%s-%s', $filename, I18n::locale()), $filename];
 
         //Checks if the page exists in APP
         foreach ($patterns as $pattern) {
-            $filename = firstValue(App::path('Template')) . 'StaticPages' . DS . $pattern . '.ctp';
+            $filename = collection(App::path('Template'))->first() . 'StaticPages' . DS . $pattern . '.ctp';
 
             if (is_readable($filename)) {
                 return 'StaticPages' . DS . $pattern;
@@ -116,7 +121,7 @@ class StaticPage
         //Checks if the page exists in each plugin
         foreach (Plugin::all() as $plugin) {
             foreach ($patterns as $pattern) {
-                $filename = firstValue(App::path('Template', $plugin)) . 'StaticPages' . DS . $pattern . '.ctp';
+                $filename = collection(App::path('Template', $plugin))->first() . 'StaticPages' . DS . $pattern . '.ctp';
 
                 if (is_readable($filename)) {
                     return sprintf('%s.%s', $plugin, 'StaticPages' . DS . $pattern);

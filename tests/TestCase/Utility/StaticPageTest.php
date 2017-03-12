@@ -61,29 +61,6 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `_getPaths()` method
-     * @test
-     */
-    public function testGetPaths()
-    {
-        $object = new StaticPage;
-
-        $paths = $this->invokeMethod($object, '_getPaths');
-        $paths = collection($paths)->extract(function ($path) {
-            return rtr($path);
-        })->toArray();
-
-        $this->assertEquals([
-            'tests/test_app/TestApp/Template/StaticPages',
-            'src/Template/StaticPages',
-            'vendor/mirko-pagliai/me-tools/src/Template/StaticPages',
-            'vendor/mirko-pagliai/assets/src/Template/StaticPages',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages',
-            'vendor/mirko-pagliai/cakephp-thumber/src/Template/StaticPages',
-        ], $paths);
-    }
-
-    /**
      * Test for `all()` method
      * @test
      */
@@ -190,6 +167,55 @@ class StaticPageTest extends TestCase
         ini_set('intl.default_locale', 'it');
 
         $this->assertEquals('MeCms.StaticPages/cookies-policy-it', StaticPage::get('cookies-policy'));
+    }
+
+    /**
+     * Test for `paths()` method
+     * @test
+     */
+    public function testPaths()
+    {
+        $object = new StaticPage;
+
+        $paths = collection($this->invokeMethod($object, 'paths'))->extract(function ($path) {
+            return rtr($path);
+        })->toArray();
+
+        $this->assertEquals([
+            'tests/test_app/TestApp/Template/StaticPages',
+            'src/Template/StaticPages',
+            'vendor/mirko-pagliai/me-tools/src/Template/StaticPages',
+            'vendor/mirko-pagliai/assets/src/Template/StaticPages',
+            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages',
+            'vendor/mirko-pagliai/cakephp-thumber/src/Template/StaticPages',
+        ], $paths);
+    }
+
+    /**
+     * Test for `slug()` method
+     * @test
+     */
+    public function testSlug()
+    {
+        $object = new StaticPage;
+
+        $files = [
+            'my-file',
+            'my-file.ctp',
+            '/first/second/my-file.ctp',
+            '/first/second/my-file.php',
+        ];
+
+        foreach ($files as $file) {
+            $this->assertEquals('my-file', $this->invokeMethod($object, 'slug', [$file, '/first/second']));
+            $this->assertEquals('my-file', $this->invokeMethod($object, 'slug', [$file, '/first/second/']));
+        }
+
+        $result = $this->invokeMethod($object, 'slug', ['first/my-file.ctp', '/first/second']);
+        $this->assertEquals('first/my-file', $result);
+
+        $result = $this->invokeMethod($object, 'slug', ['/first/second/third/my-file.ctp', '/first/second']);
+        $this->assertEquals('third/my-file', $result);
     }
 
     /**

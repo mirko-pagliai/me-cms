@@ -25,7 +25,7 @@ namespace MeCms\Controller;
 use Cake\Filesystem\File;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
-use MeCms\Form\ContactForm;
+use MeCms\Form\ContactUsForm;
 
 /**
  * Systems controller
@@ -47,23 +47,23 @@ class SystemsController extends AppController
     }
 
     /**
-     * Contact form
+     * "Contact us" form
      * @return \Cake\Network\Response|null|void
-     * @see MeCms\Form\ContactForm
-     * @see MeCms\Mailer\ContactFormMailer
+     * @see MeCms\Form\ContactUsForm
+     * @see MeCms\Mailer\ContactUsMailer
      * @uses MeTools\Controller\Component\Recaptcha::check()
      * @uses MeTools\Controller\Component\Recaptcha::getError()
      */
-    public function contactForm()
+    public function contactUs()
     {
-        //Checks if the contact form is enabled
-        if (!config('default.contact_form')) {
+        //Checks if the "contact us" form is enabled
+        if (!config('default.contact_us')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $contact = new ContactForm;
+        $contact = new ContactUsForm;
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested

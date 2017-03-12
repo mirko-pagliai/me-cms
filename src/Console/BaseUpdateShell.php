@@ -62,24 +62,12 @@ class BaseUpdateShell extends Shell
     }
 
     /**
-     * Checks if a column exists
-     * @param string $column Column name
-     * @param string $table Table name
-     * @return bool
-     * @uses _getColumns()
-     */
-    protected function _checkColumn($column, $table)
-    {
-        return in_array($column, $this->_getColumns($table));
-    }
-
-    /**
      * Gets all update methods.
      *
      * Each value contains the name method and the version number.
      * @return array
      */
-    protected function _getAllUpdateMethods()
+    protected function _allUpdateMethods()
     {
         $methods = getChildMethods(get_called_class());
 
@@ -97,18 +85,26 @@ class BaseUpdateShell extends Shell
     }
 
     /**
+     * Checks if a column exists
+     * @param string $column Column name
+     * @param string $table Table name
+     * @return bool
+     * @uses _columns()
+     */
+    protected function _checkColumn($column, $table)
+    {
+        return in_array($column, $this->_columns($table));
+    }
+
+    /**
      * Gets the table columns
      * @param string $table Table name
      * @return array
      * @uses $connection
      */
-    protected function _getColumns($table)
+    protected function _columns($table)
     {
-        $columns = $this->connection->execute(sprintf('SHOW COLUMNS FROM %s;', $table))->fetchAll();
-
-        return array_map(function ($column) {
-            return firstValue($column);
-        }, $columns);
+        return $this->connection->schemaCollection()->describe($table)->columns();
     }
 
     /**
@@ -116,11 +112,11 @@ class BaseUpdateShell extends Shell
      *
      * Return an array with the name method and the version number.
      * @return array
-     * @uses _getAllUpdateMethods()
+     * @uses _allUpdateMethods()
      */
-    protected function _getLatestUpdateMethod()
+    protected function _latestUpdateMethod()
     {
-        return firstValue($this->_getAllUpdateMethods());
+        return collection($this->_allUpdateMethods())->first();
     }
 
     /**
@@ -141,21 +137,17 @@ class BaseUpdateShell extends Shell
      */
     protected function _tables()
     {
-        $tables = $this->connection->execute(sprintf('SHOW TABLES;'))->fetchAll();
-
-        return array_map(function ($table) {
-            return firstValue($table);
-        }, $tables);
+        return $this->connection->schemaCollection()->listTables();
     }
 
     /**
      * Performs all available updates
      * @return void
-     * @uses _getAllUpdateMethods()
+     * @uses _allUpdateMethods()
      */
     public function all()
     {
-        $methods = array_reverse($this->_getAllUpdateMethods());
+        $methods = array_reverse($this->_allUpdateMethods());
 
         foreach ($methods as $method) {
             $this->verbose(__d('me_cms', 'Upgrading to {0}', $method['version']));
@@ -168,11 +160,11 @@ class BaseUpdateShell extends Shell
     /**
      * Performs the latest update available
      * @return void
-     * @uses _getLatestUpdateMethod()
+     * @uses _latestUpdateMethod()
      */
     public function latest()
     {
-        list($name, $version) = array_values($this->_getLatestUpdateMethod());
+        list($name, $version) = array_values($this->_latestUpdateMethod());
 
         $this->verbose(__d('me_cms', 'Upgrading to {0}', $version));
 
@@ -183,7 +175,7 @@ class BaseUpdateShell extends Shell
     /**
      * Gets the option parser instance and configures it.
      * @return ConsoleOptionParser
-     * @uses _getAllUpdateMethods()
+     * @uses _allUpdateMethods()
      */
     public function getOptionParser()
     {
@@ -192,7 +184,7 @@ class BaseUpdateShell extends Shell
         $parser->addSubcommand('all', ['help' => __d('me_cms', 'Performs all available updates')]);
         $parser->addSubcommand('latest', ['help' => __d('me_cms', 'Performs the latest update available')]);
 
-        $methods = $this->_getAllUpdateMethods();
+        $methods = $this->_allUpdateMethods();
 
         //Adds all update methods to the parser
         foreach ($methods as $method) {

@@ -54,7 +54,6 @@ class Mailer extends CakeMailer
 
         $this->getEmailInstance()
             ->helpers('MeTools.Html')
-            ->set('ipAddress', getClientIp())
             ->from(config('email.webmaster'), config('main.title'))
             ->sender(config('email.webmaster'), config('main.title'))
             ->emailFormat('html');

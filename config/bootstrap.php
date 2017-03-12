@@ -25,7 +25,10 @@
  * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
 use Cake\Core\Plugin;
+use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
+
+$request = new Request;
 
 /**
  * Requires the base of bootstrap
@@ -35,7 +38,7 @@ require_once __DIR__ . DS . 'bootstrap_base.php';
 /**
  * Loads DebugKit on localhost, if required
  */
-if (isLocalhost() && config('main.debug_on_localhost')
+if (($request->is('localhost')) && config('main.debug_on_localhost')
     && !config('debug') && !Plugin::loaded('DebugKit')
 ) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
