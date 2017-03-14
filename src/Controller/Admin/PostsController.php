@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -152,8 +151,6 @@ class PostsController extends AppController
                 $this->request->data('user_id', $this->Auth->user('id'));
             }
 
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
             $post = $this->Posts->patchEntity($post, $this->request->data);
 
             if ($this->Posts->save($post)) {
@@ -189,8 +186,6 @@ class PostsController extends AppController
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
                 $this->request->data('user_id', $this->Auth->user('id'));
             }
-
-            $this->request->data['created'] = new Time($this->request->data('created'));
 
             $post = $this->Posts->patchEntity($post, $this->request->data);
 

@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.16 branch
+### 2.16.1
+* added `AppTable::beforeSave()`. It checks if the `created` property is an
+    instance of `Time`.
+
 ### 2.16.0
 * it uses `CollectionInterface::first()` instead of the global `firstValue()`;
 * added `StaticPage::slug()` method. Renamed `StaticPage::_getPaths()` as

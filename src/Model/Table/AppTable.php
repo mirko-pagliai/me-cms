@@ -22,8 +22,12 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 
@@ -40,7 +44,7 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
@@ -55,10 +59,27 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
+        }
+    }
+
+    /**
+     * Called before each entity is saved. Stopping this event will abort the
+     *  save operation. When the event is stopped the result of the event will
+     *  be returned
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Datasource\EntityInterface $entity EntityInterface object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.16.1
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        if (array_key_exists('created', $entity->toArray()) && !$entity->created instanceof Time) {
+            $entity->created = new Time($entity->created);
         }
     }
 

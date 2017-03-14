@@ -55,6 +55,7 @@ class AppTableTest extends TestCase
         'plugin.me_cms.photos',
         'plugin.me_cms.posts',
         'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
         'plugin.me_cms.users',
     ];
 
@@ -117,6 +118,57 @@ class AppTableTest extends TestCase
 
         //The cache is cleared
         $this->assertFalse(Cache::read('testKey', $this->Posts->cache));
+    }
+
+    /**
+     * Test for `beforeSave()` method
+     * @test
+     */
+    public function testBeforeSave()
+    {
+        $example = [
+            'user_id' => 1,
+            'category_id' => 1,
+            'title' => 'Example',
+            'slug' => 'example',
+            'text' => 'Example text',
+        ];
+
+        $entity = $this->Posts->save($this->Posts->newEntity($example));
+        $this->assertNotEmpty($entity->created);
+        $this->Posts->delete($entity);
+
+        foreach ([null, ''] as $value) {
+            $example['created'] = $value;
+            $entity = $this->Posts->save($this->Posts->newEntity($example));
+            $this->assertNotEmpty($entity->created);
+            $this->Posts->delete($entity);
+        }
+
+        $example['created'] = $now = new Time;
+        $entity = $this->Posts->save($this->Posts->newEntity($example));
+        $this->assertEquals($now, $entity->created);
+        $this->Posts->delete($entity);
+
+        foreach ([
+            '2017-03-14 20:19',
+            '2017-03-14 20:19:00',
+        ] as $value) {
+            $example['created'] = $value;
+            $entity = $this->Posts->save($this->Posts->newEntity($example));
+            $this->assertEquals('2017-03-14 20:19:00', $entity->created->i18nFormat('yyyy-MM-dd HH:mm:ss'));
+            $this->Posts->delete($entity);
+        }
+
+        //Now tries with a record that already exists
+        $entity = $this->Posts->get(1);
+
+        foreach ([null, ''] as $value) {
+            $entity->created = $value;
+            $entity = $this->Posts->save($entity);
+            $this->assertNotEmpty($entity->created);
+        }
+
     }
 
     /**
