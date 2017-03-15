@@ -168,7 +168,6 @@ class AppTableTest extends TestCase
             $entity = $this->Posts->save($entity);
             $this->assertNotEmpty($entity->created);
         }
-
     }
 
     /**

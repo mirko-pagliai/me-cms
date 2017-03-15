@@ -23,9 +23,9 @@
 namespace MeCms\Model\Table;
 
 use ArrayObject;
+use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
