@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 if (!config('users.userbar')) {
     return;
 }
@@ -46,29 +45,15 @@ if (!$this->Auth->isLogged()) {
         <div class="collapse navbar-collapse" id="userbar-collapse">
             <?php
                 echo $this->Html->ul([
-                    $this->Html->link(
-                        __d('me_cms', 'Dashboard'),
-                        ['_name' => 'dashboard'],
-                        ['icon' => 'dashboard']
-                    ),
+                    $this->Html->link(__d('me_cms', 'Dashboard'), ['_name' => 'dashboard'], ['icon' => 'dashboard']),
                     $this->fetch('userbar'),
                 ], ['class' => 'nav navbar-nav']);
 
                 echo $this->Html->ul([
-                    $this->Dropdown->menu(
-                        $this->Auth->user('full_name'),
-                        [
-                            $this->Html->link(
-                                __d('me_cms', 'Change password'),
-                                ['_name' => 'changePassword']
-                            ),
-                            $this->Html->link(
-                                __d('me_cms', 'Logout'),
-                                ['_name' => 'logout']
-                            ),
-                        ],
-                        ['icon' => 'user']
-                    ),
+                    $this->Dropdown->menu($this->Auth->user('full_name'), [
+                            $this->Html->link(__d('me_cms', 'Change password'), ['_name' => 'changePassword']),
+                            $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']),
+                    ], ['icon' => 'user']),
                 ], ['class' => 'nav navbar-nav navbar-right']);
             ?>
         </div><!-- /.navbar-collapse -->

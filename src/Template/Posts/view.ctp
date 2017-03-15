@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/view');
 $this->assign('title', $post->title);
 
@@ -28,44 +27,31 @@ $this->assign('title', $post->title);
  * Userbar
  */
 if (!$post->active) {
-    $this->userbar($this->Html->span(
-        __d('me_cms', 'Draft'),
-        ['class' => 'label label-warning']
-    ));
+    $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
 }
-
 if ($post->created->isFuture()) {
-    $this->userbar($this->Html->span(
-        __d('me_cms', 'Scheduled'),
-        ['class' => 'label label-warning']
-    ));
+    $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
 }
-
-$this->userbar([
-    $this->Html->link(
-        __d('me_cms', 'Edit post'),
-        ['action' => 'edit', $post->id, 'prefix' => ADMIN_PREFIX],
-        ['icon' => 'pencil', 'target' => '_blank']
-    ),
-    $this->Form->postLink(
-        __d('me_cms', 'Delete post'),
-        ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
-        [
-            'icon' => 'trash-o',
-            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-            'target' => '_blank',
-        ]
-    ),
-]);
+$this->userbar($this->Html->link(
+    __d('me_cms', 'Edit post'),
+    ['action' => 'edit', $post->id, 'prefix' => ADMIN_PREFIX],
+    ['icon' => 'pencil', 'target' => '_blank']
+));
+$this->userbar($this->Form->postLink(
+    __d('me_cms', 'Delete post'),
+    ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
+    [
+        'icon' => 'trash-o',
+        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+        'target' => '_blank',
+    ]
+));
 
 /**
  * Breadcrumb
  */
 if (config('post.category')) {
-    $this->Breadcrumbs->add(
-        $post->category->title,
-        ['_name' => 'postsCategory', $post->category->slug]
-    );
+    $this->Breadcrumbs->add($post->category->title, ['_name' => 'postsCategory', $post->category->slug]);
 }
 $this->Breadcrumbs->add($post->title, ['_name' => 'post', $post->slug]);
 
@@ -73,24 +59,12 @@ $this->Breadcrumbs->add($post->title, ['_name' => 'post', $post->slug]);
  * Meta tags
  */
 if ($this->request->isAction('view', 'Posts')) {
-    $this->Html->meta([
-        'content' => 'article',
-        'property' => 'og:type',
-    ]);
-    $this->Html->meta([
-        'content' => $post->modified->toUnixString(),
-        'property' => 'og:updated_time',
-    ]);
+    $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+    $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
 
     if (!empty($post->preview)) {
-        $this->Html->meta([
-            'href' => $post->preview,
-            'rel' => 'image_src',
-        ]);
-        $this->Html->meta([
-            'content' => $post->preview,
-            'property' => 'og:image',
-        ]);
+        $this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
     }
 
     if (!empty($post->text)) {

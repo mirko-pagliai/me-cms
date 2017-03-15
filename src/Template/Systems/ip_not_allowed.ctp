@@ -20,9 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/view');
-
 ?>
 
 <div class="text-center">
@@ -30,11 +28,9 @@ $this->extend('/Common/view');
 </div>
 
 <div class="text-center">
-    <?php
-        echo __d(
-            'me_cms',
-            'You can send us an email to {0}',
-            $this->Recaptcha->mail(config('email.webmaster'))
-        );
-    ?>
+    <?= __d(
+        'me_cms',
+        'You can send us an email to {0}',
+        $this->Recaptcha->mail(config('email.webmaster'))
+    ) ?>
 </div>

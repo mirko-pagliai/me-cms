@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 if (trim($this->fetch('class'))) {
     $class = sprintf('widget %s', trim($this->fetch('class')));
 } else {

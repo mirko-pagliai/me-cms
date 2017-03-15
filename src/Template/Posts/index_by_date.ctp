@@ -20,13 +20,12 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use Cake\I18n\Time;
 
 $this->extend('/Posts/index');
 
-$date = new \Cake\I18n\Time();
-$date->year($year)
-    ->month(empty($month) ? 1 : $month)
-    ->day(empty($day) ? 1 : $day);
+$date = new Time;
+$date->year($year)->month(empty($month) ? 1 : $month)->day(empty($day) ? 1 : $day);
 
 if ($year && $month && $day) {
     if ($date->isToday()) {

@@ -20,23 +20,18 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Posts/index');
 $this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->tag));
 
 /**
  * Userbar
  */
-$this->userbar($this->Html->link(
-    __d('me_cms', 'Edit tag'),
-    [
-        'controller' => 'PostsTags',
-        'action' => 'edit',
-        'prefix' => ADMIN_PREFIX,
-        $tag->id
-    ],
-    ['icon' => 'pencil', 'target' => '_blank']
-));
+$this->userbar($this->Html->link(__d('me_cms', 'Edit tag'), [
+    'controller' => 'PostsTags',
+    'action' => 'edit',
+    'prefix' => ADMIN_PREFIX,
+    $tag->id,
+], ['icon' => 'pencil', 'target' => '_blank']));
 
 /**
  * Breadcrumb

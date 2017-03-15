@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->set([
     'documentData' => [
         'xmlns:dc' => 'http://purl.org/dc/elements/1.1/'
@@ -41,7 +40,8 @@ foreach ($posts as $post) {
     $text = $this->BBCode->parser($post->text);
 
     //Truncates the text if the "<!-- read-more -->" tag is present
-    if ($strpos = strpos($text, '<!-- read-more -->')) {
+    $strpos = strpos($text, '<!-- read-more -->');
+    if ($strpos) {
         $text = $this->Text->truncate(
             $text,
             $strpos,
@@ -62,8 +62,7 @@ foreach ($posts as $post) {
     //Adds the preview image
     if (!empty($post->preview)) {
         $text = $this->Thumb->resize($post->preview, ['width' => 200]) .
-            $this->Html->br(null) .
-            $text;
+            $this->Html->br(null) . $text;
     }
 
     echo $this->Rss->item([], [

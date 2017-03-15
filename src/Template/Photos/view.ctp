@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/view');
 $this->assign('title', $title = $photo->filename);
 
@@ -28,40 +27,28 @@ $this->assign('title', $title = $photo->filename);
  * Userbar
  */
 if (!$photo->active) {
-    $this->userbar($this->Html->span(
-        __d('me_cms', 'Not published'),
-        ['class' => 'label label-warning']
-    ));
+    $this->userbar($this->Html->span(__d('me_cms', 'Not published'), ['class' => 'label label-warning']));
 }
-
-$this->userbar([
-    $this->Html->link(
-        __d('me_cms', 'Edit photo'),
-        ['action' => 'edit', $photo->id, 'prefix' => ADMIN_PREFIX],
-        ['icon' => 'pencil', 'target' => '_blank']
-    ),
-    $this->Form->postLink(
-        __d('me_cms', 'Delete photo'),
-        ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
-        [
-            'icon' => 'trash-o',
-            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-            'target' => '_blank',
-        ]
-    ),
-]);
+$this->userbar($this->Html->link(
+    __d('me_cms', 'Edit photo'),
+    ['action' => 'edit', $photo->id, 'prefix' => ADMIN_PREFIX],
+    ['icon' => 'pencil', 'target' => '_blank']
+));
+$this->userbar($this->Form->postLink(
+    __d('me_cms', 'Delete photo'),
+    ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
+    [
+        'icon' => 'trash-o',
+        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+        'target' => '_blank',
+    ]
+));
 
 /**
  * Breadcrumb
  */
 $this->Breadcrumbs->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
-$this->Breadcrumbs->add(
-    $photo->album->title,
-    ['_name' => 'album', $photo->album->slug]
-);
-$this->Breadcrumbs->add(
-    $title,
-    ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id]
-);
+$this->Breadcrumbs->add($photo->album->title, ['_name' => 'album', $photo->album->slug]);
+$this->Breadcrumbs->add($title, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id]);
 
 echo $this->Thumb->resize($photo->path, ['width' => 848]);
