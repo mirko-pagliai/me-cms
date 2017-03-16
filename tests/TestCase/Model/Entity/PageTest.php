@@ -24,7 +24,6 @@ namespace MeCms\Test\TestCase\Model\Entity;
 
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Page;
-use MeTools\Utility\Youtube;
 
 /**
  * PageTest class
@@ -47,37 +46,9 @@ class PageTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Page();
+        $entity = new Page;
 
         $this->assertFalse($entity->accessible('id'));
         $this->assertFalse($entity->accessible('modified'));
-    }
-
-    /**
-     * Test for `_getPreview()` method
-     * @test
-     */
-    public function testPreviewGetMutator()
-    {
-        $entity = new Page();
-
-        $this->assertNull($entity->preview);
-
-        $entity->text = 'This is a simple text';
-        $this->assertFalse($entity->preview);
-
-        $entity->text = '<img src=\'image.jpg\' /> Image before text';
-        $this->assertEquals('image.jpg', $entity->preview);
-
-        $expected = Youtube::getPreview('videoID');
-
-        $entity->text = '[youtube]videoID[/youtube]';
-        $this->assertEquals($expected, $entity->preview);
-
-        $entity->text = '[youtube]videoID[/youtube]Text';
-        $this->assertEquals($expected, $entity->preview);
-
-        $entity->text = '[youtube]videoID[/youtube] Text';
-        $this->assertEquals($expected, $entity->preview);
     }
 }

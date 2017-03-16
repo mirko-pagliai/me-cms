@@ -20,40 +20,35 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Model\Entity;
+namespace MeCms\Model\Entity\Accessors;
 
-use Cake\ORM\Entity;
-use MeCms\Model\Entity\Accessors\PreviewTrait;
+use MeTools\Utility\Youtube;
 
 /**
- * Page entity
- * @property int $id
- * @property string $title
- * @property string $subtitle
- * @property string $slug
- * @property string $text
- * @property int $priority
- * @property bool $active
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * This trait adds the `preview` accessor
  */
-class Page extends Entity
+trait PreviewTrait
 {
-    use PreviewTrait;
-
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
-     * @var array
+     * Gets the image preview (virtual field)
+     * @return string|void
+     * @uses MeTools\Utility\Youtube::getPreview()
      */
-    protected $_accessible = [
-        '*' => true,
-        'id' => false,
-        'modified' => false,
-    ];
+    protected function _getPreview()
+    {
+        if (empty($this->_properties['text'])) {
+            return;
+        }
 
-    /**
-     * Virtual fields that should be exposed
-     * @var array
-     */
-    protected $_virtual = ['preview'];
+        $preview = firstImage($this->_properties['text']);
+
+        if ($preview) {
+            return $preview;
+        }
+
+        //Checks for a YouTube video and its preview
+        if (preg_match('/\[youtube](.+?)\[\/youtube]/', $this->_properties['text'], $matches)) {
+            return Youtube::getPreview($matches[1]);
+        }
+    }
 }
