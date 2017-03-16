@@ -201,7 +201,7 @@ class BaseUpdateShellTest extends TestCase
             'UsersGroups'
         );
 
-        $this->assertEquals([
+        foreach ([
             'banners',
             'banners_positions',
             'pages',
@@ -215,7 +215,9 @@ class BaseUpdateShellTest extends TestCase
             'tokens',
             'users',
             'users_groups',
-        ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
+        ] as $table) {
+            $this->assertContains($table, $this->invokeMethod($this->BaseUpdateShell, '_tables'));
+        }
     }
 
     /**
