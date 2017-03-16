@@ -23,7 +23,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeCms\Model\Entity\Accessors\PreviewTrait;
+use MeCms\Model\Entity\Traits\PreviewAccessorTrait;
 
 /**
  * Page entity
@@ -39,7 +39,7 @@ use MeCms\Model\Entity\Accessors\PreviewTrait;
  */
 class Page extends Entity
 {
-    use PreviewTrait;
+    use PreviewAccessorTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()

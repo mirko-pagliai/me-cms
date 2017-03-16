@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Model\Entity\Accessors;
+namespace MeCms\Model\Entity\Traits;
 
 use Cake\Routing\Router;
 use MeTools\Utility\Youtube;
@@ -28,7 +28,7 @@ use MeTools\Utility\Youtube;
 /**
  * This trait adds the `preview` accessor
  */
-trait PreviewTrait
+trait PreviewAccessorTrait
 {
     /**
      * Gets the image preview (virtual field)

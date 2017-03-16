@@ -20,16 +20,16 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Test\TestCase\Model\Entity;
+namespace MeCms\Test\TestCase\Model\Entity\Traits;
 
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Post;
 use MeTools\Utility\Youtube;
 
 /**
- * PreviewTraitTest class
+ * PreviewAccessorTraitTest class
  */
-class PreviewTraitTest extends TestCase
+class PreviewAccessorTraitTest extends TestCase
 {
     /**
      * Test for `_getPreview()` method
