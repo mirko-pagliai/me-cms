@@ -27,6 +27,7 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Posts model
@@ -36,6 +37,8 @@ use MeCms\Model\Table\AppTable;
  */
 class PostsTable extends AppTable
 {
+    use NextToBePublishedTrait;
+
     /**
      * Name of the configuration to use for this table
      * @var string

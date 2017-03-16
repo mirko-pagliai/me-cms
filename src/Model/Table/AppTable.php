@@ -117,16 +117,6 @@ class AppTable extends Table
     }
 
     /**
-     * Gets from cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return string|bool Timestamp or `false`
-     */
-    public function getNextToBePublished()
-    {
-        return Cache::read('next_to_be_published', $this->cache);
-    }
-
-    /**
      * Gets the categories list
      * @return array
      * @uses $cache
@@ -226,29 +216,5 @@ class AppTable extends Table
         }
 
         return $query;
-    }
-
-    /**
-     * Sets to cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return string|bool Timestamp or `false`
-     * @uses $cache
-     */
-    public function setNextToBePublished()
-    {
-        $next = $this->find()
-            ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time,
-            ])
-            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-            ->extract('created')
-            ->first();
-
-        $next = empty($next) ? false : $next->toUnixString();
-
-        Cache::write('next_to_be_published', $next, $this->cache);
-
-        return $next;
     }
 }

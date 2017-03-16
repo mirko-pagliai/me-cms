@@ -25,12 +25,15 @@ namespace MeCms\Model\Table;
 use Cake\Cache\Cache;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Pages model
  */
 class PagesTable extends AppTable
 {
+    use NextToBePublishedTrait;
+
     /**
      * Name of the configuration to use for this table
      * @var string

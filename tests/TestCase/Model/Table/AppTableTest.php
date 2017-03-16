@@ -210,49 +210,6 @@ class AppTableTest extends TestCase
     }
 
     /**
-     * Test for `getNextToBePublished()` and `setNextToBePublished()` methods
-     * @test
-     */
-    public function testGetNextToBePublishedAndSetNextToBePublished()
-    {
-        $this->assertFalse($this->Posts->getNextToBePublished());
-        $this->assertFalse($this->Posts->setNextToBePublished());
-
-        //Creates a record with a future publication time (1 hours)
-        $created = new Time('+1 hours');
-
-        $entity = $this->Posts->newEntity([
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'Future record',
-            'slug' => 'future-record',
-            'text' => 'Example text',
-            'created' => $created,
-        ]);
-
-        $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
-
-        //Creates another record with a future publication time (30 minuts)
-        //This record takes precedence over the previous
-        $created = new Time('+30 minutes');
-
-        $entity = $this->Posts->newEntity([
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'Another future record',
-            'slug' => 'another-future-record',
-            'text' => 'Example text',
-            'created' => $created,
-        ]);
-
-        $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
-    }
-
-    /**
      * Test for `getList()` method
      * @test
      */
