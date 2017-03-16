@@ -48,8 +48,8 @@ class PostsCategoryTest extends TestCase
     {
         $entity = new PostsCategory();
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('post_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('post_count'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 }

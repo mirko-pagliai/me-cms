@@ -48,8 +48,8 @@ class UsersGroupTest extends TestCase
     {
         $entity = new UsersGroup();
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('user_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('user_count'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 }

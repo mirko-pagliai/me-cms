@@ -48,8 +48,8 @@ class BannersPositionTest extends TestCase
     {
         $entity = new BannersPosition();
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('banner_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('banner_count'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 }

@@ -48,8 +48,8 @@ class PagesCategoryTest extends TestCase
     {
         $entity = new PagesCategory();
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('page_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('page_count'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 }

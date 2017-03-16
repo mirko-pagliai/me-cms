@@ -48,6 +48,6 @@ class PostsTagTest extends TestCase
     {
         $entity = new PostsTag();
 
-        $this->assertFalse($entity->accessible('id'));
+        $this->assertFalse($entity->isAccessible('id'));
     }
 }

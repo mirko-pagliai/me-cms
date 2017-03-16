@@ -48,8 +48,8 @@ class PhotoTest extends TestCase
     {
         $entity = new Photo();
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 
     /**

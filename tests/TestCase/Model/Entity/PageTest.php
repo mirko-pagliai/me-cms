@@ -48,7 +48,7 @@ class PageTest extends TestCase
     {
         $entity = new Page;
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 }

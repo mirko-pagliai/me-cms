@@ -48,9 +48,9 @@ class PhotosAlbumTest extends TestCase
     {
         $entity = new PhotosAlbum();
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('photo_count'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($entity->isAccessible('id'));
+        $this->assertFalse($entity->isAccessible('photo_count'));
+        $this->assertFalse($entity->isAccessible('modified'));
     }
 
     /**
