@@ -50,14 +50,16 @@ class PreviewTraitTest extends TestCase
         $entity->text = 'This is a simple text';
         $this->assertNull($entity->preview);
 
+        $expected = 'http://localhost/image.jpg';
+
         $entity->text = '<img src=\'image.jpg\' />e';
-        $this->assertEquals('image.jpg', $entity->preview);
+        $this->assertEquals($expected, $entity->preview);
 
         $entity->text = '<img src=\'image.jpg\' /> Text after image';
-        $this->assertEquals('image.jpg', $entity->preview);
+        $this->assertEquals($expected, $entity->preview);
 
         $entity->text = '<img src=\'http://localhost/image.jpg\' /> Text after image';
-        $this->assertEquals('http://localhost/image.jpg', $entity->preview);
+        $this->assertEquals($expected, $entity->preview);
 
         $expected = Youtube::getPreview('6z4KK7RWjmk');
 

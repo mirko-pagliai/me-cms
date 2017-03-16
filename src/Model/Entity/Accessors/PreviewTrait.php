@@ -22,6 +22,7 @@
  */
 namespace MeCms\Model\Entity\Accessors;
 
+use Cake\Routing\Router;
 use MeTools\Utility\Youtube;
 
 /**
@@ -43,6 +44,10 @@ trait PreviewTrait
         $preview = firstImage($this->_properties['text']);
 
         if ($preview) {
+            if (!isUrl($preview)) {
+                $preview = Router::url($preview, true);
+            }
+
             return $preview;
         }
 
