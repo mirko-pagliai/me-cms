@@ -73,14 +73,14 @@ class BaseUpdateShell extends Shell
 
         return af(array_map(function ($method) {
             //Returns array with the name method and the version number
-            if (preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
-                return [
-                    'name' => $method,
-                    'version' => $matches[1] . '.' . $matches[2] . '.' . $matches[3],
-                ];
+            if (!preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
+                return false;
             }
 
-            return false;
+            return [
+                'name' => $method,
+                'version' => $matches[1] . '.' . $matches[2] . '.' . $matches[3],
+            ];
         }, $methods));
     }
 

@@ -33,11 +33,7 @@ if (!function_exists('config')) {
     {
         $value = Configure::read(sprintf('MeCms.%s', $key));
 
-        if ($value) {
-            return $value;
-        }
-
-        return Configure::read($key);
+        return $value ? $value : Configure::read($key);
     }
 }
 
