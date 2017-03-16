@@ -31,12 +31,41 @@ use MeCms\Model\Entity\PostsCategory;
 class PostsCategoryTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\PostsCategory
+     */
+    protected $PostsCategory;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->PostsCategory = new PostsCategory;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->PostsCategory);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', new PostsCategory);
+        $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $this->PostsCategory);
     }
 
     /**
@@ -46,10 +75,8 @@ class PostsCategoryTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new PostsCategory();
-
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('post_count'));
-        $this->assertFalse($entity->isAccessible('modified'));
+        $this->assertFalse($this->PostsCategory->isAccessible('id'));
+        $this->assertFalse($this->PostsCategory->isAccessible('post_count'));
+        $this->assertFalse($this->PostsCategory->isAccessible('modified'));
     }
 }

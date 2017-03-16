@@ -4,7 +4,8 @@
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
 * added `MeCms\Model\Entity\Accessors\PreviewTrait` trait;
-* global function `firstImageFromText()` renamed as `firstImage()`.
+* global function `firstImageFromText()` renamed as `firstImage()`;
+* added tests for virtual fields.
 
 ### 2.16.0
 * it uses `CollectionInterface::first()` instead of the global `firstValue()`;

@@ -31,12 +31,41 @@ use MeCms\Model\Entity\PagesCategory;
 class PagesCategoryTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\PagesCategory
+     */
+    protected $PagesCategory;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->PagesCategory = new PagesCategory;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->PagesCategory);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', new PagesCategory);
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $this->PagesCategory);
     }
 
     /**
@@ -46,10 +75,8 @@ class PagesCategoryTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new PagesCategory();
-
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('page_count'));
-        $this->assertFalse($entity->isAccessible('modified'));
+        $this->assertFalse($this->PagesCategory->isAccessible('id'));
+        $this->assertFalse($this->PagesCategory->isAccessible('page_count'));
+        $this->assertFalse($this->PagesCategory->isAccessible('modified'));
     }
 }

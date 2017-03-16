@@ -33,6 +33,11 @@ use MeCms\Model\Entity\Post;
 class PostTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Post
+     */
+    protected $Post;
+
+    /**
      * @var \MeCms\Model\Table\PostsTable
      */
     protected $Posts;
@@ -57,6 +62,7 @@ class PostTest extends TestCase
     {
         parent::setUp();
 
+        $this->Post = new Post;
         $this->Posts = TableRegistry::get('MeCms.Posts');
 
         Cache::clear(false, $this->Posts->cache);
@@ -70,7 +76,7 @@ class PostTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Posts);
+        unset($this->Post, $this->Posts);
     }
 
     /**
@@ -79,7 +85,7 @@ class PostTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Post', new Post);
+        $this->assertInstanceOf('MeCms\Model\Entity\Post', $this->Post);
     }
 
     /**
@@ -89,10 +95,17 @@ class PostTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Post;
+        $this->assertFalse($this->Post->isAccessible('id'));
+        $this->assertFalse($this->Post->isAccessible('modified'));
+    }
 
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('modified'));
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['preview', 'tags_as_string'], $this->Post->getVirtual());
     }
 
     /**

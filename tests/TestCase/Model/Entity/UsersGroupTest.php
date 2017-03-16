@@ -31,12 +31,41 @@ use MeCms\Model\Entity\UsersGroup;
 class UsersGroupTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\UsersGroup
+     */
+    protected $UsersGroup;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->UsersGroup = new UsersGroup;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->UsersGroup);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', new UsersGroup);
+        $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', $this->UsersGroup);
     }
 
     /**
@@ -46,10 +75,8 @@ class UsersGroupTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new UsersGroup();
-
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('user_count'));
-        $this->assertFalse($entity->isAccessible('modified'));
+        $this->assertFalse($this->UsersGroup->isAccessible('id'));
+        $this->assertFalse($this->UsersGroup->isAccessible('user_count'));
+        $this->assertFalse($this->UsersGroup->isAccessible('modified'));
     }
 }

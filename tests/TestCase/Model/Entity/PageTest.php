@@ -31,12 +31,41 @@ use MeCms\Model\Entity\Page;
 class PageTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Page
+     */
+    protected $Page;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Page = new Page;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Page);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Page', new Page);
+        $this->assertInstanceOf('MeCms\Model\Entity\Page', $this->Page);
     }
 
     /**
@@ -46,9 +75,16 @@ class PageTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Page;
+        $this->assertFalse($this->Page->isAccessible('id'));
+        $this->assertFalse($this->Page->isAccessible('modified'));
+    }
 
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('modified'));
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['preview'], $this->Page->getVirtual());
     }
 }

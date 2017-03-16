@@ -31,12 +31,41 @@ use MeCms\Model\Entity\Photo;
 class PhotoTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Photo
+     */
+    protected $Photo;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Photo = new Photo;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Photo);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Photo', new Photo);
+        $this->assertInstanceOf('MeCms\Model\Entity\Photo', $this->Photo);
     }
 
     /**
@@ -46,10 +75,8 @@ class PhotoTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Photo();
-
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('modified'));
+        $this->assertFalse($this->Photo->isAccessible('id'));
+        $this->assertFalse($this->Photo->isAccessible('modified'));
     }
 
     /**
@@ -58,20 +85,24 @@ class PhotoTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $entity = new Photo();
+        $this->assertNull($this->Photo->path);
 
-        $this->assertNull($entity->path);
+        $this->Photo->album_id = 1;
+        $this->assertNull($this->Photo->path);
 
-        $entity->album_id = 1;
+        $this->Photo->filename = 'photo.jpg';
+        $this->assertEquals(PHOTOS . '1' . DS . 'photo.jpg', $this->Photo->path);
 
-        $this->assertNull($entity->path);
+        unset($this->Photo->album_id);
+        $this->assertNull($this->Photo->path);
+    }
 
-        $entity->filename = 'photo.jpg';
-
-        $this->assertEquals(PHOTOS . '1' . DS . 'photo.jpg', $entity->path);
-
-        unset($entity->album_id);
-
-        $this->assertNull($entity->path);
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['path'], $this->Photo->getVirtual());
     }
 }

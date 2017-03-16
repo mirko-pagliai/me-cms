@@ -31,12 +31,41 @@ use MeCms\Model\Entity\Tag;
 class TagTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Tag
+     */
+    protected $Tag;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Tag = new Tag;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Tag);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Tag', new Tag);
+        $this->assertInstanceOf('MeCms\Model\Entity\Tag', $this->Tag);
     }
 
     /**
@@ -46,11 +75,18 @@ class TagTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Tag();
+        $this->assertFalse($this->Tag->isAccessible('id'));
+        $this->assertFalse($this->Tag->isAccessible('post_count'));
+        $this->assertFalse($this->Tag->isAccessible('modified'));
+    }
 
-        $this->assertFalse($entity->isAccessible('id'));
-        $this->assertFalse($entity->isAccessible('post_count'));
-        $this->assertFalse($entity->isAccessible('modified'));
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['slug'], $this->Tag->getVirtual());
     }
 
     /**
@@ -59,14 +95,12 @@ class TagTest extends TestCase
      */
     public function testSlugGetMutator()
     {
-        $entity = new Tag();
+        $this->assertNull($this->Tag->slug);
 
-        $this->assertNull($entity->slug);
+        $this->Tag->tag = 'This is a tag';
+        $this->assertEquals('this-is-a-tag', $this->Tag->slug);
 
-        $entity->tag = 'This is a tag';
-        $this->assertEquals('this-is-a-tag', $entity->slug);
-
-        $entity->tag = 'MY_TAG.a!';
-        $this->assertEquals('my-tag-a', $entity->slug);
+        $this->Tag->tag = 'MY_TAG.a!';
+        $this->assertEquals('my-tag-a', $this->Tag->slug);
     }
 }
