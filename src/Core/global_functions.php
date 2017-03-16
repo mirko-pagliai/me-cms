@@ -41,17 +41,15 @@ if (!function_exists('config')) {
     }
 }
 
-if (!function_exists('firstImageFromText')) {
+if (!function_exists('firstImage')) {
     /**
-     * Performs a regex match on a text and returns the first image
-     * @param string $text Text
-     * @return string|bool Image or `false` if there's no image on the text
+     * Returns the first image from an html string
+     * @param string $html Html
+     * @return string|bool Image or `false`
      */
-    function firstImageFromText($text)
+    function firstImage($html)
     {
-        preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $text, $matches);
-
-        if (empty($matches[2])) {
+        if (!preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $html, $matches)) {
             return false;
         }
 

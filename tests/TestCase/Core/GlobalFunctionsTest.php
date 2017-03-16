@@ -51,27 +51,27 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `firstImageFromText()` global function
+     * Test for `firstImage()` global function
      * @test
      */
-    public function testFirstImageFromText()
+    public function testfirstImage()
     {
-        $this->assertFalse(firstImageFromText('Text'));
+        $this->assertFalse(firstImage('Text'));
 
-        $this->assertEquals('image.jpg', firstImageFromText('<img src=\'image.jpg\'>'));
-        $this->assertEquals('/image.jpg', firstImageFromText('<img src=\'/image.jpg\'>'));
-        $this->assertEquals('subdir/image.jpg', firstImageFromText('<img src=\'subdir/image.jpg\'>'));
-        $this->assertEquals('/subdir/image.jpg', firstImageFromText('<img src=\'/subdir/image.jpg\'>'));
+        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'>'));
+        $this->assertEquals('/image.jpg', firstImage('<img src=\'/image.jpg\'>'));
+        $this->assertEquals('subdir/image.jpg', firstImage('<img src=\'subdir/image.jpg\'>'));
+        $this->assertEquals('/subdir/image.jpg', firstImage('<img src=\'/subdir/image.jpg\'>'));
 
         $expected = 'http://example.com/image.jpg';
 
-        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\'>'));
-        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\' />'));
-        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\' />Text'));
-        $this->assertEquals($expected, firstImageFromText('<img src=\'http://example.com/image.jpg\' /> Text'));
+        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\'>'));
+        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\' />'));
+        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\' />Text'));
+        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\' /> Text'));
 
-        $this->assertEquals('ftp://example.com/image.jpg', firstImageFromText('<img src=\'ftp://example.com/image.jpg\'>'));
-        $this->assertEquals('https://example.com/image.jpg', firstImageFromText('<img src=\'https://example.com/image.jpg\'>'));
-        $this->assertEquals('http://www.example.com/image.jpg', firstImageFromText('<img src=\'http://www.example.com/image.jpg\'>'));
+        $this->assertEquals('ftp://example.com/image.jpg', firstImage('<img src=\'ftp://example.com/image.jpg\'>'));
+        $this->assertEquals('https://example.com/image.jpg', firstImage('<img src=\'https://example.com/image.jpg\'>'));
+        $this->assertEquals('http://www.example.com/image.jpg', firstImage('<img src=\'http://www.example.com/image.jpg\'>'));
     }
 }

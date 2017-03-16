@@ -67,7 +67,7 @@ class Page extends Entity
             return;
         }
 
-        $preview = firstImageFromText($this->_properties['text']);
+        $preview = firstImage($this->_properties['text']);
 
         if ($preview) {
             return $preview;

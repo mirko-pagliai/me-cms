@@ -2,7 +2,8 @@
 ## 2.16 branch
 ### 2.16.1
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
-    instance of `Time`.
+    instance of `Time`;
+* global function `firstImageFromText()` renamed as `firstImage()`.
 
 ### 2.16.0
 * it uses `CollectionInterface::first()` instead of the global `firstValue()`;
