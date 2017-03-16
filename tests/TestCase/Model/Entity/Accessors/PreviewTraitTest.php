@@ -22,15 +22,9 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\ORM\Entity;
 use Cake\TestSuite\TestCase;
-use MeCms\Model\Entity\Accessors\PreviewTrait;
+use MeCms\Model\Entity\Post;
 use MeTools\Utility\Youtube;
-
-class Post extends Entity
-{
-    use PreviewTrait;
-}
 
 /**
  * PreviewTraitTest class
