@@ -22,8 +22,11 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -54,7 +57,7 @@ class PostsTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -71,7 +74,7 @@ class PostsTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterSave()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
@@ -87,7 +90,7 @@ class PostsTable extends AppTable
      * @return void
      * @since 2.15.2
      */
-    public function beforeMarshal(\Cake\Event\Event $event, \ArrayObject $data, \ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         if (!empty($data['tags_as_string'])) {
             //Gets existing tags

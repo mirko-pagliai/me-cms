@@ -22,7 +22,10 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
@@ -49,7 +52,7 @@ class PagesTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -66,7 +69,7 @@ class PagesTable extends AppTable
      * @uses MeCms\Model\Table\AppTable::afterSave()
      * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
