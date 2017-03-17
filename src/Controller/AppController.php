@@ -32,44 +32,6 @@ use Cake\Network\Exception\InternalErrorException;
 class AppController extends BaseController
 {
     /**
-     * Checks if the latest search has been executed out of the minimum
-     *  interval
-     * @param string $queryId Query
-     * @return bool
-     */
-    protected function _checkLastSearch($queryId = false)
-    {
-        $interval = config('security.search_interval');
-
-        if (!$interval) {
-            return true;
-        }
-
-        if ($queryId) {
-            $queryId = md5($queryId);
-        }
-
-        $lastSearch = $this->request->session()->read('last_search');
-
-        if ($lastSearch) {
-            //Checks if it's the same search
-            if ($queryId && !empty($lastSearch['id']) && $queryId === $lastSearch['id']) {
-                return true;
-            //Checks if the interval has not yet expired
-            } elseif (($lastSearch['time'] + $interval) > time()) {
-                return false;
-            }
-        }
-
-        $this->request->session()->write('last_search', [
-            'id' => $queryId,
-            'time' => time(),
-        ]);
-
-        return true;
-    }
-
-    /**
      * Internal method to download a file
      * @param string $path File path
      * @param bool $force If `true`, it forces the download

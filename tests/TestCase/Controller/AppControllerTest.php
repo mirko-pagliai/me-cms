@@ -75,45 +75,6 @@ class AppControllerTest extends TestCase
     }
 
     /**
-     * Tests for `_checkLastSearch()` method
-     * @test
-     */
-    public function testCheckLastSearch()
-    {
-        $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch', ['my-query']));
-        $firstSession = $this->AppController->request->session()->read('last_search');
-        $this->assertNotEmpty($firstSession);
-        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession['id']);
-
-        //Tries with the same query
-        $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch', ['my-query']));
-        $secondSession = $this->AppController->request->session()->read('last_search');
-        $this->assertNotEmpty($secondSession);
-        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession['id']);
-
-        $this->assertEquals($firstSession, $secondSession);
-
-        //Tries with another query
-        $this->assertFalse($this->invokeMethod($this->AppController, '_checkLastSearch', ['another-query']));
-        $thirdSession = $this->AppController->request->session()->read('last_search');
-        $this->assertEquals($firstSession, $thirdSession);
-
-        //Deletes the session and tries again with another query
-        $this->AppController->request->session()->delete('last_search');
-        $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch', ['another-query']));
-        $fourthSession = $this->AppController->request->session()->read('last_search');
-        $this->assertNotEquals($firstSession, $fourthSession);
-
-        foreach ([0, false] as $value) {
-            $this->AppController->request->session()->delete('last_search');
-            Configure::write(ME_CMS . '.security.search_interval', $value);
-
-            $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch'));
-            $this->assertNull($this->AppController->request->session()->read('last_search'));
-        }
-    }
-
-    /**
      * Tests for `_download()` method
      * @test
      */

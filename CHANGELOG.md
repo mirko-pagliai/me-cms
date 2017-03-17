@@ -3,6 +3,7 @@
 ### 2.16.1
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
+* added `MeCms\Controller\Traits\CheckLastSearchTrait` trait;
 * added `MeCms\Model\Entity\Traits\PreviewAccessorTrait` trait;
 * added `MeCms\Model\Table\Traits\NextToBePublishedTrait` trait;
 * the preview image for pages and posts always contains a full url;
