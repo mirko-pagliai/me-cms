@@ -29,6 +29,7 @@ use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
@@ -164,7 +165,7 @@ class PostsTable extends AppTable
      * @throws InternalErrorException
      * @uses $cache
      */
-    public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5, $images = true)
+    public function getRelated(Post $post, $limit = 5, $images = true)
     {
         if (empty($post->id) || !isset($post->tags)) {
             throw new InternalErrorException(__d('me_cms', 'ID or tags of the post are missing'));
