@@ -23,6 +23,7 @@
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
@@ -32,6 +33,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 class PagesTable extends AppTable
 {
+    use LocatorAwareTrait;
     use NextToBePublishedTrait;
 
     /**
@@ -133,6 +135,7 @@ class PagesTable extends AppTable
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
             'className' => 'MeCms.PagesCategories',
+            'targetTable' => $this->tableLocator()->get('MeCms.PagesCategories'),
         ]);
 
         $this->addBehavior('Timestamp');
