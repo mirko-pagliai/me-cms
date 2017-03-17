@@ -56,7 +56,7 @@ class PostsTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
@@ -73,7 +73,7 @@ class PostsTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
@@ -137,8 +137,8 @@ class PostsTable extends AppTable
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses $cache
-     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
@@ -150,6 +150,7 @@ class PostsTable extends AppTable
         if ($next && time() >= $next) {
             Cache::clear(false, $this->cache);
 
+            //Sets the next record to be published
             $this->setNextToBePublished();
         }
 
