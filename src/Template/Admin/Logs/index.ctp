@@ -42,18 +42,18 @@ $this->append('actions', $this->Form->postButton(
                     <?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?>
                 </strong>
                 <?php
-                    $actions = [
-                        $this->Html->link(
-                            __d('me_cms', 'Basic view'),
-                            ['action' => 'view', $log->filename],
-                            ['icon' => 'eye']
-                        ),
-                    ];
+                    $actions = [];
+
+                    $actions[] = $this->Html->link(
+                        __d('me_cms', 'Basic view'),
+                        ['action' => 'view', $log->filename],
+                        ['icon' => 'eye']
+                    );
 
                     if ($log->hasSerialized) {
                         $actions[] = $this->Html->link(
                             __d('me_cms', 'Advanced view'),
-                            ['action' => 'viewSerialized', $log->filename],
+                            ['action' => 'view', $log->filename, '?' => ['as' => 'serialized']],
                             ['icon' => 'eye']
                         );
                     }

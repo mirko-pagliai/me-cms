@@ -20,18 +20,17 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/view');
-$this->assign('title', __d('me_cms', 'Log {0}', $log->filename));
+$this->assign('title', __d('me_cms', 'Log {0}', $filename));
 
 $this->append('actions', $this->Html->button(
     __d('me_cms', 'Download'),
-    ['action' => 'download', $log->filename],
+    ['action' => 'download', $filename],
     ['class' => 'btn-success', 'icon' => 'download']
 ));
 $this->append('actions', $this->Form->postButton(
     __d('me_cms', 'Delete'),
-    ['action' => 'delete', $log->filename],
+    ['action' => 'delete', $filename],
     [
         'class' => 'btn-danger',
         'icon' => 'trash-o',
@@ -40,9 +39,9 @@ $this->append('actions', $this->Form->postButton(
 ));
 ?>
 
-<?php if (!empty($log->content)) : ?>
+<?php if (!empty($content)) : ?>
     <div class="as-table">
-        <?php foreach ($log->content as $k => $row) : ?>
+        <?php foreach ($content as $k => $row) : ?>
             <div class="padding-10 small">
                 <?php
                 if (in_array($row->level, ['error', 'fatal'])) {
@@ -62,49 +61,39 @@ $this->append('actions', $this->Form->postButton(
                     <div class="margin-10 text-muted">
                         <?php if (!empty($row->request)) : ?>
                             <div class="text-truncated">
-                                <?= __d('me_cms', 'Request URL') ?>: 
-                                <?php
-                                    echo $this->Html->link(
-                                        $row->request === '/' ? '(Root)' : $row->request,
-                                        $row->request,
-                                        ['target' => '_blank']
-                                    );
-                                ?>
+                                <?= __d('me_cms', 'Request URL') ?>:
+                                <?= $this->Html->link(
+                                    $row->request === '/' ? '(Root)' : $row->request,
+                                    $row->request,
+                                    ['target' => '_blank']
+                                ) ?>
                             </div>
                         <?php endif; ?>
 
                         <?php if (!empty($row->referer)) : ?>
                             <div class="text-truncated">
-                                <?= __d('me_cms', 'Referer URL') ?>: 
-                                <?php
-                                    echo $this->Html->link(
-                                        $row->referer,
-                                        $row->referer,
-                                        ['target' => '_blank']
-                                    );
-                                ?>
+                                <?= __d('me_cms', 'Referer URL') ?>:
+                                <?= $this->Html->link($row->referer, $row->referer, ['target' => '_blank']) ?>
                             </div>
                         <?php endif; ?>
 
                         <?php if (!empty($row->ip)) : ?>
                             <div>
-                                <?= __d('me_cms', 'Client IP') ?>: 
-                                <?= $row->ip ?> 
-                                <?php
-                                    echo sprintf(
-                                        '(%s | %s)',
-                                        $this->Html->link(
-                                            __d('me_cms', 'Who is'),
-                                            str_replace('{IP}', $row->ip, config('security.ip_whois')),
-                                            ['target' => '_blank']
-                                        ),
-                                        $this->Html->link(
-                                            __d('me_cms', 'Map'),
-                                            str_replace('{IP}', $row->ip, config('security.ip_map')),
-                                            ['target' => '_blank']
-                                        )
-                                    );
-                                ?>
+                                <?= __d('me_cms', 'Client IP') ?>:
+                                <?= $row->ip ?>
+                                <?= sprintf(
+                                    '(%s | %s)',
+                                    $this->Html->link(
+                                        __d('me_cms', 'Who is'),
+                                        str_replace('{IP}', $row->ip, config('security.ip_whois')),
+                                        ['target' => '_blank']
+                                    ),
+                                    $this->Html->link(
+                                        __d('me_cms', 'Map'),
+                                        str_replace('{IP}', $row->ip, config('security.ip_map')),
+                                        ['target' => '_blank']
+                                    )
+                                ) ?>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -114,15 +103,11 @@ $this->append('actions', $this->Form->postButton(
                 $buttons = $collapse = [];
 
                 if (!empty($row->attributes)) {
-                    $buttons[] = $this->Html->tag(
-                        'button',
-                        __d('me_cms', 'Exception attributes'),
-                        [
-                            'class' => 'btn-sm btn-primary',
-                            'data-toggle' => 'collapse',
-                            'data-target' => "#log-attributes-{$k}",
-                        ]
-                    );
+                    $buttons[] = $this->Html->tag('button', __d('me_cms', 'Exception attributes'), [
+                        'class' => 'btn-sm btn-primary',
+                        'data-toggle' => 'collapse',
+                        'data-target' => "#log-attributes-{$k}",
+                    ]);
                     $collapse[] = $this->Html->div(
                         'collapse',
                         $this->Html->pre($row->attributes),
@@ -131,15 +116,11 @@ $this->append('actions', $this->Form->postButton(
                 }
 
                 if (!empty($row->trace)) {
-                    $buttons[] = $this->Html->tag(
-                        'button',
-                        __d('me_cms', 'Trace'),
-                        [
-                            'class' => 'btn-sm btn-primary',
-                            'data-toggle' => 'collapse',
-                            'data-target' => "#log-trace-{$k}",
-                        ]
-                    );
+                    $buttons[] = $this->Html->tag('button', __d('me_cms', 'Trace'), [
+                        'class' => 'btn-sm btn-primary',
+                        'data-toggle' => 'collapse',
+                        'data-target' => "#log-trace-{$k}",
+                    ]);
                     $collapse[] = $this->Html->div(
                         'collapse',
                         $this->Html->pre($row->trace),
@@ -147,26 +128,18 @@ $this->append('actions', $this->Form->postButton(
                     );
                 }
 
-                $buttons[] = $this->Html->tag(
-                    'button',
-                    __d('me_cms', 'Full log'),
-                    [
-                        'class' => 'btn-sm btn-primary',
-                        'data-toggle' => 'collapse',
-                        'data-target' => "#log-full-{$k}",
-                    ]
-                );
+                $buttons[] = $this->Html->tag('button', __d('me_cms', 'Full log'), [
+                    'class' => 'btn-sm btn-primary',
+                    'data-toggle' => 'collapse',
+                    'data-target' => "#log-full-{$k}",
+                ]);
                 $collapse[] = $this->Html->div(
                     'collapse',
                     $this->Html->pre($row->full),
                     ['id' => "log-full-{$k}"]
                 );
 
-                echo $this->Html->div(
-                    'btn-group margin-10',
-                    implode(PHP_EOL, $buttons),
-                    ['role' => 'group']
-                );
+                echo $this->Html->div('btn-group margin-10', implode(PHP_EOL, $buttons), ['role' => 'group']);
                 echo implode(PHP_EOL, $collapse);
                 ?>
             </div>

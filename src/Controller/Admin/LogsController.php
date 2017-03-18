@@ -91,6 +91,7 @@ class LogsController extends AppController
     /**
      * Lists logs
      * @return void
+     * @uses _path()
      */
     public function index()
     {
@@ -116,26 +117,16 @@ class LogsController extends AppController
      */
     public function view($filename)
     {
-        $log = (object)am([
-            'content' => $this->_read($filename),
-        ], compact('filename'));
+        $serialized = false;
 
-        $this->set(compact('log'));
-    }
+        if ($this->request->getQuery('as') === 'serialized') {
+            $serialized = true;
+            $this->viewBuilder()->setTemplate('view_serialized');
+        }
 
-    /**
-     * Views a (serialized) log
-     * @param string $filename Filename
-     * @return void
-     * @uses _read()
-     */
-    public function viewSerialized($filename)
-    {
-        $log = (object)am([
-            'content' => $this->_read($filename, true),
-        ], compact('filename'));
+        $content = $this->_read($filename, $serialized);
 
-        $this->set(compact('log'));
+        $this->set(compact('content', 'filename'));
     }
 
     /**
