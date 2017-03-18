@@ -74,5 +74,4 @@ class CheckLastSearchTraitTest extends TestCase
             $this->assertNull($controller->request->session()->read('last_search'));
         }
     }
-
 }
