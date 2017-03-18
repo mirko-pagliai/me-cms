@@ -3,6 +3,7 @@
 ### 2.16.1
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
+* improved `MeCms\Controller\Admin\LogController`;
 * added `MeCms\Controller\Traits\CheckLastSearchTrait` trait;
 * added `MeCms\Controller\Traits\DownloadTrait` trait;
 * added `MeCms\Model\Entity\Traits\PreviewAccessorTrait` trait;

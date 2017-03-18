@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Logs'));
 
@@ -51,7 +50,7 @@ $this->append('actions', $this->Form->postButton(
                         ),
                     ];
 
-                    if ($log->serialized) {
+                    if ($log->hasSerialized) {
                         $actions[] = $this->Html->link(
                             __d('me_cms', 'Advanced view'),
                             ['action' => 'viewSerialized', $log->filename],

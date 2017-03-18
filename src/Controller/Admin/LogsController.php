@@ -57,11 +57,7 @@ class LogsController extends AppController
     protected function _path($filename, $serialized = false)
     {
         if ($serialized) {
-            $filename = sprintf(
-                '%s_serialized.%s',
-                pathinfo($filename, PATHINFO_FILENAME),
-                pathinfo($filename, PATHINFO_EXTENSION)
-            );
+            $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
         }
 
         return LOGS . $filename;
@@ -73,23 +69,16 @@ class LogsController extends AppController
      */
     public function index()
     {
-        //Gets all log files
-        $logs = (new Folder(LOGS))->read(true, ['empty'])[1];
+        //Gets all log files, except those serialized
+        $logs = (new Folder(LOGS))->find('(?!.*_serialized).+\.log');
 
-        $logs = af(array_map(function ($log) {
-            //Return, if this is a serialized log
-            if (preg_match('/_serialized\.log$/i', $log)) {
-                return;
-            }
-
-            //If this log has a serialized copy
-            $serialized = is_readable(LOGS . sprintf('%s_serialized.log', pathinfo($log, PATHINFO_FILENAME)));
-
-            return (object)am([
+        $logs = collection($logs)->map(function ($log) {
+            return (object)[
                 'filename' => $log,
+                'hasSerialized' => is_readable($this->_path($log, true)),
                 'size' => filesize(LOGS . $log),
-            ], compact('serialized'));
-        }, $logs));
+            ];
+        })->toList();
 
         $this->set(compact('logs'));
     }
