@@ -51,7 +51,7 @@ class LogsController extends AppController
     /**
      * Returns the path for a log
      * @param string $filename Filename
-     * @param bool $serialized true if is a serialized log
+     * @param bool $serialized `true` for a serialized log
      * @return string
      */
     protected function _path($filename, $serialized = false)
@@ -61,6 +61,31 @@ class LogsController extends AppController
         }
 
         return LOGS . $filename;
+    }
+
+    /**
+     * Internal method to read a log content
+     * @param string $filename Filename
+     * @param bool $serialized `true` for a serialized log
+     * @return string Log content
+     * @throws InternalErrorException
+     * @uses _path()
+     */
+    protected function _read($filename, $serialized = false)
+    {
+        $log = $this->_path($filename, $serialized);
+
+        if (!is_readable($log)) {
+            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
+        }
+
+        $log = file_get_contents($log);
+
+        if ($serialized) {
+            return unserialize($log);
+        }
+
+        return trim($log);
     }
 
     /**
@@ -87,19 +112,12 @@ class LogsController extends AppController
      * Views a log
      * @param string $filename Filename
      * @return void
-     * @throws InternalErrorException
-     * @uses _path()
+     * @uses _read()
      */
     public function view($filename)
     {
-        $log = $this->_path($filename);
-
-        if (!is_readable($log)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-        }
-
         $log = (object)am([
-            'content' => trim(file_get_contents($log)),
+            'content' => $this->_read($filename),
         ], compact('filename'));
 
         $this->set(compact('log'));
@@ -109,19 +127,12 @@ class LogsController extends AppController
      * Views a (serialized) log
      * @param string $filename Filename
      * @return void
-     * @throws InternalErrorException
-     * @uses _path()
+     * @uses _read()
      */
     public function viewSerialized($filename)
     {
-        $log = $this->_path($filename, true);
-
-        if (!is_readable($log)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-        }
-
         $log = (object)am([
-            'content' => unserialize(file_get_contents($log)),
+            'content' => $this->_read($filename, true),
         ], compact('filename'));
 
         $this->set(compact('log'));
