@@ -24,31 +24,12 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\Event\Event;
-use Cake\Network\Exception\InternalErrorException;
 
 /**
  * Application controller class
  */
 class AppController extends BaseController
 {
-    /**
-     * Internal method to download a file
-     * @param string $path File path
-     * @param bool $force If `true`, it forces the download
-     * @return \Cake\Network\Response
-     * @throws InternalErrorException
-     */
-    protected function _download($path, $force = true)
-    {
-        if (!is_readable($path)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
-        }
-
-        $this->response->file($path, ['download' => $force]);
-
-        return $this->response;
-    }
-
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before

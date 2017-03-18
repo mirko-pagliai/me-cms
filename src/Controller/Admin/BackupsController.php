@@ -25,6 +25,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use MeCms\Controller\AppController;
+use MeCms\Controller\Traits\DownloadTrait;
 use MysqlBackup\Utility\BackupImport;
 use MysqlBackup\Utility\BackupManager;
 
@@ -33,6 +34,8 @@ use MysqlBackup\Utility\BackupManager;
  */
 class BackupsController extends AppController
 {
+    use DownloadTrait;
+
     /**
      * Check if the provided user is authorized for the request
      * @param array $user The user to check the authorization of. If empty
@@ -127,7 +130,7 @@ class BackupsController extends AppController
      * Downloads a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\AppController::_download()
+     * @uses MeCms\Controller\Traits\DownloadTrait::_download()
      */
     public function download($filename)
     {

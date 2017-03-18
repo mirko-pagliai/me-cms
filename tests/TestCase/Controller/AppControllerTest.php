@@ -26,15 +26,12 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use MeCms\Controller\AppController;
-use Reflection\ReflectionTrait;
 
 /**
  * AppControllerTest class
  */
 class AppControllerTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Controller\AppController
      */
@@ -72,34 +69,6 @@ class AppControllerTest extends TestCase
         parent::tearDown();
 
         unset($this->AppController);
-    }
-
-    /**
-     * Tests for `_download()` method
-     * @test
-     */
-    public function testDownload()
-    {
-        $file = tempnam(sys_get_temp_dir(), 'temp');
-
-        $response = $this->invokeMethod($this->AppController, '_download', [$file]);
-        $this->assertInstanceOf('Cake\Http\Response', $response);
-
-        $this->assertInstanceOf('Cake\Filesystem\File', $this->getProperty($response, '_file'));
-        $this->assertEquals($file, $this->getProperty($response, '_file')->path);
-
-        unlink($file);
-    }
-
-    /**
-     * Tests for `_download()` method, with a no existing file
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File or directory noExistingFile not readable
-     * @test
-     */
-    public function testDownloadNoExistingFile()
-    {
-        $this->invokeMethod($this->AppController, '_download', ['noExistingFile']);
     }
 
     /**
