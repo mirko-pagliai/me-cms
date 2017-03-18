@@ -120,7 +120,7 @@ class UserMailerTest extends TestCase
     public function testActivateAccountWithSend()
     {
         $result = $this->UserMailer->transport('debug')
-            ->layout(false)
+            ->setLayout(false)
             ->set('url', 'http://example/link')
             ->send('activateAccount', [$this->example]);
 
@@ -183,7 +183,7 @@ class UserMailerTest extends TestCase
     public function testChangePasswordWithSend()
     {
         $result = $this->UserMailer->transport('debug')
-            ->layout(false)
+            ->setLayout(false)
             ->set('url', 'http://example/link')
             ->send('changePassword', [$this->example]);
 
@@ -245,7 +245,7 @@ class UserMailerTest extends TestCase
     public function testForgotPasswordWithSend()
     {
         $result = $this->UserMailer->transport('debug')
-            ->layout(false)
+            ->setLayout(false)
             ->set('url', 'http://example/link')
             ->send('forgotPassword', [$this->example]);
 

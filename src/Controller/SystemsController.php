@@ -135,23 +135,19 @@ class SystemsController extends AppController
      */
     public function sitemap()
     {
-        //If the sitemap doesn't exists, it writes the sitemap
-        if (!is_readable(SITEMAP)) {
-            $sitemap = $this->_sitemap();
-        } else {
+        //Checks if the sitemap exist and is not expired
+        if (is_readable(SITEMAP)) {
             $time = Time::createFromTimestamp(filemtime(SITEMAP));
 
-            //If the sitemap has expired, it writes a new sitemap
-            if ($time->modify(config('main.sitemap_expiration'))->isPast()) {
-                $sitemap = $this->_sitemap();
-            } else {
+            if (!$time->modify(config('main.sitemap_expiration'))->isPast()) {
                 $sitemap = file_get_contents(SITEMAP);
             }
         }
 
-        $this->response->body($sitemap);
-        $this->response->type('x-gzip');
+        if (empty($sitemap)) {
+            $sitemap = $this->_sitemap();
+        }
 
-        return $this->response;
+        return $this->response->withStringBody($sitemap)->withType(mime_content_type(SITEMAP));
     }
 }

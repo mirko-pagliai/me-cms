@@ -43,8 +43,6 @@ trait DownloadTrait
             throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
         }
 
-        $this->response->file($path, ['download' => $force]);
-
-        return $this->response;
+        return $this->response->withFile($path, ['download' => $force]);
     }
 }

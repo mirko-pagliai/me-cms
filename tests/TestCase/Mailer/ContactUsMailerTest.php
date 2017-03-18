@@ -127,7 +127,7 @@ class ContactUsMailerTest extends TestCase
     public function testContactUsMailWithSend()
     {
         $result = $this->ContactUsMailer->transport('debug')
-            ->layout(false)
+            ->setLayout(false)
             ->send('contactUsMail', [$this->example]);
 
         $headers = $message = null;
