@@ -94,7 +94,10 @@ class PostsTableTest extends TestCase
     {
         $this->Posts = $this->getMockBuilder(get_class($this->Posts))
             ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([['table' => $this->Posts->table(), 'connection' => $this->Posts->connection()]])
+            ->setConstructorArgs([[
+                'table' => $this->Posts->table(),
+                'connection' => $this->Posts->getConnection(),
+            ]])
             ->getMock();
 
         $this->Posts->expects($this->once())
@@ -111,7 +114,10 @@ class PostsTableTest extends TestCase
     {
         $this->Posts = $this->getMockBuilder(get_class($this->Posts))
             ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([['table' => $this->Posts->table(), 'connection' => $this->Posts->connection()]])
+            ->setConstructorArgs([[
+                'table' => $this->Posts->table(),
+                'connection' => $this->Posts->getConnection(),
+            ]])
             ->getMock();
 
         $this->Posts->expects($this->once())

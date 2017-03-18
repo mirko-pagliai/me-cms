@@ -318,7 +318,7 @@ class UserShellTest extends TestCase
             'groups',
             'users',
         ], array_keys($parser->subcommands()));
-        $this->assertEquals('Shell to handle users and user groups', $parser->description());
+        $this->assertEquals('Shell to handle users and user groups', $parser->getDescription());
         $this->assertEquals(['help', 'quiet', 'verbose'], array_keys($parser->options()));
     }
 }

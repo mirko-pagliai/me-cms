@@ -22,7 +22,10 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -90,14 +93,14 @@ class PagesTableTest extends TestCase
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
                 'table' => $this->Pages->table(),
-                'connection' => $this->Pages->connection(),
+                'connection' => $this->Pages->getConnection(),
             ]])
             ->getMock();
 
         $this->Pages->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Pages->afterDelete(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Pages->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -110,14 +113,14 @@ class PagesTableTest extends TestCase
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
                 'table' => $this->Pages->table(),
-                'connection' => $this->Pages->connection(),
+                'connection' => $this->Pages->getConnection(),
             ]])
             ->getMock();
 
         $this->Pages->expects($this->once())
             ->method('setNextToBePublished');
 
-        $this->Pages->afterSave(new \Cake\Event\Event(null), new \Cake\ORM\Entity, new \ArrayObject);
+        $this->Pages->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
     /**

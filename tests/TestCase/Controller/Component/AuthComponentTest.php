@@ -79,14 +79,14 @@ class AuthComponentTest extends TestCase
             'unauthorizedRedirect',
         ];
 
-        $config = $this->Auth->config();
+        $config = $this->Auth->getConfig();
 
         //Checks that all keys exist
         foreach ($keysToCheck as $key) {
             $this->assertTrue(array_key_exists($key, $config));
         }
 
-        $this->assertFalse($this->Auth->config('authError'));
+        $this->assertFalse($this->Auth->getConfig('authError'));
     }
 
     /**

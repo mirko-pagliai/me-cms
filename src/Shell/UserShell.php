@@ -232,7 +232,7 @@ class UserShell extends Shell
     {
         $parser = parent::getOptionParser();
 
-        $parser->description(__d('me_cms', 'Shell to handle users and user groups'));
+        $parser->setDescription(__d('me_cms', 'Shell to handle users and user groups'));
 
         $parser->addSubcommand('add', [
             'help' => __d('me_cms', 'Adds an user'),

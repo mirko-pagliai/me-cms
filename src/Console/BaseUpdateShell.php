@@ -104,7 +104,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _columns($table)
     {
-        return $this->connection->schemaCollection()->describe($table)->columns();
+        return $this->connection->getSchemaCollection()->describe($table)->columns();
     }
 
     /**
@@ -137,7 +137,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _tables()
     {
-        return $this->connection->schemaCollection()->listTables();
+        return $this->connection->getSchemaCollection()->listTables();
     }
 
     /**
