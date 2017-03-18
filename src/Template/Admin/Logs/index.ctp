@@ -38,42 +38,41 @@ $this->append('actions', $this->Form->postButton(
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
-                <strong>
-                    <?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?>
-                </strong>
                 <?php
-                    $actions = [];
+                echo $this->Html->strong($this->Html->link($log->filename, ['action' => 'view', $log->filename]));
 
+                $actions = [];
+
+                $actions[] = $this->Html->link(
+                    __d('me_cms', 'Basic view'),
+                    ['action' => 'view', $log->filename],
+                    ['icon' => 'eye']
+                );
+
+                if ($log->hasSerialized) {
                     $actions[] = $this->Html->link(
-                        __d('me_cms', 'Basic view'),
-                        ['action' => 'view', $log->filename],
+                        __d('me_cms', 'Advanced view'),
+                        ['action' => 'view', $log->filename, '?' => ['as' => 'serialized']],
                         ['icon' => 'eye']
                     );
+                }
 
-                    if ($log->hasSerialized) {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Advanced view'),
-                            ['action' => 'view', $log->filename, '?' => ['as' => 'serialized']],
-                            ['icon' => 'eye']
-                        );
-                    }
+                $actions[] = $this->Html->link(
+                    __d('me_cms', 'Download'),
+                    ['action' => 'download', $log->filename],
+                    ['icon' => 'download']
+                );
+                $actions[] = $this->Form->postLink(
+                    __d('me_cms', 'Delete'),
+                    ['action' => 'delete', $log->filename],
+                    [
+                        'class' => 'text-danger',
+                        'icon' => 'trash-o',
+                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                    ]
+                );
 
-                    $actions[] = $this->Html->link(
-                        __d('me_cms', 'Download'),
-                        ['action' => 'download', $log->filename],
-                        ['icon' => 'download']
-                    );
-                    $actions[] = $this->Form->postLink(
-                        __d('me_cms', 'Delete'),
-                        ['action' => 'delete', $log->filename],
-                        [
-                            'class' => 'text-danger',
-                            'icon' => 'trash-o',
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                        ]
-                    );
-
-                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </td>
             <td class="min-width text-center">
