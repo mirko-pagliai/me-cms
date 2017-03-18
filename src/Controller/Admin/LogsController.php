@@ -121,7 +121,7 @@ class LogsController extends AppController
 
         if ($this->request->getQuery('as') === 'serialized') {
             $serialized = true;
-            $this->viewBuilder()->setTemplate('view_serialized');
+            $this->viewBuilder()->setTemplate('view_as_serialized');
         }
 
         $content = $this->_read($filename, $serialized);
