@@ -31,7 +31,7 @@ $this->Asset->script('MeCms.admin/kcfinder', ['block' => 'script_bottom']);
     <?php
         echo $this->Form->createInline(false, ['type' => 'get']);
         echo $this->Form->label('type', __d('me_cms', 'Type'));
-        echo $this->Form->input('type', [
+        echo $this->Form->control('type', [
             'default' => $this->request->query('type'),
             'onchange' => 'send_form(this)',
         ]);

@@ -35,13 +35,13 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
     <?php
     //Only admins and managers can edit posts on behalf of other users
     if ($this->Auth->isGroup(['admin', 'manager'])) {
-        echo $this->Form->input('user_id', [
+        echo $this->Form->control('user_id', [
             'empty' => false,
             'label' => __d('me_cms', 'Author'),
         ]);
     }
 
-    echo $this->Form->input('category_id', [
+    echo $this->Form->control('category_id', [
         'empty' => false,
         'label' => __d('me_cms', 'Category'),
     ]);
@@ -53,10 +53,10 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
         ],
         'value' => $post->created->i18nFormat(FORMAT_FOR_MYSQL),
     ]);
-    echo $this->Form->input('priority', [
+    echo $this->Form->control('priority', [
         'label' => __d('me_cms', 'Priority'),
     ]);
-    echo $this->Form->input('active', [
+    echo $this->Form->control('active', [
         'label' => sprintf('%s?', __d('me_cms', 'Published')),
         'help' => __d('me_cms', 'Disable this option to save as a draft'),
     ]);
@@ -64,14 +64,14 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
 </div>
 <fieldset>
     <?php
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'id' => 'title',
             'label' => __d('me_cms', 'Title'),
         ]);
-        echo $this->Form->input('subtitle', [
+        echo $this->Form->control('subtitle', [
             'label' => __d('me_cms', 'Subtitle'),
         ]);
-        echo $this->Form->input('slug', [
+        echo $this->Form->control('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
             'help' => __d('me_cms', 'The slug is a string identifying a ' .
@@ -81,7 +81,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
     ?>
     <div class="form-group to-be-hidden">
         <?php
-            echo $this->Form->input('tags_as_string', [
+            echo $this->Form->control('tags_as_string', [
                 'id' => 'tags-output-text',
                 'label' => __d('me_cms', 'Tags'),
                 'rows' => 2,
@@ -96,7 +96,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
             <?= sprintf('%s:', __d('me_cms', 'Tags')) ?>
         </div>
         <?php
-            echo $this->Form->input('add_tags', [
+            echo $this->Form->control('add_tags', [
                 'button' => $this->Form->button(null, [
                     'class' => 'btn-success',
                     'icon' => 'plus',

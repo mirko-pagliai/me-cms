@@ -27,21 +27,21 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
 <?= $this->Form->create($user); ?>
 <fieldset>
     <?php
-        echo $this->Form->input('username', [
+        echo $this->Form->control('username', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Username'),
         ]);
-        echo $this->Form->input('email', [
+        echo $this->Form->control('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
             'help' => __d('me_cms', 'Enter your email'),
         ]);
-        echo $this->Form->input('email_repeat', [
+        echo $this->Form->control('email_repeat', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
             'help' => __d('me_cms', 'Repeat your email'),
         ]);
-        echo $this->Form->input('password', [
+        echo $this->Form->control('password', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
@@ -51,7 +51,7 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
             'label' => __d('me_cms', 'Password'),
             'help' => __d('me_cms', 'Enter your password'),
         ]);
-        echo $this->Form->input('password_repeat', [
+        echo $this->Form->control('password_repeat', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
@@ -61,11 +61,11 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
             'label' => __d('me_cms', 'Repeat password'),
             'help' => __d('me_cms', 'Repeat your password'),
         ]);
-        echo $this->Form->input('first_name', [
+        echo $this->Form->control('first_name', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'First name'),
         ]);
-        echo $this->Form->input('last_name', [
+        echo $this->Form->control('last_name', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Last name'),
         ]);

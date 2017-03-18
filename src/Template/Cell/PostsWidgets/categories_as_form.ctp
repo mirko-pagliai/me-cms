@@ -31,7 +31,7 @@ echo $this->Form->create(false, [
     'type' => 'get',
     'url' => ['_name' => 'postsCategory', 'category'],
 ]);
-echo $this->Form->input('q', [
+echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',

@@ -28,11 +28,11 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
 <?= $this->Form->create($user); ?>
 <div class='float-form'>
     <?php
-        echo $this->Form->input('group_id', [
+        echo $this->Form->control('group_id', [
             'default' => config('users.default_group'),
             'label' => __d('me_cms', 'User group'),
         ]);
-        echo $this->Form->input('active', [
+        echo $this->Form->control('active', [
             'checked' => true,
             'label' => sprintf('%s?', __d('me_cms', 'Active')),
             'help' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
@@ -41,19 +41,19 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
 </div>
 <fieldset>
     <?php
-        echo $this->Form->input('username', [
+        echo $this->Form->control('username', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Username'),
         ]);
-        echo $this->Form->input('email', [
+        echo $this->Form->control('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
         ]);
-        echo $this->Form->input('email_repeat', [
+        echo $this->Form->control('email_repeat', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
         ]);
-        echo $this->Form->input('password', [
+        echo $this->Form->control('password', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
@@ -62,7 +62,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
              ]),
             'label' => __d('me_cms', 'Password'),
         ]);
-        echo $this->Form->input('password_repeat', [
+        echo $this->Form->control('password_repeat', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
@@ -71,11 +71,11 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
              ]),
             'label' => __d('me_cms', 'Repeat password'),
         ]);
-        echo $this->Form->input('first_name', [
+        echo $this->Form->control('first_name', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'First name'),
         ]);
-        echo $this->Form->input('last_name', [
+        echo $this->Form->control('last_name', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Last name'),
         ]);

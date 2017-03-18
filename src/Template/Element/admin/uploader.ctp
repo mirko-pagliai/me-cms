@@ -50,7 +50,7 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 <?= $this->Form->create(null, ['class' => 'dropzone', 'type' => 'file']) ?>
     <div class="fallback">
         <?php
-            echo $this->Form->input('file', [
+            echo $this->Form->control('file', [
                 'label' => false,
                 'multiple' => 'multiple',
                 'type' => 'file',

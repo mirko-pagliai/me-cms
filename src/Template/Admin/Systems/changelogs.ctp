@@ -56,7 +56,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
     <fieldset>
         <?php
             echo $this->Form->label('file', __d('me_cms', 'Changelog'));
-            echo $this->Form->input('file', [
+            echo $this->Form->control('file', [
                 'default' => $this->request->query('file'),
                 'label' => __d('me_cms', 'Changelog'),
                 'name' => 'file',

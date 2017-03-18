@@ -32,7 +32,7 @@ echo $this->Form->create(null, [
     'type' => 'get',
     'url' => ['_name' => 'postsSearch']
 ]);
-echo $this->Form->input('p', [
+echo $this->Form->control('p', [
     'default' => $this->request->query('p'),
     'label' => false,
     'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),

@@ -29,7 +29,7 @@ $this->assign('title', __d('me_cms', 'Upload banners'));
     <?php
         echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
-        echo $this->Form->input('position', [
+        echo $this->Form->control('position', [
             'default' => $this->request->query('position'),
             'label' => __d('me_cms', 'Position to upload banners'),
             'onchange' => 'send_form(this)',

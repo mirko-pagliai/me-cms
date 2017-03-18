@@ -42,17 +42,17 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
+            echo $this->Form->control('id', [
                 'default' => $this->request->query('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('username', [
+            echo $this->Form->control('username', [
                 'default' => $this->request->query('username'),
                 'placeholder' => __d('me_cms', 'username'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('status', [
+            echo $this->Form->control('status', [
                 'default' => $this->request->query('status'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
@@ -61,7 +61,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     'banned' => __d('me_cms', 'Only banned'),
                 ],
             ]);
-            echo $this->Form->input('group', [
+            echo $this->Form->control('group', [
                 'default' => $this->request->query('group'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all groups')),
             ]);

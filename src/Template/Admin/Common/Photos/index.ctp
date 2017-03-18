@@ -42,17 +42,17 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
+            echo $this->Form->control('id', [
                 'default' => $this->request->query('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('filename', [
+            echo $this->Form->control('filename', [
                 'default' => $this->request->query('filename'),
                 'placeholder' => __d('me_cms', 'filename'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('active', [
+            echo $this->Form->control('active', [
                 'default' => $this->request->query('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
@@ -60,7 +60,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     'no' => __d('me_cms', 'Only not published'),
                 ],
             ]);
-            echo $this->Form->input('album', [
+            echo $this->Form->control('album', [
                 'default' => $this->request->query('album'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all albums')),
             ]);

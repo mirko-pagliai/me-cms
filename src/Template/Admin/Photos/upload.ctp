@@ -29,7 +29,7 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
     <?php
         echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
-        echo $this->Form->input('album', [
+        echo $this->Form->control('album', [
             'default' => $this->request->query('album'),
             'label' => __d('me_cms', 'Album to upload photos'),
             'onchange' => 'send_form(this)',
