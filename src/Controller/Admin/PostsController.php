@@ -131,7 +131,7 @@ class PostsController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->query));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->getQuery()));
 
         $this->set(compact('posts'));
     }

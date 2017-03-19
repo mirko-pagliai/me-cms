@@ -48,11 +48,9 @@ class RequestDetectorsTest extends TestCase
 
         //Creates request
         $this->Request = new Request;
-        $this->Request->params = [
-            'action' => 'add',
-            'controller' => 'myController',
-            'prefix' => 'myPrefix',
-        ];
+        $this->Request = $this->Request->withParam('action', 'add')
+            ->withParam('controller', 'myController')
+            ->withParam('prefix', 'myPrefix');
     }
 
     /**
@@ -100,7 +98,7 @@ class RequestDetectorsTest extends TestCase
 
         //Creates request
         $this->Request = new Request;
-        $this->Request->params = ['prefix' => ADMIN_PREFIX];
+        $this->Request = $this->Request->withParam('prefix', ADMIN_PREFIX);
 
         $this->assertTrue($this->Request->isAdmin());
         $this->assertTrue($this->Request->is('admin'));
@@ -191,14 +189,14 @@ class RequestDetectorsTest extends TestCase
 
         //Creates request
         $this->Request = new Request;
-        $this->Request->params = ['prefix' => ADMIN_PREFIX];
+        $this->Request = $this->Request->withParam('prefix', ADMIN_PREFIX);
 
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));
 
         //Creates request
         $this->Request = new Request;
-        $this->Request->params = ['action' => 'offline'];
+        $this->Request = $this->Request->withParam('action', 'offline');
 
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));

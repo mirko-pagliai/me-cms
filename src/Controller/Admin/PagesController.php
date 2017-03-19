@@ -118,7 +118,7 @@ class PagesController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->query));
+        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->getQuery()));
 
         $this->set(compact('pages'));
     }

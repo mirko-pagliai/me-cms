@@ -91,7 +91,7 @@ class PhotosController extends AppController
         $render = $this->request->getQuery('render');
 
         if ($this->Cookie->read('render.photos') === 'grid' && !$render) {
-            return $this->redirect(['?' => am($this->request->query, ['render' => 'grid'])]);
+            return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
         }
 
         $query = $this->Photos->find()->contain([
@@ -108,7 +108,7 @@ class PhotosController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = config('admin.photos');
         }
 
-        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->query)));
+        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQuery())));
 
         if ($render) {
             $this->Cookie->write('render.photos', $render);
@@ -133,7 +133,7 @@ class PhotosController extends AppController
 
         //If there's only one album, it automatically sets the query value
         if (!$album && count($this->viewVars['albums']) < 2) {
-            $this->request->query['album'] = firstKey($this->viewVars['albums']);
+            $this->request = $this->request->withQueryParams(['album' => firstKey($this->viewVars['albums'])]);
         }
 
         if ($this->request->data('file')) {

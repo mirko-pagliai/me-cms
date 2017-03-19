@@ -152,7 +152,7 @@ class UsersTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */

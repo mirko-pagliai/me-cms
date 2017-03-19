@@ -61,7 +61,7 @@ class PostsTagsController extends AppController
         //Limit X4
         $this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 
-        $tags = $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->query));
+        $tags = $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->getQuery()));
 
         $this->set(compact('tags'));
     }

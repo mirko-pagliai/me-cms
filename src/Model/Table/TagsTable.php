@@ -93,7 +93,7 @@ class TagsTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])

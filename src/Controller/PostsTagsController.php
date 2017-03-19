@@ -106,7 +106,7 @@ class PostsTagsController extends AppController
             ], $this->PostsTags->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(am([

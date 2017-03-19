@@ -92,7 +92,7 @@ class BannersController extends AppController
 
         if ($this->Cookie->read('render.banners') === 'grid' && !$render) {
             return $this->redirect([
-                '?' => am($this->request->query, ['render' => 'grid'])
+                '?' => am($this->request->getQuery(), ['render' => 'grid'])
             ]);
         }
 
@@ -110,7 +110,7 @@ class BannersController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = config('admin.photos');
         }
 
-        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
+        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQuery())));
 
         if ($render) {
             $this->Cookie->write('render.banners', $render);
@@ -135,7 +135,7 @@ class BannersController extends AppController
 
         //If there's only one position, it automatically sets the query value
         if (!$position && count($this->viewVars['positions']) < 2) {
-            $this->request->query['position'] = firstKey($this->viewVars['positions']);
+            $this->request = $this->request->withQueryParams(['position' => firstKey($this->viewVars['positions'])]);
         }
 
         if ($this->request->data('file')) {

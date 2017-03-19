@@ -99,8 +99,9 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilter()
     {
-        $this->AppController->request->action = 'my-action';
-        $this->AppController->request->query['sort'] = 'my-field';
+        $this->AppController->request = $this->AppController->request
+            ->withParam('action', 'my-action')
+            ->withQueryParams(['sort' => 'my-field']);
 
         $this->AppController->beforeFilter(new Event('event'));
 
@@ -111,9 +112,10 @@ class AppControllerTest extends TestCase
 
         //Admin request
         $this->AppController = new AppController();
-        $this->AppController->request->action = 'my-action';
-        $this->AppController->request->query['sort'] = 'my-field';
-        $this->AppController->request->params['prefix'] = ADMIN_PREFIX;
+        $this->AppController->request = $this->AppController->request
+            ->withParam('action', 'my-action')
+            ->withQueryParams(['sort' => 'my-field']);
+        $this->AppController->request = $this->AppController->request->withParam('prefix', ADMIN_PREFIX);
         $this->AppController->beforeFilter(new Event('event'));
 
         $this->assertEquals([], $this->AppController->Auth->allowedActions);
@@ -160,7 +162,7 @@ class AppControllerTest extends TestCase
 
         //Admin request
         $this->AppController = new AppController();
-        $this->AppController->request->params['prefix'] = ADMIN_PREFIX;
+        $this->AppController->request = $this->AppController->request->withParam('prefix', ADMIN_PREFIX);
         $this->AppController->beforeRender(new Event('event'));
 
         $this->assertEquals('MeCms.View/Admin', $this->AppController->viewBuilder()->className());

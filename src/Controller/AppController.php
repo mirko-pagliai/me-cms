@@ -55,7 +55,7 @@ class AppController extends BaseController
 
         //Authorizes the current action, if this is not an admin request
         if (!$this->request->isAdmin()) {
-            $this->Auth->allow($this->request->action);
+            $this->Auth->allow($this->request->getParam('action'));
         }
 
         //Adds the current sort field in the whitelist of pagination

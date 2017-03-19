@@ -112,7 +112,7 @@ class PhotosAlbumsController extends AppController
             ], $this->PhotosAlbums->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('album', 'photos'));
