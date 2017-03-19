@@ -38,6 +38,11 @@ class UsersTableTest extends TestCase
     protected $Users;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -59,6 +64,16 @@ class UsersTableTest extends TestCase
         parent::setUp();
 
         $this->Users = TableRegistry::get('MeCms.Users');
+
+        $this->example = [
+            'group_id' => 1,
+            'email' => 'example@test.com',
+            'first_name' => 'Alfa',
+            'last_name' => 'Beta',
+            'username' => 'myusername',
+            'password' => 'mypassword1!',
+            'password_repeat' => 'mypassword1!',
+        ];
 
         Cache::clear(false, $this->Users->cache);
     }
@@ -89,38 +104,26 @@ class UsersTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'group_id' => 1,
-            'email' => 'example@test.com',
-            'first_name' => 'Alfa',
-            'last_name' => 'Beta',
-            'username' => 'myusername',
-            'password' => 'mypassword1!',
-            'password_repeat' => 'mypassword1!',
+        $expected = [
+            'email' => ['_isUnique' => 'This value is already used'],
+            'username' => ['_isUnique' => 'This value is already used'],
         ];
 
-        $entity = $this->Users->newEntity($example);
+        $entity = $this->Users->newEntity($this->example);
         $this->assertNotEmpty($this->Users->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Users->newEntity($example);
+        $entity = $this->Users->newEntity($this->example);
         $this->assertFalse($this->Users->save($entity));
-        $this->assertEquals([
-            'email' => ['_isUnique' => 'This value is already used'],
-            'username' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        $this->assertEquals($expected, $entity->errors());
 
-        $entity = $this->Users->newEntity([
-            'group_id' => 999,
-            'email' => 'example2@test.com',
-            'first_name' => 'Alfa',
-            'last_name' => 'Beta',
-            'username' => 'myusername2',
-            'password' => 'mypassword1!',
-            'password_repeat' => 'mypassword1!',
-        ]);
+        $this->example['group_id'] = 999;
+
+        $entity = $this->Users->newEntity($this->example);
         $this->assertFalse($this->Users->save($entity));
-        $this->assertEquals(['group_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(array_merge([
+            'group_id' => ['_existsIn' => 'You have to select a valid option']
+        ], $expected), $entity->errors());
     }
 
     /**
@@ -393,23 +396,20 @@ class UsersTableTest extends TestCase
      */
     public function testValidationEmptyPassword()
     {
-        $example = [
-            'group_id' => 1,
-            'email' => 'example@test.com',
-            'first_name' => 'Alfa',
-            'last_name' => 'Beta',
-            'username' => 'myusername',
-            'password' => '',
-            'password_repeat' => '',
-        ];
+        $this->example['password'] = $this->example['password_repeat'] = '';
 
-        $entity = $this->Users->newEntity($example);
-        $this->assertEquals([
+        $expected = [
             'password' => ['_empty' => 'This field cannot be left empty'],
             'password_repeat' => ['_empty' => 'This field cannot be left empty'],
-        ], $entity->errors());
+        ];
 
-        $entity = $this->Users->newEntity($example, ['validate' => 'EmptyPassword']);
+        $entity = $this->Users->newEntity($this->example);
+        $this->assertEquals($expected, $entity->errors());
+
+        $entity = $this->Users->patchEntity($this->Users->get(1), $this->example);
+        $this->assertEquals($expected, $entity->errors());
+
+        $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
         $this->assertEmpty($entity->errors());
     }
 }
