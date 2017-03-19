@@ -144,7 +144,7 @@ class PagesController extends AppController
         $page = $this->Pages->newEntity();
 
         if ($this->request->is('post')) {
-            $page = $this->Pages->patchEntity($page, $this->request->data);
+            $page = $this->Pages->patchEntity($page, $this->request->getData());
 
             if ($this->Pages->save($page)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -168,7 +168,7 @@ class PagesController extends AppController
         $page = $this->Pages->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $page = $this->Pages->patchEntity($page, $this->request->data);
+            $page = $this->Pages->patchEntity($page, $this->request->getData());
 
             if ($this->Pages->save($page)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

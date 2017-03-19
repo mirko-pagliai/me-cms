@@ -72,7 +72,7 @@ class UsersController extends AppController
         $this->request->data = $this->Cookie->read('login');
 
         //Tries to login
-        if (!empty($this->request->data['username']) && !empty($this->request->data['password'])) {
+        if ($this->request->getData('username') && $this->request->getData('password')) {
             $user = $this->Auth->identify();
 
             if ($user && $user['active'] && !$user['banned']) {
@@ -192,7 +192,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'DoNotRequirePresence']);
+        $entity = $this->Users->newEntity($this->request->getData(), ['validate' => 'DoNotRequirePresence']);
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
@@ -201,7 +201,7 @@ class UsersController extends AppController
             } elseif (!$entity->errors()) {
                 $user = $this->Users->find('active')
                     ->select(['id', 'email', 'first_name', 'last_name'])
-                    ->where(['email' => $this->request->data('email')])
+                    ->where(['email' => $this->request->getData('email')])
                     ->first();
 
                 if ($user) {
@@ -225,7 +225,7 @@ class UsersController extends AppController
                     Log::error(sprintf(
                         '%s - Forgot password with incorrect email `%s`',
                         $this->request->clientIp(),
-                        $this->request->data('email')
+                        $this->request->getData('email')
                     ), 'users');
 
                     $this->Flash->error(__d('me_cms', 'No account found'));
@@ -272,12 +272,11 @@ class UsersController extends AppController
                 (new LoginRecorder($user['id']))->write();
 
                 //Saves the login data in a cookie, if it was requested
-                if ($this->request->data('remember_me')) {
-                    $this->Cookie->setConfig('expires', '+365 days')
-                        ->write('login', [
-                            'username' => $this->request->data('username'),
-                            'password' => $this->request->data('password'),
-                        ]);
+                if ($this->request->getData('remember_me')) {
+                    $this->Cookie->setConfig('expires', '+365 days')->write('login', [
+                        'username' => $this->request->getData('username'),
+                        'password' => $this->request->getData('password'),
+                    ]);
                 }
 
                 $this->Auth->setUser($user);
@@ -288,8 +287,8 @@ class UsersController extends AppController
                 Log::error(sprintf(
                     '%s - Failed login with username `%s` and password `%s`',
                     $this->request->clientIp(),
-                    $this->request->data('username'),
-                    $this->request->data('password')
+                    $this->request->getData('username'),
+                    $this->request->getData('password')
                 ), 'users');
 
                 $this->Flash->error(__d('me_cms', 'Invalid username or password'));
@@ -328,7 +327,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'login']);
         }
 
-        $entity = $this->Users->newEntity($this->request->data(), ['validate' => 'DoNotRequirePresence']);
+        $entity = $this->Users->newEntity($this->request->getData(), ['validate' => 'DoNotRequirePresence']);
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
@@ -337,7 +336,7 @@ class UsersController extends AppController
             } elseif (!$entity->errors()) {
                 $user = $this->Users->find('pending')
                     ->select(['id', 'email', 'first_name', 'last_name'])
-                    ->where(['email' => $this->request->data('email')])
+                    ->where(['email' => $this->request->getData('email')])
                     ->first();
 
                 if ($user) {
@@ -352,7 +351,7 @@ class UsersController extends AppController
                     Log::error(sprintf(
                         '%s - Resend activation with incorrect email `%s`',
                         $this->request->clientIp(),
-                        $this->request->data('email')
+                        $this->request->getData('email')
                     ), 'users');
 
                     $this->Flash->error(__d('me_cms', 'No account found'));
@@ -386,7 +385,7 @@ class UsersController extends AppController
             ->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(__d('me_cms', 'The password has been edited'));
@@ -421,15 +420,13 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'login']);
         }
 
-        $this->request->data += [
-            'group_id' => config('users.default_group'),
-            'active' => (bool)!config('users.activation'),
-        ];
+        $this->request = $this->request->withData('group_id', config('users.default_group'))
+            ->withData('active', (bool)!config('users.activation'));
 
         $user = $this->Users->newEntity();
 
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
 
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {

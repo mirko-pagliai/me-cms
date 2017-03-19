@@ -127,7 +127,7 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
 
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -162,11 +162,11 @@ class UsersController extends AppController
         }
 
         //It prevents a blank password is saved
-        if (!$this->request->data('password')) {
+        if (!$this->request->getData('password')) {
             unset($this->request->data['password'], $this->request->data['password_repeat']);
         }
 
-        $user = $this->Users->patchEntity($user, $this->request->data, ['validate' => 'EmptyPassword']);
+        $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'EmptyPassword']);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->Users->save($user)) {
@@ -247,7 +247,7 @@ class UsersController extends AppController
             ->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
 
             if ($this->Users->save($user)) {
                 //Sends email

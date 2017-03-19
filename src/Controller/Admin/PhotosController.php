@@ -136,14 +136,14 @@ class PhotosController extends AppController
             $this->request = $this->request->withQueryParams(['album' => firstKey($this->viewVars['albums'])]);
         }
 
-        if ($this->request->data('file')) {
+        if ($this->request->getData('file')) {
             if (empty($album)) {
                 throw new InternalErrorException(__d('me_cms', 'Missing album ID'));
             }
 
             http_response_code(500);
 
-            $uploaded = $this->Uploader->set($this->request->data('file'))
+            $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
                 ->save(PHOTOS . $album);
 
@@ -176,7 +176,7 @@ class PhotosController extends AppController
         $photo = $this->Photos->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $photo = $this->Photos->patchEntity($photo, $this->request->data);
+            $photo = $this->Photos->patchEntity($photo, $this->request->getData());
 
             if ($this->Photos->save($photo)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

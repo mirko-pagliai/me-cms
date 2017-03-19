@@ -138,14 +138,14 @@ class BannersController extends AppController
             $this->request = $this->request->withQueryParams(['position' => firstKey($this->viewVars['positions'])]);
         }
 
-        if ($this->request->data('file')) {
+        if ($this->request->getData('file')) {
             if (empty($position)) {
                 throw new InternalErrorException(__d('me_cms', 'Missing position ID'));
             }
 
             http_response_code(500);
 
-            $uploaded = $this->Uploader->set($this->request->data('file'))
+            $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
                 ->save(BANNERS);
 
@@ -178,7 +178,7 @@ class BannersController extends AppController
         $banner = $this->Banners->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $banner = $this->Banners->patchEntity($banner, $this->request->data);
+            $banner = $this->Banners->patchEntity($banner, $this->request->getData());
 
             if ($this->Banners->save($banner)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

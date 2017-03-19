@@ -148,10 +148,10 @@ class PostsController extends AppController
         if ($this->request->is('post')) {
             //Only admins and managers can add posts on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request->data('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
 
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+            $post = $this->Posts->patchEntity($post, $this->request->getData());
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -184,10 +184,10 @@ class PostsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit posts on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request->data('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
 
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+            $post = $this->Posts->patchEntity($post, $this->request->getData());
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

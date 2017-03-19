@@ -77,7 +77,7 @@ class BackupsController extends AppController
 
         if ($this->request->is('post')) {
             //Creates the backup
-            if ($backup->execute($this->request->data)) {
+            if ($backup->execute($this->request->getData())) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);

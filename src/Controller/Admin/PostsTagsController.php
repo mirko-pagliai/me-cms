@@ -76,7 +76,7 @@ class PostsTagsController extends AppController
         $tag = $this->PostsTags->Tags->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->request->data);
+            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->request->getData());
 
             if ($this->PostsTags->Tags->save($tag)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

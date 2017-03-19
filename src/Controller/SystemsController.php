@@ -71,7 +71,7 @@ class SystemsController extends AppController
                 $this->Flash->error($this->Recaptcha->getError());
             } else {
                 //Sends the email
-                if ($contact->execute($this->request->data())) {
+                if ($contact->execute($this->request->getData())) {
                     $this->Flash->success(__d('me_cms', 'The email has been sent'));
 
                     return $this->redirect(['_name' => 'homepage']);

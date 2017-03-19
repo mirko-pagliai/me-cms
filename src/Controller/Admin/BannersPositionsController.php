@@ -65,7 +65,7 @@ class BannersPositionsController extends AppController
         $position = $this->BannersPositions->newEntity();
 
         if ($this->request->is('post')) {
-            $position = $this->BannersPositions->patchEntity($position, $this->request->data);
+            $position = $this->BannersPositions->patchEntity($position, $this->request->getData());
 
             if ($this->BannersPositions->save($position)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -89,7 +89,7 @@ class BannersPositionsController extends AppController
         $position = $this->BannersPositions->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $position = $this->BannersPositions->patchEntity($position, $this->request->data);
+            $position = $this->BannersPositions->patchEntity($position, $this->request->getData());
 
             if ($this->BannersPositions->save($position)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
