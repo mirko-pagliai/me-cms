@@ -99,6 +99,31 @@ class UsersTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeMarshal()` method
+     * @test
+     */
+    public function testBeforeMarshal()
+    {
+        $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
+        $this->assertNotEmpty($entity->password);
+        $this->assertNotEmpty($entity->password_repeat);
+
+        $this->example['password'] = $this->example['password_repeat'] = '';
+
+        $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
+        $this->assertEmpty($entity->errors());
+        $this->assertObjectNotHasAttribute('password', $entity);
+        $this->assertObjectNotHasAttribute('password_repeat', $entity);
+
+        unset($this->example['password'], $this->example['password_repeat']);
+
+        $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
+        $this->assertEmpty($entity->errors());
+        $this->assertObjectNotHasAttribute('password', $entity);
+        $this->assertObjectNotHasAttribute('password_repeat', $entity);
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */

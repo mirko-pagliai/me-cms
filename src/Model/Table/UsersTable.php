@@ -22,6 +22,8 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -41,6 +43,22 @@ class UsersTable extends AppTable
      * @var string
      */
     public $cache = 'users';
+
+    /**
+     * Called before request data is converted into entities
+     * @param \Cake\Event\Event $event Event object
+     * @param \ArrayObject $data Request data
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.16.1
+     */
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        //Prevents that a blank password is saved
+        if ($options['validate'] === 'EmptyPassword' && isset($data['password']) && $data['password'] === '') {
+            unset($data['password'], $data['password_repeat']);
+        }
+    }
 
     /**
      * Returns a rules checker object that will be used for validating

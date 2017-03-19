@@ -161,11 +161,6 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        //It prevents a blank password is saved
-        if (!$this->request->getData('password')) {
-            unset($this->request->data['password'], $this->request->data['password_repeat']);
-        }
-
         $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'EmptyPassword']);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
