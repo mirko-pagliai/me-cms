@@ -54,7 +54,7 @@ class ContactUsMailerTest extends TestCase
     {
         parent::setUp();
 
-        Email::configTransport(['debug' => ['className' => 'Debug']]);
+        Email::setConfigTransport('debug', ['className' => 'Debug']);
 
         $this->ContactUsMailer = new ContactUsMailer;
 

@@ -54,7 +54,7 @@ class UserMailerTest extends TestCase
     {
         parent::setUp();
 
-        Email::configTransport(['debug' => ['className' => 'Debug']]);
+        Email::setConfigTransport('debug', ['className' => 'Debug']);
 
         $this->example = (object)[
             'email' => 'test@test.com',

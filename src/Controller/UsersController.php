@@ -69,7 +69,8 @@ class UsersController extends AppController
             return;
         }
 
-        $this->request->data = $this->Cookie->read('login');
+        $this->request = $this->request->withData('username', $this->Cookie->read('login.username'))
+            ->withData('password', $this->Cookie->read('login.password'));
 
         //Tries to login
         if ($this->request->getData('username') && $this->request->getData('password')) {
