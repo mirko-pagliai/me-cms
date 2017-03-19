@@ -68,7 +68,7 @@ class UserShell extends Shell
         $user['last_name'] = $this->in(__d('me_cms', 'Last name'));
 
         //Asks for group, if not passed as option
-        if (empty($this->params['group'])) {
+        if (!$this->param('group')) {
             //Formats groups
             foreach ($groups as $id => $group) {
                 $groups[$id] = [$id, $group];
@@ -82,7 +82,7 @@ class UserShell extends Shell
 
             $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
         } else {
-            $user['group_id'] = $this->params['group'];
+            $user['group_id'] = $this->param('group');
         }
 
         //Checks fields
