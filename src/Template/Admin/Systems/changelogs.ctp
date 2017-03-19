@@ -57,7 +57,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
         <?php
             echo $this->Form->label('file', __d('me_cms', 'Changelog'));
             echo $this->Form->control('file', [
-                'default' => $this->request->query('file'),
+                'default' => $this->request->getQuery('file'),
                 'label' => __d('me_cms', 'Changelog'),
                 'name' => 'file',
                 'onchange' => 'send_form(this)',

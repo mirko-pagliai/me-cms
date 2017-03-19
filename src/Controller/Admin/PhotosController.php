@@ -88,7 +88,7 @@ class PhotosController extends AppController
      */
     public function index()
     {
-        $render = $this->request->query('render');
+        $render = $this->request->getQuery('render');
 
         if ($this->Cookie->read('render.photos') === 'grid' && !$render) {
             return $this->redirect(['?' => am($this->request->query, ['render' => 'grid'])]);
@@ -129,7 +129,7 @@ class PhotosController extends AppController
      */
     public function upload()
     {
-        $album = $this->request->query('album');
+        $album = $this->request->getQuery('album');
 
         //If there's only one album, it automatically sets the query value
         if (!$album && count($this->viewVars['albums']) < 2) {

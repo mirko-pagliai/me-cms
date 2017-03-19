@@ -105,11 +105,11 @@ if (is_readable(CONFIG . 'cache.php')) {
 //Adds all cache configurations
 foreach (Configure::consume('Cache') as $key => $config) {
     //Drops cache configurations that already exist
-    if (Cache::config($key)) {
+    if (Cache::getConfig($key)) {
         Cache::drop($key);
     }
 
-    Cache::config($key, $config);
+    Cache::setConfig($key, $config);
 }
 
 /**
@@ -130,7 +130,7 @@ if (is_readable(CONFIG . 'widgets.php')) {
 }
 
 //Adds log for users actions
-Log::config('users', [
+Log::setConfig('users', [
     'className' => 'MeCms\Log\Engine\SerializedLog',
     'path' => LOGS,
     'levels' => [],

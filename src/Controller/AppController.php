@@ -59,8 +59,8 @@ class AppController extends BaseController
         }
 
         //Adds the current sort field in the whitelist of pagination
-        if ($this->request->isAdmin() && $this->request->query('sort')) {
-            $this->paginate['sortWhitelist'] = [$this->request->query('sort')];
+        if ($this->request->isAdmin() && $this->request->getQuery('sort')) {
+            $this->paginate['sortWhitelist'] = [$this->request->getQuery('sort')];
         }
 
         //Sets the paginate limit and the maximum paginate limit

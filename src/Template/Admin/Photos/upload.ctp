@@ -30,7 +30,7 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
         echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
         echo $this->Form->control('album', [
-            'default' => $this->request->query('album'),
+            'default' => $this->request->getQuery('album'),
             'label' => __d('me_cms', 'Album to upload photos'),
             'onchange' => 'send_form(this)',
             'options' => $albums,
@@ -41,6 +41,6 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
 </div>
 
 <?php
-if ($this->request->query('album')) {
+if ($this->request->getQuery('album')) {
     echo $this->element('admin/uploader');
 }

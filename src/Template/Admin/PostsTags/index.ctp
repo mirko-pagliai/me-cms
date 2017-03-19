@@ -48,12 +48,12 @@ $this->append('actions', $this->Html->button(
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
             echo $this->Form->control('id', [
-                'default' => $this->request->query('id'),
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
             echo $this->Form->control('name', [
-                'default' => $this->request->query('name'),
+                'default' => $this->request->getQuery('name'),
                 'placeholder' => __d('me_cms', 'name'),
                 'size' => 16,
             ]);

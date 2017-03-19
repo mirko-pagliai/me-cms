@@ -158,7 +158,7 @@ class SerializedLogTest extends TestCase
             'url' => env('LOG_ERROR_URL', null),
         ];
 
-        Log::config('error', $config);
+        Log::setConfig('error', $config);
 
         //Writes some logs
         $this->_writeSomeLogs();
@@ -189,7 +189,7 @@ class SerializedLogTest extends TestCase
         //Deletes all logs, drops and reconfigure, adding `mask`
         $this->_deleteAll();
         Log::drop('error');
-        Log::config('error', am($config, ['mask' => 0777]));
+        Log::setConfig('error', am($config, ['mask' => 0777]));
 
         //Writes some logs
         $this->_writeSomeLogs();

@@ -88,7 +88,7 @@ class BannersController extends AppController
      */
     public function index()
     {
-        $render = $this->request->query('render');
+        $render = $this->request->getQuery('render');
 
         if ($this->Cookie->read('render.banners') === 'grid' && !$render) {
             return $this->redirect([
@@ -131,7 +131,7 @@ class BannersController extends AppController
      */
     public function upload()
     {
-        $position = $this->request->query('position');
+        $position = $this->request->getQuery('position');
 
         //If there's only one position, it automatically sets the query value
         if (!$position && count($this->viewVars['positions']) < 2) {

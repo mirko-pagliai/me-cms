@@ -56,11 +56,11 @@ class PostsCategoriesController extends AppController
     public function view($slug = null)
     {
         //The category can be passed as query string, from a widget
-        if ($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
+        if ($this->request->getQuery('q')) {
+            return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page') ?: 1;
 
         //Sets the cache name
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
@@ -100,7 +100,7 @@ class PostsCategoriesController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
             ], $this->PostsCategories->cache);
         //Else, sets the paging parameter
         } else {

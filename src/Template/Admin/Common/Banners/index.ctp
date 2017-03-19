@@ -43,17 +43,17 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
             echo $this->Form->control('id', [
-                'default' => $this->request->query('id'),
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
             echo $this->Form->control('filename', [
-                'default' => $this->request->query('filename'),
+                'default' => $this->request->getQuery('filename'),
                 'placeholder' => __d('me_cms', 'filename'),
                 'size' => 16,
             ]);
             echo $this->Form->control('active', [
-                'default' => $this->request->query('active'),
+                'default' => $this->request->getQuery('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
                     'yes' => __d('me_cms', 'Only published'),
@@ -61,12 +61,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 ],
             ]);
             echo $this->Form->control('position', [
-                'default' => $this->request->query('position'),
+                'default' => $this->request->getQuery('position'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all positions')),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
-                'default' => $this->request->query('created'),
+                'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
