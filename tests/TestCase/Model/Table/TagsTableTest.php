@@ -106,13 +106,13 @@ class TagsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('tags', $this->Tags->table());
-        $this->assertEquals('tag', $this->Tags->displayField());
-        $this->assertEquals('id', $this->Tags->primaryKey());
+        $this->assertEquals('tags', $this->Tags->getTable());
+        $this->assertEquals('tag', $this->Tags->getDisplayField());
+        $this->assertEquals('id', $this->Tags->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Tags->Posts);
-        $this->assertEquals('tag_id', $this->Tags->Posts->foreignKey());
-        $this->assertEquals('post_id', $this->Tags->Posts->targetForeignKey());
+        $this->assertEquals('tag_id', $this->Tags->Posts->getForeignKey());
+        $this->assertEquals('post_id', $this->Tags->Posts->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Tags->Posts->junction()->getTable());
         $this->assertEquals('MeCms.Posts', $this->Tags->Posts->className());
         $this->assertEquals('MeCms.PostsTags', $this->Tags->Posts->getThrough());

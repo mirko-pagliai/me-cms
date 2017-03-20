@@ -94,15 +94,13 @@ class BannersTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('banners');
-        $this->displayField('filename');
-        $this->primaryKey('id');
+        $this->setTable('banners');
+        $this->setDisplayField('filename');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Positions', [
-            'foreignKey' => 'position_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.BannersPositions',
-        ]);
+        $this->belongsTo('Positions', ['className' => 'MeCms.BannersPositions'])
+            ->setForeignKey('position_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);

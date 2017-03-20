@@ -117,20 +117,20 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('pages_categories', $this->PagesCategories->table());
-        $this->assertEquals('title', $this->PagesCategories->displayField());
-        $this->assertEquals('id', $this->PagesCategories->primaryKey());
+        $this->assertEquals('pages_categories', $this->PagesCategories->getTable());
+        $this->assertEquals('title', $this->PagesCategories->getDisplayField());
+        $this->assertEquals('id', $this->PagesCategories->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PagesCategories->Parents);
-        $this->assertEquals('parent_id', $this->PagesCategories->Parents->foreignKey());
+        $this->assertEquals('parent_id', $this->PagesCategories->Parents->getForeignKey());
         $this->assertEquals('MeCms.PagesCategories', $this->PagesCategories->Parents->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PagesCategories->Childs);
-        $this->assertEquals('parent_id', $this->PagesCategories->Childs->foreignKey());
+        $this->assertEquals('parent_id', $this->PagesCategories->Childs->getForeignKey());
         $this->assertEquals('MeCms.PagesCategories', $this->PagesCategories->Childs->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PagesCategories->Pages);
-        $this->assertEquals('category_id', $this->PagesCategories->Pages->foreignKey());
+        $this->assertEquals('category_id', $this->PagesCategories->Pages->getForeignKey());
         $this->assertEquals('MeCms.Pages', $this->PagesCategories->Pages->className());
 
         $this->assertTrue($this->PagesCategories->hasBehavior('Timestamp'));

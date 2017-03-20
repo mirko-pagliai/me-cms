@@ -235,27 +235,22 @@ class PostsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('posts');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('posts');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.PostsCategories',
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.Users',
-        ]);
-        $this->belongsToMany('Tags', [
-            'foreignKey' => 'post_id',
-            'targetForeignKey' => 'tag_id',
-            'joinTable' => 'posts_tags',
-            'className' => 'MeCms.Tags',
-            'through' => 'MeCms.PostsTags',
-        ]);
+        $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
+            ->setForeignKey('category_id')
+            ->setJoinType('INNER');
+
+        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+            ->setForeignKey('user_id')
+            ->setJoinType('INNER');
+
+        $this->belongsToMany('Tags', ['className' => 'MeCms.Tags', 'joinTable' => 'posts_tags'])
+            ->setForeignKey('post_id')
+            ->setTargetForeignKey('tag_id')
+            ->setThrough('MeCms.PostsTags');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [

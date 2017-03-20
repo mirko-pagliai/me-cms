@@ -109,12 +109,12 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('users_groups', $this->UsersGroups->table());
-        $this->assertEquals('label', $this->UsersGroups->displayField());
-        $this->assertEquals('id', $this->UsersGroups->primaryKey());
+        $this->assertEquals('users_groups', $this->UsersGroups->getTable());
+        $this->assertEquals('label', $this->UsersGroups->getDisplayField());
+        $this->assertEquals('id', $this->UsersGroups->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->UsersGroups->Users);
-        $this->assertEquals('group_id', $this->UsersGroups->Users->foreignKey());
+        $this->assertEquals('group_id', $this->UsersGroups->Users->getForeignKey());
         $this->assertEquals('MeCms.Users', $this->UsersGroups->Users->className());
 
         $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));

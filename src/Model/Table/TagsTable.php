@@ -73,17 +73,14 @@ class TagsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('tags');
-        $this->displayField('tag');
-        $this->primaryKey('id');
+        $this->setTable('tags');
+        $this->setDisplayField('tag');
+        $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Posts', [
-            'foreignKey' => 'tag_id',
-            'targetForeignKey' => 'post_id',
-            'joinTable' => 'posts_tags',
-            'className' => 'MeCms.Posts',
-            'through' => 'MeCms.PostsTags',
-        ]);
+        $this->belongsToMany('Posts', ['className' => 'MeCms.Posts', 'joinTable' => 'posts_tags'])
+            ->setForeignKey('tag_id')
+            ->setTargetForeignKey('post_id')
+            ->setThrough('MeCms.PostsTags');
 
         $this->addBehavior('Timestamp');
 

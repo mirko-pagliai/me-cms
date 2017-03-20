@@ -131,13 +131,13 @@ class BannersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('banners', $this->Banners->table());
-        $this->assertEquals('filename', $this->Banners->displayField());
-        $this->assertEquals('id', $this->Banners->primaryKey());
+        $this->assertEquals('banners', $this->Banners->getTable());
+        $this->assertEquals('filename', $this->Banners->getDisplayField());
+        $this->assertEquals('id', $this->Banners->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Banners->Positions);
-        $this->assertEquals('position_id', $this->Banners->Positions->foreignKey());
-        $this->assertEquals('INNER', $this->Banners->Positions->joinType());
+        $this->assertEquals('position_id', $this->Banners->Positions->getForeignKey());
+        $this->assertEquals('INNER', $this->Banners->Positions->getJoinType());
         $this->assertEquals('MeCms.BannersPositions', $this->Banners->Positions->className());
 
         $this->assertTrue($this->Banners->hasBehavior('Timestamp'));

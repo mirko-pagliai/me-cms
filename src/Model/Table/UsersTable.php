@@ -143,23 +143,19 @@ class UsersTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('users');
-        $this->displayField('username');
-        $this->primaryKey('id');
+        $this->setTable('users');
+        $this->setDisplayField('username');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Groups', [
-            'foreignKey' => 'group_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.UsersGroups',
-        ]);
-        $this->hasMany('Posts', [
-            'foreignKey' => 'user_id',
-            'className' => 'MeCms.Posts',
-        ]);
-        $this->hasMany('Tokens', [
-            'foreignKey' => 'user_id',
-            'className' => 'Tokens.Tokens',
-        ]);
+        $this->belongsTo('Groups', ['className' => 'MeCms.UsersGroups'])
+            ->setForeignKey('group_id')
+            ->setJoinType('INNER');
+
+        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
+            ->setForeignKey('user_id');
+
+        $this->hasMany('Tokens', ['className' => 'Tokens.Tokens'])
+            ->setForeignKey('user_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);

@@ -163,13 +163,13 @@ class PagesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('pages', $this->Pages->table());
-        $this->assertEquals('title', $this->Pages->displayField());
-        $this->assertEquals('id', $this->Pages->primaryKey());
+        $this->assertEquals('pages', $this->Pages->getTable());
+        $this->assertEquals('title', $this->Pages->getDisplayField());
+        $this->assertEquals('id', $this->Pages->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Pages->Categories);
-        $this->assertEquals('category_id', $this->Pages->Categories->foreignKey());
-        $this->assertEquals('INNER', $this->Pages->Categories->joinType());
+        $this->assertEquals('category_id', $this->Pages->Categories->getForeignKey());
+        $this->assertEquals('INNER', $this->Pages->Categories->getJoinType());
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->className());
 
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));

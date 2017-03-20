@@ -129,15 +129,13 @@ class PagesTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('pages');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('pages');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.PagesCategories',
-        ]);
+        $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
+            ->setForeignKey('category_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);

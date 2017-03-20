@@ -99,15 +99,13 @@ class PhotosTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('photos');
-        $this->displayField('filename');
-        $this->primaryKey('id');
+        $this->setTable('photos');
+        $this->setDisplayField('filename');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Albums', [
-            'foreignKey' => 'album_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.PhotosAlbums',
-        ]);
+        $this->belongsTo('Albums', ['className' => 'MeCms.PhotosAlbums'])
+            ->setForeignKey('album_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);

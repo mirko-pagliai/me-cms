@@ -206,23 +206,23 @@ class PostsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('posts', $this->Posts->table());
-        $this->assertEquals('title', $this->Posts->displayField());
-        $this->assertEquals('id', $this->Posts->primaryKey());
+        $this->assertEquals('posts', $this->Posts->getTable());
+        $this->assertEquals('title', $this->Posts->getDisplayField());
+        $this->assertEquals('id', $this->Posts->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Categories);
-        $this->assertEquals('category_id', $this->Posts->Categories->foreignKey());
-        $this->assertEquals('INNER', $this->Posts->Categories->joinType());
+        $this->assertEquals('category_id', $this->Posts->Categories->getForeignKey());
+        $this->assertEquals('INNER', $this->Posts->Categories->getJoinType());
         $this->assertEquals('MeCms.PostsCategories', $this->Posts->Categories->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Users);
-        $this->assertEquals('user_id', $this->Posts->Users->foreignKey());
-        $this->assertEquals('INNER', $this->Posts->Users->joinType());
+        $this->assertEquals('user_id', $this->Posts->Users->getForeignKey());
+        $this->assertEquals('INNER', $this->Posts->Users->getJoinType());
         $this->assertEquals('MeCms.Users', $this->Posts->Users->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Posts->Tags);
-        $this->assertEquals('post_id', $this->Posts->Tags->foreignKey());
-        $this->assertEquals('tag_id', $this->Posts->Tags->targetForeignKey());
+        $this->assertEquals('post_id', $this->Posts->Tags->getForeignKey());
+        $this->assertEquals('tag_id', $this->Posts->Tags->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Posts->Tags->junction()->getTable());
         $this->assertEquals('MeCms.Tags', $this->Posts->Tags->className());
         $this->assertEquals('MeCms.PostsTags', $this->Posts->Tags->getThrough());

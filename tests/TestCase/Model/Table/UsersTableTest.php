@@ -157,21 +157,21 @@ class UsersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('users', $this->Users->table());
-        $this->assertEquals('username', $this->Users->displayField());
-        $this->assertEquals('id', $this->Users->primaryKey());
+        $this->assertEquals('users', $this->Users->getTable());
+        $this->assertEquals('username', $this->Users->getDisplayField());
+        $this->assertEquals('id', $this->Users->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Users->Groups);
-        $this->assertEquals('group_id', $this->Users->Groups->foreignKey());
-        $this->assertEquals('INNER', $this->Users->Groups->joinType());
+        $this->assertEquals('group_id', $this->Users->Groups->getForeignKey());
+        $this->assertEquals('INNER', $this->Users->Groups->getJoinType());
         $this->assertEquals('MeCms.UsersGroups', $this->Users->Groups->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->Users->Posts);
-        $this->assertEquals('user_id', $this->Users->Posts->foreignKey());
+        $this->assertEquals('user_id', $this->Users->Posts->getForeignKey());
         $this->assertEquals('MeCms.Posts', $this->Users->Posts->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->Users->Tokens);
-        $this->assertEquals('user_id', $this->Users->Tokens->foreignKey());
+        $this->assertEquals('user_id', $this->Users->Tokens->getForeignKey());
         $this->assertEquals('Tokens.Tokens', $this->Users->Tokens->className());
 
         $this->assertTrue($this->Users->hasBehavior('Timestamp'));

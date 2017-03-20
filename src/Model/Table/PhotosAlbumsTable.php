@@ -117,14 +117,12 @@ class PhotosAlbumsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('photos_albums');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('photos_albums');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->hasMany('Photos', [
-            'foreignKey' => 'album_id',
-            'className' => 'MeCms.Photos',
-        ]);
+        $this->hasMany('Photos', ['className' => 'MeCms.Photos'])
+            ->setForeignKey('album_id');
 
         $this->addBehavior('Timestamp');
 
