@@ -60,7 +60,7 @@ class PostsTagsController extends AppController
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        $page = $this->request->getQuery('page') ?: 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($tag), $this->paginate['limit'], $page);
