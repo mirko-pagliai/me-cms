@@ -82,7 +82,7 @@ class PagesController extends AppController
                     return $q->select(['title', 'slug']);
                 },
             ])
-            ->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
             ->firstOrFail();
 
@@ -104,7 +104,7 @@ class PagesController extends AppController
                     return $q->select(['title', 'slug']);
                 },
             ])
-            ->where([sprintf('%s.slug', $this->Pages->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->firstOrFail();
 
         $this->set(compact('page'));

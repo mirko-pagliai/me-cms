@@ -80,7 +80,7 @@ class BannersTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->alias()) => true]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
 
         return $query;
     }
@@ -121,7 +121,7 @@ class BannersTable extends AppTable
 
         //"Position" field
         if (!empty($data['position']) && isPositive($data['position'])) {
-            $query->where([sprintf('%s.position_id', $this->alias()) => $data['position']]);
+            $query->where([sprintf('%s.position_id', $this->getAlias()) => $data['position']]);
         }
 
         return $query;

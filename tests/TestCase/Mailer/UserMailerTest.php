@@ -88,16 +88,10 @@ class UserMailerTest extends TestCase
         //Gets `Email` instance
         $email = $this->getProperty($this->UserMailer, '_email');
 
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->to());
-        $this->assertEquals('Activate your account', $email->subject());
-        $this->assertEquals([
-            'template' => 'MeCms.Users/activate_account',
-            'layout' => 'default',
-        ], $email->template());
-
-        $this->assertEquals([
-            'fullName' => 'James Blue',
-        ], $email->viewVars);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
+        $this->assertEquals('Activate your account', $email->getSubject());
+        $this->assertEquals('MeCms.Users/activate_account', $email->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
     /**
@@ -119,9 +113,9 @@ class UserMailerTest extends TestCase
      */
     public function testActivateAccountWithSend()
     {
-        $result = $this->UserMailer->transport('debug')
+        $result = $this->UserMailer->setTransport('debug')
             ->setLayout(false)
-            ->set('url', 'http://example/link')
+            ->setViewVars(['url' => 'http://example/link'])
             ->send('activateAccount', [$this->example]);
 
         $headers = $message = null;
@@ -151,16 +145,10 @@ class UserMailerTest extends TestCase
         //Gets `Email` instance
         $email = $this->getProperty($this->UserMailer, '_email');
 
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->to());
-        $this->assertEquals('Your password has been changed', $email->subject());
-        $this->assertEquals([
-            'template' => 'MeCms.Users/change_password',
-            'layout' => 'default',
-        ], $email->template());
-
-        $this->assertEquals([
-            'fullName' => 'James Blue',
-        ], $email->viewVars);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
+        $this->assertEquals('Your password has been changed', $email->getSubject());
+        $this->assertEquals('MeCms.Users/change_password', $email->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
     /**
@@ -182,9 +170,9 @@ class UserMailerTest extends TestCase
      */
     public function testChangePasswordWithSend()
     {
-        $result = $this->UserMailer->transport('debug')
+        $result = $this->UserMailer->setTransport('debug')
             ->setLayout(false)
-            ->set('url', 'http://example/link')
+            ->setViewVars(['url' => 'http://example/link'])
             ->send('changePassword', [$this->example]);
 
         $headers = $message = null;
@@ -213,16 +201,10 @@ class UserMailerTest extends TestCase
         //Gets `Email` instance
         $email = $this->getProperty($this->UserMailer, '_email');
 
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->to());
-        $this->assertEquals('Reset your password', $email->subject());
-        $this->assertEquals([
-            'template' => 'MeCms.Users/forgot_password',
-            'layout' => 'default',
-        ], $email->template());
-
-        $this->assertEquals([
-            'fullName' => 'James Blue',
-        ], $email->viewVars);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
+        $this->assertEquals('Reset your password', $email->getSubject());
+        $this->assertEquals('MeCms.Users/forgot_password', $email->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
     /**
@@ -244,9 +226,9 @@ class UserMailerTest extends TestCase
      */
     public function testForgotPasswordWithSend()
     {
-        $result = $this->UserMailer->transport('debug')
+        $result = $this->UserMailer->setTransport('debug')
             ->setLayout(false)
-            ->set('url', 'http://example/link')
+            ->setViewVars(['url' => 'http://example/link'])
             ->send('forgotPassword', [$this->example]);
 
         $headers = $message = null;

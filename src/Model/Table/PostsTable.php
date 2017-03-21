@@ -197,12 +197,12 @@ class PostsTable extends AppTable
                     $post = $this->find('active')
                         ->select(['id', 'title', 'slug', 'text'])
                         ->matching('Tags', function ($q) use ($tag) {
-                            return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
+                            return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
                         })
-                        ->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
+                        ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
 
                     if ($images) {
-                        $post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);
+                        $post->where([sprintf('%s.text LIKE', $this->getAlias()) => sprintf('%%%s%%', '<img')]);
                     }
 
                     $post = $post->first();
@@ -275,7 +275,7 @@ class PostsTable extends AppTable
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
             $query->matching('Tags', function ($q) use ($data) {
-                return $q->where([sprintf('%s.tag', $this->Tags->alias()) => $data['tag']]);
+                return $q->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
             });
         }
 

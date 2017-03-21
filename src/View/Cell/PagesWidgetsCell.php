@@ -56,7 +56,7 @@ class PagesWidgetsCell extends Cell
      */
     public function categories($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'pagesCategories'])) {
@@ -65,7 +65,7 @@ class PagesWidgetsCell extends Cell
 
         $categories = $this->Pages->Categories->find('active')
             ->select(['title', 'slug', 'page_count'])
-            ->order([sprintf('%s.title', $this->Pages->Categories->alias()) => 'ASC'])
+            ->order([sprintf('%s.title', $this->Pages->Categories->getAlias()) => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
@@ -88,7 +88,7 @@ class PagesWidgetsCell extends Cell
 
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
-            ->order([sprintf('%s.title', $this->Pages->alias()) => 'ASC'])
+            ->order([sprintf('%s.title', $this->Pages->getAlias()) => 'ASC'])
             ->cache(sprintf('widget_list'), $this->Pages->cache)
             ->toArray();
 

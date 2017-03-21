@@ -91,7 +91,7 @@ class PostsTagsController extends AppController
                     ]);
                 })
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->PostsTags->Posts->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
                 throw new RecordNotFoundException(__d('me_cms', 'Record not found'));

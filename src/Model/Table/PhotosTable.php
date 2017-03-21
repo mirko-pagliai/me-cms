@@ -82,9 +82,9 @@ class PhotosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->alias()) => true]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
         $query->matching('Albums', function ($q) {
-            return $q->where([sprintf('%s.active', $this->Albums->alias()) => true]);
+            return $q->where([sprintf('%s.active', $this->Albums->getAlias()) => true]);
         });
 
         return $query;
@@ -126,7 +126,7 @@ class PhotosTable extends AppTable
 
         //"Album" field
         if (!empty($data['album']) && isPositive($data['album'])) {
-            $query->where([sprintf('%s.album_id', $this->alias()) => $data['album']]);
+            $query->where([sprintf('%s.album_id', $this->getAlias()) => $data['album']]);
         }
 
         return $query;

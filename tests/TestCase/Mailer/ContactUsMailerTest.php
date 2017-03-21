@@ -90,21 +90,17 @@ class ContactUsMailerTest extends TestCase
         //Gets `Email` instance
         $email = $this->getProperty($this->ContactUsMailer, '_email');
 
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->sender());
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->replyTo());
-        $this->assertEquals(['email@example.com' => 'email@example.com'], $email->to());
-        $this->assertEquals('Email from MeCms', $email->subject());
-        $this->assertEquals([
-            'template' => 'MeCms.Systems/contact_us',
-            'layout' => 'default',
-        ], $email->template());
-
+        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getSender());
+        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getReplyTo());
+        $this->assertEquals(['email@example.com' => 'email@example.com'], $email->getTo());
+        $this->assertEquals('Email from MeCms', $email->getSubject());
+        $this->assertEquals('MeCms.Systems/contact_us', $email->getTemplate());
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $email->viewVars);
+        ], $email->getViewVars());
     }
 
     /**
@@ -126,7 +122,7 @@ class ContactUsMailerTest extends TestCase
      */
     public function testContactUsMailWithSend()
     {
-        $result = $this->ContactUsMailer->transport('debug')
+        $result = $this->ContactUsMailer->setTransport('debug')
             ->setLayout(false)
             ->send('contactUsMail', [$this->example]);
 

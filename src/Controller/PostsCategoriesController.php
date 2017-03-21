@@ -89,7 +89,7 @@ class PostsCategoriesController extends AppController
                     },
                 ])
                 ->where(['Categories.slug' => $slug])
-                ->order([sprintf('%s.created', $this->PostsCategories->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->PostsCategories->Posts->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
                 throw new RecordNotFoundException(__d('me_cms', 'Record not found'));

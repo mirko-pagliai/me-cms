@@ -59,7 +59,7 @@ class TagsTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.post_count >', $this->alias()) => 0]);
+        $query->where([sprintf('%s.post_count >', $this->getAlias()) => 0]);
 
         return $query;
     }
@@ -99,7 +99,7 @@ class TagsTable extends AppTable
 
         //"Name" field
         if (!empty($data['name']) && strlen($data['name']) > 2) {
-            $query->where([sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name'])]);
+            $query->where([sprintf('%s.tag LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['name'])]);
         }
 
         return $query;

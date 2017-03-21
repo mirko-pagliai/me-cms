@@ -48,7 +48,7 @@ class PhotosController extends AppController
                         return $q->select(['id', 'slug']);
                     }
                 ])
-                ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+                ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
                 ->firstOrFail();
 
             return $this->redirect(am(['slug' => $photo->album->slug], compact('id')), 301);
@@ -61,7 +61,7 @@ class PhotosController extends AppController
                     return $q->select(['id', 'title', 'slug']);
                 }
             ])
-            ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
             ->firstOrFail();
 
@@ -83,7 +83,7 @@ class PhotosController extends AppController
                     return $q->select(['id', 'title', 'slug']);
                 }
             ])
-            ->where([sprintf('%s.id', $this->Photos->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->firstOrFail();
 
         $this->set(compact('photo'));

@@ -86,7 +86,7 @@ class PostsController extends AppController
                     },
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
             $posts = $this->paginate($query)->toArray();
 
@@ -194,10 +194,10 @@ class PostsController extends AppController
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->where([
-                    sprintf('%s.created >=', $this->Posts->alias()) => $start,
-                    sprintf('%s.created <', $this->Posts->alias()) => $end,
+                    sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
+                    sprintf('%s.created <', $this->Posts->getAlias()) => $end,
                 ])
-                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
             $posts = $this->paginate($query)->toArray();
 
@@ -229,7 +229,7 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->select(['title', 'slug', 'text', 'created'])
             ->limit(config('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
             ->cache('rss', $this->Posts->cache);
 
         $this->set(compact('posts'));
@@ -276,7 +276,7 @@ class PostsController extends AppController
                                 'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                                 'text LIKE' => sprintf('%%%s%%', $pattern),
                             ]])
-                            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
                         $posts = $this->paginate($query)->toArray();
 
@@ -323,7 +323,7 @@ class PostsController extends AppController
                 },
             ])
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
             ->firstOrFail();
 
@@ -357,7 +357,7 @@ class PostsController extends AppController
                 },
             ])
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->firstOrFail();
 
         $this->set(compact('post'));

@@ -156,22 +156,22 @@ class AppControllerTest extends TestCase
     {
         $this->AppController->beforeRender(new Event('event'));
 
-        $this->assertEquals(null, $this->AppController->viewBuilder()->layout());
-        $this->assertEquals('MeCms.View/App', $this->AppController->viewBuilder()->className());
-        $this->assertEquals(['MeCms.Auth' => null], $this->AppController->viewBuilder()->helpers());
+        $this->assertEquals(null, $this->AppController->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->AppController->viewBuilder()->getClassName());
+        $this->assertEquals(['MeCms.Auth' => null], $this->AppController->viewBuilder()->getHelpers());
 
         //Admin request
         $this->AppController = new AppController();
         $this->AppController->request = $this->AppController->request->withParam('prefix', ADMIN_PREFIX);
         $this->AppController->beforeRender(new Event('event'));
 
-        $this->assertEquals('MeCms.View/Admin', $this->AppController->viewBuilder()->className());
+        $this->assertEquals('MeCms.View/Admin', $this->AppController->viewBuilder()->getClassName());
 
         //Ajax request
         $this->AppController->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
 
         $this->AppController->beforeRender(new Event('event'));
-        $this->assertEquals('MeCms.ajax', $this->AppController->viewBuilder()->layout());
+        $this->assertEquals('MeCms.ajax', $this->AppController->viewBuilder()->getLayout());
     }
 
     /**

@@ -56,7 +56,7 @@ class PostsWidgetsCell extends Cell
      */
     public function categories($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('categories_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
         //Returns on categories index
         if ($this->request->isUrl(['_name' => 'postsCategories'])) {
@@ -65,7 +65,7 @@ class PostsWidgetsCell extends Cell
 
         $categories = $this->Posts->Categories->find('active')
             ->select(['title', 'slug', 'post_count'])
-            ->order([sprintf('%s.title', $this->Posts->Categories->alias()) => 'ASC'])
+            ->order([sprintf('%s.title', $this->Posts->Categories->getAlias()) => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
@@ -90,7 +90,7 @@ class PostsWidgetsCell extends Cell
         $posts = $this->Posts->find('active')
             ->select(['title', 'slug'])
             ->limit($limit)
-            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
             ->toArray();
 
@@ -104,7 +104,7 @@ class PostsWidgetsCell extends Cell
      */
     public function months($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('months_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('months_as_%s', $render));
 
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {

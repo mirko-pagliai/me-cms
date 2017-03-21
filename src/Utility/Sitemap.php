@@ -56,7 +56,7 @@ class Sitemap extends SitemapBuilder
             ->select(['id', 'slug'])
             ->contain(['Pages' => function ($query) use ($table) {
                 $query->select(['category_id', 'slug', 'modified']);
-                $query->order([sprintf('%s.modified', $table->Pages->alias()) => 'DESC']);
+                $query->order([sprintf('%s.modified', $table->Pages->getAlias()) => 'DESC']);
 
                 return $query;
             }]);
@@ -108,7 +108,7 @@ class Sitemap extends SitemapBuilder
             ->select(['id', 'slug'])
             ->contain(['Photos' => function ($query) use ($table) {
                 $query->select(['id', 'album_id', 'modified']);
-                $query->order([sprintf('%s.modified', $table->Photos->alias()) => 'DESC']);
+                $query->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC']);
 
                 return $query;
             }]);
@@ -119,7 +119,7 @@ class Sitemap extends SitemapBuilder
 
         $latest = $table->Photos->find('active')
             ->select(['modified'])
-            ->order([sprintf('%s.modified', $table->Photos->alias()) => 'DESC'])
+            ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC'])
             ->firstOrFail();
 
         //Adds albums index
@@ -165,7 +165,7 @@ class Sitemap extends SitemapBuilder
             ->select(['id', 'slug'])
             ->contain(['Posts' => function ($query) use ($table) {
                 $query->select(['category_id', 'slug', 'modified']);
-                $query->order([sprintf('%s.modified', $table->Posts->alias()) => 'DESC']);
+                $query->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC']);
 
                 return $query;
             }]);
@@ -176,7 +176,7 @@ class Sitemap extends SitemapBuilder
 
         $latest = $table->Posts->find('active')
             ->select(['modified'])
-            ->order([sprintf('%s.modified', $table->Posts->alias()) => 'DESC'])
+            ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC'])
             ->firstOrFail();
 
         //Adds posts index, categories index and posts search

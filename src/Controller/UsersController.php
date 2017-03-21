@@ -237,7 +237,7 @@ class UsersController extends AppController
         }
 
         $this->set('user', $entity);
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 
     /**
@@ -296,7 +296,7 @@ class UsersController extends AppController
             }
         }
 
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 
     /**
@@ -363,7 +363,7 @@ class UsersController extends AppController
         }
 
         $this->set('user', $entity);
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 
     /**
@@ -402,7 +402,7 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
 
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 
     /**
@@ -460,6 +460,6 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
 
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 }

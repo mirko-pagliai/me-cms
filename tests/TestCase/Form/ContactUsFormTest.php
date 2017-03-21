@@ -138,7 +138,7 @@ class ContactUsFormTest extends TestCase
 
         $this->ContactUsForm->method('getMailer')
             ->will($this->returnCallback(function ($data) {
-                return $this->getMailer($data)->transport('debug');
+                return $this->getMailer($data)->setTransport('debug');
             }));
 
         $this->assertEquals(['headers', 'message'], array_keys($this->ContactUsForm->execute($this->example)));

@@ -84,8 +84,8 @@ class UsersTable extends AppTable
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.banned', $this->alias()) => false,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.banned', $this->getAlias()) => false,
         ]);
 
         return $query;
@@ -99,7 +99,7 @@ class UsersTable extends AppTable
      */
     public function findBanned(Query $query, array $options)
     {
-        $query->where([sprintf('%s.banned', $this->alias()) => true]);
+        $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
 
         return $query;
     }
@@ -113,8 +113,8 @@ class UsersTable extends AppTable
     public function findPending(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => false,
-            sprintf('%s.banned', $this->alias()) => false,
+            sprintf('%s.active', $this->getAlias()) => false,
+            sprintf('%s.banned', $this->getAlias()) => false,
         ]);
 
         return $query;
@@ -128,7 +128,7 @@ class UsersTable extends AppTable
     public function getActiveList()
     {
         return $this->find('list')
-            ->where([sprintf('%s.active', $this->alias()) => true])
+            ->where([sprintf('%s.active', $this->getAlias()) => true])
             ->cache('active_users_list', $this->cache)
             ->order(['username' => 'ASC'])
             ->toArray();
@@ -176,12 +176,12 @@ class UsersTable extends AppTable
 
         //"Username" field
         if (!empty($data['username']) && strlen($data['username']) > 2) {
-            $query->where([sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username'])]);
+            $query->where([sprintf('%s.username LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['username'])]);
         }
 
         //"Group" field
         if (!empty($data['group']) && isPositive($data['group'])) {
-            $query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
+            $query->where([sprintf('%s.group_id', $this->getAlias()) => $data['group']]);
         }
 
         //"Status" field
@@ -189,17 +189,17 @@ class UsersTable extends AppTable
             switch ($data['status']) {
                 case 'active':
                     $query->where([
-                        sprintf('%s.active', $this->alias()) => true,
-                        sprintf('%s.banned', $this->alias()) => false,
+                        sprintf('%s.active', $this->getAlias()) => true,
+                        sprintf('%s.banned', $this->getAlias()) => false,
                     ]);
 
                     break;
                 case 'pending':
-                    $query->where([sprintf('%s.active', $this->alias()) => false]);
+                    $query->where([sprintf('%s.active', $this->getAlias()) => false]);
 
                     break;
                 case 'banned':
-                    $query->where([sprintf('%s.banned', $this->alias()) => true]);
+                    $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
 
                     break;
             }

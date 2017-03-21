@@ -92,7 +92,7 @@ class PagesTableTest extends TestCase
         $this->Pages = $this->getMockBuilder(get_class($this->Pages))
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
-                'table' => $this->Pages->table(),
+                'table' => $this->Pages->getTable(),
                 'connection' => $this->Pages->getConnection(),
             ]])
             ->getMock();
@@ -112,7 +112,7 @@ class PagesTableTest extends TestCase
         $this->Pages = $this->getMockBuilder(get_class($this->Pages))
             ->setMethods(['setNextToBePublished'])
             ->setConstructorArgs([[
-                'table' => $this->Pages->table(),
+                'table' => $this->Pages->getTable(),
                 'connection' => $this->Pages->getConnection(),
             ]])
             ->getMock();

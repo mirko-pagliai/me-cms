@@ -215,7 +215,7 @@ class AppTableTest extends TestCase
      */
     public function testGetList()
     {
-        $cacheKey = sprintf('%s_list', $this->Photos->table());
+        $cacheKey = sprintf('%s_list', $this->Photos->getTable());
         $this->assertEquals($cacheKey, 'photos_list');
         $this->assertFalse(Cache::read($cacheKey, $this->Photos->cache));
 
@@ -228,7 +228,7 @@ class AppTableTest extends TestCase
         ], $list);
         $this->assertEquals($list, Cache::read($cacheKey, $this->Photos->cache)->toArray());
 
-        $cacheKey = sprintf('%s_list', $this->PostsCategories->table());
+        $cacheKey = sprintf('%s_list', $this->PostsCategories->getTable());
         $this->assertEquals($cacheKey, 'posts_categories_list');
         $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
 
@@ -248,7 +248,7 @@ class AppTableTest extends TestCase
      */
     public function testGetTreeList()
     {
-        $cacheKey = sprintf('%s_tree_list', $this->PostsCategories->table());
+        $cacheKey = sprintf('%s_tree_list', $this->PostsCategories->getTable());
         $this->assertEquals($cacheKey, 'posts_categories_tree_list');
         $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
 

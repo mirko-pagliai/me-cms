@@ -163,7 +163,7 @@ class InstallShell extends BaseInstallShell
         }
 
         //Truncates the table. This resets IDs
-        ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->table()));
+        ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->getTable()));
 
         $entities = $this->UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],

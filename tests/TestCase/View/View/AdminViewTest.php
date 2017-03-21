@@ -25,12 +25,15 @@ namespace MeCms\Test\TestCase\View\View;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
 use MeCms\View\View\AdminView as View;
+use Reflection\ReflectionTrait;
 
 /**
  * AdminViewTest class
  */
 class AdminViewTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in

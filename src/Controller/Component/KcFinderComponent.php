@@ -24,6 +24,7 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
@@ -51,7 +52,9 @@ class KcFinderComponent extends Component
      */
     public function configure()
     {
-        if ($this->request->session()->check('KCFINDER')) {
+        $controller = $this->getController();
+
+        if ($controller->request->session()->check('KCFINDER')) {
             return true;
         }
 
@@ -89,7 +92,7 @@ class KcFinderComponent extends Component
         //Merges default options with the options from configuration
         $options = am($options, config('kcfinder'));
 
-        return $this->request->session()->write('KCFINDER', $options);
+        return $controller->request->session()->write('KCFINDER', $options);
     }
 
     /**
@@ -120,7 +123,7 @@ class KcFinderComponent extends Component
      * @uses configure()
      * @throws InternalErrorException
      */
-    public function startup(\Cake\Event\Event $event)
+    public function startup(Event $event)
     {
         //Checks for KCFinder
         if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php')) {

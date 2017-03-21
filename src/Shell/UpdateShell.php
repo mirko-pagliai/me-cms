@@ -65,10 +65,10 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCms.Banners');
 
         //Adds "thumbnail" field to the banner table
-        if (!$this->_checkColumn('thumbnail', $this->Banners->table())) {
+        if (!$this->_checkColumn('thumbnail', $this->Banners->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `thumbnail` BOOLEAN NOT null DEFAULT true AFTER `active`;',
-                $this->Banners->table()
+                $this->Banners->getTable()
             ));
         }
     }
@@ -109,10 +109,10 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCms.BannersPositions');
 
         //Renames the "name" column as "title"
-        if ($this->_checkColumn('name', $this->BannersPositions->table())) {
+        if ($this->_checkColumn('name', $this->BannersPositions->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` CHANGE `name` `title` VARCHAR(100) NOT NULL;',
-                $this->BannersPositions->table()
+                $this->BannersPositions->getTable()
             ));
         }
     }
@@ -162,7 +162,7 @@ class UpdateShell extends BaseUpdateShell
             if (!$pages->isEmpty()) {
                 $this->connection->execute(sprintf(
                     "INSERT INTO `%s` (`id`, `parent_id`, `lft`, `rght`, `title`, `slug`, `description`, `page_count`, `created`, `modified`) VALUES ('1', null, '1', '2', 'Main category', 'main-category', null, '0', '%s', '%s');",
-                    $this->Pages->Categories->table(),
+                    $this->Pages->Categories->getTable(),
                     $this->now->i18nFormat('yyyy-MM-dd HH:mm:ss'),
                     $this->now->i18nFormat('yyyy-MM-dd HH:mm:ss')
                 ));
@@ -170,10 +170,10 @@ class UpdateShell extends BaseUpdateShell
         }
 
         //Adds "category_id" field to the pages table
-        if (!$this->_checkColumn('category_id', $this->Pages->table())) {
+        if (!$this->_checkColumn('category_id', $this->Pages->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `category_id` INT(11) NOT null AFTER `id`;',
-                $this->Pages->table()
+                $this->Pages->getTable()
             ));
 
             //Adds the pages to the first category
@@ -200,10 +200,10 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCms.Photos');
 
         //Adds "active" field to the photos table and sets the default value
-        if (!$this->_checkColumn('active', $this->Photos->table())) {
+        if (!$this->_checkColumn('active', $this->Photos->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `active` BOOLEAN NOT null DEFAULT true AFTER `description`;',
-                $this->Photos->table()
+                $this->Photos->getTable()
             ));
             $this->Photos->query()->update()->set(['active' => true])->execute();
         }
@@ -240,91 +240,91 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCms.UsersGroups');
 
         //Adds "created" field to the banners positions table and sets the default value
-        if (!$this->_checkColumn('created', $this->BannersPositions->table())) {
+        if (!$this->_checkColumn('created', $this->BannersPositions->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `banner_count`;',
-                $this->BannersPositions->table()
+                $this->BannersPositions->getTable()
             ));
             $this->BannersPositions->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the banners positions table and sets the default value
-        if (!$this->_checkColumn('modified', $this->BannersPositions->table())) {
+        if (!$this->_checkColumn('modified', $this->BannersPositions->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->BannersPositions->table()
+                $this->BannersPositions->getTable()
             ));
             $this->BannersPositions->query()->update()->set(['modified' => $this->now])->execute();
         }
 
         //Adds "created" field to the photos albums table and sets the default value
-        if (!$this->_checkColumn('created', $this->PhotosAlbums->table())) {
+        if (!$this->_checkColumn('created', $this->PhotosAlbums->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `photo_count`;',
-                $this->PhotosAlbums->table()
+                $this->PhotosAlbums->getTable()
             ));
             $this->PhotosAlbums->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the photos albums table and sets the default value
-        if (!$this->_checkColumn('modified', $this->PhotosAlbums->table())) {
+        if (!$this->_checkColumn('modified', $this->PhotosAlbums->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->PhotosAlbums->table()
+                $this->PhotosAlbums->getTable()
             ));
             $this->PhotosAlbums->query()->update()->set(['modified' => $this->now])->execute();
         }
 
         //Adds "created" field to the posts categories table and sets the default value
-        if (!$this->_checkColumn('created', $this->PostsCategories->table())) {
+        if (!$this->_checkColumn('created', $this->PostsCategories->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `post_count`;',
-                $this->PostsCategories->table()
+                $this->PostsCategories->getTable()
             ));
             $this->PostsCategories->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the posts categories table and sets the default value
-        if (!$this->_checkColumn('modified', $this->PostsCategories->table())) {
+        if (!$this->_checkColumn('modified', $this->PostsCategories->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->PostsCategories->table()
+                $this->PostsCategories->getTable()
             ));
             $this->PostsCategories->query()->update()->set(['modified' => $this->now])->execute();
         }
 
         //Adds "created" field to the tags table and sets the default value
-        if (!$this->_checkColumn('created', $this->Tags->table())) {
+        if (!$this->_checkColumn('created', $this->Tags->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `post_count`;',
-                $this->Tags->table()
+                $this->Tags->getTable()
             ));
             $this->Tags->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the tags table and sets the default value
-        if (!$this->_checkColumn('modified', $this->Tags->table())) {
+        if (!$this->_checkColumn('modified', $this->Tags->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->Tags->table()
+                $this->Tags->getTable()
             ));
             $this->Tags->query()->update()->set(['modified' => $this->now])->execute();
         }
 
         //Adds "created" field to the users groups table and sets the default value
-        if (!$this->_checkColumn('created', $this->UsersGroups->table())) {
+        if (!$this->_checkColumn('created', $this->UsersGroups->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `user_count`;',
-                $this->UsersGroups->table()
+                $this->UsersGroups->getTable()
             ));
             $this->UsersGroups->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the users groups table and sets the default value
-        if (!$this->_checkColumn('modified', $this->UsersGroups->table())) {
+        if (!$this->_checkColumn('modified', $this->UsersGroups->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->UsersGroups->table()
+                $this->UsersGroups->getTable()
             ));
             $this->UsersGroups->query()->update()->set(['modified' => $this->now])->execute();
         }
@@ -360,28 +360,28 @@ class UpdateShell extends BaseUpdateShell
         $this->loadModel('MeCms.Photos');
 
         //Adds "created" field to the banners table and sets the default value
-        if (!$this->_checkColumn('created', $this->Banners->table())) {
+        if (!$this->_checkColumn('created', $this->Banners->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null AFTER `click_count`;',
-                $this->Banners->table()
+                $this->Banners->getTable()
             ));
             $this->Banners->query()->update()->set(['created' => $this->now])->execute();
         }
 
         //Adds "modified" field to the banners table and sets the default value
-        if (!$this->_checkColumn('modified', $this->Banners->table())) {
+        if (!$this->_checkColumn('modified', $this->Banners->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->Banners->table()
+                $this->Banners->getTable()
             ));
             $this->Banners->query()->update()->set(['modified' => $this->now])->execute();
         }
 
         //Adds "modified" field to the photos table and sets the default value
-        if (!$this->_checkColumn('modified', $this->Photos->table())) {
+        if (!$this->_checkColumn('modified', $this->Photos->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `modified` DATETIME null AFTER `created`;',
-                $this->Photos->table()
+                $this->Photos->getTable()
             ));
             $this->Photos->query()->update()->set(['modified' => $this->now])->execute();
         }
@@ -410,10 +410,10 @@ class UpdateShell extends BaseUpdateShell
         }
 
         //Adds "created" field to the photos table and sets the default value
-        if (!$this->_checkColumn('created', $this->Photos->table())) {
+        if (!$this->_checkColumn('created', $this->Photos->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `created` DATETIME null DEFAULT null AFTER `description`;',
-                $this->Photos->table()
+                $this->Photos->getTable()
             ));
             $this->Photos->query()->update()->set(['created' => $this->now])->execute();
         }
@@ -430,7 +430,7 @@ class UpdateShell extends BaseUpdateShell
 
         $this->connection->execute(sprintf(
             'ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT null;',
-            $this->Tags->table()
+            $this->Tags->getTable()
         ));
     }
 }

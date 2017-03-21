@@ -50,10 +50,10 @@ trait NextToBePublishedTrait
     {
         $next = $this->find()
             ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time,
+                sprintf('%s.active', $this->getAlias()) => true,
+                sprintf('%s.created >', $this->getAlias()) => new Time,
             ])
-            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
+            ->order([sprintf('%s.created', $this->getAlias()) => 'ASC'])
             ->extract('created')
             ->first();
 

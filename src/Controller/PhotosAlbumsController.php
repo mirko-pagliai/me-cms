@@ -43,7 +43,7 @@ class PhotosAlbumsController extends AppController
                 'Photos' => function ($q) {
                     return $q->select(['album_id', 'filename'])
                         ->where([
-                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => true,
+                            sprintf('%s.active', $this->PhotosAlbums->Photos->getAlias()) => true,
                         ])
                         ->order('rand()');
                 }
@@ -99,8 +99,8 @@ class PhotosAlbumsController extends AppController
                 ->select(['id', 'album_id', 'filename', 'description'])
                 ->where(['album_id' => $album->id])
                 ->order([
-                    sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
-                    sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                    sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                    sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
                 ]);
 
             $photos = $this->paginate($query)->toArray();
@@ -132,8 +132,8 @@ class PhotosAlbumsController extends AppController
                 'Photos' => function ($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
                         ->order([
-                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
-                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                            sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                            sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
                         ]);
                 }
              ])

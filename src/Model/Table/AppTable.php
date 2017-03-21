@@ -92,8 +92,8 @@ class AppTable extends Table
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.created <=', $this->alias()) => new Time,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.created <=', $this->getAlias()) => new Time,
         ]);
 
         return $query;
@@ -124,8 +124,8 @@ class AppTable extends Table
     public function getList()
     {
         return $this->find('list')
-            ->order([$this->displayField() => 'ASC'])
-            ->cache(sprintf('%s_list', $this->table()), $this->cache)
+            ->order([$this->getDisplayField() => 'ASC'])
+            ->cache(sprintf('%s_list', $this->getTable()), $this->cache)
             ->toArray();
     }
 
@@ -137,7 +137,7 @@ class AppTable extends Table
     public function getTreeList()
     {
         return $this->find('treeList')
-            ->cache(sprintf('%s_tree_list', $this->table()), $this->cache)
+            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->cache)
             ->toArray();
     }
 
@@ -171,37 +171,37 @@ class AppTable extends Table
     {
         //"ID" field
         if (!empty($data['id']) && isPositive($data['id'])) {
-            $query->where([sprintf('%s.id', $this->alias()) => $data['id']]);
+            $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
         }
 
         //"Title" field
         if (!empty($data['title']) && strlen($data['title']) > 2) {
-            $query->where([sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title'])]);
+            $query->where([sprintf('%s.title LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['title'])]);
         }
 
         //"Filename" field
         if (!empty($data['filename']) && strlen($data['filename']) > 2) {
-            $query->where([sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename'])]);
+            $query->where([sprintf('%s.filename LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['filename'])]);
         }
 
         //"User" (author) field
         if (!empty($data['user']) && isPositive($data['user'])) {
-            $query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
+            $query->where([sprintf('%s.user_id', $this->getAlias()) => $data['user']]);
         }
 
         //"Category" field
         if (!empty($data['category']) && isPositive($data['category'])) {
-            $query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
+            $query->where([sprintf('%s.category_id', $this->getAlias()) => $data['category']]);
         }
 
         //"Active" field
         if (!empty($data['active'])) {
-            $query->where([sprintf('%s.active', $this->alias()) => $data['active'] === 'yes']);
+            $query->where([sprintf('%s.active', $this->getAlias()) => $data['active'] === 'yes']);
         }
 
         //"Priority" field
         if (!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority'])) {
-            $query->where([sprintf('%s.priority', $this->alias()) => $data['priority']]);
+            $query->where([sprintf('%s.priority', $this->getAlias()) => $data['priority']]);
         }
 
         //"Created" field
@@ -210,8 +210,8 @@ class AppTable extends Table
             $end = (new Time($start))->addMonth(1);
 
             $query->where([
-                sprintf('%s.created >=', $this->alias()) => $start,
-                sprintf('%s.created <', $this->alias()) => $end,
+                sprintf('%s.created >=', $this->getAlias()) => $start,
+                sprintf('%s.created <', $this->getAlias()) => $end,
             ]);
         }
 

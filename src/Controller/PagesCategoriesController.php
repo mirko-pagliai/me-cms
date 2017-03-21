@@ -65,7 +65,7 @@ class PagesCategoriesController extends AppController
                     return $q->select(['category_id', 'slug', 'title']);
                 },
             ])
-            ->where([sprintf('%s.slug', $this->PagesCategories->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->PagesCategories->getAlias()) => $slug])
             ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache)
             ->firstOrFail();
 

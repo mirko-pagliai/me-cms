@@ -101,8 +101,8 @@ class PhotosAlbumsTable extends AppTable
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.photo_count >', $this->alias()) => 0,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.photo_count >', $this->getAlias()) => 0,
         ]);
 
         return $query;

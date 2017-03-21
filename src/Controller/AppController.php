@@ -90,19 +90,19 @@ class AppController extends BaseController
     {
         //Layout for ajax requests
         if ($this->request->is('ajax')) {
-            $this->viewBuilder()->layout('MeCms.ajax');
+            $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
-        $this->viewBuilder()->className('MeCms.View/App');
+        $this->viewBuilder()->setClassName('MeCms.View/App');
 
         //Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
         if ($this->request->isAdmin()) {
-            $this->viewBuilder()->className('MeCms.View/Admin');
+            $this->viewBuilder()->setClassName('MeCms.View/Admin');
         }
 
         //Loads the `Auth` helper.
         //The `helper is loaded here (instead of the view) to pass user data
-        $this->viewBuilder()->helpers(['MeCms.Auth' => $this->Auth->user()]);
+        $this->viewBuilder()->setHelpers(['MeCms.Auth' => $this->Auth->user()]);
 
         parent::beforeRender($event);
     }

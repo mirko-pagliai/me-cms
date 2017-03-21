@@ -55,7 +55,7 @@ class PhotosWidgetsCell extends Cell
      */
     public function albums($render = 'form')
     {
-        $this->viewBuilder()->template(sprintf('albums_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('albums_as_%s', $render));
 
         //Returns on albums index
         if ($this->request->isUrl(['_name' => 'albums'])) {
@@ -63,7 +63,7 @@ class PhotosWidgetsCell extends Cell
         }
 
         $albums = $this->Photos->Albums->find('active')
-            ->order([sprintf('%s.title', $this->Photos->Albums->alias()) => 'ASC'])
+            ->order([sprintf('%s.title', $this->Photos->Albums->getAlias()) => 'ASC'])
             ->order(['title' => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
@@ -90,8 +90,8 @@ class PhotosWidgetsCell extends Cell
             ->select(['album_id', 'filename'])
             ->limit($limit)
             ->order([
-                sprintf('%s.created', $this->Photos->alias()) => 'DESC',
-                sprintf('%s.id', $this->Photos->alias()) => 'DESC',
+                sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
+                sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
             ])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
             ->toArray();
