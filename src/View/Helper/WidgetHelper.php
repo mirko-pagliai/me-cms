@@ -100,6 +100,6 @@ class WidgetHelper extends Helper
             $name = sprintf('%s::%s', $name, $parts[1]);
         }
 
-        return $this->_View->cell($name, $data, $options);
+        return $this->getView()->cell($name, $data, $options);
     }
 }
