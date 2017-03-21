@@ -65,9 +65,7 @@ class BaseUpdateShell extends Shell
      */
     protected function _allUpdateMethods()
     {
-        $methods = getChildMethods(get_called_class());
-
-        return af(array_map(function ($method) {
+        $methods = collection(getChildMethods(get_called_class()))->map(function ($method) {
             //Returns array with the name method and the version number
             if (!preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
                 return false;
@@ -77,7 +75,9 @@ class BaseUpdateShell extends Shell
                 'name' => $method,
                 'version' => $matches[1] . '.' . $matches[2] . '.' . $matches[3],
             ];
-        }, $methods));
+        })->toList();
+
+        return array_filter($methods);
     }
 
     /**
