@@ -118,8 +118,8 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testConstruct()
     {
-        $connection = $this->getProperty($this->BaseUpdateShell, 'connection');
-        $this->assertInstanceOf('Cake\Database\Connection', $connection);
+        $SchemaCollection = $this->getProperty($this->BaseUpdateShell, 'SchemaCollection');
+        $this->assertInstanceOf('Cake\Database\Schema\Collection', $SchemaCollection);
 
         $now = $this->getProperty($this->BaseUpdateShell, 'now');
         $this->assertInstanceOf('Cake\I18n\Time', $now);

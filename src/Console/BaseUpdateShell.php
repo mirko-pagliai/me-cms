@@ -32,13 +32,11 @@ use MeTools\Console\Shell;
 class BaseUpdateShell extends Shell
 {
     /**
-     * Database connection
-     * @var \Cake\Database\Connection
+     * @var \Cake\Database\Schema\Collection
      */
-    protected $connection;
+    protected $SchemaCollection;
 
     /**
-     * Now for MySql
      * @var \Cake\I18n\Time
      */
     protected $now;
@@ -47,17 +45,15 @@ class BaseUpdateShell extends Shell
      * Construct
      * @param \Cake\Console\ConsoleIo|null $io An io instance
      * @return void
-     * @uses $connection
+     * @uses $SchemaCollection
      * @uses $now
      */
     public function __construct(\Cake\Console\ConsoleIo $io = null)
     {
         parent::__construct($io);
 
-        //Gets database connection
-        $this->connection = ConnectionManager::get('default');
+        $this->SchemaCollection = ConnectionManager::get('default')->getSchemaCollection();
 
-        //Sets now for MySql
         $this->now = new Time;
     }
 
@@ -100,11 +96,11 @@ class BaseUpdateShell extends Shell
      * Gets the table columns
      * @param string $table Table name
      * @return array
-     * @uses $connection
+     * @uses $SchemaCollection
      */
     protected function _columns($table)
     {
-        return $this->connection->getSchemaCollection()->describe($table)->columns();
+        return $this->SchemaCollection->describe($table)->columns();
     }
 
     /**
@@ -133,11 +129,11 @@ class BaseUpdateShell extends Shell
     /**
      * Gets the tables list
      * @return array
-     * @uses $connection
+     * @uses $SchemaCollection
      */
     protected function _tables()
     {
-        return $this->connection->getSchemaCollection()->listTables();
+        return $this->SchemaCollection->listTables();
     }
 
     /**
