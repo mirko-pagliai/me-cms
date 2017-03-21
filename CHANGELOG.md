@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.16 branch
 ### 2.16.1
+* fixed bug on redirect from the old address of the "contact us" form;
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
 * improved `MeCms\Controller\Admin\LogController`, added `_read()` method and
