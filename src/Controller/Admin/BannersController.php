@@ -23,7 +23,6 @@
 namespace MeCms\Controller\Admin;
 
 use MeCms\Controller\AppController;
-use MeCms\Controller\Traits\DownloadTrait;
 
 /**
  * Banners controller
@@ -31,8 +30,6 @@ use MeCms\Controller\Traits\DownloadTrait;
  */
 class BannersController extends AppController
 {
-    use DownloadTrait;
-
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
@@ -196,11 +193,12 @@ class BannersController extends AppController
      * Downloads banner
      * @param string $id Banner ID
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\Traits\DownloadTrait::_download()
      */
     public function download($id = null)
     {
-        return $this->_download($this->Banners->get($id)->path);
+        $file = $this->Banners->get($id)->path;
+
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**

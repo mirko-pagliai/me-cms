@@ -9,11 +9,11 @@
     `view_as_serialized` template);
 * added `MeCms\Model\Table\UsersTable\beforeMarshal()` method;
 * added `MeCms\Controller\Traits\CheckLastSearchTrait` trait;
-* added `MeCms\Controller\Traits\DownloadTrait` trait;
 * added `MeCms\Model\Entity\Traits\PreviewAccessorTrait` trait;
 * added `MeCms\Model\Table\Traits\NextToBePublishedTrait` trait;
 * the preview image for pages and posts always contains a full url;
 * global function `firstImageFromText()` renamed as `firstImage()`;
+* removed `AppController::_download()` method;
 * added tests for virtual fields.
 
 ### 2.16.0

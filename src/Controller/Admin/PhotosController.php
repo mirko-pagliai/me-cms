@@ -24,7 +24,6 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
-use MeCms\Controller\Traits\DownloadTrait;
 
 /**
  * Photos controller
@@ -32,8 +31,6 @@ use MeCms\Controller\Traits\DownloadTrait;
  */
 class PhotosController extends AppController
 {
-    use DownloadTrait;
-
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
@@ -194,11 +191,12 @@ class PhotosController extends AppController
      * Downloads photo
      * @param string $id Photo ID
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\Traits\DownloadTrait::_download()
      */
     public function download($id = null)
     {
-        return $this->_download($this->Photos->get($id)->path);
+        $file = $this->Photos->get($id)->path;
+
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**

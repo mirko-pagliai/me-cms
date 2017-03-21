@@ -26,15 +26,12 @@ use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
-use MeCms\Controller\Traits\DownloadTrait;
 
 /**
  * Logs controller
  */
 class LogsController extends AppController
 {
-    use DownloadTrait;
-
     /**
      * Check if the provided user is authorized for the request
      * @param array $user The user to check the authorization of. If empty
@@ -133,12 +130,13 @@ class LogsController extends AppController
      * Downloads a log
      * @param string $filename Filename
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\Traits\DownloadTrait::_download()
      * @uses _path()
      */
     public function download($filename)
     {
-        return $this->_download($this->_path($filename));
+        $file = $this->_path($filename);
+
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**
