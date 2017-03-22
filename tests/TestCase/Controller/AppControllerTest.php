@@ -35,7 +35,21 @@ class AppControllerTest extends TestCase
     /**
      * @var \MeCms\Controller\AppController
      */
-    public $AppController;
+    protected $Controller;
+
+    /**
+     * @var \Cake\Event\Event
+     */
+    protected $Event;
+
+    /**
+     * Internal method to set the user group
+     * @param string $group Group name
+     */
+    protected function setUserGroup($group)
+    {
+        $this->Controller->Auth->setUser(['group' => ['name' => $group]]);
+    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -53,11 +67,13 @@ class AppControllerTest extends TestCase
         Configure::write(ME_CMS . '.security.recaptcha', true);
         Configure::write(ME_CMS . '.security.search_interval', 15);
 
-        $this->AppController = $this->getMockBuilder(AppController::class)
+        $this->Controller = $this->getMockBuilder(AppController::class)
             ->setMethods(['isBanned', 'isOffline', 'redirect'])
             ->getMock();
 
-        $this->AppController->method('redirect')->will($this->returnArgument(0));
+        $this->Controller->method('redirect')->will($this->returnArgument(0));
+
+        $this->Event = new Event('myEvent');
     }
 
     /**
@@ -68,7 +84,7 @@ class AppControllerTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->AppController);
+        unset($this->Controller, $this->Event);
     }
 
     /**
@@ -77,11 +93,12 @@ class AppControllerTest extends TestCase
      */
     public function testInitialize()
     {
-        $components = collection($this->AppController->components()->loaded())
-            ->map(function ($value) {
-                return get_class($this->AppController->components()->{$value});
-            })
-            ->toList();
+        $componentsInstance = $this->Controller->components();
+
+        $components = collection($componentsInstance->loaded())
+            ->map(function ($value) use ($componentsInstance) {
+                return get_class($componentsInstance->{$value});
+            })->toList();
 
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
@@ -99,29 +116,29 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilter()
     {
-        $this->AppController->request = $this->AppController->request
+        $this->Controller->request = $this->Controller->request
             ->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
 
-        $this->AppController->beforeFilter(new Event('event'));
+        $this->Controller->beforeFilter($this->Event);
 
-        $this->assertEquals(['my-action'], $this->AppController->Auth->allowedActions);
-        $this->assertFalse(array_search('sortWhitelist', array_keys($this->AppController->paginate)));
-        $this->assertEquals(5, $this->AppController->paginate['limit']);
-        $this->assertEquals(5, $this->AppController->paginate['maxLimit']);
+        $this->assertEquals(['my-action'], $this->Controller->Auth->allowedActions);
+        $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
+        $this->assertEquals(5, $this->Controller->paginate['limit']);
+        $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
 
         //Admin request
-        $this->AppController = new AppController();
-        $this->AppController->request = $this->AppController->request
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request
             ->withParam('action', 'my-action')
-            ->withQueryParams(['sort' => 'my-field']);
-        $this->AppController->request = $this->AppController->request->withParam('prefix', ADMIN_PREFIX);
-        $this->AppController->beforeFilter(new Event('event'));
+            ->withQueryParams(['sort' => 'my-field'])
+            ->withParam('prefix', ADMIN_PREFIX);
 
-        $this->assertEquals([], $this->AppController->Auth->allowedActions);
-        $this->assertEquals(['my-field'], $this->AppController->paginate['sortWhitelist']);
-        $this->assertEquals(7, $this->AppController->paginate['limit']);
-        $this->assertEquals(7, $this->AppController->paginate['maxLimit']);
+        $this->Controller->beforeFilter($this->Event);
+        $this->assertEquals([], $this->Controller->Auth->allowedActions);
+        $this->assertEquals(['my-field'], $this->Controller->paginate['sortWhitelist']);
+        $this->assertEquals(7, $this->Controller->paginate['limit']);
+        $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
     }
 
     /**
@@ -130,9 +147,9 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilterWithBannedUser()
     {
-        $this->AppController->method('isBanned')->willReturn(true);
+        $this->Controller->method('isBanned')->willReturn(true);
 
-        $beforeFilter = $this->AppController->beforeFilter(new Event('event'));
+        $beforeFilter = $this->Controller->beforeFilter($this->Event);
         $this->assertEquals(['_name' => 'ipNotAllowed'], $beforeFilter);
     }
 
@@ -142,9 +159,9 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilterWithOfflineSite()
     {
-        $this->AppController->method('isOffline')->willReturn(true);
+        $this->Controller->method('isOffline')->willReturn(true);
 
-        $beforeFilter = $this->AppController->beforeFilter(new Event('event'));
+        $beforeFilter = $this->Controller->beforeFilter($this->Event);
         $this->assertEquals(['_name' => 'offline'], $beforeFilter);
     }
 
@@ -154,24 +171,24 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeRender()
     {
-        $this->AppController->beforeRender(new Event('event'));
+        $this->Controller->beforeRender($this->Event);
 
-        $this->assertEquals(null, $this->AppController->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->AppController->viewBuilder()->getClassName());
-        $this->assertEquals(['MeCms.Auth' => null], $this->AppController->viewBuilder()->getHelpers());
+        $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEquals(['MeCms.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
 
         //Admin request
-        $this->AppController = new AppController();
-        $this->AppController->request = $this->AppController->request->withParam('prefix', ADMIN_PREFIX);
-        $this->AppController->beforeRender(new Event('event'));
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
 
-        $this->assertEquals('MeCms.View/Admin', $this->AppController->viewBuilder()->getClassName());
+        $this->Controller->beforeRender($this->Event);
+        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
-        $this->AppController->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
 
-        $this->AppController->beforeRender(new Event('event'));
-        $this->assertEquals('MeCms.ajax', $this->AppController->viewBuilder()->getLayout());
+        $this->Controller->beforeRender($this->Event);
+        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
@@ -180,15 +197,15 @@ class AppControllerTest extends TestCase
      */
     public function testIsAuthorized()
     {
-        $this->assertFalse($this->AppController->isAuthorized());
+        $this->assertFalse($this->Controller->isAuthorized());
 
-        $this->AppController->components()->Auth->setUser(['group' => ['name' => 'admin']]);
-        $this->assertTrue($this->AppController->isAuthorized());
+        $this->setUserGroup('admin');
+        $this->assertTrue($this->Controller->isAuthorized());
 
-        $this->AppController->components()->Auth->setUser(['group' => ['name' => 'manager']]);
-        $this->assertTrue($this->AppController->isAuthorized());
+        $this->setUserGroup('manager');
+        $this->assertTrue($this->Controller->isAuthorized());
 
-        $this->AppController->components()->Auth->setUser(['group' => ['name' => 'user']]);
-        $this->assertFalse($this->AppController->isAuthorized());
+        $this->setUserGroup('user');
+        $this->assertFalse($this->Controller->isAuthorized());
     }
 }
