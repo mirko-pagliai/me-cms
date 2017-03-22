@@ -104,10 +104,8 @@ class BaseUpdateShell extends Shell
     }
 
     /**
-     * Gets the latest update method.
-     *
-     * Return an array with the name method and the version number.
-     * @return array
+     * Gets the latest update method
+     * @return array Array with the name method and the version number.
      * @uses _allUpdateMethods()
      */
     protected function _latestUpdateMethod()
