@@ -110,6 +110,10 @@ class PhotosFixture extends TestFixture
         foreach (glob(PHOTOS . '*/*.*') as $file) {
             unlink($file);
         }
+
+        foreach (glob(PHOTOS . '*', GLOB_ONLYDIR) as $dir) {
+            rmdir($dir);
+        }
     }
 
     /**
@@ -126,6 +130,10 @@ class PhotosFixture extends TestFixture
             $file = PHOTOS . $record['album_id'] . DS . $record['filename'];
 
             if (!file_exists($file)) {
+                if (!file_exists(dirname($file))) {
+                    mkdir(dirname($file));
+                }
+
                 copy(TEST_APP . 'examples' . DS . 'image.jpg', $file);
             }
         }
