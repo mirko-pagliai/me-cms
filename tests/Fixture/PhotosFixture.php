@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\Fixture;
 
+use Cake\Datasource\ConnectionInterface;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -94,4 +95,39 @@ class PhotosFixture extends TestFixture
             'modified' => '2016-12-28 10:41:42'
         ],
     ];
+
+    /**
+     * Run after all tests executed, should remove the table/collection from
+     *  the connection
+     * @param ConnectionInterface $db An instance of the connection the fixture
+     *  should be removed from
+     * @return void
+     */
+    public function drop(ConnectionInterface $db)
+    {
+        parent::drop($db);
+
+        foreach (glob(PHOTOS . '*/*.*') as $file) {
+            unlink($file);
+        }
+    }
+
+    /**
+     * Run before each test is executed
+     * @param ConnectionInterface $db An instance of the connection into which
+     *  the records will be inserted
+     * @return void
+     */
+    public function insert(ConnectionInterface $db)
+    {
+        parent::insert($db);
+
+        foreach ($this->records as $record) {
+            $file = PHOTOS . $record['album_id'] . DS . $record['filename'];
+
+            if (!file_exists($file)) {
+                copy(TEST_APP . 'examples' . DS . 'image.jpg', $file);
+            }
+        }
+    }
 }

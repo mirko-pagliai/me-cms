@@ -86,18 +86,11 @@ class PhotosTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $example = [
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
+        $entity = $this->Photos->get(1);
 
-        $entity = $this->Photos->newEntity($example);
-        $this->assertNotEmpty($this->Photos->save($entity));
+        $this->assertFileExists($entity->path);
 
-        //Creates the photo
-        file_put_contents($entity->path, null);
-
-        //Deletes the photos
+        //Deletes
         $this->assertTrue($this->Photos->delete($entity));
         $this->assertFileNotExists($entity->path);
     }

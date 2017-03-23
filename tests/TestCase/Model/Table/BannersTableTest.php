@@ -86,13 +86,13 @@ class BannersTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $banner = $this->Banners->get(1);
+        $entity = $this->Banners->get(1);
 
-        $this->assertFileExists($banner->path);
+        $this->assertFileExists($entity->path);
 
-        //Deletes the banner
-        $this->assertTrue($this->Banners->delete($banner));
-        $this->assertFileNotExists($banner->path);
+        //Deletes
+        $this->assertTrue($this->Banners->delete($entity));
+        $this->assertFileNotExists($entity->path);
     }
 
     /**
