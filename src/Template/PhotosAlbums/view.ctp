@@ -82,7 +82,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
                 echo $this->Html->link($text, [
                     '_name' => 'photo',
                     'slug' => $album->slug,
-                    'id' => $photo->id
+                    'id' => $photo->id,
                 ], $options);
                 ?>
             </div>

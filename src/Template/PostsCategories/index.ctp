@@ -29,10 +29,7 @@ $this->assign('title', $title = __d('me_cms', 'Posts categories'));
 $this->Breadcrumbs->add($title, ['_name' => 'postsCategories']);
 
 $categories = array_map(function ($category) {
-    return $this->Html->link(
-        $category->title,
-        ['_name' => 'postsCategory', $category->slug]
-    );
+    return $this->Html->link($category->title, ['_name' => 'postsCategory', $category->slug]);
 }, $categories->toArray());
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

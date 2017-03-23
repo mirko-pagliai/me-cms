@@ -20,15 +20,17 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use Cake\I18n\I18n;
+
 $this->set([
     'documentData' => [
-        'xmlns:dc' => 'http://purl.org/dc/elements/1.1/'
+        'xmlns:dc' => 'http://purl.org/dc/elements/1.1/',
     ],
     'channelData' => [
         'title' => __d('me_cms', 'Latest posts'),
         'link' => $this->Url->build('/', true),
         'description' => __d('me_cms', 'Latest posts'),
-        'language' => \Cake\I18n\I18n::locale(),
+        'language' => I18n::locale(),
     ],
 ]);
 
@@ -61,8 +63,7 @@ foreach ($posts as $post) {
 
     //Adds the preview image
     if (!empty($post->preview)) {
-        $text = $this->Thumb->resize($post->preview, ['width' => 200]) .
-            $this->Html->br(null) . $text;
+        $text = $this->Thumb->resize($post->preview, ['width' => 200]) . '< br/>' . $text;
     }
 
     echo $this->Rss->item([], [

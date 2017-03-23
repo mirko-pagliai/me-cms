@@ -30,7 +30,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'postsSearch']);
 
 echo $this->Form->create(null, [
     'type' => 'get',
-    'url' => ['_name' => 'postsSearch']
+    'url' => ['_name' => 'postsSearch'],
 ]);
 echo $this->Form->control('p', [
     'default' => $this->request->getQuery('p'),

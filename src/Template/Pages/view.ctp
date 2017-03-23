@@ -62,12 +62,12 @@ if ($this->request->isAction('view', 'Pages')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
     $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if (!empty($page->preview)) {
+    if ($page->preview) {
         $this->Html->meta(['href' => $page->preview, 'rel' => 'image_src']);
         $this->Html->meta(['content' => $page->preview, 'property' => 'og:image']);
     }
 
-    if (!empty($page->text)) {
+    if ($page->text) {
         $this->Html->meta([
             'content' => $this->Text->truncate(
                 trim(strip_tags($this->BBCode->remove($page->text))),
