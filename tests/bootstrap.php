@@ -125,6 +125,17 @@ Plugin::load('Assets', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
 ]);
 
+Configure::write('MysqlBackup.connection', 'test');
+Configure::write('MysqlBackup.target', TMP . 'backups');
+
+//@codingStandardsIgnoreLine
+@mkdir(Configure::read('MysqlBackup.target'));
+
+Plugin::load('MysqlBackup', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-mysql-backup' . DS,
+]);
+
 Configure::write('Thumbs.target', TMP . 'thumbs');
 
 //@codingStandardsIgnoreLine
