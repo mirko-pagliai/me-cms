@@ -173,13 +173,11 @@ class PostsController extends AppController
      */
     public function edit($id = null)
     {
-        $post = $this->Posts->findById($id)
-            ->contain([
-                'Tags' => function ($q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
-            ])
-            ->firstOrFail();
+        $post = $this->Posts->findById($id)->contain([
+            'Tags' => function ($q) {
+                return $q->order(['tag' => 'ASC']);
+            },
+        ])->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit posts on behalf of other users
