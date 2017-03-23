@@ -138,14 +138,20 @@ if (config('post.keywords') && $this->request->isAction('view', 'Posts') &&
     <div class="related-contents">
         <?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
         <?php if (!config('post.related.images')) : ?>
-            <?= $this->Html->ul(array_map(function ($post) {
-                return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-            }, $related), ['icon' => 'caret-right']) ?>
+            <?= $this->Html->ul(
+                array_map(function ($post) {
+                    return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+                }, $related),
+                ['icon' => 'caret-right']
+            ) ?>
         <?php else : ?>
             <div class="visible-xs">
-                <?= $this->Html->ul(array_map(function ($post) {
+            <?= $this->Html->ul(
+                array_map(function ($post) {
                     return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-                }, $related), ['icon' => 'caret-right']) ?>
+                }, $related),
+                ['icon' => 'caret-right']
+            ) ?>
             </div>
 
             <div class="hidden-xs row">

@@ -49,52 +49,52 @@ $this->extend('/Admin/Common/Photos/index');
                 </div>
 
                 <?php
-                    $actions = [];
+                $actions = [];
+                $actions[] = $this->Html->link(
+                    null,
+                    ['action' => 'edit', $photo->id],
+                    ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
+                );
+                $actions[] = $this->Html->link(
+                    null,
+                    ['action' => 'download', $photo->id],
+                    ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
+                );
+
+                //Only admins can delete photos
+                if ($this->Auth->isGroup('admin')) {
+                    $actions[] = $this->Form->postLink(
+                        null,
+                        ['action' => 'delete', $photo->id],
+                        [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'title' => __d('me_cms', 'Delete'),
+                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                        ]
+                    );
+                }
+
+                //If the photo is active
+                if ($photo->active) {
                     $actions[] = $this->Html->link(
                         null,
-                        ['action' => 'edit', $photo->id],
-                        ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
-                    );
-                    $actions[] = $this->Html->link(
-                        null,
-                        ['action' => 'download', $photo->id],
-                        ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
-                    );
-
-                    //Only admins can delete photos
-                    if ($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(
-                            null,
-                            ['action' => 'delete', $photo->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'title' => __d('me_cms', 'Delete'),
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                            ]
-                        );
-                    }
-
-                    //If the photo is active
-                    if ($photo->active) {
-                        $actions[] = $this->Html->link(
-                            null,
-                            ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
-                            [
-                                'icon' => 'external-link',
-                                'target' => '_blank',
-                                'title' => __d('me_cms', 'Open'),
-                            ]
-                        );
-                    } else {
-                        $actions[] = $this->Html->link(null, ['_name' => 'photosPreview', $photo->id], [
+                        ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
+                        [
                             'icon' => 'external-link',
                             'target' => '_blank',
-                            'title' => __d('me_cms', 'Preview'),
-                        ]);
-                    }
+                            'title' => __d('me_cms', 'Open'),
+                        ]
+                    );
+                } else {
+                    $actions[] = $this->Html->link(null, ['_name' => 'photosPreview', $photo->id], [
+                        'icon' => 'external-link',
+                        'target' => '_blank',
+                        'title' => __d('me_cms', 'Preview'),
+                    ]);
+                }
 
-                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </div>
         </div>
