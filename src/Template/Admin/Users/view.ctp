@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/view');
 $this->assign('title', $user->full_name);
 
@@ -75,35 +74,22 @@ if ($this->Auth->isGroup('admin')) {
 
     //If the user is banned
     if ($user->banned) {
-        echo $this->Html->dd(
-            __d('me_cms', 'Banned'),
-            ['class' => 'text-danger']
-        );
+        echo $this->Html->dd(__d('me_cms', 'Banned'), ['class' => 'text-danger']);
     //Else, if the user is pending (not active)
     } elseif (!$user->active) {
-        echo $this->Html->dd(
-            __d('me_cms', 'Pending'),
-            ['class' => 'text-warning']
-        );
+        echo $this->Html->dd(__d('me_cms', 'Pending'), ['class' => 'text-warning']);
     //Else, if the user is active
     } else {
-        echo $this->Html->dd(
-            __d('me_cms', 'Active'),
-            ['class' => 'text-success']
-        );
+        echo $this->Html->dd(__d('me_cms', 'Active'), ['class' => 'text-success']);
     }
 
     if ($user->post_count) {
         echo $this->Html->dt(__d('me_cms', 'Posts'));
-        echo $this->Html->dd($this->Html->link(
-            $user->post_count,
-            [
-                'controller' => 'Posts',
-                'action' => 'index',
-                '?' => ['user' => $user->id],
-            ],
-            ['title' => __d('me_cms', 'View items that belong to this user')]
-        ));
+        echo $this->Html->dd($this->Html->link($user->post_count, [
+            'controller' => 'Posts',
+            'action' => 'index',
+            '?' => ['user' => $user->id],
+        ], ['title' => __d('me_cms', 'View items that belong to this user')]));
     }
 
     echo $this->Html->dt(__d('me_cms', 'Created'));
@@ -112,6 +98,6 @@ if ($this->Auth->isGroup('admin')) {
 </dl>
 
 <?php if (!empty($loginLog)) : ?>
-    <h4> <?= __d('me_cms', 'Last login') ?></h4>
+    <h4><?= __d('me_cms', 'Last login') ?></h4>
     <?= $this->element('admin/last-logins') ?>
 <?php endif; ?>

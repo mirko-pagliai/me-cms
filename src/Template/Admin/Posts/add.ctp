@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Add post'));
 
@@ -81,16 +80,14 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
         ]);
     ?>
     <div class="form-group to-be-hidden">
-        <?php
-            echo $this->Form->control('tags_as_string', [
-                'id' => 'tags-output-text',
-                'label' => __d('me_cms', 'Tags'),
-                'rows' => 2,
-                'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
-                    'separated by a comma or a comma and a space. Only ' .
-                    'lowercase letters, numbers, hyphen, space'),
-            ]);
-        ?>
+        <?= $this->Form->control('tags_as_string', [
+            'id' => 'tags-output-text',
+            'label' => __d('me_cms', 'Tags'),
+            'rows' => 2,
+            'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
+                'separated by a comma or a comma and a space. Only ' .
+                'lowercase letters, numbers, hyphen, space'),
+        ]) ?>
     </div>
     <div class="form-group hidden to-be-shown">
         <div id="tags-preview">
@@ -116,12 +113,10 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
             }
         ?>
     </div>
-    <?php
-        echo $this->Form->ckeditor('text', [
-            'label' => __d('me_cms', 'Text'),
-            'rows' => 10,
-        ]);
-    ?>
+    <?= $this->Form->ckeditor('text', [
+        'label' => __d('me_cms', 'Text'),
+        'rows' => 10,
+    ]) ?>
     <?= $this->element('admin/bbcode') ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>

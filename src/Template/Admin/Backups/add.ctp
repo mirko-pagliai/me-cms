@@ -63,8 +63,8 @@ $this->assign('title', $title = __d('me_cms', 'Add backup'));
             </td>
         </tr>
         <tr>
-            <td class="min-width"
-                ><code>{$HOSTNAME}</code>
+            <td class="min-width">
+                <code>{$HOSTNAME}</code>
             </td>
             <td>
                 <?= __d('me_cms', 'Database hostname') ?>

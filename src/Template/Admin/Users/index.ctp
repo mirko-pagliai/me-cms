@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Users'));
 
@@ -96,12 +95,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $user->username,
-                                ['action' => 'view', $user->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?>
                     </strong>
                     <?php
                     //If the user is banned
@@ -167,26 +161,20 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $user->group->label,
-                            ['?' => ['group' => $user->group->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $user->group->label,
+                        ['?' => ['group' => $user->group->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </td>
                 <td class="min-width text-center">
                     <?php
                     if ($user->post_count) {
-                        echo $this->Html->link(
-                            $user->post_count,
-                            [
-                                'controller' => 'Posts',
-                                'action' => 'index',
-                                '?' => ['user' => $user->id],
-                            ],
-                            ['title' => __d('me_cms', 'View items that belong to this user')]
-                        );
+                        echo $this->Html->link($user->post_count, [
+                            'controller' => 'Posts',
+                            'action' => 'index',
+                            '?' => ['user' => $user->id],
+                        ], ['title' => __d('me_cms', 'View items that belong to this user')]);
                     } else {
                         echo $user->post_count;
                     }

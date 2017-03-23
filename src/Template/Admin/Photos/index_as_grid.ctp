@@ -20,10 +20,9 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/Photos/index');
 ?>
-    
+
 <div class='clearfix'>
     <?php foreach ($photos as $photo) : ?>
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -35,14 +34,12 @@ $this->extend('/Admin/Common/Photos/index');
                     <?= __d('me_cms', 'ID') ?> <code><?= $photo->id ?></code>
                 </div>
                 <div class="photo-album">
-                    <?= __d('me_cms', 'Album') ?>: 
-                    <?php
-                        echo $this->Html->link(
-                            $photo->album->title,
-                            ['?' => ['album' => $photo->album->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= __d('me_cms', 'Album') ?>:
+                    <?= $this->Html->link(
+                        $photo->album->title,
+                        ['?' => ['album' => $photo->album->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </div>
                 <div class="photo-created">
                     (<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)
@@ -91,15 +88,11 @@ $this->extend('/Admin/Common/Photos/index');
                             ]
                         );
                     } else {
-                        $actions[] = $this->Html->link(
-                            null,
-                            ['_name' => 'photosPreview', $photo->id],
-                            [
-                                'icon' => 'external-link',
-                                'target' => '_blank',
-                                'title' => __d('me_cms', 'Preview'),
-                            ]
-                        );
+                        $actions[] = $this->Html->link(null, ['_name' => 'photosPreview', $photo->id], [
+                            'icon' => 'external-link',
+                            'target' => '_blank',
+                            'title' => __d('me_cms', 'Preview'),
+                        ]);
                     }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);

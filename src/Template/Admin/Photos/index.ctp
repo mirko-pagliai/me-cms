@@ -20,10 +20,9 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/Photos/index');
 ?>
-    
+
 <table class="table table-hover">
     <thead>
         <tr>
@@ -79,14 +78,11 @@ $this->extend('/Admin/Common/Photos/index');
 
                     //If the photo is active
                     if ($photo->active) {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Open'),
-                            [
-                                '_name' => 'photo',
-                                'slug' => $photo->album->slug,
-                                'id' => $photo->id],
-                            ['icon' => 'external-link', 'target' => '_blank']
-                        );
+                        $actions[] = $this->Html->link(__d('me_cms', 'Open'), [
+                            '_name' => 'photo',
+                            'slug' => $photo->album->slug,
+                            'id' => $photo->id
+                        ], ['icon' => 'external-link', 'target' => '_blank']);
                     } else {
                         $actions[] = $this->Html->link(
                             __d('me_cms', 'Preview'),
@@ -99,13 +95,11 @@ $this->extend('/Admin/Common/Photos/index');
                     ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $photo->album->title,
-                            ['?' => ['album' => $photo->album->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $photo->album->title,
+                        ['?' => ['album' => $photo->album->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </td>
                 <td class="text-center">
                     <?= $photo->description ?>

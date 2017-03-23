@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Media browser'));
 
@@ -42,8 +41,5 @@ $this->Asset->script('MeCms.admin/kcfinder', ['block' => 'script_bottom']);
 
 <?php
 if (!empty($kcfinder)) {
-    echo $this->Html->iframe(
-        $kcfinder,
-        ['id' => 'kcfinder', 'width' => '100%']
-    );
+    echo $this->Html->iframe($kcfinder, ['id' => 'kcfinder', 'width' => '100%']);
 }

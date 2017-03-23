@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/Banners/index');
 ?>
 
@@ -44,14 +43,9 @@ $this->extend('/Admin/Common/Banners/index');
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $banner->filename,
-                                ['action' => 'edit', $banner->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
                     </strong>
-                    
+
                     <?php
                     //If the banner is not active (not published)
                     if (!$banner->active) {
@@ -108,13 +102,11 @@ $this->extend('/Admin/Common/Banners/index');
                     ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $banner->position->title,
-                            ['?' => ['position' => $banner->position->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $banner->position->title,
+                        ['?' => ['position' => $banner->position->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </td>
                 <td class="text-center hidden-xs">
                     <?php
