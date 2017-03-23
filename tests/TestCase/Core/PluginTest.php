@@ -40,6 +40,7 @@ class PluginTest extends TestCase
             'MeCms',
             'MeTools',
             'Assets',
+            'MysqlBackup',
             'Thumber',
         ], Plugin::all());
 
@@ -49,6 +50,7 @@ class PluginTest extends TestCase
             'MeCms',
             'MeTools',
             'Assets',
+            'MysqlBackup',
             'TestPlugin',
             'Thumber',
         ], Plugin::all());
@@ -57,6 +59,7 @@ class PluginTest extends TestCase
             'Assets',
             'MeCms',
             'MeTools',
+            'MysqlBackup',
             'TestPlugin',
             'Thumber',
         ], Plugin::all(['order' => false]));
