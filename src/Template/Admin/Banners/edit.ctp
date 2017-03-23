@@ -41,14 +41,10 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
     ?>
 </div>
 <fieldset>
-    <p><?= $this->Html->para(null, $this->Html->strong(__d('me_cms', 'Preview'))) ?></p>
+    <p><?= $this->Html->strong(__d('me_cms', 'Preview')) ?></p>
     <?php
     if ($banner->thumbnail) {
-        echo $this->Thumb->resize(
-            $banner->path,
-            ['width' => 1186],
-            ['class' => 'img-thumbnail margin-15']
-        );
+        echo $this->Thumb->resize($banner->path, ['width' => 1186], ['class' => 'img-thumbnail margin-15']);
     } else {
         echo $this->Html->img($banner->www, ['class' => 'img-thumbnail margin-15']);
     }

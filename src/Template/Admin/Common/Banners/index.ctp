@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Banners'));
 
@@ -76,7 +75,5 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 <?= $this->Form->end() ?>
 
 <?= $this->element('admin/list-grid-buttons') ?>
-
 <?= $this->fetch('content') ?>
-
 <?= $this->element('MeTools.paginator') ?>

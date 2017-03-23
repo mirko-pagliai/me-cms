@@ -49,18 +49,17 @@ $this->extend('/Admin/Common/Photos/index');
                 </div>
 
                 <?php
-                    $actions = [
-                        $this->Html->link(
-                            null,
-                            ['action' => 'edit', $photo->id],
-                            ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
-                        ),
-                        $this->Html->link(
-                            null,
-                            ['action' => 'download', $photo->id],
-                            ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
-                        ),
-                    ];
+                    $actions = [];
+                    $actions[] = $this->Html->link(
+                        null,
+                        ['action' => 'edit', $photo->id],
+                        ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
+                    );
+                    $actions[] = $this->Html->link(
+                        null,
+                        ['action' => 'download', $photo->id],
+                        ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
+                    );
 
                     //Only admins can delete photos
                     if ($this->Auth->isGroup('admin')) {

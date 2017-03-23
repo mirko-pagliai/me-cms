@@ -83,7 +83,7 @@ $this->extend('/Admin/Common/Banners/index');
                         'class' => 'text-danger',
                         'icon' => 'trash-o',
                         'title' => __d('me_cms', 'Delete'),
-                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
                     ]);
                 }
 

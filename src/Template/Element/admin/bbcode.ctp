@@ -21,7 +21,6 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
@@ -46,7 +45,7 @@
                                 <code>[readmore /]</code>
                             </td>
                             <td>
-                                <?= __d('me_cms', 'Manually indicates where to cut the text and show the "Read more" button') ?>. 
+                                <?= __d('me_cms', 'Manually indicates where to cut the text and show the "Read more" button') ?>.
                                 <?= __d('me_cms', 'If this is not present, the system can still cut the text, for example after a certain number of characters') ?>
                             </td>
                         </tr>

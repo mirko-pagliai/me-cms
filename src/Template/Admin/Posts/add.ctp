@@ -74,9 +74,8 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
         echo $this->Form->control('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'help' => __d('me_cms', 'The slug is a string identifying a ' .
-                'resource. If you do not have special needs, let it be ' .
-                'generated automatically'),
+            'help' => __d('me_cms', 'The slug is a string identifying a resource. If ' .
+                'you do not have special needs, let it be generated automatically'),
         ]);
     ?>
     <div class="form-group to-be-hidden">

@@ -36,7 +36,7 @@ if ($banner->position->name) {
             ['_name' => 'banner', $banner->id],
             [
                 'target' => '_blank',
-                'title' => $banner->description ? $banner->description : null,
+                'title' => $banner->description ?: null,
             ]
         );
     } else {

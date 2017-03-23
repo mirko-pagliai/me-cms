@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Banners positions'));
 
@@ -52,33 +51,30 @@ $this->append('actions', $this->Html->button(
                     <code><?= $position->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($position->title, ['action' => 'edit', $position->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($position->title, ['action' => 'edit', $position->id]) ?>
+                    </strong>
                     <?php
-                        $actions = [
-                            $this->Html->link(
-                                __d('me_cms', 'Edit'),
-                                ['action' => 'edit', $position->id],
-                                ['icon' => 'pencil']
-                            ),
-                            $this->Form->postLink(
-                                __d('me_cms', 'Delete'),
-                                ['action' => 'delete', $position->id],
-                                [
-                                    'class' => 'text-danger',
-                                    'icon' => 'trash-o',
-                                    'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                                ]
-                            ),
-                            $this->Html->link(
-                                __d('me_cms', 'Upload'),
-                                [
-                                    'controller' => 'Banners',
-                                    'action' => 'upload',
-                                    '?' => ['position' => $position->id]
-                                ],
-                                ['icon' => 'upload']
-                            ),
-                        ];
+                        $actions = [];
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $position->id],
+                            ['icon' => 'pencil']
+                        );
+                        $actions[] = $this->Form->postLink(
+                            __d('me_cms', 'Delete'),
+                            ['action' => 'delete', $position->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
+                        $actions[] = $this->Html->link(__d('me_cms', 'Upload'), [
+                            'controller' => 'Banners',
+                            'action' => 'upload',
+                            '?' => ['position' => $position->id]
+                        ], ['icon' => 'upload']);
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
@@ -87,21 +83,17 @@ $this->append('actions', $this->Html->button(
                     <?= $position->description ?>
                 </td>
                 <td class="min-width text-center">
-                    <?php if ($position->banner_count) : ?>
-                        <?php
-                            echo $this->Html->link(
-                                $position->banner_count,
-                                [
-                                    'controller' => 'Banners',
-                                    'action' => 'index',
-                                    '?' => ['position' => $position->id]
-                                ],
-                                ['title' => __d('me_cms', 'View items that belong to this category')]
-                            );
-                        ?>
-                    <?php else : ?>
-                        <?= $position->banner_count ?>
-                    <?php endif; ?>
+                    <?php
+                    if ($position->banner_count) {
+                        echo $this->Html->link($position->banner_count, [
+                            'controller' => 'Banners',
+                            'action' => 'index',
+                            '?' => ['position' => $position->id],
+                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
+                    } else {
+                        echo $position->banner_count;
+                    }
+                    ?>
                 </td>
             </tr>
         <?php endforeach; ?>

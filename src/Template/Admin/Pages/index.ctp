@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Pages'));
 
@@ -97,9 +96,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link($page->title, ['action' => 'edit', $page->id]);
-                        ?>
+                        <?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?>
                     </strong>
                     <?php
                     //If the page is not active (it's a draft)
@@ -137,7 +134,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                             [
                                 'class' => 'text-danger',
                                 'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
                             ]
                         );
                     }
@@ -161,13 +158,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <?php
-                    echo $this->Html->link(
+                    <?= $this->Html->link(
                         $page->category->title,
                         ['?' => ['category' => $page->category->id]],
                         ['title' => __d('me_cms', 'View items that belong to this category')]
-                    );
-                    ?>
+                    ) ?>
                 </td>
                 <td class="min-width text-center">
                     <?php

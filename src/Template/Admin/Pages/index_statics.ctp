@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Static pages'));
 ?>
@@ -35,13 +34,10 @@ $this->assign('title', __d('me_cms', 'Static pages'));
         <tr>
             <td>
                 <strong>
-                    <?php
-                    echo $this->Html->link(
-                        $page->filename,
+                    <?= $this->Html->link($page->filename,
                         ['_name' => 'page', $page->slug],
                         ['target' => '_blank']
-                    );
-                    ?>
+                    ) ?>
                 </strong>
                 <?php
                 $actions = [
@@ -59,9 +55,7 @@ $this->assign('title', __d('me_cms', 'Static pages'));
                 <?= $page->title ?>
             </td>
             <td>
-                <samp>
-                    <?= $page->path ?>
-                </samp>
+                <samp><?= $page->path ?></samp>
             </td>
         </tr>
     <?php endforeach; ?>
