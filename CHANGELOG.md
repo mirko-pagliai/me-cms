@@ -11,6 +11,7 @@
 * added `MeCms\Model\Table\UsersTable\beforeMarshal()` method;
 * added `MeCms\Controller\Traits\CheckLastSearchTrait` trait;
 * added `MeCms\Model\Entity\Traits\PreviewAccessorTrait` trait;
+* added `MeCms\Model\Table\Traits\IsOwnedByTrait` trait;
 * added `MeCms\Model\Table\Traits\NextToBePublishedTrait` trait;
 * the preview image for pages and posts always contains a full url;
 * global function `firstImageFromText()` renamed as `firstImage()`;

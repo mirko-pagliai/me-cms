@@ -31,6 +31,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
@@ -41,6 +42,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 class PostsTable extends AppTable
 {
+    use IsOwnedByTrait;
     use NextToBePublishedTrait;
 
     /**

@@ -273,18 +273,6 @@ class AppTableTest extends TestCase
     }
 
     /**
-     * Test for `isOwnedBy()` method
-     * @test
-     */
-    public function testIsOwnedBy()
-    {
-        $this->assertTrue($this->Posts->isOwnedBy(2, 4));
-        $this->assertFalse($this->Posts->isOwnedBy(2, 1));
-        $this->assertTrue($this->Posts->isOwnedBy(1, 1));
-        $this->assertFalse($this->Posts->isOwnedBy(1, 2));
-    }
-
-    /**
      * Test for `queryFromFilter()` method
      * @test
      */

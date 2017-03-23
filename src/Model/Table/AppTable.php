@@ -142,26 +142,6 @@ class AppTable extends Table
     }
 
     /**
-     * Checks whether a record belongs to an user.
-     *
-     * For example:
-     * <code>
-     * $posts = TableRegistry::get('Posts');
-     * $posts->isOwnedBy(2, 4);
-     * </code>
-     * checks if the posts with ID 2 belongs to the user with ID 4.
-     * @param int $id Record ID
-     * @param int $userId User ID
-     * @return bool
-     */
-    public function isOwnedBy($id, $userId = null)
-    {
-        return (bool)$this->find()
-            ->where(am(compact('id'), ['user_id' => $userId]))
-            ->first();
-    }
-
-    /**
      * Build query from filter data
      * @param Query $query Query object
      * @param array $data Filter data ($this->request->getQuery())
