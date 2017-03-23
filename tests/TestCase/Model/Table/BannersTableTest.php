@@ -88,9 +88,6 @@ class BannersTableTest extends TestCase
     {
         $banner = $this->Banners->get(1);
 
-        //Creates the file
-        file_put_contents($banner->path, null);
-
         $this->assertFileExists($banner->path);
 
         //Deletes the banner
