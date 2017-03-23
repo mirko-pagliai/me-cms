@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 
 /**
@@ -92,7 +91,7 @@ class PostsController extends AppController
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\AppTable::isOwnedBy()
+     * @uses MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null)
     {
@@ -100,7 +99,7 @@ class PostsController extends AppController
         //Users can edit only their own posts
         if ($this->request->isEdit()) {
             return $this->Auth->isGroup(['admin', 'manager']) ||
-                $this->Posts->isOwnedBy($this->request->pass[0], $this->Auth->user('id'));
+                $this->Posts->isOwnedBy($this->request->getParam('pass.0'), $this->Auth->user('id'));
         }
 
         //Only admins and managers can delete posts
@@ -132,7 +131,7 @@ class PostsController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->query));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->getQuery()));
 
         $this->set(compact('posts'));
     }
@@ -149,12 +148,10 @@ class PostsController extends AppController
         if ($this->request->is('post')) {
             //Only admins and managers can add posts on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request->data('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
 
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+            $post = $this->Posts->patchEntity($post, $this->request->getData());
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -176,23 +173,19 @@ class PostsController extends AppController
      */
     public function edit($id = null)
     {
-        $post = $this->Posts->findById($id)
-            ->contain([
-                'Tags' => function ($q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
-            ])
-            ->firstOrFail();
+        $post = $this->Posts->findById($id)->contain([
+            'Tags' => function ($q) {
+                return $q->order(['tag' => 'ASC']);
+            },
+        ])->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit posts on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request->data('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
 
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
-            $post = $this->Posts->patchEntity($post, $this->request->data);
+            $post = $this->Posts->patchEntity($post, $this->request->getData());
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

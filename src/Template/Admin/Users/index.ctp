@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Users'));
 
@@ -42,18 +41,18 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
-                'default' => $this->request->query('id'),
+            echo $this->Form->control('id', [
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('username', [
-                'default' => $this->request->query('username'),
+            echo $this->Form->control('username', [
+                'default' => $this->request->getQuery('username'),
                 'placeholder' => __d('me_cms', 'username'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('status', [
-                'default' => $this->request->query('status'),
+            echo $this->Form->control('status', [
+                'default' => $this->request->getQuery('status'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
                     'active' => __d('me_cms', 'Only active'),
@@ -61,13 +60,13 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     'banned' => __d('me_cms', 'Only banned'),
                 ],
             ]);
-            echo $this->Form->input('group', [
-                'default' => $this->request->query('group'),
+            echo $this->Form->control('group', [
+                'default' => $this->request->getQuery('group'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all groups')),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
-                'default' => $this->request->query('created'),
+                'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
@@ -96,12 +95,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $user->username,
-                                ['action' => 'view', $user->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?>
                     </strong>
                     <?php
                     //If the user is banned
@@ -167,26 +161,20 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
                 </td>
                 <td class="text-center">
-                    <?php
-                        echo $this->Html->link(
-                            $user->group->label,
-                            ['?' => ['group' => $user->group->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $user->group->label,
+                        ['?' => ['group' => $user->group->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </td>
                 <td class="min-width text-center">
                     <?php
                     if ($user->post_count) {
-                        echo $this->Html->link(
-                            $user->post_count,
-                            [
-                                'controller' => 'Posts',
-                                'action' => 'index',
-                                '?' => ['user' => $user->id],
-                            ],
-                            ['title' => __d('me_cms', 'View items that belong to this user')]
-                        );
+                        echo $this->Html->link($user->post_count, [
+                            'controller' => 'Posts',
+                            'action' => 'index',
+                            '?' => ['user' => $user->id],
+                        ], ['title' => __d('me_cms', 'View items that belong to this user')]);
                     } else {
                         echo $user->post_count;
                     }

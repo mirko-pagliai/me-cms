@@ -36,10 +36,9 @@ $request = new Request;
 require_once __DIR__ . DS . 'bootstrap_base.php';
 
 /**
- * Loads DebugKit on localhost, if required
+ * Loads DebugKit, if debugging is enabled
  */
-if (($request->is('localhost')) && config('main.debug_on_localhost')
-    && !config('debug') && !Plugin::loaded('DebugKit')
+if (config('debug') && !Plugin::loaded('DebugKit')
 ) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }

@@ -31,12 +31,41 @@ use MeCms\Model\Entity\Banner;
 class BannerTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Banner
+     */
+    protected $Banner;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Banner = new Banner;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Banner);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Banner', new Banner);
+        $this->assertInstanceOf('MeCms\Model\Entity\Banner', $this->Banner);
     }
 
     /**
@@ -46,10 +75,17 @@ class BannerTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Banner();
+        $this->assertFalse($this->Banner->isAccessible('id'));
+        $this->assertFalse($this->Banner->isAccessible('modified'));
+    }
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('modified'));
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['path', 'www'], $this->Banner->getVirtual());
     }
 
     /**
@@ -58,13 +94,10 @@ class BannerTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $entity = new Banner();
+        $this->assertNull($this->Banner->path);
 
-        $this->assertNull($entity->path);
-
-        $entity->filename = 'example.gif';
-
-        $this->assertEquals(BANNERS . 'example.gif', $entity->path);
+        $this->Banner->filename = 'example.gif';
+        $this->assertEquals(BANNERS . 'example.gif', $this->Banner->path);
     }
 
     /**
@@ -73,12 +106,9 @@ class BannerTest extends TestCase
      */
     public function testWwwGetMutator()
     {
-        $entity = new Banner();
+        $this->assertNull($this->Banner->www);
 
-        $this->assertNull($entity->www);
-
-        $entity->filename = 'example.gif';
-
-        $this->assertEquals(BANNERS_WWW . 'example.gif', $entity->www);
+        $this->Banner->filename = 'example.gif';
+        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Banner->www);
     }
 }

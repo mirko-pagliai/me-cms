@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Pages'));
 
@@ -42,35 +41,35 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-        echo $this->Form->input('id', [
-            'default' => $this->request->query('id'),
+        echo $this->Form->control('id', [
+            'default' => $this->request->getQuery('id'),
             'placeholder' => __d('me_cms', 'ID'),
             'size' => 2,
         ]);
-        echo $this->Form->input('title', [
-            'default' => $this->request->query('title'),
+        echo $this->Form->control('title', [
+            'default' => $this->request->getQuery('title'),
             'placeholder' => __d('me_cms', 'title'),
             'size' => 16,
         ]);
-        echo $this->Form->input('active', [
-            'default' => $this->request->query('active'),
+        echo $this->Form->control('active', [
+            'default' => $this->request->getQuery('active'),
             'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
             'options' => [
                 'yes' => __d('me_cms', 'Only published'),
                 'no' => __d('me_cms', 'Only drafts'),
             ],
         ]);
-        echo $this->Form->input('category', [
-            'default' => $this->request->query('category'),
+        echo $this->Form->control('category', [
+            'default' => $this->request->getQuery('category'),
             'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
         ]);
-        echo $this->Form->input('priority', [
-            'default' => $this->request->query('priority'),
+        echo $this->Form->control('priority', [
+            'default' => $this->request->getQuery('priority'),
             'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
         ]);
         echo $this->Form->datepicker('created', [
             'data-date-format' => 'YYYY-MM',
-            'default' => $this->request->query('created'),
+            'default' => $this->request->getQuery('created'),
             'placeholder' => __d('me_cms', 'month'),
             'size' => 5,
         ]);
@@ -97,9 +96,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link($page->title, ['action' => 'edit', $page->id]);
-                        ?>
+                        <?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?>
                     </strong>
                     <?php
                     //If the page is not active (it's a draft)
@@ -137,7 +134,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                             [
                                 'class' => 'text-danger',
                                 'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
                             ]
                         );
                     }
@@ -161,13 +158,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <?php
-                    echo $this->Html->link(
+                    <?= $this->Html->link(
                         $page->category->title,
                         ['?' => ['category' => $page->category->id]],
                         ['title' => __d('me_cms', 'View items that belong to this category')]
-                    );
-                    ?>
+                    ) ?>
                 </td>
                 <td class="min-width text-center">
                     <?php

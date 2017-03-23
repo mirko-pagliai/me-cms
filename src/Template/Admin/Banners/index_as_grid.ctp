@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/Banners/index');
 ?>
 
@@ -35,14 +34,12 @@ $this->extend('/Admin/Common/Banners/index');
                     <?= __d('me_cms', 'ID') ?> <code><?= $banner->id ?></code>
                 </div>
                 <div class="photo-album">
-                    <?= __d('me_cms', 'Position') ?>: 
-                    <?php
-                        echo $this->Html->link(
-                            $banner->position->title,
-                            ['?' => ['position' => $banner->position->id]],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
-                    ?>
+                    <?= __d('me_cms', 'Position') ?>:
+                    <?= $this->Html->link(
+                        $banner->position->title,
+                        ['?' => ['position' => $banner->position->id]],
+                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                    ) ?>
                 </div>
                 <div class="photo-created">
                     (<?= $banner->created->i18nFormat(config('main.datetime.long')) ?>)
@@ -67,15 +64,11 @@ $this->extend('/Admin/Common/Banners/index');
                 ];
 
                 if ($banner->target) {
-                    $actions[] = $this->Html->link(
-                        null,
-                        $banner->target,
-                        [
-                            'icon' => 'external-link',
-                            'title' => __d('me_cms', 'Open'),
-                            'target' => '_blank'
-                        ]
-                    );
+                    $actions[] = $this->Html->link(null, $banner->target, [
+                        'icon' => 'external-link',
+                        'title' => __d('me_cms', 'Open'),
+                        'target' => '_blank'
+                    ]);
                 }
 
                 $actions[] = $this->Html->link(
@@ -86,16 +79,12 @@ $this->extend('/Admin/Common/Banners/index');
 
                 //Only admins can delete banners
                 if ($this->Auth->isGroup('admin')) {
-                    $actions[] = $this->Form->postLink(
-                        null,
-                        ['action' => 'delete', $banner->id],
-                        [
-                            'class' => 'text-danger',
-                            'icon' => 'trash-o',
-                            'title' => __d('me_cms', 'Delete'),
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                        ]
-                    );
+                    $actions[] = $this->Form->postLink(null, ['action' => 'delete', $banner->id], [
+                        'class' => 'text-danger',
+                        'icon' => 'trash-o',
+                        'title' => __d('me_cms', 'Delete'),
+                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                    ]);
                 }
 
                 echo $this->Html->ul($actions, ['class' => 'actions']);

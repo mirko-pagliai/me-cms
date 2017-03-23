@@ -22,6 +22,8 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -41,6 +43,22 @@ class UsersTable extends AppTable
      * @var string
      */
     public $cache = 'users';
+
+    /**
+     * Called before request data is converted into entities
+     * @param \Cake\Event\Event $event Event object
+     * @param \ArrayObject $data Request data
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.16.1
+     */
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        //Prevents that a blank password is saved
+        if ($options['validate'] === 'EmptyPassword' && isset($data['password']) && $data['password'] === '') {
+            unset($data['password'], $data['password_repeat']);
+        }
+    }
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -66,8 +84,8 @@ class UsersTable extends AppTable
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.banned', $this->alias()) => false,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.banned', $this->getAlias()) => false,
         ]);
 
         return $query;
@@ -81,7 +99,7 @@ class UsersTable extends AppTable
      */
     public function findBanned(Query $query, array $options)
     {
-        $query->where([sprintf('%s.banned', $this->alias()) => true]);
+        $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
 
         return $query;
     }
@@ -95,8 +113,8 @@ class UsersTable extends AppTable
     public function findPending(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => false,
-            sprintf('%s.banned', $this->alias()) => false,
+            sprintf('%s.active', $this->getAlias()) => false,
+            sprintf('%s.banned', $this->getAlias()) => false,
         ]);
 
         return $query;
@@ -110,7 +128,7 @@ class UsersTable extends AppTable
     public function getActiveList()
     {
         return $this->find('list')
-            ->where([sprintf('%s.active', $this->alias()) => true])
+            ->where([sprintf('%s.active', $this->getAlias()) => true])
             ->cache('active_users_list', $this->cache)
             ->order(['username' => 'ASC'])
             ->toArray();
@@ -125,23 +143,19 @@ class UsersTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('users');
-        $this->displayField('username');
-        $this->primaryKey('id');
+        $this->setTable('users');
+        $this->setDisplayField('username');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Groups', [
-            'foreignKey' => 'group_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.UsersGroups',
-        ]);
-        $this->hasMany('Posts', [
-            'foreignKey' => 'user_id',
-            'className' => 'MeCms.Posts',
-        ]);
-        $this->hasMany('Tokens', [
-            'foreignKey' => 'user_id',
-            'className' => 'Tokens.Tokens',
-        ]);
+        $this->belongsTo('Groups', ['className' => 'MeCms.UsersGroups'])
+            ->setForeignKey('group_id')
+            ->setJoinType('INNER');
+
+        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
+            ->setForeignKey('user_id');
+
+        $this->hasMany('Tokens', ['className' => 'Tokens.Tokens'])
+            ->setForeignKey('user_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
@@ -152,7 +166,7 @@ class UsersTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -162,12 +176,12 @@ class UsersTable extends AppTable
 
         //"Username" field
         if (!empty($data['username']) && strlen($data['username']) > 2) {
-            $query->where([sprintf('%s.username LIKE', $this->alias()) => sprintf('%%%s%%', $data['username'])]);
+            $query->where([sprintf('%s.username LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['username'])]);
         }
 
         //"Group" field
         if (!empty($data['group']) && isPositive($data['group'])) {
-            $query->where([sprintf('%s.group_id', $this->alias()) => $data['group']]);
+            $query->where([sprintf('%s.group_id', $this->getAlias()) => $data['group']]);
         }
 
         //"Status" field
@@ -175,17 +189,17 @@ class UsersTable extends AppTable
             switch ($data['status']) {
                 case 'active':
                     $query->where([
-                        sprintf('%s.active', $this->alias()) => true,
-                        sprintf('%s.banned', $this->alias()) => false,
+                        sprintf('%s.active', $this->getAlias()) => true,
+                        sprintf('%s.banned', $this->getAlias()) => false,
                     ]);
 
                     break;
                 case 'pending':
-                    $query->where([sprintf('%s.active', $this->alias()) => false]);
+                    $query->where([sprintf('%s.active', $this->getAlias()) => false]);
 
                     break;
                 case 'banned':
-                    $query->where([sprintf('%s.banned', $this->alias()) => true]);
+                    $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
 
                     break;
             }

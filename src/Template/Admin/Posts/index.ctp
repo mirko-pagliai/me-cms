@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Posts'));
 
@@ -42,44 +41,44 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
-                'default' => $this->request->query('id'),
+            echo $this->Form->control('id', [
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('title', [
-                'default' => $this->request->query('title'),
+            echo $this->Form->control('title', [
+                'default' => $this->request->getQuery('title'),
                 'placeholder' => __d('me_cms', 'title'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('active', [
-                'default' => $this->request->query('active'),
+            echo $this->Form->control('active', [
+                'default' => $this->request->getQuery('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
                     'yes' => __d('me_cms', 'Only published'),
                     'no' => __d('me_cms', 'Only drafts'),
                 ],
             ]);
-            echo $this->Form->input('user', [
-                'default' => $this->request->query('user'),
+            echo $this->Form->control('user', [
+                'default' => $this->request->getQuery('user'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all users')),
             ]);
-            echo $this->Form->input('category', [
-                'default' => $this->request->query('category'),
+            echo $this->Form->control('category', [
+                'default' => $this->request->getQuery('category'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
             ]);
-            echo $this->Form->input('priority', [
-                'default' => $this->request->query('priority'),
+            echo $this->Form->control('priority', [
+                'default' => $this->request->getQuery('priority'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
-                'default' => $this->request->query('created'),
+                'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
-            echo $this->Form->input('tag', [
-                'default' => $this->request->query('tag'),
+            echo $this->Form->control('tag', [
+                'default' => $this->request->getQuery('tag'),
                 'placeholder' => __d('me_cms', 'tag'),
                 'size' => 10,
             ]);
@@ -133,16 +132,24 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts
                     if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                        $actions[] = $this->Html->link(__d('me_cms', 'Edit'), ['action' => 'edit', $post->id], ['icon' => 'pencil']);
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $post->id],
+                            ['icon' => 'pencil']
+                        );
                     }
 
                     //Only admins and managers can delete posts
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(__d('me_cms', 'Delete'), ['action' => 'delete', $post->id], [
-                            'class' => 'text-danger',
-                            'icon' => 'trash-o',
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                        ]);
+                        $actions[] = $this->Form->postLink(
+                            __d('me_cms', 'Delete'),
+                            ['action' => 'delete', $post->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
                     }
 
                     //If the post is active and is not scheduled

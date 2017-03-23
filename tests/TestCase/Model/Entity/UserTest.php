@@ -31,12 +31,41 @@ use MeCms\Model\Entity\User;
 class UserTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\User
+     */
+    protected $User;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->User = new User;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->User);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\User', new User);
+        $this->assertInstanceOf('MeCms\Model\Entity\User', $this->User);
     }
 
     /**
@@ -46,11 +75,18 @@ class UserTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new User();
+        $this->assertFalse($this->User->isAccessible('id'));
+        $this->assertFalse($this->User->isAccessible('post_count'));
+        $this->assertFalse($this->User->isAccessible('modified'));
+    }
 
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('post_count'));
-        $this->assertFalse($entity->accessible('modified'));
+    /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertEquals(['full_name'], $this->User->getVirtual());
     }
 
     /**
@@ -59,20 +95,15 @@ class UserTest extends TestCase
      */
     public function testFullNameGetMutator()
     {
-        $entity = new User();
+        $this->assertNull($this->User->full_name);
 
-        $this->assertNull($entity->full_name);
+        $this->User->first_name = 'Alfa';
+        $this->assertNull($this->User->full_name);
 
-        $entity->first_name = 'Alfa';
+        $this->User->last_name = 'Beta';
+        $this->assertEquals('Alfa Beta', $this->User->full_name);
 
-        $this->assertNull($entity->full_name);
-
-        $entity->last_name = 'Beta';
-
-        $this->assertEquals('Alfa Beta', $entity->full_name);
-
-        unset($entity->first_name);
-
-        $this->assertNull($entity->full_name);
+        unset($this->User->first_name);
+        $this->assertNull($this->User->full_name);
     }
 }

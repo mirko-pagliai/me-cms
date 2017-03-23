@@ -56,11 +56,11 @@ class PostsTagsController extends AppController
     public function view($tag = null)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
+        if ($this->request->getQuery('q')) {
+            return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($tag), $this->paginate['limit'], $page);
@@ -91,7 +91,7 @@ class PostsTagsController extends AppController
                     ]);
                 })
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->PostsTags->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->PostsTags->Posts->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
                 throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
@@ -102,11 +102,11 @@ class PostsTagsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
             ], $this->PostsTags->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(am([

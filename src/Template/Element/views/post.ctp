@@ -22,8 +22,7 @@
  */
 
 //Adds tags as keywords meta-tag
-if (config('post.keywords') &&
-    $this->request->isAction('view', 'Posts') &&
+if (config('post.keywords') && $this->request->isAction('view', 'Posts') &&
     !empty($post->tags_as_string)
 ) {
     $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
@@ -34,32 +33,20 @@ if (config('post.keywords') &&
     <div class="content-header">
         <?php if (config('post.category') && !empty($post->category->title) && !empty($post->category->slug)) : ?>
             <h5 class="content-category">
-                <?php
-                    echo $this->Html->link(
-                        $post->category->title,
-                        ['_name' => 'postsCategory', $post->category->slug]
-                    );
-                ?>
+                <?= $this->Html->link(
+                    $post->category->title,
+                    ['_name' => 'postsCategory', $post->category->slug]
+                ) ?>
             </h5>
         <?php endif; ?>
 
         <h3 class="content-title">
-            <?php
-                echo $this->Html->link(
-                    $post->title,
-                    ['_name' => 'post', $post->slug]
-                );
-            ?>
+            <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
         </h3>
 
         <?php if ($post->subtitle) : ?>
             <h4 class="content-subtitle">
-                <?php
-                    echo $this->Html->link(
-                        $post->subtitle,
-                        ['_name' => 'post', $post->slug]
-                    );
-                ?>
+                <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
             </h4>
         <?php endif; ?>
 
@@ -74,15 +61,11 @@ if (config('post.keywords') &&
             }
 
             if (config('post.created')) {
-                echo $this->Html->div(
-                    'content-date',
-                    __d(
-                        'me_cms',
-                        'Posted on {0}',
-                        $post->created->i18nFormat(config('main.datetime.long'))
-                    ),
-                    ['icon' => 'clock-o']
-                );
+                echo $this->Html->div('content-date', __d(
+                    'me_cms',
+                    'Posted on {0}',
+                    $post->created->i18nFormat(config('main.datetime.long'))
+                ), ['icon' => 'clock-o']);
             }
             ?>
         </div>
@@ -103,9 +86,7 @@ if (config('post.keywords') &&
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview']) &&
-            config('default.truncate_to')
-        ) {
+        } elseif (!$this->request->isAction(['view', 'preview']) && config('default.truncate_to')) {
             echo $truncatedText = $this->Text->truncate($text, config('default.truncate_to'), [
                 'exact' => false,
                 'html' => true,
@@ -145,10 +126,8 @@ if (config('post.keywords') &&
     </div>
 
     <?php
-    if (config('post.shareaholic') &&
-        config('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Posts')
-        && !$this->request->isAjax()
+    if (config('post.shareaholic') && config('shareaholic.app_id') &&
+        $this->request->isAction('view', 'Posts') && !$this->request->isAjax()
     ) {
         echo $this->Html->shareaholic(config('shareaholic.app_id'));
     }
@@ -159,35 +138,26 @@ if (config('post.keywords') &&
     <div class="related-contents">
         <?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
         <?php if (!config('post.related.images')) : ?>
-            <?php
-                echo $this->Html->ul(array_map(function ($post) {
-                    return $this->Html->link(
-                        $post->title,
-                        ['_name' => 'post', $post->slug]
-                    );
-                }, $related), ['icon' => 'caret-right']);
-            ?>
+            <?= $this->Html->ul(
+                array_map(function ($post) {
+                    return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+                }, $related),
+                ['icon' => 'caret-right']
+            ) ?>
         <?php else : ?>
             <div class="visible-xs">
-                <?php
-                    echo $this->Html->ul(array_map(function ($post) {
-                        return $this->Html->link(
-                            $post->title,
-                            ['_name' => 'post', $post->slug]
-                        );
-                    }, $related), ['icon' => 'caret-right']);
-                ?>
+            <?= $this->Html->ul(
+                array_map(function ($post) {
+                    return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+                }, $related),
+                ['icon' => 'caret-right']
+            ) ?>
             </div>
 
             <div class="hidden-xs row">
                 <?php foreach ($related as $post) : ?>
                     <div class="col-sm-6 col-md-3">
-                        <?php
-                            echo $this->element(
-                                'views/post-preview',
-                                compact('post')
-                            );
-                        ?>
+                        <?= $this->element('views/post-preview', compact('post')) ?>
                     </div>
                 <?php endforeach; ?>
             </div>

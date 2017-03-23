@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Banners'));
 
@@ -42,31 +41,31 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
-                'default' => $this->request->query('id'),
+            echo $this->Form->control('id', [
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('filename', [
-                'default' => $this->request->query('filename'),
+            echo $this->Form->control('filename', [
+                'default' => $this->request->getQuery('filename'),
                 'placeholder' => __d('me_cms', 'filename'),
                 'size' => 16,
             ]);
-            echo $this->Form->input('active', [
-                'default' => $this->request->query('active'),
+            echo $this->Form->control('active', [
+                'default' => $this->request->getQuery('active'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
                 'options' => [
                     'yes' => __d('me_cms', 'Only published'),
                     'no' => __d('me_cms', 'Only not published'),
                 ],
             ]);
-            echo $this->Form->input('position', [
-                'default' => $this->request->query('position'),
+            echo $this->Form->control('position', [
+                'default' => $this->request->getQuery('position'),
                 'empty' => sprintf('-- %s --', __d('me_cms', 'all positions')),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
-                'default' => $this->request->query('created'),
+                'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
                 'size' => 5,
             ]);
@@ -76,7 +75,5 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 <?= $this->Form->end() ?>
 
 <?= $this->element('admin/list-grid-buttons') ?>
-
 <?= $this->fetch('content') ?>
-
 <?= $this->element('MeTools.paginator') ?>

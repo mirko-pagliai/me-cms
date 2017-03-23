@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Changelogs'));
 ?>
@@ -56,8 +55,8 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
     <fieldset>
         <?php
             echo $this->Form->label('file', __d('me_cms', 'Changelog'));
-            echo $this->Form->input('file', [
-                'default' => $this->request->query('file'),
+            echo $this->Form->control('file', [
+                'default' => $this->request->getQuery('file'),
                 'label' => __d('me_cms', 'Changelog'),
                 'name' => 'file',
                 'onchange' => 'send_form(this)',
@@ -70,9 +69,5 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 
 <?php
 if (!empty($changelog)) {
-    echo $this->Html->div(
-        null,
-        $this->CommonMark->convertToHtml($changelog),
-        ['id' => 'changelog']
-    );
+    echo $this->Html->div(null, $this->CommonMark->convertToHtml($changelog), ['id' => 'changelog']);
 }

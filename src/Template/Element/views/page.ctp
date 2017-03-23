@@ -26,12 +26,10 @@
     <div class="content-header">
         <?php if (config('page.category') && !empty($page->category)) : ?>
             <h5 class="content-category">
-                <?php
-                    echo $this->Html->link(
-                        $page->category->title,
-                        ['_name' => 'pagesCategory', $page->category->slug]
-                    );
-                ?>
+                <?= $this->Html->link(
+                    $page->category->title,
+                    ['_name' => 'pagesCategory', $page->category->slug]
+                ) ?>
             </h5>
         <?php endif; ?>
 
@@ -41,28 +39,17 @@
 
         <?php if (!empty($page->subtitle)) : ?>
             <h4 class="content-subtitle">
-                <?php
-                    echo $this->Html->link(
-                        $page->subtitle,
-                        ['_name' => 'page', $page->slug]
-                    );
-                ?>
+                <?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?>
             </h4>
         <?php endif; ?>
 
         <div class="content-info">
             <?php if (config('page.created')) : ?>
-                <?php
-                    echo $this->Html->div(
-                        'content-date',
-                        __d(
-                            'me_cms',
-                            'Posted on {0}',
-                            $page->created->i18nFormat(config('main.datetime.long'))
-                        ),
-                        ['icon' => 'clock-o']
-                    );
-                ?>
+                <?= $this->Html->div('content-date', __d(
+                    'me_cms',
+                    'Posted on {0}',
+                    $page->created->i18nFormat(config('main.datetime.long'))
+                ), ['icon' => 'clock-o']) ?>
             <?php endif; ?>
         </div>
     </div>
@@ -72,9 +59,7 @@
         $text = $this->BBCode->parser($page->text);
 
         //Truncates the text if the "<!-- read-more -->" tag is present
-        if (!$this->request->isAction('view', 'Pages') &&
-            $strpos = strpos($text, '<!-- read-more -->')
-        ) {
+        if (!$this->request->isAction('view', 'Pages') && $strpos = strpos($text, '<!-- read-more -->')) {
             echo $truncatedText = $this->Text->truncate(
                 $text,
                 $strpos,
@@ -108,10 +93,8 @@
         ?>
     </div>
     <?php
-    if (config('page.shareaholic') &&
-        config('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Pages') &&
-        !$this->request->isAjax()
+    if (config('page.shareaholic') && config('shareaholic.app_id') &&
+        $this->request->isAction('view', 'Pages') && !$this->request->isAjax()
     ) {
         echo $this->Html->shareaholic(config('shareaholic.app_id'));
     }

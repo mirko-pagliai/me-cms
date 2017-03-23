@@ -22,15 +22,21 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Pages model
  */
 class PagesTable extends AppTable
 {
+    use NextToBePublishedTrait;
+
     /**
      * Name of the configuration to use for this table
      * @var string
@@ -44,9 +50,9 @@ class PagesTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -61,9 +67,9 @@ class PagesTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
@@ -94,8 +100,8 @@ class PagesTable extends AppTable
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses $cache
-     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
@@ -107,6 +113,7 @@ class PagesTable extends AppTable
         if ($next && time() >= $next) {
             Cache::clear(false, $this->cache);
 
+            //Sets the next record to be published
             $this->setNextToBePublished();
         }
 
@@ -122,15 +129,13 @@ class PagesTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('pages');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('pages');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.PagesCategories',
-        ]);
+        $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
+            ->setForeignKey('category_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);

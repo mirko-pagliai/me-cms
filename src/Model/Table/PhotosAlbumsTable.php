@@ -22,7 +22,10 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\Filesystem\Folder;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -46,7 +49,7 @@ class PhotosAlbumsTable extends AppTable
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the directory
         if (file_exists($entity->path)) {
@@ -65,7 +68,7 @@ class PhotosAlbumsTable extends AppTable
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         //Creates the folder
         if (!file_exists($entity->path)) {
@@ -98,8 +101,8 @@ class PhotosAlbumsTable extends AppTable
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.photo_count >', $this->alias()) => 0,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.photo_count >', $this->getAlias()) => 0,
         ]);
 
         return $query;
@@ -114,14 +117,12 @@ class PhotosAlbumsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('photos_albums');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('photos_albums');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->hasMany('Photos', [
-            'foreignKey' => 'album_id',
-            'className' => 'MeCms.Photos',
-        ]);
+        $this->hasMany('Photos', ['className' => 'MeCms.Photos'])
+            ->setForeignKey('album_id');
 
         $this->addBehavior('Timestamp');
 

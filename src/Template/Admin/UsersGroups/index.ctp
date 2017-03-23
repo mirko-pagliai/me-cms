@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Users groups'));
 
@@ -53,14 +52,9 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $group->name,
-                                ['action' => 'edit', $group->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?>
                     </strong>
-                    
+
                     <?php
                         $actions = [
                             $this->Html->link(
@@ -88,15 +82,11 @@ $this->append('actions', $this->Html->button(
                 <td class="min-width text-center">
                     <?php
                     if ($group->user_count) {
-                        echo $this->Html->link(
-                            $group->user_count,
-                            [
-                                'controller' => 'Users',
-                                'action' => 'index',
-                                '?' => ['group' => $group->id],
-                            ],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
+                        echo $this->Html->link($group->user_count, [
+                            'controller' => 'Users',
+                            'action' => 'index',
+                            '?' => ['group' => $group->id],
+                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
                     } else {
                         echo $group->user_count;
                     }

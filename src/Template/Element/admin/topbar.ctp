@@ -20,6 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use MeCms\Core\Plugin;
 ?>
 
 <nav id="topbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -45,22 +46,16 @@
                     ['icon' => 'home', 'target' => '_blank']
                 );
 
-                echo $this->Html->ul(
-                    $menus,
-                    ['class' => 'nav navbar-nav hidden-xs hidden-sm']
-                );
+                echo $this->Html->ul($menus, ['class' => 'nav navbar-nav hidden-xs hidden-sm']);
 
                 //Renders menus for each plugin
-                foreach (\MeCms\Core\Plugin::all([
+                foreach (Plugin::all([
                     'exclude' => [METOOLS, 'Assets', 'MysqlBackup', 'Thumber'],
                     ]) as $plugin) {
                     $menus += $this->MenuBuilder->renderAsDropdown($plugin);
                 }
 
-                echo $this->Html->ul(
-                    $menus,
-                    ['class' => 'nav navbar-nav visible-xs visible-sm']
-                );
+                echo $this->Html->ul($menus, ['class' => 'nav navbar-nav visible-xs visible-sm']);
 
                 $userMenu[] = call_user_func(function () {
                     $this->Dropdown->start(
@@ -89,10 +84,7 @@
                     return $this->Dropdown->end();
                 });
 
-                echo $this->Html->ul(
-                    $userMenu,
-                    ['class' => 'nav navbar-nav  navbar-right']
-                );
+                echo $this->Html->ul($userMenu, ['class' => 'nav navbar-nav  navbar-right']);
             ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

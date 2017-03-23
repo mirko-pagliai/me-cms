@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Database backups'));
 
@@ -51,30 +50,30 @@ $this->append('actions', $this->Form->postButton(
                     <?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?>
                 </strong>
                 <?php
-                    $actions = [
-                        $this->Html->link(
-                            __d('me_cms', 'Download'),
-                            ['action' => 'download', $backup->slug],
-                            ['icon' => 'download']
-                        ),
-                        $this->Form->postLink(
-                            __d('me_cms', 'Restore'),
-                            ['action' => 'restore', $backup->slug],
-                            [
-                                'icon' => 'upload',
-                                'confirm' => __d('me_cms', 'This will overwrite the current database and some data may be lost. Are you sure?')
-                            ]
-                        ),
-                        $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
-                            ['action' => 'delete', $backup->slug],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                            ]
-                        ),
-                    ];
+                    $actions = [];
+                    $actions[] = $this->Html->link(
+                        __d('me_cms', 'Download'),
+                        ['action' => 'download', $backup->slug],
+                        ['icon' => 'download']
+                    );
+                    $actions[] = $this->Form->postLink(
+                        __d('me_cms', 'Restore'),
+                        ['action' => 'restore', $backup->slug],
+                        [
+                            'icon' => 'upload',
+                            'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
+                                'some data may be lost. Are you sure?')
+                        ]
+                    );
+                    $actions[] = $this->Form->postLink(
+                        __d('me_cms', 'Delete'),
+                        ['action' => 'delete', $backup->slug],
+                        [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                        ]
+                    );
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>

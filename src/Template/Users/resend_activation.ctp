@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Resend activation email'));
 ?>
@@ -28,12 +27,12 @@ $this->assign('title', $title = __d('me_cms', 'Resend activation email'));
 <?= $this->Form->create($user) ?>
 <fieldset>
     <?php
-        echo $this->Form->input('email', [
+        echo $this->Form->control('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
             'help' => __d('me_cms', 'Enter your email'),
         ]);
-        echo $this->Form->input('email_repeat', [
+        echo $this->Form->control('email_repeat', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Repeat email'),
             'help' => __d('me_cms', 'Repeat your email'),

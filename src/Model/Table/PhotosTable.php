@@ -22,6 +22,9 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -46,7 +49,7 @@ class PhotosTable extends AppTable
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the file
         if (file_exists($entity->path) && is_writable($entity->path)) {
@@ -79,9 +82,9 @@ class PhotosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->alias()) => true]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
         $query->matching('Albums', function ($q) {
-            return $q->where([sprintf('%s.active', $this->Albums->alias()) => true]);
+            return $q->where([sprintf('%s.active', $this->Albums->getAlias()) => true]);
         });
 
         return $query;
@@ -96,15 +99,13 @@ class PhotosTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('photos');
-        $this->displayField('filename');
-        $this->primaryKey('id');
+        $this->setTable('photos');
+        $this->setDisplayField('filename');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Albums', [
-            'foreignKey' => 'album_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.PhotosAlbums',
-        ]);
+        $this->belongsTo('Albums', ['className' => 'MeCms.PhotosAlbums'])
+            ->setForeignKey('album_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
@@ -115,7 +116,7 @@ class PhotosTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -125,7 +126,7 @@ class PhotosTable extends AppTable
 
         //"Album" field
         if (!empty($data['album']) && isPositive($data['album'])) {
-            $query->where([sprintf('%s.album_id', $this->alias()) => $data['album']]);
+            $query->where([sprintf('%s.album_id', $this->getAlias()) => $data['album']]);
         }
 
         return $query;

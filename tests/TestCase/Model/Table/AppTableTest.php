@@ -55,6 +55,7 @@ class AppTableTest extends TestCase
         'plugin.me_cms.photos',
         'plugin.me_cms.posts',
         'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
         'plugin.me_cms.users',
     ];
 
@@ -120,6 +121,56 @@ class AppTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeSave()` method
+     * @test
+     */
+    public function testBeforeSave()
+    {
+        $example = [
+            'user_id' => 1,
+            'category_id' => 1,
+            'title' => 'Example',
+            'slug' => 'example',
+            'text' => 'Example text',
+        ];
+
+        $entity = $this->Posts->save($this->Posts->newEntity($example));
+        $this->assertNotEmpty($entity->created);
+        $this->Posts->delete($entity);
+
+        foreach ([null, ''] as $value) {
+            $example['created'] = $value;
+            $entity = $this->Posts->save($this->Posts->newEntity($example));
+            $this->assertNotEmpty($entity->created);
+            $this->Posts->delete($entity);
+        }
+
+        $example['created'] = $now = new Time;
+        $entity = $this->Posts->save($this->Posts->newEntity($example));
+        $this->assertEquals($now, $entity->created);
+        $this->Posts->delete($entity);
+
+        foreach ([
+            '2017-03-14 20:19',
+            '2017-03-14 20:19:00',
+        ] as $value) {
+            $example['created'] = $value;
+            $entity = $this->Posts->save($this->Posts->newEntity($example));
+            $this->assertEquals('2017-03-14 20:19:00', $entity->created->i18nFormat('yyyy-MM-dd HH:mm:ss'));
+            $this->Posts->delete($entity);
+        }
+
+        //Now tries with a record that already exists
+        $entity = $this->Posts->get(1);
+
+        foreach ([null, ''] as $value) {
+            $entity->created = $value;
+            $entity = $this->Posts->save($entity);
+            $this->assertNotEmpty($entity->created);
+        }
+    }
+
+    /**
      * Test for `findActive()` method
      * @test
      */
@@ -159,55 +210,12 @@ class AppTableTest extends TestCase
     }
 
     /**
-     * Test for `getNextToBePublished()` and `setNextToBePublished()` methods
-     * @test
-     */
-    public function testGetNextToBePublishedAndSetNextToBePublished()
-    {
-        $this->assertFalse($this->Posts->getNextToBePublished());
-        $this->assertFalse($this->Posts->setNextToBePublished());
-
-        //Creates a record with a future publication time (1 hours)
-        $created = new Time('+1 hours');
-
-        $entity = $this->Posts->newEntity([
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'Future record',
-            'slug' => 'future-record',
-            'text' => 'Example text',
-            'created' => $created,
-        ]);
-
-        $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
-
-        //Creates another record with a future publication time (30 minuts)
-        //This record takes precedence over the previous
-        $created = new Time('+30 minutes');
-
-        $entity = $this->Posts->newEntity([
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'Another future record',
-            'slug' => 'another-future-record',
-            'text' => 'Example text',
-            'created' => $created,
-        ]);
-
-        $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
-    }
-
-    /**
      * Test for `getList()` method
      * @test
      */
     public function testGetList()
     {
-        $cacheKey = sprintf('%s_list', $this->Photos->table());
+        $cacheKey = sprintf('%s_list', $this->Photos->getTable());
         $this->assertEquals($cacheKey, 'photos_list');
         $this->assertFalse(Cache::read($cacheKey, $this->Photos->cache));
 
@@ -220,7 +228,7 @@ class AppTableTest extends TestCase
         ], $list);
         $this->assertEquals($list, Cache::read($cacheKey, $this->Photos->cache)->toArray());
 
-        $cacheKey = sprintf('%s_list', $this->PostsCategories->table());
+        $cacheKey = sprintf('%s_list', $this->PostsCategories->getTable());
         $this->assertEquals($cacheKey, 'posts_categories_list');
         $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
 
@@ -240,7 +248,7 @@ class AppTableTest extends TestCase
      */
     public function testGetTreeList()
     {
-        $cacheKey = sprintf('%s_tree_list', $this->PostsCategories->table());
+        $cacheKey = sprintf('%s_tree_list', $this->PostsCategories->getTable());
         $this->assertEquals($cacheKey, 'posts_categories_tree_list');
         $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
 
@@ -262,18 +270,6 @@ class AppTableTest extends TestCase
     public function testGetTreeListModelDoesNotHaveTree()
     {
         $this->Posts->getTreeList();
-    }
-
-    /**
-     * Test for `isOwnedBy()` method
-     * @test
-     */
-    public function testIsOwnedBy()
-    {
-        $this->assertTrue($this->Posts->isOwnedBy(2, 4));
-        $this->assertFalse($this->Posts->isOwnedBy(2, 1));
-        $this->assertTrue($this->Posts->isOwnedBy(1, 1));
-        $this->assertFalse($this->Posts->isOwnedBy(1, 2));
     }
 
     /**

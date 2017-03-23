@@ -75,7 +75,7 @@ class AuthComponent extends CakeAuthComponent
         //The authorization error is shown only if the user is already logged
         //  in and he is trying to do something not allowed
         if (!$this->user('id')) {
-            $this->config('authError', false);
+            $this->setConfig('authError', false);
         }
     }
 

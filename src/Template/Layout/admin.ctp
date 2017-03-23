@@ -68,9 +68,7 @@ use Cake\Core\Configure;
             ];
         }
 
-        echo $this->element('MeCms.admin/topbar', [], [
-           'cache' => $topbarCache,
-        ]);
+        echo $this->element('MeCms.admin/topbar', [], ['cache' => $topbarCache]);
         ?>
         <div class="container-fluid">
             <div class="row">
@@ -82,16 +80,11 @@ use Cake\Core\Configure;
                     if (!Configure::read('debug')) {
                         $sidebarCache = [
                             'config' => 'admin',
-                            'key' => sprintf(
-                                'sidebar_user_%s',
-                                $this->Auth->user('id')
-                            ),
+                            'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
                         ];
                     }
 
-                    echo $this->element('MeCms.admin/sidebar', [], [
-                        'cache' => $sidebarCache,
-                    ]);
+                    echo $this->element('MeCms.admin/sidebar', [], ['cache' => $sidebarCache]);
                     ?>
                 </div>
                 <div id="content" class="col-md-offset-3 col-lg-offset-2">

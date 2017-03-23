@@ -32,13 +32,11 @@ use MeTools\Console\Shell;
 class BaseUpdateShell extends Shell
 {
     /**
-     * Database connection
-     * @var \Cake\Database\Connection
+     * @var \Cake\Database\Schema\Collection
      */
-    protected $connection;
+    protected $SchemaCollection;
 
     /**
-     * Now for MySql
      * @var \Cake\I18n\Time
      */
     protected $now;
@@ -47,17 +45,15 @@ class BaseUpdateShell extends Shell
      * Construct
      * @param \Cake\Console\ConsoleIo|null $io An io instance
      * @return void
-     * @uses $connection
+     * @uses $SchemaCollection
      * @uses $now
      */
     public function __construct(\Cake\Console\ConsoleIo $io = null)
     {
         parent::__construct($io);
 
-        //Gets database connection
-        $this->connection = ConnectionManager::get('default');
+        $this->SchemaCollection = ConnectionManager::get('default')->getSchemaCollection();
 
-        //Sets now for MySql
         $this->now = new Time;
     }
 
@@ -69,19 +65,19 @@ class BaseUpdateShell extends Shell
      */
     protected function _allUpdateMethods()
     {
-        $methods = getChildMethods(get_called_class());
-
-        return af(array_map(function ($method) {
+        $methods = collection(getChildMethods(get_called_class()))->map(function ($method) {
             //Returns array with the name method and the version number
-            if (preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
-                return [
-                    'name' => $method,
-                    'version' => $matches[1] . '.' . $matches[2] . '.' . $matches[3],
-                ];
+            if (!preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
+                return false;
             }
 
-            return false;
-        }, $methods));
+            return [
+                'name' => $method,
+                'version' => $matches[1] . '.' . $matches[2] . '.' . $matches[3],
+            ];
+        })->toList();
+
+        return array_filter($methods);
     }
 
     /**
@@ -100,18 +96,16 @@ class BaseUpdateShell extends Shell
      * Gets the table columns
      * @param string $table Table name
      * @return array
-     * @uses $connection
+     * @uses $SchemaCollection
      */
     protected function _columns($table)
     {
-        return $this->connection->schemaCollection()->describe($table)->columns();
+        return $this->SchemaCollection->describe($table)->columns();
     }
 
     /**
-     * Gets the latest update method.
-     *
-     * Return an array with the name method and the version number.
-     * @return array
+     * Gets the latest update method
+     * @return array Array with the name method and the version number.
      * @uses _allUpdateMethods()
      */
     protected function _latestUpdateMethod()
@@ -133,11 +127,11 @@ class BaseUpdateShell extends Shell
     /**
      * Gets the tables list
      * @return array
-     * @uses $connection
+     * @uses $SchemaCollection
      */
     protected function _tables()
     {
-        return $this->connection->schemaCollection()->listTables();
+        return $this->SchemaCollection->listTables();
     }
 
     /**

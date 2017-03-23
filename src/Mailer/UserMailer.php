@@ -49,10 +49,10 @@ class UserMailer extends Mailer
             }
         }
 
-        $this->to([$user->email => $user->full_name])
-            ->subject(__d('me_cms', 'Activate your account'))
-            ->template('MeCms.Users/activate_account')
-            ->set(['fullName' => $user->full_name]);
+        $this->setTo([$user->email => $user->full_name])
+            ->setSubject(__d('me_cms', 'Activate your account'))
+            ->setTemplate('MeCms.Users/activate_account')
+            ->setViewVars(['fullName' => $user->full_name]);
     }
 
     /**
@@ -73,10 +73,10 @@ class UserMailer extends Mailer
             }
         }
 
-        $this->to([$user->email => $user->full_name])
-            ->subject(__d('me_cms', 'Your password has been changed'))
-            ->template('MeCms.Users/change_password')
-            ->set(['fullName' => $user->full_name]);
+        $this->setTo([$user->email => $user->full_name])
+            ->setSubject(__d('me_cms', 'Your password has been changed'))
+            ->setTemplate('MeCms.Users/change_password')
+            ->setViewVars(['fullName' => $user->full_name]);
     }
 
     /**
@@ -97,9 +97,9 @@ class UserMailer extends Mailer
             }
         }
 
-        $this->to([$user->email => $user->full_name])
-            ->subject(__d('me_cms', 'Reset your password'))
-            ->template('MeCms.Users/forgot_password')
-            ->set(['fullName' => $user->full_name]);
+        $this->setTo([$user->email => $user->full_name])
+            ->setSubject(__d('me_cms', 'Reset your password'))
+            ->setTemplate('MeCms.Users/forgot_password')
+            ->setViewVars(['fullName' => $user->full_name]);
     }
 }

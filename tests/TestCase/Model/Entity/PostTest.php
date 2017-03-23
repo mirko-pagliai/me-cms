@@ -26,13 +26,17 @@ use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Post;
-use MeTools\Utility\Youtube;
 
 /**
  * PostTest class
  */
 class PostTest extends TestCase
 {
+    /**
+     * @var \MeCms\Model\Entity\Post
+     */
+    protected $Post;
+
     /**
      * @var \MeCms\Model\Table\PostsTable
      */
@@ -58,6 +62,7 @@ class PostTest extends TestCase
     {
         parent::setUp();
 
+        $this->Post = new Post;
         $this->Posts = TableRegistry::get('MeCms.Posts');
 
         Cache::clear(false, $this->Posts->cache);
@@ -71,7 +76,7 @@ class PostTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Posts);
+        unset($this->Post, $this->Posts);
     }
 
     /**
@@ -80,7 +85,7 @@ class PostTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Post', new Post);
+        $this->assertInstanceOf('MeCms\Model\Entity\Post', $this->Post);
     }
 
     /**
@@ -90,38 +95,17 @@ class PostTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Post();
-
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($this->Post->isAccessible('id'));
+        $this->assertFalse($this->Post->isAccessible('modified'));
     }
 
     /**
-     * Test for `_getPreview()` method
+     * Test for virtual fields
      * @test
      */
-    public function testPreviewGetMutator()
+    public function testVirtualFields()
     {
-        $entity = new Post();
-
-        $this->assertNull($entity->preview);
-
-        $entity->text = 'This is a simple text';
-        $this->assertFalse($entity->preview);
-
-        $entity->text = '<img src=\'image.jpg\' /> Image before text';
-        $this->assertEquals('image.jpg', $entity->preview);
-
-        $expected = Youtube::getPreview('videoID');
-
-        $entity->text = '[youtube]videoID[/youtube]';
-        $this->assertEquals($expected, $entity->preview);
-
-        $entity->text = '[youtube]videoID[/youtube]Text';
-        $this->assertEquals($expected, $entity->preview);
-
-        $entity->text = '[youtube]videoID[/youtube] Text';
-        $this->assertEquals($expected, $entity->preview);
+        $this->assertEquals(['preview', 'tags_as_string'], $this->Post->getVirtual());
     }
 
     /**

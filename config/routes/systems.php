@@ -39,8 +39,12 @@ if (!$routes->nameExists('contactUs')) {
     );
 }
 
-//Callback for the old address
-$routes->redirect('/contact/form', ['_name' => 'contactUs'], ['status' => 301]);
+//Redirect from the old address of the "contact us" form
+$routes->redirect(
+    '/contact/form',
+    ['controller' => 'Systems', 'action' => 'contactUs'],
+    ['status' => 301]
+);
 
 //Offline page
 if (!$routes->nameExists('offline')) {

@@ -104,7 +104,7 @@ class PostsCategoriesController extends AppController
         $category = $this->PostsCategories->newEntity();
 
         if ($this->request->is('post')) {
-            $category = $this->PostsCategories->patchEntity($category, $this->request->data);
+            $category = $this->PostsCategories->patchEntity($category, $this->request->getData());
 
             if ($this->PostsCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -128,7 +128,7 @@ class PostsCategoriesController extends AppController
         $category = $this->PostsCategories->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $category = $this->PostsCategories->patchEntity($category, $this->request->data);
+            $category = $this->PostsCategories->patchEntity($category, $this->request->getData());
 
             if ($this->PostsCategories->save($category)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Add users group'));
 ?>
@@ -28,13 +27,13 @@ $this->assign('title', $title = __d('me_cms', 'Add users group'));
 <?= $this->Form->create($group); ?>
 <fieldset>
     <?php
-        echo $this->Form->input('name', [
+        echo $this->Form->control('name', [
             'label' => __d('me_cms', 'Name'),
         ]);
-        echo $this->Form->input('label', [
+        echo $this->Form->control('label', [
             'label' => __d('me_cms', 'Label'),
         ]);
-        echo $this->Form->input('description', [
+        echo $this->Form->control('description', [
             'label' => __d('me_cms', 'Description'),
             'rows' => 3,
             'type' => 'textarea',

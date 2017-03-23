@@ -209,7 +209,7 @@ class PhotosWidgetsCellTest extends TestCase
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
             $request = new Request;
-            $request->params['controller'] = $controller;
+            $request = $request->withParam('controller', $controller);
             $this->Widget = new WidgetHelper(new View($request));
             $result = $this->Widget->widget($widget)->render();
             $this->assertEmpty($result);
@@ -270,7 +270,7 @@ class PhotosWidgetsCellTest extends TestCase
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
             $request = new Request;
-            $request->params['controller'] = $controller;
+            $request = $request->withParam('controller', $controller);
             $this->Widget = new WidgetHelper(new View($request));
             $result = $this->Widget->widget($widget)->render();
             $this->assertEmpty($result);

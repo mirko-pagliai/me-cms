@@ -65,7 +65,7 @@ class UsersGroupsController extends AppController
         $group = $this->UsersGroups->newEntity();
 
         if ($this->request->is('post')) {
-            $group = $this->UsersGroups->patchEntity($group, $this->request->data);
+            $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
 
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -89,7 +89,7 @@ class UsersGroupsController extends AppController
         $group = $this->UsersGroups->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $group = $this->UsersGroups->patchEntity($group, $this->request->data);
+            $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
 
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

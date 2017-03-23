@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', __d('me_cms', 'Upload photos'));
 ?>
@@ -29,8 +28,8 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
     <?php
         echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
-        echo $this->Form->input('album', [
-            'default' => $this->request->query('album'),
+        echo $this->Form->control('album', [
+            'default' => $this->request->getQuery('album'),
             'label' => __d('me_cms', 'Album to upload photos'),
             'onchange' => 'send_form(this)',
             'options' => $albums,
@@ -41,6 +40,6 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
 </div>
 
 <?php
-if ($this->request->query('album')) {
+if ($this->request->getQuery('album')) {
     echo $this->element('admin/uploader');
 }

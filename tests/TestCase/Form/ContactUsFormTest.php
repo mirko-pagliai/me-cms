@@ -56,7 +56,7 @@ class ContactUsFormTest extends TestCase
     {
         parent::setUp();
 
-        Email::configTransport(['debug' => ['className' => 'Debug']]);
+        Email::setConfigTransport('debug', ['className' => 'Debug']);
 
         $this->ContactUsForm = new ContactUsForm;
 
@@ -138,7 +138,7 @@ class ContactUsFormTest extends TestCase
 
         $this->ContactUsForm->method('getMailer')
             ->will($this->returnCallback(function ($data) {
-                return $this->getMailer($data)->transport('debug');
+                return $this->getMailer($data)->setTransport('debug');
             }));
 
         $this->assertEquals(['headers', 'message'], array_keys($this->ContactUsForm->execute($this->example)));

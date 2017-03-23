@@ -82,7 +82,7 @@ Configure::write('App', [
     ]
 ]);
 
-Cache::config([
+Cache::setConfig([
     '_cake_core_' => [
         'engine' => 'File',
         'prefix' => 'cake_core_',
@@ -105,8 +105,8 @@ if (!getenv('db_dsn')) {
     putenv('db_dsn=mysql://travis@localhost/test');
 }
 
-ConnectionManager::config('test', ['url' => getenv('db_dsn')]);
-ConnectionManager::config('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
+ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
+ConnectionManager::setConfig('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
 
 Configure::write('Session', [
     'defaults' => 'php'
@@ -123,6 +123,17 @@ Configure::write('Assets.target', TMP . 'assets');
 Plugin::load('Assets', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+]);
+
+Configure::write('MysqlBackup.connection', 'test');
+Configure::write('MysqlBackup.target', TMP . 'backups');
+
+//@codingStandardsIgnoreLine
+@mkdir(Configure::read('MysqlBackup.target'));
+
+Plugin::load('MysqlBackup', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-mysql-backup' . DS,
 ]);
 
 Configure::write('Thumbs.target', TMP . 'thumbs');

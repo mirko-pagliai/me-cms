@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/index');
 $this->assign('title', $title = __d('me_cms', 'Photos'));
 
@@ -32,9 +31,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'albums']);
 
 <div class="clearfix">
     <?php foreach ($albums as $album) : ?>
-        <?php
-            $url = $this->Url->build(['_name' => 'album', $album->slug]);
-        ?>
+        <?php $url = $this->Url->build(['_name' => 'album', $album->slug]); ?>
         <div class="col-sm-6 col-md-4">
             <div class="photo-box">
                 <a href="<?= $url ?>" class="thumbnail" title="<?= $album->title ?>">
@@ -42,11 +39,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'albums']);
                     <div class="photo-info">
                         <div>
                             <p><strong><?= $album->title ?></strong></p>
-                            <p>
-                                <small>
-                                    <?= __d('me_cms', '{0} photos', $album->photo_count) ?>
-                                </small>
-                            </p>
+                            <p><small><?= __d('me_cms', '{0} photos', $album->photo_count) ?></small></p>
                         </div>
                     </div>
                 </a>

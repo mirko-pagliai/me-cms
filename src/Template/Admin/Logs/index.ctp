@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Logs'));
 
@@ -39,42 +38,41 @@ $this->append('actions', $this->Form->postButton(
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
-                <strong>
-                    <?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?>
-                </strong>
                 <?php
-                    $actions = [
-                        $this->Html->link(
-                            __d('me_cms', 'Basic view'),
-                            ['action' => 'view', $log->filename],
-                            ['icon' => 'eye']
-                        ),
-                    ];
+                echo $this->Html->strong($this->Html->link($log->filename, ['action' => 'view', $log->filename]));
 
-                    if ($log->serialized) {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Advanced view'),
-                            ['action' => 'viewSerialized', $log->filename],
-                            ['icon' => 'eye']
-                        );
-                    }
+                $actions = [];
 
+                $actions[] = $this->Html->link(
+                    __d('me_cms', 'Basic view'),
+                    ['action' => 'view', $log->filename],
+                    ['icon' => 'eye']
+                );
+
+                if ($log->hasSerialized) {
                     $actions[] = $this->Html->link(
-                        __d('me_cms', 'Download'),
-                        ['action' => 'download', $log->filename],
-                        ['icon' => 'download']
+                        __d('me_cms', 'Advanced view'),
+                        ['action' => 'view', $log->filename, '?' => ['as' => 'serialized']],
+                        ['icon' => 'eye']
                     );
-                    $actions[] = $this->Form->postLink(
-                        __d('me_cms', 'Delete'),
-                        ['action' => 'delete', $log->filename],
-                        [
-                            'class' => 'text-danger',
-                            'icon' => 'trash-o',
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                        ]
-                    );
+                }
 
-                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                $actions[] = $this->Html->link(
+                    __d('me_cms', 'Download'),
+                    ['action' => 'download', $log->filename],
+                    ['icon' => 'download']
+                );
+                $actions[] = $this->Form->postLink(
+                    __d('me_cms', 'Delete'),
+                    ['action' => 'delete', $log->filename],
+                    [
+                        'class' => 'text-danger',
+                        'icon' => 'trash-o',
+                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                    ]
+                );
+
+                echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </td>
             <td class="min-width text-center">

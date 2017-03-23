@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit photo'));
 ?>
@@ -28,10 +27,10 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
 <?= $this->Form->create($photo); ?>
 <div class='float-form'>
     <?php
-        echo $this->Form->input('album_id', [
+        echo $this->Form->control('album_id', [
             'label' => __d('me_cms', 'Album'),
         ]);
-        echo $this->Form->input('active', [
+        echo $this->Form->control('active', [
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
         ]);
     ?>
@@ -45,11 +44,11 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
             ['class' => 'img-thumbnail margin-15']
         );
 
-        echo $this->Form->input('filename', [
+        echo $this->Form->control('filename', [
             'disabled' => true,
             'label' => __d('me_cms', 'Filename'),
         ]);
-        echo $this->Form->input('description', [
+        echo $this->Form->control('description', [
             'label' => __d('me_cms', 'Description'),
             'rows' => 3,
             'type' => 'textarea',

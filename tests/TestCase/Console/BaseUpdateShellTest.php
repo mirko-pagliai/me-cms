@@ -118,8 +118,8 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testConstruct()
     {
-        $connection = $this->getProperty($this->BaseUpdateShell, 'connection');
-        $this->assertInstanceOf('Cake\Database\Connection', $connection);
+        $SchemaCollection = $this->getProperty($this->BaseUpdateShell, 'SchemaCollection');
+        $this->assertInstanceOf('Cake\Database\Schema\Collection', $SchemaCollection);
 
         $now = $this->getProperty($this->BaseUpdateShell, 'now');
         $this->assertInstanceOf('Cake\I18n\Time', $now);
@@ -201,7 +201,7 @@ class BaseUpdateShellTest extends TestCase
             'UsersGroups'
         );
 
-        $this->assertEquals([
+        foreach ([
             'banners',
             'banners_positions',
             'pages',
@@ -215,7 +215,9 @@ class BaseUpdateShellTest extends TestCase
             'tokens',
             'users',
             'users_groups',
-        ], $this->invokeMethod($this->BaseUpdateShell, '_tables'));
+        ] as $table) {
+            $this->assertContains($table, $this->invokeMethod($this->BaseUpdateShell, '_tables'));
+        }
     }
 
     /**
@@ -273,6 +275,22 @@ class BaseUpdateShellTest extends TestCase
 
             $this->assertEquals($method['version'], $matches[1] . '.' . $matches[2] . '.' . $matches[3]);
         }
+
+        $versions = collection($methods)->extract('version')->toList();
+        $this->assertEquals([
+            '2.14.8',
+            '2.14.7',
+            '2.14.3',
+            '2.14.0',
+            '2.10.1',
+            '2.10.0',
+            '2.7.0',
+            '2.6.0',
+            '2.2.1',
+            '2.1.9',
+            '2.1.8',
+            '2.1.7',
+        ], $versions);
     }
 
     /**
@@ -327,10 +345,7 @@ class BaseUpdateShellTest extends TestCase
         $parser = $this->UpdateShell->getOptionParser();
 
         $methods = $this->invokeMethod($this->UpdateShell, '_allUpdateMethods');
-
-        $methods = array_map(function ($method) {
-            return $method['name'];
-        }, $methods);
+        $methods = collection($methods)->extract('name')->toList();
 
         asort($methods);
 

@@ -61,20 +61,17 @@ class PostsTagsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('posts_tags');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('posts_tags');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Posts', [
-            'foreignKey' => 'post_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.Posts',
-        ]);
-        $this->belongsTo('Tags', [
-            'foreignKey' => 'tag_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.Tags',
-        ]);
+        $this->belongsTo('Posts', ['className' => 'MeCms.Posts'])
+            ->setForeignKey('post_id')
+            ->setJoinType('INNER');
+
+        $this->belongsTo('Tags', ['className' => 'MeCms.Tags'])
+            ->setForeignKey('tag_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('CounterCache', ['Tags' => ['post_count']]);
 

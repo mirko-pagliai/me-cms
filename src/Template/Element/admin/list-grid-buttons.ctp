@@ -27,12 +27,12 @@
         <?php
             echo $this->Html->button(
                 __d('me_cms', 'Show as list'),
-                ['?' => am($this->request->query, ['render' => 'list'])],
+                ['?' => am($this->request->getQuery(), ['render' => 'list'])],
                 ['class' => 'btn-primary', 'icon' => 'align-justify']
             );
             echo $this->Html->button(
                 __d('me_cms', 'Show as grid'),
-                ['?' => am($this->request->query, ['render' => 'grid'])],
+                ['?' => am($this->request->getQuery(), ['render' => 'grid'])],
                 ['class' => 'btn-primary', 'icon' => 'th-large']
             );
         ?>

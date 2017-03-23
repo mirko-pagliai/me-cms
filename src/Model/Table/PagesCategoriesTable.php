@@ -62,7 +62,7 @@ class PagesCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.page_count >', $this->alias()) => 0]);
+        $query->where([sprintf('%s.page_count >', $this->getAlias()) => 0]);
 
         return $query;
     }
@@ -76,22 +76,18 @@ class PagesCategoriesTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('pages_categories');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('pages_categories');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', [
-            'className' => 'MeCms.PagesCategories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Childs', [
-            'className' => 'MeCms.PagesCategories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Pages', [
-            'className' => 'MeCms.Pages',
-            'foreignKey' => 'category_id',
-        ]);
+        $this->belongsTo('Parents', ['className' => 'MeCms.PagesCategories'])
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Childs', ['className' => 'MeCms.PagesCategories'])
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Pages', ['className' => 'MeCms.Pages'])
+            ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');

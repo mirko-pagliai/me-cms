@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Albums'));
 
@@ -53,12 +52,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $album->title,
-                                ['action' => 'edit', $album->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($album->title, ['action' => 'edit', $album->id]) ?>
                     </strong>
                     <?php
                     //If the album is not active (not published)
@@ -90,15 +84,11 @@ $this->append('actions', $this->Html->button(
                         );
                     }
 
-                    $actions[] = $this->Html->link(
-                        __d('me_cms', 'Upload'),
-                        [
-                            'controller' => 'Photos',
-                            'action' => 'upload',
-                            '?' => ['album' => $album->id],
-                        ],
-                        ['icon' => 'upload']
-                    );
+                    $actions[] = $this->Html->link(__d('me_cms', 'Upload'), [
+                        'controller' => 'Photos',
+                        'action' => 'upload',
+                        '?' => ['album' => $album->id],
+                    ], ['icon' => 'upload']);
 
                     //If the the is active
                     if ($album->active) {
@@ -124,15 +114,11 @@ $this->append('actions', $this->Html->button(
                 <td class="min-width text-center">
                     <?php
                     if ($album->photo_count) {
-                        echo $this->Html->link(
-                            $album->photo_count,
-                            [
-                                'controller' => 'Photos',
-                                'action' => 'index',
-                                '?' => ['album' => $album->id],
-                            ],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
+                        echo $this->Html->link($album->photo_count, [
+                            'controller' => 'Photos',
+                            'action' => 'index',
+                            '?' => ['album' => $album->id],
+                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
                     } else {
                         echo $album->photo_count;
                     }

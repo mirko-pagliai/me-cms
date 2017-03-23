@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Add banners position'));
 ?>
@@ -28,10 +27,10 @@ $this->assign('title', $title = __d('me_cms', 'Add banners position'));
 <?= $this->Form->create($position); ?>
 <fieldset>
     <?php
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'label' => __d('me_cms', 'Title'),
         ]);
-        echo $this->Form->input('description', [
+        echo $this->Form->control('description', [
             'label' => __d('me_cms', 'Description'),
         ]);
     ?>

@@ -26,19 +26,30 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use MeCms\Controller\AppController;
-use Reflection\ReflectionTrait;
 
 /**
  * AppControllerTest class
  */
 class AppControllerTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Controller\AppController
      */
-    public $AppController;
+    protected $Controller;
+
+    /**
+     * @var \Cake\Event\Event
+     */
+    protected $Event;
+
+    /**
+     * Internal method to set the user group
+     * @param string $group Group name
+     */
+    protected function setUserGroup($group)
+    {
+        $this->Controller->Auth->setUser(['group' => ['name' => $group]]);
+    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -56,11 +67,13 @@ class AppControllerTest extends TestCase
         Configure::write(ME_CMS . '.security.recaptcha', true);
         Configure::write(ME_CMS . '.security.search_interval', 15);
 
-        $this->AppController = $this->getMockBuilder(AppController::class)
+        $this->Controller = $this->getMockBuilder(AppController::class)
             ->setMethods(['isBanned', 'isOffline', 'redirect'])
             ->getMock();
 
-        $this->AppController->method('redirect')->will($this->returnArgument(0));
+        $this->Controller->method('redirect')->will($this->returnArgument(0));
+
+        $this->Event = new Event('myEvent');
     }
 
     /**
@@ -71,74 +84,7 @@ class AppControllerTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->AppController);
-    }
-
-    /**
-     * Tests for `_checkLastSearch()` method
-     * @test
-     */
-    public function testCheckLastSearch()
-    {
-        $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch', ['my-query']));
-        $firstSession = $this->AppController->request->session()->read('last_search');
-        $this->assertNotEmpty($firstSession);
-        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession['id']);
-
-        //Tries with the same query
-        $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch', ['my-query']));
-        $secondSession = $this->AppController->request->session()->read('last_search');
-        $this->assertNotEmpty($secondSession);
-        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession['id']);
-
-        $this->assertEquals($firstSession, $secondSession);
-
-        //Tries with another query
-        $this->assertFalse($this->invokeMethod($this->AppController, '_checkLastSearch', ['another-query']));
-        $thirdSession = $this->AppController->request->session()->read('last_search');
-        $this->assertEquals($firstSession, $thirdSession);
-
-        //Deletes the session and tries again with another query
-        $this->AppController->request->session()->delete('last_search');
-        $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch', ['another-query']));
-        $fourthSession = $this->AppController->request->session()->read('last_search');
-        $this->assertNotEquals($firstSession, $fourthSession);
-
-        foreach ([0, false] as $value) {
-            $this->AppController->request->session()->delete('last_search');
-            Configure::write(ME_CMS . '.security.search_interval', $value);
-
-            $this->assertTrue($this->invokeMethod($this->AppController, '_checkLastSearch'));
-            $this->assertNull($this->AppController->request->session()->read('last_search'));
-        }
-    }
-
-    /**
-     * Tests for `_download()` method
-     * @test
-     */
-    public function testDownload()
-    {
-        $file = tempnam(sys_get_temp_dir(), 'temp');
-
-        $response = $this->invokeMethod($this->AppController, '_download', [$file]);
-        $this->assertInstanceOf('Cake\Http\Response', $response);
-
-        $this->assertInstanceOf('Cake\Filesystem\File', $this->getProperty($response, '_file'));
-        $this->assertEquals($file, $this->getProperty($response, '_file')->path);
-
-        unlink($file);
-    }
-
-    /**
-     * Tests for `_download()` method, with a no existing file
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File or directory noExistingFile not readable
-     * @test
-     */
-    public function testDownloadNoExistingFile()
-    {
-        $this->invokeMethod($this->AppController, '_download', ['noExistingFile']);
+        unset($this->Controller, $this->Event);
     }
 
     /**
@@ -147,11 +93,12 @@ class AppControllerTest extends TestCase
      */
     public function testInitialize()
     {
-        $components = collection($this->AppController->components()->loaded())
-            ->map(function ($value) {
-                return get_class($this->AppController->components()->{$value});
-            })
-            ->toList();
+        $componentsInstance = $this->Controller->components();
+
+        $components = collection($componentsInstance->loaded())
+            ->map(function ($value) use ($componentsInstance) {
+                return get_class($componentsInstance->{$value});
+            })->toList();
 
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
@@ -169,27 +116,29 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilter()
     {
-        $this->AppController->request->action = 'my-action';
-        $this->AppController->request->query['sort'] = 'my-field';
+        $this->Controller->request = $this->Controller->request
+            ->withParam('action', 'my-action')
+            ->withQueryParams(['sort' => 'my-field']);
 
-        $this->AppController->beforeFilter(new Event('event'));
+        $this->Controller->beforeFilter($this->Event);
 
-        $this->assertEquals(['my-action'], $this->AppController->Auth->allowedActions);
-        $this->assertFalse(array_search('sortWhitelist', array_keys($this->AppController->paginate)));
-        $this->assertEquals(5, $this->AppController->paginate['limit']);
-        $this->assertEquals(5, $this->AppController->paginate['maxLimit']);
+        $this->assertEquals(['my-action'], $this->Controller->Auth->allowedActions);
+        $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
+        $this->assertEquals(5, $this->Controller->paginate['limit']);
+        $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
 
         //Admin request
-        $this->AppController = new AppController();
-        $this->AppController->request->action = 'my-action';
-        $this->AppController->request->query['sort'] = 'my-field';
-        $this->AppController->request->params['prefix'] = ADMIN_PREFIX;
-        $this->AppController->beforeFilter(new Event('event'));
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request
+            ->withParam('action', 'my-action')
+            ->withQueryParams(['sort' => 'my-field'])
+            ->withParam('prefix', ADMIN_PREFIX);
 
-        $this->assertEquals([], $this->AppController->Auth->allowedActions);
-        $this->assertEquals(['my-field'], $this->AppController->paginate['sortWhitelist']);
-        $this->assertEquals(7, $this->AppController->paginate['limit']);
-        $this->assertEquals(7, $this->AppController->paginate['maxLimit']);
+        $this->Controller->beforeFilter($this->Event);
+        $this->assertEquals([], $this->Controller->Auth->allowedActions);
+        $this->assertEquals(['my-field'], $this->Controller->paginate['sortWhitelist']);
+        $this->assertEquals(7, $this->Controller->paginate['limit']);
+        $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
     }
 
     /**
@@ -198,9 +147,9 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilterWithBannedUser()
     {
-        $this->AppController->method('isBanned')->willReturn(true);
+        $this->Controller->method('isBanned')->willReturn(true);
 
-        $beforeFilter = $this->AppController->beforeFilter(new Event('event'));
+        $beforeFilter = $this->Controller->beforeFilter($this->Event);
         $this->assertEquals(['_name' => 'ipNotAllowed'], $beforeFilter);
     }
 
@@ -210,9 +159,9 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilterWithOfflineSite()
     {
-        $this->AppController->method('isOffline')->willReturn(true);
+        $this->Controller->method('isOffline')->willReturn(true);
 
-        $beforeFilter = $this->AppController->beforeFilter(new Event('event'));
+        $beforeFilter = $this->Controller->beforeFilter($this->Event);
         $this->assertEquals(['_name' => 'offline'], $beforeFilter);
     }
 
@@ -222,24 +171,24 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeRender()
     {
-        $this->AppController->beforeRender(new Event('event'));
+        $this->Controller->beforeRender($this->Event);
 
-        $this->assertEquals(null, $this->AppController->viewBuilder()->layout());
-        $this->assertEquals('MeCms.View/App', $this->AppController->viewBuilder()->className());
-        $this->assertEquals(['MeCms.Auth' => null], $this->AppController->viewBuilder()->helpers());
+        $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEquals(['MeCms.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
 
         //Admin request
-        $this->AppController = new AppController();
-        $this->AppController->request->params['prefix'] = ADMIN_PREFIX;
-        $this->AppController->beforeRender(new Event('event'));
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
 
-        $this->assertEquals('MeCms.View/Admin', $this->AppController->viewBuilder()->className());
+        $this->Controller->beforeRender($this->Event);
+        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
-        $this->AppController->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
 
-        $this->AppController->beforeRender(new Event('event'));
-        $this->assertEquals('MeCms.ajax', $this->AppController->viewBuilder()->layout());
+        $this->Controller->beforeRender($this->Event);
+        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
@@ -248,15 +197,15 @@ class AppControllerTest extends TestCase
      */
     public function testIsAuthorized()
     {
-        $this->assertFalse($this->AppController->isAuthorized());
+        $this->assertFalse($this->Controller->isAuthorized());
 
-        $this->AppController->components()->Auth->setUser(['group' => ['name' => 'admin']]);
-        $this->assertTrue($this->AppController->isAuthorized());
+        $this->setUserGroup('admin');
+        $this->assertTrue($this->Controller->isAuthorized());
 
-        $this->AppController->components()->Auth->setUser(['group' => ['name' => 'manager']]);
-        $this->assertTrue($this->AppController->isAuthorized());
+        $this->setUserGroup('manager');
+        $this->assertTrue($this->Controller->isAuthorized());
 
-        $this->AppController->components()->Auth->setUser(['group' => ['name' => 'user']]);
-        $this->assertFalse($this->AppController->isAuthorized());
+        $this->setUserGroup('user');
+        $this->assertFalse($this->Controller->isAuthorized());
     }
 }

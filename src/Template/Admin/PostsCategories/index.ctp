@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Posts categories'));
 
@@ -53,14 +52,9 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td>
                     <strong>
-                        <?php
-                            echo $this->Html->link(
-                                $category->title,
-                                ['action' => 'edit', $category->id]
-                            );
-                        ?>
+                        <?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?>
                     </strong>
-                    
+
                     <?php
                         $actions = [
                             $this->Html->link(
@@ -104,15 +98,11 @@ $this->append('actions', $this->Html->button(
                 <td class="min-width text-center">
                     <?php
                     if ($category->post_count) {
-                        echo $this->Html->link(
-                            $category->post_count,
-                            [
-                                'controller' => 'Posts',
-                                'action' => 'index',
-                                '?' => ['category' => $category->id],
-                            ],
-                            ['title' => __d('me_cms', 'View items that belong to this category')]
-                        );
+                        echo $this->Html->link($category->post_count, [
+                            'controller' => 'Posts',
+                            'action' => 'index',
+                            '?' => ['category' => $category->id],
+                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
                     } else {
                         echo $category->post_count;
                     }

@@ -87,7 +87,7 @@ class PostsTagsWidgetsCell extends Cell
         $shuffle = true,
         $style = ['maxFont' => 40, 'minFont' => 12]
     ) {
-        $this->viewBuilder()->template(sprintf('popular_as_%s', $render));
+        $this->viewBuilder()->setTemplate(sprintf('popular_as_%s', $render));
 
         //Returns on tags index
         if ($this->request->isUrl(['_name' => 'postsTags'])) {
@@ -112,8 +112,8 @@ class PostsTagsWidgetsCell extends Cell
             ->select(['tag', 'post_count'])
             ->limit($limit)
             ->order([
-                sprintf('%s.post_count', $this->Tags->alias()) => 'DESC',
-                sprintf('%s.tag', $this->Tags->alias()) => 'ASC',
+                sprintf('%s.post_count', $this->Tags->getAlias()) => 'DESC',
+                sprintf('%s.tag', $this->Tags->getAlias()) => 'ASC',
             ])
             ->formatResults(function ($results) use ($style, $maxFont, $minFont) {
                 if (!$results->count()) {

@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit banner'));
 ?>
@@ -28,13 +27,13 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
 <?= $this->Form->create($banner); ?>
 <div class='float-form'>
     <?php
-        echo $this->Form->input('position_id', [
+        echo $this->Form->control('position_id', [
             'label' => __d('me_cms', 'Position'),
         ]);
-        echo $this->Form->input('active', [
+        echo $this->Form->control('active', [
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
         ]);
-        echo $this->Form->input('thumbnail', [
+        echo $this->Form->control('thumbnail', [
             'label' => __d('me_cms', 'Thumbnail'),
             'help' => __d('me_cms', 'The banner is displayed as a  thumbnail. ' .
                 'You should disable this, if the banner is an animated gif'),
@@ -42,27 +41,23 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
     ?>
 </div>
 <fieldset>
-    <p><?= $this->Html->para(null, $this->Html->strong(__d('me_cms', 'Preview'))) ?></p>
+    <p><?= $this->Html->strong(__d('me_cms', 'Preview')) ?></p>
     <?php
     if ($banner->thumbnail) {
-        echo $this->Thumb->resize(
-            $banner->path,
-            ['width' => 1186],
-            ['class' => 'img-thumbnail margin-15']
-        );
+        echo $this->Thumb->resize($banner->path, ['width' => 1186], ['class' => 'img-thumbnail margin-15']);
     } else {
         echo $this->Html->img($banner->www, ['class' => 'img-thumbnail margin-15']);
     }
 
-    echo $this->Form->input('filename', [
+    echo $this->Form->control('filename', [
         'disabled' => true,
         'label' => __d('me_cms', 'Filename'),
     ]);
-    echo $this->Form->input('target', [
+    echo $this->Form->control('target', [
         'label' => __d('me_cms', 'Web address'),
         'help' => __d('me_cms', 'The address should begin with {0}', $this->Html->em('http://')),
     ]);
-    echo $this->Form->input('description', [
+    echo $this->Form->control('description', [
         'label' => __d('me_cms', 'Description'),
         'rows' => 3,
         'type' => 'textarea',

@@ -63,7 +63,7 @@ class SystemsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can clear all temporary files or logs
-        if ($this->request->isAction('tmpCleaner') && in_array($this->request->param('pass.0'), ['all', 'logs'])) {
+        if ($this->request->isAction('tmpCleaner') && in_array($this->request->getParam('pass.0'), ['all', 'logs'])) {
             return $this->Auth->isGroup('admin');
         }
 
@@ -84,12 +84,12 @@ class SystemsController extends AppController
         $types = $this->KcFinder->getTypes();
 
         //If there's only one type, it automatically sets the query value
-        if (!$this->request->query('type') && count($types) < 2) {
-            $this->request->query['type'] = firstKey($types);
+        if (!$this->request->getQuery('type') && count($types) < 2) {
+            $this->request = $this->request->withQueryParams(['type' => firstKey($types)]);
         }
 
         //Gets the type from the query and the types from configuration
-        $type = $this->request->query('type');
+        $type = $this->request->getQuery('type');
 
         //Checks the type, then sets the KCFinder path
         if ($type && array_key_exists($type, $types)) {
@@ -116,8 +116,8 @@ class SystemsController extends AppController
         }
 
         //If a changelog file has been specified
-        if ($this->request->query('file') && $this->request->is('get')) {
-            $path = ROOT . DS . $files[$this->request->query('file')];
+        if ($this->request->getQuery('file') && $this->request->is('get')) {
+            $path = ROOT . DS . $files[$this->request->getQuery('file')];
 
             $this->set('changelog', file_get_contents($path));
         }

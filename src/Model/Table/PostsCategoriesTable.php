@@ -62,7 +62,7 @@ class PostsCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.post_count >', $this->alias()) => 0]);
+        $query->where([sprintf('%s.post_count >', $this->getAlias()) => 0]);
 
         return $query;
     }
@@ -76,22 +76,18 @@ class PostsCategoriesTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('posts_categories');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('posts_categories');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', [
-            'className' => 'MeCms.PostsCategories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Childs', [
-            'className' => 'MeCms.PostsCategories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Posts', [
-            'className' => 'MeCms.Posts',
-            'foreignKey' => 'category_id',
-        ]);
+        $this->belongsTo('Parents', ['className' => 'MeCms.PostsCategories'])
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Childs', ['className' => 'MeCms.PostsCategories'])
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
+            ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');

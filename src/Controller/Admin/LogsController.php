@@ -48,45 +48,60 @@ class LogsController extends AppController
     /**
      * Returns the path for a log
      * @param string $filename Filename
-     * @param bool $serialized true if is a serialized log
+     * @param bool $serialized `true` for a serialized log
      * @return string
      */
     protected function _path($filename, $serialized = false)
     {
         if ($serialized) {
-            $filename = sprintf(
-                '%s_serialized.%s',
-                pathinfo($filename, PATHINFO_FILENAME),
-                pathinfo($filename, PATHINFO_EXTENSION)
-            );
+            $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
         }
 
         return LOGS . $filename;
     }
 
     /**
+     * Internal method to read a log content
+     * @param string $filename Filename
+     * @param bool $serialized `true` for a serialized log
+     * @return string Log content
+     * @throws InternalErrorException
+     * @uses _path()
+     */
+    protected function _read($filename, $serialized = false)
+    {
+        $log = $this->_path($filename, $serialized);
+
+        if (!is_readable($log)) {
+            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
+        }
+
+        $log = file_get_contents($log);
+
+        if ($serialized) {
+            return unserialize($log);
+        }
+
+        return trim($log);
+    }
+
+    /**
      * Lists logs
      * @return void
+     * @uses _path()
      */
     public function index()
     {
-        //Gets all log files
-        $logs = (new Folder(LOGS))->read(true, ['empty'])[1];
+        //Gets all log files, except those serialized
+        $logs = (new Folder(LOGS))->find('(?!.*_serialized).+\.log');
 
-        $logs = af(array_map(function ($log) {
-            //Return, if this is a serialized log
-            if (preg_match('/_serialized\.log$/i', $log)) {
-                return;
-            }
-
-            //If this log has a serialized copy
-            $serialized = is_readable(LOGS . sprintf('%s_serialized.log', pathinfo($log, PATHINFO_FILENAME)));
-
-            return (object)am([
+        $logs = collection($logs)->map(function ($log) {
+            return (object)[
                 'filename' => $log,
+                'hasSerialized' => is_readable($this->_path($log, true)),
                 'size' => filesize(LOGS . $log),
-            ], compact('serialized'));
-        }, $logs));
+            ];
+        })->toList();
 
         $this->set(compact('logs'));
     }
@@ -95,58 +110,33 @@ class LogsController extends AppController
      * Views a log
      * @param string $filename Filename
      * @return void
-     * @throws InternalErrorException
-     * @uses _path()
+     * @uses _read()
      */
     public function view($filename)
     {
-        $log = $this->_path($filename);
+        $serialized = false;
 
-        if (!is_readable($log)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
+        if ($this->request->getQuery('as') === 'serialized') {
+            $serialized = true;
+            $this->viewBuilder()->setTemplate('view_as_serialized');
         }
 
-        $log = (object)am([
-            'content' => trim(file_get_contents($log)),
-        ], compact('filename'));
+        $content = $this->_read($filename, $serialized);
 
-        $this->set(compact('log'));
-    }
-
-    /**
-     * Views a (serialized) log
-     * @param string $filename Filename
-     * @return void
-     * @throws InternalErrorException
-     * @uses _path()
-     */
-    public function viewSerialized($filename)
-    {
-        $log = $this->_path($filename, true);
-
-        if (!is_readable($log)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-        }
-
-        $log = (object)am([
-            'content' => unserialize(file_get_contents($log)),
-        ], compact('filename'));
-
-        $this->set(compact('log'));
+        $this->set(compact('content', 'filename'));
     }
 
     /**
      * Downloads a log
      * @param string $filename Filename
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\AppController::_download()
      * @uses _path()
      */
     public function download($filename)
     {
-        $log = $this->_path($filename);
+        $file = $this->_path($filename);
 
-        return $this->_download($log);
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**

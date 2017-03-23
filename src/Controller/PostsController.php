@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Network\Exception\ForbiddenException;
 use MeCms\Controller\AppController;
+use MeCms\Controller\Traits\CheckLastSearchTrait;
 
 /**
  * Posts controller
@@ -33,6 +34,8 @@ use MeCms\Controller\AppController;
  */
 class PostsController extends AppController
 {
+    use CheckLastSearchTrait;
+
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
@@ -55,7 +58,7 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
@@ -83,15 +86,18 @@ class PostsController extends AppController
                     },
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
             $posts = $this->paginate($query)->toArray();
 
             //Writes on cache
-            Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
+            Cache::writeMany([
+                $cache => $posts,
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+            ], $this->Posts->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('posts'));
@@ -131,8 +137,8 @@ class PostsController extends AppController
     public function indexByDate($date = null)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
+        if ($this->request->getQuery('q')) {
+            return $this->redirect([$this->request->getQuery('q')]);
         }
 
         //Sets `$year`, `$month` and `$day`
@@ -159,7 +165,7 @@ class PostsController extends AppController
             $end = (new Time($start))->addYear(1);
         }
 
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
@@ -188,21 +194,21 @@ class PostsController extends AppController
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->where([
-                    sprintf('%s.created >=', $this->Posts->alias()) => $start,
-                    sprintf('%s.created <', $this->Posts->alias()) => $end,
+                    sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
+                    sprintf('%s.created <', $this->Posts->getAlias()) => $end,
                 ])
-                ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
             $posts = $this->paginate($query)->toArray();
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
             ], $this->Posts->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('posts', 'year', 'month', 'day'));
@@ -223,7 +229,7 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->select(['title', 'slug', 'text', 'created'])
             ->limit(config('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC'])
+            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
             ->cache('rss', $this->Posts->cache);
 
         $this->set(compact('posts'));
@@ -232,19 +238,19 @@ class PostsController extends AppController
     /**
      * Searches posts
      * @return void
-     * @uses MeCms\Controller\AppController::_checkLastSearch()
+     * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
-        $pattern = $this->request->query('p');
+        $pattern = $this->request->getQuery('p');
 
         if ($pattern) {
             //Checks if the pattern is at least 4 characters long
             if (strlen($pattern) >= 4) {
-                if ($this->_checkLastSearch($pattern)) {
+                if ($this->checkLastSearch($pattern)) {
                     $this->paginate['limit'] = config('default.records_for_searches');
 
-                    $page = $this->request->query('page') ? $this->request->query('page') : 1;
+                    $page = $this->request->getQuery('page', 1);
 
                     //Sets the initial cache name
                     $cache = sprintf('search_%s', md5($pattern));
@@ -270,15 +276,18 @@ class PostsController extends AppController
                                 'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                                 'text LIKE' => sprintf('%%%s%%', $pattern),
                             ]])
-                            ->order([sprintf('%s.created', $this->Posts->alias()) => 'DESC']);
+                            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
                         $posts = $this->paginate($query)->toArray();
 
                         //Writes on cache
-                        Cache::writeMany([$cache => $posts, sprintf('%s_paging', $cache) => $this->request->param('paging')], $this->Posts->cache);
+                        Cache::writeMany([
+                            $cache => $posts,
+                            sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                        ], $this->Posts->cache);
                     //Else, sets the paging parameter
                     } else {
-                        $this->request->params['paging'] = $paging;
+                        $this->request = $this->request->withParam('paging', $paging);
                     }
 
                     $this->set(compact('posts'));
@@ -314,7 +323,7 @@ class PostsController extends AppController
                 },
             ])
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
             ->firstOrFail();
 
@@ -348,7 +357,7 @@ class PostsController extends AppController
                 },
             ])
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->where([sprintf('%s.slug', $this->Posts->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->firstOrFail();
 
         $this->set(compact('post'));

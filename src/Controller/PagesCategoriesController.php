@@ -54,8 +54,8 @@ class PagesCategoriesController extends AppController
     public function view($slug = null)
     {
         //The category can be passed as query string, from a widget
-        if ($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
+        if ($this->request->getQuery('q')) {
+            return $this->redirect([$this->request->getQuery('q')]);
         }
 
         $category = $this->PagesCategories->find('active')
@@ -65,7 +65,7 @@ class PagesCategoriesController extends AppController
                     return $q->select(['category_id', 'slug', 'title']);
                 },
             ])
-            ->where([sprintf('%s.slug', $this->PagesCategories->alias()) => $slug])
+            ->where([sprintf('%s.slug', $this->PagesCategories->getAlias()) => $slug])
             ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache)
             ->firstOrFail();
 

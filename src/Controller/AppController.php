@@ -24,69 +24,12 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\Event\Event;
-use Cake\Network\Exception\InternalErrorException;
 
 /**
  * Application controller class
  */
 class AppController extends BaseController
 {
-    /**
-     * Checks if the latest search has been executed out of the minimum
-     *  interval
-     * @param string $queryId Query
-     * @return bool
-     */
-    protected function _checkLastSearch($queryId = false)
-    {
-        $interval = config('security.search_interval');
-
-        if (!$interval) {
-            return true;
-        }
-
-        if ($queryId) {
-            $queryId = md5($queryId);
-        }
-
-        $lastSearch = $this->request->session()->read('last_search');
-
-        if ($lastSearch) {
-            //Checks if it's the same search
-            if ($queryId && !empty($lastSearch['id']) && $queryId === $lastSearch['id']) {
-                return true;
-            //Checks if the interval has not yet expired
-            } elseif (($lastSearch['time'] + $interval) > time()) {
-                return false;
-            }
-        }
-
-        $this->request->session()->write('last_search', [
-            'id' => $queryId,
-            'time' => time(),
-        ]);
-
-        return true;
-    }
-
-    /**
-     * Internal method to download a file
-     * @param string $path File path
-     * @param bool $force If `true`, it forces the download
-     * @return \Cake\Network\Response
-     * @throws InternalErrorException
-     */
-    protected function _download($path, $force = true)
-    {
-        if (!is_readable($path)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($path)));
-        }
-
-        $this->response->file($path, ['download' => $force]);
-
-        return $this->response;
-    }
-
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
@@ -112,12 +55,12 @@ class AppController extends BaseController
 
         //Authorizes the current action, if this is not an admin request
         if (!$this->request->isAdmin()) {
-            $this->Auth->allow($this->request->action);
+            $this->Auth->allow($this->request->getParam('action'));
         }
 
         //Adds the current sort field in the whitelist of pagination
-        if ($this->request->isAdmin() && $this->request->query('sort')) {
-            $this->paginate['sortWhitelist'] = [$this->request->query('sort')];
+        if ($this->request->isAdmin() && $this->request->getQuery('sort')) {
+            $this->paginate['sortWhitelist'] = [$this->request->getQuery('sort')];
         }
 
         //Sets the paginate limit and the maximum paginate limit
@@ -147,19 +90,19 @@ class AppController extends BaseController
     {
         //Layout for ajax requests
         if ($this->request->is('ajax')) {
-            $this->viewBuilder()->layout('MeCms.ajax');
+            $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
-        $this->viewBuilder()->className('MeCms.View/App');
+        $this->viewBuilder()->setClassName('MeCms.View/App');
 
         //Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
         if ($this->request->isAdmin()) {
-            $this->viewBuilder()->className('MeCms.View/Admin');
+            $this->viewBuilder()->setClassName('MeCms.View/Admin');
         }
 
         //Loads the `Auth` helper.
         //The `helper is loaded here (instead of the view) to pass user data
-        $this->viewBuilder()->helpers(['MeCms.Auth' => $this->Auth->user()]);
+        $this->viewBuilder()->setHelpers(['MeCms.Auth' => $this->Auth->user()]);
 
         parent::beforeRender($event);
     }

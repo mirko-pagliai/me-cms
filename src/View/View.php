@@ -23,6 +23,9 @@
 namespace MeCms\View;
 
 use App\View\AppView;
+use Cake\Event\EventManager;
+use Cake\Network\Request;
+use Cake\Network\Response;
 
 /**
  * Base view class.
@@ -48,9 +51,9 @@ class View extends AppView
      *   options which get set as class properties
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $viewOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $viewOptions);

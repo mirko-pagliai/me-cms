@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 if (empty($categories) || count($categories) < 2) {
     return;
 }
@@ -32,7 +31,7 @@ echo $this->Form->create(false, [
     'type' => 'get',
     'url' => ['_name' => 'pagesCategory', 'category'],
 ]);
-echo $this->Form->input('q', [
+echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',

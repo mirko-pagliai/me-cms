@@ -287,7 +287,7 @@ class InstallShellTest extends TestCase
             'runFromOtherPlugins',
             'setPermissions',
         ], array_keys($parser->subcommands()));
-        $this->assertEquals('Executes some tasks to make the system ready to work', $parser->description());
+        $this->assertEquals('Executes some tasks to make the system ready to work', $parser->getDescription());
         $this->assertEquals(['force', 'help', 'quiet', 'verbose'], array_keys($parser->options()));
     }
 }

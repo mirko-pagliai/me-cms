@@ -59,14 +59,12 @@ class UsersGroupsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('users_groups');
-        $this->displayField('label');
-        $this->primaryKey('id');
+        $this->setTable('users_groups');
+        $this->setDisplayField('label');
+        $this->setPrimaryKey('id');
 
-        $this->hasMany('Users', [
-            'foreignKey' => 'group_id',
-            'className' => 'MeCms.Users',
-        ]);
+        $this->hasMany('Users', ['className' => 'MeCms.Users'])
+            ->setForeignKey('group_id');
 
         $this->addBehavior('Timestamp');
 

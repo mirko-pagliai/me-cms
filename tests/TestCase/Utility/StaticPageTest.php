@@ -177,17 +177,16 @@ class StaticPageTest extends TestCase
     {
         $object = new StaticPage;
 
-        $paths = collection($this->invokeMethod($object, 'paths'))->extract(function ($path) {
-            return rtr($path);
-        })->toArray();
+        $paths = collection($this->invokeMethod($object, 'paths'))
+            ->extract(function ($path) {
+                return rtr($path);
+            })
+            ->toArray();
 
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages',
             'src/Template/StaticPages',
-            'vendor/mirko-pagliai/me-tools/src/Template/StaticPages',
-            'vendor/mirko-pagliai/assets/src/Template/StaticPages',
             'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages',
-            'vendor/mirko-pagliai/cakephp-thumber/src/Template/StaticPages',
         ], $paths);
     }
 

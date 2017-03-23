@@ -53,9 +53,9 @@ class Mailer extends CakeMailer
         parent::__construct($email);
 
         $this->getEmailInstance()
-            ->helpers('MeTools.Html')
-            ->from(config('email.webmaster'), config('main.title'))
-            ->sender(config('email.webmaster'), config('main.title'))
-            ->emailFormat('html');
+            ->setHelpers(['MeTools.Html'])
+            ->setFrom(config('email.webmaster'), config('main.title'))
+            ->setSender(config('email.webmaster'), config('main.title'))
+            ->setEmailFormat('html');
     }
 }

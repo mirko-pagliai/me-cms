@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 //Returns on search
 if ($this->request->isUrl(['_name' => 'postsSearch'])) {
     return;
@@ -33,7 +32,7 @@ echo $this->Form->createInline(false, [
     'type' => 'get',
     'url' => ['_name' => 'postsSearch'],
 ]);
-echo $this->Form->input('p', [
+echo $this->Form->control('p', [
     'button' => $this->Form->button(null, ['class' => 'btn-primary', 'icon' => 'search']),
     'id' => false,
     'label' => false,

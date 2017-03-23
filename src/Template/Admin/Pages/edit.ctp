@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit page'));
 
@@ -32,7 +31,7 @@ $this->Library->slugify();
 <?= $this->Form->create($page); ?>
 <div class='float-form'>
     <?php
-        echo $this->Form->input('category_id', [
+        echo $this->Form->control('category_id', [
             'empty' => false,
             'label' => __d('me_cms', 'Category'),
         ]);
@@ -44,10 +43,10 @@ $this->Library->slugify();
             ],
             'value' => $page->created->i18nFormat(FORMAT_FOR_MYSQL),
         ]);
-        echo $this->Form->input('priority', [
+        echo $this->Form->control('priority', [
             'label' => __d('me_cms', 'Priority'),
         ]);
-        echo $this->Form->input('active', [
+        echo $this->Form->control('active', [
             'label' => sprintf('%s?', __d('me_cms', 'Published')),
             'help' => __d('me_cms', 'Disable this option to save as a draft'),
         ]);
@@ -55,14 +54,14 @@ $this->Library->slugify();
 </div>
 <fieldset>
     <?php
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'id' => 'title',
             'label' => __d('me_cms', 'Title'),
         ]);
-        echo $this->Form->input('subtitle', [
+        echo $this->Form->control('subtitle', [
             'label' => __d('me_cms', 'Subtitle'),
         ]);
-        echo $this->Form->input('slug', [
+        echo $this->Form->control('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
             'help' => __d('me_cms', 'The slug is a string identifying a ' .

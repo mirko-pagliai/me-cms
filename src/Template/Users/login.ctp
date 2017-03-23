@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Login'));
 ?>
@@ -29,12 +28,12 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
     <?= $this->Form->create('User') ?>
     <fieldset>
         <?php
-            echo $this->Form->input('username', [
+            echo $this->Form->control('username', [
                 'autofocus' => true,
                 'label' => false,
                 'placeholder' => __d('me_cms', 'Username'),
             ]);
-            echo $this->Form->input('password', [
+            echo $this->Form->control('password', [
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
                     'icon' => 'eye',
@@ -43,7 +42,7 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
                 'label' => false,
                 'placeholder' => __d('me_cms', 'Password'),
             ]);
-            echo $this->Form->input('remember_me', [
+            echo $this->Form->control('remember_me', [
                 'label' => __d('me_cms', 'Remember me'),
                 'help' => __d('me_cms', 'Don\'t use on public computers'),
                 'type' => 'checkbox',

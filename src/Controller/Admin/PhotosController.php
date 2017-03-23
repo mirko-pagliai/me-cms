@@ -85,10 +85,10 @@ class PhotosController extends AppController
      */
     public function index()
     {
-        $render = $this->request->query('render');
+        $render = $this->request->getQuery('render');
 
         if ($this->Cookie->read('render.photos') === 'grid' && !$render) {
-            return $this->redirect(['?' => am($this->request->query, ['render' => 'grid'])]);
+            return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
         }
 
         $query = $this->Photos->find()->contain([
@@ -105,7 +105,7 @@ class PhotosController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = config('admin.photos');
         }
 
-        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->query)));
+        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQuery())));
 
         if ($render) {
             $this->Cookie->write('render.photos', $render);
@@ -126,21 +126,21 @@ class PhotosController extends AppController
      */
     public function upload()
     {
-        $album = $this->request->query('album');
+        $album = $this->request->getQuery('album');
 
         //If there's only one album, it automatically sets the query value
         if (!$album && count($this->viewVars['albums']) < 2) {
-            $this->request->query['album'] = firstKey($this->viewVars['albums']);
+            $this->request = $this->request->withQueryParams(['album' => firstKey($this->viewVars['albums'])]);
         }
 
-        if ($this->request->data('file')) {
+        if ($this->request->getData('file')) {
             if (empty($album)) {
                 throw new InternalErrorException(__d('me_cms', 'Missing album ID'));
             }
 
             http_response_code(500);
 
-            $uploaded = $this->Uploader->set($this->request->data('file'))
+            $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
                 ->save(PHOTOS . $album);
 
@@ -173,7 +173,7 @@ class PhotosController extends AppController
         $photo = $this->Photos->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $photo = $this->Photos->patchEntity($photo, $this->request->data);
+            $photo = $this->Photos->patchEntity($photo, $this->request->getData());
 
             if ($this->Photos->save($photo)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -191,11 +191,12 @@ class PhotosController extends AppController
      * Downloads photo
      * @param string $id Photo ID
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\AppController::_download()
      */
     public function download($id = null)
     {
-        return $this->_download($this->Photos->get($id)->path);
+        $file = $this->Photos->get($id)->path;
+
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**

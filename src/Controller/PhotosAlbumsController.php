@@ -43,7 +43,7 @@ class PhotosAlbumsController extends AppController
                 'Photos' => function ($q) {
                     return $q->select(['album_id', 'filename'])
                         ->where([
-                            sprintf('%s.active', $this->PhotosAlbums->Photos->alias()) => true,
+                            sprintf('%s.active', $this->PhotosAlbums->Photos->getAlias()) => true,
                         ])
                         ->order('rand()');
                 }
@@ -68,8 +68,8 @@ class PhotosAlbumsController extends AppController
     public function view($slug = null)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->query('q')) {
-            return $this->redirect([$this->request->query('q')]);
+        if ($this->request->getQuery('q')) {
+            return $this->redirect([$this->request->getQuery('q')]);
         }
 
         //Gets album ID and title
@@ -79,7 +79,7 @@ class PhotosAlbumsController extends AppController
             ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->cache)
             ->firstOrFail();
 
-        $page = $this->request->query('page') ? $this->request->query('page') : 1;
+        $page = $this->request->getQuery('page', 1);
         $this->paginate['limit'] = $this->paginate['maxLimit'] = config('default.photos');
 
         //Sets the cache name
@@ -99,8 +99,8 @@ class PhotosAlbumsController extends AppController
                 ->select(['id', 'album_id', 'filename', 'description'])
                 ->where(['album_id' => $album->id])
                 ->order([
-                    sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
-                    sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                    sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                    sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
                 ]);
 
             $photos = $this->paginate($query)->toArray();
@@ -108,11 +108,11 @@ class PhotosAlbumsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $photos,
-                sprintf('%s_paging', $cache) => $this->request->param('paging'),
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
             ], $this->PhotosAlbums->cache);
         //Else, sets the paging parameter
         } else {
-            $this->request->params['paging'] = $paging;
+            $this->request = $this->request->withParam('paging', $paging);
         }
 
         $this->set(compact('album', 'photos'));
@@ -132,8 +132,8 @@ class PhotosAlbumsController extends AppController
                 'Photos' => function ($q) {
                     return $q->select(['id', 'album_id', 'filename', 'description'])
                         ->order([
-                            sprintf('%s.created', $this->PhotosAlbums->Photos->alias()) => 'DESC',
-                            sprintf('%s.id', $this->PhotosAlbums->Photos->alias()) => 'DESC',
+                            sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                            sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
                         ]);
                 }
              ])

@@ -59,7 +59,7 @@ class TagsTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.post_count >', $this->alias()) => 0]);
+        $query->where([sprintf('%s.post_count >', $this->getAlias()) => 0]);
 
         return $query;
     }
@@ -73,17 +73,14 @@ class TagsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('tags');
-        $this->displayField('tag');
-        $this->primaryKey('id');
+        $this->setTable('tags');
+        $this->setDisplayField('tag');
+        $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Posts', [
-            'foreignKey' => 'tag_id',
-            'targetForeignKey' => 'post_id',
-            'joinTable' => 'posts_tags',
-            'className' => 'MeCms.Posts',
-            'through' => 'MeCms.PostsTags',
-        ]);
+        $this->belongsToMany('Posts', ['className' => 'MeCms.Posts', 'joinTable' => 'posts_tags'])
+            ->setForeignKey('tag_id')
+            ->setTargetForeignKey('post_id')
+            ->setThrough('MeCms.PostsTags');
 
         $this->addBehavior('Timestamp');
 
@@ -93,7 +90,7 @@ class TagsTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])
@@ -102,7 +99,7 @@ class TagsTable extends AppTable
 
         //"Name" field
         if (!empty($data['name']) && strlen($data['name']) > 2) {
-            $query->where([sprintf('%s.tag LIKE', $this->alias()) => sprintf('%%%s%%', $data['name'])]);
+            $query->where([sprintf('%s.tag LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['name'])]);
         }
 
         return $query;

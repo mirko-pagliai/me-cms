@@ -22,7 +22,10 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\Filesystem\File;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -47,7 +50,7 @@ class BannersTable extends AppTable
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the file
         (new File(BANNERS . $entity->filename))->delete();
@@ -77,7 +80,7 @@ class BannersTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->alias()) => true]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
 
         return $query;
     }
@@ -91,15 +94,13 @@ class BannersTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('banners');
-        $this->displayField('filename');
-        $this->primaryKey('id');
+        $this->setTable('banners');
+        $this->setDisplayField('filename');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Positions', [
-            'foreignKey' => 'position_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.BannersPositions',
-        ]);
+        $this->belongsTo('Positions', ['className' => 'MeCms.BannersPositions'])
+            ->setForeignKey('position_id')
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
@@ -110,7 +111,7 @@ class BannersTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -120,7 +121,7 @@ class BannersTable extends AppTable
 
         //"Position" field
         if (!empty($data['position']) && isPositive($data['position'])) {
-            $query->where([sprintf('%s.position_id', $this->alias()) => $data['position']]);
+            $query->where([sprintf('%s.position_id', $this->getAlias()) => $data['position']]);
         }
 
         return $query;

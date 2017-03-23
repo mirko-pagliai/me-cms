@@ -149,12 +149,12 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('photos_albums', $this->PhotosAlbums->table());
-        $this->assertEquals('title', $this->PhotosAlbums->displayField());
-        $this->assertEquals('id', $this->PhotosAlbums->primaryKey());
+        $this->assertEquals('photos_albums', $this->PhotosAlbums->getTable());
+        $this->assertEquals('title', $this->PhotosAlbums->getDisplayField());
+        $this->assertEquals('id', $this->PhotosAlbums->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PhotosAlbums->Photos);
-        $this->assertEquals('album_id', $this->PhotosAlbums->Photos->foreignKey());
+        $this->assertEquals('album_id', $this->PhotosAlbums->Photos->getForeignKey());
         $this->assertEquals('MeCms.Photos', $this->PhotosAlbums->Photos->className());
 
         $this->assertTrue($this->PhotosAlbums->hasBehavior('Timestamp'));

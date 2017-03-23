@@ -24,7 +24,6 @@ namespace MeCms\Test\TestCase\Model\Entity;
 
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Page;
-use MeTools\Utility\Youtube;
 
 /**
  * PageTest class
@@ -32,12 +31,41 @@ use MeTools\Utility\Youtube;
 class PageTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\Page
+     */
+    protected $Page;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Page = new Page;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Page);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\Page', new Page);
+        $this->assertInstanceOf('MeCms\Model\Entity\Page', $this->Page);
     }
 
     /**
@@ -47,37 +75,16 @@ class PageTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new Page();
-
-        $this->assertFalse($entity->accessible('id'));
-        $this->assertFalse($entity->accessible('modified'));
+        $this->assertFalse($this->Page->isAccessible('id'));
+        $this->assertFalse($this->Page->isAccessible('modified'));
     }
 
     /**
-     * Test for `_getPreview()` method
+     * Test for virtual fields
      * @test
      */
-    public function testPreviewGetMutator()
+    public function testVirtualFields()
     {
-        $entity = new Page();
-
-        $this->assertNull($entity->preview);
-
-        $entity->text = 'This is a simple text';
-        $this->assertFalse($entity->preview);
-
-        $entity->text = '<img src=\'image.jpg\' /> Image before text';
-        $this->assertEquals('image.jpg', $entity->preview);
-
-        $expected = Youtube::getPreview('videoID');
-
-        $entity->text = '[youtube]videoID[/youtube]';
-        $this->assertEquals($expected, $entity->preview);
-
-        $entity->text = '[youtube]videoID[/youtube]Text';
-        $this->assertEquals($expected, $entity->preview);
-
-        $entity->text = '[youtube]videoID[/youtube] Text';
-        $this->assertEquals($expected, $entity->preview);
+        $this->assertEquals(['preview'], $this->Page->getVirtual());
     }
 }

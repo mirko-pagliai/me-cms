@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Change your password'));
 ?>
@@ -28,7 +27,7 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
 <?= $this->Form->create($user) ?>
     <fieldset>
         <?php
-            echo $this->Form->input('password_old', [
+            echo $this->Form->control('password_old', [
                 'autocomplete' => 'off',
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
@@ -39,7 +38,7 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
                 'help' => __d('me_cms', 'Enter your old password'),
                 'type' => 'password',
             ]);
-            echo $this->Form->input('password', [
+            echo $this->Form->control('password', [
                 'autocomplete' => 'off',
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
@@ -49,7 +48,7 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
                 'label' => __d('me_cms', 'Password'),
                 'help' => __d('me_cms', 'Enter your new password'),
             ]);
-            echo $this->Form->input('password_repeat', [
+            echo $this->Form->control('password_repeat', [
                 'autocomplete' => 'off',
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',

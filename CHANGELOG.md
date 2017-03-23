@@ -1,5 +1,24 @@
 # 2.x branch
 ## 2.16 branch
+### 2.16.1
+* fixed bug on redirect from the old address of the "contact us" form;
+* fixed bug on `StaticPage::paths()`. Now it returns only existing paths;
+* added `AppTable::beforeSave()`. It checks if the `created` property is an
+    instance of `Time`;
+* improved `MeCms\Controller\Admin\LogController`, added `_read()` method and
+    removed the `viewSerialized` action (the `view` action can use the 
+    `view_as_serialized` template);
+* added `MeCms\Model\Table\UsersTable\beforeMarshal()` method;
+* added `MeCms\Controller\Traits\CheckLastSearchTrait` trait;
+* added `MeCms\Model\Entity\Traits\PreviewAccessorTrait` trait;
+* added `MeCms\Model\Table\Traits\IsOwnedByTrait` trait;
+* added `MeCms\Model\Table\Traits\NextToBePublishedTrait` trait;
+* the preview image for pages and posts always contains a full url;
+* global function `firstImageFromText()` renamed as `firstImage()`;
+* removed `AppController::_download()` method;
+* added tests for `isAuthorized()` and `download()` methods of all controllers;
+* added tests for virtual fields.
+
 ### 2.16.0
 * it uses `CollectionInterface::first()` instead of the global `firstValue()`;
 * added `StaticPage::slug()` method. Renamed `StaticPage::_getPaths()` as

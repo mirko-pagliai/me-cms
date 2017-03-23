@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Tags'));
 $this->append('actions', $this->Html->button(
@@ -47,13 +46,13 @@ $this->append('actions', $this->Html->button(
     <fieldset>
         <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
         <?php
-            echo $this->Form->input('id', [
-                'default' => $this->request->query('id'),
+            echo $this->Form->control('id', [
+                'default' => $this->request->getQuery('id'),
                 'placeholder' => __d('me_cms', 'ID'),
                 'size' => 2,
             ]);
-            echo $this->Form->input('name', [
-                'default' => $this->request->query('name'),
+            echo $this->Form->control('name', [
+                'default' => $this->request->getQuery('name'),
                 'placeholder' => __d('me_cms', 'name'),
                 'size' => 16,
             ]);
@@ -70,21 +69,17 @@ $this->append('actions', $this->Html->button(
                     <?= __d('me_cms', 'ID') ?> <code><?= $tag->id ?></code>
                 </div>
                 <div class="no-wrap">
-                    <?php
-                        echo $this->Html->link(
-                            $this->Html->strong($tag->tag),
-                            ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]
-                        );
-                    ?>
+                    <?= $this->Html->link(
+                        $this->Html->strong($tag->tag),
+                        ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]
+                    ) ?>
                 </div>
                 <div class="small">
-                    <?php
-                        echo sprintf('(%s)', $this->Html->link(
-                            __dn('me_cms', '{0} post', '{0} posts', $tag->post_count, $tag->post_count),
-                            ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]],
-                            ['title' => __d('me_cms', 'View items that belong to this element')]
-                        ));
-                    ?>
+                    <?= sprintf('(%s)', $this->Html->link(
+                        __dn('me_cms', '{0} post', '{0} posts', $tag->post_count, $tag->post_count),
+                        ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]],
+                        ['title' => __d('me_cms', 'View items that belong to this element')]
+                    )) ?>
                 </div>
                 <?php
                 $actions = [];

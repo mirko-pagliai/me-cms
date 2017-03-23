@@ -85,11 +85,11 @@ class BannersController extends AppController
      */
     public function index()
     {
-        $render = $this->request->query('render');
+        $render = $this->request->getQuery('render');
 
         if ($this->Cookie->read('render.banners') === 'grid' && !$render) {
             return $this->redirect([
-                '?' => am($this->request->query, ['render' => 'grid'])
+                '?' => am($this->request->getQuery(), ['render' => 'grid'])
             ]);
         }
 
@@ -107,7 +107,7 @@ class BannersController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = config('admin.photos');
         }
 
-        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->query)));
+        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQuery())));
 
         if ($render) {
             $this->Cookie->write('render.banners', $render);
@@ -128,21 +128,21 @@ class BannersController extends AppController
      */
     public function upload()
     {
-        $position = $this->request->query('position');
+        $position = $this->request->getQuery('position');
 
         //If there's only one position, it automatically sets the query value
         if (!$position && count($this->viewVars['positions']) < 2) {
-            $this->request->query['position'] = firstKey($this->viewVars['positions']);
+            $this->request = $this->request->withQueryParams(['position' => firstKey($this->viewVars['positions'])]);
         }
 
-        if ($this->request->data('file')) {
+        if ($this->request->getData('file')) {
             if (empty($position)) {
                 throw new InternalErrorException(__d('me_cms', 'Missing position ID'));
             }
 
             http_response_code(500);
 
-            $uploaded = $this->Uploader->set($this->request->data('file'))
+            $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
                 ->save(BANNERS);
 
@@ -175,7 +175,7 @@ class BannersController extends AppController
         $banner = $this->Banners->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $banner = $this->Banners->patchEntity($banner, $this->request->data);
+            $banner = $this->Banners->patchEntity($banner, $this->request->getData());
 
             if ($this->Banners->save($banner)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -193,11 +193,12 @@ class BannersController extends AppController
      * Downloads banner
      * @param string $id Banner ID
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\AppController::_download()
      */
     public function download($id = null)
     {
-        return $this->_download($this->Banners->get($id)->path);
+        $file = $this->Banners->get($id)->path;
+
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**

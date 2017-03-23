@@ -22,11 +22,17 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\IsOwnedByTrait;
+use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Posts model
@@ -36,6 +42,9 @@ use MeCms\Model\Table\AppTable;
  */
 class PostsTable extends AppTable
 {
+    use IsOwnedByTrait;
+    use NextToBePublishedTrait;
+
     /**
      * Name of the configuration to use for this table
      * @var string
@@ -49,9 +58,9 @@ class PostsTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -66,9 +75,9 @@ class PostsTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
@@ -84,7 +93,7 @@ class PostsTable extends AppTable
      * @return void
      * @since 2.15.2
      */
-    public function beforeMarshal(\Cake\Event\Event $event, \ArrayObject $data, \ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         if (!empty($data['tags_as_string'])) {
             //Gets existing tags
@@ -130,8 +139,8 @@ class PostsTable extends AppTable
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses $cache
-     * @uses MeCms\Model\Table\AppTable::getNextToBePublished()
-     * @uses MeCms\Model\Table\AppTable::setNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function find($type = 'all', $options = [])
     {
@@ -143,6 +152,7 @@ class PostsTable extends AppTable
         if ($next && time() >= $next) {
             Cache::clear(false, $this->cache);
 
+            //Sets the next record to be published
             $this->setNextToBePublished();
         }
 
@@ -158,7 +168,7 @@ class PostsTable extends AppTable
      * @throws InternalErrorException
      * @uses $cache
      */
-    public function getRelated(\MeCms\Model\Entity\Post $post, $limit = 5, $images = true)
+    public function getRelated(Post $post, $limit = 5, $images = true)
     {
         if (empty($post->id) || !isset($post->tags)) {
             throw new InternalErrorException(__d('me_cms', 'ID or tags of the post are missing'));
@@ -189,12 +199,12 @@ class PostsTable extends AppTable
                     $post = $this->find('active')
                         ->select(['id', 'title', 'slug', 'text'])
                         ->matching('Tags', function ($q) use ($tag) {
-                            return $q->where([sprintf('%s.id', $this->Tags->alias()) => $tag->id]);
+                            return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
                         })
-                        ->where([sprintf('%s.id NOT IN', $this->alias()) => $exclude]);
+                        ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
 
                     if ($images) {
-                        $post->where([sprintf('%s.text LIKE', $this->alias()) => sprintf('%%%s%%', '<img')]);
+                        $post->where([sprintf('%s.text LIKE', $this->getAlias()) => sprintf('%%%s%%', '<img')]);
                     }
 
                     $post = $post->first();
@@ -227,27 +237,22 @@ class PostsTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->table('posts');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('posts');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.PostsCategories',
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
-            'className' => 'MeCms.Users',
-        ]);
-        $this->belongsToMany('Tags', [
-            'foreignKey' => 'post_id',
-            'targetForeignKey' => 'tag_id',
-            'joinTable' => 'posts_tags',
-            'className' => 'MeCms.Tags',
-            'through' => 'MeCms.PostsTags',
-        ]);
+        $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
+            ->setForeignKey('category_id')
+            ->setJoinType('INNER');
+
+        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+            ->setForeignKey('user_id')
+            ->setJoinType('INNER');
+
+        $this->belongsToMany('Tags', ['className' => 'MeCms.Tags', 'joinTable' => 'posts_tags'])
+            ->setForeignKey('post_id')
+            ->setTargetForeignKey('tag_id')
+            ->setThrough('MeCms.PostsTags');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [
@@ -261,7 +266,7 @@ class PostsTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -272,7 +277,7 @@ class PostsTable extends AppTable
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
             $query->matching('Tags', function ($q) use ($data) {
-                return $q->where([sprintf('%s.tag', $this->Tags->alias()) => $data['tag']]);
+                return $q->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
             });
         }
 

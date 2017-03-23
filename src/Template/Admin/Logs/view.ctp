@@ -20,18 +20,17 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/view');
-$this->assign('title', __d('me_cms', 'Log {0}', $log->filename));
+$this->assign('title', __d('me_cms', 'Log {0}', $filename));
 
 $this->append('actions', $this->Html->button(
     __d('me_cms', 'Download'),
-    ['action' => 'download', $log->filename],
+    ['action' => 'download', $filename],
     ['class' => 'btn-success', 'icon' => 'download']
 ));
 $this->append('actions', $this->Form->postButton(
     __d('me_cms', 'Delete'),
-    ['action' => 'delete', $log->filename],
+    ['action' => 'delete', $filename],
     [
         'class' => 'btn-danger',
         'icon' => 'trash-o',
@@ -39,6 +38,6 @@ $this->append('actions', $this->Form->postButton(
     ]
 ));
 
-if (!empty($log->content)) {
-    echo $this->Html->pre($log->content);
+if (!empty($content)) {
+    echo $this->Html->pre($content);
 }

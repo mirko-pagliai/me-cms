@@ -31,12 +31,41 @@ use MeCms\Model\Entity\PostsTag;
 class PostsTagTest extends TestCase
 {
     /**
+     * @var \MeCms\Model\Entity\PostsTag
+     */
+    protected $PostsTag;
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->PostsTag = new PostsTag;
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->PostsTag);
+    }
+
+    /**
      * Test for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('MeCms\Model\Entity\PostsTag', new PostsTag);
+        $this->assertInstanceOf('MeCms\Model\Entity\PostsTag', $this->PostsTag);
     }
 
     /**
@@ -46,8 +75,6 @@ class PostsTagTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $entity = new PostsTag();
-
-        $this->assertFalse($entity->accessible('id'));
+        $this->assertFalse($this->PostsTag->isAccessible('id'));
     }
 }

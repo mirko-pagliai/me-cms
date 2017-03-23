@@ -42,9 +42,14 @@ class StaticPage
     protected static function paths()
     {
         //Adds all plugins to paths
-        $paths = collection(Plugin::all())->map(function ($plugin) {
-            return collection(App::path('Template', $plugin))->first() . 'StaticPages';
-        })->toList();
+        $paths = collection(Plugin::all())
+            ->map(function ($plugin) {
+                return collection(App::path('Template', $plugin))->first() . 'StaticPages';
+            })
+            ->filter(function ($path) {
+                return file_exists($path);
+            })
+            ->toList();
 
         //Adds APP to paths
         array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');

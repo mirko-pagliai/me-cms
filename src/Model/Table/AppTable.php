@@ -22,8 +22,12 @@
  */
 namespace MeCms\Model\Table;
 
+use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\I18n\Time;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 
@@ -40,7 +44,7 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterDelete(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
@@ -55,10 +59,27 @@ class AppTable extends Table
      * @return void
      * @uses $cache
      */
-    public function afterSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, \ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         if (!empty($this->cache)) {
             Cache::clear(false, $this->cache);
+        }
+    }
+
+    /**
+     * Called before each entity is saved. Stopping this event will abort the
+     *  save operation. When the event is stopped the result of the event will
+     *  be returned
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Datasource\EntityInterface $entity EntityInterface object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.16.1
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        if (array_key_exists('created', $entity->toArray()) && !$entity->created instanceof Time) {
+            $entity->created = new Time($entity->created);
         }
     }
 
@@ -71,8 +92,8 @@ class AppTable extends Table
     public function findActive(Query $query, array $options)
     {
         $query->where([
-            sprintf('%s.active', $this->alias()) => true,
-            sprintf('%s.created <=', $this->alias()) => new Time,
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.created <=', $this->getAlias()) => new Time,
         ]);
 
         return $query;
@@ -96,16 +117,6 @@ class AppTable extends Table
     }
 
     /**
-     * Gets from cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return string|bool Timestamp or `false`
-     */
-    public function getNextToBePublished()
-    {
-        return Cache::read('next_to_be_published', $this->cache);
-    }
-
-    /**
      * Gets the categories list
      * @return array
      * @uses $cache
@@ -113,8 +124,8 @@ class AppTable extends Table
     public function getList()
     {
         return $this->find('list')
-            ->order([$this->displayField() => 'ASC'])
-            ->cache(sprintf('%s_list', $this->table()), $this->cache)
+            ->order([$this->getDisplayField() => 'ASC'])
+            ->cache(sprintf('%s_list', $this->getTable()), $this->cache)
             ->toArray();
     }
 
@@ -126,71 +137,51 @@ class AppTable extends Table
     public function getTreeList()
     {
         return $this->find('treeList')
-            ->cache(sprintf('%s_tree_list', $this->table()), $this->cache)
+            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->cache)
             ->toArray();
-    }
-
-    /**
-     * Checks whether a record belongs to an user.
-     *
-     * For example:
-     * <code>
-     * $posts = TableRegistry::get('Posts');
-     * $posts->isOwnedBy(2, 4);
-     * </code>
-     * checks if the posts with ID 2 belongs to the user with ID 4.
-     * @param int $id Record ID
-     * @param int $userId User ID
-     * @return bool
-     */
-    public function isOwnedBy($id, $userId = null)
-    {
-        return (bool)$this->find()
-            ->where(am(compact('id'), ['user_id' => $userId]))
-            ->first();
     }
 
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->query)
+     * @param array $data Filter data ($this->request->getQuery())
      * @return Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])
     {
         //"ID" field
         if (!empty($data['id']) && isPositive($data['id'])) {
-            $query->where([sprintf('%s.id', $this->alias()) => $data['id']]);
+            $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
         }
 
         //"Title" field
         if (!empty($data['title']) && strlen($data['title']) > 2) {
-            $query->where([sprintf('%s.title LIKE', $this->alias()) => sprintf('%%%s%%', $data['title'])]);
+            $query->where([sprintf('%s.title LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['title'])]);
         }
 
         //"Filename" field
         if (!empty($data['filename']) && strlen($data['filename']) > 2) {
-            $query->where([sprintf('%s.filename LIKE', $this->alias()) => sprintf('%%%s%%', $data['filename'])]);
+            $query->where([sprintf('%s.filename LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['filename'])]);
         }
 
         //"User" (author) field
         if (!empty($data['user']) && isPositive($data['user'])) {
-            $query->where([sprintf('%s.user_id', $this->alias()) => $data['user']]);
+            $query->where([sprintf('%s.user_id', $this->getAlias()) => $data['user']]);
         }
 
         //"Category" field
         if (!empty($data['category']) && isPositive($data['category'])) {
-            $query->where([sprintf('%s.category_id', $this->alias()) => $data['category']]);
+            $query->where([sprintf('%s.category_id', $this->getAlias()) => $data['category']]);
         }
 
         //"Active" field
         if (!empty($data['active'])) {
-            $query->where([sprintf('%s.active', $this->alias()) => $data['active'] === 'yes']);
+            $query->where([sprintf('%s.active', $this->getAlias()) => $data['active'] === 'yes']);
         }
 
         //"Priority" field
         if (!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority'])) {
-            $query->where([sprintf('%s.priority', $this->alias()) => $data['priority']]);
+            $query->where([sprintf('%s.priority', $this->getAlias()) => $data['priority']]);
         }
 
         //"Created" field
@@ -199,35 +190,11 @@ class AppTable extends Table
             $end = (new Time($start))->addMonth(1);
 
             $query->where([
-                sprintf('%s.created >=', $this->alias()) => $start,
-                sprintf('%s.created <', $this->alias()) => $end,
+                sprintf('%s.created >=', $this->getAlias()) => $start,
+                sprintf('%s.created <', $this->getAlias()) => $end,
             ]);
         }
 
         return $query;
-    }
-
-    /**
-     * Sets to cache the timestamp of the next record to be published.
-     * This value can be used to check if the cache is valid
-     * @return string|bool Timestamp or `false`
-     * @uses $cache
-     */
-    public function setNextToBePublished()
-    {
-        $next = $this->find()
-            ->where([
-                sprintf('%s.active', $this->alias()) => true,
-                sprintf('%s.created >', $this->alias()) => new Time,
-            ])
-            ->order([sprintf('%s.created', $this->alias()) => 'ASC'])
-            ->extract('created')
-            ->first();
-
-        $next = empty($next) ? false : $next->toUnixString();
-
-        Cache::write('next_to_be_published', $next, $this->cache);
-
-        return $next;
     }
 }

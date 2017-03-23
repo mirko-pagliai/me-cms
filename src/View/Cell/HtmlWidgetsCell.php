@@ -37,6 +37,6 @@ class HtmlWidgetsCell extends Cell
      */
     public function display($template)
     {
-        $this->viewBuilder()->template($template);
+        $this->viewBuilder()->setTemplate($template);
     }
 }

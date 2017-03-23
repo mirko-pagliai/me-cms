@@ -74,7 +74,7 @@ class BackupsController extends AppController
 
         if ($this->request->is('post')) {
             //Creates the backup
-            if ($backup->execute($this->request->data)) {
+            if ($backup->execute($this->request->getData())) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
@@ -127,11 +127,12 @@ class BackupsController extends AppController
      * Downloads a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response
-     * @uses MeCms\Controller\AppController::_download()
      */
     public function download($filename)
     {
-        return $this->_download(Configure::read('MysqlBackup.target') . DS . urldecode($filename));
+        $file = Configure::read('MysqlBackup.target') . DS . urldecode($filename);
+
+        return $this->response->withFile($file, ['download' => true]);
     }
 
     /**

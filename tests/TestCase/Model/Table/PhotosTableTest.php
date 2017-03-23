@@ -86,18 +86,11 @@ class PhotosTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $example = [
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
+        $entity = $this->Photos->get(1);
 
-        $entity = $this->Photos->newEntity($example);
-        $this->assertNotEmpty($this->Photos->save($entity));
+        $this->assertFileExists($entity->path);
 
-        //Creates the photo
-        file_put_contents($entity->path, null);
-
-        //Deletes the photos
+        //Deletes
         $this->assertTrue($this->Photos->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
@@ -135,13 +128,13 @@ class PhotosTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('photos', $this->Photos->table());
-        $this->assertEquals('filename', $this->Photos->displayField());
-        $this->assertEquals('id', $this->Photos->primaryKey());
+        $this->assertEquals('photos', $this->Photos->getTable());
+        $this->assertEquals('filename', $this->Photos->getDisplayField());
+        $this->assertEquals('id', $this->Photos->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Photos->Albums);
-        $this->assertEquals('album_id', $this->Photos->Albums->foreignKey());
-        $this->assertEquals('INNER', $this->Photos->Albums->joinType());
+        $this->assertEquals('album_id', $this->Photos->Albums->getForeignKey());
+        $this->assertEquals('INNER', $this->Photos->Albums->getJoinType());
         $this->assertEquals('MeCms.PhotosAlbums', $this->Photos->Albums->className());
 
         $this->assertTrue($this->Photos->hasBehavior('Timestamp'));

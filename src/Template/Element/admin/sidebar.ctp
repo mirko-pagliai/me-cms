@@ -20,12 +20,13 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use MeCms\Core\Plugin;
 
 //Renders menus for MeCms
 echo $this->MenuBuilder->renderAsCollapse(ME_CMS);
 
 //Renders menus for each plugin
-foreach (\MeCms\Core\Plugin::all([
+foreach (Plugin::all([
     'exclude' => [ME_CMS, METOOLS, 'Assets', 'MysqlBackup', 'Thumber'],
     ]) as $plugin) {
     $menus = $this->MenuBuilder->renderAsCollapse($plugin);

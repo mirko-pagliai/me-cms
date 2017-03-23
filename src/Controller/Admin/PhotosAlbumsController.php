@@ -69,7 +69,7 @@ class PhotosAlbumsController extends AppController
         $album = $this->PhotosAlbums->newEntity();
 
         if ($this->request->is('post')) {
-            $album = $this->PhotosAlbums->patchEntity($album, $this->request->data);
+            $album = $this->PhotosAlbums->patchEntity($album, $this->request->getData());
 
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -93,7 +93,7 @@ class PhotosAlbumsController extends AppController
         $album = $this->PhotosAlbums->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $album = $this->PhotosAlbums->patchEntity($album, $this->request->data);
+            $album = $this->PhotosAlbums->patchEntity($album, $this->request->getData());
 
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

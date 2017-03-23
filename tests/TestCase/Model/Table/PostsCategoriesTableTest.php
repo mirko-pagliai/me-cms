@@ -117,20 +117,20 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('posts_categories', $this->PostsCategories->table());
-        $this->assertEquals('title', $this->PostsCategories->displayField());
-        $this->assertEquals('id', $this->PostsCategories->primaryKey());
+        $this->assertEquals('posts_categories', $this->PostsCategories->getTable());
+        $this->assertEquals('title', $this->PostsCategories->getDisplayField());
+        $this->assertEquals('id', $this->PostsCategories->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsCategories->Parents);
-        $this->assertEquals('parent_id', $this->PostsCategories->Parents->foreignKey());
+        $this->assertEquals('parent_id', $this->PostsCategories->Parents->getForeignKey());
         $this->assertEquals('MeCms.PostsCategories', $this->PostsCategories->Parents->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Childs);
-        $this->assertEquals('parent_id', $this->PostsCategories->Childs->foreignKey());
+        $this->assertEquals('parent_id', $this->PostsCategories->Childs->getForeignKey());
         $this->assertEquals('MeCms.PostsCategories', $this->PostsCategories->Childs->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Posts);
-        $this->assertEquals('category_id', $this->PostsCategories->Posts->foreignKey());
+        $this->assertEquals('category_id', $this->PostsCategories->Posts->getForeignKey());
         $this->assertEquals('MeCms.Posts', $this->PostsCategories->Posts->className());
 
         $this->assertTrue($this->PostsCategories->hasBehavior('Timestamp'));

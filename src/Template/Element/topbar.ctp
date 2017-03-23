@@ -21,7 +21,6 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 ?>
-
 <nav id="topbar" class="navbar navbar-default" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -36,30 +35,12 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="topbar-collapse">
-            <?php
-                echo $this->Html->ul(
-                    [
-                        $this->Html->link(
-                            __d('me_cms', 'Home'),
-                            ['_name' => 'homepage'],
-                            ['icon' => 'home']
-                        ),
-                        $this->Html->link(
-                            __d('me_cms', 'Categories'),
-                            ['_name' => 'postsCategories']
-                        ),
-                        $this->Html->link(
-                            __d('me_cms', 'Pages'),
-                            ['_name' => 'pagesCategories']
-                        ),
-                        $this->Html->link(
-                            __d('me_cms', 'Photos'),
-                            ['_name' => 'albums']
-                        ),
-                    ],
-                    ['class' => 'nav navbar-nav']
-                );
-            ?>
+            <?= $this->Html->ul([
+                $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['icon' => 'home']),
+                $this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'postsCategories']),
+                $this->Html->link(__d('me_cms', 'Pages'), ['_name' => 'pagesCategories']),
+                $this->Html->link(__d('me_cms', 'Photos'), ['_name' => 'albums']),
+            ], ['class' => 'nav navbar-nav']) ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

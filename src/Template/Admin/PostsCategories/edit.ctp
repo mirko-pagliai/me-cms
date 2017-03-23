@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit posts category'));
 $this->Library->slugify();
@@ -30,7 +29,7 @@ $this->Library->slugify();
 <div class='float-form'>
     <?php
     if (!empty($categories)) {
-        echo $this->Form->input('parent_id', [
+        echo $this->Form->control('parent_id', [
             'label' => __d('me_cms', 'Parent category'),
             'options' => $categories,
             'help' => __d('me_cms', 'Leave blank to create a parent category'),
@@ -40,18 +39,18 @@ $this->Library->slugify();
 </div>
 <fieldset>
     <?php
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'id' => 'title',
             'label' => __d('me_cms', 'Title'),
         ]);
-        echo $this->Form->input('slug', [
+        echo $this->Form->control('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
             'help' => __d('me_cms', 'The slug is a string identifying a ' .
                 'resource. If you do not have special needs, let it be ' .
                 'generated automatically'),
         ]);
-        echo $this->Form->input('description', [
+        echo $this->Form->control('description', [
             'label' => __d('me_cms', 'Description'),
             'rows' => 3,
         ]);

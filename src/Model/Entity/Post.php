@@ -23,7 +23,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeTools\Utility\Youtube;
+use MeCms\Model\Entity\Traits\PreviewAccessorTrait;
 
 /**
  * Post entity
@@ -44,6 +44,8 @@ use MeTools\Utility\Youtube;
  */
 class Post extends Entity
 {
+    use PreviewAccessorTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
@@ -59,34 +61,6 @@ class Post extends Entity
      * @var array
      */
     protected $_virtual = ['preview', 'tags_as_string'];
-
-    /**
-     * Gets the image preview (virtual field)
-     * @return string|void
-     * @uses MeTools\Utility\Youtube::getId()
-     * @uses MeTools\Utility\Youtube::getPreview()
-     */
-    protected function _getPreview()
-    {
-        if (empty($this->_properties['text'])) {
-            return;
-        }
-
-        $preview = firstImageFromText($this->_properties['text']);
-
-        if ($preview) {
-            return $preview;
-        }
-
-        //Checks for a YouTube video and its preview
-        preg_match('/\[youtube](.+?)\[\/youtube]/', $this->_properties['text'], $matches);
-
-        if (!empty($matches[1])) {
-            return Youtube::getPreview(isUrl($matches[1]) ? Youtube::getId($matches[1]) : $matches[1]);
-        }
-
-        return false;
-    }
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)

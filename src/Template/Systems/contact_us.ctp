@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/view');
 $this->assign('title', __d('me_cms', 'Contact us'));
 ?>
@@ -28,18 +27,18 @@ $this->assign('title', __d('me_cms', 'Contact us'));
 <?= $this->Form->create($contact) ?>
 <fieldset>
     <?php
-        echo $this->Form->input('first_name', [
+        echo $this->Form->control('first_name', [
             'label' => __d('me_cms', 'First name'),
         ]);
-        echo $this->Form->input('last_name', [
+        echo $this->Form->control('last_name', [
             'label' => __d('me_cms', 'Last name'),
         ]);
-        echo $this->Form->input('email', [
+        echo $this->Form->control('email', [
             'autocomplete' => 'off',
             'label' => __d('me_cms', 'Email'),
             'help' => __d('me_cms', 'Enter your email'),
         ]);
-        echo $this->Form->input('message', [
+        echo $this->Form->control('message', [
             'label' => __d('me_cms', 'Message'),
             'rows' => 8,
             'type' => 'textarea',

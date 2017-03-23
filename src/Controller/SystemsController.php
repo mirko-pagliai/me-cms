@@ -41,7 +41,7 @@ class SystemsController extends AppController
     public function acceptCookies()
     {
         //Sets the cookie
-        $this->Cookie->config(['expires' => '+999 days'])->write('cookies-policy', true);
+        $this->Cookie->setConfig('expires', '+999 days')->write('cookies-policy', true);
 
         return $this->redirect($this->referer('/', true));
     }
@@ -71,7 +71,7 @@ class SystemsController extends AppController
                 $this->Flash->error($this->Recaptcha->getError());
             } else {
                 //Sends the email
-                if ($contact->execute($this->request->data())) {
+                if ($contact->execute($this->request->getData())) {
                     $this->Flash->success(__d('me_cms', 'The email has been sent'));
 
                     return $this->redirect(['_name' => 'homepage']);
@@ -95,7 +95,7 @@ class SystemsController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 
     /**
@@ -109,7 +109,7 @@ class SystemsController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $this->viewBuilder()->layout('login');
+        $this->viewBuilder()->setLayout('login');
     }
 
     /**
@@ -135,23 +135,19 @@ class SystemsController extends AppController
      */
     public function sitemap()
     {
-        //If the sitemap doesn't exists, it writes the sitemap
-        if (!is_readable(SITEMAP)) {
-            $sitemap = $this->_sitemap();
-        } else {
+        //Checks if the sitemap exist and is not expired
+        if (is_readable(SITEMAP)) {
             $time = Time::createFromTimestamp(filemtime(SITEMAP));
 
-            //If the sitemap has expired, it writes a new sitemap
-            if ($time->modify(config('main.sitemap_expiration'))->isPast()) {
-                $sitemap = $this->_sitemap();
-            } else {
+            if (!$time->modify(config('main.sitemap_expiration'))->isPast()) {
                 $sitemap = file_get_contents(SITEMAP);
             }
         }
 
-        $this->response->body($sitemap);
-        $this->response->type('x-gzip');
+        if (empty($sitemap)) {
+            $sitemap = $this->_sitemap();
+        }
 
-        return $this->response;
+        return $this->response->withStringBody($sitemap)->withType(mime_content_type(SITEMAP));
     }
 }

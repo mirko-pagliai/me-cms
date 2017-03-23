@@ -105,18 +105,18 @@ class PostsTagsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('posts_tags', $this->PostsTags->table());
-        $this->assertEquals('id', $this->PostsTags->displayField());
-        $this->assertEquals('id', $this->PostsTags->primaryKey());
+        $this->assertEquals('posts_tags', $this->PostsTags->getTable());
+        $this->assertEquals('id', $this->PostsTags->getDisplayField());
+        $this->assertEquals('id', $this->PostsTags->getPrimaryKey());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Posts);
-        $this->assertEquals('post_id', $this->PostsTags->Posts->foreignKey());
-        $this->assertEquals('INNER', $this->PostsTags->Posts->joinType());
+        $this->assertEquals('post_id', $this->PostsTags->Posts->getForeignKey());
+        $this->assertEquals('INNER', $this->PostsTags->Posts->getJoinType());
         $this->assertEquals('MeCms.Posts', $this->PostsTags->Posts->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Tags);
-        $this->assertEquals('tag_id', $this->PostsTags->Tags->foreignKey());
-        $this->assertEquals('INNER', $this->PostsTags->Tags->joinType());
+        $this->assertEquals('tag_id', $this->PostsTags->Tags->getForeignKey());
+        $this->assertEquals('INNER', $this->PostsTags->Tags->getJoinType());
         $this->assertEquals('MeCms.Tags', $this->PostsTags->Tags->className());
 
         $this->assertTrue($this->PostsTags->hasBehavior('CounterCache'));

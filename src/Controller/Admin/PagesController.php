@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -119,7 +118,7 @@ class PagesController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->query));
+        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->getQuery()));
 
         $this->set(compact('pages'));
     }
@@ -145,9 +144,7 @@ class PagesController extends AppController
         $page = $this->Pages->newEntity();
 
         if ($this->request->is('post')) {
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
-            $page = $this->Pages->patchEntity($page, $this->request->data);
+            $page = $this->Pages->patchEntity($page, $this->request->getData());
 
             if ($this->Pages->save($page)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
@@ -171,9 +168,7 @@ class PagesController extends AppController
         $page = $this->Pages->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $this->request->data['created'] = new Time($this->request->data('created'));
-
-            $page = $this->Pages->patchEntity($page, $this->request->data);
+            $page = $this->Pages->patchEntity($page, $this->request->getData());
 
             if ($this->Pages->save($page)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->extend('/Common/view');
 $this->assign('title', $page->title);
 
@@ -28,44 +27,31 @@ $this->assign('title', $page->title);
  * Userbar
  */
 if (!$page->active) {
-    $this->userbar($this->Html->span(
-        __d('me_cms', 'Draft'),
-        ['class' => 'label label-warning']
-    ));
+    $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
 }
-
 if ($page->created->isFuture()) {
-    $this->userbar($this->Html->span(
-        __d('me_cms', 'Scheduled'),
-        ['class' => 'label label-warning']
-    ));
+    $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
 }
-
-$this->userbar([
-    $this->Html->link(
-        __d('me_cms', 'Edit page'),
-        ['action' => 'edit', $page->id, 'prefix' => ADMIN_PREFIX],
-        ['icon' => 'pencil', 'target' => '_blank']
-    ),
-    $this->Form->postLink(
-        __d('me_cms', 'Delete page'),
-        ['action' => 'delete', $page->id, 'prefix' => ADMIN_PREFIX],
-        [
-            'icon' => 'trash-o',
-            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-            'target' => '_blank',
-        ]
-    ),
-]);
+$this->userbar($this->Html->link(
+    __d('me_cms', 'Edit page'),
+    ['action' => 'edit', $page->id, 'prefix' => ADMIN_PREFIX],
+    ['icon' => 'pencil', 'target' => '_blank']
+));
+$this->userbar($this->Form->postLink(
+    __d('me_cms', 'Delete page'),
+    ['action' => 'delete', $page->id, 'prefix' => ADMIN_PREFIX],
+    [
+        'icon' => 'trash-o',
+        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+        'target' => '_blank',
+    ]
+));
 
 /**
  * Breadcrumb
  */
 if (config('page.category')) {
-    $this->Breadcrumbs->add(
-        $page->category->title,
-        ['_name' => 'pagesCategory', $page->category->slug]
-    );
+    $this->Breadcrumbs->add($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]);
 }
 $this->Breadcrumbs->add($page->title, ['_name' => 'page', $page->slug]);
 
@@ -73,27 +59,15 @@ $this->Breadcrumbs->add($page->title, ['_name' => 'page', $page->slug]);
  * Meta tags
  */
 if ($this->request->isAction('view', 'Pages')) {
-    $this->Html->meta([
-        'content' => 'article',
-        'property' => 'og:type',
-    ]);
-    $this->Html->meta([
-        'content' => $page->modified->toUnixString(),
-        'property' => 'og:updated_time',
-    ]);
+    $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
+    $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if (!empty($page->preview)) {
-        $this->Html->meta([
-            'href' => $page->preview,
-            'rel' => 'image_src',
-        ]);
-        $this->Html->meta([
-            'content' => $page->preview,
-            'property' => 'og:image',
-        ]);
+    if ($page->preview) {
+        $this->Html->meta(['href' => $page->preview, 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $page->preview, 'property' => 'og:image']);
     }
 
-    if (!empty($page->text)) {
+    if ($page->text) {
         $this->Html->meta([
             'content' => $this->Text->truncate(
                 trim(strip_tags($this->BBCode->remove($page->text))),
