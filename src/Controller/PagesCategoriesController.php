@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
 /**
