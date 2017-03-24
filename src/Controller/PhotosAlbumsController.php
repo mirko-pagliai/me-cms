@@ -39,15 +39,11 @@ class PhotosAlbumsController extends AppController
     {
         $albums = $this->PhotosAlbums->find('active')
             ->select(['id', 'title', 'slug', 'photo_count'])
-            ->contain([
-                'Photos' => function ($q) {
-                    return $q->select(['album_id', 'filename'])
-                        ->where([
-                            sprintf('%s.active', $this->PhotosAlbums->Photos->getAlias()) => true,
-                        ])
-                        ->order('rand()');
-                }
-            ])
+            ->contain(['Photos' => function ($q) {
+                return $q->select(['album_id', 'filename'])
+                    ->where([sprintf('%s.active', $this->PhotosAlbums->Photos->getAlias()) => true])
+                    ->order('rand()');
+            }])
             ->order(['title' => 'ASC'])
             ->cache('albums_index', $this->PhotosAlbums->cache)
             ->all();
@@ -86,12 +82,10 @@ class PhotosAlbumsController extends AppController
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($photos, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->PhotosAlbums->cache
-            )
-        );
+        list($photos, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->PhotosAlbums->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
@@ -128,15 +122,13 @@ class PhotosAlbumsController extends AppController
     {
         $album = $this->PhotosAlbums->find()
             ->select(['id', 'slug', 'title', 'active'])
-            ->contain([
-                'Photos' => function ($q) {
-                    return $q->select(['id', 'album_id', 'filename', 'description'])
-                        ->order([
-                            sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
-                            sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
-                        ]);
-                }
-             ])
+            ->contain(['Photos' => function ($q) {
+                return $q->select(['id', 'album_id', 'filename', 'description'])
+                    ->order([
+                        sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                        sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                    ]);
+            }])
             ->where(compact('slug'))
             ->firstOrFail();
 

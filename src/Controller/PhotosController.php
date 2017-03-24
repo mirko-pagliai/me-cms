@@ -38,16 +38,13 @@ class PhotosController extends AppController
      */
     public function view($slug = null, $id = null)
     {
-        //This allows backward compatibility for URLs like:
-        //<pre>/photo/11</pre>
+        //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
             $photo = $this->Photos->find('active')
                 ->select(['album_id'])
-                ->contain([
-                    'Albums' => function ($q) {
-                        return $q->select(['id', 'slug']);
-                    }
-                ])
+                ->contain(['Albums' => function ($q) {
+                    return $q->select(['id', 'slug']);
+                }])
                 ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
                 ->firstOrFail();
 
@@ -56,11 +53,9 @@ class PhotosController extends AppController
 
         $photo = $this->Photos->find('active')
             ->select(['id', 'album_id', 'filename', 'active'])
-            ->contain([
-                'Albums' => function ($q) {
-                    return $q->select(['id', 'title', 'slug']);
-                }
-            ])
+            ->contain(['Albums' => function ($q) {
+                return $q->select(['id', 'title', 'slug']);
+            }])
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
             ->firstOrFail();
@@ -78,11 +73,9 @@ class PhotosController extends AppController
     {
         $photo = $this->Photos->find()
             ->select(['id', 'album_id', 'filename'])
-            ->contain([
-                'Albums' => function ($q) {
-                    return $q->select(['id', 'title', 'slug']);
-                }
-            ])
+            ->contain(['Albums' => function ($q) {
+                return $q->select(['id', 'title', 'slug']);
+            }])
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->firstOrFail();
 

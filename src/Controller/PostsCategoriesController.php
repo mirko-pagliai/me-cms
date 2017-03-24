@@ -66,12 +66,10 @@ class PostsCategoriesController extends AppController
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->PostsCategories->cache
-            )
-        );
+        list($posts, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->PostsCategories->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
@@ -107,8 +105,6 @@ class PostsCategoriesController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(am([
-            'category' => $posts[0]->category,
-        ], compact('posts')));
+        $this->set(am(['category' => $posts[0]->category], compact('posts')));
     }
 }

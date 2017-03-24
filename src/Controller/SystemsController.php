@@ -26,6 +26,7 @@ use Cake\Filesystem\File;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
+use MeCms\Utility\Sitemap;
 
 /**
  * Systems controller
@@ -113,25 +114,10 @@ class SystemsController extends AppController
     }
 
     /**
-     * Internal method to generate, encode and write the sitemap
-     * @return string Sitemap content, encoded
-     * @uses MeCms\Utility\Sitemap::generate;
-     */
-    protected function _sitemap()
-    {
-        $sitemap = gzencode(\MeCms\Utility\Sitemap::generate(), 9);
-
-        (new File(SITEMAP, true, 0777))->write($sitemap);
-
-        return $sitemap;
-    }
-
-    /**
      * Returns the site sitemap.
      * If the sitemap doesn't exist or has expired, it generates and writes
      *  the sitemap.
      * @return \Cake\Network\Response
-     * @uses _sitemap()
      */
     public function sitemap()
     {
@@ -145,7 +131,9 @@ class SystemsController extends AppController
         }
 
         if (empty($sitemap)) {
-            $sitemap = $this->_sitemap();
+            $sitemap = gzencode(Sitemap::generate(), 9);
+
+            (new File(SITEMAP, true, 0777))->write($sitemap);
         }
 
         return $this->response->withStringBody($sitemap)->withType(mime_content_type(SITEMAP));

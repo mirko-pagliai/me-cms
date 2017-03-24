@@ -64,12 +64,10 @@ class PostsController extends AppController
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->Posts->cache
-            )
-        );
+        list($posts, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->Posts->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
@@ -171,12 +169,10 @@ class PostsController extends AppController
         $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(
-            Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->Posts->cache
-            )
-        );
+        list($posts, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->Posts->cache
+        ));
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
@@ -260,12 +256,10 @@ class PostsController extends AppController
                     $cache = sprintf('%s_page_%s', $cache, $page);
 
                     //Tries to get data from the cache
-                    list($posts, $paging) = array_values(
-                        Cache::readMany(
-                            [$cache, sprintf('%s_paging', $cache)],
-                            $this->Posts->cache
-                        )
-                    );
+                    list($posts, $paging) = array_values(Cache::readMany(
+                        [$cache, sprintf('%s_paging', $cache)],
+                        $this->Posts->cache
+                    ));
 
                     //If the data are not available from the cache
                     if (empty($posts) || empty($paging)) {
@@ -292,7 +286,11 @@ class PostsController extends AppController
 
                     $this->set(compact('posts'));
                 } else {
-                    $this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', config('security.search_interval')));
+                    $this->Flash->alert(__d(
+                        'me_cms',
+                        'You have to wait {0} seconds to perform a new search',
+                        config('security.search_interval')
+                    ));
                 }
             } else {
                 $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
