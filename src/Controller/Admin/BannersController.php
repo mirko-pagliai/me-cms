@@ -88,16 +88,13 @@ class BannersController extends AppController
         $render = $this->request->getQuery('render');
 
         if ($this->Cookie->read('render.banners') === 'grid' && !$render) {
-            return $this->redirect([
-                '?' => am($this->request->getQuery(), ['render' => 'grid'])
-            ]);
+            return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
         }
 
-        $query = $this->Banners->find()->contain([
-            'Positions' => function ($q) {
+        $query = $this->Banners->find()
+            ->contain(['Positions' => function ($q) {
                 return $q->select(['id', 'title']);
-            },
-        ]);
+            }]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

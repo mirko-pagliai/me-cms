@@ -26,6 +26,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
+use Cake\I18n\I18n;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
@@ -94,7 +95,7 @@ class SystemsController extends AppController
         //Checks the type, then sets the KCFinder path
         if ($type && array_key_exists($type, $types)) {
             //Sets locale
-            $locale = substr(\Cake\I18n\I18n::locale(), 0, 2);
+            $locale = substr(I18n::locale(), 0, 2);
             $locale = empty($locale) ? 'en' : $locale;
 
             $this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', true), $locale, $type));
@@ -285,12 +286,9 @@ class SystemsController extends AppController
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
         $thumbsSize = (new Folder(Configure::read('Thumbs.target')))->dirsize();
 
-        $this->set(am(
-            [
-            'cacheStatus' => Cache::enabled(),
-            'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
-            ],
-            compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize')
-        ));
+        $this->set(am([
+        'cacheStatus' => Cache::enabled(),
+        'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
+        ], compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize')));
     }
 }
