@@ -16,7 +16,8 @@
 * the preview image for pages and posts always contains a full url;
 * global function `firstImageFromText()` renamed as `firstImage()`;
 * removed `AppController::_download()` method;
-* added tests for `isAuthorized()` and `download()` methods of all controllers;
+* added tests for `isAuthorized()` and `download()` methods of all admin 
+    controllers;
 * added tests for virtual fields.
 
 ### 2.16.0
