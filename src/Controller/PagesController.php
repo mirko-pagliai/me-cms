@@ -66,9 +66,7 @@ class PagesController extends AppController
         $static = StaticPage::get($slug);
 
         if ($static) {
-            $page = (object)am([
-                'title' => StaticPage::title($slug),
-            ], compact('slug'));
+            $page = (object)am(['title' => StaticPage::title($slug)], compact('slug'));
 
             $this->set(compact('page'));
 
@@ -77,11 +75,9 @@ class PagesController extends AppController
 
         $page = $this->Pages->find('active')
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['title', 'slug']);
-                },
-            ])
+            ->contain(['Categories' => function ($q) {
+                return $q->select(['title', 'slug']);
+            }])
             ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
             ->firstOrFail();
@@ -99,11 +95,9 @@ class PagesController extends AppController
     {
         $page = $this->Pages->find()
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['title', 'slug']);
-                },
-            ])
+            ->contain(['Categories' => function ($q) {
+                return $q->select(['title', 'slug']);
+            }])
             ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->firstOrFail();
 

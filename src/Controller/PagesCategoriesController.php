@@ -22,7 +22,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Controller\AppController;
 
 /**
@@ -60,11 +59,9 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->find('active')
             ->select(['id', 'title'])
-            ->contain([
-                'Pages' => function ($q) {
-                    return $q->select(['category_id', 'slug', 'title']);
-                },
-            ])
+            ->contain(['Pages' => function ($q) {
+                return $q->select(['category_id', 'slug', 'title']);
+            }])
             ->where([sprintf('%s.slug', $this->PagesCategories->getAlias()) => $slug])
             ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache)
             ->firstOrFail();

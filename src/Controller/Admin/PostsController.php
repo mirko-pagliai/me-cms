@@ -117,17 +117,18 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $query = $this->Posts->find()->contain([
-            'Categories' => function ($q) {
-                return $q->select(['id', 'title']);
-            },
-            'Tags' => function ($q) {
-                return $q->order(['tag' => 'ASC']);
-            },
-            'Users' => function ($q) {
-                return $q->select(['id', 'first_name', 'last_name']);
-            },
-        ]);
+        $query = $this->Posts->find()
+            ->contain([
+                'Categories' => function ($q) {
+                    return $q->select(['id', 'title']);
+                },
+                'Tags' => function ($q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
+                'Users' => function ($q) {
+                    return $q->select(['id', 'first_name', 'last_name']);
+                },
+            ]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
@@ -173,11 +174,11 @@ class PostsController extends AppController
      */
     public function edit($id = null)
     {
-        $post = $this->Posts->findById($id)->contain([
-            'Tags' => function ($q) {
+        $post = $this->Posts->findById($id)
+            ->contain(['Tags' => function ($q) {
                 return $q->order(['tag' => 'ASC']);
-            },
-        ])->firstOrFail();
+            }])
+            ->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit posts on behalf of other users

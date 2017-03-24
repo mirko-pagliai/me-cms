@@ -39,7 +39,7 @@ class BannersController extends AppController
     public function open($id = null)
     {
         $banner = $this->Banners->find('active')
-            ->select(['id', 'target'])
+            ->select(['target'])
             ->where(am(['target !=' => ''], compact('id')))
             ->cache(sprintf('view_%s', md5($id)), $this->Banners->cache)
             ->firstOrFail();

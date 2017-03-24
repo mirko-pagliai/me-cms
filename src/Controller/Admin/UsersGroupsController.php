@@ -123,7 +123,10 @@ class UsersGroupsController extends AppController
         } elseif ($id <= 3) {
             $this->Flash->alert(__d('me_cms', 'You cannot delete this users group'));
         } else {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            $this->Flash->alert(__d(
+                'me_cms',
+                'Before deleting this, you must delete or reassign all items that belong to this element'
+            ));
         }
 
         return $this->redirect(['action' => 'index']);

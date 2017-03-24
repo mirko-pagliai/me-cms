@@ -82,11 +82,10 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $query = $this->Users->find()->contain([
-            'Groups' => function ($q) {
+        $query = $this->Users->find()
+            ->contain(['Groups' => function ($q) {
                 return $q->select(['id', 'label']);
-            },
-        ]);
+            }]);
 
         $this->paginate['order'] = ['username' => 'ASC'];
 
@@ -197,7 +196,10 @@ class UsersController extends AppController
         } elseif ($user->group_id === 1 && !$this->Auth->isFounder()) {
             $this->Flash->alert(__d('me_cms', 'Only the admin founder can do this'));
         } elseif (!empty($user->post_count)) {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            $this->Flash->alert(__d(
+                'me_cms',
+                'Before deleting this, you must delete or reassign all items that belong to this element'
+            ));
         } else {
             if ($this->Users->delete($user)) {
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));

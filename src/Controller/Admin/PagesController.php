@@ -110,11 +110,10 @@ class PagesController extends AppController
      */
     public function index()
     {
-        $query = $this->Pages->find()->contain([
-            'Categories' => function ($q) {
+        $query = $this->Pages->find()
+            ->contain(['Categories' => function ($q) {
                 return $q->select(['id', 'title']);
-            }
-        ]);
+            }]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

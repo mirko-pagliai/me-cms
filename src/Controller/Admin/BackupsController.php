@@ -25,6 +25,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use MeCms\Controller\AppController;
+use MeCms\Form\BackupForm;
 use MysqlBackup\Utility\BackupImport;
 use MysqlBackup\Utility\BackupManager;
 
@@ -70,7 +71,7 @@ class BackupsController extends AppController
      */
     public function add()
     {
-        $backup = new \MeCms\Form\BackupForm();
+        $backup = new BackupForm;
 
         if ($this->request->is('post')) {
             //Creates the backup
@@ -146,7 +147,7 @@ class BackupsController extends AppController
     {
         $filename = Configure::read('MysqlBackup.target') . DS . urldecode($filename);
 
-        $backup = new BackupImport();
+        $backup = new BackupImport;
         $backup->filename($filename);
 
         if ($backup->import()) {

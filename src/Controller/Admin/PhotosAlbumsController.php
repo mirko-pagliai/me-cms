@@ -125,7 +125,10 @@ class PhotosAlbumsController extends AppController
                 $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
         } else {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            $this->Flash->alert(__d(
+                'me_cms',
+                'Before deleting this, you must delete or reassign all items that belong to this element'
+            ));
         }
 
         return $this->redirect(['action' => 'index']);
