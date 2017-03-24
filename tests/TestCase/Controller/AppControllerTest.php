@@ -26,12 +26,15 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use MeCms\Controller\AppController;
+use MeCms\TestSuite\Traits\AuthMethodsTrait;
 
 /**
  * AppControllerTest class
  */
 class AppControllerTest extends TestCase
 {
+    use AuthMethodsTrait;
+
     /**
      * @var \MeCms\Controller\AppController
      */
@@ -41,15 +44,6 @@ class AppControllerTest extends TestCase
      * @var \Cake\Event\Event
      */
     protected $Event;
-
-    /**
-     * Internal method to set the user group
-     * @param string $group Group name
-     */
-    protected function setUserGroup($group)
-    {
-        $this->Controller->Auth->setUser(['group' => ['name' => $group]]);
-    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -172,7 +166,6 @@ class AppControllerTest extends TestCase
     public function testBeforeRender()
     {
         $this->Controller->beforeRender($this->Event);
-
         $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
         $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
         $this->assertEquals(['MeCms.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
@@ -180,13 +173,11 @@ class AppControllerTest extends TestCase
         //Admin request
         $this->Controller = new AppController;
         $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
-
         $this->Controller->beforeRender($this->Event);
         $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
         $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
-
         $this->Controller->beforeRender($this->Event);
         $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
@@ -197,15 +188,11 @@ class AppControllerTest extends TestCase
      */
     public function testIsAuthorized()
     {
-        $this->assertFalse($this->Controller->isAuthorized());
-
-        $this->setUserGroup('admin');
-        $this->assertTrue($this->Controller->isAuthorized());
-
-        $this->setUserGroup('manager');
-        $this->assertTrue($this->Controller->isAuthorized());
-
-        $this->setUserGroup('user');
-        $this->assertFalse($this->Controller->isAuthorized());
+        $this->assertGroupsAreAuthorized([
+            null => false,
+            'admin' => true,
+            'manager' => true,
+            'user' => false,
+        ]);
     }
 }

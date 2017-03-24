@@ -70,7 +70,10 @@ trait AuthMethodsTrait
     protected function setUserId($id)
     {
         $this->Controller->Auth->setUser(['id' => $id]);
-        $this->session(['Auth' => ['User' => ['id' => $id]]]);
+
+        if (method_exists($this, 'session')) {
+            $this->session(['Auth' => ['User' => ['id' => $id]]]);
+        }
     }
 
     /**
@@ -82,6 +85,9 @@ trait AuthMethodsTrait
     protected function setUserGroup($group)
     {
         $this->Controller->Auth->setUser(['group' => ['name' => $group]]);
-        $this->session(['Auth' => ['User' => ['group' => ['name' => $group]]]]);
+
+        if (method_exists($this, 'session')) {
+            $this->session(['Auth' => ['User' => ['group' => ['name' => $group]]]]);
+        }
     }
 }
