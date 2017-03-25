@@ -326,15 +326,13 @@ class UsersTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
 
-        $params = array_map(function ($v) {
-            return $v['value'];
-        }, $query->valueBinder()->bindings());
+        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
         $this->assertEquals([
-            ':c0' => '%test%',
-            ':c1' => 1,
-            ':c2' => true,
-            ':c3' => false,
+            '%test%',
+            1,
+            true,
+            false,
         ], $params);
 
         $data['status'] = 'pending';
@@ -342,14 +340,12 @@ class UsersTableTest extends TestCase
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
 
-        $params = array_map(function ($v) {
-            return $v['value'];
-        }, $query->valueBinder()->bindings());
+        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
         $this->assertEquals([
-            ':c0' => '%test%',
-            ':c1' => 1,
-            ':c2' => false,
+            '%test%',
+            1,
+            false,
         ], $params);
 
         $data['status'] = 'banned';
@@ -357,14 +353,12 @@ class UsersTableTest extends TestCase
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
 
-        $params = array_map(function ($v) {
-            return $v['value'];
-        }, $query->valueBinder()->bindings());
+        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
         $this->assertEquals([
-            ':c0' => '%test%',
-            ':c1' => 1,
-            ':c2' => true,
+            '%test%',
+            1,
+            true,
         ], $params);
     }
 
