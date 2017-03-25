@@ -27,6 +27,7 @@ use Cake\Core\App;
 use Cake\Filesystem\Folder;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
+use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 
@@ -94,13 +95,13 @@ class StaticPage
             $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
 
             foreach ($files as $file) {
-                $pages[] = (object)[
+                $pages[] = new Entity([
                     'filename' => pathinfo($file, PATHINFO_FILENAME),
                     'path' => rtr($file),
                     'slug' => self::slug($file, $path),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
                     'modified' => new FrozenTime(filemtime($file)),
-                ];
+                ]);
             }
         }
 

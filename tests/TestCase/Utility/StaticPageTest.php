@@ -78,10 +78,13 @@ class StaticPageTest extends TestCase
     {
         $pages = $this->StaticPage->all();
 
+        foreach ($pages as $page) {
+            $this->assertInstanceOf('Cake\ORM\Entity', $page);
+            $this->assertInstanceOf('Cake\I18n\FrozenTime', $page->modified);
+        }
+
         //Checks filenames
-        $filenames = collection($pages)->extract(function ($page) {
-            return $page->filename;
-        })->toArray();
+        $filenames = collection($pages)->extract('filename')->toList();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -92,9 +95,7 @@ class StaticPageTest extends TestCase
         ], $filenames);
 
         //Checks paths
-        $paths = collection($pages)->extract(function ($page) {
-            return $page->path;
-        })->toList();
+        $paths = collection($pages)->extract('path')->toList();
 
         $this->assertEquals([
             'src/Template/StaticPages/cookies-policy-it.ctp',
@@ -105,9 +106,7 @@ class StaticPageTest extends TestCase
         ], $paths);
 
         //Checks slugs
-        $slugs = collection($pages)->extract(function ($page) {
-            return $page->slug;
-        })->toList();
+        $slugs = collection($pages)->extract('slug')->toList();
 
         $this->assertEquals([
             'cookies-policy-it',
@@ -118,9 +117,7 @@ class StaticPageTest extends TestCase
         ], $slugs);
 
         //Checks titles
-        $titles = collection($pages)->extract(function ($page) {
-            return $page->title;
-        })->toList();
+        $titles = collection($pages)->extract('title')->toList();
 
         $this->assertEquals([
             'Cookies Policy It',
@@ -129,11 +126,6 @@ class StaticPageTest extends TestCase
             'Page On First From Plugin',
             'Page On Second From Plugin',
         ], $titles);
-
-        //Checks modified times
-        foreach ($pages as $page) {
-            $this->assertInstanceOf('Cake\I18n\FrozenTime', $page->modified);
-        }
     }
 
     /**
@@ -143,9 +135,7 @@ class StaticPageTest extends TestCase
     public function testGet()
     {
         //Gets all slugs from pages
-        $slugs = collection($this->StaticPage->all())->map(function ($page) {
-            return $page->slug;
-        })->toList();
+        $slugs = collection($this->StaticPage->all())->extract('slug')->toList();
 
         //Now, on the contrary, gets all pages from slugs
         $pages = collection($slugs)->map(function ($slug) {
@@ -239,9 +229,7 @@ class StaticPageTest extends TestCase
         ];
 
         //Gets all slugs from pages
-        $slugs = collection($this->StaticPage->all())->map(function ($page) {
-            return $page->slug;
-        })->toList();
+        $slugs = collection($this->StaticPage->all())->extract('slug')->toList();
 
         //Now gets all title from slugs
         $titles = collection($slugs)->map(function ($slug) {
@@ -251,9 +239,7 @@ class StaticPageTest extends TestCase
         $this->assertEquals($expected, $titles);
 
         //Gets all paths from pages
-        $paths = collection($this->StaticPage->all())->map(function ($page) {
-            return $page->path;
-        })->toList();
+        $paths = collection($this->StaticPage->all())->extract('path')->toList();
 
         //Now gets all title from paths
         $titles = collection($paths)->map(function ($path) {

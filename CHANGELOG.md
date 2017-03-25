@@ -5,7 +5,7 @@
 * fixed bug on `StaticPage::paths()`. Now it returns only existing paths;
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
-* static pages uses cache;
+* static pages uses cache. `StaticPage::all()` returns an array of `Entity`;
 * improved `MeCms\Controller\Admin\LogController`, added `_read()` method and
     removed the `viewSerialized` action (the `view` action can use the 
     `view_as_serialized` template);
