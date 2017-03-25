@@ -22,6 +22,7 @@
  */
 namespace MeCms\Utility;
 
+use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Filesystem\Folder;
 use Cake\I18n\FrozenTime;
@@ -41,18 +42,24 @@ class StaticPage
      */
     protected static function paths()
     {
-        //Adds all plugins to paths
-        $paths = collection(Plugin::all())
-            ->map(function ($plugin) {
-                return collection(App::path('Template', $plugin))->first() . 'StaticPages';
-            })
-            ->filter(function ($path) {
-                return file_exists($path);
-            })
-            ->toList();
+        $paths = Cache::read('paths', 'static_pages');
 
-        //Adds APP to paths
-        array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');
+        if (empty($paths)) {
+            //Adds all plugins to paths
+            $paths = collection(Plugin::all())
+                ->map(function ($plugin) {
+                    return collection(App::path('Template', $plugin))->first() . 'StaticPages';
+                })
+                ->filter(function ($path) {
+                    return file_exists($path);
+                })
+                ->toList();
+
+            //Adds APP to paths
+            array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');
+
+            Cache::write('paths', $paths, 'static_pages');
+        }
 
         return $paths;
     }
@@ -108,33 +115,48 @@ class StaticPage
      */
     public static function get($slug)
     {
-        //Sets the (partial) filename
-        $filename = implode(DS, af(explode('/', $slug)));
+        $locale = I18n::locale();
 
-        //Sets the filename patterns
-        $patterns = [sprintf('%s-%s', $filename, I18n::locale()), $filename];
+        //Sets the cache name
+        $cache = sprintf('page_%s_locale_%s', md5($slug), $locale);
 
-        //Checks if the page exists in APP
-        foreach ($patterns as $pattern) {
-            $filename = collection(App::path('Template'))->first() . 'StaticPages' . DS . $pattern . '.ctp';
+        $page = Cache::read($cache, 'static_pages');
 
-            if (is_readable($filename)) {
-                return 'StaticPages' . DS . $pattern;
-            }
-        }
+        if (empty($page)) {
+            //Sets the (partial) filename
+            $filename = implode(DS, af(explode('/', $slug)));
 
-        //Checks if the page exists in each plugin
-        foreach (Plugin::all() as $plugin) {
+            //Sets the filename patterns
+            $patterns = [$filename . '-' . $locale, $filename];
+
+            //Checks if the page exists in APP
             foreach ($patterns as $pattern) {
-                $filename = collection(App::path('Template', $plugin))->first() . 'StaticPages' . DS . $pattern . '.ctp';
+                $filename = collection(App::path('Template'))->first() . 'StaticPages' . DS . $pattern . '.ctp';
 
                 if (is_readable($filename)) {
-                    return sprintf('%s.%s', $plugin, 'StaticPages' . DS . $pattern);
+                    $page = 'StaticPages' . DS . $pattern;
+
+                    break;
                 }
             }
+
+            //Checks if the page exists in each plugin
+            foreach (Plugin::all() as $plugin) {
+                foreach ($patterns as $pattern) {
+                    $filename = collection(App::path('Template', $plugin))->first() . 'StaticPages' . DS . $pattern . '.ctp';
+
+                    if (is_readable($filename)) {
+                        $page = $plugin . '.' . 'StaticPages' . DS . $pattern;
+
+                        break;
+                    }
+                }
+            }
+
+            Cache::write($cache, $page, 'static_pages');
         }
 
-        return false;
+        return $page;
     }
 
     /**

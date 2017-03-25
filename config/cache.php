@@ -44,5 +44,6 @@ return ['Cache' => [
     'pages' => am($options, ['path' => ME_CMS_CACHE . 'pages']),
     'photos' => am($options, ['path' => ME_CMS_CACHE . 'photos']),
     'posts' => am($options, ['path' => ME_CMS_CACHE . 'posts']),
+    'static_pages' => am($options, ['path' => ME_CMS_CACHE . 'static_pages']),
     'users' => am($options, ['path' => ME_CMS_CACHE . 'users']),
 ]];
