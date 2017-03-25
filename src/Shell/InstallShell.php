@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Core\Plugin;
@@ -77,21 +78,13 @@ class InstallShell extends BaseInstallShell
      */
     protected function _getOtherPlugins()
     {
-        //Gets all plugins
-        $plugins = Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]);
+        return collection(Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]))
+            ->filter(function ($plugin) {
+                $class = App::classname($plugin . '.InstallShell', 'Shell');
 
-        //Gets only the plugins that have the `InstallShell` class
-        $plugins = array_map(function ($plugin) {
-            $class = '\\' . $plugin . '\Shell\InstallShell';
-
-            if (class_exists($class) && method_exists($class, 'all')) {
-                return $plugin;
-            }
-
-            return false;
-        }, $plugins);
-
-        return array_values(af($plugins));
+                return $class && method_exists($class, 'all');
+            })
+            ->toList();
     }
 
     /**
