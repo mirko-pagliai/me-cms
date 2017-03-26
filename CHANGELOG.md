@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.16 branch
 ### 2.16.1
+* managers can delete photos and photos albums; 
 * fixed bug on redirect from the old address of the "contact us" form;
 * fixed bug in getting the active users list. Now it shows the full name;
 * fixed bug on `StaticPage::paths()`. Now it returns only existing paths;

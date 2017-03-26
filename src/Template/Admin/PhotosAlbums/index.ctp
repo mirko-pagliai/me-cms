@@ -71,8 +71,8 @@ $this->append('actions', $this->Html->button(
                         ),
                     ];
 
-                    //Only admins  can delete albums
-                    if ($this->Auth->isGroup('admin')) {
+                    //Only admins and managers can delete albums
+                    if ($this->Auth->isGroup(['admin', 'manager'])) {
                         $actions[] = $this->Form->postLink(
                             __d('me_cms', 'Delete'),
                             ['action' => 'delete', $album->id],
