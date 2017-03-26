@@ -304,9 +304,9 @@ class UsersTableTest extends TestCase
         $users = $this->Users->getActiveList();
 
         $this->assertEquals([
-            4 => 'abc',
-            1 => 'alfa',
-            3 => 'ypsilon',
+            4 => 'Abc Def',
+            1 => 'Alfa Beta',
+            3 => 'Ypsilon Zeta',
         ], $users);
     }
 
