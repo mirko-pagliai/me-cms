@@ -1,0 +1,30 @@
+/*!
+* This file is part of MeCms.
+* @author      Mirko Pagliai <mirko.pagliai@gmail.com>
+* @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
+* @license     http://www.gnu.org/licenses/agpl.txt AGPL License
+*/
+
+/* Changelog, h1 */
+#changelog > h1 {
+    font-size: 22px;
+    margin: 0 0 10px;
+}
+
+/* Changelog, h2 */
+#changelog > h2 {
+    font-size: 18px;
+    margin: 0 0 10px 10px;
+}
+
+/* Changelog, h3 */
+#changelog > h3 {
+    font-size: 16px;
+    margin: 0 0 0 20px;
+}
+
+/* Changelog, lists */
+#changelog > ul {
+    list-style: decimal outside none;
+    margin: 0 0 15px 20px;
+}
