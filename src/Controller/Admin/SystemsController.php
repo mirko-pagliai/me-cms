@@ -115,7 +115,7 @@ class SystemsController extends AppController
         foreach (Plugin::all() as $plugin) {
             $changelog = Plugin::path($plugin, 'CHANGELOG.md', true);
 
-            if($changelog) {
+            if ($changelog) {
                 $files[$plugin] = rtr($changelog);
             }
         }
