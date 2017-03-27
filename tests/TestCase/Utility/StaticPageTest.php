@@ -87,6 +87,7 @@ class StaticPageTest extends TestCase
         $filenames = collection($pages)->extract('filename')->toList();
 
         $this->assertEquals([
+            'page-from-app',
             'cookies-policy-it',
             'cookies-policy',
             'test-from-plugin',
@@ -98,6 +99,7 @@ class StaticPageTest extends TestCase
         $paths = collection($pages)->extract('path')->toList();
 
         $this->assertEquals([
+            'tests/test_app/TestApp/Template/StaticPages/page-from-app.ctp',
             'src/Template/StaticPages/cookies-policy-it.ctp',
             'src/Template/StaticPages/cookies-policy.ctp',
             'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp',
@@ -109,6 +111,7 @@ class StaticPageTest extends TestCase
         $slugs = collection($pages)->extract('slug')->toList();
 
         $this->assertEquals([
+            'page-from-app',
             'cookies-policy-it',
             'cookies-policy',
             'test-from-plugin',
@@ -120,6 +123,7 @@ class StaticPageTest extends TestCase
         $titles = collection($pages)->extract('title')->toList();
 
         $this->assertEquals([
+            'Page From App',
             'Cookies Policy It',
             'Cookies Policy',
             'Test From Plugin',
@@ -143,6 +147,7 @@ class StaticPageTest extends TestCase
         })->toList();
 
         $this->assertEquals([
+            'StaticPages/page-from-app',
             'MeCms.StaticPages/cookies-policy-it',
             'MeCms.StaticPages/cookies-policy',
             'TestPlugin.StaticPages/test-from-plugin',
@@ -221,6 +226,7 @@ class StaticPageTest extends TestCase
     public function testTitle()
     {
         $expected = [
+            'Page From App',
             'Cookies Policy It',
             'Cookies Policy',
             'Test From Plugin',

@@ -352,6 +352,10 @@ class SitemapTest extends TestCase
 
         $this->assertEquals([
             [
+                'loc' => 'http://localhost/page/page-from-app',
+                'priority' => '0.5',
+            ],
+            [
                 'loc' => 'http://localhost/page/cookies-policy-it',
                 'priority' => '0.5',
             ],
