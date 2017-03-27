@@ -24,6 +24,7 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use Reflection\ReflectionTrait;
@@ -165,6 +166,35 @@ class LoginRecorderComponentTest extends TestCase
     public function testSetUserInvalidId()
     {
         $this->LoginRecorder->setUser('string');
+    }
+
+    /**
+     * Test for `getClientIp()` method
+     * @test
+     */
+    public function testGetClientIp()
+    {
+        $this->getLoginRecorderInstance();
+        $this->assertEmpty($this->invokeMethod($this->LoginRecorder, 'getClientIp'));
+    }
+
+    /**
+     * Test for `getClientIp()` method on localhost
+     * @test
+     */
+    public function testGetClientIpOnLocalhost()
+    {
+        $request = $this->getMockBuilder(ServerRequest::class)
+            ->setMethods(['clientIp'])
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('clientIp')
+            ->will($this->returnValue('::1'));
+
+        $this->LoginRecorder->request = $request;
+
+        $this->assertEquals('127.0.0.1', $this->invokeMethod($this->LoginRecorder, 'getClientIp'));
     }
 
     /**

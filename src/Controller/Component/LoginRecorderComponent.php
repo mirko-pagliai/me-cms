@@ -48,6 +48,21 @@ class LoginRecorderComponent extends Component
     protected $user;
 
     /**
+     * Internal method to get the client ip
+     * @return string The client IP
+     */
+    protected function getClientIp()
+    {
+        $ip = $this->getController()->request->clientIp();
+
+        if ($ip === '::1') {
+            return '127.0.0.1';
+        }
+
+        return $ip;
+    }
+
+    /**
      * Internal method to parses and gets the user agent
      * @param string|null $userAgent User agent string to parse or `null` to
      *  use `$_SERVER['HTTP_USER_AGENT']`
@@ -96,6 +111,7 @@ class LoginRecorderComponent extends Component
      * Saves data
      * @return bool
      * @uses $SerializedArray
+     * @uses getClientIp()
      * @uses getUserAgent()
      * @uses read()
      * @throws InternalErrorException
@@ -110,7 +126,7 @@ class LoginRecorderComponent extends Component
         $data = $this->read();
 
         $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-        $ip = $this->getController()->request->clientIp();
+        $ip = $this->getClientIp();
         $time = new Time;
         list($platform, $browser, $version) = array_values($this->getUserAgent());
 
