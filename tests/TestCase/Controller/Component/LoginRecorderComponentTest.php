@@ -180,7 +180,7 @@ class LoginRecorderComponentTest extends TestCase
         $SerializedArray = $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
 
         $this->assertInstanceOf('SerializedArray\SerializedArray', $SerializedArray);
-        $this->assertEquals($this->log, $this->getProperty($SerializedArray, 'file'));
+        $this->assertEquals(LOGIN_RECORDS . 'user_1.log', $this->getProperty($SerializedArray, 'file'));
     }
 
     /**
