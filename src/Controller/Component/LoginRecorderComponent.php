@@ -62,7 +62,7 @@ class LoginRecorderComponent extends Component
     /**
      * Sets the user ID
      * @param int $id User ID
-     * @return void
+     * @return $this
      * @uses $SerializedArray
      * @throws InternalErrorException
      */
@@ -73,6 +73,8 @@ class LoginRecorderComponent extends Component
         }
 
         $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $id . '.log');
+
+        return $this;
     }
 
     /**

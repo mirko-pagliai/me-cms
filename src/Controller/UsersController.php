@@ -61,8 +61,7 @@ class UsersController extends AppController
 
             if ($user && $user['active'] && !$user['banned']) {
                 //Saves the login log
-                $this->LoginRecorder->setUser($user['id']);
-                $this->LoginRecorder->write();
+                $this->LoginRecorder->setUser($user['id'])->write();
 
                 $this->Auth->setUser($user);
 
@@ -275,8 +274,7 @@ class UsersController extends AppController
                 }
 
                 //Saves the login log
-                $this->LoginRecorder->setUser($user['id']);
-                $this->LoginRecorder->write();
+                $this->LoginRecorder->setUser($user['id'])->write();
 
                 //Saves the login data in a cookie, if it was requested
                 if ($this->request->getData('remember_me')) {

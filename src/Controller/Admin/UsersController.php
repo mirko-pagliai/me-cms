@@ -125,8 +125,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
 
         if (config('users.login_log')) {
-            $this->LoginRecorder->setUser($id);
-            $loginLog = $this->LoginRecorder->read();
+            $loginLog = $this->LoginRecorder->setUser($id)->read();
 
             $this->set(compact('loginLog'));
         }
@@ -291,8 +290,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'admin']);
         }
 
-        $this->LoginRecorder->setUser($this->Auth->user('id'));
-        $loginLog = $this->LoginRecorder->read();
+        $loginLog = $this->LoginRecorder->setUser($this->Auth->user('id'))->read();
 
         $this->set(compact('loginLog'));
     }

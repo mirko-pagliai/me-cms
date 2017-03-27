@@ -150,6 +150,10 @@ class LoginRecorderComponentTest extends TestCase
         $SerializedArray = $this->getProperty($this->LoginRecorder, 'SerializedArray');
         $this->assertInstanceOf('SerializedArray\SerializedArray', $SerializedArray);
         $this->assertEquals($this->log, $this->getProperty($SerializedArray, 'file'));
+
+        //Sets again
+        $this->getLoginRecorderInstance();
+        $this->assertInstanceOf('MeCms\Controller\Component\LoginRecorderComponent', $this->LoginRecorder->setUser(1));
     }
 
     /**
