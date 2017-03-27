@@ -37,6 +37,12 @@ class BaseUpdateShell extends Shell
     protected $SchemaCollection;
 
     /**
+     * Database connection
+     * @var \Cake\Database\Connection
+     */
+    protected $connection;
+
+    /**
      * @var \Cake\I18n\Time
      */
     protected $now;
@@ -52,8 +58,8 @@ class BaseUpdateShell extends Shell
     {
         parent::__construct($io);
 
-        $this->SchemaCollection = ConnectionManager::get('default')->getSchemaCollection();
-
+        $this->connection = ConnectionManager::get('default');
+        $this->SchemaCollection = $this->connection->getSchemaCollection();
         $this->now = new Time;
     }
 
