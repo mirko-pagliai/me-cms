@@ -22,9 +22,9 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\AppController;
-use MeCms\Utility\LoginRecorder;
 
 /**
  * Users controller
@@ -58,6 +58,19 @@ class UsersController extends AppController
     }
 
     /**
+     * Initialization hook method
+     * @return void
+     * @uses MeCms\Controller\AppController::initialize()
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        //Loads components
+        $this->loadComponent('MeCms.LoginRecorder');
+    }
+
+    /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
@@ -66,7 +79,7 @@ class UsersController extends AppController
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCms\Model\Table\UsersGroupsTable::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -98,7 +111,8 @@ class UsersController extends AppController
      * Views user
      * @param string $id User ID
      * @return void
-     * @uses MeCms\Utility\LoginRecorder::read()
+     * @uses MeCms\Controller\Component\LoginRecorderComponent::read()
+     * @uses MeCms\Controller\Component\LoginRecorderComponent::setUser()
      */
     public function view($id = null)
     {
@@ -111,7 +125,8 @@ class UsersController extends AppController
         $this->set(compact('user'));
 
         if (config('users.login_log')) {
-            $loginLog = (new LoginRecorder($id))->read();
+            $this->LoginRecorder->setUser($id);
+            $loginLog = $this->LoginRecorder->read();
 
             $this->set(compact('loginLog'));
         }
@@ -264,7 +279,8 @@ class UsersController extends AppController
     /**
      * Displays the login log
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginRecorder::read()
+     * @uses MeCms\Controller\Component\LoginRecorderComponent::read()
+     * @uses MeCms\Controller\Component\LoginRecorderComponent::setUser()
      */
     public function lastLogin()
     {
@@ -275,7 +291,8 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'admin']);
         }
 
-        $loginLog = (new LoginRecorder($this->Auth->user('id')))->read();
+        $this->LoginRecorder->setUser($this->Auth->user('id'));
+        $loginLog = $this->LoginRecorder->read();
 
         $this->set(compact('loginLog'));
     }
