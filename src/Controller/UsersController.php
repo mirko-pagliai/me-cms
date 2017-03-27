@@ -41,7 +41,6 @@ class UsersController extends AppController
     /**
      * Internal function to login with cookie
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::setUser()
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses _logout()
      */
@@ -61,7 +60,7 @@ class UsersController extends AppController
 
             if ($user && $user['active'] && !$user['banned']) {
                 //Saves the login log
-                $this->LoginRecorder->setUser($user['id'])->write();
+                $this->LoginRecorder->config('user', $user['id'])->write();
 
                 $this->Auth->setUser($user);
 
@@ -246,7 +245,6 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::setUser()
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses _loginWithCookie()
      */
@@ -274,7 +272,7 @@ class UsersController extends AppController
                 }
 
                 //Saves the login log
-                $this->LoginRecorder->setUser($user['id'])->write();
+                $this->LoginRecorder->config('user', $user['id'])->write();
 
                 //Saves the login data in a cookie, if it was requested
                 if ($this->request->getData('remember_me')) {

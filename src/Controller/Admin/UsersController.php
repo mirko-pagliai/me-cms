@@ -112,7 +112,6 @@ class UsersController extends AppController
      * @param string $id User ID
      * @return void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::read()
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::setUser()
      */
     public function view($id = null)
     {
@@ -125,7 +124,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
 
         if (config('users.login_log')) {
-            $loginLog = $this->LoginRecorder->setUser($id)->read();
+            $loginLog = $this->LoginRecorder->config('user', $id)->read();
 
             $this->set(compact('loginLog'));
         }
@@ -279,7 +278,6 @@ class UsersController extends AppController
      * Displays the login log
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::read()
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::setUser()
      */
     public function lastLogin()
     {
@@ -290,7 +288,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'admin']);
         }
 
-        $loginLog = $this->LoginRecorder->setUser($this->Auth->user('id'))->read();
+        $loginLog = $this->LoginRecorder->config('user', $this->Auth->user('id'))->read();
 
         $this->set(compact('loginLog'));
     }
