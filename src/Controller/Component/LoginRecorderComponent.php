@@ -31,8 +31,14 @@ use SerializedArray\SerializedArray;
  * This component allows you to save and retrieve user logins, through a special
  *  register for each user.
  *
- * You must first set the user ID with the `setUser()` method, then you can
- *  execute `read()` and `write()` methods.
+ * You must first set the user ID with the `config()` method and the `user`
+ *  value, then you can execute `read()` and `write()` methods.
+ *
+ * Example:
+ * <code>
+ * $this->LoginRecorder->config('user', 1);
+ * $data = $this->LoginRecorder->read();
+ * </code>
  */
 class LoginRecorderComponent extends Component
 {
@@ -40,12 +46,6 @@ class LoginRecorderComponent extends Component
      * @var \MeTools\Utility\SerializedArray
      */
     protected $SerializedArray;
-
-    /**
-     * User ID
-     * @var int
-     */
-    protected $user;
 
     /**
      * Internal method to get the client ip
@@ -63,6 +63,24 @@ class LoginRecorderComponent extends Component
     }
 
     /**
+     * Gets the `SerializedArray` instance
+     * @return \MeTools\Utility\SerializedArray
+     * @throws InternalErrorException
+     */
+    protected function getSerializedArray()
+    {
+        $user = $this->config('user');
+
+        if (!isPositive($user)) {
+            throw new InternalErrorException(__d('me_cms', 'You have to set a valid user id'));
+        }
+
+        $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $user . '.log');
+
+        return $this->SerializedArray;
+    }
+
+    /**
      * Internal method to parses and gets the user agent
      * @param string|null $userAgent User agent string to parse or `null` to
      *  use `$_SERVER['HTTP_USER_AGENT']`
@@ -75,53 +93,25 @@ class LoginRecorderComponent extends Component
     }
 
     /**
-     * Sets the user ID
-     * @param int $id User ID
-     * @return $this
-     * @uses $SerializedArray
-     * @throws InternalErrorException
-     */
-    public function setUser($id)
-    {
-        if (!isPositive($id)) {
-            throw new InternalErrorException(__d('me_cms', 'Invalid value'));
-        }
-
-        $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $id . '.log');
-
-        return $this;
-    }
-
-    /**
      * Gets data
      * @return array
-     * @uses $SerializedArray
-     * @throws InternalErrorException
+     * @uses getSerializedArray()
      */
     public function read()
     {
-        if (empty($this->SerializedArray)) {
-            throw new InternalErrorException(__d('me_cms', 'You must first set the user ID'));
-        }
-
-        return $this->SerializedArray->read();
+        return $this->getSerializedArray()->read();
     }
 
     /**
      * Saves data
      * @return bool
-     * @uses $SerializedArray
      * @uses getClientIp()
+     * @uses getSerializedArray()
      * @uses getUserAgent()
      * @uses read()
-     * @throws InternalErrorException
      */
     public function write()
     {
-        if (empty($this->SerializedArray)) {
-            throw new InternalErrorException(__d('me_cms', 'You must first set the user ID'));
-        }
-
         //Gets existing data
         $data = $this->read();
 
@@ -147,6 +137,6 @@ class LoginRecorderComponent extends Component
         $data = array_slice($data, 0, config('users.login_log'));
 
         //Writes
-        return $this->SerializedArray->write($data);
+        return $this->getSerializedArray()->write($data);
     }
 }

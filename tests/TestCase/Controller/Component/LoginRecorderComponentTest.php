@@ -59,7 +59,7 @@ class LoginRecorderComponentTest extends TestCase
     protected function getLoginRecorderInstance()
     {
         $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
-        $this->LoginRecorder->setUser(1);
+        $this->LoginRecorder->config('user', 1);
 
         return $this->LoginRecorder;
     }
@@ -82,7 +82,7 @@ class LoginRecorderComponentTest extends TestCase
                 'version' => '55.0.2883.87',
             ]));
 
-        $this->LoginRecorder->setUser(1);
+        $this->LoginRecorder->config('user', 1);
 
         return $this->LoginRecorder;
     }
@@ -106,7 +106,7 @@ class LoginRecorderComponentTest extends TestCase
                 'version' => '1.2.3',
             ]));
 
-        $this->LoginRecorder->setUser(1);
+        $this->LoginRecorder->config('user', 1);
 
         return $this->LoginRecorder;
     }
@@ -143,32 +143,6 @@ class LoginRecorderComponentTest extends TestCase
     }
 
     /**
-     * Test for `setUser()` method
-     * @test
-     */
-    public function testSetUser()
-    {
-        $SerializedArray = $this->getProperty($this->LoginRecorder, 'SerializedArray');
-        $this->assertInstanceOf('SerializedArray\SerializedArray', $SerializedArray);
-        $this->assertEquals($this->log, $this->getProperty($SerializedArray, 'file'));
-
-        //Sets again
-        $this->getLoginRecorderInstance();
-        $this->assertInstanceOf('MeCms\Controller\Component\LoginRecorderComponent', $this->LoginRecorder->setUser(1));
-    }
-
-    /**
-     * Test for `setUser()` method, with invalid id
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid value
-     * @test
-     */
-    public function testSetUserInvalidId()
-    {
-        $this->LoginRecorder->setUser('string');
-    }
-
-    /**
      * Test for `getClientIp()` method
      * @test
      */
@@ -195,6 +169,43 @@ class LoginRecorderComponentTest extends TestCase
         $this->LoginRecorder->request = $request;
 
         $this->assertEquals('127.0.0.1', $this->invokeMethod($this->LoginRecorder, 'getClientIp'));
+    }
+
+    /**
+     * Test for `getSerializedArray()` method
+     * @test
+     */
+    public function testGetSerializedArray()
+    {
+        $SerializedArray = $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
+
+        $this->assertInstanceOf('SerializedArray\SerializedArray', $SerializedArray);
+        $this->assertEquals($this->log, $this->getProperty($SerializedArray, 'file'));
+    }
+
+    /**
+     * Test for `getSerializedArray()` method, without the user ID
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage You have to set a valid user id
+     * @test
+     */
+    public function testGetSerializedArrayMissingUserId()
+    {
+        $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
+        $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
+    }
+
+    /**
+     * Test for `getSerializedArray()` method, with an invalid user ID
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage You have to set a valid user id
+     * @test
+     */
+    public function testGetSerializedArrayInvalidUserId()
+    {
+        $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
+        $this->LoginRecorder->config('user', 'string');
+        $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
     }
 
     /**
@@ -250,7 +261,7 @@ class LoginRecorderComponentTest extends TestCase
     /**
      * Test for `read()` method, without the user ID
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage You must first set the user ID
+     * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
     public function testReadMissingUserId()
@@ -305,7 +316,7 @@ class LoginRecorderComponentTest extends TestCase
     /**
      * Test for `write()` method, without the user ID
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage You must first set the user ID
+     * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
     public function testWriteMissingUserId()
