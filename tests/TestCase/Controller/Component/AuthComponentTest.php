@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of MeCms.
  *
@@ -68,25 +67,37 @@ class AuthComponentTest extends TestCase
      */
     public function testConstructAndInitialize()
     {
-        $keysToCheck = [
-            'authenticate',
-            'authError',
-            'authorize',
-            'flash',
-            'loginAction',
-            'loginRedirect',
-            'logoutRedirect',
-            'unauthorizedRedirect',
-        ];
-
-        $config = $this->Auth->getConfig();
-
-        //Checks that all keys exist
-        foreach ($keysToCheck as $key) {
-            $this->assertTrue(array_key_exists($key, $config));
-        }
-
-        $this->assertFalse($this->Auth->getConfig('authError'));
+        $this->assertEquals([
+            'authenticate' => [
+                'Form' => [
+                    'contain' => 'Groups',
+                    'userModel' => 'MeCms.Users',
+                ]
+            ],
+            'authorize' => 'Controller',
+            'ajaxLogin' => null,
+            'flash' => [
+                'element' => 'MeTools.flash',
+                'params' => [
+                    'class' => 'alert-danger',
+                ],
+            ],
+            'loginAction' => [
+                '_name' => 'login',
+            ],
+            'loginRedirect' => [
+                '_name' => 'dashboard',
+            ],
+            'logoutRedirect' => [
+                '_name' => 'homepage',
+            ],
+            'authError' => false,
+            'unauthorizedRedirect' => [
+                '_name' => 'dashboard',
+            ],
+            'storage' => 'Session',
+            'checkAuthIn' => 'Controller.startup',
+        ], $this->Auth->getConfig());
     }
 
     /**

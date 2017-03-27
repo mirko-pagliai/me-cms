@@ -127,10 +127,16 @@ class UsersTable extends AppTable
      */
     public function getActiveList()
     {
-        return $this->find('list')
+        return $this->find()
+            ->select(['id', 'first_name', 'last_name'])
             ->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->cache('active_users_list', $this->cache)
             ->order(['username' => 'ASC'])
+            ->formatResults(function ($results) {
+                return $results->indexBy('id')->map(function ($row) {
+                    return $row->first_name . ' ' . $row->last_name;
+                });
+            })
+            ->cache('active_users_list', $this->cache)
             ->toArray();
     }
 

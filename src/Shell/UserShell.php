@@ -143,14 +143,14 @@ class UserShell extends Shell
         }
 
         //Formats groups
-        $groups = array_map(function ($group) {
+        $groups = collection($groups)->extract(function ($group) {
             return [
                 $group->id,
                 $group->name,
                 $group->label,
                 $group->user_count,
             ];
-        }, $groups->toArray());
+        })->toList();
 
         //Sets header
         $header = [
@@ -196,9 +196,7 @@ class UserShell extends Shell
             __d('me_cms', 'Date'),
         ];
 
-        //Formats users
-        $users = array_map(function ($user) {
-            //Sets the user status
+        $users = collection($users)->map(function ($user) {
             if ($user->banned) {
                 $user->status = __d('me_cms', 'Banned');
             } elseif (!$user->active) {
@@ -217,7 +215,7 @@ class UserShell extends Shell
                 $user->status,
                 $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
             ];
-        }, $users->toArray());
+        })->toList();
 
         //Prints as table
         $this->helper('table')->output(am([$header], $users));

@@ -61,8 +61,8 @@ $this->extend('/Admin/Common/Photos/index');
                     ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
                 );
 
-                //Only admins can delete photos
-                if ($this->Auth->isGroup('admin')) {
+                //Only admins and managers can delete photos
+                if ($this->Auth->isGroup(['admin', 'manager'])) {
                     $actions[] = $this->Form->postLink(
                         null,
                         ['action' => 'delete', $photo->id],

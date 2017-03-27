@@ -48,9 +48,9 @@ class SitemapBuilder
             return [];
         }
 
-        return array_map(function ($method) use ($class) {
-            return ['class' => $class, 'name' => $method];
-        }, $methods);
+        return collection($methods)->map(function ($method) use ($class) {
+            return am(compact('class'), ['name' => $method]);
+        })->toList();
     }
 
     /**

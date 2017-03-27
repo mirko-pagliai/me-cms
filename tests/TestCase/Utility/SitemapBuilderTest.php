@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Utility;
 
+use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\I18n\Time;
 use Cake\TestSuite\TestCase;
@@ -49,6 +50,19 @@ class SitemapBuilderTest extends TestCase
         'plugin.me_cms.posts_categories',
         'plugin.me_cms.tags',
     ];
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        Cache::clearAll();
+    }
 
     /**
      * Teardown any static object changes and restore them
@@ -178,29 +192,30 @@ class SitemapBuilderTest extends TestCase
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
 
-        $countWithoutPlugin = count($mapAsArray);
-
-        $this->assertGreaterThan(0, $countWithoutPlugin);
+        $this->assertGreaterThan(0, count($mapAsArray));
 
         foreach ($mapAsArray as $url) {
             $this->assertNotEmpty($url['loc']);
             $this->assertNotEmpty($url['priority']);
         }
+    }
 
+    /**
+     * Test for `generate()` method, with a plugin
+     * @test
+     */
+    public function testGenerateWithPlugin()
+    {
         Plugin::load('TestPlugin');
 
         $map = SitemapBuilder::generate();
 
-        $this->assertStringStartsWith(
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL .
-            '  <url>',
-            $map
-        );
-        $this->assertStringEndsWith('  </url>' . PHP_EOL . '</urlset>', $map);
+        $this->assertContains('first-folder/page-on-first-from-plugin', $map);
+        $this->assertContains('first-folder/second_folder/page_on_second_from_plugin', $map);
+        $this->assertContains('test-from-plugin', $map);
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
 
-        $this->assertEquals($countWithoutPlugin + 3, count($mapAsArray));
+        $this->assertGreaterThan(0, count($mapAsArray));
     }
 }

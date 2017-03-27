@@ -23,12 +23,12 @@
 namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
-use MeCms\Utility\LoginRecorder;
 
 /**
  * Users controller
@@ -39,27 +39,9 @@ class UsersController extends AppController
     use MailerAwareTrait;
 
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     */
-    public function beforeFilter(\Cake\Event\Event $event)
-    {
-        parent::beforeFilter($event);
-
-        //Checks if the user is already logged in
-        if (!$this->request->isAction('logout') && $this->Auth->isLogged()) {
-            return $this->redirect(['_name' => 'dashboard']);
-        }
-    }
-
-    /**
      * Internal function to login with cookie
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginRecorder::write()
+     * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses _logout()
      */
     protected function _loginWithCookie()
@@ -78,7 +60,7 @@ class UsersController extends AppController
 
             if ($user && $user['active'] && !$user['banned']) {
                 //Saves the login log
-                (new LoginRecorder($user['id']))->write();
+                $this->LoginRecorder->config('user', $user['id'])->write();
 
                 $this->Auth->setUser($user);
 
@@ -134,6 +116,7 @@ class UsersController extends AppController
     /**
      * Initialization hook method
      * @return void
+     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -141,6 +124,25 @@ class UsersController extends AppController
 
         $this->loadComponent('Cookie');
         $this->loadComponent('Tokens.Token');
+        $this->loadComponent('MeCms.LoginRecorder');
+    }
+
+    /**
+     * Called before the controller action.
+     * You can use this method to perform logic that needs to happen before
+     *  each controller action.
+     * @param \Cake\Event\Event $event An Event instance
+     * @return \Cake\Network\Response|null|void
+     * @uses MeCms\Controller\AppController::beforeFilter()
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+
+        //Checks if the user is already logged in
+        if (!$this->request->isAction('logout') && $this->Auth->isLogged()) {
+            return $this->redirect(['_name' => 'dashboard']);
+        }
     }
 
     /**
@@ -243,7 +245,7 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Utility\LoginRecorder::write()
+     * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses _loginWithCookie()
      */
     public function login()
@@ -270,7 +272,7 @@ class UsersController extends AppController
                 }
 
                 //Saves the login log
-                (new LoginRecorder($user['id']))->write();
+                $this->LoginRecorder->config('user', $user['id'])->write();
 
                 //Saves the login data in a cookie, if it was requested
                 if ($this->request->getData('remember_me')) {

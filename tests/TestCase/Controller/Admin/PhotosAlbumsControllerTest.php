@@ -82,7 +82,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $this->assertGroupsAreAuthorized([
             null => false,
             'admin' => true,
-            'manager' => false,
+            'manager' => true,
             'user' => false,
         ]);
     }

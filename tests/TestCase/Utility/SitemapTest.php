@@ -360,15 +360,15 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/test',
+                'loc' => 'http://localhost/page/test-from-plugin',
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/first-folder/page-on-first',
+                'loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin',
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/first-folder/second_folder/page_on_second',
+                'loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',
                 'priority' => '0.5',
             ],
         ], $map);

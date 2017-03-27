@@ -169,13 +169,11 @@ class PhotosTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified`, Albums.id AS `Albums__id`, Albums.title AS `Albums__title`, Albums.slug AS `Albums__slug`, Albums.description AS `Albums__description`, Albums.active AS `Albums__active`, Albums.photo_count AS `Albums__photo_count`, Albums.created AS `Albums__created`, Albums.modified AS `Albums__modified` FROM photos Photos INNER JOIN photos_albums Albums ON (Albums.active = :c0 AND Albums.id = (Photos.album_id)) WHERE Photos.active = :c1', $query->sql());
 
-        $params = array_map(function ($v) {
-            return $v['value'];
-        }, $query->valueBinder()->bindings());
+        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
         $this->assertEquals([
-            ':c0' => true,
-            ':c1' => true,
+            true,
+            true,
         ], $params);
 
         $this->assertNotEmpty($query->count());

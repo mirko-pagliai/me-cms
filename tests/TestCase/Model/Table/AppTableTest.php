@@ -294,23 +294,26 @@ class AppTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals($expected, $query->sql());
 
-        $params = array_map(function ($v) {
-            if (is_object($v['value']) && get_class($v['value']) === 'Cake\I18n\Time') {
-                return ($v['value']->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-            }
+        $params = collection($query->valueBinder()->bindings())
+            ->extract('value')
+            ->map(function ($value) {
+                if ($value instanceof \Cake\I18n\Time) {
+                    return $value->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                }
 
-            return $v['value'];
-        }, $query->valueBinder()->bindings());
+                return $value;
+            })
+            ->toList();
 
         $this->assertEquals([
-            ':c0' => 2,
-            ':c1' => '%Title%',
-            ':c2' => 3,
-            ':c3' => 4,
-            ':c4' => true,
-            ':c5' => 3,
-            ':c6' => '2016-12-01 00:00:00',
-            ':c7' => '2017-01-01 00:00:00',
+            2,
+            '%Title%',
+            3,
+            4,
+            true,
+            3,
+            '2016-12-01 00:00:00',
+            '2017-01-01 00:00:00',
         ], $params);
 
         $data['active'] = 'no';

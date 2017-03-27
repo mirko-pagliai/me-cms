@@ -113,7 +113,11 @@ class SystemsController extends AppController
     public function changelogs()
     {
         foreach (Plugin::all() as $plugin) {
-            $files[$plugin] = rtr(Plugin::path($plugin, 'CHANGELOG.md', true));
+            $file = Plugin::path($plugin, 'CHANGELOG.md', true);
+
+            if ($file) {
+                $files[$plugin] = rtr($file);
+            }
         }
 
         //If a changelog file has been specified

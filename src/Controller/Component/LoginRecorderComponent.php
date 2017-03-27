@@ -20,34 +20,64 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace MeCms\Utility;
+namespace MeCms\Controller\Component;
 
-use Cake\Http\ServerRequest;
-use Cake\I18n\FrozenTime;
+use Cake\Controller\Component;
 use Cake\I18n\Time;
+use Cake\Network\Exception\InternalErrorException;
 use SerializedArray\SerializedArray;
 
 /**
- * This utility allows you to save and retrieve user login, through a special
- *  register for each user
+ * This component allows you to save and retrieve user logins, through a special
+ *  register for each user.
+ *
+ * You must first set the user ID with the `config()` method and the `user`
+ *  value, then you can execute `read()` and `write()` methods.
+ *
+ * Example:
+ * <code>
+ * $this->LoginRecorder->config('user', 1);
+ * $data = $this->LoginRecorder->read();
+ * </code>
  */
-class LoginRecorder
+class LoginRecorderComponent extends Component
 {
     /**
-     * SerializedArray instance
      * @var \MeTools\Utility\SerializedArray
      */
     protected $SerializedArray;
 
     /**
-     * Construct
-     * @param int $id User ID
-     * @return void
-     * @uses $SerializedArray
+     * Internal method to get the client ip
+     * @return string The client IP
      */
-    public function __construct($id)
+    protected function getClientIp()
     {
-        $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $id . '.log');
+        $ip = $this->getController()->request->clientIp();
+
+        if ($ip === '::1') {
+            return '127.0.0.1';
+        }
+
+        return $ip;
+    }
+
+    /**
+     * Gets the `SerializedArray` instance
+     * @return \MeTools\Utility\SerializedArray
+     * @throws InternalErrorException
+     */
+    protected function getSerializedArray()
+    {
+        $user = $this->config('user');
+
+        if (!isPositive($user)) {
+            throw new InternalErrorException(__d('me_cms', 'You have to set a valid user id'));
+        }
+
+        $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $user . '.log');
+
+        return $this->SerializedArray;
     }
 
     /**
@@ -57,7 +87,7 @@ class LoginRecorder
      * @return array
      * @see https://github.com/donatj/PhpUserAgent
      */
-    protected function _getUserAgent($userAgent = null)
+    protected function getUserAgent($userAgent = null)
     {
         return parse_user_agent($userAgent);
     }
@@ -65,18 +95,19 @@ class LoginRecorder
     /**
      * Gets data
      * @return array
-     * @uses $SerializedArray
+     * @uses getSerializedArray()
      */
     public function read()
     {
-        return $this->SerializedArray->read();
+        return $this->getSerializedArray()->read();
     }
 
     /**
      * Saves data
      * @return bool
-     * @uses $SerializedArray
-     * @uses _getUserAgent()
+     * @uses getClientIp()
+     * @uses getSerializedArray()
+     * @uses getUserAgent()
      * @uses read()
      */
     public function write()
@@ -85,9 +116,9 @@ class LoginRecorder
         $data = $this->read();
 
         $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-        $ip = (new ServerRequest)->clientIp();
-        $time = new FrozenTime;
-        list($platform, $browser, $version) = array_values($this->_getUserAgent());
+        $ip = $this->getClientIp();
+        $time = new Time;
+        list($platform, $browser, $version) = array_values($this->getUserAgent());
 
         //Removes the first record (last in order of time), if it has been saved
         //  less than an hour ago and if the user agent data are the same
@@ -106,6 +137,6 @@ class LoginRecorder
         $data = array_slice($data, 0, config('users.login_log'));
 
         //Writes
-        return $this->SerializedArray->write($data);
+        return $this->getSerializedArray()->write($data);
     }
 }

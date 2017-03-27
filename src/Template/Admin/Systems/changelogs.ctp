@@ -22,33 +22,8 @@
  */
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Changelogs'));
+$this->Html->css('MeCms.admin/changelogs', ['block' => 'css_bottom']);
 ?>
-
-<?= $this->Html->cssStart() ?>
-    /* Changelog, h1 */
-    #changelog > h1 {
-        font-size: 22px;
-        margin: 0 0 10px;
-    }
-
-    /* Changelog, h2 */
-    #changelog > h2 {
-        font-size: 18px;
-        margin: 0 0 10px 10px;
-    }
-
-    /* Changelog, h3 */
-    #changelog > h3 {
-        font-size: 16px;
-        margin: 0 0 0 20px;
-    }
-
-    /* Changelog, lists */
-    #changelog > ul {
-        list-style: decimal outside none;
-        margin: 0 0 15px 20px;
-    }
-<?= $this->Html->cssEnd() ?>
 
 <div class="well">
     <?= $this->Form->createInline(false, ['type' => 'get']) ?>
@@ -67,7 +42,8 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
     <?= $this->Form->end() ?>
 </div>
 
-<?php
-if (!empty($changelog)) {
-    echo $this->Html->div(null, $this->CommonMark->convertToHtml($changelog), ['id' => 'changelog']);
-}
+<?php if (!empty($changelog)) : ?>
+<div id="changelog">
+    <?= $this->CommonMark->convertToHtml($changelog) ?>
+</div>
+<?php endif; ?>
