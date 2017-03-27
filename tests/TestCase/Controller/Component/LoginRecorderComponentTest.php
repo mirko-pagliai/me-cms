@@ -47,12 +47,6 @@ class LoginRecorderComponentTest extends TestCase
     protected $LoginRecorder;
 
     /**
-     * Path of the log file
-     * @var string
-     */
-    protected $log;
-
-    /**
      * Internal method to get a `LoginRecorder` instance
      * @return \MeCms\Controller\Component\LoginRecorderComponent
      */
@@ -121,8 +115,6 @@ class LoginRecorderComponentTest extends TestCase
     {
         parent::setUp();
 
-        $this->log = LOGIN_RECORDS . 'user_1.log';
-
         $this->ComponentRegistry = new ComponentRegistry(new Controller);
         $this->LoginRecorder = $this->getLoginRecorderMock();
     }
@@ -139,7 +131,7 @@ class LoginRecorderComponentTest extends TestCase
 
         //Deletes the file
         //@codingStandardsIgnoreLine
-        @unlink($this->log);
+        @unlink(LOGIN_RECORDS . 'user_1.log');
     }
 
     /**
@@ -252,7 +244,7 @@ class LoginRecorderComponentTest extends TestCase
         $this->assertTrue(is_array($result));
 
         //Creates an empty file. Now is always empty
-        file_put_contents($this->log, null);
+        file_put_contents(LOGIN_RECORDS . 'user_1.log', null);
         $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
         $this->assertTrue(is_array($result));
