@@ -82,7 +82,7 @@ class UpdateShell extends BaseUpdateShell
     {
         $this->loadModel('MeCms.Banners');
 
-        //Adds "thumbnail" field to the banner table
+        //Adds "thumbnail" field to the banners table
         if (!$this->_checkColumn('thumbnail', $this->Banners->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `thumbnail` BOOLEAN NOT null DEFAULT true AFTER `active`;',
