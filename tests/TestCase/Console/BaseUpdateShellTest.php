@@ -278,6 +278,7 @@ class BaseUpdateShellTest extends TestCase
 
         $versions = collection($methods)->extract('version')->toList();
         $this->assertEquals([
+            '2.17.0',
             '2.14.8',
             '2.14.7',
             '2.14.3',

@@ -31,6 +31,24 @@ use MeCms\Console\BaseUpdateShell;
 class UpdateShell extends BaseUpdateShell
 {
     /**
+     * Updates to 2.17.0 version
+     * @return void
+     * @uses MeCms\Console\BaseUpdateShell::$connection
+     */
+    public function to2v17v0()
+    {
+        $this->loadModel('MeCms.Posts');
+
+        //Adds "preview" field to the posts table
+        if (!$this->_checkColumn('preview', $this->Posts->getTable())) {
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` ADD `preview` TEXT NULL DEFAULT NULL AFTER `text`;',
+                $this->Posts->getTable()
+            ));
+        }
+    }
+
+    /**
      * Updates to 2.14.8 version
      * @return void
      * @uses MeCms\Console\BaseUpdateShell::$connection
