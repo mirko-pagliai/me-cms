@@ -28,6 +28,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Entity;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
@@ -53,6 +54,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 class PostsTable extends AppTable
 {
     use IsOwnedByTrait;
+    use LocatorAwareTrait;
     use NextToBePublishedTrait;
 
     /**
@@ -279,7 +281,8 @@ class PostsTable extends AppTable
 
         $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
             ->setForeignKey('category_id')
-            ->setJoinType('INNER');
+            ->setJoinType('INNER')
+            ->setTarget($this->tableLocator()->get('MeCms.PostsCategories'));
 
         $this->belongsTo('Users', ['className' => 'MeCms.Users'])
             ->setForeignKey('user_id')

@@ -171,6 +171,8 @@ class PagesTableTest extends TestCase
         $this->assertEquals('category_id', $this->Pages->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Pages->Categories->getJoinType());
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->className());
+        $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Pages->Categories->getTarget());
+        $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->getTarget()->getRegistryAlias());
 
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));
         $this->assertTrue($this->Pages->hasBehavior('CounterCache'));
