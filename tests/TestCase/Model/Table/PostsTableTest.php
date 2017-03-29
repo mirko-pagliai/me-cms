@@ -40,6 +40,11 @@ class PostsTableTest extends TestCase
     protected $Posts;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -62,6 +67,15 @@ class PostsTableTest extends TestCase
         parent::setUp();
 
         $this->Posts = TableRegistry::get('MeCms.Posts');
+
+        $this->example = [
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+            'tags_as_string' => 'first tag, second tag',
+        ];
 
         Cache::clear(false, $this->Posts->cache);
     }
@@ -132,16 +146,7 @@ class PostsTableTest extends TestCase
      */
     public function testBeforeMarshal()
     {
-        $example = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-            'tags_as_string' => 'first tag, second tag',
-        ];
-
-        $tags = $this->Posts->newEntity($example)->tags;
+        $tags = $this->Posts->newEntity($this->example)->tags;
 
         $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
         $this->assertEquals('first tag', $tags[0]->tag);
@@ -149,9 +154,9 @@ class PostsTableTest extends TestCase
         $this->assertEquals('second tag', $tags[1]->tag);
 
         //In this case, the `dog` tag already exists
-        $example['tags_as_string'] = 'first tag, dog';
+        $this->example['tags_as_string'] = 'first tag, dog';
 
-        $tags = $this->Posts->newEntity($example)->tags;
+        $tags = $this->Posts->newEntity($this->example)->tags;
 
         $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
         $this->assertEmpty($tags[0]->id);
@@ -162,24 +167,63 @@ class PostsTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeSave()` method
+     * @test
+     */
+    public function testBeforeSave()
+    {
+        $entity = $this->Posts->newEntity($this->example);
+        $this->assertNotEmpty($this->Posts->save($entity));
+        $this->assertNull($entity->preview);
+
+        $this->Posts->delete($entity);
+
+        //Tries with an url
+        $this->example['text'] .= '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />';
+
+        $entity = $this->Posts->newEntity($this->example);
+        $this->assertNotEmpty($this->Posts->save($entity));
+
+        $this->assertTrue(isJson($entity->preview));
+        $this->assertEquals([
+            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
+            'width' => 400,
+            'height' => 400,
+        ], json_decode($entity->preview, true));
+
+        //Tries with relative and absolute paths
+        foreach ([
+            'image.jpg',
+            WWW_ROOT . 'img' . DS . 'image.jpg',
+        ] as $image) {
+            $this->Posts->delete($entity);
+
+            $this->example['text'] = '<img src=\'' . $image . '\' /> Text';
+
+            $entity = $this->Posts->newEntity($this->example);
+            $this->assertNotEmpty($this->Posts->save($entity));
+
+            $preview = json_decode($entity->preview, true);
+            $preview['preview'] = rtr($preview['preview']);
+            $this->assertEquals([
+                'preview' => 'tests/test_app/TestApp/webroot/img/image.jpg',
+                'width' => 400,
+                'height' => 400,
+            ], $preview);
+        }
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */
     public function testBuildRules()
     {
-        $example = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($example);
+        $entity = $this->Posts->newEntity($this->example);
         $this->assertNotEmpty($this->Posts->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Posts->newEntity($example);
+        $entity = $this->Posts->newEntity($this->example);
         $this->assertFalse($this->Posts->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],

@@ -134,7 +134,7 @@ class PhotosFixture extends TestFixture
                     mkdir(dirname($file));
                 }
 
-                copy(TEST_APP . 'examples' . DS . 'image.jpg', $file);
+                copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
             }
         }
     }

@@ -105,7 +105,7 @@ class PostTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['preview', 'tags_as_string'], $this->Post->getVirtual());
+        $this->assertEquals(['tags_as_string'], $this->Post->getVirtual());
     }
 
     /**

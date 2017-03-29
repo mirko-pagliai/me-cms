@@ -23,7 +23,6 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeCms\Model\Entity\Traits\PreviewAccessorTrait;
 
 /**
  * Post entity
@@ -45,8 +44,6 @@ use MeCms\Model\Entity\Traits\PreviewAccessorTrait;
  */
 class Post extends Entity
 {
-    use PreviewAccessorTrait;
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
@@ -61,7 +58,7 @@ class Post extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['preview', 'tags_as_string'];
+    protected $_virtual = ['tags_as_string'];
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)

@@ -24,6 +24,7 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Entity;
@@ -121,6 +122,32 @@ class PostsTable extends AppTable
 
                 $data['tags'][$k]['tag'] = $tag;
             }
+        }
+    }
+
+    /**
+     * Called before each entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @uses MeCms\Model\Table\AppTable::beforeSave()
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        parent::beforeSave($event, $entity, $options);
+
+        $preview = firstImage($entity->text);
+
+        if ($preview) {
+            //If is not an url and is a relative path
+            if (!isUrl($preview) && !\Cake\Filesystem\Folder::isAbsolute($preview)) {
+                $preview = WWW_ROOT . 'img' . DS . $preview;
+            }
+
+            list($width, $height) = getimagesize($preview);
+
+            $entity->preview = json_encode(compact('preview', 'width', 'height'));
         }
     }
 
