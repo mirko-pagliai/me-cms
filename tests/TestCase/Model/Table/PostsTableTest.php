@@ -214,6 +214,8 @@ class PostsTableTest extends TestCase
         $this->assertEquals('category_id', $this->Posts->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Posts->Categories->getJoinType());
         $this->assertEquals('MeCms.PostsCategories', $this->Posts->Categories->className());
+        $this->assertInstanceOf('MeCms\Model\Table\PostsCategoriesTable', $this->Posts->Categories->getTarget());
+        $this->assertEquals('MeCms.PostsCategories', $this->Posts->Categories->getTarget()->getRegistryAlias());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Users);
         $this->assertEquals('user_id', $this->Posts->Users->getForeignKey());

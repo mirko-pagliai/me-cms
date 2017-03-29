@@ -26,6 +26,7 @@ use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
@@ -35,6 +36,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 class PagesTable extends AppTable
 {
+    use LocatorAwareTrait;
     use NextToBePublishedTrait;
 
     /**
@@ -135,7 +137,8 @@ class PagesTable extends AppTable
 
         $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
             ->setForeignKey('category_id')
-            ->setJoinType('INNER');
+            ->setJoinType('INNER')
+            ->setTarget($this->tableLocator()->get('MeCms.PagesCategories'));
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);

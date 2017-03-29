@@ -8,6 +8,7 @@
 * `LoginRecorder` is now a component and returns the correct IP on localhost.
     You must first set the user ID with the `config()` method and the `user`
     value;
+* fixed bug https://github.com/cakephp/cakephp/pull/10417;
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
 * static pages uses cache. `StaticPage::all()` returns an array of `Entity`;
