@@ -39,7 +39,7 @@ trait GetPreviewTrait
      *  properties or `null` if there is not no preview
      * @uses getPreviewSize()
      */
-    protected function getPreview($text)
+    public function getPreview($text)
     {
         $preview = firstImage($text);
 
