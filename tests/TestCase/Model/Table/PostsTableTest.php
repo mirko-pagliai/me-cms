@@ -28,6 +28,7 @@ use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use MeTools\Utility\Youtube;
 
 /**
  * PostsTableTest class
@@ -179,12 +180,12 @@ class PostsTableTest extends TestCase
         $this->Posts->delete($entity);
 
         //Tries with an url
-        $this->example['text'] .= '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />';
+        $this->example['text'] = '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />';
 
         $entity = $this->Posts->newEntity($this->example);
+        $this->Posts->save($entity);
         $this->assertNotEmpty($this->Posts->save($entity));
 
-        $this->assertTrue(isJson($entity->preview));
         $this->assertEquals([
             'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
             'width' => 400,
@@ -198,7 +199,7 @@ class PostsTableTest extends TestCase
         ] as $image) {
             $this->Posts->delete($entity);
 
-            $this->example['text'] = '<img src=\'' . $image . '\' /> Text';
+            $this->example['text'] = '<img src=\'' . $image . '\' />';
 
             $entity = $this->Posts->newEntity($this->example);
             $this->assertNotEmpty($this->Posts->save($entity));
@@ -211,6 +212,20 @@ class PostsTableTest extends TestCase
                 'height' => 400,
             ], $preview);
         }
+
+        $this->Posts->delete($entity);
+
+        //Tries with a Youtube video
+        $this->example['text'] = '[youtube]6z4KK7RWjmk[/youtube]';
+
+        $entity = $this->Posts->newEntity($this->example);
+        $this->assertNotEmpty($this->Posts->save($entity));
+
+        $this->assertEquals([
+            'preview' => Youtube::getPreview('6z4KK7RWjmk'),
+            'width' => 480,
+            'height' => 360,
+        ], json_decode($entity->preview, true));
     }
 
     /**

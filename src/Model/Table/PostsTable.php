@@ -26,6 +26,7 @@ use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
@@ -35,6 +36,7 @@ use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
+use MeTools\Utility\Youtube;
 
 /**
  * Posts model
@@ -141,12 +143,14 @@ class PostsTable extends AppTable
 
         $preview = firstImage($entity->text);
 
-        if ($preview) {
-            //If is not an url and is a relative path
-            if (!isUrl($preview) && !\Cake\Filesystem\Folder::isAbsolute($preview)) {
-                $preview = WWW_ROOT . 'img' . DS . $preview;
-            }
+        //If is not an url and is a relative path
+        if ($preview && !isUrl($preview) && !Folder::isAbsolute($preview)) {
+            $preview = WWW_ROOT . 'img' . DS . $preview;
+        } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $entity->text, $matches)) {
+            $preview = Youtube::getPreview($matches[1]);
+        }
 
+        if ($preview) {
             list($width, $height) = getimagesize($preview);
 
             $entity->preview = json_encode(compact('preview', 'width', 'height'));
