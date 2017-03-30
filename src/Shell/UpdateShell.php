@@ -48,6 +48,23 @@ class UpdateShell extends BaseUpdateShell
                 ));
             }
         }
+
+        //Updates all `preview` fields
+        foreach (['Pages', 'Posts'] as $table) {
+            $records = $this->$table->find('all')
+                ->select(['id', 'text'])
+                ->where(['preview IS' => null])
+                ->toArray();
+
+            foreach ($records as $record) {
+                $preview = $this->$table->getPreview($record->text);
+
+                if (!empty($preview)) {
+                    $record->preview = $preview;
+                    $this->$table->save($record);
+                }
+            }
+        }
     }
 
     /**
