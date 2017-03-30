@@ -2,7 +2,8 @@
 ## 2.17 branch
 ### 2.17.0
 * added `preview` field to pages and posts tables, which contains url, width
-    and height of the preview, encoded with json.
+    and height of the preview, encoded with json;
+* `BaseUpdateShell` renamed as `BaseUpdateConsole`. This creates less confusion.
 
 ## 2.16 branch
 ### 2.16.1

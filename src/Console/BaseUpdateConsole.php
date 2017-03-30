@@ -30,7 +30,7 @@ use MeTools\Console\Shell;
 /**
  * Provided some provides some useful methods for the `UpdateShell` classes
  */
-class BaseUpdateShell extends Shell
+class BaseUpdateConsole extends Shell
 {
     /**
      * @var \Cake\Database\Schema\Collection
