@@ -28,7 +28,6 @@ use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use MeTools\Utility\Youtube;
 
 /**
  * PostsTableTest class
@@ -99,6 +98,15 @@ class PostsTableTest extends TestCase
     public function testCacheProperty()
     {
         $this->assertEquals('posts', $this->Posts->cache);
+    }
+
+    /**
+     * Test for `_initializeSchema()` method
+     * @test
+     */
+    public function testInitializeSchema()
+    {
+        $this->assertEquals('json', $this->Posts->getSchema()->columnType('preview'));
     }
 
     /**
@@ -173,59 +181,18 @@ class PostsTableTest extends TestCase
      */
     public function testBeforeSave()
     {
+        //Tries with a text without images or videos
         $entity = $this->Posts->newEntity($this->example);
         $this->assertNotEmpty($this->Posts->save($entity));
         $this->assertNull($entity->preview);
 
         $this->Posts->delete($entity);
 
-        //Tries with an url
-        $this->example['text'] = '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />';
-
-        $entity = $this->Posts->newEntity($this->example);
-        $this->Posts->save($entity);
-        $this->assertNotEmpty($this->Posts->save($entity));
-
-        $this->assertEquals([
-            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
-            'width' => 400,
-            'height' => 400,
-        ], json_decode($entity->preview, true));
-
-        //Tries with relative and absolute paths
-        foreach ([
-            'image.jpg',
-            WWW_ROOT . 'img' . DS . 'image.jpg',
-        ] as $image) {
-            $this->Posts->delete($entity);
-
-            $this->example['text'] = '<img src=\'' . $image . '\' />';
-
-            $entity = $this->Posts->newEntity($this->example);
-            $this->assertNotEmpty($this->Posts->save($entity));
-
-            $preview = json_decode($entity->preview, true);
-            $preview['preview'] = rtr($preview['preview']);
-            $this->assertEquals([
-                'preview' => 'tests/test_app/TestApp/webroot/img/image.jpg',
-                'width' => 400,
-                'height' => 400,
-            ], $preview);
-        }
-
-        $this->Posts->delete($entity);
-
-        //Tries with a Youtube video
-        $this->example['text'] = '[youtube]6z4KK7RWjmk[/youtube]';
-
+        //Tries with a text with an image
+        $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
         $entity = $this->Posts->newEntity($this->example);
         $this->assertNotEmpty($this->Posts->save($entity));
-
-        $this->assertEquals([
-            'preview' => Youtube::getPreview('6z4KK7RWjmk'),
-            'width' => 480,
-            'height' => 360,
-        ], json_decode($entity->preview, true));
+        $this->assertNotEmpty($entity->preview);
     }
 
     /**

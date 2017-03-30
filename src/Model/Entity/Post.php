@@ -51,6 +51,7 @@ class Post extends Entity
     protected $_accessible = [
         '*' => true,
         'id' => false,
+        'preview' => false,
         'modified' => false,
     ];
 

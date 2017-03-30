@@ -24,9 +24,9 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Database\Schema\Table as Schema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
@@ -34,9 +34,9 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\GetPreviewTrait;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
-use MeTools\Utility\Youtube;
 
 /**
  * Posts model
@@ -55,6 +55,7 @@ use MeTools\Utility\Youtube;
  */
 class PostsTable extends AppTable
 {
+    use GetPreviewTrait;
     use IsOwnedByTrait;
     use LocatorAwareTrait;
     use NextToBePublishedTrait;
@@ -64,6 +65,20 @@ class PostsTable extends AppTable
      * @var string
      */
     public $cache = 'posts';
+
+    /**
+     * Alters the schema used by this table. This function is only called after
+     *  fetching the schema out of the database
+     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
+     * @return Cake\Database\Schema\TableSchema TableSchema instance
+     * @since 2.17.0
+     */
+    protected function _initializeSchema(Schema $schema)
+    {
+        $schema->columnType('preview', 'json');
+
+        return $schema;
+    }
 
     /**
      * Called after an entity has been deleted
@@ -135,26 +150,15 @@ class PostsTable extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
+     * @since 2.17.0
      * @uses MeCms\Model\Table\AppTable::beforeSave()
+     * @uses MeCms\Model\Table\Traits\GetPreviewTrait::getPreview()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         parent::beforeSave($event, $entity, $options);
 
-        $preview = firstImage($entity->text);
-
-        //If is not an url and is a relative path
-        if ($preview && !isUrl($preview) && !Folder::isAbsolute($preview)) {
-            $preview = WWW_ROOT . 'img' . DS . $preview;
-        } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $entity->text, $matches)) {
-            $preview = Youtube::getPreview($matches[1]);
-        }
-
-        if ($preview) {
-            list($width, $height) = getimagesize($preview);
-
-            $entity->preview = json_encode(compact('preview', 'width', 'height'));
-        }
+        $entity->preview = $this->getPreview($entity->text);
     }
 
     /**

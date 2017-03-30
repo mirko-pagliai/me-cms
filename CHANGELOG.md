@@ -1,4 +1,9 @@
 # 2.x branch
+## 2.17 branch
+### 2.17.0
+* added `preview` field to pages and posts tables, which contains url, width
+    and height of the preview, encoded with json.
+
 ## 2.16 branch
 ### 2.16.1
 * managers can delete photos and photos albums; 

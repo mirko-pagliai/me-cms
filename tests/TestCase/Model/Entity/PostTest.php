@@ -96,6 +96,7 @@ class PostTest extends TestCase
     public function testNoAccessibleProperties()
     {
         $this->assertFalse($this->Post->isAccessible('id'));
+        $this->assertFalse($this->Post->isAccessible('preview'));
         $this->assertFalse($this->Post->isAccessible('modified'));
     }
 

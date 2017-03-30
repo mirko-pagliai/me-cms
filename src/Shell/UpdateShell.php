@@ -37,14 +37,16 @@ class UpdateShell extends BaseUpdateShell
      */
     public function to2v17v0()
     {
-        $this->loadModel('MeCms.Posts');
+        //Adds "preview" field to pages and posts tables
+        foreach (['Pages', 'Posts'] as $table) {
+            $this->loadModel('MeCms.' . $table);
 
-        //Adds "preview" field to the posts table
-        if (!$this->_checkColumn('preview', $this->Posts->getTable())) {
-            $this->connection->execute(sprintf(
-                'ALTER TABLE `%s` ADD `preview` TEXT NULL DEFAULT NULL AFTER `text`;',
-                $this->Posts->getTable()
-            ));
+            if (!$this->_checkColumn('preview', $this->$table->getTable())) {
+                $this->connection->execute(sprintf(
+                    'ALTER TABLE `%s` ADD `preview` TEXT NULL DEFAULT NULL AFTER `text`;',
+                    $this->$table->getTable()
+                ));
+            }
         }
     }
 
