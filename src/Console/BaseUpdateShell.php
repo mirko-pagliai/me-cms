@@ -144,6 +144,7 @@ class BaseUpdateShell extends Shell
     /**
      * Initializes the Shell acts as constructor for subclasses allows
      *  configuration of tasks prior to shell execution
+     * @return void
      */
     public function initialize()
     {
