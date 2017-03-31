@@ -367,7 +367,15 @@ class PostsTableTest extends TestCase
         $this->assertEquals(2, $related[0]->id);
         $this->assertNotEmpty($related[0]->title);
         $this->assertNotEmpty($related[0]->slug);
-        $this->assertContains('<img src="img.gif" />', $related[0]->text);
+        $this->assertContains(
+            '<img src="https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg" />Text of the second post',
+            $related[0]->text
+        );
+        $this->assertEquals([
+            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
+            'width' => 400,
+            'height' => 400,
+        ], $related[0]->preview);
         $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
 
         //This post has no tags
