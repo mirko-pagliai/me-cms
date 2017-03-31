@@ -23,6 +23,7 @@
 namespace MeCms\Model\Table;
 
 use ArrayObject;
+use Cake\Database\Schema\Table as Schema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -32,6 +33,15 @@ use MeCms\Model\Table\AppTable;
 /**
  * Photos model
  * @property \Cake\ORM\Association\BelongsTo $Albums
+ * @method \MeCms\Model\Entity\Photo get($primaryKey, $options = [])
+ * @method \MeCms\Model\Entity\Photo newEntity($data = null, array $options = [])
+ * @method \MeCms\Model\Entity\Photo[] newEntities(array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Photo|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \MeCms\Model\Entity\Photo patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Photo[] patchEntities($entities, array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Photo findOrCreate($search, callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class PhotosTable extends AppTable
 {
@@ -40,6 +50,20 @@ class PhotosTable extends AppTable
      * @var string
      */
     public $cache = 'photos';
+
+    /**
+     * Alters the schema used by this table. This function is only called after
+     *  fetching the schema out of the database
+     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
+     * @return Cake\Database\Schema\TableSchema TableSchema instance
+     * @since 2.17.0
+     */
+    protected function _initializeSchema(Schema $schema)
+    {
+        $schema->columnType('size', 'json');
+
+        return $schema;
+    }
 
     /**
      * Called after an entity has been deleted

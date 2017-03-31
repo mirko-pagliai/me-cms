@@ -49,6 +49,14 @@ class UpdateShell extends BaseUpdateConsole
             }
         }
 
+        $this->loadModel('MeCms.Photos');
+        if (!$this->_checkColumn('size', $this->Photos->getTable())) {
+            $this->connection->execute(sprintf(
+                'ALTER TABLE `%s` ADD `size` TEXT NULL AFTER `filename`;',
+                $this->Photos->getTable()
+            ));
+        }
+
         //Updates all `preview` fields
         foreach (['Pages', 'Posts'] as $table) {
             $records = $this->$table->find('all')

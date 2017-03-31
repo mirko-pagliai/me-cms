@@ -77,6 +77,7 @@ class PhotoTest extends TestCase
     {
         $this->assertFalse($this->Photo->isAccessible('id'));
         $this->assertFalse($this->Photo->isAccessible('modified'));
+        $this->assertFalse($this->Photo->isAccessible('size'));
     }
 
     /**

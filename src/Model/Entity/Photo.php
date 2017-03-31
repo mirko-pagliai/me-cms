@@ -28,11 +28,13 @@ use Cake\ORM\Entity;
  * Photo entity
  * @property int $id
  * @property int $album_id
- * @property \MeCms\Model\Entity\Album $album
  * @property string $filename
+ * @property string $size
  * @property string $description
+ * @property bool $active
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \MeCms\Model\Entity\PhotosAlbum $album
  */
 class Photo extends Entity
 {
@@ -43,6 +45,7 @@ class Photo extends Entity
     protected $_accessible = [
         '*' => true,
         'id' => false,
+        'size' => false,
         'modified' => false,
     ];
 
