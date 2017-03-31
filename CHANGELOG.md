@@ -4,6 +4,8 @@
 * added `og:image:width` and `og:image:height` meta tags for previews;
 * added `preview` field to pages and posts tables, which contains url, width
     and height of the preview, encoded with json;
+* improved `KcFinderComponent`. Now the class has `_getDefaultConfig()` and
+    `initialize()` method;
 * `BaseUpdateShell` renamed as `BaseUpdateConsole`. This creates less confusion.
 
 ## 2.16 branch

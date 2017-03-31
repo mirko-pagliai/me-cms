@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of MeCms.
  *
@@ -25,26 +24,30 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\KcFinderComponent;
+use Reflection\ReflectionTrait;
 
+/**
+ * KcFinderComponentTest class
+ */
 class KcFinderComponentTest extends TestCase
 {
-    /**
-     * @var \Cake\Controller\ComponentRegistry
-     */
-    protected $ComponentRegistry;
-
-    /**
-     * @var \Cake\Event\Event
-     */
-    protected $Event;
+    use ReflectionTrait;
 
     /**
      * @var \MeCms\Controller\Component\KcFinderComponent
      */
     protected $KcFinder;
+
+    /**
+     * Internal method to get a KcFinder instance
+     * @return \MeCms\Controller\Component\KcFinderComponent
+     */
+    protected function getKcFinderInstance()
+    {
+        return new KcFinderComponent(new ComponentRegistry(new Controller));
+    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -65,9 +68,7 @@ class KcFinderComponentTest extends TestCase
 
         file_put_contents($file, null);
 
-        $this->ComponentRegistry = new ComponentRegistry(new Controller);
-        $this->Event = new Event('test');
-        $this->KcFinder = new KcFinderComponent($this->ComponentRegistry);
+        $this->KcFinder = $this->getKcFinderInstance();
     }
 
     /**
@@ -85,36 +86,75 @@ class KcFinderComponentTest extends TestCase
         @rmdir(dirname($file));
         //@codingStandardsIgnoreEnd
 
-        unset($this->ComponentRegistry, $this->Event, $this->KcFinder);
+        unset($this->KcFinder);
     }
 
     /**
-     * Test for `configure()` method
+     * Test for `_getDefaultConfig()` method
      * @test
      */
-    public function testConfigure()
+    public function testGetDefaultConfig()
     {
-        $this->assertEmpty($this->KcFinder->request->session()->read('KCFINDER'));
-
-        $this->assertNull($this->KcFinder->configure());
-
-        $config = $this->KcFinder->request->session()->read('KCFINDER');
-
+        $defaultConfig = $this->invokeMethod($this->KcFinder, '_getDefaultConfig');
+        $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
-            'denyExtensionRename',
-            'denyUpdateCheck',
-            'dirnameChangeChars',
-            'disabled',
-            'filenameChangeChars',
-            'jpegQuality',
-            'uploadDir',
-            'uploadURL',
-            'types',
-            'access',
-        ], array_keys($config));
+            'denyExtensionRename' => true,
+            'denyUpdateCheck' => true,
+            'dirnameChangeChars' => [
+                ' ' => '_',
+                ':' => '_',
+            ],
+            'disabled' => false,
+            'filenameChangeChars' => [
+                ' ' => '_',
+                ':' => '_',
+            ],
+            'jpegQuality' => 100,
+            'uploadDir' => 'tests/test_app/TestApp/webroot/files/',
+            'uploadURL' => 'http://localhost/files',
+            'types' => [
+                'images' => '*img',
+            ],
+            'access' => [
+                'dirs' => [
+                    'create' => true,
+                    'delete' => false,
+                    'rename' => false,
+                ],
+                'files' => [
+                    'upload' => true,
+                    'delete' => false,
+                    'copy' => true,
+                    'move' => false,
+                    'rename' => false,
+                ],
+            ],
+        ], $defaultConfig);
 
-        //Re-call
-        $this->assertTrue($this->KcFinder->configure());
+        //Tries with admin user
+        $this->KcFinder->Auth->setUser(['group' => ['name' => 'admin']]);
+
+        $defaultConfig = $this->invokeMethod($this->KcFinder, '_getDefaultConfig');
+        $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
+        $this->assertEquals([
+            'denyExtensionRename' => true,
+            'denyUpdateCheck' => true,
+            'dirnameChangeChars' => [
+                ' ' => '_',
+                ':' => '_',
+            ],
+            'disabled' => false,
+            'filenameChangeChars' => [
+                ' ' => '_',
+                ':' => '_',
+            ],
+            'jpegQuality' => (int)100,
+            'uploadDir' => 'tests/test_app/TestApp/webroot/files/',
+            'uploadURL' => 'http://localhost/files',
+            'types' => [
+                'images' => '*img',
+            ],
+        ], $defaultConfig);
     }
 
     /**
@@ -139,44 +179,54 @@ class KcFinderComponentTest extends TestCase
         @rmdir(UPLOADED . 'docs');
     }
 
-    public function testStartup()
+    /**
+     * Test for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
     {
-        $this->KcFinder = $this->getMockBuilder(KcFinderComponent::class)
-            ->setMethods(['configure'])
-            ->setConstructorArgs([$this->ComponentRegistry])
-            ->getMock();
+        $config = $this->KcFinder->request->session()->read('KCFINDER');
+        $this->assertNotEmpty($config);
 
-        $this->KcFinder->method('configure')
-            ->will($this->returnCallback(function () {
-                return 'called `configure`';
-            }));
-
-        $this->assertEquals('called `configure`', $this->KcFinder->startup($this->Event));
+        $this->assertEquals([
+            'denyExtensionRename',
+            'denyUpdateCheck',
+            'dirnameChangeChars',
+            'disabled',
+            'filenameChangeChars',
+            'jpegQuality',
+            'uploadDir',
+            'uploadURL',
+            'types',
+            'access',
+        ], array_keys($config));
     }
 
     /**
-     * Test for `startup()` method, with `uploaded` dir not writable
+     * Test for `initialize()` method, with `uploaded` dir not writable
      * @expectedException \Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage File or directory tests/test_app/TestApp/webroot/files/ not writeable
+     * @test
      */
-    public function testStartupDirNotWritable()
+    public function testInitializeDirNotWritable()
     {
         //@codingStandardsIgnoreLine
         @rmdir(UPLOADED);
 
-        $this->KcFinder->startup($this->Event);
+        $this->getKcFinderInstance();
     }
 
     /**
-     * Test for `startup()` method, with KCFinder not available
+     * Test for `initialize()` method, with KCFinder not available
      * @expectedException \Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage KCFinder is not available
+     * @test
      */
-    public function testStartupKCFinderNotAvailable()
+    public function testInitializeKCFinderNotAvailable()
     {
         //@codingStandardsIgnoreLine
         @unlink(WWW_ROOT . 'vendor' . DS . 'kcfinder' .DS . 'index.php');
 
-        $this->KcFinder->startup($this->Event);
+        $this->getKcFinderInstance();
     }
 }
