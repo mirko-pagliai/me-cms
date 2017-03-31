@@ -81,6 +81,15 @@ class PhotosTableTest extends TestCase
     }
 
     /**
+     * Test for `_initializeSchema()` method
+     * @test
+     */
+    public function testInitializeSchema()
+    {
+        $this->assertEquals('json', $this->Photos->getSchema()->columnType('size'));
+    }
+
+    /**
      * Test for `afterDelete()` method
      * @test
      */
