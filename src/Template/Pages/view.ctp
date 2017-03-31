@@ -65,6 +65,8 @@ if ($this->request->isAction('view', 'Pages')) {
     if ($page->preview) {
         $this->Html->meta(['href' => $page->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $page->preview['preview'], 'property' => 'og:image']);
+        $this->Html->meta(['content' => $page->preview['width'], 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $page->preview['height'], 'property' => 'og:image:height']);
     }
 
     if ($page->text) {
