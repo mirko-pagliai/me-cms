@@ -6,6 +6,7 @@
     and height of the preview, encoded with json;
 * improved `KcFinderComponent`. Now the class has `_getDefaultConfig()` and
     `initialize()` method;
+* improved `AuthComponent`. Now the class has the `initialize()` method;
 * `BaseUpdateShell` renamed as `BaseUpdateConsole`. This creates less confusion.
 
 ## 2.16 branch
