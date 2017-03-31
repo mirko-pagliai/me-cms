@@ -35,7 +35,7 @@ trait GetPreviewTrait
     /**
      * Gets the first available image or the preview of the first YouTube video
      * @param string $text The text within which to search
-     * @return object|null Object with `preview`, `width` and `height`
+     * @return array|null Array with `preview`, `width` and `height`
      *  properties or `null` if there is not no preview
      * @uses getPreviewSize()
      */
@@ -56,7 +56,7 @@ trait GetPreviewTrait
 
         list($width, $height) = $this->getPreviewSize($preview);
 
-        return (object)compact('preview', 'width', 'height');
+        return compact('preview', 'width', 'height');
     }
 
     /**

@@ -107,25 +107,30 @@ class GetPreviewTraitTest extends TestCase
         $result = $this->getPreview(
             '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />'
         );
-        $this->assertInstanceof('stdClass', $result);
-        $this->assertEquals('https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg', $result->preview);
-        $this->assertEquals(400, $result->width);
-        $this->assertEquals(300, $result->height);
+        $this->assertEquals([
+            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
+            'width' => 400,
+            'height' => 300,
+        ], $result);
 
         foreach ([
             'image.jpg',
             WWW_ROOT . 'img' . DS . 'image.jpg',
         ] as $image) {
             $result = $this->getPreview('<img src=\'' . $image . '\' />');
-            $result->preview = rtr($result->preview);
-            $this->assertEquals('tests/test_app/TestApp/webroot/img/image.jpg', $result->preview);
-            $this->assertEquals(400, $result->width);
-            $this->assertEquals(300, $result->height);
+            $result['preview'] = rtr($result['preview']);
+            $this->assertEquals([
+                'preview' => 'tests/test_app/TestApp/webroot/img/image.jpg',
+                'width' => 400,
+                'height' => 300,
+            ], $result);
         }
 
         $result = $this->getPreview('[youtube]6z4KK7RWjmk[/youtube]');
-        $this->assertEquals(Youtube::getPreview('6z4KK7RWjmk'), $result->preview);
-        $this->assertEquals(400, $result->width);
-        $this->assertEquals(300, $result->height);
+        $this->assertEquals([
+            'preview' => Youtube::getPreview('6z4KK7RWjmk'),
+            'width' => 400,
+            'height' => 300,
+        ], $result);
     }
 }
