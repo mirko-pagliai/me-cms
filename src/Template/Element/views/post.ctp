@@ -101,11 +101,7 @@ if (config('post.keywords') && $this->request->isAction('view', 'Posts') &&
         <div class="content-tags">
             <?php
             foreach ($post->tags as $tag) {
-                echo $this->Html->link(
-                    $tag->tag,
-                    ['_name' => 'postsTag', $tag->slug],
-                    ['icon' => 'tags']
-                );
+                echo $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']);
             }
             ?>
         </div>
