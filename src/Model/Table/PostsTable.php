@@ -243,14 +243,14 @@ class PostsTable extends AppTable
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
                     $post = $this->find('active')
-                        ->select(['id', 'title', 'slug', 'text'])
+                        ->select(['id', 'title', 'slug', 'text', 'preview'])
                         ->matching('Tags', function ($q) use ($tag) {
                             return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
                         })
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
 
                     if ($images) {
-                        $post->where([sprintf('%s.text LIKE', $this->getAlias()) => sprintf('%%%s%%', '<img')]);
+                        $post->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null]);
                     }
 
                     $post = $post->first();
