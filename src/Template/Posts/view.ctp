@@ -63,8 +63,10 @@ if ($this->request->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
 
     if ($post->preview) {
-        $this->Html->meta(['href' => $post->preview->preview, 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $post->preview->preview, 'property' => 'og:image']);
+        $this->Html->meta(['href' => $post->preview['preview'], 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $post->preview['preview'], 'property' => 'og:image']);
+        $this->Html->meta(['content' => $post->preview['width'], 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $post->preview['height'], 'property' => 'og:image:height']);
     }
 
     if (!empty($post->text)) {

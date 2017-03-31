@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.0
+* added `og:image:width` and `og:image:height` meta tags for previews;
 * added `preview` field to pages and posts tables, which contains url, width
     and height of the preview, encoded with json;
 * `BaseUpdateShell` renamed as `BaseUpdateConsole`. This creates less confusion.

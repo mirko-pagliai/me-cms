@@ -320,7 +320,7 @@ class PostsController extends AppController
                     return $q->select(['first_name', 'last_name']);
                 },
             ])
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'preview', 'active', 'created', 'modified'])
             ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
             ->firstOrFail();

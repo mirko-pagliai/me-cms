@@ -63,8 +63,8 @@ if ($this->request->isAction('view', 'Pages')) {
     $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
 
     if ($page->preview) {
-        $this->Html->meta(['href' => $page->preview->preview, 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $page->preview->preview, 'property' => 'og:image']);
+        $this->Html->meta(['href' => $page->preview['preview'], 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $page->preview['preview'], 'property' => 'og:image']);
     }
 
     if ($page->text) {

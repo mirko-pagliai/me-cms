@@ -63,7 +63,7 @@ foreach ($posts as $post) {
 
     //Adds the preview image
     if ($post->preview) {
-        $text = $this->Thumb->resize($post->preview->preview, ['width' => 200]) . '< br/>' . $text;
+        $text = $this->Thumb->resize($post->preview['preview'], ['width' => 200]) . '< br/>' . $text;
     }
 
     echo $this->Rss->item([], [
