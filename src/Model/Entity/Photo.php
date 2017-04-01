@@ -45,7 +45,6 @@ class Photo extends Entity
     protected $_accessible = [
         '*' => true,
         'id' => false,
-        'size' => false,
         'modified' => false,
     ];
 

@@ -53,20 +53,6 @@ class PhotosTable extends AppTable
     public $cache = 'photos';
 
     /**
-     * Alters the schema used by this table. This function is only called after
-     *  fetching the schema out of the database
-     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
-     * @return Cake\Database\Schema\TableSchema TableSchema instance
-     * @since 2.17.0
-     */
-    protected function _initializeSchema(Schema $schema)
-    {
-        $schema->columnType('size', 'json');
-
-        return $schema;
-    }
-
-    /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\ORM\Entity $entity Entity object
