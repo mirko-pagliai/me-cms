@@ -325,7 +325,7 @@ class AppTableTest extends TestCase
         $data = ['filename' => 'image.jpg'];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
-        $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.size AS `Photos__size`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
+        $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
         $this->assertEquals('%image.jpg%', $query->valueBinder()->bindings()[':c0']['value']);
     }
 
@@ -347,7 +347,7 @@ class AppTableTest extends TestCase
         $this->assertEquals($expected, $query->sql());
         $this->assertEmpty($query->valueBinder()->bindings());
 
-        $expected = 'SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.size AS `Photos__size`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos';
+        $expected = 'SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos';
 
         $data = ['filename' => 'ab'];
 

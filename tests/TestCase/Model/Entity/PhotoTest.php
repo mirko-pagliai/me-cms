@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Photo;
 
@@ -36,6 +37,19 @@ class PhotoTest extends TestCase
     protected $Photo;
 
     /**
+     * @var \MeCms\Model\Table\PhotosTable
+     */
+    protected $Photos;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.photos',
+    ];
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -46,6 +60,8 @@ class PhotoTest extends TestCase
         parent::setUp();
 
         $this->Photo = new Photo;
+
+        $this->Photos = TableRegistry::get('MeCms.Photos');
     }
 
     /**
@@ -56,7 +72,7 @@ class PhotoTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Photo);
+        unset($this->Photo, $this->Photos);
     }
 
     /**
@@ -98,11 +114,29 @@ class PhotoTest extends TestCase
     }
 
     /**
+     * Test for `_getPreview()` method
+     * @test
+     */
+    public function testPreviewGetMutator()
+    {
+        $photo = $this->Photos->get(1);
+        $preview = $photo->preview;
+
+        $this->assertEquals($photo->path, $preview['preview']);
+        $preview['preview'] = rtr($preview['preview']);
+        $this->assertEquals([
+            'preview' => 'tests/test_app/TestApp/webroot/img/photos/1/photo1.jpg',
+            'width' => 400,
+            'height' => 400,
+        ], $preview);
+    }
+
+    /**
      * Test for virtual fields
      * @test
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path'], $this->Photo->getVirtual());
+        $this->assertEquals(['path', 'preview'], $this->Photo->getVirtual());
     }
 }

@@ -52,7 +52,7 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path'];
+    protected $_virtual = ['path', 'preview'];
 
     /**
      * Gets the photo path (virtual field)
@@ -65,5 +65,23 @@ class Photo extends Entity
         }
 
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
+    }
+
+    /**
+     * Gets the photo preview (virtual field)
+     * @return array|void Array with `preview`, `width` and `height` keys
+     * @uses _getPath()
+     */
+    protected function _getPreview()
+    {
+        $preview = $this->_getPath();
+
+        if (!$preview) {
+            return;
+        }
+
+        list($width, $height) = getimagesize($preview);
+
+        return compact('preview', 'width', 'height');
     }
 }
