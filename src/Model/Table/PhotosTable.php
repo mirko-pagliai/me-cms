@@ -24,6 +24,7 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Database\Schema\Table as Schema;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -82,6 +83,24 @@ class PhotosTable extends AppTable
         }
 
         parent::afterDelete($event, $entity, $options);
+    }
+
+    /**
+     * Called before each entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.17.0
+     * @uses MeCms\Model\Table\AppTable::beforeSave()
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        parent::beforeSave($event, $entity, $options);
+
+        list($width, $height) = getimagesize($entity->path);
+
+        $entity->size = compact('width', 'height');
     }
 
     /**
