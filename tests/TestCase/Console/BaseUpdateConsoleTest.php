@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Console;
 
+use Cake\Cache\Cache;
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
@@ -218,6 +219,21 @@ class BaseUpdateConsoleTest extends TestCase
         ] as $table) {
             $this->assertContains($table, $this->invokeMethod($this->BaseUpdateConsole, '_tables'));
         }
+    }
+
+    /**
+     * Test for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
+    {
+        Cache::write('test', 'value');
+        Cache::write('testFromAdmin', 'value', 'admin');
+
+        $this->UpdateShell->initialize();
+
+        $this->assertFalse(Cache::read('test'));
+        $this->assertFalse(Cache::read('testFromAdmin', 'admin'));
     }
 
     /**
