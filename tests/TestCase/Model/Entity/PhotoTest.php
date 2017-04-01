@@ -119,20 +119,24 @@ class PhotoTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $preview = $this->Photos->get(1)->preview;
+        $photo = $this->Photos->get(1);
 
+        $this->assertEquals($photo->thumbnail, $photo->preview['preview']);
         $this->assertEquals([
             'preview' => 'http://localhost/thumb/ZWQyMTVlM2QwM2UxMTFmNjQ5NzE3ZWNkNWUyZmIwODkuanBn',
             'width' => 400,
             'height' => 400,
-        ], $preview);
+        ], $photo->preview);
     }
 
+    /**
+     * Test for `_getThumbnail()` method
+     * @test
+     */
     public function testThumbnailGetMutator()
     {
         $thumbnail = $this->Photos->get(1)->thumbnail;
-
-        $this->assertEquals('/tmp/thumbs/ed215e3d03e111f649717ecd5e2fb089.jpg', $thumbnail);
+        $this->assertEquals('http://localhost/thumb/ZWQyMTVlM2QwM2UxMTFmNjQ5NzE3ZWNkNWUyZmIwODkuanBn', $thumbnail);
     }
 
     /**

@@ -71,16 +71,17 @@ class Photo extends Entity
     /**
      * Gets the photo preview (virtual field)
      * @return array|void Array with `preview`, `width` and `height` keys
-     * @uses _getThumbnail()
+     * @uses _getPath()
      */
     protected function _getPreview()
     {
-        $thumb = $this->_getThumbnail();
+        $preview = $this->_getPath();
 
-        if (!$thumb) {
+        if (!$preview) {
             return;
         }
 
+        $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
         $preview = thumbUrl($thumb, true);
 
         list($width, $height) = getimagesize($thumb);
@@ -91,6 +92,7 @@ class Photo extends Entity
     /**
      * Gets the photo thumbnail (virtual field)
      * @return string|void Thumbnail path
+     * @uses _getPath()
      */
     protected function _getThumbnail()
     {
@@ -100,6 +102,7 @@ class Photo extends Entity
             return;
         }
 
-        return (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+        $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+        return thumbUrl($thumb, true);
     }
 }
