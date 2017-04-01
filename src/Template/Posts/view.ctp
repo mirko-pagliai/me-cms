@@ -62,12 +62,19 @@ if ($this->request->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
     $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if (!empty($post->preview)) {
-        $this->Html->meta(['href' => $post->preview, 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $post->preview, 'property' => 'og:image']);
+    //Adds tags as keywords
+    if (config('post.keywords') && $post->tags_as_string) {
+        $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
     }
 
-    if (!empty($post->text)) {
+    if ($post->preview) {
+        $this->Html->meta(['href' => $post->preview['preview'], 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $post->preview['preview'], 'property' => 'og:image']);
+        $this->Html->meta(['content' => $post->preview['width'], 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $post->preview['height'], 'property' => 'og:image:height']);
+    }
+
+    if ($post->text) {
         $this->Html->meta([
             'content' => $this->Text->truncate(
                 trim(strip_tags($this->BBCode->remove($post->text))),

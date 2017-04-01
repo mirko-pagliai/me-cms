@@ -22,24 +22,25 @@
  */
 namespace MeCms\Test\TestCase\Console;
 
+use Cake\Cache\Cache;
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
-use MeCms\Console\BaseUpdateShell;
+use MeCms\Console\BaseUpdateConsole;
 use MeCms\Shell\UpdateShell;
 use Reflection\ReflectionTrait;
 
 /**
- * BaseUpdateShellTest class
+ * BaseUpdateConsoleTest class
  */
-class BaseUpdateShellTest extends TestCase
+class BaseUpdateConsoleTest extends TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @var \MeCms\Console\BaseUpdateShell
+     * @var \MeCms\Console\BaseUpdateConsole
      */
-    protected $BaseUpdateShell;
+    protected $BaseUpdateConsole;
 
     /**
      * Does not automatically load fixtures
@@ -92,7 +93,7 @@ class BaseUpdateShellTest extends TestCase
     {
         parent::setUp();
 
-        $this->BaseUpdateShell = new BaseUpdateShell;
+        $this->BaseUpdateConsole = new BaseUpdateConsole;
         $this->UpdateShell = new UpdateShell;
 
         $this->out = new ConsoleOutput;
@@ -109,7 +110,7 @@ class BaseUpdateShellTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->BaseUpdateShell, $this->UpdateShell, $this->io, $this->err, $this->out);
+        unset($this->BaseUpdateConsole, $this->UpdateShell, $this->io, $this->err, $this->out);
     }
 
     /**
@@ -118,10 +119,10 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testConstruct()
     {
-        $SchemaCollection = $this->getProperty($this->BaseUpdateShell, 'SchemaCollection');
+        $SchemaCollection = $this->getProperty($this->BaseUpdateConsole, 'SchemaCollection');
         $this->assertInstanceOf('Cake\Database\Schema\Collection', $SchemaCollection);
 
-        $now = $this->getProperty($this->BaseUpdateShell, 'now');
+        $now = $this->getProperty($this->BaseUpdateConsole, 'now');
         $this->assertInstanceOf('Cake\I18n\Time', $now);
     }
 
@@ -133,8 +134,8 @@ class BaseUpdateShellTest extends TestCase
     {
         $this->loadFixtures('Users');
 
-        $this->assertTrue($this->invokeMethod($this->BaseUpdateShell, '_checkColumn', ['id', 'users']));
-        $this->assertFalse($this->invokeMethod($this->BaseUpdateShell, '_checkColumn', ['noExistingColumn', 'users']));
+        $this->assertTrue($this->invokeMethod($this->BaseUpdateConsole, '_checkColumn', ['id', 'users']));
+        $this->assertFalse($this->invokeMethod($this->BaseUpdateConsole, '_checkColumn', ['noExistingColumn', 'users']));
     }
 
     /**
@@ -156,7 +157,7 @@ class BaseUpdateShellTest extends TestCase
             'post_count',
             'created',
             'modified',
-        ], $this->invokeMethod($this->BaseUpdateShell, '_columns', ['users']));
+        ], $this->invokeMethod($this->BaseUpdateConsole, '_columns', ['users']));
     }
 
     /**
@@ -166,7 +167,7 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testColumnsNoExistingTable()
     {
-        $this->invokeMethod($this->BaseUpdateShell, '_columns', ['noExistingTable']);
+        $this->invokeMethod($this->BaseUpdateConsole, '_columns', ['noExistingTable']);
     }
 
     /**
@@ -175,8 +176,8 @@ class BaseUpdateShellTest extends TestCase
      */
     public function testTableExists()
     {
-        $this->assertTrue($this->invokeMethod($this->BaseUpdateShell, '_tableExists', ['users']));
-        $this->assertFalse($this->invokeMethod($this->BaseUpdateShell, '_tableExists', ['noExisting']));
+        $this->assertTrue($this->invokeMethod($this->BaseUpdateConsole, '_tableExists', ['users']));
+        $this->assertFalse($this->invokeMethod($this->BaseUpdateConsole, '_tableExists', ['noExisting']));
     }
 
     /**
@@ -216,8 +217,23 @@ class BaseUpdateShellTest extends TestCase
             'users',
             'users_groups',
         ] as $table) {
-            $this->assertContains($table, $this->invokeMethod($this->BaseUpdateShell, '_tables'));
+            $this->assertContains($table, $this->invokeMethod($this->BaseUpdateConsole, '_tables'));
         }
+    }
+
+    /**
+     * Test for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
+    {
+        Cache::write('test', 'value');
+        Cache::write('testFromAdmin', 'value', 'admin');
+
+        $this->UpdateShell->initialize();
+
+        $this->assertFalse(Cache::read('test'));
+        $this->assertFalse(Cache::read('testFromAdmin', 'admin'));
     }
 
     /**
@@ -278,6 +294,7 @@ class BaseUpdateShellTest extends TestCase
 
         $versions = collection($methods)->extract('version')->toList();
         $this->assertEquals([
+            '2.17.0',
             '2.14.8',
             '2.14.7',
             '2.14.3',

@@ -22,6 +22,7 @@
  */
 namespace MeCms\Console;
 
+use Cake\Cache\Cache;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
 use MeTools\Console\Shell;
@@ -29,7 +30,7 @@ use MeTools\Console\Shell;
 /**
  * Provided some provides some useful methods for the `UpdateShell` classes
  */
-class BaseUpdateShell extends Shell
+class BaseUpdateConsole extends Shell
 {
     /**
      * @var \Cake\Database\Schema\Collection
@@ -138,6 +139,18 @@ class BaseUpdateShell extends Shell
     protected function _tables()
     {
         return $this->SchemaCollection->listTables();
+    }
+
+    /**
+     * Initializes the Shell acts as constructor for subclasses allows
+     *  configuration of tasks prior to shell execution
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        Cache::clearAll();
     }
 
     /**

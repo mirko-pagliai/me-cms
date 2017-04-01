@@ -51,4 +51,29 @@ $this->Breadcrumbs->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
 $this->Breadcrumbs->add($photo->album->title, ['_name' => 'album', $photo->album->slug]);
 $this->Breadcrumbs->add($title, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id]);
 
-echo $this->Thumb->resize($photo->path, ['width' => 848]);
+/**
+ * Meta tags
+ */
+if ($this->request->isAction('view', 'Photos')) {
+    $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
+
+    if ($photo->preview) {
+        $this->Html->meta(['href' => $photo->preview['preview'], 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $photo->preview['preview'], 'property' => 'og:image']);
+        $this->Html->meta(['content' => $photo->preview['width'], 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $photo->preview['height'], 'property' => 'og:image:height']);
+    }
+
+    if ($photo->description) {
+        $this->Html->meta([
+            'content' => $this->Text->truncate(
+                trim(strip_tags($this->BBCode->remove($photo->description))),
+                100,
+                ['html' => true]
+            ),
+            'property' => 'og:description',
+        ]);
+    }
+}
+
+echo $this->Html->img($photo->thumbnail);

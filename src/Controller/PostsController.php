@@ -320,7 +320,7 @@ class PostsController extends AppController
                     return $q->select(['first_name', 'last_name']);
                 },
             ])
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'preview', 'active', 'created', 'modified'])
             ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
             ->firstOrFail();
@@ -329,7 +329,8 @@ class PostsController extends AppController
 
         //Gets related posts
         if (config('post.related') && config('post.related.limit')) {
-            $this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
+            $related = $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images'));
+            $this->set(compact('related'));
         }
     }
 

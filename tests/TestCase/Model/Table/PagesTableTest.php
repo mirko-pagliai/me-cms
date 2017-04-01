@@ -40,6 +40,11 @@ class PagesTableTest extends TestCase
     protected $Pages;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -59,6 +64,13 @@ class PagesTableTest extends TestCase
         parent::setUp();
 
         $this->Pages = TableRegistry::get('MeCms.Pages');
+
+        $this->example = [
+            'category_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+        ];
 
         Cache::clear(false, $this->Pages->cache);
     }
@@ -81,6 +93,15 @@ class PagesTableTest extends TestCase
     public function testCacheProperty()
     {
         $this->assertEquals('pages', $this->Pages->cache);
+    }
+
+    /**
+     * Test for `_initializeSchema()` method
+     * @test
+     */
+    public function testInitializeSchema()
+    {
+        $this->assertEquals('json', $this->Pages->getSchema()->columnType('preview'));
     }
 
     /**
@@ -124,23 +145,36 @@ class PagesTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeSave()` method
+     * @test
+     */
+    public function testBeforeSave()
+    {
+        //Tries with a text without images or videos
+        $entity = $this->Pages->newEntity($this->example);
+        $this->assertNotEmpty($this->Pages->save($entity));
+        $this->assertNull($entity->preview);
+
+        $this->Pages->delete($entity);
+
+        //Tries with a text with an image
+        $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
+        $entity = $this->Pages->newEntity($this->example);
+        $this->assertNotEmpty($this->Pages->save($entity));
+        $this->assertNotEmpty($entity->preview);
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */
     public function testBuildRules()
     {
-        $example = [
-            'category_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Pages->newEntity($example);
+        $entity = $this->Pages->newEntity($this->example);
         $this->assertNotEmpty($this->Pages->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Pages->newEntity($example);
+        $entity = $this->Pages->newEntity($this->example);
         $this->assertFalse($this->Pages->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],

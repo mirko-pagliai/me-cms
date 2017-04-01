@@ -23,16 +23,19 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Thumber\Utility\ThumbCreator;
 
 /**
  * Photo entity
  * @property int $id
  * @property int $album_id
- * @property \MeCms\Model\Entity\Album $album
  * @property string $filename
+ * @property string $size
  * @property string $description
+ * @property bool $active
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \MeCms\Model\Entity\PhotosAlbum $album
  */
 class Photo extends Entity
 {
@@ -50,7 +53,7 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path'];
+    protected $_virtual = ['path', 'preview', 'thumbnail'];
 
     /**
      * Gets the photo path (virtual field)
@@ -63,5 +66,44 @@ class Photo extends Entity
         }
 
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
+    }
+
+    /**
+     * Gets the photo preview (virtual field)
+     * @return array|void Array with `preview`, `width` and `height` keys
+     * @uses _getPath()
+     */
+    protected function _getPreview()
+    {
+        $preview = $this->_getPath();
+
+        if (!$preview) {
+            return;
+        }
+
+        $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+        $preview = thumbUrl($thumb, true);
+
+        list($width, $height) = getimagesize($thumb);
+
+        return compact('preview', 'width', 'height');
+    }
+
+    /**
+     * Gets the photo thumbnail (virtual field)
+     * @return string|void Thumbnail path
+     * @uses _getPath()
+     */
+    protected function _getThumbnail()
+    {
+        $preview = $this->_getPath();
+
+        if (!$preview) {
+            return;
+        }
+
+        $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+
+        return thumbUrl($thumb, true);
     }
 }

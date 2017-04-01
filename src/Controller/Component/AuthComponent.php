@@ -23,7 +23,6 @@
  */
 namespace MeCms\Controller\Component;
 
-use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Component\AuthComponent as CakeAuthComponent;
 
 /**
@@ -36,16 +35,14 @@ use Cake\Controller\Component\AuthComponent as CakeAuthComponent;
 class AuthComponent extends CakeAuthComponent
 {
     /**
-     * Constructor
-     * @param ComponentRegistry $registry A ComponentRegistry this component
-     *  can use to lazy load its components
-     * @param array $config Array of configuration settings
+     * Constructor hook method
+     * @param array $config The configuration settings provided to this
+     *  component
      * @return void
      */
-    public function __construct(ComponentRegistry $registry, array $config = [])
+    public function initialize(array $config)
     {
-        //Sets config
-        $config = am([
+        $defaultConfig = [
             'authenticate' => [
                 'Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users'],
             ],
@@ -59,27 +56,19 @@ class AuthComponent extends CakeAuthComponent
             'loginRedirect' => ['_name' => 'dashboard'],
             'logoutRedirect' => ['_name' => 'homepage'],
             'unauthorizedRedirect' => ['_name' => 'dashboard'],
-        ], $config);
-
-        parent::__construct($registry, $config);
-    }
-
-    /**
-     * Constructor hook method
-     * @param array $config The configuration settings provided to this
-     *  component
-     * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Component.html#_initialize
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+        ];
 
         //The authorization error is shown only if the user is already logged
         //  in and he is trying to do something not allowed
         if (!$this->user('id')) {
-            $this->setConfig('authError', false);
+            $defaultConfig['authError'] = false;
         }
+
+        $config = am($defaultConfig, $config);
+
+        $this->setConfig($config);
+
+        parent::initialize($config);
     }
 
     /**

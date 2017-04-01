@@ -62,8 +62,8 @@ foreach ($posts as $post) {
     $text = strip_tags($text);
 
     //Adds the preview image
-    if (!empty($post->preview)) {
-        $text = $this->Thumb->resize($post->preview, ['width' => 200]) . '< br/>' . $text;
+    if ($post->preview) {
+        $text = $this->Thumb->resize($post->preview['preview'], ['width' => 200]) . '< br/>' . $text;
     }
 
     echo $this->Rss->item([], [

@@ -52,7 +52,7 @@ class PhotosController extends AppController
         }
 
         $photo = $this->Photos->find('active')
-            ->select(['id', 'album_id', 'filename', 'active'])
+            ->select(['id', 'album_id', 'filename', 'active', 'modified'])
             ->contain(['Albums' => function ($q) {
                 return $q->select(['id', 'title', 'slug']);
             }])

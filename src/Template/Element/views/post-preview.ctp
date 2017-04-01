@@ -56,6 +56,10 @@
                 <?php endif; ?>
             </div>
         </div>
-        <?= $this->Thumb->fit($post->preview, ['width' => 205]) ?>
+        <?php
+        if ($post->preview) {
+            echo $this->Thumb->fit($post->preview['preview'], ['width' => 205]);
+        }
+        ?>
     </a>
 </div>

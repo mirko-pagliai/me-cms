@@ -37,6 +37,11 @@ class PhotosTableTest extends TestCase
     protected $Photos;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -57,6 +62,19 @@ class PhotosTableTest extends TestCase
 
         $this->Photos = TableRegistry::get('MeCms.Photos');
 
+        $this->example = [
+            'album_id' => 1,
+            'filename' => 'pic.jpg',
+        ];
+
+        $file = PHOTOS . $this->example['album_id'] . DS . $this->example['filename'];
+
+        //Creates the file for the example
+        //@codingStandardsIgnoreStart
+        @mkdir(dirname($file));
+        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+        //@codingStandardsIgnoreEnd
+
         Cache::clear(false, $this->Photos->cache);
     }
 
@@ -67,6 +85,10 @@ class PhotosTableTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+
+        //Deletes the file for the example
+        //@codingStandardsIgnoreLine
+        @unlink(PHOTOS . $this->example['album_id'] . DS . $this->example['filename']);
 
         unset($this->Photos);
     }
@@ -96,21 +118,31 @@ class PhotosTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeSave()` method
+     * @test
+     */
+    public function testBeforeSave()
+    {
+        $entity = $this->Photos->newEntity($this->example);
+        $this->assertNotEmpty($this->Photos->save($entity));
+
+        $this->assertEquals([
+            'width' => 400,
+            'height' => 400,
+        ], $entity->size);
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */
     public function testBuildRules()
     {
-        $example = [
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
-
-        $entity = $this->Photos->newEntity($example);
+        $entity = $this->Photos->newEntity($this->example);
         $this->assertNotEmpty($this->Photos->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Photos->newEntity($example);
+        $entity = $this->Photos->newEntity($this->example);
         $this->assertFalse($this->Photos->save($entity));
         $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->errors());
 

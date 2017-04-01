@@ -40,6 +40,11 @@ class PostsTableTest extends TestCase
     protected $Posts;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -63,6 +68,15 @@ class PostsTableTest extends TestCase
 
         $this->Posts = TableRegistry::get('MeCms.Posts');
 
+        $this->example = [
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'My title',
+            'slug' => 'my-slug',
+            'text' => 'My text',
+            'tags_as_string' => 'first tag, second tag',
+        ];
+
         Cache::clear(false, $this->Posts->cache);
     }
 
@@ -84,6 +98,15 @@ class PostsTableTest extends TestCase
     public function testCacheProperty()
     {
         $this->assertEquals('posts', $this->Posts->cache);
+    }
+
+    /**
+     * Test for `_initializeSchema()` method
+     * @test
+     */
+    public function testInitializeSchema()
+    {
+        $this->assertEquals('json', $this->Posts->getSchema()->columnType('preview'));
     }
 
     /**
@@ -132,16 +155,7 @@ class PostsTableTest extends TestCase
      */
     public function testBeforeMarshal()
     {
-        $example = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-            'tags_as_string' => 'first tag, second tag',
-        ];
-
-        $tags = $this->Posts->newEntity($example)->tags;
+        $tags = $this->Posts->newEntity($this->example)->tags;
 
         $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
         $this->assertEquals('first tag', $tags[0]->tag);
@@ -149,9 +163,9 @@ class PostsTableTest extends TestCase
         $this->assertEquals('second tag', $tags[1]->tag);
 
         //In this case, the `dog` tag already exists
-        $example['tags_as_string'] = 'first tag, dog';
+        $this->example['tags_as_string'] = 'first tag, dog';
 
-        $tags = $this->Posts->newEntity($example)->tags;
+        $tags = $this->Posts->newEntity($this->example)->tags;
 
         $this->assertInstanceOf('MeCms\Model\Entity\Tag', $tags[0]);
         $this->assertEmpty($tags[0]->id);
@@ -162,24 +176,36 @@ class PostsTableTest extends TestCase
     }
 
     /**
+     * Test for `beforeSave()` method
+     * @test
+     */
+    public function testBeforeSave()
+    {
+        //Tries with a text without images or videos
+        $entity = $this->Posts->newEntity($this->example);
+        $this->assertNotEmpty($this->Posts->save($entity));
+        $this->assertNull($entity->preview);
+
+        $this->Posts->delete($entity);
+
+        //Tries with a text with an image
+        $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
+        $entity = $this->Posts->newEntity($this->example);
+        $this->assertNotEmpty($this->Posts->save($entity));
+        $this->assertNotEmpty($entity->preview);
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */
     public function testBuildRules()
     {
-        $example = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        $entity = $this->Posts->newEntity($example);
+        $entity = $this->Posts->newEntity($this->example);
         $this->assertNotEmpty($this->Posts->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Posts->newEntity($example);
+        $entity = $this->Posts->newEntity($this->example);
         $this->assertFalse($this->Posts->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
@@ -341,7 +367,15 @@ class PostsTableTest extends TestCase
         $this->assertEquals(2, $related[0]->id);
         $this->assertNotEmpty($related[0]->title);
         $this->assertNotEmpty($related[0]->slug);
-        $this->assertContains('<img src="img.gif" />', $related[0]->text);
+        $this->assertContains(
+            '<img src="https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg" />Text of the second post',
+            $related[0]->text
+        );
+        $this->assertEquals([
+            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
+            'width' => 400,
+            'height' => 400,
+        ], $related[0]->preview);
         $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
 
         //This post has no tags
@@ -380,7 +414,7 @@ class PostsTableTest extends TestCase
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active`, PostsTags.id AS `PostsTags__id`, PostsTags.tag_id AS `PostsTags__tag_id`, PostsTags.post_id AS `PostsTags__post_id`, Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
+        $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.preview AS `Posts__preview`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active`, PostsTags.id AS `PostsTags__id`, PostsTags.tag_id AS `PostsTags__tag_id`, PostsTags.post_id AS `PostsTags__post_id`, Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
 
         $this->assertEquals('test', $query->valueBinder()->bindings()[':c0']['value']);
     }

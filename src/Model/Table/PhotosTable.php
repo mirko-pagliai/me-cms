@@ -23,6 +23,8 @@
 namespace MeCms\Model\Table;
 
 use ArrayObject;
+use Cake\Database\Schema\Table as Schema;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -32,6 +34,15 @@ use MeCms\Model\Table\AppTable;
 /**
  * Photos model
  * @property \Cake\ORM\Association\BelongsTo $Albums
+ * @method \MeCms\Model\Entity\Photo get($primaryKey, $options = [])
+ * @method \MeCms\Model\Entity\Photo newEntity($data = null, array $options = [])
+ * @method \MeCms\Model\Entity\Photo[] newEntities(array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Photo|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \MeCms\Model\Entity\Photo patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Photo[] patchEntities($entities, array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Photo findOrCreate($search, callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class PhotosTable extends AppTable
 {
@@ -58,6 +69,24 @@ class PhotosTable extends AppTable
         }
 
         parent::afterDelete($event, $entity, $options);
+    }
+
+    /**
+     * Called before each entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.17.0
+     * @uses MeCms\Model\Table\AppTable::beforeSave()
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        parent::beforeSave($event, $entity, $options);
+
+        list($width, $height) = getimagesize($entity->path);
+
+        $entity->size = compact('width', 'height');
     }
 
     /**

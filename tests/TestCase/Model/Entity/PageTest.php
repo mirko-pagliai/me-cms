@@ -76,15 +76,7 @@ class PageTest extends TestCase
     public function testNoAccessibleProperties()
     {
         $this->assertFalse($this->Page->isAccessible('id'));
+        $this->assertFalse($this->Page->isAccessible('preview'));
         $this->assertFalse($this->Page->isAccessible('modified'));
-    }
-
-    /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertEquals(['preview'], $this->Page->getVirtual());
     }
 }

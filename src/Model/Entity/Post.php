@@ -23,29 +23,27 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use MeCms\Model\Entity\Traits\PreviewAccessorTrait;
 
 /**
  * Post entity
  * @property int $id
  * @property int $category_id
- * @property \MeCms\Model\Entity\Category $category
  * @property int $user_id
- * @property \MeCms\Model\Entity\User $user
  * @property string $title
- * @property string $subtitle
  * @property string $slug
+ * @property string $subtitle
  * @property string $text
+ * @property string $preview
  * @property int $priority
- * @property bool $active
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property bool $active
+ * @property \MeCms\Model\Entity\PostsCategory $category
+ * @property \MeCms\Model\Entity\User $user
  * @property \MeCms\Model\Entity\Tag[] $tags
  */
 class Post extends Entity
 {
-    use PreviewAccessorTrait;
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
@@ -53,6 +51,7 @@ class Post extends Entity
     protected $_accessible = [
         '*' => true,
         'id' => false,
+        'preview' => false,
         'modified' => false,
     ];
 
@@ -60,7 +59,7 @@ class Post extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['preview', 'tags_as_string'];
+    protected $_virtual = ['tags_as_string'];
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)

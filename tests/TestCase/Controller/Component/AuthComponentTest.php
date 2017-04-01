@@ -38,6 +38,15 @@ class AuthComponentTest extends TestCase
     public $Auth;
 
     /**
+     * Internal method to get an Auth instance
+     * @return \MeCms\Controller\Component\AuthComponent
+     */
+    protected function getAuthInstance()
+    {
+        return new AuthComponent(new ComponentRegistry(new Controller));
+    }
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -47,7 +56,7 @@ class AuthComponentTest extends TestCase
     {
         parent::setUp();
 
-        $this->Auth = new AuthComponent(new ComponentRegistry(new Controller));
+        $this->Auth = $this->getAuthInstance();
     }
 
     /**
@@ -62,42 +71,36 @@ class AuthComponentTest extends TestCase
     }
 
     /**
-     * Tests for `__construct()` and `initialize()` methods
+     * Tests for `initialize()` method
      * @test
      */
-    public function testConstructAndInitialize()
+    public function testInitialize()
     {
-        $this->assertEquals([
+        $expected = [
             'authenticate' => [
-                'Form' => [
-                    'contain' => 'Groups',
-                    'userModel' => 'MeCms.Users',
-                ]
+                'Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users'],
             ],
             'authorize' => 'Controller',
             'ajaxLogin' => null,
             'flash' => [
                 'element' => 'MeTools.flash',
-                'params' => [
-                    'class' => 'alert-danger',
-                ],
+                'params' => ['class' => 'alert-danger'],
             ],
-            'loginAction' => [
-                '_name' => 'login',
-            ],
-            'loginRedirect' => [
-                '_name' => 'dashboard',
-            ],
-            'logoutRedirect' => [
-                '_name' => 'homepage',
-            ],
+            'loginAction' => ['_name' => 'login'],
+            'loginRedirect' => ['_name' => 'dashboard'],
+            'logoutRedirect' => ['_name' => 'homepage'],
             'authError' => false,
-            'unauthorizedRedirect' => [
-                '_name' => 'dashboard',
-            ],
+            'unauthorizedRedirect' => ['_name' => 'dashboard'],
             'storage' => 'Session',
             'checkAuthIn' => 'Controller.startup',
-        ], $this->Auth->getConfig());
+        ];
+
+        $this->assertEquals($expected, $this->Auth->getConfig());
+
+        $this->Auth->setUser(['id' => 1]);
+        $this->Auth->initialize([]);
+        $expected['authError'] = 'You are not authorized for this action';
+        $this->assertEquals($expected, $this->Auth->getConfig());
     }
 
     /**

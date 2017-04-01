@@ -24,12 +24,9 @@
 
 <div class="page-container content-container">
     <div class="content-header">
-        <?php if (config('page.category') && !empty($page->category)) : ?>
+        <?php if (config('page.category') && $page->category->title && $page->category->slug) : ?>
             <h5 class="content-category">
-                <?= $this->Html->link(
-                    $page->category->title,
-                    ['_name' => 'pagesCategory', $page->category->slug]
-                ) ?>
+                <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
@@ -37,7 +34,7 @@
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>
 
-        <?php if (!empty($page->subtitle)) : ?>
+        <?php if ($page->subtitle) : ?>
             <h4 class="content-subtitle">
                 <?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?>
             </h4>
@@ -66,9 +63,7 @@
                 ['ellipsis' => false, 'exact' => true, 'html' => false]
             );
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction('view', 'Pages') &&
-            config('default.truncate_to')
-        ) {
+        } elseif (!$this->request->isAction('view', 'Pages') && config('default.truncate_to')) {
             echo $truncatedText = $this->Text->truncate(
                 $text,
                 config('default.truncate_to'),

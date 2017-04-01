@@ -31,14 +31,10 @@ if ($banner->position->name) {
 <div class="banner <?= $class ?>">
     <?php
     if ($banner->target) {
-        echo $this->Html->link(
-            $this->Html->img($banner->path),
-            ['_name' => 'banner', $banner->id],
-            [
-                'target' => '_blank',
-                'title' => $banner->description ?: null,
-            ]
-        );
+        echo $this->Html->link($this->Html->img($banner->path), ['_name' => 'banner', $banner->id], [
+            'target' => '_blank',
+            'title' => $banner->description ?: null,
+        ]);
     } else {
         echo $this->Html->img($banner->path);
     }

@@ -23,17 +23,54 @@
 namespace MeCms\Shell;
 
 use Cake\Core\Configure;
-use MeCms\Console\BaseUpdateShell;
+use MeCms\Console\BaseUpdateConsole;
 
 /**
  * Applies updates
  */
-class UpdateShell extends BaseUpdateShell
+class UpdateShell extends BaseUpdateConsole
 {
+    /**
+     * Updates to 2.17.0 version
+     * @return void
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     */
+    public function to2v17v0()
+    {
+        //Adds "preview" field to pages and posts tables
+        foreach (['Pages', 'Posts'] as $table) {
+            $this->loadModel('MeCms.' . $table);
+
+            if (!$this->_checkColumn('preview', $this->$table->getTable())) {
+                $this->connection->execute(sprintf(
+                    'ALTER TABLE `%s` ADD `preview` TEXT NULL DEFAULT NULL AFTER `text`;',
+                    $this->$table->getTable()
+                ));
+            }
+        }
+
+        //Updates all `preview` fields
+        foreach (['Pages', 'Posts'] as $table) {
+            $records = $this->$table->find('all')
+                ->select(['id', 'text'])
+                ->where(['preview IS' => null])
+                ->toArray();
+
+            foreach ($records as $record) {
+                $preview = $this->$table->getPreview($record->text);
+
+                if (!empty($preview)) {
+                    $record->preview = $preview;
+                    $this->$table->save($record);
+                }
+            }
+        }
+    }
+
     /**
      * Updates to 2.14.8 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
      */
     public function to2v14v8()
     {
@@ -57,14 +94,14 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.14.7 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v14v7()
     {
         $this->loadModel('MeCms.Banners');
 
-        //Adds "thumbnail" field to the banner table
+        //Adds "thumbnail" field to the banners table
         if (!$this->_checkColumn('thumbnail', $this->Banners->getTable())) {
             $this->connection->execute(sprintf(
                 'ALTER TABLE `%s` ADD `thumbnail` BOOLEAN NOT null DEFAULT true AFTER `active`;',
@@ -101,8 +138,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.14.0 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v14v0()
     {
@@ -120,10 +157,10 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.10.1 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::$now
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
-     * @uses MeCms\Console\BaseUpdateShell::_tableExists()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::$now
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::_tableExists()
      */
     public function to2v10v1()
     {
@@ -192,8 +229,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.10.0 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v10v0()
     {
@@ -228,8 +265,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.6.0 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v6v0()
     {
@@ -333,7 +370,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.2.1 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
      */
     public function to2v2v1()
     {
@@ -351,8 +388,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.1.9 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v1v9()
     {
@@ -390,8 +427,8 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.1.8 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
-     * @uses MeCms\Console\BaseUpdateShell::_checkColumn()
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::_checkColumn()
      */
     public function to2v1v8()
     {
@@ -422,7 +459,7 @@ class UpdateShell extends BaseUpdateShell
     /**
      * Updates to 2.1.7 version
      * @return void
-     * @uses MeCms\Console\BaseUpdateShell::$connection
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
      */
     public function to2v1v7()
     {

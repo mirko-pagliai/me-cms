@@ -24,7 +24,6 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Event\Event;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
@@ -41,25 +40,13 @@ class KcFinderComponent extends Component
     public $components = ['MeCms.Auth'];
 
     /**
-     * Sets the configuration for KCFinder.
-     *
-     * This method will automatically call by `startup()` when the
-     *  component is loaded.
-     * @return bool
-     * @see http://kcfinder.sunhater.com/install
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * Gets the default config
+     * @return array
      * @uses getTypes()
      */
-    public function configure()
+    protected function _getDefaultConfig()
     {
-        $controller = $this->getController();
-
-        if ($controller->request->session()->check('KCFINDER')) {
-            return true;
-        }
-
-        //Default configuration
-        $options = [
+        $defaultConfig = [
             'denyExtensionRename' => true,
             'denyUpdateCheck' => true,
             'dirnameChangeChars' => [' ' => '_', ':' => '_'],
@@ -74,13 +61,13 @@ class KcFinderComponent extends Component
         //If the user is not and admin
         if (!$this->Auth->isGroup(['admin'])) {
             //Only admins can delete or rename directories
-            $options['access']['dirs'] = [
+            $defaultConfig['access']['dirs'] = [
                 'create' => true,
                 'delete' => false,
                 'rename' => false,
             ];
             //Only admins can delete, move or rename files
-            $options['access']['files'] = [
+            $defaultConfig['access']['files'] = [
                 'upload' => true,
                 'delete' => false,
                 'copy' => true,
@@ -89,10 +76,7 @@ class KcFinderComponent extends Component
             ];
         }
 
-        //Merges default options with the options from configuration
-        $options = am($options, config('kcfinder'));
-
-        return $controller->request->session()->write('KCFINDER', $options);
+        return $defaultConfig;
     }
 
     /**
@@ -116,14 +100,14 @@ class KcFinderComponent extends Component
     }
 
     /**
-     * Called after the controller's `beforeFilter()` method, but before the
-     *  controller executes the current action handler
-     * @param \Cake\Event\Event $event Event instance
-     * @return bool
-     * @uses configure()
+     * Constructor hook method
+     * @param array $config The configuration settings provided to this
+     *  component
+     * @return void
      * @throws InternalErrorException
+     * @uses _getDefaultConfig()
      */
-    public function startup(Event $event)
+    public function initialize(array $config)
     {
         //Checks for KCFinder
         if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php')) {
@@ -135,7 +119,12 @@ class KcFinderComponent extends Component
             throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
 
-        //Configures KCFinder
-        return $this->configure();
+        //Merges default config, options from configuration and passed options
+        $config = am($this->_getDefaultConfig(), config('kcfinder'), $config);
+
+        //Writes on session
+        $this->getController()->request->session()->write('KCFINDER', $config);
+
+        parent::initialize($config);
     }
 }

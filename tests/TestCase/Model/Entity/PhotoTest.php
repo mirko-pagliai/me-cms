@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Photo;
 
@@ -36,6 +37,19 @@ class PhotoTest extends TestCase
     protected $Photo;
 
     /**
+     * @var \MeCms\Model\Table\PhotosTable
+     */
+    protected $Photos;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.photos',
+    ];
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -46,6 +60,8 @@ class PhotoTest extends TestCase
         parent::setUp();
 
         $this->Photo = new Photo;
+
+        $this->Photos = TableRegistry::get('MeCms.Photos');
     }
 
     /**
@@ -56,7 +72,7 @@ class PhotoTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->Photo);
+        unset($this->Photo, $this->Photos);
     }
 
     /**
@@ -98,11 +114,38 @@ class PhotoTest extends TestCase
     }
 
     /**
+     * Test for `_getPreview()` method
+     * @test
+     */
+    public function testPreviewGetMutator()
+    {
+        $photo = $this->Photos->get(1);
+
+        $this->assertEquals($photo->thumbnail, $photo->preview['preview']);
+
+        $this->assertEquals(['preview', 'width', 'height'], array_keys($photo->preview));
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $photo->preview['preview']);
+        $this->assertEquals(400, $photo->preview['width']);
+        $this->assertEquals(400, $photo->preview['height']);
+    }
+
+    /**
+     * Test for `_getThumbnail()` method
+     * @test
+     */
+    public function testThumbnailGetMutator()
+    {
+        $thumbnail = $this->Photos->get(1)->thumbnail;
+
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $thumbnail);
+    }
+
+    /**
      * Test for virtual fields
      * @test
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path'], $this->Photo->getVirtual());
+        $this->assertEquals(['path', 'preview', 'thumbnail'], $this->Photo->getVirtual());
     }
 }

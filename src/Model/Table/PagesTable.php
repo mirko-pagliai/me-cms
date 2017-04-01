@@ -24,18 +24,31 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Database\Schema\Table as Schema;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\Traits\GetPreviewFromTextTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Pages model
+ * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @method \MeCms\Model\Entity\Page get($primaryKey, $options = [])
+ * @method \MeCms\Model\Entity\Page newEntity($data = null, array $options = [])
+ * @method \MeCms\Model\Entity\Page[] newEntities(array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Page|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \MeCms\Model\Entity\Page patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Page[] patchEntities($entities, array $data, array $options = [])
+ * @method \MeCms\Model\Entity\Page findOrCreate($search, callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class PagesTable extends AppTable
 {
+    use GetPreviewFromTextTrait;
     use LocatorAwareTrait;
     use NextToBePublishedTrait;
 
@@ -44,6 +57,20 @@ class PagesTable extends AppTable
      * @var string
      */
     public $cache = 'pages';
+
+    /**
+     * Alters the schema used by this table. This function is only called after
+     *  fetching the schema out of the database
+     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
+     * @return Cake\Database\Schema\TableSchema TableSchema instance
+     * @since 2.17.0
+     */
+    protected function _initializeSchema(Schema $schema)
+    {
+        $schema->columnType('preview', 'json');
+
+        return $schema;
+    }
 
     /**
      * Called after an entity has been deleted
@@ -77,6 +104,23 @@ class PagesTable extends AppTable
 
         //Sets the next record to be published
         $this->setNextToBePublished();
+    }
+
+    /**
+     * Called before each entity is saved
+     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.17.0
+     * @uses MeCms\Model\Table\AppTable::beforeSave()
+     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreview()
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        parent::beforeSave($event, $entity, $options);
+
+        $entity->preview = $this->getPreview($entity->text);
     }
 
     /**
