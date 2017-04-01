@@ -24,7 +24,7 @@
 
 <div class="post-container content-container">
     <div class="content-header">
-        <?php if (config('post.category') && !empty($post->category->title) && !empty($post->category->slug)) : ?>
+        <?php if (config('post.category') && $post->category->title && $post->category->slug) : ?>
             <h5 class="content-category">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
