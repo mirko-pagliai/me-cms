@@ -122,11 +122,11 @@ class PhotoTest extends TestCase
         $photo = $this->Photos->get(1);
 
         $this->assertEquals($photo->thumbnail, $photo->preview['preview']);
-        $this->assertEquals([
-            'preview' => 'http://localhost/thumb/ZWQyMTVlM2QwM2UxMTFmNjQ5NzE3ZWNkNWUyZmIwODkuanBn',
-            'width' => 400,
-            'height' => 400,
-        ], $photo->preview);
+
+        $this->assertEquals(['preview', 'width', 'height'], array_keys($photo->preview));
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $photo->preview['preview']);
+        $this->assertEquals(400, $photo->preview['width']);
+        $this->assertEquals(400, $photo->preview['height']);
     }
 
     /**
@@ -136,7 +136,8 @@ class PhotoTest extends TestCase
     public function testThumbnailGetMutator()
     {
         $thumbnail = $this->Photos->get(1)->thumbnail;
-        $this->assertEquals('http://localhost/thumb/ZWQyMTVlM2QwM2UxMTFmNjQ5NzE3ZWNkNWUyZmIwODkuanBn', $thumbnail);
+
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $thumbnail);
     }
 
     /**
