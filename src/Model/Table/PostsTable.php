@@ -34,7 +34,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\Traits\GetPreviewTrait;
+use MeCms\Model\Table\Traits\GetPreviewFromTextTrait;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
@@ -55,7 +55,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 class PostsTable extends AppTable
 {
-    use GetPreviewTrait;
+    use GetPreviewFromTextTrait;
     use IsOwnedByTrait;
     use LocatorAwareTrait;
     use NextToBePublishedTrait;
@@ -152,7 +152,7 @@ class PostsTable extends AppTable
      * @return void
      * @since 2.17.0
      * @uses MeCms\Model\Table\AppTable::beforeSave()
-     * @uses MeCms\Model\Table\Traits\GetPreviewTrait::getPreview()
+     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreview()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
