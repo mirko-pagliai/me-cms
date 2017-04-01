@@ -62,6 +62,11 @@ if ($this->request->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
     $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
 
+    //Adds tags as keywords
+    if (config('post.keywords') && $post->tags_as_string) {
+        $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
+    }
+
     if ($post->preview) {
         $this->Html->meta(['href' => $post->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $post->preview['preview'], 'property' => 'og:image']);

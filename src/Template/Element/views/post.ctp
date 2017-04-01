@@ -20,23 +20,13 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-//Adds tags as keywords meta-tag
-if (config('post.keywords') && $this->request->isAction('view', 'Posts') &&
-    !empty($post->tags_as_string)
-) {
-    $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
-}
 ?>
 
 <div class="post-container content-container">
     <div class="content-header">
         <?php if (config('post.category') && !empty($post->category->title) && !empty($post->category->slug)) : ?>
             <h5 class="content-category">
-                <?= $this->Html->link(
-                    $post->category->title,
-                    ['_name' => 'postsCategory', $post->category->slug]
-                ) ?>
+                <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
@@ -99,11 +89,9 @@ if (config('post.keywords') && $this->request->isAction('view', 'Posts') &&
 
     <?php if (config('post.tags') && $post->tags) : ?>
         <div class="content-tags">
-            <?php
-            foreach ($post->tags as $tag) {
-                echo $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']);
-            }
-            ?>
+            <?php foreach ($post->tags as $tag) : ?>
+                <?= $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']) ?>
+            <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
