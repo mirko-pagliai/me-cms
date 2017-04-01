@@ -74,7 +74,7 @@ if ($this->request->isAction('view', 'Posts')) {
         $this->Html->meta(['content' => $post->preview['height'], 'property' => 'og:image:height']);
     }
 
-    if (!empty($post->text)) {
+    if ($post->text) {
         $this->Html->meta([
             'content' => $this->Text->truncate(
                 trim(strip_tags($this->BBCode->remove($post->text))),
