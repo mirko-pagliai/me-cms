@@ -103,6 +103,7 @@ class Photo extends Entity
         }
 
         $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+
         return thumbUrl($thumb, true);
     }
 }
