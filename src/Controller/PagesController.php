@@ -66,7 +66,14 @@ class PagesController extends AppController
         $static = StaticPage::get($slug);
 
         if ($static) {
-            $page = (object)am(['title' => StaticPage::title($slug)], compact('slug'));
+            $page = (object)am([
+                'category' => (object)[
+                    'slug' => null,
+                    'title' => null,
+                ],
+                'title' => StaticPage::title($slug),
+                'subtitle' => null,
+            ], compact('slug'));
 
             $this->set(compact('page'));
 
