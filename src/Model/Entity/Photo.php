@@ -23,6 +23,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Thumber\Utility\ThumbCreator;
 
 /**
  * Photo entity
@@ -52,7 +53,7 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path', 'preview'];
+    protected $_virtual = ['path', 'preview', 'thumbnail'];
 
     /**
      * Gets the photo path (virtual field)
@@ -70,9 +71,28 @@ class Photo extends Entity
     /**
      * Gets the photo preview (virtual field)
      * @return array|void Array with `preview`, `width` and `height` keys
-     * @uses _getPath()
+     * @uses _getThumbnail()
      */
     protected function _getPreview()
+    {
+        $thumb = $this->_getThumbnail();
+
+        if (!$thumb) {
+            return;
+        }
+
+        $preview = thumbUrl($thumb, true);
+
+        list($width, $height) = getimagesize($thumb);
+
+        return compact('preview', 'width', 'height');
+    }
+
+    /**
+     * Gets the photo thumbnail (virtual field)
+     * @return string|void Thumbnail path
+     */
+    protected function _getThumbnail()
     {
         $preview = $this->_getPath();
 
@@ -80,8 +100,6 @@ class Photo extends Entity
             return;
         }
 
-        list($width, $height) = getimagesize($preview);
-
-        return compact('preview', 'width', 'height');
+        return (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
     }
 }

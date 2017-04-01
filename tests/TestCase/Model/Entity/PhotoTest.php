@@ -119,16 +119,20 @@ class PhotoTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $photo = $this->Photos->get(1);
-        $preview = $photo->preview;
+        $preview = $this->Photos->get(1)->preview;
 
-        $this->assertEquals($photo->path, $preview['preview']);
-        $preview['preview'] = rtr($preview['preview']);
         $this->assertEquals([
-            'preview' => 'tests/test_app/TestApp/webroot/img/photos/1/photo1.jpg',
+            'preview' => 'http://localhost/thumb/ZWQyMTVlM2QwM2UxMTFmNjQ5NzE3ZWNkNWUyZmIwODkuanBn',
             'width' => 400,
             'height' => 400,
         ], $preview);
+    }
+
+    public function testThumbnailGetMutator()
+    {
+        $thumbnail = $this->Photos->get(1)->thumbnail;
+
+        $this->assertEquals('/tmp/thumbs/ed215e3d03e111f649717ecd5e2fb089.jpg', $thumbnail);
     }
 
     /**
@@ -137,6 +141,6 @@ class PhotoTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path', 'preview'], $this->Photo->getVirtual());
+        $this->assertEquals(['path', 'preview', 'thumbnail'], $this->Photo->getVirtual());
     }
 }

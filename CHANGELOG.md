@@ -4,7 +4,7 @@
 * added `og:image:width` and `og:image:height` meta tags for previews;
 * added `preview` field to pages and posts tables, which contains url, width
     and height of the preview, encoded with json;
-* added `preview` virtual field to photos;
+* added `preview` and `thumbnail` virtual fields to photos;
 * improved `KcFinderComponent`. Now the class has `_getDefaultConfig()` and
     `initialize()` method;
 * improved `AuthComponent`. Now the class has the `initialize()` method;
