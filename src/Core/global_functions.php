@@ -45,7 +45,7 @@ if (!function_exists('firstImage')) {
      */
     function firstImage($html)
     {
-        if (!preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im', $html, $matches)) {
+        if (!preg_match('/<\s*img [^\>]*src\s*=\s*(["\'])(.+\.(gif|jpe?g|png))\1/im', $html, $matches)) {
             return false;
         }
 
