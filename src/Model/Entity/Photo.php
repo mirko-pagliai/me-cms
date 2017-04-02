@@ -81,7 +81,7 @@ class Photo extends Entity
             return;
         }
 
-        $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+        $thumb = (new ThumbCreator($preview))->resize(1200, 1200)->save(['format' => 'jpg']);
         $preview = thumbUrl($thumb, true);
 
         list($width, $height) = getimagesize($thumb);
