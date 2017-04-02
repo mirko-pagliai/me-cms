@@ -76,4 +76,4 @@ if ($this->request->isAction('view', 'Photos')) {
     }
 }
 
-echo $this->Html->img($photo->thumbnail);
+echo $this->Thumb->resize($photo->path, ['width' => 1200]);

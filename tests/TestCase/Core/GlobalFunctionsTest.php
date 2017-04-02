@@ -58,7 +58,20 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertFalse(firstImage('Text'));
 
+        $this->assertFalse(firstImage('<img src=\'\'>'));
+        $this->assertFalse(firstImage('<img src=\'a\'>'));
+        $this->assertFalse(firstImage('<img src=\'a.a\'>'));
+        $this->assertFalse(firstImage('<img src=\'data:\'>'));
+
         $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpeg', firstImage('<img src=\'image.jpeg\'>'));
+        $this->assertEquals('image.gif', firstImage('<img src=\'image.gif\'>'));
+        $this->assertEquals('image.png', firstImage('<img src=\'image.png\'>'));
+
+        $this->assertEquals('IMAGE.jpg', firstImage('<img src=\'IMAGE.jpg\'>'));
+        $this->assertEquals('image.JPG', firstImage('<img src=\'image.JPG\'>'));
+        $this->assertEquals('IMAGE.JPG', firstImage('<img src=\'IMAGE.JPG\'>'));
+
         $this->assertEquals('/image.jpg', firstImage('<img src=\'/image.jpg\'>'));
         $this->assertEquals('subdir/image.jpg', firstImage('<img src=\'subdir/image.jpg\'>'));
         $this->assertEquals('/subdir/image.jpg', firstImage('<img src=\'/subdir/image.jpg\'>'));

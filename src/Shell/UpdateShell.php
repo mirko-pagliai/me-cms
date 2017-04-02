@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use MeCms\Console\BaseUpdateConsole;
 
@@ -49,6 +50,8 @@ class UpdateShell extends BaseUpdateConsole
             }
         }
 
+        Cache::clearAll();
+
         //Updates all `preview` fields
         foreach (['Pages', 'Posts'] as $table) {
             $records = $this->$table->find('all')
@@ -59,7 +62,7 @@ class UpdateShell extends BaseUpdateConsole
             foreach ($records as $record) {
                 $preview = $this->$table->getPreview($record->text);
 
-                if (!empty($preview)) {
+                if ($preview) {
                     $record->preview = $preview;
                     $this->$table->save($record);
                 }

@@ -29,9 +29,9 @@ use MeTools\Utility\Youtube;
 use Reflection\ReflectionTrait;
 
 /**
- * GetPreviewFromTextTest class
+ * GetPreviewFromTextTraitTest class
  */
-class GetPreviewFromTextTest extends TestCase
+class GetPreviewFromTextTraitTest extends TestCase
 {
     use ReflectionTrait;
 
@@ -118,12 +118,10 @@ class GetPreviewFromTextTest extends TestCase
             WWW_ROOT . 'img' . DS . 'image.jpg',
         ] as $image) {
             $result = $this->getPreview('<img src=\'' . $image . '\' />');
-            $result['preview'] = rtr($result['preview']);
-            $this->assertEquals([
-                'preview' => 'tests/test_app/TestApp/webroot/img/image.jpg',
-                'width' => 400,
-                'height' => 300,
-            ], $result);
+            $this->assertEquals(['preview', 'width', 'height'], array_keys($result));
+            $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $result['preview']);
+            $this->assertEquals(400, $result['width']);
+            $this->assertEquals(300, $result['height']);
         }
 
         $result = $this->getPreview('[youtube]6z4KK7RWjmk[/youtube]');

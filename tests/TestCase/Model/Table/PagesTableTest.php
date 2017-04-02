@@ -150,6 +150,18 @@ class PagesTableTest extends TestCase
      */
     public function testBeforeSave()
     {
+        $this->Pages = $this->getMockBuilder(get_class($this->Pages))
+            ->setMethods(['getPreviewSize'])
+            ->setConstructorArgs([[
+                'table' => $this->Pages->getTable(),
+                'connection' => $this->Pages->getConnection(),
+            ]])
+            ->getMock();
+
+        $this->Pages->expects($this->any())
+            ->method('getPreviewSize')
+            ->will($this->returnValue([400, 300]));
+
         //Tries with a text without images or videos
         $entity = $this->Pages->newEntity($this->example);
         $this->assertNotEmpty($this->Pages->save($entity));
@@ -161,7 +173,10 @@ class PagesTableTest extends TestCase
         $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
         $entity = $this->Pages->newEntity($this->example);
         $this->assertNotEmpty($this->Pages->save($entity));
-        $this->assertNotEmpty($entity->preview);
+        $this->assertEquals(['preview', 'width', 'height'], array_keys($entity->preview));
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $entity->preview['preview']);
+        $this->assertEquals(400, $entity->preview['width']);
+        $this->assertEquals(300, $entity->preview['height']);
     }
 
     /**
