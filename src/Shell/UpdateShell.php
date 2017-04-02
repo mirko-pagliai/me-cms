@@ -64,6 +64,7 @@ class UpdateShell extends BaseUpdateConsole
 
                 if ($preview) {
                     $record->preview = $preview;
+                    $this->$table->save($record);
                 }
             }
         }
