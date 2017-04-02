@@ -75,7 +75,11 @@ class WidgetHelperTest extends TestCase
      */
     public function testGetAll()
     {
-        $result = $this->invokeMethod($this->Widget, '_getAll');
+        $widgets = collection($this->invokeMethod($this->Widget, '_getAll'))
+            ->map(function ($widget) {
+                return collection(array_keys($widget))->first();
+            })->toList();
+
         $this->assertEquals([
             'MeCms.Pages::categories',
             'MeCms.Pages::pages',
@@ -87,23 +91,27 @@ class WidgetHelperTest extends TestCase
             'MeCms.Posts::months',
             'MeCms.Posts::search',
             'MeCms.PostsTags::popular',
-        ], array_keys($result));
+        ], $widgets);
 
         //Sets some widgets
         Configure::write('Widgets.general', [
             'First' => [],
             'Second',
-            'Third' => [],
-            'Fourth',
+            ['Third' => ['key' => 'value']],
+            ['Third' => ['anotherKey' => 'anotherValue']],
+            'Fourth' => ['fourth' => 'fourthValue'],
+            ['Fifth'],
         ]);
 
-        $result = $this->invokeMethod($this->Widget, '_getAll');
+        $widgets = $this->invokeMethod($this->Widget, '_getAll');
         $this->assertEquals([
-            'First',
-            'Second',
-            'Third',
-            'Fourth',
-        ], array_keys($result));
+            ['First' => []],
+            ['Second' => []],
+            ['Third' => ['key' => 'value']],
+            ['Third' => ['anotherKey' => 'anotherValue']],
+            ['Fourth' => ['fourth' => 'fourthValue']],
+            ['Fifth' => []]
+        ], $widgets);
 
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
@@ -115,8 +123,10 @@ class WidgetHelperTest extends TestCase
         //Sets some widgets for the homepage
         Configure::write('Widgets.homepage', ['ExampleForHomepage']);
 
-        $result = $this->invokeMethod($this->Widget, '_getAll');
-        $this->assertEquals(['ExampleForHomepage'], array_keys($result));
+        $widgets = $this->invokeMethod($this->Widget, '_getAll');
+        $this->assertEquals([
+            ['ExampleForHomepage' => []],
+        ], $widgets);
 
         //Resets
         Configure::write('Widgets.homepage', []);

@@ -47,21 +47,22 @@ class WidgetHelper extends Helper
             return [];
         }
 
-        $widgetsCopy = [];
-
-        //For widgets with no arguments, the widget name is the value of the
-        //  array. For widgets with arguments, the widget name is the array key
-        //  and the arguments are the array value
-        foreach ($widgets as $name => $args) {
-            if (is_int($name) && is_string($args)) {
-                $name = $args;
-                $args = [];
+        return collection($widgets)->map(function ($args, $name) {
+            if (is_string($name) && is_array($args)) {
+                return [$name => $args];
+            } elseif (is_string($args)) {
+                return [$args => []];
             }
 
-            $widgetsCopy[$name] = $args;
-        }
+            $name = collection(array_keys($args))->first();
+            $args = collection($args)->first();
 
-        return $widgetsCopy;
+            if (is_int($name) && is_string($args)) {
+                return [$args => []];
+            }
+
+            return [$name => $args];
+        })->toList();
     }
 
     /**
@@ -72,8 +73,10 @@ class WidgetHelper extends Helper
      */
     public function all()
     {
-        foreach ($this->_getAll() as $name => $args) {
-            $widgets[$name] = $this->widget($name, $args);
+        foreach ($this->_getAll() as $widget) {
+            foreach ($widget as $name => $args) {
+                $widgets[] = $this->widget($name, $args);
+            }
         }
 
         if (empty($widgets)) {
