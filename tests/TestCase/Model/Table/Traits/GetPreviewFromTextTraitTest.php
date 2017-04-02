@@ -29,9 +29,9 @@ use MeTools\Utility\Youtube;
 use Reflection\ReflectionTrait;
 
 /**
- * GetPreviewFromTextTest class
+ * GetPreviewFromTextTraitTest class
  */
-class GetPreviewFromTextTest extends TestCase
+class GetPreviewFromTextTraitTest extends TestCase
 {
     use ReflectionTrait;
 
