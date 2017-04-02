@@ -25,6 +25,7 @@ namespace MeCms\Model\Table\Traits;
 
 use Cake\Filesystem\Folder;
 use MeTools\Utility\Youtube;
+use Thumber\Utility\ThumbCreator;
 
 /**
  * This trait provides a method to get the first available image or the preview
@@ -43,9 +44,14 @@ trait GetPreviewFromTextTrait
     {
         $preview = firstImage($text);
 
-        //If is not an url and is a relative path
-        if ($preview && !isUrl($preview) && !Folder::isAbsolute($preview)) {
-            $preview = WWW_ROOT . 'img' . DS . $preview;
+        if ($preview && !isUrl($preview)) {
+            //If is relative path
+            if (!Folder::isAbsolute($preview)) {
+                $preview = WWW_ROOT . 'img' . DS . $preview;
+            }
+
+            $thumb = (new ThumbCreator($preview))->resize(1200)->save(['format' => 'jpg']);
+            $preview = thumbUrl($thumb, true);
         } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $text, $matches)) {
             $preview = Youtube::getPreview($matches[1]);
         }

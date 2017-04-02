@@ -181,6 +181,18 @@ class PostsTableTest extends TestCase
      */
     public function testBeforeSave()
     {
+        $this->Posts = $this->getMockBuilder(get_class($this->Posts))
+            ->setMethods(['getPreviewSize'])
+            ->setConstructorArgs([[
+                'table' => $this->Posts->getTable(),
+                'connection' => $this->Posts->getConnection(),
+            ]])
+            ->getMock();
+
+        $this->Posts->expects($this->any())
+            ->method('getPreviewSize')
+            ->will($this->returnValue([400, 300]));
+
         //Tries with a text without images or videos
         $entity = $this->Posts->newEntity($this->example);
         $this->assertNotEmpty($this->Posts->save($entity));
@@ -192,7 +204,10 @@ class PostsTableTest extends TestCase
         $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
         $entity = $this->Posts->newEntity($this->example);
         $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertNotEmpty($entity->preview);
+        $this->assertEquals(['preview', 'width', 'height'], array_keys($entity->preview));
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $entity->preview['preview']);
+        $this->assertEquals(400, $entity->preview['width']);
+        $this->assertEquals(300, $entity->preview['height']);
     }
 
     /**
