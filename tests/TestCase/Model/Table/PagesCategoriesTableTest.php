@@ -209,7 +209,7 @@ class PagesCategoriesTableTest extends TestCase
 
         $query = $this->PagesCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT PagesCategories.id AS `PagesCategories__id`, PagesCategories.parent_id AS `PagesCategories__parent_id`, PagesCategories.lft AS `PagesCategories__lft`, PagesCategories.rght AS `PagesCategories__rght`, PagesCategories.title AS `PagesCategories__title`, PagesCategories.slug AS `PagesCategories__slug`, PagesCategories.description AS `PagesCategories__description`, PagesCategories.page_count AS `PagesCategories__page_count`, PagesCategories.created AS `PagesCategories__created`, PagesCategories.modified AS `PagesCategories__modified` FROM pages_categories PagesCategories WHERE PagesCategories.page_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM pages_categories PagesCategories WHERE PagesCategories.page_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
 

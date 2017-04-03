@@ -180,7 +180,7 @@ class AppTableTest extends TestCase
 
         $query = $this->Posts->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.preview AS `Posts__preview`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active` FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
@@ -203,10 +203,10 @@ class AppTableTest extends TestCase
 
         $query = $this->Posts->find('random');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.preview AS `Posts__preview`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active` FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
 
         $query = $this->Posts->find('random')->limit(2);
-        $this->assertEquals('SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.preview AS `Posts__preview`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active` FROM posts Posts ORDER BY rand() LIMIT 2', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 2', $query->sql());
     }
 
     /**
@@ -278,7 +278,7 @@ class AppTableTest extends TestCase
      */
     public function testQueryFromFilter()
     {
-        $expected = 'SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.preview AS `Posts__preview`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active` FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $expected = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
 
         $data = [
             'id' => 2,
@@ -292,18 +292,15 @@ class AppTableTest extends TestCase
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals($expected, $query->sql());
+        $this->assertStringEndsWith($expected, $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())
-            ->extract('value')
-            ->map(function ($value) {
-                if ($value instanceof \Cake\I18n\Time) {
-                    return $value->i18nFormat('yyyy-MM-dd HH:mm:ss');
-                }
+        $params = collection($query->valueBinder()->bindings())->extract('value')->map(function ($value) {
+            if ($value instanceof Time) {
+                return $value->i18nFormat('yyyy-MM-dd HH:mm:ss');
+            }
 
-                return $value;
-            })
-            ->toList();
+            return $value;
+        })->toList();
 
         $this->assertEquals([
             2,
@@ -319,13 +316,13 @@ class AppTableTest extends TestCase
         $data['active'] = 'no';
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertEquals($expected, $query->sql());
+        $this->assertStringEndsWith($expected, $query->sql());
         $this->assertEquals(false, $query->valueBinder()->bindings()[':c4']['value']);
 
         $data = ['filename' => 'image.jpg'];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
-        $this->assertEquals('SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
+        $this->assertStringEndsWith('FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
         $this->assertEquals('%image.jpg%', $query->valueBinder()->bindings()[':c0']['value']);
     }
 
@@ -335,8 +332,6 @@ class AppTableTest extends TestCase
      */
     public function testQueryFromFilterWithInvalidData()
     {
-        $expected = 'SELECT Posts.id AS `Posts__id`, Posts.category_id AS `Posts__category_id`, Posts.user_id AS `Posts__user_id`, Posts.title AS `Posts__title`, Posts.slug AS `Posts__slug`, Posts.subtitle AS `Posts__subtitle`, Posts.text AS `Posts__text`, Posts.preview AS `Posts__preview`, Posts.priority AS `Posts__priority`, Posts.created AS `Posts__created`, Posts.modified AS `Posts__modified`, Posts.active AS `Posts__active` FROM posts Posts';
-
         $data = [
             'title' => 'ab',
             'priority' => 6,
@@ -344,15 +339,11 @@ class AppTableTest extends TestCase
         ];
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertEquals($expected, $query->sql());
         $this->assertEmpty($query->valueBinder()->bindings());
-
-        $expected = 'SELECT Photos.id AS `Photos__id`, Photos.album_id AS `Photos__album_id`, Photos.filename AS `Photos__filename`, Photos.description AS `Photos__description`, Photos.active AS `Photos__active`, Photos.created AS `Photos__created`, Photos.modified AS `Photos__modified` FROM photos Photos';
 
         $data = ['filename' => 'ab'];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
-        $this->assertEquals($expected, $query->sql());
         $this->assertEmpty($query->valueBinder()->bindings());
     }
 }
