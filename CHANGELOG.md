@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.17 branch
+### 2.17.1
+* added tests for `BannerController` class.
+
 ### 2.17.0
 * fixed bug when using multiple widgets that have the same name;
 * added `og:image:width` and `og:image:height` meta tags for previews;
