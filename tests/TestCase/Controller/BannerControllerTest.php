@@ -24,7 +24,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
@@ -79,7 +78,7 @@ class BannerControllerTest extends IntegrationTestCase
     {
         $banner = $this->Banners->findById(1)->first();
 
-        $this->get(Router::url(['_name' => 'banner', $banner->id]));
+        $this->get(['_name' => 'banner', $banner->id]);
         $this->assertResponseCode(302);
         $this->assertRedirect($banner->target);
 
