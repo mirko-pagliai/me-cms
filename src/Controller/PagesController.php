@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\Event\Event;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -40,7 +41,7 @@ class PagesController extends AppController
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
