@@ -110,13 +110,15 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeFilter()
     {
+        $this->assertEmpty($this->Controller->Auth->allowedActions);
+
         $this->Controller->request = $this->Controller->request
             ->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
 
         $this->Controller->beforeFilter($this->Event);
 
-        $this->assertEquals(['my-action'], $this->Controller->Auth->allowedActions);
+        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
         $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
         $this->assertEquals(5, $this->Controller->paginate['limit']);
         $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
@@ -129,7 +131,7 @@ class AppControllerTest extends TestCase
             ->withParam('prefix', ADMIN_PREFIX);
 
         $this->Controller->beforeFilter($this->Event);
-        $this->assertEquals([], $this->Controller->Auth->allowedActions);
+        $this->assertEmpty($this->Controller->Auth->allowedActions);
         $this->assertEquals(['my-field'], $this->Controller->paginate['sortWhitelist']);
         $this->assertEquals(7, $this->Controller->paginate['limit']);
         $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
@@ -188,6 +190,17 @@ class AppControllerTest extends TestCase
      */
     public function testIsAuthorized()
     {
+        $this->assertGroupsAreAuthorized([
+            null => true,
+            'admin' => true,
+            'manager' => true,
+            'user' => true,
+        ]);
+
+        //Admin request
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
+
         $this->assertGroupsAreAuthorized([
             null => false,
             'admin' => true,

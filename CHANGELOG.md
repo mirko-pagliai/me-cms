@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.1
+* fixed bug for `isAuthorized()` method, simple users could not access some
+    denied actions as `preview`;
 * fixed bug, the `created` field is formatted correctly in `edit` templates;
 * added tests for `BannersController` and `PagesCategoriesController` classes.
 
