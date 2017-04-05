@@ -164,7 +164,15 @@ class PagesController extends AppController
      */
     public function edit($id = null)
     {
-        $page = $this->Pages->get($id);
+        $page = $this->Pages->findById($id)
+            ->formatResults(function ($results) {
+                return $results->map(function ($row) {
+                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
+
+                    return $row;
+                });
+            })
+            ->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $page = $this->Pages->patchEntity($page, $this->request->getData());

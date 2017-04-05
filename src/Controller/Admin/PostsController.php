@@ -178,6 +178,13 @@ class PostsController extends AppController
             ->contain(['Tags' => function ($q) {
                 return $q->order(['tag' => 'ASC']);
             }])
+            ->formatResults(function ($results) {
+                return $results->map(function ($row) {
+                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
+
+                    return $row;
+                });
+            })
             ->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
