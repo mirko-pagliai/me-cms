@@ -27,9 +27,9 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * BackupsControllerTest class
+ * BannersControllerTest class
  */
-class BannerControllerTest extends IntegrationTestCase
+class BannersControllerTest extends IntegrationTestCase
 {
     /**
      * @var \MeCms\Model\Table\BannersTable
