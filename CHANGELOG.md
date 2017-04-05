@@ -5,7 +5,8 @@
     denied actions as `preview`;
 * fixed bug, the `created` field is formatted correctly in `edit` templates;
 * improved `StaticPage` class, added `_appPath()` and `_pluginPath()` methods;
-* added tests for `BannersController` and `PagesCategoriesController` classes.
+* added tests for `BannersController`, `PagesCategoriesController` and 
+    `PagesController` classes.
 
 ### 2.17.0
 * fixed bug when using multiple widgets that have the same name;
