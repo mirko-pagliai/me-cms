@@ -24,7 +24,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
@@ -96,8 +95,11 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/index.ctp');
 
+        $viewVariable = $this->viewVariable('categories');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $viewVariable);
+
         $cache = Cache::read('categories_index', $this->PagesCategories->cache);
-        $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
+        $this->assertEquals($viewVariable->toArray(), $cache->toArray());
     }
 
     /**
@@ -114,11 +116,13 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/view.ctp');
 
+        $viewVariable = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $viewVariable);
+
         $cache = Cache::read(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache);
-        $this->assertEquals($this->viewVariable('category'), $cache->first());
+        $this->assertEquals($viewVariable, $cache->first());
 
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
-        $this->assertResponseCode(302);
-        $this->assertRedirect(Router::url($url));
+        $this->assertRedirect($url);
     }
 }
