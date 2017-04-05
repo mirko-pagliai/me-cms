@@ -4,6 +4,7 @@
 * fixed bug for `isAuthorized()` method, simple users could not access some
     denied actions as `preview`;
 * fixed bug, the `created` field is formatted correctly in `edit` templates;
+* improved `StaticPage` class, added `_appPath()` and `_pluginPath()` methods;
 * added tests for `BannersController` and `PagesCategoriesController` classes.
 
 ### 2.17.0

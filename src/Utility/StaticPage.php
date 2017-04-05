@@ -37,9 +37,36 @@ use MeCms\Core\Plugin;
 class StaticPage
 {
     /**
+     * Internal method to get the app path
+     * @return string
+     * @since 2.17.1
+     */
+    protected static function _appPath()
+    {
+        $path = collection(App::path('Template'))->first();
+
+        return Folder::slashTerm($path) . 'StaticPages' . DS;
+    }
+
+    /**
+     * Internal method to get a plugin path
+     * @param string $plugin Plugin name
+     * @return string
+     * @since 2.17.1
+     */
+    protected static function _pluginPath($plugin)
+    {
+        $path = collection(App::path('Template', $plugin))->first();
+
+        return Folder::slashTerm($path) . 'StaticPages' . DS;
+    }
+
+    /**
      * Internal method to get all paths for static pages
-     * @uses MeCms\Core\Plugin::all()
      * @return array
+     * @uses MeCms\Core\Plugin::all()
+     * @uses _appPath()
+     * @uses _pluginPath()
      */
     protected static function paths()
     {
@@ -49,7 +76,7 @@ class StaticPage
             //Adds all plugins to paths
             $paths = collection(Plugin::all())
                 ->map(function ($plugin) {
-                    return collection(App::path('Template', $plugin))->first() . 'StaticPages';
+                    return self::_pluginPath($plugin);
                 })
                 ->filter(function ($path) {
                     return file_exists($path);
@@ -57,7 +84,7 @@ class StaticPage
                 ->toList();
 
             //Adds APP to paths
-            array_unshift($paths, collection(App::path('Template'))->first() . 'StaticPages');
+            array_unshift($paths, self::_appPath());
 
             Cache::write('paths', $paths, 'static_pages');
         }
@@ -113,6 +140,8 @@ class StaticPage
      * @param string $slug Slug
      * @return string|bool Static page or `false`
      * @uses MeCms\Core\Plugin::all()
+     * @uses _appPath()
+     * @uses _pluginPath()
      */
     public static function get($slug)
     {
@@ -132,10 +161,10 @@ class StaticPage
 
             //Checks if the page exists in APP
             foreach ($patterns as $pattern) {
-                $filename = collection(App::path('Template'))->first() . 'StaticPages' . DS . $pattern . '.ctp';
+                $filename = self::_appPath() . $pattern . '.ctp';
 
                 if (is_readable($filename)) {
-                    $page = 'StaticPages' . DS . $pattern;
+                    $page = DS . 'StaticPages' . DS . $pattern;
 
                     break;
                 }
@@ -144,10 +173,10 @@ class StaticPage
             //Checks if the page exists in each plugin
             foreach (Plugin::all() as $plugin) {
                 foreach ($patterns as $pattern) {
-                    $filename = collection(App::path('Template', $plugin))->first() . 'StaticPages' . DS . $pattern . '.ctp';
+                    $filename = self::_pluginPath($plugin) . $pattern . '.ctp';
 
                     if (is_readable($filename)) {
-                        $page = $plugin . '.' . 'StaticPages' . DS . $pattern;
+                        $page = $plugin . '.' . DS . 'StaticPages' . DS . $pattern;
 
                         break;
                     }
