@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.1
+* fixed bug, the `created` field is formatted correctly in `edit` templates;
 * added tests for `BannerController` class.
 
 ### 2.17.0
