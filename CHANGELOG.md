@@ -2,7 +2,7 @@
 ## 2.17 branch
 ### 2.17.1
 * fixed bug, the `created` field is formatted correctly in `edit` templates;
-* added tests for `BannerController` class.
+* added tests for `BannersController` and `PagesCategoriesController` classes.
 
 ### 2.17.0
 * fixed bug when using multiple widgets that have the same name;
