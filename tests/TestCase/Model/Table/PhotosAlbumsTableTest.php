@@ -188,7 +188,7 @@ class PhotosAlbumsTableTest extends TestCase
 
         $query = $this->PhotosAlbums->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT PhotosAlbums.id AS `PhotosAlbums__id`, PhotosAlbums.title AS `PhotosAlbums__title`, PhotosAlbums.slug AS `PhotosAlbums__slug`, PhotosAlbums.description AS `PhotosAlbums__description`, PhotosAlbums.active AS `PhotosAlbums__active`, PhotosAlbums.photo_count AS `PhotosAlbums__photo_count`, PhotosAlbums.created AS `PhotosAlbums__created`, PhotosAlbums.modified AS `PhotosAlbums__modified` FROM photos_albums PhotosAlbums WHERE (PhotosAlbums.active = :c0 AND PhotosAlbums.photo_count > :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM photos_albums PhotosAlbums WHERE (PhotosAlbums.active = :c0 AND PhotosAlbums.photo_count > :c1)', $query->sql());
 
         $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 

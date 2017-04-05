@@ -50,6 +50,8 @@ class StaticPageTest extends TestCase
     {
         parent::setUp();
 
+        Cache::clearAll();
+
         Plugin::load('TestPlugin');
 
         $this->StaticPage = new StaticPage;
@@ -68,6 +70,26 @@ class StaticPageTest extends TestCase
         Plugin::unload('TestPlugin');
 
         unset($this->StaticPage);
+    }
+
+    /**
+     * Test for `_appPath()` method
+     * @test
+     */
+    public function testAppPath()
+    {
+        $result = rtr($this->invokeMethod($this->StaticPage, '_appPath'));
+        $this->assertEquals('tests/test_app/TestApp/Template/StaticPages/', $result);
+    }
+
+    /**
+     * Test for `_pluginPath()` method
+     * @test
+     */
+    public function testPluginPath()
+    {
+        $result = rtr($this->invokeMethod($this->StaticPage, '_pluginPath', ['TestPlugin']));
+        $this->assertEquals('tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/', $result);
     }
 
     /**
@@ -147,12 +169,12 @@ class StaticPageTest extends TestCase
         })->toList();
 
         $this->assertEquals([
-            'StaticPages/page-from-app',
-            'MeCms.StaticPages/cookies-policy-it',
-            'MeCms.StaticPages/cookies-policy',
-            'TestPlugin.StaticPages/test-from-plugin',
-            'TestPlugin.StaticPages/first-folder/page-on-first-from-plugin',
-            'TestPlugin.StaticPages/first-folder/second_folder/page_on_second_from_plugin',
+            '/StaticPages/page-from-app',
+            'MeCms./StaticPages/cookies-policy-it',
+            'MeCms./StaticPages/cookies-policy',
+            'TestPlugin./StaticPages/test-from-plugin',
+            'TestPlugin./StaticPages/first-folder/page-on-first-from-plugin',
+            'TestPlugin./StaticPages/first-folder/second_folder/page_on_second_from_plugin',
         ], $pages);
 
         //Tries to get a no existing page
@@ -165,11 +187,11 @@ class StaticPageTest extends TestCase
      */
     public function testGetDifferentLocale()
     {
-        $this->assertEquals('MeCms.StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
+        $this->assertEquals('MeCms./StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
 
         ini_set('intl.default_locale', 'it');
 
-        $this->assertEquals('MeCms.StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
+        $this->assertEquals('MeCms./StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
     }
 
     /**
@@ -188,9 +210,9 @@ class StaticPageTest extends TestCase
         })->toList();
 
         $this->assertEquals([
-            'tests/test_app/TestApp/Template/StaticPages',
-            'src/Template/StaticPages',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages',
+            'tests/test_app/TestApp/Template/StaticPages/',
+            'src/Template/StaticPages/',
+            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/',
         ], $paths);
     }
 

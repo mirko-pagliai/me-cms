@@ -132,7 +132,7 @@ class TagsTableTest extends TestCase
 
         $query = $this->Tags->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM tags Tags WHERE Tags.post_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM tags Tags WHERE Tags.post_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
 
@@ -153,7 +153,7 @@ class TagsTableTest extends TestCase
 
         $query = $this->Tags->queryFromFilter($this->Tags->find(), $data);
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Tags.id AS `Tags__id`, Tags.tag AS `Tags__tag`, Tags.post_count AS `Tags__post_count`, Tags.created AS `Tags__created`, Tags.modified AS `Tags__modified` FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
+        $this->assertStringEndsWith('FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
 
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
     }

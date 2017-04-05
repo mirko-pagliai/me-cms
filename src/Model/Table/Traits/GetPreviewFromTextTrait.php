@@ -50,6 +50,10 @@ trait GetPreviewFromTextTrait
                 $preview = WWW_ROOT . 'img' . DS . $preview;
             }
 
+            if (!file_exists($preview)) {
+                return null;
+            }
+
             $thumb = (new ThumbCreator($preview))->resize(1200, 1200)->save(['format' => 'jpg']);
             $preview = thumbUrl($thumb, true);
         } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $text, $matches)) {

@@ -104,6 +104,10 @@ class GetPreviewFromTextTraitTest extends TestCase
         $result = $this->getPreview('text');
         $this->assertNull($result);
 
+        //No existing file
+        $result = $this->getPreview('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />');
+        $this->assertNull($result);
+
         $result = $this->getPreview(
             '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />'
         );

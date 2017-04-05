@@ -1,5 +1,13 @@
 # 2.x branch
 ## 2.17 branch
+### 2.17.1
+* fixed bug for `isAuthorized()` method, simple users could not access some
+    denied actions as `preview`;
+* fixed bug, the `created` field is formatted correctly in `edit` templates;
+* improved `StaticPage` class, added `_appPath()` and `_pluginPath()` methods;
+* added tests for `BannersController`, `PagesCategoriesController` and 
+    `PagesController` classes.
+
 ### 2.17.0
 * fixed bug when using multiple widgets that have the same name;
 * added `og:image:width` and `og:image:height` meta tags for previews;

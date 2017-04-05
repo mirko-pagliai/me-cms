@@ -238,7 +238,7 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
@@ -261,7 +261,7 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->find('banned');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE Users.banned = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
 
@@ -282,7 +282,7 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->find('pending');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
 
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
@@ -324,7 +324,7 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
 
         $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
@@ -338,7 +338,7 @@ class UsersTableTest extends TestCase
         $data['status'] = 'pending';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
 
         $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
@@ -351,7 +351,7 @@ class UsersTableTest extends TestCase
         $data['status'] = 'banned';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
 
         $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
 
@@ -368,15 +368,12 @@ class UsersTableTest extends TestCase
      */
     public function testQueryFromFilterWithInvalidData()
     {
-        $expected = 'SELECT Users.id AS `Users__id`, Users.group_id AS `Users__group_id`, Users.username AS `Users__username`, Users.email AS `Users__email`, Users.password AS `Users__password`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`, Users.active AS `Users__active`, Users.banned AS `Users__banned`, Users.post_count AS `Users__post_count`, Users.created AS `Users__created`, Users.modified AS `Users__modified` FROM users Users';
-
         $data = [
             'status' => 'invalid',
             'username' => 'ab',
         ];
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
-        $this->assertEquals($expected, $query->sql());
         $this->assertEmpty($query->valueBinder()->bindings());
     }
 

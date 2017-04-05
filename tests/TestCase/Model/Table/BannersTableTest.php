@@ -167,7 +167,7 @@ class BannersTableTest extends TestCase
 
         $query = $this->Banners->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.active = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
 
@@ -188,7 +188,7 @@ class BannersTableTest extends TestCase
 
         $query = $this->Banners->queryFromFilter($this->Banners->find(), $data);
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertEquals('SELECT Banners.id AS `Banners__id`, Banners.position_id AS `Banners__position_id`, Banners.filename AS `Banners__filename`, Banners.target AS `Banners__target`, Banners.description AS `Banners__description`, Banners.active AS `Banners__active`, Banners.click_count AS `Banners__click_count`, Banners.created AS `Banners__created`, Banners.modified AS `Banners__modified` FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
 
         $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
     }
