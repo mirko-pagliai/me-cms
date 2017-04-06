@@ -83,5 +83,18 @@ class PagesFixture extends TestFixture
             'created' => '2016-12-26 17:30:20',
             'modified' => '2016-12-26 17:30:20',
         ],
+        [
+            'id' => 3,
+            'category_id' => 1,
+            'title' => 'Disabled page',
+            'subtitle' => 'Subtitle for the disabled page',
+            'slug' => 'disabled-page',
+            'text' => 'Text of the disabled page',
+            'preview' => null,
+            'priority' => 1,
+            'active' => 0,
+            'created' => '2016-12-26 18:30:20',
+            'modified' => '2016-12-26 18:30:20',
+        ],
     ];
 }

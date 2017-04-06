@@ -343,7 +343,7 @@ class PostsController extends AppController
      */
     public function preview($slug = null)
     {
-        $post = $this->Posts->find()
+        $post = $this->Posts->find('pending')
             ->contain([
                 'Categories' => function ($q) {
                     return $q->select(['title', 'slug']);
