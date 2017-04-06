@@ -23,7 +23,6 @@
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BackupsController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -71,7 +70,6 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => false,
             'user' => false,
@@ -89,13 +87,13 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->setUserGroup('admin');
 
-        $this->get(Router::url([
+        $this->get([
             'controller' => 'Backups',
             'action' => 'download',
             urlencode(basename($file)),
             'prefix' => ADMIN_PREFIX,
             'plugin' => ME_CMS,
-        ]));
+        ]);
         $this->assertResponseOk();
         $this->assertFileResponse($file);
 

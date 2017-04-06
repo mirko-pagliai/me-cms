@@ -69,7 +69,6 @@ class SystemsControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => true,
             'user' => false,
@@ -80,7 +79,6 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->Controller->request = $this->Controller->request->withParam('action', 'tmpCleaner');
 
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => true,
             'user' => false,
@@ -90,7 +88,6 @@ class SystemsControllerTest extends IntegrationTestCase
             $this->Controller->request = $this->Controller->request->withParam('pass.0', $param);
 
             $this->assertGroupsAreAuthorized([
-                null => false,
                 'admin' => true,
                 'manager' => false,
                 'user' => false,
