@@ -191,7 +191,6 @@ class AppControllerTest extends TestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => true,
             'admin' => true,
             'manager' => true,
             'user' => true,
@@ -202,7 +201,6 @@ class AppControllerTest extends TestCase
         $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
 
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => true,
             'user' => false,
