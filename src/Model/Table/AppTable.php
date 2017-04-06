@@ -100,6 +100,20 @@ class AppTable extends Table
     }
 
     /**
+     * "Pending" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findPending(Query $query, array $options)
+    {
+        $query->where([sprintf('%s.active', $this->getAlias()) => false])
+            ->orWhere([sprintf('%s.created >', $this->getAlias()) => new Time]);
+
+        return $query;
+    }
+
+    /**
      * "Random" find method
      * @param Query $query Query object
      * @param array $options Options

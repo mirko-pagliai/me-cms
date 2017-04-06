@@ -194,6 +194,22 @@ class AppTableTest extends TestCase
     }
 
     /**
+     * Test for `findPending()` method
+     * @test
+     */
+    public function testFindPending()
+    {
+        $this->assertTrue($this->Posts->hasFinder('pending'));
+
+        $query = $this->Posts->find('pending');
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.created > :c0 OR Posts.active = :c1)', $query->sql());
+
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+    }
+
+    /**
      * Test for `findRandom()` method
      * @test
      */

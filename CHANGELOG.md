@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.2
+* added "pending" find method;
 * improved `isAuthorized()` method: any registered user can access public
     functions; only admin and managers can access all admin actions.
 
