@@ -46,6 +46,7 @@ class SitemapTest extends TestCase
         'plugin.me_cms.photos_albums',
         'plugin.me_cms.posts',
         'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
         'plugin.me_cms.tags',
     ];
 
