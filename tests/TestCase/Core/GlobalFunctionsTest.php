@@ -62,6 +62,7 @@ class GlobalFunctionsTest extends TestCase
         $this->assertFalse(firstImage('<img src=\'a\'>'));
         $this->assertFalse(firstImage('<img src=\'a.a\'>'));
         $this->assertFalse(firstImage('<img src=\'data:\'>'));
+        $this->assertFalse(firstImage('<img src=\'text.txt\'>'));
 
         $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'>'));
         $this->assertEquals('image.jpeg', firstImage('<img src=\'image.jpeg\'>'));
@@ -75,6 +76,15 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals('/image.jpg', firstImage('<img src=\'/image.jpg\'>'));
         $this->assertEquals('subdir/image.jpg', firstImage('<img src=\'subdir/image.jpg\'>'));
         $this->assertEquals('/subdir/image.jpg', firstImage('<img src=\'/subdir/image.jpg\'>'));
+
+        //Some attributes
+        $this->assertEquals('image.jpg', firstImage('<img alt=\'\' src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpg', firstImage('<img alt="" src="image.jpg">'));
+        $this->assertEquals('image.jpg', firstImage('<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpg', firstImage('<img alt="" class="my-class" src="image.jpg">'));
+
+        //Two images
+        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'> Text <img src=\'image.gif\'>'));
 
         $expected = 'http://example.com/image.jpg';
 

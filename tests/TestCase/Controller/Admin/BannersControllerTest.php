@@ -22,7 +22,6 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -78,7 +77,6 @@ class BannersControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => true,
             'user' => false,
@@ -89,7 +87,6 @@ class BannersControllerTest extends IntegrationTestCase
         $this->Controller->request = $this->Controller->request->withParam('action', 'delete');
 
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => false,
             'user' => false,
@@ -104,13 +101,13 @@ class BannersControllerTest extends IntegrationTestCase
     {
         $this->setUserGroup('admin');
 
-        $this->get(Router::url([
+        $this->get([
             'controller' => 'Banners',
             'action' => 'download',
             1,
             'prefix' => ADMIN_PREFIX,
             'plugin' => ME_CMS,
-        ]));
+        ]);
         $this->assertResponseOk();
         $this->assertFileResponse(BANNERS . 'banner1.jpg');
     }

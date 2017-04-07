@@ -101,7 +101,7 @@ class PagesController extends AppController
      */
     public function preview($slug = null)
     {
-        $page = $this->Pages->find()
+        $page = $this->Pages->find('pending')
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
             ->contain(['Categories' => function ($q) {
                 return $q->select(['title', 'slug']);

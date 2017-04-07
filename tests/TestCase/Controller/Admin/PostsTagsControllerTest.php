@@ -69,7 +69,6 @@ class PostsTagsControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => true,
             'admin' => true,
             'manager' => true,
             'user' => true,
@@ -80,7 +79,6 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $this->Controller->request = $this->Controller->request->withParam('action', 'edit');
 
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => true,
             'user' => false,

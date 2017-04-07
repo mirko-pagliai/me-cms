@@ -69,7 +69,6 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => false,
             'user' => false,

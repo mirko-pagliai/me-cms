@@ -160,12 +160,7 @@ class SitemapTest extends TestCase
             ],
             [
                 'loc' => 'http://localhost/album/another-album-test',
-                'lastmod' => '2016-12-28T10:41:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/photo/another-album-test/4',
-                'lastmod' => '2016-12-28T10:41:42+00:00',
+                'lastmod' => '2016-12-28T10:39:42+00:00',
                 'priority' => '0.5',
             ],
             [

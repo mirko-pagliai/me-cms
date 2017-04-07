@@ -138,12 +138,18 @@ class AppController extends BaseController
      */
     public function isAuthorized($user = null)
     {
-        //Only admin and managers can access admin actions
+        //Any registered user can access public functions
+        if (!$this->request->getParam('prefix')) {
+            return true;
+        }
+
+        //Only admin and managers can access all admin actions
         if ($this->request->isAdmin()) {
             return $this->Auth->isGroup(['admin', 'manager']);
         }
 
-        return true;
+        //Default deny
+        return false;
     }
 
     /**

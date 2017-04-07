@@ -69,7 +69,6 @@ class PagesControllerTest extends IntegrationTestCase
     public function testIsAuthorized()
     {
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => true,
             'user' => false,
@@ -81,7 +80,6 @@ class PagesControllerTest extends IntegrationTestCase
             $this->Controller->request = $this->Controller->request->withParam('action', $action);
 
             $this->assertGroupsAreAuthorized([
-                null => true,
                 'admin' => true,
                 'manager' => true,
                 'user' => true,
@@ -93,7 +91,6 @@ class PagesControllerTest extends IntegrationTestCase
         $this->Controller->request = $this->Controller->request->withParam('action', 'delete');
 
         $this->assertGroupsAreAuthorized([
-            null => false,
             'admin' => true,
             'manager' => false,
             'user' => false,

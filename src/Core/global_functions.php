@@ -21,6 +21,7 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 use Cake\Core\Configure;
+use Sunra\PhpSimple\HtmlDomParser;
 
 if (!function_exists('config')) {
     /**
@@ -45,10 +46,20 @@ if (!function_exists('firstImage')) {
      */
     function firstImage($html)
     {
-        if (!preg_match('/<\s*img [^\>]*src\s*=\s*(["\'])(.+\.(gif|jpe?g|png))\1/im', $html, $matches)) {
+        $dom = HtmlDomParser::str_get_html($html);
+
+        if (!$dom) {
             return false;
         }
 
-        return $matches[2];
+        $img = $dom->find('img', 0);
+
+        if (empty($img->src) ||
+            !in_array(strtolower(pathinfo($img->src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])
+        ) {
+            return false;
+        }
+
+        return $img->src;
     }
 }

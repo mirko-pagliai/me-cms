@@ -156,7 +156,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testPreview()
     {
-        $slug = 'first-page';
+        $slug = 'disabled-page';
         $url = ['_name' => 'pagesPreview', $slug];
 
         $this->get($url);
