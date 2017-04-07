@@ -46,7 +46,13 @@ if (!function_exists('firstImage')) {
      */
     function firstImage($html)
     {
-        $img = HtmlDomParser::str_get_html($html)->find('img', 0);
+        $dom = HtmlDomParser::str_get_html($html);
+
+        if (!$dom) {
+            return false;
+        }
+
+        $img = $dom->find('img', 0);
 
         if (empty($img->src) ||
             !in_array(strtolower(pathinfo($img->src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])
