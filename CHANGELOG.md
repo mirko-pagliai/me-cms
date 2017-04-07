@@ -1,10 +1,10 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.2
+* fixed bug on the sitemap: pending pages, photos and posts are now excluded;
 * added "pending" find method;
 * improved `isAuthorized()` method: any registered user can access public
-    functions; only admin and managers can access all admin actions;
-* fixed bug on the sitemap: pending pages, photos and posts are now excluded.
+    functions; only admin and managers can access all admin actions.
 
 ### 2.17.1
 * fixed bug for `isAuthorized()` method, simple users could not access some
