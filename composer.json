@@ -22,7 +22,8 @@
         "mirko-pagliai/cakephp-tokens": "*",
         "mirko-pagliai/me-tools": ">=2.12.1",
         "mirko-pagliai/serialized-array": "^1.0",
-        "wyrihaximus/minify-html": "^1.1"
+        "wyrihaximus/minify-html": "^1.1",
+        "sunra/php-simple-html-dom-parser": "^1.5"
     },
     "suggest": {
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"

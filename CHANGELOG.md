@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.2
+* fixed bug on `firstImage()` global method;
 * fixed bug on the sitemap: pending pages, photos and posts are now excluded;
 * added "pending" find method;
 * improved `isAuthorized()` method: any registered user can access public
