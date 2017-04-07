@@ -132,15 +132,12 @@ class TagsTableTest extends TestCase
 
         $query = $this->Tags->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM tags Tags WHERE Tags.post_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
 
-        $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(true, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
 
         $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $tag) {
-            $this->assertNotEquals(0, $tag->post_count);
-        }
     }
 
     /**
