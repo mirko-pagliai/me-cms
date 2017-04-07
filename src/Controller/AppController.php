@@ -157,7 +157,7 @@ class AppController extends BaseController
      * @return bool
      * @since 2.15.2
      */
-    public function isBanned()
+    protected function isBanned()
     {
         return $this->request->isBanned() && !$this->request->isAction('ipNotAllowed', 'Systems');
     }
@@ -167,7 +167,7 @@ class AppController extends BaseController
      * @return bool
      * @since 2.15.2
      */
-    public function isOffline()
+    protected function isOffline()
     {
         return $this->request->isOffline();
     }
