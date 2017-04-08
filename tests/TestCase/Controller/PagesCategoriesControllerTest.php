@@ -98,6 +98,10 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $viewVariable = $this->viewVariable('categories');
         $this->assertInstanceof('Cake\ORM\ResultSet', $viewVariable);
 
+        foreach ($viewVariable as $category) {
+            $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category);
+        }
+
         $cache = Cache::read('categories_index', $this->PagesCategories->cache);
         $this->assertEquals($viewVariable->toArray(), $cache->toArray());
     }
