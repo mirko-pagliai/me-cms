@@ -240,6 +240,13 @@ class UsersTableTest extends TestCase
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->active);
+            $this->assertFalse($entity->banned);
+        }
     }
 
     /**
@@ -254,7 +261,11 @@ class UsersTableTest extends TestCase
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
 
-        $this->assertEquals([3], collection($query->toArray())->extract('id')->toList());
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->banned);
+        }
     }
 
     /**
@@ -270,7 +281,12 @@ class UsersTableTest extends TestCase
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
 
-        $this->assertEquals([2], collection($query->toArray())->extract('id')->toList());
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertFalse($entity->active);
+            $this->assertFalse($entity->banned);
+        }
     }
 
     /**
@@ -304,40 +320,28 @@ class UsersTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            '%test%',
-            1,
-            true,
-            false,
-        ], $params);
+        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c3']['value']);
 
         $data['status'] = 'pending';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            '%test%',
-            1,
-            false,
-        ], $params);
+        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
 
         $data['status'] = 'banned';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            '%test%',
-            1,
-            true,
-        ], $params);
+        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
     }
 
     /**

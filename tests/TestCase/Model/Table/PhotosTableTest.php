@@ -201,6 +201,13 @@ class PhotosTableTest extends TestCase
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertTrue($query->valueBinder()->bindings()[':c1']['value']);
+
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->active);
+            $this->assertTrue($entity->_matchingData['Albums']->active);
+        }
     }
 
     /**

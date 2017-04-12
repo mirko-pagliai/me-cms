@@ -168,6 +168,12 @@ class BannersTableTest extends TestCase
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->active);
+        }
     }
 
     /**

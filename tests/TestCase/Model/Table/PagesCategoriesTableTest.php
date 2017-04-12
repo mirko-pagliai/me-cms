@@ -207,8 +207,16 @@ class PagesCategoriesTableTest extends TestCase
     {
         $query = $this->PagesCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM pages_categories PagesCategories WHERE PagesCategories.page_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM pages_categories PagesCategories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND PagesCategories.id = (Pages.category_id))', $query->sql());
 
-        $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+
+        $this->assertNotEmpty($query->count());
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->_matchingData['Pages']->active);
+            $this->assertTrue(!$entity->_matchingData['Pages']->created->isFuture());
+        }
     }
 }
