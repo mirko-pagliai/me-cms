@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\Fixture;
 
+use Cake\I18n\Time;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -133,5 +134,45 @@ class PostsFixture extends TestFixture
             'modified' => '2016-12-28 18:59:19',
             'active' => 1,
         ],
+        [
+            'id' => 6,
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'Inactive post',
+            'slug' => 'inactive-post',
+            'subtitle' => 'Subtitle for inactive post',
+            'text' => 'Text of the inactive post',
+            'preview' => null,
+            'priority' => 1,
+            'created' => '2016-12-28 19:00:19',
+            'modified' => '2016-12-28 19:00:19',
+            'active' => 0,
+        ],
     ];
+
+    /**
+     * Initialize the fixture
+     */
+    public function init()
+    {
+        $future = new Time('+999 days');
+
+        //Adds a future post
+        $this->records[] = [
+            'id' => 7,
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'Future post',
+            'slug' => 'future-post',
+            'subtitle' => 'Subtitle for future post',
+            'text' => 'Text of the future post',
+            'preview' => null,
+            'priority' => 1,
+            'created' => $future,
+            'modified' => $future,
+            'active' => 1,
+        ];
+
+        parent::init();
+    }
 }

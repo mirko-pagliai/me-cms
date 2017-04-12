@@ -327,11 +327,13 @@ class PostsTableTest extends TestCase
      */
     public function testFind()
     {
+        $anHourAgo = time() - 3600;
+
         $query = $this->Posts->find();
         $this->assertInstanceOf('Cake\ORM\Query', $query);
 
         //Writes `next_to_be_published` and some data on cache
-        Cache::write('next_to_be_published', time() - 3600, $this->Posts->cache);
+        Cache::write('next_to_be_published', $anHourAgo, $this->Posts->cache);
         Cache::write('someData', 'someValue', $this->Posts->cache);
 
         $this->assertNotEmpty(Cache::read('next_to_be_published', $this->Posts->cache));
@@ -341,7 +343,7 @@ class PostsTableTest extends TestCase
         $query = $this->Posts->find();
         $this->assertInstanceOf('Cake\ORM\Query', $query);
 
-        $this->assertEmpty(Cache::read('next_to_be_published', $this->Posts->cache));
+        $this->assertNotEquals($anHourAgo, Cache::read('next_to_be_published', $this->Posts->cache));
         $this->assertEmpty(Cache::read('someData', $this->Posts->cache));
     }
 

@@ -176,8 +176,6 @@ class AppTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->Posts->hasFinder('active'));
-
         $query = $this->Posts->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
@@ -187,9 +185,9 @@ class AppTableTest extends TestCase
 
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $post) {
-            $this->assertTrue($post->active);
-            $this->assertTrue(!$post->created->isFuture());
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->active);
+            $this->assertTrue(!$entity->created->isFuture());
         }
     }
 
@@ -199,14 +197,16 @@ class AppTableTest extends TestCase
      */
     public function testFindPending()
     {
-        $this->assertTrue($this->Posts->hasFinder('pending'));
-
         $query = $this->Posts->find('pending');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.created > :c0 OR Posts.active = :c1)', $query->sql());
 
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue(!$entity->active || $entity->created->isFuture());
+        }
     }
 
     /**

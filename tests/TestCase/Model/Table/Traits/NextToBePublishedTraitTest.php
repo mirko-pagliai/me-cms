@@ -64,11 +64,8 @@ class NextToBePublishedTraitTest extends TestCase
      */
     public function testGetNextToBePublishedAndSetNextToBePublished()
     {
-        $this->assertFalse($this->Posts->getNextToBePublished());
-        $this->assertFalse($this->Posts->setNextToBePublished());
-
         //Creates a record with a future publication time (1 hours)
-        $created = new Time('+1 hours');
+        $future = new Time('+1 hours');
 
         $entity = $this->Posts->newEntity([
             'user_id' => 1,
@@ -76,16 +73,16 @@ class NextToBePublishedTraitTest extends TestCase
             'title' => 'Future record',
             'slug' => 'future-record',
             'text' => 'Example text',
-            'created' => $created,
+            'created' => $future,
         ]);
 
         $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
+        $this->assertEquals($future->toUnixString(), $this->Posts->setNextToBePublished());
+        $this->assertEquals($future->toUnixString(), $this->Posts->getNextToBePublished());
 
         //Creates another record with a future publication time (30 minuts)
         //This record takes precedence over the previous
-        $created = new Time('+30 minutes');
+        $future = new Time('+30 minutes');
 
         $entity = $this->Posts->newEntity([
             'user_id' => 1,
@@ -93,11 +90,11 @@ class NextToBePublishedTraitTest extends TestCase
             'title' => 'Another future record',
             'slug' => 'another-future-record',
             'text' => 'Example text',
-            'created' => $created,
+            'created' => $future,
         ]);
 
         $this->assertNotEmpty($this->Posts->save($entity));
-        $this->assertEquals($created->toUnixString(), $this->Posts->setNextToBePublished());
-        $this->assertEquals($created->toUnixString(), $this->Posts->getNextToBePublished());
+        $this->assertEquals($future->toUnixString(), $this->Posts->setNextToBePublished());
+        $this->assertEquals($future->toUnixString(), $this->Posts->getNextToBePublished());
     }
 }
