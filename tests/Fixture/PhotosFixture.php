@@ -94,6 +94,15 @@ class PhotosFixture extends TestFixture
             'created' => '2016-12-28 10:41:42',
             'modified' => '2016-12-28 10:41:42'
         ],
+        [
+            'id' => 5,
+            'album_id' => 3,
+            'filename' => 'photo5.jpg',
+            'description' => 'Photo from no active album',
+            'active' => 1,
+            'created' => '2016-12-28 10:42:42',
+            'modified' => '2016-12-28 10:42:42'
+        ],
     ];
 
     /**

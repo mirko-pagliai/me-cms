@@ -204,18 +204,10 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->PostsCategories->hasFinder('active'));
-
         $query = $this->PostsCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts_categories PostsCategories WHERE PostsCategories.post_count > :c0', $query->sql());
 
         $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
-
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $category) {
-            $this->assertNotEquals(0, $category->post_count);
-        }
     }
 }

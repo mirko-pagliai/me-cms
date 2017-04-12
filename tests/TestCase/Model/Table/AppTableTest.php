@@ -204,9 +204,8 @@ class AppTableTest extends TestCase
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
 
-        foreach ($query->toArray() as $entity) {
-            $this->assertTrue(!$entity->active || $entity->created->isFuture());
-        }
+        $pendingId = collection($query->toArray())->extract('id')->toList();
+        $this->assertEquals([6, 7], $pendingId);
     }
 
     /**
@@ -215,8 +214,6 @@ class AppTableTest extends TestCase
      */
     public function testFindRandom()
     {
-        $this->assertTrue($this->Posts->hasFinder('random'));
-
         $query = $this->Posts->find('random');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
@@ -241,6 +238,8 @@ class AppTableTest extends TestCase
             3 => 'photo3.jpg',
             4 => 'photo4.jpg',
             2 => 'photoa.jpg',
+            5 => 'photo5.jpg',
+
         ], $list);
         $this->assertEquals($list, Cache::read($cacheKey, $this->Photos->cache)->toArray());
 

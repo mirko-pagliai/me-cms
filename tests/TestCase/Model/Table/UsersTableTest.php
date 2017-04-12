@@ -234,21 +234,12 @@ class UsersTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->Users->hasFinder('active'));
-
         $query = $this->Users->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
-
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $user) {
-            $this->assertTrue($user->active);
-            $this->assertFalse($user->banned);
-        }
     }
 
     /**
@@ -257,19 +248,13 @@ class UsersTableTest extends TestCase
      */
     public function testFindBanned()
     {
-        $this->assertTrue($this->Users->hasFinder('banned'));
-
         $query = $this->Users->find('banned');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
 
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $user) {
-            $this->assertTrue($user->banned);
-        }
+        $this->assertEquals([3], collection($query->toArray())->extract('id')->toList());
     }
 
     /**
@@ -278,8 +263,6 @@ class UsersTableTest extends TestCase
      */
     public function testFindPending()
     {
-        $this->assertTrue($this->Users->hasFinder('pending'));
-
         $query = $this->Users->find('pending');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
@@ -287,12 +270,7 @@ class UsersTableTest extends TestCase
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
 
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $user) {
-            $this->assertFalse($user->active);
-            $this->assertFalse($user->banned);
-        }
+        $this->assertEquals([2], collection($query->toArray())->extract('id')->toList());
     }
 
     /**

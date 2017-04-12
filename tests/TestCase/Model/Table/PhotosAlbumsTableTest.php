@@ -184,24 +184,11 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->PhotosAlbums->hasFinder('active'));
-
         $query = $this->PhotosAlbums->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums WHERE (PhotosAlbums.active = :c0 AND PhotosAlbums.photo_count > :c1)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            true,
-            0,
-        ], $params);
-
-        $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $album) {
-            $this->assertTrue($album->active);
-            $this->assertGreaterThan(0, $album->photo_count);
-        }
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(0, $query->valueBinder()->bindings()[':c1']['value']);
     }
 }
