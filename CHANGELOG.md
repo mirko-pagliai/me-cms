@@ -1,12 +1,13 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.3
+* added `PhotosTable::findPending()` method;
 * fixed bug for "active" find method of `TagsTable`.
 
 ### 2.17.2
 * fixed bug on `firstImage()` global method;
 * fixed bug on the sitemap: pending pages, photos and posts are now excluded;
-* added "pending" find method;
+* added `AppTable::findPending()` and `UsersTable::findPending()` methods;
 * improved `isAuthorized()` method: any registered user can access public
     functions; only admin and managers can access all admin actions.
 

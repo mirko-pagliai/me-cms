@@ -120,6 +120,20 @@ class PhotosTable extends AppTable
     }
 
     /**
+     * "Pending" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findPending(Query $query, array $options)
+    {
+        $query->where([sprintf('%s.active', $this->getAlias()) => false]);
+        $query->orWhere([sprintf('%s.active', $this->Albums->getAlias()) => false]);
+
+        return $query;
+    }
+
+    /**
      * Initialize method
      * @param array $config The configuration for the table
      * @return void

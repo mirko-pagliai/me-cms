@@ -217,6 +217,20 @@ class PhotosTableTest extends TestCase
     }
 
     /**
+     * Test for `findPending()` method
+     * @test
+     */
+    public function testFindPending()
+    {
+        $query = $this->Photos->find('pending');
+        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->assertStringEndsWith('FROM photos Photos WHERE (Albums.active = :c0 OR Photos.active = :c1)', $query->sql());
+
+        $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+    }
+
+    /**
      * Test for `queryFromFilter()` method
      * @test
      */
