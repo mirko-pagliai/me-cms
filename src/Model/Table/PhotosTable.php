@@ -23,7 +23,6 @@
 namespace MeCms\Model\Table;
 
 use ArrayObject;
-use Cake\Database\Schema\Table as Schema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
@@ -111,10 +110,10 @@ class PhotosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
-        $query->matching('Albums', function ($q) {
-            return $q->where([sprintf('%s.active', $this->Albums->getAlias()) => true]);
-        });
+        $query->where([sprintf('%s.active', $this->getAlias()) => true])
+            ->matching($this->Albums->getAlias(), function ($q) {
+                return $q->where([sprintf('%s.active', $this->Albums->getAlias()) => true]);
+            });
 
         return $query;
     }

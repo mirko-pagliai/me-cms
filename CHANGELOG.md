@@ -2,7 +2,7 @@
 ## 2.17 branch
 ### 2.17.3
 * added `PhotosTable::findPending()` method;
-* fixed bug for "active" find method of `TagsTable`.
+* fixed all `find()` methods.
 
 ### 2.17.2
 * fixed bug on `firstImage()` global method;
