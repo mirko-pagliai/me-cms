@@ -127,8 +127,10 @@ class PhotosTable extends AppTable
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => false]);
-        $query->orWhere([sprintf('%s.active', $this->Albums->getAlias()) => false]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => false])
+            ->matching($this->Albums->getAlias(), function ($q) {
+                return $q->where([sprintf('%s.active', $this->Albums->getAlias()) => false]);
+            });
 
         return $query;
     }
