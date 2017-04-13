@@ -59,7 +59,7 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->find('active')
             ->select(['id', 'title'])
-            ->contain(['Pages' => function ($q) {
+            ->contain([$this->PagesCategories->Pages->getAlias() => function ($q) {
                 return $q->select(['category_id', 'slug', 'title']);
             }])
             ->where([sprintf('%s.slug', $this->PagesCategories->getAlias()) => $slug])

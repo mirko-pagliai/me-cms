@@ -70,7 +70,7 @@ class PhotosController extends AppController
     {
         $photo = $this->Photos->find('pending')
             ->select(['id', 'album_id', 'filename'])
-            ->contain(['Albums' => function ($q) {
+            ->contain([$this->Photos->Albums->getAlias() => function ($q) {
                 return $q->select(['id', 'title', 'slug']);
             }])
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
