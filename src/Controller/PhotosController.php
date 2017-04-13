@@ -40,20 +40,17 @@ class PhotosController extends AppController
     {
         //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
-            $photo = $this->Photos->find('active')
-                ->select(['album_id'])
-                ->contain(['Albums' => function ($q) {
-                    return $q->select(['id', 'slug']);
-                }])
-                ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
-                ->firstOrFail();
+            $slug = $this->Photos->findById($id)
+                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
+                ->extract('album.slug')
+                ->first();
 
-            return $this->redirect(am(['slug' => $photo->album->slug], compact('id')), 301);
+            return $this->redirect(compact('id', 'slug'), 301);
         }
 
         $photo = $this->Photos->find('active')
             ->select(['id', 'album_id', 'filename', 'active', 'modified'])
-            ->contain(['Albums' => function ($q) {
+            ->contain([$this->Photos->Albums->getAlias() => function ($q) {
                 return $q->select(['id', 'title', 'slug']);
             }])
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
@@ -71,7 +68,7 @@ class PhotosController extends AppController
      */
     public function preview($id = null)
     {
-        $photo = $this->Photos->find()
+        $photo = $this->Photos->find('pending')
             ->select(['id', 'album_id', 'filename'])
             ->contain(['Albums' => function ($q) {
                 return $q->select(['id', 'title', 'slug']);
