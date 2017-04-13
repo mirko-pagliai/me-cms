@@ -83,10 +83,8 @@ class UsersTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.active', $this->getAlias()) => true,
-            sprintf('%s.banned', $this->getAlias()) => false,
-        ]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => true])
+            ->where([sprintf('%s.banned', $this->getAlias()) => false]);
 
         return $query;
     }
@@ -112,10 +110,8 @@ class UsersTable extends AppTable
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([
-            sprintf('%s.active', $this->getAlias()) => false,
-            sprintf('%s.banned', $this->getAlias()) => false,
-        ]);
+        $query->where([sprintf('%s.active', $this->getAlias()) => false])
+            ->where([sprintf('%s.banned', $this->getAlias()) => false]);
 
         return $query;
     }

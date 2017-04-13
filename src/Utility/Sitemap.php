@@ -54,13 +54,12 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Pages' => function ($query) use ($table) {
-                $query->find('active')
+            ->contain([$table->Pages->getAlias() => function ($q) use ($table) {
+                return $q->find('active')
                     ->select(['category_id', 'slug', 'modified'])
                     ->order([sprintf('%s.modified', $table->Pages->getAlias()) => 'DESC']);
-
-                return $query;
-            }]);
+            }])
+            ->order(['lft' => 'ASC']);
 
         if ($categories->isEmpty()) {
             return [];
@@ -107,12 +106,10 @@ class Sitemap extends SitemapBuilder
 
         $albums = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain(['Photos' => function ($query) use ($table) {
-                $query->find('active')
+            ->contain([$table->Photos->getAlias() => function ($q) use ($table) {
+                return $q->find('active')
                     ->select(['id', 'album_id', 'modified'])
                     ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC']);
-
-                return $query;
             }]);
 
         if ($albums->isEmpty()) {
@@ -164,14 +161,13 @@ class Sitemap extends SitemapBuilder
         }
 
         $categories = $table->find('active')
-            ->select(['id', 'slug'])
-            ->contain(['Posts' => function ($query) use ($table) {
-                $query->find('active')
+            ->select(['id', 'lft', 'slug'])
+            ->contain([$table->Posts->getAlias() => function ($q) use ($table) {
+                return $q->find('active')
                     ->select(['category_id', 'slug', 'modified'])
                     ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC']);
-
-                return $query;
-            }]);
+            }])
+            ->order(['lft' => 'ASC']);
 
         if ($categories->isEmpty()) {
             return [];

@@ -23,7 +23,6 @@
 namespace MeCms\Model\Table;
 
 use ArrayObject;
-use Cake\Database\Schema\Table as Schema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
@@ -111,10 +110,24 @@ class PhotosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
-        $query->matching('Albums', function ($q) {
-            return $q->where([sprintf('%s.active', $this->Albums->getAlias()) => true]);
-        });
+        $query->contain([$this->Albums->getAlias()])
+            ->where([sprintf('%s.active', $this->getAlias()) => true])
+            ->where([sprintf('%s.active', $this->Albums->getAlias()) => true]);
+
+        return $query;
+    }
+
+    /**
+     * "Pending" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     */
+    public function findPending(Query $query, array $options)
+    {
+        $query->contain([$this->Albums->getAlias()])
+            ->where([sprintf('%s.active', $this->getAlias()) => false])
+            ->orWhere([sprintf('%s.active', $this->Albums->getAlias()) => false]);
 
         return $query;
     }

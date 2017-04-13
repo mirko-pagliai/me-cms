@@ -59,7 +59,9 @@ class TagsTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.post_count >', $this->getAlias()) => 0]);
+        $query->matching('Posts', function ($q) {
+            return $q->find('active');
+        })->distinct();
 
         return $query;
     }

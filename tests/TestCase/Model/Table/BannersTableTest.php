@@ -163,8 +163,6 @@ class BannersTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->Banners->hasFinder('active'));
-
         $query = $this->Banners->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
@@ -173,8 +171,8 @@ class BannersTableTest extends TestCase
 
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $banner) {
-            $this->assertTrue($banner->active);
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->active);
         }
     }
 

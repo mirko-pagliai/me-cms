@@ -62,7 +62,9 @@ class PostsCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.post_count >', $this->getAlias()) => 0]);
+        $query->matching($this->Posts->getAlias(), function ($q) {
+            return $q->find('active');
+        })->distinct();
 
         return $query;
     }

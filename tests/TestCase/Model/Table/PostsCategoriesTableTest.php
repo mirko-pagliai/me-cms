@@ -204,18 +204,18 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->PostsCategories->hasFinder('active'));
-
         $query = $this->PostsCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM posts_categories PostsCategories WHERE PostsCategories.post_count > :c0', $query->sql());
+        $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = (Posts.category_id))', $query->sql());
 
-        $this->assertEquals(0, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
 
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $category) {
-            $this->assertNotEquals(0, $category->post_count);
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->_matchingData['Posts']->active);
+            $this->assertTrue(!$entity->_matchingData['Posts']->created->isFuture());
         }
     }
 }

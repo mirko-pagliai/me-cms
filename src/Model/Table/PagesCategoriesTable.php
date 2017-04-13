@@ -62,7 +62,9 @@ class PagesCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.page_count >', $this->getAlias()) => 0]);
+        $query->matching($this->Pages->getAlias(), function ($q) {
+            return $q->find('active');
+        });
 
         return $query;
     }

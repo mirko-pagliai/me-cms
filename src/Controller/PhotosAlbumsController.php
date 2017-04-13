@@ -40,17 +40,17 @@ class PhotosAlbumsController extends AppController
         $albums = $this->PhotosAlbums->find('active')
             ->select(['id', 'title', 'slug', 'photo_count'])
             ->contain(['Photos' => function ($q) {
-                return $q->select(['album_id', 'filename'])
-                    ->where([sprintf('%s.active', $this->PhotosAlbums->Photos->getAlias()) => true])
+                return $q->find('active')
+                    ->select(['album_id', 'filename'])
                     ->order('rand()');
             }])
             ->order(['title' => 'ASC'])
             ->cache('albums_index', $this->PhotosAlbums->cache)
             ->all();
 
-        //If there is only one album, redirects to that album
+        //If there is only one record, redirects
         if ($albums->count() === 1) {
-            return $this->redirect(['action' => 'view', $albums->toArray()[0]->slug]);
+            return $this->redirect(['_name' => 'album', $albums->extract('slug')->first()]);
         }
 
         $this->set(compact('albums'));

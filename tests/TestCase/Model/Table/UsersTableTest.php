@@ -234,8 +234,6 @@ class UsersTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $this->assertTrue($this->Users->hasFinder('active'));
-
         $query = $this->Users->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
@@ -245,9 +243,9 @@ class UsersTableTest extends TestCase
 
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $user) {
-            $this->assertTrue($user->active);
-            $this->assertFalse($user->banned);
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->active);
+            $this->assertFalse($entity->banned);
         }
     }
 
@@ -257,8 +255,6 @@ class UsersTableTest extends TestCase
      */
     public function testFindBanned()
     {
-        $this->assertTrue($this->Users->hasFinder('banned'));
-
         $query = $this->Users->find('banned');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
@@ -267,8 +263,8 @@ class UsersTableTest extends TestCase
 
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $user) {
-            $this->assertTrue($user->banned);
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue($entity->banned);
         }
     }
 
@@ -278,8 +274,6 @@ class UsersTableTest extends TestCase
      */
     public function testFindPending()
     {
-        $this->assertTrue($this->Users->hasFinder('pending'));
-
         $query = $this->Users->find('pending');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
@@ -289,9 +283,9 @@ class UsersTableTest extends TestCase
 
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $user) {
-            $this->assertFalse($user->active);
-            $this->assertFalse($user->banned);
+        foreach ($query->toArray() as $entity) {
+            $this->assertFalse($entity->active);
+            $this->assertFalse($entity->banned);
         }
     }
 
@@ -326,40 +320,28 @@ class UsersTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            '%test%',
-            1,
-            true,
-            false,
-        ], $params);
+        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c3']['value']);
 
         $data['status'] = 'pending';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            '%test%',
-            1,
-            false,
-        ], $params);
+        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
 
         $data['status'] = 'banned';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->toList();
-
-        $this->assertEquals([
-            '%test%',
-            1,
-            true,
-        ], $params);
+        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
     }
 
     /**
