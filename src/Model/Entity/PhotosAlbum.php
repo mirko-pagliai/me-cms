@@ -30,7 +30,6 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property string $slug
  * @property string $description
- * @property bool $active
  * @property int $photo_count
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified

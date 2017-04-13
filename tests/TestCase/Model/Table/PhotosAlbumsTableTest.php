@@ -186,15 +186,13 @@ class PhotosAlbumsTableTest extends TestCase
     {
         $query = $this->PhotosAlbums->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id)) WHERE PhotosAlbums.active = :c1', $query->sql());
+        $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertTrue($query->valueBinder()->bindings()[':c1']['value']);
 
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->active);
             $this->assertTrue($entity->_matchingData['Photos']->active);
         }
     }

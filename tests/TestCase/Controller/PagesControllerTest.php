@@ -156,7 +156,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testPreview()
     {
-        $slug = 'disabled-page';
+        $slug = $this->Pages->find('pending')->extract('slug')->first();
         $url = ['_name' => 'pagesPreview', $slug];
 
         $this->get($url);

@@ -26,13 +26,6 @@ $this->Library->slugify();
 ?>
 
 <?= $this->Form->create($album); ?>
-<div class='float-form'>
-    <?php
-        echo $this->Form->control('active', [
-            'label' => sprintf('%s?', __d('me_cms', 'Published')),
-        ]);
-    ?>
-</div>
 <fieldset>
     <?php
         echo $this->Form->control('title', [

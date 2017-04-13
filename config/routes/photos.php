@@ -39,19 +39,6 @@ if (!$routes->nameExists('album')) {
     );
 }
 
-//Album preview
-if (!$routes->nameExists('albumsPreview')) {
-    $routes->connect(
-        '/album/preview/:slug',
-        ['controller' => 'PhotosAlbums', 'action' => 'preview'],
-        [
-            '_name' => 'albumsPreview',
-            'slug' => '[a-z0-9\-]+',
-            'pass' => ['slug'],
-        ]
-    );
-}
-
 //Photo
 if (!$routes->nameExists('photo')) {
     $routes->connect(

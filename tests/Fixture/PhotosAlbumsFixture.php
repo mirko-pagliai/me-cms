@@ -39,7 +39,6 @@ class PhotosAlbumsFixture extends TestFixture
         'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'slug' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'photo_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -59,7 +58,6 @@ class PhotosAlbumsFixture extends TestFixture
             'title' => 'Test album',
             'slug' => 'test-album',
             'description' => 'This is an album test',
-            'active' => 1,
             'photo_count' => 2,
             'created' => '2016-12-28 10:38:46',
             'modified' => '2016-12-28 10:38:46'
@@ -69,20 +67,9 @@ class PhotosAlbumsFixture extends TestFixture
             'title' => 'Another album test',
             'slug' => 'another-album-test',
             'description' => 'This is another album test',
-            'active' => 1,
             'photo_count' => 2,
             'created' => '2016-12-28 10:39:46',
             'modified' => '2016-12-28 10:39:46'
-        ],
-        [
-            'id' => 3,
-            'title' => 'A no active album test',
-            'slug' => 'a-no-active-album-test',
-            'description' => 'This is a no active album test',
-            'active' => 0,
-            'photo_count' => 0,
-            'created' => '2016-12-28 10:40:46',
-            'modified' => '2016-12-28 10:40:46'
         ],
     ];
 }

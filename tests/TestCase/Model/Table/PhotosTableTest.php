@@ -195,18 +195,16 @@ class PhotosTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->Photos->find('active')->contain(['Albums']);
+        $query = $this->Photos->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM photos Photos INNER JOIN photos_albums Albums ON Albums.id = (Photos.album_id) WHERE (Photos.active = :c0 AND Albums.active = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertTrue($query->valueBinder()->bindings()[':c1']['value']);
 
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
             $this->assertTrue($entity->active);
-            $this->assertTrue($entity->album->active);
         }
     }
 
@@ -218,12 +216,11 @@ class PhotosTableTest extends TestCase
     {
         $query = $this->Photos->find('pending');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM photos Photos INNER JOIN photos_albums Albums ON Albums.id = (Photos.album_id) WHERE (Albums.active = :c0 OR Photos.active = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
 
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
 
-        $this->assertEquals([4, 5], collection($query->toArray())->extract('id')->toList());
+        $this->assertEquals([4], collection($query->toArray())->extract('id')->toList());
     }
 
     /**

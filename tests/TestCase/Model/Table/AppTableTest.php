@@ -238,8 +238,6 @@ class AppTableTest extends TestCase
             3 => 'photo3.jpg',
             4 => 'photo4.jpg',
             2 => 'photoa.jpg',
-            5 => 'photo5.jpg',
-
         ], $list);
         $this->assertEquals($list, Cache::read($cacheKey, $this->Photos->cache)->toArray());
 
