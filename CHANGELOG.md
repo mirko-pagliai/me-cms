@@ -5,7 +5,7 @@
 * fixed all `find()` methods;
 * removed `active` field from `PhotosAlbums` table and the `preview` action
     from its controller;
-* added tests for `PhotosAlbumsController` class.
+* added tests for `PhotosAlbumsController` and `PhotosController` classes.
 
 ### 2.17.2
 * fixed bug on `firstImage()` global method;
