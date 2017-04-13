@@ -61,7 +61,7 @@ class TagsTable extends AppTable
     {
         $query->matching('Posts', function ($q) {
             return $q->find('active');
-        });
+        })->distinct();
 
         return $query;
     }

@@ -103,7 +103,8 @@ class PhotosAlbumsTable extends AppTable
         $query->where([sprintf('%s.active', $this->getAlias()) => true])
             ->matching($this->Photos->getAlias(), function ($q) {
                 return $q->where([sprintf('%s.active', $this->Photos->getAlias()) => true]);
-            });
+            })
+            ->distinct();
 
         return $query;
     }
