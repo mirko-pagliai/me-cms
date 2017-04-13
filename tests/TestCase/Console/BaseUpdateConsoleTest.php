@@ -291,23 +291,6 @@ class BaseUpdateConsoleTest extends TestCase
 
             $this->assertEquals($method['version'], $matches[1] . '.' . $matches[2] . '.' . $matches[3]);
         }
-
-        $versions = collection($methods)->extract('version')->toList();
-        $this->assertEquals([
-            '2.17.0',
-            '2.14.8',
-            '2.14.7',
-            '2.14.3',
-            '2.14.0',
-            '2.10.1',
-            '2.10.0',
-            '2.7.0',
-            '2.6.0',
-            '2.2.1',
-            '2.1.9',
-            '2.1.8',
-            '2.1.7',
-        ], $versions);
     }
 
     /**
