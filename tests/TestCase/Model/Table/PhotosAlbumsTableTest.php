@@ -197,6 +197,5 @@ class PhotosAlbumsTableTest extends TestCase
             $this->assertTrue($entity->active);
             $this->assertTrue($entity->_matchingData['Photos']->active);
         }
-
     }
 }
