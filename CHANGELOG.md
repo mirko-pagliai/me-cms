@@ -2,7 +2,9 @@
 ## 2.17 branch
 ### 2.17.3
 * added `PhotosTable::findPending()` method;
-* fixed all `find()` methods.
+* fixed all `find()` methods;
+* removed `active` field from `PhotosAlbums` table and the `preview` action
+    from its controller.
 
 ### 2.17.2
 * fixed bug on `firstImage()` global method;

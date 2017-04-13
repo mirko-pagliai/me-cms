@@ -111,29 +111,4 @@ class PhotosAlbumsController extends AppController
 
         $this->set(compact('album', 'photos'));
     }
-
-    /**
-     * Preview for albums.
-     * It uses the `view` template.
-     * @param string $slug Album slug
-     * @return \Cake\Network\Response
-     */
-    public function preview($slug = null)
-    {
-        $album = $this->PhotosAlbums->find()
-            ->select(['id', 'slug', 'title', 'active'])
-            ->contain(['Photos' => function ($q) {
-                return $q->select(['id', 'album_id', 'filename', 'description'])
-                    ->order([
-                        sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
-                        sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
-                    ]);
-            }])
-            ->where(compact('slug'))
-            ->firstOrFail();
-
-        $this->set(compact('album'));
-
-        $this->render('view');
-    }
 }

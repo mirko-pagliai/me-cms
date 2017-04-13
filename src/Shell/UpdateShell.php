@@ -32,6 +32,23 @@ use MeCms\Console\BaseUpdateConsole;
 class UpdateShell extends BaseUpdateConsole
 {
     /**
+     * Updates to 2.17.3 version
+     * @return void
+     * @uses MeCms\Console\BaseUpdateConsole::$connection
+     */
+    public function to2v17v3()
+    {
+        $this->loadModel('MeCms.PhotosAlbums');
+
+        //Deletes `active` field from photos albums table
+        if ($this->_checkColumn('active', $this->PhotosAlbums->getTable())) {
+            $this->connection->execute(sprintf('ALTER TABLE `%s` DROP `active`;', $this->PhotosAlbums->getTable()));
+        }
+
+        Cache::clearAll();
+    }
+
+    /**
      * Updates to 2.17.0 version
      * @return void
      * @uses MeCms\Console\BaseUpdateConsole::$connection

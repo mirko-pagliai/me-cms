@@ -55,14 +55,6 @@ $this->append('actions', $this->Html->button(
                         <?= $this->Html->link($album->title, ['action' => 'edit', $album->id]) ?>
                     </strong>
                     <?php
-                    //If the album is not active (not published)
-                    if (!$album->active) {
-                        echo $this->Html->span(
-                            __d('me_cms', 'Not published'),
-                            ['class' => 'record-label record-label-warning']
-                        );
-                    }
-
                     $actions = [
                         $this->Html->link(
                             __d('me_cms', 'Edit'),
@@ -90,17 +82,10 @@ $this->append('actions', $this->Html->button(
                         '?' => ['album' => $album->id],
                     ], ['icon' => 'upload']);
 
-                    //If the the is active
-                    if ($album->active) {
+                    if ($album->photo_count) {
                         $actions[] = $this->Html->link(
                             __d('me_cms', 'Open'),
                             ['_name' => 'album', $album->slug],
-                            ['icon' => 'external-link', 'target' => '_blank']
-                        );
-                    } else {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Preview'),
-                            ['_name' => 'albumsPreview', $album->slug],
                             ['icon' => 'external-link', 'target' => '_blank']
                         );
                     }
