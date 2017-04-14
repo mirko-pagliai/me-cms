@@ -91,10 +91,7 @@ class PhotosController extends AppController
             return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
         }
 
-        $query = $this->Photos->find()
-            ->contain(['Albums' => function ($q) {
-                return $q->select(['id', 'slug', 'title']);
-            }]);
+        $query = $this->Photos->find()->contain(['Albums' => ['fields' => ['id', 'slug', 'title']]]);
 
         $this->paginate['order'] = ['Photos.created' => 'DESC'];
 

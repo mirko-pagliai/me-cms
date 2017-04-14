@@ -53,7 +53,7 @@ class Sitemap extends SitemapBuilder
         }
 
         $categories = $table->find('active')
-            ->select(['id', 'slug'])
+            ->select(['id', 'lft', 'slug'])
             ->contain([$table->Pages->getAlias() => function ($q) use ($table) {
                 return $q->find('active')
                     ->select(['category_id', 'slug', 'modified'])

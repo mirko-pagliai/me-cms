@@ -50,9 +50,7 @@ class PhotosController extends AppController
 
         $photo = $this->Photos->find('active')
             ->select(['id', 'album_id', 'filename', 'active', 'modified'])
-            ->contain([$this->Photos->Albums->getAlias() => function ($q) {
-                return $q->select(['id', 'title', 'slug']);
-            }])
+            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
             ->firstOrFail();
@@ -64,15 +62,13 @@ class PhotosController extends AppController
      * Preview for photos.
      * It uses the `view` template.
      * @param string $id Photo ID
-     * @return \Cake\Network\Response
+     * @return \Cake\Network\Response|null|void
      */
     public function preview($id = null)
     {
         $photo = $this->Photos->find('pending')
             ->select(['id', 'album_id', 'filename'])
-            ->contain([$this->Photos->Albums->getAlias() => function ($q) {
-                return $q->select(['id', 'title', 'slug']);
-            }])
+            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->firstOrFail();
 
