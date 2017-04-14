@@ -89,7 +89,7 @@ class PostsCategoriesController extends AppController
                 throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
             }
 
-            $posts = $this->paginate($query)->toArray();
+            $posts = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -101,6 +101,7 @@ class PostsCategoriesController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(am(['category' => $posts[0]->category], compact('posts')));
+        $this->set('category', $posts->extract('category')->first());
+        $this->set(compact('posts'));
     }
 }
