@@ -82,7 +82,7 @@ class PostsController extends AppController
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
-            $posts = $this->paginate($query)->toArray();
+            $posts = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
