@@ -90,8 +90,8 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $id = 1;
-        $url = ['_name' => 'photo', 'test-album', $id];
+        $photo = $this->Photos->find('active')->contain('Albums')->first();
+        $url = ['_name' => 'photo', $photo->album->slug, $photo->id];
 
         $this->get($url);
         $this->assertResponseOk();
@@ -101,11 +101,11 @@ class PhotosControllerTest extends IntegrationTestCase
         $photoFromView = $this->viewVariable('photo');
         $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
 
-        $cache = Cache::read(sprintf('view_%s', md5($id)), $this->Photos->cache);
+        $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Photos->cache);
         $this->assertEquals($photoFromView, $cache->first());
 
         //Backward compatibility for URLs like `/photo/11`
-        $this->get('/photo/' . $id);
+        $this->get('/photo/' . $photo->id);
         $this->assertRedirect($url);
     }
 

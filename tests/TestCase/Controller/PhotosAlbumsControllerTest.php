@@ -123,7 +123,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = 'test-album';
+        $slug = $this->PhotosAlbums->find('active')->extract('slug')->first();
         $url = ['_name' => 'album', $slug];
 
         $this->get($url);

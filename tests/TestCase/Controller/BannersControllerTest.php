@@ -76,7 +76,7 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testOpen()
     {
-        $banner = $this->Banners->findById(1)->first();
+        $banner = $this->Banners->find('active')->first();
 
         $this->get(['_name' => 'banner', $banner->id]);
         $this->assertRedirect($banner->target);

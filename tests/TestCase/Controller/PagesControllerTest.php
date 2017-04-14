@@ -100,7 +100,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = 'first-page';
+        $slug = $this->Pages->find('active')->extract('slug')->first();
 
         $this->get(['_name' => 'page', $slug]);
         $this->assertResponseOk();

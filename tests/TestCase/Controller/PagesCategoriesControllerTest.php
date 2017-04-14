@@ -112,7 +112,11 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = 'first-page-category';
+        $slug = $this->PagesCategories->find('active')
+            ->order([sprintf('%s.id', $this->PagesCategories->getAlias()) => 'ASC'])
+            ->extract('slug')
+            ->first();
+
         $url = ['_name' => 'pagesCategory', $slug];
 
         $this->get($url);
