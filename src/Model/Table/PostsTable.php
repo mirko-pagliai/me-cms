@@ -325,7 +325,7 @@ class PostsTable extends AppTable
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
             $query->matching('Tags', function ($q) use ($data) {
                 return $q->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
-            });
+            })->distinct();
         }
 
         return $query;

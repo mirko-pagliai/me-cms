@@ -95,10 +95,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $query = $this->Users->find()
-            ->contain(['Groups' => function ($q) {
-                return $q->select(['id', 'label']);
-            }]);
+        $query = $this->Users->find()->contain(['Groups' => ['fields' => ['id', 'label']]]);
 
         $this->paginate['order'] = ['username' => 'ASC'];
 

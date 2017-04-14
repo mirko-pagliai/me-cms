@@ -173,9 +173,7 @@ class UserShell extends Shell
         //Gets users
         $users = $this->Users->find()
             ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-            ->contain(['Groups' => function ($q) {
-                return $q->select(['label']);
-            }]);
+            ->contain(['Groups' => ['fields' => ['label']]]);
 
         //Checks for users
         if (!$users->count()) {

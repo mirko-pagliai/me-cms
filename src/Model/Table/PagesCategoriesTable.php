@@ -64,7 +64,7 @@ class PagesCategoriesTable extends AppTable
     {
         $query->matching($this->Pages->getAlias(), function ($q) {
             return $q->find('active');
-        });
+        })->distinct();
 
         return $query;
     }

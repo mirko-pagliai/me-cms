@@ -91,10 +91,7 @@ class BannersController extends AppController
             return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
         }
 
-        $query = $this->Banners->find()
-            ->contain(['Positions' => function ($q) {
-                return $q->select(['id', 'title']);
-            }]);
+        $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

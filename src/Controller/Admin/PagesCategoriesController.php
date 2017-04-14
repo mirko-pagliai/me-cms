@@ -74,9 +74,7 @@ class PagesCategoriesController extends AppController
     public function index()
     {
         $categories = $this->PagesCategories->find('all')
-            ->contain(['Parents' => function ($q) {
-                return $q->select(['title']);
-            }])
+            ->contain(['Parents' => ['fields' => ['title']]])
             ->order(['PagesCategories.lft' => 'ASC'])
             ->toArray();
 

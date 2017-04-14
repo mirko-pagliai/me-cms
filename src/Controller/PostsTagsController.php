@@ -75,20 +75,14 @@ class PostsTagsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->PostsTags->Posts->find('active')
                 ->contain([
-                    'Categories' => function ($q) {
-                        return $q->select(['title', 'slug']);
-                    },
+                    'Categories' => ['fields' => ['title', 'slug']],
                     'Tags' => function ($q) {
                         return $q->order(['tag' => 'ASC']);
                     },
-                    'Users' => function ($q) {
-                        return $q->select(['first_name', 'last_name']);
-                    },
+                    'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
                 ->matching('Tags', function ($q) use ($tag) {
-                    return $q->where([
-                        'Tags.tag' => Text::slug($tag, ['replacement' => ' ']),
-                    ]);
+                    return $q->where(['Tags.tag' => Text::slug($tag, ['replacement' => ' '])]);
                 })
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->PostsTags->Posts->getAlias()) => 'DESC']);

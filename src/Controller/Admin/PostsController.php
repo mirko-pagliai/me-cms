@@ -119,15 +119,11 @@ class PostsController extends AppController
     {
         $query = $this->Posts->find()
             ->contain([
-                'Categories' => function ($q) {
-                    return $q->select(['id', 'title']);
-                },
+                'Categories' => ['fields' => ['id', 'title']],
                 'Tags' => function ($q) {
                     return $q->order(['tag' => 'ASC']);
                 },
-                'Users' => function ($q) {
-                    return $q->select(['id', 'first_name', 'last_name']);
-                },
+                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
             ]);
 
         $this->paginate['order'] = ['created' => 'DESC'];

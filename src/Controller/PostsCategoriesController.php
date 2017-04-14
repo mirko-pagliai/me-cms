@@ -76,15 +76,11 @@ class PostsCategoriesController extends AppController
             $query = $this->PostsCategories->Posts->find('active')
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->contain([
-                    'Categories' => function ($q) {
-                        return $q->select(['id', 'title', 'slug']);
-                    },
+                    'Categories' => ['fields' => ['id', 'title', 'slug']],
                     'Tags' => function ($q) {
                         return $q->order(['tag' => 'ASC']);
                     },
-                    'Users' => function ($q) {
-                        return $q->select(['first_name', 'last_name']);
-                    },
+                    'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
                 ->where(['Categories.slug' => $slug])
                 ->order([sprintf('%s.created', $this->PostsCategories->Posts->getAlias()) => 'DESC']);
