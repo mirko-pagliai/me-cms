@@ -98,20 +98,6 @@ class PostsController extends AppController
     }
 
     /**
-     * This allows backward compatibility for URLs like:
-     * <pre>/posts/page:3</pre>
-     * <pre>/posts/page:3/sort:Post.created/direction:desc</pre>
-     * These URLs will become:
-     * <pre>/posts?page=3</pre>
-     * @param int $page Page number
-     * @return \Cake\Network\Response|null
-     */
-    public function indexCompatibility($page)
-    {
-        return $this->redirect(['_name' => 'posts', '?' => ['page' => $page]], 301);
-    }
-
-    /**
      * List posts for a specific date:
      *
      * The date must be passed in the format:
