@@ -138,7 +138,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $this->assertEquals($albumFromView, $cache->first());
 
         $photosFromView = $this->viewVariable('photos');
-        $this->assertTrue(is_array($photosFromView));
+        $this->assertInstanceof('Cake\ORM\ResultSet', $photosFromView);
 
         foreach ($photosFromView as $photo) {
             $this->assertInstanceof('MeCms\Model\Entity\Photo', $photo);
@@ -151,8 +151,8 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
             $this->PhotosAlbums->cache
         ));
 
-        $this->assertEquals($photosFromView, $photosFromCache);
-        $this->assertNotEmpty($pagingFromCache);
+        $this->assertEquals($photosFromView->toArray(), $photosFromCache->toArray());
+        $this->assertNotEmpty($pagingFromCache['Photos']);
 
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
