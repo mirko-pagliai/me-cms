@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.4
+* added `PostsController::getStartAndEndDate()` method;
 * removed `PostsController::indexCompatibility()`.
 * added tests for `PostsCategoriesController` class.
 

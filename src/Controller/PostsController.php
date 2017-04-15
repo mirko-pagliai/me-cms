@@ -98,6 +98,40 @@ class PostsController extends AppController
     }
 
     /**
+     * Internal method to get start and end date
+     * @param string $date Date as `YYYY/MM/dd`
+     * @return array Array with start and end date
+     */
+    protected function getStartAndEndDate($date)
+    {
+        $year = $month = $day = null;
+
+        //Sets the start date
+        if (in_array($date, ['today', 'yesterday'])) {
+            $start = Time::parse($date);
+        } else {
+            list($year, $month, $day) = array_replace([null, null, null], explode('/', $date));
+
+            $start = Time::now()->setDate($year, $month ?: 1, $day ?: 1);
+        }
+
+        $start = $start->setTime(0, 0, 0);
+
+        //Sets the end date
+        $end = Time::parse($start);
+
+        if (($year && $month && $day) || in_array($date, ['today', 'yesterday'])) {
+            $end = $end->addDay(1);
+        } elseif ($year && $month) {
+            $end = $end->addMonth(1);
+        } else {
+            $end = $end->addYear(1);
+        }
+
+        return [$start, $end];
+    }
+
+    /**
      * List posts for a specific date.
      *
      * Month and day are optional and you can also use special keywords "today"
@@ -111,37 +145,16 @@ class PostsController extends AppController
      * <pre>/posts/yesterday</pre>
      * @param string $date Date as `YYYY/MM/dd`
      * @return \Cake\Network\Response|null|void
+     * @use getStartAndEndDate()
      */
-    public function indexByDate($date = null)
+    public function indexByDate($date)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        //Sets `$year`, `$month` and `$day`
-        //`$month` and `$day` may be `null`
-        if ($date === 'today' || $date === 'yesterday') {
-            $date = new Time($date === 'today' ? 'now' : '1 days ago');
-
-            list($year, $month, $day) = explode('/', $date->i18nFormat('YYYY/MM/dd'));
-        } else {
-            list($year, $month, $day) = am(explode('/', $date), [null, null, null]);
-        }
-
-        //Sets the start date
-        $start = (new Time())
-            ->setDate($year, empty($month) ? 1 : $month, empty($day) ? 1 : $day)
-            ->setTime(0, 0, 0);
-
-        //Sets the end date
-        if ($year && $month && $day) {
-            $end = (new Time($start))->addDay(1);
-        } elseif ($year && $month) {
-            $end = (new Time($start))->addMonth(1);
-        } else {
-            $end = (new Time($start))->addYear(1);
-        }
+        list($start, $end) = $this->getStartAndEndDate($date);
 
         $page = $this->request->getQuery('page', 1);
 
