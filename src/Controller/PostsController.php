@@ -98,12 +98,10 @@ class PostsController extends AppController
     }
 
     /**
-     * List posts for a specific date:
+     * List posts for a specific date.
      *
-     * The date must be passed in the format:
-     * <pre>YYYY/MM/dd</pre>
-     * The month and day are optional.
-     * You can also use the special keywords "today" and "yesterday".
+     * Month and day are optional and you can also use special keywords "today"
+     *  and "yesterday".
      *
      * Examples:
      * <pre>/posts/2016/06/11</pre>
