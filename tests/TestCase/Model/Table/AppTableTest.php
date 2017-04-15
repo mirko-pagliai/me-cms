@@ -205,7 +205,8 @@ class AppTableTest extends TestCase
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
 
         $pendingId = collection($query->toArray())->extract('id')->toList();
-        $this->assertEquals([6, 7], $pendingId);
+        dd($pendingId);
+        $this->assertEquals([6, 8], $pendingId);
     }
 
     /**
