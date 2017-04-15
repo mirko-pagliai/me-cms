@@ -184,7 +184,7 @@ class PostsController extends AppController
                 ])
                 ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
-            $posts = $this->paginate($query)->toArray();
+            $posts = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -196,7 +196,7 @@ class PostsController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(compact('posts', 'year', 'month', 'day'));
+        $this->set(compact('date', 'posts', 'start'));
     }
 
     /**
