@@ -215,75 +215,77 @@ class PostsController extends AppController
             ->select(['title', 'slug', 'text', 'created'])
             ->limit(config('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache('rss', $this->Posts->cache);
+            ->cache('rss', $this->Posts->cache)
+            ->all();
 
         $this->set(compact('posts'));
     }
 
     /**
      * Searches posts
-     * @return void
+     * @return Cake\Network\Response|null
      * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
         $pattern = $this->request->getQuery('p');
 
+        //Checks if the pattern is at least 4 characters long
+        if ($pattern && strlen($pattern) < 4) {
+            $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+
+            return $this->redirect([]);
+        }
+
+        //Checks the last search
+        if ($pattern && !$this->checkLastSearch($pattern)) {
+            $this->Flash->alert(__d(
+                'me_cms',
+                'You have to wait {0} seconds to perform a new search',
+                config('security.search_interval')
+            ));
+
+            return $this->redirect([]);
+        }
+
         if ($pattern) {
-            //Checks if the pattern is at least 4 characters long
-            if (strlen($pattern) >= 4) {
-                if ($this->checkLastSearch($pattern)) {
-                    $this->paginate['limit'] = config('default.records_for_searches');
+            $this->paginate['limit'] = config('default.records_for_searches');
 
-                    $page = $this->request->getQuery('page', 1);
+            $page = $this->request->getQuery('page', 1);
 
-                    //Sets the initial cache name
-                    $cache = sprintf('search_%s', md5($pattern));
+            //Sets the cache name
+            $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
 
-                    //Updates the cache name with the query limit and the number of the page
-                    $cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-                    $cache = sprintf('%s_page_%s', $cache, $page);
+            //Tries to get data from the cache
+            list($posts, $paging) = array_values(Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->Posts->cache
+            ));
 
-                    //Tries to get data from the cache
-                    list($posts, $paging) = array_values(Cache::readMany(
-                        [$cache, sprintf('%s_paging', $cache)],
-                        $this->Posts->cache
-                    ));
+            //If the data are not available from the cache
+            if (empty($posts) || empty($paging)) {
+                $query = $this->Posts->find('active')
+                    ->select(['title', 'slug', 'text', 'created'])
+                    ->where(['OR' => [
+                        'title LIKE' => sprintf('%%%s%%', $pattern),
+                        'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+                        'text LIKE' => sprintf('%%%s%%', $pattern),
+                    ]])
+                    ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
-                    //If the data are not available from the cache
-                    if (empty($posts) || empty($paging)) {
-                        $query = $this->Posts->find('active')
-                            ->select(['title', 'slug', 'text', 'created'])
-                            ->where(['OR' => [
-                                'title LIKE' => sprintf('%%%s%%', $pattern),
-                                'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-                                'text LIKE' => sprintf('%%%s%%', $pattern),
-                            ]])
-                            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
+                $posts = $this->paginate($query);
 
-                        $posts = $this->paginate($query)->toArray();
-
-                        //Writes on cache
-                        Cache::writeMany([
-                            $cache => $posts,
-                            sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-                        ], $this->Posts->cache);
-                    //Else, sets the paging parameter
-                    } else {
-                        $this->request = $this->request->withParam('paging', $paging);
-                    }
-
-                    $this->set(compact('posts'));
-                } else {
-                    $this->Flash->alert(__d(
-                        'me_cms',
-                        'You have to wait {0} seconds to perform a new search',
-                        config('security.search_interval')
-                    ));
-                }
+                //Writes on cache
+                Cache::writeMany([
+                    $cache => $posts,
+                    sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                ], $this->Posts->cache);
+            //Else, sets the paging parameter
             } else {
-                $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+                $this->request = $this->request->withParam('paging', $paging);
             }
+
+            $this->set(compact('posts'));
         }
 
         $this->set(compact('pattern'));
