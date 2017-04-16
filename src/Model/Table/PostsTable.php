@@ -210,7 +210,7 @@ class PostsTable extends AppTable
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If true, gets only posts with images
-     * @return array|null Related posts, array of entities
+     * @return array Array of entities
      * @throws InternalErrorException
      * @uses $cache
      */
@@ -230,7 +230,9 @@ class PostsTable extends AppTable
         //A `null` value means that there are no related post
         $related = Cache::read($cache, $this->cache);
 
-        if (empty($related) && !is_null($related)) {
+        if (empty($related)) {
+            $related = [];
+
             if (!empty($post->tags)) {
                 //Sorts and takes tags by `post_count` field
                 $tags = collection($post->tags)->sortBy('post_count')->take($limit)->toList();
@@ -262,10 +264,6 @@ class PostsTable extends AppTable
                         $exclude[] = $post->id;
                     }
                 }
-            }
-
-            if (empty($related)) {
-                $related = null;
             }
 
             Cache::write($cache, $related, $this->cache);

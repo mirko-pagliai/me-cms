@@ -398,17 +398,14 @@ class PostsTableTest extends TestCase
         //This post has no tags
         $post = $this->Posts->findById(4)->contain(['Tags'])->first();
         $this->assertEquals([], $post->tags);
-
-        //Related posts are `null`
-        $this->assertNull($this->Posts->getRelated($post));
-        $this->assertNull(Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
+        $this->assertEquals([], $this->Posts->getRelated($post));
+        $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
 
         //This post has one tag, but this is not related to any other post
         $post = $this->Posts->findById(5)->contain(['Tags'])->first();
         $this->assertCount(1, $post->tags);
-
-        $this->assertNull($this->Posts->getRelated($post));
-        $this->assertNull(Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));
+        $this->assertEquals([], $this->Posts->getRelated($post));
+        $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));
     }
 
     /**
