@@ -85,8 +85,8 @@ class PostsFixture extends TestFixture
             'title' => 'Second post',
             'slug' => 'second-post',
             'subtitle' => 'Subtitle for second post',
-            'text' => '<img src="https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg" />Text of the second post',
-            'preview' => '{"preview":"https:\/\/github.com\/mirko-pagliai\/me-cms\/raw\/master\/tests\/test_app\/examples\/image.jpg","width":400,"height":400}',
+            'text' => '<img src="https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg" />Text of the second post',
+            'preview' => '{"preview":"https:\/\/raw.githubusercontent.com\/mirko-pagliai\/me-cms\/master\/tests\/test_app\/TestApp\/webroot\/img\/image.jpg","width":400,"height":400}',
             'priority' => 1,
             'created' => '2016-12-28 18:56:19',
             'modified' => '2016-12-28 18:56:19',
@@ -148,6 +148,20 @@ class PostsFixture extends TestFixture
             'modified' => '2016-12-28 19:00:19',
             'active' => 0,
         ],
+        [
+            'id' => 7,
+            'category_id' => 1,
+            'user_id' => 1,
+            'title' => 'Seventh post',
+            'slug' => 'seventh-post',
+            'subtitle' => 'Subtitle for seventh post',
+            'text' => 'Text of the seventh post',
+            'preview' => null,
+            'priority' => 1,
+            'created' => '2016-12-29 18:59:19',
+            'modified' => '2016-12-29 18:59:19',
+            'active' => 1,
+        ],
     ];
 
     /**
@@ -159,7 +173,7 @@ class PostsFixture extends TestFixture
 
         //Adds a future post
         $this->records[] = [
-            'id' => 7,
+            'id' => collection($this->records)->extract('id')->last() + 1,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Future post',

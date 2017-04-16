@@ -385,11 +385,11 @@ class PostsTableTest extends TestCase
         $this->assertNotEmpty($related[0]->title);
         $this->assertNotEmpty($related[0]->slug);
         $this->assertContains(
-            '<img src="https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg" />Text of the second post',
+            '<img src="https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg" />Text of the second post',
             $related[0]->text
         );
         $this->assertEquals([
-            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
+            'preview' => 'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg',
             'width' => 400,
             'height' => 400,
         ], $related[0]->preview);
@@ -398,17 +398,14 @@ class PostsTableTest extends TestCase
         //This post has no tags
         $post = $this->Posts->findById(4)->contain(['Tags'])->first();
         $this->assertEquals([], $post->tags);
-
-        //Related posts are `null`
-        $this->assertNull($this->Posts->getRelated($post));
-        $this->assertNull(Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
+        $this->assertEquals([], $this->Posts->getRelated($post));
+        $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
 
         //This post has one tag, but this is not related to any other post
         $post = $this->Posts->findById(5)->contain(['Tags'])->first();
         $this->assertCount(1, $post->tags);
-
-        $this->assertNull($this->Posts->getRelated($post));
-        $this->assertNull(Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));
+        $this->assertEquals([], $this->Posts->getRelated($post));
+        $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));
     }
 
     /**

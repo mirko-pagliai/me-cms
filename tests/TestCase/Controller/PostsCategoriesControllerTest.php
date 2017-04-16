@@ -27,22 +27,25 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * PhotosAlbumsControllerTest class
+ * PostsCategoriesControllerTest class
  */
-class PhotosAlbumsControllerTest extends IntegrationTestCase
+class PostsCategoriesControllerTest extends IntegrationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosAlbumsTable
+     * @var \MeCms\Model\Table\PostsCategoriesTable
      */
-    protected $PhotosAlbums;
+    protected $PostsCategories;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
+        'plugin.me_cms.users',
     ];
 
     /**
@@ -55,9 +58,9 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->PhotosAlbums = TableRegistry::get('MeCms.PhotosAlbums');
+        $this->PostsCategories = TableRegistry::get('MeCms.PostsCategories');
 
-        Cache::clear(false, $this->PhotosAlbums->cache);
+        Cache::clear(false, $this->PostsCategories->cache);
     }
 
     /**
@@ -68,7 +71,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->PhotosAlbums);
+        unset($this->PostsCategories);
     }
 
     /**
@@ -90,31 +93,20 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(['_name' => 'albums']);
+        $this->get(['_name' => 'postsCategories']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/index.ctp');
+        $this->assertTemplate(ROOT . 'src/Template/PostsCategories/index.ctp');
 
-        $albumsFromView = $this->viewVariable('albums');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $albumsFromView);
+        $categoriesFromView = $this->viewVariable('categories');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $categoriesFromView);
 
-        foreach ($albumsFromView as $album) {
-            $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $album);
-
-            $this->assertGreaterThan(0, count($album->photos));
-            $this->assertInstanceOf('MeCms\Model\Entity\Photo', collection($album->photos)->first());
+        foreach ($categoriesFromView as $category) {
+            $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $category);
         }
 
-        $cache = Cache::read('albums_index', $this->PhotosAlbums->cache);
-        $this->assertEquals($albumsFromView->toArray(), $cache->toArray());
-
-        //Deletes all albums, except the first one and clears the cache
-        $this->PhotosAlbums->deleteAll(['id !=' => 1]);
-        Cache::clear(false, $this->PhotosAlbums->cache);
-
-        //Now it redirects to the first album
-        $this->get(['_name' => 'albums']);
-        $this->assertRedirect(['_name' => 'album', 'test-album']);
+        $cache = Cache::read('categories_index', $this->PostsCategories->cache);
+        $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
     }
 
     /**
@@ -123,36 +115,37 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->PhotosAlbums->find('active')->extract('slug')->first();
-        $url = ['_name' => 'album', $slug];
+        $slug = $this->PostsCategories->find('active')
+            ->order([sprintf('%s.id', $this->PostsCategories->getAlias()) => 'ASC'])
+            ->extract('slug')
+            ->first();
+
+        $url = ['_name' => 'postsCategory', $slug];
 
         $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/view.ctp');
+        $this->assertTemplate(ROOT . 'src/Template/PostsCategories/view.ctp');
 
-        $albumFromView = $this->viewVariable('album');
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
+        $categoryFromView = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
 
-        $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->cache);
-        $this->assertEquals($albumFromView, $cache->first());
+        $postsFromView = $this->viewVariable('posts');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
 
-        $photosFromView = $this->viewVariable('photos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $photosFromView);
-
-        foreach ($photosFromView as $photo) {
-            $this->assertInstanceof('MeCms\Model\Entity\Photo', $photo);
+        foreach ($postsFromView as $post) {
+            $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
         }
 
         //Sets the cache name
-        $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), config('default.photos'), 1);
-        list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), config('default.records'), 1);
+        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PhotosAlbums->cache
+            $this->PostsCategories->cache
         ));
 
-        $this->assertEquals($photosFromView->toArray(), $photosFromCache->toArray());
-        $this->assertNotEmpty($pagingFromCache['Photos']);
+        $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
+        $this->assertNotEmpty($pagingFromCache['Posts']);
 
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);

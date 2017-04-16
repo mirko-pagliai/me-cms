@@ -168,6 +168,8 @@ class PostsWidgetsCellTest extends TestCase
      */
     public function testLatest()
     {
+        $latestPost = $this->Posts->find('active')->order(['created' => 'DESC'])->first();
+
         $widget = ME_CMS . '.Posts::latest';
 
         //Tries with a limit of 1
@@ -185,8 +187,8 @@ class PostsWidgetsCellTest extends TestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/fifth-post', 'title' => 'Fifth post']],
-            'Fifth post',
+            ['a' => ['href' => '/post/' . $latestPost->slug, 'title' => $latestPost->title]],
+            $latestPost->title,
             '/a',
             '/li',
             '/ul',
@@ -194,6 +196,8 @@ class PostsWidgetsCellTest extends TestCase
             '/div',
         ];
         $this->assertHtml($expected, $result);
+
+        list($lastPost, $penultimatePost) = $this->Posts->find('active')->order(['created' => 'DESC'])->limit(2)->toArray();
 
         //Tries with a limit of 2
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
@@ -210,8 +214,8 @@ class PostsWidgetsCellTest extends TestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/fifth-post', 'title' => 'Fifth post']],
-            'Fifth post',
+            ['a' => ['href' => '/post/' . $latestPost->slug, 'title' => $latestPost->title]],
+            $latestPost->title,
             '/a',
             '/li',
             ['li' => true],
@@ -219,8 +223,8 @@ class PostsWidgetsCellTest extends TestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/fourth-post', 'title' => 'Fourth post']],
-            'Fourth post',
+            ['a' => ['href' => '/post/' . $penultimatePost->slug, 'title' => $penultimatePost->title]],
+            $penultimatePost->title,
             '/a',
             '/li',
             '/ul',
@@ -265,7 +269,7 @@ class PostsWidgetsCellTest extends TestCase
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => '2016/12']],
-            'December 2016 (4)',
+            'December 2016 (5)',
             '/option',
             ['option' => ['value' => '2016/11']],
             'November 2016 (1)',

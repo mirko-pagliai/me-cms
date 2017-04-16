@@ -59,16 +59,12 @@ echo $this->Form->end();
                     (<?= $post->created->i18nFormat(config('main.datetime.short')) ?>)
                 </span>
                 <div class="text-justify">
-                    <?php
-                        //Executes BBCode on the text
-                        $post->text = $this->BBCode->parser($post->text);
+                <?php
+                    //Executes BBCode on the text and strips other tags
+                    $text = strip_tags($this->BBCode->parser($post->text));
 
-                        echo $this->Text->truncate(
-                            strip_tags($post->text),
-                            350,
-                            ['exact' => false, 'html' => true]
-                        );
-                    ?>
+                    echo $this->Text->truncate($text, 350, ['exact' => false, 'html' => true]);
+                ?>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -120,30 +120,8 @@ if (!$routes->nameExists('postsPreview')) {
 }
 
 /**
- * This allows backward compatibility for URLs like:
- * /posts/page:3
- * /posts/page:3/sort:Post.created/direction:desc
- * These URLs will become:
- * /posts?page=3
- */
-$routes->connect(
-    '/posts/page::page/*',
-    ['controller' => 'Posts', 'action' => 'indexCompatibility'],
-    ['page' => '\d+', 'pass' => ['page']]
-);
-
-/**
  * Fallbacks
  */
-$routes->connect(
-    '/tags',
-    ['controller' => 'PostsTags', 'action' => 'index']
-);
-$routes->connect(
-    '/rss',
-    ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']
-);
-$routes->connect(
-    '/search',
-    ['controller' => 'Posts', 'action' => 'search']
-);
+$routes->connect('/tags', ['controller' => 'PostsTags', 'action' => 'index']);
+$routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
+$routes->connect('/search', ['controller' => 'Posts', 'action' => 'search']);

@@ -54,7 +54,7 @@ class TagsFixture extends TestFixture
         [
             'id' => 1,
             'tag' => 'cat',
-            'post_count' => 3,
+            'post_count' => 4,
             'created' => '2016-12-29 11:13:31',
             'modified' => '2016-12-29 11:13:31',
         ],

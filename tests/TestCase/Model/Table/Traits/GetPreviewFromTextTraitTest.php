@@ -109,10 +109,10 @@ class GetPreviewFromTextTraitTest extends TestCase
         $this->assertNull($result);
 
         $result = $this->getPreview(
-            '<img src=\'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg\' />'
+            '<img src=\'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg\' />'
         );
         $this->assertEquals([
-            'preview' => 'https://github.com/mirko-pagliai/me-cms/raw/master/tests/test_app/examples/image.jpg',
+            'preview' => 'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg',
             'width' => 400,
             'height' => 300,
         ], $result);

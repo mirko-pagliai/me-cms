@@ -97,7 +97,7 @@ class PhotosAlbumsController extends AppController
                     sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
                 ]);
 
-            $photos = $this->paginate($query)->toArray();
+            $photos = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([

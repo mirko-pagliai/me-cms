@@ -82,7 +82,7 @@ class PostsController extends AppController
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
-            $posts = $this->paginate($query)->toArray();
+            $posts = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -98,26 +98,44 @@ class PostsController extends AppController
     }
 
     /**
-     * This allows backward compatibility for URLs like:
-     * <pre>/posts/page:3</pre>
-     * <pre>/posts/page:3/sort:Post.created/direction:desc</pre>
-     * These URLs will become:
-     * <pre>/posts?page=3</pre>
-     * @param int $page Page number
-     * @return \Cake\Network\Response|null
+     * Internal method to get start and end date
+     * @param string $date Date as `YYYY/MM/dd`
+     * @return array Array with start and end date
      */
-    public function indexCompatibility($page)
+    protected function getStartAndEndDate($date)
     {
-        return $this->redirect(['_name' => 'posts', '?' => ['page' => $page]], 301);
+        $year = $month = $day = null;
+
+        //Sets the start date
+        if (in_array($date, ['today', 'yesterday'])) {
+            $start = Time::parse($date);
+        } else {
+            list($year, $month, $day) = array_replace([null, null, null], explode('/', $date));
+
+            $start = Time::now()->setDate($year, $month ?: 1, $day ?: 1);
+        }
+
+        $start = $start->setTime(0, 0, 0);
+
+        //Sets the end date
+        $end = Time::parse($start);
+
+        if (($year && $month && $day) || in_array($date, ['today', 'yesterday'])) {
+            $end = $end->addDay(1);
+        } elseif ($year && $month) {
+            $end = $end->addMonth(1);
+        } else {
+            $end = $end->addYear(1);
+        }
+
+        return [$start, $end];
     }
 
     /**
-     * List posts for a specific date:
+     * List posts for a specific date.
      *
-     * The date must be passed in the format:
-     * <pre>YYYY/MM/dd</pre>
-     * The month and day are optional.
-     * You can also use the special keywords "today" and "yesterday".
+     * Month and day are optional and you can also use special keywords "today"
+     *  and "yesterday".
      *
      * Examples:
      * <pre>/posts/2016/06/11</pre>
@@ -127,37 +145,16 @@ class PostsController extends AppController
      * <pre>/posts/yesterday</pre>
      * @param string $date Date as `YYYY/MM/dd`
      * @return \Cake\Network\Response|null|void
+     * @use getStartAndEndDate()
      */
-    public function indexByDate($date = null)
+    public function indexByDate($date)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        //Sets `$year`, `$month` and `$day`
-        //`$month` and `$day` may be `null`
-        if ($date === 'today' || $date === 'yesterday') {
-            $date = new Time($date === 'today' ? 'now' : '1 days ago');
-
-            list($year, $month, $day) = explode('/', $date->i18nFormat('YYYY/MM/dd'));
-        } else {
-            list($year, $month, $day) = am(explode('/', $date), [null, null, null]);
-        }
-
-        //Sets the start date
-        $start = (new Time())
-            ->setDate($year, empty($month) ? 1 : $month, empty($day) ? 1 : $day)
-            ->setTime(0, 0, 0);
-
-        //Sets the end date
-        if ($year && $month && $day) {
-            $end = (new Time($start))->addDay(1);
-        } elseif ($year && $month) {
-            $end = (new Time($start))->addMonth(1);
-        } else {
-            $end = (new Time($start))->addYear(1);
-        }
+        list($start, $end) = $this->getStartAndEndDate($date);
 
         $page = $this->request->getQuery('page', 1);
 
@@ -187,7 +184,7 @@ class PostsController extends AppController
                 ])
                 ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
-            $posts = $this->paginate($query)->toArray();
+            $posts = $this->paginate($query);
 
             //Writes on cache
             Cache::writeMany([
@@ -199,7 +196,7 @@ class PostsController extends AppController
             $this->request = $this->request->withParam('paging', $paging);
         }
 
-        $this->set(compact('posts', 'year', 'month', 'day'));
+        $this->set(compact('date', 'posts', 'start'));
     }
 
     /**
@@ -218,75 +215,77 @@ class PostsController extends AppController
             ->select(['title', 'slug', 'text', 'created'])
             ->limit(config('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache('rss', $this->Posts->cache);
+            ->cache('rss', $this->Posts->cache)
+            ->all();
 
         $this->set(compact('posts'));
     }
 
     /**
      * Searches posts
-     * @return void
+     * @return Cake\Network\Response|null
      * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
         $pattern = $this->request->getQuery('p');
 
+        //Checks if the pattern is at least 4 characters long
+        if ($pattern && strlen($pattern) < 4) {
+            $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+
+            return $this->redirect([]);
+        }
+
+        //Checks the last search
+        if ($pattern && !$this->checkLastSearch($pattern)) {
+            $this->Flash->alert(__d(
+                'me_cms',
+                'You have to wait {0} seconds to perform a new search',
+                config('security.search_interval')
+            ));
+
+            return $this->redirect([]);
+        }
+
         if ($pattern) {
-            //Checks if the pattern is at least 4 characters long
-            if (strlen($pattern) >= 4) {
-                if ($this->checkLastSearch($pattern)) {
-                    $this->paginate['limit'] = config('default.records_for_searches');
+            $this->paginate['limit'] = config('default.records_for_searches');
 
-                    $page = $this->request->getQuery('page', 1);
+            $page = $this->request->getQuery('page', 1);
 
-                    //Sets the initial cache name
-                    $cache = sprintf('search_%s', md5($pattern));
+            //Sets the cache name
+            $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
 
-                    //Updates the cache name with the query limit and the number of the page
-                    $cache = sprintf('%s_limit_%s', $cache, $this->paginate['limit']);
-                    $cache = sprintf('%s_page_%s', $cache, $page);
+            //Tries to get data from the cache
+            list($posts, $paging) = array_values(Cache::readMany(
+                [$cache, sprintf('%s_paging', $cache)],
+                $this->Posts->cache
+            ));
 
-                    //Tries to get data from the cache
-                    list($posts, $paging) = array_values(Cache::readMany(
-                        [$cache, sprintf('%s_paging', $cache)],
-                        $this->Posts->cache
-                    ));
+            //If the data are not available from the cache
+            if (empty($posts) || empty($paging)) {
+                $query = $this->Posts->find('active')
+                    ->select(['title', 'slug', 'text', 'created'])
+                    ->where(['OR' => [
+                        'title LIKE' => sprintf('%%%s%%', $pattern),
+                        'subtitle LIKE' => sprintf('%%%s%%', $pattern),
+                        'text LIKE' => sprintf('%%%s%%', $pattern),
+                    ]])
+                    ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
 
-                    //If the data are not available from the cache
-                    if (empty($posts) || empty($paging)) {
-                        $query = $this->Posts->find('active')
-                            ->select(['title', 'slug', 'text', 'created'])
-                            ->where(['OR' => [
-                                'title LIKE' => sprintf('%%%s%%', $pattern),
-                                'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-                                'text LIKE' => sprintf('%%%s%%', $pattern),
-                            ]])
-                            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
+                $posts = $this->paginate($query);
 
-                        $posts = $this->paginate($query)->toArray();
-
-                        //Writes on cache
-                        Cache::writeMany([
-                            $cache => $posts,
-                            sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-                        ], $this->Posts->cache);
-                    //Else, sets the paging parameter
-                    } else {
-                        $this->request = $this->request->withParam('paging', $paging);
-                    }
-
-                    $this->set(compact('posts'));
-                } else {
-                    $this->Flash->alert(__d(
-                        'me_cms',
-                        'You have to wait {0} seconds to perform a new search',
-                        config('security.search_interval')
-                    ));
-                }
+                //Writes on cache
+                Cache::writeMany([
+                    $cache => $posts,
+                    sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                ], $this->Posts->cache);
+            //Else, sets the paging parameter
             } else {
-                $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
+                $this->request = $this->request->withParam('paging', $paging);
             }
+
+            $this->set(compact('posts'));
         }
 
         $this->set(compact('pattern'));

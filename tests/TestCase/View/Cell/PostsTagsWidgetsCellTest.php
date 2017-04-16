@@ -216,7 +216,7 @@ class PostsTagsWidgetsCellTest extends TestCase
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'cat']],
-            'cat (3)',
+            'cat (4)',
             '/option',
             ['option' => ['value' => 'dog']],
             'dog (2)',
