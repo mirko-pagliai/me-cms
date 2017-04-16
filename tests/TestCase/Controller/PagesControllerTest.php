@@ -156,15 +156,11 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testPreview()
     {
-        $slug = $this->Pages->find('pending')->extract('slug')->first();
-        $url = ['_name' => 'pagesPreview', $slug];
-
-        $this->get($url);
-        $this->assertRedirect(['_name' => 'login', '?' => ['redirect' => Router::url($url)]]);
-
         $this->setUserGroup('user');
 
-        $this->get($url);
+        $slug = $this->Pages->find('pending')->extract('slug')->first();
+
+        $this->get(['_name' => 'pagesPreview', $slug]);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
