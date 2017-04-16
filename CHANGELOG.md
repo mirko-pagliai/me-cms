@@ -5,7 +5,7 @@
 * removed `PostsController::indexCompatibility()` method.
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
     related post;
-* added tests for `PostsCategoriesController` class.
+* added tests for `PostsCategoriesController` and `PostsController` classes.
 
 ### 2.17.3
 * added `PhotosTable::findPending()` method;
