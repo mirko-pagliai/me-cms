@@ -95,15 +95,16 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/index.ctp');
 
-        $viewVariable = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $viewVariable);
+        $categoriesFromView = $this->viewVariable('categories');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $categoriesFromView);
+        $this->assertNotEmpty($categoriesFromView);
 
-        foreach ($viewVariable as $category) {
+        foreach ($categoriesFromView as $category) {
             $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category);
         }
 
         $cache = Cache::read('categories_index', $this->PagesCategories->cache);
-        $this->assertEquals($viewVariable->toArray(), $cache->toArray());
+        $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
     }
 
     /**
@@ -124,11 +125,11 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/view.ctp');
 
-        $viewVariable = $this->viewVariable('category');
-        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $viewVariable);
+        $categoryFromView = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
 
         $cache = Cache::read(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache);
-        $this->assertEquals($viewVariable, $cache->first());
+        $this->assertEquals($categoryFromView, $cache->first());
 
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);

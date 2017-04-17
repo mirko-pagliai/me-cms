@@ -24,7 +24,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Core\Plugin;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -107,11 +106,11 @@ class PagesControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
 
-        $viewVariable = $this->viewVariable('page');
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $viewVariable);
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
 
         $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Pages->cache);
-        $this->assertEquals($viewVariable, $cache->first());
+        $this->assertEquals($pageFromView, $cache->first());
     }
 
     /**
@@ -125,17 +124,17 @@ class PagesControllerTest extends IntegrationTestCase
         $this->assertResponseEquals('This is a static page');
         $this->assertTemplate(APP . 'Template/StaticPages/page-from-app.ctp');
 
-        $viewVariable = $this->viewVariable('page');
-        $this->assertInstanceof('stdClass', $viewVariable);
-        $this->assertInstanceof('stdClass', $viewVariable->category);
-        $viewVariable->category = (array)$viewVariable->category;
-        $viewVariable = (array)$viewVariable;
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('stdClass', $pageFromView);
+        $this->assertInstanceof('stdClass', $pageFromView->category);
+        $pageFromView->category = (array)$pageFromView->category;
+        $pageFromView = (array)$pageFromView;
         $this->assertEquals([
             'category' => ['slug' => null, 'title' => null],
             'title' => 'Page From App',
             'subtitle' => null,
             'slug' => 'page-from-app',
-        ], $viewVariable);
+        ], $pageFromView);
     }
 
     /**
@@ -165,7 +164,7 @@ class PagesControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
 
-        $viewVariable = $this->viewVariable('page');
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $viewVariable);
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
     }
 }
