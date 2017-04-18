@@ -46,6 +46,15 @@ $routes->redirect(
     ['status' => 301]
 );
 
+//"IP not allowed" page
+if (!$routes->nameExists('ipNotAllowed')) {
+    $routes->connect(
+        '/unallowed',
+        ['controller' => 'Systems', 'action' => 'ipNotAllowed'],
+        ['_name' => 'ipNotAllowed']
+    );
+}
+
 //Offline page
 if (!$routes->nameExists('offline')) {
     $routes->connect(
@@ -61,14 +70,5 @@ if (!$routes->nameExists('sitemap')) {
         '/sitemap:ext',
         ['controller' => 'Systems', 'action' => 'sitemap'],
         ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
-    );
-}
-
-//Unallowed page
-if (!$routes->nameExists('ipNotAllowed')) {
-    $routes->connect(
-        '/unallowed',
-        ['controller' => 'Systems', 'action' => 'ipNotAllowed'],
-        ['_name' => 'ipNotAllowed']
     );
 }
