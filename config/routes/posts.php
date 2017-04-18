@@ -43,30 +43,26 @@ if (!$routes->nameExists('postsCategory')) {
     );
 }
 
-//Tags
-if (!$routes->nameExists('postsTags')) {
-    $routes->connect(
-        '/posts/tags',
-        ['controller' => 'PostsTags', 'action' => 'index'],
-        ['_name' => 'postsTags']
-    );
-}
-
-//Tag
-if (!$routes->nameExists('postsTag')) {
-    $routes->connect(
-        '/posts/tag/:tag',
-        ['controller' => 'PostsTags', 'action' => 'view'],
-        ['_name' => 'postsTag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
-    );
-}
-
 //Posts
 if (!$routes->nameExists('posts')) {
     $routes->connect(
         '/posts',
         ['controller' => 'Posts', 'action' => 'index'],
         ['_name' => 'posts']
+    );
+}
+
+//Posts by date
+if (!$routes->nameExists('postsByDate')) {
+    //Posts by date
+    $routes->connect(
+        '/posts/:date',
+        ['controller' => 'Posts', 'action' => 'indexByDate'],
+        [
+            '_name' => 'postsByDate',
+            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
+            'pass' => ['date'],
+        ]
     );
 }
 
@@ -88,19 +84,6 @@ if (!$routes->nameExists('postsSearch')) {
     );
 }
 
-if (!$routes->nameExists('postsByDate')) {
-    //Posts by date
-    $routes->connect(
-        '/posts/:date',
-        ['controller' => 'Posts', 'action' => 'indexByDate'],
-        [
-            '_name' => 'postsByDate',
-            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-            'pass' => ['date'],
-        ]
-    );
-}
-
 //Post
 if (!$routes->nameExists('post')) {
     $routes->connect(
@@ -119,9 +102,27 @@ if (!$routes->nameExists('postsPreview')) {
     );
 }
 
+//Tags
+if (!$routes->nameExists('postsTags')) {
+    $routes->connect(
+        '/posts/tags',
+        ['controller' => 'PostsTags', 'action' => 'index'],
+        ['_name' => 'postsTags']
+    );
+}
+
+//Tag
+if (!$routes->nameExists('postsTag')) {
+    $routes->connect(
+        '/posts/tag/:tag',
+        ['controller' => 'PostsTags', 'action' => 'view'],
+        ['_name' => 'postsTag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
+    );
+}
+
 /**
  * Fallbacks
  */
-$routes->connect('/tags', ['controller' => 'PostsTags', 'action' => 'index']);
 $routes->connect('/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss']);
 $routes->connect('/search', ['controller' => 'Posts', 'action' => 'search']);
+$routes->connect('/tags', ['controller' => 'PostsTags', 'action' => 'index']);
