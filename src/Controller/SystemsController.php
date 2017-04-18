@@ -42,9 +42,13 @@ class SystemsController extends AppController
     public function acceptCookies()
     {
         //Sets the cookie
-        $this->Cookie->setConfig('expires', '+999 days')->write('cookies-policy', true);
+        $this->Cookie->configKey('cookies-policy', [
+            'encryption' => false,
+            'expires' => '+999 days',
+        ]);
+        $this->Cookie->write('cookies-policy', true);
 
-        return $this->redirect($this->referer('/', true));
+        return $this->redirect($this->referer(['_name' => 'homepage'], true));
     }
 
     /**
@@ -93,7 +97,7 @@ class SystemsController extends AppController
     {
         //If the user's IP address is not banned
         if (!$this->request->isBanned()) {
-            return $this->redirect(['_name' => 'homepage']);
+            return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 
         $this->viewBuilder()->setLayout('login');
@@ -107,7 +111,7 @@ class SystemsController extends AppController
     {
         //If the site has not been taken offline
         if (!config('default.offline')) {
-            return $this->redirect(['_name' => 'homepage']);
+            return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 
         $this->viewBuilder()->setLayout('login');
@@ -136,6 +140,6 @@ class SystemsController extends AppController
             (new File(SITEMAP, true, 0777))->write($sitemap);
         }
 
-        return $this->response->withStringBody($sitemap)->withType(mime_content_type(SITEMAP));
+        return $this->response->withFile(SITEMAP);
     }
 }
