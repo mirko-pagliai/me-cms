@@ -100,6 +100,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $categoriesFromView = $this->viewVariable('categories');
         $this->assertInstanceof('Cake\ORM\ResultSet', $categoriesFromView);
+        $this->assertNotEmpty($categoriesFromView);
 
         foreach ($categoriesFromView as $category) {
             $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $category);
@@ -132,6 +133,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
+        $this->assertNotEmpty($postsFromView);
 
         foreach ($postsFromView as $post) {
             $this->assertInstanceof('MeCms\Model\Entity\Post', $post);

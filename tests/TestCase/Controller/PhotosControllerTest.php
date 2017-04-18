@@ -116,9 +116,8 @@ class PhotosControllerTest extends IntegrationTestCase
     public function testPreview()
     {
         $id = $this->Photos->find('pending')->extract('id')->first();
-        $url = ['_name' => 'photosPreview', $id];
 
-        $this->get($url);
+        $this->get(['_name' => 'photosPreview', $id]);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Photos/view.ctp');

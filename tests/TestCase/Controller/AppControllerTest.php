@@ -190,19 +190,28 @@ class AppControllerTest extends TestCase
      */
     public function testIsAuthorized()
     {
+        //No prefix
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
             'user' => true,
         ]);
 
-        //Admin request
+        //Admin prefix
         $this->Controller = new AppController;
         $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
-
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
+            'user' => false,
+        ]);
+
+        //Other prefix
+        $this->Controller = new AppController;
+        $this->Controller->request = $this->Controller->request->withParam('prefix', 'otherPrefix');
+        $this->assertGroupsAreAuthorized([
+            'admin' => false,
+            'manager' => false,
             'user' => false,
         ]);
     }

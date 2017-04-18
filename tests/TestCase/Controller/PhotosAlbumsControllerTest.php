@@ -97,11 +97,10 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
 
         $albumsFromView = $this->viewVariable('albums');
         $this->assertInstanceof('Cake\ORM\ResultSet', $albumsFromView);
+        $this->assertNotEmpty($albumsFromView);
 
         foreach ($albumsFromView as $album) {
             $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $album);
-
-            $this->assertGreaterThan(0, count($album->photos));
             $this->assertInstanceOf('MeCms\Model\Entity\Photo', collection($album->photos)->first());
         }
 
@@ -139,6 +138,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
 
         $photosFromView = $this->viewVariable('photos');
         $this->assertInstanceof('Cake\ORM\ResultSet', $photosFromView);
+        $this->assertNotEmpty($photosFromView);
 
         foreach ($photosFromView as $photo) {
             $this->assertInstanceof('MeCms\Model\Entity\Photo', $photo);
