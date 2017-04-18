@@ -277,6 +277,19 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
+
+        $this->get(array_merge($url, ['?' => ['p' => 'a']]));
+        $this->assertRedirect($url);
+        $this->assertSession('You have to search at least a word of 4 characters', 'Flash.flash.0.message');
+
+        $this->session(['last_search' => [
+            'id' => md5(time()),
+            'time' => time(),
+        ]]);
+
+        $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
+        $this->assertRedirect($url);
+        $this->assertSession('You have to wait 10 seconds to perform a new search', 'Flash.flash.0.message');
     }
 
     /**
