@@ -150,6 +150,12 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
+        //GET request again. Now the data is in cache
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
+
+        //GET request with query string
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
     }

@@ -131,6 +131,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $cache = Cache::read(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache);
         $this->assertEquals($categoryFromView, $cache->first());
 
+        //GET request with query string
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
     }

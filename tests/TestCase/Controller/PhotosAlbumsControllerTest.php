@@ -154,6 +154,12 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $this->assertEquals($photosFromView->toArray(), $photosFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Photos']);
 
+        //GET request again. Now the data is in cache
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Photos']);
+
+        //GET request with query string
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
     }
