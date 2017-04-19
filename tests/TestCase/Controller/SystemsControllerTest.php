@@ -22,13 +22,9 @@
  */
 namespace MeCms\Test\TestCase\Controller;
 
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Cake\TestSuite\IntegrationTestCase;
-use MeCms\Controller\PostsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
-use Reflection\ReflectionTrait;
 
 /**
  * SystemsControllerTest class
@@ -85,13 +81,21 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testContactUs()
     {
-        $this->get(['_name' => 'contactUs']);
+        $url = ['_name' => 'contactUs'];
+
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Systems/contact_us.ctp');
 
         $contactFromView = $this->viewVariable('contact');
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+
+        //Disabled
+        Configure::write('MeCms.default.contact_us', false);
+        $this->get($url);
+        $this->assertRedirect(['_name' => 'homepage']);
+        $this->assertSession('Disabled', 'Flash.flash.0.message');
     }
 
     /**
@@ -113,8 +117,8 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->get(['_name' => 'offline']);
         $this->assertRedirect(['_name' => 'homepage']);
 
+        //Offline
         Configure::write('MeCms.default.offline', true);
-
         $this->get(['_name' => 'offline']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
