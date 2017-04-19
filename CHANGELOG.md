@@ -2,7 +2,7 @@
 ## 2.17 branch
 ### 2.17.4
 * added `PostsController::getStartAndEndDate()` method;
-* removed `PostsController::indexCompatibility()` method.
+* removed `PostsController::indexCompatibility()` method;
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
     related post;
 * added tests for `PostsCategoriesController`, `PostsController` and
