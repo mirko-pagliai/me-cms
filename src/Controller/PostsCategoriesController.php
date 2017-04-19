@@ -82,7 +82,7 @@ class PostsCategoriesController extends AppController
                     },
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->where(['Categories.slug' => $slug])
+                ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug])
                 ->order([sprintf('%s.created', $this->PostsCategories->Posts->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
