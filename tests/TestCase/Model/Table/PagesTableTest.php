@@ -222,6 +222,7 @@ class PagesTableTest extends TestCase
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->className());
         $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Pages->Categories->getTarget());
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('Categories', $this->Pages->Categories->getAlias());
 
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));
         $this->assertTrue($this->Pages->hasBehavior('CounterCache'));

@@ -5,6 +5,7 @@
 * removed `PostsController::indexCompatibility()` method;
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
     related post;
+* fixed the `Categories` alias for `Pages` and `Posts` tables;
 * added tests for `PostsCategoriesController`, `PostsController` and
     `PostsTagsController` classes.
 
