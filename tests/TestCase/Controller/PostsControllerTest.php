@@ -248,7 +248,7 @@ class PostsControllerTest extends IntegrationTestCase
             $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
         }
 
-        $this->assertHeader('Content-Type', 'application/rss+xml; charset=UTF-8');
+        $this->assertHeaderContains('Content-Type', 'application/rss+xml');
     }
 
     /**
