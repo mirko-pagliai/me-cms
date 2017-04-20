@@ -25,12 +25,18 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Cake\TestSuite\IntegrationTestCase;
+use MeCms\Controller\SystemsController;
 
 /**
  * SystemsControllerTest class
  */
 class SystemsControllerTest extends IntegrationTestCase
 {
+    /**
+     * @var \MeCms\Controller\SystemsController
+     */
+    protected $Controller;
+
     /**
      * Does not automatically load fixtures
      * @var bool
@@ -63,6 +69,31 @@ class SystemsControllerTest extends IntegrationTestCase
         $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
 
         parent::controllerSpy($event, $controller);
+    }
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Controller = new SystemsController;
+        $this->Controller->viewBuilder()->setPlugin(ME_CMS);
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Controller);
     }
 
     /**
@@ -110,6 +141,16 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertRedirect(['_name' => 'homepage']);
+
+        //Now the current IP is banned
+        $this->Controller->request->env('REMOTE_ADDR', '99.99.99.99');
+        Configure::write('Banned', ['99.99.99.99']);
+
+        $this->Controller->ipNotAllowed();
+        $this->_response = $this->Controller->render('ipNotAllowed');
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertEquals('login', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
