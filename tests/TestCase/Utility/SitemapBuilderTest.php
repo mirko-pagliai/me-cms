@@ -38,6 +38,12 @@ class SitemapBuilderTest extends TestCase
     use ReflectionTrait;
 
     /**
+     * Does not automatically load fixtures
+     * @var bool
+     */
+    public $autoFixtures = false;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -46,9 +52,6 @@ class SitemapBuilderTest extends TestCase
         'plugin.me_cms.pages_categories',
         'plugin.me_cms.photos',
         'plugin.me_cms.photos_albums',
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
-        'plugin.me_cms.tags',
     ];
 
     /**
@@ -180,6 +183,8 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerate()
     {
+        $this->loadFixtures('Pages', 'PagesCategories', 'Photos', 'PhotosAlbums');
+
         $map = SitemapBuilder::generate();
 
         $this->assertStringStartsWith(

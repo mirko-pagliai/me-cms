@@ -36,6 +36,12 @@ use MeCms\Utility\Sitemap;
 class SitemapTest extends TestCase
 {
     /**
+     * Does not automatically load fixtures
+     * @var bool
+     */
+    public $autoFixtures = false;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -82,6 +88,8 @@ class SitemapTest extends TestCase
      */
     public function testPages()
     {
+        $this->loadFixtures('Pages', 'PagesCategories');
+
         $expected = [
             [
                 'loc' => 'http://localhost/pages/categories',
@@ -126,6 +134,8 @@ class SitemapTest extends TestCase
      */
     public function testPagesNoRecords()
     {
+        $this->loadFixtures('Pages', 'PagesCategories');
+
         //Deletes all records
         TableRegistry::get('MeCms.PagesCategories')->deleteAll(['id >=' => 1]);
 
@@ -138,6 +148,8 @@ class SitemapTest extends TestCase
      */
     public function testPhotos()
     {
+        $this->loadFixtures('Photos', 'PhotosAlbums');
+
         $expected = [
             [
                 'loc' => 'http://localhost/albums',
@@ -188,6 +200,8 @@ class SitemapTest extends TestCase
      */
     public function testPhotosNoRecords()
     {
+        $this->loadFixtures('Photos', 'PhotosAlbums');
+
         //Deletes all records
         TableRegistry::get('MeCms.PhotosAlbums')->deleteAll(['id >=' => 1]);
 
@@ -200,6 +214,8 @@ class SitemapTest extends TestCase
      */
     public function testPosts()
     {
+        $this->loadFixtures('Posts', 'PostsCategories');
+
         $expected = [
             [
                 'loc' => 'http://localhost/posts',
@@ -285,6 +301,8 @@ class SitemapTest extends TestCase
      */
     public function testPostsTags()
     {
+        $this->loadFixtures('Posts', 'PostsTags', 'Tags');
+
         $expected = [
             [
                 'loc' => 'http://localhost/posts/tags',
