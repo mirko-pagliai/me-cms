@@ -31,6 +31,10 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class SystemsControllerTest extends IntegrationTestCase
 {
+    /**
+     * Does not automatically load fixtures
+     * @var bool
+     */
     public $autoFixtures = false;
 
     /**
