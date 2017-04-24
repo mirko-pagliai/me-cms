@@ -46,8 +46,8 @@ class UsersController extends AppController
      */
     protected function _loginWithCookie()
     {
-        //Checks if the cookie exists
-        if (!$this->Cookie->read('login')) {
+        //Checks if the cookies exist
+        if (!$this->Cookie->read('login.username') || !$this->Cookie->read('login.password')) {
             return;
         }
 
@@ -55,21 +55,19 @@ class UsersController extends AppController
             ->withData('password', $this->Cookie->read('login.password'));
 
         //Tries to login
-        if ($this->request->getData('username') && $this->request->getData('password')) {
-            $user = $this->Auth->identify();
+        $user = $this->Auth->identify();
 
-            if ($user && $user['active'] && !$user['banned']) {
-                //Saves the login log
-                $this->LoginRecorder->config('user', $user['id'])->write();
+        if ($user && $user['active'] && !$user['banned']) {
+            //Saves the login log
+            $this->LoginRecorder->config('user', $user['id'])->write();
 
-                $this->Auth->setUser($user);
+            $this->Auth->setUser($user);
 
-                return $this->redirect($this->Auth->redirectUrl());
-            }
+            return $this->redirect($this->Auth->redirectUrl());
         }
 
         //Internal function to logout
-        $this->_logout();
+        return $this->_logout();
     }
 
     /**
@@ -78,14 +76,12 @@ class UsersController extends AppController
      */
     protected function _logout()
     {
-        //Deletes the login cookie
+        //Deletes some cookies
         $this->Cookie->delete('login');
+        $this->Cookie->delete('sidebar-lastmenu');
 
         //Deletes the KCFinder session
         $this->request->session()->delete('KCFINDER');
-
-        //Deletes JS cookie
-        setcookie('sidebar-lastmenu', '', 1, '/');
 
         return $this->redirect($this->Auth->logout());
     }
