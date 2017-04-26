@@ -53,7 +53,7 @@ $(function () {
     //On click on a sidebar menu
     $('#sidebar a[data-toggle=collapse]').click(function () {
         //Saves the menu ID into a cookie
-        Cookies.set('sidebar-lastmenu', $(this).next().attr('id'), { path: '/' });
+        Cookies.set('sidebar-lastmenu', $(this).next().attr('id'), { path: '' });
     });
 
     //Gets query string as objects, removing empty values and pagination values
