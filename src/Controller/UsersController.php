@@ -123,7 +123,6 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->loadComponent('Cookie');
         $this->loadComponent('Tokens.Token');
         $this->loadComponent('MeCms.LoginRecorder');
     }
