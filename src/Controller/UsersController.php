@@ -87,24 +87,29 @@ class UsersController extends AppController
     }
 
     /**
+     *
+     * @return type
+     * @see MeCms\Mailer\UserMailer
+     */
+    protected function getUserMailer()
+    {
+        return $this->getMailer('MeCms.User');
+    }
+
+    /**
      * Internal function to send the activation mail
      * @param object $user Users entity
      * @return bool
-     * @throws InternalErrorException
-     * @uses MeCms\Mailer\UserMailer::activateAccount()
-     * @uses MeCms\Network\Email\Email
+     * @see MeCms\Mailer\UserMailer::activateAccount()
+     * @uses getUserMailer()
      */
     protected function _sendActivationMail($user)
     {
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 
-        if (empty($token)) {
-            throw new InternalErrorException(__d('me_cms', 'Failure when creating the token'));
-        }
-
         //Sends email
-        return $this->getMailer('MeCms.User')
+        return $this->getUserMailer()
             ->set('url', Router::url(['_name' => 'activateAccount', $user->id, $token], true))
             ->send('activateAccount', [$user]);
     }
