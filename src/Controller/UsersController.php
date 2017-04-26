@@ -87,9 +87,8 @@ class UsersController extends AppController
     }
 
     /**
-     *
-     * @return type
-     * @see MeCms\Mailer\UserMailer
+     * Gets an instance of `UserMailer` class
+     * @return \MeCms\Mailer\UserMailer
      */
     protected function getUserMailer()
     {
