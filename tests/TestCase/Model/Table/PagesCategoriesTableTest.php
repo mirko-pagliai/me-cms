@@ -189,13 +189,13 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testHasManyPages()
     {
-        $category = $this->PagesCategories->findById(4)->contain(['Pages'])->first();
+        $category = $this->PagesCategories->find()->contain(['Pages'])->first();
 
         $this->assertNotEmpty($category->pages);
 
         foreach ($category->pages as $page) {
             $this->assertInstanceOf('MeCms\Model\Entity\Page', $page);
-            $this->assertEquals(4, $page->category_id);
+            $this->assertEquals($category->id, $page->category_id);
         }
     }
 
@@ -207,7 +207,7 @@ class PagesCategoriesTableTest extends TestCase
     {
         $query = $this->PagesCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM pages_categories PagesCategories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND PagesCategories.id = (Pages.category_id))', $query->sql());
+        $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
