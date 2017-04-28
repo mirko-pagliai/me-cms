@@ -74,7 +74,7 @@ class PostsCategoryValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->PostsCategories->newEntity($this->example)->errors());
+        $this->assertEmpty($this->PostsCategories->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -83,7 +83,7 @@ class PostsCategoryValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->PostsCategories->newEntity($copy)->errors());
+            ], $this->PostsCategories->newEntity($copy)->getErrors());
         }
     }
 }

@@ -100,7 +100,7 @@ class UsersGroupsTableTest extends TestCase
         $this->assertEquals([
             'name' => ['_isUnique' => 'This value is already used'],
             'label' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
     }
 
     /**

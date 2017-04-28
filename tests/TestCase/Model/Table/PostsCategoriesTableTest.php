@@ -100,7 +100,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
             'title' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
 
         $entity = $this->PostsCategories->newEntity([
             'parent_id' => 999,
@@ -108,7 +108,7 @@ class PostsCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PostsCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
     }
 
     /**

@@ -225,7 +225,7 @@ class PostsTableTest extends TestCase
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
             'title' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
 
         $entity = $this->Posts->newEntity([
             'category_id' => 999,
@@ -238,7 +238,7 @@ class PostsTableTest extends TestCase
         $this->assertEquals([
             'category_id' => ['_existsIn' => 'You have to select a valid option'],
             'user_id' => ['_existsIn' => 'You have to select a valid option'],
-        ], $entity->errors());
+        ], $entity->getErrors());
     }
 
     /**

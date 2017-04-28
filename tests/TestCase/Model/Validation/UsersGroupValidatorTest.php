@@ -74,7 +74,7 @@ class UsersGroupValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
+        $this->assertEmpty($this->UsersGroups->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -83,7 +83,7 @@ class UsersGroupValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->UsersGroups->newEntity($copy)->errors());
+            ], $this->UsersGroups->newEntity($copy)->getErrors());
         }
     }
 
@@ -97,19 +97,19 @@ class UsersGroupValidatorTest extends TestCase
             $this->example['name'] = $value;
             $this->assertEquals([
                 'name' => ['valid' => 'Allowed chars: lowercase letters'],
-            ], $this->UsersGroups->newEntity($this->example)->errors());
+            ], $this->UsersGroups->newEntity($this->example)->getErrors());
         }
 
         foreach (['ab', str_repeat('a', 101)] as $value) {
             $this->example['name'] = $value;
             $this->assertEquals([
                 'name' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
-            ], $this->UsersGroups->newEntity($this->example)->errors());
+            ], $this->UsersGroups->newEntity($this->example)->getErrors());
         }
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['name'] = $value;
-            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
+            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->getErrors());
         }
     }
 
@@ -123,12 +123,12 @@ class UsersGroupValidatorTest extends TestCase
             $this->example['label'] = $value;
             $this->assertEquals([
                 'label' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
-            ], $this->UsersGroups->newEntity($this->example)->errors());
+            ], $this->UsersGroups->newEntity($this->example)->getErrors());
         }
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['label'] = $value;
-            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->errors());
+            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->getErrors());
         }
     }
 }

@@ -200,7 +200,7 @@ class UsersController extends AppController
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
-            } elseif (!$entity->errors()) {
+            } elseif (!$entity->getErrors()) {
                 $user = $this->Users->find('active')
                     ->select(['id', 'email', 'first_name', 'last_name'])
                     ->where(['email' => $this->request->getData('email')])
@@ -335,7 +335,7 @@ class UsersController extends AppController
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
-            } elseif (!$entity->errors()) {
+            } elseif (!$entity->getErrors()) {
                 $user = $this->Users->find('pending')
                     ->select(['id', 'email', 'first_name', 'last_name'])
                     ->where(['email' => $this->request->getData('email')])

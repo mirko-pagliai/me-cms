@@ -74,7 +74,7 @@ class BannerValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
+        $this->assertEmpty($this->Banners->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -83,7 +83,7 @@ class BannerValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->Banners->newEntity($copy)->errors());
+            ], $this->Banners->newEntity($copy)->getErrors());
         }
     }
 
@@ -96,7 +96,7 @@ class BannerValidatorTest extends TestCase
         $this->example['position_id'] = 'string';
         $this->assertEquals([
             'position_id' => ['naturalNumber' => 'You have to select a valid option'],
-        ], $this->Banners->newEntity($this->example)->errors());
+        ], $this->Banners->newEntity($this->example)->getErrors());
     }
 
     /**
@@ -109,7 +109,7 @@ class BannerValidatorTest extends TestCase
             $this->example['filename'] = $value;
             $this->assertEquals([
                 'filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png'],
-            ], $this->Banners->newEntity($this->example)->errors());
+            ], $this->Banners->newEntity($this->example)->getErrors());
         }
     }
 
@@ -122,18 +122,18 @@ class BannerValidatorTest extends TestCase
         $this->example['target'] = 'string';
         $this->assertEquals([
             'target' => ['url' => 'Must be a valid url'],
-        ], $this->Banners->newEntity($this->example)->errors());
+        ], $this->Banners->newEntity($this->example)->getErrors());
 
         $this->example['target'] = 'http://example.com/' . str_repeat('a', 237);
         $this->assertEquals([
             'target' => ['maxLength' => 'Must be at most 255 chars'],
-        ], $this->Banners->newEntity($this->example)->errors());
+        ], $this->Banners->newEntity($this->example)->getErrors());
 
         $this->example['target'] = 'http://example.com/' . str_repeat('a', 236);
-        $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
+        $this->assertEmpty($this->Banners->newEntity($this->example)->getErrors());
 
         $this->example['target'] = 'http://example.com';
-        $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
+        $this->assertEmpty($this->Banners->newEntity($this->example)->getErrors());
     }
 
     /**
@@ -145,11 +145,11 @@ class BannerValidatorTest extends TestCase
         $this->example['thumbnail'] = 'string';
         $this->assertEquals([
             'thumbnail' => ['boolean' => 'You have to select a valid option'],
-        ], $this->Banners->newEntity($this->example)->errors());
+        ], $this->Banners->newEntity($this->example)->getErrors());
 
         foreach ([true, false] as $value) {
             $this->example['thumbnail'] = $value;
-            $this->assertEmpty($this->Banners->newEntity($this->example)->errors());
+            $this->assertEmpty($this->Banners->newEntity($this->example)->getErrors());
         }
     }
 }

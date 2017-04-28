@@ -194,7 +194,7 @@ class PagesTableTest extends TestCase
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
             'title' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
 
         $entity = $this->Pages->newEntity([
             'category_id' => 999,
@@ -203,7 +203,7 @@ class PagesTableTest extends TestCase
             'text' => 'My text',
         ]);
         $this->assertFalse($this->Pages->save($entity));
-        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
     }
 
     /**

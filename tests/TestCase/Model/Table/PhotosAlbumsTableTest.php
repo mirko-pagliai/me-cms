@@ -140,7 +140,7 @@ class PhotosAlbumsTableTest extends TestCase
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
             'title' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
     }
 
     /**
