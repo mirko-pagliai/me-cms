@@ -3,6 +3,7 @@
 ### 2.17.4
 * added `PostsController::getStartAndEndDate()` method;
 * removed `PostsController::indexCompatibility()` method;
+* fixed bug on page preview;
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
     related post;
 * fixed the `Categories` alias for `Pages` and `Posts` tables;
