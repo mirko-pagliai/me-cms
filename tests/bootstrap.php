@@ -24,6 +24,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
+use Cake\Mailer\Email;
 use Cake\Routing\DispatcherFactory;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -170,5 +171,8 @@ require_once ROOT . 'config' . DS . 'bootstrap_base.php';
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
+
+Email::setConfigTransport('debug', ['className' => 'Debug']);
+Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
 ini_set('intl.default_locale', 'en_US');
