@@ -320,15 +320,15 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testActivateAccount()
     {
-        $url = ['_name' => 'activateAccount'];
-
         //Gets an active user and creates a token
         $user = $this->Users->find('active')->first();
         $tokenOptions = ['type' => 'signup', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
+        $url = array_merge(['_name' => 'activateAccount'], ['id' => $user->id], compact('token'));
+
         //GET request. This request is invalid, because the user is already active
-        $this->get(array_merge($url, ['id' => $user->id], compact('token')));
+        $this->get($url);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertSession('The account has not been activated', 'Flash.flash.0.message');
 
@@ -340,8 +340,10 @@ class UsersControllerTest extends IntegrationTestCase
         $tokenOptions = ['type' => 'signup', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
+        $url = array_merge(['_name' => 'activateAccount'], ['id' => $user->id], compact('token'));
+
         //GET request. This request is valid, because the user is pending
-        $this->get(array_merge($url, ['id' => $user->id], compact('token')));
+        $this->get($url);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertSession('The account has been activated', 'Flash.flash.0.message');
 
