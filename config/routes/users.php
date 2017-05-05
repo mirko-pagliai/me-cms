@@ -20,16 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-//Resend activation
-if (!$routes->nameExists('resendActivation')) {
-    $routes->connect(
-        '/activation/resend',
-        ['controller' => 'Users', 'action' => 'resendActivation'],
-        ['_name' => 'resendActivation']
-    );
-}
-
 //Activate account
 if (!$routes->nameExists('activateAccount')) {
     $routes->connect(
@@ -44,12 +34,12 @@ if (!$routes->nameExists('activateAccount')) {
     );
 }
 
-//Change password
-if (!$routes->nameExists('changePassword')) {
+//Forgot password
+if (!$routes->nameExists('forgotPassword')) {
     $routes->connect(
-        '/change/password',
-        ['controller' => 'Users', 'action' => 'changePassword'],
-        ['_name' => 'changePassword']
+        '/password/forgot',
+        ['controller' => 'Users', 'action' => 'forgotPassword'],
+        ['_name' => 'forgotPassword']
     );
 }
 
@@ -71,12 +61,12 @@ if (!$routes->nameExists('logout')) {
     );
 }
 
-//Forgot password
-if (!$routes->nameExists('forgotPassword')) {
+//Resend activation
+if (!$routes->nameExists('resendActivation')) {
     $routes->connect(
-        '/password/forgot',
-        ['controller' => 'Users', 'action' => 'forgotPassword'],
-        ['_name' => 'forgotPassword']
+        '/activation/resend',
+        ['controller' => 'Users', 'action' => 'resendActivation'],
+        ['_name' => 'resendActivation']
     );
 }
 
