@@ -199,10 +199,10 @@ class AppTableTest extends TestCase
     {
         $query = $this->Posts->find('pending');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.created > :c0 OR Posts.active = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
 
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
 
         $pendingId = collection($query->toArray())->extract('id')->toList();
         $this->assertEquals([6, 8], $pendingId);
