@@ -8,8 +8,8 @@
     related post;
 * fixed the `Categories` alias for `Pages` and `Posts` tables;
 * fixed some little bugs and improved code for `UsersController` class;
-* added tests for `PostsCategoriesController`, `PostsController` and
-    `PostsTagsController` classes.
+* added tests for `PostsCategoriesController`, `PostsController`,
+    `PostsTagsController` and `UsersControllerTest` classes.
 
 ### 2.17.3
 * added `PhotosTable::findPending()` method;
