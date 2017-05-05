@@ -320,15 +320,15 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testActivateAccount()
     {
+        $url = ['_name' => 'activateAccount'];
+
         //Gets an active user and creates a token
         $user = $this->Users->find('active')->first();
         $tokenOptions = ['type' => 'signup', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
-        $url = array_merge(['_name' => 'activateAccount'], ['id' => $user->id], compact('token'));
-
         //GET request. This request is invalid, because the user is already active
-        $this->get($url);
+        $this->get(array_merge($url, ['id' => $user->id], compact('token')));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertSession('The account has not been activated', 'Flash.flash.0.message');
 
@@ -340,10 +340,8 @@ class UsersControllerTest extends IntegrationTestCase
         $tokenOptions = ['type' => 'signup', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
-        $url = array_merge(['_name' => 'activateAccount'], ['id' => $user->id], compact('token'));
-
         //GET request. This request is valid, because the user is pending
-        $this->get($url);
+        $this->get(array_merge($url, ['id' => $user->id], compact('token')));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertSession('The account has been activated', 'Flash.flash.0.message');
 
@@ -672,6 +670,10 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Account created, but it needs to be activated by an admin', 'Flash.flash.0.message');
 
+        $user = $this->Users->findByUsername($data['username'])->first();
+        $this->assertEquals(config('users.default_group'), $user->group_id);
+        $this->assertFalse($user->active);
+
         //Deletes the user
         $this->Users->deleteAll(['username' => $data['username']]);
 
@@ -682,6 +684,10 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
 
+        $user = $this->Users->findByUsername($data['username'])->first();
+        $this->assertEquals(config('users.default_group'), $user->group_id);
+        $this->assertFalse($user->active);
+
         //Deletes the user
         $this->Users->deleteAll(['username' => $data['username']]);
 
@@ -691,6 +697,10 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Account created. Now you can login', 'Flash.flash.0.message');
+
+        $user = $this->Users->findByUsername($data['username'])->first();
+        $this->assertEquals(config('users.default_group'), $user->group_id);
+        $this->assertTrue($user->active);
 
         //With reCAPTCHA
         Configure::write('MeCms.security.recaptcha', true);

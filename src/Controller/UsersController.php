@@ -401,14 +401,13 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $this->request = $this->request
-            ->withData('group_id', config('users.default_group'))
-            ->withData('active', (bool)!config('users.activation'));
-
         $user = $this->Users->newEntity();
 
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            $user->group_id = config('users.default_group');
+            $user->active = (bool)!config('users.activation');
 
             //Checks for reCAPTCHA, if requested
             if (config('security.recaptcha') && !$this->Recaptcha->check()) {
