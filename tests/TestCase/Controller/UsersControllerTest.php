@@ -26,7 +26,7 @@ use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\I18n\Time;;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -125,7 +125,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         //Stubs the `getUserMailer()` method
         if (in_array('getUserMailer', $methodsToSet)) {
-            $this->Controller->method('getUserMailer')->will($this->returnCallback(function() {
+            $this->Controller->method('getUserMailer')->will($this->returnCallback(function () {
                 $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
 
                 $userMailerMock->method('set')->will($this->returnSelf());
@@ -452,7 +452,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertEmpty($this->_response->cookie('login')['value']);
 
         $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Failed login with username `' . $wrongUsername .'` and password `' . $wrongPassword . '`', $log);
+        $this->assertContains('Failed login with username `' . $wrongUsername . '` and password `' . $wrongPassword . '`', $log);
         //@codingStandardsIgnoreLine
         @unlink(LOGS . 'users.log');
 
