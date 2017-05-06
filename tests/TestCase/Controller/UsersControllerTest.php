@@ -600,12 +600,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
 
-        //Creates a new token
-        $token = $this->Controller->Token->create($user->email, $tokenOptions);
-
-        $url = array_merge(['_name' => 'resetPassword', 'id' => $user->id], compact('token'));
-
-        //POST request. For now, data are invalid
+        //POST request. Data are invalid
         $this->post($url, ['password' => '', 'password_repeat' => '']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
@@ -615,11 +610,6 @@ class UsersControllerTest extends IntegrationTestCase
         $newPassword = $this->Users->findById($user->id)->extract('password')->first();
         $this->assertTrue($this->Controller->Token->check($token, $tokenOptions));
         $this->assertEquals($newPassword, $user->password);
-
-        //Creates a new token
-        $token = $this->Controller->Token->create($user->email, $tokenOptions);
-
-        $url = array_merge(['_name' => 'resetPassword', 'id' => $user->id], compact('token'));
 
         //POST request again. Now data are valid
         $password = 'newPassword1!';
