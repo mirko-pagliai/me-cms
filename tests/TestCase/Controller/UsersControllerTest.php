@@ -587,7 +587,7 @@ class UsersControllerTest extends IntegrationTestCase
         $tokenOptions = ['type' => 'forgot_password', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
-        $url = array_merge(['_name' => 'resetPassword'], ['id' => $user->id], compact('token'));
+        $url = array_merge(['_name' => 'resetPassword', 'id' => $user->id], compact('token'));
 
         $this->get($url);
         $this->assertResponseOk();
@@ -611,7 +611,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Creates a new token
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
-        $url = array_merge(['_name' => 'resetPassword'], ['id' => $user->id], compact('token'));
+        $url = array_merge(['_name' => 'resetPassword', 'id' => $user->id], compact('token'));
 
         //POST request again. Now data are valid
         $password = 'newPassword1!';
