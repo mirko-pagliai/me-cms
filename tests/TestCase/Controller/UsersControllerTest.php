@@ -92,23 +92,6 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUsersControllerMock();
-
-        $this->Users = TableRegistry::get('MeCms.Users');
-
-        Cache::clear(false, $this->Users->cache);
-    }
-
-    /**
      * Internal method to set a mock of `UsersController`
      * @param array $methodsToSet Methods to set
      */
@@ -165,6 +148,23 @@ class UsersControllerTest extends IntegrationTestCase
         $this->Controller->Token->expects($this->any())
             ->method('create')
             ->will($this->returnValue('aTokenString'));
+    }
+
+    /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->setUsersControllerMock();
+
+        $this->Users = TableRegistry::get('MeCms.Users');
+
+        Cache::clear(false, $this->Users->cache);
     }
 
     /**
