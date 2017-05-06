@@ -175,6 +175,9 @@ class UsersControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
+        //Deletes all tokens
+        TableRegistry::get('Tokens.Tokens')->deleteAll([]);
+
         unset($this->Controller, $this->Users);
     }
 
