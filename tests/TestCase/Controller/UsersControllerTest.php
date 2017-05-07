@@ -102,12 +102,8 @@ class UsersControllerTest extends IntegrationTestCase
             ->setMethods($methodsToSet)
             ->getMock();
 
-        if (!is_array($methodsToSet)) {
-            $methodsToSet = [];
-        }
-
         //Stubs the `getUserMailer()` method
-        if (in_array('getUserMailer', $methodsToSet)) {
+        if (in_array('getUserMailer', (array)$methodsToSet)) {
             $this->Controller->method('getUserMailer')->will($this->returnCallback(function () {
                 $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
 
@@ -119,7 +115,7 @@ class UsersControllerTest extends IntegrationTestCase
         }
 
         //Stubs the `redirect()` method
-        if (in_array('redirect', $methodsToSet)) {
+        if (in_array('redirect', (array)$methodsToSet)) {
             $this->Controller->method('redirect')->will($this->returnArgument(0));
         }
 
@@ -438,8 +434,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
 
-        $this->assertEmpty($this->_requestSession->read('Auth'));
-        $this->assertEmpty($this->_response->cookie('login')['value']);
+        $this->assertCookieNotSet('login');
+        $this->assertSession(null, 'Auth');
 
         $log = trim(file_get_contents(LOGS . 'users.log'));
         $this->assertContains('Failed login with username `' . $wrongUsername . '` and password `' . $wrongPassword . '`', $log);
@@ -480,9 +476,9 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
         $this->assertRedirect($this->Controller->Auth->logout());
 
+        $this->assertCookieNotSet('login');
+        $this->assertSession(null, 'Auth');
         $this->assertSession('Your account has been banned by an admin', 'Flash.flash.0.message');
-        $this->assertEmpty($this->_requestSession->read('Auth'));
-        $this->assertEmpty($this->_response->cookie('login')['value']);
 
         //Sets the user as pending
         $user->active = $user->banned = false;
@@ -496,9 +492,9 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
         $this->assertRedirect($this->Controller->Auth->logout());
 
+        $this->assertCookieNotSet('login');
+        $this->assertSession(null, 'Auth');
         $this->assertSession('Your account has not been activated yet', 'Flash.flash.0.message');
-        $this->assertEmpty($this->_requestSession->read('Auth'));
-        $this->assertEmpty($this->_response->cookie('login')['value']);
     }
 
     /**
