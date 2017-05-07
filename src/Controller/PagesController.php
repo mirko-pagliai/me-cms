@@ -68,10 +68,7 @@ class PagesController extends AppController
 
         if ($static) {
             $page = (object)am([
-                'category' => (object)[
-                    'slug' => null,
-                    'title' => null,
-                ],
+                'category' => (object)['slug' => null, 'title' => null],
                 'title' => StaticPage::title($slug),
                 'subtitle' => null,
             ], compact('slug'));
@@ -83,7 +80,7 @@ class PagesController extends AppController
 
         $page = $this->Pages->find('active')
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain(['Categories' => ['fields' => ['title', 'slug']]])
+            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
             ->firstOrFail();
@@ -101,7 +98,7 @@ class PagesController extends AppController
     {
         $page = $this->Pages->find('pending')
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain(['Categories' => ['fields' => ['title', 'slug']]])
+            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->firstOrFail();
 

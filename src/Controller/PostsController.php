@@ -208,7 +208,7 @@ class PostsController extends AppController
     {
         //This method works only for RSS
         if (!$this->RequestHandler->isRss()) {
-            throw new ForbiddenException();
+            throw new ForbiddenException;
         }
 
         $posts = $this->Posts->find('active')

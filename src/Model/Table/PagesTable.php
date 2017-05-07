@@ -182,7 +182,8 @@ class PagesTable extends AppTable
         $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get('MeCms.PagesCategories'));
+            ->setTarget($this->tableLocator()->get('MeCms.PagesCategories'))
+            ->setAlias('Categories');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);

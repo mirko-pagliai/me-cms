@@ -42,6 +42,7 @@ class PluginTest extends TestCase
             'Assets',
             'MysqlBackup',
             'Thumber',
+            'Tokens',
         ], Plugin::all());
 
         Plugin::load('TestPlugin');
@@ -53,6 +54,7 @@ class PluginTest extends TestCase
             'MysqlBackup',
             'TestPlugin',
             'Thumber',
+            'Tokens',
         ], Plugin::all());
 
         $this->assertEquals([
@@ -62,6 +64,7 @@ class PluginTest extends TestCase
             'MysqlBackup',
             'TestPlugin',
             'Thumber',
+            'Tokens',
         ], Plugin::all(['order' => false]));
     }
 }

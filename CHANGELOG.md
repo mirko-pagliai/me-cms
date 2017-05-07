@@ -2,11 +2,20 @@
 ## 2.17 branch
 ### 2.17.4
 * added `PostsController::getStartAndEndDate()` method;
-* removed `PostsController::indexCompatibility()` method.
+* removed `PostsController::indexCompatibility()` method;
+* `UserController::activateAccount()` becomes `activation()`, 
+    `UserController::forgotPassword()` becomes `passwordForgot()`, 
+    `UserController::resetPassword()` becomes `passwordReset()`, 
+    `UserController::resendActivation()` becomes `activationResend()`, 
+    `UserMailer::activateAccount()` becomes `activation()`, 
+    `UserMailer::forgotPassword()` becomes `passwordForgot()`;
+* fixed bug on page preview;
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
     related post;
-* added tests for `PostsCategoriesController`, `PostsController` and
-    `PostsTagsController` classes.
+* fixed the `Categories` alias for `Pages` and `Posts` tables;
+* fixed some little bugs and improved code for `UsersController` class;
+* added tests for `PostsCategoriesController`, `PostsController`,
+    `PostsTagsController` and `UsersControllerTest` classes.
 
 ### 2.17.3
 * added `PhotosTable::findPending()` method;

@@ -36,11 +36,11 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\Admin\UsersController::resendActivation()
+     * @see MeCms\Controller\Admin\UsersController::activationResend()
      * @see MeCms\Controller\Admin\UsersController::signup()
      * @throws InternalErrorException
      */
-    public function activateAccount($user)
+    public function activation($user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
@@ -51,7 +51,7 @@ class UserMailer extends Mailer
 
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Activate your account'))
-            ->setTemplate('MeCms.Users/activate_account')
+            ->setTemplate('MeCms.Users/activation')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 
@@ -85,10 +85,10 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\UsersController::forgotPassword()
+     * @see MeCms\Controller\UsersController::passwordForgot()
      * @throws InternalErrorException
      */
-    public function forgotPassword($user)
+    public function passwordForgot($user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
@@ -99,7 +99,7 @@ class UserMailer extends Mailer
 
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Reset your password'))
-            ->setTemplate('MeCms.Users/forgot_password')
+            ->setTemplate('MeCms.Users/password_forgot')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 }

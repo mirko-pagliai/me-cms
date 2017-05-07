@@ -100,7 +100,9 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(['_name' => 'posts']);
+        $url = ['_name' => 'posts'];
+
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Posts/index.ctp');
@@ -122,6 +124,11 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
+
+        //GET request again. Now the data is in cache
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
     }
 
     /**
@@ -198,6 +205,11 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
+        //GET request again. Now the data is in cache
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
+
         //Tries with various possible dates
         foreach ([
             'today',
@@ -212,6 +224,7 @@ class PostsControllerTest extends IntegrationTestCase
             $this->assertTemplate(ROOT . 'src/Template/Posts/index_by_date.ctp');
         }
 
+        //GET request with query string
         $this->get(array_merge($url, ['?' => ['q' => $date]]));
         $this->assertRedirect($url);
     }
@@ -235,7 +248,7 @@ class PostsControllerTest extends IntegrationTestCase
             $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
         }
 
-        $this->assertHeader('Content-Type', 'application/rss+xml; charset=UTF-8');
+        $this->assertHeaderContains('Content-Type', 'application/rss+xml');
     }
 
     /**
@@ -277,6 +290,11 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
+
+        //GET request again. Now the data is in cache
+        $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         $this->get(array_merge($url, ['?' => ['p' => 'a']]));
         $this->assertRedirect($url);

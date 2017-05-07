@@ -110,7 +110,7 @@ class UserShell extends Shell
 
             //With verbose, shows errors for each field
             if ($this->param('verbose')) {
-                foreach ($user->errors() as $field => $errors) {
+                foreach ($user->getErrors() as $field => $errors) {
                     foreach ($errors as $error) {
                         $this->err(__d('me_cms', 'Field `{0}`: {1}', $field, lcfirst($error)));
                     }

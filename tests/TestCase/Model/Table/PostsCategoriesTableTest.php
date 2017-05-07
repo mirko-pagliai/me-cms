@@ -100,7 +100,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
             'title' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
 
         $entity = $this->PostsCategories->newEntity([
             'parent_id' => 999,
@@ -108,7 +108,7 @@ class PostsCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PostsCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
     }
 
     /**
@@ -188,13 +188,13 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testHasManyPosts()
     {
-        $category = $this->PostsCategories->findById(4)->contain(['Posts'])->first();
+        $category = $this->PostsCategories->find()->contain(['Posts'])->first();
 
         $this->assertNotEmpty($category->posts);
 
         foreach ($category->posts as $post) {
             $this->assertInstanceOf('MeCms\Model\Entity\Post', $post);
-            $this->assertEquals(4, $post->category_id);
+            $this->assertEquals($category->id, $post->category_id);
         }
     }
 
@@ -206,7 +206,7 @@ class PostsCategoriesTableTest extends TestCase
     {
         $query = $this->PostsCategories->find('active');
         $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = (Posts.category_id))', $query->sql());
+        $this->assertStringEndsWith('FROM posts_categories Categories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Categories.id = (Posts.category_id))', $query->sql());
 
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);

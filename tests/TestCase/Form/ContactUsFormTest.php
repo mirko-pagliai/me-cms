@@ -22,7 +22,6 @@
  */
 namespace MeCms\Test\TestCase\Form;
 
-use Cake\Mailer\Email;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\TestSuite\TestCase;
 use MeCms\Form\ContactUsForm;
@@ -56,8 +55,6 @@ class ContactUsFormTest extends TestCase
     {
         parent::setUp();
 
-        Email::setConfigTransport('debug', ['className' => 'Debug']);
-
         $this->ContactUsForm = new ContactUsForm;
 
         $this->example = [
@@ -75,8 +72,6 @@ class ContactUsFormTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-
-        Email::dropTransport('debug');
 
         unset($this->ContactUsForm);
     }

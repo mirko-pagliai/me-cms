@@ -36,13 +36,13 @@ if (config('users.signup') &&
 
 //If signup is enabled and if accounts will be enabled by the user via email
 if (config('users.signup') && config('users.activation') === 1 &&
-    !$this->request->isUrl($url = ['_name' => 'resendActivation'])
+    !$this->request->isUrl($url = ['_name' => 'activationResend'])
 ) {
     $menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), $url);
 }
 
 //If reset password is enabled
-if (config('users.reset_password') && !$this->request->isUrl($url = ['_name' => 'forgotPassword'])) {
+if (config('users.reset_password') && !$this->request->isUrl($url = ['_name' => 'passwordForgot'])) {
     $menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
 }
 

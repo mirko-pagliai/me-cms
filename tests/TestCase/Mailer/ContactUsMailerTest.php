@@ -22,7 +22,6 @@
  */
 namespace MeCms\Test\TestCase\Mailer;
 
-use Cake\Mailer\Email;
 use Cake\TestSuite\TestCase;
 use MeCms\Mailer\ContactUsMailer;
 use Reflection\ReflectionTrait;
@@ -54,8 +53,6 @@ class ContactUsMailerTest extends TestCase
     {
         parent::setUp();
 
-        Email::setConfigTransport('debug', ['className' => 'Debug']);
-
         $this->ContactUsMailer = new ContactUsMailer;
 
         $this->example = [
@@ -73,8 +70,6 @@ class ContactUsMailerTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-
-        Email::dropTransport('debug');
 
         unset($this->ContactUsMailer);
     }

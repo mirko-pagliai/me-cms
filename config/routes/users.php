@@ -20,23 +20,13 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
-//Resend activation
-if (!$routes->nameExists('resendActivation')) {
-    $routes->connect(
-        '/activation/resend',
-        ['controller' => 'Users', 'action' => 'resendActivation'],
-        ['_name' => 'resendActivation']
-    );
-}
-
-//Activate account
-if (!$routes->nameExists('activateAccount')) {
+//Activation
+if (!$routes->nameExists('activation')) {
     $routes->connect(
         '/activation/:id/:token',
-        ['controller' => 'Users', 'action' => 'activateAccount'],
+        ['controller' => 'Users', 'action' => 'activation'],
         [
-            '_name' => 'activateAccount',
+            '_name' => 'activation',
             'id' => '\d+',
             'token' => '[\d\w]+',
             'pass' => ['id', 'token'],
@@ -44,12 +34,12 @@ if (!$routes->nameExists('activateAccount')) {
     );
 }
 
-//Change password
-if (!$routes->nameExists('changePassword')) {
+//Activation resend
+if (!$routes->nameExists('activationResend')) {
     $routes->connect(
-        '/change/password',
-        ['controller' => 'Users', 'action' => 'changePassword'],
-        ['_name' => 'changePassword']
+        '/activation/resend',
+        ['controller' => 'Users', 'action' => 'activationResend'],
+        ['_name' => 'activationResend']
     );
 }
 
@@ -71,22 +61,22 @@ if (!$routes->nameExists('logout')) {
     );
 }
 
-//Forgot password
-if (!$routes->nameExists('forgotPassword')) {
+//Password forgot
+if (!$routes->nameExists('passwordForgot')) {
     $routes->connect(
         '/password/forgot',
-        ['controller' => 'Users', 'action' => 'forgotPassword'],
-        ['_name' => 'forgotPassword']
+        ['controller' => 'Users', 'action' => 'passwordForgot'],
+        ['_name' => 'passwordForgot']
     );
 }
 
-//Reset password
-if (!$routes->nameExists('resetPassword')) {
+//Password reset
+if (!$routes->nameExists('passwordReset')) {
     $routes->connect(
         '/password/reset/:id/:token',
-        ['controller' => 'Users', 'action' => 'resetPassword'],
+        ['controller' => 'Users', 'action' => 'passwordReset'],
         [
-            '_name' => 'resetPassword',
+            '_name' => 'passwordReset',
             'id' => '\d+',
             'token' => '[\d\w]+',
             'pass' => ['id', 'token'],

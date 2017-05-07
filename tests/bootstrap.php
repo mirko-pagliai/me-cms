@@ -24,6 +24,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
+use Cake\Mailer\Email;
 use Cake\Routing\DispatcherFactory;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -108,9 +109,7 @@ if (!getenv('db_dsn')) {
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 ConnectionManager::setConfig('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
 
-Configure::write('Session', [
-    'defaults' => 'php'
-]);
+Configure::write('Session', ['defaults' => 'php']);
 
 /**
  * Loads plugins
@@ -134,6 +133,16 @@ Configure::write('MysqlBackup.target', TMP . 'backups');
 Plugin::load('MysqlBackup', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-mysql-backup' . DS,
+]);
+
+Configure::write('Tokens.usersClassOptions', [
+    'foreignKey' => 'user_id',
+    'className' => 'Users',
+]);
+
+Plugin::load('Tokens', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-tokens' . DS,
 ]);
 
 Configure::write('Thumbs.target', TMP . 'thumbs');
@@ -170,5 +179,8 @@ require_once ROOT . 'config' . DS . 'bootstrap_base.php';
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
+
+Email::setConfigTransport('debug', ['className' => 'Debug']);
+Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
 ini_set('intl.default_locale', 'en_US');

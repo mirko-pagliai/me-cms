@@ -88,7 +88,7 @@ class PostsTagsController extends AppController
                     },
                     'Users' => ['fields' => ['first_name', 'last_name']],
                 ])
-                ->matching('Tags', function ($q) use ($slug) {
+                ->matching($this->PostsTags->Tags->getAlias(), function ($q) use ($slug) {
                     return $q->where(['tag' => $slug]);
                 })
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])

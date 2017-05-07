@@ -78,7 +78,7 @@ class PostValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->Posts->newEntity($this->example)->errors());
+        $this->assertEmpty($this->Posts->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -87,7 +87,7 @@ class PostValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->Posts->newEntity($copy)->errors());
+            ], $this->Posts->newEntity($copy)->getErrors());
         }
     }
 
@@ -100,7 +100,7 @@ class PostValidatorTest extends TestCase
         $this->example['category_id'] = 'string';
         $this->assertEquals([
             'category_id' => ['naturalNumber' => 'You have to select a valid option'],
-        ], $this->Posts->newEntity($this->example)->errors());
+        ], $this->Posts->newEntity($this->example)->getErrors());
     }
 
     /**
@@ -113,19 +113,19 @@ class PostValidatorTest extends TestCase
             $this->example['tags_as_string'] = $value;
             $this->assertEquals([
                 'tags' => ['validTagsLength' => 'Each tag must be between 3 and 30 chars'],
-            ], $this->Posts->newEntity($this->example)->errors());
+            ], $this->Posts->newEntity($this->example)->getErrors());
         }
 
         foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $value) {
             $this->example['tags_as_string'] = $value;
             $this->assertEquals([
                 'tags' => ['validTagsChars' => 'Allowed chars: lowercase letters, numbers, space'],
-            ], $this->Posts->newEntity($this->example)->errors());
+            ], $this->Posts->newEntity($this->example)->getErrors());
         }
 
         foreach (['abc', str_repeat('a', 30)] as $value) {
             $this->example['tags_as_string'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example)->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example)->getErrors());
         }
 
         foreach ([
@@ -140,7 +140,7 @@ class PostValidatorTest extends TestCase
             ' first, second ',
             ' first , second ',
         ] as $value) {
-            $this->assertEmpty($this->Posts->newEntity($this->example)->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example)->getErrors());
         }
     }
 }

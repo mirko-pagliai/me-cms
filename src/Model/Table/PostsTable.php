@@ -288,7 +288,8 @@ class PostsTable extends AppTable
         $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get('MeCms.PostsCategories'));
+            ->setTarget($this->tableLocator()->get('MeCms.PostsCategories'))
+            ->setAlias('Categories');
 
         $this->belongsTo('Users', ['className' => 'MeCms.Users'])
             ->setForeignKey('user_id')

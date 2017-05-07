@@ -194,7 +194,7 @@ class PagesTableTest extends TestCase
         $this->assertEquals([
             'slug' => ['_isUnique' => 'This value is already used'],
             'title' => ['_isUnique' => 'This value is already used'],
-        ], $entity->errors());
+        ], $entity->getErrors());
 
         $entity = $this->Pages->newEntity([
             'category_id' => 999,
@@ -203,7 +203,7 @@ class PagesTableTest extends TestCase
             'text' => 'My text',
         ]);
         $this->assertFalse($this->Pages->save($entity));
-        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
     }
 
     /**
@@ -222,6 +222,7 @@ class PagesTableTest extends TestCase
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->className());
         $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Pages->Categories->getTarget());
         $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('Categories', $this->Pages->Categories->getAlias());
 
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));
         $this->assertTrue($this->Pages->hasBehavior('CounterCache'));

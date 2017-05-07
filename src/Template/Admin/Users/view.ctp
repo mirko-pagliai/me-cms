@@ -35,7 +35,7 @@ if ($this->Auth->isGroup('admin')) {
     if (!$user->active) {
         $this->append('actions', $this->Form->postButton(
             __d('me_cms', 'Activate'),
-            ['action' => 'activateAccount', $user->id],
+            ['action' => 'activate', $user->id],
             [
                 'class' => 'btn-success',
                 'icon' => 'user-plus',

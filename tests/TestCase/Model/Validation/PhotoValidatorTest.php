@@ -74,7 +74,7 @@ class PhotoValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->Photos->newEntity($this->example)->errors());
+        $this->assertEmpty($this->Photos->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -83,7 +83,7 @@ class PhotoValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->Photos->newEntity($copy)->errors());
+            ], $this->Photos->newEntity($copy)->getErrors());
         }
     }
 
@@ -96,7 +96,7 @@ class PhotoValidatorTest extends TestCase
         $this->example['album_id'] = 'string';
         $this->assertEquals([
             'album_id' => ['naturalNumber' => 'You have to select a valid option'],
-        ], $this->Photos->newEntity($this->example)->errors());
+        ], $this->Photos->newEntity($this->example)->getErrors());
     }
 
     /**
@@ -109,7 +109,7 @@ class PhotoValidatorTest extends TestCase
             $this->example['filename'] = $value;
             $this->assertEquals([
                 'filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png'],
-            ], $this->Photos->newEntity($this->example)->errors());
+            ], $this->Photos->newEntity($this->example)->getErrors());
         }
     }
 }

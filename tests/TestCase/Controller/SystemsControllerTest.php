@@ -22,19 +22,25 @@
  */
 namespace MeCms\Test\TestCase\Controller;
 
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Cake\TestSuite\IntegrationTestCase;
-use MeCms\Controller\PostsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
-use Reflection\ReflectionTrait;
+use MeCms\Controller\SystemsController;
 
 /**
  * SystemsControllerTest class
  */
 class SystemsControllerTest extends IntegrationTestCase
 {
+    /**
+     * @var \MeCms\Controller\SystemsController
+     */
+    protected $Controller;
+
+    /**
+     * Does not automatically load fixtures
+     * @var bool
+     */
     public $autoFixtures = false;
 
     /**
@@ -66,6 +72,31 @@ class SystemsControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Controller = new SystemsController;
+        $this->Controller->viewBuilder()->setPlugin(ME_CMS);
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        unset($this->Controller);
+    }
+
+    /**
      * Tests for `acceptCookies()` method
      * @test
      */
@@ -85,13 +116,21 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testContactUs()
     {
-        $this->get(['_name' => 'contactUs']);
+        $url = ['_name' => 'contactUs'];
+
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Systems/contact_us.ctp');
 
         $contactFromView = $this->viewVariable('contact');
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+
+        //Disabled
+        Configure::write('MeCms.default.contact_us', false);
+        $this->get($url);
+        $this->assertRedirect(['_name' => 'homepage']);
+        $this->assertSession('Disabled', 'Flash.flash.0.message');
     }
 
     /**
@@ -102,6 +141,16 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertRedirect(['_name' => 'homepage']);
+
+        //Now the current IP is banned
+        $this->Controller->request->env('REMOTE_ADDR', '99.99.99.99');
+        Configure::write('Banned', ['99.99.99.99']);
+
+        $this->Controller->ipNotAllowed();
+        $this->_response = $this->Controller->render('ipNotAllowed');
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertEquals('login', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
@@ -113,8 +162,8 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->get(['_name' => 'offline']);
         $this->assertRedirect(['_name' => 'homepage']);
 
+        //Offline
         Configure::write('MeCms.default.offline', true);
-
         $this->get(['_name' => 'offline']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();

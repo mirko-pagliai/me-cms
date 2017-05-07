@@ -96,7 +96,7 @@ class PostsTagsTableTest extends TestCase
         $this->assertEquals([
             'tag_id' => ['_existsIn' => 'You have to select a valid option'],
             'post_id' => ['_existsIn' => 'You have to select a valid option'],
-        ], $entity->errors());
+        ], $entity->getErrors());
     }
 
     /**

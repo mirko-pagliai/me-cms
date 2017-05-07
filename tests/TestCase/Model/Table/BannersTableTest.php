@@ -112,14 +112,14 @@ class BannersTableTest extends TestCase
         //Saves again the same entity
         $entity = $this->Banners->newEntity($example);
         $this->assertFalse($this->Banners->save($entity));
-        $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->errors());
+        $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->getErrors());
 
         $entity = $this->Banners->newEntity([
             'position_id' => 999,
             'filename' => 'pic2.jpg',
         ]);
         $this->assertFalse($this->Banners->save($entity));
-        $this->assertEquals(['position_id' => ['_existsIn' => 'You have to select a valid option']], $entity->errors());
+        $this->assertEquals(['position_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
     }
 
     /**

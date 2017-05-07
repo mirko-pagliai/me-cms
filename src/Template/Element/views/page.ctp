@@ -56,14 +56,16 @@
         $text = $this->BBCode->parser($page->text);
 
         //Truncates the text if the "<!-- read-more -->" tag is present
-        if (!$this->request->isAction('view', 'Pages') && $strpos = strpos($text, '<!-- read-more -->')) {
-            echo $truncatedText = $this->Text->truncate(
-                $text,
-                $strpos,
-                ['ellipsis' => false, 'exact' => true, 'html' => false]
-            );
+        $strpos = strpos($text, '<!-- read-more -->');
+
+        if (!$this->request->isAction(['view', 'preview']) && $strpos) {
+            echo $truncatedText = $this->Text->truncate($text, $strpos, [
+                'ellipsis' => false,
+                'exact' => true,
+                'html' => false,
+            ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction('view', 'Pages') && config('default.truncate_to')) {
+        } elseif (!$this->request->isAction(['view', 'preview']) && config('default.truncate_to')) {
             echo $truncatedText = $this->Text->truncate(
                 $text,
                 config('default.truncate_to'),
@@ -74,6 +76,7 @@
         }
         ?>
     </div>
+
     <div class="content-buttons">
         <?php
         //If it was requested to truncate the text and that has been

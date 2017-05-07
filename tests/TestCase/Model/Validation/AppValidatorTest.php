@@ -119,7 +119,7 @@ class AppValidatorTest extends TestCase
         $this->example['Posts']['user_id'] = 'string';
         $this->assertEquals([
             'user_id' => ['naturalNumber' => 'You have to select a valid option'],
-        ], $this->Posts->newEntity($this->example['Posts'])->errors());
+        ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
     }
 
     /**
@@ -132,16 +132,16 @@ class AppValidatorTest extends TestCase
             $this->example['Users']['email'] = $value;
             $this->assertEquals([
                 'email' => ['email' => 'You have to enter a valid value'],
-            ], $this->Users->newEntity($this->example['Users'])->errors());
+            ], $this->Users->newEntity($this->example['Users'])->getErrors());
         }
 
         $this->example['Users']['email'] = str_repeat('a', 92) . '@test.com';
         $this->assertEquals([
             'email' => ['maxLength' => 'Must be at most 100 chars'],
-        ], $this->Users->newEntity($this->example['Users'])->errors());
+        ], $this->Users->newEntity($this->example['Users'])->getErrors());
 
         $this->example['Users']['email'] = str_repeat('a', 91) . '@test.com';
-        $this->assertEmpty($this->Users->newEntity($this->example['Users'])->errors());
+        $this->assertEmpty($this->Users->newEntity($this->example['Users'])->getErrors());
     }
 
     /**
@@ -157,19 +157,19 @@ class AppValidatorTest extends TestCase
                 $copy[$field] = $value;
                 $this->assertEquals([
                     $field => ['personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'],
-                ], $this->Users->newEntity($copy)->errors());
+                ], $this->Users->newEntity($copy)->getErrors());
             }
 
             foreach (['Ab', 'A' . str_repeat('a', 40)] as $value) {
                 $copy[$field] = $value;
                 $this->assertEquals([
                     $field => ['lengthBetween' => 'Must be between 3 and 40 chars'],
-                ], $this->Users->newEntity($copy)->errors());
+                ], $this->Users->newEntity($copy)->getErrors());
             }
 
             foreach (['Abc', 'A' . str_repeat('a', 39)] as $value) {
                 $copy[$field] = $value;
-                $this->assertEmpty($this->Users->newEntity($copy)->errors());
+                $this->assertEmpty($this->Users->newEntity($copy)->getErrors());
             }
 
             $copy[$field] = $this->example['Users'][$field];
@@ -186,12 +186,12 @@ class AppValidatorTest extends TestCase
             $this->example['Posts']['title'] = $value;
             $this->assertEquals([
                 'title' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
-            ], $this->Posts->newEntity($this->example['Posts'])->errors());
+            ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['Posts']['title'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
     }
 
@@ -204,10 +204,10 @@ class AppValidatorTest extends TestCase
         $this->example['Banners']['filename'] = str_repeat('a', 252) . '.gif';
         $this->assertEquals([
             'filename' => ['maxLength' => 'Must be at most 255 chars'],
-        ], $this->Banners->newEntity($this->example['Banners'])->errors());
+        ], $this->Banners->newEntity($this->example['Banners'])->getErrors());
 
         $this->example['Banners']['filename'] = str_repeat('a', 251) . '.gif';
-        $this->assertEmpty($this->Banners->newEntity($this->example['Banners'])->errors());
+        $this->assertEmpty($this->Banners->newEntity($this->example['Banners'])->getErrors());
     }
 
     /**
@@ -220,12 +220,12 @@ class AppValidatorTest extends TestCase
             $this->example['Posts']['subtitle'] = $value;
             $this->assertEquals([
                 'subtitle' => ['lengthBetween' => 'Must be between 3 and 150 chars'],
-            ], $this->Posts->newEntity($this->example['Posts'])->errors());
+            ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
         foreach (['abc', str_repeat('a', 150)] as $value) {
             $this->example['Posts']['subtitle'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
     }
 
@@ -239,17 +239,17 @@ class AppValidatorTest extends TestCase
             $this->example['Posts']['slug'] = $value;
             $this->assertEquals([
                 'slug' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash'],
-            ], $this->Posts->newEntity($this->example['Posts'])->errors());
+            ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
         $this->example['Posts']['slug'] = str_repeat('a', 101);
         $this->assertEquals([
             'slug' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
-        ], $this->Posts->newEntity($this->example['Posts'])->errors());
+        ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['Posts']['slug'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
     }
 
@@ -263,12 +263,12 @@ class AppValidatorTest extends TestCase
             $this->example['Posts']['priority'] = $value;
             $this->assertEquals([
                 'priority' => ['range' => 'You have to select a valid option'],
-            ], $this->Posts->newEntity($this->example['Posts'])->errors());
+            ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
         foreach (range(1, 5) as $value) {
             $this->example['Posts']['priority'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
     }
 
@@ -281,10 +281,10 @@ class AppValidatorTest extends TestCase
         $this->example['BannersPositions']['description'] = str_repeat('a', 256);
         $this->assertEquals([
             'description' => ['maxLength' => 'Must be at most 255 chars'],
-        ], $this->BannersPositions->newEntity($this->example['BannersPositions'])->errors());
+        ], $this->BannersPositions->newEntity($this->example['BannersPositions'])->getErrors());
 
         $this->example['BannersPositions']['description'] = str_repeat('a', 255);
-        $this->assertEmpty($this->BannersPositions->newEntity($this->example['BannersPositions'])->errors());
+        $this->assertEmpty($this->BannersPositions->newEntity($this->example['BannersPositions'])->getErrors());
     }
 
     /**
@@ -296,11 +296,11 @@ class AppValidatorTest extends TestCase
         $this->example['Posts']['active'] = 'string';
         $this->assertEquals([
             'active' => ['boolean' => 'You have to select a valid option'],
-        ], $this->Posts->newEntity($this->example['Posts'])->errors());
+        ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
 
         foreach ([true, false] as $value) {
             $this->example['Posts']['active'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
     }
 
@@ -314,7 +314,7 @@ class AppValidatorTest extends TestCase
             $this->example['Posts']['created'] = $value;
             $this->assertEquals([
                 'created' => ['datetime' => 'You have to enter a valid value'],
-            ], $this->Posts->newEntity($this->example['Posts'])->errors());
+            ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
         foreach ([
@@ -322,7 +322,7 @@ class AppValidatorTest extends TestCase
             '2016-01-16 19:09:00',
         ] as $value) {
             $this->example['Posts']['created'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->errors());
+            $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
     }
 }

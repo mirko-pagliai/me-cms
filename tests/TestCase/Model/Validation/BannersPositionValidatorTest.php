@@ -73,7 +73,7 @@ class BannersPositionValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->BannersPositions->newEntity($this->example)->errors());
+        $this->assertEmpty($this->BannersPositions->newEntity($this->example)->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -82,7 +82,7 @@ class BannersPositionValidatorTest extends TestCase
 
             $this->assertEquals([
                 $key => ['_required' => 'This field is required'],
-            ], $this->BannersPositions->newEntity($copy)->errors());
+            ], $this->BannersPositions->newEntity($copy)->getErrors());
         }
     }
 
@@ -96,12 +96,12 @@ class BannersPositionValidatorTest extends TestCase
             $this->example['title'] = $value;
             $this->assertEquals([
                 'title' => ['lengthBetween' => 'Must be between 3 and 100 chars'],
-            ], $this->BannersPositions->newEntity($this->example)->errors());
+            ], $this->BannersPositions->newEntity($this->example)->getErrors());
         }
 
         foreach (['abc', str_repeat('a', 100)] as $value) {
             $this->example['title'] = $value;
-            $this->assertEmpty($this->BannersPositions->newEntity($this->example)->errors());
+            $this->assertEmpty($this->BannersPositions->newEntity($this->example)->getErrors());
         }
     }
 }

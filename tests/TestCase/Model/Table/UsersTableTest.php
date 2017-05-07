@@ -111,14 +111,14 @@ class UsersTableTest extends TestCase
         $this->example['password'] = $this->example['password_repeat'] = '';
 
         $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
         $this->assertObjectNotHasAttribute('password', $entity);
         $this->assertObjectNotHasAttribute('password_repeat', $entity);
 
         unset($this->example['password'], $this->example['password_repeat']);
 
         $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
         $this->assertObjectNotHasAttribute('password', $entity);
         $this->assertObjectNotHasAttribute('password_repeat', $entity);
     }
@@ -140,7 +140,7 @@ class UsersTableTest extends TestCase
         //Saves again the same entity
         $entity = $this->Users->newEntity($this->example);
         $this->assertFalse($this->Users->save($entity));
-        $this->assertEquals($expected, $entity->errors());
+        $this->assertEquals($expected, $entity->getErrors());
 
         $this->example['group_id'] = 999;
 
@@ -148,7 +148,7 @@ class UsersTableTest extends TestCase
         $this->assertFalse($this->Users->save($entity));
         $this->assertEquals(array_merge([
             'group_id' => ['_existsIn' => 'You have to select a valid option']
-        ], $expected), $entity->errors());
+        ], $expected), $entity->getErrors());
     }
 
     /**
@@ -370,22 +370,22 @@ class UsersTableTest extends TestCase
         ];
 
         $entity = $this->Users->newEntity($example);
-        $this->assertNotEmpty($entity->errors());
+        $this->assertNotEmpty($entity->getErrors());
 
         $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
 
         $example['email_repeat'] = $example['email'];
 
         $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
 
         $example['email_repeat'] = $example['email'] . 'aaa';
 
         $entity = $this->Users->newEntity($example, ['validate' => 'DoNotRequirePresence']);
         $this->assertEquals([
             'email_repeat' => ['compareWith' => 'Email addresses don\'t match'],
-        ], $entity->errors());
+        ], $entity->getErrors());
     }
 
     /**
@@ -402,12 +402,12 @@ class UsersTableTest extends TestCase
         ];
 
         $entity = $this->Users->newEntity($this->example);
-        $this->assertEquals($expected, $entity->errors());
+        $this->assertEquals($expected, $entity->getErrors());
 
         $entity = $this->Users->patchEntity($this->Users->get(1), $this->example);
-        $this->assertEquals($expected, $entity->errors());
+        $this->assertEquals($expected, $entity->getErrors());
 
         $entity = $this->Users->patchEntity($this->Users->get(1), $this->example, ['validate' => 'EmptyPassword']);
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
     }
 }
