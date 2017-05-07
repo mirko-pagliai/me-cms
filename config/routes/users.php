@@ -20,13 +20,13 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-//Activate account
-if (!$routes->nameExists('activateAccount')) {
+//Activation
+if (!$routes->nameExists('activation')) {
     $routes->connect(
         '/activation/:id/:token',
-        ['controller' => 'Users', 'action' => 'activateAccount'],
+        ['controller' => 'Users', 'action' => 'activation'],
         [
-            '_name' => 'activateAccount',
+            '_name' => 'activation',
             'id' => '\d+',
             'token' => '[\d\w]+',
             'pass' => ['id', 'token'],
@@ -34,12 +34,12 @@ if (!$routes->nameExists('activateAccount')) {
     );
 }
 
-//Forgot password
-if (!$routes->nameExists('forgotPassword')) {
+//Activation resend
+if (!$routes->nameExists('activationResend')) {
     $routes->connect(
-        '/password/forgot',
-        ['controller' => 'Users', 'action' => 'forgotPassword'],
-        ['_name' => 'forgotPassword']
+        '/activation/resend',
+        ['controller' => 'Users', 'action' => 'activationResend'],
+        ['_name' => 'activationResend']
     );
 }
 
@@ -61,22 +61,22 @@ if (!$routes->nameExists('logout')) {
     );
 }
 
-//Resend activation
-if (!$routes->nameExists('resendActivation')) {
+//Password forgot
+if (!$routes->nameExists('passwordForgot')) {
     $routes->connect(
-        '/activation/resend',
-        ['controller' => 'Users', 'action' => 'resendActivation'],
-        ['_name' => 'resendActivation']
+        '/password/forgot',
+        ['controller' => 'Users', 'action' => 'passwordForgot'],
+        ['_name' => 'passwordForgot']
     );
 }
 
-//Reset password
-if (!$routes->nameExists('resetPassword')) {
+//Password reset
+if (!$routes->nameExists('passwordReset')) {
     $routes->connect(
         '/password/reset/:id/:token',
-        ['controller' => 'Users', 'action' => 'resetPassword'],
+        ['controller' => 'Users', 'action' => 'passwordReset'],
         [
-            '_name' => 'resetPassword',
+            '_name' => 'passwordReset',
             'id' => '\d+',
             'token' => '[\d\w]+',
             'pass' => ['id', 'token'],

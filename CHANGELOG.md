@@ -3,6 +3,12 @@
 ### 2.17.4
 * added `PostsController::getStartAndEndDate()` method;
 * removed `PostsController::indexCompatibility()` method;
+* `UserController::activateAccount()` becomes `activation()`, 
+    `UserController::forgotPassword()` becomes `passwordForgot()`, 
+    `UserController::resetPassword()` becomes `passwordReset()`, 
+    `UserController::resendActivation()` becomes `activationResend()`, 
+    `UserMailer::activateAccount()` becomes `activation()`, 
+    `UserMailer::forgotPassword()` becomes `passwordForgot()`;
 * fixed bug on page preview;
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
     related post;

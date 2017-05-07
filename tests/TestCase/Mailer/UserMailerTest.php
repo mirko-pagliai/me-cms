@@ -73,45 +73,45 @@ class UserMailerTest extends TestCase
     }
 
     /**
-     * Tests for `activateAccount()` method
+     * Tests for `activation()` method
      * @test
      */
-    public function testActivateAccount()
+    public function testActivation()
     {
-        $this->UserMailer->activateAccount($this->example);
+        $this->UserMailer->activation($this->example);
 
         //Gets `Email` instance
         $email = $this->getProperty($this->UserMailer, '_email');
 
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
         $this->assertEquals('Activate your account', $email->getSubject());
-        $this->assertEquals('MeCms.Users/activate_account', $email->getTemplate());
+        $this->assertEquals('MeCms.Users/activation', $email->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
     /**
-     * Tests for `activateAccount()` method, with some missing data
+     * Tests for `activation()` method, with some missing data
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Missing `email` property from data
      * @test
      */
-    public function testActivateAccountMissingData()
+    public function testActivationMissingData()
     {
         unset($this->example->email);
 
-        $this->UserMailer->activateAccount($this->example);
+        $this->UserMailer->activation($this->example);
     }
 
     /**
-     * Tests for `activateAccount()` method, calling `send()` method
+     * Tests for `activation()` method, calling `send()` method
      * @test
      */
-    public function testActivateAccountWithSend()
+    public function testActivationWithSend()
     {
         $result = $this->UserMailer->setTransport('debug')
             ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
-            ->send('activateAccount', [$this->example]);
+            ->send('activation', [$this->example]);
 
         $headers = $message = null;
         extract($result);
@@ -186,45 +186,45 @@ class UserMailerTest extends TestCase
     }
 
     /**
-     * Tests for `forgotPassword()` method
+     * Tests for `passwordForgot()` method
      * @test
      */
-    public function testForgotPassword()
+    public function testPasswordForgot()
     {
-        $this->UserMailer->forgotPassword($this->example);
+        $this->UserMailer->passwordForgot($this->example);
 
         //Gets `Email` instance
         $email = $this->getProperty($this->UserMailer, '_email');
 
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
         $this->assertEquals('Reset your password', $email->getSubject());
-        $this->assertEquals('MeCms.Users/forgot_password', $email->getTemplate());
+        $this->assertEquals('MeCms.Users/password_forgot', $email->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
     /**
-     * Tests for `forgotPassword()` method, with some missing data
+     * Tests for `passwordForgot()` method, with some missing data
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Missing `email` property from data
      * @test
      */
-    public function testForgotPasswordMissingData()
+    public function testPasswordForgotMissingData()
     {
         unset($this->example->email);
 
-        $this->UserMailer->forgotPassword($this->example);
+        $this->UserMailer->passwordForgot($this->example);
     }
 
     /**
-     * Tests for `forgotPassword()` method, calling `send()` method
+     * Tests for `passwordForgot()` method, calling `send()` method
      * @test
      */
-    public function testForgotPasswordWithSend()
+    public function testPasswordForgotWithSend()
     {
         $result = $this->UserMailer->setTransport('debug')
             ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
-            ->send('forgotPassword', [$this->example]);
+            ->send('passwordForgot', [$this->example]);
 
         $headers = $message = null;
         extract($result);

@@ -318,12 +318,12 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `activateAccount()` method
+     * Test for `activation()` method
      * @test
      */
-    public function testActivateAccount()
+    public function testActivation()
     {
-        $url = ['_name' => 'activateAccount'];
+        $url = ['_name' => 'activation'];
 
         //Gets an active user and creates a token
         $user = $this->Users->find('active')->first();
@@ -354,66 +354,52 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `activateAccount()` method, with an invalid token
+     * Test for `activation()` method, with an invalid token
      * @expectedException Cake\Datasource\Exception\RecordNotFoundException
      * @expectedExceptionMessage Invalid token
      * @test
      */
-    public function testActivateAccountInvalidToken()
+    public function testActivationInvalidToken()
     {
-        $this->Controller->activateAccount(1, 'invalidToken');
+        $this->Controller->activation(1, 'invalidToken');
     }
 
     /**
-     * Test for `forgotPassword()` method
+     * Test for `activationResend()` method
      * @test
      */
-    public function testForgotPassword()
+    public function testActivationResend()
     {
-        $url = ['_name' => 'forgotPassword'];
+        $url = ['_name' => 'activationResend'];
 
         $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Users/forgot_password.ctp');
+        $this->assertTemplate(ROOT . 'src/Template/Users/activation_resend.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
         $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
 
-        $wrongEmail = 'wrongMail@example.it';
+        $wrongEmail = 'wrongEmail@example.com';
 
         //POST request. For now, data are invalid
         $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
+        $this->assertResponseContains('No valid account was found');
 
-        $this->assertResponseContains('No account found');
         $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Forgot password request with invalid email `' . $wrongEmail . '`', $log);
-        //@codingStandardsIgnoreLine
-        @unlink(LOGS . 'users.log');
-
-        //Gets a pending user
-        $email = $this->Users->find('pending')->extract('email')->first();
-
-        //POST request. This request is invalid, because the user is pending
-        $this->post($url, ['email' => $email, 'email_repeat' => $email]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
-
-        $this->assertResponseContains('No account found');
-        $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Forgot password request with invalid email `' . $email . '`', $log);
+        $this->assertContains('Resend activation request with invalid email `' . $wrongEmail . '`', $log);
         //@codingStandardsIgnoreLine
         @unlink(LOGS . 'users.log');
 
         //Gets an active user
-        $email = $this->Users->find('active')->extract('email')->first();
+        $email = $this->Users->find('pending')->extract('email')->first();
 
-        //POST request. This request is valid
+        //POST request. Now, data are valid
         $this->post($url, ['email' => $email, 'email_repeat' => $email]);
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('We have sent you an email to reset your password', 'Flash.flash.0.message');
+        $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
 
         //With reCAPTCHA
         Configure::write('MeCms.security.recaptcha', true);
@@ -423,7 +409,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('You have not filled out the reCAPTCHA control');
 
         //Disabled
-        Configure::write('MeCms.users.reset_password', false);
+        Configure::write('MeCms.users.signup', false);
+        Configure::write('MeCms.users.activation', 1);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Disabled', 'Flash.flash.0.message');
@@ -528,41 +515,55 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `resendActivation()` method
+     * Test for `passwordForgot()` method
      * @test
      */
-    public function testResendActivation()
+    public function testPasswordForgot()
     {
-        $url = ['_name' => 'resendActivation'];
+        $url = ['_name' => 'passwordForgot'];
 
         $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Users/resend_activation.ctp');
+        $this->assertTemplate(ROOT . 'src/Template/Users/password_forgot.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
         $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
 
-        $wrongEmail = 'wrongEmail@example.com';
+        $wrongEmail = 'wrongMail@example.it';
 
         //POST request. For now, data are invalid
         $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('No valid account was found');
 
+        $this->assertResponseContains('No account found');
         $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Resend activation request with invalid email `' . $wrongEmail . '`', $log);
+        $this->assertContains('Forgot password request with invalid email `' . $wrongEmail . '`', $log);
+        //@codingStandardsIgnoreLine
+        @unlink(LOGS . 'users.log');
+
+        //Gets a pending user
+        $email = $this->Users->find('pending')->extract('email')->first();
+
+        //POST request. This request is invalid, because the user is pending
+        $this->post($url, ['email' => $email, 'email_repeat' => $email]);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+
+        $this->assertResponseContains('No account found');
+        $log = trim(file_get_contents(LOGS . 'users.log'));
+        $this->assertContains('Forgot password request with invalid email `' . $email . '`', $log);
         //@codingStandardsIgnoreLine
         @unlink(LOGS . 'users.log');
 
         //Gets an active user
-        $email = $this->Users->find('pending')->extract('email')->first();
+        $email = $this->Users->find('active')->extract('email')->first();
 
-        //POST request. Now, data are valid
+        //POST request. This request is valid
         $this->post($url, ['email' => $email, 'email_repeat' => $email]);
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
+        $this->assertSession('We have sent you an email to reset your password', 'Flash.flash.0.message');
 
         //With reCAPTCHA
         Configure::write('MeCms.security.recaptcha', true);
@@ -572,30 +573,29 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('You have not filled out the reCAPTCHA control');
 
         //Disabled
-        Configure::write('MeCms.users.signup', false);
-        Configure::write('MeCms.users.activation', 1);
+        Configure::write('MeCms.users.reset_password', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Disabled', 'Flash.flash.0.message');
     }
 
     /**
-     * Test for `resetPassword()` method
+     * Test for `passwordReset()` method
      * @test
      */
-    public function testResetPassword()
+    public function testPasswordReset()
     {
         //Gets an active user and creates the token
         $user = $this->Users->find('active')->first();
-        $tokenOptions = ['type' => 'forgot_password', 'user_id' => $user->id];
+        $tokenOptions = ['type' => 'password_forgot', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
-        $url = array_merge(['_name' => 'resetPassword', 'id' => $user->id], compact('token'));
+        $url = array_merge(['_name' => 'passwordReset', 'id' => $user->id], compact('token'));
 
         $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Users/reset_password.ctp');
+        $this->assertTemplate(ROOT . 'src/Template/Users/password_reset.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
         $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
@@ -625,14 +625,14 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `resetPassword()` method, with an invalid token
+     * Test for `passwordReset()` method, with an invalid token
      * @expectedException Cake\Datasource\Exception\RecordNotFoundException
      * @expectedExceptionMessage Invalid token
      * @test
      */
-    public function testResetPasswordInvalidToken()
+    public function testPasswordResetInvalidToken()
     {
-        $this->Controller->resetPassword(1, 'invalidToken');
+        $this->Controller->passwordReset(1, 'invalidToken');
     }
 
     /**
