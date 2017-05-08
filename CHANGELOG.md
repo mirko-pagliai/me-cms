@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.17 branch
+### 2.17.5
+* added `LogsMethodsTrait`.
+
 ### 2.17.4
 * added `PostsController::getStartAndEndDate()` method;
 * removed `PostsController::indexCompatibility()` method;

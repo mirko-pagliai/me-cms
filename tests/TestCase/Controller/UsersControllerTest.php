@@ -33,6 +33,7 @@ use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Controller\UsersController;
 use MeCms\Mailer\UserMailer;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\Traits\LogsMethodsTrait;
 use Reflection\ReflectionTrait;
 use Tokens\Controller\Component\TokenComponent;
 
@@ -42,6 +43,7 @@ use Tokens\Controller\Component\TokenComponent;
 class UsersControllerTest extends IntegrationTestCase
 {
     use AuthMethodsTrait;
+    use LogsMethodsTrait;
     use ReflectionTrait;
 
     /**
@@ -384,10 +386,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertResponseContains('No valid account was found');
 
-        $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Resend activation request with invalid email `' . $wrongEmail . '`', $log);
-        //@codingStandardsIgnoreLine
-        @unlink(LOGS . 'users.log');
+        $this->assertLogContains('Resend activation request with invalid email `' . $wrongEmail . '`', 'users');
+        $this->deleteLog('users');
 
         //Gets an active user
         $email = $this->Users->find('pending')->extract('email')->first();
@@ -436,11 +436,8 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertCookieNotSet('login');
         $this->assertSession(null, 'Auth');
-
-        $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Failed login with username `' . $wrongUsername . '` and password `' . $wrongPassword . '`', $log);
-        //@codingStandardsIgnoreLine
-        @unlink(LOGS . 'users.log');
+        $this->assertLogContains('Failed login with username `' . $wrongUsername . '` and password `' . $wrongPassword . '`', 'users');
+        $this->deleteLog('users');
 
         //Gets the first user, sets a valid password and saves
         $password = 'newPassword1!';
@@ -534,10 +531,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
 
         $this->assertResponseContains('No account found');
-        $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Forgot password request with invalid email `' . $wrongEmail . '`', $log);
-        //@codingStandardsIgnoreLine
-        @unlink(LOGS . 'users.log');
+        $this->assertLogContains('Forgot password request with invalid email `' . $wrongEmail . '`', 'users');
+        $this->deleteLog('users');
 
         //Gets a pending user
         $email = $this->Users->find('pending')->extract('email')->first();
@@ -548,10 +543,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
 
         $this->assertResponseContains('No account found');
-        $log = trim(file_get_contents(LOGS . 'users.log'));
-        $this->assertContains('Forgot password request with invalid email `' . $email . '`', $log);
-        //@codingStandardsIgnoreLine
-        @unlink(LOGS . 'users.log');
+        $this->assertLogContains('Forgot password request with invalid email `' . $email . '`', 'users');
+        $this->deleteLog('users');
 
         //Gets an active user
         $email = $this->Users->find('active')->extract('email')->first();
