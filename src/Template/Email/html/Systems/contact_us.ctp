@@ -20,11 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-echo __d(
-    'me_cms',
-    'Email from {0}',
-    sprintf('%s %s (%s)', $firstName, $lastName, $email)
-);
+echo __d('me_cms', 'Email from {0}', sprintf('%s %s (%s)', $firstName, $lastName, $email));
 ?>
 
 

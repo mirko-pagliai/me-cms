@@ -24,17 +24,15 @@
 
 <div class="margin-20">
     <div class="btn-group btn-group-sm" role="group">
-        <?php
-            echo $this->Html->button(
-                __d('me_cms', 'Show as list'),
-                ['?' => am($this->request->getQuery(), ['render' => 'list'])],
-                ['class' => 'btn-primary', 'icon' => 'align-justify']
-            );
-            echo $this->Html->button(
-                __d('me_cms', 'Show as grid'),
-                ['?' => am($this->request->getQuery(), ['render' => 'grid'])],
-                ['class' => 'btn-primary', 'icon' => 'th-large']
-            );
-        ?>
+        <?= $this->Html->button(
+            __d('me_cms', 'Show as list'),
+            ['?' => am($this->request->getQuery(), ['render' => 'list'])],
+            ['class' => 'btn-primary', 'icon' => 'align-justify']
+        ) ?>
+        <?= $this->Html->button(
+            __d('me_cms', 'Show as grid'),
+            ['?' => am($this->request->getQuery(), ['render' => 'grid'])],
+            ['class' => 'btn-primary', 'icon' => 'th-large']
+        ) ?>
     </div>
 </div>

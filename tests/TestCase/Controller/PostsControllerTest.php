@@ -245,8 +245,8 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/Posts/rss/rss.ctp');
 
         $postsFromView = $this->viewVariable('posts');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
-        $this->assertNotEmpty($postsFromView);
+        $this->assertInstanceof('Cake\ORM\Query', $postsFromView);
+        $this->assertNotEmpty($postsFromView->toArray());
 
         foreach ($postsFromView as $post) {
             $this->assertInstanceof('MeCms\Model\Entity\Post', $post);

@@ -49,19 +49,14 @@ use MeCms\Core\Plugin;
                 echo $this->Html->ul($menus, ['class' => 'nav navbar-nav hidden-xs hidden-sm']);
 
                 //Renders menus for each plugin
-                foreach (Plugin::all([
-                    'exclude' => [METOOLS, 'Assets', 'MysqlBackup', 'Thumber'],
-                    ]) as $plugin) {
+                foreach (Plugin::all(['exclude' => [METOOLS, 'Assets', 'MysqlBackup', 'Thumber']]) as $plugin) {
                     $menus += $this->MenuBuilder->renderAsDropdown($plugin);
                 }
 
                 echo $this->Html->ul($menus, ['class' => 'nav navbar-nav visible-xs visible-sm']);
 
                 $userMenu[] = call_user_func(function () {
-                    $this->Dropdown->start(
-                        $this->Auth->user('full_name'),
-                        ['icon' => 'user']
-                    );
+                    $this->Dropdown->start($this->Auth->user('full_name'), ['icon' => 'user']);
 
                     if (config('users.login_log')) {
                         echo $this->Html->link(__d('me_cms', 'Last login'), [
@@ -76,10 +71,7 @@ use MeCms\Core\Plugin;
                         'action' => 'changePassword',
                         'plugin' => ME_CMS,
                     ]);
-
-                    echo $this->Html->link(__d('me_cms', 'Logout'), [
-                        '_name' => 'logout',
-                    ]);
+                    echo $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']);
 
                     return $this->Dropdown->end();
                 });

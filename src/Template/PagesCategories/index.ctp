@@ -28,7 +28,7 @@ $this->assign('title', $title = __d('me_cms', 'Pages categories'));
  */
 $this->Breadcrumbs->add($title, ['_name' => 'pagesCategories']);
 
-$categories = collection($categories)->map(function ($category) {
+$categories = $categories->map(function ($category) {
     return $this->Html->link($category->title, ['_name' => 'pagesCategory', $category->slug]);
 })->toList();
 

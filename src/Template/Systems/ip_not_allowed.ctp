@@ -28,9 +28,5 @@ $this->extend('/Common/view');
 </div>
 
 <div class="text-center">
-    <?= __d(
-        'me_cms',
-        'You can send us an email to {0}',
-        $this->Recaptcha->mail(config('email.webmaster'))
-    ) ?>
+    <?= __d('me_cms', 'You can send us an email to {0}', $this->Recaptcha->mail(config('email.webmaster'))) ?>
 </div>

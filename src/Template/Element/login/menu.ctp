@@ -20,29 +20,32 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $menu = [];
 
-if (!$this->request->isUrl($url = ['_name' => 'login'])) {
+$url = ['_name' => 'login'];
+
+if (!$this->request->isUrl($url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Login'), $url);
 }
 
 //If signup is enabled
-if (config('users.signup') &&
-    !$this->request->isUrl($url = ['_name' => 'signup'])
-) {
+$url = ['_name' => 'signup'];
+
+if (config('users.signup') && !$this->request->isUrl($url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Sign up'), $url);
 }
 
 //If signup is enabled and if accounts will be enabled by the user via email
-if (config('users.signup') && config('users.activation') === 1 &&
-    !$this->request->isUrl($url = ['_name' => 'activationResend'])
-) {
+$url = ['_name' => 'activationResend'];
+
+if (config('users.signup') && config('users.activation') === 1 && !$this->request->isUrl($url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), $url);
 }
 
 //If reset password is enabled
-if (config('users.reset_password') && !$this->request->isUrl($url = ['_name' => 'passwordForgot'])) {
+$url = ['_name' => 'passwordForgot'];
+
+if (config('users.reset_password') && !$this->request->isUrl($url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
 }
 
