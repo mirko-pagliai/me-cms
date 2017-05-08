@@ -51,8 +51,17 @@ if (!$this->Auth->isLogged()) {
 
                 echo $this->Html->ul([
                     $this->Dropdown->menu($this->Auth->user('full_name'), [
-                            $this->Html->link(__d('me_cms', 'Change password'), ['_name' => 'changePassword']),
-                            $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']),
+                        $this->Html->link(__d('me_cms', 'Last login'), [
+                            'controller' => 'Users',
+                            'action' => 'lastLogin',
+                            'plugin' => ME_CMS,
+                        ]),
+                        $this->Html->link(__d('me_cms', 'Change password'), [
+                            'controller' => 'Users',
+                            'action' => 'changePassword',
+                            'plugin' => ME_CMS,
+                        ]),
+                        $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']),
                     ], ['icon' => 'user']),
                 ], ['class' => 'nav navbar-nav navbar-right']);
             ?>
