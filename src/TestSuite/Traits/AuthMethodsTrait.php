@@ -40,6 +40,10 @@ trait AuthMethodsTrait
      */
     public function assertGroupsAreAuthorized($values)
     {
+        if (empty($this->Controller)) {
+            $this->fail('The property `$this->Controller` has not been set');
+        }
+
         foreach ($values as $group => $isAllowed) {
             $this->setUserGroup($group);
             $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
@@ -55,6 +59,10 @@ trait AuthMethodsTrait
      */
     public function assertUsersAreAuthorized($values)
     {
+        if (empty($this->Controller)) {
+            $this->fail('The property `$this->Controller` has not been set');
+        }
+
         foreach ($values as $id => $isAllowed) {
             $this->setUserId($id);
             $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
