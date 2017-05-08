@@ -96,8 +96,8 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/index.ctp');
 
         $albumsFromView = $this->viewVariable('albums');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $albumsFromView);
-        $this->assertNotEmpty($albumsFromView);
+        $this->assertInstanceof('Cake\ORM\Query', $albumsFromView);
+        $this->assertNotEmpty($albumsFromView->toArray());
 
         foreach ($albumsFromView as $album) {
             $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $album);

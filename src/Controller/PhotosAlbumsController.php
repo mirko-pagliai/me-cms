@@ -45,8 +45,7 @@ class PhotosAlbumsController extends AppController
                     ->order('rand()');
             }])
             ->order(['title' => 'ASC'])
-            ->cache('albums_index', $this->PhotosAlbums->cache)
-            ->all();
+            ->cache('albums_index', $this->PhotosAlbums->cache);
 
         //If there is only one record, redirects
         if ($albums->count() === 1) {

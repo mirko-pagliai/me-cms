@@ -41,8 +41,7 @@ class PostsTagsController extends AppController
     {
         $tags = $this->PostsTags->Tags->find('active')
             ->order(['tag' => 'ASC'])
-            ->cache('tag_index', $this->PostsTags->cache)
-            ->all();
+            ->cache('tag_index', $this->PostsTags->cache);
 
         $this->set(compact('tags'));
     }

@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 $this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
 $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
@@ -49,12 +48,10 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 
 <?= $this->Form->create(null, ['class' => 'dropzone', 'type' => 'file']) ?>
     <div class="fallback">
-        <?php
-            echo $this->Form->control('file', [
-                'label' => false,
-                'multiple' => 'multiple',
-                'type' => 'file',
-            ]);
-        ?>
+        <?= $this->Form->control('file', [
+            'label' => false,
+            'multiple' => 'multiple',
+            'type' => 'file',
+        ]) ?>
     </div>
 <?= $this->Form->end() ?>

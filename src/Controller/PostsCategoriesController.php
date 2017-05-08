@@ -41,8 +41,7 @@ class PostsCategoriesController extends AppController
         $categories = $this->PostsCategories->find('active')
             ->select(['title', 'slug'])
             ->order([sprintf('%s.title', $this->PostsCategories->getAlias()) => 'ASC'])
-            ->cache('categories_index', $this->PostsCategories->cache)
-            ->all();
+            ->cache('categories_index', $this->PostsCategories->cache);
 
         $this->set(compact('categories'));
     }

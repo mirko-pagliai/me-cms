@@ -96,8 +96,8 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $categoriesFromView);
-        $this->assertNotEmpty($categoriesFromView);
+        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
+        $this->assertNotEmpty($categoriesFromView->toArray());
 
         foreach ($categoriesFromView as $category) {
             $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category);

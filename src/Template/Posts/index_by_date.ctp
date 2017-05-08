@@ -39,4 +39,8 @@ if ($date === 'today') {
 }
 
 $this->assign('title', $title);
+
+/**
+ * Breadcrumb
+ */
 $this->Breadcrumbs->add($title);

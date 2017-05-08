@@ -99,8 +99,8 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/PostsTags/index.ctp');
 
         $tagsFromView = $this->viewVariable('tags');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $tagsFromView);
-        $this->assertNotEmpty($tagsFromView);
+        $this->assertInstanceof('Cake\ORM\Query', $tagsFromView);
+        $this->assertNotEmpty($tagsFromView->toArray());
 
         foreach ($tagsFromView as $tag) {
             $this->assertInstanceof('MeCms\Model\Entity\Tag', $tag);

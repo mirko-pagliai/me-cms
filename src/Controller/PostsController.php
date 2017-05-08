@@ -215,8 +215,7 @@ class PostsController extends AppController
             ->select(['title', 'slug', 'text', 'created'])
             ->limit(config('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache('rss', $this->Posts->cache)
-            ->all();
+            ->cache('rss', $this->Posts->cache);
 
         $this->set(compact('posts'));
     }
