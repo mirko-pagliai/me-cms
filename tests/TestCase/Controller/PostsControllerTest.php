@@ -39,6 +39,11 @@ class PostsControllerTest extends IntegrationTestCase
     use ReflectionTrait;
 
     /**
+     * @var \MeCms\Controller\PostsController
+     */
+    protected $Controller;
+
+    /**
      * @var \MeCms\Model\Table\PostsTable
      */
     protected $Posts;
@@ -65,6 +70,7 @@ class PostsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->Controller = new PostsController;
         $this->Posts = TableRegistry::get('MeCms.Posts');
 
         Cache::clear(false, $this->Posts->cache);
@@ -78,7 +84,7 @@ class PostsControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Posts);
+        unset($this->Controller, $this->Posts);
     }
 
     /**
@@ -137,30 +143,28 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testGetStartAndEndDate()
     {
-        $controller = new PostsController;
-
         //"today" special word
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['today']);
+        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['today']);
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d', time() + DAY) . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //"yesterday" special word
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['yesterday']);
+        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['yesterday']);
         $this->assertEquals(date('Y-m-d', time() - DAY) . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Only year
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017']);
+        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['2017']);
         $this->assertEquals('2017-01-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2018-01-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //only year and month
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017/04']);
+        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['2017/04']);
         $this->assertEquals('2017-04-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-05-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Full date
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017/04/15']);
+        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['2017/04/15']);
         $this->assertEquals('2017-04-15 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-04-16 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
     }
@@ -249,6 +253,17 @@ class PostsControllerTest extends IntegrationTestCase
         }
 
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
+    }
+
+    /**
+     * Tests for `rss()` method, using an invalid extension
+     * @expectedException \Cake\Network\Exception\ForbiddenException
+     * @test
+     */
+    public function testRssInvalidExtension()
+    {
+        $this->Controller->request = $this->Controller->request->withParam('_ext', 'html');
+        $this->Controller->rss();
     }
 
     /**
