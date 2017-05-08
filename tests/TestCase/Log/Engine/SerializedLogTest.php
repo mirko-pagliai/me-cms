@@ -25,6 +25,7 @@ namespace MeCms\Test\TestCase\Log\Engine;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
 use MeCms\Log\Engine\SerializedLog;
+use MeCms\TestSuite\Traits\LogsMethodsTrait;
 use Reflection\ReflectionTrait;
 
 /**
@@ -32,19 +33,8 @@ use Reflection\ReflectionTrait;
  */
 class SerializedLogTest extends TestCase
 {
+    use LogsMethodsTrait;
     use ReflectionTrait;
-
-    /**
-     * Internal method to delete all log files
-     */
-    protected function _deleteAll()
-    {
-        //Deletes all logs
-        foreach (glob(LOGS . '*') as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
-        }
-    }
 
     /**
      * Internal method to write some logs
@@ -66,7 +56,7 @@ class SerializedLogTest extends TestCase
         Log::drop('error');
 
         //Deletes all logs
-        $this->_deleteAll();
+        $this->deleteAllLogs();
     }
 
     /**
@@ -163,8 +153,8 @@ class SerializedLogTest extends TestCase
         //Writes some logs
         $this->_writeSomeLogs();
 
-        //Tests the plain log is not empty
-        $this->assertNotEmpty(trim(file_get_contents(LOGS . 'error.log')));
+        $this->assertLogContains('Error: This is an error message', 'error');
+        $this->assertLogContains('Critical: This is a critical message', 'error');
 
         //Tests the serialized log is not empty
         $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
@@ -187,15 +177,15 @@ class SerializedLogTest extends TestCase
         $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4), ['0644', '0664']);
 
         //Deletes all logs, drops and reconfigure, adding `mask`
-        $this->_deleteAll();
+        $this->deleteAllLogs();
         Log::drop('error');
         Log::setConfig('error', am($config, ['mask' => 0777]));
 
         //Writes some logs
         $this->_writeSomeLogs();
 
-        //Tests the plain log is not empty
-        $this->assertNotEmpty(trim(file_get_contents(LOGS . 'error.log')));
+        $this->assertLogContains('Error: This is an error message', 'error');
+        $this->assertLogContains('Critical: This is a critical message', 'error');
 
         //Tests the serialized log is not empty
         $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
