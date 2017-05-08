@@ -54,4 +54,3 @@ class LogsMethodsTraitTest extends TestCase
         $this->deleteLog('noExisting');
     }
 }
-
