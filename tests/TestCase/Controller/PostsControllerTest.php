@@ -152,7 +152,7 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/Posts/index_by_date.ctp');
 
         $dateFromView = $this->viewVariable('date');
-        $this->assertEquals('2016/12/29', $dateFromView);
+        $this->assertEquals($date, $dateFromView);
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);

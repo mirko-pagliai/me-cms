@@ -99,7 +99,7 @@ class PostsController extends AppController
     }
 
     /**
-     * List posts for a specific date.
+     * Lists posts for a specific date.
      *
      * Month and day are optional and you can also use special keywords `today`
      *  or `yesterday`.
