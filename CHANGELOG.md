@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.5
+* added `GetStartAndEndDateTrait`;
 * added `LogsMethodsTrait`.
 
 ### 2.17.4
