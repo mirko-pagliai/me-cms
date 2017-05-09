@@ -138,38 +138,6 @@ class PostsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `getStartAndEndDate()` method
-     * @test
-     */
-    public function testGetStartAndEndDate()
-    {
-        //"today" special word
-        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['today']);
-        $this->assertEquals(date('Y-m-d') . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-        $this->assertEquals(date('Y-m-d', time() + DAY) . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-
-        //"yesterday" special word
-        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['yesterday']);
-        $this->assertEquals(date('Y-m-d', time() - DAY) . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-        $this->assertEquals(date('Y-m-d') . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-
-        //Only year
-        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['2017']);
-        $this->assertEquals('2017-01-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-        $this->assertEquals('2018-01-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-
-        //only year and month
-        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['2017/04']);
-        $this->assertEquals('2017-04-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-        $this->assertEquals('2017-05-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-
-        //Full date
-        list($start, $end) = $this->invokeMethod($this->Controller, 'getStartAndEndDate', ['2017/04/15']);
-        $this->assertEquals('2017-04-15 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-        $this->assertEquals('2017-04-16 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-    }
-
-    /**
      * Tests for `indexByDate()` method
      * @test
      */

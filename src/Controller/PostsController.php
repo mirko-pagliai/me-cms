@@ -23,10 +23,10 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
 use Cake\Network\Exception\ForbiddenException;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
+use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 
 /**
  * Posts controller
@@ -35,6 +35,7 @@ use MeCms\Controller\Traits\CheckLastSearchTrait;
 class PostsController extends AppController
 {
     use CheckLastSearchTrait;
+    use GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -98,44 +99,10 @@ class PostsController extends AppController
     }
 
     /**
-     * Internal method to get start and end date
-     * @param string $date Date as `YYYY/MM/dd`
-     * @return array Array with start and end date
-     */
-    protected function getStartAndEndDate($date)
-    {
-        $year = $month = $day = null;
-
-        //Sets the start date
-        if (in_array($date, ['today', 'yesterday'])) {
-            $start = Time::parse($date);
-        } else {
-            list($year, $month, $day) = array_replace([null, null, null], explode('/', $date));
-
-            $start = Time::now()->setDate($year, $month ?: 1, $day ?: 1);
-        }
-
-        $start = $start->setTime(0, 0, 0);
-
-        //Sets the end date
-        $end = Time::parse($start);
-
-        if (($year && $month && $day) || in_array($date, ['today', 'yesterday'])) {
-            $end = $end->addDay(1);
-        } elseif ($year && $month) {
-            $end = $end->addMonth(1);
-        } else {
-            $end = $end->addYear(1);
-        }
-
-        return [$start, $end];
-    }
-
-    /**
      * List posts for a specific date.
      *
-     * Month and day are optional and you can also use special keywords "today"
-     *  and "yesterday".
+     * Month and day are optional and you can also use special keywords `today`
+     *  or `yesterday`.
      *
      * Examples:
      * <pre>/posts/2016/06/11</pre>
@@ -143,9 +110,10 @@ class PostsController extends AppController
      * <pre>/posts/2016</pre>
      * <pre>/posts/today</pre>
      * <pre>/posts/yesterday</pre>
-     * @param string $date Date as `YYYY/MM/dd`
+     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
+     *  `YYYY/MM` or `YYYY`
      * @return \Cake\Network\Response|null|void
-     * @use getStartAndEndDate()
+     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait\getStartAndEndDate()
      */
     public function indexByDate($date)
     {
