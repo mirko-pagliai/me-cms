@@ -281,20 +281,22 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/Posts/search.ctp');
 
         $this->assertEmpty($this->viewVariable('posts'));
+        $this->assertEmpty($this->viewVariable('pattern'));
 
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/search.ctp');
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
-        $this->assertNotEmpty($postsFromView);
+        $this->assertNotEmpty($postsFromView->toArray());
 
         foreach ($postsFromView as $post) {
             $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
             $this->assertContains($pattern, $post->text);
         }
+
+        $this->assertEquals($this->viewVariable('pattern'), $pattern);
 
         //Sets the cache name
         $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), config('default.records_for_searches'), 1);
