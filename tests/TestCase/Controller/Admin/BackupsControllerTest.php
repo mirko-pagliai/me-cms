@@ -96,8 +96,6 @@ class BackupsControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        $this->setUserGroup(null);
-
         //Deletes all backups
         foreach (glob(Configure::read('MysqlBackup.target') . DS . '*') as $file) {
             //@codingStandardsIgnoreLine

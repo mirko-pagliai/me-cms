@@ -40,6 +40,11 @@ class PostsControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -66,7 +71,11 @@ class PostsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->setUserGroup('admin');
+
         $this->setPostsControllerInstance();
+
+        $this->url = ['controller' => 'Posts', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
     /**

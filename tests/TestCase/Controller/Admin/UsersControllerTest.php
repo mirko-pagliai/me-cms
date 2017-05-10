@@ -39,6 +39,11 @@ class UsersControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -48,7 +53,11 @@ class UsersControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->setUserGroup('admin');
+
         $this->Controller = new UsersController;
+
+        $this->url = ['controller' => 'Users', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
     /**
