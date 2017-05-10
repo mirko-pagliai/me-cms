@@ -62,7 +62,7 @@ $this->append('actions', $this->Form->postButton(
                         [
                             'icon' => 'upload',
                             'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
-                                'some data may be lost. Are you sure?')
+                                'some data may be lost. Are you sure?'),
                         ]
                     );
                     $actions[] = $this->Form->postLink(
@@ -71,7 +71,7 @@ $this->append('actions', $this->Form->postButton(
                         [
                             'class' => 'text-danger',
                             'icon' => 'trash-o',
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
+                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
                         ]
                     );
 
