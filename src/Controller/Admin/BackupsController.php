@@ -54,11 +54,11 @@ class BackupsController extends AppController
      */
     public function index()
     {
-        $backups = array_map(function ($backup) {
+        $backups = collection(BackupManager::index())->map(function ($backup) {
             $backup->slug = urlencode($backup->filename);
 
             return $backup;
-        }, BackupManager::index());
+        });
 
         $this->set(compact('backups'));
     }
