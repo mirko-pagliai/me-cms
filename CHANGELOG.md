@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.17 branch
 ### 2.17.6
-* widgets (cells) use collections.
+* widgets (cells) use collections;
+* added tests for `BackupsController` admin class.
 
 ### 2.17.5
 * added `GetStartAndEndDateTrait`;
