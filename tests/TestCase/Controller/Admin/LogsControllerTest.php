@@ -68,6 +68,12 @@ class LogsControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
+        //Deletes all backups
+        foreach (glob(LOGS . '*') as $file) {
+            //@codingStandardsIgnoreLine
+            @unlink($file);
+        }
+
         unset($this->Controller);
     }
 
@@ -82,5 +88,21 @@ class LogsControllerTest extends IntegrationTestCase
             'manager' => false,
             'user' => false,
         ]);
+    }
+
+    /**
+     * Tests for `download()` method
+     * @test
+     */
+    public function testDownload()
+    {
+        $file = LOGS . 'error.log';
+        file_put_contents($file, null);
+
+        $url = array_merge($this->url, ['action' => 'download', 'error.log']);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertFileResponse($file);
     }
 }
