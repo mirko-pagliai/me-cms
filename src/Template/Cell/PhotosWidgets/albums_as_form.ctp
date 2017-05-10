@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($albums) || count($albums) < 2) {
+if (empty($albums) || $albums->count() < 2) {
     return;
 }
 
@@ -35,8 +35,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => array_map(function ($album) {
+    'options' => $albums->map(function ($album) {
         return sprintf('%s (%d)', $album->title, $album->photo_count);
-    }, $albums),
+    })->toArray(),
 ]);
 echo $this->Form->end();

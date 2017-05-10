@@ -22,7 +22,10 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Event\EventManager;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\Cell;
 
 /**
@@ -39,9 +42,9 @@ class PostsTagsWidgetsCell extends Cell
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
@@ -147,8 +150,6 @@ class PostsTagsWidgetsCell extends Cell
         if ($shuffle) {
             $tags = $tags->shuffle();
         }
-
-        $tags = $tags->toArray();
 
         $this->set(compact('prefix', 'tags'));
     }

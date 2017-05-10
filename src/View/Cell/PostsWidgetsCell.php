@@ -22,7 +22,10 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Event\EventManager;
 use Cake\I18n\FrozenDate;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\Cell;
 
 /**
@@ -39,9 +42,9 @@ class PostsWidgetsCell extends Cell
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
@@ -69,8 +72,7 @@ class PostsWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Posts->cache)
-            ->toArray();
+            ->cache('widget_categories', $this->Posts->cache);
 
         $this->set(compact('categories'));
     }
@@ -91,8 +93,7 @@ class PostsWidgetsCell extends Cell
             ->select(['title', 'slug'])
             ->limit($limit)
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
-            ->toArray();
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache);
 
         $this->set(compact('posts'));
     }
@@ -127,8 +128,7 @@ class PostsWidgetsCell extends Cell
                 });
             })
             ->order(['month' => 'DESC'])
-            ->cache('widget_months', $this->Posts->cache)
-            ->toArray();
+            ->cache('widget_months', $this->Posts->cache);
 
         $this->set(compact('months'));
     }

@@ -22,6 +22,9 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Event\EventManager;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\Cell;
 
 /**
@@ -38,9 +41,9 @@ class PhotosWidgetsCell extends Cell
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
@@ -68,8 +71,7 @@ class PhotosWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_albums', $this->Photos->cache)
-            ->toArray();
+            ->cache('widget_albums', $this->Photos->cache);
 
         $this->set(compact('albums'));
     }
@@ -93,8 +95,7 @@ class PhotosWidgetsCell extends Cell
                 sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
                 sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
             ])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
-            ->toArray();
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache);
 
         $this->set(compact('photos'));
     }
@@ -114,8 +115,7 @@ class PhotosWidgetsCell extends Cell
         $photos = $this->Photos->find('active')
             ->select(['album_id', 'filename'])
             ->cache(sprintf('widget_random_%d', $limit), $this->Photos->cache)
-            ->sample($limit)
-            ->toArray();
+            ->sample($limit);
 
         $this->set(compact('photos'));
     }

@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.17 branch
+### 2.17.6
+* widgets (cells) use collections.
+
 ### 2.17.5
 * added `GetStartAndEndDateTrait`;
 * added `LogsMethodsTrait`.

@@ -22,6 +22,9 @@
  */
 namespace MeCms\View\Cell;
 
+use Cake\Event\EventManager;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\Cell;
 
 /**
@@ -39,9 +42,9 @@ class PagesWidgetsCell extends Cell
      * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
-        \Cake\Network\Request $request = null,
-        \Cake\Network\Response $response = null,
-        \Cake\Event\EventManager $eventManager = null,
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
@@ -69,8 +72,7 @@ class PagesWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Pages->cache)
-            ->toArray();
+            ->cache('widget_categories', $this->Pages->cache);
 
         $this->set(compact('categories'));
     }
@@ -89,8 +91,7 @@ class PagesWidgetsCell extends Cell
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
             ->order([sprintf('%s.title', $this->Pages->getAlias()) => 'ASC'])
-            ->cache(sprintf('widget_list'), $this->Pages->cache)
-            ->toArray();
+            ->cache(sprintf('widget_list'), $this->Pages->cache);
 
         $this->set(compact('pages'));
     }

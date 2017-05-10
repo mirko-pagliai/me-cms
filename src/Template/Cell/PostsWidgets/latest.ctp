@@ -24,17 +24,13 @@ if (empty($posts)) {
     return;
 }
 
-$this->extend('/Common/widget');
-$this->assign('title', __dn(
-    'me_cms',
-    'Latest post',
-    'Latest {0} posts',
-    count($posts),
-    count($posts)
-));
+$count = $posts->all()->count();
 
-$posts = array_map(function ($post) {
+$this->extend('/Common/widget');
+$this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', $count, $count));
+
+$posts = $posts->map(function ($post) {
     return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-}, $posts);
+})->toArray();
 
 echo $this->Html->ul($posts, ['icon' => 'caret-right']);
