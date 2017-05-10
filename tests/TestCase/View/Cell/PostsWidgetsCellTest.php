@@ -197,7 +197,7 @@ class PostsWidgetsCellTest extends TestCase
         ];
         $this->assertHtml($expected, $result);
 
-        list($lastPost, $penultimatePost) = $this->Posts->find('active')->order(['created' => 'DESC'])->limit(2)->toArray();
+        list($latestPost, $penultimatePost) = $this->Posts->find('active')->order(['created' => 'DESC'])->limit(2)->toArray();
 
         //Tries with a limit of 2
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
