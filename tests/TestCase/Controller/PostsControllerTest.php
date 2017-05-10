@@ -301,7 +301,10 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->Posts->find('active')->extract('slug')->first();
+        $slug = $this->Posts->find('active')
+            ->where(['preview IS' => null])
+            ->extract('slug')
+            ->first();
 
         $this->get(['_name' => 'post', $slug]);
         $this->assertResponseOk();
@@ -330,7 +333,10 @@ class PostsControllerTest extends IntegrationTestCase
     {
         $this->setUserGroup('user');
 
-        $slug = $this->Posts->find('pending')->extract('slug')->first();
+        $slug = $this->Posts->find('pending')
+            ->where(['preview IS' => null])
+            ->extract('slug')
+            ->first();
 
         $this->get(['_name' => 'postsPreview', $slug]);
         $this->assertResponseOk();

@@ -386,11 +386,11 @@ class PostsTableTest extends TestCase
         $this->assertNotEmpty($related[0]->title);
         $this->assertNotEmpty($related[0]->slug);
         $this->assertContains(
-            '<img src="https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg" />Text of the second post',
+            '<img src="image.jpg" />Text of the second post',
             $related[0]->text
         );
         $this->assertEquals([
-            'preview' => 'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg',
+            'preview' => 'image.jpg',
             'width' => 400,
             'height' => 400,
         ], $related[0]->preview);
