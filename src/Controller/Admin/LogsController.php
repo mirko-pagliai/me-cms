@@ -128,7 +128,7 @@ class LogsController extends AppController
 
     /**
      * Downloads a log
-     * @param string $filename Filename
+     * @param string $filename Log filename
      * @return \Cake\Network\Response
      * @uses _path()
      */

@@ -35,8 +35,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => array_map(function ($tag) {
+    'options' => $tags->map(function ($tag) {
         return sprintf('%s (%d)', $tag->tag, $tag->post_count);
-    }, $tags),
+    })->toArray(),
 ]);
 echo $this->Form->end();

@@ -342,7 +342,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.PostsTags::popular';
         $result = $this->Widget->widget($widget, $this->options)->render();
 
-        $this->assertEmpty($result);
+        $this->assertEmpty(trim($result));
     }
 
     /**

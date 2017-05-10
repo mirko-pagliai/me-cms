@@ -20,15 +20,15 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($albums) || count($albums) < 2) {
+if (empty($albums) || $albums->count() < 2) {
     return;
 }
 
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Albums'));
 
-$albums = array_map(function ($album) {
+$albums = $albums->map(function ($album) {
     return $this->Html->link($album->title, ['_name' => 'album', $album->slug]);
-}, $albums);
+})->toArray();
 
 echo $this->Html->ul($albums, ['icon' => 'caret-right']);

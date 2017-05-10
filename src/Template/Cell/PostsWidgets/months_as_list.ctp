@@ -20,18 +20,18 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($months) || count($months) < 2) {
+if (empty($months) || $months->count() < 2) {
     return;
 }
 
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
-$months = array_map(function ($month) {
+$months = $months->map(function ($month) {
     return $this->Html->link($month->month->i18nFormat('MMMM yyyy'), [
         '_name' => 'postsByDate',
         sprintf('%s/%s', $month->month->i18nFormat('yyyy'), $month->month->i18nFormat('MM')),
     ]);
-}, $months);
+})->toArray();
 
 echo $this->Html->ul($months, ['icon' => 'caret-right']);

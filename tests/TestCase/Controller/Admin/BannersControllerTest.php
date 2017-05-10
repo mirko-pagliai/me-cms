@@ -39,6 +39,11 @@ class BannersControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -56,7 +61,11 @@ class BannersControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->setUserGroup('admin');
+
         $this->Controller = new BannersController;
+
+        $this->url = ['controller' => 'Banners', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
     /**
@@ -99,15 +108,9 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testDownload()
     {
-        $this->setUserGroup('admin');
+        $url = array_merge($this->url, ['action' => 'download', 1]);
 
-        $this->get([
-            'controller' => 'Banners',
-            'action' => 'download',
-            1,
-            'prefix' => ADMIN_PREFIX,
-            'plugin' => ME_CMS,
-        ]);
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertFileResponse(BANNERS . 'banner1.jpg');
     }

@@ -39,6 +39,11 @@ class PhotosControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -56,7 +61,11 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->setUserGroup('admin');
+
         $this->Controller = new PhotosController;
+
+        $this->url = ['controller' => 'Photos', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
     /**
@@ -99,15 +108,9 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testDownload()
     {
-        $this->setUserGroup('admin');
+        $url = array_merge($this->url, ['action' => 'download', 1]);
 
-        $this->get([
-            'controller' => 'Photos',
-            'action' => 'download',
-            1,
-            'prefix' => ADMIN_PREFIX,
-            'plugin' => ME_CMS,
-        ]);
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertFileResponse(PHOTOS . '1' . DS . 'photo1.jpg');
     }

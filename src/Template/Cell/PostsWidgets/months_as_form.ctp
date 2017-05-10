@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($months) || count($months) < 2) {
+if (empty($months) || $months->count() < 2) {
     return;
 }
 
@@ -35,8 +35,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => array_map(function ($month) {
+    'options' => $months->map(function ($month) {
         return sprintf('%s (%s)', $month->month->i18nFormat('MMMM yyyy'), $month->post_count);
-    }, $months),
+    })->toArray(),
 ]);
 echo $this->Form->end();

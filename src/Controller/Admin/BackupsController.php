@@ -54,11 +54,11 @@ class BackupsController extends AppController
      */
     public function index()
     {
-        $backups = array_map(function ($backup) {
+        $backups = collection(BackupManager::index())->map(function ($backup) {
             $backup->slug = urlencode($backup->filename);
 
             return $backup;
-        }, BackupManager::index());
+        });
 
         $this->set(compact('backups'));
     }
@@ -97,11 +97,9 @@ class BackupsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        if (BackupManager::delete(urldecode($filename))) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        BackupManager::delete(urldecode($filename));
+
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
     }
@@ -115,11 +113,9 @@ class BackupsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        if (BackupManager::deleteAll()) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        BackupManager::deleteAll();
+
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
     }
@@ -147,17 +143,12 @@ class BackupsController extends AppController
     {
         $filename = Configure::read('MysqlBackup.target') . DS . urldecode($filename);
 
-        $backup = new BackupImport;
-        $backup->filename($filename);
+        (new BackupImport)->filename($filename)->import();
 
-        if ($backup->import()) {
-            //Clears the cache
-            Cache::clearAll();
+        //Clears the cache
+        Cache::clearAll();
 
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
     }

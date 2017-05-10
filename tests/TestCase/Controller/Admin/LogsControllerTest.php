@@ -39,6 +39,11 @@ class LogsControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -48,7 +53,11 @@ class LogsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        $this->setUserGroup('admin');
+
         $this->Controller = new LogsController;
+
+        $this->url = ['controller' => 'Logs', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
     /**
@@ -58,6 +67,12 @@ class LogsControllerTest extends IntegrationTestCase
     public function tearDown()
     {
         parent::tearDown();
+
+        //Deletes all backups
+        foreach (glob(LOGS . '*') as $file) {
+            //@codingStandardsIgnoreLine
+            @unlink($file);
+        }
 
         unset($this->Controller);
     }
@@ -73,5 +88,21 @@ class LogsControllerTest extends IntegrationTestCase
             'manager' => false,
             'user' => false,
         ]);
+    }
+
+    /**
+     * Tests for `download()` method
+     * @test
+     */
+    public function testDownload()
+    {
+        $file = LOGS . 'error.log';
+        file_put_contents($file, null);
+
+        $url = array_merge($this->url, ['action' => 'download', 'error.log']);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertFileResponse($file);
     }
 }

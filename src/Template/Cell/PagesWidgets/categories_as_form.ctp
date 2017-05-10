@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($categories) || count($categories) < 2) {
+if (empty($categories) || $categories->count() < 2) {
     return;
 }
 
@@ -35,8 +35,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => array_map(function ($category) {
+    'options' => $categories->map(function ($category) {
         return sprintf('%s (%d)', $category->title, $category->page_count);
-    }, $categories),
+    })->toArray(),
 ]);
 echo $this->Form->end();

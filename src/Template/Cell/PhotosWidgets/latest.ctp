@@ -24,14 +24,10 @@ if (empty($photos)) {
     return;
 }
 
+$count = $photos->all()->count();
+
 $this->extend('/Common/widget');
-$this->assign('title', __dn(
-    'me_cms',
-    'Latest photo',
-    'Latest {0} photos',
-    count($photos),
-    count($photos)
-));
+$this->assign('title', __dn('me_cms', 'Latest photo', 'Latest {0} photos', $count, $count));
 
 foreach ($photos as $photo) {
     echo $this->Html->link(
