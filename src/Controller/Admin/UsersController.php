@@ -35,6 +35,37 @@ class UsersController extends AppController
     use MailerAwareTrait;
 
     /**
+     * Called before the controller action.
+     * You can use this method to perform logic that needs to happen before
+     *  each controller action.
+     * @param \Cake\Event\Event $event An Event instance
+     * @return void
+     * @uses MeCms\Controller\AppController::beforeFilter()
+     * @uses MeCms\Model\Table\UsersGroupsTable::getList()
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+
+        if ($this->request->isAction(['index', 'add', 'edit'])) {
+            $this->set('groups', $this->Users->Groups->getList());
+        }
+    }
+
+    /**
+     * Initialization hook method
+     * @return void
+     * @uses MeCms\Controller\AppController::initialize()
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        //Loads components
+        $this->loadComponent('MeCms.LoginRecorder');
+    }
+
+    /**
      * Check if the provided user is authorized for the request
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
@@ -55,37 +86,6 @@ class UsersController extends AppController
 
         //Admins and managers can access other actions
         return $this->Auth->isGroup(['admin', 'manager']);
-    }
-
-    /**
-     * Initialization hook method
-     * @return void
-     * @uses MeCms\Controller\AppController::initialize()
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        //Loads components
-        $this->loadComponent('MeCms.LoginRecorder');
-    }
-
-    /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
-     * @return void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\UsersGroupsTable::getList()
-     */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        if ($this->request->isAction(['index', 'add', 'edit'])) {
-            $this->set('groups', $this->Users->Groups->getList());
-        }
     }
 
     /**
