@@ -39,7 +39,7 @@ class UsersController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCms\Model\Table\UsersGroupsTable::getList()
      */
