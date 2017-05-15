@@ -184,3 +184,9 @@ Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
 ini_set('intl.default_locale', 'en_US');
+
+//This makes it believe that KCFinder is installed
+$kcfinder = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
+//@codingStandardsIgnoreLine
+@mkdir(dirname($kcfinder));
+file_put_contents($kcfinder, null);

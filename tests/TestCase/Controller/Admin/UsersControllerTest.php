@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\UsersController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -39,9 +41,23 @@ class UsersControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var \MeCms\Model\Table\UsersTable
+     */
+    protected $Users;
+
+    /**
      * @var array
      */
     protected $url;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.users',
+        'plugin.me_cms.users_groups',
+    ];
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -57,6 +73,10 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->Controller = new UsersController;
 
+        $this->Users = TableRegistry::get('MeCms.Users');
+
+        Cache::clear(false, $this->Users->cache);
+
         $this->url = ['controller' => 'Users', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
@@ -68,7 +88,62 @@ class UsersControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->Users);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [2]));
+            $this->assertResponseOk();
+            $this->assertNotEmpty($this->viewVariable('groups'));
+        }
+
+        //Other actions, for example `changePassword`, still work
+        $this->setUserId(1);
+        $this->get(array_merge($this->url, ['action' => 'changePassword']));
+        $this->assertResponseOk();
+        $this->assertEmpty($this->viewVariable('groups'));
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no groups
+     * @test
+     */
+    public function testBeforeFilterNoGroups()
+    {
+        //Deletes all categories
+        $this->Users->Groups->deleteAll(['id IS NOT' => null]);
+
+        //`add` and `edit` actions don't work
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertRedirect(['controller' => 'UsersGroups', 'action' => 'index']);
+            $this->assertSession('You must first create an user group', 'Flash.flash.0.message');
+        }
+
+        //Other actions, for example `changePassword`, still work
+        $this->setUserId(1);
+        $this->get(array_merge($this->url, ['action' => 'changePassword']));
+        $this->assertResponseOk();
+        $this->assertEmpty($this->viewVariable('groups'));
+    }
+
+    /**
+     * Tests for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
+    {
+        $this->Controller = new UsersController;
+        $this->Controller->request = $this->Controller->request->withParam('action', 'index');
+        $this->Controller->initialize();
+
+        $this->assertContains('LoginRecorder', $this->Controller->components()->loaded());
     }
 
     /**

@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PagesCategoriesController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -37,6 +39,19 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      * @var \MeCms\Controller\Admin\PagesCategoriesController
      */
     protected $Controller;
+
+    /**
+     * @var \MeCms\Model\Table\PagesCategoriesTable
+     */
+    protected $PagesCategories;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.pages_categories',
+    ];
 
     /**
      * @var array
@@ -57,6 +72,10 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
 
         $this->Controller = new PagesCategoriesController;
 
+        $this->PagesCategories = TableRegistry::get('MeCms.PagesCategories');
+
+        Cache::clear(false, $this->PagesCategories->cache);
+
         $this->url = ['controller' => 'PagesCategories', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
@@ -68,7 +87,20 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->PagesCategories);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertResponseOk();
+            $this->assertNotEmpty($this->viewVariable('categories'));
+        }
     }
 
     /**

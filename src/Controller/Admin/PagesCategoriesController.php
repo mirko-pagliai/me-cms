@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCms\Controller\AppController;
 
 /**
@@ -39,7 +40,7 @@ class PagesCategoriesController extends AppController
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 

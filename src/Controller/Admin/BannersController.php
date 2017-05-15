@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCms\Controller\AppController;
 
 /**
@@ -39,23 +40,20 @@ class BannersController extends AppController
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCms\Model\Table\BannersPositions::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction(['index', 'edit', 'upload'])) {
-            //Gets positions
-            $positions = $this->Banners->Positions->getList();
+        //Gets positions
+        $positions = $this->Banners->Positions->getList();
 
-            //Checks for positions
-            if (empty($positions) && !$this->request->isIndex()) {
-                $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
+        if (!$positions) {
+            $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
 
-                return $this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
-            }
-
-            $this->set(compact('positions'));
+            return $this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
         }
+
+        $this->set(compact('positions'));
     }
 
     /**

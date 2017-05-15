@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
@@ -40,23 +41,20 @@ class PhotosController extends AppController
      * @uses MeCms\Controller\AppController::beforeFilter()
      * @uses MeCms\Model\Table\PhotosAlbums::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction(['index', 'edit', 'upload'])) {
-            //Gets albums
-            $albums = $this->Photos->Albums->getList();
+        //Gets albums
+        $albums = $this->Photos->Albums->getList();
 
-            //Checks for albums
-            if (empty($albums) && !$this->request->isIndex()) {
-                $this->Flash->alert(__d('me_cms', 'You must first create an album'));
+        if (!$albums) {
+            $this->Flash->alert(__d('me_cms', 'You must first create an album'));
 
-                return $this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
-            }
-
-            $this->set(compact('albums'));
+            return $this->redirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
         }
+
+        $this->set(compact('albums'));
     }
 
     /**

@@ -33,19 +33,6 @@ use MeCms\Controller\AppController;
 class LogsController extends AppController
 {
     /**
-     * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
-     * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     */
-    public function isAuthorized($user = null)
-    {
-        //Only admins can access this controller
-        return $this->Auth->isGroup('admin');
-    }
-
-    /**
      * Returns the path for a log
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
@@ -83,6 +70,19 @@ class LogsController extends AppController
         }
 
         return trim($log);
+    }
+
+    /**
+     * Check if the provided user is authorized for the request
+     * @param array $user The user to check the authorization of. If empty
+     *  the user in the session will be used
+     * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     */
+    public function isAuthorized($user = null)
+    {
+        //Only admins can access this controller
+        return $this->Auth->isGroup('admin');
     }
 
     /**
