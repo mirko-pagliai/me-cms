@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -43,26 +44,28 @@ class PagesController extends AppController
      * @uses MeCms\Model\Table\UsersTable::getActiveList()
      * @uses MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isIndex()) {
-            $categories = $this->Pages->Categories->getList();
-        } elseif ($this->request->isAction(['add', 'edit'])) {
-            $categories = $this->Pages->Categories->getTreeList();
+        //Returns, if it's the `indexStatics` action
+        if ($this->request->isAction('indexStatics')) {
+            return;
         }
 
-        //Checks for categories
-        if (isset($categories) && empty($categories) && !$this->request->isIndex()) {
+        if ($this->request->isAction(['add', 'edit'])) {
+            $categories = $this->Pages->Categories->getTreeList();
+        } else {
+            $categories = $this->Pages->Categories->getList();
+        }
+
+        if (!$categories) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PagesCategories', 'action' => 'index']);
         }
 
-        if (!empty($categories)) {
-            $this->set(compact('categories'));
-        }
+        $this->set(compact('categories'));
     }
 
     /**

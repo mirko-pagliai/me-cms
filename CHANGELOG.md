@@ -2,7 +2,9 @@
 ## 2.17 branch
 ### 2.17.6
 * widgets (cells) use collections;
-* added tests for `BackupsController` admin class.
+* added tests for `BackupsController` admin class;
+* added tests for `beforeFilter()` and `initialize()` methods of all admin
+    controllers.
 
 ### 2.17.5
 * added `GetStartAndEndDateTrait`;

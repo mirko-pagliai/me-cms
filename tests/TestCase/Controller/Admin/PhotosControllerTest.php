@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PhotosController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -39,6 +41,11 @@ class PhotosControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var \MeCms\Model\Table\PhotosTable
+     */
+    protected $Photos;
+
+    /**
      * @var array
      */
     protected $url;
@@ -49,6 +56,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.me_cms.photos',
+        'plugin.me_cms.photos_albums',
     ];
 
     /**
@@ -65,6 +73,10 @@ class PhotosControllerTest extends IntegrationTestCase
 
         $this->Controller = new PhotosController;
 
+        $this->Photos = TableRegistry::get('MeCms.Photos');
+
+        Cache::clear(false, $this->Photos->cache);
+
         $this->url = ['controller' => 'Photos', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
@@ -76,7 +88,32 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->Photos);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->viewVariable('albums'));
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no positions
+     * @test
+     */
+    public function testBeforeFilterNoAlbums()
+    {
+        //Deletes all albums
+        $this->Photos->Albums->deleteAll(['id IS NOT' => null]);
+
+        $this->get(array_merge($this->url, ['action' => 'add']));
+        $this->assertRedirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
+        $this->assertSession('You must first create an album', 'Flash.flash.0.message');
     }
 
     /**

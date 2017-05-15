@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PagesController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -37,6 +39,19 @@ class PagesControllerTest extends IntegrationTestCase
      * @var \MeCms\Controller\Admin\PagesController
      */
     protected $Controller;
+
+    /**
+     * @var \MeCms\Model\Table\PagesTable
+     */
+    protected $Pages;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.pages_categories',
+    ];
 
     /**
      * @var array
@@ -57,6 +72,10 @@ class PagesControllerTest extends IntegrationTestCase
 
         $this->Controller = new PagesController;
 
+        $this->Pages = TableRegistry::get('MeCms.Pages');
+
+        Cache::clear(false, $this->Pages->cache);
+
         $this->url = ['controller' => 'Pages', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
 
@@ -68,7 +87,65 @@ class PagesControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->Pages);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertResponseOk();
+            $this->assertNotEmpty($this->viewVariable('categories'));
+        }
+
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->viewVariable('categories'));
+
+        //`indexStatics` still works
+        $this->get(array_merge($this->url, ['action' => 'indexStatics']));
+        $this->assertResponseOk();
+        $this->assertEmpty($this->viewVariable('categories'));
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no categories
+     * @test
+     */
+    public function testBeforeFilterNoCategories()
+    {
+        //Deletes all categories
+        $this->Pages->Categories->deleteAll(['id IS NOT' => null]);
+
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertRedirect(['controller' => 'PagesCategories', 'action' => 'index']);
+            $this->assertSession('You must first create a category', 'Flash.flash.0.message');
+        }
+
+        //`indexStatics` still works
+        $this->get(array_merge($this->url, ['action' => 'indexStatics']));
+        $this->assertResponseOk();
+        $this->assertEmpty($this->viewVariable('categories'));
+    }
+
+    /**
+     * Tests for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->Controller = new PagesController;
+            $this->Controller->request = $this->Controller->request->withParam('action', $action);
+            $this->Controller->initialize();
+
+            $this->assertContains('KcFinder', $this->Controller->components()->loaded());
+        }
     }
 
     /**

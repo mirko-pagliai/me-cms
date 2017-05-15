@@ -72,6 +72,18 @@ class SystemsControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Tests for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
+    {
+        $this->Controller->request = $this->Controller->request->withParam('action', 'browser');
+        $this->Controller->initialize();
+
+        $this->assertContains('KcFinder', $this->Controller->components()->loaded());
+    }
+
+    /**
      * Tests for `isAuthorized()` method
      * @test
      */

@@ -22,6 +22,7 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PostsController;
@@ -40,6 +41,11 @@ class PostsControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected $Posts;
+
+    /**
      * @var array
      */
     protected $url;
@@ -50,16 +56,11 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
+        'plugin.me_cms.users',
     ];
-
-    /**
-     * Internal method to set a `PostsController` instance
-     */
-    protected function setPostsControllerInstance()
-    {
-        $this->Controller = new PostsController;
-        $this->Controller->Posts = TableRegistry::get('MeCms.Posts');
-    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -73,7 +74,12 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->setUserGroup('admin');
 
-        $this->setPostsControllerInstance();
+        $this->Controller = new PostsController;
+
+        $this->Posts = TableRegistry::get('MeCms.Posts');
+
+        Cache::clear(false, $this->Posts->cache);
+        Cache::clear(false, $this->Posts->Users->cache);
 
         $this->url = ['controller' => 'Posts', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
@@ -86,7 +92,73 @@ class PostsControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Controller, $this->Posts);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertResponseOk();
+            $this->assertNotEmpty($this->viewVariable('categories'));
+            $this->assertNotEmpty($this->viewVariable('users'));
+        }
+
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->viewVariable('categories'));
+        $this->assertNotEmpty($this->viewVariable('users'));
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no categories
+     * @test
+     */
+    public function testBeforeFilterNoCategories()
+    {
+        //Deletes all categories
+        $this->Posts->Categories->deleteAll(['id IS NOT' => null]);
+
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertRedirect(['controller' => 'PostsCategories', 'action' => 'index']);
+            $this->assertSession('You must first create a category', 'Flash.flash.0.message');
+        }
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no users
+     * @test
+     */
+    public function testBeforeFilterNoUsers()
+    {
+        //Deletes all users
+        $this->Posts->Users->deleteAll(['id IS NOT' => null]);
+
+        foreach (['index', 'add', 'edit'] as $action) {
+            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
+            $this->assertSession('You must first create an user', 'Flash.flash.0.message');
+        }
+    }
+
+    /**
+     * Tests for `initialize()` method
+     * @test
+     */
+    public function testInitialize()
+    {
+        foreach (['add', 'edit'] as $action) {
+            $this->Controller = new PostsController;
+            $this->Controller->request = $this->Controller->request->withParam('action', $action);
+            $this->Controller->initialize();
+
+            $this->assertContains('KcFinder', $this->Controller->components()->loaded());
+        }
     }
 
     /**
@@ -103,7 +175,8 @@ class PostsControllerTest extends IntegrationTestCase
 
         //`edit` and `delete` actions
         foreach (['edit', 'delete'] as $action) {
-            $this->setPostsControllerInstance();
+            $this->Controller = new PostsController;
+            $this->Controller->Posts = $this->Posts;
             $this->Controller->request = $this->Controller->request->withParam('action', $action);
 
             $this->assertGroupsAreAuthorized([
@@ -114,7 +187,8 @@ class PostsControllerTest extends IntegrationTestCase
         }
 
         //`edit` action, with an user who owns the record
-        $this->setPostsControllerInstance();
+        $this->Controller = new PostsController;
+        $this->Controller->Posts = $this->Posts;
         $this->Controller->request = $this->Controller->request
             ->withParam('action', 'edit')
             ->withParam('pass.0', 1);

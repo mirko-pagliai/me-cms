@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -32,6 +34,11 @@ use MeCms\TestSuite\Traits\AuthMethodsTrait;
 class BannersControllerTest extends IntegrationTestCase
 {
     use AuthMethodsTrait;
+
+    /**
+     * @var \MeCms\Model\Table\BannersTable
+     */
+    protected $Banners;
 
     /**
      * @var \MeCms\Controller\Admin\BannersController
@@ -49,6 +56,7 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.me_cms.banners',
+        'plugin.me_cms.banners_positions',
     ];
 
     /**
@@ -63,7 +71,11 @@ class BannersControllerTest extends IntegrationTestCase
 
         $this->setUserGroup('admin');
 
+        $this->Banners = TableRegistry::get('MeCms.Banners');
+
         $this->Controller = new BannersController;
+
+        Cache::clear(false, $this->Banners->cache);
 
         $this->url = ['controller' => 'Banners', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
@@ -76,7 +88,32 @@ class BannersControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->Banners, $this->Controller);
+    }
+
+    /**
+     * Tests for `beforeFilter()` method
+     * @test
+     */
+    public function testBeforeFilter()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->viewVariable('positions'));
+    }
+
+    /**
+     * Tests for `beforeFilter()` method, with no positions
+     * @test
+     */
+    public function testBeforeFilterNoPositions()
+    {
+        //Deletes all positions
+        $this->Banners->Positions->deleteAll(['id IS NOT' => null]);
+
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertRedirect(['controller' => 'BannersPositions', 'action' => 'index']);
+        $this->assertSession('You must first create a banner position', 'Flash.flash.0.message');
     }
 
     /**

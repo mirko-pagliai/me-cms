@@ -48,7 +48,15 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         if ($this->request->isAction(['index', 'add', 'edit'])) {
-            $this->set('groups', $this->Users->Groups->getList());
+            $groups = $this->Users->Groups->getList();
+
+            if (!$groups) {
+                $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
+
+                return $this->redirect(['controller' => 'UsersGroups', 'action' => 'index']);
+            }
+
+            $this->set(compact('groups'));
         }
     }
 

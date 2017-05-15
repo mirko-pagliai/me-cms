@@ -22,6 +22,7 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Event\Event;
 use MeCms\Controller\AppController;
 
 /**
@@ -42,32 +43,31 @@ class PostsController extends AppController
      * @uses MeCms\Model\Table\UsersTable::getActiveList()
      * @uses MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isIndex()) {
-            $categories = $this->Posts->Categories->getList();
-            $users = $this->Posts->Users->getList();
-        } elseif ($this->request->isAction(['add', 'edit'])) {
+        if ($this->request->isAction(['add', 'edit'])) {
             $categories = $this->Posts->Categories->getTreeList();
             $users = $this->Posts->Users->getActiveList();
+        } else {
+            $categories = $this->Posts->Categories->getList();
+            $users = $this->Posts->Users->getList();
         }
 
-        //Checks for categories
-        if (isset($categories) && empty($categories) && !$this->request->isIndex()) {
+        if (!$users) {
+            $this->Flash->alert(__d('me_cms', 'You must first create an user'));
+
+            return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+        }
+
+        if (!$categories) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PostsCategories', 'action' => 'index']);
         }
 
-        if (!empty($categories)) {
-            $this->set(compact('categories'));
-        }
-
-        if (!empty($users)) {
-            $this->set(compact('users'));
-        }
+        $this->set(compact('categories', 'users'));
     }
 
     /**

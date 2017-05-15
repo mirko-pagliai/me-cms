@@ -47,7 +47,7 @@ class BannersController extends AppController
         //Gets positions
         $positions = $this->Banners->Positions->getList();
 
-        if (!$positions && !$this->request->isIndex()) {
+        if (!$positions) {
             $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
 
             return $this->redirect(['controller' => 'BannersPositions', 'action' => 'index']);
