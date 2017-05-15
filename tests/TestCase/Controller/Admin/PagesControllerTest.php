@@ -50,6 +50,7 @@ class PagesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
+        'plugin.me_cms.pages',
         'plugin.me_cms.pages_categories',
     ];
 
