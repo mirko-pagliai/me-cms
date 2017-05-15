@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.18 branch
+### 2.18.0
+* `AppTable::getList()`, `AppTable::getTreeList()` and
+    `UsersTable::getActiveList()` now return a `Query` object.
+
+
 ## 2.17 branch
 ### 2.17.6
 * widgets (cells) use collections;

@@ -129,28 +129,26 @@ class AppTable extends Table
     }
 
     /**
-     * Gets the categories list
-     * @return array
+     * Gets records as list
+     * @return Query $query Query object
      * @uses $cache
      */
     public function getList()
     {
         return $this->find('list')
             ->order([$this->getDisplayField() => 'ASC'])
-            ->cache(sprintf('%s_list', $this->getTable()), $this->cache)
-            ->toArray();
+            ->cache(sprintf('%s_list', $this->getTable()), $this->cache);
     }
 
     /**
-     * Gets the categories tree list
-     * @return array
+     * Gets records as tree list
+     * @return Query $query Query object
      * @uses $cache
      */
     public function getTreeList()
     {
         return $this->find('treeList')
-            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->cache)
-            ->toArray();
+            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->cache);
     }
 
     /**
