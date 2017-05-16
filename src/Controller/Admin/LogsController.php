@@ -144,35 +144,22 @@ class LogsController extends AppController
      * If there's even a serialized log copy, it also deletes that.
      * @param string $filename Filename
      * @return \Cake\Network\Response|null
-     * @throws InternalErrorException
      * @uses _path()
      */
     public function delete($filename)
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $log = $this->_path($filename);
-
-        if (!is_writeable($log)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($log)));
-        }
-
-        $success = (new File($log))->delete();
+        $success = (new File($this->_path($filename)))->delete();
 
         $serialized = $this->_path($filename, true);
 
-        //It also deletes the serialized log copy, where such exists
+        //Deletes the serialized log copy, if it exists
         if (file_exists($serialized)) {
-            if (!is_writeable($serialized)) {
-                throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr($serialized)));
-            }
-
-            if (!(new File($serialized))->delete()) {
-                $success = false;
-            }
+            $successSerialized = (new File($serialized))->delete();
         }
 
-        if ($success) {
+        if ($success && $successSerialized) {
             $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         } else {
             $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
