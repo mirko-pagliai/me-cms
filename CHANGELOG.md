@@ -7,7 +7,8 @@
 * `AppTable::getList()`, `AppTable::getTreeList()` and
     `UsersTable::getActiveList()` now return a `Query` object;
 * added tests for `BackupsController`, `BannersController`,
-    `BannersPositionsController` and `LogsController` admin classes;
+    `BannersPositionsController`, `LogsController` and
+    `PagesCategoriesController` admin classes;
 * added tests for `beforeFilter()` and `initialize()` methods of all admin
     controllers.
 
