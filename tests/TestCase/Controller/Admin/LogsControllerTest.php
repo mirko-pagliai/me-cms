@@ -22,9 +22,11 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Log\Log;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\LogsController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use Reflection\ReflectionTrait;
 
 /**
  * LogsControllerTest class
@@ -32,6 +34,7 @@ use MeCms\TestSuite\Traits\AuthMethodsTrait;
 class LogsControllerTest extends IntegrationTestCase
 {
     use AuthMethodsTrait;
+    use ReflectionTrait;
 
     /**
      * @var \MeCms\Controller\Admin\LogsController
@@ -44,6 +47,15 @@ class LogsControllerTest extends IntegrationTestCase
     protected $url;
 
     /**
+     * Internal method to write some logs
+     */
+    protected function _writeSomeLogs()
+    {
+        Log::write('error', 'This is an error message');
+        Log::write('critical', 'This is a critical message');
+    }
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -52,6 +64,15 @@ class LogsControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+
+        Log::drop('error');
+        Log::setConfig('error', [
+            'className' => 'MeCms\Log\Engine\SerializedLog',
+            'path' => LOGS,
+            'file' => 'error',
+            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+            'url' => env('LOG_ERROR_URL', null),
+        ]);
 
         $this->setUserGroup('admin');
 
@@ -78,6 +99,43 @@ class LogsControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Tests for `_path()` method
+     * @test
+     */
+    public function testPath()
+    {
+        $result = $this->invokeMethod($this->Controller, '_path', ['file.log']);
+        $this->assertEquals(LOGS . 'file.log', $result);
+
+        $result = $this->invokeMethod($this->Controller, '_path', ['file.log', true]);
+        $this->assertEquals(LOGS . 'file_serialized.log', $result);
+    }
+
+    /**
+     * Tests for `_read()` method
+     * @test
+     */
+    public function testRead()
+    {
+        $this->_writeSomeLogs();
+
+        $this->assertNotEmpty($this->invokeMethod($this->Controller, '_read', ['error.log']));
+
+        $this->assertNotEmpty($this->invokeMethod($this->Controller, '_read', ['error.log', true]));
+    }
+
+    /**
+     * Tests for `_read()` method, with a not readable file
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage File or directory /tmp/cakephp_log/noExisting.log not readable
+     * @test
+     */
+    public function testReadNotReadableFile()
+    {
+        $this->invokeMethod($this->Controller, '_read', ['noExisting.log']);
+    }
+
+    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -91,18 +149,104 @@ class LogsControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Tests for `index()` method
+     * @test
+     */
+    public function testIndex()
+    {
+        $this->_writeSomeLogs();
+
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/index.ctp');
+
+        $logsFromView = $this->viewVariable('logs');
+        $this->assertTrue(is_array($logsFromView));
+        $this->assertNotEmpty($logsFromView);
+
+        $logs = collection($logsFromView)->map(function ($log) {
+            return (array)$log;
+        })->toList();
+
+        $this->assertEquals([
+            [
+                'filename' => 'error.log',
+                'hasSerialized' => true,
+                'size' => filesize(LOGS . 'error.log'),
+            ],
+        ], $logs);
+    }
+
+    /**
+     * Tests for `view()` method
+     * @test
+     */
+    public function testView()
+    {
+        $this->_writeSomeLogs();
+
+        $this->get(array_merge($this->url, ['action' => 'view', 'error.log']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/view.ctp');
+
+        $contentFromView = $this->viewVariable('content');
+        $this->assertNotEmpty('some data', $contentFromView);
+
+        $filenameFromView = $this->viewVariable('filename');
+        $this->assertEquals('error.log', $filenameFromView);
+    }
+
+    /**
+     * Tests for `view()` method, render as serialized
+     * @test
+     */
+    public function testViewAsSerialized()
+    {
+        $this->_writeSomeLogs();
+
+        $this->get(array_merge($this->url, ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/view_as_serialized.ctp');
+
+        $contentFromView = $this->viewVariable('content');
+        $this->assertNotEmpty('some data', $contentFromView);
+
+        $filenameFromView = $this->viewVariable('filename');
+        $this->assertEquals('error.log', $filenameFromView);
+    }
+
+    /**
      * Tests for `download()` method
      * @test
      */
     public function testDownload()
     {
-        $file = LOGS . 'error.log';
-        file_put_contents($file, null);
+        $this->_writeSomeLogs();
 
-        $url = array_merge($this->url, ['action' => 'download', 'error.log']);
-
-        $this->get($url);
+        $this->get(array_merge($this->url, ['action' => 'download', 'error.log']));
         $this->assertResponseOk();
-        $this->assertFileResponse($file);
+        $this->assertFileResponse(LOGS . 'error.log');
+    }
+
+    /**
+     * Tests for `delete()` method
+     * @test
+     */
+    public function testDelete()
+    {
+        $this->_writeSomeLogs();
+
+        //POST request
+        $this->post(array_merge($this->url, ['action' => 'delete', 'error.log']));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. The log file doesn't exist
+        $this->post(array_merge($this->url, ['action' => 'delete', 'noExisting.log']));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has not been performed correctly', 'Flash.flash.0.message');
     }
 }
