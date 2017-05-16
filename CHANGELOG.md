@@ -2,7 +2,8 @@
 ## 2.18 branch
 ### 2.18.0
 * widgets (cells) use collections;
-* fixed little bugs and improved code for `BannersController` admin controller;
+* fixed little bugs and improved code for `BannersController` and 
+    `PhotosController` admin classes;
 * by default, cookies are not encrypted;
 * `AppTable::getList()`, `AppTable::getTreeList()` and
     `UsersTable::getActiveList()` now return a `Query` object;
