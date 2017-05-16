@@ -244,7 +244,7 @@ class BannersControllerTest extends IntegrationTestCase
         $this->assertEquals(1, $banner['position_id']);
         $this->assertEquals('file_to_upload.jpg', $banner['filename']);
 
-        //Deletes all positions, except for the first one
+        //Deletes all positions (except for the first one) and all banners
         $this->Banners->deleteAll(['id >=' => 1]);
         $this->Banners->Positions->deleteAll(['id >' => 1]);
 
@@ -261,7 +261,7 @@ class BannersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `download()` method
+     * Tests for `edit()` method
      * @test
      */
     public function testEdit()
