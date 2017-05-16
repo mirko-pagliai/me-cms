@@ -77,18 +77,16 @@ class PagesCategoriesController extends AppController
         $categories = $this->PagesCategories->find('all')
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order(['PagesCategories.lft' => 'ASC'])
-            ->toArray();
+            ->formatResults(function ($categories) {
+                //Gets categories as tree list
+                $treeList = $this->PagesCategories->getTreeList()->toArray();
 
-        //Gets categories as tree list
-        $treeList = $this->PagesCategories->getTreeList();
+                return $categories->map(function ($category) use ($treeList) {
+                    $category->title = $treeList[$category->id];
 
-        //Changes the category titles, replacing them with the titles of the
-        //  tree list
-        $categories = array_map(function ($category) use ($treeList) {
-            $category->title = $treeList[$category->id];
-
-            return $category;
-        }, $categories);
+                    return $category;
+                });
+            });
 
         $this->set(compact('categories'));
     }
@@ -108,9 +106,9 @@ class PagesCategoriesController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('category'));
@@ -132,9 +130,9 @@ class PagesCategoriesController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('category'));
@@ -152,11 +150,9 @@ class PagesCategoriesController extends AppController
 
         //Before deleting, it checks if the category has some pages
         if (!$category->page_count) {
-            if ($this->PagesCategories->delete($category)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-            }
+            $this->PagesCategories->deleteOrFail($category);
+
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         } else {
             $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
