@@ -48,11 +48,6 @@ class BannersControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
-     * @var array
-     */
-    protected $url;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -60,6 +55,11 @@ class BannersControllerTest extends IntegrationTestCase
         'plugin.me_cms.banners',
         'plugin.me_cms.banners_positions',
     ];
+
+    /**
+     * @var array
+     */
+    protected $url;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -273,19 +273,24 @@ class BannersControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/edit.ctp');
 
+        $bannerFromView = $this->viewVariable('banner');
+        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannerFromView);
+        $this->assertNotEmpty($bannerFromView);
+
         //POST request. Data are valid
-        $description = 'New description for first banner';
-        $this->post($url, compact('description'));
+        $this->post($url, ['description' => 'New description for first banner']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
-
-        $this->assertEquals($description, $this->Banners->get(1)->description);
 
         //POST request. Data are invalid
         $this->post($url, ['target' => 'invalidTarget']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
+
+        $bannerFromView = $this->viewVariable('banner');
+        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannerFromView);
+        $this->assertNotEmpty($bannerFromView);
     }
 
     /**
