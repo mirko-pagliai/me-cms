@@ -177,9 +177,9 @@ class BannersController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('banner'));
@@ -207,7 +207,7 @@ class BannersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $this->Banners->deleteOrFail($this->Banners->get($id));
-        
+
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
