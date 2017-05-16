@@ -223,14 +223,14 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     {
         $id = $this->PagesCategories->find()->where(['page_count <' => 1])->extract('id')->first();
 
-        //POST request. This position has no banner
+        //POST request. This category has no pages
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
         $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
 
         $id = $this->PagesCategories->find()->where(['page_count >=' => 1])->extract('id')->first();
 
-        //POST request. This position has some banners, so it cannot be deleted
+        //POST request. This category has some pages, so it cannot be deleted
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
         $this->assertSession(
