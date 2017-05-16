@@ -23,6 +23,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Network\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
@@ -85,8 +86,9 @@ class BannersController extends AppController
     {
         $render = $this->request->getQuery('render');
 
-        if ($this->Cookie->read('render.banners') === 'grid' && !$render) {
-            return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
+        //The "render" type can also be set via cookies, if it's not set by query
+        if (!$render && $this->Cookie->check('renderBanners')) {
+            $render = $this->Cookie->read('renderBanners');
         }
 
         $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
@@ -102,7 +104,7 @@ class BannersController extends AppController
         $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQuery())));
 
         if ($render) {
-            $this->Cookie->write('render.banners', $render);
+            $this->Cookie->write('renderBanners', $render);
 
             if ($render === 'grid') {
                 $this->render('index_as_grid');
@@ -121,10 +123,12 @@ class BannersController extends AppController
     public function upload()
     {
         $position = $this->request->getQuery('position');
+        $positions = $this->viewVars['positions']->toArray();
 
-        //If there's only one position, it automatically sets the query value
-        if (!$position && count($this->viewVars['positions']) < 2) {
-            $this->request = $this->request->withQueryParams(['position' => firstKey($this->viewVars['positions'])]);
+        //If there's only one available position
+        if (!$position && count($positions) < 2) {
+            $position = collection(array_keys($positions))->first();
+            $this->request = $this->request->withQueryParams(compact('position'));
         }
 
         if ($this->request->getData('file')) {
@@ -202,13 +206,9 @@ class BannersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $banner = $this->Banners->get($id);
-
-        if ($this->Banners->delete($banner)) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        $this->Banners->deleteOrFail($this->Banners->get($id));
+        
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
     }
