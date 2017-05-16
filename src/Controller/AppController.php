@@ -116,7 +116,7 @@ class AppController extends BaseController
     {
         //Loads components
         //The configuration for `AuthComponent`  takes place in the same class
-        $this->loadComponent('Cookie');
+        $this->loadComponent('Cookie', ['encryption' => false]);
         $this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');

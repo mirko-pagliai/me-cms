@@ -121,12 +121,13 @@ class PostsTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.15.2
+     * @uses \MeCms\Model\Table\AppTable::getList()
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         if (!empty($data['tags_as_string'])) {
             //Gets existing tags
-            $existingTags = $this->Tags->getList();
+            $existingTags = $this->Tags->getList()->toArray();
 
             $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
 

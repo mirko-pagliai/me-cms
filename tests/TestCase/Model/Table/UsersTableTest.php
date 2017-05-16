@@ -295,13 +295,19 @@ class UsersTableTest extends TestCase
      */
     public function testGetActiveList()
     {
-        $users = $this->Users->getActiveList();
+        $query = $this->Users->getActiveList();
+        $this->assertInstanceof('Cake\ORM\Query', $query);
+        $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
 
+        $list = $query->toArray();
         $this->assertEquals([
             4 => 'Abc Def',
             1 => 'Alfa Beta',
             3 => 'Ypsilon Zeta',
-        ], $users);
+        ], $list);
+
+        $fromCache = Cache::read('active_users_list', $this->Users->cache)->toArray();
+        $this->assertEquals($fromCache, $list);
     }
 
     /**

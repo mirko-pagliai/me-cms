@@ -297,6 +297,9 @@ class UsersControllerTest extends IntegrationTestCase
             'Tokens\Controller\Component\TokenComponent',
             'MeCms\Controller\Component\LoginRecorderComponent',
         ], $components);
+
+        $this->assertEquals('aes', $this->Controller->Cookie->configKey('login')['encryption']);
+        $this->assertEquals('+365 days', $this->Controller->Cookie->configKey('login')['expires']);
     }
 
     /**

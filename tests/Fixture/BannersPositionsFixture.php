@@ -68,5 +68,13 @@ class BannersPositionsFixture extends TestFixture
             'created' => '2016-12-26 16:27:20',
             'modified' => '2016-12-26 16:27:20',
         ],
+        [
+            'id' => 3,
+            'title' => 'bottom',
+            'description' => 'Bottom Banners',
+            'banner_count' => 0,
+            'created' => '2016-12-26 16:28:20',
+            'modified' => '2016-12-26 16:28:20',
+        ],
     ];
 }

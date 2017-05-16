@@ -117,8 +117,8 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Gets the active users list
-     * @return array List
+     * Gets active users as list
+     * @return Query $query Query object
      * @uses $cache
      */
     public function getActiveList()
@@ -127,13 +127,12 @@ class UsersTable extends AppTable
             ->select(['id', 'first_name', 'last_name'])
             ->where([sprintf('%s.active', $this->getAlias()) => true])
             ->order(['username' => 'ASC'])
-            ->formatResults(function ($results) {
-                return $results->indexBy('id')->map(function ($row) {
-                    return $row->first_name . ' ' . $row->last_name;
+            ->formatResults(function ($users) {
+                return $users->indexBy('id')->map(function ($user) {
+                    return $user->first_name . ' ' . $user->last_name;
                 });
             })
-            ->cache('active_users_list', $this->cache)
-            ->toArray();
+            ->cache(sprintf('active_%s_list', $this->getTable()), $this->cache);
     }
 
     /**

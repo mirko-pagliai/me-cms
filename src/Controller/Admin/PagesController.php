@@ -59,7 +59,7 @@ class PagesController extends AppController
             $categories = $this->Pages->Categories->getList();
         }
 
-        if (!$categories) {
+        if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
             return $this->redirect(['controller' => 'PagesCategories', 'action' => 'index']);

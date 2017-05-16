@@ -228,31 +228,20 @@ class AppTableTest extends TestCase
      */
     public function testGetList()
     {
-        $cacheKey = sprintf('%s_list', $this->Photos->getTable());
-        $this->assertEquals($cacheKey, 'photos_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->Photos->cache));
+        $query = $this->Photos->getList();
+        $this->assertInstanceof('Cake\ORM\Query', $query);
+        $this->assertContains('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
 
-        $list = $this->Photos->getList();
+        $list = $query->toArray();
         $this->assertEquals([
             1 => 'photo1.jpg',
             3 => 'photo3.jpg',
             4 => 'photo4.jpg',
             2 => 'photoa.jpg',
         ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->Photos->cache)->toArray());
 
-        $cacheKey = sprintf('%s_list', $this->PostsCategories->getTable());
-        $this->assertEquals($cacheKey, 'posts_categories_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
-
-        $list = $this->PostsCategories->getList();
-        $this->assertEquals([
-            2 => 'Another post category',
-            1 => 'First post category',
-            3 => 'Sub post category',
-            4 => 'Sub sub post category',
-        ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->PostsCategories->cache)->toArray());
+        $fromCache = Cache::read('photos_list', $this->Photos->cache)->toArray();
+        $this->assertEquals($list, $fromCache);
     }
 
     /**
@@ -261,18 +250,19 @@ class AppTableTest extends TestCase
      */
     public function testGetTreeList()
     {
-        $cacheKey = sprintf('%s_tree_list', $this->PostsCategories->getTable());
-        $this->assertEquals($cacheKey, 'posts_categories_tree_list');
-        $this->assertFalse(Cache::read($cacheKey, $this->PostsCategories->cache));
+        $query = $this->PostsCategories->getTreeList();
+        $this->assertInstanceof('Cake\ORM\Query', $query);
 
-        $list = $this->PostsCategories->getTreeList();
+        $list = $query->toArray();
         $this->assertEquals([
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
         ], $list);
-        $this->assertEquals($list, Cache::read($cacheKey, $this->PostsCategories->cache)->toArray());
+
+        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->cache)->toArray();
+        $this->assertEquals($list, $fromCache);
     }
 
     /**

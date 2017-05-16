@@ -1,8 +1,13 @@
 # 2.x branch
-## 2.17 branch
-### 2.17.6
+## 2.18 branch
+### 2.18.0
 * widgets (cells) use collections;
-* added tests for `BackupsController` admin class;
+* fixed little bugs and improved code for `BannersController` admin controller;
+* by default, cookies are not encrypted;
+* `AppTable::getList()`, `AppTable::getTreeList()` and
+    `UsersTable::getActiveList()` now return a `Query` object;
+* added tests for `BackupsController`, `BannersController`,
+    `BannersPositionsController` and `LogsController` admin classes;
 * added tests for `beforeFilter()` and `initialize()` methods of all admin
     controllers.
 
