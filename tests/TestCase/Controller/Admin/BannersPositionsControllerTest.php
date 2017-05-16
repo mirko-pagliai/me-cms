@@ -22,6 +22,8 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersPositionsController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -34,9 +36,22 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     use AuthMethodsTrait;
 
     /**
+     * @var \MeCms\Model\Table\BannersPositionsTable
+     */
+    protected $BannersPositions;
+
+    /**
      * @var \MeCms\Controller\Admin\BannersPositionsController
      */
     protected $Controller;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.banners_positions',
+    ];
 
     /**
      * @var array
@@ -55,7 +70,11 @@ class BannersPositionsControllerTest extends IntegrationTestCase
 
         $this->setUserGroup('admin');
 
+        $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
+
         $this->Controller = new BannersPositionsController;
+
+        Cache::clear(false, $this->BannersPositions->cache);
 
         $this->url = ['controller' => 'BannersPositions', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
     }
@@ -68,7 +87,7 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller);
+        unset($this->BannersPositions, $this->Controller);
     }
 
     /**
@@ -82,5 +101,114 @@ class BannersPositionsControllerTest extends IntegrationTestCase
             'manager' => false,
             'user' => false,
         ]);
+    }
+
+    /**
+     * Tests for `index()` method
+     * @test
+     */
+    public function testIndex()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/index.ctp');
+
+        $positionsFromView = $this->viewVariable('positions');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $positionsFromView);
+        $this->assertNotEmpty($positionsFromView);
+    }
+
+    /**
+     * Tests for `add()` method
+     * @test
+     */
+    public function testAdd()
+    {
+        $url = array_merge($this->url, ['action' => 'add']);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/add.ctp');
+
+        $positionFromView = $this->viewVariable('position');
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertNotEmpty($positionFromView);
+
+        //POST request. Data are valid
+        $this->post($url, [
+            'title' => 'new-position-title',
+            'descriptions' => 'new position description',
+        ]);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $positionFromView = $this->viewVariable('position');
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertNotEmpty($positionFromView);
+    }
+
+    /**
+     * Tests for `edit()` method
+     * @test
+     */
+    public function testEdit()
+    {
+        $url = array_merge($this->url, ['action' => 'edit', 1]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/edit.ctp');
+
+        $positionFromView = $this->viewVariable('position');
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertNotEmpty($positionFromView);
+
+        //POST request. Data are valid
+        $this->post($url, ['title' => 'another-title']);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $positionFromView = $this->viewVariable('position');
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertNotEmpty($positionFromView);
+    }
+
+    /**
+     * Tests for `delete()` method
+     * @test
+     */
+    public function testDelete()
+    {
+        $id = $this->BannersPositions->find()->where(['banner_count <' => 1])->extract('id')->first();
+
+        //POST request. This position has no banner
+        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        $id = $this->BannersPositions->find()->where(['banner_count >=' => 1])->extract('id')->first();
+
+        //POST request. This position has some banners, so it cannot be deleted
+        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession(
+            'Before deleting this, you must delete or reassign all items that belong to this element',
+            'Flash.flash.0.message'
+        );
     }
 }

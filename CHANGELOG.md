@@ -5,7 +5,8 @@
 * by default, cookies are not encrypted;
 * `AppTable::getList()`, `AppTable::getTreeList()` and
     `UsersTable::getActiveList()` now return a `Query` object;
-* added tests for `BannersController` admin class.
+* added tests for `BannersController` and `BannersPositionsController` admin
+    classes.
 
 
 ## 2.17 branch
