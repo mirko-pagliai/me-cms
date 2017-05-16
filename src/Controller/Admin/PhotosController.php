@@ -85,8 +85,9 @@ class PhotosController extends AppController
     {
         $render = $this->request->getQuery('render');
 
-        if ($this->Cookie->read('render.photos') === 'grid' && !$render) {
-            return $this->redirect(['?' => am($this->request->getQuery(), ['render' => 'grid'])]);
+        //The "render" type can also be set via cookies, if it's not set by query
+        if (!$render && $this->Cookie->check('renderPhotos')) {
+            $render = $this->Cookie->read('renderPhotos');
         }
 
         $query = $this->Photos->find()->contain(['Albums' => ['fields' => ['id', 'slug', 'title']]]);
@@ -102,7 +103,7 @@ class PhotosController extends AppController
         $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQuery())));
 
         if ($render) {
-            $this->Cookie->write('render.photos', $render);
+            $this->Cookie->write('renderPhotos', $render);
 
             if ($render === 'grid') {
                 $this->render('index_as_grid');
@@ -121,10 +122,12 @@ class PhotosController extends AppController
     public function upload()
     {
         $album = $this->request->getQuery('album');
+        $albums = $this->viewVars['albums']->toArray();
 
-        //If there's only one album, it automatically sets the query value
-        if (!$album && count($this->viewVars['albums']) < 2) {
-            $this->request = $this->request->withQueryParams(['album' => firstKey($this->viewVars['albums'])]);
+        //If there's only one available album
+        if (!$album && count($albums) < 2) {
+            $album = collection(array_keys($albums))->first();
+            $this->request = $this->request->withQueryParams(compact('album'));
         }
 
         if ($this->request->getData('file')) {
@@ -173,9 +176,9 @@ class PhotosController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index', $photo->album_id]);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('photo'));
@@ -204,11 +207,9 @@ class PhotosController extends AppController
 
         $photo = $this->Photos->get($id);
 
-        if ($this->Photos->delete($photo)) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        $this->Photos->deleteOrFail($photo);
+
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index', $photo->album_id]);
     }
