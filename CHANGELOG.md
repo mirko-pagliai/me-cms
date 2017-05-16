@@ -4,7 +4,8 @@
 * fixed little bugs and improved code for `BannersController` admin controller;
 * by default, cookies are not encrypted;
 * `AppTable::getList()`, `AppTable::getTreeList()` and
-    `UsersTable::getActiveList()` now return a `Query` object.
+    `UsersTable::getActiveList()` now return a `Query` object;
+* added tests for `BannersController` admin class.
 
 
 ## 2.17 branch
