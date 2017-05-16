@@ -102,6 +102,8 @@ class AppControllerTest extends TestCase
             'MeTools\Controller\Component\UploaderComponent',
             'MeTools\Controller\Component\RecaptchaComponent',
         ], $components);
+
+        $this->assertFalse($this->Controller->Cookie->config('encryption'));
     }
 
     /**

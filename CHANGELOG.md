@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.18 branch
 ### 2.18.0
+* by default, cookies are not encrypted;
 * `AppTable::getList()`, `AppTable::getTreeList()` and
     `UsersTable::getActiveList()` now return a `Query` object.
 

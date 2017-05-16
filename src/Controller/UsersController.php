@@ -111,6 +111,11 @@ class UsersController extends AppController
     {
         parent::initialize();
 
+        $this->Cookie->configKey('login', [
+            'encryption' => 'aes',
+            'expires' => '+365 days',
+        ]);
+
         $this->loadComponent('Tokens.Token');
         $this->loadComponent('MeCms.LoginRecorder');
     }
@@ -254,7 +259,7 @@ class UsersController extends AppController
 
                 //Saves the login data as cookies, if requested
                 if ($this->request->getData('remember_me')) {
-                    $this->Cookie->setConfig('expires', '+365 days')->write('login', [
+                    $this->Cookie->write('login', [
                         'username' => $this->request->getData('username'),
                         'password' => $this->request->getData('password'),
                     ]);
