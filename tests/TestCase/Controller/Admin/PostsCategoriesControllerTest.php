@@ -125,4 +125,117 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
             'user' => false,
         ]);
     }
+
+    /**
+     * Tests for `index()` method
+     * @test
+     */
+    public function testIndex()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsCategories/index.ctp');
+
+        $categoriesFromView = $this->viewVariable('categories');
+        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
+        $this->assertNotEmpty($categoriesFromView);
+
+        foreach ($categoriesFromView as $category) {
+            $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $category);
+        }
+    }
+
+    /**
+     * Tests for `add()` method
+     * @test
+     */
+    public function testAdd()
+    {
+        $url = array_merge($this->url, ['action' => 'add']);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsCategories/add.ctp');
+
+        $categoryFromView = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertNotEmpty($categoryFromView);
+
+        //POST request. Data are valid
+        $this->post($url, [
+            'title' => 'new category',
+            'slug' => 'new-category-slug',
+        ]);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $categoryFromView = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertNotEmpty($categoryFromView);
+    }
+
+    /**
+     * Tests for `edit()` method
+     * @test
+     */
+    public function testEdit()
+    {
+        $url = array_merge($this->url, ['action' => 'edit', 1]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsCategories/edit.ctp');
+
+        $categoryFromView = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertNotEmpty($categoryFromView);
+
+        //POST request. Data are valid
+        $this->post($url, ['title' => 'another title']);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $categoryFromView = $this->viewVariable('category');
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertNotEmpty($categoryFromView);
+    }
+
+    /**
+     * Tests for `delete()` method
+     * @test
+     */
+    public function testDelete()
+    {
+        $id = $this->PostsCategories->find()->where(['post_count <' => 1])->extract('id')->first();
+
+        //POST request. This category has no pages
+        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        $id = $this->PostsCategories->find()->where(['post_count >=' => 1])->extract('id')->first();
+
+        //POST request. This category has some pages, so it cannot be deleted
+        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession(
+            'Before deleting this, you must delete or reassign all items that belong to this element',
+            'Flash.flash.0.message'
+        );
+    }
 }
