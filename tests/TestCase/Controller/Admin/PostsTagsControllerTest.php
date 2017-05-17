@@ -39,6 +39,16 @@ class PostsTagsControllerTest extends IntegrationTestCase
     protected $Controller;
 
     /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_tags',
+        'plugin.me_cms.tags',
+    ];
+
+    /**
      * @var array
      */
     protected $url;
@@ -92,5 +102,58 @@ class PostsTagsControllerTest extends IntegrationTestCase
             'manager' => true,
             'user' => false,
         ]);
+    }
+
+    /**
+     * Tests for `index()` method
+     * @test
+     */
+    public function testIndex()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/index.ctp');
+
+        $tagsFromView = $this->viewVariable('tags');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $tagsFromView);
+        $this->assertNotEmpty($tagsFromView);
+
+        foreach ($tagsFromView as $tag) {
+            $this->assertInstanceof('MeCms\Model\Entity\Tag', $tag);
+        }
+    }
+
+    /**
+     * Tests for `edit()` method
+     * @test
+     */
+    public function testEdit()
+    {
+        $url = array_merge($this->url, ['action' => 'edit', 1]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/edit.ctp');
+
+        $tagFromView = $this->viewVariable('tag');
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
+        $this->assertNotEmpty($tagFromView);
+
+        //POST request. Data are valid
+        $this->post($url, ['tag' => 'another tag']);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['tag' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $tagFromView = $this->viewVariable('tag');
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
+        $this->assertNotEmpty($tagFromView);
     }
 }
