@@ -54,7 +54,8 @@ class PostsTagsController extends AppController
      */
     public function index()
     {
-        $query = $this->PostsTags->Tags->find()->where(['post_count >' => 0]);
+        $query = $this->PostsTags->Tags->find()
+            ->matching($this->PostsTags->Posts->alias());
 
         $this->paginate['order'] = ['tag' => 'ASC'];
 
@@ -82,9 +83,9 @@ class PostsTagsController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('tag'));
