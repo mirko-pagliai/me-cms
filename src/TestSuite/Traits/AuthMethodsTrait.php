@@ -82,7 +82,7 @@ trait AuthMethodsTrait
         }
 
         if (method_exists($this, 'session')) {
-            $this->session(['Auth' => ['User' => ['id' => $id]]]);
+            $this->session(['Auth.User.id' => $id]);
         }
     }
 
@@ -99,7 +99,7 @@ trait AuthMethodsTrait
         }
 
         if (method_exists($this, 'session')) {
-            $this->session(['Auth' => ['User' => ['group' => ['name' => $group]]]]);
+            $this->session(['Auth.User.group.name' => $group]);
         }
     }
 }
