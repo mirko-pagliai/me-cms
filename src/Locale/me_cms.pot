@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2017-05-05 14:39+0200\n"
+"POT-Creation-Date: 2017-05-20 20:29+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -30,22 +30,22 @@ msgstr ""
 msgid "Updates to {0} version"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsCategoriesController.php:89
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsTagsController.php:98
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsCategoriesController.php:88
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsTagsController.php:97
 msgid "Record not found"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:235
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:202
 msgid "You have to search at least a word of {0} characters"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:242
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:209
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/SystemsController.php:66
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:179;309;399
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:283
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:185;309;404
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:274
 msgid "Disabled"
 msgstr ""
 
@@ -57,101 +57,101 @@ msgstr ""
 msgid "The email was not sent"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:147;361
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:152;366
 msgid "Invalid token"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:157
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:162
 msgid "The account has been activated"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:159
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:164
 msgid "The account has not been activated"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:204
-msgid "We have sent you an email to reset your password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:217
-msgid "No account found"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:246
-msgid "Your account has been banned by an admin"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:248
-msgid "Your account has not been activated yet"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:279
-msgid "Invalid username or password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:292
-msgid "You are successfully logged out"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:329;428
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:205;432
 msgid "We send you an email to activate your account"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:342
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:218
 msgid "No valid account was found"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:373
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:247
+msgid "Your account has been banned by an admin"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:249
+msgid "Your account has not been activated yet"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:280
+msgid "Invalid username or password"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:293
+msgid "You are successfully logged out"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:334
+msgid "We have sent you an email to reset your password"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:347
+msgid "No account found"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:378
 msgid "The password has been edited"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:381
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:386
 msgid "The password has not been edited"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:420
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:424
 msgid "Account created, but it needs to be activated by an admin"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:432
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:436
 msgid "Account created. Now you can login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:438
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/UsersController.php:442
 msgid "The account has not been created"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:79;101;119;157
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:175;210
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:71;95;119
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:176
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:107;131;155
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:146;178;200
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:75;99;123
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:175;210
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:106;130;154
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:154;195;217
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:82
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:273
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:142;177;215;236;263
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:71;95;119
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:79;102;118;151
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:177;211
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:71;95;120
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:163
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:106;130;155
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:149;181;202
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:75;99;124
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:176;212
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:106;130;155
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:154;195;216
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:83
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:271
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:149;181;214;233;254
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:71;95;120
 msgid "The operation has been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:83;103;121;159
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:179;212
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:75;99;121
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:178
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:111;135;157
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:150;182;202
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:79;103;125
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:179;212
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:110;134;156
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:158;199;219
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:86
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:275
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:146;181;217;238;267
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:75;99;121
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BackupsController.php:83
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:182
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:76;100
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/LogsController.php:165
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:111;135
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:154;186
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:80;104
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:181
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:111;135
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:159;200
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsTagsController.php:88
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:273
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:154;186;259
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:76;100
 msgid "The operation has not been performed correctly"
 msgstr ""
 
@@ -159,57 +159,61 @@ msgstr ""
 msgid "You must first create a banner position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:134
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:136
 msgid "Missing position ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:153
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:155
 msgid "The banner could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:124
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:160
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:128
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:159
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:209
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:126
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersPositionsController.php:122
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesCategoriesController.php:157
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosAlbumsController.php:126
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsCategoriesController.php:157
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:210
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:124
 msgid "Before deleting this, you must delete or reassign all items that belong to this element"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:58
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:59
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:63
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:65
 msgid "You must first create a category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:53
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:52
 msgid "You must first create an album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:134
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:135
 msgid "Missing album ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:153
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:154
 msgid "The photo could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:173
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:59
+msgid "You must first create an user"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:172
 msgid "n.a."
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/SystemsController.php:269
-msgid "Unknown command type"
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:54
+msgid "You must first create an user group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:168;207
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:172;208
 msgid "Only the admin founder can do this"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:204
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:205
 msgid "You cannot delete the admin founder"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:124
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersGroupsController.php:122
 msgid "You cannot delete this users group"
 msgstr ""
 
@@ -269,7 +273,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PhotosAlbumsTable.php:89;90
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PhotosTable.php:100
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsCategoriesTable.php:51;52
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:174;175
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:175;176
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/TagsTable.php:49
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/UsersGroupsTable.php:47;48
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/UsersTable.php:72;73
@@ -281,7 +285,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PagesTable.php:134
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PhotosTable.php:99
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsCategoriesTable.php:50
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:172;173
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:173;174
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTagsTable.php:49;50
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/UsersTable.php:71
 #: /home/mirko/Libs/Plugins/MeCms/src/Model/Validation/AppValidator.php:55;153;169
@@ -293,7 +297,7 @@ msgstr ""
 msgid "You have to select a valid option"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:220
+#: /home/mirko/Libs/Plugins/MeCms/src/Model/Table/PostsTable.php:221
 msgid "ID or tags of the post are missing"
 msgstr ""
 
@@ -426,19 +430,19 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:64
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:62
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:48
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:52
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:50
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:54
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/login.ctp:43
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/reset_password.ctp:37
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_reset.ctp:37
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:51
 msgid "Password"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:65
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:71
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:58
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:64
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/reset_password.ctp:47
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:72
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:61
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:67
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_reset.ctp:47
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:61
 msgid "Repeat password"
 msgstr ""
@@ -449,23 +453,23 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:84
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:64
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Systems/contact_us.ctp:38
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/forgot_password.ctp:32
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/resend_activation.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/activation_resend.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_forgot.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:36
 msgid "Email"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:67
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:75
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:71
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:77
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:73
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Systems/contact_us.ctp:31
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:66
 msgid "First name"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:68
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:79
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:75
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:81
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:77
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Systems/contact_us.ctp:34
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:70
 msgid "Last name"
@@ -628,7 +632,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Banners/index.ctp:30
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Logs/index.ctp:35
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Pages/index_statics.ctp:29
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:49
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:45
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:30
 msgid "Filename"
 msgstr ""
@@ -645,7 +649,7 @@ msgstr ""
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/BannersPositions/index.ctp:43
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/add.ctp:54
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PagesCategories/edit.ctp:54
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:52
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/edit.ctp:48
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Photos/index.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/add.ctp:43
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/PhotosAlbums/edit.ctp:43
@@ -1577,17 +1581,17 @@ msgid "If is not active, the user won't be able to login"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:53
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/forgot_password.ctp:37
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/resend_activation.ctp:37
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/activation_resend.ctp:37
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_forgot.ctp:37
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:41
 msgid "Repeat email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:60;69
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:35;46;56
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:50;62
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:60;70
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:35;47;58
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:50;63
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/login.ctp:40
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/reset_password.ctp:35;45
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_reset.ctp:35;45
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:49;59
 msgid "Show/hide password"
 msgstr ""
@@ -1597,20 +1601,20 @@ msgid "Change your password"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:37
-msgid "Old password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:38
 msgid "Enter your old password"
 msgstr ""
 
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:38
+msgid "Old password"
+msgstr ""
+
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:49
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/reset_password.ctp:38
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_reset.ctp:38
 msgid "Enter your new password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:59
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/reset_password.ctp:48
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/change_password.ctp:60
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_reset.ctp:48
 msgid "Repeat your new password"
 msgstr ""
 
@@ -1618,7 +1622,7 @@ msgstr ""
 msgid "Edit user"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:54;66
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/edit.ctp:52;65
 msgid "If you want to change the password just type a new one. Otherwise, leave the field empty"
 msgstr ""
 
@@ -1663,7 +1667,8 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/last_login.ctp:24
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:101
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:67
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:62
 msgid "Last login"
 msgstr ""
 
@@ -1683,13 +1688,13 @@ msgstr ""
 msgid "Users groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/PhotosWidgets/latest.ctp:28
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/PhotosWidgets/latest.ctp:30
 msgid "Latest photo"
 msgid_plural "Latest {0} photos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/PhotosWidgets/random.ctp:28
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/PhotosWidgets/random.ctp:30
 msgid "Random photo"
 msgid_plural "Random {0} photos"
 msgstr[0] ""
@@ -1701,7 +1706,7 @@ msgstr[1] ""
 msgid "Popular tags"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/PostsWidgets/latest.ctp:28
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Cell/PostsWidgets/latest.ctp:30
 msgid "Latest post"
 msgid_plural "Latest {0} posts"
 msgstr[0] ""
@@ -1777,13 +1782,13 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:54
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:74
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:59
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:69
 msgid "Change password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:55
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:80
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:64
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:74
 msgid "Logout"
 msgstr ""
 
@@ -1835,11 +1840,11 @@ msgstr ""
 msgid "{0} {1} on {2}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/list-grid-buttons.ctp:29
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/list-grid-buttons.ctp:28
 msgid "Show as list"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/list-grid-buttons.ctp:34
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/list-grid-buttons.ctp:33
 msgid "Show as grid"
 msgstr ""
 
@@ -1848,26 +1853,26 @@ msgstr ""
 msgid "Homepage"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/uploader.ctp:32
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/uploader.ctp:31
 msgid "Drag files here or click"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:27
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:28
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/login.ctp:24
 msgid "Login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:34
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:35
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:24
 msgid "Sign up"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:41
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/resend_activation.ctp:24
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:42
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/activation_resend.ctp:24
 msgid "Resend activation email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/login/menu.ctp:49
 msgid "Forgot your password?"
 msgstr ""
 
@@ -1884,28 +1889,28 @@ msgstr ""
 msgid "Related posts"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activate_account.ctp:25
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activation.ctp:25
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/change_password.ctp:25
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/forgot_password.ctp:25
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/password_forgot.ctp:25
 msgid "Hello {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activate_account.ctp:27
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activation.ctp:27
 msgid "you have signed on the site {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activate_account.ctp:29
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activation.ctp:29
 msgid "To activate your account, click {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activate_account.ctp:32
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/forgot_password.ctp:36
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activation.ctp:29
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/password_forgot.ctp:29
 msgid "here"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activate_account.ctp:35
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/change_password.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/forgot_password.ctp:39
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/activation.ctp:31
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/change_password.ctp:29
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/password_forgot.ctp:31
 msgid "If you have not made this request, please contact an administrator"
 msgstr ""
 
@@ -1913,11 +1918,11 @@ msgstr ""
 msgid "you have recently changed your password on our site {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/forgot_password.ctp:27
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/password_forgot.ctp:27
 msgid "you have requested to change your password on the site {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/forgot_password.ctp:33
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Email/html/Users/password_forgot.ctp:29
 msgid "To reset your password, click {0}"
 msgstr ""
 
@@ -2008,8 +2013,8 @@ msgid "Tag {0}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Systems/contact_us.ctp:39
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/forgot_password.ctp:33
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/resend_activation.ctp:33
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/activation_resend.ctp:33
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_forgot.ctp:33
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:37
 msgid "Enter your email"
 msgstr ""
@@ -2034,12 +2039,8 @@ msgstr ""
 msgid "The website is temporarily offline"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/forgot_password.ctp:24
-msgid "Request new password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/forgot_password.ctp:38
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/resend_activation.ctp:38
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/activation_resend.ctp:38
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_forgot.ctp:38
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/signup.ctp:42
 msgid "Repeat your email"
 msgstr ""
@@ -2052,7 +2053,11 @@ msgstr ""
 msgid "Don't use on public computers"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/reset_password.ctp:24
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_forgot.ctp:24
+msgid "Request new password"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Users/password_reset.ctp:24
 msgid "Reset password"
 msgstr ""
 
@@ -2064,7 +2069,7 @@ msgstr ""
 msgid "Repeat your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/View/Cell/PostsTagsWidgetsCell.php:66
+#: /home/mirko/Libs/Plugins/MeCms/src/View/Cell/PostsTagsWidgetsCell.php:69
 msgid "Invalid values"
 msgstr ""
 

@@ -60,6 +60,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
             'label' => __d('me_cms', 'Password'),
+            'value' => '',
         ]);
         echo $this->Form->control('password_repeat', [
             'autocomplete' => 'off',
@@ -69,6 +70,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
             'label' => __d('me_cms', 'Repeat password'),
+            'value' => '',
         ]);
         echo $this->Form->control('first_name', [
             'autocomplete' => 'off',

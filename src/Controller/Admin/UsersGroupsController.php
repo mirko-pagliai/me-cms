@@ -71,9 +71,9 @@ class UsersGroupsController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('group'));
@@ -95,9 +95,9 @@ class UsersGroupsController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('group'));
@@ -115,18 +115,13 @@ class UsersGroupsController extends AppController
 
         //Before deleting, checks if the group is a necessary group or if the group has some users
         if ($id > 3 && !$group->user_count) {
-            if ($this->UsersGroups->delete($group)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-            }
+            $this->UsersGroups->deleteOrFail($group);
+
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         } elseif ($id <= 3) {
             $this->Flash->alert(__d('me_cms', 'You cannot delete this users group'));
         } else {
-            $this->Flash->alert(__d(
-                'me_cms',
-                'Before deleting this, you must delete or reassign all items that belong to this element'
-            ));
+            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         }
 
         return $this->redirect(['action' => 'index']);

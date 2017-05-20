@@ -121,9 +121,8 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->find()
-            ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
             ->contain(['Groups' => ['fields' => ['label']]])
-            ->where(['Users.id' => $id])
+            ->where([sprintf('%s.id', $this->Users->alias()) => $id])
             ->firstOrFail();
 
         $this->set(compact('user'));
@@ -150,9 +149,9 @@ class UsersController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('user'));
@@ -166,10 +165,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->find()
-            ->select(['id', 'group_id', 'username', 'email', 'first_name', 'last_name', 'active'])
-            ->where(['Users.id' => $id])
-            ->firstOrFail();
+        $user = $this->Users->get($id);
 
         //Only the admin founder can edit others admin users
         if ($user->group_id === 1 && !$this->Auth->isFounder()) {
@@ -185,9 +181,9 @@ class UsersController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('user'));
@@ -202,10 +198,7 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $user = $this->Users->find()
-            ->select(['id', 'group_id', 'post_count'])
-            ->where(['Users.id' => $id])
-            ->firstOrFail();
+        $user = $this->Users->get($id);
 
         //You cannot delete the admin founder
         if ($user->id === 1) {
@@ -213,17 +206,12 @@ class UsersController extends AppController
         //Only the admin founder can delete others admin users
         } elseif ($user->group_id === 1 && !$this->Auth->isFounder()) {
             $this->Flash->alert(__d('me_cms', 'Only the admin founder can do this'));
-        } elseif (!empty($user->post_count)) {
-            $this->Flash->alert(__d(
-                'me_cms',
-                'Before deleting this, you must delete or reassign all items that belong to this element'
-            ));
+        } elseif ($user->post_count) {
+            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
         } else {
-            if ($this->Users->delete($user)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-            }
+            $this->Users->deleteOrFail($user);
+
+            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -240,11 +228,9 @@ class UsersController extends AppController
 
         $user->active = true;
 
-        if ($this->Users->save($user)) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
-        } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
-        }
+        $this->Users->save($user);
+
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
         return $this->redirect(['action' => 'index']);
     }
@@ -256,10 +242,7 @@ class UsersController extends AppController
      */
     public function changePassword()
     {
-        $user = $this->Users->find()
-            ->select(['id', 'email', 'first_name', 'last_name'])
-            ->where(['id' => $this->Auth->user('id')])
-            ->firstOrFail();
+        $user = $this->Users->get($this->Auth->user('id'));
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -271,9 +254,9 @@ class UsersController extends AppController
                 $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
                 return $this->redirect(['_name' => 'dashboard']);
-            } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
             }
+
+            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
         }
 
         $this->set(compact('user'));
@@ -290,7 +273,7 @@ class UsersController extends AppController
         if (!config('users.login_log')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
-            return $this->redirect(['_name' => 'admin']);
+            return $this->redirect(['_name' => 'dashboard']);
         }
 
         $loginLog = $this->LoginRecorder->config('user', $this->Auth->user('id'))->read();

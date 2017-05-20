@@ -38,11 +38,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
 <fieldset>
     <p><?= $this->Html->strong(__d('me_cms', 'Preview')) ?></p>
     <?php
-        echo $this->Thumb->resize(
-            $photo->path,
-            ['width' => 1186],
-            ['class' => 'img-thumbnail margin-15']
-        );
+        echo $this->Thumb->resize($photo->path, ['width' => 1186], ['class' => 'img-thumbnail margin-15']);
 
         echo $this->Form->control('filename', [
             'disabled' => true,

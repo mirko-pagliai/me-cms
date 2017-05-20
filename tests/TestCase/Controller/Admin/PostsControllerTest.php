@@ -48,7 +48,7 @@ class PostsControllerTest extends IntegrationTestCase
     /**
      * @var array
      */
-    protected $url;
+    protected $example;
 
     /**
      * Fixtures
@@ -63,6 +63,11 @@ class PostsControllerTest extends IntegrationTestCase
     ];
 
     /**
+     * @var array
+     */
+    protected $url;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -71,6 +76,14 @@ class PostsControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->example = [
+            'user_id' => 1,
+            'category_id' => 1,
+            'title' => 'new post title',
+            'slug' => 'new-post-slug',
+            'text' => 'new post text',
+        ];
 
         $this->setUserGroup('admin');
 
@@ -209,5 +222,185 @@ class PostsControllerTest extends IntegrationTestCase
             3 => false,
             4 => true,
         ]);
+    }
+
+    /**
+     * Tests for `index()` method
+     * @test
+     */
+    public function testIndex()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/index.ctp');
+
+        $postsFromView = $this->viewVariable('posts');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
+        $this->assertNotEmpty($postsFromView);
+
+        foreach ($postsFromView as $post) {
+            $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
+        }
+    }
+
+    /**
+     * Tests for `add()` method
+     * @test
+     */
+    public function testAdd()
+    {
+        $url = array_merge($this->url, ['action' => 'add']);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/add.ctp');
+
+        $postFromView = $this->viewVariable('post');
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertNotEmpty($postFromView);
+
+        //POST request. Data are valid
+        $this->post($url, $this->example);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $postFromView = $this->viewVariable('post');
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertNotEmpty($postFromView);
+    }
+
+    /**
+     * Tests for `edit()` method
+     * @test
+     */
+    public function testEdit()
+    {
+        $url = array_merge($this->url, ['action' => 'edit', 1]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/edit.ctp');
+
+        $postFromView = $this->viewVariable('post');
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertNotEmpty($postFromView);
+
+        //Checks if the `created` field has been properly formatted
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $postFromView->created);
+
+        //Checks for tags
+        $this->assertNotEmpty($postFromView->tags);
+
+        foreach ($postFromView->tags as $tag) {
+            $this->assertInstanceof('MeCms\Model\Entity\Tag', $tag);
+        }
+
+        //POST request. Data are valid
+        $this->post($url, ['title' => 'another title']);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $postFromView = $this->viewVariable('post');
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertNotEmpty($postFromView);
+    }
+
+    /**
+     * Tests for `delete()` method
+     * @test
+     */
+    public function testDelete()
+    {
+        $this->post(array_merge($this->url, ['action' => 'delete', 1]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+    }
+
+    /**
+     * Tests that the admins and manangers can add and edit as another user
+     * @test
+     */
+    public function testAdminsAndManagersCanAddAndEditAsAnotherUser()
+    {
+        foreach (['admin', 'manager'] as $userGroup) {
+            $this->setUserGroup($userGroup);
+
+            foreach ([1, 2] as $userId) {
+                //Adds post
+                $this->post(
+                    array_merge($this->url, ['action' => 'add']),
+                    array_merge($this->example, ['user_id' => $userId])
+                );
+                $this->assertRedirect(['action' => 'index']);
+                $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+                $post = $this->Posts->find()->last();
+                $this->assertEquals($userId, $post->user_id);
+
+                //Edit post, adding +1 to the `user_id`
+                $this->post(
+                    array_merge($this->url, ['action' => 'edit', $post->id]),
+                    array_merge($this->example, ['user_id' => $userId + 1])
+                );
+                $this->assertRedirect(['action' => 'index']);
+                $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+                $post = $this->Posts->findById($post->id)->first();
+                $this->assertEquals($userId + 1, $post->user_id);
+
+                $this->Posts->delete($post);
+            }
+        }
+    }
+
+    /**
+     * Tests that the other users cannot add and edit as another user
+     * @test
+     */
+    public function testOtherUsersCannotAddOrEditAsAnotherUser()
+    {
+        $this->setUserGroup('user');
+        $this->setUserId(3);
+
+        foreach ([1, 2] as $userId) {
+            //Adds post
+            $this->post(
+                array_merge($this->url, ['action' => 'add']),
+                array_merge($this->example, ['user_id' => $userId])
+            );
+            $this->assertRedirect(['action' => 'index']);
+            $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+            $post = $this->Posts->find()->last();
+            $this->assertEquals(3, $post->user_id);
+
+            //Edit post, adding +1 to the `user_id`
+            $this->post(
+                array_merge($this->url, ['action' => 'edit', $post->id]),
+                array_merge($this->example, ['user_id' => $userId + 1])
+            );
+            $this->assertRedirect(['action' => 'index']);
+            $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+            $post = $this->Posts->findById($post->id)->first();
+            $this->assertEquals(3, $post->user_id);
+
+            $this->Posts->delete($post);
+        }
     }
 }

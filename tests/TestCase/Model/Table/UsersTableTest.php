@@ -304,6 +304,7 @@ class UsersTableTest extends TestCase
             4 => 'Abc Def',
             1 => 'Alfa Beta',
             3 => 'Ypsilon Zeta',
+            5 => 'Mno Pqr',
         ], $list);
 
         $fromCache = Cache::read('active_users_list', $this->Users->cache)->toArray();

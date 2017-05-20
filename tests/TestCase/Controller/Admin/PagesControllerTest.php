@@ -183,4 +183,129 @@ class PagesControllerTest extends IntegrationTestCase
             'user' => false,
         ]);
     }
+
+    /**
+     * Tests for `index()` method
+     * @test
+     */
+    public function testIndex()
+    {
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/index.ctp');
+
+        $pagesFromView = $this->viewVariable('pages');
+        $this->assertInstanceof('Cake\ORM\ResultSet', $pagesFromView);
+        $this->assertNotEmpty($pagesFromView);
+
+        foreach ($pagesFromView as $page) {
+            $this->assertInstanceof('MeCms\Model\Entity\Page', $page);
+        }
+    }
+
+    /**
+     * Tests for `indexStatics()` method
+     * @test
+     */
+    public function testIndexStatics()
+    {
+        $this->get(array_merge($this->url, ['action' => 'indexStatics']));
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/index_statics.ctp');
+
+        $pagesFromView = $this->viewVariable('pages');
+        $this->assertTrue(is_array($pagesFromView));
+        $this->assertNotEmpty($pagesFromView);
+
+        foreach ($pagesFromView as $page) {
+            $this->assertInstanceof('Cake\ORM\Entity', $page);
+        }
+    }
+
+    /**
+     * Tests for `add()` method
+     * @test
+     */
+    public function testAdd()
+    {
+        $url = array_merge($this->url, ['action' => 'add']);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/add.ctp');
+
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
+        $this->assertNotEmpty($pageFromView);
+
+        //POST request. Data are valid
+        $this->post($url, [
+            'category_id' => 1,
+            'title' => 'new page title',
+            'slug' => 'new-page-slug',
+            'text' => 'new page text',
+        ]);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
+        $this->assertNotEmpty($pageFromView);
+    }
+
+    /**
+     * Tests for `edit()` method
+     * @test
+     */
+    public function testEdit()
+    {
+        $url = array_merge($this->url, ['action' => 'edit', 1]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/edit.ctp');
+
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
+        $this->assertNotEmpty($pageFromView);
+
+        //Checks if the `created` field has been properly formatted
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $pageFromView->created);
+
+        //POST request. Data are valid
+        $this->post($url, ['title' => 'another title']);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        //POST request. Data are invalid
+        $this->post($url, ['title' => 'aa']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The operation has not been performed correctly');
+
+        $pageFromView = $this->viewVariable('page');
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
+        $this->assertNotEmpty($pageFromView);
+    }
+
+    /**
+     * Tests for `delete()` method
+     * @test
+     */
+    public function testDelete()
+    {
+        $this->post(array_merge($this->url, ['action' => 'delete', 1]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+    }
 }

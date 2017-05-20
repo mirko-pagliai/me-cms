@@ -81,16 +81,15 @@ class SystemsController extends AppController
      */
     public function browser()
     {
-        //Gets the supported types
+        //Gets the type from the query and the supported types from configuration
+        $type = $this->request->getQuery('type');
         $types = $this->KcFinder->getTypes();
 
         //If there's only one type, it automatically sets the query value
-        if (!$this->request->getQuery('type') && count($types) < 2) {
-            $this->request = $this->request->withQueryParams(['type' => firstKey($types)]);
+        if (!$type && count($types) < 2) {
+            $type = collection(array_keys($types))->first();
+            $this->request = $this->request->withQueryParams(compact('type'));
         }
-
-        //Gets the type from the query and the types from configuration
-        $type = $this->request->getQuery('type');
 
         //Checks the type, then sets the KCFinder path
         if ($type && array_key_exists($type, $types)) {
@@ -120,14 +119,14 @@ class SystemsController extends AppController
             }
         }
 
-        //If a changelog file has been specified
-        if ($this->request->getQuery('file') && $this->request->is('get')) {
-            $path = ROOT . DS . $files[$this->request->getQuery('file')];
+        $changelog = null;
 
-            $this->set('changelog', file_get_contents($path));
+        //If a changelog file has been specified
+        if ($this->request->getQuery('file')) {
+            $changelog = file_get_contents(ROOT . DS . $files[$this->request->getQuery('file')]);
         }
 
-        $this->set(compact('files'));
+        $this->set(compact('changelog', 'files'));
     }
 
     /**
@@ -202,9 +201,9 @@ class SystemsController extends AppController
             ];
         }
 
-        array_walk($checkup, function ($value, $key) {
+        foreach ($checkup as $key => $value) {
             $this->set($key, $value);
-        });
+        };
     }
 
     /**
@@ -234,7 +233,6 @@ class SystemsController extends AppController
      * @param string $type Type
      * @return \Cake\Network\Response|null|void
      * @throws MethodNotAllowedException
-     * @throws InternalErrorException
      * @uses clearCache()
      * @uses clearSitemap()
      */
@@ -243,6 +241,8 @@ class SystemsController extends AppController
         if (!$this->request->is(['post', 'delete'])) {
             throw new MethodNotAllowedException();
         }
+
+        $success = false;
 
         switch ($type) {
             case 'all':
@@ -265,11 +265,9 @@ class SystemsController extends AppController
             case 'thumbs':
                 $success = clearDir(Configure::read('Thumbs.target'));
                 break;
-            default:
-                throw new InternalErrorException(__d('me_cms', 'Unknown command type'));
         }
 
-        if (!empty($success)) {
+        if ($success) {
             $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
         } else {
             $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
@@ -290,9 +288,10 @@ class SystemsController extends AppController
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
         $thumbsSize = (new Folder(Configure::read('Thumbs.target')))->dirsize();
 
-        $this->set(am([
-        'cacheStatus' => Cache::enabled(),
-        'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
-        ], compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize')));
+        $this->set([
+            'cacheStatus' => Cache::enabled(),
+            'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
+        ]);
+        $this->set(compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize'));
     }
 }

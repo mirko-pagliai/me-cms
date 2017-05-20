@@ -49,10 +49,11 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
                 'icon' => 'eye',
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
-            'label' => __d('me_cms', 'Password'),
-            'required' => false,
             'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
+            'label' => __d('me_cms', 'Password'),
+            'required' => false,
+            'value' => '',
         ]);
         echo $this->Form->control('password_repeat', [
             'autocomplete' => 'off',
@@ -61,10 +62,11 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
                 'icon' => 'eye',
                 'title' => __d('me_cms', 'Show/hide password'),
              ]),
-            'label' => __d('me_cms', 'Repeat password'),
-            'required' => false,
             'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
+            'label' => __d('me_cms', 'Repeat password'),
+            'required' => false,
+            'value' => '',
         ]);
         echo $this->Form->control('first_name', [
             'autocomplete' => 'off',

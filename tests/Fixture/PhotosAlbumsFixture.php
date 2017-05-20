@@ -71,5 +71,14 @@ class PhotosAlbumsFixture extends TestFixture
             'created' => '2016-12-28 10:39:46',
             'modified' => '2016-12-28 10:39:46'
         ],
+        [
+            'id' => 3,
+            'title' => 'Third album test',
+            'slug' => 'third-album-test',
+            'description' => 'This is the third album test',
+            'photo_count' => 0,
+            'created' => '2016-12-28 10:40:46',
+            'modified' => '2016-12-28 10:40:46'
+        ],
     ];
 }

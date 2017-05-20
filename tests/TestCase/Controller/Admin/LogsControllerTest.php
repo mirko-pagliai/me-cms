@@ -127,7 +127,7 @@ class LogsControllerTest extends IntegrationTestCase
     /**
      * Tests for `_read()` method, with a not readable file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File or directory /tmp/cakephp_log/noExisting.log not readable
+     * @expectedExceptionMessage File or directory /tmp/me_cms/cakephp_log/noExisting.log not readable
      * @test
      */
     public function testReadNotReadableFile()
