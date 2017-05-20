@@ -49,11 +49,6 @@ class UsersControllerTest extends IntegrationTestCase
     protected $Users;
 
     /**
-     * @var array
-     */
-    protected $url;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -61,6 +56,11 @@ class UsersControllerTest extends IntegrationTestCase
         'plugin.me_cms.users',
         'plugin.me_cms.users_groups',
     ];
+
+    /**
+     * @var array
+     */
+    protected $url;
 
     /**
      * Setup the test case, backup the static object values so they can be
