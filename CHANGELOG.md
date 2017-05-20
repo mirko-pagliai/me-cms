@@ -7,11 +7,7 @@
 * by default, cookies are not encrypted;
 * `AppTable::getList()`, `AppTable::getTreeList()` and
     `UsersTable::getActiveList()` now return a `Query` object;
-* added tests for `BackupsController`, `BannersController`,
-    `BannersPositionsController`, `LogsController`, `PagesCategoriesController`
-    and `PagesController` admin classes;
-* added tests for `beforeFilter()` and `initialize()` methods of all admin
-    controllers.
+* added tests for all admin classes.
 
 ### 2.17.5
 * added `GetStartAndEndDateTrait`;
