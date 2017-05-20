@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.18 branch
 ### 2.18.0
+* the tags index now uses pagination;
 * widgets (cells) use collections;
 * fixed little bugs and improved code for `BannersController` and 
     `PhotosController` admin classes;

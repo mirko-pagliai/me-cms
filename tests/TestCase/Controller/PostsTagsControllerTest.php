@@ -93,13 +93,15 @@ class PostsTagsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(['_name' => 'postsTags']);
+        $url = ['_name' => 'postsTags'];
+
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsTags/index.ctp');
 
         $tagsFromView = $this->viewVariable('tags');
-        $this->assertInstanceof('Cake\ORM\Query', $tagsFromView);
+        $this->assertInstanceof('Cake\ORM\ResultSet', $tagsFromView);
         $this->assertNotEmpty($tagsFromView->toArray());
 
         foreach ($tagsFromView as $tag) {
@@ -107,9 +109,19 @@ class PostsTagsControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $tagsFromCache = Cache::read('tag_index', $this->PostsTags->cache);
+        $cache = sprintf('tags_limit_%s_page_%s', config('default.records') * 4, 1);
+        list($tagsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->PostsTags->cache
+        ));
 
         $this->assertEquals($tagsFromView->toArray(), $tagsFromCache->toArray());
+        $this->assertNotEmpty($pagingFromCache['Tags']);
+
+        //GET request again. Now the data is in cache
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Tags']);
     }
 
     /**

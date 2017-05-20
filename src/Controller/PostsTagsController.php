@@ -39,9 +39,37 @@ class PostsTagsController extends AppController
      */
     public function index()
     {
-        $tags = $this->PostsTags->Tags->find('active')
-            ->order(['tag' => 'ASC'])
-            ->cache('tag_index', $this->PostsTags->cache);
+        $page = $this->request->getQuery('page', 1);
+
+        $this->paginate['order'] = ['tag' => 'ASC'];
+
+        //Limit X4
+        $this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
+
+        //Sets the cache name
+        $cache = sprintf('tags_limit_%s_page_%s', $this->paginate['limit'], $page);
+
+        //Tries to get data from the cache
+        list($tags, $paging) = array_values(Cache::readMany(
+            [$cache, sprintf('%s_paging', $cache)],
+            $this->PostsTags->cache
+        ));
+
+        //If the data are not available from the cache
+        if (empty($tags) || empty($paging)) {
+            $query = $this->PostsTags->Tags->find('active');
+
+            $tags = $this->paginate($query);
+
+            //Writes on cache
+            Cache::writeMany([
+                $cache => $tags,
+                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+            ], $this->PostsTags->cache);
+        //Else, sets the paging parameter
+        } else {
+            $this->request = $this->request->withParam('paging', $paging);
+        }
 
         $this->set(compact('tags'));
     }
