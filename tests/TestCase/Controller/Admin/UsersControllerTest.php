@@ -63,32 +63,6 @@ class UsersControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Internal method to get a `LoginRecorder` mock
-     * @return \MeCms\Controller\Component\LoginRecorderComponent
-     */
-    protected function getLoginRecorderMock()
-    {
-        $this->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
-            ->setMethods(['getController', 'getUserAgent'])
-            ->setConstructorArgs([new ComponentRegistry])
-            ->getMock();
-
-        $this->LoginRecorder->method('getController')
-            ->will($this->returnValue($this->Controller));
-
-        $this->LoginRecorder->method('getUserAgent')
-            ->will($this->returnValue([
-                'platform' => 'Linux',
-                'browser' => 'Chrome',
-                'version' => '55.0.2883.87',
-            ]));
-
-        $this->LoginRecorder->config('user', 1);
-
-        return $this->LoginRecorder;
-    }
-
-    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -101,8 +75,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->setUserGroup('admin');
 
         $this->Controller = new UsersController;
-
-        $this->LoginRecorder = $this->getLoginRecorderMock();
 
         $this->Users = TableRegistry::get('MeCms.Users');
 
@@ -119,7 +91,7 @@ class UsersControllerTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        unset($this->Controller, $this->LoginRecorder, $this->Users);
+        unset($this->Controller, $this->Users);
     }
 
     /**
@@ -477,6 +449,23 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testLastLogin()
     {
+        $this->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
+            ->setMethods(['getController', 'getUserAgent'])
+            ->setConstructorArgs([new ComponentRegistry])
+            ->getMock();
+
+        $this->LoginRecorder->method('getController')
+            ->will($this->returnValue($this->Controller));
+
+        $this->LoginRecorder->method('getUserAgent')
+            ->will($this->returnValue([
+                'platform' => 'Linux',
+                'browser' => 'Chrome',
+                'version' => '55.0.2883.87',
+            ]));
+
+        $this->LoginRecorder->config('user', 1);
+
         //Writes a login log
         $this->assertTrue($this->LoginRecorder->write());
 
