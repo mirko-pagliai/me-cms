@@ -54,8 +54,45 @@ class UsersGroupsFixture extends TestFixture
      * @var array
      */
     public $records = [
-        ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
-        ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
-        ['id' => 3, 'name' => 'user', 'label' => 'User'],
+        [
+            'id' => 1,
+            'name' => 'admin',
+            'label' => 'Admin',
+            'description' => '',
+            'user_count' => 2,
+            'created' => '2016-12-24 17:00:05',
+        ],
+        [
+            'id' => 2,
+            'name' => 'manager',
+            'label' => 'Manager',
+            'description' => '',
+            'user_count' => 0,
+            'created' => '2016-12-24 17:01:05',
+        ],
+        [
+            'id' => 3,
+            'name' => 'user',
+            'label' => 'User',
+            'description' => '',
+            'user_count' => 3,
+            'created' => '2016-12-24 17:02:05',
+        ],
+        [
+            'id' => 4,
+            'name' => 'fans',
+            'label' => 'Fans',
+            'description' => '',
+            'user_count' => 3,
+            'created' => '2016-12-24 17:03:05',
+        ],
+        [
+            'id' => 5,
+            'name' => 'people',
+            'label' => 'People',
+            'description' => '',
+            'user_count' => 0,
+            'created' => '2016-12-24 17:04:05',
+        ],
     ];
 }

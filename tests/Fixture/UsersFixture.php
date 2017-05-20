@@ -77,7 +77,7 @@ class UsersFixture extends TestFixture
         ],
         [
             'id' => 2,
-            'group_id' => 2,
+            'group_id' => 3,
             'username' => 'gamma',
             'email' => 'gamma@test.com',
             'password' => '',
