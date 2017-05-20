@@ -141,7 +141,9 @@ class UserShellTest extends TestCase
             '| <info>ID</info> | <info>Name</info>    |',
             '+----+---------+',
             '| 1  | Admin   |',
+            '| 4  | Fans    |',
             '| 2  | Manager |',
+            '| 5  | People  |',
             '| 3  | User    |',
             '+----+---------+',
             '<success>The user has been saved</success>',
@@ -242,7 +244,7 @@ class UserShellTest extends TestCase
             ->method('in')
             ->will($this->returnValue('test'));
 
-        $this->UserShell->params['group'] = 4;
+        $this->UserShell->params['group'] = 123;
         $this->assertFalse($this->UserShell->add());
 
         $this->assertEmpty($this->out->messages());
@@ -268,9 +270,11 @@ class UserShellTest extends TestCase
             '+----+---------+---------+-------+',
             '| <info>ID</info> | <info>Name</info>    | <info>Label</info>   | <info>Users</info> |',
             '+----+---------+---------+-------+',
-            '| 1  | admin   | Admin   | 0     |',
+            '| 1  | admin   | Admin   | 2     |',
             '| 2  | manager | Manager | 0     |',
-            '| 3  | user    | User    | 0     |',
+            '| 3  | user    | User    | 3     |',
+            '| 4  | fans    | Fans    | 3     |',
+            '| 5  | people  | People  | 0     |',
             '+----+---------+---------+-------+',
         ], $this->out->messages());
         $this->assertEquals(['<error>There are no user groups</error>'], $this->err->messages());
@@ -292,14 +296,15 @@ class UserShellTest extends TestCase
         $this->UserShell->users();
 
         $this->assertTextEquals([
-            '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
-            '| <info>ID</info> | <info>Username</info> | <info>Group</info>   | <info>Name</info>         | <info>Email</info>            | <info>Posts</info> | <info>Status</info>  | <info>Date</info>             |',
-            '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
-            '| 1  | alfa     | Admin   | Alfa Beta    | alfa@test.com    | 2     | Active  | 2016/12/24 17:00 |',
-            '| 2  | gamma    | Manager | Gamma Delta  | gamma@test.com   | 0     | Pending | 2016/12/24 17:01 |',
-            '| 3  | ypsilon  | User    | Ypsilon Zeta | ypsilon@test.com | 0     | Banned  | 2016/12/24 17:02 |',
-            '| 4  | abc      | User    | Abc Def      | abc@example.com  | 1     | Active  | 2016/12/24 17:03 |',
-            '+----+----------+---------+--------------+------------------+-------+---------+------------------+',
+            '+----+----------+-------+--------------+-------------------+-------+---------+------------------+',
+            '| <info>ID</info> | <info>Username</info> | <info>Group</info> | <info>Name</info>         | <info>Email</info>             | <info>Posts</info> | <info>Status</info>  | <info>Date</info>             |',
+            '+----+----------+-------+--------------+-------------------+-------+---------+------------------+',
+            '| 1  | alfa     | Admin | Alfa Beta    | alfa@test.com     | 2     | Active  | 2016/12/24 17:00 |',
+            '| 2  | gamma    | User  | Gamma Delta  | gamma@test.com    | 0     | Pending | 2016/12/24 17:01 |',
+            '| 3  | ypsilon  | User  | Ypsilon Zeta | ypsilon@test.com  | 0     | Banned  | 2016/12/24 17:02 |',
+            '| 4  | abc      | User  | Abc Def      | abc@example.com   | 1     | Active  | 2016/12/24 17:03 |',
+            '| 5  | delta    | Admin | Mno Pqr      | delta@example.com | 0     | Active  | 2016/12/24 17:04 |',
+            '+----+----------+-------+--------------+-------------------+-------+---------+------------------+',
         ], $this->out->messages());
         $this->assertEquals(['<error>There are no users</error>'], $this->err->messages());
     }
