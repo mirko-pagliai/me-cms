@@ -114,5 +114,18 @@ class UsersFixture extends TestFixture
             'post_count' => 1,
             'created' => '2016-12-24 17:03:10',
         ],
+        [
+            'id' => 5,
+            'group_id' => 1,
+            'username' => 'delta',
+            'email' => 'delta@example.com',
+            'password' => '',
+            'first_name' => 'Mno',
+            'last_name' => 'Pqr',
+            'active' => 1,
+            'banned' => 0,
+            'post_count' => 0,
+            'created' => '2016-12-24 17:04:10',
+        ],
     ];
 }
