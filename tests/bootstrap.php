@@ -45,7 +45,7 @@ define('APP', TEST_APP . 'TestApp' . DS);
 define('APP_DIR', 'TestApp');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
-define('TMP', sys_get_temp_dir() . DS);
+define('TMP', sys_get_temp_dir() . DS . 'me_cms' . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP . 'cakephp_log' . DS);
@@ -155,6 +155,9 @@ Plugin::load('Thumber', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-thumber' . DS,
     'routes' => true,
 ]);
+
+//This adds `apache_get_modules()` and `apache_get_version()` functions
+require 'apache_functions.php';
 
 Plugin::load('MeTools', [
     'bootstrap' => true,
