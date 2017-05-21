@@ -33,3 +33,5 @@ $tags = $tags->map(function ($tag) {
 })->toList();
 
 echo $this->Html->ul($tags, ['icon' => 'caret-right']);
+
+echo $this->element('MeTools.paginator');

@@ -136,11 +136,6 @@ class TagsTableTest extends TestCase
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
 
         $this->assertNotEmpty($query->count());
-
-        foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->_matchingData['Posts']->active);
-            $this->assertTrue(!$entity->_matchingData['Posts']->created->isFuture());
-        }
     }
 
     /**
