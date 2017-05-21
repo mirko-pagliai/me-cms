@@ -352,7 +352,7 @@ class PostsControllerTest extends IntegrationTestCase
                 $post = $this->Posts->find()->last();
                 $this->assertEquals($userId, $post->user_id);
 
-                //Edit record, adding +1 to the `user_id`
+                //Edits record, adding +1 to the `user_id`
                 $this->post(
                     array_merge($this->url, ['action' => 'edit', $post->id]),
                     array_merge($this->example, ['user_id' => $userId + 1])
@@ -389,7 +389,7 @@ class PostsControllerTest extends IntegrationTestCase
             $post = $this->Posts->find()->last();
             $this->assertEquals(3, $post->user_id);
 
-            //Edit record, adding +1 to the `user_id`
+            //Edits record, adding +1 to the `user_id`
             $this->post(
                 array_merge($this->url, ['action' => 'edit', $post->id]),
                 array_merge($this->example, ['user_id' => $userId + 1])
