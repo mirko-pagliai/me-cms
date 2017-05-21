@@ -74,7 +74,7 @@ class PagesCategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->PagesCategories->find('all')
+        $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->PagesCategories->alias()) => 'ASC'])
             ->formatResults(function ($categories) {
