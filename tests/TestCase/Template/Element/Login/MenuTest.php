@@ -49,6 +49,12 @@ class MenuTest extends IntegrationTestCase
         $this->assertResponseContains('Sign up</a>');
         $this->assertResponseContains('Resend activation email</a>');
         $this->assertResponseContains('Forgot your password?</a>');
+
+        $this->get(['_name' => 'login', '?' => ['redirect' => 'action']]);
+        $this->assertResponseNotContains('Login</a>');
+        $this->assertResponseContains('Sign up</a>');
+        $this->assertResponseContains('Resend activation email</a>');
+        $this->assertResponseContains('Forgot your password?</a>');
     }
 
     /**
