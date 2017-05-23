@@ -25,6 +25,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\DispatcherFactory;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -219,6 +220,18 @@ class BannersControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/index_as_grid.ctp');
 
         $this->assertCookie('grid', 'renderBanners');
+    }
+
+    /**
+     * Tests for `upload()` method, with no position
+     * @test
+     */
+    public function testUploadNoPosition()
+    {
+//        DispatcherFactory::clear();
+
+        $this->post(array_merge($this->url, ['action' => 'upload']), ['file' => true]);
+        $this->assertResponseFailure();
     }
 
     /**
