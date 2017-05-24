@@ -149,7 +149,7 @@ class InstallShell extends BaseInstallShell
     {
         $this->loadModel('MeCms.UsersGroups');
 
-        if (!$this->UsersGroups->find('all')->isEmpty()) {
+        if (!$this->UsersGroups->find()->isEmpty()) {
             $this->err(__d('me_cms', 'Some user groups already exist'));
 
             return false;
