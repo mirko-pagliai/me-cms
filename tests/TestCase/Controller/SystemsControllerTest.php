@@ -64,9 +64,9 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        $controller->viewBuilder()->setLayout(false);
-
         $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
+
+        $controller->viewBuilder()->setLayout('with_flash');
 
         parent::controllerSpy($event, $controller);
     }
@@ -82,7 +82,6 @@ class SystemsControllerTest extends IntegrationTestCase
         parent::setUp();
 
         $this->Controller = new SystemsController;
-        $this->Controller->viewBuilder()->setPlugin(ME_CMS);
     }
 
     /**
@@ -126,8 +125,37 @@ class SystemsControllerTest extends IntegrationTestCase
         $contactFromView = $this->viewVariable('contact');
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
 
+        //POST request. Data are invalid
+        $this->post($url, ['first_name' => 'a']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('The email was not sent');
+
+        $contactFromView = $this->viewVariable('contact');
+        $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+
+        //POST request. Now data are valid
+        $this->post($url, [
+            'first_name' => 'Alfa',
+            'last_name' => 'Beta',
+            'email' => 'text@example.com',
+            'message' => 'This is the message',
+        ]);
+        $this->assertRedirect(['_name' => 'homepage']);
+        $this->assertSession('The email has been sent', 'Flash.flash.0.message');
+
+        //With reCAPTCHA
+        Configure::write(ME_CMS . '.security.recaptcha', true);
+        $this->post($url);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+
+        $contactFromView = $this->viewVariable('contact');
+        $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+
         //Disabled
-        Configure::write('MeCms.default.contact_us', false);
+        Configure::write(ME_CMS . '.default.contact_us', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Disabled', 'Flash.flash.0.message');
@@ -147,6 +175,8 @@ class SystemsControllerTest extends IntegrationTestCase
         Configure::write('Banned', ['99.99.99.99']);
 
         $this->Controller->ipNotAllowed();
+
+        $this->Controller->viewBuilder()->setPlugin(ME_CMS);
         $this->_response = $this->Controller->render('ipNotAllowed');
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
@@ -185,6 +215,8 @@ class SystemsControllerTest extends IntegrationTestCase
             'Posts',
             'PostsCategories'
         );
+        //@codingStandardsIgnoreLine
+        @unlink(SITEMAP);
 
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
         $this->assertResponseOk();

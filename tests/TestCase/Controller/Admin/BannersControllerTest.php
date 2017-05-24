@@ -25,7 +25,6 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\DispatcherFactory;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -108,16 +107,19 @@ class BannersControllerTest extends IntegrationTestCase
         //Mocks the `Uploader` component
         $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
             ->setConstructorArgs([new ComponentRegistry])
+            ->setMethods(['mimetype', 'save', 'set'])
             ->getMock();
-
-        $controller->Uploader->method('set')
-            ->will($this->returnSelf());
 
         $controller->Uploader->method('mimetype')
             ->will($this->returnSelf());
 
         $controller->Uploader->method('save')
             ->will($this->returnValue('/full/path/to/file_to_upload.jpg'));
+
+        $controller->Uploader->method('set')
+            ->will($this->returnSelf());
+
+        $controller->viewBuilder()->setLayout('with_flash');
 
         parent::controllerSpy($event, $controller);
     }
@@ -223,18 +225,6 @@ class BannersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, with no position
-     * @test
-     */
-    public function testUploadNoPosition()
-    {
-//        DispatcherFactory::clear();
-
-        $this->post(array_merge($this->url, ['action' => 'upload']), ['file' => true]);
-        $this->assertResponseFailure();
-    }
-
-    /**
      * Tests for `upload()` method
      * @test
      */
@@ -271,6 +261,10 @@ class BannersControllerTest extends IntegrationTestCase
         $banner = $this->Banners->find()->last();
         $this->assertEquals(1, $banner['position_id']);
         $this->assertEquals('file_to_upload.jpg', $banner['filename']);
+
+        //POST request again. Missing position in the query string
+        $this->post(array_merge($this->url, ['action' => 'upload']), ['file' => true]);
+        $this->assertResponseFailure();
     }
 
     /**
