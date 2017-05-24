@@ -401,15 +401,15 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
 
         //With reCAPTCHA
-        Configure::write('MeCms.security.recaptcha', true);
+        Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertResponseContains('You have not filled out the reCAPTCHA control');
 
         //Disabled
-        Configure::write('MeCms.users.signup', false);
-        Configure::write('MeCms.users.activation', 1);
+        Configure::write(ME_CMS . '.users.signup', false);
+        Configure::write(ME_CMS . '.users.activation', 1);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Disabled', 'Flash.flash.0.message');
@@ -558,14 +558,14 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertSession('We have sent you an email to reset your password', 'Flash.flash.0.message');
 
         //With reCAPTCHA
-        Configure::write('MeCms.security.recaptcha', true);
+        Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertResponseContains('You have not filled out the reCAPTCHA control');
 
         //Disabled
-        Configure::write('MeCms.users.reset_password', false);
+        Configure::write(ME_CMS . '.users.reset_password', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Disabled', 'Flash.flash.0.message');
@@ -658,7 +658,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseNotEmpty();
         $this->assertResponseContains('The account has not been created');
 
-        Configure::write('MeCms.users.activation', 2);
+        Configure::write(ME_CMS . '.users.activation', 2);
 
         //POST request. Data are valid, the account needs to be activated by an admin
         $this->post($url, $data);
@@ -672,7 +672,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Deletes the user
         $this->Users->deleteAll(['username' => $data['username']]);
 
-        Configure::write('MeCms.users.activation', 1);
+        Configure::write(ME_CMS . '.users.activation', 1);
 
         //POST request. Data are valid, an email is sent to the user
         $this->post($url, $data);
@@ -686,7 +686,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Deletes the user
         $this->Users->deleteAll(['username' => $data['username']]);
 
-        Configure::write('MeCms.users.activation', 0);
+        Configure::write(ME_CMS . '.users.activation', 0);
 
         //POST request. Data are valid
         $this->post($url, $data);
@@ -698,14 +698,14 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertTrue($user->active);
 
         //With reCAPTCHA
-        Configure::write('MeCms.security.recaptcha', true);
+        Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertResponseContains('You have not filled out the reCAPTCHA control');
 
         //Disabled
-        Configure::write('MeCms.users.signup', false);
+        Configure::write(ME_CMS . '.users.signup', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertSession('Disabled', 'Flash.flash.0.message');

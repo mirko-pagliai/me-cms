@@ -37,7 +37,7 @@ class PluginTest extends TestCase
     public function testAll()
     {
         $this->assertEquals([
-            'MeCms',
+            ME_CMS,
             'MeTools',
             'Assets',
             'MysqlBackup',
@@ -48,7 +48,7 @@ class PluginTest extends TestCase
         Plugin::load('TestPlugin');
 
         $this->assertEquals([
-            'MeCms',
+            ME_CMS,
             'MeTools',
             'Assets',
             'MysqlBackup',
@@ -59,7 +59,7 @@ class PluginTest extends TestCase
 
         $this->assertEquals([
             'Assets',
-            'MeCms',
+            ME_CMS,
             'MeTools',
             'MysqlBackup',
             'TestPlugin',

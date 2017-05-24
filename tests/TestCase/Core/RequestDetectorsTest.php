@@ -179,7 +179,7 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));
 
-        Configure::write('MeCms.default.offline', true);
+        Configure::write(ME_CMS . '.default.offline', true);
 
         //Creates request
         $this->Request = new Request;

@@ -74,7 +74,7 @@ class PostsCategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->PostsCategories->find('all')
+        $categories = $this->PostsCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->PostsCategories->alias()) => 'ASC'])
             ->formatResults(function ($categories) {

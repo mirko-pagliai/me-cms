@@ -71,7 +71,7 @@ class UpdateShell extends BaseUpdateConsole
 
         //Updates all `preview` fields
         foreach (['Pages', 'Posts'] as $table) {
-            $records = $this->$table->find('all')
+            $records = $this->$table->find()
                 ->select(['id', 'text'])
                 ->where(['preview IS' => null])
                 ->toArray();
@@ -186,7 +186,7 @@ class UpdateShell extends BaseUpdateConsole
     {
         $this->loadModel('MeCms.Pages');
 
-        $pages = $this->Pages->find('all');
+        $pages = $this->Pages->find();
 
         //Creates the `pages_categories` table and the first category
         if (!$this->_tableExists('pages_categories')) {

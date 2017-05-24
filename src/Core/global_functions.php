@@ -32,7 +32,7 @@ if (!function_exists('config')) {
      */
     function config($key = null)
     {
-        $value = Configure::read(sprintf('MeCms.%s', $key));
+        $value = Configure::read(sprintf('%s.%s', ME_CMS, $key));
 
         return $value ? $value : Configure::read($key);
     }

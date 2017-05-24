@@ -72,16 +72,16 @@ class BaseUpdateConsole extends Shell
      */
     protected function _allUpdateMethods()
     {
-        $methods = collection(getChildMethods(get_called_class()))->map(function ($method) {
+        $methods = collection(getChildMethods(get_called_class()))->map(function ($name) {
+            $result = false;
+
             //Returns array with the name method and the version number
-            if (!preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $method, $matches)) {
-                return false;
+            if (preg_match('/^to([0-9]+)v([0-9]+)v(.+)$/', $name, $matches)) {
+                $version = $matches[1] . '.' . $matches[2] . '.' . $matches[3];
+                $result = compact('name', 'version');
             }
 
-            return [
-                'name' => $method,
-                'version' => $matches[1] . '.' . $matches[2] . '.' . $matches[3],
-            ];
+            return $result;
         })->toList();
 
         return array_filter($methods);

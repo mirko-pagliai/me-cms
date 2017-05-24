@@ -39,13 +39,13 @@ class GlobalFunctionsTest extends TestCase
         $this->assertNotEmpty(config());
         $this->assertNotEmpty(config(null));
         $this->assertNull(config('noExisting'));
-        $this->assertNull(config('MeCms.noExisting'));
+        $this->assertNull(config(ME_CMS . '.noExisting'));
 
         Configure::write('exampleKey', 'exampleValue');
 
         $this->assertEquals('exampleValue', config('exampleKey'));
 
-        Configure::write('MeCms.exampleKey', 'MeCmsExampleValue');
+        Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
 
         $this->assertEquals('MeCmsExampleValue', config('exampleKey'));
     }
@@ -84,6 +84,8 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals('image.jpg', firstImage('<img alt="" class="my-class" src="image.jpg">'));
 
         //Two images
+        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\' /><img src=\'image.gif\' />'));
+        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'><img src=\'image.gif\'>'));
         $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'> Text <img src=\'image.gif\'>'));
 
         $expected = 'http://example.com/image.jpg';
