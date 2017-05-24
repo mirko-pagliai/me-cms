@@ -132,7 +132,7 @@ class BannersController extends AppController
         }
 
         if ($this->request->getData('file')) {
-            if (empty($position)) {
+            if (!$position) {
                 throw new InternalErrorException(__d('me_cms', 'Missing position ID'));
             }
 
