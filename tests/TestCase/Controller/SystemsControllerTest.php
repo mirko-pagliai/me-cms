@@ -193,7 +193,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertRedirect(['_name' => 'homepage']);
 
         //Offline
-        Configure::write('MeCms.default.offline', true);
+        Configure::write(ME_CMS . '.default.offline', true);
         $this->get(['_name' => 'offline']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
