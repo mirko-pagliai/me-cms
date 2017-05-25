@@ -230,6 +230,7 @@
     opacity: 0;
     padding: 10px;
     position: absolute;
+    width: 100%;
     /* Transition for "opacity" propriety */
     transition: opacity 1s ease-in-out;
     -moz-transition: opacity 1s ease-in-out;
