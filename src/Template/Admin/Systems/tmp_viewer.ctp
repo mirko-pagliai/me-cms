@@ -25,139 +25,99 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
 ?>
 
 <div class="margin-20">
-    <?php
-    echo $this->Html->h4(__d('me_cms', 'All temporary files'));
-    echo $this->Html->para(null, __d(
-        'me_cms',
-        'All temporary files size: {0}',
-        $this->Number->toReadableSize($totalSize)
-    ));
+    <h4><?= __d('me_cms', 'All temporary files') ?></h4>
+    <p><?= __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($totalSize)) ?></p>
 
-    //Only admins can clear all temporary files
-    if ($this->Auth->isGroup('admin')) {
-        echo $this->Html->para(null, __d(
-            'me_cms',
-            'This command clear all temporary files: cache, assets, logs and thumbnails'
-        ));
+    <?php if ($this->Auth->isGroup('admin')) : ?>
+        <p><?= __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails') ?></p>
 
-        echo $this->Form->postButton(
+        <?= $this->Form->postButton(
             __d('me_cms', 'Clear all temporary files'),
             ['action' => 'tmpCleaner', 'all'],
             ['class' => 'btn-success', 'icon' => 'trash-o']
-        );
-    }
-    ?>
+        ) ?>
+    <?php endif; ?>
 </div>
 
 <hr />
 
 <div class="margin-20">
-    <?php
-    echo $this->Html->h4(__d('me_cms', 'Cache'));
+    <h4><?= __d('me_cms', 'Cache') ?></h4>
 
-    if (!$cacheStatus) {
-        echo $this->Html->para('text-danger', __d('me_cms', 'The cache is disabled or debugging is active'));
-    }
+    <?php if (!$cacheStatus) : ?>
+        <p class="text-danger"><?= __d('me_cms', 'The cache is disabled or debugging is active') ?></p>
+    <?php endif; ?>
 
-    echo $this->Html->para(null, __d(
-        'me_cms',
-        'Cache size: {0}',
-        $this->Number->toReadableSize($cacheSize)
-    ));
+    <p><?= __d('me_cms', 'Cache size: {0}', $this->Number->toReadableSize($cacheSize)) ?></p>
+    <p>
+        <?= __d('me_cms', 'Note: you should not need to clear the cache, unless you have not ' .
+        'edited the configuration or after an upgrade') ?>
+    </p>
 
-    echo $this->Html->para(null, __d(
-        'me_cms',
-        'Note: you should not need to clear the cache, unless you have ' .
-        'not edited the configuration or after an upgrade'
-    ));
-
-    echo $this->Form->postButton(
+    <?= $this->Form->postButton(
         __d('me_cms', 'Clear cache'),
         ['action' => 'tmpCleaner', 'cache'],
         ['class' => 'btn-success', 'icon' => 'trash-o']
-    );
-    ?>
+    ) ?>
 </div>
 
 <div class="margin-20">
-    <?php
-    echo $this->Html->h4(__d('me_cms', 'Assets'));
+    <h4><?= __d('me_cms', 'Assets') ?></h4>
+    <p><?= __d('me_cms', 'Assets size: {0}', $this->Number->toReadableSize($assetsSize)) ?></p>
 
-    echo $this->Html->para(null, __d(
-        'me_cms',
-        'Assets size: {0}',
-        $this->Number->toReadableSize($assetsSize)
-    ));
-
-    if ($assetsSize) {
-        echo $this->Form->postButton(
+    <?php if ($assetsSize) : ?>
+        <?= $this->Form->postButton(
             __d('me_cms', 'Clear all assets'),
             ['action' => 'tmpCleaner', 'assets'],
             ['class' => 'btn-success', 'icon' => 'trash-o']
-        );
-    }
-    ?>
+        ) ?>
+    <?php endif; ?>
 </div>
 
 <div class="margin-20">
-    <?php
-    echo $this->Html->h4(__d('me_cms', 'Logs'));
-    echo $this->Html->para(null, __d(
-        'me_cms',
-        'Logs size: {0}',
-        $this->Number->toReadableSize($logsSize)
-    ));
+    <h4><?= __d('me_cms', 'Logs') ?></h4>
+    <p><?= __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logsSize)) ?></p>
 
-    //Only admins can clear logs
-    if ($this->Auth->isGroup('admin') && $logsSize) {
-        echo $this->Form->postButton(
+    <?php if ($this->Auth->isGroup('admin') && $logsSize) : ?>
+        <?= $this->Form->postButton(
             __d('me_cms', 'Clear all logs'),
             ['action' => 'tmpCleaner', 'logs'],
             ['class' => 'btn-success', 'icon' => 'trash-o']
-        );
-    }
-    ?>
+        ) ?>
+    <?php endif; ?>
 </div>
 
 <div class="margin-20">
-    <?php
-    echo $this->Html->h4(__d('me_cms', 'Sitemap'));
-    echo $this->Html->para(null, __d('me_cms', 'Sitemap size: {0}', $this->Number->toReadableSize($sitemapSize)));
+    <h4><?= __d('me_cms', 'Sitemap') ?></h4>
+    <p><?= __d('me_cms', 'Sitemap size: {0}', $this->Number->toReadableSize($sitemapSize)) ?></p>
 
-    //Only admins can clear sitemap
-    if ($this->Auth->isGroup('admin') && $sitemapSize) {
-        echo $this->Html->para(null, __d(
-            'me_cms',
-            'Note: you should not need to clear the sitemap, unless you have recently changed many records'
-        ));
+    <?php if ($this->Auth->isGroup('admin') && $sitemapSize) : ?>
+        <p><?= __d('me_cms', 'Note: you should not need to clear the sitemap, unless you have recently changed many records') ?></p>
 
-        echo $this->Form->postButton(
+        <?= $this->Form->postButton(
             __d('me_cms', 'Clear sitemap'),
             ['action' => 'tmpCleaner', 'sitemap'],
             ['class' => 'btn-success', 'icon' => 'trash-o']
-        );
-    }
+        ) ?>
+    <?php endif; ?>
     ?>
 </div>
 
 <div class="margin-20">
-    <?php
-    echo $this->Html->h4(__d('me_cms', 'Thumbnails'));
-    echo $this->Html->para(null, __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbsSize)));
+    <h4><?= __d('me_cms', 'Thumbnails') ?></h4>
+    <p><?= __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbsSize)) ?></p>
 
-    if ($thumbsSize) {
-        echo $this->Html->para(null, __d(
-            'me_cms',
-            'Note: you should not need to clear the thumbnails and that this will slow down the ' .
-            'images loading the first time that are displayed. You should clear thumbnails only ' .
-            'when they have reached a large size or when many images are no longer used'
-        ));
+    <?php if ($thumbsSize) : ?>
+        <p>
+            <?= __d('me_cms', 'Note: you should not need to clear the thumbnails and that this will slow down the ' .
+                'images loading the first time that are displayed. You should clear thumbnails only ' .
+                'when they have reached a large size or when many images are no longer used') ?>
+        </p>
 
-        echo $this->Form->postButton(
+        <?= $this->Form->postButton(
             __d('me_cms', 'Clear all thumbnails'),
             ['action' => 'tmpCleaner', 'thumbs'],
             ['class' => 'btn-success', 'icon' => 'trash-o']
-        );
-    }
-    ?>
+        ) ?>
+    <?php endif; ?>
 </div>
