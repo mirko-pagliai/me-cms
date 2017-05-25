@@ -31,10 +31,9 @@ $this->Breadcrumbs->add($title, ['_name' => 'albums']);
 
 <div class="clearfix">
     <?php foreach ($albums as $album) : ?>
-        <?php $url = $this->Url->build(['_name' => 'album', $album->slug]); ?>
         <div class="col-sm-6 col-md-4">
             <div class="photo-box">
-                <a href="<?= $url ?>" class="thumbnail" title="<?= $album->title ?>">
+                <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
                     <?= $this->Thumb->fit(collection($album->photos)->extract('path')->first(), ['width' => 275]) ?>
                     <div class="photo-info">
                         <div>

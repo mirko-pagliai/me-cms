@@ -38,9 +38,8 @@ $this->append('actions', $this->Form->postButton(
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
+                <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?></strong>
                 <?php
-                echo $this->Html->strong($this->Html->link($log->filename, ['action' => 'view', $log->filename]));
-
                 $actions = [];
 
                 $actions[] = $this->Html->link(

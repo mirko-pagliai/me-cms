@@ -127,19 +127,14 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
 <div class="margin-20">
     <?php
         echo $this->Html->h4(__d('me_cms', 'Sitemap'));
-        echo $this->Html->para(null, __d(
-            'me_cms',
-            'Sitemap size: {0}',
-            $this->Number->toReadableSize($sitemapSize)
-        ));
+        echo $this->Html->para(null, __d('me_cms', 'Sitemap size: {0}', $this->Number->toReadableSize($sitemapSize)));
 
         //Only admins can clear sitemap
         if ($this->Auth->isGroup('admin')) {
             if ($sitemapSize) {
                 echo $this->Html->para(null, __d(
                     'me_cms',
-                    'Note: you should not need to clear the sitemap, unless ' .
-                    'you have recently changed many records'
+                    'Note: you should not need to clear the sitemap, unless you have recently changed many records'
                 ));
 
                 echo $this->Form->postButton(
@@ -155,20 +150,14 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
 <div class="margin-20">
     <?php
         echo $this->Html->h4(__d('me_cms', 'Thumbnails'));
-        echo $this->Html->para(null, __d(
-            'me_cms',
-            'Thumbnails size: {0}',
-            $this->Number->toReadableSize($thumbsSize)
-        ));
+        echo $this->Html->para(null, __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbsSize)));
 
         if ($thumbsSize) {
             echo $this->Html->para(null, __d(
                 'me_cms',
-                'Note: you should not need to clear the thumbnails and that ' .
-                'this will slow down the images loading the first time that ' .
-                'are displayed. You should clear thumbnails only when they ' .
-                'have reached a large size or when many images are no longer ' .
-                'used'
+                'Note: you should not need to clear the thumbnails and that this will slow down the ' .
+                'images loading the first time that are displayed. You should clear thumbnails only ' .
+                'when they have reached a large size or when many images are no longer used'
             ));
 
             echo $this->Form->postButton(

@@ -26,13 +26,11 @@ $this->assign('title', $title = __d('me_cms', 'Add backup'));
 
 <?= $this->Form->create($backup); ?>
 <fieldset>
-    <?php
-        echo $this->Form->control('filename', [
-            'default' => 'backup_{$DATABASE}_{$DATETIME}.sql.gz',
-            'label' => __d('me_cms', 'Filename'),
-            'help' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
-        ]);
-    ?>
+    <?= $this->Form->control('filename', [
+        'default' => 'backup_{$DATABASE}_{$DATETIME}.sql.gz',
+        'label' => __d('me_cms', 'Filename'),
+        'help' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
+    ]) ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

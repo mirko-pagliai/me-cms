@@ -51,27 +51,23 @@ $this->append('actions', $this->Html->button(
                     <code><?= $group->id ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?>
-                    </strong>
-
+                    <strong><?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?></strong>
                     <?php
-                        $actions = [
-                            $this->Html->link(
-                                __d('me_cms', 'Edit'),
-                                ['action' => 'edit', $group->id],
-                                ['icon' => 'pencil']
-                            ),
-                            $this->Form->postLink(
-                                __d('me_cms', 'Delete'),
-                                ['action' => 'delete', $group->id],
-                                [
-                                    'class' => 'text-danger',
-                                    'icon' => 'trash-o',
-                                    'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                                ]
-                            ),
-                        ];
+                        $actions = [];
+                        $actions[] = $this->Html->link(
+                            __d('me_cms', 'Edit'),
+                            ['action' => 'edit', $group->id],
+                            ['icon' => 'pencil']
+                        );
+                        $actions[] = $this->Form->postLink(
+                            __d('me_cms', 'Delete'),
+                            ['action' => 'delete', $group->id],
+                            [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
+                            ]
+                        );
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>

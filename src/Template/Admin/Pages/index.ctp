@@ -95,9 +95,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <code><?= $page->id ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?>
-                    </strong>
+                    <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
                     <?php
                     //If the page is not active (it's a draft)
                     if (!$page->active) {
@@ -168,36 +166,33 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <?php
                     switch ($page->priority) {
                         case '1':
-                            echo $this->Html->badge('1', [
-                                'class' => 'priority-verylow',
-                                'tooltip' => __d('me_cms', 'Very low'),
-                            ]);
+                            $priority = 1;
+                            $class = 'priority-verylow';
+                            $tooltip = __d('me_cms', 'Very low');
                             break;
                         case '2':
-                            echo $this->Html->badge('2', [
-                                'class' => 'priority-low',
-                                'tooltip' => __d('me_cms', 'Low'),
-                            ]);
+                            $priority = 2;
+                            $class = 'priority-low';
+                            $tooltip = __d('me_cms', 'Low');
                             break;
                         case '4':
-                            echo $this->Html->badge('4', [
-                                'class' => 'priority-high',
-                                'tooltip' => __d('me_cms', 'High'),
-                            ]);
+                            $priority = 4;
+                            $class = 'priority-high';
+                            $tooltip = __d('me_cms', 'High');
                             break;
                         case '5':
-                            echo $this->Html->badge('5', [
-                                'class' => 'priority-veryhigh',
-                                'tooltip' => __d('me_cms', 'Very high'),
-                            ]);
+                            $priority = 5;
+                            $class = 'priority-veryhigh';
+                            $tooltip = __d('me_cms', 'Very high');
                             break;
                         default:
-                            echo $this->Html->badge('3', [
-                                'class' => 'priority-normal',
-                                'tooltip' => __d('me_cms', 'Normal'),
-                            ]);
+                            $priority = 3;
+                            $class = 'priority-normal';
+                            $tooltip = __d('me_cms', 'Normal');
                             break;
                     }
+
+                    echo $this->Html->badge($priority, compact('class', 'tooltip'));
                     ?>
                 </td>
                 <td class="min-width text-center">
