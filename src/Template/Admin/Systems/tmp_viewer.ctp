@@ -112,14 +112,12 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
         ));
 
         //Only admins can clear logs
-        if ($this->Auth->isGroup('admin')) {
-            if ($logsSize) {
-                echo $this->Form->postButton(
-                    __d('me_cms', 'Clear all logs'),
-                    ['action' => 'tmpCleaner', 'logs'],
-                    ['class' => 'btn-success', 'icon' => 'trash-o']
-                );
-            }
+        if ($this->Auth->isGroup('admin') && $logsSize) {
+            echo $this->Form->postButton(
+                __d('me_cms', 'Clear all logs'),
+                ['action' => 'tmpCleaner', 'logs'],
+                ['class' => 'btn-success', 'icon' => 'trash-o']
+            );
         }
     ?>
 </div>
