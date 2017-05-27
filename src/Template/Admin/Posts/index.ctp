@@ -118,16 +118,20 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     if ($post->created->isFuture()) {
                         echo $this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'record-label record-label-warning']);
                     }
+                    ?>
 
-                    if (!empty($post->tags)) {
-                        echo $this->Html->div('margin-top-5 small', implode(PHP_EOL, array_map(function ($tag) {
-                            return $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
-                                'icon' => 'tag',
-                                'title' => __d('me_cms', 'View items that belong to this category'),
-                            ]);
-                        }, $post->tags)));
-                    }
+                    <?php if ($post->tags) : ?>
+                        <div class="margin-top-5 small">
+                            <?php foreach ($post->tags as $tag) : ?>
+                                <?= $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
+                                    'icon' => 'tag',
+                                    'title' => __d('me_cms', 'View items that belong to this category'),
+                                ]) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
 
+                    <?php
                     $actions = [];
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts

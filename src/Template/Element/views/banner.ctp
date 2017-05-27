@@ -20,21 +20,21 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 if ($banner->position->name) {
-    $class = sprintf('banner-%s', $banner->position->name);
+    $class = sprintf('banner banner-%s', $banner->position->name);
 } else {
-    $class = null;
+    $class = 'banner';
 }
 ?>
 
-<div class="banner <?= $class ?>">
+<div class="<?= $class ?>">
     <?php
     if ($banner->target) {
-        echo $this->Html->link($this->Html->img($banner->path), ['_name' => 'banner', $banner->id], [
-            'target' => '_blank',
-            'title' => $banner->description ?: null,
-        ]);
+        echo $this->Html->link(
+            $this->Html->img($banner->path),
+            ['_name' => 'banner', $banner->id],
+            ['target' => '_blank', 'title' => $banner->description ?: null]
+        );
     } else {
         echo $this->Html->img($banner->path);
     }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <phpunit
 	colors="true"
 	processIsolation="false"
@@ -17,6 +18,10 @@
 	<filter>
 		<whitelist>
 			<directory suffix=".php">./src/</directory>
+            <exclude>
+                <!-- UpdateShell doesn't need coverage -->
+                <file>./src/Shell/UpdateShell.php</file>
+            </exclude>
 		</whitelist>
 	</filter>
     

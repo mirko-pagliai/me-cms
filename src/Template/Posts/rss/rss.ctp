@@ -44,18 +44,10 @@ foreach ($posts as $post) {
     //Truncates the text if the "<!-- read-more -->" tag is present
     $strpos = strpos($text, '<!-- read-more -->');
     if ($strpos) {
-        $text = $this->Text->truncate(
-            $text,
-            $strpos,
-            ['exact' => true, 'html' => false]
-        );
+        $text = $this->Text->truncate($text, $strpos, ['exact' => true, 'html' => false]);
     //Truncates the text if requested by the configuration
     } elseif (config('default.truncate_to')) {
-        $text = $this->Text->truncate(
-            $text,
-            config('default.truncate_to'),
-            ['exact' => false, 'html' => true]
-        );
+        $text = $this->Text->truncate($text, config('default.truncate_to'), ['exact' => false, 'html' => true]);
     }
 
     //Strips tags

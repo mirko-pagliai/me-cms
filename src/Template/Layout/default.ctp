@@ -32,10 +32,7 @@ use Cake\Core\Configure;
             echo $this->Html->title($this->fetch('title'));
             echo $this->fetch('meta');
 
-            echo $this->Html->css(
-                'https://fonts.googleapis.com/css?family=Roboto',
-                ['block' => true]
-            );
+            echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/font-awesome/css/font-awesome.min',
                 'MeCms.bootstrap.min',

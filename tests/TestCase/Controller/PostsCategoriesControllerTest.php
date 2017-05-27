@@ -158,7 +158,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
 
-        //GET requesti with a no existing category
+        //GET request with a no existing category
         $this->get(['_name' => 'postsCategory', 'no-existing']);
         $this->assertResponseError();
     }

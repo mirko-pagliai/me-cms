@@ -26,11 +26,9 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
 
 <?= $this->Form->create($user); ?>
 <div class='float-form'>
-    <?php
-        echo $this->Form->control('group_id', [
-            'label' => __d('me_cms', 'User group')
-        ]);
-    ?>
+    <?= $this->Form->control('group_id', [
+        'label' => __d('me_cms', 'User group')
+    ]) ?>
 </div>
 <fieldset>
     <?php

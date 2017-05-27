@@ -46,9 +46,8 @@ $this->Library->slugify();
         echo $this->Form->control('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'help' => __d('me_cms', 'The slug is a string identifying a ' .
-                'resource. If you do not have special needs, let it be ' .
-                'generated automatically'),
+            'help' => __d('me_cms', 'The slug is a string identifying a resource. If ' .
+                'you do not have special needs, let it be generated automatically'),
         ]);
         echo $this->Form->control('description', [
             'label' => __d('me_cms', 'Description'),

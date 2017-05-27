@@ -94,9 +94,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     <code><?= $user->id ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?>
-                    </strong>
+                    <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
                     <?php
                     //If the user is banned
                     if ($user->banned) {
@@ -111,19 +109,17 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                             ['class' => 'record-label record-label-warning']
                         );
                     }
-
-                    $actions = [
-                        $this->Html->link(
-                            __d('me_cms', 'View'),
-                            ['action' => 'view', $user->id],
-                            ['icon' => 'eye']
-                        ),
-                        $this->Html->link(
-                            __d('me_cms', 'Edit'),
-                            ['action' => 'edit', $user->id],
-                            ['icon' => 'pencil']
-                        ),
-                    ];
+                    $actions = [];
+                    $actions[] = $this->Html->link(
+                        __d('me_cms', 'View'),
+                        ['action' => 'view', $user->id],
+                        ['icon' => 'eye']
+                    );
+                    $actions[] = $this->Html->link(
+                        __d('me_cms', 'Edit'),
+                        ['action' => 'edit', $user->id],
+                        ['icon' => 'pencil']
+                    );
 
                     //Only admins can activate accounts and delete users
                     if ($this->Auth->isGroup('admin')) {
@@ -134,8 +130,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                                 ['action' => 'activate', $user->id],
                                 [
                                     'icon' => 'user-plus',
-                                    'confirm' => __d('me_cms', 'Are you sure ' .
-                                        'you want to activate this account?'),
+                                    'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
                                 ]
                             );
                         }

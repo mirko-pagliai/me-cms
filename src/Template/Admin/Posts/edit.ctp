@@ -72,9 +72,8 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
         echo $this->Form->control('slug', [
             'id' => 'slug',
             'label' => __d('me_cms', 'Slug'),
-            'help' => __d('me_cms', 'The slug is a string identifying a ' .
-                'resource. If you do not have special needs, let it be ' .
-                'generated automatically'),
+            'help' => __d('me_cms', 'The slug is a string identifying a resource. If ' .
+                'you do not have special needs, let it be generated automatically'),
         ]);
     ?>
     <div class="form-group to-be-hidden">
@@ -82,9 +81,8 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
             'id' => 'tags-output-text',
             'label' => __d('me_cms', 'Tags'),
             'rows' => 2,
-            'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
-                'separated by a comma or a comma and a space. Only ' .
-                'lowercase letters, numbers, hyphen, space'),
+            'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
+                'or a comma and a space. Only  lowercase letters, numbers, hyphen, space'),
         ]) ?>
     </div>
     <div class="form-group hidden to-be-shown">
@@ -100,9 +98,8 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
                 ]),
                 'id' => 'tags-input-text',
                 'label' => false,
-                'help' => __d('me_cms', 'Tags must be at least 3 chars and ' .
-                    'separated by a comma or a comma and a space. Only ' .
-                    'lowercase letters, numbers, hyphen, space'),
+                'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
+                    'or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
             ]);
 
             //Tags error

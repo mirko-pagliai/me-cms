@@ -39,7 +39,7 @@
                     }
                     ?>
                 </div>
-                <?php if (!empty($post->text)) : ?>
+                <?php if ($post->text) : ?>
                     <div class="content-text">
                         <?php
                         if (isset($truncate['text']) && !$truncate['text']) {

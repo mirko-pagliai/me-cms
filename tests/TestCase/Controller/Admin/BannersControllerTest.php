@@ -261,8 +261,15 @@ class BannersControllerTest extends IntegrationTestCase
         $banner = $this->Banners->find()->last();
         $this->assertEquals(1, $banner['position_id']);
         $this->assertEquals('file_to_upload.jpg', $banner['filename']);
+    }
 
-        //POST request again. Missing position in the query string
+    /**
+     * Tests for `upload()` method, missing the position on the query string
+     * @test
+     */
+    public function testUploadMissingPositionOnQueryString()
+    {
+        //POST request again. Missing position on the query string
         $this->post(array_merge($this->url, ['action' => 'upload']), ['file' => true]);
         $this->assertResponseFailure();
     }

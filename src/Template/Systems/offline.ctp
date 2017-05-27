@@ -24,10 +24,10 @@ $this->extend('/Common/view'); ?>
 
 <div class="text-center">
     <?php
-    if (!config('default.offline_text')) {
-        echo __d('me_cms', 'The website is temporarily offline');
-    } else {
+    if (config('default.offline_text')) {
         echo config('default.offline_text');
+    } else {
+        echo __d('me_cms', 'The website is temporarily offline');
     }
     ?>
 </div>
