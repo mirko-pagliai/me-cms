@@ -171,16 +171,14 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertRedirect(['_name' => 'homepage']);
 
         //Now the current IP is banned
-        $this->Controller->request->env('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.99']);
+        $this->configRequest(['environment' => ['REMOTE_ADDR' => '99.99.99.99']]);
 
-        $this->Controller->ipNotAllowed();
-
-        $this->Controller->viewBuilder()->setPlugin(ME_CMS);
-        $this->_response = $this->Controller->render('ipNotAllowed');
+        $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertEquals('login', $this->Controller->viewBuilder()->getLayout());
+        $this->assertTemplate(ROOT . 'src/Template/Systems/ip_not_allowed.ctp');
+        $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
     }
 
     /**

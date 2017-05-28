@@ -124,6 +124,8 @@ class AppControllerTest extends TestCase
         $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
         $this->assertEquals(5, $this->Controller->paginate['limit']);
         $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
+        $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Admin request
         $this->Controller = new AppController;
@@ -137,6 +139,12 @@ class AppControllerTest extends TestCase
         $this->assertEquals(['my-field'], $this->Controller->paginate['sortWhitelist']);
         $this->assertEquals(7, $this->Controller->paginate['limit']);
         $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
+        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
+
+        //Ajax request
+        $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $this->Controller->beforeFilter($this->Event);
+        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
@@ -170,20 +178,7 @@ class AppControllerTest extends TestCase
     public function testBeforeRender()
     {
         $this->Controller->beforeRender($this->Event);
-        $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
         $this->assertEquals(['MeCms.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
-
-        //Admin request
-        $this->Controller = new AppController;
-        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
-        $this->Controller->beforeRender($this->Event);
-        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
-
-        //Ajax request
-        $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
-        $this->Controller->beforeRender($this->Event);
-        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
