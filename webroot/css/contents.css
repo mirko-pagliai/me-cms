@@ -271,11 +271,3 @@
 .related-contents {
     margin-bottom: 20px;
 }
-
-/* Related contents, links */
-.related-contents a {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
