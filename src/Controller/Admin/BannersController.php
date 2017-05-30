@@ -115,10 +115,8 @@ class BannersController extends AppController
     /**
      * Uploads banners
      * @return void
-     * @uses MeTools\Controller\Component\UploaderComponent::error()
-     * @uses MeTools\Controller\Component\UploaderComponent::mimetype()
-     * @uses MeTools\Controller\Component\UploaderComponent::save()
-     * @uses MeTools\Controller\Component\UploaderComponent::set()
+     * @uses MeCms\Controller\AppController::setUploadError()
+     * @uses MeTools\Controller\Component\UploaderComponent
      */
     public function upload()
     {
@@ -136,14 +134,14 @@ class BannersController extends AppController
                 throw new InternalErrorException(__d('me_cms', 'Missing position ID'));
             }
 
-            http_response_code(500);
-
             $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
                 ->save(BANNERS);
 
             if (!$uploaded) {
-                exit($this->Uploader->error());
+                $this->setUploadError($this->Uploader->error());
+
+                return;
             }
 
             $saved = $this->Banners->save($this->Banners->newEntity([
@@ -152,12 +150,8 @@ class BannersController extends AppController
             ]));
 
             if (!$saved) {
-                exit(__d('me_cms', 'The banner could not be saved'));
+                $this->setUploadError(__d('me_cms', 'The banner could not be saved'));
             }
-
-            http_response_code(200);
-
-            $this->render(false);
         }
     }
 
