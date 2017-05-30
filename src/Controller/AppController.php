@@ -73,8 +73,8 @@ class AppController extends BaseController
 
         $this->paginate['maxLimit'] = $this->paginate['limit'];
 
-        //Layout for ajax requests
-        if ($this->request->is('ajax')) {
+        //Layout for ajax and json requests
+        if ($this->request->is(['ajax', 'json'])) {
             $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
