@@ -213,9 +213,11 @@ class SystemsControllerTest extends IntegrationTestCase
             'Posts',
             'PostsCategories'
         );
+
         //@codingStandardsIgnoreLine
         @unlink(SITEMAP);
 
+        //GET request. The sitemap will be created
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
@@ -223,7 +225,16 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
 
-        //@codingStandardsIgnoreLine
-        @unlink(SITEMAP);
+        $filemtime = filemtime(SITEMAP);
+
+        //GET request. The sitemap will be the same as the previous request
+        $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
+        $this->assertResponseOk();
+        $this->assertResponseNotEmpty();
+
+        $this->assertContentType('application/x-gzip');
+        $this->assertFileResponse(SITEMAP);
+
+        $this->assertEquals($filemtime, filemtime(SITEMAP));
     }
 }
