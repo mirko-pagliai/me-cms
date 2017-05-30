@@ -285,7 +285,7 @@ class PhotosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, with and error during the upload
+     * Tests for `upload()` method, simulating and error during the upload
      * @test
      */
     public function testUploadErrorDuringUpload()
@@ -306,11 +306,10 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         $file = $this->_createFileToUpload();
 
-        //Deletes all albums (except for the first one) and all photos
-        $this->Photos->deleteAll(['id >=' => 1]);
+        //Deletes all albums, except for the first one
         $this->Photos->Albums->deleteAll(['id >' => 1]);
 
-        //POST request. This should also work without the album ID the query
+        //POST request. This should also work without the album ID on the query
         //  string, as there is only one album
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), compact('file'));
         $this->assertResponseOk();
@@ -329,8 +328,8 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         $file = $this->_createFileToUpload();
 
-        //`$this->Photos->save()` returns `false` for this method. See
-        //  `controllerSpy()`.
+        //The table `save()` method returns `false` for this test. See the
+        //  `controllerSpy()` method.
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"The photo could not be saved"}');
@@ -338,10 +337,10 @@ class PhotosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, without the album ID as query string
+     * Tests for `upload()` method, without the album ID on the query string
      * @test
      */
-    public function testUploadWithoutQueryString()
+    public function testUploadWithoutAlbumIdOnQueryString()
     {
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
         $this->assertResponseFailure();
