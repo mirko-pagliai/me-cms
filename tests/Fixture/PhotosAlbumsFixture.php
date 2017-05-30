@@ -114,7 +114,11 @@ class PhotosAlbumsFixture extends TestFixture
         parent::insert($db);
 
         foreach ($this->records as $record) {
-            mkdir(PHOTOS . $record['id']);
+            $album = PHOTOS . $record['id'];
+
+            if (!file_exists($album)) {
+                mkdir($album);
+            }
         }
     }
 }
