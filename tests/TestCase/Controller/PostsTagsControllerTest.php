@@ -171,7 +171,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $this->get(array_merge($url, ['?' => ['q' => $slug]]));
         $this->assertRedirect($url);
 
-        //GET requesti with a no existing tag
+        //GET request with a no existing tag
         $this->get(['_name' => 'postsTag', 'no-existing']);
         $this->assertResponseError();
     }

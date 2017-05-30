@@ -73,6 +73,18 @@ class AppController extends BaseController
 
         $this->paginate['maxLimit'] = $this->paginate['limit'];
 
+        //Layout for ajax and json requests
+        if ($this->request->is(['ajax', 'json'])) {
+            $this->viewBuilder()->setLayout('MeCms.ajax');
+        }
+
+        $this->viewBuilder()->setClassName('MeCms.View/App');
+
+        //Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
+        if ($this->request->isAdmin()) {
+            $this->viewBuilder()->setClassName('MeCms.View/Admin');
+        }
+
         parent::beforeFilter($event);
     }
 
@@ -88,18 +100,6 @@ class AppController extends BaseController
      */
     public function beforeRender(Event $event)
     {
-        //Layout for ajax requests
-        if ($this->request->is('ajax')) {
-            $this->viewBuilder()->setLayout('MeCms.ajax');
-        }
-
-        $this->viewBuilder()->setClassName('MeCms.View/App');
-
-        //Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-        if ($this->request->isAdmin()) {
-            $this->viewBuilder()->setClassName('MeCms.View/Admin');
-        }
-
         //Loads the `Auth` helper.
         //The `helper is loaded here (instead of the view) to pass user data
         $this->viewBuilder()->setHelpers(['MeCms.Auth' => $this->Auth->user()]);
@@ -121,10 +121,7 @@ class AppController extends BaseController
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler');
         $this->loadComponent('MeTools.Uploader');
-
-        if (config('security.recaptcha')) {
-            $this->loadComponent('MeTools.Recaptcha');
-        }
+        $this->loadComponent('MeTools.Recaptcha');
 
         parent::initialize();
     }
@@ -170,5 +167,22 @@ class AppController extends BaseController
     protected function isOffline()
     {
         return $this->request->isOffline();
+    }
+
+    /**
+     * Internal method to set an upload error.
+     *
+     * It saves the error as view var that `JsonView` should serialize and sets
+     *  the response status code to 500.
+     * @param string $error Error message
+     * @return void
+     * @since 2.18.1
+     */
+    protected function setUploadError($error)
+    {
+        $this->response = $this->response->withStatus(500);
+
+        $this->set(compact('error'));
+        $this->set('_serialize', ['error']);
     }
 }

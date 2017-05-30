@@ -294,6 +294,7 @@ class UsersControllerTest extends IntegrationTestCase
             'MeTools\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
             'MeTools\Controller\Component\UploaderComponent',
+            'MeTools\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
             'MeCms\Controller\Component\LoginRecorderComponent',
         ], $components);

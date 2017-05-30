@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.18 branch
+### 2.18.1
+* `BannersController::upload()` and `PhotosController::upload()` methods return
+    errors with a json response;
+* fixed bug. The view class to be used is set by the
+    `AppController::beforeFilter()` method.
+
 ### 2.18.0
 * the tags index now uses pagination;
 * widgets (cells) use collections;

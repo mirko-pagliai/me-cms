@@ -352,6 +352,10 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->post(array_merge($url, ['invalidType']));
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertSession('The operation has not been performed correctly', 'Flash.flash.0.message');
+
+        //GET request
+        $this->get(array_merge($url, ['all']));
+        $this->assertResponseError();
     }
 
     /**

@@ -23,7 +23,6 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 
@@ -78,7 +77,6 @@ class PostsTagsController extends AppController
      * Lists posts for a tag
      * @param string $slug Tag slug
      * @return \Cake\Network\Response|null|void
-     * @throws RecordNotFoundException
      */
     public function view($slug = null)
     {
@@ -120,10 +118,6 @@ class PostsTagsController extends AppController
                 })
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->PostsTags->Posts->getAlias()) => 'DESC']);
-
-            if ($query->isEmpty()) {
-                throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
-            }
 
             $posts = $this->paginate($query);
 
