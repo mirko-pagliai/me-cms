@@ -168,4 +168,21 @@ class AppController extends BaseController
     {
         return $this->request->isOffline();
     }
+
+    /**
+     * Internal method to set an upload error.
+     *
+     * It saves the error as view var that `JsonView` should serialize and sets
+     *  the response status code to 500.
+     * @param string $error Error message
+     * @return void
+     * @since 2.18.1
+     */
+    protected function setUploadError($error)
+    {
+        $this->response = $this->response->withStatus(500);
+
+        $this->set(compact('error'));
+        $this->set('_serialize', ['error']);
+    }
 }

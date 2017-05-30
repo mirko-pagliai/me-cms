@@ -23,7 +23,7 @@
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('DashedRoute');
-Router::extensions('rss');
+Router::extensions(['json', 'rss']);
 
 Router::scope('/', ['plugin' => ME_CMS], function ($routes) {
     //Requires other routes

@@ -46,12 +46,16 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
     });
 <?= $this->Html->scriptEnd(); ?>
 
-<?= $this->Form->create(null, ['class' => 'dropzone', 'type' => 'file']) ?>
-    <div class="fallback">
-        <?= $this->Form->control('file', [
-            'label' => false,
-            'multiple' => 'multiple',
-            'type' => 'file',
-        ]) ?>
-    </div>
-<?= $this->Form->end() ?>
+<?php
+    echo $this->Form->create(null, [
+        'class' => 'dropzone',
+        'type' => 'file',
+        'url' => ['?' => $this->request->getQuery(), '_ext' => 'json'],
+    ]);
+    echo $this->Html->div('fallback', $this->Form->control('file', [
+        'label' => false,
+        'multiple' => 'multiple',
+        'type' => 'file',
+    ]));
+    echo $this->Form->end();
+?>

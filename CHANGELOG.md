@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.18 branch
 ### 2.18.1
+* the `MeCms\Controller\Admin\PhotosController::upload()` method returns errors
+    with a json response;
 * fixed bug. The view class to be used is set by the
     `AppController::beforeFilter()` method.
 

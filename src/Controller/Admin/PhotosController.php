@@ -114,10 +114,8 @@ class PhotosController extends AppController
     /**
      * Uploads photos
      * @return void
-     * @uses MeTools\Controller\Component\UploaderComponent::error()
-     * @uses MeTools\Controller\Component\UploaderComponent::mimetype()
-     * @uses MeTools\Controller\Component\UploaderComponent::save()
-     * @uses MeTools\Controller\Component\UploaderComponent::set()
+     * @uses MeCms\Controller\AppController::setUploadError()
+     * @uses MeTools\Controller\Component\UploaderComponent
      */
     public function upload()
     {
@@ -131,18 +129,18 @@ class PhotosController extends AppController
         }
 
         if ($this->request->getData('file')) {
-            if (empty($album)) {
+            if (!$album) {
                 throw new InternalErrorException(__d('me_cms', 'Missing album ID'));
             }
-
-            http_response_code(500);
 
             $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
                 ->save(PHOTOS . $album);
 
             if (!$uploaded) {
-                exit($this->Uploader->error());
+                $this->setUploadError($this->Uploader->error());
+
+                return;
             }
 
             $saved = $this->Photos->save($this->Photos->newEntity([
@@ -151,12 +149,8 @@ class PhotosController extends AppController
             ]));
 
             if (!$saved) {
-                exit(__d('me_cms', 'The photo could not be saved'));
+                $this->setUploadError(__d('me_cms', 'The photo could not be saved'));
             }
-
-            http_response_code(200);
-
-            $this->render(false);
         }
     }
 
