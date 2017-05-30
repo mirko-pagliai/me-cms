@@ -144,8 +144,8 @@ class BannersControllerTest extends IntegrationTestCase
         if ($this->getName() === 'testUploadSaveFailure') {
             $controller->Banners = $this->getMockBuilder(get_class($controller->Banners))
                 ->setConstructorArgs([[
-                    'table' =>  $controller->Banners->getTable(),
-                    'connection' =>  $controller->Banners->getConnection(),
+                    'table' => $controller->Banners->getTable(),
+                    'connection' => $controller->Banners->getConnection(),
                 ]])
                 ->setMethods(['save'])
                 ->getMock();

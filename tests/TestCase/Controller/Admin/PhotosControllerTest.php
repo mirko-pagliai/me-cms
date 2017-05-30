@@ -144,8 +144,8 @@ class PhotosControllerTest extends IntegrationTestCase
         if ($this->getName() === 'testUploadSaveFailure') {
             $controller->Photos = $this->getMockBuilder(get_class($controller->Photos))
                 ->setConstructorArgs([[
-                    'table' =>  $controller->Photos->getTable(),
-                    'connection' =>  $controller->Photos->getConnection(),
+                    'table' => $controller->Photos->getTable(),
+                    'connection' => $controller->Photos->getConnection(),
                 ]])
                 ->setMethods(['save'])
                 ->getMock();
