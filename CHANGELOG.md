@@ -4,7 +4,8 @@
 * `BannersController::upload()` and `PhotosController::upload()` methods return
     errors with a json response;
 * fixed bug. The view class to be used is set by the
-    `AppController::beforeFilter()` method.
+    `AppController::beforeFilter()` method;
+* improved/fixed the code of all template files.
 
 ### 2.18.0
 * the tags index now uses pagination;
