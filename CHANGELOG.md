@@ -1,9 +1,10 @@
 # 2.x branch
-## 2.18 branch
+## 2.19 branch
 ### 2.19.0
 * `config()` global function becomes `getConfig()` The function accepts a second
     parameter as the default value in case the configuration is empty.
 
+## 2.18 branch
 ### 2.18.1
 * `BannersController::upload()` and `PhotosController::upload()` methods return
     errors with a json response;
