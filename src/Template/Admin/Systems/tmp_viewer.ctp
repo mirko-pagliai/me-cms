@@ -100,7 +100,6 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
             ['class' => 'btn-success', 'icon' => 'trash-o']
         ) ?>
     <?php endif; ?>
-    ?>
 </div>
 
 <div class="margin-20">
