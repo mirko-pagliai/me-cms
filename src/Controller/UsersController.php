@@ -181,7 +181,7 @@ class UsersController extends AppController
     {
         //Checks if signup is enabled and if accounts will be enabled by the
         //  user via email
-        if (!config('users.signup') && config('users.activation') === 1) {
+        if (!getConfig('users.signup') && getConfig('users.activation') === 1) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
             return $this->redirect(['_name' => 'homepage']);
@@ -191,7 +191,7 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (config('security.recaptcha') && !$this->Recaptcha->check()) {
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
             } elseif (!$entity->getErrors()) {
                 $user = $this->Users->find('pending')
@@ -232,7 +232,7 @@ class UsersController extends AppController
     public function login()
     {
         //Tries to login with cookies, if the login with cookies is enabled
-        if (config('users.cookies_login')) {
+        if (getConfig('users.cookies_login')) {
             $this->_loginWithCookie();
         }
 
@@ -305,7 +305,7 @@ class UsersController extends AppController
     public function passwordForgot()
     {
         //Checks if reset password is enabled
-        if (!config('users.reset_password')) {
+        if (!getConfig('users.reset_password')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
             return $this->redirect(['_name' => 'homepage']);
@@ -315,7 +315,7 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (config('security.recaptcha') && !$this->Recaptcha->check()) {
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
             } else {
                 $user = $this->Users->find('active')
@@ -400,7 +400,7 @@ class UsersController extends AppController
     public function signup()
     {
         //Checks if signup is enabled
-        if (!config('users.signup')) {
+        if (!getConfig('users.signup')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
             return $this->redirect(['_name' => 'homepage']);
@@ -411,14 +411,14 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            $user->group_id = config('users.default_group');
-            $user->active = (bool)!config('users.activation');
+            $user->group_id = getConfig('users.default_group');
+            $user->active = (bool)!getConfig('users.activation');
 
             //Checks for reCAPTCHA, if requested
-            if (config('security.recaptcha') && !$this->Recaptcha->check()) {
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
             } elseif ($this->Users->save($user)) {
-                switch (config('users.activation')) {
+                switch (getConfig('users.activation')) {
                     //The account will be enabled by an administrator
                     case 2:
                         $this->Flash->success(__d('me_cms', 'Account created, but it needs to be activated by an admin'));

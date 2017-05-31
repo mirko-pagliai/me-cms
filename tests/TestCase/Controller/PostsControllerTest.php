@@ -122,7 +122,7 @@ class PostsControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $cache = sprintf('index_limit_%s_page_%s', config('default.records'), 1);
+        $cache = sprintf('index_limit_%s_page_%s', getConfig('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->cache
@@ -168,7 +168,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         //Sets the cache name
         $end = Time::parse($startFromView)->addDay(1);
-        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$startFromView, $end])), config('default.records'), 1);
+        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$startFromView, $end])), getConfig('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->cache
@@ -267,7 +267,7 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
 
         //Sets the cache name
-        $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), config('default.records_for_searches'), 1);
+        $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfig('default.records_for_searches'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->cache

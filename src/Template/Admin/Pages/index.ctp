@@ -197,11 +197,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="min-width text-center">
                     <div class="hidden-xs">
-                        <?= $page->created->i18nFormat(config('main.datetime.long')) ?>
+                        <?= $page->created->i18nFormat(getConfig('main.datetime.long')) ?>
                     </div>
                     <div class="visible-xs">
-                        <div><?= $page->created->i18nFormat(config('main.date.short')) ?></div>
-                        <div><?= $page->created->i18nFormat(config('main.time.short')) ?></div>
+                        <div><?= $page->created->i18nFormat(getConfig('main.date.short')) ?></div>
+                        <div><?= $page->created->i18nFormat(getConfig('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

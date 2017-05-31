@@ -65,10 +65,10 @@ class AppController extends BaseController
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-        $this->paginate['limit'] = config('default.records');
+        $this->paginate['limit'] = getConfig('default.records');
 
         if ($this->request->isAdmin()) {
-            $this->paginate['limit'] = config('admin.records');
+            $this->paginate['limit'] = getConfig('admin.records');
         }
 
         $this->paginate['maxLimit'] = $this->paginate['limit'];

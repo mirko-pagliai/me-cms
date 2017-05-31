@@ -24,7 +24,7 @@
 
 <?= __d('me_cms', 'Hello {0}', $fullName); ?>,
 
-<?= __d('me_cms', 'you have requested to change your password on the site {0}', config('main.title')) ?>.
+<?= __d('me_cms', 'you have requested to change your password on the site {0}', getConfig('main.title')) ?>.
 
 <?= __d('me_cms', 'To reset your password, click {0}', $this->Html->link(__d('me_cms', 'here'), $url)) ?>.
 

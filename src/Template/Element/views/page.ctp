@@ -24,7 +24,7 @@
 
 <div class="page-container content-container">
     <div class="content-header">
-        <?php if (config('page.category') && $page->category->title && $page->category->slug) : ?>
+        <?php if (getConfig('page.category') && $page->category->title && $page->category->slug) : ?>
             <h5 class="content-category">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
             </h5>
@@ -41,11 +41,11 @@
         <?php endif; ?>
 
         <div class="content-info">
-            <?php if (config('page.created')) : ?>
+            <?php if (getConfig('page.created')) : ?>
                 <?= $this->Html->div('content-date', __d(
                     'me_cms',
                     'Posted on {0}',
-                    $page->created->i18nFormat(config('main.datetime.long'))
+                    $page->created->i18nFormat(getConfig('main.datetime.long'))
                 ), ['icon' => 'clock-o']) ?>
             <?php endif; ?>
         </div>
@@ -65,10 +65,10 @@
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview']) && config('default.truncate_to')) {
+        } elseif (!$this->request->isAction(['view', 'preview']) && getConfig('default.truncate_to')) {
             echo $truncatedText = $this->Text->truncate(
                 $text,
-                config('default.truncate_to'),
+                getConfig('default.truncate_to'),
                 ['exact' => false, 'html' => true]
             );
         } else {
@@ -91,10 +91,10 @@
         ?>
     </div>
     <?php
-    if (config('page.shareaholic') && config('shareaholic.app_id') &&
+    if (getConfig('page.shareaholic') && getConfig('shareaholic.app_id') &&
         $this->request->isAction('view', 'Pages') && !$this->request->isAjax()
     ) {
-        echo $this->Html->shareaholic(config('shareaholic.app_id'));
+        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
     }
     ?>
 </div>

@@ -49,23 +49,23 @@ class AppView extends View
     protected function _setBlocks()
     {
         //Sets the "theme color" (the toolbar color for some mobile browser)
-        if (config('default.toolbar_color')) {
-            $this->Html->meta('theme-color', config('default.toolbar_color'));
+        if (getConfig('default.toolbar_color')) {
+            $this->Html->meta('theme-color', getConfig('default.toolbar_color'));
         }
 
         //Sets the meta tag for RSS posts
-        if (config('default.rss_meta')) {
+        if (getConfig('default.rss_meta')) {
             $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
         }
 
         //Sets scripts for Google Analytics
-        if (config('default.analytics')) {
-            echo $this->Library->analytics(config('default.analytics'));
+        if (getConfig('default.analytics')) {
+            echo $this->Library->analytics(getConfig('default.analytics'));
         }
 
         //Sets scripts for Shareaholic
-        if (config('shareaholic.site_id')) {
-            echo $this->Library->shareaholic(config('shareaholic.site_id'));
+        if (getConfig('shareaholic.site_id')) {
+            echo $this->Library->shareaholic(getConfig('shareaholic.site_id'));
         }
 
         //Sets some Facebook's tags
@@ -79,9 +79,9 @@ class AppView extends View
         ]);
 
         //Sets the app ID for Facebook
-        if (config('default.facebook_app_id')) {
+        if (getConfig('default.facebook_app_id')) {
             $this->Html->meta([
-                'content' => config('default.facebook_app_id'),
+                'content' => getConfig('default.facebook_app_id'),
                 'property' => 'fb:app_id',
             ]);
         }

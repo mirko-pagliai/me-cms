@@ -31,30 +31,10 @@ use Cake\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
-     * Test for `config()` global function
-     * @test
-     */
-    public function testConfig()
-    {
-        $this->assertNotEmpty(config());
-        $this->assertNotEmpty(config(null));
-        $this->assertNull(config('noExisting'));
-        $this->assertNull(config(ME_CMS . '.noExisting'));
-
-        Configure::write('exampleKey', 'exampleValue');
-
-        $this->assertEquals('exampleValue', config('exampleKey'));
-
-        Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
-
-        $this->assertEquals('MeCmsExampleValue', config('exampleKey'));
-    }
-
-    /**
      * Test for `firstImage()` global function
      * @test
      */
-    public function testfirstImage()
+    public function testFirstImage()
     {
         $this->assertFalse(firstImage('Text'));
 
@@ -98,5 +78,25 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals('ftp://example.com/image.jpg', firstImage('<img src=\'ftp://example.com/image.jpg\'>'));
         $this->assertEquals('https://example.com/image.jpg', firstImage('<img src=\'https://example.com/image.jpg\'>'));
         $this->assertEquals('http://www.example.com/image.jpg', firstImage('<img src=\'http://www.example.com/image.jpg\'>'));
+    }
+
+    /**
+     * Test for `getConfig()` global function
+     * @test
+     */
+    public function testGetConfig()
+    {
+        $this->assertNotEmpty(getConfig());
+        $this->assertNotEmpty(getConfig(null));
+        $this->assertNull(getConfig('noExisting'));
+        $this->assertNull(getConfig(ME_CMS . '.noExisting'));
+
+        Configure::write('exampleKey', 'exampleValue');
+
+        $this->assertEquals('exampleValue', getConfig('exampleKey'));
+
+        Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
+
+        $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey'));
     }
 }

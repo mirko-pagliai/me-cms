@@ -23,21 +23,6 @@
 use Cake\Core\Configure;
 use Sunra\PhpSimple\HtmlDomParser;
 
-if (!function_exists('config')) {
-    /**
-     * Gets config values stored in the configuration.
-     * It will first look in the MeCms configuration, then in the application configuration
-     * @param string|null $key Configuration key
-     * @return mixed Configuration value
-     */
-    function config($key = null)
-    {
-        $value = Configure::read(sprintf('%s.%s', ME_CMS, $key));
-
-        return $value ? $value : Configure::read($key);
-    }
-}
-
 if (!function_exists('firstImage')) {
     /**
      * Returns the first image from an html string
@@ -61,5 +46,21 @@ if (!function_exists('firstImage')) {
         }
 
         return $img->src;
+    }
+}
+
+if (!function_exists('getConfig')) {
+    /**
+     * Used to read information stored in Configure.
+     *
+     * It will first look in the MeCms configuration, then in the APP configuration
+     * @param string|null $var Variable to obtain. Use '.' to access array elements
+     * @return mixed Value stored in configure, or null
+     */
+    function getConfig($var = null)
+    {
+        $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
+
+        return $value ? $value : Configure::read($var);
     }
 }

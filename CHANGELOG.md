@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.18 branch
+### 2.19.0
+* `config()` global function becomes `getConfig()`.
+
 ### 2.18.1
 * `BannersController::upload()` and `PhotosController::upload()` methods return
     errors with a json response;

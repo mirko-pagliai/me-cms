@@ -134,7 +134,7 @@ class LoginRecorderComponent extends Component
         array_unshift($data, (object)compact('agent', 'ip', 'time', 'platform', 'browser', 'version'));
 
         //Keeps only a specified number of records
-        $data = array_slice($data, 0, config('users.login_log'));
+        $data = array_slice($data, 0, getConfig('users.login_log'));
 
         //Writes
         return $this->getSerializedArray()->write($data);
