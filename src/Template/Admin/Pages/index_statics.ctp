@@ -34,11 +34,7 @@ $this->assign('title', __d('me_cms', 'Static pages'));
         <tr>
             <td>
                 <strong>
-                    <?= $this->Html->link(
-                        $page->filename,
-                        ['_name' => 'page', $page->slug],
-                        ['target' => '_blank']
-                    ) ?>
+                    <?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug], ['target' => '_blank']) ?>
                 </strong>
                 <?php
                 $actions = [

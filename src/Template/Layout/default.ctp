@@ -70,10 +70,7 @@ use Cake\Core\Configure;
                     $logo = $this->Html->img(config('default.logo'));
                 }
 
-                echo $this->Html->link($logo, '/', [
-                    'id' => 'logo',
-                    'title' => __d('me_cms', 'Homepage'),
-                ]);
+                echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
                 ?>
             </div>
             <?php
