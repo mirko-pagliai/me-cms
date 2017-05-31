@@ -88,15 +88,22 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertNotEmpty(getConfig());
         $this->assertNotEmpty(getConfig(null));
+        $this->assertNotEmpty(getConfig(null, null));
+
         $this->assertNull(getConfig('noExisting'));
+        $this->assertEquals('defaultValue', getConfig('noExisting', 'defaultValue'));
+
         $this->assertNull(getConfig(ME_CMS . '.noExisting'));
+        $this->assertEquals('defaultValue', getConfig(ME_CMS . '.noExisting', 'defaultValue'));
 
         Configure::write('exampleKey', 'exampleValue');
 
         $this->assertEquals('exampleValue', getConfig('exampleKey'));
+        $this->assertEquals('exampleValue', getConfig('exampleKey', 'defaultValue'));
 
         Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
 
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey'));
+        $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey', 'defaultValue'));
     }
 }

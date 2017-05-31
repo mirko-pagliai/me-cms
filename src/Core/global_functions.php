@@ -55,12 +55,22 @@ if (!function_exists('getConfig')) {
      *
      * It will first look in the MeCms configuration, then in the APP configuration
      * @param string|null $var Variable to obtain. Use '.' to access array elements
+     * @param mixed $default The default data
      * @return mixed Value stored in configure, or null
+     * @since 2.19.0
      */
-    function getConfig($var = null)
+    function getConfig($var = null, $default = null)
     {
         $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
 
-        return $value ? $value : Configure::read($var);
+        if (!$value) {
+            $value = Configure::read($var);
+        }
+
+        if (!$value) {
+            return $default;
+        }
+
+        return $value;
     }
 }
