@@ -1,5 +1,6 @@
 [Cake\Routing\Exception\MissingControllerException] Controller class NoExistingRoute could not be found.
 Request URL: /noExistingRoute
+Client IP: 1.1.1.1
 Stack Trace:
 #0 /home/mirko/Server/mirkopagliai/vendor/cakephp/cakephp/src/Http/ControllerFactory.php(72): Cake\Http\ControllerFactory->missingController(Object(Cake\Network\Request))
 #1 /home/mirko/Server/mirkopagliai/vendor/cakephp/cakephp/src/Http/ActionDispatcher.php(92): Cake\Http\ControllerFactory->create(Object(Cake\Network\Request), Object(Cake\Network\Response))

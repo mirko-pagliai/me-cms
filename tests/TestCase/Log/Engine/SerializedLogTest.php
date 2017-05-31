@@ -96,6 +96,7 @@ class SerializedLogTest extends TestCase
             'exception',
             'message',
             'request',
+            'ip',
             'trace',
             'full',
         ], array_keys($result));
@@ -104,6 +105,7 @@ class SerializedLogTest extends TestCase
         $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result['exception']);
         $this->assertEquals('Controller class NoExistingRoute could not be found.', $result['message']);
         $this->assertEquals('/noExistingRoute', $result['request']);
+        $this->assertEquals('1.1.1.1', $result['ip']);
         $this->assertEquals($trace, $result['trace']);
 
         $message = file_get_contents(TEST_APP . 'examples' . DS . 'stacktraces' . DS . 'example2');
@@ -116,6 +118,7 @@ class SerializedLogTest extends TestCase
             'attributes',
             'request',
             'referer',
+            'ip',
             'trace',
             'full',
         ], array_keys($result));
@@ -131,6 +134,7 @@ class SerializedLogTest extends TestCase
             ')', $result['attributes']);
         $this->assertEquals('/noExistingRoute', $result['request']);
         $this->assertEquals('/noExistingReferer', $result['referer']);
+        $this->assertEquals('1.1.1.1', $result['ip']);
         $this->assertEquals($trace, $result['trace']);
     }
 
