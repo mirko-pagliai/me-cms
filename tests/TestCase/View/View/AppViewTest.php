@@ -108,7 +108,7 @@ class AppViewTest extends TestCase
             METOOLS . '\View\Helper\FormHelper',
             METOOLS . '\View\Helper\LibraryHelper',
             METOOLS . '\View\Helper\PaginatorHelper',
-            'Assets\View\Helper\AssetHelper',
+            ASSETS . '\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
             METOOLS . '\View\Helper\BBCodeHelper',

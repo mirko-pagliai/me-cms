@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.18 branch
 ### 2.18.2
+* updated for MeTools 2.12.5;
 * updated for cakephp-mysql-backup 1.0.3.
 
 ### 2.18.1

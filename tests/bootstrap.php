@@ -116,9 +116,6 @@ Configure::write('Session', ['defaults' => 'php']);
  */
 Configure::write('Assets.target', TMP . 'assets');
 
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('Assets.target'));
-
 Plugin::load('Assets', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,

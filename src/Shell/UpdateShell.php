@@ -150,8 +150,8 @@ class UpdateShell extends BaseUpdateConsole
         }
 
         //Creates `APP/tmp/assets`
-        if (!file_exists(Configure::read('Assets.target'))) {
-            mkdir(Configure::read('Assets.target'), 0777, true);
+        if (!file_exists(Configure::read(ASSETS . '.target'))) {
+            mkdir(Configure::read(ASSETS . '.target'), 0777, true);
         }
     }
 

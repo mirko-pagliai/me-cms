@@ -59,7 +59,7 @@ class SystemsControllerTest extends IntegrationTestCase
         Cache::write('valueFromGroup', 'data', 'posts');
 
         //Creates some asset files
-        file_put_contents(Configure::read('Assets.target') . DS . 'asset_file', str_repeat('a', 10));
+        file_put_contents(Configure::read(ASSETS . '.target') . DS . 'asset_file', str_repeat('a', 10));
 
         //Creates some log file
         file_put_contents(LOGS . 'log_file', str_repeat('a', 10));
@@ -305,7 +305,7 @@ class SystemsControllerTest extends IntegrationTestCase
 
         $this->assertFalse(Cache::read('value'));
         $this->assertFalse(Cache::read('valueFromGroup', 'posts'));
-        $this->assertFalse(file_exists(Configure::read('Assets.target') . DS . 'asset_file'));
+        $this->assertFalse(file_exists(Configure::read(ASSETS . '.target') . DS . 'asset_file'));
         $this->assertFalse(file_exists(LOGS . 'log_file'));
         $this->assertFalse(file_exists(SITEMAP));
         $this->assertFalse(file_exists(Configure::read('Thumbs.target') . DS . 'thumb.jpg'));
@@ -325,7 +325,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
 
-        $this->assertFalse(file_exists(Configure::read('Assets.target') . DS . 'asset_file'));
+        $this->assertFalse(file_exists(Configure::read(ASSETS . '.target') . DS . 'asset_file'));
 
         //POST request. Cleans logs
         $this->post(array_merge($url, ['logs']));

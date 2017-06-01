@@ -177,7 +177,7 @@ class SystemsController extends AppController
         foreach ([
             LOGS,
             TMP,
-            Configure::read('Assets.target'),
+            Configure::read(ASSETS . '.target'),
             CACHE,
             LOGIN_RECORDS,
             Configure::read('Thumbs.target'),
@@ -246,7 +246,7 @@ class SystemsController extends AppController
 
         switch ($type) {
             case 'all':
-                $success = clearDir(Configure::read('Assets.target')) && clearDir(LOGS)
+                $success = clearDir(Configure::read(ASSETS . '.target')) && clearDir(LOGS)
                     && self::clearCache() && self::clearSitemap()
                     && clearDir(Configure::read('Thumbs.target'));
                 break;
@@ -254,7 +254,7 @@ class SystemsController extends AppController
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $success = clearDir(Configure::read('Assets.target'));
+                $success = clearDir(Configure::read(ASSETS . '.target'));
                 break;
             case 'logs':
                 $success = clearDir(LOGS);
@@ -282,7 +282,7 @@ class SystemsController extends AppController
      */
     public function tmpViewer()
     {
-        $assetsSize = (new Folder(Configure::read('Assets.target')))->dirsize();
+        $assetsSize = (new Folder(Configure::read(ASSETS . '.target')))->dirsize();
         $cacheSize = (new Folder(CACHE))->dirsize();
         $logsSize = (new Folder(LOGS))->dirsize();
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;

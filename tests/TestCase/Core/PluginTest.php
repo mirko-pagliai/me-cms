@@ -39,7 +39,7 @@ class PluginTest extends TestCase
         $this->assertEquals([
             ME_CMS,
             METOOLS,
-            'Assets',
+            ASSETS,
             MYSQL_BACKUP,
             'Thumber',
             'Tokens',
@@ -50,7 +50,7 @@ class PluginTest extends TestCase
         $this->assertEquals([
             ME_CMS,
             METOOLS,
-            'Assets',
+            ASSETS,
             MYSQL_BACKUP,
             'TestPlugin',
             'Thumber',
@@ -58,7 +58,7 @@ class PluginTest extends TestCase
         ], Plugin::all());
 
         $this->assertEquals([
-            'Assets',
+            ASSETS,
             ME_CMS,
             METOOLS,
             MYSQL_BACKUP,

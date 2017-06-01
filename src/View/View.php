@@ -112,7 +112,7 @@ class View extends AppView
         $this->loadHelper(METOOLS . '.Form');
         $this->loadHelper(METOOLS . '.Library');
         $this->loadHelper(METOOLS . '.Paginator');
-        $this->loadHelper('Assets.Asset');
+        $this->loadHelper(ASSETS . '.Asset');
         $this->loadHelper('Thumber.Thumb');
         $this->loadHelper('WyriHaximus/MinifyHtml.MinifyHtml');
     }
