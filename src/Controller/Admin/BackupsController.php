@@ -127,7 +127,7 @@ class BackupsController extends AppController
      */
     public function download($filename)
     {
-        $file = Configure::read('MysqlBackup.target') . DS . urldecode($filename);
+        $file = Configure::read(MYSQL_BACKUP . '.target') . DS . urldecode($filename);
 
         return $this->response->withFile($file, ['download' => true]);
     }
@@ -141,7 +141,7 @@ class BackupsController extends AppController
      */
     public function restore($filename)
     {
-        $filename = Configure::read('MysqlBackup.target') . DS . urldecode($filename);
+        $filename = Configure::read(MYSQL_BACKUP . '.target') . DS . urldecode($filename);
 
         (new BackupImport)->filename($filename)->import();
 

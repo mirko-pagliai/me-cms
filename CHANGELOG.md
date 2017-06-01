@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.18 branch
+### 2.18.2
+* updated for cakephp-mysql-backup 1.0.3.
+
 ### 2.18.1
 * `BannersController::upload()` and `PhotosController::upload()` methods return
     errors with a json response;

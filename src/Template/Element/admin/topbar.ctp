@@ -49,7 +49,7 @@ use MeCms\Core\Plugin;
                 echo $this->Html->ul($menus, ['class' => 'nav navbar-nav hidden-xs hidden-sm']);
 
                 //Renders menus for each plugin
-                foreach (Plugin::all(['exclude' => [METOOLS, 'Assets', 'MysqlBackup', 'Thumber']]) as $plugin) {
+                foreach (Plugin::all(['exclude' => [METOOLS, 'Assets', MYSQL_BACKUP, 'Thumber']]) as $plugin) {
                     $menus += $this->MenuBuilder->renderAsDropdown($plugin);
                 }
 
