@@ -66,7 +66,7 @@ class PostsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         $this->example = [
             'category_id' => 1,
@@ -254,22 +254,22 @@ class PostsTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Categories);
         $this->assertEquals('category_id', $this->Posts->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Posts->Categories->getJoinType());
-        $this->assertEquals('MeCms.PostsCategories', $this->Posts->Categories->className());
+        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Posts->Categories->className());
         $this->assertInstanceOf('MeCms\Model\Table\PostsCategoriesTable', $this->Posts->Categories->getTarget());
-        $this->assertEquals('MeCms.PostsCategories', $this->Posts->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Posts->Categories->getTarget()->getRegistryAlias());
         $this->assertEquals('Categories', $this->Posts->Categories->getAlias());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Posts->Users);
         $this->assertEquals('user_id', $this->Posts->Users->getForeignKey());
         $this->assertEquals('INNER', $this->Posts->Users->getJoinType());
-        $this->assertEquals('MeCms.Users', $this->Posts->Users->className());
+        $this->assertEquals(ME_CMS . '.Users', $this->Posts->Users->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Posts->Tags);
         $this->assertEquals('post_id', $this->Posts->Tags->getForeignKey());
         $this->assertEquals('tag_id', $this->Posts->Tags->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Posts->Tags->junction()->getTable());
-        $this->assertEquals('MeCms.Tags', $this->Posts->Tags->className());
-        $this->assertEquals('MeCms.PostsTags', $this->Posts->Tags->getThrough());
+        $this->assertEquals(ME_CMS . '.Tags', $this->Posts->Tags->className());
+        $this->assertEquals(ME_CMS . '.PostsTags', $this->Posts->Tags->getThrough());
 
         $this->assertTrue($this->Posts->hasBehavior('Timestamp'));
         $this->assertTrue($this->Posts->hasBehavior('CounterCache'));

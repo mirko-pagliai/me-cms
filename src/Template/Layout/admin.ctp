@@ -37,21 +37,21 @@ use Cake\Core\Configure;
                 '/vendor/font-awesome/css/font-awesome.min',
             ], ['block' => true]);
             echo $this->Asset->css([
-                'MeCms.admin/bootstrap.min',
-                'MeTools.default',
-                'MeTools.forms',
-                'MeCms.admin/layout',
-                'MeCms.admin/photos',
+                ME_CMS . '.admin/bootstrap.min',
+                METOOLS . '.default',
+                METOOLS . '.forms',
+                ME_CMS . '.admin/layout',
+                ME_CMS . 'admin/photos',
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
-                'MeCms.admin/bootstrap.min',
-                'MeTools.default',
-                'MeCms.admin/layout',
-                'MeCms.display-password',
+                ME_CMS . '.admin/bootstrap.min',
+                METOOLS . '.default',
+                ME_CMS . '.admin/layout',
+                ME_CMS . '.display-password',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
@@ -68,7 +68,7 @@ use Cake\Core\Configure;
             ];
         }
 
-        echo $this->element('MeCms.admin/topbar', [], ['cache' => $topbarCache]);
+        echo $this->element(ME_CMS . '.admin/topbar', [], ['cache' => $topbarCache]);
         ?>
         <div class="container-fluid">
             <div class="row">
@@ -84,7 +84,7 @@ use Cake\Core\Configure;
                         ];
                     }
 
-                    echo $this->element('MeCms.admin/sidebar', [], ['cache' => $sidebarCache]);
+                    echo $this->element(ME_CMS . '.admin/sidebar', [], ['cache' => $sidebarCache]);
                     ?>
                 </div>
                 <div id="content" class="col-md-offset-3 col-lg-offset-2">

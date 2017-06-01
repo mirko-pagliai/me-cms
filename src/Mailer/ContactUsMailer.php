@@ -54,7 +54,7 @@ class ContactUsMailer extends Mailer
             ->setReplyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->setTo(config('email.webmaster'))
             ->setSubject(__d('me_cms', 'Email from {0}', config('main.title')))
-            ->setTemplate('MeCms.Systems/contact_us')
+            ->setTemplate(ME_CMS . '.Systems/contact_us')
             ->setViewVars([
                 'email' => $data['email'],
                 'firstName' => $data['first_name'],

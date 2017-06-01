@@ -62,8 +62,8 @@ class AssociationsSameAliasesTest extends TestCase
     {
         parent::setUp();
 
-        $this->Pages = TableRegistry::get('MeCms.Pages');
-        $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         Cache::clearAll();
         Cache::clear(false, $this->Pages->cache);
@@ -92,7 +92,7 @@ class AssociationsSameAliasesTest extends TestCase
 
             $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals('MeCms.' . $table . 'Categories', $categories->className());
+            $this->assertEquals(ME_CMS . '.' . $table . 'Categories', $categories->className());
 
             $category = $categories->find()->first();
             $this->assertNotEmpty($category);

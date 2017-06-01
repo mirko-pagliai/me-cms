@@ -64,7 +64,7 @@ class AdminViewTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals('MeCms.admin', $this->View->layout());
+        $this->assertEquals(ME_CMS . '.admin', $this->View->layout());
     }
 
     /**
@@ -79,15 +79,15 @@ class AdminViewTest extends TestCase
         })->toArray();
 
         $this->assertEquals([
-            'MeTools\View\Helper\HtmlHelper',
-            'MeTools\View\Helper\DropdownHelper',
-            'MeTools\View\Helper\FormHelper',
-            'MeTools\View\Helper\LibraryHelper',
-            'MeTools\View\Helper\PaginatorHelper',
+            METOOLS . '\View\Helper\HtmlHelper',
+            METOOLS . '\View\Helper\DropdownHelper',
+            METOOLS . '\View\Helper\FormHelper',
+            METOOLS . '\View\Helper\LibraryHelper',
+            METOOLS . '\View\Helper\PaginatorHelper',
             'Assets\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
-            'MeCms\View\Helper\MenuBuilderHelper',
+            ME_CMS . '\View\Helper\MenuBuilderHelper',
             'Gourmet\CommonMark\View\Helper\CommonMarkHelper',
         ], $helpers);
     }

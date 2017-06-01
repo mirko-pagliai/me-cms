@@ -35,16 +35,16 @@
                 '/vendor/font-awesome/css/font-awesome.min',
             ], ['block' => true]);
             echo $this->Asset->css([
-                'MeCms.login/bootstrap.min',
-                'MeTools.default',
-                'MeTools.forms',
-                'MeCms.login/layout'
+                ME_CMS . '.login/bootstrap.min',
+                METOOLS . '.default',
+                METOOLS . '.forms',
+                ME_CMS . '.login/layout'
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
-                'MeCms.display-password',
+                ME_CMS . '.display-password',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>

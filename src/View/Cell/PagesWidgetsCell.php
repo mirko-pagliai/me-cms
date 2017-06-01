@@ -49,7 +49,7 @@ class PagesWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel('MeCms.Pages');
+        $this->loadModel(ME_CMS . '.Pages');
     }
 
     /**

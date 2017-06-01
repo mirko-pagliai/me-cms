@@ -59,7 +59,7 @@ class BannersPositionValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
+        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
 
         $this->example = [
             'title' => 'my-title',

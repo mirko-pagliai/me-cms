@@ -71,7 +71,7 @@ class MailerTest extends TestCase
         //Gets `Email` instance
         $email = $this->invokeMethod($this->Mailer, 'getEmailInstance');
 
-        $this->assertEquals(['MeTools.Html'], $email->getHelpers());
+        $this->assertEquals([METOOLS . '.Html'], $email->getHelpers());
         $this->assertEquals(['email@example.com' => ME_CMS], $email->getSender());
         $this->assertEquals(['email@example.com' => ME_CMS], $email->getFrom());
         $this->assertEquals('html', $email->getEmailFormat());

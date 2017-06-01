@@ -160,7 +160,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->setUsersControllerMock();
 
-        $this->Users = TableRegistry::get('MeCms.Users');
+        $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
         Cache::clear(false, $this->Users->cache);
     }
@@ -290,13 +290,13 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
-            'MeCms\Controller\Component\AuthComponent',
-            'MeTools\Controller\Component\FlashComponent',
+            ME_CMS . '\Controller\Component\AuthComponent',
+            METOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
-            'MeTools\Controller\Component\UploaderComponent',
-            'MeTools\Controller\Component\RecaptchaComponent',
+            METOOLS . '\Controller\Component\UploaderComponent',
+            METOOLS . '\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
-            'MeCms\Controller\Component\LoginRecorderComponent',
+            ME_CMS . '\Controller\Component\LoginRecorderComponent',
         ], $components);
 
         $this->assertEquals('aes', $this->Controller->Cookie->configKey('login')['encryption']);

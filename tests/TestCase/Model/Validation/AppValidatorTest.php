@@ -77,10 +77,10 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Banners = TableRegistry::get('MeCms.Banners');
-        $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
-        $this->Posts = TableRegistry::get('MeCms.Posts');
-        $this->Users = TableRegistry::get('MeCms.Users');
+        $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
+        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
+        $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
         $this->example['Banners'] = [
             'position_id' => 1,

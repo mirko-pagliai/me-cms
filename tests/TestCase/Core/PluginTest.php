@@ -38,7 +38,7 @@ class PluginTest extends TestCase
     {
         $this->assertEquals([
             ME_CMS,
-            'MeTools',
+            METOOLS,
             'Assets',
             MYSQL_BACKUP,
             'Thumber',
@@ -49,7 +49,7 @@ class PluginTest extends TestCase
 
         $this->assertEquals([
             ME_CMS,
-            'MeTools',
+            METOOLS,
             'Assets',
             MYSQL_BACKUP,
             'TestPlugin',
@@ -60,7 +60,7 @@ class PluginTest extends TestCase
         $this->assertEquals([
             'Assets',
             ME_CMS,
-            'MeTools',
+            METOOLS,
             MYSQL_BACKUP,
             'TestPlugin',
             'Thumber',

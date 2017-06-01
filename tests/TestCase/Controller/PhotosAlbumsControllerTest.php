@@ -55,7 +55,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->PhotosAlbums = TableRegistry::get('MeCms.PhotosAlbums');
+        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
         Cache::clear(false, $this->PhotosAlbums->cache);
     }

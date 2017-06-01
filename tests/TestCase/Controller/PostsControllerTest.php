@@ -71,7 +71,7 @@ class PostsControllerTest extends IntegrationTestCase
         parent::setUp();
 
         $this->Controller = new PostsController;
-        $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         Cache::clear(false, $this->Posts->cache);
     }

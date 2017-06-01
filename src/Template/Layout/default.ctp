@@ -35,31 +35,31 @@ use Cake\Core\Configure;
             echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/font-awesome/css/font-awesome.min',
-                'MeCms.bootstrap.min',
-                'MeTools.default',
-                'MeTools.forms',
-                'MeCms.userbar',
-                'MeCms.cookies',
-                'MeCms.widgets',
-                'MeCms.layout',
-                'MeCms.contents',
-                'MeCms.photos'
+                ME_CMS . '.bootstrap.min',
+                METOOLS . '.default',
+                METOOLS . '.forms',
+                ME_CMS . '.userbar',
+                ME_CMS . '.cookies',
+                ME_CMS . '.widgets',
+                ME_CMS . '.layout',
+                ME_CMS . '.contents',
+                ME_CMS . '.photos'
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
-                'MeCms.bootstrap.min',
-                'MeTools.default',
-                'MeCms.layout'
+                ME_CMS . '.bootstrap.min',
+                METOOLS . '.default',
+                ME_CMS . '.layout'
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
     </head>
     <body>
-        <?= $this->element('MeCms.userbar') ?>
-        <?= $this->element('MeCms.cookies_policy') ?>
+        <?= $this->element(ME_CMS . '.userbar') ?>
+        <?= $this->element(ME_CMS . '.cookies_policy') ?>
         <header>
             <div class="container">
                 <?php
@@ -81,7 +81,7 @@ use Cake\Core\Configure;
                 $topbarCache = ['key' => 'topbar'];
             }
 
-            echo $this->element('MeCms.topbar', [], ['cache' => $topbarCache]);
+            echo $this->element(ME_CMS . '.topbar', [], ['cache' => $topbarCache]);
             ?>
         </header>
         <div class="container">
@@ -112,7 +112,7 @@ use Cake\Core\Configure;
             $footerCache = ['key' => 'footer'];
         }
 
-        echo $this->element('MeCms.footer', [], ['cache' => $footerCache]);
+        echo $this->element(ME_CMS . '.footer', [], ['cache' => $footerCache]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

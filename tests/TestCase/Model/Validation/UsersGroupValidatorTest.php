@@ -64,7 +64,7 @@ class UsersGroupValidatorTest extends TestCase
             'label' => 'Group label',
         ];
 
-        $this->UsersGroups = TableRegistry::get('MeCms.UsersGroups');
+        $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
     }
 
     /**

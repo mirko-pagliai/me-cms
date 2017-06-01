@@ -117,7 +117,7 @@ class SitemapTest extends TestCase
             ],
         ];
 
-        $table = TableRegistry::get('MeCms.PagesCategories');
+        $table = TableRegistry::get(ME_CMS . '.PagesCategories');
 
         $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
@@ -137,7 +137,7 @@ class SitemapTest extends TestCase
         $this->loadFixtures('Pages', 'PagesCategories');
 
         //Deletes all records
-        TableRegistry::get('MeCms.PagesCategories')->deleteAll(['id >=' => 1]);
+        TableRegistry::get(ME_CMS . '.PagesCategories')->deleteAll(['id >=' => 1]);
 
         $this->assertEmpty(Sitemap::pages());
     }
@@ -183,7 +183,7 @@ class SitemapTest extends TestCase
             ],
         ];
 
-        $table = TableRegistry::get('MeCms.PhotosAlbums');
+        $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
         $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
@@ -203,7 +203,7 @@ class SitemapTest extends TestCase
         $this->loadFixtures('Photos', 'PhotosAlbums');
 
         //Deletes all records
-        TableRegistry::get('MeCms.PhotosAlbums')->deleteAll(['id >=' => 1]);
+        TableRegistry::get(ME_CMS . '.PhotosAlbums')->deleteAll(['id >=' => 1]);
 
         $this->assertEmpty(Sitemap::photos());
     }
@@ -272,7 +272,7 @@ class SitemapTest extends TestCase
             ],
         ];
 
-        $table = TableRegistry::get('MeCms.PostsCategories');
+        $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
         $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
@@ -290,7 +290,7 @@ class SitemapTest extends TestCase
     public function testPostsNoRecords()
     {
         //Deletes all records
-        TableRegistry::get('MeCms.PostsCategories')->deleteAll(['id >=' => 1]);
+        TableRegistry::get(ME_CMS . '.PostsCategories')->deleteAll(['id >=' => 1]);
 
         $this->assertEmpty(Sitemap::posts());
     }
@@ -331,7 +331,7 @@ class SitemapTest extends TestCase
             ],
         ];
 
-        $table = TableRegistry::get('MeCms.Tags');
+        $table = TableRegistry::get(ME_CMS . '.Tags');
 
         $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
@@ -349,7 +349,7 @@ class SitemapTest extends TestCase
     public function testPostsTagsNoRecords()
     {
         //Deletes all records
-        TableRegistry::get('MeCms.Tags')->deleteAll(['id >=' => 1]);
+        TableRegistry::get(ME_CMS . '.Tags')->deleteAll(['id >=' => 1]);
 
         $this->assertEmpty(Sitemap::postsTags());
     }

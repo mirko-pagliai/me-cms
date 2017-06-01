@@ -59,7 +59,7 @@ class PageValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Pages = TableRegistry::get('MeCms.Pages');
+        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
 
         $this->example = [
             'category_id' => 1,

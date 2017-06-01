@@ -63,7 +63,7 @@ class UsersGroupsTable extends AppTable
         $this->setDisplayField('label');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Users', ['className' => 'MeCms.Users'])
+        $this->hasMany('Users', ['className' => ME_CMS . '.Users'])
             ->setForeignKey('group_id');
 
         $this->addBehavior('Timestamp');

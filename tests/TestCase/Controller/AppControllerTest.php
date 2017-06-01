@@ -96,11 +96,11 @@ class AppControllerTest extends TestCase
 
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
-            'MeCms\Controller\Component\AuthComponent',
-            'MeTools\Controller\Component\FlashComponent',
+            ME_CMS . '\Controller\Component\AuthComponent',
+            METOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
-            'MeTools\Controller\Component\UploaderComponent',
-            'MeTools\Controller\Component\RecaptchaComponent',
+            METOOLS . '\Controller\Component\UploaderComponent',
+            METOOLS . '\Controller\Component\RecaptchaComponent',
         ], $components);
 
         $this->assertFalse($this->Controller->Cookie->config('encryption'));
@@ -125,7 +125,7 @@ class AppControllerTest extends TestCase
         $this->assertEquals(5, $this->Controller->paginate['limit']);
         $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
         $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEquals(ME_CMS . '.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Admin request
         $this->Controller = new AppController;
@@ -139,12 +139,12 @@ class AppControllerTest extends TestCase
         $this->assertEquals(['my-field'], $this->Controller->paginate['sortWhitelist']);
         $this->assertEquals(7, $this->Controller->paginate['limit']);
         $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
-        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEquals(ME_CMS . '.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
         $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
         $this->Controller->beforeFilter($this->Event);
-        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals(ME_CMS . '.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
@@ -178,7 +178,7 @@ class AppControllerTest extends TestCase
     public function testBeforeRender()
     {
         $this->Controller->beforeRender($this->Event);
-        $this->assertEquals(['MeCms.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
+        $this->assertEquals([ME_CMS . '.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
     }
 
     /**

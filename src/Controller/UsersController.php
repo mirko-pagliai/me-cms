@@ -97,7 +97,7 @@ class UsersController extends AppController
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 
         //Sends email
-        return $this->getMailer('MeCms.User')
+        return $this->getMailer(ME_CMS . '.User')
             ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
             ->send('activation', [$user]);
     }
@@ -117,7 +117,7 @@ class UsersController extends AppController
         ]);
 
         $this->loadComponent('Tokens.Token');
-        $this->loadComponent('MeCms.LoginRecorder');
+        $this->loadComponent(ME_CMS . '.LoginRecorder');
     }
 
     /**
@@ -327,7 +327,7 @@ class UsersController extends AppController
                     $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
 
                     //Sends email
-                    $this->getMailer('MeCms.User')
+                    $this->getMailer(ME_CMS . '.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
 

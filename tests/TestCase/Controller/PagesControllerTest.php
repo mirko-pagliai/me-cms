@@ -61,7 +61,7 @@ class PagesControllerTest extends IntegrationTestCase
 
         Plugin::load('TestPlugin');
 
-        $this->Pages = TableRegistry::get('MeCms.Pages');
+        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
 
         Cache::clear(false, $this->Pages->cache);
         Cache::clear(false, 'static_pages');

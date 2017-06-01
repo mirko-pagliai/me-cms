@@ -78,12 +78,12 @@ class AuthComponentTest extends TestCase
     {
         $expected = [
             'authenticate' => [
-                'Form' => ['contain' => 'Groups', 'userModel' => 'MeCms.Users'],
+                'Form' => ['contain' => 'Groups', 'userModel' => ME_CMS . '.Users'],
             ],
             'authorize' => 'Controller',
             'ajaxLogin' => null,
             'flash' => [
-                'element' => 'MeTools.flash',
+                'element' => METOOLS . '.flash',
                 'params' => ['class' => 'alert-danger'],
             ],
             'loginAction' => ['_name' => 'login'],

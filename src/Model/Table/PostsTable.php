@@ -286,20 +286,20 @@ class PostsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
+        $this->belongsTo('Categories', ['className' => ME_CMS . '.PostsCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get('MeCms.PostsCategories'))
+            ->setTarget($this->tableLocator()->get(ME_CMS . '.PostsCategories'))
             ->setAlias('Categories');
 
-        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+        $this->belongsTo('Users', ['className' => ME_CMS . '.Users'])
             ->setForeignKey('user_id')
             ->setJoinType('INNER');
 
-        $this->belongsToMany('Tags', ['className' => 'MeCms.Tags', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Tags', ['className' => ME_CMS . '.Tags', 'joinTable' => 'posts_tags'])
             ->setForeignKey('post_id')
             ->setTargetForeignKey('tag_id')
-            ->setThrough('MeCms.PostsTags');
+            ->setThrough(ME_CMS . '.PostsTags');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [

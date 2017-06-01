@@ -81,16 +81,16 @@ class WidgetHelperTest extends TestCase
             })->toList();
 
         $this->assertEquals([
-            'MeCms.Pages::categories',
-            'MeCms.Pages::pages',
-            'MeCms.Photos::albums',
-            'MeCms.Photos::latest',
-            'MeCms.Photos::random',
-            'MeCms.Posts::categories',
-            'MeCms.Posts::latest',
-            'MeCms.Posts::months',
-            'MeCms.Posts::search',
-            'MeCms.PostsTags::popular',
+            ME_CMS . '.Pages::categories',
+            ME_CMS . '.Pages::pages',
+            ME_CMS . '.Photos::albums',
+            ME_CMS . '.Photos::latest',
+            ME_CMS . '.Photos::random',
+            ME_CMS . '.Posts::categories',
+            ME_CMS . '.Posts::latest',
+            ME_CMS . '.Posts::months',
+            ME_CMS . '.Posts::search',
+            ME_CMS . '.PostsTags::popular',
         ], $widgets);
 
         //Sets some widgets

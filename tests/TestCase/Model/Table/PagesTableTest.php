@@ -63,7 +63,7 @@ class PagesTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Pages = TableRegistry::get('MeCms.Pages');
+        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
 
         $this->example = [
             'category_id' => 1,
@@ -219,9 +219,9 @@ class PagesTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Pages->Categories);
         $this->assertEquals('category_id', $this->Pages->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Pages->Categories->getJoinType());
-        $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->className());
+        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Pages->Categories->className());
         $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Pages->Categories->getTarget());
-        $this->assertEquals('MeCms.PagesCategories', $this->Pages->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Pages->Categories->getTarget()->getRegistryAlias());
         $this->assertEquals('Categories', $this->Pages->Categories->getAlias());
 
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));

@@ -55,7 +55,7 @@ class PhotosAlbumsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->PhotosAlbums = TableRegistry::get('MeCms.PhotosAlbums');
+        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
         Cache::clear(false, $this->PhotosAlbums->cache);
     }
@@ -155,7 +155,7 @@ class PhotosAlbumsTableTest extends TestCase
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PhotosAlbums->Photos);
         $this->assertEquals('album_id', $this->PhotosAlbums->Photos->getForeignKey());
-        $this->assertEquals('MeCms.Photos', $this->PhotosAlbums->Photos->className());
+        $this->assertEquals(ME_CMS . '.Photos', $this->PhotosAlbums->Photos->className());
 
         $this->assertTrue($this->PhotosAlbums->hasBehavior('Timestamp'));
 

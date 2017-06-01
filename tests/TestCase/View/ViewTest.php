@@ -140,11 +140,11 @@ class ViewTest extends TestCase
         })->toArray();
 
         $this->assertEquals([
-            'MeTools\View\Helper\HtmlHelper',
-            'MeTools\View\Helper\DropdownHelper',
-            'MeTools\View\Helper\FormHelper',
-            'MeTools\View\Helper\LibraryHelper',
-            'MeTools\View\Helper\PaginatorHelper',
+            METOOLS . '\View\Helper\HtmlHelper',
+            METOOLS . '\View\Helper\DropdownHelper',
+            METOOLS . '\View\Helper\FormHelper',
+            METOOLS . '\View\Helper\LibraryHelper',
+            METOOLS . '\View\Helper\PaginatorHelper',
             'Assets\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
@@ -158,8 +158,8 @@ class ViewTest extends TestCase
     public function testRenderLayout()
     {
         //Loads some other helpers
-        $this->View->loadHelper('MeCms.Auth');
-        $this->View->loadHelper('MeCms.Widget');
+        $this->View->loadHelper(ME_CMS . '.Auth');
+        $this->View->loadHelper(ME_CMS . '.Widget');
 
         //Disable widgets
         Configure::write('Widgets.general', []);
@@ -171,14 +171,14 @@ class ViewTest extends TestCase
         file_put_contents(WWW_ROOT . 'favicon.ico', null);
 
         //Renders
-        $result = $this->View->render(false, 'MeCms.default');
+        $result = $this->View->render(false, ME_CMS . '.default');
         $this->assertNotEmpty($result);
 
         //@codingStandardsIgnoreLine
         @unlink(WWW_ROOT . 'favicon.ico');
 
         //Checks for title
-        $this->assertRegExp('/' . preg_quote('<title>title from controller - MeCms</title>', '/') . '/', $result);
+        $this->assertRegExp('/' . preg_quote('<title>title from controller - ' . ME_CMS . '</title>', '/') . '/', $result);
 
         //Checks for favicon
         $this->assertRegExp('/' . preg_quote('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', '/') . '/', $result);

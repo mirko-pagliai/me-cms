@@ -94,7 +94,7 @@ class UserShellTest extends TestCase
     {
         parent::setUp();
 
-        $this->Users = TableRegistry::get('MeCms.Users');
+        $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
         $this->out = new ConsoleOutput();
         $this->err = new ConsoleOutput();
@@ -287,7 +287,7 @@ class UserShellTest extends TestCase
     {
         $this->UserShell->users();
 
-        $users = TableRegistry::get('MeCms.Users');
+        $users = TableRegistry::get(ME_CMS . '.Users');
 
         //Deletes all users
         $this->assertNotEquals(0, $users->deleteAll(['id >=' => '1']));

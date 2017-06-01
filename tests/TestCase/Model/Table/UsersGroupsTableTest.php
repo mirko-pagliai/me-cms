@@ -55,7 +55,7 @@ class UsersGroupsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->UsersGroups = TableRegistry::get('MeCms.UsersGroups');
+        $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
 
         Cache::clear(false, $this->UsersGroups->cache);
     }
@@ -115,7 +115,7 @@ class UsersGroupsTableTest extends TestCase
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->UsersGroups->Users);
         $this->assertEquals('group_id', $this->UsersGroups->Users->getForeignKey());
-        $this->assertEquals('MeCms.Users', $this->UsersGroups->Users->className());
+        $this->assertEquals(ME_CMS . '.Users', $this->UsersGroups->Users->className());
 
         $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
 

@@ -47,9 +47,9 @@ class InstallShell extends BaseInstallShell
 
         //Configuration files to be copied
         $this->config = am($this->config, [
-            'MeCms.banned_ip',
-            'MeCms.me_cms',
-            'MeCms.widgets',
+            ME_CMS . '.banned_ip',
+            ME_CMS . '.me_cms',
+            ME_CMS . '.widgets',
         ]);
 
         //Merges assets for which create symbolic links
@@ -138,7 +138,7 @@ class InstallShell extends BaseInstallShell
      */
     public function createAdmin()
     {
-        return $this->dispatchShell('MeCms.user', 'add', '--group', 1);
+        return $this->dispatchShell(ME_CMS . '.user', 'add', '--group', 1);
     }
 
     /**
@@ -147,7 +147,7 @@ class InstallShell extends BaseInstallShell
      */
     public function createGroups()
     {
-        $this->loadModel('MeCms.UsersGroups');
+        $this->loadModel(ME_CMS . '.UsersGroups');
 
         if (!$this->UsersGroups->find()->isEmpty()) {
             $this->err(__d('me_cms', 'Some user groups already exist'));

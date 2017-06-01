@@ -44,7 +44,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function pages()
     {
-        $table = TableRegistry::get('MeCms.PagesCategories');
+        $table = TableRegistry::get(ME_CMS . '.PagesCategories');
 
         $url = Cache::read('sitemap', $table->cache);
 
@@ -96,7 +96,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function photos()
     {
-        $table = TableRegistry::get('MeCms.PhotosAlbums');
+        $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
         $url = Cache::read('sitemap', $table->cache);
 
@@ -152,7 +152,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function posts()
     {
-        $table = TableRegistry::get('MeCms.PostsCategories');
+        $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
         $url = Cache::read('sitemap', $table->cache);
 
@@ -211,7 +211,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function postsTags()
     {
-        $table = TableRegistry::get('MeCms.Tags');
+        $table = TableRegistry::get(ME_CMS . '.Tags');
 
         $url = Cache::read('sitemap', $table->cache);
 

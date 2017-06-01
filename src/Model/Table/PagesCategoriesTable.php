@@ -82,17 +82,17 @@ class PagesCategoriesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', ['className' => 'MeCms.PagesCategories'])
+        $this->belongsTo('Parents', ['className' => ME_CMS . '.PagesCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Childs', ['className' => 'MeCms.PagesCategories'])
+        $this->hasMany('Childs', ['className' => ME_CMS . '.PagesCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Pages', ['className' => 'MeCms.Pages'])
+        $this->hasMany('Pages', ['className' => ME_CMS . '.Pages'])
             ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior('MeCms.Tree');
+        $this->addBehavior(ME_CMS . '.Tree');
 
         $this->_validatorClass = '\MeCms\Model\Validation\PagesCategoryValidator';
     }

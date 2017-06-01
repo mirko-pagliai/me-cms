@@ -89,7 +89,7 @@ class ContactUsMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->getReplyTo());
         $this->assertEquals(['email@example.com' => 'email@example.com'], $email->getTo());
         $this->assertEquals('Email from MeCms', $email->getSubject());
-        $this->assertEquals('MeCms.Systems/contact_us', $email->getTemplate());
+        $this->assertEquals(ME_CMS . '.Systems/contact_us', $email->getTemplate());
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',

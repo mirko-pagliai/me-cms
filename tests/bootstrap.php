@@ -127,9 +127,6 @@ Plugin::load('Assets', [
 Configure::write('MysqlBackup.connection', 'test');
 Configure::write('MysqlBackup.target', TMP . 'backups');
 
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('MysqlBackup.target'));
-
 Plugin::load('MysqlBackup', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-mysql-backup' . DS,

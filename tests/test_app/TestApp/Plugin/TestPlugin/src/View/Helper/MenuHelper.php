@@ -26,7 +26,7 @@ use Cake\View\Helper;
 
 class MenuHelper extends Helper
 {
-    public $helpers = ['Html' => ['className' => 'MeTools.Html']];
+    public $helpers = ['Html' => ['className' => METOOLS . '.Html']];
 
     //@codingStandardsIgnoreStart
     public function _invalidMethod()

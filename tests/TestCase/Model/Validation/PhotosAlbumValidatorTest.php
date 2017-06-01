@@ -59,7 +59,7 @@ class PhotosAlbumValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->PhotosAlbums = TableRegistry::get('MeCms.PhotosAlbums');
+        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
         $this->example = [
             'title' => 'My title',

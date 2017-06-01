@@ -51,7 +51,7 @@ class UserMailer extends Mailer
 
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Activate your account'))
-            ->setTemplate('MeCms.Users/activation')
+            ->setTemplate(ME_CMS . '.Users/activation')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 
@@ -75,7 +75,7 @@ class UserMailer extends Mailer
 
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Your password has been changed'))
-            ->setTemplate('MeCms.Users/change_password')
+            ->setTemplate(ME_CMS . '.Users/change_password')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 
@@ -99,7 +99,7 @@ class UserMailer extends Mailer
 
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Reset your password'))
-            ->setTemplate('MeCms.Users/password_forgot')
+            ->setTemplate(ME_CMS . '.Users/password_forgot')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 }

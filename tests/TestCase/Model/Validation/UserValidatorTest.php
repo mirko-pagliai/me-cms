@@ -60,7 +60,7 @@ class UserValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Users = TableRegistry::get('MeCms.Users');
+        $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
         $this->example = [
             'group_id' => 1,

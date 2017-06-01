@@ -38,7 +38,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v17v3()
     {
-        $this->loadModel('MeCms.PhotosAlbums');
+        $this->loadModel(ME_CMS . '.PhotosAlbums');
 
         //Deletes `active` field from photos albums table
         if ($this->_checkColumn('active', $this->PhotosAlbums->getTable())) {
@@ -57,7 +57,7 @@ class UpdateShell extends BaseUpdateConsole
     {
         //Adds "preview" field to pages and posts tables
         foreach (['Pages', 'Posts'] as $table) {
-            $this->loadModel('MeCms.' . $table);
+            $this->loadModel(ME_CMS . '.' . $table);
 
             if (!$this->_checkColumn('preview', $this->$table->getTable())) {
                 $this->connection->execute(sprintf(
@@ -119,7 +119,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v14v7()
     {
-        $this->loadModel('MeCms.Banners');
+        $this->loadModel(ME_CMS . '.Banners');
 
         //Adds "thumbnail" field to the banners table
         if (!$this->_checkColumn('thumbnail', $this->Banners->getTable())) {
@@ -163,7 +163,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v14v0()
     {
-        $this->loadModel('MeCms.BannersPositions');
+        $this->loadModel(ME_CMS . '.BannersPositions');
 
         //Renames the "name" column as "title"
         if ($this->_checkColumn('name', $this->BannersPositions->getTable())) {
@@ -184,7 +184,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v10v1()
     {
-        $this->loadModel('MeCms.Pages');
+        $this->loadModel(ME_CMS . '.Pages');
 
         $pages = $this->Pages->find();
 
@@ -254,7 +254,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v10v0()
     {
-        $this->loadModel('MeCms.Photos');
+        $this->loadModel(ME_CMS . '.Photos');
 
         //Adds "active" field to the photos table and sets the default value
         if (!$this->_checkColumn('active', $this->Photos->getTable())) {
@@ -272,7 +272,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v7v0()
     {
-        $this->dispatchShell('MeCms.install', 'createVendorsLinks');
+        $this->dispatchShell(ME_CMS . '.install', 'createVendorsLinks');
 
         $path = WWW_ROOT . 'vendor' . DS . 'jquery-cookie';
 
@@ -290,11 +290,11 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v6v0()
     {
-        $this->loadModel('MeCms.BannersPositions');
-        $this->loadModel('MeCms.PhotosAlbums');
-        $this->loadModel('MeCms.PostsCategories');
-        $this->loadModel('MeCms.Tags');
-        $this->loadModel('MeCms.UsersGroups');
+        $this->loadModel(ME_CMS . '.BannersPositions');
+        $this->loadModel(ME_CMS . '.PhotosAlbums');
+        $this->loadModel(ME_CMS . '.PostsCategories');
+        $this->loadModel(ME_CMS . '.Tags');
+        $this->loadModel(ME_CMS . '.UsersGroups');
 
         //Adds "created" field to the banners positions table and sets the default value
         if (!$this->_checkColumn('created', $this->BannersPositions->getTable())) {
@@ -394,7 +394,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v2v1()
     {
-        $this->loadModel('MeCms.Tags');
+        $this->loadModel(ME_CMS . '.Tags');
 
         //For each tag, it replaces the hyphen with space
         foreach ($this->Tags->find()->where(['tag LIKE' => '%-%'])->toArray() as $tag) {
@@ -413,8 +413,8 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v1v9()
     {
-        $this->loadModel('MeCms.Banners');
-        $this->loadModel('MeCms.Photos');
+        $this->loadModel(ME_CMS . '.Banners');
+        $this->loadModel(ME_CMS . '.Photos');
 
         //Adds "created" field to the banners table and sets the default value
         if (!$this->_checkColumn('created', $this->Banners->getTable())) {
@@ -452,8 +452,8 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v1v8()
     {
-        $this->loadModel('MeCms.Photos');
-        $this->loadModel('MeCms.Tags');
+        $this->loadModel(ME_CMS . '.Photos');
+        $this->loadModel(ME_CMS . '.Tags');
 
         //Deletes all unused tags
         $this->Tags->deleteAll(['post_count' => 0]);
@@ -483,7 +483,7 @@ class UpdateShell extends BaseUpdateConsole
      */
     public function to2v1v7()
     {
-        $this->loadModel('MeCms.Tags');
+        $this->loadModel(ME_CMS . '.Tags');
 
         $this->connection->execute(sprintf(
             'ALTER TABLE `%s` CHANGE `tag` `tag` VARCHAR(30) NOT null;',

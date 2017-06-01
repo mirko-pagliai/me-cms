@@ -76,7 +76,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->Controller = new UsersController;
 
-        $this->Users = TableRegistry::get('MeCms.Users');
+        $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
         Cache::clear(false, $this->Users->cache);
 
