@@ -68,7 +68,7 @@ class SystemsControllerTest extends IntegrationTestCase
         file_put_contents(SITEMAP, str_repeat('a', 10));
 
         //Creates a thumbnail
-        file_put_contents(Configure::read('Thumbs.target') . DS . 'thumb.jpg', str_repeat('a', 10));
+        file_put_contents(Configure::read(THUMBER . '.target') . DS . 'thumb.jpg', str_repeat('a', 10));
     }
 
     /**
@@ -308,7 +308,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertFalse(file_exists(Configure::read(ASSETS . '.target') . DS . 'asset_file'));
         $this->assertFalse(file_exists(LOGS . 'log_file'));
         $this->assertFalse(file_exists(SITEMAP));
-        $this->assertFalse(file_exists(Configure::read('Thumbs.target') . DS . 'thumb.jpg'));
+        $this->assertFalse(file_exists(Configure::read(THUMBER . '.target') . DS . 'thumb.jpg'));
 
         $this->createSomeTemporaryData();
 
@@ -346,7 +346,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
 
-        $this->assertFalse(file_exists(Configure::read('Thumbs.target') . DS . 'thumb.jpg'));
+        $this->assertFalse(file_exists(Configure::read(THUMBER . '.target') . DS . 'thumb.jpg'));
 
         //POST request. Invalid type
         $this->post(array_merge($url, ['invalidType']));

@@ -139,11 +139,6 @@ Plugin::load('Tokens', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-tokens' . DS,
 ]);
 
-Configure::write('Thumbs.target', TMP . 'thumbs');
-
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('Thumbs.target'));
-
 Plugin::load('Thumber', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-thumber' . DS,

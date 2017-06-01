@@ -180,7 +180,7 @@ class SystemsController extends AppController
             Configure::read(ASSETS . '.target'),
             CACHE,
             LOGIN_RECORDS,
-            Configure::read('Thumbs.target'),
+            Configure::read(THUMBER . '.target'),
         ] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
@@ -248,7 +248,7 @@ class SystemsController extends AppController
             case 'all':
                 $success = clearDir(Configure::read(ASSETS . '.target')) && clearDir(LOGS)
                     && self::clearCache() && self::clearSitemap()
-                    && clearDir(Configure::read('Thumbs.target'));
+                    && clearDir(Configure::read(THUMBER . '.target'));
                 break;
             case 'cache':
                 $success = self::clearCache();
@@ -263,7 +263,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir(Configure::read('Thumbs.target'));
+                $success = clearDir(Configure::read(THUMBER . '.target'));
                 break;
         }
 
@@ -286,7 +286,7 @@ class SystemsController extends AppController
         $cacheSize = (new Folder(CACHE))->dirsize();
         $logsSize = (new Folder(LOGS))->dirsize();
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = (new Folder(Configure::read('Thumbs.target')))->dirsize();
+        $thumbsSize = (new Folder(Configure::read(THUMBER . '.target')))->dirsize();
 
         $this->set([
             'cacheStatus' => Cache::enabled(),

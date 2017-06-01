@@ -41,7 +41,7 @@ class PluginTest extends TestCase
             METOOLS,
             ASSETS,
             MYSQL_BACKUP,
-            'Thumber',
+            THUMBER,
             'Tokens',
         ], Plugin::all());
 
@@ -53,7 +53,7 @@ class PluginTest extends TestCase
             ASSETS,
             MYSQL_BACKUP,
             'TestPlugin',
-            'Thumber',
+            THUMBER,
             'Tokens',
         ], Plugin::all());
 
@@ -63,7 +63,7 @@ class PluginTest extends TestCase
             METOOLS,
             MYSQL_BACKUP,
             'TestPlugin',
-            'Thumber',
+            THUMBER,
             'Tokens',
         ], Plugin::all(['order' => false]));
     }

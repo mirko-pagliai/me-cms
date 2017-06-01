@@ -63,7 +63,7 @@ class InstallShell extends BaseInstallShell
         $this->paths = am($this->paths, [
             Configure::read(ASSETS . '.target'),
             Configure::read(MYSQL_BACKUP . '.target'),
-            Configure::read('Thumbs.target'),
+            Configure::read(THUMBER . '.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
