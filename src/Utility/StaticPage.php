@@ -154,7 +154,7 @@ class StaticPage
 
         if (empty($page)) {
             //Sets the (partial) filename
-            $filename = implode(DS, af(explode('/', $slug)));
+            $filename = implode(DS, array_filter(explode('/', $slug)));
 
             //Sets the filename patterns
             $patterns = [$filename . '-' . $locale, $filename];
