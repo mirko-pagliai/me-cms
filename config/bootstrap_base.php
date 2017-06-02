@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 /**
  * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
@@ -39,20 +38,15 @@ if (!Plugin::loaded('MeTools')) {
     Plugin::load('MeTools', ['bootstrap' => true]);
 }
 
-if (!is_writeable(BANNERS)) {
-    trigger_error(sprintf('Directory %s not writeable', BANNERS), E_USER_ERROR);
-}
+foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED] as $dir) {
+    if (!file_exists($dir)) {
+        //@codingStandardsIgnoreLine
+        @mkdir($dir);
+    }
 
-if (!is_writeable(LOGIN_RECORDS)) {
-    trigger_error(sprintf('Directory %s not writeable', LOGIN_RECORDS), E_USER_ERROR);
-}
-
-if (!is_writeable(PHOTOS)) {
-    trigger_error(sprintf('Directory %s not writeable', PHOTOS), E_USER_ERROR);
-}
-
-if (!is_writeable(UPLOADED)) {
-    trigger_error(sprintf('Directory %s not writeable', UPLOADED), E_USER_ERROR);
+    if (!is_writeable($dir)) {
+        trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);
+    }
 }
 
 /**

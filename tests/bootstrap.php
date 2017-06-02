@@ -80,7 +80,7 @@ Configure::write('App', [
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
         'templates' => [APP . 'Template' . DS],
-    ]
+    ],
 ]);
 
 Cache::setConfig([
@@ -114,8 +114,6 @@ Configure::write('Session', ['defaults' => 'php']);
 /**
  * Loads plugins
  */
-Configure::write('Assets.target', TMP . 'assets');
-
 Plugin::load('Assets', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
@@ -155,11 +153,6 @@ Plugin::load('MeTools', [
 
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
-
-//@codingStandardsIgnoreStart
-@mkdir(LOGIN_RECORDS);
-@mkdir(UPLOADED);
-//@codingStandardsIgnoreEnd
 
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap
