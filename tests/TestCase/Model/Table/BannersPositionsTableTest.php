@@ -55,7 +55,7 @@ class BannersPositionsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
+        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
 
         Cache::clear(false, $this->BannersPositions->cache);
     }
@@ -111,7 +111,7 @@ class BannersPositionsTableTest extends TestCase
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->BannersPositions->Banners);
         $this->assertEquals('position_id', $this->BannersPositions->Banners->getForeignKey());
-        $this->assertEquals('MeCms.Banners', $this->BannersPositions->Banners->className());
+        $this->assertEquals(ME_CMS . '.Banners', $this->BannersPositions->Banners->className());
 
         $this->assertTrue($this->BannersPositions->hasBehavior('Timestamp'));
 

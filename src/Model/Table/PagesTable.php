@@ -179,10 +179,10 @@ class PagesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
+        $this->belongsTo('Categories', ['className' => ME_CMS . '.PagesCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get('MeCms.PagesCategories'))
+            ->setTarget($this->tableLocator()->get(ME_CMS . '.PagesCategories'))
             ->setAlias('Categories');
 
         $this->addBehavior('Timestamp');

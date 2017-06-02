@@ -110,7 +110,7 @@ class InstallShellTest extends TestCase
     {
         //Gets all methods from `InstallShell`
         $methods = array_diff(am(
-            getChildMethods('MeTools\Shell\InstallShell'),
+            getChildMethods(METOOLS . '\Shell\InstallShell'),
             getChildMethods(InstallShell::class)
         ), ['all']);
 
@@ -186,7 +186,7 @@ class InstallShellTest extends TestCase
 
         $this->assertEquals([
             'method' => 'dispatchShell',
-            'args' => ['MeCms.user', 'add', '--group', 1],
+            'args' => [ME_CMS . '.user', 'add', '--group', 1],
         ], $this->InstallShell->createAdmin());
     }
 
@@ -199,7 +199,7 @@ class InstallShellTest extends TestCase
         //A group already exists
         $this->assertFalse($this->InstallShell->createGroups());
 
-        $groups = TableRegistry::get('MeCms.UsersGroups');
+        $groups = TableRegistry::get(ME_CMS . '.UsersGroups');
 
         //Deletes all groups
         $this->assertNotEquals(0, $groups->deleteAll(['id >=' => '1']));

@@ -44,7 +44,7 @@ class TreeBehaviorTest extends TestCase
      */
     public function testFindTreeList()
     {
-        $table = TableRegistry::get('MeCms.PostsCategories');
+        $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
         $query = $table->find('treeList');
         $this->assertInstanceOf('Cake\ORM\Query', $query);

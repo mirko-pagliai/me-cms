@@ -148,11 +148,11 @@ class UsersTable extends AppTable
         $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Groups', ['className' => 'MeCms.UsersGroups'])
+        $this->belongsTo('Groups', ['className' => ME_CMS . '.UsersGroups'])
             ->setForeignKey('group_id')
             ->setJoinType('INNER');
 
-        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
+        $this->hasMany('Posts', ['className' => ME_CMS . '.Posts'])
             ->setForeignKey('user_id');
 
         $this->hasMany('Tokens', ['className' => 'Tokens.Tokens'])

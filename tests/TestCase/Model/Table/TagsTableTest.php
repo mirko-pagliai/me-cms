@@ -56,7 +56,7 @@ class TagsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Tags = TableRegistry::get('MeCms.Tags');
+        $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
 
         Cache::clear(false, $this->Tags->cache);
     }
@@ -114,8 +114,8 @@ class TagsTableTest extends TestCase
         $this->assertEquals('tag_id', $this->Tags->Posts->getForeignKey());
         $this->assertEquals('post_id', $this->Tags->Posts->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Tags->Posts->junction()->getTable());
-        $this->assertEquals('MeCms.Posts', $this->Tags->Posts->className());
-        $this->assertEquals('MeCms.PostsTags', $this->Tags->Posts->getThrough());
+        $this->assertEquals(ME_CMS . '.Posts', $this->Tags->Posts->className());
+        $this->assertEquals(ME_CMS . '.PostsTags', $this->Tags->Posts->getThrough());
 
         $this->assertTrue($this->Tags->hasBehavior('Timestamp'));
 

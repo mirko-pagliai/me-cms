@@ -54,7 +54,7 @@ class BannersControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->Banners = TableRegistry::get('MeCms.Banners');
+        $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
 
         Cache::clear(false, $this->Banners->cache);
     }

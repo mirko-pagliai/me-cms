@@ -64,7 +64,7 @@ class PostsWidgetsCellTest extends TestCase
     {
         Cache::clearAll();
 
-        $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         $this->Widget = new WidgetHelper(new View);
     }

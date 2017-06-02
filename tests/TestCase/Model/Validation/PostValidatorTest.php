@@ -60,7 +60,7 @@ class PostValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         $this->example = [
             'category_id' => 1,

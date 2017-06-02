@@ -64,7 +64,7 @@ class PhotosWidgetsCellTest extends TestCase
     {
         Cache::clearAll();
 
-        $this->Photos = TableRegistry::get('MeCms.Photos');
+        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
 
         $this->Widget = new WidgetHelper(new View);
     }

@@ -61,7 +61,7 @@ class GetPreviewFromTextTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::get('MeCms.Posts');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
     }
 
     /**

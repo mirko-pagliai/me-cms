@@ -55,7 +55,7 @@ class BannersTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Banners = TableRegistry::get('MeCms.Banners');
+        $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
 
         Cache::clear(false, $this->Banners->cache);
     }
@@ -135,7 +135,7 @@ class BannersTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Banners->Positions);
         $this->assertEquals('position_id', $this->Banners->Positions->getForeignKey());
         $this->assertEquals('INNER', $this->Banners->Positions->getJoinType());
-        $this->assertEquals('MeCms.BannersPositions', $this->Banners->Positions->className());
+        $this->assertEquals(ME_CMS . '.BannersPositions', $this->Banners->Positions->className());
 
         $this->assertTrue($this->Banners->hasBehavior('Timestamp'));
         $this->assertTrue($this->Banners->hasBehavior('CounterCache'));

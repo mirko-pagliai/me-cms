@@ -56,7 +56,7 @@ class PostsTagsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->PostsTags = TableRegistry::get('MeCms.PostsTags');
+        $this->PostsTags = TableRegistry::get(ME_CMS . '.PostsTags');
 
         Cache::clear(false, $this->PostsTags->cache);
     }
@@ -112,12 +112,12 @@ class PostsTagsTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Posts);
         $this->assertEquals('post_id', $this->PostsTags->Posts->getForeignKey());
         $this->assertEquals('INNER', $this->PostsTags->Posts->getJoinType());
-        $this->assertEquals('MeCms.Posts', $this->PostsTags->Posts->className());
+        $this->assertEquals(ME_CMS . '.Posts', $this->PostsTags->Posts->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Tags);
         $this->assertEquals('tag_id', $this->PostsTags->Tags->getForeignKey());
         $this->assertEquals('INNER', $this->PostsTags->Tags->getJoinType());
-        $this->assertEquals('MeCms.Tags', $this->PostsTags->Tags->className());
+        $this->assertEquals(ME_CMS . '.Tags', $this->PostsTags->Tags->className());
 
         $this->assertTrue($this->PostsTags->hasBehavior('CounterCache'));
 

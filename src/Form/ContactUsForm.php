@@ -75,6 +75,6 @@ class ContactUsForm extends Form
      */
     protected function _execute(array $data)
     {
-        return $this->getMailer('MeCms.ContactUs')->send('contactUsMail', [$data]);
+        return $this->getMailer(ME_CMS . '.ContactUs')->send('contactUsMail', [$data]);
     }
 }

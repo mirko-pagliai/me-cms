@@ -61,7 +61,7 @@ class PhotoTest extends TestCase
 
         $this->Photo = new Photo;
 
-        $this->Photos = TableRegistry::get('MeCms.Photos');
+        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
     }
 
     /**

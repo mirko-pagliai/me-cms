@@ -80,7 +80,7 @@ Configure::write('App', [
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
         'templates' => [APP . 'Template' . DS],
-    ]
+    ],
 ]);
 
 Cache::setConfig([
@@ -114,11 +114,6 @@ Configure::write('Session', ['defaults' => 'php']);
 /**
  * Loads plugins
  */
-Configure::write('Assets.target', TMP . 'assets');
-
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('Assets.target'));
-
 Plugin::load('Assets', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
@@ -126,9 +121,6 @@ Plugin::load('Assets', [
 
 Configure::write('MysqlBackup.connection', 'test');
 Configure::write('MysqlBackup.target', TMP . 'backups');
-
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('MysqlBackup.target'));
 
 Plugin::load('MysqlBackup', [
     'bootstrap' => true,
@@ -144,11 +136,6 @@ Plugin::load('Tokens', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-tokens' . DS,
 ]);
-
-Configure::write('Thumbs.target', TMP . 'thumbs');
-
-//@codingStandardsIgnoreLine
-@mkdir(Configure::read('Thumbs.target'));
 
 Plugin::load('Thumber', [
     'bootstrap' => true,
@@ -166,11 +153,6 @@ Plugin::load('MeTools', [
 
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
-
-//@codingStandardsIgnoreStart
-@mkdir(LOGIN_RECORDS);
-@mkdir(UPLOADED);
-//@codingStandardsIgnoreEnd
 
 Plugin::load('MeCms', [
     'bootstrap' => false, //Doesn't load the bootstrap

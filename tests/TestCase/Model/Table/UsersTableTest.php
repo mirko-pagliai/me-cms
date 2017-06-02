@@ -63,7 +63,7 @@ class UsersTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Users = TableRegistry::get('MeCms.Users');
+        $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
         $this->example = [
             'group_id' => 1,
@@ -164,11 +164,11 @@ class UsersTableTest extends TestCase
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Users->Groups);
         $this->assertEquals('group_id', $this->Users->Groups->getForeignKey());
         $this->assertEquals('INNER', $this->Users->Groups->getJoinType());
-        $this->assertEquals('MeCms.UsersGroups', $this->Users->Groups->className());
+        $this->assertEquals(ME_CMS . '.UsersGroups', $this->Users->Groups->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->Users->Posts);
         $this->assertEquals('user_id', $this->Users->Posts->getForeignKey());
-        $this->assertEquals('MeCms.Posts', $this->Users->Posts->className());
+        $this->assertEquals(ME_CMS . '.Posts', $this->Users->Posts->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->Users->Tokens);
         $this->assertEquals('user_id', $this->Users->Tokens->getForeignKey());

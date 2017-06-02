@@ -50,7 +50,7 @@ class SystemsController extends AppController
 
         //Loads KcFinderComponent
         if ($this->request->isAction('browser')) {
-            $this->loadComponent('MeCms.KcFinder');
+            $this->loadComponent(ME_CMS . '.KcFinder');
         }
     }
 
@@ -146,8 +146,8 @@ class SystemsController extends AppController
         ];
 
         $checkup['backups'] = [
-            'path' => rtr(Configure::read('MysqlBackup.target') . DS),
-            'writeable' => folderIsWriteable(Configure::read('MysqlBackup.target')),
+            'path' => rtr(Configure::read(MYSQL_BACKUP . '.target') . DS),
+            'writeable' => folderIsWriteable(Configure::read(MYSQL_BACKUP . '.target')),
         ];
 
         $checkup['cache'] = Cache::enabled();
@@ -177,10 +177,10 @@ class SystemsController extends AppController
         foreach ([
             LOGS,
             TMP,
-            Configure::read('Assets.target'),
+            Configure::read(ASSETS . '.target'),
             CACHE,
             LOGIN_RECORDS,
-            Configure::read('Thumbs.target'),
+            Configure::read(THUMBER . '.target'),
         ] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
@@ -246,15 +246,15 @@ class SystemsController extends AppController
 
         switch ($type) {
             case 'all':
-                $success = clearDir(Configure::read('Assets.target')) && clearDir(LOGS)
+                $success = clearDir(Configure::read(ASSETS . '.target')) && clearDir(LOGS)
                     && self::clearCache() && self::clearSitemap()
-                    && clearDir(Configure::read('Thumbs.target'));
+                    && clearDir(Configure::read(THUMBER . '.target'));
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $success = clearDir(Configure::read('Assets.target'));
+                $success = clearDir(Configure::read(ASSETS . '.target'));
                 break;
             case 'logs':
                 $success = clearDir(LOGS);
@@ -263,7 +263,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir(Configure::read('Thumbs.target'));
+                $success = clearDir(Configure::read(THUMBER . '.target'));
                 break;
         }
 
@@ -282,11 +282,11 @@ class SystemsController extends AppController
      */
     public function tmpViewer()
     {
-        $assetsSize = (new Folder(Configure::read('Assets.target')))->dirsize();
+        $assetsSize = (new Folder(Configure::read(ASSETS . '.target')))->dirsize();
         $cacheSize = (new Folder(CACHE))->dirsize();
         $logsSize = (new Folder(LOGS))->dirsize();
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = (new Folder(Configure::read('Thumbs.target')))->dirsize();
+        $thumbsSize = (new Folder(Configure::read(THUMBER . '.target')))->dirsize();
 
         $this->set([
             'cacheStatus' => Cache::enabled(),

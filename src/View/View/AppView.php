@@ -98,10 +98,10 @@ class AppView extends View
         parent::initialize();
 
         //Loads helpers
-        $this->loadHelper('MeTools.BBCode');
-        $this->loadHelper('MeTools.Breadcrumbs');
-        $this->loadHelper('MeTools.Recaptcha');
-        $this->loadHelper('MeCms.Widget');
+        $this->loadHelper(METOOLS . '.BBCode');
+        $this->loadHelper(METOOLS . '.Breadcrumbs');
+        $this->loadHelper(METOOLS . '.Recaptcha');
+        $this->loadHelper(ME_CMS . '.Widget');
     }
 
     /**

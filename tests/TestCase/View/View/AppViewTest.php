@@ -103,18 +103,18 @@ class AppViewTest extends TestCase
         })->toArray();
 
         $this->assertEquals([
-            'MeTools\View\Helper\HtmlHelper',
-            'MeTools\View\Helper\DropdownHelper',
-            'MeTools\View\Helper\FormHelper',
-            'MeTools\View\Helper\LibraryHelper',
-            'MeTools\View\Helper\PaginatorHelper',
-            'Assets\View\Helper\AssetHelper',
+            METOOLS . '\View\Helper\HtmlHelper',
+            METOOLS . '\View\Helper\DropdownHelper',
+            METOOLS . '\View\Helper\FormHelper',
+            METOOLS . '\View\Helper\LibraryHelper',
+            METOOLS . '\View\Helper\PaginatorHelper',
+            ASSETS . '\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
-            'MeTools\View\Helper\BBCodeHelper',
-            'MeTools\View\Helper\BreadcrumbsHelper',
-            'MeTools\View\Helper\RecaptchaHelper',
-            'MeCms\View\Helper\WidgetHelper',
+            METOOLS . '\View\Helper\BBCodeHelper',
+            METOOLS . '\View\Helper\BreadcrumbsHelper',
+            METOOLS . '\View\Helper\RecaptchaHelper',
+            ME_CMS . '\View\Helper\WidgetHelper',
         ], $helpers);
     }
 

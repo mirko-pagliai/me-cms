@@ -59,7 +59,7 @@ class TagValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Tags = TableRegistry::get('MeCms.Tags');
+        $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
 
         $this->example = [
             'tag' => 'my tag',

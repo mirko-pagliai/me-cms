@@ -55,7 +55,7 @@ class PostsCategoriesTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->PostsCategories = TableRegistry::get('MeCms.PostsCategories');
+        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
 
         Cache::clear(false, $this->PostsCategories->cache);
     }
@@ -123,15 +123,15 @@ class PostsCategoriesTableTest extends TestCase
 
         $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsCategories->Parents);
         $this->assertEquals('parent_id', $this->PostsCategories->Parents->getForeignKey());
-        $this->assertEquals('MeCms.PostsCategories', $this->PostsCategories->Parents->className());
+        $this->assertEquals(ME_CMS . '.PostsCategories', $this->PostsCategories->Parents->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Childs);
         $this->assertEquals('parent_id', $this->PostsCategories->Childs->getForeignKey());
-        $this->assertEquals('MeCms.PostsCategories', $this->PostsCategories->Childs->className());
+        $this->assertEquals(ME_CMS . '.PostsCategories', $this->PostsCategories->Childs->className());
 
         $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Posts);
         $this->assertEquals('category_id', $this->PostsCategories->Posts->getForeignKey());
-        $this->assertEquals('MeCms.Posts', $this->PostsCategories->Posts->className());
+        $this->assertEquals(ME_CMS . '.Posts', $this->PostsCategories->Posts->className());
 
         $this->assertTrue($this->PostsCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PostsCategories->hasBehavior('Tree'));

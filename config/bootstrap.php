@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 /**
  * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
@@ -38,8 +37,7 @@ require_once __DIR__ . DS . 'bootstrap_base.php';
 /**
  * Loads DebugKit, if debugging is enabled
  */
-if (config('debug') && !Plugin::loaded('DebugKit')
-) {
+if (config('debug') && !Plugin::loaded('DebugKit')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 

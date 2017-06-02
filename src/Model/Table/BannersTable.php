@@ -98,7 +98,7 @@ class BannersTable extends AppTable
         $this->setDisplayField('filename');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Positions', ['className' => 'MeCms.BannersPositions'])
+        $this->belongsTo('Positions', ['className' => ME_CMS . '.BannersPositions'])
             ->setForeignKey('position_id')
             ->setJoinType('INNER');
 

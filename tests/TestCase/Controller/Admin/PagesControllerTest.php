@@ -73,7 +73,7 @@ class PagesControllerTest extends IntegrationTestCase
 
         $this->Controller = new PagesController;
 
-        $this->Pages = TableRegistry::get('MeCms.Pages');
+        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
 
         Cache::clear(false, $this->Pages->cache);
 

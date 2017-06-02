@@ -38,10 +38,10 @@ class PluginTest extends TestCase
     {
         $this->assertEquals([
             ME_CMS,
-            'MeTools',
-            'Assets',
-            'MysqlBackup',
-            'Thumber',
+            METOOLS,
+            ASSETS,
+            MYSQL_BACKUP,
+            THUMBER,
             'Tokens',
         ], Plugin::all());
 
@@ -49,21 +49,21 @@ class PluginTest extends TestCase
 
         $this->assertEquals([
             ME_CMS,
-            'MeTools',
-            'Assets',
-            'MysqlBackup',
+            METOOLS,
+            ASSETS,
+            MYSQL_BACKUP,
             'TestPlugin',
-            'Thumber',
+            THUMBER,
             'Tokens',
         ], Plugin::all());
 
         $this->assertEquals([
-            'Assets',
+            ASSETS,
             ME_CMS,
-            'MeTools',
-            'MysqlBackup',
+            METOOLS,
+            MYSQL_BACKUP,
             'TestPlugin',
-            'Thumber',
+            THUMBER,
             'Tokens',
         ], Plugin::all(['order' => false]));
     }

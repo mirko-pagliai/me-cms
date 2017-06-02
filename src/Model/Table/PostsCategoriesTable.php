@@ -82,17 +82,17 @@ class PostsCategoriesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', ['className' => 'MeCms.PostsCategories'])
+        $this->belongsTo('Parents', ['className' => ME_CMS . '.PostsCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Childs', ['className' => 'MeCms.PostsCategories'])
+        $this->hasMany('Childs', ['className' => ME_CMS . '.PostsCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
+        $this->hasMany('Posts', ['className' => ME_CMS . '.Posts'])
             ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior('MeCms.Tree');
+        $this->addBehavior(ME_CMS . '.Tree');
 
         $this->_validatorClass = '\MeCms\Model\Validation\PostsCategoryValidator';
     }

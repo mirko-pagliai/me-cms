@@ -65,11 +65,11 @@ class PostsTagsTable extends AppTable
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Posts', ['className' => 'MeCms.Posts'])
+        $this->belongsTo('Posts', ['className' => ME_CMS . '.Posts'])
             ->setForeignKey('post_id')
             ->setJoinType('INNER');
 
-        $this->belongsTo('Tags', ['className' => 'MeCms.Tags'])
+        $this->belongsTo('Tags', ['className' => ME_CMS . '.Tags'])
             ->setForeignKey('tag_id')
             ->setJoinType('INNER');
 

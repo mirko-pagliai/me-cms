@@ -170,8 +170,8 @@ class StaticPageTest extends TestCase
 
         $this->assertEquals([
             '/StaticPages/page-from-app',
-            'MeCms./StaticPages/cookies-policy-it',
-            'MeCms./StaticPages/cookies-policy',
+            ME_CMS . './StaticPages/cookies-policy-it',
+            ME_CMS . './StaticPages/cookies-policy',
             'TestPlugin./StaticPages/test-from-plugin',
             'TestPlugin./StaticPages/first-folder/page-on-first-from-plugin',
             'TestPlugin./StaticPages/first-folder/second_folder/page_on_second_from_plugin',
@@ -187,11 +187,11 @@ class StaticPageTest extends TestCase
      */
     public function testGetDifferentLocale()
     {
-        $this->assertEquals('MeCms./StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
+        $this->assertEquals(ME_CMS . './StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
 
         ini_set('intl.default_locale', 'it');
 
-        $this->assertEquals('MeCms./StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
+        $this->assertEquals(ME_CMS . './StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
     }
 
     /**

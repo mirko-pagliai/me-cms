@@ -97,7 +97,7 @@ class BannersControllerTest extends IntegrationTestCase
 
         $this->setUserGroup('admin');
 
-        $this->Banners = TableRegistry::get('MeCms.Banners');
+        $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
 
         $this->Controller = new BannersController;
 

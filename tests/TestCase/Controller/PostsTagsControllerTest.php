@@ -58,7 +58,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->PostsTags = TableRegistry::get('MeCms.PostsTags');
+        $this->PostsTags = TableRegistry::get(ME_CMS . '.PostsTags');
 
         Cache::clear(false, $this->PostsTags->cache);
     }

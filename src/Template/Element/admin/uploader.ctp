@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-$this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
+$this->Asset->css(ME_CMS . '.admin/uploader', ['block' => 'css_bottom']);
 $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
 

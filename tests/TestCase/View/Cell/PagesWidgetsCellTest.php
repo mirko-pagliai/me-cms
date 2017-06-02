@@ -64,7 +64,7 @@ class PagesWidgetsCellTest extends TestCase
     {
         Cache::clearAll();
 
-        $this->Pages = TableRegistry::get('MeCms.Pages');
+        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
 
         $this->Widget = new WidgetHelper(new View);
     }

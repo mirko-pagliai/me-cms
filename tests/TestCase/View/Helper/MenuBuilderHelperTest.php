@@ -105,7 +105,7 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->generate(ME_CMS);
 
         //Checks array keys (menu names)
-        $this->assertEquals(['MeCms.posts', 'MeCms.pages', 'MeCms.photos'], array_keys($result));
+        $this->assertEquals([ME_CMS . '.posts', ME_CMS . '.pages', ME_CMS . '.photos'], array_keys($result));
 
         //Foreach menu
         foreach ($result as $menu) {

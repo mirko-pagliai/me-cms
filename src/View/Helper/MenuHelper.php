@@ -39,8 +39,8 @@ class MenuHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'Html' => ['className' => 'MeTools.Html'],
-        'MeCms.Auth',
+        'Html' => ['className' => METOOLS . '.Html'],
+        ME_CMS . '.Auth',
     ];
 
     /**

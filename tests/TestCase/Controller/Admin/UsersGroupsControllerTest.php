@@ -72,7 +72,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->Controller = new UsersGroupsController;
 
-        $this->UsersGroups = TableRegistry::get('MeCms.UsersGroups');
+        $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
 
         Cache::clear(false, $this->UsersGroups->cache);
 

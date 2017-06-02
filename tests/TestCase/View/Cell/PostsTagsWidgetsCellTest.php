@@ -82,7 +82,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
         $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell();
 
-        $this->Tags = TableRegistry::get('MeCms.Tags');
+        $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
 
         $this->Widget = new WidgetHelper(new View);
 

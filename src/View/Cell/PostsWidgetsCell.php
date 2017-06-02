@@ -49,7 +49,7 @@ class PostsWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel('MeCms.Posts');
+        $this->loadModel(ME_CMS . '.Posts');
     }
 
     /**

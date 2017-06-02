@@ -22,7 +22,7 @@
  */
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Changelogs'));
-$this->Html->css('MeCms.admin/changelogs', ['block' => 'css_bottom']);
+$this->Html->css(ME_CMS . '.admin/changelogs', ['block' => 'css_bottom']);
 ?>
 
 <div class="well">

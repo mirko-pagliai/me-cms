@@ -70,7 +70,7 @@ class BannersPositionsControllerTest extends IntegrationTestCase
 
         $this->setUserGroup('admin');
 
-        $this->BannersPositions = TableRegistry::get('MeCms.BannersPositions');
+        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
 
         $this->Controller = new BannersPositionsController;
 

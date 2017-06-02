@@ -79,10 +79,10 @@ class TagsTable extends AppTable
         $this->setDisplayField('tag');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Posts', ['className' => 'MeCms.Posts', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Posts', ['className' => ME_CMS . '.Posts', 'joinTable' => 'posts_tags'])
             ->setForeignKey('tag_id')
             ->setTargetForeignKey('post_id')
-            ->setThrough('MeCms.PostsTags');
+            ->setThrough(ME_CMS . '.PostsTags');
 
         $this->addBehavior('Timestamp');
 

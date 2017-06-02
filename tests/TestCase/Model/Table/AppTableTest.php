@@ -72,9 +72,9 @@ class AppTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Photos = TableRegistry::get('MeCms.Photos');
-        $this->Posts = TableRegistry::get('MeCms.Posts');
-        $this->PostsCategories = TableRegistry::get('MeCms.PostsCategories');
+        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
+        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
+        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
 
         Cache::clear(false, $this->Photos->cache);
         Cache::clear(false, $this->Posts->cache);

@@ -33,7 +33,7 @@ class AdminView extends View
      * The name of the layout file to render the template inside of
      * @var string
      */
-    public $layout = 'MeCms.admin';
+    public $layout = ME_CMS . '.admin';
 
     /**
      * Initialization hook method
@@ -46,7 +46,7 @@ class AdminView extends View
         parent::initialize();
 
         //Loads helpers
-        $this->loadHelper('MeCms.MenuBuilder');
+        $this->loadHelper(ME_CMS . '.MenuBuilder');
         $this->loadHelper('Gourmet/CommonMark.CommonMark');
     }
 

@@ -58,7 +58,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->PostsCategories = TableRegistry::get('MeCms.PostsCategories');
+        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
 
         Cache::clear(false, $this->PostsCategories->cache);
     }

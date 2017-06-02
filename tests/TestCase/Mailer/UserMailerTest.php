@@ -85,7 +85,7 @@ class UserMailerTest extends TestCase
 
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
         $this->assertEquals('Activate your account', $email->getSubject());
-        $this->assertEquals('MeCms.Users/activation', $email->getTemplate());
+        $this->assertEquals(ME_CMS . '.Users/activation', $email->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
@@ -142,7 +142,7 @@ class UserMailerTest extends TestCase
 
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
         $this->assertEquals('Your password has been changed', $email->getSubject());
-        $this->assertEquals('MeCms.Users/change_password', $email->getTemplate());
+        $this->assertEquals(ME_CMS . '.Users/change_password', $email->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 
@@ -198,7 +198,7 @@ class UserMailerTest extends TestCase
 
         $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
         $this->assertEquals('Reset your password', $email->getSubject());
-        $this->assertEquals('MeCms.Users/password_forgot', $email->getTemplate());
+        $this->assertEquals(ME_CMS . '.Users/password_forgot', $email->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
     }
 

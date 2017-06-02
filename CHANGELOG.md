@@ -1,5 +1,11 @@
 # 2.x branch
 ## 2.18 branch
+### 2.18.2
+* the default directories are created automatically, if they do not exist;
+* updated for MeTools 2.12.5;
+* updated for cakephp-thumber 1.1.0;
+* updated for cakephp-mysql-backup 1.0.3.
+
 ### 2.18.1
 * `BannersController::upload()` and `PhotosController::upload()` methods return
     errors with a json response;

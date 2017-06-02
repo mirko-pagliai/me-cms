@@ -81,7 +81,7 @@ class PostsController extends AppController
 
         //Loads KcFinderComponent
         if ($this->request->isAction(['add', 'edit'])) {
-            $this->loadComponent('MeCms.KcFinder');
+            $this->loadComponent(ME_CMS . '.KcFinder');
         }
     }
 
