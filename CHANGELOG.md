@@ -2,6 +2,7 @@
 ## 2.18 branch
 ### 2.18.2
 * the default directories are created automatically, if they do not exist;
+* fixed ajax/json layouts;
 * updated for MeTools 2.12.5;
 * updated for cakephp-thumber 1.1.0;
 * updated for cakephp-mysql-backup 1.0.3.
