@@ -35,6 +35,11 @@ use MysqlBackup\Utility\BackupManager;
 class BackupsController extends AppController
 {
     /**
+     * @var \MysqlBackup\Utility\BackupManager
+     */
+    public $BackupManager;
+
+    /**
      * Check if the provided user is authorized for the request
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
@@ -48,17 +53,30 @@ class BackupsController extends AppController
     }
 
     /**
+     * Initialization hook method
+     * @return void
+     * @uses MeCms\Controller\AppController::initialize()
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->BackupManager = new BackupManager;
+    }
+
+    /**
      * Lists backup files
      * @return void
      * @uses MysqlBackup\Utility\BackupManager::index()
      */
     public function index()
     {
-        $backups = collection(BackupManager::index())->map(function ($backup) {
-            $backup->slug = urlencode($backup->filename);
+        $backups = collection($this->BackupManager->index())
+            ->map(function ($backup) {
+                $backup->slug = urlencode($backup->filename);
 
-            return $backup;
-        });
+                return $backup;
+            });
 
         $this->set(compact('backups'));
     }
@@ -97,7 +115,7 @@ class BackupsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        BackupManager::delete(urldecode($filename));
+        $this->BackupManager->delete(urldecode($filename));
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
@@ -113,7 +131,7 @@ class BackupsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        BackupManager::deleteAll();
+        $this->BackupManager->deleteAll();
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
@@ -147,6 +165,23 @@ class BackupsController extends AppController
 
         //Clears the cache
         Cache::clearAll();
+
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Sends a backup file via mail
+     * @param string $filename Backup filename
+     * @return \Cake\Network\Response|null
+     * @uses MysqlBackup\Utility\BackupManager::send()
+     */
+    public function send($filename)
+    {
+        $filename = Configure::read(MYSQL_BACKUP . '.target') . DS . urldecode($filename);
+
+        $this->BackupManager->send($filename, config('email.webmaster'));
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 

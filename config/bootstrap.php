@@ -23,6 +23,7 @@
 /**
  * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
@@ -49,6 +50,10 @@ Plugin::load('Tokens', ['bootstrap' => true]);
 Plugin::load('MysqlBackup', ['bootstrap' => true]);
 Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 Plugin::load('Gourmet/CommonMark');
+
+if (!Configure::read(MYSQL_BACKUP . '.mailSender')) {
+    Configure::write(MYSQL_BACKUP . '.mailSender', Configure::read(ME_CMS . '.email.webmaster'));
+}
 
 //CakePHP will automatically set the locale based on the current user
 DispatcherFactory::add('LocaleSelector');

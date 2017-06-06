@@ -24,6 +24,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BackupsController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
@@ -102,7 +103,42 @@ class BackupsControllerTest extends IntegrationTestCase
             @unlink($file);
         }
 
+        //Deletes debug log
+        //@codingStandardsIgnoreLine
+        @unlink(LOGS . 'debug.log');
+
         unset($this->Controller);
+    }
+
+    /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy($event, $controller = null)
+    {
+        if ($this->getName() === 'testSend') {
+            //Only for the `testSend` test, mocks the `send()` method of
+            //  `BackupManager` class, so that it writes on the debug log
+            //  instead of sending a real mail
+            $controller->BackupManager = $this->getMockBuilder(BackupManager::class)
+                ->setMethods(['send'])
+                ->getMock();
+
+            $controller->BackupManager->method('send')
+                ->will($this->returnCallback(function () {
+                    $args = implode(', ', array_map(function ($arg) {
+                        return '`' . $arg . '`';
+                    }, func_get_args()));
+
+                    return Log::write('debug', 'Called `send()` with args: ' . $args);
+                }));
+        }
+
+        $controller->viewBuilder()->setLayout('with_flash');
+
+        parent::controllerSpy($event, $controller);
     }
 
     /**
@@ -250,5 +286,23 @@ class BackupsControllerTest extends IntegrationTestCase
         //Cache data no longer exists
         $this->assertFalse(Cache::read('firstKey'));
         $this->assertFalse(Cache::read('secondKey'));
+    }
+
+    /**
+     * Tests for `send()` method
+     * @test
+     */
+    public function testSend()
+    {
+        //Creates a backup file
+        $file = $this->createBackup();
+
+        $this->post(array_merge($this->url, ['action' => 'send', urlencode(basename($file))]));
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+
+        $log = file_get_contents(LOGS . 'debug.log');
+        $mail = Configure::read(ME_CMS . '.email.webmaster');
+        $this->assertTextContains('Called `send()` with args: `' . $file . '`, `' . $mail . '`', $log);
     }
 }
