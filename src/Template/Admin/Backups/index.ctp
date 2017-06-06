@@ -66,6 +66,14 @@ $this->append('actions', $this->Form->postButton(
                         ]
                     );
                     $actions[] = $this->Form->postLink(
+                        __d('me_cms', 'Send'),
+                        ['action' => 'send', $backup->slug],
+                        [
+                            'icon' => ' envelope-o',
+                            'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
+                        ]
+                    );
+                    $actions[] = $this->Form->postLink(
                         __d('me_cms', 'Delete'),
                         ['action' => 'delete', $backup->slug],
                         [

@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.18 branch
+### 2.18.3
+* updated for cakephp-mysql-backup 1.1.0. Now you can send backups via mail.
+
 ### 2.18.2
 * the default directories are created automatically, if they do not exist;
 * fixed ajax/json layouts;
