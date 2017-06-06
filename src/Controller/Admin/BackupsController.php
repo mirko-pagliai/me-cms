@@ -54,11 +54,12 @@ class BackupsController extends AppController
      */
     public function index()
     {
-        $backups = collection(BackupManager::index())->map(function ($backup) {
-            $backup->slug = urlencode($backup->filename);
+        $backups = collection((new BackupManager)->index())
+            ->map(function ($backup) {
+                $backup->slug = urlencode($backup->filename);
 
-            return $backup;
-        });
+                return $backup;
+            });
 
         $this->set(compact('backups'));
     }
@@ -97,7 +98,7 @@ class BackupsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        BackupManager::delete(urldecode($filename));
+        (new BackupManager)->delete(urldecode($filename));
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
@@ -113,7 +114,7 @@ class BackupsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        BackupManager::deleteAll();
+        (new BackupManager)->deleteAll();
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
