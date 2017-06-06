@@ -186,6 +186,7 @@ class BackupsController extends AppController
      * Sends a backup file via mail
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
+     * @since 2.18.3
      * @uses MysqlBackup\Utility\BackupManager::send()
      * @uses getFilename()
      */
