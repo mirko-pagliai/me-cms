@@ -27,7 +27,6 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
