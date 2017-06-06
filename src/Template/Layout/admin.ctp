@@ -41,7 +41,7 @@ use Cake\Core\Configure;
                 METOOLS . '.default',
                 METOOLS . '.forms',
                 ME_CMS . '.admin/layout',
-                ME_CMS . 'admin/photos',
+                ME_CMS . '.admin/photos',
             ], ['block' => true]);
             echo $this->fetch('css');
 
