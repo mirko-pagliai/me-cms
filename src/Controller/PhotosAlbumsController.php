@@ -75,7 +75,7 @@ class PhotosAlbumsController extends AppController
             ->firstOrFail();
 
         $page = $this->request->getQuery('page', 1);
-        $this->paginate['limit'] = $this->paginate['maxLimit'] = config('default.photos');
+        $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfig('default.photos');
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);

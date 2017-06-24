@@ -24,6 +24,6 @@
 
 <?= __d('me_cms', 'Hello {0}', $fullName) ?>,
 
-<?= __d('me_cms', 'you have recently changed your password on our site {0}', config('main.title')) ?>.
+<?= __d('me_cms', 'you have recently changed your password on our site {0}', getConfig('main.title')) ?>.
 
 <?= __d('me_cms', 'If you have not made this request, please contact an administrator') ?>.

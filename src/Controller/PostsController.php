@@ -181,7 +181,7 @@ class PostsController extends AppController
 
         $posts = $this->Posts->find('active')
             ->select(['title', 'slug', 'text', 'created'])
-            ->limit(config('default.records_for_rss'))
+            ->limit(getConfig('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
             ->cache('rss', $this->Posts->cache);
 
@@ -209,14 +209,14 @@ class PostsController extends AppController
             $this->Flash->alert(__d(
                 'me_cms',
                 'You have to wait {0} seconds to perform a new search',
-                config('security.search_interval')
+                getConfig('security.search_interval')
             ));
 
             return $this->redirect([]);
         }
 
         if ($pattern) {
-            $this->paginate['limit'] = config('default.records_for_searches');
+            $this->paginate['limit'] = getConfig('default.records_for_searches');
 
             $page = $this->request->getQuery('page', 1);
 
@@ -282,8 +282,8 @@ class PostsController extends AppController
         $this->set(compact('post'));
 
         //Gets related posts
-        if (config('post.related') && config('post.related.limit')) {
-            $related = $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images'));
+        if (getConfig('post.related') && getConfig('post.related.limit')) {
+            $related = $this->Posts->getRelated($post, getConfig('post.related.limit'), getConfig('post.related.images'));
             $this->set(compact('related'));
         }
     }
@@ -312,8 +312,8 @@ class PostsController extends AppController
         $this->set(compact('post'));
 
         //Gets related posts
-        if (config('post.related') && config('post.related.limit')) {
-            $this->set('related', $this->Posts->getRelated($post, config('post.related.limit'), config('post.related.images')));
+        if (getConfig('post.related') && getConfig('post.related.limit')) {
+            $this->set('related', $this->Posts->getRelated($post, getConfig('post.related.limit'), getConfig('post.related.images')));
         }
 
         $this->render('view');

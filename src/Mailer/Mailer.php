@@ -54,8 +54,8 @@ class Mailer extends CakeMailer
 
         $this->getEmailInstance()
             ->setHelpers([METOOLS . '.Html'])
-            ->setFrom(config('email.webmaster'), config('main.title'))
-            ->setSender(config('email.webmaster'), config('main.title'))
+            ->setFrom(getConfig('email.webmaster'), getConfig('main.title'))
+            ->setSender(getConfig('email.webmaster'), getConfig('main.title'))
             ->setEmailFormat('html');
     }
 }

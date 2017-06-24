@@ -38,7 +38,7 @@ require_once __DIR__ . DS . 'bootstrap_base.php';
 /**
  * Loads DebugKit, if debugging is enabled
  */
-if (config('debug') && !Plugin::loaded('DebugKit')) {
+if (getConfig('debug') && !Plugin::loaded('DebugKit')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 

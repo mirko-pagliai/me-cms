@@ -109,7 +109,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $cache = sprintf('tags_limit_%s_page_%s', config('default.records') * 4, 1);
+        $cache = sprintf('tags_limit_%s_page_%s', getConfig('default.records') * 4, 1);
         list($tagsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsTags->cache
@@ -153,7 +153,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), config('default.records'), 1);
+        $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfig('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsTags->cache

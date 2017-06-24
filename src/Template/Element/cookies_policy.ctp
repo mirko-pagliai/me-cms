@@ -26,7 +26,7 @@ if ($this->Auth->isLogged()) {
 }
 
 //Returns if disabled or already checked
-if (!config('default.cookies_policy') || !empty($_COOKIE['cookies-policy'])) {
+if (!getConfig('default.cookies_policy') || !empty($_COOKIE['cookies-policy'])) {
     return;
 }
 ?>

@@ -191,10 +191,10 @@
 <p>
     Se hai qualsiasi domanda sull'uso dei nostri cookie, clicca
     <?php
-    if (config('default.contact_us')) {
+    if (getConfig('default.contact_us')) {
         $url = ['_name' => 'contactUs'];
     } else {
-        $url = $this->Recaptcha->mailUrl(config('email.webmaster'));
+        $url = $this->Recaptcha->mailUrl(getConfig('email.webmaster'));
     }
 
     echo $this->Html->link('qui', $url);

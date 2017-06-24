@@ -24,7 +24,7 @@
 
 <div class="post-container content-container">
     <div class="content-header">
-        <?php if (config('post.category') && $post->category->title && $post->category->slug) : ?>
+        <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
             <h5 class="content-category">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
@@ -42,7 +42,7 @@
 
         <div class="content-info">
             <?php
-            if (config('post.author')) {
+            if (getConfig('post.author')) {
                 echo $this->Html->div(
                     'content-author',
                     __d('me_cms', 'Posted by {0}', $post->user->full_name),
@@ -50,11 +50,11 @@
                 );
             }
 
-            if (config('post.created')) {
+            if (getConfig('post.created')) {
                 echo $this->Html->div('content-date', __d(
                     'me_cms',
                     'Posted on {0}',
-                    $post->created->i18nFormat(config('main.datetime.long'))
+                    $post->created->i18nFormat(getConfig('main.datetime.long'))
                 ), ['icon' => 'clock-o']);
             }
             ?>
@@ -76,8 +76,8 @@
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview']) && config('default.truncate_to')) {
-            echo $truncatedText = $this->Text->truncate($text, config('default.truncate_to'), [
+        } elseif (!$this->request->isAction(['view', 'preview']) && getConfig('default.truncate_to')) {
+            echo $truncatedText = $this->Text->truncate($text, getConfig('default.truncate_to'), [
                 'exact' => false,
                 'html' => true,
             ]);
@@ -87,7 +87,7 @@
         ?>
     </div>
 
-    <?php if (config('post.tags') && $post->tags) : ?>
+    <?php if (getConfig('post.tags') && $post->tags) : ?>
         <div class="content-tags">
             <?php foreach ($post->tags as $tag) : ?>
                 <?= $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']) ?>
@@ -110,10 +110,10 @@
     </div>
 
     <?php
-    if (config('post.shareaholic') && config('shareaholic.app_id') &&
+    if (getConfig('post.shareaholic') && getConfig('shareaholic.app_id') &&
         $this->request->isAction('view', 'Posts') && !$this->request->isAjax()
     ) {
-        echo $this->Html->shareaholic(config('shareaholic.app_id'));
+        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
     }
     ?>
 </div>

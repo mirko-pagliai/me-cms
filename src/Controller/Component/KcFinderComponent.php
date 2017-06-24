@@ -120,7 +120,7 @@ class KcFinderComponent extends Component
         }
 
         //Merges default config, options from configuration and passed options
-        $config = am($this->_getDefaultConfig(), config('kcfinder'), $config);
+        $config = am($this->_getDefaultConfig(), getConfig('kcfinder'), $config);
 
         //Writes on session
         $this->getController()->request->session()->write('KCFINDER', $config);

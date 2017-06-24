@@ -42,7 +42,7 @@ $this->extend('/Admin/Common/Photos/index');
                     ) ?>
                 </div>
                 <div class="photo-created">
-                    (<?= $photo->created->i18nFormat(config('main.datetime.long')) ?>)
+                    (<?= $photo->created->i18nFormat(getConfig('main.datetime.long')) ?>)
                 </div>
                 <div class="photo-image">
                     <?= $this->Thumb->fit($photo->path, ['width' => 400]); ?>

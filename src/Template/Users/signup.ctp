@@ -70,7 +70,7 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
             'label' => __d('me_cms', 'Last name'),
         ]);
 
-        if (config('security.recaptcha')) {
+        if (getConfig('security.recaptcha')) {
             echo $this->Recaptcha->recaptcha();
         }
     ?>

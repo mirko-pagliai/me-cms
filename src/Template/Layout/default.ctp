@@ -63,11 +63,11 @@ use Cake\Core\Configure;
         <header>
             <div class="container">
                 <?php
-                $logo = $this->Html->h1(config('main.title'));
+                $logo = $this->Html->h1(getConfig('main.title'));
 
                 //Check if the logo image exists
-                if (is_readable(WWW_ROOT . 'img' . DS . config('default.logo'))) {
-                    $logo = $this->Html->img(config('default.logo'));
+                if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
+                    $logo = $this->Html->img(getConfig('default.logo'));
                 }
 
                 echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);

@@ -50,7 +50,7 @@ $this->userbar($this->Form->postLink(
 /**
  * Breadcrumb
  */
-if (config('post.category')) {
+if (getConfig('post.category')) {
     $this->Breadcrumbs->add($post->category->title, ['_name' => 'postsCategory', $post->category->slug]);
 }
 $this->Breadcrumbs->add($post->title, ['_name' => 'post', $post->slug]);
@@ -63,7 +63,7 @@ if ($this->request->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
 
     //Adds tags as keywords
-    if (config('post.keywords') && $post->tags_as_string) {
+    if (getConfig('post.keywords') && $post->tags_as_string) {
         $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
     }
 
@@ -97,7 +97,7 @@ echo $this->element('views/post', compact('post'));
     ?>
     <div class="related-contents">
         <?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
-        <?php if (!config('post.related.images')) : ?>
+        <?php if (!getConfig('post.related.images')) : ?>
             <?= $this->Html->ul($relatedAsList, ['icon' => 'caret-right']) ?>
         <?php else : ?>
             <div class="visible-xs">

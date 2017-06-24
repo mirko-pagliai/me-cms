@@ -62,7 +62,7 @@ class SystemsController extends AppController
     public function contactUs()
     {
         //Checks if the "contact us" form is enabled
-        if (!config('default.contact_us')) {
+        if (!getConfig('default.contact_us')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
             return $this->redirect(['_name' => 'homepage']);
@@ -72,7 +72,7 @@ class SystemsController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (config('security.recaptcha') && !$this->Recaptcha->check()) {
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
                 $this->Flash->error($this->Recaptcha->getError());
             } else {
                 //Sends the email
@@ -110,7 +110,7 @@ class SystemsController extends AppController
     public function offline()
     {
         //If the site has not been taken offline
-        if (!config('default.offline')) {
+        if (!getConfig('default.offline')) {
             return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 
@@ -129,7 +129,7 @@ class SystemsController extends AppController
         if (is_readable(SITEMAP)) {
             $time = Time::createFromTimestamp(filemtime(SITEMAP));
 
-            if (!$time->modify(config('main.sitemap_expiration'))->isPast()) {
+            if (!$time->modify(getConfig('main.sitemap_expiration'))->isPast()) {
                 $sitemap = file_get_contents(SITEMAP);
             }
         }

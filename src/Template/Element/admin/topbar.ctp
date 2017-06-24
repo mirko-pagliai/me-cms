@@ -58,7 +58,7 @@ use MeCms\Core\Plugin;
                 $userMenu[] = call_user_func(function () {
                     $this->Dropdown->start($this->Auth->user('full_name'), ['icon' => 'user']);
 
-                    if (config('users.login_log')) {
+                    if (getConfig('users.login_log')) {
                         echo $this->Html->link(__d('me_cms', 'Last login'), [
                             'controller' => 'Users',
                             'action' => 'lastLogin',

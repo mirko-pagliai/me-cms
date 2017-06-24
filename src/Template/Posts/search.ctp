@@ -56,7 +56,7 @@ echo $this->Form->end();
             <div class="margin-10 padding-10">
                 <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
                 <span class="small text-muted">
-                    (<?= $post->created->i18nFormat(config('main.datetime.short')) ?>)
+                    (<?= $post->created->i18nFormat(getConfig('main.datetime.short')) ?>)
                 </span>
                 <div class="text-justify">
                 <?php

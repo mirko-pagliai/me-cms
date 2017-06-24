@@ -96,7 +96,7 @@ $this->append('actions', $this->Form->postButton(
                 <?= $this->Number->toReadableSize($backup->size) ?>
             </td>
             <td class="min-width text-center">
-                <?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?>
+                <?= $backup->datetime->i18nFormat(getConfig('main.datetime.long')) ?>
             </td>
         </tr>
     <?php endforeach; ?>
