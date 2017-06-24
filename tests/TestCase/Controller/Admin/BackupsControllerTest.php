@@ -52,7 +52,7 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     protected function createBackup()
     {
-        $file = Configure::read(MYSQL_BACKUP . '.target') . DS . 'backup.sql';
+        $file = Configure::read(DATABASE_BACKUP . '.target') . DS . 'backup.sql';
         file_put_contents($file, null);
 
         return $file;
@@ -65,7 +65,7 @@ class BackupsControllerTest extends IntegrationTestCase
     protected function createSomeBackups()
     {
         foreach (['sql', 'sql.gz', 'sql.bz2'] as $k => $ext) {
-            $files[$k] = Configure::read(MYSQL_BACKUP . '.target') . DS . 'backup.' . $ext;
+            $files[$k] = Configure::read(DATABASE_BACKUP . '.target') . DS . 'backup.' . $ext;
             file_put_contents($files[$k], null);
         }
 
@@ -98,7 +98,7 @@ class BackupsControllerTest extends IntegrationTestCase
         parent::tearDown();
 
         //Deletes all backups
-        foreach (glob(Configure::read(MYSQL_BACKUP . '.target') . DS . '*') as $file) {
+        foreach (glob(Configure::read(DATABASE_BACKUP . '.target') . DS . '*') as $file) {
             //@codingStandardsIgnoreLine
             @unlink($file);
         }
@@ -206,7 +206,7 @@ class BackupsControllerTest extends IntegrationTestCase
         $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
 
         //The backup file has been created
-        $this->assertTrue(file_exists(Configure::read(MYSQL_BACKUP . '.target') . DS . 'my_backup.sql'));
+        $this->assertTrue(file_exists(Configure::read(DATABASE_BACKUP . '.target') . DS . 'my_backup.sql'));
     }
 
     /**

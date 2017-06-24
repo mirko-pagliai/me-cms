@@ -40,7 +40,7 @@ class PluginTest extends TestCase
             ME_CMS,
             METOOLS,
             ASSETS,
-            MYSQL_BACKUP,
+            DATABASE_BACKUP,
             THUMBER,
             'Tokens',
         ], Plugin::all());
@@ -51,7 +51,7 @@ class PluginTest extends TestCase
             ME_CMS,
             METOOLS,
             ASSETS,
-            MYSQL_BACKUP,
+            DATABASE_BACKUP,
             'TestPlugin',
             THUMBER,
             'Tokens',
@@ -59,9 +59,9 @@ class PluginTest extends TestCase
 
         $this->assertEquals([
             ASSETS,
+            DATABASE_BACKUP,
             ME_CMS,
             METOOLS,
-            MYSQL_BACKUP,
             'TestPlugin',
             THUMBER,
             'Tokens',

@@ -47,12 +47,12 @@ if (config('debug') && !Plugin::loaded('DebugKit')) {
  */
 Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
 Plugin::load('Tokens', ['bootstrap' => true]);
-Plugin::load('MysqlBackup', ['bootstrap' => true]);
+Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 Plugin::load('Gourmet/CommonMark');
 
-if (!Configure::read(MYSQL_BACKUP . '.mailSender')) {
-    Configure::write(MYSQL_BACKUP . '.mailSender', Configure::read(ME_CMS . '.email.webmaster'));
+if (!Configure::read(DATABASE_BACKUP . '.mailSender')) {
+    Configure::write(DATABASE_BACKUP . '.mailSender', Configure::read(ME_CMS . '.email.webmaster'));
 }
 
 //CakePHP will automatically set the locale based on the current user

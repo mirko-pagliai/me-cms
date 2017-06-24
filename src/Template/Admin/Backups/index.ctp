@@ -90,13 +90,7 @@ $this->append('actions', $this->Form->postButton(
                 <?= $backup->extension ?>
             </td>
             <td class="min-width text-center">
-                <?php
-                if (isset($backup->compression) && !$backup->compression) {
-                    $backup->compression = __d('mysql_backup', 'none');
-                }
-
-                echo $backup->compression;
-                ?>
+                <?= $backup->compression ?>
             </td>
             <td class="min-width text-center">
                 <?= $this->Number->toReadableSize($backup->size) ?>

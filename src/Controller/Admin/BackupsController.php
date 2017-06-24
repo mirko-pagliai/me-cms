@@ -24,10 +24,10 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use DatabaseBackup\Utility\BackupImport;
+use DatabaseBackup\Utility\BackupManager;
 use MeCms\Controller\AppController;
 use MeCms\Form\BackupForm;
-use MysqlBackup\Utility\BackupImport;
-use MysqlBackup\Utility\BackupManager;
 
 /**
  * Backups controller
@@ -35,7 +35,7 @@ use MysqlBackup\Utility\BackupManager;
 class BackupsController extends AppController
 {
     /**
-     * @var \MysqlBackup\Utility\BackupManager
+     * @var \DatabaseBackup\Utility\BackupManager
      */
     public $BackupManager;
 
@@ -73,13 +73,13 @@ class BackupsController extends AppController
      */
     protected function getFilename($filename)
     {
-        return Configure::read(MYSQL_BACKUP . '.target') . DS . urldecode($filename);
+        return Configure::read(DATABASE_BACKUP . '.target') . DS . urldecode($filename);
     }
 
     /**
      * Lists backup files
      * @return void
-     * @uses MysqlBackup\Utility\BackupManager::index()
+     * @uses DatabaseBackup\Utility\BackupManager::index()
      */
     public function index()
     {
@@ -121,7 +121,7 @@ class BackupsController extends AppController
      * Deletes a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses MysqlBackup\Utility\BackupManager::delete()
+     * @uses DatabaseBackup\Utility\BackupManager::delete()
      * @uses getFilename()
      */
     public function delete($filename)
@@ -138,7 +138,7 @@ class BackupsController extends AppController
     /**
      * Deletes all backup files
      * @return \Cake\Network\Response|null
-     * @uses MysqlBackup\Utility\BackupManager::deleteAll()
+     * @uses DatabaseBackup\Utility\BackupManager::deleteAll()
      */
     public function deleteAll()
     {
@@ -166,8 +166,8 @@ class BackupsController extends AppController
      * Restores a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses MysqlBackup\Utility\BackupImport::filename()
-     * @uses MysqlBackup\Utility\BackupImport::import()
+     * @uses DatabaseBackup\Utility\BackupImport::filename()
+     * @uses DatabaseBackup\Utility\BackupImport::import()
      * @uses getFilename()
      */
     public function restore($filename)
@@ -187,7 +187,7 @@ class BackupsController extends AppController
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
      * @since 2.18.3
-     * @uses MysqlBackup\Utility\BackupManager::send()
+     * @uses DatabaseBackup\Utility\BackupManager::send()
      * @uses getFilename()
      */
     public function send($filename)

@@ -120,12 +120,12 @@ Plugin::load('Assets', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
 ]);
 
-Configure::write('MysqlBackup.connection', 'test');
-Configure::write('MysqlBackup.target', TMP . 'backups');
+Configure::write('DatabaseBackup.connection', 'test');
+Configure::write('DatabaseBackup.target', TMP . 'backups');
 
-Plugin::load('MysqlBackup', [
+Plugin::load('DatabaseBackup', [
     'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-mysql-backup' . DS,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-database-backup' . DS,
 ]);
 
 Configure::write('Tokens.usersClassOptions', [
@@ -177,7 +177,7 @@ DispatcherFactory::add('ControllerFactory');
 Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
-Configure::write(MYSQL_BACKUP . '.mailSender', config('email.webmaster'));
+Configure::write(DATABASE_BACKUP . '.mailSender', config('email.webmaster'));
 
 ini_set('intl.default_locale', 'en_US');
 

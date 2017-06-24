@@ -25,8 +25,8 @@ namespace MeCms\Form;
 
 use Cake\Form\Form;
 use Cake\Network\Exception\InternalErrorException;
+use DatabaseBackup\Utility\BackupExport;
 use MeCms\Model\Validation\AppValidator;
-use MysqlBackup\Utility\BackupExport;
 
 /**
  * BackupForm class
@@ -34,7 +34,7 @@ use MysqlBackup\Utility\BackupExport;
 class BackupForm extends Form
 {
     /**
-     * @var \MysqlBackup\Utility\BackupExport
+     * @var \DatabaseBackup\Utility\BackupExport
      */
     protected $_BackupExport;
 
@@ -61,7 +61,7 @@ class BackupForm extends Form
 
     /**
      * Gets a `BackupExport` instance
-     * @return \MysqlBackup\Utility\BackupExport
+     * @return \DatabaseBackup\Utility\BackupExport
      * @uses $_BackupExport
      */
     protected function _getBackupExportInstance()
@@ -77,8 +77,8 @@ class BackupForm extends Form
      * Used by `execute()` to execute the form's action
      * @param array $data Form data
      * @return string|bool Filename or `false` on failure
-     * @uses MysqlBackup\Utility\BackupExport::filename()
-     * @uses MysqlBackup\Utility\BackupExport::export()
+     * @uses DatabaseBackup\Utility\BackupExport::filename()
+     * @uses DatabaseBackup\Utility\BackupExport::export()
      * @uses _getBackupExportInstance()
      */
     protected function _execute(array $data)
