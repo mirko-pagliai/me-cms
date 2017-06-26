@@ -29,7 +29,7 @@
             $this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss'),
         ];
 
-        if (config('default.contact_us')) {
+        if (getConfig('default.contact_us')) {
             $links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contactUs']);
         }
 

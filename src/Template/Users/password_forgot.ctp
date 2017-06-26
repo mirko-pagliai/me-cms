@@ -38,7 +38,7 @@ $this->assign('title', $title = __d('me_cms', 'Request new password'));
             'help' => __d('me_cms', 'Repeat your email'),
         ]);
 
-        if (config('security.recaptcha')) {
+        if (getConfig('security.recaptcha')) {
             echo $this->Recaptcha->recaptcha();
         }
     ?>

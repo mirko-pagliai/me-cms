@@ -23,6 +23,7 @@
 /**
  * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
  */
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
@@ -37,7 +38,7 @@ require_once __DIR__ . DS . 'bootstrap_base.php';
 /**
  * Loads DebugKit, if debugging is enabled
  */
-if (config('debug') && !Plugin::loaded('DebugKit')) {
+if (getConfig('debug') && !Plugin::loaded('DebugKit')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
@@ -46,9 +47,13 @@ if (config('debug') && !Plugin::loaded('DebugKit')) {
  */
 Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
 Plugin::load('Tokens', ['bootstrap' => true]);
-Plugin::load('MysqlBackup', ['bootstrap' => true]);
+Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 Plugin::load('Gourmet/CommonMark');
+
+if (!Configure::read(DATABASE_BACKUP . '.mailSender')) {
+    Configure::write(DATABASE_BACKUP . '.mailSender', Configure::read(ME_CMS . '.email.webmaster'));
+}
 
 //CakePHP will automatically set the locale based on the current user
 DispatcherFactory::add('LocaleSelector');

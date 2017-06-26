@@ -59,8 +59,8 @@ class View extends AppView
         parent::__construct($request, $response, $eventManager, $viewOptions);
 
         //Sets the theme from configuration
-        if (config('default.theme')) {
-            $this->theme(config('default.theme'));
+        if (getConfig('default.theme')) {
+            $this->theme(getConfig('default.theme'));
         }
     }
 
@@ -76,7 +76,7 @@ class View extends AppView
         }
 
         //Gets the main title setted by the configuration
-        $title = config('main.title');
+        $title = getConfig('main.title');
 
         //For homepage, it returns only the main title
         if ($this->request->isUrl(['_name' => 'homepage'])) {

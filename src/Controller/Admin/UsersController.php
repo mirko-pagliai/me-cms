@@ -127,7 +127,7 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
 
-        if (config('users.login_log')) {
+        if (getConfig('users.login_log')) {
             $loginLog = $this->LoginRecorder->config('user', $id)->read();
 
             $this->set(compact('loginLog'));
@@ -270,7 +270,7 @@ class UsersController extends AppController
     public function lastLogin()
     {
         //Checks if login logs are enabled
-        if (!config('users.login_log')) {
+        if (!getConfig('users.login_log')) {
             $this->Flash->error(__d('me_cms', 'Disabled'));
 
             return $this->redirect(['_name' => 'dashboard']);

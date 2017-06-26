@@ -24,8 +24,8 @@ namespace MeCms\Test\TestCase\Form;
 
 use Cake\Network\Exception\InternalErrorException;
 use Cake\TestSuite\TestCase;
+use DatabaseBackup\Utility\BackupExport;
 use MeCms\Form\BackupForm;
-use MysqlBackup\Utility\BackupExport;
 use Reflection\ReflectionTrait;
 
 /**
@@ -36,7 +36,7 @@ class BackupFormTest extends TestCase
     use ReflectionTrait;
 
     /**
-     * @var \MysqlBackup\Utility\BackupExport
+     * @var \DatabaseBackup\Utility\BackupExport
      */
     public $BackupExport;
 
@@ -135,7 +135,7 @@ class BackupFormTest extends TestCase
         $this->assertEmpty($this->getProperty($this->BackupForm, '_BackupExport'));
 
         $instance = $this->invokeMethod($this->BackupForm, '_getBackupExportInstance');
-        $this->assertInstanceOf('MysqlBackup\Utility\BackupExport', $instance);
+        $this->assertInstanceOf('DatabaseBackup\Utility\BackupExport', $instance);
 
         $this->assertEquals($instance, $this->getProperty($this->BackupForm, '_BackupExport'));
     }

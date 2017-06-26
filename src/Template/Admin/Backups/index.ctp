@@ -66,6 +66,14 @@ $this->append('actions', $this->Form->postButton(
                         ]
                     );
                     $actions[] = $this->Form->postLink(
+                        __d('me_cms', 'Send'),
+                        ['action' => 'send', $backup->slug],
+                        [
+                            'icon' => ' envelope-o',
+                            'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
+                        ]
+                    );
+                    $actions[] = $this->Form->postLink(
                         __d('me_cms', 'Delete'),
                         ['action' => 'delete', $backup->slug],
                         [
@@ -82,19 +90,13 @@ $this->append('actions', $this->Form->postButton(
                 <?= $backup->extension ?>
             </td>
             <td class="min-width text-center">
-                <?php
-                if (isset($backup->compression) && !$backup->compression) {
-                    $backup->compression = __d('mysql_backup', 'none');
-                }
-
-                echo $backup->compression;
-                ?>
+                <?= $backup->compression ?>
             </td>
             <td class="min-width text-center">
                 <?= $this->Number->toReadableSize($backup->size) ?>
             </td>
             <td class="min-width text-center">
-                <?= $backup->datetime->i18nFormat(config('main.datetime.long')) ?>
+                <?= $backup->datetime->i18nFormat(getConfig('main.datetime.long')) ?>
             </td>
         </tr>
     <?php endforeach; ?>

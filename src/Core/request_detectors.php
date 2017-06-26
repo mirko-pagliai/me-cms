@@ -60,7 +60,7 @@ Request::addDetector('admin', function ($request) {
  * </code>
  */
 Request::addDetector('banned', function ($request) {
-    $banned = config('Banned');
+    $banned = getConfig('Banned');
 
     //The IP address is allowed if:
     //  - the list of banned IP is empty;
@@ -94,7 +94,7 @@ Request::addDetector('banned', function ($request) {
  * </code>
  */
 Request::addDetector('offline', function ($request) {
-    if (!config('default.offline')) {
+    if (!getConfig('default.offline')) {
         return false;
     }
 

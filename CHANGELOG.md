@@ -1,5 +1,11 @@
 # 2.x branch
-## 2.18 branch
+## 2.19 branch
+### 2.19.0
+* cakephp-mysql-backup has been replaced with cakephp-database-backup, 2.0.0
+    version. Now you can send backups via mail;
+* `config()` global function becomes `getConfig()` The function accepts a second
+    parameter as the default value in case the configuration is empty.
+
 ### 2.18.2
 * the default directories are created automatically, if they do not exist;
 * fixed ajax/json layouts;

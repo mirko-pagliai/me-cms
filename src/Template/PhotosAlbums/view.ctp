@@ -23,7 +23,7 @@
 $this->extend('/Common/view');
 $this->assign('title', $title = $album->title);
 
-if (config('default.fancybox')) {
+if (getConfig('default.fancybox')) {
     $this->Library->fancybox();
 }
 
@@ -71,7 +71,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
                 $options = ['class' => 'thumbnail', 'title' => $photo->description];
 
                 //If Fancybox is enabled, adds some options
-                if (config('default.fancybox')) {
+                if (getConfig('default.fancybox')) {
                     $options = am($options, [
                         'class' => 'fancybox thumbnail',
                         'data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280]),

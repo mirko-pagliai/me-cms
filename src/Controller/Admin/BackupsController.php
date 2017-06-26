@@ -24,16 +24,21 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use DatabaseBackup\Utility\BackupImport;
+use DatabaseBackup\Utility\BackupManager;
 use MeCms\Controller\AppController;
 use MeCms\Form\BackupForm;
-use MysqlBackup\Utility\BackupImport;
-use MysqlBackup\Utility\BackupManager;
 
 /**
  * Backups controller
  */
 class BackupsController extends AppController
 {
+    /**
+     * @var \DatabaseBackup\Utility\BackupManager
+     */
+    public $BackupManager;
+
     /**
      * Check if the provided user is authorized for the request
      * @param array $user The user to check the authorization of. If empty
@@ -48,17 +53,42 @@ class BackupsController extends AppController
     }
 
     /**
+     * Initialization hook method
+     * @return void
+     * @uses MeCms\Controller\AppController::initialize()
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->BackupManager = new BackupManager;
+    }
+
+    /**
+     * Internal method to get a filename. It decodes the filename and adds the
+     *  backup target directory
+     * @param string $filename Filename
+     * @return string
+     * @since 2.18.3
+     */
+    protected function getFilename($filename)
+    {
+        return Configure::read(DATABASE_BACKUP . '.target') . DS . urldecode($filename);
+    }
+
+    /**
      * Lists backup files
      * @return void
-     * @uses MysqlBackup\Utility\BackupManager::index()
+     * @uses DatabaseBackup\Utility\BackupManager::index()
      */
     public function index()
     {
-        $backups = collection(BackupManager::index())->map(function ($backup) {
-            $backup->slug = urlencode($backup->filename);
+        $backups = collection($this->BackupManager->index())
+            ->map(function ($backup) {
+                $backup->slug = urlencode($backup->filename);
 
-            return $backup;
-        });
+                return $backup;
+            });
 
         $this->set(compact('backups'));
     }
@@ -91,13 +121,14 @@ class BackupsController extends AppController
      * Deletes a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses MysqlBackup\Utility\BackupManager::delete()
+     * @uses DatabaseBackup\Utility\BackupManager::delete()
+     * @uses getFilename()
      */
     public function delete($filename)
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        BackupManager::delete(urldecode($filename));
+        $this->BackupManager->delete($this->getFilename($filename));
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
@@ -107,13 +138,13 @@ class BackupsController extends AppController
     /**
      * Deletes all backup files
      * @return \Cake\Network\Response|null
-     * @uses MysqlBackup\Utility\BackupManager::deleteAll()
+     * @uses DatabaseBackup\Utility\BackupManager::deleteAll()
      */
     public function deleteAll()
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        BackupManager::deleteAll();
+        $this->BackupManager->deleteAll();
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 
@@ -124,29 +155,44 @@ class BackupsController extends AppController
      * Downloads a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response
+     * @uses getFilename()
      */
     public function download($filename)
     {
-        $file = Configure::read(MYSQL_BACKUP . '.target') . DS . urldecode($filename);
-
-        return $this->response->withFile($file, ['download' => true]);
+        return $this->response->withFile($this->getFilename($filename), ['download' => true]);
     }
 
     /**
      * Restores a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses MysqlBackup\Utility\BackupImport::filename()
-     * @uses MysqlBackup\Utility\BackupImport::import()
+     * @uses DatabaseBackup\Utility\BackupImport::filename()
+     * @uses DatabaseBackup\Utility\BackupImport::import()
+     * @uses getFilename()
      */
     public function restore($filename)
     {
-        $filename = Configure::read(MYSQL_BACKUP . '.target') . DS . urldecode($filename);
-
-        (new BackupImport)->filename($filename)->import();
+        (new BackupImport)->filename($this->getFilename($filename))->import();
 
         //Clears the cache
         Cache::clearAll();
+
+        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Sends a backup file via mail
+     * @param string $filename Backup filename
+     * @return \Cake\Network\Response|null
+     * @since 2.18.3
+     * @uses DatabaseBackup\Utility\BackupManager::send()
+     * @uses getFilename()
+     */
+    public function send($filename)
+    {
+        $this->BackupManager->send($this->getFilename($filename), getConfig('email.webmaster'));
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 

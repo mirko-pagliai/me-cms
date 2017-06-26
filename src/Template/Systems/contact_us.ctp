@@ -44,7 +44,7 @@ $this->assign('title', __d('me_cms', 'Contact us'));
             'type' => 'textarea',
         ]);
 
-        if (config('security.recaptcha')) {
+        if (getConfig('security.recaptcha')) {
             echo $this->Recaptcha->recaptcha();
         }
     ?>

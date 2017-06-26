@@ -28,7 +28,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
 <div class='float-form'>
     <?php
         echo $this->Form->control('group_id', [
-            'default' => config('users.default_group'),
+            'default' => getConfig('users.default_group'),
             'label' => __d('me_cms', 'User group'),
         ]);
         echo $this->Form->control('active', [

@@ -42,7 +42,7 @@ $this->extend('/Admin/Common/Banners/index');
                     ) ?>
                 </div>
                 <div class="photo-created">
-                    (<?= $banner->created->i18nFormat(config('main.datetime.long')) ?>)
+                    (<?= $banner->created->i18nFormat(getConfig('main.datetime.long')) ?>)
                 </div>
                 <div class="photo-image">
                     <?php

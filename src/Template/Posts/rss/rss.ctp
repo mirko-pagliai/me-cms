@@ -46,8 +46,8 @@ foreach ($posts as $post) {
     if ($strpos) {
         $text = $this->Text->truncate($text, $strpos, ['exact' => true, 'html' => false]);
     //Truncates the text if requested by the configuration
-    } elseif (config('default.truncate_to')) {
-        $text = $this->Text->truncate($text, config('default.truncate_to'), ['exact' => false, 'html' => true]);
+    } elseif (getConfig('default.truncate_to')) {
+        $text = $this->Text->truncate($text, getConfig('default.truncate_to'), ['exact' => false, 'html' => true]);
     }
 
     //Strips tags

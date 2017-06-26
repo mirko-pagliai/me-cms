@@ -50,7 +50,7 @@ $this->userbar($this->Form->postLink(
 /**
  * Breadcrumb
  */
-if (config('page.category')) {
+if (getConfig('page.category')) {
     $this->Breadcrumbs->add($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]);
 }
 $this->Breadcrumbs->add($page->title, ['_name' => 'page', $page->slug]);

@@ -62,7 +62,7 @@ class InstallShell extends BaseInstallShell
         //Merges paths to be created and made writable
         $this->paths = am($this->paths, [
             Configure::read(ASSETS . '.target'),
-            Configure::read(MYSQL_BACKUP . '.target'),
+            Configure::read(DATABASE_BACKUP . '.target'),
             Configure::read(THUMBER . '.target'),
             BANNERS,
             LOGIN_RECORDS,

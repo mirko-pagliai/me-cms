@@ -73,14 +73,14 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 if (!isset($request)) {
     $request = new Request;
 }
-if ($request->is('localhost') && config('main.debug_on_localhost') && !config('debug')) {
+if ($request->is('localhost') && getConfig('main.debug_on_localhost') && !getConfig('debug')) {
     Configure::write('debug', true);
 }
 
 /**
  * Loads theme plugin
  */
-$theme = config('default.theme');
+$theme = getConfig('default.theme');
 
 if ($theme && !Plugin::loaded($theme)) {
     Plugin::load($theme);
