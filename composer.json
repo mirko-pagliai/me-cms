@@ -26,6 +26,8 @@
         "sunra/php-simple-html-dom-parser": "^1.5"
     },
     "suggest": {
+        "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",
+        "mirko-pagliai/me-cms-youtube": "Youtube plugin for MeCms",
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
     },
     "require-dev": {
