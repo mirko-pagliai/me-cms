@@ -178,10 +178,7 @@ class InstallShellTest extends TestCase
 
         $this->InstallShell->method('dispatchShell')
             ->will($this->returnCallback(function () {
-                return [
-                    'method' => 'dispatchShell',
-                    'args' => func_get_args(),
-                ];
+                return ['method' => 'dispatchShell', 'args' => func_get_args()];
             }));
 
         $this->assertEquals([
@@ -219,13 +216,20 @@ class InstallShellTest extends TestCase
      */
     public function testFixKcfinder()
     {
+        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+
+        //@codingStandardsIgnoreStart
+        @unlink($file);
+        @unlink(dirname($file) . DS . 'index.php');
+        @rmdir(dirname($file));
+        //@codingStandardsIgnoreEnd
+
         //For now KCFinder is not available
         $this->InstallShell->fixKcfinder();
 
-        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
-
         //@codingStandardsIgnoreLine
         @mkdir(dirname($file), 0777, true);
+        file_put_contents(dirname($file) . DS . 'index.php', null);
 
         $this->InstallShell->fixKcfinder();
         $this->assertFileExists($file);
@@ -243,11 +247,6 @@ class InstallShellTest extends TestCase
         $this->assertEquals([
             '<error>KCFinder is not available</error>',
         ], $this->err->messages());
-
-        //@codingStandardsIgnoreStart
-        @unlink($file);
-        @rmdir(dirname($file));
-        //@codingStandardsIgnoreEnd
     }
 
     /**

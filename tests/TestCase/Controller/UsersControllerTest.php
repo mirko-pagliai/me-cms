@@ -106,14 +106,15 @@ class UsersControllerTest extends IntegrationTestCase
 
         //Stubs the `getUserMailer()` method
         if (in_array('getUserMailer', (array)$methodsToSet)) {
-            $this->Controller->method('getUserMailer')->will($this->returnCallback(function () {
-                $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
+            $this->Controller->method('getUserMailer')
+                ->will($this->returnCallback(function () {
+                    $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
 
-                $userMailerMock->method('set')->will($this->returnSelf());
-                $userMailerMock->method('send')->will($this->returnValue(true));
+                    $userMailerMock->method('set')->will($this->returnSelf());
+                    $userMailerMock->method('send')->will($this->returnValue(true));
 
-                return $userMailerMock;
-            }));
+                    return $userMailerMock;
+                }));
         }
 
         //Stubs the `redirect()` method
