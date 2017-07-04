@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.19 branch
+### 2.19.1
+* updated for cakephp-database-backup 2.1.0.
+
 ### 2.19.0
 * cakephp-mysql-backup has been replaced with cakephp-database-backup, 2.0.0
     version. Now you can send backups via mail;
