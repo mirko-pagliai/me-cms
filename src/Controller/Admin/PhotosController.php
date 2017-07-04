@@ -114,6 +114,7 @@ class PhotosController extends AppController
     /**
      * Uploads photos
      * @return void
+     * @throws InternalErrorException
      * @uses MeCms\Controller\AppController::setUploadError()
      * @uses MeTools\Controller\Component\UploaderComponent
      */
@@ -143,10 +144,18 @@ class PhotosController extends AppController
                 return;
             }
 
-            $saved = $this->Photos->save($this->Photos->newEntity([
+            $entity = $this->Photos->newEntity([
                 'album_id' => $album,
                 'filename' => basename($uploaded),
-            ]));
+            ]);
+
+            if ($entity->getErrors()) {
+                $this->setUploadError(collection(collection($entity->getErrors())->first())->first());
+
+                return;
+            }
+
+            $saved = $this->Photos->save($entity);
 
             if (!$saved) {
                 $this->setUploadError(__d('me_cms', 'The photo could not be saved'));

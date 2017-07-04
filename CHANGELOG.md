@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.19 branch
 ### 2.19.1
+* updated for dropzone 5.1;
 * updated for cakephp-database-backup 2.1.0.
 
 ### 2.19.0

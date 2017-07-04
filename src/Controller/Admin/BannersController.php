@@ -115,6 +115,7 @@ class BannersController extends AppController
     /**
      * Uploads banners
      * @return void
+     * @throws InternalErrorException
      * @uses MeCms\Controller\AppController::setUploadError()
      * @uses MeTools\Controller\Component\UploaderComponent
      */
@@ -144,10 +145,18 @@ class BannersController extends AppController
                 return;
             }
 
-            $saved = $this->Banners->save($this->Banners->newEntity([
+            $entity = $this->Banners->newEntity([
                 'position_id' => $position,
                 'filename' => basename($uploaded),
-            ]));
+            ]);
+
+            if ($entity->getErrors()) {
+                $this->setUploadError(collection(collection($entity->getErrors())->first())->first());
+
+                return;
+            }
+
+            $saved = $this->Banners->save($entity);
 
             if (!$saved) {
                 $this->setUploadError(__d('me_cms', 'The banner could not be saved'));
