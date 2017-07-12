@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.19 branch
 ### 2.19.1
+* added configuration for reCAPTCHA (`config/recaptcha.php`);
 * fixed bug for `upload()` methods. Now all errors are handled properly;
 * uses `crabstudio/Recaptcha` and `mirko-pagliai/cakephp-recaptcha-mailhide`
     plugins for reCAPTCHA;

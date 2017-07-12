@@ -123,8 +123,8 @@ class AppController extends BaseController
         $this->loadComponent('RequestHandler');
         $this->loadComponent(METOOLS . '.Uploader');
         $this->loadComponent('Recaptcha.Recaptcha', [
-            'sitekey' => getConfig('Recaptcha.Form.public'),
-            'secret' => getConfig('Recaptcha.Form.private'),
+            'sitekey' => getConfig('Recaptcha.public'),
+            'secret' => getConfig('Recaptcha.private'),
             'lang' => substr(I18n::locale(), 0, 2),
         ]);
 
