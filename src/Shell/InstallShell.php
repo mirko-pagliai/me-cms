@@ -22,6 +22,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\Console\ConsoleIo;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
@@ -34,6 +35,12 @@ use MeTools\Shell\InstallShell as BaseInstallShell;
 class InstallShell extends BaseInstallShell
 {
     /**
+     * Configuration files to be copied
+     * @var array
+     */
+    protected $config = [];
+
+    /**
      * Construct
      * @param \Cake\Console\ConsoleIo|null $io An io instance
      * @uses $config
@@ -41,16 +48,17 @@ class InstallShell extends BaseInstallShell
      * @uses $paths
      * @uses MeTools\Shell\InstallShell::__construct()
      */
-    public function __construct(\Cake\Console\ConsoleIo $io = null)
+    public function __construct(ConsoleIo $io = null)
     {
         parent::__construct($io);
 
         //Configuration files to be copied
-        $this->config = am($this->config, [
+        $this->config = [
+            ME_CMS . '.recaptcha',
             ME_CMS . '.banned_ip',
             ME_CMS . '.me_cms',
             ME_CMS . '.widgets',
-        ]);
+        ];
 
         //Merges assets for which create symbolic links
         $this->links = am($this->links, [
@@ -92,6 +100,7 @@ class InstallShell extends BaseInstallShell
      * @return void
      * @uses MeTools\Shell\InstallShell::all()
      * @uses _getOtherPlugins()
+     * @uses copyConfig()
      * @uses createAdmin()
      * @uses createGroups()
      * @uses fixKcfinder()
@@ -102,10 +111,16 @@ class InstallShell extends BaseInstallShell
         parent::all();
 
         if ($this->param('force')) {
+            $this->copyConfig();
             $this->fixKcfinder();
             $this->runFromOtherPlugins();
 
             return;
+        }
+
+        $ask = $this->in(__d('me_cms', 'Copy configuration files?'), ['Y', 'n'], 'Y');
+        if (in_array($ask, ['Y', 'y'])) {
+            $this->copyConfig();
         }
 
         $ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
@@ -128,6 +143,25 @@ class InstallShell extends BaseInstallShell
         $ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
         if (in_array($ask, ['Y', 'y'])) {
             $this->createAdmin();
+        }
+    }
+
+    /**
+     * Copies the configuration files
+     * @return void
+     * @uses $config
+     * @uses MeTools\Console\Shell::copyFile()
+     * @uses MeTools\Core\Plugin::path()
+     */
+    public function copyConfig()
+    {
+        foreach ($this->config as $file) {
+            list($plugin, $file) = pluginSplit($file);
+
+            $this->copyFile(
+                Plugin::path($plugin, 'config' . DS . $file . '.php'),
+                CONFIG . $file . '.php'
+            );
         }
     }
 
@@ -205,6 +239,7 @@ class InstallShell extends BaseInstallShell
     {
         $parser = parent::getOptionParser();
 
+        $parser->addSubcommand('copyConfig', ['help' => __d('me_cms', 'Copies the configuration files')]);
         $parser->addSubcommand('createAdmin', ['help' => __d('me_cms', 'Creates an admin user')]);
         $parser->addSubcommand('createGroups', ['help' => __d('me_cms', 'Creates the user groups')]);
         $parser->addSubcommand('fixKcfinder', ['help' => __d('me_cms', 'Fixes {0}', 'KCFinder')]);

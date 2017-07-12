@@ -139,12 +139,12 @@ class InstallShellTest extends TestCase
         $expectedMethodsCalledInOrder = [
             'called `createDirectories`',
             'called `setPermissions`',
-            'called `copyConfig`',
             'called `createRobots`',
             'called `fixComposerJson`',
             'called `createPluginsLinks`',
             'called `createVendorsLinks`',
             'called `copyFonts`',
+            'called `copyConfig`',
             'called `fixKcfinder`',
             'called `runFromOtherPlugins`',
         ];
@@ -162,6 +162,24 @@ class InstallShellTest extends TestCase
             'called `createGroups`',
             'called `createAdmin`',
         ]), $this->out->messages());
+        $this->assertEmpty($this->err->messages());
+    }
+
+    /**
+     * Tests for `copyConfig()` method
+     * @test
+     */
+    public function testCopyConfig()
+    {
+        $this->InstallShell->copyConfig();
+
+        $this->assertEquals([
+            'File or directory tests/test_app/TestApp/config/recaptcha.php already exists',
+            'File or directory tests/test_app/TestApp/config/banned_ip.php already exists',
+            'File or directory tests/test_app/TestApp/config/me_cms.php already exists',
+            'File or directory tests/test_app/TestApp/config/widgets.php already exists',
+        ], $this->out->messages());
+
         $this->assertEmpty($this->err->messages());
     }
 
