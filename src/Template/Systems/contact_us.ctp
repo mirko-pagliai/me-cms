@@ -45,7 +45,7 @@ $this->assign('title', __d('me_cms', 'Contact us'));
         ]);
 
         if (getConfig('security.recaptcha')) {
-            echo $this->Recaptcha->recaptcha();
+            echo $this->Recaptcha->display();
         }
     ?>
 </fieldset>

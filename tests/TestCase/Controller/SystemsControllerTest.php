@@ -149,7 +149,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         $contactFromView = $this->viewVariable('contact');
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);

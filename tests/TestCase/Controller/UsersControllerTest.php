@@ -295,7 +295,7 @@ class UsersControllerTest extends IntegrationTestCase
             METOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
             METOOLS . '\Controller\Component\UploaderComponent',
-            METOOLS . '\Controller\Component\RecaptchaComponent',
+            'Recaptcha\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
             ME_CMS . '\Controller\Component\LoginRecorderComponent',
         ], $components);
@@ -407,7 +407,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.signup', false);
@@ -564,7 +564,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.reset_password', false);
@@ -704,7 +704,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.signup', false);

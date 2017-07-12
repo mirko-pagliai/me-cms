@@ -173,8 +173,6 @@ class UsersController extends AppController
     /**
      * Activation resend (resends the activation mail)
      * @return \Cake\Network\Response|null|void
-     * @uses MeTools\Controller\Component\Recaptcha::check()
-     * @uses MeTools\Controller\Component\Recaptcha::getError()
      * @uses _sendActivationMail()
      */
     public function activationResend()
@@ -191,8 +189,8 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
-                $this->Flash->error($this->Recaptcha->getError());
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->verify()) {
+                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             } elseif (!$entity->getErrors()) {
                 $user = $this->Users->find('pending')
                     ->where(['email' => $this->request->getData('email')])
@@ -299,8 +297,6 @@ class UsersController extends AppController
      * Password forgot (requests a new password)
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Mailer\UserMailer::passwordForgot()
-     * @uses MeTools\Controller\Component\Recaptcha::check()
-     * @uses MeTools\Controller\Component\Recaptcha::getError()
      */
     public function passwordForgot()
     {
@@ -315,8 +311,8 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
-                $this->Flash->error($this->Recaptcha->getError());
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->verify()) {
+                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             } else {
                 $user = $this->Users->find('active')
                     ->where(['email' => $this->request->getData('email')])
@@ -393,8 +389,6 @@ class UsersController extends AppController
     /**
      * Sign up
      * @return \Cake\Network\Response|null|void
-     * @uses MeTools\Controller\Component\Recaptcha::check()
-     * @uses MeTools\Controller\Component\Recaptcha::getError()
      * @uses _sendActivationMail()
      */
     public function signup()
@@ -415,8 +409,8 @@ class UsersController extends AppController
             $user->active = (bool)!getConfig('users.activation');
 
             //Checks for reCAPTCHA, if requested
-            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
-                $this->Flash->error($this->Recaptcha->getError());
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->verify()) {
+                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             } elseif ($this->Users->save($user)) {
                 switch (getConfig('users.activation')) {
                     //The account will be enabled by an administrator

@@ -100,7 +100,7 @@ class AppView extends View
         //Loads helpers
         $this->loadHelper(METOOLS . '.BBCode');
         $this->loadHelper(METOOLS . '.Breadcrumbs');
-        $this->loadHelper(METOOLS . '.Recaptcha');
+        $this->loadHelper(RECAPTCHA_MAILHIDE . '.Mailhide');
         $this->loadHelper(ME_CMS . '.Widget');
     }
 

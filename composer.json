@@ -23,7 +23,9 @@
         "mirko-pagliai/me-tools": ">=2.12.5 <2.13",
         "mirko-pagliai/serialized-array": "^1.0",
         "wyrihaximus/minify-html": "^1.1",
-        "sunra/php-simple-html-dom-parser": "^1.5"
+        "sunra/php-simple-html-dom-parser": "^1.5",
+        "crabstudio/recaptcha": "^2.0",
+        "mirko-pagliai/cakephp-recaptcha-mailhide":  "^1.0"
     },
     "suggest": {
         "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",

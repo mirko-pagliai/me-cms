@@ -128,6 +128,16 @@ Plugin::load('DatabaseBackup', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-database-backup' . DS,
 ]);
 
+Plugin::load('Recaptcha', [
+    'path' => VENDOR . 'crabstudio' . DS . 'recaptcha' . DS,
+]);
+
+Plugin::load('RecaptchaMailhide', [
+    'bootstrap' => true,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-recaptcha-mailhide' . DS,
+    'routes' => true,
+]);
+
 Configure::write('Tokens.usersClassOptions', [
     'foreignKey' => 'user_id',
     'className' => 'Users',

@@ -113,7 +113,7 @@ class AppViewTest extends TestCase
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
             METOOLS . '\View\Helper\BBCodeHelper',
             METOOLS . '\View\Helper\BreadcrumbsHelper',
-            METOOLS . '\View\Helper\RecaptchaHelper',
+            RECAPTCHA_MAILHIDE . '\View\Helper\MailhideHelper',
             ME_CMS . '\View\Helper\WidgetHelper',
         ], $helpers);
     }

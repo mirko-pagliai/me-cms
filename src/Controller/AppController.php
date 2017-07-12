@@ -24,6 +24,7 @@ namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 
 /**
  * Application controller class
@@ -121,7 +122,11 @@ class AppController extends BaseController
         $this->loadComponent(METOOLS . '.Flash');
         $this->loadComponent('RequestHandler');
         $this->loadComponent(METOOLS . '.Uploader');
-        $this->loadComponent(METOOLS . '.Recaptcha');
+        $this->loadComponent('Recaptcha.Recaptcha', [
+            'sitekey' => getConfig('Recaptcha.Form.public'),
+            'secret' => getConfig('Recaptcha.Form.private'),
+            'lang' => substr(I18n::locale(), 0, 2),
+        ]);
 
         parent::initialize();
     }

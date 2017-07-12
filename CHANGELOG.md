@@ -2,6 +2,8 @@
 ## 2.19 branch
 ### 2.19.1
 * fixed bug for `upload()` methods. Now all errors are handled properly;
+* uses `crabstudio/Recaptcha` and `mirko-pagliai/cakephp-recaptcha-mailhide`
+    plugins for reCAPTCHA;
 * updated for dropzone 5.1;
 * updated for cakephp-database-backup 2.1.0.
 

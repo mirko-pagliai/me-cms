@@ -123,6 +123,15 @@ if (is_readable(CONFIG . 'widgets.php')) {
     Configure::load('widgets', 'default', false);
 }
 
+/**
+ * Loads the reCAPTCHA configuration
+ */
+Configure::load('recaptcha');
+
+if (!getConfig('RecaptchaMailhide.encryptKey')) {
+    Configure::write('RecaptchaMailhide.encryptKey', getConfig('Recaptcha.Form.private'));
+}
+
 //Adds log for users actions
 Log::setConfig('users', [
     'className' => 'MeCms\Log\Engine\SerializedLog',
