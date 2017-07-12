@@ -148,7 +148,8 @@ class PhotosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on albums index
-        $request = new Request(Router::url(['_name' => 'albums']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'albums']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);

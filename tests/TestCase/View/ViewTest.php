@@ -47,7 +47,7 @@ class ViewTest extends TestCase
         parent::setUp();
 
         $request = new Request;
-        $request = $request->withRequestTarget('/some-page');
+        $request = $request->env('REQUEST_URI', '/some-page');
 
         $this->View = new View($request);
     }
