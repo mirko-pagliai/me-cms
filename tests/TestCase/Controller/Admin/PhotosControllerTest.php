@@ -139,17 +139,10 @@ class PhotosControllerTest extends IntegrationTestCase
                 return rename($filename, $destination);
             }));
 
-        //Only for the `testUploadSaveFailure()` method, it mocks the `Photos`
+        //Only for the `testUploadErrorOnSave()` method, it mocks the `Photos`
         //  table, so the `save()` method returns `false`
-        if ($this->getName() === 'testUploadSaveFailure') {
-            $controller->Photos = $this->getMockBuilder(get_class($controller->Photos))
-                ->setConstructorArgs([[
-                    'table' => $controller->Photos->getTable(),
-                    'connection' => $controller->Photos->getConnection(),
-                ]])
-                ->setMethods(['save'])
-                ->getMock();
-
+        if ($this->getName() === 'testUploadErrorOnSave') {
+            $controller->Photos = $this->getMockForModel(get_class($controller->Photos), ['save']);
             $controller->Photos->method('save')->will($this->returnValue(false));
         }
 
@@ -285,7 +278,7 @@ class PhotosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, simulating and error during the upload
+     * Tests for `upload()` method, error during the upload
      * @test
      */
     public function testUploadErrorDuringUpload()
@@ -295,6 +288,47 @@ class PhotosControllerTest extends IntegrationTestCase
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
+    }
+
+    /**
+     * Tests for `upload()` method, error, missing album ID on the query string
+     * @test
+     */
+    public function testUploadErrorMissingAlbumIdOnQueryString()
+    {
+        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
+        $this->assertResponseFailure();
+        $this->assertResponseContains('Missing album ID');
+    }
+
+    /**
+     * Tests for `upload()` method, error on save
+     * @test
+     */
+    public function testUploadErrorOnSave()
+    {
+        $file = $this->_createFileToUpload();
+
+        //The table `save()` method returns `false` for this test. See the
+        //  `controllerSpy()` method.
+        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
+        $this->assertResponseFailure();
+        $this->assertResponseEquals('{"error":"The photo could not be saved"}');
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
+    }
+
+    /**
+     * Tests for `upload()` method, error on entity
+     * @test
+     */
+    public function testUploadErrorOnEntity()
+    {
+        $file = array_merge($this->_createFileToUpload(), ['name' => 'a.jpg?name=value']);
+
+        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
+        $this->assertResponseFailure();
+        $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
     }
 
@@ -318,33 +352,6 @@ class PhotosControllerTest extends IntegrationTestCase
         $photo = $this->Photos->find()->last();
         $this->assertEquals(1, $photo['album_id']);
         $this->assertTextContains('file_to_upload', $photo['filename']);
-    }
-
-    /**
-     * Tests for `upload()` method, with a failure on save
-     * @test
-     */
-    public function testUploadSaveFailure()
-    {
-        $file = $this->_createFileToUpload();
-
-        //The table `save()` method returns `false` for this test. See the
-        //  `controllerSpy()` method.
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
-        $this->assertResponseFailure();
-        $this->assertResponseEquals('{"error":"The photo could not be saved"}');
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
-    }
-
-    /**
-     * Tests for `upload()` method, without the album ID on the query string
-     * @test
-     */
-    public function testUploadWithoutAlbumIdOnQueryString()
-    {
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
-        $this->assertResponseFailure();
-        $this->assertResponseContains('Missing album ID');
     }
 
     /**

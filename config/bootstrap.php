@@ -50,6 +50,8 @@ Plugin::load('Tokens', ['bootstrap' => true]);
 Plugin::load('DatabaseBackup', ['bootstrap' => true]);
 Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
 Plugin::load('Gourmet/CommonMark');
+Plugin::load('Recaptcha');
+Plugin::load('RecaptchaMailhide', ['bootstrap' => true, 'routes' => true]);
 
 if (!Configure::read(DATABASE_BACKUP . '.mailSender')) {
     Configure::write(DATABASE_BACKUP . '.mailSender', Configure::read(ME_CMS . '.email.webmaster'));

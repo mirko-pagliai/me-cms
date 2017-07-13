@@ -115,13 +115,7 @@ class PostsTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Posts = $this->getMockBuilder(get_class($this->Posts))
-            ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([[
-                'table' => $this->Posts->getTable(),
-                'connection' => $this->Posts->getConnection(),
-            ]])
-            ->getMock();
+        $this->Posts = $this->getMockForModel(get_class($this->Posts), ['setNextToBePublished']);
 
         $this->Posts->expects($this->once())
             ->method('setNextToBePublished');
@@ -135,13 +129,7 @@ class PostsTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Posts = $this->getMockBuilder(get_class($this->Posts))
-            ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([[
-                'table' => $this->Posts->getTable(),
-                'connection' => $this->Posts->getConnection(),
-            ]])
-            ->getMock();
+        $this->Posts = $this->getMockForModel(get_class($this->Posts), ['setNextToBePublished']);
 
         $this->Posts->expects($this->once())
             ->method('setNextToBePublished');
@@ -189,8 +177,7 @@ class PostsTableTest extends TestCase
             ]])
             ->getMock();
 
-        $this->Posts->expects($this->any())
-            ->method('getPreviewSize')
+        $this->Posts->method('getPreviewSize')
             ->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos

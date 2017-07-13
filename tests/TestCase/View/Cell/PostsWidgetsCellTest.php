@@ -148,7 +148,8 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $request = new Request(Router::url(['_name' => 'postsCategories']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
@@ -234,7 +235,8 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on posts index
-        $request = new Request(Router::url(['_name' => 'posts']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
@@ -315,7 +317,8 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on posts index
-        $request = new Request(Router::url(['_name' => 'posts']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);
@@ -370,7 +373,8 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on search
-        $request = new Request(Router::url(['_name' => 'postsSearch']));
+        $request = new Request;
+        $request->env('REQUEST_URI', Router::url(['_name' => 'postsSearch']));
         $this->Widget = new WidgetHelper(new View($request));
         $result = $this->Widget->widget($widget)->render();
         $this->assertEmpty($result);

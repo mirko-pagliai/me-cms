@@ -56,8 +56,6 @@ class SystemsController extends AppController
      * @return \Cake\Network\Response|null|void
      * @see MeCms\Form\ContactUsForm
      * @see MeCms\Mailer\ContactUsMailer
-     * @uses MeTools\Controller\Component\Recaptcha::check()
-     * @uses MeTools\Controller\Component\Recaptcha::getError()
      */
     public function contactUs()
     {
@@ -72,8 +70,8 @@ class SystemsController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (getConfig('security.recaptcha') && !$this->Recaptcha->check()) {
-                $this->Flash->error($this->Recaptcha->getError());
+            if (getConfig('security.recaptcha') && !$this->Recaptcha->verify()) {
+                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             } else {
                 //Sends the email
                 if ($contact->execute($this->request->getData())) {

@@ -139,17 +139,10 @@ class BannersControllerTest extends IntegrationTestCase
                 return rename($filename, $destination);
             }));
 
-        //Only for the `testUploadSaveFailure()` method, it mocks the `Banners`
+        //Only for the `testUploadErrorOnSave()` method, it mocks the `Banners`
         //  table, so the `save()` method returns `false`
-        if ($this->getName() === 'testUploadSaveFailure') {
-            $controller->Banners = $this->getMockBuilder(get_class($controller->Banners))
-                ->setConstructorArgs([[
-                    'table' => $controller->Banners->getTable(),
-                    'connection' => $controller->Banners->getConnection(),
-                ]])
-                ->setMethods(['save'])
-                ->getMock();
-
+        if ($this->getName() === 'testUploadErrorOnSave') {
+            $controller->Banners = $this->getMockForModel(get_class($controller->Banners), ['save']);
             $controller->Banners->method('save')->will($this->returnValue(false));
         }
 
@@ -285,7 +278,7 @@ class BannersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, simulating an error during the upload
+     * Tests for `upload()` method, error during the upload
      * @test
      */
     public function testUploadErrorDuringUpload()
@@ -295,6 +288,47 @@ class BannersControllerTest extends IntegrationTestCase
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/json/upload.ctp');
+    }
+
+    /**
+     * Tests for `upload()` method, error, missing position ID on the query string
+     * @test
+     */
+    public function testUploadErrorMissingPositionIdOnQueryString()
+    {
+        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
+        $this->assertResponseFailure();
+        $this->assertResponseContains('Missing position ID');
+    }
+
+    /**
+     * Tests for `upload()` method, error on entity
+     * @test
+     */
+    public function testUploadErrorOnEntity()
+    {
+        $file = array_merge($this->_createFileToUpload(), ['name' => 'a.jpg?name=value']);
+
+        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
+        $this->assertResponseFailure();
+        $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/json/upload.ctp');
+    }
+
+    /**
+     * Tests for `upload()` method, error on save
+     * @test
+     */
+    public function testUploadErrorOnSave()
+    {
+        $file = $this->_createFileToUpload();
+
+        //The table `save()` method returns `false` for this test. See the
+        //  `controllerSpy()` method.
+        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
+        $this->assertResponseFailure();
+        $this->assertResponseEquals('{"error":"The banner could not be saved"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/json/upload.ctp');
     }
 
@@ -318,33 +352,6 @@ class BannersControllerTest extends IntegrationTestCase
         $banner = $this->Banners->find()->last();
         $this->assertEquals(1, $banner['position_id']);
         $this->assertTextContains('file_to_upload', $banner['filename']);
-    }
-
-    /**
-     * Tests for `upload()` method, with a failure on save
-     * @test
-     */
-    public function testUploadSaveFailure()
-    {
-        $file = $this->_createFileToUpload();
-
-        //The table `save()` method returns `false` for this test. See the
-        //  `controllerSpy()` method.
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
-        $this->assertResponseFailure();
-        $this->assertResponseEquals('{"error":"The banner could not be saved"}');
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/json/upload.ctp');
-    }
-
-    /**
-     * Tests for `upload()` method, without the position ID on the query string
-     * @test
-     */
-    public function testUploadWithoutPositionIdOnQueryString()
-    {
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
-        $this->assertResponseFailure();
-        $this->assertResponseContains('Missing position ID');
     }
 
     /**

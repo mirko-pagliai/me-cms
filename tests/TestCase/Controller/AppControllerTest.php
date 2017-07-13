@@ -100,7 +100,7 @@ class AppControllerTest extends TestCase
             METOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
             METOOLS . '\Controller\Component\UploaderComponent',
-            METOOLS . '\Controller\Component\RecaptchaComponent',
+            'Recaptcha\Controller\Component\RecaptchaComponent',
         ], $components);
 
         $this->assertFalse($this->Controller->Cookie->config('encryption'));
@@ -178,7 +178,10 @@ class AppControllerTest extends TestCase
     public function testBeforeRender()
     {
         $this->Controller->beforeRender($this->Event);
-        $this->assertEquals([ME_CMS . '.Auth' => null], $this->Controller->viewBuilder()->getHelpers());
+        $this->assertEquals([
+            'Recaptcha.Recaptcha',
+            'MeCms.Auth',
+        ], array_keys($this->Controller->viewBuilder()->getHelpers()));
     }
 
     /**

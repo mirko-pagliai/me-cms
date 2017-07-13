@@ -139,12 +139,12 @@ class InstallShellTest extends TestCase
         $expectedMethodsCalledInOrder = [
             'called `createDirectories`',
             'called `setPermissions`',
-            'called `copyConfig`',
             'called `createRobots`',
             'called `fixComposerJson`',
             'called `createPluginsLinks`',
             'called `createVendorsLinks`',
             'called `copyFonts`',
+            'called `copyConfig`',
             'called `fixKcfinder`',
             'called `runFromOtherPlugins`',
         ];
@@ -166,6 +166,24 @@ class InstallShellTest extends TestCase
     }
 
     /**
+     * Tests for `copyConfig()` method
+     * @test
+     */
+    public function testCopyConfig()
+    {
+        $this->InstallShell->copyConfig();
+
+        $this->assertEquals([
+            'File or directory tests/test_app/TestApp/config/recaptcha.php already exists',
+            'File or directory tests/test_app/TestApp/config/banned_ip.php already exists',
+            'File or directory tests/test_app/TestApp/config/me_cms.php already exists',
+            'File or directory tests/test_app/TestApp/config/widgets.php already exists',
+        ], $this->out->messages());
+
+        $this->assertEmpty($this->err->messages());
+    }
+
+    /**
      * Test for `createAdmin()` method
      * @test
      */
@@ -178,10 +196,7 @@ class InstallShellTest extends TestCase
 
         $this->InstallShell->method('dispatchShell')
             ->will($this->returnCallback(function () {
-                return [
-                    'method' => 'dispatchShell',
-                    'args' => func_get_args(),
-                ];
+                return ['method' => 'dispatchShell', 'args' => func_get_args()];
             }));
 
         $this->assertEquals([
@@ -219,13 +234,20 @@ class InstallShellTest extends TestCase
      */
     public function testFixKcfinder()
     {
+        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+
+        //@codingStandardsIgnoreStart
+        @unlink($file);
+        @unlink(dirname($file) . DS . 'index.php');
+        @rmdir(dirname($file));
+        //@codingStandardsIgnoreEnd
+
         //For now KCFinder is not available
         $this->InstallShell->fixKcfinder();
 
-        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
-
         //@codingStandardsIgnoreLine
         @mkdir(dirname($file), 0777, true);
+        file_put_contents(dirname($file) . DS . 'index.php', null);
 
         $this->InstallShell->fixKcfinder();
         $this->assertFileExists($file);
@@ -243,11 +265,6 @@ class InstallShellTest extends TestCase
         $this->assertEquals([
             '<error>KCFinder is not available</error>',
         ], $this->err->messages());
-
-        //@codingStandardsIgnoreStart
-        @unlink($file);
-        @rmdir(dirname($file));
-        //@codingStandardsIgnoreEnd
     }
 
     /**

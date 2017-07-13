@@ -106,14 +106,15 @@ class UsersControllerTest extends IntegrationTestCase
 
         //Stubs the `getUserMailer()` method
         if (in_array('getUserMailer', (array)$methodsToSet)) {
-            $this->Controller->method('getUserMailer')->will($this->returnCallback(function () {
-                $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
+            $this->Controller->method('getUserMailer')
+                ->will($this->returnCallback(function () {
+                    $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
 
-                $userMailerMock->method('set')->will($this->returnSelf());
-                $userMailerMock->method('send')->will($this->returnValue(true));
+                    $userMailerMock->method('set')->will($this->returnSelf());
+                    $userMailerMock->method('send')->will($this->returnValue(true));
 
-                return $userMailerMock;
-            }));
+                    return $userMailerMock;
+                }));
         }
 
         //Stubs the `redirect()` method
@@ -294,7 +295,7 @@ class UsersControllerTest extends IntegrationTestCase
             METOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
             METOOLS . '\Controller\Component\UploaderComponent',
-            METOOLS . '\Controller\Component\RecaptchaComponent',
+            'Recaptcha\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
             ME_CMS . '\Controller\Component\LoginRecorderComponent',
         ], $components);
@@ -406,7 +407,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.signup', false);
@@ -563,7 +564,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.reset_password', false);
@@ -703,7 +704,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('You have not filled out the reCAPTCHA control');
+        $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.signup', false);

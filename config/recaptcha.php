@@ -8,7 +8,7 @@
  */
 return ['Recaptcha' => [
     //Form public key
-    'public' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    'public' => 'your-public-key-here',
     //Form private key
-    'private' => 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'private' => 'your-private-key-here',
 ]];

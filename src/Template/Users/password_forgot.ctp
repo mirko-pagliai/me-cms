@@ -39,7 +39,7 @@ $this->assign('title', $title = __d('me_cms', 'Request new password'));
         ]);
 
         if (getConfig('security.recaptcha')) {
-            echo $this->Recaptcha->recaptcha();
+            echo $this->Recaptcha->display();
         }
     ?>
 </fieldset>

@@ -110,13 +110,7 @@ class PagesTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Pages = $this->getMockBuilder(get_class($this->Pages))
-            ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([[
-                'table' => $this->Pages->getTable(),
-                'connection' => $this->Pages->getConnection(),
-            ]])
-            ->getMock();
+        $this->Pages = $this->getMockForModel(get_class($this->Pages), ['setNextToBePublished']);
 
         $this->Pages->expects($this->once())
             ->method('setNextToBePublished');
@@ -130,13 +124,7 @@ class PagesTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Pages = $this->getMockBuilder(get_class($this->Pages))
-            ->setMethods(['setNextToBePublished'])
-            ->setConstructorArgs([[
-                'table' => $this->Pages->getTable(),
-                'connection' => $this->Pages->getConnection(),
-            ]])
-            ->getMock();
+        $this->Pages = $this->getMockForModel(get_class($this->Pages), ['setNextToBePublished']);
 
         $this->Pages->expects($this->once())
             ->method('setNextToBePublished');
@@ -158,8 +146,7 @@ class PagesTableTest extends TestCase
             ]])
             ->getMock();
 
-        $this->Pages->expects($this->any())
-            ->method('getPreviewSize')
+        $this->Pages->method('getPreviewSize')
             ->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
