@@ -221,9 +221,9 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $request = (new Request)->withParam('controller', $controller);
-            $this->Widget = new WidgetHelper(new View($request));
-            $this->assertEmpty($this->Widget->widget($widget)->render());
+            $widgetClass = $this->Widget->widget($widget);
+            $widgetClass->request = $widgetClass->request->withParam('controller', $controller);
+            $this->assertEmpty($widgetClass->render());
         }
 
         //Tests cache
@@ -291,9 +291,9 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $request = (new Request)->withParam('controller', $controller);
-            $this->Widget = new WidgetHelper(new View($request));
-            $this->assertEmpty($this->Widget->widget($widget)->render());
+            $widgetClass = $this->Widget->widget($widget);
+            $widgetClass->request = $widgetClass->request->withParam('controller', $controller);
+            $this->assertEmpty($widgetClass->render());
         }
 
         //Tests cache
