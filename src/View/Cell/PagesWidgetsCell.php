@@ -39,7 +39,6 @@ class PagesWidgetsCell extends Cell
      * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
      * @param array $cellOptions Cell options to apply
      * @return void
-     * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
         Request $request = null,
@@ -72,7 +71,8 @@ class PagesWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Pages->cache);
+            ->cache('widget_categories', $this->Pages->cache)
+            ->all();
 
         $this->set(compact('categories'));
     }
@@ -91,7 +91,8 @@ class PagesWidgetsCell extends Cell
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
             ->order([sprintf('%s.title', $this->Pages->getAlias()) => 'ASC'])
-            ->cache(sprintf('widget_list'), $this->Pages->cache);
+            ->cache(sprintf('widget_list'), $this->Pages->cache)
+            ->all();
 
         $this->set(compact('pages'));
     }

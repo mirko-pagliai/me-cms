@@ -164,6 +164,20 @@ class PagesWidgetsCellTest extends TestCase
     }
 
     /**
+     * Test for `categories()` method, with no pages
+     * @test
+     */
+    public function testCategoriesNoPages()
+    {
+        $widget = ME_CMS . '.Pages::categories';
+
+        $this->Pages->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
+    }
+
+    /**
      * Test for `pages()` method
      * @test
      */
@@ -212,5 +226,16 @@ class PagesWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_list', $this->Pages->cache);
         $this->assertEquals(2, $fromCache->count());
+    }
+
+    /**
+     * Test for `pages()` method, with no pages
+     * @test
+     */
+    public function testPagesNoPages()
+    {
+        $this->Pages->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Pages::pages')->render());
     }
 }

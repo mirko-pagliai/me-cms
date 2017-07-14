@@ -24,10 +24,8 @@ if (empty($photos)) {
     return;
 }
 
-$count = count($photos->toArray());
-
 $this->extend('/Common/widget');
-$this->assign('title', __dn('me_cms', 'Random photo', 'Random {0} photos', $count, $count));
+$this->assign('title', __dn('me_cms', 'Random photo', 'Random {0} photos', count($photos), count($photos)));
 
 foreach ($photos as $photo) {
     echo $this->Html->link(

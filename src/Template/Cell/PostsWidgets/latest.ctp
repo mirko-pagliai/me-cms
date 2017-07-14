@@ -20,14 +20,12 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-if (empty($posts)) {
+if (empty($posts) || $posts->isEmpty()) {
     return;
 }
 
-$count = $posts->all()->count();
-
 $this->extend('/Common/widget');
-$this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', $count, $count));
+$this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', $posts->count(), $posts->count()));
 
 $posts = $posts->map(function ($post) {
     return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);

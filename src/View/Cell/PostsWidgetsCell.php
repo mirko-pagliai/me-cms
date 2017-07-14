@@ -39,7 +39,6 @@ class PostsWidgetsCell extends Cell
      * @param \Cake\Network\Response $response The request to use in the cell
      * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
      * @param array $cellOptions Cell options to apply
-     * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
         Request $request = null,
@@ -72,7 +71,8 @@ class PostsWidgetsCell extends Cell
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Posts->cache);
+            ->cache('widget_categories', $this->Posts->cache)
+            ->all();
 
         $this->set(compact('categories'));
     }
@@ -93,7 +93,8 @@ class PostsWidgetsCell extends Cell
             ->select(['title', 'slug'])
             ->limit($limit)
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache);
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->cache)
+            ->all();
 
         $this->set(compact('posts'));
     }
@@ -128,7 +129,8 @@ class PostsWidgetsCell extends Cell
                 });
             })
             ->order(['month' => 'DESC'])
-            ->cache('widget_months', $this->Posts->cache);
+            ->cache('widget_months', $this->Posts->cache)
+            ->all();
 
         $this->set(compact('months'));
     }

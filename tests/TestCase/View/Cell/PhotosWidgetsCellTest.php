@@ -164,6 +164,20 @@ class PhotosWidgetsCellTest extends TestCase
     }
 
     /**
+     * Test for `albums()` method, with no photos
+     * @test
+     */
+    public function testAlbumsNoPhotos()
+    {
+        $widget = ME_CMS . '.Photos::albums';
+
+        $this->Photos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
+    }
+
+    /**
      * Test for `latest()` method
      * @test
      */
@@ -225,6 +239,17 @@ class PhotosWidgetsCellTest extends TestCase
     }
 
     /**
+     * Test for `latest()` method, with no photos
+     * @test
+     */
+    public function testLatestNoPhotos()
+    {
+        $this->Photos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Photos::latest')->render());
+    }
+
+    /**
      * Test for `random()` method
      * @test
      */
@@ -283,5 +308,16 @@ class PhotosWidgetsCellTest extends TestCase
 
         $fromCache = Cache::read('widget_random_2', $this->Photos->cache);
         $this->assertEquals(3, $fromCache->count());
+    }
+
+    /**
+     * Test for `random()` method, with no photos
+     * @test
+     */
+    public function testRandomNoPhotos()
+    {
+        $this->Photos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Photos::random')->render());
     }
 }

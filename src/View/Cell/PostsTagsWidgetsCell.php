@@ -39,7 +39,6 @@ class PostsTagsWidgetsCell extends Cell
      * @param \Cake\Network\Response $response The request to use in the cell
      * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
      * @param array $cellOptions Cell options to apply
-     * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
         Request $request = null,
@@ -145,7 +144,8 @@ class PostsTagsWidgetsCell extends Cell
                     return $value;
                 });
             })
-            ->cache($cache, $this->Tags->Posts->cache);
+            ->cache($cache, $this->Tags->Posts->cache)
+            ->all();
 
         if ($shuffle) {
             $tags = $tags->shuffle();

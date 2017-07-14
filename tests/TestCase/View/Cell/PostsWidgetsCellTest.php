@@ -164,14 +164,28 @@ class PostsWidgetsCellTest extends TestCase
     }
 
     /**
+     * Test for `categories()` method, with no posts
+     * @test
+     */
+    public function testCategoriesNoPosts()
+    {
+        $widget = ME_CMS . '.Posts::categories';
+
+        $this->Posts->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
+    }
+
+    /**
      * Test for `latest()` method
      * @test
      */
     public function testLatest()
     {
-        $latestPost = $this->Posts->find('active')->order(['created' => 'DESC'])->first();
-
         $widget = ME_CMS . '.Posts::latest';
+
+        $latestPost = $this->Posts->find('active')->order(['created' => 'DESC'])->first();
 
         //Tries with a limit of 1
         $result = $this->Widget->widget($widget, ['limit' => 1])->render();
@@ -247,6 +261,17 @@ class PostsWidgetsCellTest extends TestCase
 
         $fromCache = Cache::read('widget_latest_2', $this->Posts->cache);
         $this->assertEquals(2, $fromCache->count());
+    }
+
+    /**
+     * Test for `latest()` method, with no posts
+     * @test
+     */
+    public function testLatestNoPosts()
+    {
+        $this->Posts->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Posts::latest')->render());
     }
 
     /**
@@ -335,6 +360,20 @@ class PostsWidgetsCellTest extends TestCase
             $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);
             $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
         }
+    }
+
+    /**
+     * Test for `months()` method, with no posts
+     * @test
+     */
+    public function testMonthsNoPosts()
+    {
+        $widget = ME_CMS . '.Posts::months';
+
+        $this->Posts->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
 
     /**

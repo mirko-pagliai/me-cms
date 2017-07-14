@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.19 branch
 ### 2.19.2
-* fixed bug in the list of active pages for each page category.
+* fixed bug in the list of active pages for each page category;
+* fixed bug for widgets: they do not show anything if there are no records.
 
 ### 2.19.1
 * added configuration for reCAPTCHA (`config/recaptcha.php`);
