@@ -80,7 +80,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
         Cache::clearAll();
 
-        $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell();
+        $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell;
 
         $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
 
@@ -294,19 +294,14 @@ class PostsTagsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'postsTags']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widgetClass = $this->Widget->widget($widget);
+        $widgetClass->request->env('REQUEST_URI', Router::url(['_name' => 'postsTags']));
+        $this->assertEmpty($widgetClass->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2', $this->Tags->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
-            'cat',
-            'dog',
-        ], array_keys($fromCache->toArray()));
+        $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
         foreach ($fromCache as $entity) {
             $this->assertNull($entity->size);
@@ -314,10 +309,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Tags->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
-            'cat',
-            'dog',
-        ], array_keys($fromCache->toArray()));
+        $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
         foreach ($fromCache as $entity) {
             $this->assertGreaterThan(0, $entity->size);
@@ -337,13 +329,14 @@ class PostsTagsWidgetsCellTest extends TestCase
      */
     public function testPopularWithNoTags()
     {
-        //Deletes all tags
+        $widget = ME_CMS . '.PostsTags::popular';
+
         $this->Tags->deleteAll(['id >=' => 1]);
 
-        $widget = ME_CMS . '.PostsTags::popular';
-        $result = $this->Widget->widget($widget, $this->options)->render();
-
-        $this->assertEmpty(trim($result));
+        $this->assertEmpty($this->Widget->widget($widget, $this->options)->render());
+        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->options, ['render' => 'form']))->render());
+        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->options, ['render' => 'list']))->render());
+        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->options, ['shuffle' => true]))->render());
     }
 
     /**
@@ -390,10 +383,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Tags->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
-            'example1',
-            'example2',
-        ], array_keys($fromCache->toArray()));
+        $this->assertEquals(['example1', 'example2'], array_keys($fromCache->toArray()));
 
         foreach ($fromCache as $entity) {
             $this->assertEquals(40, $entity->size);

@@ -58,11 +58,16 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->find('active')
             ->select(['id', 'title'])
-            ->contain([$this->PagesCategories->Pages->getAlias() => ['fields' => ['category_id', 'slug', 'title']]])
             ->where([sprintf('%s.slug', $this->PagesCategories->getAlias()) => $slug])
             ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache)
             ->firstOrFail();
 
-        $this->set(compact('category'));
+        $pages = $this->PagesCategories->Pages->find('active')
+            ->select(['slug', 'title'])
+            ->where(['category_id' => $category->id])
+            ->cache(sprintf('category_%s_pages', md5($slug)), $this->PagesCategories->cache)
+            ->all();
+
+        $this->set(compact('category', 'pages'));
     }
 }

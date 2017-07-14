@@ -38,7 +38,6 @@ class PhotosWidgetsCell extends Cell
      * @param \Cake\Network\Response $response The request to use in the cell
      * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
      * @param array $cellOptions Cell options to apply
-     * @uses Cake\View\Cell::__construct()
      */
     public function __construct(
         Request $request = null,
@@ -67,11 +66,11 @@ class PhotosWidgetsCell extends Cell
 
         $albums = $this->Photos->Albums->find('active')
             ->order([sprintf('%s.title', $this->Photos->Albums->getAlias()) => 'ASC'])
-            ->order(['title' => 'ASC'])
             ->formatResults(function ($results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_albums', $this->Photos->cache);
+            ->cache('widget_albums', $this->Photos->cache)
+            ->all();
 
         $this->set(compact('albums'));
     }
@@ -95,7 +94,8 @@ class PhotosWidgetsCell extends Cell
                 sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
                 sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
             ])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache);
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
+            ->all();
 
         $this->set(compact('photos'));
     }
@@ -115,7 +115,8 @@ class PhotosWidgetsCell extends Cell
         $photos = $this->Photos->find('active')
             ->select(['album_id', 'filename'])
             ->cache(sprintf('widget_random_%d', $limit), $this->Photos->cache)
-            ->sample($limit);
+            ->sample($limit)
+            ->toArray();
 
         $this->set(compact('photos'));
     }

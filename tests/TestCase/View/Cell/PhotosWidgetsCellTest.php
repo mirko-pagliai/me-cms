@@ -148,11 +148,9 @@ class PhotosWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on albums index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'albums']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'albums']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_albums', $this->Photos->cache);
@@ -161,6 +159,20 @@ class PhotosWidgetsCellTest extends TestCase
             'another-album-test',
             'test-album',
         ], array_keys($fromCache->toArray()));
+    }
+
+    /**
+     * Test for `albums()` method, with no photos
+     * @test
+     */
+    public function testAlbumsNoPhotos()
+    {
+        $widget = ME_CMS . '.Photos::albums';
+
+        $this->Photos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
 
     /**
@@ -209,11 +221,9 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $request = new Request;
-            $request = $request->withParam('controller', $controller);
-            $this->Widget = new WidgetHelper(new View($request));
-            $result = $this->Widget->widget($widget)->render();
-            $this->assertEmpty($result);
+            $widgetClass = $this->Widget->widget($widget);
+            $widgetClass->request = $widgetClass->request->withParam('controller', $controller);
+            $this->assertEmpty($widgetClass->render());
         }
 
         //Tests cache
@@ -222,6 +232,17 @@ class PhotosWidgetsCellTest extends TestCase
 
         $fromCache = Cache::read('widget_latest_2', $this->Photos->cache);
         $this->assertEquals(2, $fromCache->count());
+    }
+
+    /**
+     * Test for `latest()` method, with no photos
+     * @test
+     */
+    public function testLatestNoPhotos()
+    {
+        $this->Photos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Photos::latest')->render());
     }
 
     /**
@@ -270,11 +291,9 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $request = new Request;
-            $request = $request->withParam('controller', $controller);
-            $this->Widget = new WidgetHelper(new View($request));
-            $result = $this->Widget->widget($widget)->render();
-            $this->assertEmpty($result);
+            $widgetClass = $this->Widget->widget($widget);
+            $widgetClass->request = $widgetClass->request->withParam('controller', $controller);
+            $this->assertEmpty($widgetClass->render());
         }
 
         //Tests cache
@@ -283,5 +302,16 @@ class PhotosWidgetsCellTest extends TestCase
 
         $fromCache = Cache::read('widget_random_2', $this->Photos->cache);
         $this->assertEquals(3, $fromCache->count());
+    }
+
+    /**
+     * Test for `random()` method, with no photos
+     * @test
+     */
+    public function testRandomNoPhotos()
+    {
+        $this->Photos->deleteAll(['id >=' => 1]);
+
+        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Photos::random')->render());
     }
 }

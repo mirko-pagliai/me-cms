@@ -33,7 +33,7 @@
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "2.*",
+        "cakephp/cakephp-codesniffer": "^3.0",
         "mirko-pagliai/reflection": "^1.0",
         "phpunit/phpunit": "^5.7|^6.0"
     },
