@@ -148,11 +148,9 @@ class PagesWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Pages->cache);
@@ -217,11 +215,9 @@ class PagesWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_list', $this->Pages->cache);

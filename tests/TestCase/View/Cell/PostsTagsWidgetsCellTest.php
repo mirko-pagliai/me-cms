@@ -294,11 +294,9 @@ class PostsTagsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'postsTags']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widgetClass = $this->Widget->widget($widget);
+        $widgetClass->request->env('REQUEST_URI', Router::url(['_name' => 'postsTags']));
+        $this->assertEmpty($widgetClass->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2', $this->Tags->cache);

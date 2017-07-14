@@ -148,11 +148,9 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Posts->cache);
@@ -249,11 +247,9 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on posts index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_latest_1', $this->Posts->cache);
@@ -342,11 +338,9 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on posts index
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
+        $this->assertEmpty($widget->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Posts->cache);
@@ -412,10 +406,8 @@ class PostsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Empty on search
-        $request = new Request;
-        $request->env('REQUEST_URI', Router::url(['_name' => 'postsSearch']));
-        $this->Widget = new WidgetHelper(new View($request));
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
+        $widget = $this->Widget->widget($widget);
+        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'postsSearch']));
+        $this->assertEmpty($widget->render());
     }
 }
