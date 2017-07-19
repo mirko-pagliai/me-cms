@@ -73,7 +73,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 if (!isset($request)) {
     $request = new Request;
 }
-if ($request->is('localhost') && getConfig('main.debug_on_localhost') && !getConfig('debug')) {
+if ($request->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
 
