@@ -119,8 +119,15 @@ class KcFinderComponent extends Component
             throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
 
-        //Merges default config, options from configuration and passed options
-        $config = array_merge($this->_getDefaultConfig(), getConfig('kcfinder', []), $config);
+        //Merges:
+        //  1) default config;
+        //  2) options from configuration;
+        //  3) passed options.
+        $config = array_merge(
+            $this->_getDefaultConfig(),
+            getConfig('kcfinder', []),
+            $config
+        );
 
         //Writes on session
         $this->getController()->request->session()->write('KCFINDER', $config);
