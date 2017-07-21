@@ -43,7 +43,7 @@ class WidgetHelper extends Helper
             $widgets = getConfig('Widgets.general');
         }
 
-        if (empty($widgets) || !is_array($widgets)) {
+        if (!$widgets || !is_array($widgets)) {
             return [];
         }
 
