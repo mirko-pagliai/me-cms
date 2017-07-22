@@ -145,7 +145,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         }
 
         //Sets the cache name
-        $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), getConfig('default.photos'), 1);
+        $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.photos'), 1);
         list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PhotosAlbums->cache

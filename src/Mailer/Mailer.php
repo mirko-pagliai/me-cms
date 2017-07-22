@@ -23,6 +23,7 @@
  */
 namespace MeCms\Mailer;
 
+use Cake\Mailer\Email;
 use Cake\Mailer\Mailer as CakeMailer;
 
 /**
@@ -48,14 +49,14 @@ class Mailer extends CakeMailer
      * @uses Cake\Mailer\Mailer::__construct()
      * @uses getEmailInstance()
      */
-    public function __construct(\Cake\Mailer\Email $email = null)
+    public function __construct(Email $email = null)
     {
         parent::__construct($email);
 
         $this->getEmailInstance()
             ->setHelpers([METOOLS . '.Html'])
-            ->setFrom(getConfig('email.webmaster'), getConfig('main.title'))
-            ->setSender(getConfig('email.webmaster'), getConfig('main.title'))
+            ->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
+            ->setSender(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setEmailFormat('html');
     }
 }

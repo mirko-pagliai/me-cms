@@ -192,7 +192,7 @@ class BackupsController extends AppController
      */
     public function send($filename)
     {
-        $this->BackupManager->send($this->getFilename($filename), getConfig('email.webmaster'));
+        $this->BackupManager->send($this->getFilename($filename), getConfigOrFail('email.webmaster'));
 
         $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
 

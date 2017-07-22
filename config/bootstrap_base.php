@@ -129,7 +129,7 @@ if (is_readable(CONFIG . 'widgets.php')) {
 Configure::load('recaptcha');
 
 if (!getConfig('RecaptchaMailhide.encryptKey')) {
-    Configure::write('RecaptchaMailhide.encryptKey', getConfig('Recaptcha.private'));
+    Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
 }
 
 //Adds log for users actions

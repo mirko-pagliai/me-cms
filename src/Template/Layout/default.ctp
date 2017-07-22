@@ -63,7 +63,7 @@ use Cake\Core\Configure;
         <header>
             <div class="container">
                 <?php
-                $logo = $this->Html->h1(getConfig('main.title'));
+                $logo = $this->Html->h1(getConfigOrFail('main.title'));
 
                 //Check if the logo image exists
                 if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {

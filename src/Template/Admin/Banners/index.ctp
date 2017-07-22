@@ -124,11 +124,11 @@ $this->extend('/Admin/Common/Banners/index');
                 </td>
                 <td class="min-width text-center">
                     <div class="hidden-xs">
-                        <?= $banner->created->i18nFormat(getConfig('main.datetime.long')) ?>
+                        <?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
                     <div class="visible-xs">
-                        <div><?= $banner->created->i18nFormat(getConfig('main.date.short')) ?></div>
-                        <div><?= $banner->created->i18nFormat(getConfig('main.time.short')) ?></div>
+                        <div><?= $banner->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $banner->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

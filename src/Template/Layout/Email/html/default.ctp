@@ -24,7 +24,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?= $this->Html->title(getConfig('main.title')) ?>
+        <?= $this->Html->title(getConfigOrFail('main.title')) ?>
 
     </head>
     <body>
@@ -36,7 +36,7 @@
         <br />
         <small>
             <?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(
-                getConfig('main.title'),
+                getConfigOrFail('main.title'),
                 $this->Url->build('/', true)
             )) ?>
 

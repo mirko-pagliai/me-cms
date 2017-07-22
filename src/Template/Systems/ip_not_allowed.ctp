@@ -28,11 +28,9 @@ $this->extend('/Common/view');
 </div>
 
 <div class="text-center">
-    <?php
-        echo __d(
-            'me_cms',
-            'You can send us an email to {0}',
-            $this->Mailhide->link(getConfig('email.webmaster'), getConfig('email.webmaster'))
-        );
-    ?>
+    <?= __d(
+        'me_cms',
+        'You can send us an email to {0}',
+        $this->Mailhide->link(getConfigOrFail('email.webmaster'), getConfigOrFail('email.webmaster'))
+    ) ?>
 </div>

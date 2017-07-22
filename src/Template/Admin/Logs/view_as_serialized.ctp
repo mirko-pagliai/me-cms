@@ -85,12 +85,12 @@ $this->append('actions', $this->Form->postButton(
                                     '(%s | %s)',
                                     $this->Html->link(
                                         __d('me_cms', 'Who is'),
-                                        str_replace('{IP}', $row->ip, getConfig('security.ip_whois')),
+                                        str_replace('{IP}', $row->ip, getConfigOrFail('security.ip_whois')),
                                         ['target' => '_blank']
                                     ),
                                     $this->Html->link(
                                         __d('me_cms', 'Map'),
-                                        str_replace('{IP}', $row->ip, getConfig('security.ip_map')),
+                                        str_replace('{IP}', $row->ip, getConfigOrFail('security.ip_map')),
                                         ['target' => '_blank']
                                     )
                                 ) ?>

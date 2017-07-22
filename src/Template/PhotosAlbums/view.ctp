@@ -72,7 +72,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
 
                 //If Fancybox is enabled, adds some options
                 if (getConfig('default.fancybox')) {
-                    $options = am($options, [
+                    $options = array_merge($options, [
                         'class' => 'fancybox thumbnail',
                         'data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280]),
                         'rel' => 'group',

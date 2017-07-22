@@ -97,7 +97,7 @@ class PhotosController extends AppController
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         if ($render === 'grid') {
-            $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfig('admin.photos');
+            $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
         }
 
         $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQuery())));

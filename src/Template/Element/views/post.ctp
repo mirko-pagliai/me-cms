@@ -54,7 +54,7 @@
                 echo $this->Html->div('content-date', __d(
                     'me_cms',
                     'Posted on {0}',
-                    $post->created->i18nFormat(getConfig('main.datetime.long'))
+                    $post->created->i18nFormat(getConfigOrFail('main.datetime.long'))
                 ), ['icon' => 'clock-o']);
             }
             ?>
@@ -76,11 +76,13 @@
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview']) && getConfig('default.truncate_to')) {
-            echo $truncatedText = $this->Text->truncate($text, getConfig('default.truncate_to'), [
+        } elseif (!$this->request->isAction(['view', 'preview'])) {
+            $truncatedText = $this->Text->truncate($text, getConfigOrFail('default.truncate_to'), [
                 'exact' => false,
                 'html' => true,
             ]);
+
+            echo $truncatedText;
         } else {
             echo $text;
         }
@@ -110,10 +112,8 @@
     </div>
 
     <?php
-    if (getConfig('post.shareaholic') && getConfig('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Posts') && !$this->request->isAjax()
-    ) {
-        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
+    if (getConfig('post.shareaholic') && $this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
+        echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
 </div>

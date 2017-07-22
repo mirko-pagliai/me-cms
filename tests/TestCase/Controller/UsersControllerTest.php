@@ -668,7 +668,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertSession('Account created, but it needs to be activated by an admin', 'Flash.flash.0.message');
 
         $user = $this->Users->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfig('users.default_group'), $user->group_id);
+        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
         $this->assertFalse($user->active);
 
         //Deletes the user
@@ -682,7 +682,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
 
         $user = $this->Users->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfig('users.default_group'), $user->group_id);
+        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
         $this->assertFalse($user->active);
 
         //Deletes the user
@@ -696,7 +696,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertSession('Account created. Now you can login', 'Flash.flash.0.message');
 
         $user = $this->Users->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfig('users.default_group'), $user->group_id);
+        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
         $this->assertTrue($user->active);
 
         //With reCAPTCHA

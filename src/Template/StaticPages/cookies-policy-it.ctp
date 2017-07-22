@@ -194,7 +194,7 @@
     if (getConfig('default.contact_us')) {
         $url = ['_name' => 'contactUs'];
     } else {
-        $url = $this->Recaptcha->mailUrl(getConfig('email.webmaster'));
+        $url = $this->Recaptcha->mailUrl(getConfigOrFail('email.webmaster'));
     }
 
     echo $this->Html->link('qui', $url);

@@ -105,11 +105,11 @@ $this->extend('/Admin/Common/Photos/index');
                 </td>
                 <td class="min-width text-center">
                     <div class="hidden-xs">
-                        <?= $photo->created->i18nFormat(getConfig('main.datetime.long')) ?>
+                        <?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
                     <div class="visible-xs">
-                        <div><?= $photo->created->i18nFormat(getConfig('main.date.short')) ?></div>
-                        <div><?= $photo->created->i18nFormat(getConfig('main.time.short')) ?></div>
+                        <div><?= $photo->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $photo->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

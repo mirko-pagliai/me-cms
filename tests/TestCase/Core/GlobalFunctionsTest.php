@@ -97,13 +97,34 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals('defaultValue', getConfig(ME_CMS . '.noExisting', 'defaultValue'));
 
         Configure::write('exampleKey', 'exampleValue');
-
         $this->assertEquals('exampleValue', getConfig('exampleKey'));
         $this->assertEquals('exampleValue', getConfig('exampleKey', 'defaultValue'));
 
         Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
-
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey'));
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey', 'defaultValue'));
+    }
+
+    /**
+     * Test for `getConfigOrFail()` global function
+     * @test
+     */
+    public function testGetConfigOrFail()
+    {
+        Configure::write('exampleKey', 'exampleValue');
+        $this->assertEquals('exampleValue', getConfigOrFail('exampleKey'));
+
+        Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
+        $this->assertEquals('MeCmsExampleValue', getConfigOrFail('exampleKey'));
+    }
+
+    /**
+     * Test for `getConfigOrFail()` global function, with a no existing value
+     * @expectedException RuntimeException
+     * @test
+     */
+    public function testGetConfigOrFailNoExistingValue()
+    {
+        getConfigOrFail('noExisting');
     }
 }

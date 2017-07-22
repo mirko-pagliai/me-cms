@@ -127,7 +127,7 @@ class SystemsController extends AppController
         if (is_readable(SITEMAP)) {
             $time = Time::createFromTimestamp(filemtime(SITEMAP));
 
-            if (!$time->modify(getConfig('main.sitemap_expiration'))->isPast()) {
+            if (!$time->modify(getConfigOrFail('main.sitemap_expiration'))->isPast()) {
                 $sitemap = file_get_contents(SITEMAP);
             }
         }

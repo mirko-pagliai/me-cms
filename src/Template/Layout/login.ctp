@@ -52,7 +52,7 @@
     <body>
         <div id="content" class="container">
             <?php
-            $logo = $this->Html->h1(getConfig('main.title'), ['id' => 'logo']);
+            $logo = $this->Html->h1(getConfigOrFail('main.title'), ['id' => 'logo']);
 
             //Check if the logo image exists
             if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
@@ -60,7 +60,6 @@
             }
 
             echo $logo;
-
             echo $this->Flash->render();
             echo $this->Flash->render('auth');
             echo $this->fetch('content');

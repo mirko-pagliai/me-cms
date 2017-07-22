@@ -405,7 +405,7 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            $user->group_id = getConfig('users.default_group');
+            $user->group_id = getConfigOrFail('users.default_group');
             $user->active = (bool)!getConfig('users.activation');
 
             //Checks for reCAPTCHA, if requested

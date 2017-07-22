@@ -187,7 +187,7 @@ DispatcherFactory::add('ControllerFactory');
 Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
-Configure::write(DATABASE_BACKUP . '.mailSender', getConfig('email.webmaster'));
+Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
 
 ini_set('intl.default_locale', 'en_US');
 

@@ -66,10 +66,10 @@ class AppController extends BaseController
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-        $this->paginate['limit'] = getConfig('default.records');
+        $this->paginate['limit'] = getConfigOrFail('default.records');
 
         if ($this->request->isAdmin()) {
-            $this->paginate['limit'] = getConfig('admin.records');
+            $this->paginate['limit'] = getConfigOrFail('admin.records');
         }
 
         $this->paginate['maxLimit'] = $this->paginate['limit'];
@@ -123,8 +123,8 @@ class AppController extends BaseController
         $this->loadComponent('RequestHandler');
         $this->loadComponent(METOOLS . '.Uploader');
         $this->loadComponent('Recaptcha.Recaptcha', [
-            'sitekey' => getConfig('Recaptcha.public'),
-            'secret' => getConfig('Recaptcha.private'),
+            'sitekey' => getConfigOrFail('Recaptcha.public'),
+            'secret' => getConfigOrFail('Recaptcha.private'),
             'lang' => substr(I18n::locale(), 0, 2),
         ]);
 
