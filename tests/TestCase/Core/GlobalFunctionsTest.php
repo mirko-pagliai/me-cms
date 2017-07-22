@@ -103,6 +103,10 @@ class GlobalFunctionsTest extends TestCase
         Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey'));
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey', 'defaultValue'));
+
+        Configure::write('SomePlugin.exampleKey', 'SomePluginExampleValue');
+        $this->assertEquals('SomePluginExampleValue', getConfig('SomePlugin.exampleKey'));
+        $this->assertEquals('SomePluginExampleValue', getConfig('SomePlugin.exampleKey', 'defaultValue'));
     }
 
     /**
