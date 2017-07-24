@@ -35,22 +35,11 @@ class LogsMethodsTraitTest extends TestCase
     /**
      * Test for `assertLogContains()` method on failure
      * @expectedException \PHPUnit\Framework\AssertionFailedError
-     * @expectedExceptionMessage Log file `noExisting.log` not readable
+     * @expectedExceptionMessage Log file /tmp/me_cms/cakephp_log/noExisting.log not readable
      * @test
      */
     public function testAssertLogContainsFailure()
     {
         $this->assertLogContains('value', 'noExisting');
-    }
-
-    /**
-     * Test for `deleteLog()` method on failure
-     * @expectedException \PHPUnit\Framework\AssertionFailedError
-     * @expectedExceptionMessage Log file `noExisting.log` not writable
-     * @test
-     */
-    public function testDeleteLog()
-    {
-        $this->deleteLog('noExisting');
     }
 }

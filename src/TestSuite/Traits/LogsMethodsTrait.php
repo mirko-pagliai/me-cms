@@ -68,16 +68,7 @@ trait LogsMethodsTrait
      */
     public function deleteLog($name)
     {
-        $file = LOGS . $name . '.log';
-
-        if (!file_exists($file)) {
-            return;
-        }
-
-        if (!is_writable($file)) {
-            $this->fail('Log file ' . LOGS . ' not writable');
-        }
-
-        unlink($file);
+        //@codingStandardsIgnoreLine
+        @unlink(LOGS . $name . '.log');
     }
 }
