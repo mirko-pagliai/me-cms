@@ -34,7 +34,6 @@ class PostsFixture extends TestFixture
      * Fields
      * @var array
      */
-    //@codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -57,7 +56,6 @@ class PostsFixture extends TestFixture
             'slug' => ['type' => 'unique', 'columns' => ['slug'], 'length' => []],
         ],
     ];
-    //@codingStandardsIgnoreEnd
 
     /**
      * Records

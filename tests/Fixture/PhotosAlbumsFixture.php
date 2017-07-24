@@ -34,7 +34,6 @@ class PhotosAlbumsFixture extends TestFixture
      * Fields
      * @var array
      */
-    //@codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -47,7 +46,6 @@ class PhotosAlbumsFixture extends TestFixture
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
     ];
-    //@codingStandardsIgnoreEnd
 
     /**
      * Records
@@ -61,7 +59,7 @@ class PhotosAlbumsFixture extends TestFixture
             'description' => 'This is an album test',
             'photo_count' => 2,
             'created' => '2016-12-28 10:38:46',
-            'modified' => '2016-12-28 10:38:46'
+            'modified' => '2016-12-28 10:38:46',
         ],
         [
             'id' => 2,
@@ -70,7 +68,7 @@ class PhotosAlbumsFixture extends TestFixture
             'description' => 'This is another album test',
             'photo_count' => 2,
             'created' => '2016-12-28 10:39:46',
-            'modified' => '2016-12-28 10:39:46'
+            'modified' => '2016-12-28 10:39:46',
         ],
         [
             'id' => 3,
@@ -79,7 +77,7 @@ class PhotosAlbumsFixture extends TestFixture
             'description' => 'This is the third album test',
             'photo_count' => 0,
             'created' => '2016-12-28 10:40:46',
-            'modified' => '2016-12-28 10:40:46'
+            'modified' => '2016-12-28 10:40:46',
         ],
     ];
 

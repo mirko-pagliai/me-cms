@@ -33,7 +33,6 @@ class UsersFixture extends TestFixture
      * Fields
      * @var array
      */
-    //@codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'group_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -55,7 +54,6 @@ class UsersFixture extends TestFixture
             'username' => ['type' => 'unique', 'columns' => ['username', 'email'], 'length' => []],
         ],
     ];
-    //@codingStandardsIgnoreEnd
 
     /**
      * Records

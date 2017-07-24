@@ -33,7 +33,6 @@ class PagesCategoriesFixture extends TestFixture
      * Fields
      * @var array
      */
-    //@codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'parent_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -51,7 +50,6 @@ class PagesCategoriesFixture extends TestFixture
             'slug' => ['type' => 'unique', 'columns' => ['slug'], 'length' => []],
         ],
     ];
-    //@codingStandardsIgnoreEnd
 
     /**
      * Records
