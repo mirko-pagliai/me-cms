@@ -13,7 +13,7 @@
 namespace MeCms\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
-use MeCms\Model\Validation\TagValidatorTrait;
+use MeCms\Model\Validation\Traits\TagValidatorTrait;
 
 /**
  * Post validator class
@@ -76,7 +76,7 @@ class PostValidator extends AppValidator
      * @param string $value Field value
      * @param array $context Field context
      * @return bool
-     * @use \MeCms\Model\Validation\TagValidatorTrait::validTagLength()
+     * @use \MeCms\Model\Validation\Traits\TagValidatorTrait::validTagLength()
      */
     public function validTagsLength($value, $context)
     {
@@ -96,7 +96,7 @@ class PostValidator extends AppValidator
      * @param string $value Field value
      * @param array $context Field context
      * @return bool
-     * @use \MeCms\Model\Validation\TagValidatorTrait::validTagChars()
+     * @use \MeCms\Model\Validation\Traits\TagValidatorTrait::validTagChars()
      */
     public function validTagsChars($value, $context)
     {

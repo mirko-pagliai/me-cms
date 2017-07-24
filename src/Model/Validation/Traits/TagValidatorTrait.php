@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.15.2
  */
-namespace MeCms\Model\Validation;
+namespace MeCms\Model\Validation\Traits;
 
 /**
  * Tag validator trait class.

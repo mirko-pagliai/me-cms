@@ -13,7 +13,7 @@
 namespace MeCms\Model\Validation;
 
 use MeCms\Model\Validation\AppValidator;
-use MeCms\Model\Validation\TagValidatorTrait;
+use MeCms\Model\Validation\Traits\TagValidatorTrait;
 
 /**
  * Tag validator class

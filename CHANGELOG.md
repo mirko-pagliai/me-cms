@@ -7,6 +7,7 @@
 * `firstImage()` is no longer a global function, but a method provided by the
     `GetPreviewFromTextTrait` class;
 * removed `LogsMethodsTrait`, moved to MeTools;
+* `TagValidatorTrait` moved to `MeCms\Model\Validation\Traits`;
 * the MIT license has been applied.
 
 ## 2.19 branch
