@@ -41,17 +41,6 @@ class GetPreviewFromTextTraitTest extends TestCase
     protected $Posts;
 
     /**
-     * Internal method to invoke the `getPreview()` method
-     * @param string $text The text within which to search
-     * @return object|null Object with `preview`, `width` and `height`
-     *  properties or `null` if there is not no preview
-     */
-    protected function getPreview($text)
-    {
-        return $this->invokeMethod($this->Posts, 'getPreview', [$text]);
-    }
-
-    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -145,6 +134,10 @@ class GetPreviewFromTextTraitTest extends TestCase
      */
     public function testGetPreview()
     {
+        $getPreviewMethod = function ($text) {
+            return $this->invokeMethod($this->Posts, 'getPreview', [$text]);
+        };
+
         $this->Posts = $this->getMockBuilder(PostsTable::class)
             ->setMethods(['getPreviewSize'])
             ->getMock();
@@ -152,17 +145,14 @@ class GetPreviewFromTextTraitTest extends TestCase
         $this->Posts->method('getPreviewSize')
             ->will($this->returnValue([400, 300]));
 
-        $result = $this->getPreview(null);
-        $this->assertNull($result);
+        $this->assertNull($getPreviewMethod(null));
 
-        $result = $this->getPreview('text');
-        $this->assertNull($result);
+        $this->assertNull($getPreviewMethod('text'));
 
         //No existing file
-        $result = $this->getPreview('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />');
-        $this->assertNull($result);
+        $this->assertNull($getPreviewMethod('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />'));
 
-        $result = $this->getPreview(
+        $result = $getPreviewMethod(
             '<img src=\'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg\' />'
         );
         $this->assertEquals([
@@ -175,14 +165,14 @@ class GetPreviewFromTextTraitTest extends TestCase
             'image.jpg',
             WWW_ROOT . 'img' . DS . 'image.jpg',
         ] as $image) {
-            $result = $this->getPreview('<img src=\'' . $image . '\' />');
+            $result = $getPreviewMethod('<img src=\'' . $image . '\' />');
             $this->assertEquals(['preview', 'width', 'height'], array_keys($result));
             $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $result['preview']);
             $this->assertEquals(400, $result['width']);
             $this->assertEquals(300, $result['height']);
         }
 
-        $result = $this->getPreview('[youtube]6z4KK7RWjmk[/youtube]');
+        $result = $getPreviewMethod('[youtube]6z4KK7RWjmk[/youtube]');
         $this->assertEquals([
             'preview' => Youtube::getPreview('6z4KK7RWjmk'),
             'width' => 400,
