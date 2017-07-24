@@ -3,7 +3,7 @@
     "description": "MeCms plugin for CakePHP",
     "homepage": "https://github.com/mirko-pagliai/me-cms",
     "type": "cakephp-plugin",
-    "license": "AGPL-3.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Mirko Pagliai",
