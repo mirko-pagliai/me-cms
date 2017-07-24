@@ -23,7 +23,7 @@ use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Controller\UsersController;
 use MeCms\Mailer\UserMailer;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
-use MeCms\TestSuite\Traits\LogsMethodsTrait;
+use MeTools\TestSuite\Traits\LogsMethodsTrait;
 use Reflection\ReflectionTrait;
 use Tokens\Controller\Component\TokenComponent;
 

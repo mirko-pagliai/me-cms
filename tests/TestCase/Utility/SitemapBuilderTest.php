@@ -18,6 +18,7 @@ use Cake\I18n\Time;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Xml;
 use MeCms\Utility\SitemapBuilder;
+use MeTools\TestSuite\Traits\LoadAllFixturesTrait;
 use Reflection\ReflectionTrait;
 
 /**
@@ -25,6 +26,7 @@ use Reflection\ReflectionTrait;
  */
 class SitemapBuilderTest extends TestCase
 {
+    use LoadAllFixturesTrait;
     use ReflectionTrait;
 
     /**
@@ -42,6 +44,9 @@ class SitemapBuilderTest extends TestCase
         'plugin.me_cms.pages_categories',
         'plugin.me_cms.photos',
         'plugin.me_cms.photos_albums',
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.tags',
     ];
 
     /**
@@ -173,7 +178,7 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerate()
     {
-        $this->loadFixtures('Pages', 'PagesCategories', 'Photos', 'PhotosAlbums');
+        $this->loadAllFixtures();
 
         $map = SitemapBuilder::generate();
 
@@ -201,6 +206,8 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerateWithPlugin()
     {
+        $this->loadAllFixtures();
+
         Plugin::load('TestPlugin');
 
         $map = SitemapBuilder::generate();

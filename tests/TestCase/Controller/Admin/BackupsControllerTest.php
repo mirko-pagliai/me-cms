@@ -17,7 +17,7 @@ use Cake\Log\Log;
 use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BackupsController;
 use MeCms\TestSuite\Traits\AuthMethodsTrait;
-use MeCms\TestSuite\Traits\LogsMethodsTrait;
+use MeTools\TestSuite\Traits\LogsMethodsTrait;
 
 /**
  * BackupsControllerTest class

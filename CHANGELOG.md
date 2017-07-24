@@ -6,6 +6,7 @@
 * added `getConfigOrFail()` global function;
 * `firstImage()` is no longer a global function, but a method provided by the
     `GetPreviewFromTextTrait` class;
+* removed `LogsMethodsTrait`, moved to MeTools;
 * the MIT license has been applied.
 
 ### 2.19.2

@@ -15,7 +15,7 @@ namespace MeCms\Test\TestCase\Log\Engine;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
 use MeCms\Log\Engine\SerializedLog;
-use MeCms\TestSuite\Traits\LogsMethodsTrait;
+use MeTools\TestSuite\Traits\LogsMethodsTrait;
 use Reflection\ReflectionTrait;
 
 /**
