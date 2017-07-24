@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.19 branch
 ### 2.19.3
+* added initial schema of the plugin database;
 * added `getConfigOrFail()` global function;
 * `firstImage()` is no longer a global function, but a method provided by the
     `GetPreviewFromTextTrait` class.
