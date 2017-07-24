@@ -28,7 +28,7 @@ trait GetPreviewFromTextTrait
      * Internal method to get the first image from an html string
      * @param string $html Html string
      * @return string|bool Image or `false`
-     * @since 2.19.3
+     * @since 2.20.0
      */
     protected function firstImage($html)
     {

@@ -1,6 +1,6 @@
 # 2.x branch
-## 2.19 branch
-### 2.19.3
+## 2.20 branch
+### 2.20.0
 * added initial schema of the plugin database. Removed `BaseUpdateConsole` and
     `UpdateShell` classes;
 * added `getConfigOrFail()` global function;
@@ -9,6 +9,7 @@
 * removed `LogsMethodsTrait`, moved to MeTools;
 * the MIT license has been applied.
 
+## 2.19 branch
 ### 2.19.2
 * fixed bug in the list of active pages for each page category;
 * fixed bug for widgets: they do not show anything if there are no records.

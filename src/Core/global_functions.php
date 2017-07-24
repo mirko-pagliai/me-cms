@@ -45,7 +45,7 @@ if (!function_exists('getConfigOrFail')) {
      * If no value is found, an exception will be thrown.
      * @param string $var Variable to obtain
      * @return mixed Value stored in configure
-     * @since 2.19.3
+     * @since 2.20.0
      */
     function getConfigOrFail($var)
     {
