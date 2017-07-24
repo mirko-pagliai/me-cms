@@ -23,7 +23,6 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
 use MeCms\Controller\AppController;
@@ -73,7 +72,7 @@ class BackupsController extends AppController
      */
     protected function getFilename($filename)
     {
-        return Configure::read(DATABASE_BACKUP . '.target') . DS . urldecode($filename);
+        return getConfigOrFail(DATABASE_BACKUP . '.target') . DS . urldecode($filename);
     }
 
     /**

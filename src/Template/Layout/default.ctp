@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +76,7 @@ use Cake\Core\Configure;
             //Topbar is cached only if debugging is disabled
             $topbarCache = null;
 
-            if (!Configure::read('debug')) {
+            if (!getConfig('debug')) {
                 $topbarCache = ['key' => 'topbar'];
             }
 
@@ -108,7 +107,7 @@ use Cake\Core\Configure;
         //Footer is cached only if debugging is disabled
         $footerCache = null;
 
-        if (!Configure::read('debug')) {
+        if (!getConfig('debug')) {
             $footerCache = ['key' => 'footer'];
         }
 

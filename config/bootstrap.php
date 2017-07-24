@@ -53,8 +53,8 @@ Plugin::load('Gourmet/CommonMark');
 Plugin::load('Recaptcha');
 Plugin::load('RecaptchaMailhide', ['bootstrap' => true, 'routes' => true]);
 
-if (!Configure::read(DATABASE_BACKUP . '.mailSender')) {
-    Configure::write(DATABASE_BACKUP . '.mailSender', Configure::read(ME_CMS . '.email.webmaster'));
+if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
+    Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
 }
 
 //CakePHP will automatically set the locale based on the current user

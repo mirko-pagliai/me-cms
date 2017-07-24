@@ -20,7 +20,6 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +60,7 @@ use Cake\Core\Configure;
         //Topbar is cached only if debugging is disabled
         $topbarCache = null;
 
-        if (!Configure::read('debug')) {
+        if (!getConfig('debug')) {
             $topbarCache = [
                 'config' => 'admin',
                 'key' => sprintf('topbar_user_%s', $this->Auth->user('id')),
@@ -77,7 +76,7 @@ use Cake\Core\Configure;
                     //Sidebar is cached only if debugging is disabled
                     $sidebarCache = null;
 
-                    if (!Configure::read('debug')) {
+                    if (!getConfig('debug')) {
                         $sidebarCache = [
                             'config' => 'admin',
                             'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),

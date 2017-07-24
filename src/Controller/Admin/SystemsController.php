@@ -144,9 +144,11 @@ class SystemsController extends AppController
             'version' => Apache::version(),
         ];
 
+        $databaseBackupTarget = getConfigOrFail(DATABASE_BACKUP . '.target') . DS;
+
         $checkup['backups'] = [
-            'path' => rtr(Configure::read(DATABASE_BACKUP . '.target') . DS),
-            'writeable' => folderIsWriteable(Configure::read(DATABASE_BACKUP . '.target')),
+            'path' => rtr($databaseBackupTarget),
+            'writeable' => folderIsWriteable($databaseBackupTarget),
         ];
 
         $checkup['cache'] = Cache::enabled();
@@ -176,10 +178,10 @@ class SystemsController extends AppController
         foreach ([
             LOGS,
             TMP,
-            Configure::read(ASSETS . '.target'),
+            getConfigOrFail(ASSETS . '.target'),
             CACHE,
             LOGIN_RECORDS,
-            Configure::read(THUMBER . '.target'),
+            getConfigOrFail(THUMBER . '.target'),
         ] as $path) {
             $checkup['temporary'][] = [
                 'path' => rtr($path),
@@ -241,19 +243,20 @@ class SystemsController extends AppController
             throw new MethodNotAllowedException();
         }
 
+        $assetsTarget = getConfigOrFail(ASSETS . '.target');
+        $thumberTarget = getConfigOrFail(THUMBER . '.target');
         $success = false;
 
         switch ($type) {
             case 'all':
-                $success = clearDir(Configure::read(ASSETS . '.target')) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap()
-                    && clearDir(Configure::read(THUMBER . '.target'));
+                $success = clearDir($assetsTarget) && clearDir(LOGS)
+                    && self::clearCache() && self::clearSitemap() && clearDir($thumberTarget);
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $success = clearDir(Configure::read(ASSETS . '.target'));
+                $success = clearDir($assetsTarget);
                 break;
             case 'logs':
                 $success = clearDir(LOGS);
@@ -262,7 +265,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir(Configure::read(THUMBER . '.target'));
+                $success = clearDir($thumberTarget);
                 break;
         }
 
@@ -281,11 +284,11 @@ class SystemsController extends AppController
      */
     public function tmpViewer()
     {
-        $assetsSize = (new Folder(Configure::read(ASSETS . '.target')))->dirsize();
+        $assetsSize = (new Folder(getConfigOrFail(ASSETS . '.target')))->dirsize();
         $cacheSize = (new Folder(CACHE))->dirsize();
         $logsSize = (new Folder(LOGS))->dirsize();
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = (new Folder(Configure::read(THUMBER . '.target')))->dirsize();
+        $thumbsSize = (new Folder(getConfigOrFail(THUMBER . '.target')))->dirsize();
 
         $this->set([
             'cacheStatus' => Cache::enabled(),

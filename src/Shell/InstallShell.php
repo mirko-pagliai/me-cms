@@ -24,7 +24,6 @@ namespace MeCms\Shell;
 
 use Cake\Console\ConsoleIo;
 use Cake\Core\App;
-use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
@@ -61,17 +60,17 @@ class InstallShell extends BaseInstallShell
         ];
 
         //Merges assets for which create symbolic links
-        $this->links = am($this->links, [
+        $this->links = array_merge($this->links, [
             'js-cookie/js-cookie/src' => 'js-cookie',
             'sunhater/kcfinder' => 'kcfinder',
             'enyo/dropzone/dist' => 'dropzone',
         ]);
 
         //Merges paths to be created and made writable
-        $this->paths = am($this->paths, [
-            Configure::read(ASSETS . '.target'),
-            Configure::read(DATABASE_BACKUP . '.target'),
-            Configure::read(THUMBER . '.target'),
+        $this->paths = array_merge($this->paths, [
+            getConfigOrFail(ASSETS . '.target'),
+            getConfigOrFail(DATABASE_BACKUP . '.target'),
+            getConfigOrFail(THUMBER . '.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,

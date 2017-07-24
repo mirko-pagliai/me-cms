@@ -41,7 +41,7 @@ trait LogsMethodsTrait
         $file = LOGS . $name . '.log';
 
         if (!is_readable($file)) {
-            $this->fail('Log file `' . $name . '.log` not readable');
+            $this->fail('Log file ' . $file . ' not readable');
         }
 
         $content = trim(file_get_contents($file));
@@ -70,11 +70,14 @@ trait LogsMethodsTrait
     {
         $file = LOGS . $name . '.log';
 
-        if (!is_writable($file)) {
-            $this->fail('Log file `' . $name . '.log` not writable');
+        if (!file_exists($file)) {
+            return;
         }
 
-        //@codingStandardsIgnoreLine
-        @unlink($file);
+        if (!is_writable($file)) {
+            $this->fail('Log file ' . LOGS . ' not writable');
+        }
+
+        unlink($file);
     }
 }

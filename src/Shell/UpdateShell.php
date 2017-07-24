@@ -23,7 +23,6 @@
 namespace MeCms\Shell;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use MeCms\Console\BaseUpdateConsole;
 
 /**
@@ -150,8 +149,8 @@ class UpdateShell extends BaseUpdateConsole
         }
 
         //Creates `APP/tmp/assets`
-        if (!file_exists(Configure::read(ASSETS . '.target'))) {
-            mkdir(Configure::read(ASSETS . '.target'), 0777, true);
+        if (!file_exists(getConfigOrFail(ASSETS . '.target'))) {
+            mkdir(getConfigOrFail(ASSETS . '.target'), 0777, true);
         }
     }
 
