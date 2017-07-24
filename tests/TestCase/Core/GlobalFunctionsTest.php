@@ -31,56 +31,6 @@ use Cake\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
-     * Test for `firstImage()` global function
-     * @test
-     */
-    public function testFirstImage()
-    {
-        $this->assertFalse(firstImage('Text'));
-
-        $this->assertFalse(firstImage('<img src=\'\'>'));
-        $this->assertFalse(firstImage('<img src=\'a\'>'));
-        $this->assertFalse(firstImage('<img src=\'a.a\'>'));
-        $this->assertFalse(firstImage('<img src=\'data:\'>'));
-        $this->assertFalse(firstImage('<img src=\'text.txt\'>'));
-
-        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'>'));
-        $this->assertEquals('image.jpeg', firstImage('<img src=\'image.jpeg\'>'));
-        $this->assertEquals('image.gif', firstImage('<img src=\'image.gif\'>'));
-        $this->assertEquals('image.png', firstImage('<img src=\'image.png\'>'));
-
-        $this->assertEquals('IMAGE.jpg', firstImage('<img src=\'IMAGE.jpg\'>'));
-        $this->assertEquals('image.JPG', firstImage('<img src=\'image.JPG\'>'));
-        $this->assertEquals('IMAGE.JPG', firstImage('<img src=\'IMAGE.JPG\'>'));
-
-        $this->assertEquals('/image.jpg', firstImage('<img src=\'/image.jpg\'>'));
-        $this->assertEquals('subdir/image.jpg', firstImage('<img src=\'subdir/image.jpg\'>'));
-        $this->assertEquals('/subdir/image.jpg', firstImage('<img src=\'/subdir/image.jpg\'>'));
-
-        //Some attributes
-        $this->assertEquals('image.jpg', firstImage('<img alt=\'\' src=\'image.jpg\'>'));
-        $this->assertEquals('image.jpg', firstImage('<img alt="" src="image.jpg">'));
-        $this->assertEquals('image.jpg', firstImage('<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>'));
-        $this->assertEquals('image.jpg', firstImage('<img alt="" class="my-class" src="image.jpg">'));
-
-        //Two images
-        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\' /><img src=\'image.gif\' />'));
-        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'><img src=\'image.gif\'>'));
-        $this->assertEquals('image.jpg', firstImage('<img src=\'image.jpg\'> Text <img src=\'image.gif\'>'));
-
-        $expected = 'http://example.com/image.jpg';
-
-        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\'>'));
-        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\' />'));
-        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\' />Text'));
-        $this->assertEquals($expected, firstImage('<img src=\'http://example.com/image.jpg\' /> Text'));
-
-        $this->assertEquals('ftp://example.com/image.jpg', firstImage('<img src=\'ftp://example.com/image.jpg\'>'));
-        $this->assertEquals('https://example.com/image.jpg', firstImage('<img src=\'https://example.com/image.jpg\'>'));
-        $this->assertEquals('http://www.example.com/image.jpg', firstImage('<img src=\'http://www.example.com/image.jpg\'>'));
-    }
-
-    /**
      * Test for `getConfig()` global function
      * @test
      */

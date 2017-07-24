@@ -1,7 +1,9 @@
 # 2.x branch
 ## 2.19 branch
 ### 2.19.3
-* added `getConfigOrFail()` global function.
+* added `getConfigOrFail()` global function;
+* `firstImage()` is no longer a global function, but a method provided by the
+    `GetPreviewFromTextTrait` class.
 
 ### 2.19.2
 * fixed bug in the list of active pages for each page category;

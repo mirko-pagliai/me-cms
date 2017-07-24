@@ -25,6 +25,7 @@ namespace MeCms\Model\Table\Traits;
 
 use Cake\Filesystem\Folder;
 use MeTools\Utility\Youtube;
+use Sunra\PhpSimple\HtmlDomParser;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -34,15 +35,41 @@ use Thumber\Utility\ThumbCreator;
 trait GetPreviewFromTextTrait
 {
     /**
+     * Internal method to get the first image from an html string
+     * @param string $html Html string
+     * @return string|bool Image or `false`
+     * @since 2.19.3
+     */
+    protected function firstImage($html)
+    {
+        $dom = HtmlDomParser::str_get_html($html);
+
+        if (!$dom) {
+            return false;
+        }
+
+        $img = $dom->find('img', 0);
+
+        if (empty($img->src) ||
+            !in_array(strtolower(pathinfo($img->src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])
+        ) {
+            return false;
+        }
+
+        return $img->src;
+    }
+
+    /**
      * Gets the first available image or the preview of the first YouTube video
      * @param string $text The text within which to search
      * @return array|null Array with `preview`, `width` and `height`
      *  properties or `null` if there is not no preview
+     * @uses firstImage()
      * @uses getPreviewSize()
      */
     public function getPreview($text)
     {
-        $preview = firstImage($text);
+        $preview = $this->firstImage($text);
 
         if ($preview && !isUrl($preview)) {
             //If is relative path

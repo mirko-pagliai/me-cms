@@ -76,6 +76,60 @@ class GetPreviewFromTextTraitTest extends TestCase
     }
 
     /**
+     * Test for `firstImage()` method
+     * @test
+     */
+    public function testFirstImage()
+    {
+        $firstImageMethod = function ($text) {
+            return $this->invokeMethod($this->Posts, 'firstImage', [$text]);
+        };
+
+        $this->assertFalse($firstImageMethod('Text'));
+
+        $this->assertFalse($firstImageMethod('<img src=\'\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'a\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'a.a\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'data:\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'text.txt\'>'));
+
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpeg', $firstImageMethod('<img src=\'image.jpeg\'>'));
+        $this->assertEquals('image.gif', $firstImageMethod('<img src=\'image.gif\'>'));
+        $this->assertEquals('image.png', $firstImageMethod('<img src=\'image.png\'>'));
+
+        $this->assertEquals('IMAGE.jpg', $firstImageMethod('<img src=\'IMAGE.jpg\'>'));
+        $this->assertEquals('image.JPG', $firstImageMethod('<img src=\'image.JPG\'>'));
+        $this->assertEquals('IMAGE.JPG', $firstImageMethod('<img src=\'IMAGE.JPG\'>'));
+
+        $this->assertEquals('/image.jpg', $firstImageMethod('<img src=\'/image.jpg\'>'));
+        $this->assertEquals('subdir/image.jpg', $firstImageMethod('<img src=\'subdir/image.jpg\'>'));
+        $this->assertEquals('/subdir/image.jpg', $firstImageMethod('<img src=\'/subdir/image.jpg\'>'));
+
+        //Some attributes
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt=\'\' src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt="" src="image.jpg">'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt="" class="my-class" src="image.jpg">'));
+
+        //Two images
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\' /><img src=\'image.gif\' />'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'><img src=\'image.gif\'>'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'> Text <img src=\'image.gif\'>'));
+
+        $expected = 'http://example.com/image.jpg';
+
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\'>'));
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' />'));
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' />Text'));
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' /> Text'));
+
+        $this->assertEquals('ftp://example.com/image.jpg', $firstImageMethod('<img src=\'ftp://example.com/image.jpg\'>'));
+        $this->assertEquals('https://example.com/image.jpg', $firstImageMethod('<img src=\'https://example.com/image.jpg\'>'));
+        $this->assertEquals('http://www.example.com/image.jpg', $firstImageMethod('<img src=\'http://www.example.com/image.jpg\'>'));
+    }
+
+    /**
      * Test for `getPreviewSize()` method
      * @test
      */

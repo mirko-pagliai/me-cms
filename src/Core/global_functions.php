@@ -21,33 +21,6 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 use Cake\Core\Configure;
-use Sunra\PhpSimple\HtmlDomParser;
-
-if (!function_exists('firstImage')) {
-    /**
-     * Returns the first image from an html string
-     * @param string $html Html
-     * @return string|bool Image or `false`
-     */
-    function firstImage($html)
-    {
-        $dom = HtmlDomParser::str_get_html($html);
-
-        if (!$dom) {
-            return false;
-        }
-
-        $img = $dom->find('img', 0);
-
-        if (empty($img->src) ||
-            !in_array(strtolower(pathinfo($img->src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])
-        ) {
-            return false;
-        }
-
-        return $img->src;
-    }
-}
 
 if (!function_exists('getConfig')) {
     /**
