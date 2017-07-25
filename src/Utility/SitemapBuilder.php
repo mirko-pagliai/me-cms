@@ -12,6 +12,7 @@
  */
 namespace MeCms\Utility;
 
+use Cake\Core\App;
 use Cake\Routing\Router;
 use Cake\Utility\Xml;
 use MeCms\Core\Plugin;
@@ -26,10 +27,10 @@ class SitemapBuilder
      * @param string $plugin Plugin
      * @return array Array with classes and methods names
      */
-    protected static function _getMethods($plugin)
+    protected static function getMethods($plugin)
     {
         //Sets the class name
-        $class = sprintf('\%s\Utility\Sitemap', $plugin);
+        $class = App::classname($plugin . '.Sitemap', 'Utility');
 
         //Gets all methods from the `Sitemap` class of the plugin
         $methods = getChildMethods($class);
@@ -71,7 +72,7 @@ class SitemapBuilder
      * @return string
      * @see MeCms\Utility\Sitemap
      * @uses MeCms\Core\Plugin::all()
-     * @uses _getMethods()
+     * @uses getMethods()
      * @uses parse()
      */
     public static function generate()
@@ -81,11 +82,11 @@ class SitemapBuilder
 
         foreach (Plugin::all() as $plugin) {
             //Gets all methods from `Sitemap` class of the plugin
-            $methods = self::_getMethods($plugin);
+            $methods = self::getMethods($plugin);
 
             //Calls each method
             foreach ($methods as $method) {
-                $url = am($url, call_user_func([$method['class'], $method['name']]));
+                $url = array_merge($url, (array)call_user_func([$method['class'], $method['name']]));
             }
         }
 
