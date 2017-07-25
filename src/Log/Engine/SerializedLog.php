@@ -35,7 +35,7 @@ class SerializedLog extends FileLog
      * @param string $message The message you want to log.
      * @return object
      */
-    protected function _getLogAsObject($level, $message)
+    protected function getLogAsObject($level, $message)
     {
         $log['level'] = $level;
         $log['datetime'] = date('Y-m-d H:i:s');
@@ -92,7 +92,7 @@ class SerializedLog extends FileLog
      * @param string $message The message you want to log.
      * @param array $context Additional information about the logged message
      * @return bool success of write
-     * @uses _getLogAsObject()
+     * @uses getLogAsObject()
      */
     public function log($level, $message, array $context = [])
     {
@@ -118,7 +118,7 @@ class SerializedLog extends FileLog
         $pathname = $this->_path . $filename;
         $mask = $this->_config['mask'];
 
-        $data = $this->_getLogAsObject($level, $message);
+        $data = $this->getLogAsObject($level, $message);
 
         if (empty($mask)) {
             return $parent && (new SerializedArray($pathname))->prepend($data);
