@@ -73,7 +73,7 @@ class InstallShell extends BaseInstallShell
      * Gets others plugins that have the `InstallShell` class
      * @return array
      */
-    protected function _getOtherPlugins()
+    protected function getOtherPlugins()
     {
         return collection(Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]))
             ->filter(function ($plugin) {
@@ -88,7 +88,7 @@ class InstallShell extends BaseInstallShell
      * Executes all available tasks
      * @return void
      * @uses MeTools\Shell\InstallShell::all()
-     * @uses _getOtherPlugins()
+     * @uses getOtherPlugins()
      * @uses copyConfig()
      * @uses createAdmin()
      * @uses createGroups()
@@ -117,7 +117,7 @@ class InstallShell extends BaseInstallShell
             $this->fixKcfinder();
         }
 
-        if ($this->_getOtherPlugins()) {
+        if ($this->getOtherPlugins()) {
             $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
             if (in_array($ask, ['Y', 'y'])) {
                 $this->runFromOtherPlugins();
@@ -240,13 +240,13 @@ class InstallShell extends BaseInstallShell
     /**
      * Runs the `InstallShell::all()` method from other plugins
      * @return array Array of the cli command exit code. 0 is success
-     * @uses _getOtherPlugins()
+     * @uses getOtherPlugins()
      */
     public function runFromOtherPlugins()
     {
         $executed = [];
 
-        foreach ($this->_getOtherPlugins() as $plugin) {
+        foreach ($this->getOtherPlugins() as $plugin) {
             $executed[$plugin] = $this->dispatchShell([
                 'command' => [sprintf('%s.install', $plugin), 'all'],
                 'extra' => $this->params,
