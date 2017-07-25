@@ -26,8 +26,8 @@ class View extends AppView
 {
     /**
      * Title for layout.
-     * To get the title, you should use the `_getTitleForLayout()` method
-     * @see _getTitleForLayout()
+     * To get the title, you should use the `getTitleForLayout()` method
+     * @see getTitleForLayout()
      * @var string
      */
     protected $titleForLayout;
@@ -59,7 +59,7 @@ class View extends AppView
      * @return string Title
      * @uses $titleForLayout
      */
-    protected function _getTitleForLayout()
+    protected function getTitleForLayout()
     {
         if (!empty($this->titleForLayout)) {
             return $this->titleForLayout;
@@ -116,12 +116,12 @@ class View extends AppView
      * @return mixed Rendered output, or false on error
      * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_renderLayout
      * @uses MeTools\View\Helper\HtmlHelper::meta()
-     * @uses _getTitleForLayout()
+     * @uses getTitleForLayout()
      */
     public function renderLayout($content, $layout = null)
     {
         //Sets the title for layout
-        $this->assign('title', $this->_getTitleForLayout());
+        $this->assign('title', $this->getTitleForLayout());
 
         //Adds the favicon
         if (is_readable(WWW_ROOT . 'favicon.ico')) {
