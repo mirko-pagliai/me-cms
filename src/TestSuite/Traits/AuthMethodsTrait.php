@@ -60,7 +60,7 @@ trait AuthMethodsTrait
     }
 
     /**
-     * Internal method to set the user group
+     * Internal method to set the user ID
      * @param int $id User ID
      * @return void
      * @uses $Controller
