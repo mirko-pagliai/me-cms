@@ -31,7 +31,7 @@ class AppView extends View
      * Internal method to set some blocks
      * @return void
      * @uses $userbar
-     * @uses MeCms\View\View::_getTitleForLayout()
+     * @uses MeCms\View\View::getTitleForLayout()
      * @uses MeTools\View\Helper\HtmlHelper::meta()
      * @uses MeTools\View\Helper\LibraryHelper::analytics()
      * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
@@ -60,7 +60,7 @@ class AppView extends View
 
         //Sets some Facebook's tags
         $this->Html->meta([
-            'content' => $this->_getTitleForLayout(),
+            'content' => $this->getTitleForLayout(),
             'property' => 'og:title',
         ]);
         $this->Html->meta([
