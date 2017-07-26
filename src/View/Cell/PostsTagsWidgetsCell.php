@@ -48,7 +48,7 @@ class PostsTagsWidgetsCell extends Cell
      * @return array
      * @throws InternalErrorException
      */
-    protected function _getFontSizes(array $style)
+    protected function getFontSizes(array $style)
     {
         //Maximum and minimun font sizes we want to use
         $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
@@ -70,7 +70,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return void
-     * @uses _getFontSizes()
+     * @uses getFontSizes()
      */
     public function popular(
         $limit = 10,
@@ -94,7 +94,7 @@ class PostsTagsWidgetsCell extends Cell
 
         if ($style && is_array($style)) {
             //Updates maximum and minimun font sizes we want to use
-            list($maxFont, $minFont) = $this->_getFontSizes($style);
+            list($maxFont, $minFont) = $this->getFontSizes($style);
 
             //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
