@@ -13,7 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
 use MeTools\TestSuite\IntegrationTestCase as BaseIntegrationTestCase;
 
 /**
@@ -27,7 +26,49 @@ use MeTools\TestSuite\IntegrationTestCase as BaseIntegrationTestCase;
  */
 class IntegrationTestCase extends BaseIntegrationTestCase
 {
-    use AuthMethodsTrait;
+    /**
+     * A controller instance
+     * @var object
+     */
+    protected $Controller;
+
+    /**
+     * Asserts that groups are authorized
+     * @param array $values Group name as key and boolean as value
+     * @return void
+     * @uses $Controller
+     * @uses setUserGroup()
+     */
+    public function assertGroupsAreAuthorized($values)
+    {
+        if (empty($this->Controller)) {
+            $this->fail('The property `$this->Controller` has not been set');
+        }
+
+        foreach ($values as $group => $isAllowed) {
+            $this->setUserGroup($group);
+            $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
+        }
+    }
+
+    /**
+     * Asserts that users are authorized
+     * @param array $values UserID as key and boolean as value
+     * @return void
+     * @uses $Controller
+     * @uses setUserId()
+     */
+    public function assertUsersAreAuthorized($values)
+    {
+        if (empty($this->Controller)) {
+            $this->fail('The property `$this->Controller` has not been set');
+        }
+
+        foreach ($values as $id => $isAllowed) {
+            $this->setUserId($id);
+            $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
+        }
+    }
 
     /**
      * Adds additional event spies to the controller/view event manager
@@ -41,5 +82,35 @@ class IntegrationTestCase extends BaseIntegrationTestCase
 
         //Sets key for cookies
         $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
+    }
+
+    /**
+     * Internal method to set the user ID
+     * @param int $id User ID
+     * @return void
+     * @uses $Controller
+     */
+    protected function setUserId($id)
+    {
+        if (!empty($this->Controller)) {
+            $this->Controller->Auth->setUser(['id' => $id]);
+        }
+
+        $this->session(['Auth.User.id' => $id]);
+    }
+
+    /**
+     * Internal method to set the user group
+     * @param string $group Group name
+     * @return void
+     * @uses $Controller
+     */
+    protected function setUserGroup($group)
+    {
+        if (!empty($this->Controller)) {
+            $this->Controller->Auth->setUser(['group' => ['name' => $group]]);
+        }
+
+        $this->session(['Auth.User.group.name' => $group]);
     }
 }
