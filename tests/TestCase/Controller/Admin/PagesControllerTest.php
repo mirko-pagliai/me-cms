@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PagesController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PagesControllerTest class
  */
 class PagesControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\PagesController
      */
@@ -81,17 +68,6 @@ class PagesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Pages);
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
@@ -99,17 +75,14 @@ class PagesControllerTest extends IntegrationTestCase
     {
         foreach (['add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
-            $this->assertResponseOk();
             $this->assertNotEmpty($this->viewVariable('categories'));
         }
 
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
         $this->assertNotEmpty($this->viewVariable('categories'));
 
         //`indexStatics` still works
         $this->get(array_merge($this->url, ['action' => 'indexStatics']));
-        $this->assertResponseOk();
         $this->assertEmpty($this->viewVariable('categories'));
     }
 
@@ -125,12 +98,11 @@ class PagesControllerTest extends IntegrationTestCase
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
             $this->assertRedirect(['controller' => 'PagesCategories', 'action' => 'index']);
-            $this->assertSession('You must first create a category', 'Flash.flash.0.message');
+            $this->assertFlashMessage('You must first create a category');
         }
 
         //`indexStatics` still works
         $this->get(array_merge($this->url, ['action' => 'indexStatics']));
-        $this->assertResponseOk();
         $this->assertEmpty($this->viewVariable('categories'));
     }
 
@@ -191,17 +163,12 @@ class PagesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/index.ctp');
 
         $pagesFromView = $this->viewVariable('pages');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $pagesFromView);
         $this->assertNotEmpty($pagesFromView);
-
-        foreach ($pagesFromView as $page) {
-            $this->assertInstanceof('MeCms\Model\Entity\Page', $page);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pagesFromView);
     }
 
     /**
@@ -211,17 +178,12 @@ class PagesControllerTest extends IntegrationTestCase
     public function testIndexStatics()
     {
         $this->get(array_merge($this->url, ['action' => 'indexStatics']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/index_statics.ctp');
 
         $pagesFromView = $this->viewVariable('pages');
-        $this->assertTrue(is_array($pagesFromView));
         $this->assertNotEmpty($pagesFromView);
-
-        foreach ($pagesFromView as $page) {
-            $this->assertInstanceof('Cake\ORM\Entity', $page);
-        }
+        $this->assertInstanceof('Cake\ORM\Entity', $pagesFromView);
     }
 
     /**
@@ -233,13 +195,12 @@ class PagesControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/add.ctp');
 
         $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
         $this->assertNotEmpty($pageFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
 
         //POST request. Data are valid
         $this->post($url, [
@@ -249,17 +210,16 @@ class PagesControllerTest extends IntegrationTestCase
             'text' => 'new page text',
         ]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
         $this->assertNotEmpty($pageFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
     }
 
     /**
@@ -271,13 +231,12 @@ class PagesControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/edit.ctp');
 
         $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
         $this->assertNotEmpty($pageFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
 
         //Checks if the `created` field has been properly formatted
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $pageFromView->created);
@@ -285,17 +244,16 @@ class PagesControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
         $this->assertNotEmpty($pageFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
     }
 
     /**
@@ -306,6 +264,6 @@ class PagesControllerTest extends IntegrationTestCase
     {
         $this->post(array_merge($this->url, ['action' => 'delete', 1]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 }

@@ -1,29 +1,19 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * TreeBehaviorTest class
@@ -46,21 +36,20 @@ class TreeBehaviorTest extends TestCase
     {
         $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $query = $table->find('treeList');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $categories = $table->find('treeList')->toArray();
         $this->assertEquals([
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
-        ], ($query->toArray()));
+        ], $categories);
 
-        $query = $table->find('treeList', ['spacer' => '_']);
+        $categories = $table->find('treeList', ['spacer' => '_'])->toArray();
         $this->assertEquals([
             1 => 'First post category',
             3 => '_Sub post category',
             4 => '__Sub sub post category',
             2 => 'Another post category',
-        ], $query->toArray());
+        ], $categories);
     }
 }

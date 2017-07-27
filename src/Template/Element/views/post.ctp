@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
 
@@ -54,7 +44,7 @@
                 echo $this->Html->div('content-date', __d(
                     'me_cms',
                     'Posted on {0}',
-                    $post->created->i18nFormat(getConfig('main.datetime.long'))
+                    $post->created->i18nFormat(getConfigOrFail('main.datetime.long'))
                 ), ['icon' => 'clock-o']);
             }
             ?>
@@ -76,11 +66,13 @@
                 'html' => false,
             ]);
         //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview']) && getConfig('default.truncate_to')) {
-            echo $truncatedText = $this->Text->truncate($text, getConfig('default.truncate_to'), [
+        } elseif (!$this->request->isAction(['view', 'preview'])) {
+            $truncatedText = $this->Text->truncate($text, getConfigOrFail('default.truncate_to'), [
                 'exact' => false,
                 'html' => true,
             ]);
+
+            echo $truncatedText;
         } else {
             echo $text;
         }
@@ -110,10 +102,8 @@
     </div>
 
     <?php
-    if (getConfig('post.shareaholic') && getConfig('shareaholic.app_id') &&
-        $this->request->isAction('view', 'Posts') && !$this->request->isAjax()
-    ) {
-        echo $this->Html->shareaholic(getConfig('shareaholic.app_id'));
+    if (getConfig('post.shareaholic') && $this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
+        echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
 </div>

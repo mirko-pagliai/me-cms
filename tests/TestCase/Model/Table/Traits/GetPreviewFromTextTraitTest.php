@@ -1,55 +1,31 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Table\PostsTable;
+use MeTools\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
-use Reflection\ReflectionTrait;
 
 /**
  * GetPreviewFromTextTraitTest class
  */
 class GetPreviewFromTextTraitTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Model\Table\PostsTable
      */
     protected $Posts;
-
-    /**
-     * Internal method to invoke the `getPreview()` method
-     * @param string $text The text within which to search
-     * @return object|null Object with `preview`, `width` and `height`
-     *  properties or `null` if there is not no preview
-     */
-    protected function getPreview($text)
-    {
-        return $this->invokeMethod($this->Posts, 'getPreview', [$text]);
-    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -65,14 +41,57 @@ class GetPreviewFromTextTraitTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
+     * Test for `firstImage()` method
+     * @test
      */
-    public function tearDown()
+    public function testFirstImage()
     {
-        parent::tearDown();
+        $firstImageMethod = function ($text) {
+            return $this->invokeMethod($this->Posts, 'firstImage', [$text]);
+        };
 
-        unset($this->Posts);
+        $this->assertFalse($firstImageMethod('Text'));
+
+        $this->assertFalse($firstImageMethod('<img src=\'\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'a\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'a.a\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'data:\'>'));
+        $this->assertFalse($firstImageMethod('<img src=\'text.txt\'>'));
+
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpeg', $firstImageMethod('<img src=\'image.jpeg\'>'));
+        $this->assertEquals('image.gif', $firstImageMethod('<img src=\'image.gif\'>'));
+        $this->assertEquals('image.png', $firstImageMethod('<img src=\'image.png\'>'));
+
+        $this->assertEquals('IMAGE.jpg', $firstImageMethod('<img src=\'IMAGE.jpg\'>'));
+        $this->assertEquals('image.JPG', $firstImageMethod('<img src=\'image.JPG\'>'));
+        $this->assertEquals('IMAGE.JPG', $firstImageMethod('<img src=\'IMAGE.JPG\'>'));
+
+        $this->assertEquals('/image.jpg', $firstImageMethod('<img src=\'/image.jpg\'>'));
+        $this->assertEquals('subdir/image.jpg', $firstImageMethod('<img src=\'subdir/image.jpg\'>'));
+        $this->assertEquals('/subdir/image.jpg', $firstImageMethod('<img src=\'/subdir/image.jpg\'>'));
+
+        //Some attributes
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt=\'\' src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt="" src="image.jpg">'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img alt="" class="my-class" src="image.jpg">'));
+
+        //Two images
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\' /><img src=\'image.gif\' />'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'><img src=\'image.gif\'>'));
+        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'> Text <img src=\'image.gif\'>'));
+
+        $expected = 'http://example.com/image.jpg';
+
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\'>'));
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' />'));
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' />Text'));
+        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' /> Text'));
+
+        $this->assertEquals('ftp://example.com/image.jpg', $firstImageMethod('<img src=\'ftp://example.com/image.jpg\'>'));
+        $this->assertEquals('https://example.com/image.jpg', $firstImageMethod('<img src=\'https://example.com/image.jpg\'>'));
+        $this->assertEquals('http://www.example.com/image.jpg', $firstImageMethod('<img src=\'http://www.example.com/image.jpg\'>'));
     }
 
     /**
@@ -91,6 +110,10 @@ class GetPreviewFromTextTraitTest extends TestCase
      */
     public function testGetPreview()
     {
+        $getPreviewMethod = function ($text) {
+            return $this->invokeMethod($this->Posts, 'getPreview', [$text]);
+        };
+
         $this->Posts = $this->getMockBuilder(PostsTable::class)
             ->setMethods(['getPreviewSize'])
             ->getMock();
@@ -98,17 +121,14 @@ class GetPreviewFromTextTraitTest extends TestCase
         $this->Posts->method('getPreviewSize')
             ->will($this->returnValue([400, 300]));
 
-        $result = $this->getPreview(null);
-        $this->assertNull($result);
+        $this->assertNull($getPreviewMethod(null));
 
-        $result = $this->getPreview('text');
-        $this->assertNull($result);
+        $this->assertNull($getPreviewMethod('text'));
 
         //No existing file
-        $result = $this->getPreview('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />');
-        $this->assertNull($result);
+        $this->assertNull($getPreviewMethod('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />'));
 
-        $result = $this->getPreview(
+        $result = $getPreviewMethod(
             '<img src=\'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg\' />'
         );
         $this->assertEquals([
@@ -117,18 +137,15 @@ class GetPreviewFromTextTraitTest extends TestCase
             'height' => 300,
         ], $result);
 
-        foreach ([
-            'image.jpg',
-            WWW_ROOT . 'img' . DS . 'image.jpg',
-        ] as $image) {
-            $result = $this->getPreview('<img src=\'' . $image . '\' />');
+        foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
+            $result = $getPreviewMethod('<img src=\'' . $image . '\' />');
             $this->assertEquals(['preview', 'width', 'height'], array_keys($result));
             $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $result['preview']);
             $this->assertEquals(400, $result['width']);
             $this->assertEquals(300, $result['height']);
         }
 
-        $result = $this->getPreview('[youtube]6z4KK7RWjmk[/youtube]');
+        $result = $getPreviewMethod('[youtube]6z4KK7RWjmk[/youtube]');
         $this->assertEquals([
             'preview' => Youtube::getPreview('6z4KK7RWjmk'),
             'width' => 400,

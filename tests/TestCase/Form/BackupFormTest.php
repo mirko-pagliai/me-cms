@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Form;
 
 use Cake\Network\Exception\InternalErrorException;
-use Cake\TestSuite\TestCase;
 use DatabaseBackup\Utility\BackupExport;
 use MeCms\Form\BackupForm;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * BackupFormTest class
  */
 class BackupFormTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \DatabaseBackup\Utility\BackupExport
      */
@@ -66,17 +53,6 @@ class BackupFormTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->BackupExport, $this->BackupForm);
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
@@ -87,9 +63,8 @@ class BackupFormTest extends TestCase
         $this->assertEmpty($this->BackupForm->errors());
 
         $this->assertFalse($this->BackupForm->validate([]));
-        $this->assertEquals([
-            'filename' => ['_required' => 'This field is required'],
-        ], $this->BackupForm->errors());
+        $errors = $this->BackupForm->errors();
+        $this->assertEquals(['filename' => ['_required' => 'This field is required']], $errors);
     }
 
     /**
@@ -107,9 +82,8 @@ class BackupFormTest extends TestCase
             'file.gif',
         ] as $value) {
             $this->assertFalse($this->BackupForm->validate(['filename' => $value]));
-            $this->assertEquals([
-                'filename' => ['extension' => 'Valid extensions: sql, sql.gz, sql.bz2'],
-            ], $this->BackupForm->errors());
+            $errors = $this->BackupForm->errors();
+            $this->assertEquals(['filename' => ['extension' => 'Valid extensions: sql, sql.gz, sql.bz2']], $errors);
         }
 
         foreach (['file.sql', 'file.sql.bz2', 'file.sql.gz'] as $value) {
@@ -118,26 +92,25 @@ class BackupFormTest extends TestCase
         }
 
         $this->assertFalse($this->BackupForm->validate(['filename' => str_repeat('a', 252) . '.sql']));
-        $this->assertEquals([
-            'filename' => ['maxLength' => 'Must be at most 255 chars'],
-        ], $this->BackupForm->errors());
+        $errors = $this->BackupForm->errors();
+        $this->assertEquals(['filename' => ['maxLength' => 'Must be at most 255 chars']], $errors);
 
         $this->assertTrue($this->BackupForm->validate(['filename' => str_repeat('a', 251) . '.sql']));
         $this->assertEmpty($this->BackupForm->errors());
     }
 
     /**
-     * Tests for `_getBackupExportInstance()` method
+     * Tests for `getBackupExportInstance()` method
      * @test
      */
     public function testGetBackupExportInstance()
     {
-        $this->assertEmpty($this->getProperty($this->BackupForm, '_BackupExport'));
+        $this->assertEmpty($this->getProperty($this->BackupForm, 'BackupExport'));
 
-        $instance = $this->invokeMethod($this->BackupForm, '_getBackupExportInstance');
+        $instance = $this->invokeMethod($this->BackupForm, 'getBackupExportInstance');
         $this->assertInstanceOf('DatabaseBackup\Utility\BackupExport', $instance);
 
-        $this->assertEquals($instance, $this->getProperty($this->BackupForm, '_BackupExport'));
+        $this->assertEquals($instance, $this->getProperty($this->BackupForm, 'BackupExport'));
     }
 
     /**
@@ -147,11 +120,11 @@ class BackupFormTest extends TestCase
     public function testExecute()
     {
         $this->BackupForm = $this->getMockBuilder(get_class($this->BackupForm))
-            ->setMethods(['_getBackupExportInstance'])
+            ->setMethods(['getBackupExportInstance'])
             ->getMock();
 
         $this->BackupForm->expects($this->atLeastOnce())
-            ->method('_getBackupExportInstance')
+            ->method('getBackupExportInstance')
             ->will($this->returnCallback(function () {
                 $this->BackupExport->method('export')
                     ->will($this->returnValue(true));
@@ -162,7 +135,7 @@ class BackupFormTest extends TestCase
         $this->assertTrue($this->BackupForm->execute(['filename' => 'test.sql']));
 
         $this->BackupForm->expects($this->atLeastOnce())
-            ->method('_getBackupExportInstance')
+            ->method('getBackupExportInstance')
             ->will($this->throwException(new InternalErrorException));
 
         $this->assertFalse($this->BackupForm->execute(['filename' => 'test.sql']));

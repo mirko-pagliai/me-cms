@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\View\View;
 
@@ -41,12 +31,12 @@ class AppView extends View
      * Internal method to set some blocks
      * @return void
      * @uses $userbar
-     * @uses MeCms\View\View::_getTitleForLayout()
+     * @uses MeCms\View\View::getTitleForLayout()
      * @uses MeTools\View\Helper\HtmlHelper::meta()
      * @uses MeTools\View\Helper\LibraryHelper::analytics()
      * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
      */
-    protected function _setBlocks()
+    protected function setBlocks()
     {
         //Sets the "theme color" (the toolbar color for some mobile browser)
         if (getConfig('default.toolbar_color')) {
@@ -70,7 +60,7 @@ class AppView extends View
 
         //Sets some Facebook's tags
         $this->Html->meta([
-            'content' => $this->_getTitleForLayout(),
+            'content' => $this->getTitleForLayout(),
             'property' => 'og:title',
         ]);
         $this->Html->meta([
@@ -113,12 +103,12 @@ class AppView extends View
      * @return mixed Rendered output, or false on error
      * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_renderLayout
      * @uses MeCms\View\View::renderLayout()
-     * @uses _setBlocks()
+     * @uses setBlocks()
      * @uses userbar()
      */
     public function renderLayout($content, $layout = null)
     {
-        $this->_setBlocks();
+        $this->setBlocks();
 
         //Assign the userbar
         $this->assign('userbar', implode(PHP_EOL, array_map(function ($element) {

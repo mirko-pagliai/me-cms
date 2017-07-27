@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\View\Cell;
 
@@ -58,7 +48,7 @@ class PostsTagsWidgetsCell extends Cell
      * @return array
      * @throws InternalErrorException
      */
-    protected function _getFontSizes(array $style)
+    protected function getFontSizes(array $style)
     {
         //Maximum and minimun font sizes we want to use
         $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
@@ -80,7 +70,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return void
-     * @uses _getFontSizes()
+     * @uses getFontSizes()
      */
     public function popular(
         $limit = 10,
@@ -104,7 +94,7 @@ class PostsTagsWidgetsCell extends Cell
 
         if ($style && is_array($style)) {
             //Updates maximum and minimun font sizes we want to use
-            list($maxFont, $minFont) = $this->_getFontSizes($style);
+            list($maxFont, $minFont) = $this->getFontSizes($style);
 
             //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);

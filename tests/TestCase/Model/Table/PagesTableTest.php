@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
@@ -27,7 +17,7 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PagesTableTest class
@@ -76,17 +66,6 @@ class PagesTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Pages);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -110,11 +89,8 @@ class PagesTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Pages = $this->getMockForModel(get_class($this->Pages), ['setNextToBePublished']);
-
-        $this->Pages->expects($this->once())
-            ->method('setNextToBePublished');
-
+        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['setNextToBePublished']);
+        $this->Pages->expects($this->once())->method('setNextToBePublished');
         $this->Pages->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
@@ -124,11 +100,8 @@ class PagesTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Pages = $this->getMockForModel(get_class($this->Pages), ['setNextToBePublished']);
-
-        $this->Pages->expects($this->once())
-            ->method('setNextToBePublished');
-
+        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['setNextToBePublished']);
+        $this->Pages->expects($this->once())->method('setNextToBePublished');
         $this->Pages->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
@@ -138,16 +111,8 @@ class PagesTableTest extends TestCase
      */
     public function testBeforeSave()
     {
-        $this->Pages = $this->getMockBuilder(get_class($this->Pages))
-            ->setMethods(['getPreviewSize'])
-            ->setConstructorArgs([[
-                'table' => $this->Pages->getTable(),
-                'connection' => $this->Pages->getConnection(),
-            ]])
-            ->getMock();
-
-        $this->Pages->method('getPreviewSize')
-            ->will($this->returnValue([400, 300]));
+        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['getPreviewSize']);
+        $this->Pages->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $this->Pages->newEntity($this->example);
@@ -190,7 +155,9 @@ class PagesTableTest extends TestCase
             'text' => 'My text',
         ]);
         $this->assertFalse($this->Pages->save($entity));
-        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'category_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -226,7 +193,6 @@ class PagesTableTest extends TestCase
         $page = $this->Pages->findById(1)->contain(['Categories'])->first();
 
         $this->assertNotEmpty($page->category);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $page->category);
         $this->assertEquals(4, $page->category->id);
     }
@@ -237,19 +203,12 @@ class PagesTableTest extends TestCase
      */
     public function testFind()
     {
-        $query = $this->Pages->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
-
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', time() - 3600, $this->Pages->cache);
         Cache::write('someData', 'someValue', $this->Pages->cache);
 
-        $this->assertNotEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
-        $this->assertNotEmpty(Cache::read('someData', $this->Pages->cache));
-
         //The cache will now be cleared
-        $query = $this->Pages->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->Pages->find();
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
         $this->assertEmpty(Cache::read('someData', $this->Pages->cache));

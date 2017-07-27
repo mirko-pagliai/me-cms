@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         MeCms\Controller\Admin\BackupsController::add()
  */
 namespace MeCms\Form;
@@ -36,7 +26,7 @@ class BackupForm extends Form
     /**
      * @var \DatabaseBackup\Utility\BackupExport
      */
-    protected $_BackupExport;
+    protected $BackupExport;
 
     /**
      * Defines the validator using the methods on Cake\Validation\Validator or
@@ -60,17 +50,17 @@ class BackupForm extends Form
     }
 
     /**
-     * Gets a `BackupExport` instance
+     * Internal method to get a `BackupExport` instance
      * @return \DatabaseBackup\Utility\BackupExport
-     * @uses $_BackupExport
+     * @uses $BackupExport
      */
-    protected function _getBackupExportInstance()
+    protected function getBackupExportInstance()
     {
-        if (empty($this->_BackupExport)) {
-            $this->_BackupExport = new BackupExport;
+        if (empty($this->BackupExport)) {
+            $this->BackupExport = new BackupExport;
         }
 
-        return $this->_BackupExport;
+        return $this->BackupExport;
     }
 
     /**
@@ -79,12 +69,12 @@ class BackupForm extends Form
      * @return string|bool Filename or `false` on failure
      * @uses DatabaseBackup\Utility\BackupExport::filename()
      * @uses DatabaseBackup\Utility\BackupExport::export()
-     * @uses _getBackupExportInstance()
+     * @uses getBackupExportInstance()
      */
     protected function _execute(array $data)
     {
         try {
-            return $this->_getBackupExportInstance()
+            return $this->getBackupExportInstance()
                 ->filename($data['filename'])
                 ->export();
         } catch (InternalErrorException $e) {

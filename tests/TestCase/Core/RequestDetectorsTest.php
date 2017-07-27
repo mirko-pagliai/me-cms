@@ -1,30 +1,20 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
 use Cake\Network\Request;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * RequestDetectorsTest class
@@ -47,21 +37,9 @@ class RequestDetectorsTest extends TestCase
         parent::setUp();
 
         //Creates request
-        $this->Request = new Request;
-        $this->Request = $this->Request->withParam('action', 'add')
+        $this->Request = (new Request)->withParam('action', 'add')
             ->withParam('controller', 'myController')
             ->withParam('prefix', 'myPrefix');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Request);
     }
 
     /**
@@ -78,10 +56,10 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isView());
 
         $this->assertTrue($this->Request->is('add'));
-        $this->assertFalse($this->Request->is('delete'));
-        $this->assertFalse($this->Request->is('edit'));
-        $this->assertFalse($this->Request->is('index'));
-        $this->assertFalse($this->Request->is('view'));
+
+        foreach (['delete', 'edit', 'index', 'view'] as $action) {
+            $this->assertFalse($this->Request->is($action));
+        }
 
         $this->assertTrue($this->Request->is(['add', 'edit']));
         $this->assertFalse($this->Request->is(['delete', 'edit']));
@@ -96,9 +74,7 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isAdmin());
         $this->assertFalse($this->Request->is('admin'));
 
-        //Creates request
-        $this->Request = new Request;
-        $this->Request = $this->Request->withParam('prefix', ADMIN_PREFIX);
+        $this->Request = (new Request)->withParam('prefix', ADMIN_PREFIX);
 
         $this->assertTrue($this->Request->isAdmin());
         $this->assertTrue($this->Request->is('admin'));
@@ -181,20 +157,17 @@ class RequestDetectorsTest extends TestCase
 
         Configure::write(ME_CMS . '.default.offline', true);
 
-        //Creates request
         $this->Request = new Request;
 
         $this->assertTrue($this->Request->isOffline());
         $this->assertTrue($this->Request->is('offline'));
 
-        //Creates request
         $this->Request = new Request;
         $this->Request = $this->Request->withParam('prefix', ADMIN_PREFIX);
 
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));
 
-        //Creates request
         $this->Request = new Request;
         $this->Request = $this->Request->withParam('action', 'offline');
 

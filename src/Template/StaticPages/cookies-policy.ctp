@@ -1,6 +1,18 @@
 <?php
-    $this->assign('title', $page->title = 'Cookies policy');
-    ob_start();
+/**
+ * This file is part of me-cms.
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
+
+$this->assign('title', $page->title = 'Cookies policy');
+ob_start();
 ?>
 <p>Effective date: Genuary 28, 2016.</p>
 
@@ -177,7 +189,7 @@
     if (getConfig('default.contact_us')) {
         $url = ['_name' => 'contactUs'];
     } else {
-        $url = $this->Recaptcha->mailUrl(getConfig('email.webmaster'));
+        $url = $this->Recaptcha->mailUrl(getConfigOrFail('email.webmaster'));
     }
 
     echo $this->Html->link('here', $url);

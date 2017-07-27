@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller;
 
@@ -28,13 +18,10 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Controller\UsersController;
 use MeCms\Mailer\UserMailer;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
-use MeCms\TestSuite\Traits\LogsMethodsTrait;
-use Reflection\ReflectionTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 use Tokens\Controller\Component\TokenComponent;
 
 /**
@@ -42,10 +29,6 @@ use Tokens\Controller\Component\TokenComponent;
  */
 class UsersControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-    use LogsMethodsTrait;
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Controller\UsersController
      */
@@ -176,26 +159,26 @@ class UsersControllerTest extends IntegrationTestCase
 
         //Deletes all tokens
         TableRegistry::get('Tokens.Tokens')->deleteAll([]);
-
-        unset($this->Controller, $this->Users);
     }
 
     /**
-     * Test for `_loginWithCookie()` method
+     * Test for `loginWithCookie()` method
      * @test
      */
     public function testLoginWithCookie()
     {
+        $loginWithCookieMethod = function () {
+            return $this->invokeMethod($this->Controller, 'loginWithCookie');
+        };
+
         //No user data on cookies
-        $result = $this->invokeMethod($this->Controller, '_loginWithCookie');
-        $this->assertNull($result);
+        $this->assertNull($loginWithCookieMethod());
         $this->assertNull($this->Controller->Auth->user());
 
         //Writes wrong data on cookie
         $this->Controller->Cookie->write('login', ['username' => 'a', 'password' => 'b']);
 
-        $result = $this->invokeMethod($this->Controller, '_loginWithCookie');
-        $this->assertEquals($this->Controller->Auth->logout(), $result);
+        $this->assertEquals($this->Controller->Auth->logout(), $loginWithCookieMethod());
         $this->assertNull($this->Controller->Auth->user());
 
         //Saves a new user
@@ -216,8 +199,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Writes right data on cookie
         $this->Controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
 
-        $result = $this->invokeMethod($this->Controller, '_loginWithCookie');
-        $this->assertEquals($this->Controller->Auth->redirectUrl(), $result);
+        $this->assertEquals($this->Controller->Auth->redirectUrl(), $loginWithCookieMethod());
         $this->assertNotEmpty($this->Controller->Auth->user());
 
         //Saves the user as pending and writes again data on cookie
@@ -225,8 +207,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->Users->save($user));
         $this->Controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
 
-        $result = $this->invokeMethod($this->Controller, '_loginWithCookie');
-        $this->assertEquals($this->Controller->Auth->logout(), $result);
+        $this->assertEquals($this->Controller->Auth->logout(), $loginWithCookieMethod());
         $this->assertNull($this->Controller->Auth->user());
 
         //Saves the user as banned and writes again data on cookie
@@ -234,8 +215,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->Users->save($user));
         $this->Controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
 
-        $result = $this->invokeMethod($this->Controller, '_loginWithCookie');
-        $this->assertEquals($this->Controller->Auth->logout(), $result);
+        $this->assertEquals($this->Controller->Auth->logout(), $loginWithCookieMethod());
         $this->assertNull($this->Controller->Auth->user());
     }
 
@@ -264,16 +244,16 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `_sendActivationMail()` method
+     * Test for `sendActivationMail()` method
      * @test
      */
     public function testSendActivationMail()
     {
         $user = $this->Users->find()->first();
 
-        $result = $this->invokeMethod($this->Controller, '_sendActivationMail', [$user]);
-        $this->assertTrue(is_array($result));
+        $result = $this->invokeMethod($this->Controller, 'sendActivationMail', [$user]);
         $this->assertNotEmpty($result);
+        $this->assertIsArray($result);
     }
 
     /**
@@ -311,7 +291,6 @@ class UsersControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         $this->setUsersControllerMock(null);
-
         $this->setUserId(1);
 
         $this->Controller->request = $this->Controller->request->withParam('action', 'my-action');
@@ -336,7 +315,7 @@ class UsersControllerTest extends IntegrationTestCase
         //GET request. This request is invalid, because the user is already active
         $this->get(array_merge($url, ['id' => $user->id], compact('token')));
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('The account has not been activated', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The account has not been activated');
 
         //The token no longer exists
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
@@ -349,7 +328,7 @@ class UsersControllerTest extends IntegrationTestCase
         //GET request. This request is valid, because the user is pending
         $this->get(array_merge($url, ['id' => $user->id], compact('token')));
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('The account has been activated', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The account has been activated');
 
         //Now the user is active and the token no longer exists
         $this->assertTrue($this->Users->findById($user->id)->extract('active')->first());
@@ -376,23 +355,21 @@ class UsersControllerTest extends IntegrationTestCase
         $url = ['_name' => 'activationResend'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Users/activation_resend.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
-        $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
+        $userFromView = $this->viewVariable('user');
+        $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         $wrongEmail = 'wrongEmail@example.com';
 
         //POST request. For now, data are invalid
         $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('No valid account was found');
-
         $this->assertLogContains('Resend activation request with invalid email `' . $wrongEmail . '`', 'users');
-        $this->deleteLog('users');
 
         //Gets an active user
         $email = $this->Users->find('pending')->extract('email')->first();
@@ -400,13 +377,12 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. Now, data are valid
         $this->post($url, ['email' => $email, 'email_repeat' => $email]);
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
+        $this->assertFlashMessage('We send you an email to activate your account');
 
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
@@ -414,7 +390,7 @@ class UsersControllerTest extends IntegrationTestCase
         Configure::write(ME_CMS . '.users.activation', 1);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('Disabled', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Disabled');
     }
 
     /**
@@ -426,23 +402,17 @@ class UsersControllerTest extends IntegrationTestCase
         $url = ['_name' => 'login'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Users/login.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
-        $wrongUsername = 'wrongUsername';
-        $wrongPassword = 'wrongPassword';
-
         //POST request with invalid data
-        $this->post($url, ['username' => $wrongUsername, 'password' => $wrongPassword]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->post($url, ['username' => 'wrong', 'password' => 'wrong']);
+        $this->assertResponseOkAndNotEmpty();
 
         $this->assertCookieNotSet('login');
         $this->assertSession(null, 'Auth');
-        $this->assertLogContains('Failed login with username `' . $wrongUsername . '` and password `' . $wrongPassword . '`', 'users');
-        $this->deleteLog('users');
+        $this->assertLogContains('Failed login with username `wrong` and password `wrong`', 'users');
 
         //Gets the first user, sets a valid password and saves
         $password = 'newPassword1!';
@@ -480,7 +450,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertCookieNotSet('login');
         $this->assertSession(null, 'Auth');
-        $this->assertSession('Your account has been banned by an admin', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Your account has been banned by an admin');
 
         //Sets the user as pending
         $user->active = $user->banned = false;
@@ -496,7 +466,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertCookieNotSet('login');
         $this->assertSession(null, 'Auth');
-        $this->assertSession('Your account has not been activated yet', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Your account has not been activated yet');
     }
 
     /**
@@ -505,11 +475,9 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testLogout()
     {
-        $url = ['_name' => 'logout'];
-
-        $this->get($url);
+        $this->get(['_name' => 'logout']);
         $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertSession('You are successfully logged out', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You are successfully logged out');
     }
 
     /**
@@ -521,20 +489,19 @@ class UsersControllerTest extends IntegrationTestCase
         $url = ['_name' => 'passwordForgot'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Users/password_forgot.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
-        $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
+        $userFromView = $this->viewVariable('user');
+        $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         $wrongEmail = 'wrongMail@example.it';
 
         //POST request. For now, data are invalid
         $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
-
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('No account found');
         $this->assertLogContains('Forgot password request with invalid email `' . $wrongEmail . '`', 'users');
         $this->deleteLog('users');
@@ -544,12 +511,9 @@ class UsersControllerTest extends IntegrationTestCase
 
         //POST request. This request is invalid, because the user is pending
         $this->post($url, ['email' => $email, 'email_repeat' => $email]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
-
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('No account found');
         $this->assertLogContains('Forgot password request with invalid email `' . $email . '`', 'users');
-        $this->deleteLog('users');
 
         //Gets an active user
         $email = $this->Users->find('active')->extract('email')->first();
@@ -557,20 +521,19 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. This request is valid
         $this->post($url, ['email' => $email, 'email_repeat' => $email]);
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('We have sent you an email to reset your password', 'Flash.flash.0.message');
+        $this->assertFlashMessage('We have sent you an email to reset your password');
 
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.reset_password', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('Disabled', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Disabled');
     }
 
     /**
@@ -587,17 +550,17 @@ class UsersControllerTest extends IntegrationTestCase
         $url = array_merge(['_name' => 'passwordReset', 'id' => $user->id], compact('token'));
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Users/password_reset.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
-        $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
+        $userFromView = $this->viewVariable('user');
+        $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         //POST request. Data are invalid
         $this->post($url, ['password' => '', 'password_repeat' => '']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The password has not been edited');
 
         //The password has not been changed and the token still exists
@@ -609,7 +572,7 @@ class UsersControllerTest extends IntegrationTestCase
         $password = 'newPassword1!';
         $this->post($url, ['password' => $password, 'password_repeat' => $password]);
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertSession('The password has been edited', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The password has been edited');
 
         //The password has changed and the token no longer exists
         $newPassword = $this->Users->findById($user->id)->extract('password')->first();
@@ -647,17 +610,17 @@ class UsersControllerTest extends IntegrationTestCase
         $url = ['_name' => 'signup'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Users/signup.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
 
-        $this->assertInstanceof('MeCms\Model\Entity\User', $this->viewVariable('user'));
+        $userFromView = $this->viewVariable('user');
+        $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         //POST request. For now, data are invalid
         $this->post($url, array_merge($data, ['password' => 'anotherPassword']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The account has not been created');
 
         Configure::write(ME_CMS . '.users.activation', 2);
@@ -665,10 +628,10 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. Data are valid, the account needs to be activated by an admin
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('Account created, but it needs to be activated by an admin', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Account created, but it needs to be activated by an admin');
 
         $user = $this->Users->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfig('users.default_group'), $user->group_id);
+        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
         $this->assertFalse($user->active);
 
         //Deletes the user
@@ -679,10 +642,10 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. Data are valid, an email is sent to the user
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('We send you an email to activate your account', 'Flash.flash.0.message');
+        $this->assertFlashMessage('We send you an email to activate your account');
 
         $user = $this->Users->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfig('users.default_group'), $user->group_id);
+        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
         $this->assertFalse($user->active);
 
         //Deletes the user
@@ -693,23 +656,22 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('Account created. Now you can login', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Account created. Now you can login');
 
         $user = $this->Users->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfig('users.default_group'), $user->group_id);
+        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
         $this->assertTrue($user->active);
 
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
         Configure::write(ME_CMS . '.users.signup', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('Disabled', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Disabled');
     }
 }

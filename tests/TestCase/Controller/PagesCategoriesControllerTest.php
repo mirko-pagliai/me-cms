@@ -1,30 +1,20 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PagesCategoriesControllerTest class
@@ -61,17 +51,6 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PagesCategories);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -91,17 +70,12 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(['_name' => 'pagesCategories']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
         $this->assertNotEmpty($categoriesFromView->toArray());
-
-        foreach ($categoriesFromView as $category) {
-            $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category);
-        }
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $categoriesFromView);
 
         $cache = Cache::read('categories_index', $this->PagesCategories->cache);
         $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
@@ -121,20 +95,16 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $url = ['_name' => 'pagesCategory', $slug];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/view.ctp');
 
         $categoryFromView = $this->viewVariable('category');
+        $this->assertNotEmpty($categoryFromView);
         $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
 
         $pagesFromView = $this->viewVariable('pages');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $pagesFromView);
         $this->assertNotEmpty($pagesFromView);
-
-        foreach ($pagesFromView as $page) {
-            $this->assertInstanceof('MeCms\Model\Entity\Page', $page);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pagesFromView);
 
         $categoryFromCache = Cache::read(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache);
         $this->assertEquals($categoryFromView, $categoryFromCache->first());

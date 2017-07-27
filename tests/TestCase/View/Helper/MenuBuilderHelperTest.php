@@ -1,37 +1,32 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
 use Cake\Core\Plugin;
-use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use MeCms\View\Helper\MenuBuilderHelper;
+use MeTools\TestSuite\TestCase;
 
 /**
  * MenuBuilderHelperTest class
  */
 class MenuBuilderHelperTest extends TestCase
 {
+    /**
+     * @var \MeCms\View\Helper\MenuBuilderHelper
+     */
+    protected $MenuBuilder;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -42,8 +37,7 @@ class MenuBuilderHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->View = new View();
-        $this->MenuBuilder = new MenuBuilderHelper($this->View);
+        $this->MenuBuilder = new MenuBuilderHelper(new View);
 
         Plugin::load('TestPlugin');
         Plugin::load('TestPluginTwo');
@@ -56,8 +50,6 @@ class MenuBuilderHelperTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-
-        unset($this->MenuBuilder, $this->Html, $this->View);
 
         Plugin::unload('TestPlugin');
         Plugin::unload('TestPluginTwo');
@@ -82,10 +74,9 @@ class MenuBuilderHelperTest extends TestCase
         $this->assertEquals($expected, $result);
 
         //Checks that methods exist
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', '_invalidMethod'));
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', '__otherInvalidMethod'));
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', 'articles'));
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', 'other_items'));
+        foreach (['_invalidMethod', '__otherInvalidMethod', 'articles', 'other_items'] as $method) {
+            $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', $method));
+        }
 
         $result = $this->MenuBuilder->getMenuMethods('TestPlugin');
         $expected = ['articles', 'other_items'];
@@ -110,7 +101,7 @@ class MenuBuilderHelperTest extends TestCase
         //Foreach menu
         foreach ($result as $menu) {
             //Checks array keys (menu values)
-            $this->assertEquals(['menu', 'title', 'titleOptions'], array_keys($menu));
+            $this->assertArrayKeysEqual(['menu', 'title', 'titleOptions'], $menu);
 
             //Checks each link
             foreach ($menu['menu'] as $link) {
@@ -126,7 +117,7 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->generate('TestPlugin');
 
         //Checks array keys (menu names)
-        $this->assertEquals(['TestPlugin.articles', 'TestPlugin.other_items'], array_keys($result));
+        $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
 
         //Foreach menu
         foreach ($result as $menu) {
@@ -216,7 +207,7 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->renderAsDropdown('TestPlugin');
 
         //Checks array keys (menu names)
-        $this->assertEquals(['TestPlugin.articles', 'TestPlugin.other_items'], array_keys($result));
+        $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
 
         $result = implode(PHP_EOL, $result);
 

@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\AppController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * AppControllerTest class
  */
-class AppControllerTest extends TestCase
+class AppControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\AppController
      */
@@ -68,17 +55,6 @@ class AppControllerTest extends TestCase
         $this->Controller->method('redirect')->will($this->returnArgument(0));
 
         $this->Event = new Event('myEvent');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Event);
     }
 
     /**
@@ -124,7 +100,7 @@ class AppControllerTest extends TestCase
         $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
         $this->assertEquals(5, $this->Controller->paginate['limit']);
         $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
-        $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
+        $this->assertNull($this->Controller->viewBuilder()->getLayout());
         $this->assertEquals(ME_CMS . '.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Admin request
@@ -178,10 +154,10 @@ class AppControllerTest extends TestCase
     public function testBeforeRender()
     {
         $this->Controller->beforeRender($this->Event);
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'Recaptcha.Recaptcha',
             'MeCms.Auth',
-        ], array_keys($this->Controller->viewBuilder()->getHelpers()));
+        ], $this->Controller->viewBuilder()->getHelpers());
     }
 
     /**

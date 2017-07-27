@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PostsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PostsControllerTest class
  */
 class PostsControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\PostsController
      */
@@ -98,33 +85,16 @@ class PostsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Posts);
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
     public function testBeforeFilter()
     {
-        foreach (['add', 'edit'] as $action) {
+        foreach (['add', 'edit', 'index'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
-            $this->assertResponseOk();
             $this->assertNotEmpty($this->viewVariable('categories'));
             $this->assertNotEmpty($this->viewVariable('users'));
         }
-
-        $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertNotEmpty($this->viewVariable('categories'));
-        $this->assertNotEmpty($this->viewVariable('users'));
     }
 
     /**
@@ -139,7 +109,7 @@ class PostsControllerTest extends IntegrationTestCase
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
             $this->assertRedirect(['controller' => 'PostsCategories', 'action' => 'index']);
-            $this->assertSession('You must first create a category', 'Flash.flash.0.message');
+            $this->assertFlashMessage('You must first create a category');
         }
     }
 
@@ -155,7 +125,7 @@ class PostsControllerTest extends IntegrationTestCase
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
             $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
-            $this->assertSession('You must first create an user', 'Flash.flash.0.message');
+            $this->assertFlashMessage('You must first create an user');
         }
     }
 
@@ -231,17 +201,12 @@ class PostsControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/index.ctp');
 
         $postsFromView = $this->viewVariable('posts');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
         $this->assertNotEmpty($postsFromView);
-
-        foreach ($postsFromView as $post) {
-            $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
     }
 
     /**
@@ -253,28 +218,26 @@ class PostsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/add.ctp');
 
         $postFromView = $this->viewVariable('post');
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
         $this->assertNotEmpty($postFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
 
         //POST request. Data are valid
         $this->post($url, $this->example);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $postFromView = $this->viewVariable('post');
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
         $this->assertNotEmpty($postFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
     }
 
     /**
@@ -286,38 +249,33 @@ class PostsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/edit.ctp');
 
         $postFromView = $this->viewVariable('post');
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
         $this->assertNotEmpty($postFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
 
         //Checks if the `created` field has been properly formatted
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $postFromView->created);
 
         //Checks for tags
         $this->assertNotEmpty($postFromView->tags);
-
-        foreach ($postFromView->tags as $tag) {
-            $this->assertInstanceof('MeCms\Model\Entity\Tag', $tag);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $postFromView->tags);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $postFromView = $this->viewVariable('post');
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
         $this->assertNotEmpty($postFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
     }
 
     /**
@@ -328,7 +286,7 @@ class PostsControllerTest extends IntegrationTestCase
     {
         $this->post(array_merge($this->url, ['action' => 'delete', 1]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 
     /**
@@ -347,7 +305,7 @@ class PostsControllerTest extends IntegrationTestCase
                     array_merge($this->example, ['user_id' => $userId])
                 );
                 $this->assertRedirect(['action' => 'index']);
-                $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+                $this->assertFlashMessage('The operation has been performed correctly');
 
                 $post = $this->Posts->find()->last();
                 $this->assertEquals($userId, $post->user_id);
@@ -358,7 +316,7 @@ class PostsControllerTest extends IntegrationTestCase
                     array_merge($this->example, ['user_id' => $userId + 1])
                 );
                 $this->assertRedirect(['action' => 'index']);
-                $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+                $this->assertFlashMessage('The operation has been performed correctly');
 
                 $post = $this->Posts->findById($post->id)->first();
                 $this->assertEquals($userId + 1, $post->user_id);
@@ -384,7 +342,7 @@ class PostsControllerTest extends IntegrationTestCase
                 array_merge($this->example, ['user_id' => $userId])
             );
             $this->assertRedirect(['action' => 'index']);
-            $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+            $this->assertFlashMessage('The operation has been performed correctly');
 
             $post = $this->Posts->find()->last();
             $this->assertEquals(3, $post->user_id);
@@ -395,7 +353,7 @@ class PostsControllerTest extends IntegrationTestCase
                 array_merge($this->example, ['user_id' => $userId + 1])
             );
             $this->assertRedirect(['action' => 'index']);
-            $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+            $this->assertFlashMessage('The operation has been performed correctly');
 
             $post = $this->Posts->findById($post->id)->first();
             $this->assertEquals(3, $post->user_id);

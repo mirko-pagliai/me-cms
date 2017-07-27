@@ -1,30 +1,21 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.17.0
  */
 namespace MeCms\Model\Table\Traits;
 
 use Cake\Filesystem\Folder;
 use MeTools\Utility\Youtube;
+use Sunra\PhpSimple\HtmlDomParser;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -34,15 +25,41 @@ use Thumber\Utility\ThumbCreator;
 trait GetPreviewFromTextTrait
 {
     /**
+     * Internal method to get the first image from an html string
+     * @param string $html Html string
+     * @return string|bool Image or `false`
+     * @since 2.20.0
+     */
+    protected function firstImage($html)
+    {
+        $dom = (new HtmlDomParser)->str_get_html($html);
+
+        if (!$dom) {
+            return false;
+        }
+
+        $img = $dom->find('img', 0);
+
+        if (empty($img->src) ||
+            !in_array(strtolower(pathinfo($img->src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])
+        ) {
+            return false;
+        }
+
+        return $img->src;
+    }
+
+    /**
      * Gets the first available image or the preview of the first YouTube video
      * @param string $text The text within which to search
      * @return array|null Array with `preview`, `width` and `height`
      *  properties or `null` if there is not no preview
+     * @uses firstImage()
      * @uses getPreviewSize()
      */
     public function getPreview($text)
     {
-        $preview = firstImage($text);
+        $preview = $this->firstImage($text);
 
         if ($preview && !isUrl($preview)) {
             //If is relative path

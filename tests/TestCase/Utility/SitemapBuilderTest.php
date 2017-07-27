@@ -1,41 +1,33 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\I18n\Time;
-use Cake\TestSuite\TestCase;
 use Cake\Utility\Xml;
+use MeCms\TestSuite\IntegrationTestCase;
 use MeCms\Utility\SitemapBuilder;
-use Reflection\ReflectionTrait;
 
 /**
  * SitemapTest class
  */
-class SitemapBuilderTest extends TestCase
+class SitemapBuilderTest extends IntegrationTestCase
 {
-    use ReflectionTrait;
+    /**
+     * @var \MeCms\Utility\SitemapBuilder
+     */
+    protected $SitemapBuilder;
 
     /**
      * Does not automatically load fixtures
@@ -52,6 +44,9 @@ class SitemapBuilderTest extends TestCase
         'plugin.me_cms.pages_categories',
         'plugin.me_cms.photos',
         'plugin.me_cms.photos_albums',
+        'plugin.me_cms.posts',
+        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.tags',
     ];
 
     /**
@@ -63,6 +58,8 @@ class SitemapBuilderTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->SitemapBuilder = new SitemapBuilder;
 
         Cache::clearAll();
     }
@@ -80,59 +77,42 @@ class SitemapBuilderTest extends TestCase
     }
 
     /**
-     * Test for `_getMethods()` method
+     * Test for `getMethods()` method
      * @test
      */
     public function testGetMethods()
     {
-        $object = new SitemapBuilder;
+        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', [ME_CMS]);
 
-        $methods = $this->invokeMethod($object, '_getMethods', [ME_CMS]);
+        foreach ($methods as $method) {
+            $this->assertEquals('MeCms\Utility\Sitemap', $method['class']);
+        }
+
+        $names = collection($methods)->extract('name')->toArray();
         $this->assertEquals([
-            [
-                'class' => '\MeCms\Utility\Sitemap',
-                'name' => 'pages',
-            ],
-            [
-                'class' => '\MeCms\Utility\Sitemap',
-                'name' => 'photos',
-            ],
-            [
-                'class' => '\MeCms\Utility\Sitemap',
-                'name' => 'posts',
-            ],
-            [
-                'class' => '\MeCms\Utility\Sitemap',
-                'name' => 'postsTags',
-            ],
-            [
-                'class' => '\MeCms\Utility\Sitemap',
-                'name' => 'staticPages',
-            ],
-            [
-                'class' => '\MeCms\Utility\Sitemap',
-                'name' => 'systems',
-            ],
-        ], $methods);
+            'pages',
+            'photos',
+            'posts',
+            'postsTags',
+            'staticPages',
+            'systems',
+        ], $names);
 
         Plugin::load('TestPlugin');
 
-        $methods = $this->invokeMethod($object, '_getMethods', ['TestPlugin']);
-        $this->assertEquals([
-            [
-                'class' => '\TestPlugin\Utility\Sitemap',
-                'name' => 'urlMethod1',
-            ],
-            [
-                'class' => '\TestPlugin\Utility\Sitemap',
-                'name' => 'urlMethod2',
-            ],
-        ], $methods);
+        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPlugin']);
+
+        foreach ($methods as $method) {
+            $this->assertEquals('TestPlugin\Utility\Sitemap', $method['class']);
+        }
+
+        $names = collection($methods)->extract('name')->toArray();
+        $this->assertEquals(['urlMethod1', 'urlMethod2'], $names);
 
         //This plugin does not have the `Sitemap` class
         Plugin::load('TestPluginTwo');
 
-        $methods = $this->invokeMethod($object, '_getMethods', ['TestPluginTwo']);
+        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPluginTwo']);
         $this->assertEquals([], $methods);
     }
 
@@ -142,18 +122,13 @@ class SitemapBuilderTest extends TestCase
      */
     public function testParse()
     {
-        $object = new SitemapBuilder;
+        $parseMethod = function ($url, array $options = []) {
+            return $this->invokeMethod($this->SitemapBuilder, 'parse', [$url, $options]);
+        };
 
-        $expected = [
-            'loc' => 'http://localhost/',
-            'priority' => '0.5',
-        ];
-
-        $parsed = $this->invokeMethod($object, 'parse', [['_name' => 'homepage']]);
-        $this->assertEquals($expected, $parsed);
-
-        $parsed = $this->invokeMethod($object, 'parse', ['/']);
-        $this->assertEquals($expected, $parsed);
+        $expected = ['loc' => 'http://localhost/', 'priority' => '0.5'];
+        $this->assertEquals($expected, $parseMethod(['_name' => 'homepage']));
+        $this->assertEquals($expected, $parseMethod('/'));
 
         $expected = [
             'loc' => 'http://localhost/',
@@ -161,20 +136,17 @@ class SitemapBuilderTest extends TestCase
             'priority' => '0.5',
         ];
 
-        $parsed = $this->invokeMethod($object, 'parse', ['/', ['lastmod' => (new Time('2014-01-10 11:11'))]]);
-        $this->assertEquals($expected, $parsed);
+        $result = $parseMethod('/', ['lastmod' => new Time('2014-01-10 11:11')]);
+        $this->assertEquals($expected, $result);
 
-        $parsed = $this->invokeMethod($object, 'parse', ['/', ['lastmod' => (new Time('2014-01-10T11:11:00+00:00'))]]);
-        $this->assertEquals($expected, $parsed);
+        $result = $parseMethod('/', ['lastmod' => new Time('2014-01-10T11:11:00+00:00')]);
+        $this->assertEquals($expected, $result);
 
-        $parsed = $this->invokeMethod($object, 'parse', ['/', ['lastmod' => '2014-01-10T11:11:00+00:00']]);
-        $this->assertEquals($expected, $parsed);
+        $result = $parseMethod('/', ['lastmod' => '2014-01-10T11:11:00+00:00']);
+        $this->assertEquals($expected, $result);
 
-        $parsed = $this->invokeMethod($object, 'parse', ['/', ['priority' => '0.4']]);
-        $this->assertEquals([
-            'loc' => 'http://localhost/',
-            'priority' => '0.4',
-        ], $parsed);
+        $result = $parseMethod('/', ['priority' => '0.4']);
+        $this->assertEquals(['loc' => 'http://localhost/', 'priority' => '0.4'], $result);
     }
 
     /**
@@ -183,9 +155,9 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerate()
     {
-        $this->loadFixtures('Pages', 'PagesCategories', 'Photos', 'PhotosAlbums');
+        $this->loadAllFixtures();
 
-        $map = SitemapBuilder::generate();
+        $map = $this->SitemapBuilder->generate();
 
         $this->assertStringStartsWith(
             '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .
@@ -211,9 +183,11 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerateWithPlugin()
     {
+        $this->loadAllFixtures();
+
         Plugin::load('TestPlugin');
 
-        $map = SitemapBuilder::generate();
+        $map = $this->SitemapBuilder->generate();
 
         $this->assertContains('first-folder/page-on-first-from-plugin', $map);
         $this->assertContains('first-folder/second_folder/page_on_second_from_plugin', $map);

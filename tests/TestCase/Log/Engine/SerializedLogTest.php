@@ -1,45 +1,30 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Log\Engine;
 
 use Cake\Log\Log;
-use Cake\TestSuite\TestCase;
 use MeCms\Log\Engine\SerializedLog;
-use MeCms\TestSuite\Traits\LogsMethodsTrait;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * SerializedLogTest class
  */
 class SerializedLogTest extends TestCase
 {
-    use LogsMethodsTrait;
-    use ReflectionTrait;
-
     /**
      * Internal method to write some logs
      */
-    protected function _writeSomeLogs()
+    protected function writeSomeLogs()
     {
         Log::write('error', 'This is an error message');
         Log::write('critical', 'This is a critical message');
@@ -54,17 +39,20 @@ class SerializedLogTest extends TestCase
         parent::tearDown();
 
         Log::drop('error');
-
-        //Deletes all logs
-        $this->deleteAllLogs();
     }
 
     /**
-     * Test for `_getLogAsObject()` method
+     * Test for `getLogAsObject()` method
      * @test
      */
     public function testGetLogAsObject()
     {
+        $object = new SerializedLog;
+
+        $getLogAsObjectMethod = function ($level, $message) use ($object) {
+            return $this->invokeMethod($object, 'getLogAsObject', [$level, $message]);
+        };
+
         $trace = '#0 /home/mirko/Server/mirkopagliai/vendor/cakephp/cakephp/src/Http/ControllerFactory.php(72): Cake\Http\ControllerFactory->missingController(Object(Cake\Network\Request))
 #1 /home/mirko/Server/mirkopagliai/vendor/cakephp/cakephp/src/Http/ActionDispatcher.php(92): Cake\Http\ControllerFactory->create(Object(Cake\Network\Request), Object(Cake\Network\Response))
 #2 /home/mirko/Server/mirkopagliai/vendor/cakephp/cakephp/src/Http/BaseApplication.php(83): Cake\Http\ActionDispatcher->dispatch(Object(Cake\Network\Request), Object(Cake\Network\Response))
@@ -80,17 +68,20 @@ class SerializedLogTest extends TestCase
 #12 /home/mirko/Server/mirkopagliai/webroot/index.php(37): Cake\Http\Server->run()
 #13 {main}';
 
-        $object = new SerializedLog;
-
-        $result = (array)$this->invokeMethod($object, '_getLogAsObject', ['error', 'example of message']);
-        $this->assertEquals(['level', 'datetime', 'message', 'full'], array_keys($result));
-        $this->assertEquals('error', $result['level']);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result['datetime']);
-        $this->assertEquals('example of message', $result['message']);
+        $result = $getLogAsObjectMethod('error', 'example of message');
+        $this->assertObjectPropertiesEqual([
+            'level',
+            'datetime',
+            'message',
+            'full',
+        ], $result);
+        $this->assertEquals('error', $result->level);
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result->datetime);
+        $this->assertEquals('example of message', $result->message);
 
         $message = file_get_contents(TEST_APP . 'examples' . DS . 'stacktraces' . DS . 'example1');
-        $result = (array)$this->invokeMethod($object, '_getLogAsObject', ['error', $message]);
-        $this->assertEquals([
+        $result = $getLogAsObjectMethod('error', $message);
+        $this->assertObjectPropertiesEqual([
             'level',
             'datetime',
             'exception',
@@ -99,18 +90,18 @@ class SerializedLogTest extends TestCase
             'ip',
             'trace',
             'full',
-        ], array_keys($result));
-        $this->assertEquals('error', $result['level']);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result['datetime']);
-        $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result['exception']);
-        $this->assertEquals('Controller class NoExistingRoute could not be found.', $result['message']);
-        $this->assertEquals('/noExistingRoute', $result['request']);
-        $this->assertEquals('1.1.1.1', $result['ip']);
-        $this->assertEquals($trace, $result['trace']);
+        ], $result);
+        $this->assertEquals('error', $result->level);
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result->datetime);
+        $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result->exception);
+        $this->assertEquals('Controller class NoExistingRoute could not be found.', $result->message);
+        $this->assertEquals('/noExistingRoute', $result->request);
+        $this->assertEquals('1.1.1.1', $result->ip);
+        $this->assertEquals($trace, $result->trace);
 
         $message = file_get_contents(TEST_APP . 'examples' . DS . 'stacktraces' . DS . 'example2');
-        $result = (array)$this->invokeMethod($object, '_getLogAsObject', ['error', $message]);
-        $this->assertEquals([
+        $result = $getLogAsObjectMethod('error', $message);
+        $this->assertObjectPropertiesEqual([
             'level',
             'datetime',
             'exception',
@@ -121,21 +112,21 @@ class SerializedLogTest extends TestCase
             'ip',
             'trace',
             'full',
-        ], array_keys($result));
-        $this->assertEquals('error', $result['level']);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result['datetime']);
-        $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result['exception']);
-        $this->assertEquals('Controller class NoExistingRoute could not be found.', $result['message']);
+        ], $result);
+        $this->assertEquals('error', $result->level);
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result->datetime);
+        $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result->exception);
+        $this->assertEquals('Controller class NoExistingRoute could not be found.', $result->message);
         $this->assertEquals('array (' . PHP_EOL .
             '  \'class\' => \'NoExistingRoute\',' . PHP_EOL .
             '  \'plugin\' => false,' . PHP_EOL .
             '  \'prefix\' => false,' . PHP_EOL .
             '  \'_ext\' => false,' . PHP_EOL .
-            ')', $result['attributes']);
-        $this->assertEquals('/noExistingRoute', $result['request']);
-        $this->assertEquals('/noExistingReferer', $result['referer']);
-        $this->assertEquals('1.1.1.1', $result['ip']);
-        $this->assertEquals($trace, $result['trace']);
+            ')', $result->attributes);
+        $this->assertEquals('/noExistingRoute', $result->request);
+        $this->assertEquals('/noExistingReferer', $result->referer);
+        $this->assertEquals('1.1.1.1', $result->ip);
+        $this->assertEquals($trace, $result->trace);
     }
 
     /**
@@ -155,7 +146,7 @@ class SerializedLogTest extends TestCase
         Log::setConfig('error', $config);
 
         //Writes some logs
-        $this->_writeSomeLogs();
+        $this->writeSomeLogs();
 
         $this->assertLogContains('Error: This is an error message', 'error');
         $this->assertLogContains('Critical: This is a critical message', 'error');
@@ -186,7 +177,7 @@ class SerializedLogTest extends TestCase
         Log::setConfig('error', am($config, ['mask' => 0777]));
 
         //Writes some logs
-        $this->_writeSomeLogs();
+        $this->writeSomeLogs();
 
         $this->assertLogContains('Error: This is an error message', 'error');
         $this->assertLogContains('Critical: This is a critical message', 'error');

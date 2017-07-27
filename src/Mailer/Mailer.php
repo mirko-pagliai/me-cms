@@ -1,34 +1,23 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         http://api.cakephp.org/3.4/class-Cake.Mailer.Mailer.html Mailer
  */
 namespace MeCms\Mailer;
 
+use Cake\Mailer\Email;
 use Cake\Mailer\Mailer as CakeMailer;
 
 /**
- * Mailer classes let you encapsulate related Email logic into a reusable.
- *
- * Rewrites {@link http://api.cakephp.org/3.4/class-Cake.Mailer.Mailer.html Mailer}.
+ * Mailer classes let you encapsulate related Email logic into a reusable
  */
 class Mailer extends CakeMailer
 {
@@ -48,14 +37,14 @@ class Mailer extends CakeMailer
      * @uses Cake\Mailer\Mailer::__construct()
      * @uses getEmailInstance()
      */
-    public function __construct(\Cake\Mailer\Email $email = null)
+    public function __construct(Email $email = null)
     {
         parent::__construct($email);
 
         $this->getEmailInstance()
             ->setHelpers([METOOLS . '.Html'])
-            ->setFrom(getConfig('email.webmaster'), getConfig('main.title'))
-            ->setSender(getConfig('email.webmaster'), getConfig('main.title'))
+            ->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
+            ->setSender(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setEmailFormat('html');
     }
 }

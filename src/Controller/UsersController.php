@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Controller;
 
@@ -38,12 +28,12 @@ class UsersController extends AppController
     use MailerAwareTrait;
 
     /**
-     * Internal function to login with cookie
+     * Internal method to login with cookie
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses _logout()
      */
-    protected function _loginWithCookie()
+    protected function loginWithCookie()
     {
         //Checks if the cookies exist
         if (!$this->Cookie->read('login.username') || !$this->Cookie->read('login.password')) {
@@ -70,7 +60,7 @@ class UsersController extends AppController
     }
 
     /**
-     * Internal function to logout
+     * Internal method to logout
      * @return \Cake\Network\Response|null
      */
     protected function _logout()
@@ -86,12 +76,12 @@ class UsersController extends AppController
     }
 
     /**
-     * Internal function to send the activation mail
+     * Internal method to send the activation mail
      * @param MeCms\Model\Entity\User $user User entity
      * @return bool
      * @see MeCms\Mailer\UserMailer::activation()
      */
-    protected function _sendActivationMail($user)
+    protected function sendActivationMail($user)
     {
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
@@ -173,7 +163,7 @@ class UsersController extends AppController
     /**
      * Activation resend (resends the activation mail)
      * @return \Cake\Network\Response|null|void
-     * @uses _sendActivationMail()
+     * @uses sendActivationMail()
      */
     public function activationResend()
     {
@@ -198,7 +188,7 @@ class UsersController extends AppController
 
                 if ($user) {
                     //Sends the activation mail
-                    $this->_sendActivationMail($user);
+                    $this->sendActivationMail($user);
 
                     $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 
@@ -225,13 +215,13 @@ class UsersController extends AppController
      * Login
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @uses _loginWithCookie()
+     * @uses loginWithCookie()
      */
     public function login()
     {
         //Tries to login with cookies, if the login with cookies is enabled
         if (getConfig('users.cookies_login')) {
-            $this->_loginWithCookie();
+            $this->loginWithCookie();
         }
 
         if ($this->request->is('post')) {
@@ -389,7 +379,7 @@ class UsersController extends AppController
     /**
      * Sign up
      * @return \Cake\Network\Response|null|void
-     * @uses _sendActivationMail()
+     * @uses sendActivationMail()
      */
     public function signup()
     {
@@ -405,7 +395,7 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            $user->group_id = getConfig('users.default_group');
+            $user->group_id = getConfigOrFail('users.default_group');
             $user->active = (bool)!getConfig('users.activation');
 
             //Checks for reCAPTCHA, if requested
@@ -421,7 +411,7 @@ class UsersController extends AppController
                     //  (default)
                     case 1:
                         //Sends the activation mail
-                        $this->_sendActivationMail($user);
+                        $this->sendActivationMail($user);
 
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
                         break;

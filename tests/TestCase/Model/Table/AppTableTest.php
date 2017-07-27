@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
@@ -28,7 +18,7 @@ use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppTableTest class
@@ -81,25 +71,12 @@ class AppTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Photos, $this->Posts, $this->PostsCategories);
-    }
-
-    /**
      * Test for `afterDelete()` method
      * @test
      */
     public function testAfterDelete()
     {
-        //Writes something on cache
         Cache::write('testKey', 'testValue', $this->Posts->cache);
-        $this->assertEquals('testValue', Cache::read('testKey', $this->Posts->cache));
 
         $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
 
@@ -113,9 +90,7 @@ class AppTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        //Writes something on cache
         Cache::write('testKey', 'testValue', $this->Posts->cache);
-        $this->assertEquals('testValue', Cache::read('testKey', $this->Posts->cache));
 
         $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
 
@@ -153,10 +128,7 @@ class AppTableTest extends TestCase
         $this->assertEquals($now, $entity->created);
         $this->Posts->delete($entity);
 
-        foreach ([
-            '2017-03-14 20:19',
-            '2017-03-14 20:19:00',
-        ] as $value) {
+        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $value) {
             $example['created'] = $value;
             $entity = $this->Posts->save($this->Posts->newEntity($example));
             $this->assertEquals('2017-03-14 20:19:00', $entity->created->i18nFormat('yyyy-MM-dd HH:mm:ss'));
@@ -180,17 +152,13 @@ class AppTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->Posts->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->active);
-            $this->assertTrue(!$entity->created->isFuture());
+            $this->assertTrue($entity->active && !$entity->created->isFuture());
         }
     }
 
@@ -201,14 +169,13 @@ class AppTableTest extends TestCase
     public function testFindPending()
     {
         $query = $this->Posts->find('pending');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
-
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
 
-        $pendingId = collection($query->toArray())->extract('id')->toList();
-        $this->assertEquals([6, 8], $pendingId);
+        foreach ($query->toArray() as $entity) {
+            $this->assertTrue(!$entity->active || $entity->created->isFuture());
+        }
     }
 
     /**
@@ -218,7 +185,6 @@ class AppTableTest extends TestCase
     public function testFindRandom()
     {
         $query = $this->Posts->find('random');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
 
         $query = $this->Posts->find('random')->limit(2);
@@ -232,8 +198,7 @@ class AppTableTest extends TestCase
     public function testGetList()
     {
         $query = $this->Photos->getList();
-        $this->assertInstanceof('Cake\ORM\Query', $query);
-        $this->assertContains('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
+        $this->assertStringEndsWith('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
 
         $list = $query->toArray();
         $this->assertEquals([
@@ -254,7 +219,7 @@ class AppTableTest extends TestCase
     public function testGetTreeList()
     {
         $query = $this->PostsCategories->getTreeList();
-        $this->assertInstanceof('Cake\ORM\Query', $query);
+        $this->assertStringEndsNotWith('ORDER BY ' . $this->PostsCategories->getDisplayField() . ' ASC', $query->sql());
 
         $list = $query->toArray();
         $this->assertEquals([
@@ -284,7 +249,7 @@ class AppTableTest extends TestCase
      */
     public function testQueryFromFilter()
     {
-        $expected = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
 
         $data = [
             'id' => 2,
@@ -297,8 +262,7 @@ class AppTableTest extends TestCase
         ];
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
-        $this->assertStringEndsWith($expected, $query->sql());
+        $this->assertStringEndsWith($expectedSql, $query->sql());
 
         $params = collection($query->valueBinder()->bindings())->extract('value')->map(function ($value) {
             if ($value instanceof Time) {
@@ -322,7 +286,7 @@ class AppTableTest extends TestCase
         $data['active'] = 'no';
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertStringEndsWith($expected, $query->sql());
+        $this->assertStringEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->valueBinder()->bindings()[':c4']['value']);
 
         $data = ['filename' => 'image.jpg'];

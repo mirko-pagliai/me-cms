@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PhotosAlbumsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PhotosAlbumsControllerTest class
  */
 class PhotosAlbumsControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\PhotosAlbumsController
      */
@@ -80,17 +67,6 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->PhotosAlbums);
-    }
-
-    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -120,17 +96,12 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PhotosAlbums/index.ctp');
 
         $albumsFromView = $this->viewVariable('albums');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $albumsFromView);
         $this->assertNotEmpty($albumsFromView);
-
-        foreach ($albumsFromView as $album) {
-            $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $album);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumsFromView);
     }
 
     /**
@@ -142,31 +113,26 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PhotosAlbums/add.ctp');
 
         $albumFromView = $this->viewVariable('album');
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
         $this->assertNotEmpty($albumFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
 
         //POST request. Data are valid
-        $this->post($url, [
-            'title' => 'new category',
-            'slug' => 'new-category-slug',
-        ]);
+        $this->post($url, ['title' => 'new category', 'slug' => 'category-slug']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $albumFromView = $this->viewVariable('album');
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
         $this->assertNotEmpty($albumFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
     }
 
     /**
@@ -178,28 +144,26 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PhotosAlbums/edit.ctp');
 
         $albumFromView = $this->viewVariable('album');
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
         $this->assertNotEmpty($albumFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $albumFromView = $this->viewVariable('album');
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
         $this->assertNotEmpty($albumFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
     }
 
     /**
@@ -213,16 +177,13 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         //POST request. This album has no photos
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         $id = $this->PhotosAlbums->find()->where(['photo_count >=' => 1])->extract('id')->first();
 
         //POST request. This album has some photos, so it cannot be deleted
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession(
-            'Before deleting this, you must delete or reassign all items that belong to this element',
-            'Flash.flash.0.message'
-        );
+        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
     }
 }

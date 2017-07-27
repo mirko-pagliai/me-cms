@@ -1,40 +1,28 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
-use Cake\TestSuite\TestCase;
+use Cake\Core\App;
 use MeCms\Core\Plugin;
 use MeCms\Utility\StaticPage;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * StaticPageTest class
  */
 class StaticPageTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Utility\StaticPage
      */
@@ -68,27 +56,25 @@ class StaticPageTest extends TestCase
         ini_set('intl.default_locale', 'en_US');
 
         Plugin::unload('TestPlugin');
-
-        unset($this->StaticPage);
     }
 
     /**
-     * Test for `_appPath()` method
+     * Test for `getAppPath()` method
      * @test
      */
-    public function testAppPath()
+    public function testGetAppPath()
     {
-        $result = rtr($this->invokeMethod($this->StaticPage, '_appPath'));
+        $result = rtr($this->invokeMethod($this->StaticPage, 'getAppPath'));
         $this->assertEquals('tests/test_app/TestApp/Template/StaticPages/', $result);
     }
 
     /**
-     * Test for `_pluginPath()` method
+     * Test for `getPluginPath()` method
      * @test
      */
-    public function testPluginPath()
+    public function testGetPluginPath()
     {
-        $result = rtr($this->invokeMethod($this->StaticPage, '_pluginPath', ['TestPlugin']));
+        $result = rtr($this->invokeMethod($this->StaticPage, 'getPluginPath', ['TestPlugin']));
         $this->assertEquals('tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/', $result);
     }
 
@@ -120,13 +106,15 @@ class StaticPageTest extends TestCase
         //Checks paths
         $paths = collection($pages)->extract('path')->toList();
 
+        $pluginsPath = rtr(App::path('Template', 'TestPlugin')[0]);
+
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/page-from-app.ctp',
             'src/Template/StaticPages/cookies-policy-it.ctp',
             'src/Template/StaticPages/cookies-policy.ctp',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/first-folder/page-on-first-from-plugin.ctp',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/first-folder/second_folder/page_on_second_from_plugin.ctp',
+            $pluginsPath . 'StaticPages/test-from-plugin.ctp',
+            $pluginsPath . 'StaticPages/first-folder/page-on-first-from-plugin.ctp',
+            $pluginsPath . 'StaticPages/first-folder/second_folder/page_on_second_from_plugin.ctp',
         ], $paths);
 
         //Checks slugs
@@ -195,12 +183,12 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `paths()` method
+     * Test for `getAllPaths()` method
      * @test
      */
-    public function testPaths()
+    public function testGetAllPaths()
     {
-        $paths = $this->invokeMethod($this->StaticPage, 'paths');
+        $paths = $this->invokeMethod($this->StaticPage, 'getAllPaths');
 
         $this->assertEquals(Cache::read('paths', 'static_pages'), $paths);
 
@@ -212,15 +200,15 @@ class StaticPageTest extends TestCase
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/',
             'src/Template/StaticPages/',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/',
+            rtr(App::path('Template', 'TestPlugin')[0]) . 'StaticPages/',
         ], $paths);
     }
 
     /**
-     * Test for `slug()` method
+     * Test for `getSlug()` method
      * @test
      */
-    public function testSlug()
+    public function testGetSlug()
     {
         $files = [
             'my-file',
@@ -230,14 +218,14 @@ class StaticPageTest extends TestCase
         ];
 
         foreach ($files as $file) {
-            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'slug', [$file, '/first/second']));
-            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'slug', [$file, '/first/second/']));
+            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'getSlug', [$file, '/first/second']));
+            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'getSlug', [$file, '/first/second/']));
         }
 
-        $result = $this->invokeMethod($this->StaticPage, 'slug', ['first/my-file.ctp', '/first/second']);
+        $result = $this->invokeMethod($this->StaticPage, 'getSlug', ['first/my-file.ctp', '/first/second']);
         $this->assertEquals('first/my-file', $result);
 
-        $result = $this->invokeMethod($this->StaticPage, 'slug', ['/first/second/third/my-file.ctp', '/first/second']);
+        $result = $this->invokeMethod($this->StaticPage, 'getSlug', ['/first/second/third/my-file.ctp', '/first/second']);
         $this->assertEquals('third/my-file', $result);
     }
 

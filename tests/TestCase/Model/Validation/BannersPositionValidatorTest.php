@@ -1,34 +1,24 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * BannersPositionValidatorTest class
  */
-class BannersPositionValidatorTest extends TestCase
+class BannersPositionValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\BannersPositionsTable
@@ -61,9 +51,7 @@ class BannersPositionValidatorTest extends TestCase
 
         $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
 
-        $this->example = [
-            'title' => 'my-title',
-        ];
+        $this->example = ['title' => 'my-title'];
     }
 
     /**
@@ -73,17 +61,7 @@ class BannersPositionValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->BannersPositions->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->BannersPositions->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->BannersPositions, $this->example);
     }
 
     /**

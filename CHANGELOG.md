@@ -1,4 +1,20 @@
 # 2.x branch
+## 2.20 branch
+### 2.20.1
+* added `IntegrationTestCase` and `ValidationTestCase` classes. Removed
+    `AuthMethodsTrait` class;
+* significantly improved all tests.
+
+### 2.20.0
+* added initial schema of the plugin database. Removed `BaseUpdateConsole` and
+    `UpdateShell` classes;
+* added `getConfigOrFail()` global function;
+* `firstImage()` is no longer a global function, but a method provided by the
+    `GetPreviewFromTextTrait` class;
+* removed `LogsMethodsTrait`, moved to MeTools;
+* `TagValidatorTrait` moved to `MeCms\Model\Validation\Traits`;
+* the MIT license has been applied.
+
 ## 2.19 branch
 ### 2.19.2
 * fixed bug in the list of active pages for each page category;

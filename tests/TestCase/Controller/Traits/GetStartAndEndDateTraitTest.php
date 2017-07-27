@@ -1,38 +1,25 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Traits;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\PostsController;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * GetStartAndEndDateTraitTest class
  */
 class GetStartAndEndDateTraitTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Tests for `getStartAndEndDate()` method
      * @test
@@ -41,28 +28,32 @@ class GetStartAndEndDateTraitTest extends TestCase
     {
         $controller = new PostsController;
 
+        $getStartAndEndDateMethod = function ($date) use ($controller) {
+            return $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);
+        };
+
         //"today" special word
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['today']);
+        list($start, $end) = $getStartAndEndDateMethod('today');
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d', time() + DAY) . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //"yesterday" special word
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['yesterday']);
+        list($start, $end) = $getStartAndEndDateMethod('yesterday');
         $this->assertEquals(date('Y-m-d', time() - DAY) . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Only year
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017']);
+        list($start, $end) = $getStartAndEndDateMethod('2017');
         $this->assertEquals('2017-01-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2018-01-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //only year and month
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017/04']);
+        list($start, $end) = $getStartAndEndDateMethod('2017/04');
         $this->assertEquals('2017-04-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-05-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Full date
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017/04/15']);
+        list($start, $end) = $getStartAndEndDateMethod('2017/04/15');
         $this->assertEquals('2017-04-15 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-04-16 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
     }

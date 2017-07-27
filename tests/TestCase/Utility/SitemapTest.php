@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Utility;
 
@@ -27,8 +17,8 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
+use MeTools\TestSuite\TestCase;
 
 /**
  * SitemapTest class
@@ -119,8 +109,6 @@ class SitemapTest extends TestCase
 
         $table = TableRegistry::get(ME_CMS . '.PagesCategories');
 
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::pages());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
@@ -184,8 +172,6 @@ class SitemapTest extends TestCase
         ];
 
         $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
-
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
         $this->assertEquals($expected, Sitemap::photos());
 
@@ -274,8 +260,6 @@ class SitemapTest extends TestCase
 
         $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::posts());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
@@ -332,8 +316,6 @@ class SitemapTest extends TestCase
         ];
 
         $table = TableRegistry::get(ME_CMS . '.Tags');
-
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
         $this->assertEquals($expected, Sitemap::postsTags());
 
@@ -403,12 +385,10 @@ class SitemapTest extends TestCase
      */
     public function testSystems()
     {
-        $this->assertEquals([
-            [
-                'loc' => 'http://localhost/contact/us',
-                'priority' => '0.5',
-            ],
-        ], Sitemap::systems());
+        $this->assertEquals([[
+            'loc' => 'http://localhost/contact/us',
+            'priority' => '0.5',
+        ]], Sitemap::systems());
 
         //Disabled contact form
         Configure::write(ME_CMS . '.default.contact_us', false);

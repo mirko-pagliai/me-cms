@@ -1,28 +1,17 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-/**
- * (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
- */
+
+// (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -31,9 +20,7 @@ use Cake\Network\Request;
 
 require_once __DIR__ . DS . 'constants.php';
 
-/**
- * Loads MeTools plugins
- */
+//Loads MeTools plugins
 if (!Plugin::loaded('MeTools')) {
     Plugin::load('MeTools', ['bootstrap' => true]);
 }
@@ -49,49 +36,40 @@ foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED] as $dir) {
     }
 }
 
-/**
- * Sets config for the Tokens plugin
- */
+//Sets configuration for the Tokens plugin
 Configure::write('Tokens.usersClassOptions', [
     'foreignKey' => 'user_id',
     'className' => 'Users',
 ]);
 
-/**
- * Loads the MeCms configuration
- */
+//Loads the MeCms configuration and merges with the configuration from
+//  application, if exists
 Configure::load('MeCms.me_cms');
 
-//Merges with the configuration from application, if exists
+//
 if (is_readable(CONFIG . 'me_cms.php')) {
     Configure::load('me_cms');
 }
 
-/**
- * Forces debug on localhost, if required
- */
+//Forces debug on localhost, if requiredì
 if (!isset($request)) {
     $request = new Request;
 }
-if ($request->is('localhost') && getConfig('main.debug_on_localhost') && !getConfig('debug')) {
+if ($request->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
 
-/**
- * Loads theme plugin
- */
+//Loads theme plugin
 $theme = getConfig('default.theme');
 
 if ($theme && !Plugin::loaded($theme)) {
     Plugin::load($theme);
 }
 
-/**
- * Loads the cache configuration
- */
+//Loads the cache configuration and merges with the configuration from
+//  application, if exists
 Configure::load('MeCms.cache');
 
-//Merges with the configuration from application, if exists
 if (is_readable(CONFIG . 'cache.php')) {
     Configure::load('cache');
 }
@@ -106,30 +84,24 @@ foreach (Configure::consume('Cache') as $key => $config) {
     Cache::setConfig($key, $config);
 }
 
-/**
- * Loads the banned ip configuration
- */
+//Loads the banned IP configuration
 if (is_readable(CONFIG . 'banned_ip.php')) {
     Configure::load('banned_ip');
 }
 
-/**
- * Loads the widgets configuration
- */
+//Loads the widgets configuration and merges with the configuration from
+//  application, if exists
 Configure::load('MeCms.widgets');
 
-//Overwrites with the configuration from application, if exists
 if (is_readable(CONFIG . 'widgets.php')) {
     Configure::load('widgets', 'default', false);
 }
 
-/**
- * Loads the reCAPTCHA configuration
- */
+//Loads the reCAPTCHA configuration
 Configure::load('recaptcha');
 
 if (!getConfig('RecaptchaMailhide.encryptKey')) {
-    Configure::write('RecaptchaMailhide.encryptKey', getConfig('Recaptcha.private'));
+    Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
 }
 
 //Adds log for users actions

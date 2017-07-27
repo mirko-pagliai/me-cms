@@ -1,33 +1,22 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PhotosController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 use MeTools\Controller\Component\UploaderComponent;
 
 /**
@@ -35,8 +24,6 @@ use MeTools\Controller\Component\UploaderComponent;
  */
 class PhotosControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\PhotosController
      */
@@ -68,7 +55,7 @@ class PhotosControllerTest extends IntegrationTestCase
      *  a upload
      * @return array
      */
-    protected function _createFileToUpload()
+    protected function createFileToUpload()
     {
         $file = TMP . 'file_to_upload.jpg';
 
@@ -107,17 +94,6 @@ class PhotosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Photos);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -125,9 +101,6 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        //Sets key for cookies
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
-
         //Mocks the `Uploader` component
         $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
             ->setConstructorArgs([new ComponentRegistry])
@@ -142,7 +115,7 @@ class PhotosControllerTest extends IntegrationTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Photos`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $controller->Photos = $this->getMockForModel(get_class($controller->Photos), ['save']);
+            $controller->Photos = $this->getMockForModel($controller->Photos->getRegistryAlias(), ['save']);
             $controller->Photos->method('save')->will($this->returnValue(false));
         }
 
@@ -158,7 +131,6 @@ class PhotosControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
         $this->assertNotEmpty($this->viewVariable('albums'));
     }
 
@@ -173,7 +145,7 @@ class PhotosControllerTest extends IntegrationTestCase
 
         $this->get(array_merge($this->url, ['action' => 'add']));
         $this->assertRedirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
-        $this->assertSession('You must first create an album', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You must first create an album');
     }
 
     /**
@@ -206,19 +178,13 @@ class PhotosControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/index.ctp');
 
         $photosFromView = $this->viewVariable('photos');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $photosFromView);
         $this->assertNotEmpty($photosFromView);
-
-        foreach ($photosFromView as $photo) {
-            $this->assertInstanceof('MeCms\Model\Entity\Photo', $photo);
-        }
-
-        $this->assertCookie(null, 'renderPhotos');
+        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photosFromView);
+        $this->assertCookieIsEmpty('renderPhotos');
     }
 
     /**
@@ -228,10 +194,8 @@ class PhotosControllerTest extends IntegrationTestCase
     public function testIndexAsGrid()
     {
         $this->get(array_merge($this->url, ['action' => 'index', '?' => ['render' => 'grid']]));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/index_as_grid.ctp');
-
         $this->assertCookie('grid', 'renderPhotos');
     }
 
@@ -244,10 +208,8 @@ class PhotosControllerTest extends IntegrationTestCase
         $this->cookie('renderPhotos', 'grid');
 
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/index_as_grid.ctp');
-
         $this->assertCookie('grid', 'renderPhotos');
     }
 
@@ -257,19 +219,17 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUpload()
     {
+        $file = $this->createFileToUpload();
         $url = array_merge($this->url, ['action' => 'upload']);
-
-        $file = $this->_createFileToUpload();
 
         //GET request
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/upload.ctp');
 
         //POST request. This works
         $this->post(array_merge($url, ['_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
 
         //Checks the photo has been saved
         $photo = $this->Photos->find()->last();
@@ -283,7 +243,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorDuringUpload()
     {
-        $file = array_merge($this->_createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
+        $file = array_merge($this->createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
 
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
         $this->assertResponseFailure();
@@ -308,7 +268,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorOnSave()
     {
-        $file = $this->_createFileToUpload();
+        $file = $this->createFileToUpload();
 
         //The table `save()` method returns `false` for this test. See the
         //  `controllerSpy()` method.
@@ -324,7 +284,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorOnEntity()
     {
-        $file = array_merge($this->_createFileToUpload(), ['name' => 'a.jpg?name=value']);
+        $file = array_merge($this->createFileToUpload(), ['name' => 'a.jpg?name=value']);
 
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
         $this->assertResponseFailure();
@@ -338,7 +298,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadOnlyOneAlbum()
     {
-        $file = $this->_createFileToUpload();
+        $file = $this->createFileToUpload();
 
         //Deletes all albums, except for the first one
         $this->Photos->Albums->deleteAll(['id >' => 1]);
@@ -346,7 +306,7 @@ class PhotosControllerTest extends IntegrationTestCase
         //POST request. This should also work without the album ID on the query
         //  string, as there is only one album
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), compact('file'));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
 
         //Checks the photo has been saved
         $photo = $this->Photos->find()->last();
@@ -363,28 +323,26 @@ class PhotosControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/edit.ctp');
 
         $photoFromView = $this->viewVariable('photo');
-        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
         $this->assertNotEmpty($photoFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
 
         //POST request. Data are valid
         $this->post($url, ['description' => 'New description for first banner']);
         $this->assertRedirect(['action' => 'index', 1]);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['album_id' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $photoFromView = $this->viewVariable('photo');
-        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
         $this->assertNotEmpty($photoFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
     }
 
     /**
@@ -394,7 +352,7 @@ class PhotosControllerTest extends IntegrationTestCase
     public function testDownload()
     {
         $this->get(array_merge($this->url, ['action' => 'download', 1]));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(PHOTOS . '1' . DS . 'photo1.jpg');
     }
 
@@ -406,6 +364,6 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         $this->post(array_merge($this->url, ['action' => 'delete', 1]));
         $this->assertRedirect(['action' => 'index', 1]);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 }

@@ -1,30 +1,19 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Shell;
 
 use Cake\Console\ConsoleIo;
 use Cake\Core\App;
-use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
@@ -61,17 +50,17 @@ class InstallShell extends BaseInstallShell
         ];
 
         //Merges assets for which create symbolic links
-        $this->links = am($this->links, [
+        $this->links = array_merge($this->links, [
             'js-cookie/js-cookie/src' => 'js-cookie',
             'sunhater/kcfinder' => 'kcfinder',
             'enyo/dropzone/dist' => 'dropzone',
         ]);
 
         //Merges paths to be created and made writable
-        $this->paths = am($this->paths, [
-            Configure::read(ASSETS . '.target'),
-            Configure::read(DATABASE_BACKUP . '.target'),
-            Configure::read(THUMBER . '.target'),
+        $this->paths = array_merge($this->paths, [
+            getConfigOrFail(ASSETS . '.target'),
+            getConfigOrFail(DATABASE_BACKUP . '.target'),
+            getConfigOrFail(THUMBER . '.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
@@ -84,7 +73,7 @@ class InstallShell extends BaseInstallShell
      * Gets others plugins that have the `InstallShell` class
      * @return array
      */
-    protected function _getOtherPlugins()
+    protected function getOtherPlugins()
     {
         return collection(Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]))
             ->filter(function ($plugin) {
@@ -99,7 +88,7 @@ class InstallShell extends BaseInstallShell
      * Executes all available tasks
      * @return void
      * @uses MeTools\Shell\InstallShell::all()
-     * @uses _getOtherPlugins()
+     * @uses getOtherPlugins()
      * @uses copyConfig()
      * @uses createAdmin()
      * @uses createGroups()
@@ -128,7 +117,7 @@ class InstallShell extends BaseInstallShell
             $this->fixKcfinder();
         }
 
-        if ($this->_getOtherPlugins()) {
+        if ($this->getOtherPlugins()) {
             $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
             if (in_array($ask, ['Y', 'y'])) {
                 $this->runFromOtherPlugins();
@@ -251,13 +240,13 @@ class InstallShell extends BaseInstallShell
     /**
      * Runs the `InstallShell::all()` method from other plugins
      * @return array Array of the cli command exit code. 0 is success
-     * @uses _getOtherPlugins()
+     * @uses getOtherPlugins()
      */
     public function runFromOtherPlugins()
     {
         $executed = [];
 
-        foreach ($this->_getOtherPlugins() as $plugin) {
+        foreach ($this->getOtherPlugins() as $plugin) {
             $executed[$plugin] = $this->dispatchShell([
                 'command' => [sprintf('%s.install', $plugin), 'all'],
                 'extra' => $this->params,

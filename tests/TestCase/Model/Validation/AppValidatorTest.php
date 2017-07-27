@@ -1,29 +1,19 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppValidatorTest class
@@ -155,9 +145,9 @@ class AppValidatorTest extends TestCase
         foreach (['first_name', 'last_name'] as $field) {
             foreach (['abc', 'Ab-c', 'Ab$', 'abC'] as $value) {
                 $copy[$field] = $value;
-                $this->assertEquals([
-                    $field => ['personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'],
-                ], $this->Users->newEntity($copy)->getErrors());
+                $this->assertEquals([$field => [
+                    'personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter',
+                ]], $this->Users->newEntity($copy)->getErrors());
             }
 
             foreach (['Ab', 'A' . str_repeat('a', 40)] as $value) {
@@ -317,10 +307,7 @@ class AppValidatorTest extends TestCase
             ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
-        foreach ([
-            '2016-01-16 19:09',
-            '2016-01-16 19:09:00',
-        ] as $value) {
+        foreach (['2016-01-16 19:09', '2016-01-16 19:09:00'] as $value) {
             $this->example['Posts']['created'] = $value;
             $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }

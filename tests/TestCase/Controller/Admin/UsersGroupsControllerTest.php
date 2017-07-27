@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\UsersGroupsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * UsersGroupsControllerTest class
  */
 class UsersGroupsControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\UsersGroupsController
      */
@@ -80,17 +67,6 @@ class UsersGroupsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->UsersGroups);
-    }
-
-    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -110,17 +86,12 @@ class UsersGroupsControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/index.ctp');
 
         $groupsFromView = $this->viewVariable('groups');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $groupsFromView);
         $this->assertNotEmpty($groupsFromView);
-
-        foreach ($groupsFromView as $group) {
-            $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $group);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupsFromView);
     }
 
     /**
@@ -132,28 +103,26 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/add.ctp');
 
         $groupFromView = $this->viewVariable('group');
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
         $this->assertNotEmpty($groupFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
 
         //POST request. Data are valid
         $this->post($url, ['name' => 'team', 'label' => 'Team']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['name' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $groupFromView = $this->viewVariable('group');
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
         $this->assertNotEmpty($groupFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
     }
 
     /**
@@ -165,18 +134,17 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 2]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/edit.ctp');
 
         $groupFromView = $this->viewVariable('group');
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
         $this->assertNotEmpty($groupFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
 
         //POST request. Data are valid
         $this->post($url, ['description' => 'This is a description']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['label' => 'aa']);
@@ -185,8 +153,8 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $groupFromView = $this->viewVariable('group');
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
         $this->assertNotEmpty($groupFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
     }
 
     /**
@@ -205,7 +173,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         //Cannot delete a default group
         $this->post(array_merge($url, [$id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('You cannot delete this users group', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You cannot delete this users group');
 
         $id = $this->UsersGroups->find()
             ->where(['id >' => 3, 'user_count >' => 0])
@@ -214,10 +182,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($url, [$id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession(
-            'Before deleting this, you must delete or reassign all items that belong to this element',
-            'Flash.flash.0.message'
-        );
+        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
 
         $id = $this->UsersGroups->find()
             ->where(['id >' => 3, 'user_count' => 0])
@@ -226,6 +191,6 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($url, [$id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 }

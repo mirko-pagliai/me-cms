@@ -1,24 +1,14 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         http://kcfinder.sunhater.com/install
  */
 namespace MeCms\Controller\Component;
@@ -40,11 +30,11 @@ class KcFinderComponent extends Component
     public $components = [ME_CMS . '.Auth'];
 
     /**
-     * Gets the default config
+     * Internal method to get the default config
      * @return array
      * @uses getTypes()
      */
-    protected function _getDefaultConfig()
+    protected function getDefaultConfig()
     {
         $defaultConfig = [
             'denyExtensionRename' => true,
@@ -105,7 +95,7 @@ class KcFinderComponent extends Component
      *  component
      * @return void
      * @throws InternalErrorException
-     * @uses _getDefaultConfig()
+     * @uses getDefaultConfig()
      */
     public function initialize(array $config)
     {
@@ -119,8 +109,15 @@ class KcFinderComponent extends Component
             throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
 
-        //Merges default config, options from configuration and passed options
-        $config = am($this->_getDefaultConfig(), getConfig('kcfinder'), $config);
+        //Merges:
+        //  1) default config;
+        //  2) options from configuration;
+        //  3) passed options.
+        $config = array_merge(
+            $this->getDefaultConfig(),
+            getConfig('kcfinder', []),
+            $config
+        );
 
         //Writes on session
         $this->getController()->request->session()->write('KCFINDER', $config);

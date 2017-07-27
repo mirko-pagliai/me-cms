@@ -1,39 +1,26 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Traits;
 
 use Cake\Core\Configure;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\PostsController;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * CheckLastSearchTraitTest class
  */
 class CheckLastSearchTraitTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Tests for `checkLastSearch()` method
      * @test
@@ -42,27 +29,29 @@ class CheckLastSearchTraitTest extends TestCase
     {
         $controller = new PostsController;
 
-        $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch', ['my-query']));
+        $checkLastSearchMethod = function ($queryId = false) use ($controller) {
+            return $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
+        };
+
+        $this->assertTrue($checkLastSearchMethod('my-query'));
         $firstSession = $controller->request->session()->read('last_search');
-        $this->assertNotEmpty($firstSession);
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession['id']);
 
         //Tries with the same query
-        $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch', ['my-query']));
+        $this->assertTrue($checkLastSearchMethod('my-query'));
         $secondSession = $controller->request->session()->read('last_search');
-        $this->assertNotEmpty($secondSession);
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession['id']);
 
         $this->assertEquals($firstSession, $secondSession);
 
         //Tries with another query
-        $this->assertFalse($this->invokeMethod($controller, 'checkLastSearch', ['another-query']));
+        $this->assertFalse($checkLastSearchMethod('another-query'));
         $thirdSession = $controller->request->session()->read('last_search');
         $this->assertEquals($firstSession, $thirdSession);
 
         //Deletes the session and tries again with another query
         $controller->request->session()->delete('last_search');
-        $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch', ['another-query']));
+        $this->assertTrue($checkLastSearchMethod('another-query'));
         $fourthSession = $controller->request->session()->read('last_search');
         $this->assertNotEquals($firstSession, $fourthSession);
 
@@ -70,7 +59,7 @@ class CheckLastSearchTraitTest extends TestCase
             $controller->request->session()->delete('last_search');
             Configure::write(ME_CMS . '.security.search_interval', $value);
 
-            $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch'));
+            $this->assertTrue($checkLastSearchMethod());
             $this->assertNull($controller->request->session()->read('last_search'));
         }
     }

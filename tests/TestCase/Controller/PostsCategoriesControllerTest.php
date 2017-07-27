@@ -1,30 +1,20 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PostsCategoriesControllerTest class
@@ -64,17 +54,6 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsCategories);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -94,17 +73,12 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(['_name' => 'postsCategories']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
-        $this->assertNotEmpty($categoriesFromView->toArray());
-
-        foreach ($categoriesFromView as $category) {
-            $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $category);
-        }
+        $this->assertNotEmpty($categoriesFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
 
         $cache = Cache::read('categories_index', $this->PostsCategories->cache);
         $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
@@ -124,23 +98,19 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
         $url = ['_name' => 'postsCategory', $slug];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsCategories/view.ctp');
 
         $categoryFromView = $this->viewVariable('category');
+        $this->assertNotEmpty($categoryFromView);
         $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
 
         $postsFromView = $this->viewVariable('posts');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
         $this->assertNotEmpty($postsFromView);
-
-        foreach ($postsFromView as $post) {
-            $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         //Sets the cache name
-        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfig('default.records'), 1);
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsCategories->cache
@@ -151,7 +121,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string

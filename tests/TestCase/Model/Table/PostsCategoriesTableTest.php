@@ -1,30 +1,20 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsCategoriesTableTest class
@@ -61,17 +51,6 @@ class PostsCategoriesTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsCategories);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -86,10 +65,7 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->PostsCategories->newEntity($example);
         $this->assertNotEmpty($this->PostsCategories->save($entity));
@@ -108,7 +84,9 @@ class PostsCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PostsCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'parent_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -147,7 +125,6 @@ class PostsCategoriesTableTest extends TestCase
         $category = $this->PostsCategories->findById(4)->contain(['Parents'])->first();
 
         $this->assertNotEmpty($category->parent);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
@@ -205,17 +182,14 @@ class PostsCategoriesTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->PostsCategories->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts_categories Categories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Categories.id = (Posts.category_id))', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->_matchingData['Posts']->active);
-            $this->assertTrue(!$entity->_matchingData['Posts']->created->isFuture());
+            $this->assertTrue($entity->_matchingData['Posts']->active &&
+                !$entity->_matchingData['Posts']->created->isFuture());
         }
     }
 }

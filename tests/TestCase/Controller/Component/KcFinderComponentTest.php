@@ -1,40 +1,27 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\KcFinderComponent;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * KcFinderComponentTest class
  */
 class KcFinderComponentTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Controller\Component\KcFinderComponent
      */
@@ -85,17 +72,15 @@ class KcFinderComponentTest extends TestCase
         @unlink($file);
         @rmdir(dirname($file));
         //@codingStandardsIgnoreEnd
-
-        unset($this->KcFinder);
     }
 
     /**
-     * Test for `_getDefaultConfig()` method
+     * Test for `getDefaultConfig()` method
      * @test
      */
     public function testGetDefaultConfig()
     {
-        $defaultConfig = $this->invokeMethod($this->KcFinder, '_getDefaultConfig');
+        $defaultConfig = $this->invokeMethod($this->KcFinder, 'getDefaultConfig');
         $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,
@@ -134,7 +119,7 @@ class KcFinderComponentTest extends TestCase
         //Tries with admin user
         $this->KcFinder->Auth->setUser(['group' => ['name' => 'admin']]);
 
-        $defaultConfig = $this->invokeMethod($this->KcFinder, '_getDefaultConfig');
+        $defaultConfig = $this->invokeMethod($this->KcFinder, 'getDefaultConfig');
         $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,
@@ -163,17 +148,12 @@ class KcFinderComponentTest extends TestCase
      */
     public function testGetTypes()
     {
-        $this->assertEquals([
-            'images' => '*img',
-        ], $this->KcFinder->getTypes());
+        $this->assertEquals(['images' => '*img'], $this->KcFinder->getTypes());
 
         //@codingStandardsIgnoreLine
         @mkdir(UPLOADED . 'docs');
 
-        $this->assertEquals([
-            'docs' => '',
-            'images' => '*img',
-        ], $this->KcFinder->getTypes());
+        $this->assertEquals(['docs' => '', 'images' => '*img'], $this->KcFinder->getTypes());
 
         //@codingStandardsIgnoreLine
         @rmdir(UPLOADED . 'docs');
@@ -185,10 +165,7 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitialize()
     {
-        $config = $this->KcFinder->request->session()->read('KCFINDER');
-        $this->assertNotEmpty($config);
-
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'denyExtensionRename',
             'denyUpdateCheck',
             'dirnameChangeChars',
@@ -199,7 +176,7 @@ class KcFinderComponentTest extends TestCase
             'uploadURL',
             'types',
             'access',
-        ], array_keys($config));
+        ], $this->KcFinder->request->session()->read('KCFINDER'));
     }
 
     /**

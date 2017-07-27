@@ -1,31 +1,21 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
 use App\Utility\Token;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * UsersTableTest class
@@ -76,17 +66,6 @@ class UsersTableTest extends TestCase
         ];
 
         Cache::clear(false, $this->Users->cache);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Users);
     }
 
     /**
@@ -147,7 +126,7 @@ class UsersTableTest extends TestCase
         $entity = $this->Users->newEntity($this->example);
         $this->assertFalse($this->Users->save($entity));
         $this->assertEquals(array_merge([
-            'group_id' => ['_existsIn' => 'You have to select a valid option']
+            'group_id' => ['_existsIn' => 'You have to select a valid option'],
         ], $expected), $entity->getErrors());
     }
 
@@ -189,7 +168,6 @@ class UsersTableTest extends TestCase
         $user = $this->Users->findById(4)->contain(['Groups'])->first();
 
         $this->assertNotEmpty($user->group);
-
         $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', $user->group);
         $this->assertEquals(3, $user->group->id);
     }
@@ -222,7 +200,6 @@ class UsersTableTest extends TestCase
         $user = $this->Users->findById(4)->contain(['Tokens'])->first();
 
         $this->assertEquals(1, count($user->tokens));
-
         $this->assertInstanceOf('Tokens\Model\Entity\Token', $user->tokens[0]);
         $this->assertEquals(4, $user->tokens[0]->user_id);
         $this->assertEquals($token, $user->tokens[0]->token);
@@ -235,17 +212,13 @@ class UsersTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->Users->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->active);
-            $this->assertFalse($entity->banned);
+            $this->assertTrue($entity->active && !$entity->banned);
         }
     }
 
@@ -256,11 +229,8 @@ class UsersTableTest extends TestCase
     public function testFindBanned()
     {
         $query = $this->Users->find('banned');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -275,17 +245,13 @@ class UsersTableTest extends TestCase
     public function testFindPending()
     {
         $query = $this->Users->find('pending');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
-
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertFalse($entity->active);
-            $this->assertFalse($entity->banned);
+            $this->assertTrue(!$entity->active && !$entity->banned);
         }
     }
 
@@ -296,7 +262,6 @@ class UsersTableTest extends TestCase
     public function testGetActiveList()
     {
         $query = $this->Users->getActiveList();
-        $this->assertInstanceof('Cake\ORM\Query', $query);
         $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
 
         $list = $query->toArray();
@@ -324,9 +289,7 @@ class UsersTableTest extends TestCase
         ];
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
-
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
         $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
@@ -336,7 +299,6 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
-
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
         $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
@@ -345,7 +307,6 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
-
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
         $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
@@ -357,10 +318,7 @@ class UsersTableTest extends TestCase
      */
     public function testQueryFromFilterWithInvalidData()
     {
-        $data = [
-            'status' => 'invalid',
-            'username' => 'ab',
-        ];
+        $data = ['status' => 'invalid', 'username' => 'ab'];
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertEmpty($query->valueBinder()->bindings());
@@ -372,9 +330,7 @@ class UsersTableTest extends TestCase
      */
     public function testValidationDoNotRequirePresence()
     {
-        $example = [
-            'email' => 'example@test.com',
-        ];
+        $example = ['email' => 'example@test.com'];
 
         $entity = $this->Users->newEntity($example);
         $this->assertNotEmpty($entity->getErrors());

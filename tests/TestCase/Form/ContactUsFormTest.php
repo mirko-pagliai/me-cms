@@ -1,31 +1,20 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\Form;
 
 use Cake\Mailer\MailerAwareTrait;
-use Cake\TestSuite\TestCase;
 use MeCms\Form\ContactUsForm;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * ContactUsFormTest class
@@ -33,7 +22,6 @@ use Reflection\ReflectionTrait;
 class ContactUsFormTest extends TestCase
 {
     use MailerAwareTrait;
-    use ReflectionTrait;
 
     /**
      * @var \MeCms\Form\ContactUsForm
@@ -66,17 +54,6 @@ class ContactUsFormTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->ContactUsForm);
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
@@ -92,9 +69,8 @@ class ContactUsFormTest extends TestCase
             unset($copy[$key]);
 
             $this->assertFalse($this->ContactUsForm->validate($copy));
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->ContactUsForm->errors());
+            $errors = $this->ContactUsForm->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
         }
     }
 
@@ -108,9 +84,8 @@ class ContactUsFormTest extends TestCase
             $this->example['message'] = $value;
 
             $this->assertFalse($this->ContactUsForm->validate($this->example));
-            $this->assertEquals([
-                'message' => ['lengthBetween' => 'Must be between 10 and 1000 chars'],
-            ], $this->ContactUsForm->errors());
+            $errors = $this->ContactUsForm->errors();
+            $this->assertEquals(['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']], $errors);
         }
 
         foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {

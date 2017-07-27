@@ -1,44 +1,30 @@
 <?php
 /**
- * This file is part of MeCms.
+ * This file is part of me-cms.
  *
- * MeCms is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * MeCms is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with MeCms.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\TestSuite\TestCase;
 use MeCms\View\Cell\PostsTagsWidgetsCell;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsTagsWidgetsCellTest class
  */
 class PostsTagsWidgetsCellTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\View\Cell\PostsTagsWidgetsCell
      */
@@ -99,44 +85,33 @@ class PostsTagsWidgetsCellTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsTagsWidgetsCell, $this->Tags, $this->Widget, $this->options);
-    }
-
-    /**
-     * Test for `_getFontSizes()` method
+     * Test for `getFontSizes()` method
      * @test
      */
     public function testGetFontSizes()
     {
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [[]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [[]]);
         $this->assertEquals([40, 12], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 20]]);
         $this->assertEquals([20, 12], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['minFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['minFont' => 20]]);
         $this->assertEquals([40, 20], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
         $this->assertEquals([30, 20], $result);
     }
 
     /**
-     * Test for `_getFontSizes()` method, with invalid values
+     * Test for `getFontSizes()` method, with invalid values
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Invalid values
      * @test
      */
     public function testGetFontSizesWithInvalidValues()
     {
-        $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
+        $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
     /**
