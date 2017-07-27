@@ -27,14 +27,10 @@ class WidgetHelper extends Helper
      */
     protected function getAll()
     {
+        $widgets = getConfig('Widgets.general', []);
+
         if ($this->request->isUrl(['_name' => 'homepage']) && getConfig('Widgets.homepage')) {
             $widgets = getConfig('Widgets.homepage');
-        } else {
-            $widgets = getConfig('Widgets.general');
-        }
-
-        if (!$widgets || !is_array($widgets)) {
-            return [];
         }
 
         return collection($widgets)->map(function ($args, $name) {
