@@ -28,7 +28,7 @@ class LogsController extends AppController
      * @param bool $serialized `true` for a serialized log
      * @return string
      */
-    protected function getPath($filename, $serialized = false)
+    protected function getPath($filename, $serialized)
     {
         if ($serialized) {
             $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
@@ -45,7 +45,7 @@ class LogsController extends AppController
      * @throws InternalErrorException
      * @uses getPath()
      */
-    protected function read($filename, $serialized = false)
+    protected function read($filename, $serialized)
     {
         $log = $this->getPath($filename, $serialized);
 
@@ -124,7 +124,7 @@ class LogsController extends AppController
      */
     public function download($filename)
     {
-        $file = $this->getPath($filename);
+        $file = $this->getPath($filename, false);
 
         return $this->response->withFile($file, ['download' => true]);
     }
@@ -140,7 +140,7 @@ class LogsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $success = (new File($this->getPath($filename)))->delete();
+        $success = (new File($this->getPath($filename, false)))->delete();
 
         $serialized = $this->getPath($filename, true);
 

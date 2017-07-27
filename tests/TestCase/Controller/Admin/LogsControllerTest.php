@@ -72,7 +72,7 @@ class LogsControllerTest extends IntegrationTestCase
      */
     public function testGetPath()
     {
-        $result = $this->invokeMethod($this->Controller, 'getPath', ['file.log']);
+        $result = $this->invokeMethod($this->Controller, 'getPath', ['file.log', false]);
         $this->assertEquals(LOGS . 'file.log', $result);
 
         $result = $this->invokeMethod($this->Controller, 'getPath', ['file.log', true]);
@@ -87,7 +87,7 @@ class LogsControllerTest extends IntegrationTestCase
     {
         $this->writeSomeLogs();
 
-        $this->assertNotEmpty($this->invokeMethod($this->Controller, 'read', ['error.log']));
+        $this->assertNotEmpty($this->invokeMethod($this->Controller, 'read', ['error.log', false]));
         $this->assertNotEmpty($this->invokeMethod($this->Controller, 'read', ['error.log', true]));
     }
 
@@ -99,7 +99,7 @@ class LogsControllerTest extends IntegrationTestCase
      */
     public function testReadNotReadableFile()
     {
-        $this->invokeMethod($this->Controller, 'read', ['noExisting.log']);
+        $this->invokeMethod($this->Controller, 'read', ['noExisting.log', false]);
     }
 
     /**
