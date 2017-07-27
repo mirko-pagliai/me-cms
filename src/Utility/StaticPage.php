@@ -31,7 +31,7 @@ class StaticPage
      * @return string
      * @since 2.17.1
      */
-    protected static function _appPath()
+    protected static function getAppPath()
     {
         $path = collection(App::path('Template'))->first();
 
@@ -44,7 +44,7 @@ class StaticPage
      * @return string
      * @since 2.17.1
      */
-    protected static function _pluginPath($plugin)
+    protected static function getPluginPath($plugin)
     {
         $path = collection(App::path('Template', $plugin))->first();
 
@@ -55,10 +55,10 @@ class StaticPage
      * Internal method to get all paths for static pages
      * @return array
      * @uses MeCms\Core\Plugin::all()
-     * @uses _appPath()
-     * @uses _pluginPath()
+     * @uses getAppPath()
+     * @uses getPluginPath()
      */
-    protected static function paths()
+    protected static function getAllPaths()
     {
         $paths = Cache::read('paths', 'static_pages');
 
@@ -66,7 +66,7 @@ class StaticPage
             //Adds all plugins to paths
             $paths = collection(Plugin::all())
                 ->map(function ($plugin) {
-                    return self::_pluginPath($plugin);
+                    return self::getPluginPath($plugin);
                 })
                 ->filter(function ($path) {
                     return file_exists($path);
@@ -74,7 +74,7 @@ class StaticPage
                 ->toList();
 
             //Adds APP to paths
-            array_unshift($paths, self::_appPath());
+            array_unshift($paths, self::getAppPath());
 
             Cache::write('paths', $paths, 'static_pages');
         }
@@ -101,13 +101,13 @@ class StaticPage
     /**
      * Gets all static pages
      * @return array Static pages
-     * @uses paths()
+     * @uses getAllPaths()
      * @uses slug()
      * @uses title()
      */
     public static function all()
     {
-        foreach (self::paths() as $path) {
+        foreach (self::getAllPaths() as $path) {
             //Gets all files for each path
             $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
 
@@ -130,8 +130,8 @@ class StaticPage
      * @param string $slug Slug
      * @return string|bool Static page or `false`
      * @uses MeCms\Core\Plugin::all()
-     * @uses _appPath()
-     * @uses _pluginPath()
+     * @uses getAppPath()
+     * @uses getPluginPath()
      */
     public static function get($slug)
     {
@@ -151,7 +151,7 @@ class StaticPage
 
             //Checks if the page exists in APP
             foreach ($patterns as $pattern) {
-                $filename = self::_appPath() . $pattern . '.ctp';
+                $filename = self::getAppPath() . $pattern . '.ctp';
 
                 if (is_readable($filename)) {
                     $page = DS . 'StaticPages' . DS . $pattern;
@@ -163,7 +163,7 @@ class StaticPage
             //Checks if the page exists in each plugin
             foreach (Plugin::all() as $plugin) {
                 foreach ($patterns as $pattern) {
-                    $filename = self::_pluginPath($plugin) . $pattern . '.ctp';
+                    $filename = self::getPluginPath($plugin) . $pattern . '.ctp';
 
                     if (is_readable($filename)) {
                         $page = $plugin . '.' . DS . 'StaticPages' . DS . $pattern;
