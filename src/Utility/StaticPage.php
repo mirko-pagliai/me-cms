@@ -27,31 +27,6 @@ use MeCms\Core\Plugin;
 class StaticPage
 {
     /**
-     * Internal method to get the app path
-     * @return string
-     * @since 2.17.1
-     */
-    protected static function getAppPath()
-    {
-        $path = collection(App::path('Template'))->first();
-
-        return Folder::slashTerm($path) . 'StaticPages' . DS;
-    }
-
-    /**
-     * Internal method to get a plugin path
-     * @param string $plugin Plugin name
-     * @return string
-     * @since 2.17.1
-     */
-    protected static function getPluginPath($plugin)
-    {
-        $path = collection(App::path('Template', $plugin))->first();
-
-        return Folder::slashTerm($path) . 'StaticPages' . DS;
-    }
-
-    /**
      * Internal method to get all paths for static pages
      * @return array
      * @uses MeCms\Core\Plugin::all()
@@ -83,6 +58,31 @@ class StaticPage
     }
 
     /**
+     * Internal method to get the app path
+     * @return string
+     * @since 2.17.1
+     */
+    protected static function getAppPath()
+    {
+        $path = collection(App::path('Template'))->first();
+
+        return Folder::slashTerm($path) . 'StaticPages' . DS;
+    }
+
+    /**
+     * Internal method to get a plugin path
+     * @param string $plugin Plugin name
+     * @return string
+     * @since 2.17.1
+     */
+    protected static function getPluginPath($plugin)
+    {
+        $path = collection(App::path('Template', $plugin))->first();
+
+        return Folder::slashTerm($path) . 'StaticPages' . DS;
+    }
+
+    /**
      * Internal method to get the slug.
      *
      * It takes the full path and removes the relative path and the extension.
@@ -90,7 +90,7 @@ class StaticPage
      * @param string $relativePath Relative path
      * @return string
      */
-    protected static function slug($path, $relativePath)
+    protected static function getSlug($path, $relativePath)
     {
         return preg_replace([
             sprintf('/^%s/', preg_quote(Folder::slashTerm($relativePath), DS)),
@@ -102,7 +102,7 @@ class StaticPage
      * Gets all static pages
      * @return array Static pages
      * @uses getAllPaths()
-     * @uses slug()
+     * @uses getSlug()
      * @uses title()
      */
     public static function all()
@@ -115,7 +115,7 @@ class StaticPage
                 $pages[] = new Entity([
                     'filename' => pathinfo($file, PATHINFO_FILENAME),
                     'path' => rtr($file),
-                    'slug' => self::slug($file, $path),
+                    'slug' => self::getSlug($file, $path),
                     'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
                     'modified' => new FrozenTime(filemtime($file)),
                 ]);
