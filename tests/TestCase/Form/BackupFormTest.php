@@ -100,17 +100,17 @@ class BackupFormTest extends TestCase
     }
 
     /**
-     * Tests for `_getBackupExportInstance()` method
+     * Tests for `getBackupExportInstance()` method
      * @test
      */
     public function testGetBackupExportInstance()
     {
-        $this->assertEmpty($this->getProperty($this->BackupForm, '_BackupExport'));
+        $this->assertEmpty($this->getProperty($this->BackupForm, 'BackupExport'));
 
-        $instance = $this->invokeMethod($this->BackupForm, '_getBackupExportInstance');
+        $instance = $this->invokeMethod($this->BackupForm, 'getBackupExportInstance');
         $this->assertInstanceOf('DatabaseBackup\Utility\BackupExport', $instance);
 
-        $this->assertEquals($instance, $this->getProperty($this->BackupForm, '_BackupExport'));
+        $this->assertEquals($instance, $this->getProperty($this->BackupForm, 'BackupExport'));
     }
 
     /**
@@ -120,11 +120,11 @@ class BackupFormTest extends TestCase
     public function testExecute()
     {
         $this->BackupForm = $this->getMockBuilder(get_class($this->BackupForm))
-            ->setMethods(['_getBackupExportInstance'])
+            ->setMethods(['getBackupExportInstance'])
             ->getMock();
 
         $this->BackupForm->expects($this->atLeastOnce())
-            ->method('_getBackupExportInstance')
+            ->method('getBackupExportInstance')
             ->will($this->returnCallback(function () {
                 $this->BackupExport->method('export')
                     ->will($this->returnValue(true));
@@ -135,7 +135,7 @@ class BackupFormTest extends TestCase
         $this->assertTrue($this->BackupForm->execute(['filename' => 'test.sql']));
 
         $this->BackupForm->expects($this->atLeastOnce())
-            ->method('_getBackupExportInstance')
+            ->method('getBackupExportInstance')
             ->will($this->throwException(new InternalErrorException));
 
         $this->assertFalse($this->BackupForm->execute(['filename' => 'test.sql']));

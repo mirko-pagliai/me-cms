@@ -162,13 +162,13 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `_loginWithCookie()` method
+     * Test for `loginWithCookie()` method
      * @test
      */
     public function testLoginWithCookie()
     {
         $loginWithCookieMethod = function () {
-            return $this->invokeMethod($this->Controller, '_loginWithCookie');
+            return $this->invokeMethod($this->Controller, 'loginWithCookie');
         };
 
         //No user data on cookies
@@ -244,14 +244,14 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `_sendActivationMail()` method
+     * Test for `sendActivationMail()` method
      * @test
      */
     public function testSendActivationMail()
     {
         $user = $this->Users->find()->first();
 
-        $result = $this->invokeMethod($this->Controller, '_sendActivationMail', [$user]);
+        $result = $this->invokeMethod($this->Controller, 'sendActivationMail', [$user]);
         $this->assertNotEmpty($result);
         $this->assertIsArray($result);
     }

@@ -75,12 +75,12 @@ class KcFinderComponentTest extends TestCase
     }
 
     /**
-     * Test for `_getDefaultConfig()` method
+     * Test for `getDefaultConfig()` method
      * @test
      */
     public function testGetDefaultConfig()
     {
-        $defaultConfig = $this->invokeMethod($this->KcFinder, '_getDefaultConfig');
+        $defaultConfig = $this->invokeMethod($this->KcFinder, 'getDefaultConfig');
         $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,
@@ -119,7 +119,7 @@ class KcFinderComponentTest extends TestCase
         //Tries with admin user
         $this->KcFinder->Auth->setUser(['group' => ['name' => 'admin']]);
 
-        $defaultConfig = $this->invokeMethod($this->KcFinder, '_getDefaultConfig');
+        $defaultConfig = $this->invokeMethod($this->KcFinder, 'getDefaultConfig');
         $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,

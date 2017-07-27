@@ -30,11 +30,11 @@ class KcFinderComponent extends Component
     public $components = [ME_CMS . '.Auth'];
 
     /**
-     * Gets the default config
+     * Internal method to get the default config
      * @return array
      * @uses getTypes()
      */
-    protected function _getDefaultConfig()
+    protected function getDefaultConfig()
     {
         $defaultConfig = [
             'denyExtensionRename' => true,
@@ -95,7 +95,7 @@ class KcFinderComponent extends Component
      *  component
      * @return void
      * @throws InternalErrorException
-     * @uses _getDefaultConfig()
+     * @uses getDefaultConfig()
      */
     public function initialize(array $config)
     {
@@ -114,7 +114,7 @@ class KcFinderComponent extends Component
         //  2) options from configuration;
         //  3) passed options.
         $config = array_merge(
-            $this->_getDefaultConfig(),
+            $this->getDefaultConfig(),
             getConfig('kcfinder', []),
             $config
         );

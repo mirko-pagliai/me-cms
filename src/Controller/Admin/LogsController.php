@@ -23,12 +23,12 @@ use MeCms\Controller\AppController;
 class LogsController extends AppController
 {
     /**
-     * Returns the path for a log
+     * Internal method to get the path for a log
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
      * @return string
      */
-    protected function _path($filename, $serialized = false)
+    protected function getPath($filename, $serialized = false)
     {
         if ($serialized) {
             $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
@@ -43,11 +43,11 @@ class LogsController extends AppController
      * @param bool $serialized `true` for a serialized log
      * @return string Log content
      * @throws InternalErrorException
-     * @uses _path()
+     * @uses getPath()
      */
-    protected function _read($filename, $serialized = false)
+    protected function read($filename, $serialized = false)
     {
-        $log = $this->_path($filename, $serialized);
+        $log = $this->getPath($filename, $serialized);
 
         if (!is_readable($log)) {
             throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
@@ -78,7 +78,7 @@ class LogsController extends AppController
     /**
      * Lists logs
      * @return void
-     * @uses _path()
+     * @uses getPath()
      */
     public function index()
     {
@@ -88,7 +88,7 @@ class LogsController extends AppController
         $logs = collection($logs)->map(function ($log) {
             return (object)[
                 'filename' => $log,
-                'hasSerialized' => is_readable($this->_path($log, true)),
+                'hasSerialized' => is_readable($this->getPath($log, true)),
                 'size' => filesize(LOGS . $log),
             ];
         })->toList();
@@ -100,7 +100,7 @@ class LogsController extends AppController
      * Views a log
      * @param string $filename Filename
      * @return void
-     * @uses _read()
+     * @uses read()
      */
     public function view($filename)
     {
@@ -111,7 +111,7 @@ class LogsController extends AppController
             $this->viewBuilder()->setTemplate('view_as_serialized');
         }
 
-        $content = $this->_read($filename, $serialized);
+        $content = $this->read($filename, $serialized);
 
         $this->set(compact('content', 'filename'));
     }
@@ -120,11 +120,11 @@ class LogsController extends AppController
      * Downloads a log
      * @param string $filename Log filename
      * @return \Cake\Network\Response
-     * @uses _path()
+     * @uses getPath()
      */
     public function download($filename)
     {
-        $file = $this->_path($filename);
+        $file = $this->getPath($filename);
 
         return $this->response->withFile($file, ['download' => true]);
     }
@@ -134,15 +134,15 @@ class LogsController extends AppController
      * If there's even a serialized log copy, it also deletes that.
      * @param string $filename Filename
      * @return \Cake\Network\Response|null
-     * @uses _path()
+     * @uses getPath()
      */
     public function delete($filename)
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $success = (new File($this->_path($filename)))->delete();
+        $success = (new File($this->getPath($filename)))->delete();
 
-        $serialized = $this->_path($filename, true);
+        $serialized = $this->getPath($filename, true);
 
         //Deletes the serialized log copy, if it exists
         if (file_exists($serialized)) {

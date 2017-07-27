@@ -67,39 +67,39 @@ class LogsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `_path()` method
+     * Tests for `getPath()` method
      * @test
      */
-    public function testPath()
+    public function testGetPath()
     {
-        $result = $this->invokeMethod($this->Controller, '_path', ['file.log']);
+        $result = $this->invokeMethod($this->Controller, 'getPath', ['file.log']);
         $this->assertEquals(LOGS . 'file.log', $result);
 
-        $result = $this->invokeMethod($this->Controller, '_path', ['file.log', true]);
+        $result = $this->invokeMethod($this->Controller, 'getPath', ['file.log', true]);
         $this->assertEquals(LOGS . 'file_serialized.log', $result);
     }
 
     /**
-     * Tests for `_read()` method
+     * Tests for `read()` method
      * @test
      */
     public function testRead()
     {
         $this->writeSomeLogs();
 
-        $this->assertNotEmpty($this->invokeMethod($this->Controller, '_read', ['error.log']));
-        $this->assertNotEmpty($this->invokeMethod($this->Controller, '_read', ['error.log', true]));
+        $this->assertNotEmpty($this->invokeMethod($this->Controller, 'read', ['error.log']));
+        $this->assertNotEmpty($this->invokeMethod($this->Controller, 'read', ['error.log', true]));
     }
 
     /**
-     * Tests for `_read()` method, with a not readable file
+     * Tests for `read()` method, with a not readable file
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage File or directory /tmp/me_cms/cakephp_log/noExisting.log not readable
      * @test
      */
     public function testReadNotReadableFile()
     {
-        $this->invokeMethod($this->Controller, '_read', ['noExisting.log']);
+        $this->invokeMethod($this->Controller, 'read', ['noExisting.log']);
     }
 
     /**

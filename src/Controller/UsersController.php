@@ -28,12 +28,12 @@ class UsersController extends AppController
     use MailerAwareTrait;
 
     /**
-     * Internal function to login with cookie
+     * Internal method to login with cookie
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses _logout()
      */
-    protected function _loginWithCookie()
+    protected function loginWithCookie()
     {
         //Checks if the cookies exist
         if (!$this->Cookie->read('login.username') || !$this->Cookie->read('login.password')) {
@@ -60,7 +60,7 @@ class UsersController extends AppController
     }
 
     /**
-     * Internal function to logout
+     * Internal method to logout
      * @return \Cake\Network\Response|null
      */
     protected function _logout()
@@ -76,12 +76,12 @@ class UsersController extends AppController
     }
 
     /**
-     * Internal function to send the activation mail
+     * Internal method to send the activation mail
      * @param MeCms\Model\Entity\User $user User entity
      * @return bool
      * @see MeCms\Mailer\UserMailer::activation()
      */
-    protected function _sendActivationMail($user)
+    protected function sendActivationMail($user)
     {
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
@@ -163,7 +163,7 @@ class UsersController extends AppController
     /**
      * Activation resend (resends the activation mail)
      * @return \Cake\Network\Response|null|void
-     * @uses _sendActivationMail()
+     * @uses sendActivationMail()
      */
     public function activationResend()
     {
@@ -188,7 +188,7 @@ class UsersController extends AppController
 
                 if ($user) {
                     //Sends the activation mail
-                    $this->_sendActivationMail($user);
+                    $this->sendActivationMail($user);
 
                     $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 
@@ -215,13 +215,13 @@ class UsersController extends AppController
      * Login
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @uses _loginWithCookie()
+     * @uses loginWithCookie()
      */
     public function login()
     {
         //Tries to login with cookies, if the login with cookies is enabled
         if (getConfig('users.cookies_login')) {
-            $this->_loginWithCookie();
+            $this->loginWithCookie();
         }
 
         if ($this->request->is('post')) {
@@ -379,7 +379,7 @@ class UsersController extends AppController
     /**
      * Sign up
      * @return \Cake\Network\Response|null|void
-     * @uses _sendActivationMail()
+     * @uses sendActivationMail()
      */
     public function signup()
     {
@@ -411,7 +411,7 @@ class UsersController extends AppController
                     //  (default)
                     case 1:
                         //Sends the activation mail
-                        $this->_sendActivationMail($user);
+                        $this->sendActivationMail($user);
 
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
                         break;

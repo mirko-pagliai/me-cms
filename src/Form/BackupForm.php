@@ -26,7 +26,7 @@ class BackupForm extends Form
     /**
      * @var \DatabaseBackup\Utility\BackupExport
      */
-    protected $_BackupExport;
+    protected $BackupExport;
 
     /**
      * Defines the validator using the methods on Cake\Validation\Validator or
@@ -50,17 +50,17 @@ class BackupForm extends Form
     }
 
     /**
-     * Gets a `BackupExport` instance
+     * Internal method to get a `BackupExport` instance
      * @return \DatabaseBackup\Utility\BackupExport
-     * @uses $_BackupExport
+     * @uses $BackupExport
      */
-    protected function _getBackupExportInstance()
+    protected function getBackupExportInstance()
     {
-        if (empty($this->_BackupExport)) {
-            $this->_BackupExport = new BackupExport;
+        if (empty($this->BackupExport)) {
+            $this->BackupExport = new BackupExport;
         }
 
-        return $this->_BackupExport;
+        return $this->BackupExport;
     }
 
     /**
@@ -69,12 +69,12 @@ class BackupForm extends Form
      * @return string|bool Filename or `false` on failure
      * @uses DatabaseBackup\Utility\BackupExport::filename()
      * @uses DatabaseBackup\Utility\BackupExport::export()
-     * @uses _getBackupExportInstance()
+     * @uses getBackupExportInstance()
      */
     protected function _execute(array $data)
     {
         try {
-            return $this->_getBackupExportInstance()
+            return $this->getBackupExportInstance()
                 ->filename($data['filename'])
                 ->export();
         } catch (InternalErrorException $e) {
