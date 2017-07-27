@@ -42,15 +42,4 @@ class IntegrationTestCase extends BaseIntegrationTestCase
         //Sets key for cookies
         $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
     }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller);
-    }
 }
