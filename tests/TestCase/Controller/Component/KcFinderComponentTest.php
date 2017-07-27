@@ -14,17 +14,14 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\KcFinderComponent;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * KcFinderComponentTest class
  */
 class KcFinderComponentTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Controller\Component\KcFinderComponent
      */
@@ -75,8 +72,6 @@ class KcFinderComponentTest extends TestCase
         @unlink($file);
         @rmdir(dirname($file));
         //@codingStandardsIgnoreEnd
-
-        unset($this->KcFinder);
     }
 
     /**
@@ -153,17 +148,12 @@ class KcFinderComponentTest extends TestCase
      */
     public function testGetTypes()
     {
-        $this->assertEquals([
-            'images' => '*img',
-        ], $this->KcFinder->getTypes());
+        $this->assertEquals(['images' => '*img'], $this->KcFinder->getTypes());
 
         //@codingStandardsIgnoreLine
         @mkdir(UPLOADED . 'docs');
 
-        $this->assertEquals([
-            'docs' => '',
-            'images' => '*img',
-        ], $this->KcFinder->getTypes());
+        $this->assertEquals(['docs' => '', 'images' => '*img'], $this->KcFinder->getTypes());
 
         //@codingStandardsIgnoreLine
         @rmdir(UPLOADED . 'docs');
@@ -175,10 +165,7 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitialize()
     {
-        $config = $this->KcFinder->request->session()->read('KCFINDER');
-        $this->assertNotEmpty($config);
-
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'denyExtensionRename',
             'denyUpdateCheck',
             'dirnameChangeChars',
@@ -189,7 +176,7 @@ class KcFinderComponentTest extends TestCase
             'uploadURL',
             'types',
             'access',
-        ], array_keys($config));
+        ], $this->KcFinder->request->session()->read('KCFINDER'));
     }
 
     /**

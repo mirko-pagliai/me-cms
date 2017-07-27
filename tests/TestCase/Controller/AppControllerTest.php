@@ -14,17 +14,14 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\AppController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * AppControllerTest class
  */
-class AppControllerTest extends TestCase
+class AppControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\AppController
      */
@@ -58,17 +55,6 @@ class AppControllerTest extends TestCase
         $this->Controller->method('redirect')->will($this->returnArgument(0));
 
         $this->Event = new Event('myEvent');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Event);
     }
 
     /**
@@ -114,7 +100,7 @@ class AppControllerTest extends TestCase
         $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
         $this->assertEquals(5, $this->Controller->paginate['limit']);
         $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
-        $this->assertEquals(null, $this->Controller->viewBuilder()->getLayout());
+        $this->assertNull($this->Controller->viewBuilder()->getLayout());
         $this->assertEquals(ME_CMS . '.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Admin request
@@ -168,10 +154,10 @@ class AppControllerTest extends TestCase
     public function testBeforeRender()
     {
         $this->Controller->beforeRender($this->Event);
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'Recaptcha.Recaptcha',
             'MeCms.Auth',
-        ], array_keys($this->Controller->viewBuilder()->getHelpers()));
+        ], $this->Controller->viewBuilder()->getHelpers());
     }
 
     /**

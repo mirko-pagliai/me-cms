@@ -13,16 +13,18 @@
 namespace MeCms\Test\TestCase\View\View;
 
 use Cake\Network\Request;
-use Cake\TestSuite\TestCase;
 use MeCms\View\View\AdminView as View;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AdminViewTest class
  */
 class AdminViewTest extends TestCase
 {
-    use ReflectionTrait;
+    /**
+     * @var \MeCms\View\View\AdminView
+     */
+    protected $View;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -35,17 +37,6 @@ class AdminViewTest extends TestCase
         parent::setUp();
 
         $this->View = new View(new Request);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->View);
     }
 
     /**

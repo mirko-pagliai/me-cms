@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppValidatorTest class
@@ -145,9 +145,9 @@ class AppValidatorTest extends TestCase
         foreach (['first_name', 'last_name'] as $field) {
             foreach (['abc', 'Ab-c', 'Ab$', 'abC'] as $value) {
                 $copy[$field] = $value;
-                $this->assertEquals([
-                    $field => ['personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter'],
-                ], $this->Users->newEntity($copy)->getErrors());
+                $this->assertEquals([$field => [
+                    'personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter',
+                ]], $this->Users->newEntity($copy)->getErrors());
             }
 
             foreach (['Ab', 'A' . str_repeat('a', 40)] as $value) {
@@ -307,10 +307,7 @@ class AppValidatorTest extends TestCase
             ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
-        foreach ([
-            '2016-01-16 19:09',
-            '2016-01-16 19:09:00',
-        ] as $value) {
+        foreach (['2016-01-16 19:09', '2016-01-16 19:09:00'] as $value) {
             $this->example['Posts']['created'] = $value;
             $this->assertEmpty($this->Posts->newEntity($this->example['Posts'])->getErrors());
         }

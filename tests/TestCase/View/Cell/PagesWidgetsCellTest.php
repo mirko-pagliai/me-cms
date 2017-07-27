@@ -13,12 +13,11 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PagesWidgetsCellTest class
@@ -57,17 +56,6 @@ class PagesWidgetsCellTest extends TestCase
         $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
 
         $this->Widget = new WidgetHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Pages, $this->Widget);
     }
 
     /**
@@ -145,10 +133,10 @@ class PagesWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Pages->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'first-page-category',
             'sub-sub-page-category',
-        ], array_keys($fromCache->toArray()));
+        ], $fromCache->toArray());
     }
 
     /**

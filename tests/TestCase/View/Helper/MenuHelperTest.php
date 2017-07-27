@@ -12,9 +12,9 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
-use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use MeCms\View\Helper\MenuHelper;
+use MeTools\TestSuite\TestCase;
 
 /**
  * MenuHelperTest class
@@ -37,17 +37,6 @@ class MenuHelperTest extends TestCase
         parent::setUp();
 
         $this->Menu = new MenuHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Menu);
     }
 
     /**

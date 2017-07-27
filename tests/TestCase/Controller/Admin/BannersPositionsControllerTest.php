@@ -14,17 +14,14 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersPositionsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * BannersPositionsControllerTest class
  */
 class BannersPositionsControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Model\Table\BannersPositionsTable
      */
@@ -70,17 +67,6 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->BannersPositions, $this->Controller);
-    }
-
-    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -100,13 +86,12 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/index.ctp');
 
         $positionsFromView = $this->viewVariable('positions');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $positionsFromView);
         $this->assertNotEmpty($positionsFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionsFromView);
     }
 
     /**
@@ -118,31 +103,26 @@ class BannersPositionsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/add.ctp');
 
         $positionFromView = $this->viewVariable('position');
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
         $this->assertNotEmpty($positionFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
 
         //POST request. Data are valid
-        $this->post($url, [
-            'title' => 'new-position-title',
-            'descriptions' => 'new position description',
-        ]);
+        $this->post($url, ['title' => 'new-position-title', 'descriptions' => 'position description']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $positionFromView = $this->viewVariable('position');
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
         $this->assertNotEmpty($positionFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
     }
 
     /**
@@ -154,28 +134,26 @@ class BannersPositionsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/edit.ctp');
 
         $positionFromView = $this->viewVariable('position');
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
         $this->assertNotEmpty($positionFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another-title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $positionFromView = $this->viewVariable('position');
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
         $this->assertNotEmpty($positionFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
     }
 
     /**
@@ -189,16 +167,13 @@ class BannersPositionsControllerTest extends IntegrationTestCase
         //POST request. This position has no banner
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         $id = $this->BannersPositions->find()->where(['banner_count >=' => 1])->extract('id')->first();
 
         //POST request. This position has some banners, so it cannot be deleted
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession(
-            'Before deleting this, you must delete or reassign all items that belong to this element',
-            'Flash.flash.0.message'
-        );
+        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
     }
 }

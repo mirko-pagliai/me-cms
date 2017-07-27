@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PhotosControllerTest class
@@ -51,17 +51,6 @@ class PhotosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Photos);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -84,11 +73,11 @@ class PhotosControllerTest extends IntegrationTestCase
         $url = ['_name' => 'photo', $photo->album->slug, $photo->id];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Photos/view.ctp');
 
         $photoFromView = $this->viewVariable('photo');
+        $this->assertNotEmpty($photoFromView);
         $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
 
         $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Photos->cache);
@@ -108,11 +97,11 @@ class PhotosControllerTest extends IntegrationTestCase
         $id = $this->Photos->find('pending')->extract('id')->first();
 
         $this->get(['_name' => 'photosPreview', $id]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Photos/view.ctp');
 
         $photoFromView = $this->viewVariable('photo');
+        $this->assertNotEmpty($photoFromView);
         $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
     }
 }

@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsTableTest class
@@ -52,17 +52,6 @@ class PostsTagsTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsTags);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -77,10 +66,7 @@ class PostsTagsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $entity = $this->PostsTags->newEntity([
-            'tag_id' => 999,
-            'post_id' => 999,
-        ]);
+        $entity = $this->PostsTags->newEntity(['tag_id' => 999, 'post_id' => 999]);
         $this->assertFalse($this->PostsTags->save($entity));
 
         $this->assertEquals([

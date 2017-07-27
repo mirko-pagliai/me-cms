@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\PostsTag;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsTagTest class
@@ -36,26 +36,6 @@ class PostsTagTest extends TestCase
         parent::setUp();
 
         $this->PostsTag = new PostsTag;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsTag);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\PostsTag', $this->PostsTag);
     }
 
     /**

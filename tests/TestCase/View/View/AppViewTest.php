@@ -16,14 +16,19 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
-use Cake\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AppViewTest class
  */
 class AppViewTest extends TestCase
 {
+    /**
+     * @var \MeCms\View\View\AppView
+     */
+    protected $View;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -53,8 +58,6 @@ class AppViewTest extends TestCase
         parent::tearDown();
 
         Plugin::unload('TestPlugin');
-
-        unset($this->View);
     }
 
     /**

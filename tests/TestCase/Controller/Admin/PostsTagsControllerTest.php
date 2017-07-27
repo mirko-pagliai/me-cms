@@ -12,17 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\PostsTagsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PhotosControllerTest class
  */
 class PostsTagsControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\PostsTagsController
      */
@@ -61,17 +58,6 @@ class PostsTagsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller);
-    }
-
-    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -101,17 +87,12 @@ class PostsTagsControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/index.ctp');
 
         $tagsFromView = $this->viewVariable('tags');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $tagsFromView);
         $this->assertNotEmpty($tagsFromView);
-
-        foreach ($tagsFromView as $tag) {
-            $this->assertInstanceof('MeCms\Model\Entity\Tag', $tag);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
     }
 
     /**
@@ -123,27 +104,25 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/edit.ctp');
 
         $tagFromView = $this->viewVariable('tag');
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
         $this->assertNotEmpty($tagFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
 
         //POST request. Data are valid
         $this->post($url, ['tag' => 'another tag']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['tag' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $tagFromView = $this->viewVariable('tag');
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
         $this->assertNotEmpty($tagFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
     }
 }

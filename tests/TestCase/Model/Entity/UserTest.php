@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\User;
+use MeTools\TestSuite\TestCase;
 
 /**
  * UserTest class
@@ -36,26 +36,6 @@ class UserTest extends TestCase
         parent::setUp();
 
         $this->User = new User;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->User);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\User', $this->User);
     }
 
     /**

@@ -14,8 +14,8 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\I18n\Time;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\SystemsController;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * SystemsControllerTest class
@@ -75,17 +75,6 @@ class SystemsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller);
-    }
-
-    /**
      * Tests for `acceptCookies()` method
      * @test
      */
@@ -108,20 +97,20 @@ class SystemsControllerTest extends IntegrationTestCase
         $url = ['_name' => 'contactUs'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Systems/contact_us.ctp');
 
         $contactFromView = $this->viewVariable('contact');
+        $this->assertNotEmpty($contactFromView);
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
 
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'a']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The email was not sent');
 
         $contactFromView = $this->viewVariable('contact');
+        $this->assertNotEmpty($contactFromView);
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
 
         //POST request. Now data are valid
@@ -132,23 +121,23 @@ class SystemsControllerTest extends IntegrationTestCase
             'message' => 'This is the message',
         ]);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('The email has been sent', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The email has been sent');
 
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         $contactFromView = $this->viewVariable('contact');
+        $this->assertNotEmpty($contactFromView);
         $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
 
         //Disabled
         Configure::write(ME_CMS . '.default.contact_us', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertSession('Disabled', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Disabled');
     }
 
     /**
@@ -165,8 +154,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->configRequest(['environment' => ['REMOTE_ADDR' => '99.99.99.99']]);
 
         $this->get(['_name' => 'ipNotAllowed']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Systems/ip_not_allowed.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
     }
@@ -183,8 +171,7 @@ class SystemsControllerTest extends IntegrationTestCase
         //Offline
         Configure::write(ME_CMS . '.default.offline', true);
         $this->get(['_name' => 'offline']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Systems/offline.ctp');
         $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
     }
@@ -195,23 +182,14 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testSitemap()
     {
-        $this->loadFixtures(
-            'Pages',
-            'PagesCategories',
-            'Photos',
-            'PhotosAlbums',
-            'Posts',
-            'PostsCategories'
-        );
+        $this->loadAllFixtures();
 
         //@codingStandardsIgnoreLine
         @unlink(SITEMAP);
 
         //GET request. The sitemap will be created
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
-
+        $this->assertResponseOkAndNotEmpty();
         $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
 
@@ -219,9 +197,7 @@ class SystemsControllerTest extends IntegrationTestCase
 
         //GET request. The sitemap will be the same as the previous request
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
-
+        $this->assertResponseOkAndNotEmpty();
         $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
 

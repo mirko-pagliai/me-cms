@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.20 branch
 ### 2.20.1
-* added `IntegrationTestCase` and `ValidationTestCase` classes.
+* added `IntegrationTestCase` and `ValidationTestCase` classes;
+* significantly improved all tests.
 
 ### 2.20.0
 * added initial schema of the plugin database. Removed `BaseUpdateConsole` and

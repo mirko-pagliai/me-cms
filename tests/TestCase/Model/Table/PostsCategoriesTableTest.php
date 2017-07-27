@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsCategoriesTableTest class
@@ -51,17 +51,6 @@ class PostsCategoriesTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsCategories);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -76,10 +65,7 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->PostsCategories->newEntity($example);
         $this->assertNotEmpty($this->PostsCategories->save($entity));
@@ -98,7 +84,9 @@ class PostsCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PostsCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'parent_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -137,7 +125,6 @@ class PostsCategoriesTableTest extends TestCase
         $category = $this->PostsCategories->findById(4)->contain(['Parents'])->first();
 
         $this->assertNotEmpty($category->parent);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
@@ -195,17 +182,14 @@ class PostsCategoriesTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->PostsCategories->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts_categories Categories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Categories.id = (Posts.category_id))', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->_matchingData['Posts']->active);
-            $this->assertTrue(!$entity->_matchingData['Posts']->created->isFuture());
+            $this->assertTrue($entity->_matchingData['Posts']->active &&
+                !$entity->_matchingData['Posts']->created->isFuture());
         }
     }
 }

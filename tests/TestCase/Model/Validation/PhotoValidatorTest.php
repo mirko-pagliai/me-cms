@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * PhotoValidatorTest class
  */
-class PhotoValidatorTest extends TestCase
+class PhotoValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\PhotosTable
@@ -51,10 +51,7 @@ class PhotoValidatorTest extends TestCase
 
         $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
 
-        $this->example = [
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
+        $this->example = ['album_id' => 1, 'filename' => 'pic.jpg'];
     }
 
     /**
@@ -64,17 +61,7 @@ class PhotoValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->Photos->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->Photos->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->Photos, $this->example);
     }
 
     /**

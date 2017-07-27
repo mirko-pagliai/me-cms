@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * PhotosAlbumValidatorTest class
  */
-class PhotosAlbumValidatorTest extends TestCase
+class PhotosAlbumValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\PhotosAlbumsTable
@@ -51,10 +51,7 @@ class PhotosAlbumValidatorTest extends TestCase
 
         $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
-        $this->example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $this->example = ['title' => 'My title', 'slug' => 'my-slug'];
     }
 
     /**
@@ -64,16 +61,6 @@ class PhotosAlbumValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->PhotosAlbums->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->PhotosAlbums->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->PhotosAlbums, $this->example);
     }
 }

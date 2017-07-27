@@ -14,17 +14,14 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Core\Plugin;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PagesControllerTest class
  */
 class PagesControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Model\Table\PagesTable
      */
@@ -66,8 +63,6 @@ class PagesControllerTest extends IntegrationTestCase
         parent::tearDown();
 
         Plugin::unload('TestPlugin');
-
-        unset($this->Pages);
     }
 
     /**
@@ -92,11 +87,11 @@ class PagesControllerTest extends IntegrationTestCase
         $slug = $this->Pages->find('active')->extract('slug')->first();
 
         $this->get(['_name' => 'page', $slug]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
 
         $pageFromView = $this->viewVariable('page');
+        $this->assertNotEmpty($pageFromView);
         $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
 
         $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Pages->cache);
@@ -150,11 +145,11 @@ class PagesControllerTest extends IntegrationTestCase
         $slug = $this->Pages->find('pending')->extract('slug')->first();
 
         $this->get(['_name' => 'pagesPreview', $slug]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
 
         $pageFromView = $this->viewVariable('page');
+        $this->assertNotEmpty($pageFromView);
         $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
     }
 }

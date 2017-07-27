@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * BannersPositionsTableTest class
@@ -51,17 +51,6 @@ class BannersPositionsTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->BannersPositions);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -76,14 +65,12 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'title' => 'my-title',
-        ];
+        $example = ['title' => 'my-title'];
 
         $entity = $this->BannersPositions->newEntity($example);
         $this->assertNotEmpty($this->BannersPositions->save($entity));
 
-        //Saves again the same entity
+        //Tries to save again the same entity
         $entity = $this->BannersPositions->newEntity($example);
         $this->assertFalse($this->BannersPositions->save($entity));
         $this->assertEquals(['title' => ['_isUnique' => 'This value is already used']], $entity->getErrors());
@@ -114,11 +101,10 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testHasManyBanners()
     {
-        $positions = $this->BannersPositions->findById(1)->contain(['Banners'])->first();
+        $position = $this->BannersPositions->findById(1)->contain(['Banners'])->first();
+        $this->assertNotEmpty($position->banners);
 
-        $this->assertNotEmpty($positions->banners);
-
-        foreach ($positions->banners as $banner) {
+        foreach ($position->banners as $banner) {
             $this->assertInstanceOf('MeCms\Model\Entity\Banner', $banner);
             $this->assertEquals(1, $banner->position_id);
         }

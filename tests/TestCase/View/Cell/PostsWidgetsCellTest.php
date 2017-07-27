@@ -15,9 +15,9 @@ namespace MeCms\Test\TestCase\View\Cell;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsWidgetsCellTest class
@@ -56,17 +56,6 @@ class PostsWidgetsCellTest extends TestCase
         $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         $this->Widget = new WidgetHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Posts, $this->Widget);
     }
 
     /**
@@ -144,10 +133,10 @@ class PostsWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Posts->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'first-post-category',
             'sub-sub-post-category',
-        ], array_keys($fromCache->toArray()));
+        ], $fromCache->toArray());
     }
 
     /**
@@ -334,10 +323,10 @@ class PostsWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Posts->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             '2016/12',
             '2016/11',
-        ], array_keys($fromCache->toArray()));
+        ], $fromCache->toArray());
 
         foreach ($fromCache as $key => $entity) {
             $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);

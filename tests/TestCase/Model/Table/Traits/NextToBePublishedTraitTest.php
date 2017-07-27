@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * NextToBePublishedTraitTest class

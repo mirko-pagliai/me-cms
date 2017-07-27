@@ -15,18 +15,15 @@ namespace MeCms\Test\TestCase\Shell;
 use Cake\Console\ConsoleIo;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
-use Cake\TestSuite\TestCase;
 use MeCms\Core\Plugin;
 use MeCms\Shell\InstallShell;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * InstallShellTest class
  */
 class InstallShellTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Shell\InstallShell
      */
@@ -48,8 +45,8 @@ class InstallShellTest extends TestCase
     {
         parent::setUp();
 
-        $this->out = new ConsoleOutput();
-        $this->err = new ConsoleOutput();
+        $this->out = new ConsoleOutput;
+        $this->err = new ConsoleOutput;
         $this->io = new ConsoleIo($this->out, $this->err);
         $this->io->level(2);
 
@@ -68,8 +65,6 @@ class InstallShellTest extends TestCase
         parent::tearDown();
 
         Plugin::unload('TestPlugin');
-
-        unset($this->InstallShell, $this->io, $this->err, $this->out);
     }
 
     /**
@@ -84,22 +79,22 @@ class InstallShellTest extends TestCase
     }
 
     /**
-     * Test for `_getOtherPlugins()` method
+     * Test for `getOtherPlugins()` method
      * @test
      */
     public function testGetOtherPlugins()
     {
-        $this->assertEmpty($this->invokeMethod($this->InstallShell, '_getOtherPlugins'));
+        $this->assertEmpty($this->invokeMethod($this->InstallShell, 'getOtherPlugins'));
 
         Plugin::load('TestPlugin');
 
-        $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->InstallShell, '_getOtherPlugins'));
+        $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->InstallShell, 'getOtherPlugins'));
     }
 
     public function testAll()
     {
         //Gets all methods from `InstallShell`
-        $methods = array_diff(am(
+        $methods = array_diff(array_merge(
             getChildMethods(METOOLS . '\Shell\InstallShell'),
             getChildMethods(InstallShell::class)
         ), ['all']);
@@ -109,8 +104,7 @@ class InstallShellTest extends TestCase
             ->setConstructorArgs([$this->io])
             ->getMock();
 
-        $this->InstallShell->method('in')
-            ->will($this->returnValue('y'));
+        $this->InstallShell->method('in')->will($this->returnValue('y'));
 
         //Sets a callback for each method
         foreach ($methods as $method) {
@@ -252,9 +246,7 @@ class InstallShellTest extends TestCase
         );
 
         $this->assertNotEmpty($this->out->messages());
-        $this->assertEquals([
-            '<error>KCFinder is not available</error>',
-        ], $this->err->messages());
+        $this->assertEquals(['<error>KCFinder is not available</error>'], $this->err->messages());
     }
 
     /**
@@ -279,7 +271,7 @@ class InstallShellTest extends TestCase
         $parser = $this->InstallShell->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'all',
             'copyConfig',
             'copyFonts',
@@ -293,7 +285,7 @@ class InstallShellTest extends TestCase
             'fixKcfinder',
             'runFromOtherPlugins',
             'setPermissions',
-        ], array_keys($parser->subcommands()));
+        ], $parser->subcommands());
         $this->assertEquals('Executes some tasks to make the system ready to work', $parser->getDescription());
         $this->assertEquals(['force', 'help', 'quiet', 'verbose'], array_keys($parser->options()));
     }

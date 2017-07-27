@@ -17,7 +17,7 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PagesTableTest class
@@ -66,17 +66,6 @@ class PagesTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Pages);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -100,11 +89,8 @@ class PagesTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Pages = $this->getMockForModel(get_class($this->Pages), ['setNextToBePublished']);
-
-        $this->Pages->expects($this->once())
-            ->method('setNextToBePublished');
-
+        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['setNextToBePublished']);
+        $this->Pages->expects($this->once())->method('setNextToBePublished');
         $this->Pages->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
@@ -114,11 +100,8 @@ class PagesTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Pages = $this->getMockForModel(get_class($this->Pages), ['setNextToBePublished']);
-
-        $this->Pages->expects($this->once())
-            ->method('setNextToBePublished');
-
+        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['setNextToBePublished']);
+        $this->Pages->expects($this->once())->method('setNextToBePublished');
         $this->Pages->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
@@ -128,16 +111,8 @@ class PagesTableTest extends TestCase
      */
     public function testBeforeSave()
     {
-        $this->Pages = $this->getMockBuilder(get_class($this->Pages))
-            ->setMethods(['getPreviewSize'])
-            ->setConstructorArgs([[
-                'table' => $this->Pages->getTable(),
-                'connection' => $this->Pages->getConnection(),
-            ]])
-            ->getMock();
-
-        $this->Pages->method('getPreviewSize')
-            ->will($this->returnValue([400, 300]));
+        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['getPreviewSize']);
+        $this->Pages->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $this->Pages->newEntity($this->example);
@@ -180,7 +155,9 @@ class PagesTableTest extends TestCase
             'text' => 'My text',
         ]);
         $this->assertFalse($this->Pages->save($entity));
-        $this->assertEquals(['category_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'category_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -216,7 +193,6 @@ class PagesTableTest extends TestCase
         $page = $this->Pages->findById(1)->contain(['Categories'])->first();
 
         $this->assertNotEmpty($page->category);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $page->category);
         $this->assertEquals(4, $page->category->id);
     }
@@ -227,19 +203,12 @@ class PagesTableTest extends TestCase
      */
     public function testFind()
     {
-        $query = $this->Pages->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
-
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', time() - 3600, $this->Pages->cache);
         Cache::write('someData', 'someValue', $this->Pages->cache);
 
-        $this->assertNotEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
-        $this->assertNotEmpty(Cache::read('someData', $this->Pages->cache));
-
         //The cache will now be cleared
-        $query = $this->Pages->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->Pages->find();
 
         $this->assertEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
         $this->assertEmpty(Cache::read('someData', $this->Pages->cache));

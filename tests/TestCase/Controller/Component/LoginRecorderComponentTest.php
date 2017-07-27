@@ -15,17 +15,14 @@ namespace MeCms\Test\TestCase\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * LoginRecorderTest class
  */
 class LoginRecorderComponentTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \Cake\Controller\ComponentRegistry
      */
@@ -116,8 +113,6 @@ class LoginRecorderComponentTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-
-        unset($this->LoginRecorder);
 
         //Deletes the file
         //@codingStandardsIgnoreLine

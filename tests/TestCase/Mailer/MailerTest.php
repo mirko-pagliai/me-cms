@@ -12,54 +12,24 @@
  */
 namespace MeCms\Test\TestCase\Mailer;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Mailer\Mailer;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * MailerTest class
  */
 class MailerTest extends TestCase
 {
-    use ReflectionTrait;
-
-    /**
-     * @var \MeCms\Mailer\Mailer
-     */
-    public $Mailer;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Mailer = new Mailer;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Mailer);
-    }
-
     /**
      * Tests for `__construct()` method
      * @test
      */
     public function testConstruct()
     {
+        $mailer = new Mailer;
+
         //Gets `Email` instance
-        $email = $this->invokeMethod($this->Mailer, 'getEmailInstance');
+        $email = $this->invokeMethod($mailer, 'getEmailInstance');
 
         $this->assertEquals([METOOLS . '.Html'], $email->getHelpers());
         $this->assertEquals(['email@example.com' => ME_CMS], $email->getSender());

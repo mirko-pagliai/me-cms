@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Page;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PageTest class
@@ -36,26 +36,6 @@ class PageTest extends TestCase
         parent::setUp();
 
         $this->Page = new Page;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Page);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\Page', $this->Page);
     }
 
     /**

@@ -12,9 +12,9 @@
  */
 namespace MeCms\Test\TestCase\View\Cell;
 
-use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
+use MeTools\TestSuite\TestCase;
 
 /**
  * HtmlWidgetsCellTest class
@@ -35,17 +35,6 @@ class HtmlWidgetsCellTest extends TestCase
     public function setUp()
     {
         $this->Widget = new WidgetHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Widget);
     }
 
     /**

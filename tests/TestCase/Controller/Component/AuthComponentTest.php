@@ -14,8 +14,8 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\Component\AuthComponent;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AuthComponentTest class
@@ -47,17 +47,6 @@ class AuthComponentTest extends TestCase
         parent::setUp();
 
         $this->Auth = $this->getAuthInstance();
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Auth);
     }
 
     /**

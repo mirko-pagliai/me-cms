@@ -12,17 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Mailer;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Mailer\ContactUsMailer;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * ContactUsMailerTest class
  */
 class ContactUsMailerTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Mailer\ContactUsMailer
      */
@@ -51,17 +48,6 @@ class ContactUsMailerTest extends TestCase
             'last_name' => 'Blue',
             'message' => 'Example of message',
         ];
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->ContactUsMailer);
     }
 
     /**

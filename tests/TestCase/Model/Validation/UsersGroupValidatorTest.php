@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * UsersGroupValidatorTest class
  */
-class UsersGroupValidatorTest extends TestCase
+class UsersGroupValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\UsersGroupsTable
@@ -49,12 +49,9 @@ class UsersGroupValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->example = [
-            'name' => 'group',
-            'label' => 'Group label',
-        ];
-
         $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
+
+        $this->example = ['name' => 'group', 'label' => 'Group label'];
     }
 
     /**
@@ -64,17 +61,7 @@ class UsersGroupValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->UsersGroups->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->UsersGroups->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->UsersGroups, $this->example);
     }
 
     /**

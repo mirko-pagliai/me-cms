@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PhotosAlbumsTableTest class
@@ -51,17 +51,6 @@ class PhotosAlbumsTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PhotosAlbums);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -76,13 +65,9 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $entity = $this->PhotosAlbums->newEntity([
-            'title' => 'new album',
-            'slug' => 'new-album',
-        ]);
+        $entity = $this->PhotosAlbums->newEntity(['title' => 'new album', 'slug' => 'new-album']);
 
         $this->assertNotEmpty($this->PhotosAlbums->save($entity));
-
         $this->assertFileExists($entity->path);
 
         //Deletes the album
@@ -96,13 +81,9 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $entity = $this->PhotosAlbums->newEntity([
-            'title' => 'new album',
-            'slug' => 'new-album',
-        ]);
+        $entity = $this->PhotosAlbums->newEntity(['title' => 'new album', 'slug' => 'new-album']);
 
         $this->assertNotEmpty($this->PhotosAlbums->save($entity));
-
         $this->assertFileExists($entity->path);
         $this->assertEquals('0777', substr(sprintf('%o', fileperms($entity->path)), -4));
 
@@ -116,10 +97,7 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->PhotosAlbums->newEntity($example);
         $this->assertNotEmpty($this->PhotosAlbums->save($entity));
@@ -175,11 +153,8 @@ class PhotosAlbumsTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->PhotosAlbums->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {

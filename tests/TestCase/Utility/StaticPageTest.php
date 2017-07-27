@@ -13,18 +13,16 @@
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
-use Cake\TestSuite\TestCase;
+use Cake\Core\App;
 use MeCms\Core\Plugin;
 use MeCms\Utility\StaticPage;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * StaticPageTest class
  */
 class StaticPageTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Utility\StaticPage
      */
@@ -58,8 +56,6 @@ class StaticPageTest extends TestCase
         ini_set('intl.default_locale', 'en_US');
 
         Plugin::unload('TestPlugin');
-
-        unset($this->StaticPage);
     }
 
     /**
@@ -110,13 +106,15 @@ class StaticPageTest extends TestCase
         //Checks paths
         $paths = collection($pages)->extract('path')->toList();
 
+        $pluginsPath = rtr(App::path('Template', 'TestPlugin')[0]);
+
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/page-from-app.ctp',
             'src/Template/StaticPages/cookies-policy-it.ctp',
             'src/Template/StaticPages/cookies-policy.ctp',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/first-folder/page-on-first-from-plugin.ctp',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/first-folder/second_folder/page_on_second_from_plugin.ctp',
+            $pluginsPath . 'StaticPages/test-from-plugin.ctp',
+            $pluginsPath . 'StaticPages/first-folder/page-on-first-from-plugin.ctp',
+            $pluginsPath . 'StaticPages/first-folder/second_folder/page_on_second_from_plugin.ctp',
         ], $paths);
 
         //Checks slugs
@@ -202,7 +200,7 @@ class StaticPageTest extends TestCase
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/',
             'src/Template/StaticPages/',
-            'tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/',
+            rtr(App::path('Template', 'TestPlugin')[0]) . 'StaticPages/',
         ], $paths);
     }
 

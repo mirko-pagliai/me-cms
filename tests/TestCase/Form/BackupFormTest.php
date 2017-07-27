@@ -13,18 +13,15 @@
 namespace MeCms\Test\TestCase\Form;
 
 use Cake\Network\Exception\InternalErrorException;
-use Cake\TestSuite\TestCase;
 use DatabaseBackup\Utility\BackupExport;
 use MeCms\Form\BackupForm;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * BackupFormTest class
  */
 class BackupFormTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \DatabaseBackup\Utility\BackupExport
      */
@@ -56,17 +53,6 @@ class BackupFormTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->BackupExport, $this->BackupForm);
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
@@ -77,9 +63,8 @@ class BackupFormTest extends TestCase
         $this->assertEmpty($this->BackupForm->errors());
 
         $this->assertFalse($this->BackupForm->validate([]));
-        $this->assertEquals([
-            'filename' => ['_required' => 'This field is required'],
-        ], $this->BackupForm->errors());
+        $errors = $this->BackupForm->errors();
+        $this->assertEquals(['filename' => ['_required' => 'This field is required']], $errors);
     }
 
     /**
@@ -97,9 +82,8 @@ class BackupFormTest extends TestCase
             'file.gif',
         ] as $value) {
             $this->assertFalse($this->BackupForm->validate(['filename' => $value]));
-            $this->assertEquals([
-                'filename' => ['extension' => 'Valid extensions: sql, sql.gz, sql.bz2'],
-            ], $this->BackupForm->errors());
+            $errors = $this->BackupForm->errors();
+            $this->assertEquals(['filename' => ['extension' => 'Valid extensions: sql, sql.gz, sql.bz2']], $errors);
         }
 
         foreach (['file.sql', 'file.sql.bz2', 'file.sql.gz'] as $value) {
@@ -108,9 +92,8 @@ class BackupFormTest extends TestCase
         }
 
         $this->assertFalse($this->BackupForm->validate(['filename' => str_repeat('a', 252) . '.sql']));
-        $this->assertEquals([
-            'filename' => ['maxLength' => 'Must be at most 255 chars'],
-        ], $this->BackupForm->errors());
+        $errors = $this->BackupForm->errors();
+        $this->assertEquals(['filename' => ['maxLength' => 'Must be at most 255 chars']], $errors);
 
         $this->assertTrue($this->BackupForm->validate(['filename' => str_repeat('a', 251) . '.sql']));
         $this->assertEmpty($this->BackupForm->errors());

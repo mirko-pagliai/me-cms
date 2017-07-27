@@ -16,18 +16,15 @@ use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\UsersController;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * UsersControllerTest class
  */
 class UsersControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\UsersController
      */
@@ -74,17 +71,6 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Controller, $this->Users);
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
@@ -92,14 +78,12 @@ class UsersControllerTest extends IntegrationTestCase
     {
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [2]));
-            $this->assertResponseOk();
             $this->assertNotEmpty($this->viewVariable('groups'));
         }
 
         //Other actions, for example `changePassword`, still work
         $this->setUserId(1);
         $this->get(array_merge($this->url, ['action' => 'changePassword']));
-        $this->assertResponseOk();
         $this->assertEmpty($this->viewVariable('groups'));
     }
 
@@ -116,13 +100,12 @@ class UsersControllerTest extends IntegrationTestCase
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get(array_merge($this->url, compact('action'), [1]));
             $this->assertRedirect(['controller' => 'UsersGroups', 'action' => 'index']);
-            $this->assertSession('You must first create an user group', 'Flash.flash.0.message');
+            $this->assertFlashMessage('You must first create an user group');
         }
 
         //Other actions, for example `changePassword`, still work
         $this->setUserId(1);
         $this->get(array_merge($this->url, ['action' => 'changePassword']));
-        $this->assertResponseOk();
         $this->assertEmpty($this->viewVariable('groups'));
     }
 
@@ -181,17 +164,12 @@ class UsersControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/index.ctp');
 
         $usersFromView = $this->viewVariable('users');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $usersFromView);
         $this->assertNotEmpty($usersFromView);
-
-        foreach ($usersFromView as $user) {
-            $this->assertInstanceof('MeCms\Model\Entity\User', $user);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\User', $usersFromView);
     }
 
     /**
@@ -200,18 +178,17 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $url = array_merge($this->url, ['action' => 'view', 1]);
-
         Configure::write(ME_CMS . '.users.login_log', 0);
 
+        $url = array_merge($this->url, ['action' => 'view', 1]);
+
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/view.ctp');
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         $loginLogFromView = $this->viewVariable('loginLog');
         $this->assertNull($loginLogFromView);
@@ -232,13 +209,12 @@ class UsersControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/add.ctp');
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         //POST request. Data are valid
         $this->post($url, [
@@ -252,17 +228,16 @@ class UsersControllerTest extends IntegrationTestCase
             'last_name' => 'Beta',
         ]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['username' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
     }
 
     /**
@@ -274,28 +249,26 @@ class UsersControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 2]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/edit.ctp');
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         //POST request. Data are valid
         $this->post($url, ['first_name' => 'Gamma']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'aa']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         $adminUser = $this->Users->find()->where(['group_id' => 1])->first();
         $url = array_merge($this->url, ['action' => 'edit', $adminUser->id]);
@@ -303,13 +276,13 @@ class UsersControllerTest extends IntegrationTestCase
         //An admin cannot edit other admin users
         $this->get($url);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('Only the admin founder can do this', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Only the admin founder can do this');
 
         $this->setUserId(1);
 
         //The admin founder can edit others admin users
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
     }
 
     /**
@@ -323,7 +296,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Cannot delete the admin founder
         $this->post(array_merge($url, [1]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('You cannot delete the admin founder', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You cannot delete the admin founder');
 
         $adminUser = $this->Users->find()
             ->where(['group_id' => 1, 'id !=' => 1])
@@ -333,7 +306,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Only the admin founder can delete others admin users
         $this->post(array_merge($url, [$adminUser]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('Only the admin founder can do this', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Only the admin founder can do this');
 
         $userWithPosts = $this->Users->find()
             ->where(['group_id !=' => 1, 'post_count >=' => 1])
@@ -342,10 +315,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($url, [$userWithPosts]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession(
-            'Before deleting this, you must delete or reassign all items that belong to this element',
-            'Flash.flash.0.message'
-        );
+        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
 
         $userWithNoPosts = $this->Users->find()
             ->where(['group_id !=' => 1, 'post_count' => 0])
@@ -354,7 +324,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($url, [$userWithNoPosts]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 
     /**
@@ -367,7 +337,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->get(array_merge($this->url, ['action' => 'activate', $pendingUser]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //The user is now active
         $this->assertTrue($this->Users->findById($pendingUser)->extract('active')->first());
@@ -390,13 +360,12 @@ class UsersControllerTest extends IntegrationTestCase
         $this->Users->save($user);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/change_password.ctp');
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         //POST request. Data are valid
         $this->post($url, [
@@ -405,7 +374,7 @@ class UsersControllerTest extends IntegrationTestCase
             'password_repeat' => 'newPassword!1',
         ]);
         $this->assertRedirect(['_name' => 'dashboard']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //The password has changed
         $this->assertNotEquals($user->password, $this->Users->findById(1)->extract('password')->first());
@@ -421,16 +390,15 @@ class UsersControllerTest extends IntegrationTestCase
             'password' => 'newPassword!1',
             'password_repeat' => 'newPassword!1',
         ]);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         //The password has not changed
         $this->assertEquals($user->password, $this->Users->findById(1)->extract('password')->first());
 
         $userFromView = $this->viewVariable('user');
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
         $this->assertNotEmpty($userFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
     }
 
     /**
@@ -464,18 +432,18 @@ class UsersControllerTest extends IntegrationTestCase
         $this->setUserId(1);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/last_login.ctp');
 
         $loginLogFromView = $this->viewVariable('loginLog');
-        $this->assertTrue(is_array($loginLogFromView));
         $this->assertNotEmpty($loginLogFromView);
+        $this->assertIsArray($loginLogFromView);
 
         //Disabled
         Configure::write(ME_CMS . '.users.login_log', false);
+
         $this->get($url);
         $this->assertRedirect(['_name' => 'dashboard']);
-        $this->assertSession('Disabled', 'Flash.flash.0.message');
+        $this->assertFlashMessage('Disabled');
     }
 }

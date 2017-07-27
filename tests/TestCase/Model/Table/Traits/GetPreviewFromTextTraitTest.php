@@ -13,18 +13,15 @@
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Table\PostsTable;
+use MeTools\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
-use Reflection\ReflectionTrait;
 
 /**
  * GetPreviewFromTextTraitTest class
  */
 class GetPreviewFromTextTraitTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Model\Table\PostsTable
      */
@@ -41,17 +38,6 @@ class GetPreviewFromTextTraitTest extends TestCase
         parent::setUp();
 
         $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Posts);
     }
 
     /**
@@ -151,10 +137,7 @@ class GetPreviewFromTextTraitTest extends TestCase
             'height' => 300,
         ], $result);
 
-        foreach ([
-            'image.jpg',
-            WWW_ROOT . 'img' . DS . 'image.jpg',
-        ] as $image) {
+        foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
             $result = $getPreviewMethod('<img src=\'' . $image . '\' />');
             $this->assertEquals(['preview', 'width', 'height'], array_keys($result));
             $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $result['preview']);

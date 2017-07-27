@@ -13,8 +13,8 @@
 namespace MeCms\Test\TestCase\Model\Entity;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Photo;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PhotoTest class
@@ -52,26 +52,6 @@ class PhotoTest extends TestCase
         $this->Photo = new Photo;
 
         $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Photo, $this->Photos);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\Photo', $this->Photo);
     }
 
     /**

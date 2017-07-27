@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * TagValidatorTest class
  */
-class TagValidatorTest extends TestCase
+class TagValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\TagsTable
@@ -51,9 +51,7 @@ class TagValidatorTest extends TestCase
 
         $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
 
-        $this->example = [
-            'tag' => 'my tag',
-        ];
+        $this->example = ['tag' => 'my tag'];
     }
 
     /**

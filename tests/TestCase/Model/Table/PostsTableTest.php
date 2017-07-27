@@ -17,7 +17,7 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsTableTest class
@@ -71,17 +71,6 @@ class PostsTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Posts);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -105,11 +94,8 @@ class PostsTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $this->Posts = $this->getMockForModel(get_class($this->Posts), ['setNextToBePublished']);
-
-        $this->Posts->expects($this->once())
-            ->method('setNextToBePublished');
-
+        $this->Posts = $this->getMockForModel($this->Posts->getRegistryAlias(), ['setNextToBePublished']);
+        $this->Posts->expects($this->once())->method('setNextToBePublished');
         $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
 
@@ -119,11 +105,8 @@ class PostsTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $this->Posts = $this->getMockForModel(get_class($this->Posts), ['setNextToBePublished']);
-
-        $this->Posts->expects($this->once())
-            ->method('setNextToBePublished');
-
+        $this->Posts = $this->getMockForModel($this->Posts->getRegistryAlias(), ['setNextToBePublished']);
+        $this->Posts->expects($this->once())->method('setNextToBePublished');
         $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
@@ -159,16 +142,8 @@ class PostsTableTest extends TestCase
      */
     public function testBeforeSave()
     {
-        $this->Posts = $this->getMockBuilder(get_class($this->Posts))
-            ->setMethods(['getPreviewSize'])
-            ->setConstructorArgs([[
-                'table' => $this->Posts->getTable(),
-                'connection' => $this->Posts->getConnection(),
-            ]])
-            ->getMock();
-
-        $this->Posts->method('getPreviewSize')
-            ->will($this->returnValue([400, 300]));
+        $this->Posts = $this->getMockForModel($this->Posts->getRegistryAlias(), ['getPreviewSize']);
+        $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $this->Posts->newEntity($this->example);
@@ -280,7 +255,6 @@ class PostsTableTest extends TestCase
         $post = $this->Posts->findById(2)->contain(['Categories'])->first();
 
         $this->assertNotEmpty($post->category);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $post->category);
         $this->assertEquals(4, $post->category->id);
     }
@@ -294,7 +268,6 @@ class PostsTableTest extends TestCase
         $post = $this->Posts->findById(2)->contain(['Users'])->first();
 
         $this->assertNotEmpty($post->user);
-
         $this->assertInstanceOf('MeCms\Model\Entity\User', $post->user);
         $this->assertEquals(4, $post->user->id);
     }
@@ -307,19 +280,12 @@ class PostsTableTest extends TestCase
     {
         $anHourAgo = time() - 3600;
 
-        $query = $this->Posts->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
-
         //Writes `next_to_be_published` and some data on cache
         Cache::write('next_to_be_published', $anHourAgo, $this->Posts->cache);
         Cache::write('someData', 'someValue', $this->Posts->cache);
 
-        $this->assertNotEmpty(Cache::read('next_to_be_published', $this->Posts->cache));
-        $this->assertNotEmpty(Cache::read('someData', $this->Posts->cache));
-
         //The cache will now be cleared
-        $query = $this->Posts->find();
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $this->Posts->find();
 
         $this->assertNotEquals($anHourAgo, Cache::read('next_to_be_published', $this->Posts->cache));
         $this->assertEmpty(Cache::read('someData', $this->Posts->cache));
@@ -362,10 +328,7 @@ class PostsTableTest extends TestCase
         $this->assertEquals(2, $related[0]->id);
         $this->assertNotEmpty($related[0]->title);
         $this->assertNotEmpty($related[0]->slug);
-        $this->assertContains(
-            '<img src="image.jpg" />Text of the second post',
-            $related[0]->text
-        );
+        $this->assertContains('<img src="image.jpg" />Text of the second post', $related[0]->text);
         $this->assertEquals([
             'preview' => 'image.jpg',
             'width' => 400,
@@ -405,9 +368,7 @@ class PostsTableTest extends TestCase
         $data = ['tag' => 'test'];
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
-
         $this->assertEquals('test', $query->valueBinder()->bindings()[':c0']['value']);
     }
 }

@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\PhotosAlbum;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PhotosAlbumTest class
@@ -36,26 +36,6 @@ class PhotosAlbumTest extends TestCase
         parent::setUp();
 
         $this->PhotosAlbum = new PhotosAlbum;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PhotosAlbum);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $this->PhotosAlbum);
     }
 
     /**

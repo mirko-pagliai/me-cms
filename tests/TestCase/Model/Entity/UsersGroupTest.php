@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\UsersGroup;
+use MeTools\TestSuite\TestCase;
 
 /**
  * UsersGroupTest class
@@ -36,26 +36,6 @@ class UsersGroupTest extends TestCase
         parent::setUp();
 
         $this->UsersGroup = new UsersGroup;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->UsersGroup);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', $this->UsersGroup);
     }
 
     /**

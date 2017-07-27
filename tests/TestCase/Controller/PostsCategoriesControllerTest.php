@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PostsCategoriesControllerTest class
@@ -54,17 +54,6 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsCategories);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -84,17 +73,12 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(['_name' => 'postsCategories']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
-        $this->assertNotEmpty($categoriesFromView->toArray());
-
-        foreach ($categoriesFromView as $category) {
-            $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $category);
-        }
+        $this->assertNotEmpty($categoriesFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
 
         $cache = Cache::read('categories_index', $this->PostsCategories->cache);
         $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
@@ -114,20 +98,16 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
         $url = ['_name' => 'postsCategory', $slug];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsCategories/view.ctp');
 
         $categoryFromView = $this->viewVariable('category');
+        $this->assertNotEmpty($categoryFromView);
         $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
 
         $postsFromView = $this->viewVariable('posts');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
         $this->assertNotEmpty($postsFromView);
-
-        foreach ($postsFromView as $post) {
-            $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         //Sets the cache name
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
@@ -141,7 +121,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string

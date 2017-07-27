@@ -15,9 +15,9 @@ namespace MeCms\Test\TestCase\View\Cell;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PhotosWidgetsCellTest class
@@ -56,17 +56,6 @@ class PhotosWidgetsCellTest extends TestCase
         $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
 
         $this->Widget = new WidgetHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Photos, $this->Widget);
     }
 
     /**
@@ -144,10 +133,10 @@ class PhotosWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_albums', $this->Photos->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'another-album-test',
             'test-album',
-        ], array_keys($fromCache->toArray()));
+        ], $fromCache->toArray());
     }
 
     /**

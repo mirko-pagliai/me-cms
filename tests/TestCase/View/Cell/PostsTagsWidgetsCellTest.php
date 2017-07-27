@@ -15,19 +15,16 @@ namespace MeCms\Test\TestCase\View\Cell;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\TestSuite\TestCase;
 use MeCms\View\Cell\PostsTagsWidgetsCell;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsTagsWidgetsCellTest class
  */
 class PostsTagsWidgetsCellTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\View\Cell\PostsTagsWidgetsCell
      */
@@ -88,44 +85,33 @@ class PostsTagsWidgetsCellTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsTagsWidgetsCell, $this->Tags, $this->Widget, $this->options);
-    }
-
-    /**
-     * Test for `_getFontSizes()` method
+     * Test for `getFontSizes()` method
      * @test
      */
     public function testGetFontSizes()
     {
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [[]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [[]]);
         $this->assertEquals([40, 12], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 20]]);
         $this->assertEquals([20, 12], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['minFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['minFont' => 20]]);
         $this->assertEquals([40, 20], $result);
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
+        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
         $this->assertEquals([30, 20], $result);
     }
 
     /**
-     * Test for `_getFontSizes()` method, with invalid values
+     * Test for `getFontSizes()` method, with invalid values
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Invalid values
      * @test
      */
     public function testGetFontSizesWithInvalidValues()
     {
-        $this->invokeMethod($this->PostsTagsWidgetsCell, '_getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
+        $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
     /**

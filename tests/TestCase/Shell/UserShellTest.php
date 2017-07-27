@@ -15,8 +15,8 @@ namespace MeCms\Test\TestCase\Shell;
 use Cake\Console\ConsoleIo;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
-use Cake\TestSuite\TestCase;
 use MeCms\Shell\UserShell;
+use MeTools\TestSuite\TestCase;
 
 /**
  * InstallShellTest class
@@ -47,7 +47,7 @@ class UserShellTest extends TestCase
      * It sets some expectations for shell on `in()` method.
      * @return void
      */
-    protected function _setShellExpectsForInMethod()
+    protected function setShellExpectsForInMethod()
     {
         $this->UserShell->expects($this->at(0))
             ->method('in')
@@ -86,8 +86,8 @@ class UserShellTest extends TestCase
 
         $this->Users = TableRegistry::get(ME_CMS . '.Users');
 
-        $this->out = new ConsoleOutput();
-        $this->err = new ConsoleOutput();
+        $this->out = new ConsoleOutput;
+        $this->err = new ConsoleOutput;
         $this->io = new ConsoleIo($this->out, $this->err);
         $this->io->level(2);
 
@@ -100,23 +100,12 @@ class UserShellTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Users, $this->InstallShell, $this->io, $this->err, $this->out);
-    }
-
-    /**
      * Test for `add()` method
      * @test
      */
     public function testAdd()
     {
-        $this->_setShellExpectsForInMethod();
+        $this->setShellExpectsForInMethod();
 
         $this->UserShell->expects($this->at(6))
             ->method('in')
@@ -193,7 +182,7 @@ class UserShellTest extends TestCase
      */
     public function testAddUsingGroupParam()
     {
-        $this->_setShellExpectsForInMethod();
+        $this->setShellExpectsForInMethod();
 
         $this->UserShell->params['group'] = 2;
         $id = $this->UserShell->add();
@@ -307,11 +296,11 @@ class UserShellTest extends TestCase
         $parser = $this->UserShell->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertEquals([
+        $this->assertArrayKeysEqual([
             'add',
             'groups',
             'users',
-        ], array_keys($parser->subcommands()));
+        ], $parser->subcommands());
         $this->assertEquals('Shell to handle users and user groups', $parser->getDescription());
         $this->assertEquals(['help', 'quiet', 'verbose'], array_keys($parser->options()));
     }

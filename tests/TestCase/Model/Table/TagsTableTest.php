@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * TagsTableTest class
@@ -52,17 +52,6 @@ class TagsTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Tags);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -77,9 +66,7 @@ class TagsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'tag' => 'my tag',
-        ];
+        $example = ['tag' => 'my tag'];
 
         $entity = $this->Tags->newEntity($example);
         $this->assertNotEmpty($this->Tags->save($entity));
@@ -119,12 +106,9 @@ class TagsTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->Tags->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
     }
 
@@ -137,9 +121,7 @@ class TagsTableTest extends TestCase
         $data = ['name' => 'test'];
 
         $query = $this->Tags->queryFromFilter($this->Tags->find(), $data);
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
-
         $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
     }
 }

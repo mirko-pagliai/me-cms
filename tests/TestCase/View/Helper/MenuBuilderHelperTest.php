@@ -13,15 +13,20 @@
 namespace MeCms\Test\TestCase\View\Helper;
 
 use Cake\Core\Plugin;
-use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use MeCms\View\Helper\MenuBuilderHelper;
+use MeTools\TestSuite\TestCase;
 
 /**
  * MenuBuilderHelperTest class
  */
 class MenuBuilderHelperTest extends TestCase
 {
+    /**
+     * @var \MeCms\View\Helper\MenuBuilderHelper
+     */
+    protected $MenuBuilder;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -32,8 +37,7 @@ class MenuBuilderHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->View = new View();
-        $this->MenuBuilder = new MenuBuilderHelper($this->View);
+        $this->MenuBuilder = new MenuBuilderHelper(new View);
 
         Plugin::load('TestPlugin');
         Plugin::load('TestPluginTwo');
@@ -46,8 +50,6 @@ class MenuBuilderHelperTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-
-        unset($this->MenuBuilder, $this->Html, $this->View);
 
         Plugin::unload('TestPlugin');
         Plugin::unload('TestPluginTwo');
@@ -72,10 +74,9 @@ class MenuBuilderHelperTest extends TestCase
         $this->assertEquals($expected, $result);
 
         //Checks that methods exist
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', '_invalidMethod'));
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', '__otherInvalidMethod'));
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', 'articles'));
-        $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', 'other_items'));
+        foreach (['_invalidMethod', '__otherInvalidMethod', 'articles', 'other_items'] as $method) {
+            $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', $method));
+        }
 
         $result = $this->MenuBuilder->getMenuMethods('TestPlugin');
         $expected = ['articles', 'other_items'];
@@ -100,7 +101,7 @@ class MenuBuilderHelperTest extends TestCase
         //Foreach menu
         foreach ($result as $menu) {
             //Checks array keys (menu values)
-            $this->assertEquals(['menu', 'title', 'titleOptions'], array_keys($menu));
+            $this->assertArrayKeysEqual(['menu', 'title', 'titleOptions'], $menu);
 
             //Checks each link
             foreach ($menu['menu'] as $link) {
@@ -116,7 +117,7 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->generate('TestPlugin');
 
         //Checks array keys (menu names)
-        $this->assertEquals(['TestPlugin.articles', 'TestPlugin.other_items'], array_keys($result));
+        $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
 
         //Foreach menu
         foreach ($result as $menu) {
@@ -206,7 +207,7 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->renderAsDropdown('TestPlugin');
 
         //Checks array keys (menu names)
-        $this->assertEquals(['TestPlugin.articles', 'TestPlugin.other_items'], array_keys($result));
+        $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
 
         $result = implode(PHP_EOL, $result);
 

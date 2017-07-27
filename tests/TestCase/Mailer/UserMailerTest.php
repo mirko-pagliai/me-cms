@@ -12,17 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Mailer;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Mailer\UserMailer;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * UserMailerTest class
  */
 class UserMailerTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\Mailer\UserMailer
      */
@@ -49,17 +46,6 @@ class UserMailerTest extends TestCase
         ];
 
         $this->UserMailer = new UserMailer;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->UserMailer);
     }
 
     /**

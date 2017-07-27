@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Banner;
+use MeTools\TestSuite\TestCase;
 
 /**
  * BannerTest class
@@ -36,26 +36,6 @@ class BannerTest extends TestCase
         parent::setUp();
 
         $this->Banner = new Banner;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Banner);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\Banner', $this->Banner);
     }
 
     /**

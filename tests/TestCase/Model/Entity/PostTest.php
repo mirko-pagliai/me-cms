@@ -14,8 +14,8 @@ namespace MeCms\Test\TestCase\Model\Entity;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\Post;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostTest class
@@ -56,26 +56,6 @@ class PostTest extends TestCase
         $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         Cache::clear(false, $this->Posts->cache);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Post, $this->Posts);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\Post', $this->Post);
     }
 
     /**

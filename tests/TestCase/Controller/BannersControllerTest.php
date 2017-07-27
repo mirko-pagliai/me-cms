@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeTools\TestSuite\IntegrationTestCase;
 
 /**
  * BannersControllerTest class
@@ -47,17 +47,6 @@ class BannersControllerTest extends IntegrationTestCase
         $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
 
         Cache::clear(false, $this->Banners->cache);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Banners);
     }
 
     /**

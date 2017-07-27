@@ -12,17 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Controller\Traits;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\PostsController;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * GetStartAndEndDateTraitTest class
  */
 class GetStartAndEndDateTraitTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Tests for `getStartAndEndDate()` method
      * @test
@@ -31,28 +28,32 @@ class GetStartAndEndDateTraitTest extends TestCase
     {
         $controller = new PostsController;
 
+        $getStartAndEndDateMethod = function ($date) use ($controller) {
+            return $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);
+        };
+
         //"today" special word
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['today']);
+        list($start, $end) = $getStartAndEndDateMethod('today');
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d', time() + DAY) . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //"yesterday" special word
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['yesterday']);
+        list($start, $end) = $getStartAndEndDateMethod('yesterday');
         $this->assertEquals(date('Y-m-d', time() - DAY) . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Only year
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017']);
+        list($start, $end) = $getStartAndEndDateMethod('2017');
         $this->assertEquals('2017-01-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2018-01-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //only year and month
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017/04']);
+        list($start, $end) = $getStartAndEndDateMethod('2017/04');
         $this->assertEquals('2017-04-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-05-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Full date
-        list($start, $end) = $this->invokeMethod($controller, 'getStartAndEndDate', ['2017/04/15']);
+        list($start, $end) = $getStartAndEndDateMethod('2017/04/15');
         $this->assertEquals('2017-04-15 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-04-16 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
     }

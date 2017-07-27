@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PagesCategoriesControllerTest class
@@ -51,17 +51,6 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PagesCategories);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -81,17 +70,12 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(['_name' => 'pagesCategories']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/index.ctp');
 
         $categoriesFromView = $this->viewVariable('categories');
-        $this->assertInstanceof('Cake\ORM\Query', $categoriesFromView);
         $this->assertNotEmpty($categoriesFromView->toArray());
-
-        foreach ($categoriesFromView as $category) {
-            $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category);
-        }
+        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $categoriesFromView);
 
         $cache = Cache::read('categories_index', $this->PagesCategories->cache);
         $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
@@ -111,20 +95,16 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $url = ['_name' => 'pagesCategory', $slug];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PagesCategories/view.ctp');
 
         $categoryFromView = $this->viewVariable('category');
+        $this->assertNotEmpty($categoryFromView);
         $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
 
         $pagesFromView = $this->viewVariable('pages');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $pagesFromView);
         $this->assertNotEmpty($pagesFromView);
-
-        foreach ($pagesFromView as $page) {
-            $this->assertInstanceof('MeCms\Model\Entity\Page', $page);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Page', $pagesFromView);
 
         $categoryFromCache = Cache::read(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache);
         $this->assertEquals($categoryFromView, $categoryFromCache->first());

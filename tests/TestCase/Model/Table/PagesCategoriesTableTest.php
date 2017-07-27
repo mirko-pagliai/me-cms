@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PagesCategoriesTableTest class
@@ -51,17 +51,6 @@ class PagesCategoriesTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PagesCategories);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -76,10 +65,7 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->PagesCategories->newEntity($example);
         $this->assertNotEmpty($this->PagesCategories->save($entity));
@@ -98,7 +84,9 @@ class PagesCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PagesCategories->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'parent_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -138,12 +126,10 @@ class PagesCategoriesTableTest extends TestCase
         $category = $this->PagesCategories->findById(4)->contain(['Parents'])->first();
 
         $this->assertNotEmpty($category->parent);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
         $category = $this->PagesCategories->findById($category->parent->id)->contain(['Parents'])->first();
-
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
     }
@@ -196,17 +182,14 @@ class PagesCategoriesTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->PagesCategories->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
-            $this->assertTrue($entity->_matchingData['Pages']->active);
-            $this->assertTrue(!$entity->_matchingData['Pages']->created->isFuture());
+            $this->assertTrue($entity->_matchingData['Pages']->active &&
+                !$entity->_matchingData['Pages']->created->isFuture());
         }
     }
 }

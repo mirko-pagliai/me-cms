@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * UserValidatorTest class
  */
-class UserValidatorTest extends TestCase
+class UserValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\UsersTable
@@ -70,21 +70,7 @@ class UserValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->Users->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            if ($key === 'password') {
-                continue;
-            }
-
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->Users->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->Users, $this->example, ['password']);
     }
 
     /**

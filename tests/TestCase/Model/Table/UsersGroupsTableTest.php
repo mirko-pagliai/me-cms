@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * UsersGroupsTableTest class
@@ -51,17 +51,6 @@ class UsersGroupsTableTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->UsersGroups);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
@@ -76,10 +65,7 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $example = [
-            'name' => 'group',
-            'label' => 'Group label',
-        ];
+        $example = ['name' => 'group', 'label' => 'Group label'];
 
         $entity = $this->UsersGroups->newEntity($example);
         $this->assertNotEmpty($this->UsersGroups->save($entity));

@@ -15,9 +15,8 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BannersController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 use MeTools\Controller\Component\UploaderComponent;
 
 /**
@@ -25,8 +24,6 @@ use MeTools\Controller\Component\UploaderComponent;
  */
 class BannersControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-
     /**
      * @var \MeCms\Model\Table\BannersTable
      */
@@ -58,7 +55,7 @@ class BannersControllerTest extends IntegrationTestCase
      *  a upload
      * @return array
      */
-    protected function _createFileToUpload()
+    protected function createFileToUpload()
     {
         $file = TMP . 'file_to_upload.jpg';
 
@@ -97,17 +94,6 @@ class BannersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Banners, $this->Controller);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -115,9 +101,6 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        //Sets key for cookies
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
-
         //Mocks the `Uploader` component
         $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
             ->setConstructorArgs([new ComponentRegistry])
@@ -132,7 +115,7 @@ class BannersControllerTest extends IntegrationTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Banners`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $controller->Banners = $this->getMockForModel(get_class($controller->Banners), ['save']);
+            $controller->Banners = $this->getMockForModel($controller->Banners->getRegistryAlias(), ['save']);
             $controller->Banners->method('save')->will($this->returnValue(false));
         }
 
@@ -148,7 +131,6 @@ class BannersControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
         $this->assertNotEmpty($this->viewVariable('positions'));
     }
 
@@ -163,7 +145,7 @@ class BannersControllerTest extends IntegrationTestCase
 
         $this->get(array_merge($this->url, ['action' => 'index']));
         $this->assertRedirect(['controller' => 'BannersPositions', 'action' => 'index']);
-        $this->assertSession('You must first create a banner position', 'Flash.flash.0.message');
+        $this->assertFlashMessage('You must first create a banner position');
     }
 
     /**
@@ -196,19 +178,13 @@ class BannersControllerTest extends IntegrationTestCase
     public function testIndex()
     {
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/index.ctp');
+        $this->assertCookieIsEmpty('renderBanners');
 
         $bannersFromView = $this->viewVariable('banners');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $bannersFromView);
         $this->assertNotEmpty($bannersFromView);
-
-        foreach ($bannersFromView as $banner) {
-            $this->assertInstanceof('MeCms\Model\Entity\Banner', $banner);
-        }
-
-        $this->assertCookie(null, 'renderBanners');
+        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannersFromView);
     }
 
     /**
@@ -218,10 +194,8 @@ class BannersControllerTest extends IntegrationTestCase
     public function testIndexAsGrid()
     {
         $this->get(array_merge($this->url, ['action' => 'index', '?' => ['render' => 'grid']]));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/index_as_grid.ctp');
-
         $this->assertCookie('grid', 'renderBanners');
     }
 
@@ -234,10 +208,8 @@ class BannersControllerTest extends IntegrationTestCase
         $this->cookie('renderBanners', 'grid');
 
         $this->get(array_merge($this->url, ['action' => 'index']));
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/index_as_grid.ctp');
-
         $this->assertCookie('grid', 'renderBanners');
     }
 
@@ -247,19 +219,17 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testUpload()
     {
+        $file = $this->createFileToUpload();
         $url = array_merge($this->url, ['action' => 'upload']);
-
-        $file = $this->_createFileToUpload();
 
         //GET request
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/upload.ctp');
 
         //POST request. This works
         $this->post(array_merge($url, ['_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
 
         //Checks the banner has been saved
         $banner = $this->Banners->find()->last();
@@ -273,7 +243,7 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorDuringUpload()
     {
-        $file = array_merge($this->_createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
+        $file = array_merge($this->createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
 
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
         $this->assertResponseFailure();
@@ -298,7 +268,7 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorOnEntity()
     {
-        $file = array_merge($this->_createFileToUpload(), ['name' => 'a.jpg?name=value']);
+        $file = array_merge($this->createFileToUpload(), ['name' => 'a.jpg?name=value']);
 
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
         $this->assertResponseFailure();
@@ -312,7 +282,7 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorOnSave()
     {
-        $file = $this->_createFileToUpload();
+        $file = $this->createFileToUpload();
 
         //The table `save()` method returns `false` for this test. See the
         //  `controllerSpy()` method.
@@ -328,7 +298,7 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function testUploadOnlyOnePosition()
     {
-        $file = $this->_createFileToUpload();
+        $file = $this->createFileToUpload();
 
         //Deletes all positions, except for the first one
         $this->Banners->Positions->deleteAll(['id >' => 1]);
@@ -336,7 +306,7 @@ class BannersControllerTest extends IntegrationTestCase
         //POST request. This should also work without the position ID on the
         //  query string, as there is only one album
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), compact('file'));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
 
         //Checks the banner has been saved
         $banner = $this->Banners->find()->last();
@@ -353,28 +323,26 @@ class BannersControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'edit', 1]);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/edit.ctp');
 
         $bannerFromView = $this->viewVariable('banner');
-        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannerFromView);
         $this->assertNotEmpty($bannerFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannerFromView);
 
         //POST request. Data are valid
         $this->post($url, ['description' => 'New description for first banner']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. Data are invalid
         $this->post($url, ['target' => 'invalidTarget']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
         $bannerFromView = $this->viewVariable('banner');
-        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannerFromView);
         $this->assertNotEmpty($bannerFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannerFromView);
     }
 
     /**
@@ -384,7 +352,7 @@ class BannersControllerTest extends IntegrationTestCase
     public function testDownload()
     {
         $this->get(array_merge($this->url, ['action' => 'download', 1]));
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(BANNERS . 'banner1.jpg');
     }
 
@@ -396,6 +364,6 @@ class BannersControllerTest extends IntegrationTestCase
     {
         $this->post(array_merge($this->url, ['action' => 'delete', 1]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
     }
 }

@@ -14,18 +14,15 @@ namespace MeCms\Test\TestCase\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * WidgetHelperTest class
  */
 class WidgetHelperTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\View\Helper\WidgetHelper
      */
@@ -53,8 +50,6 @@ class WidgetHelperTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-
-        unset($this->Widget);
 
         Plugin::unload('TestPlugin');
     }
@@ -114,9 +109,7 @@ class WidgetHelperTest extends TestCase
         Configure::write('Widgets.homepage', ['ExampleForHomepage']);
 
         $widgets = $this->invokeMethod($this->Widget, '_getAll');
-        $this->assertEquals([
-            ['ExampleForHomepage' => []],
-        ], $widgets);
+        $this->assertEquals([['ExampleForHomepage' => []]], $widgets);
 
         //Resets
         Configure::write('Widgets.homepage', []);

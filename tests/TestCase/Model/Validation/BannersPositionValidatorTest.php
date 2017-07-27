@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * BannersPositionValidatorTest class
  */
-class BannersPositionValidatorTest extends TestCase
+class BannersPositionValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\BannersPositionsTable
@@ -51,9 +51,7 @@ class BannersPositionValidatorTest extends TestCase
 
         $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
 
-        $this->example = [
-            'title' => 'my-title',
-        ];
+        $this->example = ['title' => 'my-title'];
     }
 
     /**
@@ -63,17 +61,7 @@ class BannersPositionValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->BannersPositions->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->BannersPositions->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->BannersPositions, $this->example);
     }
 
     /**

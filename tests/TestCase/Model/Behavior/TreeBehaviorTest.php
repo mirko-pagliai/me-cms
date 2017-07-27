@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * TreeBehaviorTest class
@@ -36,21 +36,20 @@ class TreeBehaviorTest extends TestCase
     {
         $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $query = $table->find('treeList');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
+        $categories = $table->find('treeList')->toArray();
         $this->assertEquals([
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
-        ], ($query->toArray()));
+        ], $categories);
 
-        $query = $table->find('treeList', ['spacer' => '_']);
+        $categories = $table->find('treeList', ['spacer' => '_'])->toArray();
         $this->assertEquals([
             1 => 'First post category',
             3 => '_Sub post category',
             4 => '__Sub sub post category',
             2 => 'Another post category',
-        ], $query->toArray());
+        ], $categories);
     }
 }

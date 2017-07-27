@@ -17,8 +17,8 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
+use MeTools\TestSuite\TestCase;
 
 /**
  * SitemapTest class
@@ -109,8 +109,6 @@ class SitemapTest extends TestCase
 
         $table = TableRegistry::get(ME_CMS . '.PagesCategories');
 
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::pages());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
@@ -174,8 +172,6 @@ class SitemapTest extends TestCase
         ];
 
         $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
-
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
         $this->assertEquals($expected, Sitemap::photos());
 
@@ -264,8 +260,6 @@ class SitemapTest extends TestCase
 
         $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::posts());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
@@ -322,8 +316,6 @@ class SitemapTest extends TestCase
         ];
 
         $table = TableRegistry::get(ME_CMS . '.Tags');
-
-        $this->assertEmpty(Cache::read('sitemap', $table->cache));
 
         $this->assertEquals($expected, Sitemap::postsTags());
 
@@ -393,12 +385,10 @@ class SitemapTest extends TestCase
      */
     public function testSystems()
     {
-        $this->assertEquals([
-            [
-                'loc' => 'http://localhost/contact/us',
-                'priority' => '0.5',
-            ],
-        ], Sitemap::systems());
+        $this->assertEquals([[
+            'loc' => 'http://localhost/contact/us',
+            'priority' => '0.5',
+        ]], Sitemap::systems());
 
         //Disabled contact form
         Configure::write(ME_CMS . '.default.contact_us', false);

@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\PostsCategory;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PostsCategoryTest class
@@ -36,26 +36,6 @@ class PostsCategoryTest extends TestCase
         parent::setUp();
 
         $this->PostsCategory = new PostsCategory;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsCategory);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $this->PostsCategory);
     }
 
     /**

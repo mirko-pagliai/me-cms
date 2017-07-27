@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PhotosTableTest class
@@ -79,8 +79,6 @@ class PhotosTableTest extends TestCase
         //Deletes the file for the example
         //@codingStandardsIgnoreLine
         @unlink(PHOTOS . $this->example['album_id'] . DS . $this->example['filename']);
-
-        unset($this->Photos);
     }
 
     /**
@@ -115,11 +113,7 @@ class PhotosTableTest extends TestCase
     {
         $entity = $this->Photos->newEntity($this->example);
         $this->assertNotEmpty($this->Photos->save($entity));
-
-        $this->assertEquals([
-            'width' => 400,
-            'height' => 400,
-        ], $entity->size);
+        $this->assertEquals(['width' => 400, 'height' => 400], $entity->size);
     }
 
     /**
@@ -136,12 +130,11 @@ class PhotosTableTest extends TestCase
         $this->assertFalse($this->Photos->save($entity));
         $this->assertEquals(['filename' => ['_isUnique' => 'This value is already used']], $entity->getErrors());
 
-        $entity = $this->Photos->newEntity([
-            'album_id' => 999,
-            'filename' => 'pic2.jpg',
-        ]);
+        $entity = $this->Photos->newEntity(['album_id' => 999, 'filename' => 'pic2.jpg']);
         $this->assertFalse($this->Photos->save($entity));
-        $this->assertEquals(['album_id' => ['_existsIn' => 'You have to select a valid option']], $entity->getErrors());
+        $this->assertEquals([
+            'album_id' => ['_existsIn' => 'You have to select a valid option'],
+        ], $entity->getErrors());
     }
 
     /**
@@ -174,7 +167,6 @@ class PhotosTableTest extends TestCase
         $photo = $this->Photos->findById(2)->contain(['Albums'])->first();
 
         $this->assertNotEmpty($photo->album);
-
         $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $photo->album);
         $this->assertEquals(2, $photo->album->id);
     }
@@ -186,11 +178,8 @@ class PhotosTableTest extends TestCase
     public function testFindActive()
     {
         $query = $this->Photos->find('active');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
-
         $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -205,12 +194,12 @@ class PhotosTableTest extends TestCase
     public function testFindPending()
     {
         $query = $this->Photos->find('pending');
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
-
         $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
 
-        $this->assertEquals([4], collection($query->toArray())->extract('id')->toList());
+        foreach ($query->toArray() as $entity) {
+            $this->assertFalse($entity->active);
+        }
     }
 
     /**
@@ -222,9 +211,7 @@ class PhotosTableTest extends TestCase
         $data = ['album' => 2];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
-        $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
-
         $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
     }
 }

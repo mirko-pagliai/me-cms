@@ -13,9 +13,8 @@
 namespace MeCms\Test\TestCase\Form;
 
 use Cake\Mailer\MailerAwareTrait;
-use Cake\TestSuite\TestCase;
 use MeCms\Form\ContactUsForm;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * ContactUsFormTest class
@@ -23,7 +22,6 @@ use Reflection\ReflectionTrait;
 class ContactUsFormTest extends TestCase
 {
     use MailerAwareTrait;
-    use ReflectionTrait;
 
     /**
      * @var \MeCms\Form\ContactUsForm
@@ -56,17 +54,6 @@ class ContactUsFormTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->ContactUsForm);
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
@@ -82,9 +69,8 @@ class ContactUsFormTest extends TestCase
             unset($copy[$key]);
 
             $this->assertFalse($this->ContactUsForm->validate($copy));
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->ContactUsForm->errors());
+            $errors = $this->ContactUsForm->errors();
+            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
         }
     }
 
@@ -98,9 +84,8 @@ class ContactUsFormTest extends TestCase
             $this->example['message'] = $value;
 
             $this->assertFalse($this->ContactUsForm->validate($this->example));
-            $this->assertEquals([
-                'message' => ['lengthBetween' => 'Must be between 10 and 1000 chars'],
-            ], $this->ContactUsForm->errors());
+            $errors = $this->ContactUsForm->errors();
+            $this->assertEquals(['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']], $errors);
         }
 
         foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {

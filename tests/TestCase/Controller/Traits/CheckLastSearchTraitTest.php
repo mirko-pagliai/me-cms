@@ -13,17 +13,14 @@
 namespace MeCms\Test\TestCase\Controller\Traits;
 
 use Cake\Core\Configure;
-use Cake\TestSuite\TestCase;
 use MeCms\Controller\PostsController;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * CheckLastSearchTraitTest class
  */
 class CheckLastSearchTraitTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Tests for `checkLastSearch()` method
      * @test
@@ -32,27 +29,29 @@ class CheckLastSearchTraitTest extends TestCase
     {
         $controller = new PostsController;
 
-        $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch', ['my-query']));
+        $checkLastSearchMethod = function ($queryId = false) use ($controller) {
+            return $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
+        };
+
+        $this->assertTrue($checkLastSearchMethod('my-query'));
         $firstSession = $controller->request->session()->read('last_search');
-        $this->assertNotEmpty($firstSession);
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession['id']);
 
         //Tries with the same query
-        $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch', ['my-query']));
+        $this->assertTrue($checkLastSearchMethod('my-query'));
         $secondSession = $controller->request->session()->read('last_search');
-        $this->assertNotEmpty($secondSession);
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession['id']);
 
         $this->assertEquals($firstSession, $secondSession);
 
         //Tries with another query
-        $this->assertFalse($this->invokeMethod($controller, 'checkLastSearch', ['another-query']));
+        $this->assertFalse($checkLastSearchMethod('another-query'));
         $thirdSession = $controller->request->session()->read('last_search');
         $this->assertEquals($firstSession, $thirdSession);
 
         //Deletes the session and tries again with another query
         $controller->request->session()->delete('last_search');
-        $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch', ['another-query']));
+        $this->assertTrue($checkLastSearchMethod('another-query'));
         $fourthSession = $controller->request->session()->read('last_search');
         $this->assertNotEquals($firstSession, $fourthSession);
 
@@ -60,7 +59,7 @@ class CheckLastSearchTraitTest extends TestCase
             $controller->request->session()->delete('last_search');
             Configure::write(ME_CMS . '.security.search_interval', $value);
 
-            $this->assertTrue($this->invokeMethod($controller, 'checkLastSearch'));
+            $this->assertTrue($checkLastSearchMethod());
             $this->assertNull($controller->request->session()->read('last_search'));
         }
     }

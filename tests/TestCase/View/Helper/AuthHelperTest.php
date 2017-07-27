@@ -12,18 +12,15 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
-use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use MeCms\View\Helper\AuthHelper;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * AuthHelperTest class
  */
 class AuthHelperTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \MeCms\View\Helper\AuthHelper
      */
@@ -40,17 +37,6 @@ class AuthHelperTest extends TestCase
         parent::setUp();
 
         $this->Auth = new AuthHelper(new View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Auth);
     }
 
     /**
@@ -137,16 +123,9 @@ class AuthHelperTest extends TestCase
         $this->assertNull($this->Auth->user());
         $this->assertNull($this->Auth->user('id'));
 
-        $this->Auth->initialize([
-            'id' => 1,
-            'group' => ['name' => 'admin'],
-        ]);
+        $this->Auth->initialize(['id' => 1, 'group' => ['name' => 'admin']]);
 
-        $this->assertEquals([
-            'id' => 1,
-            'group' => ['name' => 'admin'],
-        ], $this->Auth->user());
-
+        $this->assertEquals(['id' => 1, 'group' => ['name' => 'admin']], $this->Auth->user());
         $this->assertEquals(1, $this->Auth->user('id'));
         $this->assertNull($this->Auth->user('noExistingKey'));
     }

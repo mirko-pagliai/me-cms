@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\BannersPosition;
+use MeTools\TestSuite\TestCase;
 
 /**
  * BannersPositionTest class
@@ -36,26 +36,6 @@ class BannersPositionTest extends TestCase
         parent::setUp();
 
         $this->BannersPosition = new BannersPosition;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->BannersPosition);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\BannersPosition', $this->BannersPosition);
     }
 
     /**

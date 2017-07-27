@@ -15,16 +15,18 @@ namespace MeCms\Test\TestCase\View;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
-use Cake\TestSuite\TestCase;
 use MeCms\View\View;
-use Reflection\ReflectionTrait;
+use MeTools\TestSuite\TestCase;
 
 /**
  * ViewTest class
  */
 class ViewTest extends TestCase
 {
-    use ReflectionTrait;
+    /**
+     * @var \MeCms\View\View
+     */
+    protected $View;
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -40,6 +42,7 @@ class ViewTest extends TestCase
         $request = $request->env('REQUEST_URI', '/some-page');
 
         $this->View = new View($request);
+        $this->View->plugin = ME_CMS;
     }
 
     /**
@@ -51,8 +54,6 @@ class ViewTest extends TestCase
         parent::tearDown();
 
         Plugin::unload('TestPlugin');
-
-        unset($this->View);
     }
 
     /**
@@ -75,17 +76,20 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Tests for `_getTitleForLayout()` method
+     * Tests for `getTitleForLayout()` method
      * @test
      */
     public function testGetTitleForLayout()
     {
+        $getTitleForLayoutMethod = function () {
+            return $this->invokeMethod($this->View, 'getTitleForLayout');
+        };
+
         //Writes the main title on configuration
         $mainTitle = 'main title';
         Configure::write(ME_CMS . '.main.title', $mainTitle);
 
-        $result = $this->invokeMethod($this->View, '_getTitleForLayout');
-        $this->assertEquals($result, $mainTitle);
+        $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), $mainTitle);
 
         //Resets the property
@@ -93,8 +97,7 @@ class ViewTest extends TestCase
 
         //Tests the title as if it had been set by the view
         $this->View->Blocks->set('title', 'title from view');
-        $result = $this->invokeMethod($this->View, '_getTitleForLayout');
-        $this->assertEquals($result, 'title from view - ' . $mainTitle);
+        $this->assertEquals($getTitleForLayoutMethod(), 'title from view - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from view - ' . $mainTitle);
 
         //Resets the property
@@ -102,20 +105,17 @@ class ViewTest extends TestCase
 
         //Tests the title as if it had been set by the controller
         $this->View->set('title', 'title from controller');
-        $result = $this->invokeMethod($this->View, '_getTitleForLayout');
-        $this->assertEquals($result, 'title from controller - ' . $mainTitle);
+        $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from controller - ' . $mainTitle);
 
         //It does NOT reset the property. So the title is not modified
         $this->View->Blocks->set('title', 'title from view');
-        $result = $this->invokeMethod($this->View, '_getTitleForLayout');
-        $this->assertEquals($result, 'title from controller - ' . $mainTitle);
+        $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
 
         //If this is the homepage, it only returns the main title from the
         //  configuration, even if you have set another
         $this->View = new View;
-        $result = $this->invokeMethod($this->View, '_getTitleForLayout');
-        $this->assertEquals($result, $mainTitle);
+        $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
     }
 
     /**
@@ -162,15 +162,12 @@ class ViewTest extends TestCase
 
         //Renders
         $result = $this->View->render(false, ME_CMS . '.default');
-        $this->assertNotEmpty($result);
 
         //@codingStandardsIgnoreLine
         @unlink(WWW_ROOT . 'favicon.ico');
 
-        //Checks for title
+        //Checks for title and favicon
         $this->assertRegExp('/' . preg_quote('<title>title from controller - ' . ME_CMS . '</title>', '/') . '/', $result);
-
-        //Checks for favicon
         $this->assertRegExp('/' . preg_quote('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', '/') . '/', $result);
     }
 }

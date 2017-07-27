@@ -13,12 +13,12 @@
 namespace MeCms\Test\TestCase\Model\Validation;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeCms\TestSuite\ValidationTestCase;
 
 /**
  * PostsCategoryValidatorTest class
  */
-class PostsCategoryValidatorTest extends TestCase
+class PostsCategoryValidatorTest extends ValidationTestCase
 {
     /**
      * @var \MeCms\Model\Table\PostsCategoriesTable
@@ -51,10 +51,7 @@ class PostsCategoryValidatorTest extends TestCase
 
         $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $this->example = [
-            'title' => 'My title',
-            'slug' => 'my-slug',
-        ];
+        $this->example = ['title' => 'My title', 'slug' => 'my-slug'];
     }
 
     /**
@@ -64,16 +61,6 @@ class PostsCategoryValidatorTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->PostsCategories->newEntity($this->example)->getErrors());
-
-        foreach (array_keys($this->example) as $key) {
-            //Create a copy of the example data and removes the current value
-            $copy = $this->example;
-            unset($copy[$key]);
-
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $this->PostsCategories->newEntity($copy)->getErrors());
-        }
+        $this->assertAllDataAreRequired($this->PostsCategories, $this->example);
     }
 }

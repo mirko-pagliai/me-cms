@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * PostsTagsControllerTest class
@@ -54,17 +54,6 @@ class PostsTagsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PostsTags);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
@@ -86,17 +75,12 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $url = ['_name' => 'postsTags'];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsTags/index.ctp');
 
         $tagsFromView = $this->viewVariable('tags');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $tagsFromView);
-        $this->assertNotEmpty($tagsFromView->toArray());
-
-        foreach ($tagsFromView as $tag) {
-            $this->assertInstanceof('MeCms\Model\Entity\Tag', $tag);
-        }
+        $this->assertNotEmpty($tagsFromView);
+        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
 
         //Sets the cache name
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
@@ -110,7 +94,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Tags']);
     }
 
@@ -124,23 +108,19 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $url = ['_name' => 'postsTag', $slug];
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PostsTags/view.ctp');
 
         $tagFromView = $this->viewVariable('tag');
+        $this->assertNotEmpty($tagFromView);
         $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
 
         $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->PostsTags->cache);
         $this->assertEquals($tagFromView, $tagFromCache->first());
 
         $postsFromView = $this->viewVariable('posts');
-        $this->assertInstanceof('Cake\ORM\ResultSet', $postsFromView);
         $this->assertNotEmpty($postsFromView);
-
-        foreach ($postsFromView as $post) {
-            $this->assertInstanceof('MeCms\Model\Entity\Post', $post);
-        }
+        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         //Sets the cache name
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
@@ -154,7 +134,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         //GET request again. Now the data is in cache
         $this->get($url);
-        $this->assertResponseOk();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string

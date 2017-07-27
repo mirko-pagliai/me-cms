@@ -14,19 +14,14 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Log\Log;
-use Cake\TestSuite\IntegrationTestCase;
 use MeCms\Controller\Admin\BackupsController;
-use MeCms\TestSuite\Traits\AuthMethodsTrait;
-use MeTools\TestSuite\Traits\LogsMethodsTrait;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * BackupsControllerTest class
  */
 class BackupsControllerTest extends IntegrationTestCase
 {
-    use AuthMethodsTrait;
-    use LogsMethodsTrait;
-
     /**
      * @var \MeCms\Controller\Admin\BackupsController
      */
@@ -93,10 +88,6 @@ class BackupsControllerTest extends IntegrationTestCase
             //@codingStandardsIgnoreLine
             @unlink($file);
         }
-
-        $this->deleteLog('debug');
-
-        unset($this->Controller);
     }
 
     /**
@@ -152,19 +143,13 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates some backup files
         $this->createSomeBackups();
 
-        $url = array_merge($this->url, ['action' => 'index']);
-
-        $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Backups/index.ctp');
 
         $backupsFromView = $this->viewVariable('backups');
         $this->assertNotEmpty($backupsFromView->toArray());
-
-        foreach ($backupsFromView as $backup) {
-            $this->assertInstanceof('Cake\ORM\Entity', $backup);
-        }
+        $this->assertInstanceof('Cake\ORM\Entity', $backupsFromView);
     }
 
     /**
@@ -176,23 +161,22 @@ class BackupsControllerTest extends IntegrationTestCase
         $url = array_merge($this->url, ['action' => 'add']);
 
         $this->get($url);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Backups/add.ctp');
 
         $backupFromView = $this->viewVariable('backup');
+        $this->assertNotEmpty($backupFromView);
         $this->assertInstanceof('MeCms\Form\BackupForm', $backupFromView);
 
-        //POST request. For now, data are invalid
+        //POST request. Data are invalid
         $this->post($url, ['filename' => 'backup.txt']);
-        $this->assertResponseOk();
-        $this->assertResponseNotEmpty();
+        $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The operation has not been performed correctly');
 
-        //POST request. Now, data are valid
+        //POST request. Now data are valid
         $this->post($url, ['filename' => 'my_backup.sql']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertFileExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'my_backup.sql');
     }
 
@@ -205,11 +189,9 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates a backup file
         $file = $this->createBackup();
 
-        $url = array_merge($this->url, ['action' => 'delete']);
-
-        $this->post(array_merge($url, [urlencode(basename($file))]));
+        $this->post(array_merge(array_merge($this->url, ['action' => 'delete']), [urlencode(basename($file))]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertFileNotExists($file);
     }
 
@@ -222,15 +204,10 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates some backup files
         $files = $this->createSomeBackups();
 
-        $url = array_merge($this->url, ['action' => 'deleteAll']);
-
-        $this->post($url);
+        $this->post(array_merge($this->url, ['action' => 'deleteAll']));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
-
-        foreach ($files as $file) {
-            $this->assertFileNotExists($file);
-        }
+        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFileNotExists($files);
     }
 
     /**
@@ -242,10 +219,8 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates a backup file
         $file = $this->createBackup();
 
-        $url = array_merge($this->url, ['action' => 'download', urlencode(basename($file))]);
-
-        $this->get($url);
-        $this->assertResponseOk();
+        $this->get(array_merge($this->url, ['action' => 'download', urlencode(basename($file))]));
+        $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse($file);
     }
 
@@ -261,11 +236,9 @@ class BackupsControllerTest extends IntegrationTestCase
         //Writes some cache data
         Cache::writeMany(['firstKey' => 'firstValue', 'secondKey' => 'secondValue']);
 
-        $url = array_merge($this->url, ['action' => 'restore', urlencode(basename($file))]);
-
-        $this->post($url);
+        $this->post(array_merge($this->url, ['action' => 'restore', urlencode(basename($file))]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertFalse(Cache::read('firstKey'));
         $this->assertFalse(Cache::read('secondKey'));
     }
@@ -281,7 +254,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($this->url, ['action' => 'send', urlencode(basename($file))]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertSession('The operation has been performed correctly', 'Flash.flash.0.message');
+        $this->assertFlashMessage('The operation has been performed correctly');
 
         $mail = getConfigOrFail(ME_CMS . '.email.webmaster');
         $this->assertLogContains('Called `send()` with args: `' . $file . '`, `' . $mail . '`', 'debug');

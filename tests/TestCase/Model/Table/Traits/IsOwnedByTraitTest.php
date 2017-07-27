@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
+use MeTools\TestSuite\TestCase;
 
 /**
  * IsOwnedByTraitTest class
@@ -47,17 +47,6 @@ class IsOwnedByTraitTest extends TestCase
         $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
 
         Cache::clear(false, $this->Posts->cache);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Posts);
     }
 
     /**

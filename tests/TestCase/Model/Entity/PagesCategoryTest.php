@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\TestSuite\TestCase;
 use MeCms\Model\Entity\PagesCategory;
+use MeTools\TestSuite\TestCase;
 
 /**
  * PagesCategoryTest class
@@ -36,26 +36,6 @@ class PagesCategoryTest extends TestCase
         parent::setUp();
 
         $this->PagesCategory = new PagesCategory;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->PagesCategory);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $this->PagesCategory);
     }
 
     /**
