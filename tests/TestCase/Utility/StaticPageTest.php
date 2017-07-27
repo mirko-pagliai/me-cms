@@ -59,22 +59,22 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `_appPath()` method
+     * Test for `getAppPath()` method
      * @test
      */
-    public function testAppPath()
+    public function testGetAppPath()
     {
-        $result = rtr($this->invokeMethod($this->StaticPage, '_appPath'));
+        $result = rtr($this->invokeMethod($this->StaticPage, 'getAppPath'));
         $this->assertEquals('tests/test_app/TestApp/Template/StaticPages/', $result);
     }
 
     /**
-     * Test for `_pluginPath()` method
+     * Test for `getPluginPath()` method
      * @test
      */
-    public function testPluginPath()
+    public function testGetPluginPath()
     {
-        $result = rtr($this->invokeMethod($this->StaticPage, '_pluginPath', ['TestPlugin']));
+        $result = rtr($this->invokeMethod($this->StaticPage, 'getPluginPath', ['TestPlugin']));
         $this->assertEquals('tests/test_app/TestApp/Plugin/TestPlugin/src/Template/StaticPages/', $result);
     }
 
@@ -183,12 +183,12 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `paths()` method
+     * Test for `getAllPaths()` method
      * @test
      */
-    public function testPaths()
+    public function testGetAllPaths()
     {
-        $paths = $this->invokeMethod($this->StaticPage, 'paths');
+        $paths = $this->invokeMethod($this->StaticPage, 'getAllPaths');
 
         $this->assertEquals(Cache::read('paths', 'static_pages'), $paths);
 
@@ -205,10 +205,10 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `slug()` method
+     * Test for `getSlug()` method
      * @test
      */
-    public function testSlug()
+    public function testGetSlug()
     {
         $files = [
             'my-file',
@@ -218,14 +218,14 @@ class StaticPageTest extends TestCase
         ];
 
         foreach ($files as $file) {
-            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'slug', [$file, '/first/second']));
-            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'slug', [$file, '/first/second/']));
+            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'getSlug', [$file, '/first/second']));
+            $this->assertEquals('my-file', $this->invokeMethod($this->StaticPage, 'getSlug', [$file, '/first/second/']));
         }
 
-        $result = $this->invokeMethod($this->StaticPage, 'slug', ['first/my-file.ctp', '/first/second']);
+        $result = $this->invokeMethod($this->StaticPage, 'getSlug', ['first/my-file.ctp', '/first/second']);
         $this->assertEquals('first/my-file', $result);
 
-        $result = $this->invokeMethod($this->StaticPage, 'slug', ['/first/second/third/my-file.ctp', '/first/second']);
+        $result = $this->invokeMethod($this->StaticPage, 'getSlug', ['/first/second/third/my-file.ctp', '/first/second']);
         $this->assertEquals('third/my-file', $result);
     }
 
