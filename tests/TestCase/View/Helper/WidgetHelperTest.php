@@ -55,12 +55,12 @@ class WidgetHelperTest extends TestCase
     }
 
     /**
-     * Tests for `_getAll()` method
+     * Tests for `getAll()` method
      * @test
      */
     public function testGetAll()
     {
-        $widgets = collection($this->invokeMethod($this->Widget, '_getAll'))
+        $widgets = collection($this->invokeMethod($this->Widget, 'getAll'))
             ->map(function ($widget) {
                 return collection(array_keys($widget))->first();
             })->toList();
@@ -88,7 +88,7 @@ class WidgetHelperTest extends TestCase
             ['Fifth'],
         ]);
 
-        $widgets = $this->invokeMethod($this->Widget, '_getAll');
+        $widgets = $this->invokeMethod($this->Widget, 'getAll');
         $this->assertEquals([
             ['First' => []],
             ['Second' => []],
@@ -101,14 +101,14 @@ class WidgetHelperTest extends TestCase
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
             Configure::write('Widgets.general', $value);
-            $result = $this->invokeMethod($this->Widget, '_getAll');
+            $result = $this->invokeMethod($this->Widget, 'getAll');
             $this->assertEquals([], $result);
         }
 
         //Sets some widgets for the homepage
         Configure::write('Widgets.homepage', ['ExampleForHomepage']);
 
-        $widgets = $this->invokeMethod($this->Widget, '_getAll');
+        $widgets = $this->invokeMethod($this->Widget, 'getAll');
         $this->assertEquals([['ExampleForHomepage' => []]], $widgets);
 
         //Resets

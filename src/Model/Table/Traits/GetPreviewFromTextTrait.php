@@ -32,7 +32,7 @@ trait GetPreviewFromTextTrait
      */
     protected function firstImage($html)
     {
-        $dom = HtmlDomParser::str_get_html($html);
+        $dom = (new HtmlDomParser)->str_get_html($html);
 
         if (!$dom) {
             return false;

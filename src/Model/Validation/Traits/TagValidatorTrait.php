@@ -23,10 +23,9 @@ trait TagValidatorTrait
     /**
      * Checks if the tag has a valid length
      * @param string $value Field value
-     * @param array $context Field context
      * @return bool
      */
-    public function validTagLength($value, $context)
+    public function validTagLength($value)
     {
         return strlen($value) >= 3 && strlen($value) <= 30;
     }
@@ -34,10 +33,9 @@ trait TagValidatorTrait
     /**
      * Checks if the tag has a valid syntax (lowercase letters, numbers, space)
      * @param string $value Field value
-     * @param array $context Field context
      * @return bool
      */
-    public function validTagChars($value, $context)
+    public function validTagChars($value)
     {
         return (bool)preg_match('/^[a-z0-9\ ]+$/', $value);
     }

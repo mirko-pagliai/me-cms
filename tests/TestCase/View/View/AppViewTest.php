@@ -61,7 +61,7 @@ class AppViewTest extends TestCase
     }
 
     /**
-     * Tests for `_setBlocks()` method
+     * Tests for `setBlocks()` method
      * @test
      */
     public function testSetBlocks()

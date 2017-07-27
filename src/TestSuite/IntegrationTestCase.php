@@ -86,31 +86,31 @@ class IntegrationTestCase extends BaseIntegrationTestCase
 
     /**
      * Internal method to set the user ID
-     * @param int $id User ID
+     * @param int $userId User ID
      * @return void
      * @uses $Controller
      */
-    protected function setUserId($id)
+    protected function setUserId($userId)
     {
         if (!empty($this->Controller)) {
-            $this->Controller->Auth->setUser(['id' => $id]);
+            $this->Controller->Auth->setUser(['id' => $userId]);
         }
 
-        $this->session(['Auth.User.id' => $id]);
+        $this->session(['Auth.User.id' => $userId]);
     }
 
     /**
      * Internal method to set the user group
-     * @param string $group Group name
+     * @param string $groupName Group name
      * @return void
      * @uses $Controller
      */
-    protected function setUserGroup($group)
+    protected function setUserGroup($groupName)
     {
         if (!empty($this->Controller)) {
-            $this->Controller->Auth->setUser(['group' => ['name' => $group]]);
+            $this->Controller->Auth->setUser(['group' => ['name' => $groupName]]);
         }
 
-        $this->session(['Auth.User.group.name' => $group]);
+        $this->session(['Auth.User.group.name' => $groupName]);
     }
 }

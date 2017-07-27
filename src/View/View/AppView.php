@@ -36,7 +36,7 @@ class AppView extends View
      * @uses MeTools\View\Helper\LibraryHelper::analytics()
      * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
      */
-    protected function _setBlocks()
+    protected function setBlocks()
     {
         //Sets the "theme color" (the toolbar color for some mobile browser)
         if (getConfig('default.toolbar_color')) {
@@ -103,12 +103,12 @@ class AppView extends View
      * @return mixed Rendered output, or false on error
      * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_renderLayout
      * @uses MeCms\View\View::renderLayout()
-     * @uses _setBlocks()
+     * @uses setBlocks()
      * @uses userbar()
      */
     public function renderLayout($content, $layout = null)
     {
-        $this->_setBlocks();
+        $this->setBlocks();
 
         //Assign the userbar
         $this->assign('userbar', implode(PHP_EOL, array_map(function ($element) {

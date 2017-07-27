@@ -25,7 +25,7 @@ class WidgetHelper extends Helper
      * Internal method to get all widgets
      * @return array
      */
-    protected function _getAll()
+    protected function getAll()
     {
         if ($this->request->isUrl(['_name' => 'homepage']) && getConfig('Widgets.homepage')) {
             $widgets = getConfig('Widgets.homepage');
@@ -58,12 +58,12 @@ class WidgetHelper extends Helper
     /**
      * Renders all widgets
      * @return string|void Html code
-     * @uses _getAll()
+     * @uses getAll()
      * @uses widget()
      */
     public function all()
     {
-        foreach ($this->_getAll() as $widget) {
+        foreach ($this->getAll() as $widget) {
             foreach ($widget as $name => $args) {
                 $widgets[] = $this->widget($name, $args);
             }
