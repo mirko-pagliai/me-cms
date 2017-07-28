@@ -94,7 +94,7 @@ Cache::setConfig([
 
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=mysql://travis@localhost/test');
+    putenv('db_dsn=mysql://root@localhost/test');
 }
 
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
