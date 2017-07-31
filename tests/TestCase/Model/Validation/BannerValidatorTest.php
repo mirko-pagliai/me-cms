@@ -51,10 +51,7 @@ class BannerValidatorTest extends ValidationTestCase
 
         $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
 
-        $this->example = [
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
+        $this->example = ['position_id' => 1, 'filename' => 'pic.jpg'];
     }
 
     /**
