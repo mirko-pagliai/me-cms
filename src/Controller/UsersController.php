@@ -31,7 +31,7 @@ class UsersController extends AppController
      * Internal method to login with cookie
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @uses _logout()
+     * @uses buildLogout()
      */
     protected function loginWithCookie()
     {
@@ -49,7 +49,7 @@ class UsersController extends AppController
 
         if (!$user || !$user['active'] || $user['banned']) {
             //Internal function to logout
-            return $this->_logout();
+            return $this->buildLogout();
         }
 
         $this->Auth->setUser($user);
@@ -63,7 +63,7 @@ class UsersController extends AppController
      * Internal method to logout
      * @return \Cake\Network\Response|null
      */
-    protected function _logout()
+    protected function buildLogout()
     {
         //Deletes some cookies
         $this->Cookie->delete('login');
@@ -238,7 +238,7 @@ class UsersController extends AppController
                     }
 
                     //Internal function to logout
-                    return $this->_logout();
+                    return $this->buildLogout();
                 }
 
                 $this->Auth->setUser($user);
@@ -274,13 +274,13 @@ class UsersController extends AppController
     /**
      * Logout
      * @return void
-     * @uses _logout()
+     * @uses buildLogout()
      */
     public function logout()
     {
         $this->Flash->success(__d('me_cms', 'You are successfully logged out'));
 
-        $this->_logout();
+        $this->buildLogout();
     }
 
     /**

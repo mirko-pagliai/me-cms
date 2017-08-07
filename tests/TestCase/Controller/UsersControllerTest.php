@@ -220,10 +220,10 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `_logout()` method
+     * Test for `buildLogout()` method
      * @test
      */
-    public function testInternalLogout()
+    public function testBuildLogout()
     {
         //Sets cookies and session values
         $this->Controller->Cookie->write('login', 'testLogin');
@@ -234,7 +234,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertTrue($this->Controller->Cookie->check('sidebar-lastmenu'));
         $this->assertTrue($this->Controller->request->session()->check('KCFINDER'));
 
-        $result = $this->invokeMethod($this->Controller, '_logout');
+        $result = $this->invokeMethod($this->Controller, 'buildLogout');
 
         $this->assertEquals($this->Controller->Auth->logout(), $result);
 
