@@ -14,6 +14,7 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Network\Exception\ForbiddenException;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
@@ -65,7 +66,7 @@ class PostsController extends AppController
             $query = $this->Posts->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function ($q) {
+                    'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
                     'Users' => ['fields' => ['first_name', 'last_name']],
@@ -130,7 +131,7 @@ class PostsController extends AppController
             $query = $this->Posts->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function ($q) {
+                    'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
                     'Users' => ['fields' => ['first_name', 'last_name']],
@@ -259,7 +260,7 @@ class PostsController extends AppController
         $post = $this->Posts->find('active')
             ->contain([
                 'Categories' => ['fields' => ['title', 'slug']],
-                'Tags' => function ($q) {
+                'Tags' => function (Query $q) {
                     return $q->order(['tag' => 'ASC']);
                 },
                 'Users' => ['fields' => ['first_name', 'last_name']],
@@ -290,7 +291,7 @@ class PostsController extends AppController
         $post = $this->Posts->find('pending')
             ->contain([
                 'Categories' => ['fields' => ['title', 'slug']],
-                'Tags' => function ($q) {
+                'Tags' => function (Query $q) {
                     return $q->order(['tag' => 'ASC']);
                 },
                 'Users' => ['fields' => ['first_name', 'last_name']],

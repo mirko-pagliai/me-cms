@@ -52,7 +52,7 @@ class PostsCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->matching($this->Posts->getAlias(), function ($q) {
+        $query->matching($this->Posts->getAlias(), function (Query $q) {
             return $q->find('active');
         })->distinct();
 

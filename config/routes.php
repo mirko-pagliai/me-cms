@@ -10,12 +10,13 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::defaultRouteClass('DashedRoute');
 Router::extensions(['json', 'rss']);
 
-Router::scope('/', ['plugin' => ME_CMS], function ($routes) {
+Router::scope('/', ['plugin' => ME_CMS], function (RouteBuilder $routes) {
     //Requires other routes
     require 'routes' . DS . 'banners.php';
     require 'routes' . DS . 'pages.php';
@@ -33,7 +34,7 @@ Router::scope('/', ['plugin' => ME_CMS], function ($routes) {
     $routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 
     //Admin routes
-    $routes->prefix(ADMIN_PREFIX, function ($routes) {
+    $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
         //Admin home page
         if (!$routes->nameExists('dashboard')) {
             $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
@@ -41,9 +42,9 @@ Router::scope('/', ['plugin' => ME_CMS], function ($routes) {
     });
 });
 
-Router::plugin(ME_CMS, ['path' => '/me-cms'], function ($routes) {
+Router::plugin(ME_CMS, ['path' => '/me-cms'], function (RouteBuilder $routes) {
     //Admin routes
-    $routes->prefix(ADMIN_PREFIX, function ($routes) {
+    $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
         //Route `/me-cms/admin`
         $routes->connect('/', ['controller' => 'Posts', 'action' => 'index']);
 

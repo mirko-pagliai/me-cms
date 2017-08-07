@@ -13,6 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 
 /**
@@ -67,14 +68,14 @@ class PagesCategoriesController extends AppController
         $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->PagesCategories->alias()) => 'ASC'])
-            ->formatResults(function ($categories) {
+            ->formatResults(function (ResultSet $results) {
                 //Gets categories as tree list
                 $treeList = $this->PagesCategories->getTreeList()->toArray();
 
-                return $categories->map(function ($category) use ($treeList) {
-                    $category->title = $treeList[$category->id];
+                return $results->map(function ($result) use ($treeList) {
+                    $result->title = $treeList[$result->id];
 
-                    return $category;
+                    return $result;
                 });
             });
 

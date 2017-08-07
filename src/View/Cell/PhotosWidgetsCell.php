@@ -15,6 +15,7 @@ namespace MeCms\View\Cell;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 
 /**
@@ -56,7 +57,7 @@ class PhotosWidgetsCell extends Cell
 
         $albums = $this->Photos->Albums->find('active')
             ->order([sprintf('%s.title', $this->Photos->Albums->getAlias()) => 'ASC'])
-            ->formatResults(function ($results) {
+            ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
             ->cache('widget_albums', $this->Photos->cache)

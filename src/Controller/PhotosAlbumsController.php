@@ -13,6 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -29,7 +30,7 @@ class PhotosAlbumsController extends AppController
     {
         $albums = $this->PhotosAlbums->find('active')
             ->select(['id', 'title', 'slug', 'photo_count'])
-            ->contain([$this->PhotosAlbums->Photos->getAlias() => function ($q) {
+            ->contain([$this->PhotosAlbums->Photos->getAlias() => function (Query $q) {
                 return $q->find('active')
                     ->select(['album_id', 'filename'])
                     ->order('rand()');

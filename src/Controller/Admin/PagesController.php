@@ -13,6 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -155,7 +156,7 @@ class PagesController extends AppController
     public function edit($id = null)
     {
         $page = $this->Pages->findById($id)
-            ->formatResults(function ($results) {
+            ->formatResults(function (ResultSet $results) {
                 return $results->map(function ($row) {
                     $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
 
