@@ -95,11 +95,11 @@ class BackupsController extends AppController
         if ($this->request->is('post')) {
             //Creates the backup
             if ($backup->execute($this->request->getData())) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+                $this->Flash->error(I18N_OPERATION_NOT_OK);
             }
         }
 
@@ -119,7 +119,7 @@ class BackupsController extends AppController
 
         $this->BackupManager->delete($this->getFilename($filename));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }
@@ -135,7 +135,7 @@ class BackupsController extends AppController
 
         $this->BackupManager->deleteAll();
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }
@@ -166,7 +166,7 @@ class BackupsController extends AppController
         //Clears the cache
         Cache::clearAll();
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }
@@ -183,7 +183,7 @@ class BackupsController extends AppController
     {
         $this->BackupManager->send($this->getFilename($filename), getConfigOrFail('email.webmaster'));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

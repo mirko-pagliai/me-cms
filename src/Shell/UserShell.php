@@ -50,12 +50,12 @@ class UserShell extends Shell
         $user = [];
 
         //Asks for some fields
-        $user['username'] = $this->in(__d('me_cms', 'Username'));
-        $user['password'] = $this->in(__d('me_cms', 'Password'));
-        $user['password_repeat'] = $this->in(__d('me_cms', 'Repeat password'));
-        $user['email'] = $this->in(__d('me_cms', 'Email'));
-        $user['first_name'] = $this->in(__d('me_cms', 'First name'));
-        $user['last_name'] = $this->in(__d('me_cms', 'Last name'));
+        $user['username'] = $this->in(I18N_USERNAME);
+        $user['password'] = $this->in(I18N_PASSWORD);
+        $user['password_repeat'] = $this->in(I18N_REPEAT_PASSWORD);
+        $user['email'] = $this->in(I18N_EMAIL);
+        $user['first_name'] = $this->in(I18N_FIRST_NAME);
+        $user['last_name'] = $this->in(I18N_LAST_NAME);
 
         //Asks for group, if not passed as option
         if (!$this->param('group')) {
@@ -95,7 +95,7 @@ class UserShell extends Shell
 
         //Saves the user
         if (!$this->Users->save($user)) {
-            $this->err(__d('me_cms', 'An error occurred, try again'));
+            $this->err(I18N_OPERATION_NOT_OK);
             $this->err(__d('me_cms', 'The user could not be saved'));
 
             //With verbose, shows errors for each field
@@ -110,7 +110,7 @@ class UserShell extends Shell
             return false;
         }
 
-        $this->success(__d('me_cms', 'The user has been saved'));
+        $this->success(I18N_OPERATION_OK);
 
         return $user->id;
     }
@@ -143,12 +143,7 @@ class UserShell extends Shell
         })->toList();
 
         //Sets header
-        $header = [
-            __d('me_cms', 'ID'),
-            __d('me_cms', 'Name'),
-            __d('me_cms', 'Label'),
-            __d('me_cms', 'Users')
-        ];
+        $header = [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS];
 
         //Prints as table
         $this->helper('table')->output(am([$header], $groups));
@@ -172,17 +167,8 @@ class UserShell extends Shell
             return;
         }
 
-        //Sets header
-        $header = [
-            __d('me_cms', 'ID'),
-            __d('me_cms', 'Username'),
-            __d('me_cms', 'Group'),
-            __d('me_cms', 'Name'),
-            __d('me_cms', 'Email'),
-            __d('me_cms', 'Posts'),
-            __d('me_cms', 'Status'),
-            __d('me_cms', 'Date'),
-        ];
+        //Sets headers
+        $headers = [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE];
 
         $users = collection($users)->map(function ($user) {
             if ($user->banned) {
@@ -206,7 +192,7 @@ class UserShell extends Shell
         })->toList();
 
         //Prints as table
-        $this->helper('table')->output(am([$header], $users));
+        $this->helper('table')->output(array_merge([$headers], $users));
     }
 
     /**

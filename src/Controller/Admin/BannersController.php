@@ -122,7 +122,7 @@ class BannersController extends AppController
 
         if ($this->request->getData('file')) {
             if (!$position) {
-                throw new InternalErrorException(__d('me_cms', 'Missing position ID'));
+                throw new InternalErrorException(__d('me_cms', 'Missing ID'));
             }
 
             $uploaded = $this->Uploader->set($this->request->getData('file'))
@@ -149,7 +149,7 @@ class BannersController extends AppController
             $saved = $this->Banners->save($entity);
 
             if (!$saved) {
-                $this->setUploadError(__d('me_cms', 'The banner could not be saved'));
+                $this->setUploadError(I18N_OPERATION_NOT_OK);
             }
         }
     }
@@ -167,12 +167,12 @@ class BannersController extends AppController
             $banner = $this->Banners->patchEntity($banner, $this->request->getData());
 
             if ($this->Banners->save($banner)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('banner'));
@@ -201,7 +201,7 @@ class BannersController extends AppController
 
         $this->Banners->deleteOrFail($this->Banners->get($id));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

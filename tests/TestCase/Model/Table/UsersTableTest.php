@@ -109,8 +109,8 @@ class UsersTableTest extends TestCase
     public function testBuildRules()
     {
         $expected = [
-            'email' => ['_isUnique' => 'This value is already used'],
-            'username' => ['_isUnique' => 'This value is already used'],
+            'email' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+            'username' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ];
 
         $entity = $this->Users->newEntity($this->example);
@@ -126,7 +126,7 @@ class UsersTableTest extends TestCase
         $entity = $this->Users->newEntity($this->example);
         $this->assertFalse($this->Users->save($entity));
         $this->assertEquals(array_merge([
-            'group_id' => ['_existsIn' => 'You have to select a valid option'],
+            'group_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
         ], $expected), $entity->getErrors());
     }
 

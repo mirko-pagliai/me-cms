@@ -252,14 +252,14 @@ class BannersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, error, missing position ID on the query string
+     * Tests for `upload()` method, error, missing ID on the query string
      * @test
      */
     public function testUploadErrorMissingPositionIdOnQueryString()
     {
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
         $this->assertResponseFailure();
-        $this->assertResponseContains('Missing position ID');
+        $this->assertResponseContains('Missing ID');
     }
 
     /**
@@ -288,7 +288,7 @@ class BannersControllerTest extends IntegrationTestCase
         //  `controllerSpy()` method.
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]]), compact('file'));
         $this->assertResponseFailure();
-        $this->assertResponseEquals('{"error":"The banner could not be saved"}');
+        $this->assertResponseEquals('{"error":"' . I18N_OPERATION_NOT_OK . '"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Banners/json/upload.ctp');
     }
 

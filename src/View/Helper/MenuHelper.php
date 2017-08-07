@@ -77,7 +77,7 @@ class MenuHelper extends Helper
             'prefix' => ADMIN_PREFIX,
         ]);
 
-        return [$menu, __d('me_cms', 'Posts'), ['icon' => 'file-text-o']];
+        return [$menu, I18N_POSTS, ['icon' => 'file-text-o']];
     }
 
     /**
@@ -124,7 +124,7 @@ class MenuHelper extends Helper
             'prefix' => ADMIN_PREFIX,
         ]);
 
-        return [$menu, __d('me_cms', 'Pages'), ['icon' => 'files-o']];
+        return [$menu, I18N_PAGES, ['icon' => 'files-o']];
     }
 
     /**
@@ -159,7 +159,7 @@ class MenuHelper extends Helper
             'prefix' => ADMIN_PREFIX,
         ]);
 
-        return [$menu, __d('me_cms', 'Photos'), ['icon' => 'camera-retro']];
+        return [$menu, I18N_PHOTOS, ['icon' => 'camera-retro']];
     }
 
     /**
@@ -249,7 +249,7 @@ class MenuHelper extends Helper
             ]);
         }
 
-        return [$menu, __d('me_cms', 'Users'), ['icon' => 'users']];
+        return [$menu, I18N_USERS, ['icon' => 'users']];
     }
 
     /**

@@ -19,13 +19,13 @@ $this->assign('title', $title = __d('me_cms', 'Edit users group'));
     <?php
         echo $this->Form->control('name', [
             'disabled' => true,
-            'label' => __d('me_cms', 'Name'),
+            'label' => I18N_NAME,
         ]);
         echo $this->Form->control('label', [
-            'label' => __d('me_cms', 'Label'),
+            'label' => I18N_LABEL,
         ]);
         echo $this->Form->control('description', [
-            'label' => __d('me_cms', 'Description'),
+            'label' => I18N_DESCRIPTION,
             'rows' => 3,
             'type' => 'textarea',
         ]);

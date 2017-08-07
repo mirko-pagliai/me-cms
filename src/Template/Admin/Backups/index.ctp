@@ -14,7 +14,7 @@ $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Database backups'));
 
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -27,11 +27,11 @@ $this->append('actions', $this->Form->postButton(
 
 <table class="table table-striped">
     <tr>
-        <th><?= __d('me_cms', 'Filename') ?></th>
+        <th><?= I18N_FILENAME ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Extension') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
         <th class="min-width text-center"><?= __d('me_cms', 'Size') ?></th>
-        <th class="min-width text-center"><?= __d('me_cms', 'Date') ?></th>
+        <th class="min-width text-center"><?= I18N_DATE ?></th>
     </tr>
     <?php foreach ($backups as $backup) : ?>
         <tr>
@@ -40,38 +40,35 @@ $this->append('actions', $this->Form->postButton(
                     <?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?>
                 </strong>
                 <?php
-                    $actions = [];
-                    $actions[] = $this->Html->link(
-                        __d('me_cms', 'Download'),
-                        ['action' => 'download', $backup->slug],
-                        ['icon' => 'download']
-                    );
-                    $actions[] = $this->Form->postLink(
-                        __d('me_cms', 'Restore'),
-                        ['action' => 'restore', $backup->slug],
-                        [
-                            'icon' => 'upload',
-                            'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
-                                'some data may be lost. Are you sure?'),
-                        ]
-                    );
-                    $actions[] = $this->Form->postLink(
-                        __d('me_cms', 'Send'),
-                        ['action' => 'send', $backup->slug],
-                        [
-                            'icon' => ' envelope-o',
-                            'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
-                        ]
-                    );
-                    $actions[] = $this->Form->postLink(
-                        __d('me_cms', 'Delete'),
-                        ['action' => 'delete', $backup->slug],
-                        [
-                            'class' => 'text-danger',
-                            'icon' => 'trash-o',
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                        ]
-                    );
+                    $actions = [
+                        $this->Html->link(
+                            I18N_DOWNLOAD,
+                            ['action' => 'download', $backup->slug],
+                            ['icon' => 'download']
+                        ),
+                        $this->Form->postLink(
+                            __d('me_cms', 'Restore'),
+                            ['action' => 'restore', $backup->slug],
+                            [
+                                'icon' => 'upload',
+                                'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
+                                    'some data may be lost. Are you sure?'),
+                            ]
+                        ),
+                        $this->Form->postLink(
+                            __d('me_cms', 'Send'),
+                            ['action' => 'send', $backup->slug],
+                            [
+                                'icon' => ' envelope-o',
+                                'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
+                            ]
+                        ),
+                        $this->Form->postLink(
+                            I18N_DELETE,
+                            ['action' => 'delete', $backup->slug],
+                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
+                        ),
+                    ];
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>

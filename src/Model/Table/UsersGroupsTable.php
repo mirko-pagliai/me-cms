@@ -34,8 +34,8 @@ class UsersGroupsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['label'], __d('me_cms', 'This value is already used')));
-        $rules->add($rules->isUnique(['name'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->isUnique(['label'], I18N_VALUE_ALREADY_USED));
+        $rules->add($rules->isUnique(['name'], I18N_VALUE_ALREADY_USED));
 
         return $rules;
     }

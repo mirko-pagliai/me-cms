@@ -252,14 +252,14 @@ class PhotosControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Tests for `upload()` method, error, missing album ID on the query string
+     * Tests for `upload()` method, error, missing ID on the query string
      * @test
      */
     public function testUploadErrorMissingAlbumIdOnQueryString()
     {
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
         $this->assertResponseFailure();
-        $this->assertResponseContains('Missing album ID');
+        $this->assertResponseContains('Missing ID');
     }
 
     /**
@@ -274,7 +274,7 @@ class PhotosControllerTest extends IntegrationTestCase
         //  `controllerSpy()` method.
         $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
         $this->assertResponseFailure();
-        $this->assertResponseEquals('{"error":"The photo could not be saved"}');
+        $this->assertResponseEquals('{"error":"' . I18N_OPERATION_NOT_OK . '"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
     }
 

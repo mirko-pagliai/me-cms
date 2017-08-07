@@ -136,12 +136,12 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
             if ($this->Users->save($user)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('user'));
@@ -159,7 +159,7 @@ class UsersController extends AppController
 
         //Only the admin founder can edit others admin users
         if ($user->group_id === 1 && !$this->Auth->isFounder()) {
-            $this->Flash->alert(__d('me_cms', 'Only the admin founder can do this'));
+            $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
 
             return $this->redirect(['action' => 'index']);
         }
@@ -168,12 +168,12 @@ class UsersController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->Users->save($user)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('user'));
@@ -195,13 +195,13 @@ class UsersController extends AppController
             $this->Flash->error(__d('me_cms', 'You cannot delete the admin founder'));
         //Only the admin founder can delete others admin users
         } elseif ($user->group_id === 1 && !$this->Auth->isFounder()) {
-            $this->Flash->alert(__d('me_cms', 'Only the admin founder can do this'));
+            $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
         } elseif ($user->post_count) {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            $this->Flash->alert(I18N_BEFORE_DELETE);
         } else {
             $this->Users->deleteOrFail($user);
 
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+            $this->Flash->success(I18N_OPERATION_OK);
         }
 
         return $this->redirect(['action' => 'index']);
@@ -215,12 +215,11 @@ class UsersController extends AppController
     public function activate($id)
     {
         $user = $this->Users->get($id);
-
         $user->active = true;
 
         $this->Users->save($user);
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }
@@ -241,12 +240,12 @@ class UsersController extends AppController
                 //Sends email
                 $this->getMailer(ME_CMS . '.User')->send('changePassword', [$user]);
 
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['_name' => 'dashboard']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('user'));
@@ -261,7 +260,7 @@ class UsersController extends AppController
     {
         //Checks if login logs are enabled
         if (!getConfig('users.login_log')) {
-            $this->Flash->error(__d('me_cms', 'Disabled'));
+            $this->Flash->error(I18N_DISABLED);
 
             return $this->redirect(['_name' => 'dashboard']);
         }

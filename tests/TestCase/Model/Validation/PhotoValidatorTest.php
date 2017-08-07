@@ -72,7 +72,7 @@ class PhotoValidatorTest extends ValidationTestCase
     {
         $this->example['album_id'] = 'string';
         $this->assertEquals([
-            'album_id' => ['naturalNumber' => 'You have to select a valid option'],
+            'album_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
         ], $this->Photos->newEntity($this->example)->getErrors());
     }
 

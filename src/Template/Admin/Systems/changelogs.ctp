@@ -26,7 +26,7 @@ $this->Html->css(ME_CMS . '.admin/changelogs', ['block' => 'css_bottom']);
                 'name' => 'file',
                 'onchange' => 'send_form(this)',
             ]);
-            echo $this->Form->submit(__d('me_cms', 'Select'));
+            echo $this->Form->submit(I18N_SELECT);
         ?>
     </fieldset>
     <?= $this->Form->end() ?>

@@ -16,26 +16,20 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
 
 <?= $this->Form->create($photo); ?>
 <div class='float-form'>
-    <?php
-        echo $this->Form->control('album_id', [
-            'label' => __d('me_cms', 'Album'),
-        ]);
-        echo $this->Form->control('active', [
-            'label' => sprintf('%s?', __d('me_cms', 'Published')),
-        ]);
-    ?>
+    <?= $this->Form->control('album_id', ['label' => __d('me_cms', 'Album')]) ?>
+    <?= $this->Form->control('active', ['label' => I18N_PUBLISHED]) ?>
 </div>
 <fieldset>
-    <p><?= $this->Html->strong(__d('me_cms', 'Preview')) ?></p>
+    <p><?= $this->Html->strong(I18N_PREVIEW) ?></p>
     <?php
         echo $this->Thumb->resize($photo->path, ['width' => 1186], ['class' => 'img-thumbnail margin-15']);
 
         echo $this->Form->control('filename', [
             'disabled' => true,
-            'label' => __d('me_cms', 'Filename'),
+            'label' => I18N_FILENAME,
         ]);
         echo $this->Form->control('description', [
-            'label' => __d('me_cms', 'Description'),
+            'label' => I18N_DESCRIPTION,
             'rows' => 3,
             'type' => 'textarea',
         ]);

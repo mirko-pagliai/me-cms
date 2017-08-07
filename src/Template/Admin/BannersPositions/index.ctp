@@ -14,7 +14,7 @@ $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Banners positions'));
 
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -28,9 +28,9 @@ $this->append('actions', $this->Html->button(
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
-            <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('description', __d('me_cms', 'Description')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
+            <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('description', I18N_DESCRIPTION) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('banner_count', __d('me_cms', 'Banners')) ?></th>
         </tr>
     </thead>
@@ -47,24 +47,20 @@ $this->append('actions', $this->Html->button(
                     <?php
                         $actions = [];
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Edit'),
+                            I18N_EDIT,
                             ['action' => 'edit', $position->id],
                             ['icon' => 'pencil']
                         );
                         $actions[] = $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
+                            I18N_DELETE,
                             ['action' => 'delete', $position->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                            ]
+                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
                         );
-                        $actions[] = $this->Html->link(__d('me_cms', 'Upload'), [
-                            'controller' => 'Banners',
-                            'action' => 'upload',
-                            '?' => ['position' => $position->id]
-                        ], ['icon' => 'upload']);
+                        $actions[] = $this->Html->link(
+                            I18N_UPLOAD,
+                            [ 'controller' => 'Banners', 'action' => 'upload', '?' => ['position' => $position->id]],
+                            ['icon' => 'upload']
+                        );
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
@@ -75,11 +71,11 @@ $this->append('actions', $this->Html->button(
                 <td class="min-width text-center">
                     <?php
                     if ($position->banner_count) {
-                        echo $this->Html->link($position->banner_count, [
-                            'controller' => 'Banners',
-                            'action' => 'index',
-                            '?' => ['position' => $position->id],
-                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
+                        echo $this->Html->link(
+                            $position->banner_count,
+                            ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->id]],
+                            ['title' => I18N_BELONG_ELEMENT]
+                        );
                     } else {
                         echo $position->banner_count;
                     }
@@ -89,4 +85,5 @@ $this->append('actions', $this->Html->button(
         <?php endforeach; ?>
     </tbody>
 </table>
+
 <?= $this->element('MeTools.paginator') ?>

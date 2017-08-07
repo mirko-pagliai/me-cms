@@ -16,11 +16,11 @@ $this->extend('/Admin/Common/Photos/index');
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
-            <th><?= $this->Paginator->sort('filename', __d('me_cms', 'Filename')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
+            <th><?= $this->Paginator->sort('filename', I18N_FILENAME) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Albums.title', __d('me_cms', 'Album')) ?></th>
-            <th class="text-center"><?= __d('me_cms', 'Description') ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('Photos.created', __d('me_cms', 'Date')) ?></th>
+            <th class="text-center"><?= I18N_DESCRIPTION ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('Photos.created', I18N_DATE) ?></th>
         </tr>
     </thead>
     <tbody>
@@ -35,46 +35,43 @@ $this->extend('/Admin/Common/Photos/index');
                     //If the photo is not active (not published)
                     if (!$photo->active) {
                         echo $this->Html->span(
-                            __d('me_cms', 'Not published'),
+                            I18N_NOT_PUBLISHED,
                             ['class' => 'record-label record-label-warning']
                         );
                     }
 
-                    $actions = [];
-                    $actions[] = $this->Html->link(
-                        __d('me_cms', 'Edit'),
-                        ['action' => 'edit', $photo->id],
-                        ['icon' => 'pencil']
-                    );
-                    $actions[] = $this->Html->link(
-                        __d('me_cms', 'Download'),
-                        ['action' => 'download', $photo->id],
-                        ['icon' => 'download']
-                    );
+                    $actions = [
+                        $this->Html->link(
+                            I18N_EDIT,
+                            ['action' => 'edit', $photo->id],
+                            ['icon' => 'pencil']
+                        ),
+                        $this->Html->link(
+                            I18N_DOWNLOAD,
+                            ['action' => 'download', $photo->id],
+                            ['icon' => 'download']
+                        ),
+                    ];
 
                     //Only admins and managers can delete photos
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
-                            ['action' => 'delete', $photo->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                            ]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $photo->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     //If the photo is active
                     if ($photo->active) {
-                        $actions[] = $this->Html->link(__d('me_cms', 'Open'), [
+                        $actions[] = $this->Html->link(I18N_OPEN, [
                             '_name' => 'photo',
                             'slug' => $photo->album->slug,
                             'id' => $photo->id
                         ], ['icon' => 'external-link', 'target' => '_blank']);
                     } else {
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Preview'),
+                            I18N_PREVIEW,
                             ['_name' => 'photosPreview', $photo->id],
                             ['icon' => 'external-link', 'target' => '_blank']
                         );
@@ -87,7 +84,7 @@ $this->extend('/Admin/Common/Photos/index');
                     <?= $this->Html->link(
                         $photo->album->title,
                         ['?' => ['album' => $photo->album->id]],
-                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                        ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
                 <td class="text-center">

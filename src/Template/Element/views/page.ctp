@@ -32,11 +32,11 @@
 
         <div class="content-info">
             <?php if (getConfig('page.created')) : ?>
-                <?= $this->Html->div('content-date', __d(
-                    'me_cms',
-                    'Posted on {0}',
-                    $page->created->i18nFormat(getConfigOrFail('main.datetime.long'))
-                ), ['icon' => 'clock-o']) ?>
+                <?= $this->Html->div(
+                    'content-date',
+                    __d('me_cms', 'Posted on {0}', $page->created->i18nFormat(getConfigOrFail('main.datetime.long'))),
+                    ['icon' => 'clock-o']
+                ) ?>
             <?php endif; ?>
         </div>
     </div>

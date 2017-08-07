@@ -51,7 +51,7 @@ class SystemsController extends AppController
     {
         //Checks if the "contact us" form is enabled
         if (!getConfig('default.contact_us')) {
-            $this->Flash->error(__d('me_cms', 'Disabled'));
+            $this->Flash->error(I18N_DISABLED);
 
             return $this->redirect(['_name' => 'homepage']);
         }
@@ -65,12 +65,12 @@ class SystemsController extends AppController
             } else {
                 //Sends the email
                 if ($contact->execute($this->request->getData())) {
-                    $this->Flash->success(__d('me_cms', 'The email has been sent'));
+                    $this->Flash->success(I18N_OPERATION_OK);
 
                     return $this->redirect(['_name' => 'homepage']);
                 }
 
-                $this->Flash->error(__d('me_cms', 'The email was not sent'));
+                $this->Flash->error(I18N_OPERATION_NOT_OK);
             }
         }
 

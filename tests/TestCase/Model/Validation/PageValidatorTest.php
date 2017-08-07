@@ -77,7 +77,7 @@ class PageValidatorTest extends ValidationTestCase
     {
         $this->example['category_id'] = 'string';
         $this->assertEquals([
-            'category_id' => ['naturalNumber' => 'You have to select a valid option'],
+            'category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
         ], $this->Pages->newEntity($this->example)->getErrors());
     }
 }

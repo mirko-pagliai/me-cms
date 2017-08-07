@@ -58,12 +58,12 @@ class UsersGroupsController extends AppController
             $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
 
             if ($this->UsersGroups->save($group)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('group'));
@@ -82,12 +82,12 @@ class UsersGroupsController extends AppController
             $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
 
             if ($this->UsersGroups->save($group)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('group'));
@@ -107,11 +107,11 @@ class UsersGroupsController extends AppController
         if ($id > 3 && !$group->user_count) {
             $this->UsersGroups->deleteOrFail($group);
 
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+            $this->Flash->success(I18N_OPERATION_OK);
         } elseif ($id <= 3) {
             $this->Flash->alert(__d('me_cms', 'You cannot delete this users group'));
         } else {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            $this->Flash->alert(I18N_BEFORE_DELETE);
         }
 
         return $this->redirect(['action' => 'index']);

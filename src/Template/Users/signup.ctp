@@ -19,45 +19,45 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
     <?php
         echo $this->Form->control('username', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Username'),
+            'label' => I18N_USERNAME,
         ]);
         echo $this->Form->control('email', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Email'),
-            'help' => __d('me_cms', 'Enter your email'),
+            'help' => I18N_ENTER_YOUR_EMAIL,
+            'label' => I18N_EMAIL,
         ]);
         echo $this->Form->control('email_repeat', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Repeat email'),
             'help' => __d('me_cms', 'Repeat your email'),
+            'label' => I18N_REPEAT_EMAIL,
         ]);
         echo $this->Form->control('password', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
-                'title' => __d('me_cms', 'Show/hide password'),
+                'title' => I18N_SHOW_HIDE_PASSWORD,
              ]),
-            'label' => __d('me_cms', 'Password'),
             'help' => __d('me_cms', 'Enter your password'),
+            'label' => I18N_PASSWORD,
         ]);
         echo $this->Form->control('password_repeat', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
-                'title' => __d('me_cms', 'Show/hide password'),
+                'title' => I18N_SHOW_HIDE_PASSWORD,
              ]),
-            'label' => __d('me_cms', 'Repeat password'),
             'help' => __d('me_cms', 'Repeat your password'),
+            'label' => I18N_REPEAT_PASSWORD,
         ]);
         echo $this->Form->control('first_name', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'First name'),
+            'label' => I18N_FIRST_NAME,
         ]);
         echo $this->Form->control('last_name', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Last name'),
+            'label' => I18N_LAST_NAME,
         ]);
 
         if (getConfig('security.recaptcha')) {

@@ -28,12 +28,12 @@ use MeCms\Core\Plugin;
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="topbar-collapse">
             <?php
-                $menus = [];
-
-                $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
-                    'icon' => 'home',
-                    'target' => '_blank',
-                ]);
+                $menus = [
+                    $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
+                        'icon' => 'home',
+                        'target' => '_blank',
+                    ]),
+                ];
 
                 echo $this->Html->ul($menus, ['class' => 'nav navbar-nav hidden-xs hidden-sm']);
 
@@ -48,18 +48,16 @@ use MeCms\Core\Plugin;
                     $this->Dropdown->start($this->Auth->user('full_name'), ['icon' => 'user']);
 
                     if (getConfig('users.login_log')) {
-                        echo $this->Html->link(__d('me_cms', 'Last login'), [
-                            'controller' => 'Users',
-                            'action' => 'lastLogin',
-                            'plugin' => ME_CMS,
-                        ]);
+                        echo $this->Html->link(
+                            I18N_LAST_LOGIN,
+                            ['controller' => 'Users', 'action' => 'lastLogin', 'plugin' => ME_CMS]
+                        );
                     }
 
-                    echo $this->Html->link(__d('me_cms', 'Change password'), [
-                        'controller' => 'Users',
-                        'action' => 'changePassword',
-                        'plugin' => ME_CMS,
-                    ]);
+                    echo $this->Html->link(
+                        __d('me_cms', 'Change password'),
+                        ['controller' => 'Users', 'action' => 'changePassword', 'plugin' => ME_CMS]
+                    );
                     echo $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout']);
 
                     return $this->Dropdown->end();

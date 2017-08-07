@@ -150,9 +150,9 @@ class LogsController extends AppController
         }
 
         if ($success && $successSerialized) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+            $this->Flash->success(I18N_OPERATION_OK);
         } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         return $this->redirect(['action' => 'index']);

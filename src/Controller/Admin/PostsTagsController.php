@@ -70,12 +70,12 @@ class PostsTagsController extends AppController
             $tag = $this->PostsTags->Tags->patchEntity($tag, $this->request->getData());
 
             if ($this->PostsTags->Tags->save($tag)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('tag'));

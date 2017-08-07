@@ -11,10 +11,9 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/index');
-$this->assign('title', __d('me_cms', 'Posts categories'));
-
+$this->assign('title', I18N_POSTS_CATEGORIES);
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -28,10 +27,10 @@ $this->append('actions', $this->Html->button(
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= __d('me_cms', 'ID') ?></th>
-            <th><?= __d('me_cms', 'Title') ?></th>
+            <th class="text-center"><?= I18N_ID ?></th>
+            <th><?= I18N_TITLE ?></th>
             <th class="min-width text-center"><?= __d('me_cms', 'Parent') ?></th>
-            <th class="min-width text-center"><?= __d('me_cms', 'Posts') ?></th>
+            <th class="min-width text-center"><?= I18N_POSTS ?></th>
         </tr>
     </thead>
     <tbody>
@@ -41,12 +40,14 @@ $this->append('actions', $this->Html->button(
                     <code><?= $category->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?>
+                    </strong>
 
                     <?php
                         $actions = [
                             $this->Html->link(
-                                __d('me_cms', 'Edit'),
+                                I18N_EDIT,
                                 ['action' => 'edit', $category->id],
                                 ['icon' => 'pencil']
                             ),
@@ -55,19 +56,15 @@ $this->append('actions', $this->Html->button(
                         //Only admins can delete posts categories
                         if ($this->Auth->isGroup('admin')) {
                             $actions[] = $this->Form->postLink(
-                                __d('me_cms', 'Delete'),
+                                I18N_DELETE,
                                 ['action' => 'delete', $category->id],
-                                [
-                                    'class' => 'text-danger',
-                                    'icon' => 'trash-o',
-                                    'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                                ]
+                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
                             );
                         }
 
                         if ($category->post_count) {
                             $actions[] = $this->Html->link(
-                                __d('me_cms', 'Open'),
+                                I18N_OPEN,
                                 ['_name' => 'postsCategory', $category->slug],
                                 ['icon' => 'external-link', 'target' => '_blank']
                             );
@@ -86,11 +83,11 @@ $this->append('actions', $this->Html->button(
                 <td class="min-width text-center">
                     <?php
                     if ($category->post_count) {
-                        echo $this->Html->link($category->post_count, [
-                            'controller' => 'Posts',
-                            'action' => 'index',
-                            '?' => ['category' => $category->id],
-                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
+                        echo $this->Html->link(
+                            $category->post_count,
+                            ['controller' => 'Posts', 'action' => 'index', '?' => ['category' => $category->id]],
+                            ['title' => I18N_BELONG_ELEMENT]
+                        );
                     } else {
                         echo $category->post_count;
                     }

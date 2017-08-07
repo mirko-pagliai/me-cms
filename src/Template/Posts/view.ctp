@@ -17,10 +17,10 @@ $this->assign('title', $post->title);
  * Userbar
  */
 if (!$post->active) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Draft'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_DRAFT, ['class' => 'label label-warning']));
 }
 if ($post->created->isFuture()) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Scheduled'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_SCHEDULED, ['class' => 'label label-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit post'),
@@ -30,11 +30,7 @@ $this->userbar($this->Html->link(
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete post'),
     ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
-    [
-        'icon' => 'trash-o',
-        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-        'target' => '_blank',
-    ]
+    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**

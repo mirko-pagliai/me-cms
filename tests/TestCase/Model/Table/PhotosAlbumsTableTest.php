@@ -106,8 +106,8 @@ class PhotosAlbumsTableTest extends TestCase
         $entity = $this->PhotosAlbums->newEntity($example);
         $this->assertFalse($this->PhotosAlbums->save($entity));
         $this->assertEquals([
-            'slug' => ['_isUnique' => 'This value is already used'],
-            'title' => ['_isUnique' => 'This value is already used'],
+            'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+            'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
     }
 

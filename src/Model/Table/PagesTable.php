@@ -121,9 +121,9 @@ class PagesTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['category_id'], 'Categories', __d('me_cms', 'You have to select a valid option')));
-        $rules->add($rules->isUnique(['slug'], __d('me_cms', 'This value is already used')));
-        $rules->add($rules->isUnique(['title'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION));
+        $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED));
+        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
 
         return $rules;
     }

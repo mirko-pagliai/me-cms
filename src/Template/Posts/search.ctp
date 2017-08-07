@@ -49,7 +49,6 @@ echo $this->Form->end();
                 <?php
                     //Executes BBCode on the text and strips other tags
                     $text = strip_tags($this->BBCode->parser($post->text));
-
                     echo $this->Text->truncate($text, 350, ['exact' => false, 'html' => true]);
                 ?>
                 </div>

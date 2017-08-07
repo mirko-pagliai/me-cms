@@ -22,7 +22,7 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
                     'icon' => 'eye',
-                    'title' => __d('me_cms', 'Show/hide password'),
+                    'title' => I18N_SHOW_HIDE_PASSWORD,
                  ]),
                 'help' => __d('me_cms', 'Enter your old password'),
                 'label' => __d('me_cms', 'Old password'),
@@ -34,10 +34,10 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
                     'icon' => 'eye',
-                    'title' => __d('me_cms', 'Show/hide password'),
+                    'title' => I18N_SHOW_HIDE_PASSWORD,
                  ]),
                 'help' => __d('me_cms', 'Enter your new password'),
-                'label' => __d('me_cms', 'Password'),
+                'label' => I18N_PASSWORD,
                 'value' => '',
             ]);
             echo $this->Form->control('password_repeat', [
@@ -45,10 +45,10 @@ $this->assign('title', $title = __d('me_cms', 'Change your password'));
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
                     'icon' => 'eye',
-                    'title' => __d('me_cms', 'Show/hide password'),
+                    'title' => I18N_SHOW_HIDE_PASSWORD,
                  ]),
                 'help' => __d('me_cms', 'Repeat your new password'),
-                'label' => __d('me_cms', 'Repeat password'),
+                'label' => I18N_REPEAT_PASSWORD,
                 'value' => '',
             ]);
         ?>

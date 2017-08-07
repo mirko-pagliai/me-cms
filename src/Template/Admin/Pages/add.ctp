@@ -22,23 +22,23 @@ $this->Library->slugify();
     <?php
         echo $this->Form->control('category_id', [
             'default' => count($categories) < 2 ? collection($categories)->first() : false,
-            'label' => __d('me_cms', 'Category'),
+            'label' => I18N_CATEGORY,
         ]);
         echo $this->Form->datetimepicker('created', [
-            'label' => __d('me_cms', 'Date'),
             'help' => [
-                __d('me_cms', 'If blank, the current date and time will be used'),
-                __d('me_cms', 'You can delay the publication by entering a future date'),
+                I18N_USE_CURRENT_DATETIME,
+                I18N_DELAY_PUBLICATION,
             ],
+            'label' => I18N_DATE,
         ]);
         echo $this->Form->control('priority', [
             'default' => '3',
-            'label' => __d('me_cms', 'Priority'),
+            'label' => I18N_PRIORITY,
         ]);
         echo $this->Form->control('active', [
             'checked' => true,
-            'label' => sprintf('%s?', __d('me_cms', 'Published')),
-            'help' => __d('me_cms', 'Disable this option to save as a draft'),
+            'help' => I18N_HELP_DRAFT,
+            'label' => I18N_PUBLISHED,
         ]);
     ?>
 </div>
@@ -46,19 +46,18 @@ $this->Library->slugify();
     <?php
         echo $this->Form->control('title', [
             'id' => 'title',
-            'label' => __d('me_cms', 'Title'),
+            'label' => I18N_TITLE,
         ]);
         echo $this->Form->control('subtitle', [
-            'label' => __d('me_cms', 'Subtitle'),
+            'label' => I18N_SUBTITLE,
         ]);
         echo $this->Form->control('slug', [
             'id' => 'slug',
-            'label' => __d('me_cms', 'Slug'),
-            'help' => __d('me_cms', 'The slug is a string identifying a resource. If ' .
-                'you do not have special needs, let it be generated automatically'),
+            'help' => I18N_HELP_SLUG,
+            'label' => I18N_SLUG,
         ]);
         echo $this->Form->ckeditor('text', [
-            'label' => __d('me_cms', 'Text'),
+            'label' => I18N_TEXT,
             'rows' => 10,
         ]);
     ?>

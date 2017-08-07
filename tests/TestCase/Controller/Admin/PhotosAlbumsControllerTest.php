@@ -177,13 +177,13 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         //POST request. This album has no photos
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         $id = $this->PhotosAlbums->find()->where(['photo_count >=' => 1])->extract('id')->first();
 
         //POST request. This album has some photos, so it cannot be deleted
         $this->post(array_merge($this->url, ['action' => 'delete', $id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
+        $this->assertFlashMessage(I18N_BEFORE_DELETE);
     }
 }

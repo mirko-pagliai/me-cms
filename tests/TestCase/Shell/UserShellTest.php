@@ -124,7 +124,7 @@ class UserShellTest extends TestCase
             '| 5  | People  |',
             '| 3  | User    |',
             '+----+---------+',
-            '<success>The user has been saved</success>',
+            '<success>' . I18N_OPERATION_OK . '</success>',
         ], $this->out->messages());
         $this->assertEmpty($this->err->messages());
 
@@ -150,7 +150,7 @@ class UserShellTest extends TestCase
 
         $this->assertEmpty($this->out->messages());
         $this->assertEquals([
-            '<error>An error occurred, try again</error>',
+            '<error>' . I18N_OPERATION_NOT_OK . '</error>',
             '<error>The user could not be saved</error>',
             '<error>Field `email`: you have to enter a valid value</error>',
             '<error>Field `first_name`: allowed chars: letters, apostrophe, space. Has to begin with a capital letter</error>',
@@ -188,7 +188,7 @@ class UserShellTest extends TestCase
         $id = $this->UserShell->add();
         $this->assertNotEmpty($id);
 
-        $this->assertEquals(['<success>The user has been saved</success>'], $this->out->messages());
+        $this->assertEquals(['<success>' . I18N_OPERATION_OK . '</success>'], $this->out->messages());
         $this->assertEmpty($this->err->messages());
 
         $user = $this->Users->find()->where(['id' => $id])->first();

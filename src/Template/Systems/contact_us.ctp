@@ -18,15 +18,15 @@ $this->assign('title', __d('me_cms', 'Contact us'));
 <fieldset>
     <?php
         echo $this->Form->control('first_name', [
-            'label' => __d('me_cms', 'First name'),
+            'label' => I18N_FIRST_NAME,
         ]);
         echo $this->Form->control('last_name', [
-            'label' => __d('me_cms', 'Last name'),
+            'label' => I18N_LAST_NAME,
         ]);
         echo $this->Form->control('email', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Email'),
-            'help' => __d('me_cms', 'Enter your email'),
+            'help' => I18N_ENTER_YOUR_EMAIL,
+            'label' => I18N_EMAIL,
         ]);
         echo $this->Form->control('message', [
             'label' => __d('me_cms', 'Message'),

@@ -76,8 +76,8 @@ class PhotosAlbumsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['slug'], __d('me_cms', 'This value is already used')));
-        $rules->add($rules->isUnique(['title'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED));
+        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
 
         return $rules;
     }

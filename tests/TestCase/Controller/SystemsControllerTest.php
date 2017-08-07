@@ -107,7 +107,7 @@ class SystemsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'a']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The email was not sent');
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
 
         $contactFromView = $this->viewVariable('contact');
         $this->assertNotEmpty($contactFromView);
@@ -121,7 +121,7 @@ class SystemsControllerTest extends IntegrationTestCase
             'message' => 'This is the message',
         ]);
         $this->assertRedirect(['_name' => 'homepage']);
-        $this->assertFlashMessage('The email has been sent');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);

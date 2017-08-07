@@ -93,12 +93,12 @@ class PostsCategoriesController extends AppController
             $category = $this->PostsCategories->patchEntity($category, $this->request->getData());
 
             if ($this->PostsCategories->save($category)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('category'));
@@ -117,12 +117,12 @@ class PostsCategoriesController extends AppController
             $category = $this->PostsCategories->patchEntity($category, $this->request->getData());
 
             if ($this->PostsCategories->save($category)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('category'));
@@ -142,9 +142,9 @@ class PostsCategoriesController extends AppController
         if (!$category->post_count) {
             $this->PostsCategories->deleteOrFail($category);
 
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+            $this->Flash->success(I18N_OPERATION_OK);
         } else {
-            $this->Flash->alert(__d('me_cms', 'Before deleting this, you must delete or reassign all items that belong to this element'));
+            $this->Flash->alert(I18N_BEFORE_DELETE);
         }
 
         return $this->redirect(['action' => 'index']);

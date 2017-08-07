@@ -18,37 +18,38 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
 <div class='float-form'>
     <?php
         echo $this->Form->control('position_id', [
-            'label' => __d('me_cms', 'Position'),
+            'label' => I18N_POSITION,
         ]);
         echo $this->Form->control('active', [
-            'label' => sprintf('%s?', __d('me_cms', 'Published')),
+            'label' => I18N_PUBLISHED,
         ]);
         echo $this->Form->control('thumbnail', [
-            'label' => __d('me_cms', 'Thumbnail'),
             'help' => __d('me_cms', 'The banner is displayed as a  thumbnail. ' .
                 'You should disable this, if the banner is an animated gif'),
+            'label' => __d('me_cms', 'Thumbnail'),
         ]);
     ?>
 </div>
 <fieldset>
-    <p><?= $this->Html->strong(__d('me_cms', 'Preview')) ?></p>
+    <p><?= $this->Html->strong(I18N_PREVIEW) ?></p>
     <?php
+    $class = 'img-thumbnail margin-15';
     if ($banner->thumbnail) {
-        echo $this->Thumb->resize($banner->path, ['width' => 1186], ['class' => 'img-thumbnail margin-15']);
+        echo $this->Thumb->resize($banner->path, ['width' => 1186], compact('class'));
     } else {
-        echo $this->Html->img($banner->www, ['class' => 'img-thumbnail margin-15']);
+        echo $this->Html->img($banner->www, compact('class'));
     }
 
     echo $this->Form->control('filename', [
         'disabled' => true,
-        'label' => __d('me_cms', 'Filename'),
+        'label' => I18N_FILENAME,
     ]);
     echo $this->Form->control('target', [
+        'help' => __d('me_cms', 'The address should begin with {0}', '<em>http://</em>'),
         'label' => __d('me_cms', 'Web address'),
-        'help' => __d('me_cms', 'The address should begin with {0}', $this->Html->em('http://')),
     ]);
     echo $this->Form->control('description', [
-        'label' => __d('me_cms', 'Description'),
+        'label' => I18N_DESCRIPTION,
         'rows' => 3,
         'type' => 'textarea',
     ]);

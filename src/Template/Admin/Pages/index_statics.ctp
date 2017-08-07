@@ -16,8 +16,8 @@ $this->assign('title', __d('me_cms', 'Static pages'));
 
 <table class="table table-striped">
     <tr>
-        <th><?= __d('me_cms', 'Filename') ?></th>
-        <th class="text-center"><?= __d('me_cms', 'Title') ?></th>
+        <th><?= I18N_FILENAME ?></th>
+        <th class="text-center"><?= I18N_TITLE ?></th>
         <th><?= __d('me_cms', 'Path') ?></th>
     </tr>
     <?php foreach ($pages as $page) : ?>
@@ -28,11 +28,10 @@ $this->assign('title', __d('me_cms', 'Static pages'));
                 </strong>
                 <?php
                 $actions = [
-                    $this->Html->link(
-                        __d('me_cms', 'Open'),
-                        ['_name' => 'page', $page->slug],
-                        ['icon' => 'external-link', 'target' => '_blank']
-                    ),
+                    $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
+                        'icon' => 'external-link',
+                        'target' => '_blank',
+                    ]),
                 ];
 
                 echo $this->Html->ul($actions, ['class' => 'actions']);

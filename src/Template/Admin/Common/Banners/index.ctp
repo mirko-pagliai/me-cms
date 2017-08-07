@@ -14,7 +14,7 @@ $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Banners'));
 
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Upload'),
+    I18N_UPLOAD,
     ['action' => 'upload'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -29,25 +29,22 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
 <?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
         <?php
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
-                'placeholder' => __d('me_cms', 'ID'),
+                'placeholder' => I18N_ID,
                 'size' => 2,
             ]);
             echo $this->Form->control('filename', [
                 'default' => $this->request->getQuery('filename'),
-                'placeholder' => __d('me_cms', 'filename'),
+                'placeholder' => lcfirst(I18N_FILENAME),
                 'size' => 16,
             ]);
             echo $this->Form->control('active', [
                 'default' => $this->request->getQuery('active'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-                'options' => [
-                    'yes' => __d('me_cms', 'Only published'),
-                    'no' => __d('me_cms', 'Only not published'),
-                ],
+                'empty' => I18N_ALL_STATUS,
+                'options' => ['yes' => I18N_ONLY_PUBLISHED, 'no' => I18N_ONLY_NOT_PUBLISHED],
             ]);
             echo $this->Form->control('position', [
                 'default' => $this->request->getQuery('position'),
@@ -66,4 +63,5 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
 <?= $this->element('admin/list-grid-buttons') ?>
 <?= $this->fetch('content') ?>
+
 <?= $this->element('MeTools.paginator') ?>

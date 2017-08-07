@@ -28,8 +28,8 @@
             <?= $this->Html->ul([
                 $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['icon' => 'home']),
                 $this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'postsCategories']),
-                $this->Html->link(__d('me_cms', 'Pages'), ['_name' => 'pagesCategories']),
-                $this->Html->link(__d('me_cms', 'Photos'), ['_name' => 'albums']),
+                $this->Html->link(I18N_PAGES, ['_name' => 'pagesCategories']),
+                $this->Html->link(I18N_PHOTOS, ['_name' => 'albums']),
             ], ['class' => 'nav navbar-nav']) ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

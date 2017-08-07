@@ -175,8 +175,8 @@ class PostsTableTest extends TestCase
         $entity = $this->Posts->newEntity($this->example);
         $this->assertFalse($this->Posts->save($entity));
         $this->assertEquals([
-            'slug' => ['_isUnique' => 'This value is already used'],
-            'title' => ['_isUnique' => 'This value is already used'],
+            'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+            'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
 
         $entity = $this->Posts->newEntity([
@@ -188,8 +188,8 @@ class PostsTableTest extends TestCase
         ]);
         $this->assertFalse($this->Posts->save($entity));
         $this->assertEquals([
-            'category_id' => ['_existsIn' => 'You have to select a valid option'],
-            'user_id' => ['_existsIn' => 'You have to select a valid option'],
+            'category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
+            'user_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
         ], $entity->getErrors());
     }
 

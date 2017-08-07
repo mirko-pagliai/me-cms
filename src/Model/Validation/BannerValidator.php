@@ -32,7 +32,7 @@ class BannerValidator extends AppValidator
         //Position
         $this->add('position_id', [
             'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('position_id', 'create');
@@ -60,7 +60,7 @@ class BannerValidator extends AppValidator
         //Thumbnail
         $this->add('thumbnail', [
             'boolean' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'boolean',
             ],
         ]);

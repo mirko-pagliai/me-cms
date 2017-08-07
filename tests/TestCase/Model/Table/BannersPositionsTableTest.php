@@ -73,7 +73,7 @@ class BannersPositionsTableTest extends TestCase
         //Tries to save again the same entity
         $entity = $this->BannersPositions->newEntity($example);
         $this->assertFalse($this->BannersPositions->save($entity));
-        $this->assertEquals(['title' => ['_isUnique' => 'This value is already used']], $entity->getErrors());
+        $this->assertEquals(['title' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
     }
 
     /**

@@ -52,7 +52,7 @@ class MenuHelperTest extends TestCase
             '<a href="/me-cms/admin/posts/add" title="Add post">Add post</a>',
             '<a href="/me-cms/admin/posts-tags" title="List tags">List tags</a>',
         ], $menu);
-        $this->assertEquals('Posts', $title);
+        $this->assertEquals(I18N_POSTS, $title);
         $this->assertEquals(['icon' => 'file-text-o'], $options);
 
         $expected = [
@@ -88,7 +88,7 @@ class MenuHelperTest extends TestCase
             '<a href="/me-cms/admin/pages" title="List pages">List pages</a>',
             '<a href="/me-cms/admin/pages/index-statics" title="List static pages">List static pages</a>',
         ], $menu);
-        $this->assertEquals('Pages', $title);
+        $this->assertEquals(I18N_PAGES, $title);
         $this->assertEquals(['icon' => 'files-o'], $options);
 
         $expected = [
@@ -128,7 +128,7 @@ class MenuHelperTest extends TestCase
         ];
 
         $this->assertEquals($expected, $menu);
-        $this->assertEquals('Photos', $title);
+        $this->assertEquals(I18N_PHOTOS, $title);
         $this->assertEquals(['icon' => 'camera-retro'], $options);
 
         //Menu for manager users

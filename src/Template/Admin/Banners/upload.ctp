@@ -17,14 +17,14 @@ $this->assign('title', __d('me_cms', 'Upload banners'));
 <div class="well">
     <?php
         echo $this->Form->createInline(null, ['type' => 'get']);
-        echo $this->Form->label('position', __d('me_cms', 'Position to upload banners'));
+        echo $this->Form->label('position', __d('me_cms', 'Position where to upload banners'));
         echo $this->Form->control('position', [
             'default' => $this->request->getQuery('position'),
-            'label' => __d('me_cms', 'Position to upload banners'),
+            'label' => __d('me_cms', 'Position where to upload banners'),
             'onchange' => 'send_form(this)',
             'options' => $positions,
         ]);
-        echo $this->Form->submit(__d('me_cms', 'Select'));
+        echo $this->Form->submit(I18N_SELECT);
         echo $this->Form->end();
     ?>
 </div>

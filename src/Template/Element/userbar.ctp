@@ -42,7 +42,7 @@ if (!$this->Auth->isLogged()) {
 
                 echo $this->Html->ul([
                     $this->Dropdown->menu($this->Auth->user('full_name'), [
-                        $this->Html->link(__d('me_cms', 'Last login'), [
+                        $this->Html->link(I18N_LAST_LOGIN, [
                             'controller' => 'Users',
                             'action' => 'lastLogin',
                             'plugin' => ME_CMS,

@@ -12,7 +12,6 @@
  */
 $this->extend('/Admin/Common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit post'));
-
 $this->Library->ckeditor();
 $this->Library->datetimepicker();
 $this->Library->slugify();
@@ -26,27 +25,27 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
     if ($this->Auth->isGroup(['admin', 'manager'])) {
         echo $this->Form->control('user_id', [
             'empty' => false,
-            'label' => __d('me_cms', 'Author'),
+            'label' => I18N_AUTHOR,
         ]);
     }
 
     echo $this->Form->control('category_id', [
         'empty' => false,
-        'label' => __d('me_cms', 'Category'),
+        'label' => I18N_CATEGORY,
     ]);
     echo $this->Form->datetimepicker('created', [
-        'label' => __d('me_cms', 'Date'),
         'help' => [
-            __d('me_cms', 'If blank, the current date and time will be used'),
-            __d('me_cms', 'You can delay the publication by entering a future date'),
+            I18N_USE_CURRENT_DATETIME,
+            I18N_DELAY_PUBLICATION,
         ],
+        'label' => I18N_DATE,
     ]);
     echo $this->Form->control('priority', [
-        'label' => __d('me_cms', 'Priority'),
+        'label' => I18N_PRIORITY,
     ]);
     echo $this->Form->control('active', [
-        'label' => sprintf('%s?', __d('me_cms', 'Published')),
-        'help' => __d('me_cms', 'Disable this option to save as a draft'),
+        'help' => I18N_HELP_DRAFT,
+        'label' => I18N_PUBLISHED,
     ]);
     ?>
 </div>
@@ -54,30 +53,29 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
     <?php
         echo $this->Form->control('title', [
             'id' => 'title',
-            'label' => __d('me_cms', 'Title'),
+            'label' => I18N_TITLE,
         ]);
         echo $this->Form->control('subtitle', [
-            'label' => __d('me_cms', 'Subtitle'),
+            'label' => I18N_SUBTITLE,
         ]);
         echo $this->Form->control('slug', [
+            'help' => I18N_HELP_SLUG,
             'id' => 'slug',
-            'label' => __d('me_cms', 'Slug'),
-            'help' => __d('me_cms', 'The slug is a string identifying a resource. If ' .
-                'you do not have special needs, let it be generated automatically'),
+            'label' => I18N_SLUG,
         ]);
     ?>
     <div class="form-group to-be-hidden">
         <?= $this->Form->control('tags_as_string', [
-            'id' => 'tags-output-text',
-            'label' => __d('me_cms', 'Tags'),
-            'rows' => 2,
             'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
                 'or a comma and a space. Only  lowercase letters, numbers, hyphen, space'),
+            'id' => 'tags-output-text',
+            'label' => I18N_TAGS,
+            'rows' => 2,
         ]) ?>
     </div>
     <div class="form-group hidden to-be-shown">
         <div id="tags-preview">
-            <?= sprintf('%s:', __d('me_cms', 'Tags')) ?>
+            <?= sprintf('%s:', I18N_TAGS) ?>
         </div>
         <?php
             echo $this->Form->control('add_tags', [
@@ -86,10 +84,10 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
                     'icon' => 'plus',
                     'id' => 'tags-input-button',
                 ]),
-                'id' => 'tags-input-text',
-                'label' => false,
                 'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
                     'or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
+                'id' => 'tags-input-text',
+                'label' => false,
             ]);
 
             //Tags error
@@ -99,7 +97,7 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
         ?>
     </div>
     <?= $this->Form->ckeditor('text', [
-        'label' => __d('me_cms', 'Text'),
+        'label' => I18N_TEXT,
         'rows' => 10,
     ]) ?>
     <?= $this->element('admin/bbcode') ?>

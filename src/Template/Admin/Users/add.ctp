@@ -23,8 +23,8 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
         ]);
         echo $this->Form->control('active', [
             'checked' => true,
-            'label' => sprintf('%s?', __d('me_cms', 'Active')),
             'help' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
+            'label' => sprintf('%s?', __d('me_cms', 'Active')),
         ]);
     ?>
 </div>
@@ -32,24 +32,24 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
     <?php
         echo $this->Form->control('username', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Username'),
+            'label' => I18N_USERNAME,
         ]);
         echo $this->Form->control('email', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Email'),
+            'label' => I18N_EMAIL,
         ]);
         echo $this->Form->control('email_repeat', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Repeat email'),
+            'label' => I18N_REPEAT_EMAIL,
         ]);
         echo $this->Form->control('password', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
-                'title' => __d('me_cms', 'Show/hide password'),
+                'title' => I18N_SHOW_HIDE_PASSWORD,
              ]),
-            'label' => __d('me_cms', 'Password'),
+            'label' => I18N_PASSWORD,
             'value' => '',
         ]);
         echo $this->Form->control('password_repeat', [
@@ -57,18 +57,18 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
-                'title' => __d('me_cms', 'Show/hide password'),
+                'title' => I18N_SHOW_HIDE_PASSWORD,
              ]),
-            'label' => __d('me_cms', 'Repeat password'),
+            'label' => I18N_REPEAT_PASSWORD,
             'value' => '',
         ]);
         echo $this->Form->control('first_name', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'First name'),
+            'label' => I18N_FIRST_NAME,
         ]);
         echo $this->Form->control('last_name', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Last name'),
+            'label' => I18N_LAST_NAME,
         ]);
     ?>
 </fieldset>

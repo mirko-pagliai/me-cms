@@ -16,9 +16,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit tag'));
 
 <?= $this->Form->create($tag); ?>
 <fieldset>
-    <?= $this->Form->control('tag', [
-        'label' => __d('me_cms', 'Tag'),
-    ]); ?>
+    <?= $this->Form->control('tag', ['label' => __d('me_cms', 'Tag')]); ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>
