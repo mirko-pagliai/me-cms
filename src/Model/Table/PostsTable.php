@@ -237,7 +237,7 @@ class PostsTable extends AppTable
                 foreach (array_reverse($tags) as $tag) {
                     $post = $this->find('active')
                         ->select(['id', 'title', 'slug', 'text', 'preview'])
-                        ->matching('Tags', function ($q) use ($tag) {
+                        ->matching('Tags', function (Query $q) use ($tag) {
                             return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
                         })
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
@@ -313,7 +313,7 @@ class PostsTable extends AppTable
 
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->matching('Tags', function ($q) use ($data) {
+            $query->matching('Tags', function (Query $q) use ($data) {
                 return $q->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
             })->distinct();
         }

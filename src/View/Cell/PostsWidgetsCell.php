@@ -16,7 +16,9 @@ use Cake\Event\EventManager;
 use Cake\I18n\FrozenDate;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\ORM\ResultSet;
 use Cake\View\Cell;
+use MeCms\Model\Entity\Post;
 
 /**
  * PostsWidgets cell
@@ -58,7 +60,7 @@ class PostsWidgetsCell extends Cell
         $categories = $this->Posts->Categories->find('active')
             ->select(['title', 'slug', 'post_count'])
             ->order([sprintf('%s.title', $this->Posts->Categories->getAlias()) => 'ASC'])
-            ->formatResults(function ($results) {
+            ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
             ->cache('widget_categories', $this->Posts->cache)
@@ -110,13 +112,14 @@ class PostsWidgetsCell extends Cell
                 'post_count' => $query->func()->count($time),
             ])
             ->distinct(['month'])
-            ->formatResults(function ($results) {
-                return $results->indexBy('month')->map(function ($row) {
-                    list($year, $month) = explode('/', $row->month);
-                    $row->month = (new FrozenDate())->day(1)->month($month)->year($year);
+            ->formatResults(function (ResultSet $results) {
+                return $results->indexBy('month')
+                    ->map(function (Post $post) {
+                        list($year, $month) = explode('/', $post->month);
+                        $post->month = (new FrozenDate())->day(1)->month($month)->year($year);
 
-                    return $row;
-                });
+                        return $post;
+                    });
             })
             ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Posts->cache)

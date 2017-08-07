@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 
 /**
  * Adds `is('add')`, `is('delete')`, `is('edit')`, `is('index')` and
@@ -19,7 +19,7 @@ use Cake\Network\Request;
  * They check if the specified action is the current action.
  */
 foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
-    Request::addDetector($action, function ($request) use ($action) {
+    ServerRequest::addDetector($action, function (ServerRequest $request) use ($action) {
         return $request->is('action', $action);
     });
 }
@@ -34,7 +34,7 @@ foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
  * $this->request->isAdmin();
  * </code>
  */
-Request::addDetector('admin', function ($request) {
+ServerRequest::addDetector('admin', function (ServerRequest $request) {
     return $request->getParam('prefix') === ADMIN_PREFIX;
 });
 
@@ -48,7 +48,7 @@ Request::addDetector('admin', function ($request) {
  * $this->request->isBanned();
  * </code>
  */
-Request::addDetector('banned', function ($request) {
+ServerRequest::addDetector('banned', function (ServerRequest $request) {
     $banned = getConfig('Banned');
 
     //The IP address is allowed if:
@@ -82,7 +82,7 @@ Request::addDetector('banned', function ($request) {
  * $this->request->isOffline();
  * </code>
  */
-Request::addDetector('offline', function ($request) {
+ServerRequest::addDetector('offline', function (ServerRequest $request) {
     if (!getConfig('default.offline')) {
         return false;
     }
