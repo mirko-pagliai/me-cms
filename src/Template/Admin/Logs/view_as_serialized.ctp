@@ -14,18 +14,14 @@ $this->extend('/Admin/Common/view');
 $this->assign('title', __d('me_cms', 'Log {0}', $filename));
 
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Download'),
+    I18N_DOWNLOAD,
     ['action' => 'download', $filename],
     ['class' => 'btn-success', 'icon' => 'download']
 ));
 $this->append('actions', $this->Form->postButton(
-    __d('me_cms', 'Delete'),
+    I18N_DELETE,
     ['action' => 'delete', $filename],
-    [
-        'class' => 'btn-danger',
-        'icon' => 'trash-o',
-        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-    ]
+    ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
 ));
 ?>
 

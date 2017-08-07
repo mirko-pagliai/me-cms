@@ -75,7 +75,7 @@ class PostsCategoriesController extends AppController
                 ->order([sprintf('%s.created', $this->PostsCategories->Posts->getAlias()) => 'DESC']);
 
             if ($query->isEmpty()) {
-                throw new RecordNotFoundException(__d('me_cms', 'Record not found'));
+                throw new RecordNotFoundException(I18N_NOT_FOUND);
             }
 
             $posts = $this->paginate($query);

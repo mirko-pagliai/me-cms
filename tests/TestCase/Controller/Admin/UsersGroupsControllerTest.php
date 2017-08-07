@@ -182,7 +182,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($url, [$id]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
+        $this->assertFlashMessage(I18N_BEFORE_DELETE);
 
         $id = $this->UsersGroups->find()
             ->where(['id >' => 3, 'user_count' => 0])

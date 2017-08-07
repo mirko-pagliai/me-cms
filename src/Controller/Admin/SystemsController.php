@@ -53,7 +53,9 @@ class SystemsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can clear all temporary files or logs
-        if ($this->request->isAction('tmpCleaner') && in_array($this->request->getParam('pass.0'), ['all', 'logs'])) {
+        if ($this->request->isAction('tmpCleaner') &&
+            in_array($this->request->getParam('pass.0'), ['all', 'logs'])
+        ) {
             return $this->Auth->isGroup('admin');
         }
 
@@ -260,9 +262,9 @@ class SystemsController extends AppController
         }
 
         if ($success) {
-            $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+            $this->Flash->success(I18N_OPERATION_OK);
         } else {
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         return $this->redirect($this->referer(['action' => 'tmpViewer']));

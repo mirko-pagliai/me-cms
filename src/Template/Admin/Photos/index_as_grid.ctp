@@ -21,14 +21,14 @@ $this->extend('/Admin/Common/Photos/index');
                     <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
                 </div>
                 <div class="photo-id">
-                    <?= __d('me_cms', 'ID') ?> <code><?= $photo->id ?></code>
+                    <?= I18N_ID ?> <code><?= $photo->id ?></code>
                 </div>
                 <div class="photo-album">
                     <?= __d('me_cms', 'Album') ?>:
                     <?= $this->Html->link(
                         $photo->album->title,
                         ['?' => ['album' => $photo->album->id]],
-                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                        ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </div>
                 <div class="photo-created">
@@ -39,30 +39,25 @@ $this->extend('/Admin/Common/Photos/index');
                 </div>
 
                 <?php
-                $actions = [];
-                $actions[] = $this->Html->link(
-                    null,
-                    ['action' => 'edit', $photo->id],
-                    ['icon' => 'pencil', 'title' => __d('me_cms', 'Edit')]
-                );
-                $actions[] = $this->Html->link(
-                    null,
-                    ['action' => 'download', $photo->id],
-                    ['icon' => 'download', 'title' => __d('me_cms', 'Download')]
-                );
+                $actions = [
+                    $this->Html->link(null, ['action' => 'edit', $photo->id], [
+                        'icon' => 'pencil',
+                        'title' => I18N_EDIT,
+                    ]),
+                    $this->Html->link(null, ['action' => 'download', $photo->id], [
+                        'icon' => 'download',
+                        'title' => I18N_DOWNLOAD,
+                    ]),
+                ];
 
                 //Only admins and managers can delete photos
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
-                    $actions[] = $this->Form->postLink(
-                        null,
-                        ['action' => 'delete', $photo->id],
-                        [
-                            'class' => 'text-danger',
-                            'icon' => 'trash-o',
-                            'title' => __d('me_cms', 'Delete'),
-                            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                        ]
-                    );
+                    $actions[] = $this->Form->postLink(null, ['action' => 'delete', $photo->id], [
+                        'class' => 'text-danger',
+                        'icon' => 'trash-o',
+                        'title' => I18N_DELETE,
+                        'confirm' => I18N_SURE_TO_DELETE,
+                    ]);
                 }
 
                 //If the photo is active
@@ -70,17 +65,13 @@ $this->extend('/Admin/Common/Photos/index');
                     $actions[] = $this->Html->link(
                         null,
                         ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
-                        [
-                            'icon' => 'external-link',
-                            'target' => '_blank',
-                            'title' => __d('me_cms', 'Open'),
-                        ]
+                        ['icon' => 'external-link', 'target' => '_blank', 'title' => I18N_OPEN]
                     );
                 } else {
                     $actions[] = $this->Html->link(null, ['_name' => 'photosPreview', $photo->id], [
                         'icon' => 'external-link',
                         'target' => '_blank',
-                        'title' => __d('me_cms', 'Preview'),
+                        'title' => I18N_PREVIEW,
                     ]);
                 }
 

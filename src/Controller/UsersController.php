@@ -149,9 +149,9 @@ class UsersController extends AppController
             ->execute();
 
         if ($update->count()) {
-            $this->Flash->success(__d('me_cms', 'The account has been activated'));
+            $this->Flash->success(I18N_OPERATION_OK);
         } else {
-            $this->Flash->error(__d('me_cms', 'The account has not been activated'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         //Deletes the token
@@ -170,7 +170,7 @@ class UsersController extends AppController
         //Checks if signup is enabled and if accounts will be enabled by the
         //  user via email
         if (!getConfig('users.signup') && getConfig('users.activation') === 1) {
-            $this->Flash->error(__d('me_cms', 'Disabled'));
+            $this->Flash->error(I18N_DISABLED);
 
             return $this->redirect(['_name' => 'homepage']);
         }
@@ -292,7 +292,7 @@ class UsersController extends AppController
     {
         //Checks if reset password is enabled
         if (!getConfig('users.reset_password')) {
-            $this->Flash->error(__d('me_cms', 'Disabled'));
+            $this->Flash->error(I18N_DISABLED);
 
             return $this->redirect(['_name' => 'homepage']);
         }
@@ -385,7 +385,7 @@ class UsersController extends AppController
     {
         //Checks if signup is enabled
         if (!getConfig('users.signup')) {
-            $this->Flash->error(__d('me_cms', 'Disabled'));
+            $this->Flash->error(I18N_DISABLED);
 
             return $this->redirect(['_name' => 'homepage']);
         }

@@ -121,7 +121,7 @@ class PhotosController extends AppController
 
         if ($this->request->getData('file')) {
             if (!$album) {
-                throw new InternalErrorException(__d('me_cms', 'Missing album ID'));
+                throw new InternalErrorException(__d('me_cms', 'Missing ID'));
             }
 
             $uploaded = $this->Uploader->set($this->request->getData('file'))
@@ -148,7 +148,7 @@ class PhotosController extends AppController
             $saved = $this->Photos->save($entity);
 
             if (!$saved) {
-                $this->setUploadError(__d('me_cms', 'The photo could not be saved'));
+                $this->setUploadError(I18N_OPERATION_NOT_OK);
             }
         }
     }
@@ -166,12 +166,12 @@ class PhotosController extends AppController
             $photo = $this->Photos->patchEntity($photo, $this->request->getData());
 
             if ($this->Photos->save($photo)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index', $photo->album_id]);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('photo'));
@@ -202,7 +202,7 @@ class PhotosController extends AppController
 
         $this->Photos->deleteOrFail($photo);
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index', $photo->album_id]);
     }

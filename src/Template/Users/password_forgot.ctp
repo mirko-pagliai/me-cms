@@ -19,13 +19,13 @@ $this->assign('title', $title = __d('me_cms', 'Request new password'));
     <?php
         echo $this->Form->control('email', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Email'),
-            'help' => __d('me_cms', 'Enter your email'),
+            'help' => I18N_ENTER_YOUR_EMAIL,
+            'label' => I18N_EMAIL,
         ]);
         echo $this->Form->control('email_repeat', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Repeat email'),
             'help' => __d('me_cms', 'Repeat your email'),
+            'label' => I18N_REPEAT_EMAIL,
         ]);
 
         if (getConfig('security.recaptcha')) {

@@ -42,7 +42,7 @@ class AppValidator extends Validator
         //User (author)
         $this->add('user_id', [
             'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'naturalNumber',
             ],
         ]);
@@ -50,7 +50,7 @@ class AppValidator extends Validator
         //Email
         $this->add('email', [
             'email' => [
-                'message' => __d('me_cms', 'You have to enter a valid value'),
+                'message' => I18N_ENTER_VALID_VALUE,
                 'rule' => 'email',
             ],
             'maxLength' => [
@@ -68,7 +68,7 @@ class AppValidator extends Validator
             'personName' => [
                 'message' => sprintf(
                     '%s: %s. %s',
-                    __d('me_cms', 'Allowed chars'),
+                    I18N_ALLOWED_CHARS,
                     __d('me_cms', 'letters, apostrophe, space'),
                     __d('me_cms', 'Has to begin with a capital letter')
                 ),
@@ -85,7 +85,7 @@ class AppValidator extends Validator
             'personName' => [
                 'message' => sprintf(
                     '%s: %s. %s',
-                    __d('me_cms', 'Allowed chars'),
+                    I18N_ALLOWED_CHARS,
                     __d('me_cms', 'letters, apostrophe, space'),
                     __d('me_cms', 'Has to begin with a capital letter')
                 ),
@@ -127,7 +127,7 @@ class AppValidator extends Validator
             'slug' => [
                 'message' => sprintf(
                     '%s: %s',
-                    __d('me_cms', 'Allowed chars'),
+                    I18N_ALLOWED_CHARS,
                     __d('me_cms', 'lowercase letters, numbers, dash')
                 ),
                 'rule' => [$this, 'slug'],
@@ -140,7 +140,7 @@ class AppValidator extends Validator
         //Priority
         $this->add('priority', [
             'range' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => ['range', 1, 5],
             ],
         ]);
@@ -156,7 +156,7 @@ class AppValidator extends Validator
         //Active
         $this->add('active', [
             'boolean' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'boolean',
             ],
         ]);
@@ -164,7 +164,7 @@ class AppValidator extends Validator
         //Created
         $this->add('created', [
             'datetime' => [
-                'message' => __d('me_cms', 'You have to enter a valid value'),
+                'message' => I18N_ENTER_VALID_VALUE,
                 'rule' => 'datetime',
             ],
         ])->allowEmpty('created');
@@ -174,10 +174,9 @@ class AppValidator extends Validator
      * Lowercase letters validation method.
      * Checks if a field contains only lowercase letters.
      * @param string $value Field value
-     * @param array $context Field context
      * @return bool
      */
-    public function lowercaseLetters($value, $context)
+    public function lowercaseLetters($value)
     {
         return (bool)preg_match('/^[a-z]+$/', $value);
     }
@@ -187,10 +186,9 @@ class AppValidator extends Validator
      * Checks if the name is a valid person name, so contains letters,
      *  apostrophe and/or space.
      * @param string $value Field value
-     * @param array $context Field context
      * @return bool
      */
-    public function personName($value, $context)
+    public function personName($value)
     {
         return (bool)preg_match('/^[A-Z][A-z\'\ ]+$/', $value);
     }
@@ -199,10 +197,9 @@ class AppValidator extends Validator
      * Slug validation method.
      * Checks if the slug is a valid slug.
      * @param string $value Field value
-     * @param array $context Field context
      * @return bool
      */
-    public function slug($value, $context)
+    public function slug($value)
     {
         //Lowercase letters, numbers, dash. At least three chars.
         //It must contain at least one letter and must begin and end with a letter or a number.

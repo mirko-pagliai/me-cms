@@ -26,7 +26,7 @@
                     <thead>
                         <tr>
                             <th><?= __d('me_cms', 'BBCode tag') ?></th>
-                            <th><?= __d('me_cms', 'Description') ?></th>
+                            <th><?= I18N_DESCRIPTION ?></th>
                         </tr>
                     </thead>
                     <tbody>

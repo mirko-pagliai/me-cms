@@ -24,7 +24,7 @@ $this->Asset->script(ME_CMS . '.admin/kcfinder', ['block' => 'script_bottom']);
             'default' => $this->request->getQuery('type'),
             'onchange' => 'send_form(this)',
         ]);
-        echo $this->Form->submit(__d('me_cms', 'Select'));
+        echo $this->Form->submit(I18N_SELECT);
         echo $this->Form->end();
     ?>
 </div>

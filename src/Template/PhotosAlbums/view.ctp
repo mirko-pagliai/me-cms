@@ -21,7 +21,7 @@ if (getConfig('default.fancybox')) {
  * Userbar
  */
 if (!$album->active) {
-    $this->userbar($this->Html->span(__d('me_cms', 'Not published'), ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'label label-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit album'),
@@ -31,17 +31,13 @@ $this->userbar($this->Html->link(
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete album'),
     ['action' => 'delete', $album->id, 'prefix' => ADMIN_PREFIX],
-    [
-        'icon' => 'trash-o',
-        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-        'target' => '_blank',
-    ]
+    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**
  * Breadcrumb
  */
-$this->Breadcrumbs->add(__d('me_cms', 'Photos'), ['_name' => 'albums']);
+$this->Breadcrumbs->add(I18N_PHOTOS, ['_name' => 'albums']);
 $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
 ?>
 
@@ -69,11 +65,11 @@ $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
                     ]);
                 }
 
-                echo $this->Html->link($text, [
-                    '_name' => 'photo',
-                    'slug' => $album->slug,
-                    'id' => $photo->id,
-                ], $options);
+                echo $this->Html->link(
+                    $text,
+                    ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id],
+                    $options
+                );
                 ?>
             </div>
         </div>

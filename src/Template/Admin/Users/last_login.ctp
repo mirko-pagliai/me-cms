@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/view');
-$this->assign('title', $title = __d('me_cms', 'Last login'));
+$this->assign('title', $title = I18N_LAST_LOGIN);
 
 if (!empty($loginLog)) {
     echo $this->element('admin/last-logins');

@@ -32,7 +32,7 @@ class PhotoValidator extends AppValidator
         //Album
         $this->add('album_id', [
             'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('album_id', 'create');

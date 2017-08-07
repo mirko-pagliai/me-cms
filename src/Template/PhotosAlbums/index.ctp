@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Common/index');
-$this->assign('title', $title = __d('me_cms', 'Photos'));
+$this->assign('title', $title = I18N_PHOTOS);
 
 /**
  * Breadcrumb

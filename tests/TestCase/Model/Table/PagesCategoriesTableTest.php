@@ -74,8 +74,8 @@ class PagesCategoriesTableTest extends TestCase
         $entity = $this->PagesCategories->newEntity($example);
         $this->assertFalse($this->PagesCategories->save($entity));
         $this->assertEquals([
-            'slug' => ['_isUnique' => 'This value is already used'],
-            'title' => ['_isUnique' => 'This value is already used'],
+            'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+            'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
 
         $entity = $this->PagesCategories->newEntity([
@@ -85,7 +85,7 @@ class PagesCategoriesTableTest extends TestCase
         ]);
         $this->assertFalse($this->PagesCategories->save($entity));
         $this->assertEquals([
-            'parent_id' => ['_existsIn' => 'You have to select a valid option'],
+            'parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
         ], $entity->getErrors());
     }
 

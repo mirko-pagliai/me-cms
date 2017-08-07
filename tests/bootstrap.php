@@ -18,6 +18,8 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Routing\DispatcherFactory;
 
+ini_set('intl.default_locale', 'en_US');
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 if (!defined('DS')) {
@@ -178,8 +180,6 @@ Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
 Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
-
-ini_set('intl.default_locale', 'en_US');
 
 //This makes it believe that KCFinder is installed
 $kcfinder = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';

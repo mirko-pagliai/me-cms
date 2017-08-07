@@ -81,7 +81,7 @@ class UserValidatorTest extends ValidationTestCase
     {
         $this->example['group_id'] = 'string';
         $this->assertEquals([
-            'group_id' => ['naturalNumber' => 'You have to select a valid option'],
+            'group_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
         ], $this->Users->newEntity($this->example)->getErrors());
     }
 
@@ -203,7 +203,7 @@ class UserValidatorTest extends ValidationTestCase
     {
         $this->example['banned'] = 'string';
         $this->assertEquals([
-            'banned' => ['boolean' => 'You have to select a valid option'],
+            'banned' => ['boolean' => I18N_SELECT_VALID_OPTION],
         ], $this->Users->newEntity($this->example)->getErrors());
 
         foreach ([true, false] as $value) {

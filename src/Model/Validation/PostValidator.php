@@ -35,7 +35,7 @@ class PostValidator extends AppValidator
         //Category
         $this->add('category_id', [
             'naturalNumber' => [
-                'message' => __d('me_cms', 'You have to select a valid option'),
+                'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('category_id', 'create');
@@ -62,7 +62,7 @@ class PostValidator extends AppValidator
             'validTagsChars' => [
                 'message' => sprintf(
                     '%s: %s',
-                    __d('me_cms', 'Allowed chars'),
+                    I18N_ALLOWED_CHARS,
                     __d('me_cms', 'lowercase letters, numbers, space')
                 ),
                 'rule' => [$this, 'validTagsChars'],

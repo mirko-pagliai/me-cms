@@ -315,7 +315,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->post(array_merge($url, [$userWithPosts]));
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('Before deleting this, you must delete or reassign all items that belong to this element');
+        $this->assertFlashMessage(I18N_BEFORE_DELETE);
 
         $userWithNoPosts = $this->Users->find()
             ->where(['group_id !=' => 1, 'post_count' => 0])

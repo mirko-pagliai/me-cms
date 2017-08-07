@@ -36,7 +36,7 @@ class TagsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['tag'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->isUnique(['tag'], I18N_VALUE_ALREADY_USED));
 
         return $rules;
     }

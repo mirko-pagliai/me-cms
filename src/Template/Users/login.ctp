@@ -21,20 +21,20 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
             echo $this->Form->control('username', [
                 'autofocus' => true,
                 'label' => false,
-                'placeholder' => __d('me_cms', 'Username'),
+                'placeholder' => I18N_USERNAME,
             ]);
             echo $this->Form->control('password', [
                 'button' => $this->Html->button(null, '#', [
                     'class' => 'display-password',
                     'icon' => 'eye',
-                    'title' => __d('me_cms', 'Show/hide password'),
+                    'title' => I18N_SHOW_HIDE_PASSWORD,
                  ]),
                 'label' => false,
-                'placeholder' => __d('me_cms', 'Password'),
+                'placeholder' => I18N_PASSWORD,
             ]);
             echo $this->Form->control('remember_me', [
-                'label' => __d('me_cms', 'Remember me'),
                 'help' => __d('me_cms', 'Don\'t use on public computers'),
+                'label' => __d('me_cms', 'Remember me'),
                 'type' => 'checkbox',
             ]);
         ?>

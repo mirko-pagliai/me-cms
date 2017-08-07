@@ -24,7 +24,7 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
             'onchange' => 'send_form(this)',
             'options' => $albums,
         ]);
-        echo $this->Form->submit(__d('me_cms', 'Select'));
+        echo $this->Form->submit(I18N_SELECT);
         echo $this->Form->end();
     ?>
 </div>

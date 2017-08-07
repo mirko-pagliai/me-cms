@@ -11,10 +11,9 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/index');
-$this->assign('title', __d('me_cms', 'Pages'));
-
+$this->assign('title', I18N_PAGES);
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -23,31 +22,27 @@ $this->append('actions', $this->Html->button(
     ['controller' => 'PagesCategories', 'action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
-
 $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
 <?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
         <?php
         echo $this->Form->control('id', [
             'default' => $this->request->getQuery('id'),
-            'placeholder' => __d('me_cms', 'ID'),
+            'placeholder' => I18N_ID,
             'size' => 2,
         ]);
         echo $this->Form->control('title', [
             'default' => $this->request->getQuery('title'),
-            'placeholder' => __d('me_cms', 'title'),
+            'placeholder' => I18N_TITLE,
             'size' => 16,
         ]);
         echo $this->Form->control('active', [
             'default' => $this->request->getQuery('active'),
-            'empty' => sprintf('-- %s --', __d('me_cms', 'all status')),
-            'options' => [
-                'yes' => __d('me_cms', 'Only published'),
-                'no' => __d('me_cms', 'Only drafts'),
-            ],
+            'empty' => I18N_ALL_STATUS,
+            'options' => ['yes' => I18N_ONLY_PUBLISHED, 'no' => I18N_ONLY_NOT_PUBLISHED],
         ]);
         echo $this->Form->control('category', [
             'default' => $this->request->getQuery('category'),
@@ -71,11 +66,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
-            <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-            <th class="text-center"><?= $this->Paginator->sort('Categories.title', __d('me_cms', 'Category')) ?></th>
-            <th class="min-width text-center"><?= $this->Paginator->sort('priority', __d('me_cms', 'Priority')) ?></th>
-            <th class="min-width text-center"><?= $this->Paginator->sort('created', __d('me_cms', 'Date')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
+            <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('Categories.title', I18N_CATEGORY) ?></th>
+            <th class="min-width text-center"><?= $this->Paginator->sort('priority', I18N_PRIORITY) ?></th>
+            <th class="min-width text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
         </tr>
     </thead>
     <tbody>
@@ -87,20 +82,16 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 <td>
                     <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
                     <?php
+                    $class = 'record-label record-label-warning';
+
                     //If the page is not active (it's a draft)
                     if (!$page->active) {
-                        echo $this->Html->span(
-                            __d('me_cms', 'Draft'),
-                            ['class' => 'record-label record-label-warning']
-                        );
+                        echo $this->Html->span(I18N_DRAFT, compact('class'));
                     }
 
                     //If the page is scheduled
                     if ($page->created->isFuture()) {
-                        echo $this->Html->span(
-                            __d('me_cms', 'Scheduled'),
-                            ['class' => 'record-label record-label-warning']
-                        );
+                        echo $this->Html->span(I18N_SCHEDULED, compact('class'));
                     }
 
                     $actions = [];
@@ -108,7 +99,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     //Only admins and managers can edit pages
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Edit'),
+                            I18N_EDIT,
                             ['action' => 'edit', $page->id],
                             ['icon' => 'pencil']
                         );
@@ -116,30 +107,24 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins can delete pages
                     if ($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
-                            ['action' => 'delete', $page->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                            ]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $page->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     //If the page is active and is not scheduled
                     if ($page->active && !$page->created->isFuture()) {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Open'),
-                            ['_name' => 'page', $page->slug],
-                            ['icon' => 'external-link', 'target' => '_blank']
-                        );
+                        $actions[] = $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
+                            'icon' => 'external-link',
+                            'target' => '_blank',
+                        ]);
                     } else {
-                        $actions[] = $this->Html->link(
-                            __d('me_cms', 'Preview'),
-                            ['_name' => 'pagesPreview', $page->slug],
-                            ['icon' => 'external-link', 'target' => '_blank']
-                        );
+                        $actions[] = $this->Html->link(I18N_PREVIEW, ['_name' => 'pagesPreview', $page->slug], [
+                            'icon' => 'external-link',
+                            'target' => '_blank',
+                        ]);
                     }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
@@ -149,7 +134,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <?= $this->Html->link(
                         $page->category->title,
                         ['?' => ['category' => $page->category->id]],
-                        ['title' => __d('me_cms', 'View items that belong to this category')]
+                        ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
                 <td class="min-width text-center">
@@ -198,4 +183,5 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         <?php endforeach; ?>
     </tbody>
 </table>
+
 <?= $this->element('MeTools.paginator') ?>

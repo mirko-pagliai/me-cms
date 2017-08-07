@@ -74,7 +74,7 @@ class TagsTableTest extends TestCase
         //Saves again the same entity
         $entity = $this->Tags->newEntity($example);
         $this->assertFalse($this->Tags->save($entity));
-        $this->assertEquals(['tag' => ['_isUnique' => 'This value is already used']], $entity->getErrors());
+        $this->assertEquals(['tag' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
     }
 
     /**

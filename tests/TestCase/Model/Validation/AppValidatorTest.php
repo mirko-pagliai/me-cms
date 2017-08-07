@@ -108,7 +108,7 @@ class AppValidatorTest extends TestCase
     {
         $this->example['Posts']['user_id'] = 'string';
         $this->assertEquals([
-            'user_id' => ['naturalNumber' => 'You have to select a valid option'],
+            'user_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
         ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
     }
 
@@ -121,7 +121,7 @@ class AppValidatorTest extends TestCase
         foreach (['string', 'invalid@test', '@test.com', 'invalid@.com'] as $value) {
             $this->example['Users']['email'] = $value;
             $this->assertEquals([
-                'email' => ['email' => 'You have to enter a valid value'],
+                'email' => ['email' => I18N_ENTER_VALID_VALUE],
             ], $this->Users->newEntity($this->example['Users'])->getErrors());
         }
 
@@ -252,7 +252,7 @@ class AppValidatorTest extends TestCase
         foreach ([0, 6, 'string'] as $value) {
             $this->example['Posts']['priority'] = $value;
             $this->assertEquals([
-                'priority' => ['range' => 'You have to select a valid option'],
+                'priority' => ['range' => I18N_SELECT_VALID_OPTION],
             ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 
@@ -285,7 +285,7 @@ class AppValidatorTest extends TestCase
     {
         $this->example['Posts']['active'] = 'string';
         $this->assertEquals([
-            'active' => ['boolean' => 'You have to select a valid option'],
+            'active' => ['boolean' => I18N_SELECT_VALID_OPTION],
         ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
 
         foreach ([true, false] as $value) {
@@ -303,7 +303,7 @@ class AppValidatorTest extends TestCase
         foreach ([time(), 'string', true, false] as $value) {
             $this->example['Posts']['created'] = $value;
             $this->assertEquals([
-                'created' => ['datetime' => 'You have to enter a valid value'],
+                'created' => ['datetime' => I18N_ENTER_VALID_VALUE],
             ], $this->Posts->newEntity($this->example['Posts'])->getErrors());
         }
 

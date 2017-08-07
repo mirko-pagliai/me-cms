@@ -18,8 +18,8 @@ $this->assign('title', $title = __d('me_cms', 'Add backup'));
 <fieldset>
     <?= $this->Form->control('filename', [
         'default' => 'backup_{$DATABASE}_{$DATETIME}.sql.gz',
-        'label' => __d('me_cms', 'Filename'),
         'help' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
+        'label' => I18N_FILENAME,
     ]) ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
@@ -29,7 +29,7 @@ $this->assign('title', $title = __d('me_cms', 'Add backup'));
     <thead>
         <tr>
             <th><?= __d('me_cms', 'Pattern') ?></th>
-            <th><?= __d('me_cms', 'Description') ?></th>
+            <th><?= I18N_DESCRIPTION ?></th>
         </tr>
     </thead>
     <tbody>

@@ -15,7 +15,7 @@ if (empty($categories) || $categories->count() < 2) {
 }
 
 $this->extend('/Common/widget');
-$this->assign('title', __d('me_cms', 'Posts categories'));
+$this->assign('title', I18N_POSTS_CATEGORIES);
 
 $categories = $categories->map(function ($category) {
     return $this->Html->link($category->title, ['_name' => 'postsCategory', $category->slug]);

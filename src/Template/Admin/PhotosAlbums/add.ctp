@@ -20,16 +20,15 @@ $this->Library->slugify();
     <?php
         echo $this->Form->control('title', [
             'id' => 'title',
-            'label' => __d('me_cms', 'Title'),
+            'label' => I18N_TITLE,
         ]);
         echo $this->Form->control('slug', [
+            'help' => I18N_HELP_SLUG,
             'id' => 'slug',
-            'label' => __d('me_cms', 'Slug'),
-            'help' => __d('me_cms', 'The slug is a string identifying a resource. If ' .
-                'you do not have special needs, let it be generated automatically'),
+            'label' => I18N_SLUG,
         ]);
         echo $this->Form->control('description', [
-            'label' => __d('me_cms', 'Description'),
+            'label' => I18N_DESCRIPTION,
         ]);
     ?>
 </fieldset>

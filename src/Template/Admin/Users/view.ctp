@@ -12,9 +12,8 @@
  */
 $this->extend('/Admin/Common/view');
 $this->assign('title', $user->full_name);
-
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Edit'),
+    I18N_EDIT,
     ['action' => 'edit', $user->id],
     ['class' => 'btn-success', 'icon' => 'pencil']
 ));
@@ -35,32 +34,28 @@ if ($this->Auth->isGroup('admin')) {
     }
 
     $this->append('actions', $this->Form->postButton(
-        __d('me_cms', 'Delete'),
+        I18N_DELETE,
         ['action' => 'delete', $user->id],
-        [
-            'class' => 'btn-danger',
-            'icon' => 'trash-o',
-            'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-        ]
+        ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
     ));
 }
 ?>
 
 <dl class="dl-horizontal">
     <?php
-    echo $this->Html->dt(__d('me_cms', 'Username'));
+    echo $this->Html->dt(I18N_USERNAME);
     echo $this->Html->dd($user->username);
 
-    echo $this->Html->dt(__d('me_cms', 'Email'));
+    echo $this->Html->dt(I18N_EMAIL);
     echo $this->Html->dd($user->email);
 
-    echo $this->Html->dt(__d('me_cms', 'Name'));
+    echo $this->Html->dt(I18N_NAME);
     echo $this->Html->dd($user->full_name);
 
-    echo $this->Html->dt(__d('me_cms', 'Group'));
+    echo $this->Html->dt(I18N_GROUP);
     echo $this->Html->dd($user->group->label);
 
-    echo $this->Html->dt(__d('me_cms', 'Status'));
+    echo $this->Html->dt(I18N_STATUS);
 
     //If the user is banned
     if ($user->banned) {
@@ -74,12 +69,12 @@ if ($this->Auth->isGroup('admin')) {
     }
 
     if ($user->post_count) {
-        echo $this->Html->dt(__d('me_cms', 'Posts'));
-        echo $this->Html->dd($this->Html->link($user->post_count, [
-            'controller' => 'Posts',
-            'action' => 'index',
-            '?' => ['user' => $user->id],
-        ], ['title' => __d('me_cms', 'View items that belong to this user')]));
+        echo $this->Html->dt(I18N_POSTS);
+        echo $this->Html->dd($this->Html->link(
+            $user->post_count,
+            ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]],
+            ['title' => I18N_BELONG_USER]
+        ));
     }
 
     echo $this->Html->dt(__d('me_cms', 'Created'));
@@ -88,6 +83,6 @@ if ($this->Auth->isGroup('admin')) {
 </dl>
 
 <?php if (!empty($loginLog)) : ?>
-    <h4><?= __d('me_cms', 'Last login') ?></h4>
+    <h4><?= I18N_LAST_LOGIN ?></h4>
     <?= $this->element('admin/last-logins') ?>
 <?php endif; ?>

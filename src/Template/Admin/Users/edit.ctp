@@ -16,30 +16,28 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
 
 <?= $this->Form->create($user); ?>
 <div class='float-form'>
-    <?= $this->Form->control('group_id', [
-        'label' => __d('me_cms', 'User group')
-    ]) ?>
+    <?= $this->Form->control('group_id', ['label' => __d('me_cms', 'User group')]) ?>
 </div>
 <fieldset>
     <?php
         echo $this->Form->control('username', [
             'disabled' => true,
-            'label' => __d('me_cms', 'Username'),
+            'label' => I18N_USERNAME,
         ]);
         echo $this->Form->control('email', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Email'),
+            'label' => I18N_EMAIL,
         ]);
         echo $this->Form->control('password', [
             'autocomplete' => 'off',
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
-                'title' => __d('me_cms', 'Show/hide password'),
+                'title' => I18N_SHOW_HIDE_PASSWORD,
              ]),
             'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
-            'label' => __d('me_cms', 'Password'),
+            'label' => I18N_PASSWORD,
             'required' => false,
             'value' => '',
         ]);
@@ -48,21 +46,21 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
             'button' => $this->Html->button(null, '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
-                'title' => __d('me_cms', 'Show/hide password'),
+                'title' => I18N_SHOW_HIDE_PASSWORD,
              ]),
             'help' => __d('me_cms', 'If you want to change the password just ' .
                 'type a new one. Otherwise, leave the field empty'),
-            'label' => __d('me_cms', 'Repeat password'),
+            'label' => I18N_REPEAT_PASSWORD,
             'required' => false,
             'value' => '',
         ]);
         echo $this->Form->control('first_name', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'First name'),
+            'label' => I18N_FIRST_NAME,
         ]);
         echo $this->Form->control('last_name', [
             'autocomplete' => 'off',
-            'label' => __d('me_cms', 'Last name'),
+            'label' => I18N_LAST_NAME,
         ]);
     ?>
 </fieldset>

@@ -15,7 +15,7 @@ if (empty($pages) || $pages->isEmpty()) {
 }
 
 $this->extend('/Common/widget');
-$this->assign('title', __d('me_cms', 'Pages'));
+$this->assign('title', I18N_PAGES);
 
 $pages = $pages->map(function ($page) {
     return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);

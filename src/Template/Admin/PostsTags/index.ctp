@@ -11,9 +11,9 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/index');
-$this->assign('title', __d('me_cms', 'Tags'));
+$this->assign('title', I18N_TAGS);
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -34,16 +34,16 @@ $this->append('actions', $this->Html->button(
 
 <?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
-        <?= $this->Html->legend(__d('me_cms', 'Filter'), ['icon' => 'eye']) ?>
+        <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
         <?php
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
-                'placeholder' => __d('me_cms', 'ID'),
+                'placeholder' => I18N_ID,
                 'size' => 2,
             ]);
             echo $this->Form->control('name', [
                 'default' => $this->request->getQuery('name'),
-                'placeholder' => __d('me_cms', 'name'),
+                'placeholder' => I18N_NAME,
                 'size' => 16,
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
@@ -56,7 +56,7 @@ $this->append('actions', $this->Html->button(
         <div class="col-sm-3">
             <div>
                 <div class="small">
-                    <?= __d('me_cms', 'ID') ?> <code><?= $tag->id ?></code>
+                    <?= I18N_ID ?> <code><?= $tag->id ?></code>
                 </div>
                 <div class="no-wrap">
                     <?= $this->Html->link(
@@ -68,23 +68,23 @@ $this->append('actions', $this->Html->button(
                     <?= sprintf('(%s)', $this->Html->link(
                         __dn('me_cms', '{0} post', '{0} posts', $tag->post_count, $tag->post_count),
                         ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]],
-                        ['title' => __d('me_cms', 'View items that belong to this element')]
+                        ['title' => I18N_BELONG_ELEMENT]
                     )) ?>
-                </div>
+                    </div>
                 <?php
                 $actions = [];
 
                 //Only admins and managers can edit tags
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
                     $actions[] = $this->Html->link(
-                        __d('me_cms', 'Edit'),
+                        I18N_EDIT,
                         ['controller' => 'PostsTags', 'action' => 'edit', $tag->id],
                         ['icon' => 'pencil']
                     );
                 }
 
                 $actions[] = $this->Html->link(
-                    __d('me_cms', 'Open'),
+                    I18N_OPEN,
                     ['_name' => 'postsTag', $tag->slug],
                     ['icon' => 'external-link', 'target' => '_blank']
                 );

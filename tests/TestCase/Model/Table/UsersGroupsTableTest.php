@@ -74,8 +74,8 @@ class UsersGroupsTableTest extends TestCase
         $entity = $this->UsersGroups->newEntity($example);
         $this->assertFalse($this->UsersGroups->save($entity));
         $this->assertEquals([
-            'name' => ['_isUnique' => 'This value is already used'],
-            'label' => ['_isUnique' => 'This value is already used'],
+            'name' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+            'label' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
     }
 

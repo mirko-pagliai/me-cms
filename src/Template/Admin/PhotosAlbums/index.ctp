@@ -12,9 +12,8 @@
  */
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Albums'));
-
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add'),
+    I18N_ADD,
     ['action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
@@ -28,10 +27,10 @@ $this->append('actions', $this->Html->button(
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="text-center"><?= $this->Paginator->sort('id', __d('me_cms', 'ID')) ?></th>
-            <th><?= $this->Paginator->sort('title', __d('me_cms', 'Title')) ?></th>
-            <th class="text-center"><?= __d('me_cms', 'Description') ?></th>
-            <th class="min-width text-center"><?= $this->Paginator->sort('photo_count', __d('me_cms', 'Photos')) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
+            <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
+            <th class="text-center"><?= I18N_DESCRIPTION ?></th>
+            <th class="min-width text-center"><?= $this->Paginator->sort('photo_count', I18N_PHOTOS) ?></th>
         </tr>
     </thead>
     <tbody>
@@ -46,35 +45,27 @@ $this->append('actions', $this->Html->button(
                     </strong>
                     <?php
                     $actions = [
-                        $this->Html->link(
-                            __d('me_cms', 'Edit'),
-                            ['action' => 'edit', $album->id],
-                            ['icon' => 'pencil']
-                        ),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $album->id], ['icon' => 'pencil']),
                     ];
 
                     //Only admins and managers can delete albums
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
                         $actions[] = $this->Form->postLink(
-                            __d('me_cms', 'Delete'),
+                            I18N_DELETE,
                             ['action' => 'delete', $album->id],
-                            [
-                                'class' => 'text-danger',
-                                'icon' => 'trash-o',
-                                'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-                            ]
+                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
                         );
                     }
 
-                    $actions[] = $this->Html->link(__d('me_cms', 'Upload'), [
-                        'controller' => 'Photos',
-                        'action' => 'upload',
-                        '?' => ['album' => $album->id],
-                    ], ['icon' => 'upload']);
+                    $actions[] = $this->Html->link(
+                        I18N_UPLOAD,
+                        ['controller' => 'Photos', 'action' => 'upload', '?' => ['album' => $album->id]],
+                        ['icon' => 'upload']
+                    );
 
                     if ($album->photo_count) {
                         $actions[] = $this->Html->link(
-                            __d('me_cms', 'Open'),
+                            I18N_OPEN,
                             ['_name' => 'album', $album->slug],
                             ['icon' => 'external-link', 'target' => '_blank']
                         );
@@ -89,11 +80,11 @@ $this->append('actions', $this->Html->button(
                 <td class="min-width text-center">
                     <?php
                     if ($album->photo_count) {
-                        echo $this->Html->link($album->photo_count, [
-                            'controller' => 'Photos',
-                            'action' => 'index',
-                            '?' => ['album' => $album->id],
-                        ], ['title' => __d('me_cms', 'View items that belong to this category')]);
+                        echo $this->Html->link(
+                            $album->photo_count,
+                            ['controller' => 'Photos', 'action' => 'index', '?' => ['album' => $album->id]],
+                            ['title' => I18N_BELONG_ELEMENT]
+                        );
                     } else {
                         echo $album->photo_count;
                     }

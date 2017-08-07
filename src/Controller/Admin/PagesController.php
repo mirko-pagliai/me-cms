@@ -136,12 +136,12 @@ class PagesController extends AppController
             $page = $this->Pages->patchEntity($page, $this->request->getData());
 
             if ($this->Pages->save($page)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('page'));
@@ -168,12 +168,12 @@ class PagesController extends AppController
             $page = $this->Pages->patchEntity($page, $this->request->getData());
 
             if ($this->Pages->save($page)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('page'));
@@ -189,7 +189,7 @@ class PagesController extends AppController
 
         $this->Pages->deleteOrFail($this->Pages->get($id));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

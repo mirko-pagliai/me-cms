@@ -141,12 +141,12 @@ class PostsController extends AppController
             $post = $this->Posts->patchEntity($post, $this->request->getData());
 
             if ($this->Posts->save($post)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('post'));
@@ -182,12 +182,12 @@ class PostsController extends AppController
             $post = $this->Posts->patchEntity($post, $this->request->getData());
 
             if ($this->Posts->save($post)) {
-                $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+                $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__d('me_cms', 'The operation has not been performed correctly'));
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('post'));
@@ -203,7 +203,7 @@ class PostsController extends AppController
 
         $this->Posts->deleteOrFail($this->Posts->get($id));
 
-        $this->Flash->success(__d('me_cms', 'The operation has been performed correctly'));
+        $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }

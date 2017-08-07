@@ -22,7 +22,7 @@ $this->append('actions', $this->Form->postButton(
 
 <table class="table table-striped">
     <tr>
-        <th><?= __d('me_cms', 'Filename') ?></th>
+        <th><?= I18N_FILENAME ?></th>
         <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
     </tr>
     <?php foreach ($logs as $log) : ?>
@@ -30,13 +30,13 @@ $this->append('actions', $this->Form->postButton(
             <td>
                 <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?></strong>
                 <?php
-                $actions = [];
-
-                $actions[] = $this->Html->link(
-                    __d('me_cms', 'Basic view'),
-                    ['action' => 'view', $log->filename],
-                    ['icon' => 'eye']
-                );
+                $actions = [
+                    $this->Html->link(
+                        __d('me_cms', 'Basic view'),
+                        ['action' => 'view', $log->filename],
+                        ['icon' => 'eye']
+                    ),
+                ];
 
                 if ($log->hasSerialized) {
                     $actions[] = $this->Html->link(
@@ -47,18 +47,14 @@ $this->append('actions', $this->Form->postButton(
                 }
 
                 $actions[] = $this->Html->link(
-                    __d('me_cms', 'Download'),
+                    I18N_DOWNLOAD,
                     ['action' => 'download', $log->filename],
                     ['icon' => 'download']
                 );
                 $actions[] = $this->Form->postLink(
-                    __d('me_cms', 'Delete'),
+                    I18N_DELETE,
                     ['action' => 'delete', $log->filename],
-                    [
-                        'class' => 'text-danger',
-                        'icon' => 'trash-o',
-                        'confirm' => __d('me_cms', 'Are you sure you want to delete this?')
-                    ]
+                    ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
                 );
 
                 echo $this->Html->ul($actions, ['class' => 'actions']);

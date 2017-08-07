@@ -16,14 +16,8 @@ $this->assign('title', $title = __d('me_cms', 'Edit banners position'));
 
 <?= $this->Form->create($position); ?>
 <fieldset>
-    <?php
-        echo $this->Form->control('title', [
-            'label' => __d('me_cms', 'Title'),
-        ]);
-        echo $this->Form->control('description', [
-            'label' => __d('me_cms', 'Description'),
-        ]);
-    ?>
+    <?= $this->Form->control('title', ['label' => I18N_TITLE]) ?>
+    <?= $this->Form->control('description', ['label' => I18N_DESCRIPTION]) ?>
 </fieldset>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

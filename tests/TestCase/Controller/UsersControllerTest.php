@@ -315,7 +315,7 @@ class UsersControllerTest extends IntegrationTestCase
         //GET request. This request is invalid, because the user is already active
         $this->get(array_merge($url, ['id' => $user->id], compact('token')));
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertFlashMessage('The account has not been activated');
+        $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
 
         //The token no longer exists
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
@@ -328,7 +328,7 @@ class UsersControllerTest extends IntegrationTestCase
         //GET request. This request is valid, because the user is pending
         $this->get(array_merge($url, ['id' => $user->id], compact('token')));
         $this->assertRedirect(['_name' => 'login']);
-        $this->assertFlashMessage('The account has been activated');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //Now the user is active and the token no longer exists
         $this->assertTrue($this->Users->findById($user->id)->extract('active')->first());

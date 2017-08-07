@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.20 branch
+### 2.20.1
+* many i18n constants have been added. These make the code cleaner and more
+    comprehensible;
+* fixed bug on `LoginRecorderComponent`.
+
 ### 2.20.0
 * added initial schema of the plugin database. Removed `BaseUpdateConsole` and
     `UpdateShell` classes;

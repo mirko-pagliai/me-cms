@@ -51,10 +51,7 @@ class BannerValidatorTest extends ValidationTestCase
 
         $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
 
-        $this->example = [
-            'position_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
+        $this->example = ['position_id' => 1, 'filename' => 'pic.jpg'];
     }
 
     /**
@@ -75,7 +72,7 @@ class BannerValidatorTest extends ValidationTestCase
     {
         $this->example['position_id'] = 'string';
         $this->assertEquals([
-            'position_id' => ['naturalNumber' => 'You have to select a valid option'],
+            'position_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
         ], $this->Banners->newEntity($this->example)->getErrors());
     }
 
@@ -124,7 +121,7 @@ class BannerValidatorTest extends ValidationTestCase
     {
         $this->example['thumbnail'] = 'string';
         $this->assertEquals([
-            'thumbnail' => ['boolean' => 'You have to select a valid option'],
+            'thumbnail' => ['boolean' => I18N_SELECT_VALID_OPTION],
         ], $this->Banners->newEntity($this->example)->getErrors());
 
         foreach ([true, false] as $value) {

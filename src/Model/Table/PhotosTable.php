@@ -86,8 +86,8 @@ class PhotosTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['album_id'], 'Albums', __d('me_cms', 'You have to select a valid option')));
-        $rules->add($rules->isUnique(['filename'], __d('me_cms', 'This value is already used')));
+        $rules->add($rules->existsIn(['album_id'], 'Albums', I18N_SELECT_VALID_OPTION));
+        $rules->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
 
         return $rules;
     }

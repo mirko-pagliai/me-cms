@@ -39,7 +39,7 @@ class BannersPositionValidator extends AppValidator
             'slug' => [
                 'message' => sprintf(
                     '%s: %s',
-                    __d('me_cms', 'Allowed chars'),
+                    I18N_ALLOWED_CHARS,
                     __d('me_cms', 'lowercase letters, numbers, dash')
                 ),
                 'rule' => [$this, 'slug'],

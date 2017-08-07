@@ -24,12 +24,7 @@ $this->userbar($this->Html->link(
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete category'),
     ['action' => 'delete', $category->id, 'prefix' => ADMIN_PREFIX],
-    [
-        'class' => 'text-danger',
-        'icon' => 'trash-o',
-        'confirm' => __d('me_cms', 'Are you sure you want to delete this?'),
-        'target' => '_blank',
-    ]
+    ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**

@@ -44,22 +44,24 @@ class AppController extends BaseController
             return $this->redirect(['_name' => 'ipNotAllowed']);
         }
 
-        //Authorizes the current action, if this is not an admin request
-        if (!$this->request->isAdmin()) {
-            $this->Auth->allow();
-        }
-
-        //Adds the current sort field in the whitelist of pagination
-        if ($this->request->isAdmin() && $this->request->getQuery('sort')) {
-            $this->paginate['sortWhitelist'] = [$this->request->getQuery('sort')];
-        }
+        $this->viewBuilder()->setClassName(ME_CMS . '.View/App');
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = getConfigOrFail('default.records');
 
         if ($this->request->isAdmin()) {
+            $this->viewBuilder()->setClassName(ME_CMS . '.View/Admin');
+
+            //Adds the current sort field in the whitelist of pagination
+            if ($this->request->getQuery('sort')) {
+                $this->paginate['sortWhitelist'] = [$this->request->getQuery('sort')];
+            }
+
             $this->paginate['limit'] = getConfigOrFail('admin.records');
+        } else {
+            //Authorizes the current action
+            $this->Auth->allow();
         }
 
         $this->paginate['maxLimit'] = $this->paginate['limit'];
@@ -67,13 +69,6 @@ class AppController extends BaseController
         //Layout for ajax and json requests
         if ($this->request->is(['ajax', 'json'])) {
             $this->viewBuilder()->setLayout(ME_CMS . '.ajax');
-        }
-
-        $this->viewBuilder()->setClassName(ME_CMS . '.View/App');
-
-        //Uses a custom View class (`MeCms.AppView` or `MeCms.AdminView`)
-        if ($this->request->isAdmin()) {
-            $this->viewBuilder()->setClassName(ME_CMS . '.View/Admin');
         }
 
         parent::beforeFilter($event);
