@@ -52,7 +52,7 @@ class AuthComponent extends CakeAuthComponent
             $defaultConfig['authError'] = false;
         }
 
-        $config = am($defaultConfig, $config);
+        $config = array_merge($defaultConfig, $config);
 
         $this->setConfig($config);
 

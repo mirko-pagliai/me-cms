@@ -142,7 +142,7 @@ class InstallShellTest extends TestCase
         unset($this->InstallShell->params['force']);
         $this->InstallShell->all();
 
-        $this->assertEquals(am($expectedMethodsCalledInOrder, [
+        $this->assertEquals(array_merge($expectedMethodsCalledInOrder, [
             'called `createGroups`',
             'called `createAdmin`',
         ]), $this->out->messages());

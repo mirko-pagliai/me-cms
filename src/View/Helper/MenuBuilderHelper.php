@@ -103,7 +103,7 @@ class MenuBuilderHelper extends Helper
             $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
 
             return $this->Html->div('panel', implode(PHP_EOL, [
-                $this->Html->link($menu['title'], '#' . $collapseName, am($menu['titleOptions'], [
+                $this->Html->link($menu['title'], '#' . $collapseName, array_merge($menu['titleOptions'], [
                     'aria-controls' => $collapseName,
                     'aria-expanded' => 'false',
                     'class' => 'collapsed',

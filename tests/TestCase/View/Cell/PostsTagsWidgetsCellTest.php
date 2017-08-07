@@ -147,7 +147,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
-        $result = $this->Widget->widget($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, array_merge($this->options, [
             'prefix' => '-',
             'style' => false,
         ]))->render();
@@ -174,7 +174,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
-        $result = $this->Widget->widget($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, array_merge($this->options, [
             'render' => 'form',
             'style' => false,
         ]))->render();
@@ -205,7 +205,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries to render as list
-        $result = $this->Widget->widget($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, array_merge($this->options, [
             'render' => 'list',
             'style' => false,
         ]))->render();
@@ -242,7 +242,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         $this->assertHtml($expected, $result);
 
         //Tries with shuffle
-        $result = $this->Widget->widget($widget, am($this->options, [
+        $result = $this->Widget->widget($widget, array_merge($this->options, [
             'shuffle' => true,
             'style' => false,
         ]))->render();

@@ -61,7 +61,7 @@ class SitemapBuilder
             $options['priority'] = '0.5';
         }
 
-        return am(['loc' => Router::url($url, true)], $options);
+        return array_merge(['loc' => Router::url($url, true)], $options);
     }
 
     /**

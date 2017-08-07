@@ -174,7 +174,7 @@ class SerializedLogTest extends TestCase
         //Deletes all logs, drops and reconfigure, adding `mask`
         $this->deleteAllLogs();
         Log::drop('error');
-        Log::setConfig('error', am($config, ['mask' => 0777]));
+        Log::setConfig('error', array_merge($config, ['mask' => 0777]));
 
         //Writes some logs
         $this->writeSomeLogs();

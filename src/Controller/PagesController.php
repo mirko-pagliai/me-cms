@@ -57,7 +57,7 @@ class PagesController extends AppController
         $static = StaticPage::get($slug);
 
         if ($static) {
-            $page = (object)am([
+            $page = (object)array_merge([
                 'category' => (object)['slug' => null, 'title' => null],
                 'title' => StaticPage::title($slug),
                 'subtitle' => null,

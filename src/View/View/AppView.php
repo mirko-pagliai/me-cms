@@ -131,6 +131,6 @@ class AppView extends View
             return $this->userbar;
         }
 
-        $this->userbar = am($this->userbar, (array)$content);
+        $this->userbar = array_merge($this->userbar, (array)$content);
     }
 }

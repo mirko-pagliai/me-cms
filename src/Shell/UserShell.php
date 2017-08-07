@@ -69,7 +69,7 @@ class UserShell extends Shell
             $header = ['ID', 'Name'];
 
             //Prints as table
-            $this->helper('table')->output(am([$header], $groups));
+            $this->helper('table')->output(array_merge([$header], $groups));
 
             $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
         } else {
@@ -147,7 +147,7 @@ class UserShell extends Shell
         $header = [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS];
 
         //Prints as table
-        $this->helper('table')->output(am([$header], $groups));
+        $this->helper('table')->output(array_merge([$header], $groups));
     }
 
     /**
