@@ -14,6 +14,7 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -66,7 +67,7 @@ class PostsCategoriesController extends AppController
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->contain([
                     'Categories' => ['fields' => ['id', 'title', 'slug']],
-                    'Tags' => function ($q) {
+                    'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
                     'Users' => ['fields' => ['first_name', 'last_name']],

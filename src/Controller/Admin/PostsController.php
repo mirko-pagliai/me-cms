@@ -13,6 +13,8 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\Query;
+use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 
 /**
@@ -110,7 +112,7 @@ class PostsController extends AppController
         $query = $this->Posts->find()
             ->contain([
                 'Categories' => ['fields' => ['id', 'title']],
-                'Tags' => function ($q) {
+                'Tags' => function (Query $q) {
                     return $q->order(['tag' => 'ASC']);
                 },
                 'Users' => ['fields' => ['id', 'first_name', 'last_name']],
@@ -161,10 +163,10 @@ class PostsController extends AppController
     public function edit($id = null)
     {
         $post = $this->Posts->findById($id)
-            ->contain(['Tags' => function ($q) {
+            ->contain(['Tags' => function (Query $q) {
                 return $q->order(['tag' => 'ASC']);
             }])
-            ->formatResults(function ($results) {
+            ->formatResults(function (ResultSet $results) {
                 return $results->map(function ($row) {
                     $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
 

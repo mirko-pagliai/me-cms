@@ -13,6 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\ORM\Query;
 use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 
@@ -98,7 +99,7 @@ class PostsTagsController extends AppController
             $query = $this->PostsTags->Posts->find('active')
                 ->contain([
                     'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function ($q) {
+                    'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
                     'Users' => ['fields' => ['first_name', 'last_name']],

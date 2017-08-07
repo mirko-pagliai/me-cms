@@ -49,7 +49,7 @@ class TagsTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->innerJoinWith('Posts', function ($q) {
+        $query->innerJoinWith('Posts', function (Query $q) {
             return $q->find('active');
         })->distinct();
 

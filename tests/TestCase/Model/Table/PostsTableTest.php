@@ -16,6 +16,7 @@ use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use MeTools\TestSuite\TestCase;
 
@@ -300,7 +301,7 @@ class PostsTableTest extends TestCase
         //Gets a post from which to search the related posts.
         //Note that the tags of this post are sorted in ascending order
         $post = $this->Posts->findById(1)
-            ->contain(['Tags' => function ($q) {
+            ->contain(['Tags' => function (Query $q) {
                 return $q->order(['post_count' => 'ASC']);
             }])
             ->first();

@@ -12,6 +12,7 @@
  */
 namespace MeCms\Shell;
 
+use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Shell;
 
 /**
@@ -133,7 +134,7 @@ class UserShell extends Shell
         }
 
         //Formats groups
-        $groups = collection($groups)->extract(function ($group) {
+        $groups = collection($groups)->extract(function (UsersGroup $group) {
             return [
                 $group->id,
                 $group->name,

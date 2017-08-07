@@ -14,6 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\PostsCategory;
 
 /**
  * PostsCategories controller
@@ -67,11 +68,11 @@ class PostsCategoriesController extends AppController
         $categories = $this->PostsCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->PostsCategories->alias()) => 'ASC'])
-            ->formatResults(function ($categories) {
+            ->formatResults(function ($results) {
                 //Gets categories as tree list
                 $treeList = $this->PostsCategories->getTreeList()->toArray();
 
-                return $categories->map(function ($category) use ($treeList) {
+                return $results->map(function (PostsCategory $category) use ($treeList) {
                     $category->title = $treeList[$category->id];
 
                     return $category;
