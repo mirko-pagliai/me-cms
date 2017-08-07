@@ -30,7 +30,7 @@ class BannersController extends AppController
     {
         $banner = $this->Banners->find('active')
             ->select(['target'])
-            ->where(am(['target !=' => ''], compact('id')))
+            ->where(array_merge(['target !=' => ''], compact('id')))
             ->cache(sprintf('view_%s', md5($id)), $this->Banners->cache)
             ->firstOrFail();
 

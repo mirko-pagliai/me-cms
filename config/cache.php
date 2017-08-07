@@ -26,14 +26,14 @@ $options = [
 
 return ['Cache' => [
     //Default and admin configurations
-    'default' => am($options, ['path' => ME_CMS_CACHE . 'default']),
-    'admin' => am($options, ['path' => ME_CMS_CACHE . 'admin']),
+    'default' => array_merge($options, ['path' => ME_CMS_CACHE . 'default']),
+    'admin' => array_merge($options, ['path' => ME_CMS_CACHE . 'admin']),
 
     //Groups
-    'banners' => am($options, ['path' => ME_CMS_CACHE . 'banners']),
-    'pages' => am($options, ['path' => ME_CMS_CACHE . 'pages']),
-    'photos' => am($options, ['path' => ME_CMS_CACHE . 'photos']),
-    'posts' => am($options, ['path' => ME_CMS_CACHE . 'posts']),
-    'static_pages' => am($options, ['path' => ME_CMS_CACHE . 'static_pages']),
-    'users' => am($options, ['path' => ME_CMS_CACHE . 'users']),
+    'banners' => array_merge($options, ['path' => ME_CMS_CACHE . 'banners']),
+    'pages' => array_merge($options, ['path' => ME_CMS_CACHE . 'pages']),
+    'photos' => array_merge($options, ['path' => ME_CMS_CACHE . 'photos']),
+    'posts' => array_merge($options, ['path' => ME_CMS_CACHE . 'posts']),
+    'static_pages' => array_merge($options, ['path' => ME_CMS_CACHE . 'static_pages']),
+    'users' => array_merge($options, ['path' => ME_CMS_CACHE . 'users']),
 ]];
