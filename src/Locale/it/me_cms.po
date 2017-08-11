@@ -246,7 +246,7 @@ msgstr "Eseguire l'installer degli altri plugin?"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:127
 msgid "Create the user groups?"
-msgstr "Create i gruppi utente?"
+msgstr "Creare i gruppi utente?"
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/InstallShell.php:132
 msgid "Create an admin user?"
