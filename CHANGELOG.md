@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.21 branch
+### 2.21.0
+* fixed `MenuBuilderHelper` for Bootstrap 4;
+* `MenuHelper` class returns menus as arrays, without transforming them into
+    html.
+
 ## 2.20 branch
 ### 2.20.1
 * many i18n constants have been added. These make the code cleaner and more

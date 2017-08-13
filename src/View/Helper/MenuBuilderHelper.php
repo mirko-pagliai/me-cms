@@ -14,6 +14,7 @@ namespace MeCms\View\Helper;
 
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
+use MeTools\Utility\OptionsParserTrait;
 
 /**
  * MenuBuilder Helper
@@ -22,6 +23,8 @@ use Cake\View\Helper;
  */
 class MenuBuilderHelper extends Helper
 {
+    use OptionsParserTrait;
+
     /**
      * Helpers
      * @var array
@@ -30,6 +33,41 @@ class MenuBuilderHelper extends Helper
         'Html' => ['className' => METOOLS . '.Html'],
         METOOLS . '.Dropdown',
     ];
+
+    /**
+     * Internal method to build links, converting them from array to html
+     * @param array $links Array of links parameters
+     * @param array $linksOptions Array of options and HTML attributes
+     * @return array
+     */
+    protected function buildLinks($links, array $linksOptions = [])
+    {
+        return collection($links)
+            ->map(function ($link) use ($linksOptions) {
+                return $this->Html->link($link[0], $link[1], $linksOptions);
+            })
+            ->toArray();
+    }
+
+    /**
+     * Internal method to get all menu methods names from a plugin
+     * @param string $plugin Plugin name
+     * @return array
+     */
+    protected function getMenuMethods($plugin)
+    {
+        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
+        $methods = getChildMethods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+
+        if (empty($methods)) {
+            return [];
+        }
+
+        //Filters invalid name methods
+        $methods = preg_grep('/^(?!_).+$/', $methods);
+
+        return array_values($methods);
+    }
 
     /**
      * Generates all menus for a plugin
@@ -55,80 +93,70 @@ class MenuBuilderHelper extends Helper
 
         //Calls dynamically each method
         foreach ($methods as $method) {
-            list($menu, $title, $titleOptions) = call_user_func([$helper, $method]);
+            list($links, $title, $titleOptions) = call_user_func([$helper, $method]);
 
-            if (empty($menu) || empty($title)) {
+            if (empty($links) || empty($title)) {
                 continue;
             }
 
-            $menus[sprintf('%s.%s', $plugin, $method)] = compact('menu', 'title', 'titleOptions');
+            $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');
         }
 
         return $menus;
     }
 
     /**
-     * Gets all menu name methods from a plugin
-     * @param string $plugin Plugin name
-     * @return array
-     */
-    public function getMenuMethods($plugin)
-    {
-        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = getChildMethods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
-
-        if (empty($methods)) {
-            return [];
-        }
-
-        //Filters invalid name methods
-        $methods = preg_grep('/^(?!_).+$/', $methods);
-
-        return array_values($methods);
-    }
-
-    /**
      * Renders a menu as "collapse"
      * @param string $plugin Plugin name
      * @return string
+     * @uses buildLinks()
      * @uses generate()
      */
     public function renderAsCollapse($plugin)
     {
-        //Gets menus
-        $menus = $this->generate($plugin);
+        $menus = collection($this->generate($plugin))
+            ->map(function ($menu) {
+                //Sets the collapse name
+                $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
 
-        $menus = array_map(function ($menu) {
-            //Sets the collapse name
-            $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
+                $mainLink = $this->Html->link(
+                    $menu['title'],
+                    sprintf('#%s', $collapseName),
+                    array_merge($menu['titleOptions'], [
+                        'aria-controls' => $collapseName,
+                        'aria-expanded' => 'false',
+                        'class' => 'collapsed',
+                        'data-toggle' => 'collapse',
+                    ])
+                );
 
-            return $this->Html->div('panel', implode(PHP_EOL, [
-                $this->Html->link($menu['title'], '#' . $collapseName, array_merge($menu['titleOptions'], [
-                    'aria-controls' => $collapseName,
-                    'aria-expanded' => 'false',
-                    'class' => 'collapsed',
-                    'data-toggle' => 'collapse',
-                ])),
-                $this->Html->div('collapse', implode(PHP_EOL, $menu['menu']), ['id' => $collapseName])
-            ]));
-        }, $menus);
+                return $this->Html->div(
+                    'card',
+                    $mainLink . $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName])
+                );
+            });
 
-        return implode(PHP_EOL, $menus);
+        return implode(PHP_EOL, $menus->toArray());
     }
 
     /**
      * Renders a menu as "dropdown"
      * @param string $plugin Plugin name
+     * @param array $titleOptions HTML attributes of the title
      * @return array
+     * @uses buildLinks()
      * @uses generate()
      */
-    public function renderAsDropdown($plugin)
+    public function renderAsDropdown($plugin, array $titleOptions = [])
     {
-        //Gets menus
-        $menus = $this->generate($plugin);
+        return collection($this->generate($plugin))
+            ->map(function ($menu) use ($titleOptions) {
+                $titleOptions = array_merge($menu['titleOptions'], $titleOptions);
+                echo $this->Dropdown->start($menu['title'], $titleOptions);
+                echo implode(PHP_EOL, $this->buildLinks($menu['links'], ['class' => 'dropdown-item']));
 
-        return array_map(function ($menu) {
-            return $this->Dropdown->menu($menu['title'], $menu['menu'], $menu['titleOptions']);
-        }, $menus);
+                return $this->Dropdown->end();
+            })
+            ->toArray();
     }
 }
