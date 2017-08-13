@@ -11,18 +11,19 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-
-<div class="margin-20">
+<div class="mb-4">
     <div class="btn-group btn-group-sm" role="group">
-        <?= $this->Html->button(
-            __d('me_cms', 'Show as list'),
-            ['?' => array_merge($this->request->getQuery(), ['render' => 'list'])],
-            ['class' => 'btn-primary', 'icon' => 'align-justify']
-        ) ?>
-        <?= $this->Html->button(
-            __d('me_cms', 'Show as grid'),
-            ['?' => array_merge($this->request->getQuery(), ['render' => 'grid'])],
-            ['class' => 'btn-primary', 'icon' => 'th-large']
-        ) ?>
+        <?php
+            echo $this->Html->button(
+                __d('me_cms', 'Show as list'),
+                ['?' => array_merge($this->request->getQuery(), ['render' => 'list'])],
+                ['class' => 'btn-primary', 'icon' => 'align-justify']
+            );
+            echo $this->Html->button(
+                __d('me_cms', 'Show as grid'),
+                ['?' => array_merge($this->request->getQuery(), ['render' => 'grid'])],
+                ['class' => 'btn-primary', 'icon' => 'th-large']
+            );
+        ?>
     </div>
 </div>
