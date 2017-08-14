@@ -75,7 +75,7 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
     </div>
     <div class="form-group hidden to-be-shown">
         <div id="tags-preview">
-            <?= sprintf('%s:', I18N_TAGS) ?>
+            <?= $this->Form->label(sprintf('%s:', I18N_TAGS)) ?>
         </div>
         <?php
             echo $this->Form->control('add_tags', [
