@@ -15,7 +15,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 $this->Html->css(ME_CMS . '.admin/changelogs', ['block' => 'css_bottom']);
 ?>
 
-<div class="well">
+<div class="card card-body bg-light border-0 mb-4">
     <?= $this->Form->createInline(false, ['type' => 'get']) ?>
     <fieldset>
         <?php
