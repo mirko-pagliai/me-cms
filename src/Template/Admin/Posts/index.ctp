@@ -108,10 +108,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
 
                     <?php if ($post->tags) : ?>
-                        <div class="margin-top-5 small">
+                        <div class="mt-1 small">
                             <?php
                             foreach ($post->tags as $tag) {
                                 echo $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
+                                    'class' => 'mr-1',
                                     'icon' => 'tag',
                                     'title' => I18N_BELONG_ELEMENT,
                                 ]);
