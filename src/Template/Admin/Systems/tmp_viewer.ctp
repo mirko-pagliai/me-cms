@@ -14,7 +14,7 @@ $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Temporary files'));
 ?>
 
-<div class="mb4">
+<div class="mb-4">
     <h4><?= __d('me_cms', 'All temporary files') ?></h4>
     <p><?= __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($totalSize)) ?></p>
 
@@ -31,7 +31,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
 
 <hr />
 
-<div class="mb4">
+<div class="mb-4">
     <h4><?= __d('me_cms', 'Cache') ?></h4>
 
     <?php if (!$cacheStatus) : ?>
@@ -51,7 +51,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     ) ?>
 </div>
 
-<div class="mb4">
+<div class="mb-4">
     <h4><?= __d('me_cms', 'Assets') ?></h4>
     <p><?= __d('me_cms', 'Assets size: {0}', $this->Number->toReadableSize($assetsSize)) ?></p>
 
@@ -64,7 +64,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <?php endif; ?>
 </div>
 
-<div class="mb4">
+<div class="mb-4">
     <h4><?= __d('me_cms', 'Logs') ?></h4>
     <p><?= __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logsSize)) ?></p>
 
@@ -77,7 +77,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <?php endif; ?>
 </div>
 
-<div class="mb4">
+<div class="mb-4">
     <h4><?= __d('me_cms', 'Sitemap') ?></h4>
     <p><?= __d('me_cms', 'Sitemap size: {0}', $this->Number->toReadableSize($sitemapSize)) ?></p>
 
@@ -92,7 +92,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <?php endif; ?>
 </div>
 
-<div class="mb4">
+<div class="mb-4">
     <h4><?= __d('me_cms', 'Thumbnails') ?></h4>
     <p><?= __d('me_cms', 'Thumbnails size: {0}', $this->Number->toReadableSize($thumbsSize)) ?></p>
 
