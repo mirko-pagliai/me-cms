@@ -25,7 +25,7 @@
                 '/vendor/font-awesome/css/font-awesome.min',
             ], ['block' => true]);
             echo $this->Asset->css([
-                ME_CMS . '.login/bootstrap.min',
+                '/vendor/bootstrap/css/bootstrap.min',
                 METOOLS . '.default',
                 METOOLS . '.forms',
                 ME_CMS . '.login/layout'
