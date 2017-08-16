@@ -82,7 +82,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 <td>
                     <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
                     <?php
-                    $class = 'record-label record-label-warning';
+                    $class = 'record-badge badge badge-warning';
 
                     //If the page is not active (it's a draft)
                     if (!$page->active) {

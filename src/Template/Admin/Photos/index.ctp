@@ -36,7 +36,7 @@ $this->extend('/Admin/Common/Photos/index');
                     if (!$photo->active) {
                         echo $this->Html->span(
                             I18N_NOT_PUBLISHED,
-                            ['class' => 'record-label record-label-warning']
+                            ['class' => 'record-badge badge badge-warning']
                         );
                     }
 

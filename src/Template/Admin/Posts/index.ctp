@@ -94,7 +94,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                         <?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?>
                     </strong>
                     <?php
-                    $class = 'record-label record-label-warning';
+                    $class = 'record-badge badge badge-warning';
 
                     //If the post is not active (it's a draft)
                     if (!$post->active) {

@@ -37,7 +37,7 @@ $this->extend('/Admin/Common/Banners/index');
                     </strong>
 
                     <?php
-                    $class = 'record-label record-label-warning';
+                    $class = 'record-badge badge badge-warning';
 
                     //If the banner is not active (not published)
                     if (!$banner->active) {

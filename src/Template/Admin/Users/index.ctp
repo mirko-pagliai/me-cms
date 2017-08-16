@@ -84,7 +84,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 <td>
                     <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
                     <?php
-                    $class = 'record-label record-label-danger';
+                    $class = 'record-badge badge badge-danger';
 
                     //If the user is banned
                     if ($user->banned) {
