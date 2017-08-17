@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.20 branch
 ### 2.20.2
+* fixed bug for traslating i18n constants;
 * fixed bug for uploading photos.
  
 ### 2.20.1
