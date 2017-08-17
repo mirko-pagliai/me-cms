@@ -10,7 +10,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 // (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
@@ -19,6 +18,7 @@ use Cake\Log\Log;
 use Cake\Network\Request;
 
 require_once __DIR__ . DS . 'constants.php';
+require_once __DIR__ . DS . 'i18n_constants.php';
 
 //Loads MeTools plugins
 if (!Plugin::loaded('MeTools')) {
@@ -51,8 +51,8 @@ if (is_readable(CONFIG . 'me_cms.php')) {
     Configure::load('me_cms');
 }
 
-//Forces debug on localhost, if requiredì
-if (!isset($request)) {
+//Forces debug on localhost, if required
+if (empty($request)) {
     $request = new Request;
 }
 if ($request->is('localhost') && getConfig('main.debug_on_localhost')) {
