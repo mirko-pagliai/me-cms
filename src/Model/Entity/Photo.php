@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -29,6 +30,8 @@ use Thumber\Utility\ThumbCreator;
  */
 class Photo extends Entity
 {
+    use ThumbTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
@@ -72,7 +75,7 @@ class Photo extends Entity
         }
 
         $thumb = (new ThumbCreator($preview))->resize(1200, 1200)->save(['format' => 'jpg']);
-        $preview = thumbUrl($thumb, true);
+        $preview = $this->getUrl($thumb, true);
 
         list($width, $height) = getimagesize($thumb);
 

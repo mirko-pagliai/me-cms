@@ -16,6 +16,7 @@ namespace MeCms\Model\Table\Traits;
 use Cake\Filesystem\Folder;
 use MeTools\Utility\Youtube;
 use Sunra\PhpSimple\HtmlDomParser;
+use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -24,6 +25,8 @@ use Thumber\Utility\ThumbCreator;
  */
 trait GetPreviewFromTextTrait
 {
+    use ThumbTrait;
+
     /**
      * Internal method to get the first image from an html string
      * @param string $html Html string
@@ -72,7 +75,7 @@ trait GetPreviewFromTextTrait
             }
 
             $thumb = (new ThumbCreator($preview))->resize(1200, 1200)->save(['format' => 'jpg']);
-            $preview = thumbUrl($thumb, true);
+            $preview = $this->getUrl($thumb, true);
         } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $text, $matches)) {
             $preview = Youtube::getPreview($matches[1]);
         }
