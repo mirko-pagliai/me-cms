@@ -25,7 +25,7 @@ $this->append('actions', $this->Html->button(
 ?>
 
 <table class="table table-hover">
-    <thead>
+    <thead class="thead-default">
         <tr>
             <th class="text-center"><?= I18N_ID ?></th>
             <th><?= I18N_TITLE ?></th>

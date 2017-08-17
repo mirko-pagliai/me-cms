@@ -15,20 +15,23 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
 ?>
 
 <?= $this->Form->create($user); ?>
-<div class='float-form'>
-    <?php
-        echo $this->Form->control('group_id', [
-            'default' => getConfigOrFail('users.default_group'),
-            'label' => __d('me_cms', 'User group'),
-        ]);
-        echo $this->Form->control('active', [
-            'checked' => true,
-            'help' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
-            'label' => sprintf('%s?', __d('me_cms', 'Active')),
-        ]);
-    ?>
-</div>
-<fieldset>
+<div class="row">
+    <div class="col-lg-3 order-12">
+        <div class="float-form">
+        <?php
+            echo $this->Form->control('group_id', [
+                'default' => getConfigOrFail('users.default_group'),
+                'label' => __d('me_cms', 'User group'),
+            ]);
+            echo $this->Form->control('active', [
+                'checked' => true,
+                'help' => __d('me_cms', 'If is not active, the user won\'t be able to login'),
+                'label' => sprintf('%s?', __d('me_cms', 'Active')),
+            ]);
+        ?>
+        </div>
+    </div>
+    <fieldset class="col-lg-9">
     <?php
         echo $this->Form->control('username', [
             'autocomplete' => 'off',
@@ -71,6 +74,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
             'label' => I18N_LAST_NAME,
         ]);
     ?>
-</fieldset>
+    </fieldset>
+</div>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

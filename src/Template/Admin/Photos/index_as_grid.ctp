@@ -13,38 +13,39 @@
 $this->extend('/Admin/Common/Photos/index');
 ?>
 
-<div class='clearfix'>
+<div class="row">
     <?php foreach ($photos as $photo) : ?>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="photo-box">
-                <div class="photo-title">
-                    <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
-                </div>
-                <div class="photo-id">
-                    <?= I18N_ID ?> <code><?= $photo->id ?></code>
-                </div>
-                <div class="photo-album">
-                    <?= __d('me_cms', 'Album') ?>:
-                    <?= $this->Html->link(
-                        $photo->album->title,
-                        ['?' => ['album' => $photo->album->id]],
-                        ['title' => I18N_BELONG_ELEMENT]
-                    ) ?>
-                </div>
-                <div class="photo-created">
-                    (<?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
-                </div>
-                <div class="photo-image">
-                    <?= $this->Thumb->fit($photo->path, ['width' => 400]); ?>
-                </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-1 py-2 text-truncate text-center">
+                        <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
+                    </li>
+                    <li class="list-group-item px-1 py-2 text-center">
+                        <samp><?= I18N_ID ?> <?= $photo->id ?></samp>
+                    </li>
+                    <li class="list-group-item px-1 py-2 text-center">
+                        <?= __d('me_cms', 'Album') ?>:
+                        <?= $this->Html->link(
+                            $photo->album->title,
+                            ['?' => ['album' => $photo->album->id]],
+                            ['title' => I18N_BELONG_ELEMENT]
+                        ) ?>
+                    </li>
+                    <li class="list-group-item px-1 py-2 text-center">
+                        (<?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
+                    </li>
+                </ul>
 
                 <?php
+                echo $this->Thumb->fit($photo->path, ['width' => 400], ['class' => 'card-img-bottom']);
+
                 $actions = [
-                    $this->Html->link(null, ['action' => 'edit', $photo->id], [
+                    $this->Html->button(null, ['action' => 'edit', $photo->id], [
                         'icon' => 'pencil',
                         'title' => I18N_EDIT,
                     ]),
-                    $this->Html->link(null, ['action' => 'download', $photo->id], [
+                    $this->Html->button(null, ['action' => 'download', $photo->id], [
                         'icon' => 'download',
                         'title' => I18N_DOWNLOAD,
                     ]),
@@ -52,7 +53,7 @@ $this->extend('/Admin/Common/Photos/index');
 
                 //Only admins and managers can delete photos
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
-                    $actions[] = $this->Form->postLink(null, ['action' => 'delete', $photo->id], [
+                    $actions[] = $this->Form->postButton(null, ['action' => 'delete', $photo->id], [
                         'class' => 'text-danger',
                         'icon' => 'trash-o',
                         'title' => I18N_DELETE,
@@ -62,21 +63,25 @@ $this->extend('/Admin/Common/Photos/index');
 
                 //If the photo is active
                 if ($photo->active) {
-                    $actions[] = $this->Html->link(
+                    $actions[] = $this->Html->button(
                         null,
                         ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
                         ['icon' => 'external-link', 'target' => '_blank', 'title' => I18N_OPEN]
                     );
                 } else {
-                    $actions[] = $this->Html->link(null, ['_name' => 'photosPreview', $photo->id], [
+                    $actions[] = $this->Html->button(null, ['_name' => 'photosPreview', $photo->id], [
                         'icon' => 'external-link',
                         'target' => '_blank',
                         'title' => I18N_PREVIEW,
                     ]);
                 }
-
-                echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
+
+                <div class="btn-toolbar justify-content-center" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <?= implode(PHP_EOL, $actions) ?>
+                    </div>
+                </div>
             </div>
         </div>
     <?php endforeach; ?>

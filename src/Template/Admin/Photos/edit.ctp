@@ -15,25 +15,31 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
 ?>
 
 <?= $this->Form->create($photo); ?>
-<div class='float-form'>
-    <?= $this->Form->control('album_id', ['label' => __d('me_cms', 'Album')]) ?>
-    <?= $this->Form->control('active', ['label' => I18N_PUBLISHED]) ?>
-</div>
-<fieldset>
-    <p><?= $this->Html->strong(I18N_PREVIEW) ?></p>
-    <?php
-        echo $this->Thumb->resize($photo->path, ['width' => 1186], ['class' => 'img-thumbnail margin-15']);
+<div class="row">
+    <div class="col-lg-3 order-12">
+        <div class="float-form">
+        <?php
+            echo $this->Form->control('album_id', ['label' => __d('me_cms', 'Album')]);
+            echo $this->Form->control('active', ['label' => I18N_PUBLISHED]);
+        ?>
+        </div>
+    </div>
+    <fieldset class="col-lg-9">
+        <div class="mb-2"><?= $this->Html->strong(I18N_PREVIEW) ?></div>
+        <?php
+            echo $this->Thumb->resize($photo->path, ['width' => 1186], ['class' => 'img-thumbnail mb-3']);
 
-        echo $this->Form->control('filename', [
-            'disabled' => true,
-            'label' => I18N_FILENAME,
-        ]);
-        echo $this->Form->control('description', [
-            'label' => I18N_DESCRIPTION,
-            'rows' => 3,
-            'type' => 'textarea',
-        ]);
-    ?>
-</fieldset>
+            echo $this->Form->control('filename', [
+                'disabled' => true,
+                'label' => I18N_FILENAME,
+            ]);
+            echo $this->Form->control('description', [
+                'label' => I18N_DESCRIPTION,
+                'rows' => 3,
+                'type' => 'textarea',
+            ]);
+        ?>
+    </fieldset>
+</div>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

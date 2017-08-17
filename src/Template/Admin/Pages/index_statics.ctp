@@ -14,35 +14,39 @@ $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Static pages'));
 ?>
 
-<table class="table table-striped">
-    <tr>
-        <th><?= I18N_FILENAME ?></th>
-        <th class="text-center"><?= I18N_TITLE ?></th>
-        <th><?= __d('me_cms', 'Path') ?></th>
-    </tr>
-    <?php foreach ($pages as $page) : ?>
+<table class="table table-hover">
+    <thead class="thead-default">
         <tr>
-            <td>
-                <strong>
-                    <?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug], ['target' => '_blank']) ?>
-                </strong>
-                <?php
-                $actions = [
-                    $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
-                        'icon' => 'external-link',
-                        'target' => '_blank',
-                    ]),
-                ];
-
-                echo $this->Html->ul($actions, ['class' => 'actions']);
-                ?>
-            </td>
-            <td class="text-center">
-                <?= $page->title ?>
-            </td>
-            <td>
-                <samp><?= $page->path ?></samp>
-            </td>
+            <th><?= I18N_FILENAME ?></th>
+            <th class="text-center"><?= I18N_TITLE ?></th>
+            <th><?= __d('me_cms', 'Path') ?></th>
         </tr>
-    <?php endforeach; ?>
+    </thead>
+    <tbody>
+        <?php foreach ($pages as $page) : ?>
+            <tr>
+                <td>
+                    <strong>
+                        <?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug], ['target' => '_blank']) ?>
+                    </strong>
+                    <?php
+                    $actions = [
+                        $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
+                            'icon' => 'external-link',
+                            'target' => '_blank',
+                        ]),
+                    ];
+
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                    ?>
+                </td>
+                <td class="text-center">
+                    <?= $page->title ?>
+                </td>
+                <td>
+                    <samp><?= $page->path ?></samp>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
 </table>

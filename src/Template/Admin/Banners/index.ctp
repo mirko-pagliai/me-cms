@@ -14,12 +14,12 @@ $this->extend('/Admin/Common/Banners/index');
 ?>
 
 <table class="table table-hover">
-    <thead>
+    <thead class="thead-default">
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?= $this->Paginator->sort('filename', I18N_FILENAME) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Positions.title', I18N_POSITION) ?></th>
-            <th class="text-center hidden-xs"><?= __d('me_cms', 'Url') ?></th>
+            <th class="text-center d-none d-lg-block"><?= __d('me_cms', 'Url') ?></th>
             <th class="text-center"><?= I18N_DESCRIPTION ?></th>
             <th class="text-center"><?= $this->Paginator->sort('click_count', __d('me_cms', 'Click')) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
@@ -83,7 +83,7 @@ $this->extend('/Admin/Common/Banners/index');
                         '?' => ['position' => $banner->position->id],
                     ], ['title' => I18N_BELONG_ELEMENT]) ?>
                 </td>
-                <td class="text-center hidden-xs">
+                <td class="text-center d-none d-lg-block">
                     <?php
                     if ($banner->target) {
                         $truncated = $this->Text->truncate($banner->target, 50, ['exact' => false]);
@@ -98,10 +98,10 @@ $this->extend('/Admin/Common/Banners/index');
                     <?= $banner->click_count ?>
                 </td>
                 <td class="min-width text-center">
-                    <div class="hidden-xs">
+                    <div class="d-none d-lg-block">
                         <?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $banner->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $banner->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

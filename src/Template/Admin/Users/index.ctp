@@ -64,12 +64,12 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
 <?php echo $this->Form->end(); ?>
 
 <table class="table table-hover">
-    <thead>
+    <thead class="thead-default">
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?php echo $this->Paginator->sort('username', I18N_USERNAME) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('first_name', I18N_NAME) ?></th>
-            <th class="text-center hidden-xs"><?= $this->Paginator->sort('email', I18N_EMAIL) ?></th>
+            <th class="text-center d-none d-lg-block"><?= $this->Paginator->sort('email', I18N_EMAIL) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Groups.label', I18N_GROUP) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('post_count', I18N_POSTS) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
@@ -126,7 +126,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 <td class="text-center">
                     <?= $user->full_name ?>
                 </td>
-                <td class="text-center hidden-xs">
+                <td class="text-center d-none d-lg-block">
                     <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
                 </td>
                 <td class="text-center">
@@ -150,10 +150,10 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <div class="hidden-xs">
+                    <div class="d-none d-lg-block">
                         <?= $user->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $user->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $user->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

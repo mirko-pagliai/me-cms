@@ -18,18 +18,21 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
     Dropzone.autoDiscover = false;
     $(function() {
         $('.dropzone').dropzone({
-            dictDefaultMessage: '<?= __d('me_cms', 'Drag files here or click') ?>',
-            previewTemplate: '<div class="col-md-3 dz-preview dz-file-preview">' +
-                '<div>' +
-                    '<div class="dz-details">' +
-                        '<div class="dz-filename" data-dz-name></div>' +
-                        '<div class="dz-size" data-dz-size></div>' +
-                        '<img data-dz-thumbnail />' +
+            dictDefaultMessage: '<?= sprintf('%s %s', $this->Html->icon('cloud-upload'), __d('me_cms', 'Drag files here or click')) ?>',
+            previewsContainer: '#dropzone-preview',
+            previewTemplate: '<div class="col-md-3 mb-4 dz-preview dz-file-preview">' +
+                '<div class="card bg-light border-0 p-2">' +
+                    '<ul class="list-group border-0 mb-3">' +
+                        '<li class="dz-filename list-group-item py-1 px-2 text-center text-truncate" data-dz-name></li>' +
+                        '<li class="dz-size list-group-item py-1 px-2 text-center" data-dz-size></li>' +
+                    '</ul>' +
+                    '<img class="card-img-bottom img-responsive mb-2" data-dz-thumbnail />' +
+                    '<div class="progress dz-progress mb-3">' +
+                        '<div class="progress-bar bg-success dz-upload" role="progressbar" data-dz-uploadprogress></div>' +
                     '</div>' +
-                    '<div class="progress dz-progress"><div class="progress-bar progress-bar-success dz-upload" role="progressbar" data-dz-uploadprogress></div></div>' +
-                    '<div class="dz-success-mark"><?= $this->Html->icon('check') ?></div>' +
-                    '<div class="dz-error-mark"><?= $this->Html->icon('close') ?></div>' +
-                    '<div class="dz-error-message" data-dz-errormessage></div>' +
+                    '<div class="dz-success-mark text-center"><?= $this->Html->icon('check') ?></div>' +
+                    '<div class="dz-error-mark text-center"><?= $this->Html->icon('close') ?></div>' +
+                    '<div class="dz-error-message mt-2 text-danger text-center" data-dz-errormessage></div>' +
                 '</div>' +
             '</div>',
         });
@@ -38,7 +41,7 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 
 <?php
     echo $this->Form->create(null, [
-        'class' => 'dropzone',
+        'class' => 'dropzone text-center',
         'type' => 'file',
         'url' => ['?' => $this->request->getQuery(), '_ext' => 'json'],
     ]);
@@ -49,3 +52,5 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
     ]));
     echo $this->Form->end();
 ?>
+
+<div id='dropzone-preview' class='row'></div>

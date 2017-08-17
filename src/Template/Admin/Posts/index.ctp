@@ -73,7 +73,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 <?= $this->Form->end() ?>
 
 <table class="table table-hover">
-    <thead>
+    <thead class="thead-default">
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
@@ -108,7 +108,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
 
                     <?php if ($post->tags) : ?>
-                        <div class="mt-1 small">
+                        <div class="mt-1 small d-none d-lg-block">
                             <?php
                             foreach ($post->tags as $tag) {
                                 echo $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
@@ -208,10 +208,10 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
                 </td>
                 <td class="min-width text-center">
-                    <div class="hidden-xs">
+                    <div class="d-none d-lg-block">
                         <?= $post->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $post->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $post->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

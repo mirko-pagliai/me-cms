@@ -25,7 +25,7 @@ $this->assign('title', $title = __d('me_cms', 'Add backup'));
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>
 
-<table class="table margin-0">
+<table class="table mt-4">
     <thead>
         <tr>
             <th><?= __d('me_cms', 'Pattern') ?></th>

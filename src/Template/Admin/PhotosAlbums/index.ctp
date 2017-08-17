@@ -25,7 +25,7 @@ $this->append('actions', $this->Html->button(
 ?>
 
 <table class="table table-hover">
-    <thead>
+    <thead class="thead-default">
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>

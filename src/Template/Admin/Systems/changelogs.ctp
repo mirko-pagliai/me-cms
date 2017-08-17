@@ -12,7 +12,6 @@
  */
 $this->extend('/Admin/Common/index');
 $this->assign('title', __d('me_cms', 'Changelogs'));
-$this->Html->css(ME_CMS . '.admin/changelogs', ['block' => 'css_bottom']);
 ?>
 
 <div class="card card-body bg-light border-0 mb-4">
@@ -32,7 +31,7 @@ $this->Html->css(ME_CMS . '.admin/changelogs', ['block' => 'css_bottom']);
     <?= $this->Form->end() ?>
 </div>
 
-<?php if (!empty($changelog)) : ?>
+<?php if ($changelog) : ?>
 <div id="changelog">
     <?= $this->CommonMark->convertToHtml($changelog) ?>
 </div>

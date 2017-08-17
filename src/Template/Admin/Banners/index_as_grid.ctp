@@ -13,68 +13,71 @@
 $this->extend('/Admin/Common/Banners/index');
 ?>
 
-<div class='clearfix'>
+<div class="row">
     <?php foreach ($banners as $banner) : ?>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="photo-box">
-                <div class="photo-title">
-                    <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
-                </div>
-                <div class="photo-id">
-                    <?= I18N_ID ?> <code><?= $banner->id ?></code>
-                </div>
-                <div class="photo-album">
-                    <?= I18N_POSITION ?>:
-                    <?= $this->Html->link($banner->position->title, [
-                        '?' => ['position' => $banner->position->id],
-                    ], ['title' => I18N_BELONG_ELEMENT]) ?>
-                </div>
-                <div class="photo-created">
-                    (<?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
-                </div>
-                <div class="photo-image">
-                    <?php
-                    if ($banner->thumbnail) {
-                        echo $this->Thumb->resize($banner->path, ['width' => 400]);
-                    } else {
-                        echo $this->Html->img($banner->www);
-                    }
-                    ?>
-                </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-1 py-2 text-truncate text-center">
+                        <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
+                    </li>
+                    <li class="list-group-item px-1 py-2 text-center">
+                        <samp><?= I18N_ID ?> <?= $banner->id ?></samp>
+                    </li>
+                    <li class="list-group-item px-1 py-2 text-center">
+                        <?= I18N_POSITION ?>:
+                        <?= $this->Html->link($banner->position->title, [
+                            '?' => ['position' => $banner->position->id],
+                        ], ['title' => I18N_BELONG_ELEMENT]) ?>
+                    </li>
+                    <li class="list-group-item px-1 py-2 text-center">
+                        (<?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
+                    </li>
+                </ul>
 
                 <?php
+                if ($banner->thumbnail) {
+                    echo $this->Thumb->resize($banner->path, ['width' => 400], ['class' => 'card-img-bottom']);
+                } else {
+                    echo $this->Html->img($banner->www, ['class' => 'card-img-bottom']);
+                }
+
                 $actions = [
-                    $this->Html->link(null, ['action' => 'edit', $banner->id], [
+                    $this->Html->button(null, ['action' => 'edit', $banner->id], [
                         'icon' => 'pencil',
                         'title' => I18N_EDIT,
                     ]),
                 ];
 
                 if ($banner->target) {
-                    $actions[] = $this->Html->link(null, $banner->target, [
+                    $actions[] = $this->Html->button(null, $banner->target, [
                         'icon' => 'external-link',
                         'title' => I18N_OPEN,
                         'target' => '_blank',
                     ]);
                 }
 
-                $actions[] = $this->Html->link(null, ['action' => 'download', $banner->id], [
+                $actions[] = $this->Html->button(null, ['action' => 'download', $banner->id], [
                     'icon' => 'download',
                     'title' => I18N_DOWNLOAD,
                 ]);
 
                 //Only admins can delete banners
                 if ($this->Auth->isGroup('admin')) {
-                    $actions[] = $this->Form->postLink(null, ['action' => 'delete', $banner->id], [
+                    $actions[] = $this->Form->postButton(null, ['action' => 'delete', $banner->id], [
                         'class' => 'text-danger',
                         'icon' => 'trash-o',
                         'title' => I18N_DELETE,
                         'confirm' => I18N_SURE_TO_DELETE,
                     ]);
                 }
-
-                echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
+
+                <div class="btn-toolbar justify-content-center" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <?= implode(PHP_EOL, $actions) ?>
+                    </div>
+                </div>
             </div>
         </div>
     <?php endforeach; ?>

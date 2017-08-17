@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.21 branch
 ### 2.21.0
+* fixed all admin templates for Bootstrap 4;
 * fixed `login` layout for Bootstrap 4;
 * fixed `MenuBuilderHelper` for Bootstrap 4;
 * `MenuHelper` class returns menus as arrays, without transforming them into

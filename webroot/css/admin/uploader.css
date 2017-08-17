@@ -10,104 +10,40 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see			http://www.script-tutorials.com/html5-drag-and-drop-multiple-file-uploader
  */
-
 /* -------------------------------- */
 /*          Dropzone               */
 /* -------------------------------- */
-/* Main wrapper */
-.dropzone {
-    font-family: sans-serif;
-    font-size: 12px;
-    text-align: center;
-}
-
-/* Message */
-.dropzone .dz-message {
+/* Form, message */
+form.dropzone .dz-message {
     background-color: #eee;
     cursor: pointer;
-    font-size: 20px;
-    margin-bottom: 10px;
-    padding: 30px 20px;
-}
-
-/* Message, icon */
-.dropzone .dz-message::before {
-    content: "\f0ee";
-    font-family: FontAwesome;
-    font-weight: normal;
-    margin-right: 4px;
-}
-
-/* Preview */
-.dropzone .dz-preview {
-    margin: 10px 0;
-    min-height: 277px;
-}
-
-/* Preview, first div */
-.dropzone .dz-preview > div {
-    background-color: #eee;
-    padding: 10px;
-}
-
-
-/* Preview, details */
-.dropzone .dz-preview .dz-details {
-    margin-bottom: 10px;
-}
-
-/* Preview, details, filename and size */
-.dropzone .dz-preview .dz-details .dz-filename,
-.dropzone .dz-preview .dz-details .dz-size {
-    background: #fff;
-    margin: 0 -2px 4px;
-    overflow: hidden;
-    padding: 2px 6px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Preview, details, size */
-.dropzone .dz-preview .dz-details .dz-size {
-    margin-bottom: 10px !important;
-}
-
-/* Preview, details, image */
-.dropzone .dz-preview .dz-details img {
-    background: #fff;
-    max-height: 120px;
-    max-width: 100%;
-}
-
-/* Preview, progress bar */
-.dropzone .dz-preview .dz-progress {
-    margin-bottom: 10px;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
 }
 
 /* Preview, error message */
-.dropzone .dz-preview .dz-error-message {
-    color: #d9534f;
+#dropzone-preview .dz-error-message {
     display: none;
     font-size: 11px;
-    margin-top: 10px;
 }
 
 /* Preview, error message, error mark and success mark */
-.dropzone .dz-preview.dz-error .dz-error-message,
-.dropzone .dz-preview.dz-error .dz-error-mark,
-.dropzone .dz-preview.dz-success .dz-success-mark {
+#dropzone-preview .dz-error .dz-error-message,
+#dropzone-preview .dz-error .dz-error-mark,
+#dropzone-preview .dz-success .dz-success-mark {
     display: block;
 }
 
-/* Preview,  error mark and success mark */
-.dropzone .dz-preview .dz-error-mark,
-.dropzone .dz-preview .dz-success-mark {
+/* Preview, error mark and success mark */
+#dropzone-preview .dz-error-mark,
+#dropzone-preview .dz-success-mark {
     display: none;
 }
 
-/* Preview,  error mark and success mark, icons */
-.dropzone .dz-preview .dz-error-mark .fa,
-.dropzone .dz-preview .dz-success-mark .fa {
+/* Preview, error mark and success mark, icons */
+#dropzone-preview .dz-error-mark .fa,
+#dropzone-preview .dz-success-mark .fa {
     border-radius: 20px;
     color: #fff;
     font-size: 20px;
@@ -115,13 +51,12 @@
     width: 40px;
 }
 
-/* Preview,  error mark, icon */
-.dropzone .dz-preview .dz-error-mark .fa {
+/* Preview, error mark, icon */
+#dropzone-preview .dz-error-mark .fa {
     background: #d9534f;
 }
 
 /* Preview,  success mark, icon */
-.dropzone .dz-preview .dz-success-mark .fa {
+#dropzone-preview .dz-success-mark .fa {
     background: #5cb85c;
 }
-
