@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.20 branch
+### 2.20.2
+* fixed bug for uploading photos.
+ 
 ### 2.20.1
 * many i18n constants have been added. These make the code cleaner and more
     comprehensible;
