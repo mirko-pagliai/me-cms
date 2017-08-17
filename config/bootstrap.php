@@ -39,5 +39,5 @@ if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
     Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
 }
 
-//CakePHP will automatically set the locale based on the current user
+//Sets the locale based on the current user
 DispatcherFactory::add('LocaleSelector');
