@@ -157,13 +157,7 @@ Plugin::load('MeTools', [
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
 
-Plugin::load('MeCms', [
-    'bootstrap' => false, //Doesn't load the bootstrap
-    'path' => ROOT,
-    'routes' => true,
-]);
-
-require_once ROOT . 'config' . DS . 'bootstrap_base.php';
+Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
 
 //Sets debug log
 Log::config('debug', [

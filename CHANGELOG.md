@@ -8,6 +8,11 @@
     html.
 
 ## 2.20 branch
+### 2.20.2
+* only one bootstrap file is used. Deleted `config/bootstrap_base.php`;
+* fixed bug for traslating i18n constants;
+* fixed bug for creating thumbnails.
+ 
 ### 2.20.1
 * many i18n constants have been added. These make the code cleaner and more
     comprehensible;
