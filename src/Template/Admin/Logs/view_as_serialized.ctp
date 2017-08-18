@@ -26,7 +26,7 @@ $this->append('actions', $this->Form->postButton(
 ?>
 
 <?php if (!empty($content)) : ?>
-    <div class="as-table small">
+    <div class="small">
         <?php foreach ($content as $k => $row) : ?>
             <?php
             if (in_array($row->level, ['error', 'fatal'])) {
