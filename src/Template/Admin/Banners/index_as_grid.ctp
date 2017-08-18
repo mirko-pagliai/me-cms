@@ -18,19 +18,19 @@ $this->extend('/Admin/Common/Banners/index');
         <div class="col-md-6 col-lg-3 mb-4">
             <div class="card">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item px-1 py-2 text-truncate text-center">
+                    <li class="list-group-item p-1 text-truncate text-center">
                         <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
                     </li>
-                    <li class="list-group-item px-1 py-2 text-center">
+                    <li class="list-group-item p-1 small text-center">
                         <samp><?= I18N_ID ?> <?= $banner->id ?></samp>
                     </li>
-                    <li class="list-group-item px-1 py-2 text-center">
+                    <li class="list-group-item p-1 small text-center">
                         <?= I18N_POSITION ?>:
                         <?= $this->Html->link($banner->position->title, [
                             '?' => ['position' => $banner->position->id],
                         ], ['title' => I18N_BELONG_ELEMENT]) ?>
                     </li>
-                    <li class="list-group-item px-1 py-2 text-center">
+                    <li class="list-group-item p-1 small text-center">
                         (<?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
                     </li>
                 </ul>

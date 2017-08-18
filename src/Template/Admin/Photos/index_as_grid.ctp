@@ -18,13 +18,13 @@ $this->extend('/Admin/Common/Photos/index');
         <div class="col-md-6 col-lg-3 mb-4">
             <div class="card">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item px-1 py-2 text-truncate text-center">
+                    <li class="list-group-item p-1 text-truncate text-center">
                         <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
                     </li>
-                    <li class="list-group-item px-1 py-2 text-center">
+                    <li class="list-group-item p-1 small text-center">
                         <samp><?= I18N_ID ?> <?= $photo->id ?></samp>
                     </li>
-                    <li class="list-group-item px-1 py-2 text-center">
+                    <li class="list-group-item p-1 small text-center">
                         <?= __d('me_cms', 'Album') ?>:
                         <?= $this->Html->link(
                             $photo->album->title,
@@ -32,7 +32,7 @@ $this->extend('/Admin/Common/Photos/index');
                             ['title' => I18N_BELONG_ELEMENT]
                         ) ?>
                     </li>
-                    <li class="list-group-item px-1 py-2 text-center">
+                    <li class="list-group-item p-1 small text-center">
                         (<?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
                     </li>
                 </ul>
