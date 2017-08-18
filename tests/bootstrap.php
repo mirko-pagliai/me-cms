@@ -19,6 +19,8 @@ use Cake\Mailer\Email;
 use Cake\Routing\DispatcherFactory;
 
 ini_set('intl.default_locale', 'en_US');
+date_default_timezone_set('UTC');
+mb_internal_encoding('UTF-8');
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -51,11 +53,6 @@ define('SESSIONS', TMP . 'sessions' . DS);
 @mkdir(CACHE . 'views');
 @mkdir(CACHE . 'models');
 //@codingStandardsIgnoreEnd
-
-require CORE_PATH . 'config' . DS . 'bootstrap.php';
-
-date_default_timezone_set('UTC');
-mb_internal_encoding('UTF-8');
 
 Configure::write('debug', true);
 Configure::write('App', [
@@ -95,12 +92,7 @@ Cache::setConfig([
 ]);
 
 // Ensure default test connection is defined
-if (!getenv('db_dsn')) {
-    putenv('db_dsn=mysql://root@localhost/test');
-}
-
-ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
-ConnectionManager::setConfig('test_custom_i18n_datasource', ['url' => getenv('db_dsn')]);
+ConnectionManager::setConfig('test', ['url' => 'mysql://root@localhost/test']);
 
 Configure::write('Session', ['defaults' => 'php']);
 
@@ -158,6 +150,8 @@ define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
 
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
+
+require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 //Sets debug log
 Log::config('debug', [
