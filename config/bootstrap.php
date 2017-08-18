@@ -113,24 +113,27 @@ Log::setConfig('users', [
     'url' => env('LOG_DEBUG_URL', null),
 ]);
 
+//Loads other plugins
+$pluginsToLoad = ['DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'Thumber', 'Tokens'];
+
+foreach ($pluginsToLoad as $plugin) {
+    if (!Plugin::loaded($plugin)) {
+        Plugin::load($plugin, ['bootstrap' => true, 'routes' => true, 'ignoreMissing' => true]);
+    }
+}
+
 if (!$isCli) {
     //Loads DebugKit, if debugging is enabled
     if (getConfig('debug') && !Plugin::loaded('DebugKit')) {
         Plugin::load('DebugKit', ['bootstrap' => true]);
     }
 
-    //Loads other plugins
-    Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
-    Plugin::load('Tokens', ['bootstrap' => true]);
-    Plugin::load('DatabaseBackup', ['bootstrap' => true]);
-    Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
     Plugin::load('Gourmet/CommonMark');
-    Plugin::load('Recaptcha');
-    Plugin::load('RecaptchaMailhide', ['bootstrap' => true, 'routes' => true]);
+    Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
+}
 
-    if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
-        Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
-    }
+if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
+    Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
 }
 
 //Sets the locale based on the current user
