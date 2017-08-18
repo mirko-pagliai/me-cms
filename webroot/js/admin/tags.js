@@ -9,7 +9,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 $(function () {
     //Input button to add tags
     var inputButton = $('#tags-input-button');

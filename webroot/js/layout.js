@@ -9,7 +9,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 $(function () {
     //On click on the "accept" button for cookies policy
     $('#cookies-policy-accept').click(function (event) {
