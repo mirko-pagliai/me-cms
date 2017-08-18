@@ -39,4 +39,6 @@ if (getConfig('users.reset_password') && !$this->request->isUrl($url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
 }
 
-echo $this->Html->ul($menu, ['class' => 'actions']);
+if ($menu) {
+    echo $this->Html->ul($menu, ['class' => 'actions']);
+}
