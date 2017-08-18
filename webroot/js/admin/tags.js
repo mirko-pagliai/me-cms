@@ -82,7 +82,7 @@ $(function () {
 
             //Appends HTML
             var closeButton = '<button type="button" data-tag="' + counter + '" class="tag-remove" href="#">&times;</button>';
-            preview.append('<div data-tag="' + counter + '">' + tag + closeButton + '</div>');
+            preview.append('<div class="tag" data-tag="' + counter + '">' + tag + closeButton + '</div>');
 
             //Increments the counter
             counter++;
