@@ -32,7 +32,7 @@ echo $this->Form->end();
 ?>
 
 <?php if (!empty($pattern)) : ?>
-    <div class="bg-info mb4 padding-10">
+    <div class="bg-info mb-4 padding-10">
         <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
     </div>
 <?php endif; ?>
