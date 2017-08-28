@@ -86,13 +86,13 @@ class MenuHelperTest extends TestCase
 
         //Menu for manager users
         $this->Menu->Auth->initialize(['group' => ['name' => 'manager']]);
-        list($links, $title, $options) = $this->Menu->posts();
+        list($links) = $this->Menu->posts();
 
         $this->assertEquals($expected, $this->buildLinks($links));
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($links, $title, $options) = $this->Menu->posts();
+        list($links) = $this->Menu->posts();
 
         $this->assertEquals($expected, $this->buildLinks($links));
     }
@@ -122,13 +122,13 @@ class MenuHelperTest extends TestCase
 
         //Menu for manager users
         $this->Menu->Auth->initialize(['group' => ['name' => 'manager']]);
-        list($links, $title, $options) = $this->Menu->pages();
+        list($links) = $this->Menu->pages();
 
         $this->assertEquals($expected, $this->buildLinks($links));
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($links, $title, $options) = $this->Menu->pages();
+        list($links) = $this->Menu->pages();
 
         $this->assertEquals($expected, $this->buildLinks($links));
     }
@@ -154,13 +154,13 @@ class MenuHelperTest extends TestCase
 
         //Menu for manager users
         $this->Menu->Auth->initialize(['group' => ['name' => 'manager']]);
-        list($links, $title, $options) = $this->Menu->photos();
+        list($links) = $this->Menu->photos();
 
         $this->assertEquals($expected, $this->buildLinks($links));
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($links, $title, $options) = $this->Menu->photos();
+        list($links) = $this->Menu->photos();
 
         $this->assertEquals($expected, $this->buildLinks($links));
     }
@@ -186,7 +186,7 @@ class MenuHelperTest extends TestCase
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($links, $title, $options) = $this->Menu->banners();
+        list($links) = $this->Menu->banners();
 
         $this->assertEquals([
             '<a href="/me-cms/admin/banners" title="List banners">List banners</a>',
@@ -217,7 +217,7 @@ class MenuHelperTest extends TestCase
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($links, $title, $options) = $this->Menu->users();
+        list($links) = $this->Menu->users();
 
         $this->assertEquals([
             '<a href="/me-cms/admin/users" title="List users">List users</a>',
@@ -274,7 +274,7 @@ class MenuHelperTest extends TestCase
 
         //Menu for admin users
         $this->Menu->Auth->initialize(['group' => ['name' => 'admin']]);
-        list($links, $title, $options) = $this->Menu->systems();
+        list($links) = $this->Menu->systems();
 
         $this->assertEquals([
             '<a href="/me-cms/admin/systems/tmp-viewer" title="Temporary files">Temporary files</a>',
