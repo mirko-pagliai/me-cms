@@ -14,7 +14,7 @@
 
 <?php if (!empty($loginLog)) : ?>
     <table class="table table-hover">
-        <thead class="thead-default">
+        <thead>
             <tr>
                 <th class="text-center"><?= __d('me_cms', 'Time') ?></th>
                 <th class="text-center"><?= __d('me_cms', 'IP') ?></th>

@@ -26,7 +26,7 @@ $this->append('actions', $this->Form->postButton(
 ?>
 
 <table class="table table-hover">
-    <thead class="thead-default">
+    <thead>
         <tr>
             <th><?= I18N_FILENAME ?></th>
             <th class="min-width text-center"><?= __d('me_cms', 'Extension') ?></th>

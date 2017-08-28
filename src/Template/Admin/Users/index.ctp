@@ -64,7 +64,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
 <?php echo $this->Form->end(); ?>
 
 <table class="table table-hover">
-    <thead class="thead-default">
+    <thead>
         <tr>
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?php echo $this->Paginator->sort('username', I18N_USERNAME) ?></th>

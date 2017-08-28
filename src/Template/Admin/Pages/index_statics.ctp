@@ -15,7 +15,7 @@ $this->assign('title', __d('me_cms', 'Static pages'));
 ?>
 
 <table class="table table-hover">
-    <thead class="thead-default">
+    <thead>
         <tr>
             <th><?= I18N_FILENAME ?></th>
             <th class="text-center"><?= I18N_TITLE ?></th>
