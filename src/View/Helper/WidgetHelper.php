@@ -33,6 +33,10 @@ class WidgetHelper extends Helper
             $widgets = getConfig('Widgets.homepage');
         }
 
+        if (empty($widgets)) {
+            return [];
+        }
+
         return collection($widgets)->map(function ($args, $name) {
             if (is_string($name) && is_array($args)) {
                 return [$name => $args];
