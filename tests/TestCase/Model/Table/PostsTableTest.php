@@ -236,7 +236,7 @@ class PostsTableTest extends TestCase
      */
     public function testBelongsToManyTags()
     {
-        $post = $this->Posts->findById(2)->contain(['Tags'])->first();
+        $post = $this->Posts->findById(2)->contain('Tags')->first();
 
         $this->assertNotEmpty($post->tags);
 
@@ -253,7 +253,7 @@ class PostsTableTest extends TestCase
      */
     public function testBelongsToPostsCategories()
     {
-        $post = $this->Posts->findById(2)->contain(['Categories'])->first();
+        $post = $this->Posts->findById(2)->contain('Categories')->first();
 
         $this->assertNotEmpty($post->category);
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $post->category);
@@ -266,7 +266,7 @@ class PostsTableTest extends TestCase
      */
     public function testBelongsToUsers()
     {
-        $post = $this->Posts->findById(2)->contain(['Users'])->first();
+        $post = $this->Posts->findById(2)->contain('Users')->first();
 
         $this->assertNotEmpty($post->user);
         $this->assertInstanceOf('MeCms\Model\Entity\User', $post->user);
@@ -301,9 +301,9 @@ class PostsTableTest extends TestCase
         //Gets a post from which to search the related posts.
         //Note that the tags of this post are sorted in ascending order
         $post = $this->Posts->findById(1)
-            ->contain(['Tags' => function (Query $q) {
+            ->contain('Tags', function (Query $q) {
                 return $q->order(['post_count' => 'ASC']);
-            }])
+            })
             ->first();
         $this->assertNotEmpty($post->tags);
 
@@ -338,13 +338,13 @@ class PostsTableTest extends TestCase
         $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
 
         //This post has no tags
-        $post = $this->Posts->findById(4)->contain(['Tags'])->first();
+        $post = $this->Posts->findById(4)->contain('Tags')->first();
         $this->assertEquals([], $post->tags);
         $this->assertEquals([], $this->Posts->getRelated($post));
         $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Posts->cache));
 
         //This post has one tag, but this is not related to any other post
-        $post = $this->Posts->findById(5)->contain(['Tags'])->first();
+        $post = $this->Posts->findById(5)->contain('Tags')->first();
         $this->assertCount(1, $post->tags);
         $this->assertEquals([], $this->Posts->getRelated($post));
         $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Posts->cache));

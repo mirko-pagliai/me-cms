@@ -122,13 +122,13 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testBelongsToParents()
     {
-        $category = $this->PostsCategories->findById(4)->contain(['Parents'])->first();
+        $category = $this->PostsCategories->findById(4)->contain('Parents')->first();
 
         $this->assertNotEmpty($category->parent);
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
-        $category = $this->PostsCategories->findById($category->parent->id)->contain(['Parents'])->first();
+        $category = $this->PostsCategories->findById($category->parent->id)->contain('Parents')->first();
 
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
@@ -140,7 +140,7 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testHasManyChilds()
     {
-        $category = $this->PostsCategories->findById(1)->contain(['Childs'])->first();
+        $category = $this->PostsCategories->findById(1)->contain('Childs')->first();
 
         $this->assertNotEmpty($category->childs);
 
@@ -148,7 +148,7 @@ class PostsCategoriesTableTest extends TestCase
             $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $children);
             $this->assertEquals(1, $children->parent_id);
 
-            $category = $this->PostsCategories->findById($children->id)->contain(['Childs'])->first();
+            $category = $this->PostsCategories->findById($children->id)->contain('Childs')->first();
 
             $this->assertNotEmpty($category->childs);
 
@@ -165,7 +165,7 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testHasManyPosts()
     {
-        $category = $this->PostsCategories->find()->contain(['Posts'])->first();
+        $category = $this->PostsCategories->find()->contain('Posts')->first();
 
         $this->assertNotEmpty($category->posts);
 

@@ -12,6 +12,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -31,7 +32,9 @@ class PhotosController extends AppController
         //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
             $slug = $this->Photos->findById($id)
-                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
+                ->contain($this->Photos->Albums->getAlias(), function (Query $q) {
+                    return $q->select(['slug']);
+                })
                 ->extract('album.slug')
                 ->first();
 
@@ -40,7 +43,9 @@ class PhotosController extends AppController
 
         $photo = $this->Photos->find('active')
             ->select(['id', 'album_id', 'filename', 'active', 'modified'])
-            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
+            ->contain($this->Photos->Albums->getAlias(), function (Query $q) {
+                return $q->select(['id', 'title', 'slug']);
+            })
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
             ->firstOrFail();
@@ -58,7 +63,9 @@ class PhotosController extends AppController
     {
         $photo = $this->Photos->find('pending')
             ->select(['id', 'album_id', 'filename'])
-            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
+            ->contain($this->Photos->Albums->getAlias(), function (Query $q) {
+                return $q->select(['id', 'title', 'slug']);
+            })
             ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
             ->firstOrFail();
 

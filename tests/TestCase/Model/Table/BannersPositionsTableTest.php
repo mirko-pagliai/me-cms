@@ -101,7 +101,7 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testHasManyBanners()
     {
-        $position = $this->BannersPositions->findById(1)->contain(['Banners'])->first();
+        $position = $this->BannersPositions->findById(1)->contain('Banners')->first();
         $this->assertNotEmpty($position->banners);
 
         foreach ($position->banners as $banner) {

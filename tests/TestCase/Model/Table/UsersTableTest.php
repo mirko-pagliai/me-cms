@@ -165,7 +165,7 @@ class UsersTableTest extends TestCase
      */
     public function testBelongsToUsersGroups()
     {
-        $user = $this->Users->findById(4)->contain(['Groups'])->first();
+        $user = $this->Users->findById(4)->contain('Groups')->first();
 
         $this->assertNotEmpty($user->group);
         $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', $user->group);
@@ -178,7 +178,7 @@ class UsersTableTest extends TestCase
      */
     public function testHasManyPosts()
     {
-        $user = $this->Users->findById(1)->contain(['Posts'])->first();
+        $user = $this->Users->findById(1)->contain('Posts')->first();
 
         $this->assertNotEmpty($user->posts);
 
@@ -197,7 +197,7 @@ class UsersTableTest extends TestCase
         //Creates a token
         $token = (new Token)->create('testToken', ['user_id' => 4]);
 
-        $user = $this->Users->findById(4)->contain(['Tokens'])->first();
+        $user = $this->Users->findById(4)->contain('Tokens')->first();
 
         $this->assertEquals(1, count($user->tokens));
         $this->assertInstanceOf('Tokens\Model\Entity\Token', $user->tokens[0]);

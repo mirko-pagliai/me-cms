@@ -14,6 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -81,7 +82,9 @@ class BannersController extends AppController
             $render = $this->Cookie->read('renderBanners');
         }
 
-        $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
+        $query = $this->Banners->find()->contain('Positions', function (Query $q) {
+            return $q->select(['id', 'title']);
+        });
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

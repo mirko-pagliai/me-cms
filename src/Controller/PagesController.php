@@ -13,6 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Event\Event;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -70,7 +71,9 @@ class PagesController extends AppController
 
         $page = $this->Pages->find('active')
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
+            ->contain($this->Pages->Categories->getAlias(), function (Query $q) {
+                return $q->select(['title', 'slug']);
+            })
             ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
             ->firstOrFail();
@@ -88,7 +91,9 @@ class PagesController extends AppController
     {
         $page = $this->Pages->find('pending')
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
+            ->contain($this->Pages->Categories->getAlias(), function (Query $q) {
+                return $q->select(['title', 'slug']);
+            })
             ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
             ->firstOrFail();
 

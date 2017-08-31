@@ -104,7 +104,7 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testHasManyUsers()
     {
-        $group = $this->UsersGroups->findById(3)->contain(['Users'])->first();
+        $group = $this->UsersGroups->findById(3)->contain('Users')->first();
 
         $this->assertNotEmpty($group->users);
 

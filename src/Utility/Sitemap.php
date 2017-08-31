@@ -45,11 +45,11 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'lft', 'slug'])
-            ->contain([$table->Pages->getAlias() => function (Query $q) use ($table) {
+            ->contain($table->Pages->getAlias(), function (Query $q) use ($table) {
                 return $q->find('active')
                     ->select(['category_id', 'slug', 'modified'])
                     ->order([sprintf('%s.modified', $table->Pages->getAlias()) => 'DESC']);
-            }])
+            })
             ->order(['lft' => 'ASC']);
 
         if ($categories->isEmpty()) {
@@ -97,11 +97,11 @@ class Sitemap extends SitemapBuilder
 
         $albums = $table->find('active')
             ->select(['id', 'slug'])
-            ->contain([$table->Photos->getAlias() => function (Query $q) use ($table) {
+            ->contain($table->Photos->getAlias(), function (Query $q) use ($table) {
                 return $q->find('active')
                     ->select(['id', 'album_id', 'modified'])
                     ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC']);
-            }]);
+            });
 
         if ($albums->isEmpty()) {
             return [];
@@ -153,11 +153,11 @@ class Sitemap extends SitemapBuilder
 
         $categories = $table->find('active')
             ->select(['id', 'lft', 'slug'])
-            ->contain([$table->Posts->getAlias() => function (Query $q) use ($table) {
+            ->contain($table->Posts->getAlias(), function (Query $q) use ($table) {
                 return $q->find('active')
                     ->select(['category_id', 'slug', 'modified'])
                     ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC']);
-            }])
+            })
             ->order(['lft' => 'ASC']);
 
         if ($categories->isEmpty()) {

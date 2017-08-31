@@ -13,6 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
@@ -104,7 +105,9 @@ class PagesController extends AppController
      */
     public function index()
     {
-        $query = $this->Pages->find()->contain(['Categories' => ['fields' => ['id', 'title']]]);
+        $query = $this->Pages->find()->contain('Categories', function (Query $q) {
+            return $q->select(['id', 'title']);
+        });
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

@@ -124,7 +124,7 @@ class BannersTableTest extends TestCase
      */
     public function testBelongsToBannersPositions()
     {
-        $banner = $this->Banners->findById(2)->contain(['Positions'])->first();
+        $banner = $this->Banners->findById(2)->contain('Positions')->first();
 
         $this->assertNotEmpty($banner->position);
         $this->assertInstanceOf('MeCms\Model\Entity\BannersPosition', $banner->position);

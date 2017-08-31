@@ -123,13 +123,13 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testBelongsToParents()
     {
-        $category = $this->PagesCategories->findById(4)->contain(['Parents'])->first();
+        $category = $this->PagesCategories->findById(4)->contain('Parents')->first();
 
         $this->assertNotEmpty($category->parent);
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
-        $category = $this->PagesCategories->findById($category->parent->id)->contain(['Parents'])->first();
+        $category = $this->PagesCategories->findById($category->parent->id)->contain('Parents')->first();
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
     }
@@ -140,7 +140,7 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testHasManyChilds()
     {
-        $category = $this->PagesCategories->findById(1)->contain(['Childs'])->first();
+        $category = $this->PagesCategories->findById(1)->contain('Childs')->first();
 
         $this->assertNotEmpty($category->childs);
 
@@ -148,7 +148,7 @@ class PagesCategoriesTableTest extends TestCase
             $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $children);
             $this->assertEquals(1, $children->parent_id);
 
-            $category = $this->PagesCategories->findById($children->id)->contain(['Childs'])->first();
+            $category = $this->PagesCategories->findById($children->id)->contain('Childs')->first();
 
             $this->assertNotEmpty($category->childs);
 
@@ -165,7 +165,7 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testHasManyPages()
     {
-        $category = $this->PagesCategories->find()->contain(['Pages'])->first();
+        $category = $this->PagesCategories->find()->contain('Pages')->first();
 
         $this->assertNotEmpty($category->pages);
 

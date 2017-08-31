@@ -136,7 +136,7 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testHasManyPhotos()
     {
-        $album = $this->PhotosAlbums->findById(1)->contain(['Photos'])->first();
+        $album = $this->PhotosAlbums->findById(1)->contain('Photos')->first();
 
         $this->assertNotEmpty($album->photos);
 

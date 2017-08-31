@@ -12,6 +12,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\ORM\Query;
 use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Shell;
 
@@ -159,7 +160,9 @@ class UserShell extends Shell
         //Gets users
         $users = $this->Users->find()
             ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-            ->contain(['Groups' => ['fields' => ['label']]]);
+            ->contain('Groups', function (Query $q) {
+                return $q->select(['label']);
+            });
 
         //Checks for users
         if (!$users->count()) {

@@ -164,7 +164,7 @@ class PhotosTableTest extends TestCase
      */
     public function testBelongsToPhotosAlbums()
     {
-        $photo = $this->Photos->findById(2)->contain(['Albums'])->first();
+        $photo = $this->Photos->findById(2)->contain('Albums')->first();
 
         $this->assertNotEmpty($photo->album);
         $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $photo->album);
