@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.21 branch
+### 2.21.0
+* updated for CakePHP 3.5.
+
 ## 2.20 branch
 ### 2.20.2
 * only one bootstrap file is used. Deleted `config/bootstrap_base.php`;

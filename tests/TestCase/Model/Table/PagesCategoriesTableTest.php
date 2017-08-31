@@ -114,7 +114,7 @@ class PagesCategoriesTableTest extends TestCase
         $this->assertTrue($this->PagesCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PagesCategories->hasBehavior('Tree'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PagesCategoryValidator', $this->PagesCategories->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PagesCategoryValidator', $this->PagesCategories->getValidator());
     }
 
     /**
@@ -183,8 +183,8 @@ class PagesCategoriesTableTest extends TestCase
     {
         $query = $this->PagesCategories->find('active');
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {

@@ -95,7 +95,7 @@ class UsersGroupsTableTest extends TestCase
 
         $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\UsersGroupValidator', $this->UsersGroups->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\UsersGroupValidator', $this->UsersGroups->getValidator());
     }
 
     /**

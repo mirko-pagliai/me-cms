@@ -96,7 +96,7 @@ class TagsTableTest extends TestCase
 
         $this->assertTrue($this->Tags->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', $this->Tags->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', $this->Tags->getValidator());
     }
 
     /**
@@ -107,8 +107,8 @@ class TagsTableTest extends TestCase
     {
         $query = $this->Tags->find('active');
         $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
     }
 
@@ -122,6 +122,6 @@ class TagsTableTest extends TestCase
 
         $query = $this->Tags->queryFromFilter($this->Tags->find(), $data);
         $this->assertStringEndsWith('FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
-        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

@@ -45,7 +45,7 @@ class AdminViewTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals(ME_CMS . '.admin', $this->View->layout());
+        $this->assertEquals(ME_CMS . '.admin', $this->View->getLayout());
     }
 
     /**

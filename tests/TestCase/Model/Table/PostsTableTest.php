@@ -86,7 +86,7 @@ class PostsTableTest extends TestCase
      */
     public function testInitializeSchema()
     {
-        $this->assertEquals('json', $this->Posts->getSchema()->columnType('preview'));
+        $this->assertEquals('json', $this->Posts->getSchema()->getColumnType('preview'));
     }
 
     /**
@@ -227,7 +227,7 @@ class PostsTableTest extends TestCase
         $this->assertTrue($this->Posts->hasBehavior('Timestamp'));
         $this->assertTrue($this->Posts->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PostValidator', $this->Posts->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PostValidator', $this->Posts->getValidator());
     }
 
     /**
@@ -370,6 +370,6 @@ class PostsTableTest extends TestCase
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
-        $this->assertEquals('test', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

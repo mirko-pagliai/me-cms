@@ -85,7 +85,7 @@ class SystemsController extends AppController
         //Checks the type, then sets the KCFinder path
         if ($type && array_key_exists($type, $types)) {
             //Sets locale
-            $locale = substr(I18n::locale(), 0, 2);
+            $locale = substr(I18n::getLocale(), 0, 2);
             $locale = empty($locale) ? 'en' : $locale;
 
             $this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', true), $locale, $type));

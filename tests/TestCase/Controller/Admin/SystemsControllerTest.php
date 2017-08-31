@@ -77,7 +77,7 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        I18n::locale('en_US');
+        I18n::setLocale('en_US');
 
         $this->setUserGroup('admin');
 
@@ -165,7 +165,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $kcfinderFromView = $this->viewVariable('kcfinder');
         $this->assertEquals('http://localhost/vendor/kcfinder/browse.php?lang=en&type=docs', $kcfinderFromView);
 
-        I18n::locale('it');
+        I18n::setLocale('it');
 
         //GET request. Now with `it` locale
         $this->get(array_merge($url, ['?' => ['type' => 'docs']]));

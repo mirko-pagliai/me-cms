@@ -118,7 +118,7 @@ class AppControllerTest extends IntegrationTestCase
         $this->assertEquals(ME_CMS . '.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
-        $this->Controller->request->env('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $this->Controller->request = $this->Controller->request->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
         $this->Controller->beforeFilter($this->Event);
         $this->assertEquals(ME_CMS . '.ajax', $this->Controller->viewBuilder()->getLayout());
     }

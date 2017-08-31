@@ -92,7 +92,7 @@ class BannersPositionsTableTest extends TestCase
 
         $this->assertTrue($this->BannersPositions->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\BannersPositionValidator', $this->BannersPositions->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\BannersPositionValidator', $this->BannersPositions->getValidator());
     }
 
     /**

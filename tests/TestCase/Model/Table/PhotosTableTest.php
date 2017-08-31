@@ -155,7 +155,7 @@ class PhotosTableTest extends TestCase
         $this->assertTrue($this->Photos->hasBehavior('Timestamp'));
         $this->assertTrue($this->Photos->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PhotoValidator', $this->Photos->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PhotoValidator', $this->Photos->getValidator());
     }
 
     /**
@@ -179,7 +179,7 @@ class PhotosTableTest extends TestCase
     {
         $query = $this->Photos->find('active');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -195,7 +195,7 @@ class PhotosTableTest extends TestCase
     {
         $query = $this->Photos->find('pending');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
-        $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
 
         foreach ($query->toArray() as $entity) {
             $this->assertFalse($entity->active);
@@ -212,6 +212,6 @@ class PhotosTableTest extends TestCase
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
-        $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

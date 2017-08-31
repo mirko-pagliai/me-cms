@@ -27,7 +27,7 @@ class I18nTest extends TestCase
      */
     public function testI18nConstant()
     {
-        $translator = I18n::translator('me_cms', 'it_IT');
+        $translator = I18n::getTranslator('me_cms', 'it_IT');
         $this->assertEquals('Aggiungi', $translator->translate(I18N_ADD));
     }
 }

@@ -114,7 +114,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertTrue($this->PostsCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PostsCategories->hasBehavior('Tree'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PostsCategoryValidator', $this->PostsCategories->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PostsCategoryValidator', $this->PostsCategories->getValidator());
     }
     /**
      * Test for the `belongsTo` association with `PostsCategories` parents
@@ -183,8 +183,8 @@ class PostsCategoriesTableTest extends TestCase
     {
         $query = $this->PostsCategories->find('active');
         $this->assertStringEndsWith('FROM posts_categories Categories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Categories.id = (Posts.category_id))', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {

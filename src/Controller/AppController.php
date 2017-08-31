@@ -110,7 +110,7 @@ class AppController extends BaseController
         $this->loadComponent('Recaptcha.Recaptcha', [
             'sitekey' => getConfigOrFail('Recaptcha.public'),
             'secret' => getConfigOrFail('Recaptcha.private'),
-            'lang' => substr(I18n::locale(), 0, 2),
+            'lang' => substr(I18n::getLocale(), 0, 2),
         ]);
 
         parent::initialize();

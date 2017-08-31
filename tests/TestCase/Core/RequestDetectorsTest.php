@@ -90,49 +90,49 @@ class RequestDetectorsTest extends TestCase
         $this->assertNull($this->Request->session()->read('allowed_ip'));
 
         //It is NOT banned. This is not the same IP
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.98']);
         $this->assertFalse($this->Request->isBanned());
         $this->assertTrue($this->Request->session()->read('allowed_ip'));
 
         //It is NOT banned. None of the IP coincided
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.97', '99.99.99.98']);
         $this->assertFalse($this->Request->isBanned());
         $this->assertTrue($this->Request->session()->read('allowed_ip'));
 
         //It is NOT banned. None of the IP coincided
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.98.*', '99.99.*.98']);
         $this->assertFalse($this->Request->isBanned());
         $this->assertTrue($this->Request->session()->read('allowed_ip'));
 
         //It is banned. This is the same IP
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.99']);
         $this->assertTrue($this->Request->isBanned());
         $this->assertNull($this->Request->session()->read('allowed_ip'));
 
         //It is banned. One of the IP coincided
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.98', '99.99.99.99']);
         $this->assertTrue($this->Request->isBanned());
         $this->assertNull($this->Request->session()->read('allowed_ip'));
 
         //It is banned. One of the IP coincided
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.*']);
         $this->assertTrue($this->Request->isBanned());
         $this->assertNull($this->Request->session()->read('allowed_ip'));
 
         //It is banned. One of the IP coincided
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.*.99']);
         $this->assertTrue($this->Request->isBanned());
         $this->assertNull($this->Request->session()->read('allowed_ip'));
@@ -140,7 +140,7 @@ class RequestDetectorsTest extends TestCase
 
         //It is banned. One of the IP coincided
         $this->Request->session()->delete('allowed_ip');
-        $this->Request->env('REMOTE_ADDR', '99.99.99.99');
+        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
         Configure::write('Banned', ['99.99.99.98', '99.99.*.99']);
         $this->assertTrue($this->Request->isBanned());
         $this->assertNull($this->Request->session()->read('allowed_ip'));
