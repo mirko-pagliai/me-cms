@@ -196,7 +196,7 @@ class InstallShell extends BaseInstallShell
     /**
      * Fixes KCFinder.
      * Creates the file `vendor/kcfinder/.htaccess`
-     * @return void
+     * @return bool `false` on failure
      * @see http://kcfinder.sunhater.com/integrate
      * @uses MeTools\Console\Shell::createFile()
      */
@@ -206,7 +206,7 @@ class InstallShell extends BaseInstallShell
         if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder')) {
             $this->err(__d('me_tools', '{0} is not available', 'KCFinder'));
 
-            return;
+            return false;
         }
 
         $this->createFile(

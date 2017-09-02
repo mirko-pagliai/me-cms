@@ -20,7 +20,7 @@ $this->set([
         'title' => __d('me_cms', 'Latest posts'),
         'link' => $this->Url->build('/', true),
         'description' => __d('me_cms', 'Latest posts'),
-        'language' => I18n::locale(),
+        'language' => I18n::getLocale(),
     ],
 ]);
 

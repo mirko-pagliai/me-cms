@@ -153,8 +153,8 @@ class AppTableTest extends TestCase
     {
         $query = $this->Posts->find('active');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -170,8 +170,8 @@ class AppTableTest extends TestCase
     {
         $query = $this->Posts->find('pending');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
-        $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
 
         foreach ($query->toArray() as $entity) {
             $this->assertTrue(!$entity->active || $entity->created->isFuture());
@@ -264,7 +264,7 @@ class AppTableTest extends TestCase
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
 
-        $params = collection($query->valueBinder()->bindings())->extract('value')->map(function ($value) {
+        $params = collection($query->getValueBinder()->bindings())->extract('value')->map(function ($value) {
             if ($value instanceof Time) {
                 return $value->i18nFormat('yyyy-MM-dd HH:mm:ss');
             }
@@ -287,13 +287,13 @@ class AppTableTest extends TestCase
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
-        $this->assertEquals(false, $query->valueBinder()->bindings()[':c4']['value']);
+        $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
         $data = ['filename' => 'image.jpg'];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
-        $this->assertEquals('%image.jpg%', $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals('%image.jpg%', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 
     /**
@@ -309,11 +309,11 @@ class AppTableTest extends TestCase
         ];
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertEmpty($query->valueBinder()->bindings());
+        $this->assertEmpty($query->getValueBinder()->bindings());
 
         $data = ['filename' => 'ab'];
 
         $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
-        $this->assertEmpty($query->valueBinder()->bindings());
+        $this->assertEmpty($query->getValueBinder()->bindings());
     }
 }

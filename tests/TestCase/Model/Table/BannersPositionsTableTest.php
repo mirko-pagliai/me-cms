@@ -92,7 +92,7 @@ class BannersPositionsTableTest extends TestCase
 
         $this->assertTrue($this->BannersPositions->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\BannersPositionValidator', $this->BannersPositions->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\BannersPositionValidator', $this->BannersPositions->getValidator());
     }
 
     /**
@@ -101,7 +101,7 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testHasManyBanners()
     {
-        $position = $this->BannersPositions->findById(1)->contain(['Banners'])->first();
+        $position = $this->BannersPositions->findById(1)->contain('Banners')->first();
         $this->assertNotEmpty($position->banners);
 
         foreach ($position->banners as $banner) {

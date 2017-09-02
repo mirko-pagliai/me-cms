@@ -119,8 +119,8 @@ class AppViewTest extends TestCase
     {
         $result = $this->View->render(false);
         $this->assertNotEmpty($result);
-        $this->assertEquals('default', $this->View->layout());
-        $this->assertEquals(null, $this->View->theme());
+        $this->assertEquals('default', $this->View->getLayout());
+        $this->assertEquals(null, $this->View->getTheme());
     }
 
     /**
@@ -139,8 +139,8 @@ class AppViewTest extends TestCase
 
         $result = $this->View->render(false);
         $this->assertEquals('This is a layout from TestPlugin', $result);
-        $this->assertEquals('default', $this->View->layout());
-        $this->assertEquals($theme, $this->View->theme());
+        $this->assertEquals('default', $this->View->getLayout());
+        $this->assertEquals($theme, $this->View->getTheme());
     }
 
     /**
@@ -159,9 +159,9 @@ class AppViewTest extends TestCase
         @unlink($layoutFromApp);
 
         $this->assertEquals('This is a layout from app', $result);
-        $this->assertEquals('default', $this->View->layout());
+        $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals(ME_CMS, $this->View->plugin);
-        $this->assertEquals(null, $this->View->theme());
+        $this->assertEquals(null, $this->View->getTheme());
     }
 
     /**

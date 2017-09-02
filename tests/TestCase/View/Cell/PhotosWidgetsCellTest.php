@@ -67,7 +67,6 @@ class PhotosWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.Photos::albums';
 
         $result = $this->Widget->widget($widget)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -95,7 +94,6 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -127,7 +125,7 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Empty on albums index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'albums']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -162,7 +160,6 @@ class PhotosWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.Photos::latest';
 
         $result = $this->Widget->widget($widget)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -179,7 +176,6 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Tries another limit
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -232,7 +228,6 @@ class PhotosWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.Photos::random';
 
         $result = $this->Widget->widget($widget)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -249,7 +244,6 @@ class PhotosWidgetsCellTest extends TestCase
 
         //Tries another limit
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],

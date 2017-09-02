@@ -39,7 +39,7 @@ class ViewTest extends TestCase
         parent::setUp();
 
         $request = new Request;
-        $request = $request->env('REQUEST_URI', '/some-page');
+        $request = $request->withEnv('REQUEST_URI', '/some-page');
 
         $this->View = new View($request);
         $this->View->plugin = ME_CMS;
@@ -62,7 +62,7 @@ class ViewTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertNull($this->View->theme());
+        $this->assertNull($this->View->getTheme());
 
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
@@ -72,7 +72,7 @@ class ViewTest extends TestCase
         //Reloads the View
         $this->View = new View(new Request);
 
-        $this->assertEquals($theme, $this->View->theme());
+        $this->assertEquals($theme, $this->View->getTheme());
     }
 
     /**

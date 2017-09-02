@@ -135,7 +135,7 @@ class StaticPage
      */
     public static function get($slug)
     {
-        $locale = I18n::locale();
+        $locale = I18n::getLocale();
 
         //Sets the cache name
         $cache = sprintf('page_%s_locale_%s', md5($slug), $locale);

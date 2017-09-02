@@ -85,13 +85,13 @@ class PostTest extends TestCase
      */
     public function testTagsAsStringGetMutator()
     {
-        $post = $this->Posts->findById(1)->contain(['Tags'])->first();
+        $post = $this->Posts->findById(1)->contain('Tags')->first();
         $this->assertEquals('cat, dog, bird', $post->tags_as_string);
 
-        $post = $this->Posts->findById(3)->contain(['Tags'])->first();
+        $post = $this->Posts->findById(3)->contain('Tags')->first();
         $this->assertEquals('cat', $post->tags_as_string);
 
-        $post = $this->Posts->findById(4)->contain(['Tags'])->first();
+        $post = $this->Posts->findById(4)->contain('Tags')->first();
         $this->assertNull($post->tags_as_string);
     }
 }

@@ -127,7 +127,7 @@ class PhotosAlbumsTableTest extends TestCase
 
         $this->assertTrue($this->PhotosAlbums->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PhotosAlbumValidator', $this->PhotosAlbums->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PhotosAlbumValidator', $this->PhotosAlbums->getValidator());
     }
 
     /**
@@ -136,7 +136,7 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testHasManyPhotos()
     {
-        $album = $this->PhotosAlbums->findById(1)->contain(['Photos'])->first();
+        $album = $this->PhotosAlbums->findById(1)->contain('Photos')->first();
 
         $this->assertNotEmpty($album->photos);
 
@@ -154,7 +154,7 @@ class PhotosAlbumsTableTest extends TestCase
     {
         $query = $this->PhotosAlbums->find('active');
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
