@@ -131,7 +131,7 @@ class UserShell extends Shell
         if (!$groups->count()) {
             $this->err(__d('me_cms', 'There are no user groups'));
 
-            return;
+            return false;
         }
 
         //Formats groups
@@ -168,7 +168,7 @@ class UserShell extends Shell
         if (!$users->count()) {
             $this->err(__d('me_cms', 'There are no users'));
 
-            return;
+            return false;
         }
 
         //Sets headers
