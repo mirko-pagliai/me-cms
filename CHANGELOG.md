@@ -1,7 +1,9 @@
 # 2.x branch
 ## 2.21 branch
 ### 2.21.0
-* updated for CakePHP 3.5.
+* updated for CakePHP 3.5;
+* `UserShell::add()` now returns `true`. The created user id is shown through a
+    successful message.
 
 ## 2.20 branch
 ### 2.20.2

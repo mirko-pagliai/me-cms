@@ -35,7 +35,7 @@ class UserShell extends Shell
 
     /**
      * Adds an user
-     * @return int|bool User ID or `false` on failure
+     * @return bool `false` on failure
      */
     public function add()
     {
@@ -113,13 +113,12 @@ class UserShell extends Shell
         }
 
         $this->success(I18N_OPERATION_OK);
-
-        return $user->id;
+        $this->success(__d('me_cms', 'The user was created with ID {0}', $user->id));
     }
 
     /**
      * Lists user groups
-     * @return void
+     * @return bool `false` on failure
      */
     public function groups()
     {
@@ -153,7 +152,7 @@ class UserShell extends Shell
 
     /**
      * Lists users
-     * @return void
+     * @return bool `false` on failure
      */
     public function users()
     {
