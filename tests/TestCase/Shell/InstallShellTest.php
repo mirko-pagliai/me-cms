@@ -12,17 +12,16 @@
  */
 namespace MeCms\Test\TestCase\Shell;
 
-use Cake\Console\ConsoleIo;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Core\Plugin;
 use MeCms\Shell\InstallShell;
-use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestCase;
 
 /**
  * InstallShellTest class
  */
-class InstallShellTest extends TestCase
+class InstallShellTest extends ConsoleIntegrationTestCase
 {
     /**
      * @var \MeCms\Shell\InstallShell
@@ -36,6 +35,16 @@ class InstallShellTest extends TestCase
     public $fixtures = ['plugin.me_cms.users_groups'];
 
     /**
+     * @var \Cake\TestSuite\Stub\ConsoleOutput
+     */
+    protected $out;
+
+    /**
+     * @var \Cake\TestSuite\Stub\ConsoleOutput
+     */
+    protected $err;
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -47,13 +56,8 @@ class InstallShellTest extends TestCase
 
         $this->out = new ConsoleOutput;
         $this->err = new ConsoleOutput;
-        $this->io = new ConsoleIo($this->out, $this->err);
-        $this->io->level(2);
 
-        $this->InstallShell = $this->getMockBuilder(InstallShell::class)
-            ->setMethods(['in', '_stop'])
-            ->setConstructorArgs([$this->io])
-            ->getMock();
+        $this->InstallShell = new InstallShell;
     }
 
     /**
@@ -93,7 +97,7 @@ class InstallShellTest extends TestCase
 
     public function testAll()
     {
-        //Gets all methods from `InstallShell`
+        //Gets all methods from `InstallShell`, except for the `all()` method
         $methods = array_diff(array_merge(
             getChildMethods(METOOLS . '\Shell\InstallShell'),
             getChildMethods(InstallShell::class)
@@ -101,7 +105,6 @@ class InstallShellTest extends TestCase
 
         $this->InstallShell = $this->getMockBuilder(InstallShell::class)
             ->setMethods(array_merge(['in', '_stop'], $methods))
-            ->setConstructorArgs([$this->io])
             ->getMock();
 
         $this->InstallShell->method('in')->will($this->returnValue('y'));
@@ -155,16 +158,18 @@ class InstallShellTest extends TestCase
      */
     public function testCopyConfig()
     {
-        $this->InstallShell->copyConfig();
+        $files = collection($this->getProperty($this->InstallShell, 'config'))
+            ->map(function ($file) {
+                return rtr(CONFIG . pluginSplit($file)[1] . '.php');
+            })
+            ->toArray();
 
-        $this->assertEquals([
-            'File or directory tests/test_app/TestApp/config/recaptcha.php already exists',
-            'File or directory tests/test_app/TestApp/config/banned_ip.php already exists',
-            'File or directory tests/test_app/TestApp/config/me_cms.php already exists',
-            'File or directory tests/test_app/TestApp/config/widgets.php already exists',
-        ], $this->out->messages());
+        $this->exec('me_cms.install copy_config -v');
+        $this->assertExitWithSuccess();
 
-        $this->assertEmpty($this->err->messages());
+        foreach ($files as $file) {
+            $this->assertOutputContains('File or directory ' . $file . ' already exists');
+        }
     }
 
     /**
@@ -175,7 +180,6 @@ class InstallShellTest extends TestCase
     {
         $this->InstallShell = $this->getMockBuilder(InstallShell::class)
             ->setMethods(['in', '_stop', 'dispatchShell'])
-            ->setConstructorArgs([$this->io])
             ->getMock();
 
         $this->InstallShell->method('dispatchShell')
@@ -196,20 +200,18 @@ class InstallShellTest extends TestCase
     public function testCreateGroups()
     {
         //A group already exists
-        $this->assertFalse($this->InstallShell->createGroups());
+        $this->exec('me_cms.install create_groups -v');
+        $this->assertExitWithError();
+        $this->assertErrorContains('<error>Some user groups already exist</error>');
 
         $groups = TableRegistry::get(ME_CMS . '.UsersGroups');
 
         //Deletes all groups
         $this->assertNotEquals(0, $groups->deleteAll(['id >=' => '1']));
 
-        $this->assertEmpty($groups->find()->toArray());
-        $this->assertTrue($this->InstallShell->createGroups());
-        $this->assertNotEmpty($groups->find()->toArray());
-        $this->assertEquals(3, count($groups->find()->toArray()));
-
-        $this->assertEquals(['The user groups have been created'], $this->out->messages());
-        $this->assertEquals(['<error>Some user groups already exist</error>'], $this->err->messages());
+        $this->exec('me_cms.install create_groups -v');
+        $this->assertExitWithSuccess();
+        $this->assertOutputContains('The user groups have been created');
     }
 
     /**
@@ -218,35 +220,37 @@ class InstallShellTest extends TestCase
      */
     public function testFixKcfinder()
     {
-        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+        $htaccessFile = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+        $indexFile = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
 
         //@codingStandardsIgnoreStart
-        @unlink($file);
-        @unlink(dirname($file) . DS . 'index.php');
-        @rmdir(dirname($file));
+        @unlink($htaccessFile);
+        @unlink($indexFile);
+        @rmdir(dirname($indexFile));
         //@codingStandardsIgnoreEnd
 
         //For now KCFinder is not available
-        $this->InstallShell->fixKcfinder();
+        $this->exec('me_cms.install fix_kcfinder -v');
+        $this->assertExitWithError();
+        $this->assertErrorContains('<error>KCFinder is not available</error>');
 
         //@codingStandardsIgnoreLine
-        @mkdir(dirname($file), 0777, true);
-        file_put_contents(dirname($file) . DS . 'index.php', null);
+        @mkdir(dirname($indexFile), 0777, true);
+        file_put_contents($indexFile, null);
 
-        $this->InstallShell->fixKcfinder();
-        $this->assertFileExists($file);
+        $this->exec('me_cms.install fix_kcfinder -v');
+        $this->assertExitWithSuccess();
+        $this->assertOutputContains('Creating file ' . $htaccessFile);
+        $this->assertOutputContains('<success>Wrote</success> `' . $htaccessFile . '`');
 
-        $this->assertEquals(
+        $this->assertStringEqualsFile(
+            $htaccessFile,
             'php_value session.cache_limiter must-revalidate' . PHP_EOL .
             'php_value session.cookie_httponly On' . PHP_EOL .
             'php_value session.cookie_lifetime 14400' . PHP_EOL .
             'php_value session.gc_maxlifetime 14400' . PHP_EOL .
-            'php_value session.name CAKEPHP',
-            file_get_contents($file)
+            'php_value session.name CAKEPHP'
         );
-
-        $this->assertNotEmpty($this->out->messages());
-        $this->assertEquals(['<error>KCFinder is not available</error>'], $this->err->messages());
     }
 
     /**
@@ -287,6 +291,6 @@ class InstallShellTest extends TestCase
             'set_permissions',
         ], $parser->subcommands());
         $this->assertEquals('Executes some tasks to make the system ready to work', $parser->getDescription());
-        $this->assertEquals(['force', 'help', 'quiet', 'verbose'], array_keys($parser->options()));
+        $this->assertArrayKeysEqual(['force', 'help', 'quiet', 'verbose'], $parser->options());
     }
 }
