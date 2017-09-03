@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2017-08-17 13:33+0200\n"
+"POT-Creation-Date: 2017-09-03 22:43+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,274 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:13
+msgid "Add"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:14
+msgid "all status"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:15
+msgid "Allowed chars"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:16
+msgid "Author"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:17
+msgid "You must first delete or reassign all items that belong to this element"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:18
+msgid "View items that belong to this element"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:19
+msgid "View items that belong to this user"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:20
+msgid "Leave blank to create a parent category"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:21
+msgid "Category"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:22
+msgid "Date"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:23
+msgid "You can delay the publication by entering a future date"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:24
+msgid "Delete"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:25
+msgid "Disabled"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:26
+msgid "Draft"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:27
+msgid "Description"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:28
+msgid "Download"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:29
+msgid "Edit"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:30
+msgid "Email"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:31
+msgid "You have to enter a valid value"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:32
+msgid "Enter your email"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:33
+msgid "Filename"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:34
+msgid "Filter"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:35
+msgid "First name"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:36
+msgid "Group"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:37
+msgid "Disable this option to save as a draft"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:38
+msgid "The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:39
+msgid "ID"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:40
+msgid "Label"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:41
+msgid "Last login"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:42
+msgid "Last name"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:43
+msgid "Name"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:44
+msgid "Record not found"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:45
+msgid "Not published"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:46
+msgid "Only the admin founder can do this"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:47
+msgid "Only not published"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:48
+msgid "Only published"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:49
+msgid "Open"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:50
+msgid "The operation has not been performed correctly"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:51
+msgid "The operation has been performed correctly"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:52
+msgid "Pages"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:53
+msgid "Parent category"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:54
+msgid "Password"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:55
+msgid "Photos"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:56
+msgid "Position"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:57
+msgid "Posts"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:58
+msgid "Posts categories"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:59
+msgid "Preview"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:60
+msgid "Priority"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:61
+msgid "Published"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:62
+msgid "Repeat email"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:63
+msgid "Repeat password"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:64
+msgid "Scheduled"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:65
+msgid "Select"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:66
+msgid "You have to select a valid option"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:67
+msgid "Show/hide password"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:68
+msgid "Slug"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:69
+msgid "Status"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:70
+msgid "Subtitle"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:71
+msgid "Tags"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:72
+msgid "Text"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:73
+msgid "Are you sure you want to delete this?"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:74
+msgid "Title"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:75
+msgid "Upload"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:76
+msgid "If blank, the current date and time will be used"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:77
+msgid "Username"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:78
+msgid "Users"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:79
+msgid "This value is already used"
+msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/PostsController.php:193
 msgid "You have to search at least a word of {0} characters"
@@ -83,21 +351,21 @@ msgstr ""
 msgid "The account has not been created"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:42
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:43
 msgid "You must first create a banner position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:125
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:124
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/BannersController.php:128
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:127
 msgid "Missing ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:54
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PagesController.php:55
 #: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PostsController.php:57
 msgid "You must first create a category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:42
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/PhotosController.php:43
 msgid "You must first create an album"
 msgstr ""
 
@@ -109,11 +377,11 @@ msgstr ""
 msgid "n.a."
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:44
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:45
 msgid "You must first create an user group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:195
+#: /home/mirko/Libs/Plugins/MeCms/src/Controller/Admin/UsersController.php:201
 msgid "You cannot delete the admin founder"
 msgstr ""
 
@@ -282,69 +550,73 @@ msgstr ""
 msgid "Runs the installer from other plugins"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:46
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:47
 msgid "Before you can manage users, you have to create at least a user group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:74;215
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:75;217
 msgid "Group ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:82
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:83
 msgid "Field `{0}` is empty. Try again"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:90
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:91
 msgid "Invalid group ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:100
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:101
 msgid "The user could not be saved"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:106
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:107
 msgid "Field `{0}`: {1}"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:116
+msgid "The user was created with ID {0}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:131
 msgid "There are no user groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:166
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:168
 msgid "There are no users"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:176
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:178
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:91
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:62
 msgid "Banned"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:178
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:180
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/index.ctp:94
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:65
 msgid "Pending"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:180
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:182
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/add.ctp:27
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Users/view.ctp:68
 msgid "Active"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:208
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:210
 msgid "Shell to handle users and user groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:211
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:213
 msgid "Adds an user"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:219
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:221
 msgid "Lists user groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:220
+#: /home/mirko/Libs/Plugins/MeCms/src/Shell/UserShell.php:222
 msgid "Lists users"
 msgstr ""
 
@@ -1064,7 +1336,7 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/topbar.ctp:19
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:28
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:23
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:21
 msgid "Toggle navigation"
 msgstr ""
 
@@ -1082,12 +1354,12 @@ msgid "Dashboard"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:50
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:53
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:58
 msgid "Change password"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/userbar.ctp:55
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:57
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:61
 msgid "Logout"
 msgstr ""
 
@@ -1147,7 +1419,7 @@ msgstr ""
 msgid "Show as grid"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:28
+#: /home/mirko/Libs/Plugins/MeCms/src/Template/Element/admin/topbar.ctp:32
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Layout/default.ctp:61
 msgid "Homepage"
 msgstr ""
@@ -1415,273 +1687,5 @@ msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/View/Helper/MenuHelper.php:332
 msgid "System"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:13
-msgid "Add"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:14
-msgid "all status"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:15
-msgid "Allowed chars"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:16
-msgid "Author"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:17
-msgid "You must first delete or reassign all items that belong to this element"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:18
-msgid "View items that belong to this element"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:19
-msgid "View items that belong to this user"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:20
-msgid "Leave blank to create a parent category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:21
-msgid "Category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:22
-msgid "Date"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:23
-msgid "You can delay the publication by entering a future date"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:24
-msgid "Delete"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:25
-msgid "Disabled"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:26
-msgid "Draft"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:27
-msgid "Description"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:28
-msgid "Download"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:29
-msgid "Edit"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:30
-msgid "Email"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:31
-msgid "You have to enter a valid value"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:32
-msgid "Enter your email"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:33
-msgid "Filename"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:34
-msgid "Filter"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:35
-msgid "First name"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:36
-msgid "Group"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:37
-msgid "Disable this option to save as a draft"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:38
-msgid "The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:39
-msgid "ID"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:40
-msgid "Label"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:41
-msgid "Last login"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:42
-msgid "Last name"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:43
-msgid "Name"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:44
-msgid "Record not found"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:45
-msgid "Not published"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:46
-msgid "Only the admin founder can do this"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:47
-msgid "Only not published"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:48
-msgid "Only published"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:49
-msgid "Open"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:50
-msgid "The operation has not been performed correctly"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:51
-msgid "The operation has been performed correctly"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:52
-msgid "Pages"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:53
-msgid "Parent category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:54
-msgid "Password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:55
-msgid "Photos"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:56
-msgid "Position"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:57
-msgid "Posts"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:58
-msgid "Posts categories"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:59
-msgid "Preview"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:60
-msgid "Priority"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:61
-msgid "Published"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:62
-msgid "Repeat email"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:63
-msgid "Repeat password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:64
-msgid "Scheduled"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:65
-msgid "Select"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:66
-msgid "You have to select a valid option"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:67
-msgid "Show/hide password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:68
-msgid "Slug"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:69
-msgid "Status"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:70
-msgid "Subtitle"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:71
-msgid "Tags"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:72
-msgid "Text"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:73
-msgid "Are you sure you want to delete this?"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:74
-msgid "Title"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:75
-msgid "Upload"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:76
-msgid "If blank, the current date and time will be used"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:77
-msgid "Username"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:78
-msgid "Users"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/MeCms/config/i18n_constants.php:79
-msgid "This value is already used"
 msgstr ""
 
