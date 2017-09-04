@@ -16,12 +16,12 @@
     <div class="btn-group btn-group-sm" role="group">
         <?= $this->Html->button(
             __d('me_cms', 'Show as list'),
-            ['?' => array_merge($this->request->getQuery(), ['render' => 'list'])],
+            ['?' => array_merge($this->request->getQueryParams(), ['render' => 'list'])],
             ['class' => 'btn-primary', 'icon' => 'align-justify']
         ) ?>
         <?= $this->Html->button(
             __d('me_cms', 'Show as grid'),
-            ['?' => array_merge($this->request->getQuery(), ['render' => 'grid'])],
+            ['?' => array_merge($this->request->getQueryParams(), ['render' => 'grid'])],
             ['class' => 'btn-primary', 'icon' => 'th-large']
         ) ?>
     </div>

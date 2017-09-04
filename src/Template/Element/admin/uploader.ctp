@@ -40,7 +40,7 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
     echo $this->Form->create(null, [
         'class' => 'dropzone',
         'type' => 'file',
-        'url' => ['?' => $this->request->getQuery(), '_ext' => 'json'],
+        'url' => ['?' => $this->request->getQueryParams(), '_ext' => 'json'],
     ]);
     echo $this->Html->div('fallback', $this->Form->control('file', [
         'label' => false,
