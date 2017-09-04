@@ -11,16 +11,20 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group" id="accordionBbcode" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <?= __d('me_cms', 'BBCode') ?>
-                </a>
+                <?= $this->Html->link(__d('me_cms', 'BBCode'), '#collapseBbcode', [
+                    'aria-expanded' => 'true',
+                    'aria-controls' => 'collapseBbcode',
+                    'data-parent' => '#accordionBbcode',
+                    'data-toggle' => 'collapse',
+                    'role' => 'button',
+                ]) ?>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapseBbcode" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
                 <table class="table margin-0">
                     <thead>
