@@ -17,13 +17,13 @@ use MeCms\Core\Plugin;
     <?= $this->Html->button($this->Html->span(null, ['class' => 'navbar-toggler-icon']), null, [
         'class' => 'navbar-toggler',
         'data-toggle' => 'collapse',
-        'data-target' => '#navbarNavDropdown',
-        'aria-controls' => 'navbarNavDropdown',
+        'data-target' => '#topbarNav',
+        'aria-controls' => 'topbarNav',
         'aria-expanded' => 'false',
         'aria-label' => __d('me_cms', 'Toggle navigation'),
     ]) ?>
 
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="collapse navbar-collapse" id="topbarNav">
         <?php
             $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
                 'class' => 'nav-link',
