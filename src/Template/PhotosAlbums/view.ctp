@@ -21,17 +21,17 @@ if (getConfig('default.fancybox')) {
  * Userbar
  */
 if (!$album->active) {
-    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'badge badge-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit album'),
     ['action' => 'edit', $album->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete album'),
     ['action' => 'delete', $album->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    ['class' => 'nav-link text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**

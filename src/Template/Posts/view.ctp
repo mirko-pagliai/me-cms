@@ -16,21 +16,22 @@ $this->assign('title', $post->title);
 /**
  * Userbar
  */
+$class = 'badge badge-warning';
 if (!$post->active) {
-    $this->userbar($this->Html->span(I18N_DRAFT, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_DRAFT, compact('class')));
 }
 if ($post->created->isFuture()) {
-    $this->userbar($this->Html->span(I18N_SCHEDULED, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_SCHEDULED, compact('class')));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit post'),
     ['action' => 'edit', $post->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete post'),
     ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    ['class' => 'nav-link text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**
