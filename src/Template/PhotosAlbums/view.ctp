@@ -52,13 +52,13 @@ if (getConfig('default.fancybox')) {
 <div class="row">
     <?php foreach ($photos as $photo) : ?>
     <?php
-        $link = $this->Url->build(['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id]);
-        $options = $baseOptions + ['title' => $photo->description];
+    $link = $this->Url->build(['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id]);
+    $options = $baseOptions + ['title' => $photo->description];
 
-        //If Fancybox is enabled, adds some options
-        if (getConfig('default.fancybox')) {
-            $options += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280])];
-        }
+    //If Fancybox is enabled, adds some options
+    if (getConfig('default.fancybox')) {
+        $options += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280])];
+    }
     ?>
     <div class="col-md-4 col-lg-3 mb-4">
         <a href="<?= $link ?>" <?= toAttributes($options) ?>>

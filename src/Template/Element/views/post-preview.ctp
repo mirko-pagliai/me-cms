@@ -15,17 +15,17 @@ $link = $this->Url->build(['_name' => 'post', $post->slug]);
 
 <div class="card">
     <?php
-        $title = $post->title;
-        if (!isset($truncate['title']) || $truncate['title']) {
-            $truncate['title'] = empty($truncate['title']) ? 40 : $truncate['title'];
-            $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
-        }
-        echo $this->Html->link($title, $link, ['class' => 'card-header card-title p-2 text-truncate']);
+    $title = $post->title;
+    if (!isset($truncate['title']) || $truncate['title']) {
+        $truncate['title'] = empty($truncate['title']) ? 40 : $truncate['title'];
+        $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
+    }
+    echo $this->Html->link($title, $link, ['class' => 'card-header card-title p-2 text-truncate']);
 
-        echo $this->Html->link(
-            $this->Thumb->fit($post->preview['preview'], ['width' => 205], ['class' => 'card-img rounded-0']),
-            $link
-        );
+    echo $this->Html->link(
+        $this->Thumb->fit($post->preview['preview'], ['width' => 205], ['class' => 'card-img rounded-0']),
+        $link
+    );
     ?>
 
     <div class="card-body small p-2">
