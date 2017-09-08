@@ -50,7 +50,7 @@ class View extends AppView
 
         //Sets the theme from configuration
         if (getConfig('default.theme')) {
-            $this->theme(getConfig('default.theme'));
+            $this->setTheme(getConfig('default.theme'));
         }
     }
 

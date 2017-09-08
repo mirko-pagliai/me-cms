@@ -28,10 +28,10 @@ if (!function_exists('getConfig')) {
         $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
 
         if (!$value) {
-            $value = Configure::read($var);
+            $value = Configure::read($var, $default);
         }
 
-        return $value ? $value : $default;
+        return $value;
     }
 }
 

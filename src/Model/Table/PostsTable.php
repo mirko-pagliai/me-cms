@@ -65,7 +65,7 @@ class PostsTable extends AppTable
      */
     protected function _initializeSchema(Schema $schema)
     {
-        $schema->columnType('preview', 'json');
+        $schema->setColumnType('preview', 'json');
 
         return $schema;
     }
@@ -279,7 +279,7 @@ class PostsTable extends AppTable
         $this->belongsTo('Categories', ['className' => ME_CMS . '.PostsCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get(ME_CMS . '.PostsCategories'))
+            ->setTarget($this->getTableLocator()->get(ME_CMS . '.PostsCategories'))
             ->setAlias('Categories');
 
         $this->belongsTo('Users', ['className' => ME_CMS . '.Users'])
@@ -303,7 +303,7 @@ class PostsTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */

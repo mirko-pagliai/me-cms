@@ -67,7 +67,6 @@ class PostsWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.Posts::categories';
 
         $result = $this->Widget->widget($widget)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -95,7 +94,6 @@ class PostsWidgetsCellTest extends TestCase
 
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -127,7 +125,7 @@ class PostsWidgetsCellTest extends TestCase
 
         //Empty on categories index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -165,7 +163,6 @@ class PostsWidgetsCellTest extends TestCase
 
         //Tries with a limit of 1
         $result = $this->Widget->widget($widget, ['limit' => 1])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -192,7 +189,6 @@ class PostsWidgetsCellTest extends TestCase
 
         //Tries with a limit of 2
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -226,7 +222,7 @@ class PostsWidgetsCellTest extends TestCase
 
         //Empty on posts index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -257,7 +253,6 @@ class PostsWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.Posts::months';
 
         $result = $this->Widget->widget($widget)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -285,7 +280,6 @@ class PostsWidgetsCellTest extends TestCase
 
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -317,7 +311,7 @@ class PostsWidgetsCellTest extends TestCase
 
         //Empty on posts index
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'posts']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->assertEmpty($widget->render());
 
         //Tests cache
@@ -357,7 +351,6 @@ class PostsWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.Posts::search';
 
         $result = $this->Widget->widget($widget)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -385,7 +378,7 @@ class PostsWidgetsCellTest extends TestCase
 
         //Empty on search
         $widget = $this->Widget->widget($widget);
-        $widget->request->env('REQUEST_URI', Router::url(['_name' => 'postsSearch']));
+        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsSearch']));
         $this->assertEmpty($widget->render());
     }
 }

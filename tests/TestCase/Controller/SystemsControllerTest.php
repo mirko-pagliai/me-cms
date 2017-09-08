@@ -182,7 +182,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testSitemap()
     {
-        $this->loadAllFixtures();
+        $this->loadFixtures();
 
         //@codingStandardsIgnoreLine
         @unlink(SITEMAP);

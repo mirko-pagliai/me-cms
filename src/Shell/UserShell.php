@@ -12,6 +12,7 @@
  */
 namespace MeCms\Shell;
 
+use Cake\ORM\Query;
 use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Shell;
 
@@ -34,7 +35,7 @@ class UserShell extends Shell
 
     /**
      * Adds an user
-     * @return int|bool User ID or `false` on failure
+     * @return bool `false` on failure
      */
     public function add()
     {
@@ -112,13 +113,12 @@ class UserShell extends Shell
         }
 
         $this->success(I18N_OPERATION_OK);
-
-        return $user->id;
+        $this->success(__d('me_cms', 'The user was created with ID {0}', $user->id));
     }
 
     /**
      * Lists user groups
-     * @return void
+     * @return bool `false` on failure
      */
     public function groups()
     {
@@ -130,7 +130,7 @@ class UserShell extends Shell
         if (!$groups->count()) {
             $this->err(__d('me_cms', 'There are no user groups'));
 
-            return;
+            return false;
         }
 
         //Formats groups
@@ -152,20 +152,22 @@ class UserShell extends Shell
 
     /**
      * Lists users
-     * @return void
+     * @return bool `false` on failure
      */
     public function users()
     {
         //Gets users
         $users = $this->Users->find()
             ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-            ->contain(['Groups' => ['fields' => ['label']]]);
+            ->contain('Groups', function (Query $q) {
+                return $q->select(['label']);
+            });
 
         //Checks for users
         if (!$users->count()) {
             $this->err(__d('me_cms', 'There are no users'));
 
-            return;
+            return false;
         }
 
         //Sets headers

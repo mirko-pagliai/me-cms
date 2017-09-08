@@ -155,7 +155,7 @@ class SitemapBuilderTest extends IntegrationTestCase
      */
     public function testGenerate()
     {
-        $this->loadAllFixtures();
+        $this->loadFixtures();
 
         $map = $this->SitemapBuilder->generate();
 
@@ -183,7 +183,7 @@ class SitemapBuilderTest extends IntegrationTestCase
      */
     public function testGenerateWithPlugin()
     {
-        $this->loadAllFixtures();
+        $this->loadFixtures();
 
         Plugin::load('TestPlugin');
 

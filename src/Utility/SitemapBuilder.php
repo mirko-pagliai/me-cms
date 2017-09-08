@@ -40,7 +40,7 @@ class SitemapBuilder
         }
 
         return collection($methods)->map(function ($method) use ($class) {
-            return am(compact('class'), ['name' => $method]);
+            return array_merge(compact('class'), ['name' => $method]);
         })->toList();
     }
 

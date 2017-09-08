@@ -14,6 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -81,7 +82,9 @@ class BannersController extends AppController
             $render = $this->Cookie->read('renderBanners');
         }
 
-        $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
+        $query = $this->Banners->find()->contain('Positions', function (Query $q) {
+            return $q->select(['id', 'title']);
+        });
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
@@ -91,7 +94,7 @@ class BannersController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
         }
 
-        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQuery())));
+        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQueryParams())));
 
         if ($render) {
             $this->Cookie->write('renderBanners', $render);

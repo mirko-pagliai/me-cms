@@ -68,7 +68,9 @@ class AppTable extends Table
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if (array_key_exists('created', $entity->toArray()) && !$entity->created instanceof Time) {
+        if (empty($entity->created)) {
+            $entity->created = new Time;
+        } elseif (!empty($entity->created) && !$entity->created instanceof Time) {
             $entity->created = new Time($entity->created);
         }
     }
@@ -144,7 +146,7 @@ class AppTable extends Table
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])

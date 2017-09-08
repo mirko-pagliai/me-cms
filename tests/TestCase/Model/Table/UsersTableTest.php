@@ -156,7 +156,7 @@ class UsersTableTest extends TestCase
         $this->assertTrue($this->Users->hasBehavior('Timestamp'));
         $this->assertTrue($this->Users->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\UserValidator', $this->Users->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\UserValidator', $this->Users->getValidator());
     }
 
     /**
@@ -165,7 +165,7 @@ class UsersTableTest extends TestCase
      */
     public function testBelongsToUsersGroups()
     {
-        $user = $this->Users->findById(4)->contain(['Groups'])->first();
+        $user = $this->Users->findById(4)->contain('Groups')->first();
 
         $this->assertNotEmpty($user->group);
         $this->assertInstanceOf('MeCms\Model\Entity\UsersGroup', $user->group);
@@ -178,7 +178,7 @@ class UsersTableTest extends TestCase
      */
     public function testHasManyPosts()
     {
-        $user = $this->Users->findById(1)->contain(['Posts'])->first();
+        $user = $this->Users->findById(1)->contain('Posts')->first();
 
         $this->assertNotEmpty($user->posts);
 
@@ -197,7 +197,7 @@ class UsersTableTest extends TestCase
         //Creates a token
         $token = (new Token)->create('testToken', ['user_id' => 4]);
 
-        $user = $this->Users->findById(4)->contain(['Tokens'])->first();
+        $user = $this->Users->findById(4)->contain('Tokens')->first();
 
         $this->assertEquals(1, count($user->tokens));
         $this->assertInstanceOf('Tokens\Model\Entity\Token', $user->tokens[0]);
@@ -213,8 +213,8 @@ class UsersTableTest extends TestCase
     {
         $query = $this->Users->find('active');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -230,7 +230,7 @@ class UsersTableTest extends TestCase
     {
         $query = $this->Users->find('banned');
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -246,8 +246,8 @@ class UsersTableTest extends TestCase
     {
         $query = $this->Users->find('pending');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
-        $this->assertFalse($query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -290,26 +290,26 @@ class UsersTableTest extends TestCase
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
-        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c3']['value']);
+        $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c3']['value']);
 
         $data['status'] = 'pending';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
-        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertFalse($query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c2']['value']);
 
         $data['status'] = 'banned';
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
-        $this->assertEquals('%test%', $query->valueBinder()->bindings()[':c0']['value']);
-        $this->assertEquals(1, $query->valueBinder()->bindings()[':c1']['value']);
-        $this->assertTrue($query->valueBinder()->bindings()[':c2']['value']);
+        $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c2']['value']);
     }
 
     /**
@@ -321,7 +321,7 @@ class UsersTableTest extends TestCase
         $data = ['status' => 'invalid', 'username' => 'ab'];
 
         $query = $this->Users->queryFromFilter($this->Users->find(), $data);
-        $this->assertEmpty($query->valueBinder()->bindings());
+        $this->assertEmpty($query->getValueBinder()->bindings());
     }
 
     /**

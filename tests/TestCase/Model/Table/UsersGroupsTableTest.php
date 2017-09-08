@@ -95,7 +95,7 @@ class UsersGroupsTableTest extends TestCase
 
         $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\UsersGroupValidator', $this->UsersGroups->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\UsersGroupValidator', $this->UsersGroups->getValidator());
     }
 
     /**
@@ -104,7 +104,7 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testHasManyUsers()
     {
-        $group = $this->UsersGroups->findById(3)->contain(['Users'])->first();
+        $group = $this->UsersGroups->findById(3)->contain('Users')->first();
 
         $this->assertNotEmpty($group->users);
 

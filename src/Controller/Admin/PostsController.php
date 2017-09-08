@@ -120,7 +120,7 @@ class PostsController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->getQuery()));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->getQueryParams()));
 
         $this->set(compact('posts'));
     }
@@ -163,9 +163,9 @@ class PostsController extends AppController
     public function edit($id = null)
     {
         $post = $this->Posts->findById($id)
-            ->contain(['Tags' => function (Query $q) {
+            ->contain('Tags', function (Query $q) {
                 return $q->order(['tag' => 'ASC']);
-            }])
+            })
             ->formatResults(function (ResultSet $results) {
                 return $results->map(function ($row) {
                     $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);

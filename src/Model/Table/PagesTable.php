@@ -57,7 +57,7 @@ class PagesTable extends AppTable
      */
     protected function _initializeSchema(Schema $schema)
     {
-        $schema->columnType('preview', 'json');
+        $schema->setColumnType('preview', 'json');
 
         return $schema;
     }
@@ -172,7 +172,7 @@ class PagesTable extends AppTable
         $this->belongsTo('Categories', ['className' => ME_CMS . '.PagesCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->tableLocator()->get(ME_CMS . '.PagesCategories'))
+            ->setTarget($this->getTableLocator()->get(ME_CMS . '.PagesCategories'))
             ->setAlias('Categories');
 
         $this->addBehavior('Timestamp');

@@ -115,7 +115,7 @@ class BannersTableTest extends TestCase
         $this->assertTrue($this->Banners->hasBehavior('Timestamp'));
         $this->assertTrue($this->Banners->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\BannerValidator', $this->Banners->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\BannerValidator', $this->Banners->getValidator());
     }
 
     /**
@@ -124,7 +124,7 @@ class BannersTableTest extends TestCase
      */
     public function testBelongsToBannersPositions()
     {
-        $banner = $this->Banners->findById(2)->contain(['Positions'])->first();
+        $banner = $this->Banners->findById(2)->contain('Positions')->first();
 
         $this->assertNotEmpty($banner->position);
         $this->assertInstanceOf('MeCms\Model\Entity\BannersPosition', $banner->position);
@@ -139,7 +139,7 @@ class BannersTableTest extends TestCase
     {
         $query = $this->Banners->find('active');
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
-        $this->assertTrue($query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
         foreach ($query->toArray() as $entity) {
@@ -157,6 +157,6 @@ class BannersTableTest extends TestCase
 
         $query = $this->Banners->queryFromFilter($this->Banners->find(), $data);
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
-        $this->assertEquals(2, $query->valueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

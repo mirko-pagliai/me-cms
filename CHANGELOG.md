@@ -1,11 +1,24 @@
 # 2.x branch
-## 2.21 branch
-### 2.21.0
+## 2.22 branch
+### 2.22.0
 * fixed all admin templates for Bootstrap 4;
 * fixed `login` layout for Bootstrap 4;
 * fixed `MenuBuilderHelper` for Bootstrap 4;
 * `MenuHelper` class returns menus as arrays, without transforming them into
     html.
+
+## 2.21 branch
+### 2.21.1
+* added `PhotosAlbum::_getPreview()` method (`preview` virtual field);
+* all accessors methods (`_get()` methods) no longer check if the properties
+    used are not empty, except those methods that use properties that belong to
+    associated models.
+
+### 2.21.0
+* updated for CakePHP 3.5;
+* `UserShell::add()` now returns `true`. The created user id is shown through a
+    successful message;
+* uses `ConsoleIntegrationTestCase`. Console tests have been simplified.
 
 ## 2.20 branch
 ### 2.20.2

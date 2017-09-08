@@ -14,6 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -93,11 +94,14 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $query = $this->Users->find()->contain(['Groups' => ['fields' => ['id', 'label']]]);
+        $query = $this->Users->find()
+            ->contain('Groups', function (Query $q) {
+                return $q->select(['id', 'label']);
+            });
 
         $this->paginate['order'] = ['username' => 'ASC'];
 
-        $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->getQuery()));
+        $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->getQueryParams()));
 
         $this->set(compact('users'));
     }
@@ -111,7 +115,9 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->find()
-            ->contain(['Groups' => ['fields' => ['label']]])
+            ->contain('Groups', function (Query $q) {
+                return $q->select(['label']);
+            })
             ->where([sprintf('%s.id', $this->Users->alias()) => $id])
             ->firstOrFail();
 

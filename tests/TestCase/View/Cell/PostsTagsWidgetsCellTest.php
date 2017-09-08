@@ -124,7 +124,6 @@ class PostsTagsWidgetsCellTest extends TestCase
 
         //Tries using the style (`maxFont` and `minFont`)
         $result = $this->Widget->widget($widget, $this->options)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -151,7 +150,6 @@ class PostsTagsWidgetsCellTest extends TestCase
             'prefix' => '-',
             'style' => false,
         ]))->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -178,7 +176,6 @@ class PostsTagsWidgetsCellTest extends TestCase
             'render' => 'form',
             'style' => false,
         ]))->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -209,7 +206,6 @@ class PostsTagsWidgetsCellTest extends TestCase
             'render' => 'list',
             'style' => false,
         ]))->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -246,7 +242,6 @@ class PostsTagsWidgetsCellTest extends TestCase
             'shuffle' => true,
             'style' => false,
         ]))->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],
@@ -270,7 +265,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
         //Empty on tags index
         $widgetClass = $this->Widget->widget($widget);
-        $widgetClass->request->env('REQUEST_URI', Router::url(['_name' => 'postsTags']));
+        $widgetClass->request = $widgetClass->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
         $this->assertEmpty($widgetClass->render());
 
         //Tests cache
@@ -333,7 +328,6 @@ class PostsTagsWidgetsCellTest extends TestCase
         }
 
         $result = $this->Widget->widget($widget, $this->options)->render();
-
         $expected = [
             ['div' => ['class' => 'widget']],
             'h4' => ['class' => 'widget-title'],

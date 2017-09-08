@@ -14,6 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -80,7 +81,9 @@ class PhotosController extends AppController
             $render = $this->Cookie->read('renderPhotos');
         }
 
-        $query = $this->Photos->find()->contain(['Albums' => ['fields' => ['id', 'slug', 'title']]]);
+        $query = $this->Photos->find()->contain('Albums', function (Query $q) {
+            return $q->select(['id', 'slug', 'title']);
+        });
 
         $this->paginate['order'] = ['Photos.created' => 'DESC'];
 
@@ -90,7 +93,7 @@ class PhotosController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
         }
 
-        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQuery())));
+        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQueryParams())));
 
         if ($render) {
             $this->Cookie->write('renderPhotos', $render);

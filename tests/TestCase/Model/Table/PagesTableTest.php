@@ -80,7 +80,7 @@ class PagesTableTest extends TestCase
      */
     public function testInitializeSchema()
     {
-        $this->assertEquals('json', $this->Pages->getSchema()->columnType('preview'));
+        $this->assertEquals('json', $this->Pages->getSchema()->getColumnType('preview'));
     }
 
     /**
@@ -181,7 +181,7 @@ class PagesTableTest extends TestCase
         $this->assertTrue($this->Pages->hasBehavior('Timestamp'));
         $this->assertTrue($this->Pages->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Pages->validator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Pages->getValidator());
     }
 
     /**
@@ -190,7 +190,7 @@ class PagesTableTest extends TestCase
      */
     public function testBelongsToPagesCategories()
     {
-        $page = $this->Pages->findById(1)->contain(['Categories'])->first();
+        $page = $this->Pages->findById(1)->contain('Categories')->first();
 
         $this->assertNotEmpty($page->category);
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $page->category);

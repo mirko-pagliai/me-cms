@@ -24,7 +24,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'albums']);
     <div class="col-4 mb-4">
         <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="d-block" title="<?= $album->title ?>">
             <div class="card border-0 text-white">
-                <?= $this->Thumb->fit(collection($album->photos)->extract('path')->first(), ['width' => 275], ['class' => 'card-img rounded-0']) ?>
+                <?= $this->Thumb->fit($album->preview, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
                 <div class="card-img-overlay card-img-overlay-transition">
                     <h4 class="card-title"><?= $album->title ?></h4>
                     <p class="card-text">
