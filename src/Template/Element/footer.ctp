@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<footer class="navbar-fixed-bottom">
+<footer class="small text-center">
     <?php
         $links = [
             $this->Html->link(__d('me_cms', 'Search'), ['_name' => 'postsSearch']),

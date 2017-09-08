@@ -12,25 +12,25 @@
  */
 ?>
 
-<div class="page-container content-container">
-    <div class="content-header">
+<div class="page-container content-container mb-4">
+    <div class="content-header mb-3 pl-3">
         <?php if (getConfig('page.category') && $page->category->title && $page->category->slug) : ?>
-            <h5 class="content-category">
+            <h5 class="content-category mb-1">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
-        <h3 class="content-title">
+        <h3 class="content-title mb-1">
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>
 
         <?php if ($page->subtitle) : ?>
-            <h4 class="content-subtitle">
+            <h4 class="content-subtitle mb-1">
                 <?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?>
             </h4>
         <?php endif; ?>
 
-        <div class="content-info">
+        <div class="content-info mt-2 text-muted">
             <?php if (getConfig('page.created')) : ?>
                 <?= $this->Html->div(
                     'content-date',
@@ -40,7 +40,7 @@
             <?php endif; ?>
         </div>
     </div>
-    <div class="content-text">
+    <div class="content-text text-justify">
         <?php
         //Executes BBCode on the text
         $text = $this->BBCode->parser($page->text);
@@ -69,7 +69,7 @@
         ?>
     </div>
 
-    <div class="content-buttons">
+    <div class="content-buttons mt-2 text-right">
         <?php
         //If it was requested to truncate the text and that has been
         //truncated, it shows the "Read more" link

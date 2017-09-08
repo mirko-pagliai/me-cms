@@ -39,40 +39,37 @@ $this->userbar($this->Form->postLink(
  */
 $this->Breadcrumbs->add(I18N_PHOTOS, ['_name' => 'albums']);
 $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
+
+//Sets base options for each photo
+$baseOptions = ['class' => 'd-block'];
+
+//If Fancybox is enabled
+if (getConfig('default.fancybox')) {
+    $baseOptions = ['class' => 'd-block fancybox', 'rel' => 'fancybox-group'];
+}
 ?>
 
-<div class="clearfix">
+<div class="row">
     <?php foreach ($photos as $photo) : ?>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="photo-box">
-                <?php
-                $text = implode(PHP_EOL, [
-                    $this->Thumb->fit($photo->path, ['width' => 275]),
-                    $this->Html->div('photo-info', $this->Html->div(
-                        null,
-                        $this->Html->para('small', $photo->description)
-                    )),
-                ]);
+    <?php
+        $link = $this->Url->build(['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id]);
+        $options = $baseOptions + ['title' => $photo->description];
 
-                $options = ['class' => 'thumbnail', 'title' => $photo->description];
-
-                //If Fancybox is enabled, adds some options
-                if (getConfig('default.fancybox')) {
-                    $options = array_merge($options, [
-                        'class' => 'fancybox thumbnail',
-                        'data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280]),
-                        'rel' => 'group',
-                    ]);
-                }
-
-                echo $this->Html->link(
-                    $text,
-                    ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id],
-                    $options
-                );
-                ?>
+        //If Fancybox is enabled, adds some options
+        if (getConfig('default.fancybox')) {
+            $options += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280])];
+        }
+    ?>
+    <div class="col-md-4 col-lg-3 mb-4">
+        <a href="<?= $link ?>" <?= toAttributes($options) ?>>
+            <div class="card border-0 text-white">
+                <?= $this->Thumb->fit($photo->path, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
+                <div class="card-img-overlay card-img-overlay-transition">
+                    <p class="card-text"><?= $photo->description ?></p>
+                </div>
             </div>
-        </div>
+        </a>
+    </div>
     <?php endforeach; ?>
 </div>
 

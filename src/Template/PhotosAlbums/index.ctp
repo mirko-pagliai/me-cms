@@ -19,20 +19,20 @@ $this->assign('title', $title = I18N_PHOTOS);
 $this->Breadcrumbs->add($title, ['_name' => 'albums']);
 ?>
 
-<div class="clearfix">
+<div class="row">
     <?php foreach ($albums as $album) : ?>
-        <div class="col-sm-6 col-md-4">
-            <div class="photo-box">
-                <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
-                    <?= $this->Thumb->fit(collection($album->photos)->extract('path')->first(), ['width' => 275]) ?>
-                    <div class="photo-info">
-                        <div>
-                            <p><strong><?= $album->title ?></strong></p>
-                            <p><small><?= __d('me_cms', '{0} photos', $album->photo_count) ?></small></p>
-                        </div>
-                    </div>
-                </a>
+    <div class="col-4 mb-4">
+        <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="d-block" title="<?= $album->title ?>">
+            <div class="card border-0 text-white">
+                <?= $this->Thumb->fit(collection($album->photos)->extract('path')->first(), ['width' => 275], ['class' => 'card-img rounded-0']) ?>
+                <div class="card-img-overlay card-img-overlay-transition">
+                    <h4 class="card-title"><?= $album->title ?></h4>
+                    <p class="card-text">
+                        <?= __d('me_cms', '{0} photos', $album->photo_count) ?>
+                    </p>
+                </div>
             </div>
-        </div>
+        </a>
+    </div>
     <?php endforeach; ?>
 </div>

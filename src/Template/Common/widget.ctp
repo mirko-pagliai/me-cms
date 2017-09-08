@@ -19,7 +19,7 @@ if (trim($this->fetch('class'))) {
 ?>
 
 <?php if (trim($this->fetch('content'))) : ?>
-<div class="<?= $class ?>">
+<div class="<?= $class ?> mb-4">
     <?php
     if (trim($this->fetch('title'))) {
         echo $this->Html->h4(trim($this->fetch('title')), ['class' => 'widget-title']);

@@ -12,25 +12,25 @@
  */
 ?>
 
-<div class="post-container content-container">
-    <div class="content-header">
+<div class="post-container content-container mb-4">
+    <div class="content-header mb-3 pl-3">
         <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
-            <h5 class="content-category">
+            <h5 class="content-category mb-1">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
-        <h3 class="content-title">
+        <h2 class="content-title mb-1">
             <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
-        </h3>
+        </h2>
 
         <?php if ($post->subtitle) : ?>
-            <h4 class="content-subtitle">
+            <h4 class="content-subtitle mb-1">
                 <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
             </h4>
         <?php endif; ?>
 
-        <div class="content-info">
+        <div class="content-info mt-2 text-muted">
             <?php
             if (getConfig('post.author')) {
                 echo $this->Html->div(
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="content-text clearfix">
+    <div class="content-text text-justify">
         <?php
         //Executes BBCode on the text
         $text = $this->BBCode->parser($post->text);
@@ -80,14 +80,14 @@
     </div>
 
     <?php if (getConfig('post.tags') && $post->tags) : ?>
-        <div class="content-tags">
+        <div class="content-tags mt-2">
             <?php foreach ($post->tags as $tag) : ?>
                 <?= $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']) ?>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
-    <div class="content-buttons">
+    <div class="content-buttons mt-2 text-right">
         <?php
         //If it was requested to truncate the text and that has been
         //truncated, it shows the "Read more" link

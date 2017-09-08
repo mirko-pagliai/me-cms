@@ -20,10 +20,12 @@
             echo $this->Html->title($this->fetch('title'));
             echo $this->fetch('meta');
 
-            echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => true]);
-            echo $this->Asset->css([
+            echo $this->Html->css([
+                'https://fonts.googleapis.com/css?family=Roboto|Abel',
                 '/vendor/font-awesome/css/font-awesome.min',
-                ME_CMS . '.bootstrap.min',
+            ], ['block' => true]);
+            echo $this->Asset->css([
+                '/vendor/bootstrap/css/bootstrap.min',
                 METOOLS . '.default',
                 METOOLS . '.forms',
                 ME_CMS . '.userbar',
@@ -31,16 +33,16 @@
                 ME_CMS . '.widgets',
                 ME_CMS . '.layout',
                 ME_CMS . '.contents',
-                ME_CMS . '.photos'
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
+                METOOLS . '.popper',
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
-                ME_CMS . '.bootstrap.min',
+                '/vendor/bootstrap/js/bootstrap.min',
                 METOOLS . '.default',
-                ME_CMS . '.layout'
+                ME_CMS . '.layout',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
@@ -74,7 +76,7 @@
         </header>
         <div class="container">
             <div class="row">
-                <div id="content" class="col-sm-8 col-md-9">
+                <div id="content" class="col-9">
                     <?php
                     echo $this->Flash->render();
 
@@ -86,7 +88,7 @@
                     echo $this->fetch('content');
                     ?>
                 </div>
-                <div id="sidebar" class="col-sm-4 col-md-3">
+                <div id="sidebar" class="col">
                     <?= $this->fetch('sidebar') ?>
                     <?= $this->Widget->all() ?>
                 </div>

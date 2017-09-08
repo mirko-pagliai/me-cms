@@ -77,25 +77,27 @@ echo $this->element('views/post', compact('post'));
 
 <?php if (!empty($related)) : ?>
     <?php
-        $relatedAsList = collection($related)->map(function ($post) {
+        $relatedAsArray = collection($related)->map(function ($post) {
             return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-        })->toList();
+        })->toArray();
     ?>
-    <div class="related-contents">
-        <?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
+    <div class="related-contents mb-4">
+        <?= $this->Html->h5(__d('me_cms', 'Related posts')) ?>
         <?php if (!getConfig('post.related.images')) : ?>
-            <?= $this->Html->ul($relatedAsList, ['icon' => 'caret-right']) ?>
+            <?= $this->Html->ul($relatedAsArray, ['icon' => 'caret-right']) ?>
         <?php else : ?>
-            <div class="visible-xs">
-                <?= $this->Html->ul($relatedAsList, ['icon' => 'caret-right']) ?>
+            <div class="d-none d-lg-block">
+                <div class="row">
+                    <?php foreach ($related as $post) : ?>
+                        <div class="col-3">
+                            <?= $this->element('views/post-preview', compact('post')) ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
 
-            <div class="hidden-xs row">
-                <?php foreach ($related as $post) : ?>
-                    <div class="col-sm-6 col-md-3">
-                        <?= $this->element('views/post-preview', compact('post')) ?>
-                    </div>
-                <?php endforeach; ?>
+            <div class="d-lg-none">
+                <?= $this->Html->ul($relatedAsArray, ['icon' => 'caret-right']) ?>
             </div>
         <?php endif; ?>
     </div>
