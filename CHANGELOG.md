@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.21 branch
+### 2.21.1
+* added `PhotosAlbum::_getPreview()` method (`preview` virtual field).
+
 ### 2.21.0
 * updated for CakePHP 3.5;
 * `UserShell::add()` now returns `true`. The created user id is shown through a

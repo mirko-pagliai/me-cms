@@ -41,7 +41,7 @@ class PhotosAlbum extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path'];
+    protected $_virtual = ['path', 'preview'];
 
     /**
      * Gets the album full path (virtual field)
@@ -54,5 +54,15 @@ class PhotosAlbum extends Entity
         }
 
         return PHOTOS . $this->_properties['id'];
+    }
+
+    /**
+     * Gets the album preview (virtual field)
+     * @return string|void
+     * @since 2.21.1
+     */
+    protected function _getPreview()
+    {
+        return collection($this->_properties['photos'])->extract('path')->first();
     }
 }

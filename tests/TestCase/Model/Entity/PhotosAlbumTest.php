@@ -12,6 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use MeCms\Model\Entity\PhotosAlbum;
 use MeTools\TestSuite\TestCase;
 
@@ -26,6 +28,20 @@ class PhotosAlbumTest extends TestCase
     protected $PhotosAlbum;
 
     /**
+     * @var \MeCms\Model\Table\PhotosAlbumsTable
+     */
+    protected $PhotosAlbums;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.photos',
+        'plugin.me_cms.photos_albums',
+    ];
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -36,6 +52,9 @@ class PhotosAlbumTest extends TestCase
         parent::setUp();
 
         $this->PhotosAlbum = new PhotosAlbum;
+        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
+
+        Cache::clear(false, $this->PhotosAlbums->cache);
     }
 
     /**
@@ -56,7 +75,7 @@ class PhotosAlbumTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path'], $this->PhotosAlbum->getVirtual());
+        $this->assertEquals(['path', 'preview'], $this->PhotosAlbum->getVirtual());
     }
 
     /**
@@ -69,5 +88,15 @@ class PhotosAlbumTest extends TestCase
 
         $this->PhotosAlbum->id = 1;
         $this->assertEquals(PHOTOS . '1', $this->PhotosAlbum->path);
+    }
+
+    /**
+     * Test for `_getPreview()` method
+     * @test
+     */
+    public function testPreviewGetMutator()
+    {
+        $album = $this->PhotosAlbums->findById(1)->contain('Photos')->first();
+        $this->assertEquals(PHOTOS . $album->id . DS . 'photo1.jpg', $album->preview);
     }
 }
