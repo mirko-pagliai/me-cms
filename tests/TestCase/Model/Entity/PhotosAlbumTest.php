@@ -84,10 +84,8 @@ class PhotosAlbumTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $this->assertNull($this->PhotosAlbum->path);
-
         $this->PhotosAlbum->id = 1;
-        $this->assertEquals(PHOTOS . '1', $this->PhotosAlbum->path);
+        $this->assertEquals(PHOTOS . $this->PhotosAlbum->id, $this->PhotosAlbum->path);
     }
 
     /**

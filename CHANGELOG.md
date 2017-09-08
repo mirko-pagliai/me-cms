@@ -1,7 +1,10 @@
 # 2.x branch
 ## 2.21 branch
 ### 2.21.1
-* added `PhotosAlbum::_getPreview()` method (`preview` virtual field).
+* added `PhotosAlbum::_getPreview()` method (`preview` virtual field);
+* all accessors methods (`_get()` methods) no longer check if the properties
+    used are not empty, except those methods that use properties that belong to
+    associated models.
 
 ### 2.21.0
 * updated for CakePHP 3.5;

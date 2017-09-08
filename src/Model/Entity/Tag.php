@@ -45,14 +45,10 @@ class Tag extends Entity
 
     /**
      * Gets the tag slug (virtual field)
-     * @return string|void
+     * @return string
      */
     protected function _getSlug()
     {
-        if (empty($this->_properties['tag'])) {
-            return;
-        }
-
         return strtolower(Inflector::slug($this->_properties['tag']));
     }
 }

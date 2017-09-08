@@ -71,16 +71,9 @@ class PhotoTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $this->assertNull($this->Photo->path);
-
         $this->Photo->album_id = 1;
-        $this->assertNull($this->Photo->path);
-
         $this->Photo->filename = 'photo.jpg';
-        $this->assertEquals(PHOTOS . '1' . DS . 'photo.jpg', $this->Photo->path);
-
-        unset($this->Photo->album_id);
-        $this->assertNull($this->Photo->path);
+        $this->assertEquals(PHOTOS . $this->Photo->album_id . DS . $this->Photo->filename, $this->Photo->path);
     }
 
     /**
@@ -89,17 +82,12 @@ class PhotoTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $this->assertNull($this->Photo->preview);
-
         $photo = $this->Photos->get(1);
 
         $this->assertEquals(['preview', 'width', 'height'], array_keys($photo->preview));
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $photo->preview['preview']);
         $this->assertEquals(400, $photo->preview['width']);
         $this->assertEquals(400, $photo->preview['height']);
-
-        unset($photo->path);
-        $this->assertNull($this->Photo->preview);
     }
 
     /**

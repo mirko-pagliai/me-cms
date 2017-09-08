@@ -45,14 +45,10 @@ class PhotosAlbum extends Entity
 
     /**
      * Gets the album full path (virtual field)
-     * @return string|void
+     * @return string
      */
     protected function _getPath()
     {
-        if (empty($this->_properties['id'])) {
-            return;
-        }
-
         return PHOTOS . $this->_properties['id'];
     }
 
@@ -63,6 +59,10 @@ class PhotosAlbum extends Entity
      */
     protected function _getPreview()
     {
+        if (empty($this->_properties['photos'])) {
+            return;
+        }
+
         return collection($this->_properties['photos'])->extract('path')->first();
     }
 }
