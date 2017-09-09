@@ -68,7 +68,7 @@ class PhotosWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Albums',
             '/h4',
@@ -95,7 +95,7 @@ class PhotosWidgetsCellTest extends TestCase
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Albums',
             '/h4',
@@ -161,7 +161,7 @@ class PhotosWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Latest photo',
             '/h4',
@@ -177,7 +177,7 @@ class PhotosWidgetsCellTest extends TestCase
         //Tries another limit
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Latest 2 photos',
             '/h4',
@@ -229,7 +229,7 @@ class PhotosWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Random photo',
             '/h4',
@@ -245,7 +245,7 @@ class PhotosWidgetsCellTest extends TestCase
         //Tries another limit
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Random 2 photos',
             '/h4',
