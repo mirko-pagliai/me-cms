@@ -38,9 +38,9 @@ if (!$this->Auth->isLogged()) {
                     ['class' => 'nav-link', 'icon' => 'dashboard']
                 ),
                 $this->fetch('userbar'),
-            ], ['class' => 'navbar-nav mr-auto']);
+            ], ['class' => 'navbar-nav mr-auto'], ['class' => 'nav-item']);
 
-            echo $this->Html->ul([call_user_func(function () {
+            $links[] = call_user_func(function () {
                 $this->Dropdown->start($this->Auth->user('full_name'), ['class' => 'nav-link', 'icon' => 'user']);
 
                 if (getConfig('users.login_log')) {
@@ -59,7 +59,9 @@ if (!$this->Auth->isLogged()) {
                 echo $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout'], ['class' => 'dropdown-item']);
 
                 return $this->Dropdown->end(['class' => 'dropdown-menu-right']);
-            })], ['class' => 'navbar-nav navbar-right'], ['class' => 'dropdown']);
+            });
+
+            echo $this->Html->ul($links, ['class' => 'navbar-nav navbar-right'], ['class' => 'dropdown nav-item']);
         ?>
     </div>
 </nav>

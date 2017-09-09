@@ -32,7 +32,7 @@ echo $this->Form->end();
 ?>
 
 <?php if (!empty($pattern)) : ?>
-    <div class="bg-info mb-4 padding-10">
+    <div class="bg-info text-white mt-2 mb-3 p-2">
         <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
     </div>
 <?php endif; ?>
@@ -40,16 +40,19 @@ echo $this->Form->end();
 <?php if (!empty($posts)) : ?>
     <div class="as-table">
         <?php foreach ($posts as $post) : ?>
-            <div class="margin-10 padding-10">
-                <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
-                <span class="small text-muted">
-                    (<?= $post->created->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
-                </span>
+            <div class="mb-3 p-1">
+                <h6>
+                    <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
+                    <span class="small text-muted">
+                        (<?= $post->created->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
+                    </span>
+                </h6>
+
                 <div class="text-justify">
                 <?php
                     //Executes BBCode on the text and strips other tags
                     $text = strip_tags($this->BBCode->parser($post->text));
-                    echo $this->Text->truncate($text, 350, ['exact' => false, 'html' => true]);
+                    echo $this->Text->truncate($text, 350, ['html' => true]);
                 ?>
                 </div>
             </div>

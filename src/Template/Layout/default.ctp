@@ -76,7 +76,7 @@
         </header>
         <div class="container">
             <div class="row">
-                <div id="content" class="col-9">
+                <main id="content" class="col-9">
                     <?php
                     echo $this->Flash->render();
 
@@ -87,11 +87,11 @@
 
                     echo $this->fetch('content');
                     ?>
-                </div>
-                <div id="sidebar" class="col">
+                </main>
+                <nav id="sidebar" class="col">
                     <?= $this->fetch('sidebar') ?>
                     <?= $this->Widget->all() ?>
-                </div>
+                </nav>
             </div>
         </div>
         <?php

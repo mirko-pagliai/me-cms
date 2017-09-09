@@ -11,11 +11,11 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $link = $this->Url->build(['_name' => 'post', $post->slug]);
+$title = $post->title;
 ?>
 
 <div class="card">
     <?php
-    $title = $post->title;
     if (!isset($truncate['title']) || $truncate['title']) {
         $truncate['title'] = empty($truncate['title']) ? 40 : $truncate['title'];
         $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);

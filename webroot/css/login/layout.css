@@ -85,3 +85,11 @@ body {
 #content .alert button.close {
     display: none;
 }
+
+/* -------------------------------- */
+/*           ReCAPTCHA              */
+/* -------------------------------- */
+/* ReCAPTCHA wrapper */
+.g-recaptcha {
+    margin-bottom: 1rem;
+}

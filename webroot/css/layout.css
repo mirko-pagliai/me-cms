@@ -111,3 +111,11 @@ body footer ul li {
 body footer ul li:last-child {
     border-right: 0;
 }
+
+/* -------------------------------- */
+/*           ReCAPTCHA              */
+/* -------------------------------- */
+/* ReCAPTCHA wrapper */
+.g-recaptcha {
+    margin-bottom: 1rem;
+}

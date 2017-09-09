@@ -36,7 +36,7 @@ use MeCms\Core\Plugin;
                 $menus += $this->MenuBuilder->renderAsDropdown($plugin, ['class' => 'nav-link d-lg-none']);
             }
 
-            echo $this->Html->ul($menus, ['class' => 'navbar-nav mr-auto'], ['class' => 'dropdown']);
+            echo $this->Html->ul($menus, ['class' => 'navbar-nav mr-auto'], ['class' => 'dropdown nav-item']);
 
             $userMenu[] = call_user_func(function () {
                 $this->Dropdown->start($this->Auth->user('full_name'), ['class' => 'nav-link', 'icon' => 'user']);
@@ -59,7 +59,7 @@ use MeCms\Core\Plugin;
                 return $this->Dropdown->end(['class' => 'dropdown-menu-right']);
             });
 
-            echo $this->Html->ul($userMenu, ['class' => 'navbar-nav'], ['class' => 'dropdown']);
+            echo $this->Html->ul($userMenu, ['class' => 'navbar-nav'], ['class' => 'dropdown nav-item']);
         ?>
     </div>
 </nav>

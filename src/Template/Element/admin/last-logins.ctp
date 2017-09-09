@@ -51,7 +51,9 @@
                             ) ?>
                     </td>
                     <td class="text-center">
-                        <samp><?= __d('me_cms', '{0} {1} on {2}', $log->browser, $log->version, $log->platform) ?></samp>
+                        <samp>
+                            <?= __d('me_cms', '{0} {1} on {2}', $log->browser, $log->version, $log->platform) ?>
+                        </samp>
                     </td>
                     <td class="small">
                         <samp><?= $log->agent ?></samp>
