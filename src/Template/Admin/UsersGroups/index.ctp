@@ -36,7 +36,7 @@ $this->append('actions', $this->Html->button(
     <tbody>
         <?php foreach ($groups as $group) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $group->id ?></code>
                 </td>
                 <td>
@@ -61,7 +61,7 @@ $this->append('actions', $this->Html->button(
                 <td>
                     <?= $group->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($group->user_count) {
                         echo $this->Html->link(

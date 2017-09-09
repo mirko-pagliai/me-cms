@@ -78,7 +78,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
     <tbody>
         <?php foreach ($users as $user) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $user->id ?></code>
                 </td>
                 <td>
@@ -136,7 +136,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($user->post_count) {
                         echo $this->Html->link(
@@ -149,7 +149,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
                         <?= $user->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>

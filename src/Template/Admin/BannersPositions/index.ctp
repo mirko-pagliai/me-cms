@@ -37,7 +37,7 @@ $this->append('actions', $this->Html->button(
     <tbody>
         <?php foreach ($positions as $position) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $position->id ?></code>
                 </td>
                 <td>
@@ -68,7 +68,7 @@ $this->append('actions', $this->Html->button(
                 <td class="text-center">
                     <?= $position->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($position->banner_count) {
                         echo $this->Html->link(

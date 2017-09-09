@@ -29,10 +29,10 @@ $this->append('actions', $this->Form->postButton(
     <thead>
         <tr>
             <th><?= I18N_FILENAME ?></th>
-            <th class="min-width text-center"><?= __d('me_cms', 'Extension') ?></th>
-            <th class="min-width text-center"><?= __d('me_cms', 'Compression') ?></th>
-            <th class="min-width text-center"><?= __d('me_cms', 'Size') ?></th>
-            <th class="min-width text-center"><?= I18N_DATE ?></th>
+            <th class="text-nowrap text-center"><?= __d('me_cms', 'Extension') ?></th>
+            <th class="text-nowrap text-center"><?= __d('me_cms', 'Compression') ?></th>
+            <th class="text-nowrap text-center"><?= __d('me_cms', 'Size') ?></th>
+            <th class="text-nowrap text-center"><?= I18N_DATE ?></th>
         </tr>
     </thead>
     <tbody>
@@ -76,16 +76,16 @@ $this->append('actions', $this->Form->postButton(
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $backup->extension ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $backup->compression ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $this->Number->toReadableSize($backup->size) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $backup->datetime->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                 </td>
             </tr>

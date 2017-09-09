@@ -26,7 +26,7 @@ $this->extend('/Admin/Common/Photos/index');
     <tbody>
         <?php foreach ($photos as $photo) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $photo->id ?></code>
                 </td>
                 <td>
@@ -90,7 +90,7 @@ $this->extend('/Admin/Common/Photos/index');
                 <td class="text-center">
                     <?= $photo->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
                         <?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>

@@ -86,7 +86,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     <tbody>
         <?php foreach ($posts as $post) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $post->id ?></code>
                 </td>
                 <td>
@@ -160,21 +160,21 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $this->Html->link(
                         $post->category->title,
                         ['?' => ['category' => $post->category->id]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $this->Html->link(
                         $post->user->full_name,
                         ['?' => ['user' => $post->user->id]],
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     switch ($post->priority) {
                         case '1':
@@ -207,7 +207,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     echo $this->Html->badge($priority, compact('class', 'tooltip'));
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
                         <?= $post->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>

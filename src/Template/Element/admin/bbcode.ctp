@@ -23,7 +23,7 @@
         <table class="table table-sm m-0">
             <tbody>
                 <tr>
-                    <td class="min-width">
+                    <td class="text-nowrap">
                         <code>[readmore /]</code>
                     </td>
                     <td>
@@ -32,7 +32,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="min-width">
+                    <td class="text-nowrap">
                         <p><code>[img]mypic.gif[/img]</code></p>
                         <p><code>[img]http://example.com/mypic.gif[/img]</code></p>
                     </td>
@@ -41,7 +41,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="min-width">
+                    <td class="text-nowrap">
                         <code>[url="http://example.com"]my link[/url]</code>
                     </td>
                     <td>
@@ -49,7 +49,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="min-width">
+                    <td class="text-nowrap">
                         <p><code>[youtube]https://youtu.be/bL_CJKq9rIw[/youtube]</code></p>
                         <p><code>[youtube]bL_CJKq9rIw[/youtube]</code></p>
                     </td>

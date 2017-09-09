@@ -25,13 +25,19 @@
         <tbody>
             <?php foreach ($loginLog as $log) : ?>
                 <tr>
-                    <td class="text-center">
-                        <?= $log->time->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                    <td class="text-center text-nowrap">
+                        <div class="d-none d-lg-block">
+                            <?= $log->time->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        </div>
+                        <div class="d-lg-none">
+                            <div><?= $log->time->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                            <div><?= $log->time->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                        </div>
                     </td>
-                    <td class="text-center">
-                        <?= $log->ip ?>
+                    <td class="text-center text-nowrap">
                         <?= sprintf(
-                            '(%s | %s)',
+                            '%s (%s | %s)',
+                            $log->ip,
                             $this->Html->link(
                                 __d('me_cms', 'Who is'),
                                 str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_whois')),
@@ -47,7 +53,7 @@
                     <td class="text-center">
                         <samp><?= __d('me_cms', '{0} {1} on {2}', $log->browser, $log->version, $log->platform) ?></samp>
                     </td>
-                    <td>
+                    <td class="small">
                         <samp><?= $log->agent ?></samp>
                     </td>
                 </tr>

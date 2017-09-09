@@ -60,7 +60,7 @@ $this->append('actions', $this->Form->postButton(
                 echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </td>
-            <td class="min-width text-center">
+            <td class="text-nowrap text-center">
                 <?= $this->Number->toReadableSize($log->size) ?>
             </td>
         </tr>

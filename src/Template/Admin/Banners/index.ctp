@@ -28,7 +28,7 @@ $this->extend('/Admin/Common/Banners/index');
     <tbody>
         <?php foreach ($banners as $banner) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $banner->id ?></code>
                 </td>
                 <td>
@@ -94,10 +94,10 @@ $this->extend('/Admin/Common/Banners/index');
                 <td class="text-center">
                     <?= $banner->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $banner->click_count ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
                         <?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
                     </div>
