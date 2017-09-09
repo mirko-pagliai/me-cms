@@ -27,7 +27,7 @@
                 <tr>
                     <td class="text-center text-nowrap">
                         <div class="d-none d-lg-block">
-                            <?= $log->time->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                            <?= $log->time->i18nFormat() ?>
                         </div>
                         <div class="d-lg-none">
                             <div><?= $log->time->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
