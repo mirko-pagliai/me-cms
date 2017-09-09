@@ -151,7 +151,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="min-width text-center">
                     <div class="hidden-xs">
-                        <?= $user->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        <?= $user->created->i18nFormat() ?>
                     </div>
                     <div class="visible-xs">
                         <div><?= $user->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>

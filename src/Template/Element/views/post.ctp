@@ -44,7 +44,7 @@
                 echo $this->Html->div('content-date', __d(
                     'me_cms',
                     'Posted on {0}',
-                    $post->created->i18nFormat(getConfigOrFail('main.datetime.long'))
+                    $post->created->i18nFormat()
                 ), ['icon' => 'clock-o']);
             }
             ?>

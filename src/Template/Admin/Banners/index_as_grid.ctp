@@ -30,7 +30,7 @@ $this->extend('/Admin/Common/Banners/index');
                     ], ['title' => I18N_BELONG_ELEMENT]) ?>
                 </div>
                 <div class="photo-created">
-                    (<?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
+                    (<?= $banner->created->i18nFormat() ?>)
                 </div>
                 <div class="photo-image">
                     <?php

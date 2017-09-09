@@ -78,7 +78,7 @@ if ($this->Auth->isGroup('admin')) {
     }
 
     echo $this->Html->dt(__d('me_cms', 'Created'));
-    echo $this->Html->dd($user->created->i18nFormat(getConfigOrFail('main.datetime.long')));
+    echo $this->Html->dd($user->created->i18nFormat());
     ?>
 </dl>
 

@@ -34,7 +34,7 @@
             <?php if (getConfig('page.created')) : ?>
                 <?= $this->Html->div(
                     'content-date',
-                    __d('me_cms', 'Posted on {0}', $page->created->i18nFormat(getConfigOrFail('main.datetime.long'))),
+                    __d('me_cms', 'Posted on {0}', $page->created->i18nFormat()),
                     ['icon' => 'clock-o']
                 ) ?>
             <?php endif; ?>

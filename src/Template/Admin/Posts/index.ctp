@@ -208,7 +208,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="min-width text-center">
                     <div class="hidden-xs">
-                        <?= $post->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        <?= $post->created->i18nFormat() ?>
                     </div>
                     <div class="visible-xs">
                         <div><?= $post->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
