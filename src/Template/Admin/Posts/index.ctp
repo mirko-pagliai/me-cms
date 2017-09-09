@@ -126,20 +126,16 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts
                     if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                        $actions[] = $this->Html->link(
-                            I18N_EDIT,
-                            ['action' => 'edit', $post->id],
-                            ['icon' => 'pencil']
-                        );
+                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->id], ['icon' => 'pencil']);
                     }
 
                     //Only admins and managers can delete posts
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $post->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $post->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     //If the post is active and is not scheduled

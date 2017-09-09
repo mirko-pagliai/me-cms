@@ -65,10 +65,10 @@ $this->append('actions', $this->Form->postButton(
 
                     <?php if (!empty($row->ip)) : ?>
                         <div>
-                            <?= __d('me_cms', 'Client IP') ?>:
-                            <?= $row->ip ?>
                             <?= sprintf(
-                                '(%s | %s)',
+                                '%s: %s (%s | %s)',
+                                __d('me_cms', 'Client IP'),
+                                $row->ip,
                                 $this->Html->link(
                                     __d('me_cms', 'Who is'),
                                     str_replace('{IP}', $row->ip, getConfigOrFail('security.ip_whois')),

@@ -51,11 +51,11 @@ $this->append('actions', $this->Html->button(
                             ['action' => 'edit', $position->id],
                             ['icon' => 'pencil']
                         );
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $position->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $position->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                         $actions[] = $this->Html->link(
                             I18N_UPLOAD,
                             [ 'controller' => 'Banners', 'action' => 'upload', '?' => ['position' => $position->id]],

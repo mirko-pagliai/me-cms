@@ -34,7 +34,9 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
         </div>
     </div>
     <fieldset class="col-lg-9">
-        <div class="mb-2"><?= $this->Html->strong(I18N_PREVIEW) ?></div>
+        <div class="mb-2">
+            <strong><?= I18N_PREVIEW ?></strong>
+        </div>
         <?php
         $class = 'img-thumbnail mb-3';
         if ($banner->thumbnail) {

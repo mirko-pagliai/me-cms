@@ -55,11 +55,11 @@ $this->append('actions', $this->Html->button(
 
                         //Only admins can delete posts categories
                         if ($this->Auth->isGroup('admin')) {
-                            $actions[] = $this->Form->postLink(
-                                I18N_DELETE,
-                                ['action' => 'delete', $category->id],
-                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                            );
+                            $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->id], [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => I18N_SURE_TO_DELETE,
+                            ]);
                         }
 
                         if ($category->post_count) {

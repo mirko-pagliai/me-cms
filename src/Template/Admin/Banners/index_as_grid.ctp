@@ -36,10 +36,11 @@ $this->extend('/Admin/Common/Banners/index');
                 </ul>
 
                 <?php
+                $class = 'card-img-bottom';
                 if ($banner->thumbnail) {
-                    echo $this->Thumb->resize($banner->path, ['width' => 400], ['class' => 'card-img-bottom']);
+                    echo $this->Thumb->resize($banner->path, ['width' => 400], compact('class'));
                 } else {
-                    echo $this->Html->img($banner->www, ['class' => 'card-img-bottom']);
+                    echo $this->Html->img($banner->www, compact('class'));
                 }
 
                 $actions = [

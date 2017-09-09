@@ -40,19 +40,17 @@ $this->append('actions', $this->Html->button(
                     <code><?= $group->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?>
+                    </strong>
                     <?php
                         $actions = [
-                            $this->Html->link(
-                                I18N_EDIT,
-                                ['action' => 'edit', $group->id],
-                                ['icon' => 'pencil']
-                            ),
-                            $this->Form->postLink(
-                                I18N_DELETE,
-                                ['action' => 'delete', $group->id],
-                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                            ),
+                            $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->id], ['icon' => 'pencil']),
+                            $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $group->id], [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => I18N_SURE_TO_DELETE,
+                            ]),
                         ];
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);

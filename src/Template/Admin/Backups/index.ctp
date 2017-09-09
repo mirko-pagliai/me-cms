@@ -43,37 +43,28 @@ $this->append('actions', $this->Form->postButton(
                         <?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?>
                     </strong>
                     <?php
-                        $actions = [
-                            $this->Html->link(
-                                I18N_DOWNLOAD,
-                                ['action' => 'download', $backup->slug],
-                                ['icon' => 'download']
-                            ),
-                            $this->Form->postLink(
-                                __d('me_cms', 'Restore'),
-                                ['action' => 'restore', $backup->slug],
-                                [
-                                    'icon' => 'upload',
-                                    'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
-                                        'some data may be lost. Are you sure?'),
-                                ]
-                            ),
-                            $this->Form->postLink(
-                                __d('me_cms', 'Send'),
-                                ['action' => 'send', $backup->slug],
-                                [
-                                    'icon' => ' envelope-o',
-                                    'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
-                                ]
-                            ),
-                            $this->Form->postLink(
-                                I18N_DELETE,
-                                ['action' => 'delete', $backup->slug],
-                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                            ),
-                        ];
+                    $actions = [
+                        $this->Html->link(
+                            I18N_DOWNLOAD,
+                            ['action' => 'download', $backup->slug],
+                            ['icon' => 'download']),
+                        $this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', $backup->slug], [
+                            'icon' => 'upload',
+                            'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
+                                'some data may be lost. Are you sure?'),
+                        ]),
+                        $this->Form->postLink(__d('me_cms', 'Send'), ['action' => 'send', $backup->slug], [
+                            'icon' => ' envelope-o',
+                            'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
+                        ]),
+                        $this->Form->postLink(
+                            I18N_DELETE,
+                            ['action' => 'delete', $backup->slug],
+                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
+                        ),
+                    ];
 
-                        echo $this->Html->ul($actions, ['class' => 'actions']);
+                    echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
                 <td class="text-nowrap text-center">

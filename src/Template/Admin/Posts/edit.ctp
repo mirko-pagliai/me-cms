@@ -36,10 +36,7 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
             'label' => I18N_CATEGORY,
         ]);
         echo $this->Form->datetimepicker('created', [
-            'help' => [
-                I18N_USE_CURRENT_DATETIME,
-                I18N_DELAY_PUBLICATION,
-            ],
+            'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
             'label' => I18N_DATE,
         ]);
         echo $this->Form->control('priority', [

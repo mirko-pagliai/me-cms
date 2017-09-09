@@ -80,7 +80,9 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <code><?= $page->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?>
+                    </strong>
                     <?php
                     $class = 'record-badge badge badge-warning';
 

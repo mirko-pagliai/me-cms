@@ -41,7 +41,9 @@ $this->append('actions', $this->Html->button(
                     <code><?= $category->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?>
+                    </strong>
                     <?php
                     $actions = [
                         $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->id], ['icon' => 'pencil']),

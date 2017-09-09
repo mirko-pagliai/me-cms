@@ -25,7 +25,9 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
         </div>
     </div>
     <fieldset class="col-lg-9">
-        <div class="mb-2"><?= $this->Html->strong(I18N_PREVIEW) ?></div>
+        <div class="mb-2">
+            <strong><?= I18N_PREVIEW ?></strong>
+        </div>
         <?php
             echo $this->Thumb->resize($photo->path, ['width' => 1186], ['class' => 'img-thumbnail mb-3']);
 

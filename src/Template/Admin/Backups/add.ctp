@@ -34,21 +34,21 @@ $this->assign('title', $title = __d('me_cms', 'Add backup'));
     </thead>
     <tbody>
         <tr>
-            <td class="text-nowrap"><code>{$DATABASE}</code></td>
+            <td><code>{$DATABASE}</code></td>
             <td><?= __d('me_cms', 'Database name') ?>.</td>
         </tr>
         <tr>
-            <td class="text-nowrap"><code>{$DATETIME}</code></td>
+            <td><code>{$DATETIME}</code></td>
             <td>
                 <?= __d('me_cms', 'Datetime. This is the equivalent of {0}', $this->Html->code('date(\'YmdHis\')')) ?>
             </td>
         </tr>
         <tr>
-            <td class="text-nowrap"><code>{$HOSTNAME}</code></td>
+            <td><code>{$HOSTNAME}</code></td>
             <td><?= __d('me_cms', 'Database hostname') ?></td>
         </tr>
         <tr>
-            <td class="text-nowrap"><code>{$TIMESTAMP}</code></td>
+            <td><code>{$TIMESTAMP}</code></td>
             <td>
                 <?= __d('me_cms', 'Timestamp. This is the equivalent of {0}', $this->Html->code('time()')) ?>
             </td>

@@ -28,11 +28,12 @@ $this->append('actions', $this->Form->postButton(
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
-                <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?></strong>
+                <strong>
+                    <?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?>
+                </strong>
                 <?php
                 $actions = [
-                    $this->Html->link(
-                        __d('me_cms', 'Basic view'),
+                    $this->Html->link(__d('me_cms', 'Basic view'),
                         ['action' => 'view', $log->filename],
                         ['icon' => 'eye']
                     ),
@@ -51,11 +52,11 @@ $this->append('actions', $this->Form->postButton(
                     ['action' => 'download', $log->filename],
                     ['icon' => 'download']
                 );
-                $actions[] = $this->Form->postLink(
-                    I18N_DELETE,
-                    ['action' => 'delete', $log->filename],
-                    ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                );
+                $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $log->filename], [
+                    'class' => 'text-danger',
+                    'icon' => 'trash-o',
+                    'confirm' => I18N_SURE_TO_DELETE,
+                ]);
 
                 echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>

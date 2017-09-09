@@ -82,7 +82,9 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     <code><?= $user->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?>
+                    </strong>
                     <?php
                     $class = 'record-badge badge badge-danger';
 
@@ -103,21 +105,17 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     if ($this->Auth->isGroup('admin')) {
                         //If the user is not active (pending)
                         if (!$user->active) {
-                            $actions[] = $this->Form->postLink(
-                                __d('me_cms', 'Activate'),
-                                ['action' => 'activate', $user->id],
-                                [
-                                    'icon' => 'user-plus',
-                                    'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
-                                ]
-                            );
+                            $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->id], [
+                                'icon' => 'user-plus',
+                                'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
+                            ]);
                         }
 
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $user->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $user->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);

@@ -19,7 +19,7 @@ $this->assign('title', __d('me_cms', 'Static pages'));
         <tr>
             <th><?= I18N_FILENAME ?></th>
             <th class="text-center"><?= I18N_TITLE ?></th>
-            <th><?= __d('me_cms', 'Path') ?></th>
+            <th class="text-nowrap"><?= __d('me_cms', 'Path') ?></th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +43,7 @@ $this->assign('title', __d('me_cms', 'Static pages'));
                 <td class="text-center">
                     <?= $page->title ?>
                 </td>
-                <td>
+                <td class="text-nowrap">
                     <samp><?= $page->path ?></samp>
                 </td>
             </tr>
