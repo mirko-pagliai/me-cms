@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.0
+* a massive improvement of pages and posts templates;
 * fixed all admin templates for Bootstrap 4;
 * fixed `login` layout for Bootstrap 4;
 * fixed `MenuBuilderHelper` for Bootstrap 4;

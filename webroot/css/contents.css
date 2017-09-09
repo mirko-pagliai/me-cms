@@ -13,92 +13,92 @@
 /*          Content header          */
 /* -------------------------------- */
 /* Header */
-.content-container .content-header {
+article .header {
     border-color: #777;
     border-style: solid;
     border-width: 0 0 0 .35rem;
 }
 
 /* Header, links */
-.content-container .content-header a {
+article .header a {
     color: #555;
     text-decoration: none;
 }
 
 /* Header, links on hover */
-.content-container .content-header a:hover {
+article .header a:hover {
     color: #333;
 }
 
 /* Header, info (author, date, etc), icons */
-.content-container .content-header .content-info .fa {
+article .header .info .fa {
     min-width: .95rem;
 }
 
 /* -------------------------------- */
-/*          Content text            */
+/*              Content            */
 /* -------------------------------- */
-/* Content text */
-.content-container .content-text {
+/* Content */
+article .content {
     line-height: 1.6;
 }
 
-/* Content text, last paragraph */
-.content-container .content-text p:last-child {
-    margin-bottom: 0;
-}
-
-/* Content text, blockquotes */
-.content-container .content-text blockquote {
+/* Content, blockquotes */
+article .content blockquote {
     background: #eee;
     color: #333;
     padding: 1.25rem 3.5rem;
     position: relative;
 }
 
-/* Content text, blockquotes, icons */
-.content-container .content-text blockquote:before,
-.content-container .content-text blockquote:after {
+/* Content, blockquotes, icons */
+article .content blockquote:before,
+article .content blockquote:after {
     font-size: 1.5rem;
     position: absolute;
     font-family: FontAwesome;
     opacity: .5;
 }
 
-/* Content text, blockquotes, left (before) icon */
-.content-container .content-text blockquote:before {
+/* Content, blockquotes, left (before) icon */
+article .content blockquote:before {
     content: "\f10d";
     left: 1.2rem;
     top: .75rem;
 }
 
-/* Content text, blockquotes, right (after) icon */
-.content-container .content-text blockquote:after {
+/* Content, blockquotes, right (after) icon */
+article .content blockquote:after {
     bottom: .75rem;
     content: "\f10e";
     right: 1.2rem;
 }
 
+/* Content, last paragraph */
+article .content p:last-child {
+    margin-bottom: 0;
+}
+
 /* -------------------------------- */
-/*          Content tags            */
+/*              Tags                */
 /* -------------------------------- */
 /* Tags, each tag */
-.content-container .content-tags a {
+article .tags a {
     display: inline-block;
     margin-right: .5rem;
     text-decoration: none;
 }
 
-/* Tags, tag, icon */
-.content-container .content-tags a .fa {
+/* Tags, each tag, icons */
+article .tags a .fa {
     margin-right: .15rem;
 }
 
 /* -------------------------------- */
-/*          Content buttons         */
+/*              Buttons            */
 /* -------------------------------- */
-/* Content buttons, links */
-.content-container .content-buttons a {
+/* Buttons, links */
+article .buttons a {
     background: #ddd;
     border-color: #bbb;
     border-width: 0 0 .2rem;
@@ -108,13 +108,13 @@
     padding: .6rem .7rem;
 }
 
-/* Content buttons, links on hover */
-.content-container .content-buttons a:hover {
+/* Buttons, links on hover */
+article .buttons a:hover {
     color: #444;
 }
 
-/* Content buttons, "read more" button, icon */
-.content-container .content-buttons a.readmore:after {
+/* Buttons, "read more" button, icon */
+article .buttons .readmore:after {
     content: "\f178";
     font-family: FontAwesome;
     margin-left: .4rem;
