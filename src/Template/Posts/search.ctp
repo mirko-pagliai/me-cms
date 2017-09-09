@@ -25,14 +25,13 @@ echo $this->Form->control('p', [
     'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),
 ]);
 echo $this->Form->submit(__d('me_cms', 'Search'), [
-    'class' => 'btn-primary visible-lg-inline',
     'icon' => 'search',
 ]);
 echo $this->Form->end();
 ?>
 
 <?php if (!empty($pattern)) : ?>
-    <div class="bg-info text-white mt-2 mb-3 p-2">
+    <div class="bg-info text-white mt-3 mb-3 p-2">
         <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
     </div>
 <?php endif; ?>
