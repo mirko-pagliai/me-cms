@@ -47,7 +47,8 @@ $this->append('actions', $this->Form->postButton(
                         $this->Html->link(
                             I18N_DOWNLOAD,
                             ['action' => 'download', $backup->slug],
-                            ['icon' => 'download']),
+                            ['icon' => 'download']
+                        ),
                         $this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', $backup->slug], [
                             'icon' => 'upload',
                             'confirm' => __d('me_cms', 'This will overwrite the current database and ' .

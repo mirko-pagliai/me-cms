@@ -33,7 +33,8 @@ $this->append('actions', $this->Form->postButton(
                 </strong>
                 <?php
                 $actions = [
-                    $this->Html->link(__d('me_cms', 'Basic view'),
+                    $this->Html->link(
+                        __d('me_cms', 'Basic view'),
                         ['action' => 'view', $log->filename],
                         ['icon' => 'eye']
                     ),

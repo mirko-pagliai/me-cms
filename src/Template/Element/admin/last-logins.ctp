@@ -36,19 +36,19 @@
                     </td>
                     <td class="text-center text-nowrap">
                         <?= sprintf(
-                            '%s (%s | %s)',
-                            $log->ip,
-                            $this->Html->link(
-                                __d('me_cms', 'Who is'),
-                                str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_whois')),
-                                ['target' => '_blank']
-                            ),
-                            $this->Html->link(
-                                __d('me_cms', 'Map'),
-                                str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_map')),
-                                ['target' => '_blank']
-                            )
-                        ) ?>
+                                '%s (%s | %s)',
+                                $log->ip,
+                                $this->Html->link(
+                                    __d('me_cms', 'Who is'),
+                                    str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_whois')),
+                                    ['target' => '_blank']
+                                ),
+                                $this->Html->link(
+                                    __d('me_cms', 'Map'),
+                                    str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_map')),
+                                    ['target' => '_blank']
+                                )
+                            ) ?>
                     </td>
                     <td class="text-center">
                         <samp><?= __d('me_cms', '{0} {1} on {2}', $log->browser, $log->version, $log->platform) ?></samp>
