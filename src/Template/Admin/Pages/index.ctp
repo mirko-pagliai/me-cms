@@ -172,7 +172,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $page->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        <?= $page->created->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
                         <div><?= $page->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>

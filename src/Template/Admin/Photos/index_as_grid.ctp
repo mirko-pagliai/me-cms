@@ -33,7 +33,7 @@ $this->extend('/Admin/Common/Photos/index');
                         ) ?>
                     </li>
                     <li class="list-group-item p-1 small text-center">
-                        (<?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
+                        (<?= $photo->created->i18nFormat() ?>)
                     </li>
                 </ul>
 

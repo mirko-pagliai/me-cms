@@ -92,7 +92,7 @@ $this->extend('/Admin/Common/Photos/index');
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        <?= $photo->created->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
                         <div><?= $photo->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>

@@ -12,7 +12,9 @@
 * added `PhotosAlbum::_getPreview()` method (`preview` virtual field);
 * all accessors methods (`_get()` methods) no longer check if the properties
     used are not empty, except those methods that use properties that belong to
-    associated models.
+    associated models;
+* the `bootstrap` file sets the default format used when type converting
+    instances of this type to string.
 
 ### 2.21.0
 * updated for CakePHP 3.5;

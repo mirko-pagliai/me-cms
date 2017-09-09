@@ -14,6 +14,10 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\I18n\Date;
+use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
@@ -138,5 +142,12 @@ if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
 
 //Sets the locale based on the current user
 DispatcherFactory::add('LocaleSelector');
+
+//Sets the default format used when type converting instances of this type to string
+$format = getConfigOrFail('main.datetime.long');
+Date::setToStringFormat($format);
+FrozenDate::setToStringFormat($format);
+FrozenTime::setToStringFormat($format);
+Time::setToStringFormat($format);
 
 require_once __DIR__ . DS . 'i18n_constants.php';

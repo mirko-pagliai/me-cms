@@ -99,7 +99,7 @@ $this->extend('/Admin/Common/Banners/index');
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                        <?= $banner->created->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
                         <div><?= $banner->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>

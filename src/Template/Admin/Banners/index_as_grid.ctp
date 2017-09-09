@@ -31,7 +31,7 @@ $this->extend('/Admin/Common/Banners/index');
                         ], ['title' => I18N_BELONG_ELEMENT]) ?>
                     </li>
                     <li class="list-group-item p-1 small text-center">
-                        (<?= $banner->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>)
+                        (<?= $banner->created->i18nFormat() ?>)
                     </li>
                 </ul>
 
