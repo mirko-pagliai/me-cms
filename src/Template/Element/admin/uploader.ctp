@@ -26,7 +26,7 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
                         '<li class="dz-filename list-group-item py-1 px-2 text-center text-truncate" data-dz-name></li>' +
                         '<li class="dz-size list-group-item py-1 px-2 text-center" data-dz-size></li>' +
                     '</ul>' +
-                    '<img class="card-img-bottom img-responsive mb-2" data-dz-thumbnail />' +
+                    '<img class="card-img-bottom img-fluid mb-2" data-dz-thumbnail />' +
                     '<div class="progress dz-progress mb-3">' +
                         '<div class="progress-bar bg-success dz-upload" role="progressbar" data-dz-uploadprogress></div>' +
                     '</div>' +
