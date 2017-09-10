@@ -17,13 +17,14 @@ $this->assign('title', $title = I18N_PHOTOS);
  * Breadcrumb
  */
 $this->Breadcrumbs->add($title, ['_name' => 'albums']);
-
-$link = $this->Url->build(['_name' => 'album', $album->slug]);
 ?>
 
 <div class="row">
     <?php foreach ($albums as $album) : ?>
     <div class="col-4 mb-4">
+        <?php
+            $link = $this->Url->build(['_name' => 'album', $album->slug]);
+        ?>
         <a href="<?= $link ?>" class="d-block" title="<?= $album->title ?>">
             <div class="card border-0 text-white">
                 <?= $this->Thumb->fit($album->preview, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
