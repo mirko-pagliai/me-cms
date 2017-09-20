@@ -75,7 +75,7 @@ class InstallShell extends BaseInstallShell
      */
     protected function getOtherPlugins()
     {
-        return collection(Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]))
+        return collection(Plugin::all(['exclude' => [ME_TOOLS, ME_CMS], 'order' => false]))
             ->filter(function ($plugin) {
                 $class = App::classname($plugin . '.InstallShell', 'Shell');
 

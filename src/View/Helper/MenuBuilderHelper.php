@@ -14,7 +14,7 @@ namespace MeCms\View\Helper;
 
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use MeTools\Utility\OptionsParserTrait;
+use MeTools\View\OptionsParserTrait;
 
 /**
  * MenuBuilder Helper
@@ -30,8 +30,8 @@ class MenuBuilderHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'Html' => ['className' => METOOLS . '.Html'],
-        METOOLS . '.Dropdown',
+        'Html' => ['className' => ME_TOOLS . '.Html'],
+        ME_TOOLS . '.Dropdown',
     ];
 
     /**

@@ -62,7 +62,7 @@ class AuthComponentTest extends TestCase
             'authorize' => 'Controller',
             'ajaxLogin' => null,
             'flash' => [
-                'element' => METOOLS . '.flash',
+                'element' => ME_TOOLS . '.flash',
                 'params' => ['class' => 'alert-danger'],
             ],
             'loginAction' => ['_name' => 'login'],

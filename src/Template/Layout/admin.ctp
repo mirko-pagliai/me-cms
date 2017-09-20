@@ -26,18 +26,18 @@
             ], ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/bootstrap/css/bootstrap.min',
-                METOOLS . '.default',
-                METOOLS . '.forms',
+                ME_TOOLS . '.default',
+                ME_TOOLS . '.forms',
                 ME_CMS . '.admin/layout',
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
-                METOOLS . '.popper',
+                ME_TOOLS . '.popper',
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
                 '/vendor/bootstrap/js/bootstrap.min',
-                METOOLS . '.default',
+                ME_TOOLS . '.default',
                 ME_CMS . '.admin/layout',
                 ME_CMS . '.display-password',
             ], ['block' => true]);

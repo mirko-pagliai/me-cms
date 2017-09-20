@@ -28,21 +28,21 @@ class PluginTest extends TestCase
     {
         $result = Plugin::all();
         $this->assertEquals(ME_CMS, $result[0]);
-        $this->assertEquals(METOOLS, $result[1]);
+        $this->assertEquals(ME_TOOLS, $result[1]);
         $this->assertNotContains('TestPlugin', $result);
 
         Plugin::load('TestPlugin');
 
         $result = Plugin::all();
         $this->assertEquals(ME_CMS, $result[0]);
-        $this->assertEquals(METOOLS, $result[1]);
+        $this->assertEquals(ME_TOOLS, $result[1]);
         $this->assertContains('TestPlugin', $result);
 
         $result = Plugin::all(['order' => false]);
         $this->assertNotEquals(ME_CMS, $result[0]);
-        $this->assertNotEquals(METOOLS, $result[1]);
+        $this->assertNotEquals(ME_TOOLS, $result[1]);
         $this->assertContains(ME_CMS, $result);
-        $this->assertContains(METOOLS, $result);
+        $this->assertContains(ME_TOOLS, $result);
         $this->assertContains('TestPlugin', $result);
     }
 }
