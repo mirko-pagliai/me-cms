@@ -17,13 +17,20 @@ body {
     font-family: Roboto,sans-serif;
     font-size: .875rem;
 }
+
+/* -------------------------------- */
+/*              General             */
+/* -------------------------------- */
+/* Card, image overlays, transition */
 .card .card-img-overlay.card-img-overlay-transition {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, .5);
     /* Transition for "opacity" propriety */
-    transition: opacity .25s ease-in-out;
-    -moz-transition: opacity .25s ease-in-out;
-    -webkit-transition: opacity .25s ease-in-out;
+    transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -webkit-transition: opacity .5s ease-in-out;
 }
+
+/* Card on hover, image overlays, transition */
 .card:hover .card-img-overlay.card-img-overlay-transition {
     opacity: 0;
 }
@@ -71,10 +78,10 @@ body footer {
     color: #888;
     padding: 1rem;
     z-index: 99999;
-      position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
     position: sticky;
 }
 
