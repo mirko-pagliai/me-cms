@@ -20,22 +20,17 @@ $this->Breadcrumbs->add($title, ['_name' => 'albums']);
 ?>
 
 <div class="row">
-    <?php foreach ($albums as $album) : ?>
-    <div class="col-4 mb-4">
-        <?php
-            $link = $this->Url->build(['_name' => 'album', $album->slug]);
-        ?>
-        <a href="<?= $link ?>" class="d-block" title="<?= $album->title ?>">
-            <div class="card border-0 text-white">
-                <?= $this->Thumb->fit($album->preview, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
-                <div class="card-img-overlay card-img-overlay-transition">
-                    <h4 class="card-title"><?= $album->title ?></h4>
-                    <p class="card-text">
-                        <?= __d('me_cms', '{0} photos', $album->photo_count) ?>
-                    </p>
-                </div>
-            </div>
-        </a>
-    </div>
-    <?php endforeach; ?>
+    <?php
+    foreach ($albums as $album) {
+        $link = ['_name' => 'album', $album->slug];
+        $path = $album->preview;
+        $title = $album->title;
+        $text = __d('me_cms', '{0} photos', $album->photo_count);
+
+        echo $this->Html->div(
+            'col-4 mb-4',
+            $this->element(ME_CMS . '.views/photo-preview', compact('link', 'path', 'text', 'title'))
+        );
+    }
+    ?>
 </div>

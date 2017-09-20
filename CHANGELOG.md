@@ -5,6 +5,7 @@
 * fixed all admin templates for Bootstrap 4;
 * fixed `login` layout for Bootstrap 4;
 * fixed `MenuBuilderHelper` for Bootstrap 4;
+* added the `post-preview` view element;
 * `MenuHelper` class returns menus as arrays, without transforming them into
     html.
 

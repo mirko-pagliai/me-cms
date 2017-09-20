@@ -50,27 +50,24 @@ if (getConfig('default.fancybox')) {
 ?>
 
 <div class="row">
-    <?php foreach ($photos as $photo) : ?>
     <?php
-    $link = $this->Url->build(['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id]);
-    $options = $baseOptions + ['title' => $photo->description];
+    foreach ($photos as $photo) {
+        $link = ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id];
+        $linkOptions = $baseOptions + ['title' => $photo->description];
+        $path = $photo->path;
+        $text = $photo->description;
 
-    //If Fancybox is enabled, adds some options
-    if (getConfig('default.fancybox')) {
-        $options += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280])];
+        //If Fancybox is enabled, adds some options
+        if (getConfig('default.fancybox')) {
+            $linkOptions += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280])];
+        }
+
+        echo $this->Html->div(
+            'col-md-4 col-lg-3 mb-4',
+            $this->element(ME_CMS . '.views/photo-preview', compact('link', 'linkOptions', 'path', 'text'))
+        );
     }
     ?>
-    <div class="col-md-4 col-lg-3 mb-4">
-        <a href="<?= $link ?>" <?= toAttributes($options) ?>>
-            <div class="card border-0 text-white">
-                <?= $this->Thumb->fit($photo->path, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
-                <div class="card-img-overlay card-img-overlay-transition">
-                    <p class="card-text"><?= $photo->description ?></p>
-                </div>
-            </div>
-        </a>
-    </div>
-    <?php endforeach; ?>
 </div>
 
 <?= $this->element('MeTools.paginator') ?>
