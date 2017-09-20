@@ -27,7 +27,12 @@ $this->userbar($this->Html->link(
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete photo'),
     ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    [
+        'class' => 'nav-link text-danger',
+        'icon' => 'trash-o',
+        'confirm' => I18N_SURE_TO_DELETE,
+        'target' => '_blank',
+    ]
 ));
 
 /**
