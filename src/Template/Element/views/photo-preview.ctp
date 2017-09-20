@@ -32,13 +32,13 @@ if (empty($linkOptions['title'])) {
         <?= $this->Thumb->fit($path, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
         <div class="card-img-overlay card-img-overlay-transition p-3">
             <?php if (!empty($title)): ?>
-                <h5 class="card-title"><?= $title ?></h5>
+            <h5 class="card-title"><?= strip_tags($title) ?></h5>
             <?php endif; ?>
 
             <?php if (!empty($text)): ?>
-                <p class="card-text small">
-                    <?= $this->Text->truncate($text, 150) ?>
-                </p>
+            <p class="card-text small">
+                <?= $this->Text->truncate(strip_tags($text), 150) ?>
+            </p>
             <?php endif; ?>
         </div>
     </div>
