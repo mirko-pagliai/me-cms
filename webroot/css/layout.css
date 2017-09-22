@@ -18,6 +18,14 @@ body {
     font-size: .875rem;
 }
 
+/* Large ≥992px */
+@media (min-width: 992px) {
+    /* Body */
+    body {
+        padding-bottom: 7rem;
+    }
+}
+
 /* -------------------------------- */
 /*              General             */
 /* -------------------------------- */
@@ -74,15 +82,20 @@ body header #topbar .navbar-nav a {
 /* Footer */
 body #footer {
     background: #f2f2f2;
-    bottom: 0;
     color: #888;
     padding: 1rem;
-    z-index: 99999;
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: -o-sticky;
-    position: sticky;
+}
+
+/* Large ≥992px */
+@media (min-width: 992px) {
+    /* Footer */
+    body #footer {
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        z-index: 1030;
+    }
 }
 
 /* Footer, links */
