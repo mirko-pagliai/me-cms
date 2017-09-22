@@ -30,7 +30,6 @@
                 ME_TOOLS . '.forms',
                 ME_CMS . '.userbar',
                 ME_CMS . '.cookies',
-                ME_CMS . '.widgets',
                 ME_CMS . '.layout',
                 ME_CMS . '.contents',
             ], ['block' => true]);
