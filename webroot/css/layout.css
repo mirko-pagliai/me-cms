@@ -72,7 +72,7 @@ body header #topbar .navbar-nav a {
 /*              Footer              */
 /* -------------------------------- */
 /* Footer */
-body footer {
+body #footer {
     background: #f2f2f2;
     bottom: 0;
     color: #888;
@@ -86,36 +86,36 @@ body footer {
 }
 
 /* Footer, links */
-body footer a {
+body #footer a {
     border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
 }
 
 /* Footer, links on hover */
-body footer a:hover {
+body #footer a:hover {
     text-decoration: none;
 }
 
 /* Footer, paragraphs */
-body footer p {
+body #footer p {
     margin: 0;
 }
 
 /* Footer, lists */
-body footer ul {
+body #footer ul {
     padding: 0;
 }
 
 /* Footer, lists, list elements */
-body footer ul li {
+body #footer ul li {
     border-right: 1px solid #aaa;
     display: inline-block;
     padding: 0 .75rem;
 }
 
 /* Footer, lists, last list elements */
-body footer ul li:last-child {
+body #footer ul li:last-child {
     border-right: 0;
 }
 
