@@ -75,7 +75,7 @@
         </header>
         <div class="container">
             <div class="row">
-                <main id="content" class="col-9">
+                <main id="content" class="col-lg-9">
                     <?php
                     echo $this->Flash->render();
 
