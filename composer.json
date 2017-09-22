@@ -51,5 +51,6 @@
             "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src",
             "TestPluginTwo\\": "tests/test_app/TestApp/Plugin/TestPluginTwo/src"
         }
-    }
+    },
+    "minimum-stability": "beta"
 }
