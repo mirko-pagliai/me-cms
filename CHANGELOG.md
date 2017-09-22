@@ -1,6 +1,6 @@
 # 2.x branch
 ## 2.22 branch
-### 2.22.0
+### 2.22.0-beta
 * a massive improvement of pages and posts templates;
 * fixed all templates and layouts for Bootstrap 4;
 * fixed `MenuBuilderHelper` for Bootstrap 4;
