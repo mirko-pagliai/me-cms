@@ -29,6 +29,35 @@ body {
 /* -------------------------------- */
 /*              General             */
 /* -------------------------------- */
+.blockquote {
+    background: #f7f7f9;
+    padding: 1rem 3.25rem;
+    position: relative;
+}
+
+/* Blockquote, icons */
+.blockquote:before, .blockquote:after {
+    font-size: 1.5rem;
+    position: absolute;
+    font-family: FontAwesome;
+    font-weight: normal;
+    opacity: .5;
+}
+
+/* Blockquote, left (before) icon */
+.blockquote:before {
+    content: "\f10d";
+    left: 1rem;
+    top: .5rem;
+}
+
+/* Blockquote, right (after) icon */
+.blockquote:after {
+    bottom: .5rem;
+    content: "\f10e";
+    right: 1rem;
+}
+
 /* Card, image overlays, transition */
 .card .card-img-overlay.card-img-overlay-transition {
     background: rgba(0, 0, 0, .5);
