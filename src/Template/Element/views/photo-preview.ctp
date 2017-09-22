@@ -18,6 +18,8 @@ if (empty($linkOptions)) {
     $linkOptions = [];
 }
 
+$linkOptions = $this->Html->optionsValues(['class' => 'd-block'], $linkOptions);
+
 if (empty($linkOptions['title'])) {
     if (!empty($title)) {
         $linkOptions['title'] = $title;
