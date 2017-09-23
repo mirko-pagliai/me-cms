@@ -60,10 +60,14 @@
         //  the value in the configuration will be used
         if (!$this->request->isAction(['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
-            $strpos = $strpos ?: getConfigOrFail('default.truncate_to');
+            $truncatedOptions = ['ellipsis' => false];
 
-            $truncatedText = $this->Text->truncate($text, $strpos, ['html' => true]);
-            echo $truncatedText;
+            if (!$strpos) {
+                $strpos = getConfigOrFail('default.truncate_to');
+                $truncatedOptions = ['html' => true];
+            }
+
+            echo $this->Text->truncate($text, $strpos, $truncatedOptions);
         } else {
             echo $text;
         }
