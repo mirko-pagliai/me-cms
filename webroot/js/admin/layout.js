@@ -57,11 +57,11 @@ $(function () {
     var queryString = $.map(document.location.search.replace(/(^\?)/, '').split('&'), function (value, key) {
         value = value.split('=');
 
-        if (value[0] == 'direction' || value[0] == 'page' || value[0] == 'render' || value[0] == 'sort') {
+        if (value[0] === 'direction' || value[0] === 'page' || value[0] === 'render' || value[0] === 'sort') {
             return null;
         }
 
-        if (value[1] == "" || value[1] == null || value[1] == undefined) {
+        if (value[1] === "" || value[1] === null || value[1] === undefined) {
             return null;
         }
 
