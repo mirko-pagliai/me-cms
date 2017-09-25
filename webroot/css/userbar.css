@@ -15,6 +15,7 @@
 /* Userbar */
 #userbar {
     box-shadow: 0 .3rem .3rem 0 rgba(50, 50, 50, .3);
+    font-size: 1rem;
 }
 
 /* Userbar, navigation links */
