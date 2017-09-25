@@ -75,6 +75,30 @@ article .content blockquote:after {
     right: 1.2rem;
 }
 
+/* Content, images pulled on left or right */
+article .content img.float-left,
+article .content img.pull-left,
+article .content img[style~="float:left"],
+article .content img.float-right,
+article .content img.pull-right,
+article .content img[style~="float:right"] {
+    margin: .6rem 0;
+}
+
+/* Content, images pulled on left */
+article .content img.float-left,
+article .content img.pull-left,
+article .content img[style~="float:left"] {
+    margin-right: 1rem;
+}
+
+/* Content, images pulled on right */
+article .content img.float-right,
+article .content img.pull-right,
+article .content img[style~="float:right"] {
+    margin-left: 1rem;
+}
+
 /* Content, last paragraph */
 article .content p:last-child {
     margin-bottom: 0;
