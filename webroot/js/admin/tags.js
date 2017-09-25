@@ -162,7 +162,7 @@ $(function () {
     $(inputText).on('focusin', function () {
         $(this).off('keydown').keydown(function (event) {
             //On press the "enter" button
-            if (event.keyCode == 13) {
+            if (event.keyCode === 13) {
                 //Prevent default event
                 event.preventDefault();
 
