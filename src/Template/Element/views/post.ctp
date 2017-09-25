@@ -12,8 +12,8 @@
  */
 ?>
 
-<article class="mb-4">
-    <div class="header mb-3 pl-3">
+<article class="mb-4 overflow-hidden">
+    <div class="header mb-3">
         <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
             <h5 class="category mb-1">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
@@ -30,7 +30,7 @@
             </h4>
         <?php endif; ?>
 
-        <div class="info mt-2 text-muted">
+        <div class="info text-muted">
             <?php
             if (getConfig('post.author')) {
                 echo $this->Html->div(
@@ -67,7 +67,8 @@
                 $truncatedOptions = ['html' => true];
             }
 
-            echo $this->Text->truncate($text, $strpos, $truncatedOptions);
+            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
+            echo $truncatedText;
         } else {
             echo $text;
         }

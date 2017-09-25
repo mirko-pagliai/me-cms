@@ -17,6 +17,7 @@ article .header {
     border-color: #777;
     border-style: solid;
     border-width: 0 0 0 .35rem;
+    padding-left: 1rem;
 }
 
 /* Header, links */
@@ -95,7 +96,7 @@ article .tags a .fa {
 }
 
 /* -------------------------------- */
-/*              Buttons            */
+/*              Buttons             */
 /* -------------------------------- */
 /* Buttons, links */
 article .buttons a {

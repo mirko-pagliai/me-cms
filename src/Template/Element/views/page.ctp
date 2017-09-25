@@ -12,8 +12,8 @@
  */
 ?>
 
-<article class="mb-4">
-    <div class="header mb-3 pl-3">
+<article class="mb-4 overflow-hidden">
+    <div class="header mb-3">
         <?php if (getConfig('page.category') && $page->category->title && $page->category->slug) : ?>
             <h5 class="category mb-1">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
@@ -30,7 +30,7 @@
             </h4>
         <?php endif; ?>
 
-        <div class="info mt-2 text-muted">
+        <div class="info text-muted">
             <?php
             if (getConfig('page.created')) {
                 echo $this->Html->time(
@@ -51,9 +51,14 @@
         //  the value in the configuration will be used
         if (!$this->request->isAction(['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
-            $strpos = $strpos ?: getConfigOrFail('default.truncate_to');
+            $truncatedOptions = ['ellipsis' => false];
 
-            $truncatedText = $this->Text->truncate($text, $strpos, ['html' => true]);
+            if (!$strpos) {
+                $strpos = getConfigOrFail('default.truncate_to');
+                $truncatedOptions = ['html' => true];
+            }
+
+            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
             echo $truncatedText;
         } else {
             echo $text;
