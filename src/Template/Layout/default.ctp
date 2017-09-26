@@ -73,7 +73,7 @@
             echo $this->element(ME_CMS . '.topbar', [], ['cache' => $topbarCache]);
             ?>
         </header>
-        <div class="container">
+        <div class="container mb-4">
             <div class="row">
                 <main id="content" class="col-lg-9">
                     <?php
