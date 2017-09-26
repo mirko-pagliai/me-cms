@@ -16,7 +16,7 @@ function setKcfinderHeight()
 {
     var content = $('#content');
     var kcfinder = $('#kcfinder');
-    
+
     if (!kcfinder.length) {
         return;
     }
@@ -28,7 +28,7 @@ function setKcfinderHeight()
     minHeight -= (content.outerHeight(true) - content.height());
 
     //Subtracts the height of each child element of content
-    kcfinder.siblings().each(function() {
+    kcfinder.siblings().each(function () {
         minHeight -= $(this).outerHeight(true);
     });
 
