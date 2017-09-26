@@ -22,33 +22,33 @@ body {
 /*              General             */
 /* -------------------------------- */
 /* Blockquote */
-.blockquote {
-    background: #f7f7f9;
-    padding: 1rem 3.25rem;
+blockquote {
+    background: #eee;
+    color: #333;
+    padding: 1.25rem 3.5rem;
     position: relative;
 }
 
 /* Blockquote, icons */
-.blockquote:before, .blockquote:after {
+blockquote:before, blockquote:after {
     font-size: 1.5rem;
     position: absolute;
     font-family: FontAwesome;
-    font-weight: normal;
     opacity: .5;
 }
 
 /* Blockquote, left (before) icon */
-.blockquote:before {
+blockquote:before {
     content: "\f10d";
-    left: 1rem;
-    top: .5rem;
+    left: 1.2rem;
+    top: .75rem;
 }
 
 /* Blockquote, right (after) icon */
-.blockquote:after {
-    bottom: .5rem;
+blockquote:after {
+    bottom: .75rem;
     content: "\f10e";
-    right: 1rem;
+    right: 1.2rem;
 }
 
 /* Card, image overlays, transition */

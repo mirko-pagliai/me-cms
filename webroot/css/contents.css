@@ -44,37 +44,6 @@ article .content {
     line-height: 1.6;
 }
 
-/* Content, blockquotes */
-article .content blockquote {
-    background: #eee;
-    color: #333;
-    padding: 1.25rem 3.5rem;
-    position: relative;
-}
-
-/* Content, blockquotes, icons */
-article .content blockquote:before,
-article .content blockquote:after {
-    font-size: 1.5rem;
-    position: absolute;
-    font-family: FontAwesome;
-    opacity: .5;
-}
-
-/* Content, blockquotes, left (before) icon */
-article .content blockquote:before {
-    content: "\f10d";
-    left: 1.2rem;
-    top: .75rem;
-}
-
-/* Content, blockquotes, right (after) icon */
-article .content blockquote:after {
-    bottom: .75rem;
-    content: "\f10e";
-    right: 1.2rem;
-}
-
 /* Content, images pulled on left or right */
 article .content img.float-left,
 article .content img.pull-left,
