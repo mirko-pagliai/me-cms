@@ -18,14 +18,6 @@ body {
     font-size: .875rem;
 }
 
-/* Large ≥992px */
-@media (min-width: 992px) {
-    /* Body */
-    body {
-        padding-bottom: 8rem;
-    }
-}
-
 /* -------------------------------- */
 /*              General             */
 /* -------------------------------- */
@@ -116,16 +108,14 @@ body #footer {
     padding: 1rem;
 }
 
-/* Large ≥992px */
-@media (min-width: 992px) {
-    /* Footer */
-    body #footer {
-        bottom: 0;
-        left: 0;
-        position: fixed;
-        right: 0;
-        z-index: 1030;
-    }
+/* Footer, with `fixed` class. This class is added via javascript if there is a
+    difference between the height of the window and that of the body of the
+    document */
+body #footer.fixed {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1030;
 }
 
 /* Footer, links */

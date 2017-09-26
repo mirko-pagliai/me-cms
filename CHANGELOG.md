@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.1-beta
+* using javascript, it sets the footer to `fixed` position when needed, that is
+    when the document body is lower than the window height.
+
 ### 2.22.0-beta
 * a massive improvement of pages and posts templates;
 * fixed all templates and layouts for Bootstrap 4;
