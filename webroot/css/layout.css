@@ -25,7 +25,9 @@ body {
 blockquote {
     background: #eee;
     color: #333;
-    padding: 1.25rem 3.5rem;
+    font-family: sans-serif;
+    font-size: .8rem;
+    padding: .75rem 3.25rem;
     position: relative;
 }
 
@@ -40,15 +42,44 @@ blockquote:before, blockquote:after {
 /* Blockquote, left (before) icon */
 blockquote:before {
     content: "\f10d";
-    left: 1.2rem;
-    top: .75rem;
+    left: 1rem;
+    top: .25rem;
 }
 
 /* Blockquote, right (after) icon */
 blockquote:after {
-    bottom: .75rem;
+    bottom: .25rem;
     content: "\f10e";
-    right: 1.2rem;
+    right: 1rem;
+}
+
+/* Extra small and small devices */
+@media (max-width: 767px) {
+    /* Blockquote */
+    blockquote {
+        background: transparent;
+        font-size: .75rem;
+        padding: 0 1.75rem;
+    }
+
+    /* Blockquote, icons */
+    blockquote:before, blockquote:after {
+        font-size: 1.25rem;
+    }
+    
+    /* Blockquote, left (before) icon */
+    blockquote:before {
+        content: "\f10d";
+        left: 0;
+        top: 0;
+    }
+    
+    /* Blockquote, right (after) icon */
+    blockquote:after {
+        bottom: 0;
+        content: "\f10e";
+        right: 0;
+    }
 }
 
 /* Card, image overlays, transition */
