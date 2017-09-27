@@ -88,6 +88,20 @@ article .tags a .fa {
     margin-right: .15rem;
 }
 
+/* Extra small and small devices */
+@media (max-width: 767px) {
+    /* Tags, each tag */
+    article .tags a {
+        font-size: .8rem;
+        margin-right: .25rem;
+    }
+    
+    /* Tags, each tag, icons */
+    article .tags a .fa {
+        margin-right: .05rem;
+    }
+}
+
 /* -------------------------------- */
 /*              Buttons             */
 /* -------------------------------- */
