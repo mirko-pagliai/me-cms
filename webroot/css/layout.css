@@ -99,7 +99,7 @@ body header #topbar .navbar-nav a {
         font-size: .9rem;
         padding: .4rem .6rem .6rem;
     }
-    
+
     /* Breadcrumb item, next breadcrumb item, divider */
     .breadcrumb-item + .breadcrumb-item::before {
         padding-left: .25rem;
