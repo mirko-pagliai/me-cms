@@ -12,10 +12,22 @@
 /* -------------------------------- */
 /*              HTML                */
 /* -------------------------------- */
+/* Html */
+html {
+font-size: 16px;
+}
+
+/* Extra small devices */
+@media (max-width: 575px) {
+    /* Html */
+    html {
+      font-size: 14px;
+    }
+}
+
 /* Body */
 body {
     font-family: Roboto,sans-serif;
-    font-size: .875rem;
 }
 
 /* -------------------------------- */
@@ -58,7 +70,6 @@ blockquote:after {
     /* Blockquote */
     blockquote {
         background: transparent;
-        font-size: .75rem;
         padding: 0 1.75rem;
     }
 
@@ -136,7 +147,7 @@ body header #topbar .navbar-nav a {
 @media (max-width: 767px) {
     /* Breadcrumb */
     .breadcrumb {
-        font-size: .85rem;
+        font-size: .9rem;
         padding: .4rem .6rem .6rem;
     }
     
