@@ -13,7 +13,7 @@
 /*          Content header          */
 /* -------------------------------- */
 /* Header */
-article .header {
+article header {
     border-color: #777;
     border-style: solid;
     border-width: 0 0 0 .35rem;
@@ -21,55 +21,55 @@ article .header {
 }
 
 /* Header, links */
-article .header a {
+article header a {
     color: #555;
     text-decoration: none;
 }
 
 /* Header, links on hover */
-article .header a:hover {
+article header a:hover {
     color: #333;
 }
 
 /* Header, info (author, date, etc), icons */
-article .header .info .fa {
+article header .info .fa {
     min-width: .95rem;
 }
 
 /* -------------------------------- */
-/*              Content            */
+/*          Main content            */
 /* -------------------------------- */
-/* Content */
-article .content {
+/* Main content */
+article main {
     line-height: 1.6;
 }
 
-/* Content, images pulled on left or right */
-article .content img.float-left,
-article .content img.pull-left,
-article .content img[style~="float:left"],
-article .content img.float-right,
-article .content img.pull-right,
-article .content img[style~="float:right"] {
+/* Main content, images pulled on left or right */
+article main img.float-left,
+article main img.pull-left,
+article main img[style~="float:left"],
+article main img.float-right,
+article main img.pull-right,
+article main img[style~="float:right"] {
     margin: .6rem 0;
 }
 
-/* Content, images pulled on left */
-article .content img.float-left,
-article .content img.pull-left,
-article .content img[style~="float:left"] {
+/* Main content, images pulled on left */
+article main img.float-left,
+article main img.pull-left,
+article main img[style~="float:left"] {
     margin-right: 1rem;
 }
 
-/* Content, images pulled on right */
-article .content img.float-right,
-article .content img.pull-right,
-article .content img[style~="float:right"] {
+/* Main content, images pulled on right */
+article main img.float-right,
+article main img.pull-right,
+article main img[style~="float:right"] {
     margin-left: 1rem;
 }
 
-/* Content, last paragraph */
-article .content p:last-child {
+/* Main content, last paragraph */
+article main p:last-child {
     margin-bottom: 0;
 }
 

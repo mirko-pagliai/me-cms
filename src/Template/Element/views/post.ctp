@@ -13,7 +13,7 @@
 ?>
 
 <article class="mb-4 overflow-hidden">
-    <div class="header mb-3">
+    <header class="mb-3">
         <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
             <h5 class="category mb-1">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
@@ -48,9 +48,9 @@
             }
             ?>
         </div>
-    </div>
+    </header>
 
-    <div class="content text-justify">
+    <main class="text-justify">
         <?php
         //Executes BBCode on the text
         $text = $this->BBCode->parser($post->text);
