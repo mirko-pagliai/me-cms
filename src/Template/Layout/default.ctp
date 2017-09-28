@@ -49,7 +49,7 @@
     <body>
         <?= $this->element(ME_CMS . '.userbar') ?>
         <?= $this->element(ME_CMS . '.cookies_policy') ?>
-        <header>
+        <header id="header">
             <div class="container">
                 <?php
                 $logo = $this->Html->h1(getConfigOrFail('main.title'));
