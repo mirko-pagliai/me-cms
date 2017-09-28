@@ -72,7 +72,9 @@ body {
 #header #logo {
     display: inline-block;
     margin: 3rem 0;
+    text-align: center;
     text-decoration: none;
+    width: 100%;
 }
 
 /* Header, logo (as text) */
