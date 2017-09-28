@@ -12,7 +12,7 @@
  */
 ?>
 
-<article class="mb-4 overflow-hidden">
+<article class="mb-4">
     <header class="mb-3">
         <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
             <h5 class="category mb-1">
