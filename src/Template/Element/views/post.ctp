@@ -73,7 +73,7 @@
             echo $text;
         }
         ?>
-    </div>
+    </main>
 
     <?php if (getConfig('post.tags') && $post->tags) : ?>
         <div class="tags mt-2">

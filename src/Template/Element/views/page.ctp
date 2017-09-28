@@ -65,7 +65,7 @@
             echo $text;
         }
         ?>
-    </div>
+    </main>
 
     <div class="buttons mt-2 text-right">
         <?php
