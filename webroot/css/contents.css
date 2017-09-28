@@ -44,6 +44,12 @@ article main {
     line-height: 1.6;
 }
 
+/* Main content, images */
+article main img {
+    height: auto;
+    max-width: 100%;
+}
+
 /* Main content, images pulled on left or right */
 article main img.float-left,
 article main img.pull-left,
@@ -79,27 +85,9 @@ article main p:last-child {
 /* Tags, each tag */
 article .tags a {
     display: inline-block;
-    margin-right: .5rem;
+    font-size: .9rem;
+    margin-right: .2rem;
     text-decoration: none;
-}
-
-/* Tags, each tag, icons */
-article .tags a .fa {
-    margin-right: .15rem;
-}
-
-/* Extra small and small devices */
-@media (max-width: 767px) {
-    /* Tags, each tag */
-    article .tags a {
-        font-size: .8rem;
-        margin-right: .25rem;
-    }
-
-    /* Tags, each tag, icons */
-    article .tags a .fa {
-        margin-right: .05rem;
-    }
 }
 
 /* -------------------------------- */
