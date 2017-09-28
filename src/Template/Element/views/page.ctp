@@ -30,7 +30,7 @@
             </h4>
         <?php endif; ?>
 
-        <div class="info text-muted">
+        <div class="info">
             <?php
             if (getConfig('page.created')) {
                 echo $this->Html->time(

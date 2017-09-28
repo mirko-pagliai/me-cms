@@ -31,6 +31,11 @@ article header a:hover {
     color: #333;
 }
 
+/* Header, info (author, date, etc) */
+article header .info {
+    color: #868e96;
+}
+
 /* Header, info (author, date, etc), icons */
 article header .info .fa {
     min-width: .95rem;
