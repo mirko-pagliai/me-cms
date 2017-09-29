@@ -21,6 +21,7 @@ if (empty($linkOptions)) {
 $linkOptions = $this->Html->optionsValues(['class' => 'd-block'], $linkOptions);
 
 if (empty($linkOptions['title'])) {
+    $linkOptions['title'] = null;
     if (!empty($title)) {
         $linkOptions['title'] = $title;
     } elseif (!empty($text)) {
@@ -31,7 +32,7 @@ if (empty($linkOptions['title'])) {
 
 <a href="<?= $link ?>" <?= toAttributes($linkOptions) ?>>
     <div class="card border-0 text-white">
-        <?= $this->Thumb->fit($path, ['width' => 275], ['class' => 'card-img rounded-0']) ?>
+        <?= $this->Thumb->fit($path, ['width' => 275], ['class' => 'card-img rounded-0', 'alt' => $linkOptions['title']]) ?>
         <div class="card-img-overlay card-img-overlay-transition p-3">
             <?php if (!empty($title)) : ?>
             <h5 class="card-title"><?= strip_tags($title) ?></h5>
