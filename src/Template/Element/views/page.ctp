@@ -12,7 +12,7 @@
  */
 ?>
 
-<article class="mb-4">
+<article class="clearfix mb-4">
     <header class="mb-3">
         <?php if (getConfig('page.category') && $page->category->title && $page->category->slug) : ?>
             <h5 class="category mb-1">
