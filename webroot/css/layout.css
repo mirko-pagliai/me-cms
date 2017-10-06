@@ -116,7 +116,10 @@ body {
 #footer {
     background: #f2f2f2;
     color: #888;
+    font-size: 80%;
+    font-weight: 400;
     padding: 1rem;
+    text-align: center;
 }
 
 /* Footer, with `fixed` class. This class is added via javascript if there is a
