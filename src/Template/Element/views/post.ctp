@@ -15,17 +15,17 @@
 <article class="clearfix mb-4">
     <header class="mb-3">
         <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
-            <h5 class="category mb-1">
+            <h5 class="category mb-2">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
-        <h2 class="title mb-1">
+        <h2 class="title mb-2">
             <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
         </h2>
 
         <?php if ($post->subtitle) : ?>
-            <h4 class="subtitle mb-1">
+            <h4 class="subtitle mb-2">
                 <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
             </h4>
         <?php endif; ?>

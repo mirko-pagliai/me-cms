@@ -31,6 +31,17 @@ article header a:hover {
     color: #333;
 }
 
+/* Header, category */
+article header .category {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Header, title */
+article header .title {
+    line-height: 1;
+}
+
 /* Header, info (author, date, etc) */
 article header .info {
     color: #868e96;
