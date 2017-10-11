@@ -122,7 +122,7 @@ article .buttons a {
 
 /* Buttons, links on hover */
 article .buttons a:hover {
-    color: #444;
+    border-color: #666;
 }
 
 /* Buttons, "read more" button, icon */
