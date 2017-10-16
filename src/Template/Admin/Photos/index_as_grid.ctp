@@ -42,10 +42,12 @@ $this->extend('/Admin/Common/Photos/index');
 
                 $actions = [
                     $this->Html->button(null, ['action' => 'edit', $photo->id], [
+                        'class' => 'btn-link',
                         'icon' => 'pencil',
                         'title' => I18N_EDIT,
                     ]),
                     $this->Html->button(null, ['action' => 'download', $photo->id], [
+                        'class' => 'btn-link',
                         'icon' => 'download',
                         'title' => I18N_DOWNLOAD,
                     ]),
@@ -54,7 +56,7 @@ $this->extend('/Admin/Common/Photos/index');
                 //Only admins and managers can delete photos
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
                     $actions[] = $this->Form->postButton(null, ['action' => 'delete', $photo->id], [
-                        'class' => 'text-danger',
+                        'class' => 'btn-link text-danger',
                         'icon' => 'trash-o',
                         'title' => I18N_DELETE,
                         'confirm' => I18N_SURE_TO_DELETE,
@@ -63,13 +65,19 @@ $this->extend('/Admin/Common/Photos/index');
 
                 //If the photo is active
                 if ($photo->active) {
-                    $actions[] = $this->Html->button(
-                        null,
-                        ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
-                        ['icon' => 'external-link', 'target' => '_blank', 'title' => I18N_OPEN]
-                    );
+                    $actions[] = $this->Html->button(null, [
+                        '_name' => 'photo',
+                        'slug' => $photo->album->slug,
+                        'id' => $photo->id,
+                    ], [
+                        'class' => 'btn-link',
+                        'icon' => 'external-link',
+                        'target' => '_blank',
+                        'title' => I18N_OPEN,
+                    ]);
                 } else {
                     $actions[] = $this->Html->button(null, ['_name' => 'photosPreview', $photo->id], [
+                        'class' => 'btn-link',
                         'icon' => 'external-link',
                         'target' => '_blank',
                         'title' => I18N_PREVIEW,
@@ -77,7 +85,7 @@ $this->extend('/Admin/Common/Photos/index');
                 }
                 ?>
 
-                <div class="btn-toolbar justify-content-center" role="toolbar">
+                <div class="btn-toolbar mt-1 justify-content-center" role="toolbar">
                     <div class="btn-group" role="group">
                         <?= implode(PHP_EOL, $actions) ?>
                     </div>

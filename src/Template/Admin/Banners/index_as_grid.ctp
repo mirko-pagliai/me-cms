@@ -45,6 +45,7 @@ $this->extend('/Admin/Common/Banners/index');
 
                 $actions = [
                     $this->Html->button(null, ['action' => 'edit', $banner->id], [
+                        'class' => 'btn-link',
                         'icon' => 'pencil',
                         'title' => I18N_EDIT,
                     ]),
@@ -52,6 +53,7 @@ $this->extend('/Admin/Common/Banners/index');
 
                 if ($banner->target) {
                     $actions[] = $this->Html->button(null, $banner->target, [
+                        'class' => 'btn-link',
                         'icon' => 'external-link',
                         'title' => I18N_OPEN,
                         'target' => '_blank',
@@ -59,6 +61,7 @@ $this->extend('/Admin/Common/Banners/index');
                 }
 
                 $actions[] = $this->Html->button(null, ['action' => 'download', $banner->id], [
+                    'class' => 'btn-link',
                     'icon' => 'download',
                     'title' => I18N_DOWNLOAD,
                 ]);
@@ -66,7 +69,7 @@ $this->extend('/Admin/Common/Banners/index');
                 //Only admins can delete banners
                 if ($this->Auth->isGroup('admin')) {
                     $actions[] = $this->Form->postButton(null, ['action' => 'delete', $banner->id], [
-                        'class' => 'text-danger',
+                        'class' => 'btn-link text-danger',
                         'icon' => 'trash-o',
                         'title' => I18N_DELETE,
                         'confirm' => I18N_SURE_TO_DELETE,
@@ -74,7 +77,7 @@ $this->extend('/Admin/Common/Banners/index');
                 }
                 ?>
 
-                <div class="btn-toolbar justify-content-center" role="toolbar">
+                <div class="btn-toolbar mt-1 justify-content-center" role="toolbar">
                     <div class="btn-group" role="group">
                         <?= implode(PHP_EOL, $actions) ?>
                     </div>
