@@ -253,6 +253,7 @@ ul.actions li:last-child {
 .priority-high,
 .priority-veryhigh {
     border-radius: .8rem;
+    color: #fff;
     font-size: .8125rem;
     line-height: 1.6rem;
     padding: 0;

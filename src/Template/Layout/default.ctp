@@ -36,10 +36,9 @@
             echo $this->fetch('css');
 
             echo $this->Asset->script([
-                ME_TOOLS . '.popper',
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
-                '/vendor/bootstrap/js/bootstrap.min',
+                '/vendor/bootstrap/js/bootstrap.bundle.min',
                 ME_TOOLS . '.default',
                 ME_CMS . '.layout',
             ], ['block' => true]);
