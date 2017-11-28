@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$link = $this->Url->build(['_name' => 'post', $post->slug]);
+$link = ['_name' => 'post', $post->slug];
 $title = $post->title;
 ?>
 
