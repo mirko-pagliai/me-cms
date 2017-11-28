@@ -14,7 +14,6 @@ namespace MeCms\View\Helper;
 
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use MeTools\View\OptionsParserTrait;
 
 /**
  * MenuBuilder Helper
@@ -23,8 +22,6 @@ use MeTools\View\OptionsParserTrait;
  */
 class MenuBuilderHelper extends Helper
 {
-    use OptionsParserTrait;
-
     /**
      * Helpers
      * @var array
@@ -42,11 +39,9 @@ class MenuBuilderHelper extends Helper
      */
     protected function buildLinks($links, array $linksOptions = [])
     {
-        return collection($links)
-            ->map(function ($link) use ($linksOptions) {
-                return $this->Html->link($link[0], $link[1], $linksOptions);
-            })
-            ->toArray();
+        return array_map(function ($link) use ($linksOptions) {
+            return $this->Html->link($link[0], $link[1], $linksOptions);
+        }, $links);
     }
 
     /**
@@ -63,10 +58,8 @@ class MenuBuilderHelper extends Helper
             return [];
         }
 
-        //Filters invalid name methods
-        $methods = preg_grep('/^(?!_).+$/', $methods);
-
-        return array_values($methods);
+        //Filters invalid name methods and returns
+        return array_values(preg_grep('/^(?!_).+$/', $methods));
     }
 
     /**
@@ -114,29 +107,26 @@ class MenuBuilderHelper extends Helper
      */
     public function renderAsCollapse($plugin)
     {
-        $menus = collection($this->generate($plugin))
-            ->map(function ($menu) {
-                //Sets the collapse name
-                $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
+        return implode(PHP_EOL, array_map(function ($menu) {
+            //Sets the collapse name
+            $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
 
-                $mainLink = $this->Html->link(
-                    $menu['title'],
-                    sprintf('#%s', $collapseName),
-                    array_merge($menu['titleOptions'], [
-                        'aria-controls' => $collapseName,
-                        'aria-expanded' => 'false',
-                        'class' => 'collapsed',
-                        'data-toggle' => 'collapse',
-                    ])
-                );
+            $mainLink = $this->Html->link(
+                $menu['title'],
+                sprintf('#%s', $collapseName),
+                array_merge($menu['titleOptions'], [
+                    'aria-controls' => $collapseName,
+                    'aria-expanded' => 'false',
+                    'class' => 'collapsed',
+                    'data-toggle' => 'collapse',
+                ])
+            );
 
-                return $this->Html->div(
-                    'card',
-                    $mainLink . $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName])
-                );
-            });
-
-        return implode(PHP_EOL, $menus->toArray());
+            return $this->Html->div(
+                'card',
+                $mainLink . $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName])
+            );
+        }, $this->generate($plugin)));
     }
 
     /**
@@ -149,14 +139,12 @@ class MenuBuilderHelper extends Helper
      */
     public function renderAsDropdown($plugin, array $titleOptions = [])
     {
-        return collection($this->generate($plugin))
-            ->map(function ($menu) use ($titleOptions) {
-                $titleOptions = array_merge($menu['titleOptions'], $titleOptions);
-                echo $this->Dropdown->start($menu['title'], $titleOptions);
-                echo implode(PHP_EOL, $this->buildLinks($menu['links'], ['class' => 'dropdown-item']));
+        return array_map(function ($menu) use ($titleOptions) {
+            $titleOptions = array_merge($menu['titleOptions'], $titleOptions);
+            echo $this->Dropdown->start($menu['title'], $titleOptions);
+            echo implode(PHP_EOL, $this->buildLinks($menu['links'], ['class' => 'dropdown-item']));
 
-                return $this->Dropdown->end();
-            })
-            ->toArray();
+            return $this->Dropdown->end();
+        }, $this->generate($plugin));
     }
 }

@@ -10,29 +10,27 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+use MeTools\View\OptionsParser;
+
 if (is_array($link)) {
     $link = $this->Url->build($link);
 }
 
-if (empty($linkOptions)) {
-    $linkOptions = [];
-}
+$linkOptions = new OptionsParser(empty($linkOptions) ? [] : $linkOptions);
+$linkOptions->append('class', 'd-block');
 
-$linkOptions = $this->Html->optionsValues(['class' => 'd-block'], $linkOptions);
-
-if (empty($linkOptions['title'])) {
-    $linkOptions['title'] = null;
+if (!$linkOptions->exists('title')) {
     if (!empty($title)) {
-        $linkOptions['title'] = $title;
+        $linkOptions->add('title', $title);
     } elseif (!empty($text)) {
-        $linkOptions['title'] = $text;
+        $linkOptions->add('title', $text);
     }
 }
 ?>
 
-<a href="<?= $link ?>" <?= toAttributes($linkOptions) ?>>
+<a href="<?= $link ?>" <?= $linkOptions->toString() ?>>
     <div class="card border-0 text-white">
-        <?= $this->Thumb->fit($path, ['width' => 275], ['class' => 'card-img rounded-0', 'alt' => $linkOptions['title']]) ?>
+        <?= $this->Thumb->fit($path, ['width' => 275], ['class' => 'card-img rounded-0', 'alt' => $linkOptions->get('title')]) ?>
         <div class="card-img-overlay card-img-overlay-transition">
             <?php if (!empty($title)) : ?>
             <h5 class="card-title"><?= strip_tags($title) ?></h5>
