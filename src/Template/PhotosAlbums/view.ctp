@@ -52,8 +52,12 @@ if (getConfig('default.fancybox')) {
 <div class="row">
     <?php
     foreach ($photos as $photo) {
+        $linkOptions = $baseOptions;
+        if ($photo->description) {
+            $linkOptions += ['title' => $photo->description];
+        }
+
         $link = ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id];
-        $linkOptions = $baseOptions + ['title' => $photo->description];
         $path = $photo->path;
         $text = $photo->description;
 
