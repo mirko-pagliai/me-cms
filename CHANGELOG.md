@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.4-beta
+* updated for MeTools 2.16.3-beta.
+
 ### 2.22.3-beta
 * updated for MeTools 2.16.2-beta;
 * updated for Bootstrap 4 beta 2.

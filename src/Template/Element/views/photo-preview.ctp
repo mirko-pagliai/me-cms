@@ -10,14 +10,11 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-use MeTools\View\OptionsParser;
-
 if (is_array($link)) {
     $link = $this->Url->build($link);
 }
 
-$linkOptions = new OptionsParser(empty($linkOptions) ? [] : $linkOptions);
-$linkOptions->append('class', 'd-block');
+$linkOptions = optionsParser(empty($linkOptions) ? [] : $linkOptions)->append('class', 'd-block');
 
 if (!$linkOptions->exists('title')) {
     if (!empty($title)) {
