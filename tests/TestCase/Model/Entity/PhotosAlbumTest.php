@@ -96,5 +96,8 @@ class PhotosAlbumTest extends TestCase
     {
         $album = $this->PhotosAlbums->findById(1)->contain('Photos')->first();
         $this->assertEquals(PHOTOS . $album->id . DS . 'photo1.jpg', $album->preview);
+
+        $album = $this->PhotosAlbums->findById(1)->first();
+        $this->assertNull($album->preview);
     }
 }
