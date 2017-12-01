@@ -39,6 +39,11 @@ body {
     font-family: Roboto,sans-serif;
 }
 
+/* Words with highlight */
+.highlight {
+    background: yellow;
+}
+
 /* -------------------------------- */
 /*              General             */
 /* -------------------------------- */

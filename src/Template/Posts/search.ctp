@@ -47,9 +47,11 @@ echo $this->Form->end();
 
                 <div class="text-justify">
                 <?php
-                    //Executes BBCode on the text and strips other tags
+                    //Executes BBCode on the text, strips tags, extracts
+                    //  an excerpt from `$pattern` and highlights `$pattern`
                     $text = strip_tags($this->BBCode->parser($post->text));
-                    echo $this->Text->truncate($text, 350, ['html' => true]);
+                    $text = $this->Text->excerpt($text, $pattern, 350);
+                    echo $this->Text->highlight($text, $pattern);
                 ?>
                 </div>
             </div>
