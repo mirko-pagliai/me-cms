@@ -19,8 +19,6 @@ use SerializedArray\SerializedArray;
  * File Storage stream for Logging. Writes logs to different files based on
  *  the level of log it is.
  *
- * Rewrites {@link http://api.cakephp.org/3.4/class-Cake.Log.Engine.FileLog.html FileLog}.
- *
  * This adapter writes writes the normal log (using the `FileLog::log`
  *  method) and a serialized copy of the log.
  * The log information are splitted from the message, using regex.
@@ -50,7 +48,11 @@ class SerializedLog extends FileLog
         }
 
         //Sets the exception attributes
-        if (preg_match('/Exception Attributes:\s((.(?!Request URL|Referer URL|Client IP|Stack Trace|Trace))+)/is', $message, $matches)) {
+        if (preg_match(
+            '/Exception Attributes:\s((.(?!Request URL|Referer URL|Client IP|Stack Trace|Trace))+)/is',
+            $message,
+            $matches
+        )) {
             $log['attributes'] = $matches[1];
         }
 
