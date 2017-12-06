@@ -34,7 +34,6 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "posts" actions
      * @return mixed Array with links, title and title options
-     * @uses MeCms\View\Helper\AuthHelper::isGroup()
      */
     public function posts()
     {
@@ -80,7 +79,6 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "pages" actions
      * @return mixed Array with links, title and title options
-     * @uses MeCms\View\Helper\AuthHelper::isGroup()
      */
     public function pages()
     {
@@ -160,7 +158,6 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "banners" actions
      * @return mixed Array with links, title and title options
-     * @uses MeCms\View\Helper\AuthHelper::isGroup()
      */
     public function banners()
     {
@@ -204,7 +201,6 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "users" actions
      * @return mixed Array with links, title and title options
-     * @uses MeCms\View\Helper\AuthHelper::isGroup()
      */
     public function users()
     {
@@ -248,7 +244,6 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "backups" actions
      * @return mixed Array with links, title and title options
-     * @uses MeCms\View\Helper\AuthHelper::isGroup()
      */
     public function backups()
     {
@@ -276,7 +271,6 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "systems" actions
      * @return mixed Array with links, title and title options
-     * @uses MeCms\View\Helper\AuthHelper::isGroup()
      */
     public function systems()
     {
