@@ -27,8 +27,8 @@ class MenuBuilderHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'Html' => ['className' => ME_TOOLS . '.Html'],
         ME_TOOLS . '.Dropdown',
+        'Html' => ['className' => ME_TOOLS . '.Html'],
     ];
 
     /**
@@ -110,22 +110,16 @@ class MenuBuilderHelper extends Helper
         return implode(PHP_EOL, array_map(function ($menu) {
             //Sets the collapse name
             $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
+            $menu['titleOptions'] += [
+                'aria-controls' => $collapseName,
+                'aria-expanded' => 'false',
+                'class' => 'collapsed',
+                'data-toggle' => 'collapse',
+            ];
+            $mainLink = $this->Html->link($menu['title'], '#' . $collapseName, $menu['titleOptions']);
+            $links = $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName]);
 
-            $mainLink = $this->Html->link(
-                $menu['title'],
-                sprintf('#%s', $collapseName),
-                array_merge($menu['titleOptions'], [
-                    'aria-controls' => $collapseName,
-                    'aria-expanded' => 'false',
-                    'class' => 'collapsed',
-                    'data-toggle' => 'collapse',
-                ])
-            );
-
-            return $this->Html->div(
-                'card',
-                $mainLink . $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName])
-            );
+            return $this->Html->div('card', $mainLink . PHP_EOL . $links);
         }, $this->generate($plugin)));
     }
 
@@ -140,11 +134,10 @@ class MenuBuilderHelper extends Helper
     public function renderAsDropdown($plugin, array $titleOptions = [])
     {
         return array_map(function ($menu) use ($titleOptions) {
-            $titleOptions = array_merge($menu['titleOptions'], $titleOptions);
-            echo $this->Dropdown->start($menu['title'], $titleOptions);
-            echo implode(PHP_EOL, $this->buildLinks($menu['links'], ['class' => 'dropdown-item']));
+            $menu['titleOptions'] += $titleOptions;
+            $links = $this->buildLinks($menu['links'], ['class' => 'dropdown-item']);
 
-            return $this->Dropdown->end();
+            return $this->Dropdown->menu($menu['title'], $links, $menu['titleOptions']);
         }, $this->generate($plugin));
     }
 }
