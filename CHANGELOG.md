@@ -1,11 +1,8 @@
 # 2.x branch
 ## 2.22 branch
-### 2.22.5-RC1
+### 2.22.4-RC1
 * when the search function is used, the searched text is highlighted;
 * updated for MeTools 2.16.3-RC1.
-
-### 2.22.4-beta
-* updated for MeTools 2.16.3-beta.
 
 ### 2.22.3-beta
 * updated for MeTools 2.16.2-beta;
