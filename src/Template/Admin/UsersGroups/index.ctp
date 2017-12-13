@@ -36,23 +36,21 @@ $this->append('actions', $this->Html->button(
     <tbody>
         <?php foreach ($groups as $group) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $group->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?>
+                    </strong>
                     <?php
                         $actions = [
-                            $this->Html->link(
-                                I18N_EDIT,
-                                ['action' => 'edit', $group->id],
-                                ['icon' => 'pencil']
-                            ),
-                            $this->Form->postLink(
-                                I18N_DELETE,
-                                ['action' => 'delete', $group->id],
-                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                            ),
+                            $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->id], ['icon' => 'pencil']),
+                            $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $group->id], [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => I18N_SURE_TO_DELETE,
+                            ]),
                         ];
 
                         echo $this->Html->ul($actions, ['class' => 'actions']);
@@ -61,7 +59,7 @@ $this->append('actions', $this->Html->button(
                 <td>
                     <?= $group->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($group->user_count) {
                         echo $this->Html->link(

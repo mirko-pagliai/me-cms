@@ -42,7 +42,7 @@ class Mailer extends CakeMailer
         parent::__construct($email);
 
         $this->getEmailInstance()
-            ->setHelpers([METOOLS . '.Html'])
+            ->setHelpers([ME_TOOLS . '.Html'])
             ->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setSender(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setEmailFormat('html');

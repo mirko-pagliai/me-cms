@@ -9,7 +9,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 $(function () {
     //Input button to add tags
     var inputButton = $('#tags-input-button');
@@ -82,7 +81,7 @@ $(function () {
 
             //Appends HTML
             var closeButton = '<button type="button" data-tag="' + counter + '" class="tag-remove" href="#">&times;</button>';
-            preview.append('<div data-tag="' + counter + '">' + tag + closeButton + '</div>');
+            preview.append('<div class="tag" data-tag="' + counter + '">' + tag + closeButton + '</div>');
 
             //Increments the counter
             counter++;
@@ -163,7 +162,7 @@ $(function () {
     $(inputText).on('focusin', function () {
         $(this).off('keydown').keydown(function (event) {
             //On press the "enter" button
-            if (event.keyCode == 13) {
+            if (event.keyCode === 13) {
                 //Prevent default event
                 event.preventDefault();
 

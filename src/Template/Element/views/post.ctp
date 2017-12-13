@@ -12,82 +12,78 @@
  */
 ?>
 
-<div class="post-container content-container">
-    <div class="content-header">
+<article class="clearfix mb-4">
+    <header class="mb-3">
         <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
-            <h5 class="content-category">
+            <h5 class="category mb-2">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
-        <h3 class="content-title">
+        <h2 class="title mb-2">
             <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
-        </h3>
+        </h2>
 
         <?php if ($post->subtitle) : ?>
-            <h4 class="content-subtitle">
+            <h4 class="subtitle mb-2">
                 <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
             </h4>
         <?php endif; ?>
 
-        <div class="content-info">
+        <div class="info">
             <?php
             if (getConfig('post.author')) {
                 echo $this->Html->div(
-                    'content-author',
+                    'author',
                     __d('me_cms', 'Posted by {0}', $post->user->full_name),
                     ['icon' => 'user']
                 );
             }
 
             if (getConfig('post.created')) {
-                echo $this->Html->div('content-date', __d(
-                    'me_cms',
-                    'Posted on {0}',
-                    $post->created->i18nFormat(getConfigOrFail('main.datetime.long'))
-                ), ['icon' => 'clock-o']);
+                echo $this->Html->time(
+                    __d('me_cms', 'Posted on {0}', $post->created->i18nFormat()),
+                    ['class' => 'date', 'icon' => 'clock-o']
+                );
             }
             ?>
         </div>
-    </div>
+    </header>
 
-    <div class="content-text clearfix">
+    <main class="text-justify">
         <?php
         //Executes BBCode on the text
         $text = $this->BBCode->parser($post->text);
 
-        //Truncates the text if the "<!-- read-more -->" tag is present
-        $strpos = strpos($text, '<!-- read-more -->');
+        //Truncates the text when necessary. The text will be truncated to the
+        //  location of the `<!-- readmore -->` tag. If the tag is not present,
+        //  the value in the configuration will be used
+        if (!$this->request->isAction(['view', 'preview'])) {
+            $strpos = strpos($text, '<!-- read-more -->');
+            $truncatedOptions = ['ellipsis' => false];
 
-        if (!$this->request->isAction(['view', 'preview']) && $strpos) {
-            echo $truncatedText = $this->Text->truncate($text, $strpos, [
-                'ellipsis' => false,
-                'exact' => true,
-                'html' => false,
-            ]);
-        //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview'])) {
-            $truncatedText = $this->Text->truncate($text, getConfigOrFail('default.truncate_to'), [
-                'exact' => false,
-                'html' => true,
-            ]);
+            if (!$strpos) {
+                $strpos = getConfigOrFail('default.truncate_to');
+                $truncatedOptions = ['html' => true];
+            }
 
+            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
             echo $truncatedText;
         } else {
             echo $text;
         }
         ?>
-    </div>
+    </main>
 
     <?php if (getConfig('post.tags') && $post->tags) : ?>
-        <div class="content-tags">
+        <div class="tags mt-2">
             <?php foreach ($post->tags as $tag) : ?>
                 <?= $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']) ?>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
-    <div class="content-buttons">
+    <div class="buttons mt-2 text-right">
         <?php
         //If it was requested to truncate the text and that has been
         //truncated, it shows the "Read more" link
@@ -106,4 +102,4 @@
         echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
-</div>
+</article>

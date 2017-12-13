@@ -214,6 +214,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
         $this->assertResponseOkAndNotEmpty();
+        $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView);
@@ -235,6 +236,7 @@ class PostsControllerTest extends IntegrationTestCase
         //GET request again. Now the data is in cache
         $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
         $this->assertResponseOkAndNotEmpty();
+        $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         $this->get(array_merge($url, ['?' => ['p' => 'a']]));

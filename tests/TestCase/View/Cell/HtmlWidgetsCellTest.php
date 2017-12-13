@@ -50,7 +50,7 @@ class HtmlWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget, ['template' => 'custom_html2'])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             ['div' => ['class' => 'widget-content']],
             'A custom widget',
             '/div',
@@ -60,7 +60,7 @@ class HtmlWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget, ['template' => 'custom_html3'])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Custom title',
             '/h4',

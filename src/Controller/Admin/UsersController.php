@@ -101,7 +101,7 @@ class UsersController extends AppController
 
         $this->paginate['order'] = ['username' => 'ASC'];
 
-        $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->getQuery()));
+        $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->getQueryParams()));
 
         $this->set(compact('users'));
     }

@@ -69,7 +69,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?php echo $this->Paginator->sort('username', I18N_USERNAME) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('first_name', I18N_NAME) ?></th>
-            <th class="text-center hidden-xs"><?= $this->Paginator->sort('email', I18N_EMAIL) ?></th>
+            <th class="text-center d-none d-lg-block"><?= $this->Paginator->sort('email', I18N_EMAIL) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Groups.label', I18N_GROUP) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('post_count', I18N_POSTS) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
@@ -78,13 +78,15 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
     <tbody>
         <?php foreach ($users as $user) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $user->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?>
+                    </strong>
                     <?php
-                    $class = 'record-label record-label-danger';
+                    $class = 'record-badge badge badge-danger';
 
                     //If the user is banned
                     if ($user->banned) {
@@ -103,21 +105,17 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     if ($this->Auth->isGroup('admin')) {
                         //If the user is not active (pending)
                         if (!$user->active) {
-                            $actions[] = $this->Form->postLink(
-                                __d('me_cms', 'Activate'),
-                                ['action' => 'activate', $user->id],
-                                [
-                                    'icon' => 'user-plus',
-                                    'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
-                                ]
-                            );
+                            $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->id], [
+                                'icon' => 'user-plus',
+                                'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
+                            ]);
                         }
 
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $user->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $user->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     echo $this->Html->ul($actions, ['class' => 'actions']);
@@ -126,7 +124,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 <td class="text-center">
                     <?= $user->full_name ?>
                 </td>
-                <td class="text-center hidden-xs">
+                <td class="text-center d-none d-lg-block">
                     <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
                 </td>
                 <td class="text-center">
@@ -136,7 +134,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($user->post_count) {
                         echo $this->Html->link(
@@ -149,11 +147,11 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
-                    <div class="hidden-xs">
-                        <?= $user->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                <td class="text-nowrap text-center">
+                    <div class="d-none d-lg-block">
+                        <?= $user->created->i18nFormat() ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $user->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $user->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

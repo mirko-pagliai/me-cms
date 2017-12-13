@@ -12,64 +12,62 @@
  */
 ?>
 
-<div class="page-container content-container">
-    <div class="content-header">
+<article class="clearfix mb-4">
+    <header class="mb-3">
         <?php if (getConfig('page.category') && $page->category->title && $page->category->slug) : ?>
-            <h5 class="content-category">
+            <h5 class="category mb-2">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
             </h5>
         <?php endif; ?>
 
-        <h3 class="content-title">
+        <h3 class="title mb-2">
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>
 
         <?php if ($page->subtitle) : ?>
-            <h4 class="content-subtitle">
+            <h4 class="subtitle mb-2">
                 <?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?>
             </h4>
         <?php endif; ?>
 
-        <div class="content-info">
-            <?php if (getConfig('page.created')) : ?>
-                <?= $this->Html->div(
-                    'content-date',
-                    __d('me_cms', 'Posted on {0}', $page->created->i18nFormat(getConfigOrFail('main.datetime.long'))),
-                    ['icon' => 'clock-o']
-                ) ?>
-            <?php endif; ?>
+        <div class="info">
+            <?php
+            if (getConfig('page.created')) {
+                echo $this->Html->time(
+                    __d('me_cms', 'Posted on {0}', $page->created->i18nFormat()),
+                    ['class' => 'date', 'icon' => 'clock-o']
+                );
+            }
+            ?>
         </div>
-    </div>
-    <div class="content-text">
+    </header>
+
+    <main class="text-justify">
         <?php
         //Executes BBCode on the text
         $text = $this->BBCode->parser($page->text);
 
-        //Truncates the text if the "<!-- read-more -->" tag is present
-        $strpos = strpos($text, '<!-- read-more -->');
+        //Truncates the text when necessary. The text will be truncated to the
+        //  location of the `<!-- readmore -->` tag. If the tag is not present,
+        //  the value in the configuration will be used
+        if (!$this->request->isAction(['view', 'preview'])) {
+            $strpos = strpos($text, '<!-- read-more -->');
+            $truncatedOptions = ['ellipsis' => false];
 
-        if (!$this->request->isAction(['view', 'preview']) && $strpos) {
-            echo $truncatedText = $this->Text->truncate($text, $strpos, [
-                'ellipsis' => false,
-                'exact' => true,
-                'html' => false,
-            ]);
-        //Truncates the text if requested by the configuration
-        } elseif (!$this->request->isAction(['view', 'preview'])) {
-            $truncatedText = $this->Text->truncate(
-                $text,
-                getConfigOrFail('default.truncate_to'),
-                ['exact' => false, 'html' => true]
-            );
+            if (!$strpos) {
+                $strpos = getConfigOrFail('default.truncate_to');
+                $truncatedOptions = ['html' => true];
+            }
 
+            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
             echo $truncatedText;
         } else {
             echo $text;
         }
         ?>
-    </div>
+    </main>
 
-    <div class="content-buttons">
+    <div class="buttons mt-2 text-right">
         <?php
         //If it was requested to truncate the text and that has been
         //truncated, it shows the "Read more" link
@@ -87,4 +85,4 @@
         echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
     }
     ?>
-</div>
+</article>

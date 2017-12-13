@@ -26,31 +26,25 @@ $this->extend('/Admin/Common/Photos/index');
     <tbody>
         <?php foreach ($photos as $photo) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $photo->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
+                    </strong>
                     <?php
                     //If the photo is not active (not published)
                     if (!$photo->active) {
                         echo $this->Html->span(
                             I18N_NOT_PUBLISHED,
-                            ['class' => 'record-label record-label-warning']
+                            ['class' => 'record-badge badge badge-warning']
                         );
                     }
 
                     $actions = [
-                        $this->Html->link(
-                            I18N_EDIT,
-                            ['action' => 'edit', $photo->id],
-                            ['icon' => 'pencil']
-                        ),
-                        $this->Html->link(
-                            I18N_DOWNLOAD,
-                            ['action' => 'download', $photo->id],
-                            ['icon' => 'download']
-                        ),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->id], ['icon' => 'pencil']),
+                        $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $photo->id], ['icon' => 'download']),
                     ];
 
                     //Only admins and managers can delete photos
@@ -64,11 +58,11 @@ $this->extend('/Admin/Common/Photos/index');
 
                     //If the photo is active
                     if ($photo->active) {
-                        $actions[] = $this->Html->link(I18N_OPEN, [
-                            '_name' => 'photo',
-                            'slug' => $photo->album->slug,
-                            'id' => $photo->id
-                        ], ['icon' => 'external-link', 'target' => '_blank']);
+                        $actions[] = $this->Html->link(
+                            I18N_OPEN,
+                            ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
+                            ['icon' => 'external-link', 'target' => '_blank']
+                        );
                     } else {
                         $actions[] = $this->Html->link(
                             I18N_PREVIEW,
@@ -90,11 +84,11 @@ $this->extend('/Admin/Common/Photos/index');
                 <td class="text-center">
                     <?= $photo->description ?>
                 </td>
-                <td class="min-width text-center">
-                    <div class="hidden-xs">
-                        <?= $photo->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                <td class="text-nowrap text-center">
+                    <div class="d-none d-lg-block">
+                        <?= $photo->created->i18nFormat() ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $photo->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $photo->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

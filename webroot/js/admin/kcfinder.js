@@ -9,31 +9,33 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 /**
- * Sets the height for the KCFinder i frame.
+ * Sets the minimum height for the KCFinder frame.
  */
 function setKcfinderHeight()
 {
-    if (!$('#kcfinder').length) {
+    var content = $('#content');
+    var kcfinder = $('#kcfinder');
+
+    if (!kcfinder.length) {
         return;
     }
 
-    //For now, the maximum height is the maximum height available
-    var maxHeight = getAvailableHeight();
+    //For now, the minimum height is the maximum height available
+    var minHeight = getAvailableHeight();
 
-    //Subtracts content padding
-    maxHeight -= parseInt($('#content').css('padding-top')) + parseInt($('#content').css('padding-bottom'));
+    //Subtracts padding, border, and margin of #content
+    minHeight -= (content.outerHeight(true) - content.height());
 
     //Subtracts the height of each child element of content
-    $('#content > * > *:not(#kcfinder)').each(function () {
-        maxHeight -= $(this).outerHeight(true);
+    kcfinder.siblings().each(function () {
+        minHeight -= $(this).outerHeight(true);
     });
 
-    $('#kcfinder').height(maxHeight);
+    kcfinder.css('minHeight', minHeight - 5);
 }
 
-//On windows load and resize, it sets the height for the KCFinder iframe
+//On windows load and resize, it sets the minimum height for the KCFinder iframe
 $(window).on('load resize', function () {
     setKcfinderHeight();
 });

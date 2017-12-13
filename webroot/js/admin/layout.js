@@ -9,7 +9,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 /**
  * Gets the maximum height available.
  * The maximum available height is equal to the window height minus the topbar height.
@@ -36,15 +35,8 @@ $(window).on('load resize', function () {
 });
 
 $(function () {
-    //Adds the "data-parent" attribute to all links of the sidebar
-    $('#sidebar:visible a').attr('data-parent', '#sidebar');
-
-    //Sidebar affix
-    $('#sidebar:visible').affix({
-        offset: {
-            top: $('#sidebar').position().top
-        }
-    });
+    //Adds the "data-parent" attribute to all "collapse" wrapper of the sidebar
+    $('#sidebar:visible .collapse').attr('data-parent', '#sidebar-accordion');
 
     //Checks if there is the cookie of the last open menu
     if (Cookies.get('sidebar-lastmenu') && $('#sidebar').is(':visible')) {
@@ -52,24 +44,24 @@ $(function () {
         var id = '#' + Cookies.get('sidebar-lastmenu');
 
         //Opens the menu
-        $(id, '#sidebar').addClass('collapse in').attr('aria-expanded', 'true').prev('a').removeClass('collapsed').attr('aria-expanded', 'true');
+        $(id, '#sidebar').addClass('show').prev('a').removeClass('collapsed').attr('aria-expanded', 'true');
     }
 
     //On click on a sidebar menu
     $('#sidebar a[data-toggle=collapse]').click(function () {
         //Saves the menu ID into a cookie
-        Cookies.set('sidebar-lastmenu', $(this).next().attr('id'), { path: '' });
+        Cookies.set('sidebar-lastmenu', $(this).attr('aria-controls'), { path: '' });
     });
 
     //Gets query string as objects, removing empty values and pagination values
     var queryString = $.map(document.location.search.replace(/(^\?)/, '').split('&'), function (value, key) {
         value = value.split('=');
 
-        if (value[0] == 'direction' || value[0] == 'page' || value[0] == 'render' || value[0] == 'sort') {
+        if (value[0] === 'direction' || value[0] === 'page' || value[0] === 'render' || value[0] === 'sort') {
             return null;
         }
 
-        if (value[1] == "" || value[1] == null || value[1] == undefined) {
+        if (value[1] === "" || value[1] === null || value[1] === undefined) {
             return null;
         }
 

@@ -272,9 +272,9 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
             ME_CMS . '\Controller\Component\AuthComponent',
-            METOOLS . '\Controller\Component\FlashComponent',
+            ME_TOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
-            METOOLS . '\Controller\Component\UploaderComponent',
+            ME_TOOLS . '\Controller\Component\UploaderComponent',
             'Recaptcha\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
             ME_CMS . '\Controller\Component\LoginRecorderComponent',

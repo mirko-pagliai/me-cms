@@ -29,14 +29,14 @@ $this->append('actions', $this->Html->button(
         <tr>
             <th class="text-center"><?= I18N_ID ?></th>
             <th><?= I18N_TITLE ?></th>
-            <th class="min-width text-center"><?= __d('me_cms', 'Parent') ?></th>
-            <th class="min-width text-center"><?= I18N_POSTS ?></th>
+            <th class="text-nowrap text-center"><?= __d('me_cms', 'Parent') ?></th>
+            <th class="text-nowrap text-center"><?= I18N_POSTS ?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($categories as $category) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $category->id ?></code>
                 </td>
                 <td>
@@ -55,11 +55,11 @@ $this->append('actions', $this->Html->button(
 
                         //Only admins can delete posts categories
                         if ($this->Auth->isGroup('admin')) {
-                            $actions[] = $this->Form->postLink(
-                                I18N_DELETE,
-                                ['action' => 'delete', $category->id],
-                                ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                            );
+                            $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->id], [
+                                'class' => 'text-danger',
+                                'icon' => 'trash-o',
+                                'confirm' => I18N_SURE_TO_DELETE,
+                            ]);
                         }
 
                         if ($category->post_count) {
@@ -73,14 +73,14 @@ $this->append('actions', $this->Html->button(
                         echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if (!empty($category->parent->title)) {
                         echo $category->parent->title;
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($category->post_count) {
                         echo $this->Html->link(

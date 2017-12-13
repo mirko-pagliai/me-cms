@@ -16,21 +16,22 @@ $this->assign('title', $post->title);
 /**
  * Userbar
  */
+$class = 'badge badge-warning';
 if (!$post->active) {
-    $this->userbar($this->Html->span(I18N_DRAFT, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_DRAFT, compact('class')));
 }
 if ($post->created->isFuture()) {
-    $this->userbar($this->Html->span(I18N_SCHEDULED, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_SCHEDULED, compact('class')));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit post'),
     ['action' => 'edit', $post->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete post'),
     ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    ['class' => 'nav-link text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**
@@ -77,25 +78,27 @@ echo $this->element('views/post', compact('post'));
 
 <?php if (!empty($related)) : ?>
     <?php
-        $relatedAsList = collection($related)->map(function ($post) {
+        $relatedAsArray = collection($related)->map(function ($post) {
             return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
-        })->toList();
+        })->toArray();
     ?>
-    <div class="related-contents">
-        <?= $this->Html->h4(__d('me_cms', 'Related posts')) ?>
+    <div class="related-contents mb-4">
+        <?= $this->Html->h5(__d('me_cms', 'Related posts')) ?>
         <?php if (!getConfig('post.related.images')) : ?>
-            <?= $this->Html->ul($relatedAsList, ['icon' => 'caret-right']) ?>
+            <?= $this->Html->ul($relatedAsArray, ['icon' => 'caret-right']) ?>
         <?php else : ?>
-            <div class="visible-xs">
-                <?= $this->Html->ul($relatedAsList, ['icon' => 'caret-right']) ?>
+            <div class="d-none d-lg-block">
+                <div class="row">
+                    <?php foreach ($related as $post) : ?>
+                        <div class="col-3">
+                            <?= $this->element('views/post-preview', compact('post')) ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
 
-            <div class="hidden-xs row">
-                <?php foreach ($related as $post) : ?>
-                    <div class="col-sm-6 col-md-3">
-                        <?= $this->element('views/post-preview', compact('post')) ?>
-                    </div>
-                <?php endforeach; ?>
+            <div class="d-lg-none">
+                <?= $this->Html->ul($relatedAsArray, ['icon' => 'caret-right']) ?>
             </div>
         <?php endif; ?>
     </div>

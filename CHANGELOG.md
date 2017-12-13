@@ -1,5 +1,42 @@
 # 2.x branch
+## 2.22 branch
+### 2.22.5-RC1
+* when the search function is used, the searched text is highlighted;
+* updated for MeTools 2.16.3-RC1.
+
+### 2.22.4-beta
+* updated for MeTools 2.16.3-beta.
+
+### 2.22.3-beta
+* updated for MeTools 2.16.2-beta;
+* updated for Bootstrap 4 beta 2.
+
+### 2.22.2-beta
+* fixed little bugs on templates and css rules.
+
+### 2.22.1-beta
+* using javascript, it sets the footer to `fixed` position when needed, that is
+    when the document body is lower than the window height;
+* fixed little bugs on templates;
+* fixes on templates and css rules.
+
+### 2.22.0-beta
+* a massive improvement of pages and posts templates;
+* fixed all templates and layouts for Bootstrap 4;
+* fixed `MenuBuilderHelper` for Bootstrap 4;
+* added the `post-preview` view element;
+* `MenuHelper` class returns menus as arrays, without transforming them into
+    html.
+
 ## 2.21 branch
+### 2.21.1
+* added `PhotosAlbum::_getPreview()` method (`preview` virtual field);
+* all accessors methods (`_get()` methods) no longer check if the properties
+    used are not empty, except those methods that use properties that belong to
+    associated models;
+* the `bootstrap` file sets the default format used when type converting
+    instances of this type to string.
+
 ### 2.21.0
 * updated for CakePHP 3.5;
 * `UserShell::add()` now returns `true`. The created user id is shown through a

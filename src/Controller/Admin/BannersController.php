@@ -94,7 +94,7 @@ class BannersController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
         }
 
-        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQuery())));
+        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQueryParams())));
 
         if ($render) {
             $this->Cookie->write('renderBanners', $render);

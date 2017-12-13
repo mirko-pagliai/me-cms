@@ -19,20 +19,18 @@ $this->assign('title', $title = I18N_PHOTOS);
 $this->Breadcrumbs->add($title, ['_name' => 'albums']);
 ?>
 
-<div class="clearfix">
-    <?php foreach ($albums as $album) : ?>
-        <div class="col-sm-6 col-md-4">
-            <div class="photo-box">
-                <a href="<?= $this->Url->build(['_name' => 'album', $album->slug]) ?>" class="thumbnail" title="<?= $album->title ?>">
-                    <?= $this->Thumb->fit(collection($album->photos)->extract('path')->first(), ['width' => 275]) ?>
-                    <div class="photo-info">
-                        <div>
-                            <p><strong><?= $album->title ?></strong></p>
-                            <p><small><?= __d('me_cms', '{0} photos', $album->photo_count) ?></small></p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    <?php endforeach; ?>
+<div class="row">
+    <?php
+    foreach ($albums as $album) {
+        $link = ['_name' => 'album', $album->slug];
+        $path = $album->preview;
+        $title = $album->title;
+        $text = __d('me_cms', '{0} photos', $album->photo_count);
+
+        echo $this->Html->div(
+            'col-4 mb-4',
+            $this->element(ME_CMS . '.views/photo-preview', compact('link', 'path', 'text', 'title'))
+        );
+    }
+    ?>
 </div>

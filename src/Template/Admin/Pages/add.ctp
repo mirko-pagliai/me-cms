@@ -18,31 +18,31 @@ $this->Library->slugify();
 ?>
 
 <?= $this->Form->create($page); ?>
-<div class='float-form'>
-    <?php
-        echo $this->Form->control('category_id', [
-            'default' => count($categories) < 2 ? collection($categories)->first() : false,
-            'label' => I18N_CATEGORY,
-        ]);
-        echo $this->Form->datetimepicker('created', [
-            'help' => [
-                I18N_USE_CURRENT_DATETIME,
-                I18N_DELAY_PUBLICATION,
-            ],
-            'label' => I18N_DATE,
-        ]);
-        echo $this->Form->control('priority', [
-            'default' => '3',
-            'label' => I18N_PRIORITY,
-        ]);
-        echo $this->Form->control('active', [
-            'checked' => true,
-            'help' => I18N_HELP_DRAFT,
-            'label' => I18N_PUBLISHED,
-        ]);
-    ?>
-</div>
-<fieldset>
+<div class="row">
+    <div class="col-lg-3 order-12">
+        <div class="float-form">
+        <?php
+            echo $this->Form->control('category_id', [
+                'default' => count($categories) < 2 ? collection($categories)->first() : false,
+                'label' => I18N_CATEGORY,
+            ]);
+            echo $this->Form->datetimepicker('created', [
+                'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
+                'label' => I18N_DATE,
+            ]);
+            echo $this->Form->control('priority', [
+                'default' => '3',
+                'label' => I18N_PRIORITY,
+            ]);
+            echo $this->Form->control('active', [
+                'checked' => true,
+                'help' => I18N_HELP_DRAFT,
+                'label' => I18N_PUBLISHED,
+            ]);
+        ?>
+        </div>
+    </div>
+    <fieldset class="col-lg-9">
     <?php
         echo $this->Form->control('title', [
             'id' => 'title',
@@ -62,6 +62,7 @@ $this->Library->slugify();
         ]);
     ?>
     <?= $this->element('admin/bbcode') ?>
-</fieldset>
+    </fieldset>
+</div>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

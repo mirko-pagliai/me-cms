@@ -40,5 +40,5 @@ if (getConfig('users.reset_password') && !$this->request->isUrl($url)) {
 }
 
 if ($menu) {
-    echo $this->Html->ul($menu, ['class' => 'actions']);
+    echo $this->Html->ul($menu, ['class' => 'actions mt-3 mb-0']);
 }

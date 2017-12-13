@@ -16,18 +16,21 @@ $this->Library->slugify();
 ?>
 
 <?= $this->Form->create($category); ?>
-<div class='float-form'>
-    <?php
-    if (!empty($categories)) {
-        echo $this->Form->control('parent_id', [
-            'help' => I18N_BLANK_TO_CREATE_CATEGORY,
-            'label' => I18N_PARENT_CATEGORY,
-            'options' => $categories,
-        ]);
-    }
-    ?>
-</div>
-<fieldset>
+<div class="row">
+    <div class="col-lg-3 order-12">
+        <div class="float-form">
+        <?php
+        if (!empty($categories)) {
+            echo $this->Form->control('parent_id', [
+                'help' => I18N_BLANK_TO_CREATE_CATEGORY,
+                'label' => I18N_PARENT_CATEGORY,
+                'options' => $categories,
+            ]);
+        }
+        ?>
+        </div>
+    </div>
+    <fieldset class="col-lg-9">
     <?php
         echo $this->Form->control('title', [
             'id' => 'title',
@@ -43,6 +46,7 @@ $this->Library->slugify();
             'rows' => 3,
         ]);
     ?>
-</fieldset>
+    </fieldset>
+</div>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

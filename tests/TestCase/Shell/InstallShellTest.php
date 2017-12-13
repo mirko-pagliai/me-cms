@@ -99,7 +99,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
     {
         //Gets all methods from `InstallShell`, except for the `all()` method
         $methods = array_diff(array_merge(
-            getChildMethods(METOOLS . '\Shell\InstallShell'),
+            getChildMethods(ME_TOOLS . '\Shell\InstallShell'),
             getChildMethods(InstallShell::class)
         ), ['all']);
 

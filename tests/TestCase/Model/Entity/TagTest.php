@@ -65,8 +65,6 @@ class TagTest extends TestCase
      */
     public function testSlugGetMutator()
     {
-        $this->assertNull($this->Tag->slug);
-
         $this->Tag->tag = 'This is a tag';
         $this->assertEquals('this-is-a-tag', $this->Tag->slug);
 

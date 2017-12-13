@@ -21,19 +21,19 @@ if (!getConfig('default.cookies_policy') || !empty($_COOKIE['cookies-policy'])) 
 }
 ?>
 
-<div id="cookies-policy">
+<div id="cookies-policy" class="sticky-top">
     <div class="container">
         <?php
             echo __d('me_cms', 'If you continue, you agree to the use of cookies, ok?');
             echo $this->Html->button(
                 __d('me_cms', 'Ok'),
                 ['_name' => 'acceptCookies'],
-                ['class' => 'btn-xs btn-success', 'id' => 'cookies-policy-accept']
+                ['class' => 'btn-sm btn-success', 'id' => 'cookies-policy-accept']
             );
             echo $this->Html->button(
                 __d('me_cms', 'Read more'),
                 ['_name' => 'page', 'cookies-policy'],
-                ['class' => 'btn-xs btn-primary']
+                ['class' => 'btn-sm btn-primary']
             );
         ?>
     </div>

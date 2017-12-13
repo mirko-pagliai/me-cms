@@ -69,20 +69,22 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Categories.title', I18N_CATEGORY) ?></th>
-            <th class="min-width text-center"><?= $this->Paginator->sort('priority', I18N_PRIORITY) ?></th>
-            <th class="min-width text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
+            <th class="text-nowrap text-center"><?= $this->Paginator->sort('priority', I18N_PRIORITY) ?></th>
+            <th class="text-nowrap text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($pages as $page) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $page->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?>
+                    </strong>
                     <?php
-                    $class = 'record-label record-label-warning';
+                    $class = 'record-badge badge badge-warning';
 
                     //If the page is not active (it's a draft)
                     if (!$page->active) {
@@ -130,14 +132,14 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $this->Html->link(
                         $page->category->title,
                         ['?' => ['category' => $page->category->id]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     switch ($page->priority) {
                         case '1':
@@ -170,11 +172,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     echo $this->Html->badge($priority, compact('class', 'tooltip'));
                     ?>
                 </td>
-                <td class="min-width text-center">
-                    <div class="hidden-xs">
-                        <?= $page->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                <td class="text-nowrap text-center">
+                    <div class="d-none d-lg-block">
+                        <?= $page->created->i18nFormat() ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $page->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $page->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

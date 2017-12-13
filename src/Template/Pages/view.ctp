@@ -16,7 +16,7 @@ $this->assign('title', $page->title);
 /**
  * Userbar
  */
-$class = 'label label-warning';
+$class = 'badge badge-warning';
 if (!$page->active) {
     $this->userbar($this->Html->span(I18N_DRAFT, compact('class')));
 }
@@ -26,12 +26,12 @@ if ($page->created->isFuture()) {
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit page'),
     ['action' => 'edit', $page->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete page'),
     ['action' => 'delete', $page->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    ['class' => 'nav-link text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**

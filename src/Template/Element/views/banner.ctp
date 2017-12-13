@@ -15,18 +15,19 @@ if ($banner->position->name) {
 } else {
     $class = 'banner';
 }
+$image = $this->Html->img($banner->path);
 ?>
 
 <div class="<?= $class ?>">
     <?php
     if ($banner->target) {
         echo $this->Html->link(
-            $this->Html->img($banner->path),
+            $image,
             ['_name' => 'banner', $banner->id],
-            ['target' => '_blank', 'title' => $banner->description ?: null]
+            ['target' => '_blank', 'title' => $banner->description]
         );
     } else {
-        echo $this->Html->img($banner->path);
+        echo $image;
     }
     ?>
 </div>

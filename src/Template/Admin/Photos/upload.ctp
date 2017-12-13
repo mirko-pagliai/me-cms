@@ -14,9 +14,10 @@ $this->extend('/Admin/Common/form');
 $this->assign('title', __d('me_cms', 'Upload photos'));
 ?>
 
-<div class="well">
+<div class="card card-body bg-light border-0 mb-4">
+    <?= $this->Form->createInline(null, ['type' => 'get']) ?>
+    <fieldset>
     <?php
-        echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('album', __d('me_cms', 'Album to upload photos'));
         echo $this->Form->control('album', [
             'default' => $this->request->getQuery('album'),
@@ -25,8 +26,9 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
             'options' => $albums,
         ]);
         echo $this->Form->submit(I18N_SELECT);
-        echo $this->Form->end();
     ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
 </div>
 
 <?php

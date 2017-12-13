@@ -30,18 +30,20 @@ $this->append('actions', $this->Html->button(
         <tr>
             <th class="text-center"><?= I18N_ID ?></th>
             <th><?= I18N_TITLE ?></th>
-            <th class="min-width text-center"><?= __d('me_cms', 'Parent') ?></th>
-            <th class="min-width text-center"><?= I18N_PAGES ?></th>
+            <th class="text-nowrap text-center"><?= __d('me_cms', 'Parent') ?></th>
+            <th class="text-nowrap text-center"><?= I18N_PAGES ?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($categories as $category) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $category->id ?></code>
                 </td>
                 <td>
-                    <strong><?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?></strong>
+                    <strong>
+                        <?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?>
+                    </strong>
                     <?php
                     $actions = [
                         $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->id], ['icon' => 'pencil']),
@@ -67,14 +69,14 @@ $this->append('actions', $this->Html->button(
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if (!empty($category->parent->title)) {
                         echo $category->parent->title;
                     }
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($category->page_count) {
                         echo $this->Html->link(

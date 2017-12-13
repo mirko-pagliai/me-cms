@@ -16,17 +16,19 @@ $this->assign('title', __d('me_cms', 'Media browser'));
 $this->Asset->script(ME_CMS . '.admin/kcfinder', ['block' => 'script_bottom']);
 ?>
 
-<div class="well">
+<div class="card card-body bg-light border-0 mb-4">
+    <?= $this->Form->createInline(null, ['type' => 'get']) ?>
+    <fieldset>
     <?php
-        echo $this->Form->createInline(false, ['type' => 'get']);
         echo $this->Form->label('type', __d('me_cms', 'Type'));
         echo $this->Form->control('type', [
             'default' => $this->request->getQuery('type'),
             'onchange' => 'send_form(this)',
         ]);
         echo $this->Form->submit(I18N_SELECT);
-        echo $this->Form->end();
     ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
 </div>
 
 <?php

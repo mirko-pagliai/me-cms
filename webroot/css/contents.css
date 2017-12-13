@@ -9,270 +9,140 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
-/* -------------------------------- */
-/*          Container               */
-/* -------------------------------- */
-/* Container */
-.content-container {
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
 /* -------------------------------- */
 /*          Content header          */
 /* -------------------------------- */
 /* Header */
-.content-container .content-header {
+article header {
     border-color: #777;
     border-style: solid;
-    border-width: 0 0 0 4px;
-    margin: 0 0 20px;
-    padding: 0 0 0 10px;
+    border-width: 0 0 0 .35rem;
+    padding-left: 1rem;
 }
 
 /* Header, links */
-.content-container .content-header a {
+article header a {
     color: #555;
-    display: block;
-    line-height: 1.2;
-    max-width: 100%;
     text-decoration: none;
-    /* No wrap, text truncated with ellipses */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 /* Header, links on hover */
-.content-container .content-header a:hover {
+article header a:hover {
     color: #333;
 }
 
 /* Header, category */
-.content-container .content-header .content-category {
-    font-size: 18px;
-    margin: 0 0 4px;
+article header .category {
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 /* Header, title */
-.content-container .content-header .content-title {
-    font-size: 28px;
-    margin: 0;
-}
-
-/* Header, subtitle */
-.content-container .content-header .content-subtitle {
-    font-size: 22px;
-    margin: 4px 0 0;
+article header .title {
+    line-height: 1;
 }
 
 /* Header, info (author, date, etc) */
-.content-container .content-header .content-info {
-    color: #666;
-    font-size: 14px;
-    margin-top: 4px;
+article header .info {
+    color: #868e96;
 }
 
 /* Header, info (author, date, etc), icons */
-.content-container .content-header .content-info .fa {
-    margin-right: 4px;
-    width: 14px;
-}
-
-/* Extra small and small devices */
-@media (max-width: 992px) {
-    /* Header, category */
-    .content-container .content-header .content-category {
-        font-size: 15px;
-    }
-
-    /* Header, title */
-    .content-container .content-header .content-title {
-        font-size: 18px;
-    }
-
-    /* Header, subtitle */
-    .content-container .content-header .content-subtitle {
-        font-size: 16px;
-    }
-
-    /* Header, info (author, date, etc) */
-    .content-container .content-header .content-info {
-        font-size: 12px;
-    }
+article header .info .fa {
+    min-width: .95rem;
 }
 
 /* -------------------------------- */
-/*          Content text            */
+/*          Main content            */
 /* -------------------------------- */
-/* Content text */
-.content-container .content-text {
+/* Main content */
+article main,
+.article {
     line-height: 1.6;
-    text-align: justify;
 }
 
-/* Content text, last paragraph */
-.content-container .content-text p:last-child {
-    margin-bottom: 0;
-}
-
-/* Content text, images */
-.content-container .content-text img {
-    display: block;
+/* Main content, images */
+article main img,
+.article img {
     height: auto;
-    margin-bottom: 16px;
     max-width: 100%;
 }
 
-/* Content text, images pulled on left */
-.content-container .content-text img.pull-left,
-.content-container .content-text img[style~="float:left"] {
-    margin: 2px 16px 8px 0;
+/* Main content, images pulled on left or right */
+article main img.float-left,
+article main img.pull-left,
+article main img[style~="float:left"],
+article main img.float-right,
+article main img.pull-right,
+.article img[style~="float:right"],
+.article img.float-left,
+.article img.pull-left,
+.article img[style~="float:left"],
+.article img.float-right,
+.article img.pull-right,
+.article img[style~="float:right"] {
+    margin: .6rem 0;
 }
 
-/* Content text, images pulled on right */
-.content-container .content-text img.pull-right,
-.content-container .content-text img[style~="float:right"] {
-    margin: 2px 0 8px 16px;
+/* Main content, images pulled on left */
+article main img.float-left,
+article main img.pull-left,
+article main img[style~="float:left"],
+.article img.float-left,
+.article img.pull-left,
+.article img[style~="float:left"] {
+    margin-right: 1rem;
 }
 
-/* Extra small devices */
-@media (max-width: 767px) {
-    /* Content text, images pulled on right and on left */
-    .content-container .content-text img.pull-left,
-    .content-container .content-text img[style~="float:left"],
-    .content-container .content-text img.pull-right,
-    .content-container .content-text img[style~="float:right"] {
-        height: auto;
-        max-width: 40%;
-    }
+/* Main content, images pulled on right */
+article main img.float-right,
+article main img.pull-right,
+article main img[style~="float:right"],
+.article img.float-right,
+.article img.pull-right,
+.article img[style~="float:right"] {
+    margin-left: 1rem;
 }
 
-/* -------------------------------- */
-/*          Content buttons         */
-/* -------------------------------- */
-/* Content buttons */
-.content-container .content-buttons {
-    float: right;
-}
-
-/* Content buttons, links */
-.content-container .content-buttons a {
-    background: #ddd;
-    border-color: #bbb;
-    border-width: 0 0 3px;
-    color: #777;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 1;
-    margin-top: 15px;
-    padding: 10px;
-    /* Transition for "color" propriety */
-    transition: color .5s ease-in-out;
-    -moz-transition: color .5s ease-in-out;
-    -webkit-transition: color .5s ease-in-out;
-}
-
-/* Content buttons, links on hover */
-.content-container .content-buttons a:hover {
-    color: #444;
-}
-
-/* Content buttons, "read more" button, icon */
-.content-container .content-buttons a.readmore:after {
-    content: "\f178";
-    font-family: FontAwesome;
-    font-size: 12px;
-    margin-left: 6px;
+/* Main content, last paragraph */
+article main p:last-child,
+.article p:last-child {
+    margin-bottom: 0;
 }
 
 /* -------------------------------- */
-/*          Content tags            */
+/*              Tags                */
 /* -------------------------------- */
-/* Tags */
-.content-container .content-tags {
-    margin-top: 20px;
-}
-
-/* Tags, tag */
-.content-container .content-tags a {
+/* Tags, each tag */
+article .tags a {
     display: inline-block;
-    margin-right: 6px;
+    font-size: .9rem;
+    margin-right: .2rem;
     text-decoration: none;
 }
 
-/* Tags, tag, icon */
-.content-container .content-tags a .fa {
-    margin-right: 2px;
-}
-
 /* -------------------------------- */
-/*          Content preview         */
+/*              Buttons             */
 /* -------------------------------- */
-/* Content preview */
-.content-preview {
-    margin-bottom: 10px;
-}
-
-/* Content preview, link */
-.content-preview > a {
-    color: #fff;
-    display: block;
-    position: relative;
-    text-align: center;
-}
-
-/* Content preview, link, image */
-.content-preview > a > img {
-    width: 100%;
-}
-
-/* Content preview, link, main wrapper */
-.content-preview > a > div {
-    background: rgba(44, 90, 160, .66);
-    height: 100%;
-    opacity: 0;
-    padding: 10px;
-    position: absolute;
-    width: 100%;
-    /* Transition for "opacity" propriety */
-    transition: opacity 1s ease-in-out;
-    -moz-transition: opacity 1s ease-in-out;
-    -webkit-transition: opacity 1s ease-in-out;
-}
-
-/* Content preview, link, main wrapper on hover */
-.content-preview > a > div:hover {
-    opacity: 1;
-}
-
-/* Content preview, link, main wrapper, centered wrapper */
-.content-preview > a > div > div {
-    margin-top: 50%;
-    /* Vertical align: middle */
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-
-/* Content preview, content title */
-.content-preview .content-title {
+/* Buttons, links */
+article .buttons a {
+    background: #ddd;
+    border-color: #bbb;
+    border-width: 0 0 .2rem;
+    color: #777;
+    font-size: .85rem;
     font-weight: bold;
+    padding: .6rem .7rem;
 }
 
-/* -------------------------------- */
-/*          Shareaholic             */
-/* -------------------------------- */
-/* Shareaholic wrapper */
-.shareaholic-canvas {
-    margin-top: 20px;
+/* Buttons, links on hover */
+article .buttons a:hover {
+    border-color: #666;
 }
 
-/* -------------------------------- */
-/*      Related contents            */
-/* -------------------------------- */
-/* Related contents */
-.related-contents {
-    margin-bottom: 20px;
+/* Buttons, "read more" button, icon */
+article .buttons .readmore:after {
+    content: "\f178";
+    font-family: FontAwesome;
+    margin-left: .4rem;
 }

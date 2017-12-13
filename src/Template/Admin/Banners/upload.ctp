@@ -14,9 +14,10 @@ $this->extend('/Admin/Common/form');
 $this->assign('title', __d('me_cms', 'Upload banners'));
 ?>
 
-<div class="well">
+<div class="card card-body bg-light border-0">
+    <?= $this->Form->createInline(null, ['type' => 'get']) ?>
+    <fieldset>
     <?php
-        echo $this->Form->createInline(null, ['type' => 'get']);
         echo $this->Form->label('position', __d('me_cms', 'Position where to upload banners'));
         echo $this->Form->control('position', [
             'default' => $this->request->getQuery('position'),
@@ -25,8 +26,9 @@ $this->assign('title', __d('me_cms', 'Upload banners'));
             'options' => $positions,
         ]);
         echo $this->Form->submit(I18N_SELECT);
-        echo $this->Form->end();
     ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
 </div>
 
 <?php
