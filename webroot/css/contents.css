@@ -56,12 +56,14 @@ article header .info .fa {
 /*          Main content            */
 /* -------------------------------- */
 /* Main content */
-article main {
+article main,
+.article {
     line-height: 1.6;
 }
 
 /* Main content, images */
-article main img {
+article main img,
+.article img {
     height: auto;
     max-width: 100%;
 }
@@ -72,26 +74,39 @@ article main img.pull-left,
 article main img[style~="float:left"],
 article main img.float-right,
 article main img.pull-right,
-article main img[style~="float:right"] {
+.article img[style~="float:right"],
+.article img.float-left,
+.article img.pull-left,
+.article img[style~="float:left"],
+.article img.float-right,
+.article img.pull-right,
+.article img[style~="float:right"] {
     margin: .6rem 0;
 }
 
 /* Main content, images pulled on left */
 article main img.float-left,
 article main img.pull-left,
-article main img[style~="float:left"] {
+article main img[style~="float:left"],
+.article img.float-left,
+.article img.pull-left,
+.article img[style~="float:left"] {
     margin-right: 1rem;
 }
 
 /* Main content, images pulled on right */
 article main img.float-right,
 article main img.pull-right,
-article main img[style~="float:right"] {
+article main img[style~="float:right"],
+.article img.float-right,
+.article img.pull-right,
+.article img[style~="float:right"] {
     margin-left: 1rem;
 }
 
 /* Main content, last paragraph */
-article main p:last-child {
+article main p:last-child,
+.article p:last-child {
     margin-bottom: 0;
 }
 
