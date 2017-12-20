@@ -59,14 +59,8 @@ class AppView extends View
         }
 
         //Sets some Facebook's tags
-        $this->Html->meta([
-            'content' => $this->getTitleForLayout(),
-            'property' => 'og:title',
-        ]);
-        $this->Html->meta([
-            'content' => Router::url(null, true),
-            'property' => 'og:url',
-        ]);
+        $this->Html->meta(['content' => $this->getTitleForLayout(), 'property' => 'og:title']);
+        $this->Html->meta(['content' => Router::url(null, true), 'property' => 'og:url']);
 
         //Sets the app ID for Facebook
         if (getConfig('default.facebook_app_id')) {
