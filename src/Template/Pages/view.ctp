@@ -58,11 +58,7 @@ if ($this->request->isAction('view', 'Pages')) {
 
     if ($page->text) {
         $this->Html->meta([
-            'content' => $this->Text->truncate(
-                trim(strip_tags($this->BBCode->remove($page->text))),
-                100,
-                ['html' => true]
-            ),
+            'content' => $this->Text->truncate($page->plain_text, 100, ['html' => true]),
             'property' => 'og:description',
         ]);
     }
