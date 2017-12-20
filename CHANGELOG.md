@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.5-RC2
+* now `Pages` and `Posts` entities have the `plain_text` virtual field;
 * updated for MeTools 2.16.5-RC3.
 
 ### 2.22.4-RC1
