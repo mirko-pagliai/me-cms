@@ -53,7 +53,7 @@ if (getConfig('default.fancybox')) {
     <?php
     foreach ($photos as $photo) {
         $linkOptions = $baseOptions;
-        if ($photo->description) {
+        if ($photo->has('description')) {
             $linkOptions += ['title' => $photo->description];
         }
 

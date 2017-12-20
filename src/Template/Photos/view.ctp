@@ -46,16 +46,18 @@ $this->Breadcrumbs->add($title, ['_name' => 'photo', 'slug' => $photo->album->sl
  * Meta tags
  */
 if ($this->request->isAction('view', 'Photos')) {
-    $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
+    if ($photo->has('modified')) {
+        $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
+    }
 
-    if ($photo->preview) {
+    if ($photo->has('preview')) {
         $this->Html->meta(['href' => $photo->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $photo->preview['preview'], 'property' => 'og:image']);
         $this->Html->meta(['content' => $photo->preview['width'], 'property' => 'og:image:width']);
         $this->Html->meta(['content' => $photo->preview['height'], 'property' => 'og:image:height']);
     }
 
-    if ($photo->description) {
+    if ($photo->has('description')) {
         $this->Html->meta([
             'content' => $this->Text->truncate(
                 trim(strip_tags($this->BBCode->remove($photo->description))),

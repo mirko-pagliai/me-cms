@@ -47,21 +47,24 @@ $this->Breadcrumbs->add($post->title, ['_name' => 'post', $post->slug]);
  */
 if ($this->request->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
+
+    if ($post->has('modified')) {
+        $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
+    }
 
     //Adds tags as keywords
-    if (getConfig('post.keywords') && $post->tags_as_string) {
+    if (getConfig('post.keywords') && $post->has('tags_as_string')) {
         $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
     }
 
-    if ($post->preview) {
+    if ($post->has('preview')) {
         $this->Html->meta(['href' => $post->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $post->preview['preview'], 'property' => 'og:image']);
         $this->Html->meta(['content' => $post->preview['width'], 'property' => 'og:image:width']);
         $this->Html->meta(['content' => $post->preview['height'], 'property' => 'og:image:height']);
     }
 
-    if ($post->text) {
+    if ($post->has('text')) {
         $this->Html->meta([
             'content' => $this->Text->truncate($post->plain_text, 100, ['html' => true]),
             'property' => 'og:description',

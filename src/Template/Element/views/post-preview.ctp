@@ -30,7 +30,7 @@ $title = $post->title;
 
     <div class="card-body small p-2">
         <?php
-        if ($post->text) {
+        if ($post->has('text')) {
             $text = strip_tags($post->text);
             if (!isset($truncate['text']) || $truncate['text']) {
                 $truncate['text'] = empty($truncate['text']) ? 80 : $truncate['text'];

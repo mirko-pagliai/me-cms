@@ -14,7 +14,7 @@
 
 <article class="clearfix mb-4">
     <header class="mb-3">
-        <?php if (getConfig('post.category') && $post->category->title && $post->category->slug) : ?>
+        <?php if (getConfig('post.category') && $post->category->has(['slug', 'title'])) : ?>
             <h5 class="category mb-2">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
             </h5>
@@ -24,7 +24,7 @@
             <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
         </h2>
 
-        <?php if ($post->subtitle) : ?>
+        <?php if ($post->has('subtitle')) : ?>
             <h4 class="subtitle mb-2">
                 <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
             </h4>
@@ -32,7 +32,7 @@
 
         <div class="info">
             <?php
-            if (getConfig('post.author')) {
+            if (getConfig('post.author') && $post->user->has('full_name')) {
                 echo $this->Html->div(
                     'author',
                     __d('me_cms', 'Posted by {0}', $post->user->full_name),
@@ -40,7 +40,7 @@
                 );
             }
 
-            if (getConfig('post.created')) {
+            if (getConfig('post.created') && $post->has('created')) {
                 echo $this->Html->time(
                     __d('me_cms', 'Posted on {0}', $post->created->i18nFormat()),
                     ['class' => 'date', 'icon' => 'clock-o']
@@ -75,7 +75,7 @@
         ?>
     </main>
 
-    <?php if (getConfig('post.tags') && $post->tags) : ?>
+    <?php if (getConfig('post.tags') && $post->has('tags')) : ?>
         <div class="tags mt-2">
             <?php foreach ($post->tags as $tag) : ?>
                 <?= $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']) ?>
