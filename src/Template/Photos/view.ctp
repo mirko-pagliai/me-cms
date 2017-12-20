@@ -59,11 +59,7 @@ if ($this->request->isAction('view', 'Photos')) {
 
     if ($photo->has('description')) {
         $this->Html->meta([
-            'content' => $this->Text->truncate(
-                trim(strip_tags($this->BBCode->remove($photo->description))),
-                100,
-                ['html' => true]
-            ),
+            'content' => $this->Text->truncate($photo->plain_description, 100, ['html' => true]),
             'property' => 'og:description',
         ]);
     }

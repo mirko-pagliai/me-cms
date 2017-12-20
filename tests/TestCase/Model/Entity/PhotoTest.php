@@ -77,6 +77,15 @@ class PhotoTest extends TestCase
     }
 
     /**
+     * Test for `_getPlainDescription()` method
+     * @test
+     */
+    public function testPlainTextGetMutator()
+    {
+        $this->assertEquals('A photo', $this->Photos->findById(1)->first()->plain_description);
+    }
+
+    /**
      * Test for `_getPreview()` method
      * @test
      */
@@ -96,6 +105,6 @@ class PhotoTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path', 'preview'], $this->Photo->getVirtual());
+        $this->assertEquals(['path', 'plain_description', 'preview'], $this->Photo->getVirtual());
     }
 }
