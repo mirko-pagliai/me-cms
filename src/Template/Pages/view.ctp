@@ -47,22 +47,21 @@ $this->Breadcrumbs->add($page->title, ['_name' => 'page', $page->slug]);
  */
 if ($this->request->isAction('view', 'Pages')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
-    $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
 
-    if ($page->preview) {
+    if ($page->has('modified')) {
+        $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
+    }
+
+    if ($page->has('preview')) {
         $this->Html->meta(['href' => $page->preview['preview'], 'rel' => 'image_src']);
         $this->Html->meta(['content' => $page->preview['preview'], 'property' => 'og:image']);
         $this->Html->meta(['content' => $page->preview['width'], 'property' => 'og:image:width']);
         $this->Html->meta(['content' => $page->preview['height'], 'property' => 'og:image:height']);
     }
 
-    if ($page->text) {
+    if ($page->has('text')) {
         $this->Html->meta([
-            'content' => $this->Text->truncate(
-                trim(strip_tags($this->BBCode->remove($page->text))),
-                100,
-                ['html' => true]
-            ),
+            'content' => $this->Text->truncate($page->plain_text, 100, ['html' => true]),
             'property' => 'og:description',
         ]);
     }

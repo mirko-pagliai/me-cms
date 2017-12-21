@@ -49,8 +49,7 @@ echo $this->Form->end();
                 <?php
                     //Executes BBCode on the text, strips tags, extracts
                     //  an excerpt from `$pattern` and highlights `$pattern`
-                    $text = strip_tags($this->BBCode->parser($post->text));
-                    $text = $this->Text->excerpt($text, $pattern, 350);
+                    $text = $this->Text->excerpt($post->plain_text, $pattern, 350);
                     echo $this->Text->highlight($text, $pattern);
                 ?>
                 </div>

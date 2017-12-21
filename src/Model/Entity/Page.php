@@ -13,6 +13,8 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\View\HelperRegistry;
+use Cake\View\View;
 
 /**
  * Page entity
@@ -40,4 +42,26 @@ class Page extends Entity
         'preview' => false,
         'modified' => false,
     ];
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
+    protected $_virtual = ['plain_text'];
+
+    /**
+     * Gets text as plain text (virtual field)
+     * @return string|void
+     */
+    protected function _getPlainText()
+    {
+        if (empty($this->_properties['text'])) {
+            return;
+        }
+
+        //Loads the `BBCode` helper
+        $BBCode = (new HelperRegistry(new View))->load(ME_TOOLS . '.BBCode');
+
+        return trim(strip_tags($BBCode->remove($this->_properties['text'])));
+    }
 }

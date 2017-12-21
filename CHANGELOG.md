@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.5-RC2
+* `Page` and `Post` entities have the `plain_text` virtual field. `Photo` entity
+    has the `plain_description` virtual field;
+* updated for MeTools 2.16.5-RC3.
+
 ### 2.22.4-RC1
 * when the search function is used, the searched text is highlighted;
 * updated for MeTools 2.16.3-RC1.

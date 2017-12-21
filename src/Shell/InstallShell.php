@@ -35,6 +35,7 @@ class InstallShell extends BaseInstallShell
      * @uses $config
      * @uses $links
      * @uses $paths
+     * @uses $questions
      * @uses MeTools\Shell\InstallShell::__construct()
      */
     public function __construct(ConsoleIo $io = null)
@@ -50,14 +51,14 @@ class InstallShell extends BaseInstallShell
         ];
 
         //Merges assets for which create symbolic links
-        $this->links = array_merge($this->links, [
+        $this->links += [
             'js-cookie/js-cookie/src' => 'js-cookie',
             'sunhater/kcfinder' => 'kcfinder',
             'enyo/dropzone/dist' => 'dropzone',
-        ]);
+        ];
 
         //Merges paths to be created and made writable
-        $this->paths = array_merge($this->paths, [
+        $this->paths += [
             getConfigOrFail(ASSETS . '.target'),
             getConfigOrFail(DATABASE_BACKUP . '.target'),
             getConfigOrFail(THUMBER . '.target'),
@@ -66,7 +67,36 @@ class InstallShell extends BaseInstallShell
             PHOTOS,
             UPLOADED,
             TMP . 'login',
-        ]);
+        ];
+
+        //Questions used by `all()` method
+        $this->questions += [
+            [
+                'question' => __d('me_tools', 'Copy configuration files?'),
+                'default' => 'Y',
+                'method' => 'copyConfig',
+            ],
+            [
+                'question' => __d('me_tools', 'Fix {0}?', 'KCFinder'),
+                'default' => 'Y',
+                'method' => 'fixKcfinder',
+            ],
+            [
+                'question' => __d('me_cms', 'Run the installer of the other plugins?'),
+                'default' => 'Y',
+                'method' => 'runFromOtherPlugins',
+            ],
+            [
+                'question' => __d('me_cms', 'Create the user groups?'),
+                'default' => 'N',
+                'method' => 'createGroups',
+            ],
+            [
+                'question' => __d('me_cms', 'Create an admin user?'),
+                'default' => 'N',
+                'method' => 'createAdmin',
+            ],
+        ];
     }
 
     /**
@@ -82,57 +112,6 @@ class InstallShell extends BaseInstallShell
                 return $class && method_exists($class, 'all');
             })
             ->toList();
-    }
-
-    /**
-     * Executes all available tasks
-     * @return void
-     * @uses MeTools\Shell\InstallShell::all()
-     * @uses getOtherPlugins()
-     * @uses copyConfig()
-     * @uses createAdmin()
-     * @uses createGroups()
-     * @uses fixKcfinder()
-     * @uses runFromOtherPlugins()
-     */
-    public function all()
-    {
-        parent::all();
-
-        if ($this->param('force')) {
-            $this->copyConfig();
-            $this->fixKcfinder();
-            $this->runFromOtherPlugins();
-
-            return;
-        }
-
-        $ask = $this->in(__d('me_cms', 'Copy configuration files?'), ['Y', 'n'], 'Y');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->copyConfig();
-        }
-
-        $ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->fixKcfinder();
-        }
-
-        if ($this->getOtherPlugins()) {
-            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
-            if (in_array($ask, ['Y', 'y'])) {
-                $this->runFromOtherPlugins();
-            }
-        }
-
-        $ask = $this->in(__d('me_cms', 'Create the user groups?'), ['y', 'N'], 'N');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->createGroups();
-        }
-
-        $ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->createAdmin();
-        }
     }
 
     /**

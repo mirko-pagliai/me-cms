@@ -51,7 +51,7 @@ class PagesFixture extends TestFixture
             'title' => 'First page',
             'subtitle' => 'Subtitle for the first page',
             'slug' => 'first-page',
-            'text' => 'Text of the first page',
+            'text' => '<b>Text of the first page</b>',
             'preview' => null,
             'priority' => 1,
             'active' => 1,

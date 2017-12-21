@@ -14,7 +14,7 @@
 
 <article class="clearfix mb-4">
     <header class="mb-3">
-        <?php if (getConfig('page.category') && $page->category->title && $page->category->slug) : ?>
+        <?php if (getConfig('page.category') && $page->category->has(['slug', 'title'])) : ?>
             <h5 class="category mb-2">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
             </h5>
@@ -24,7 +24,7 @@
             <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
         </h3>
 
-        <?php if ($page->subtitle) : ?>
+        <?php if ($page->has('subtitle')) : ?>
             <h4 class="subtitle mb-2">
                 <?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?>
             </h4>
@@ -32,7 +32,7 @@
 
         <div class="info">
             <?php
-            if (getConfig('page.created')) {
+            if (getConfig('page.created') && $page->has('created')) {
                 echo $this->Html->time(
                     __d('me_cms', 'Posted on {0}', $page->created->i18nFormat()),
                     ['class' => 'date', 'icon' => 'clock-o']

@@ -13,6 +13,8 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\View\HelperRegistry;
+use Cake\View\View;
 use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
@@ -46,7 +48,7 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path', 'preview'];
+    protected $_virtual = ['path', 'plain_description', 'preview'];
 
     /**
      * Gets the photo path (virtual field)
@@ -55,6 +57,22 @@ class Photo extends Entity
     protected function _getPath()
     {
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
+    }
+
+    /**
+     * Gets description as plain text (virtual field)
+     * @return string|void
+     */
+    protected function _getPlainDescription()
+    {
+        if (empty($this->_properties['description'])) {
+            return;
+        }
+
+        //Loads the `BBCode` helper
+        $BBCode = (new HelperRegistry(new View))->load(ME_TOOLS . '.BBCode');
+
+        return trim(strip_tags($BBCode->remove($this->_properties['description'])));
     }
 
     /**

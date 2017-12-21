@@ -59,7 +59,7 @@ class PostsFixture extends TestFixture
             'title' => 'First post',
             'slug' => 'first-post',
             'subtitle' => 'Subtitle for first post',
-            'text' => 'Text of the first post',
+            'text' => '<b>Text of the first post</b>',
             'preview' => null,
             'priority' => 1,
             'created' => '2016-11-28 18:55:19',

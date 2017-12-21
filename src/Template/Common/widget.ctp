@@ -10,7 +10,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 if (trim($this->fetch('class'))) {
     $class = sprintf('widget %s', trim($this->fetch('class')));
 } else {

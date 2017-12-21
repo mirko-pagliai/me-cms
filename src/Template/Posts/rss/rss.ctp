@@ -44,7 +44,7 @@ foreach ($posts as $post) {
     $text = strip_tags($text);
 
     //Adds the preview image
-    if ($post->preview) {
+    if ($post->has('preview')) {
         $text = $this->Thumb->resize($post->preview['preview'], ['width' => 200]) . '< br/>' . $text;
     }
 
