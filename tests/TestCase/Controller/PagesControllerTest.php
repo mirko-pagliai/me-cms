@@ -110,16 +110,14 @@ class PagesControllerTest extends IntegrationTestCase
         $this->assertTemplate(APP . 'Template/StaticPages/page-from-app.ctp');
 
         $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof('stdClass', $pageFromView);
-        $this->assertInstanceof('stdClass', $pageFromView->category);
-        $pageFromView->category = (array)$pageFromView->category;
-        $pageFromView = (array)$pageFromView;
+        $this->assertInstanceof('Cake\ORM\Entity', $pageFromView);
+        $this->assertInstanceof('Cake\ORM\Entity', $pageFromView->category);
         $this->assertEquals([
             'category' => ['slug' => null, 'title' => null],
             'title' => 'Page From App',
             'subtitle' => null,
             'slug' => 'page-from-app',
-        ], $pageFromView);
+        ], $pageFromView->toArray());
     }
 
     /**

@@ -3,6 +3,7 @@
 ### 2.22.5-RC2
 * `Page` and `Post` entities have the `plain_text` virtual field. `Photo` entity
     has the `plain_description` virtual field;
+* static pages are entities;
 * updated for MeTools 2.16.4-RC2.
 
 ### 2.22.4-RC1
