@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use MeCms\Model\Entity\Photo;
 use MeTools\TestSuite\TestCase;
@@ -50,8 +51,9 @@ class PhotoTest extends TestCase
         parent::setUp();
 
         $this->Photo = new Photo;
-
         $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
+
+        Cache::clear(false, $this->Photos->cache);
     }
 
     /**
@@ -83,6 +85,7 @@ class PhotoTest extends TestCase
     public function testPlainTextGetMutator()
     {
         $this->assertEquals('A photo', $this->Photos->findById(1)->first()->plain_description);
+        $this->assertEmpty((new Photo)->plain_description);
     }
 
     /**
