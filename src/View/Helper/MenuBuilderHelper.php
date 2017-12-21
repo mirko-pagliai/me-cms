@@ -110,13 +110,13 @@ class MenuBuilderHelper extends Helper
         return implode(PHP_EOL, array_map(function ($menu) {
             //Sets the collapse name
             $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
-            $menu['titleOptions'] += [
+            $titleOptions = optionsParser($menu['titleOptions'], [
                 'aria-controls' => $collapseName,
                 'aria-expanded' => 'false',
                 'class' => 'collapsed',
                 'data-toggle' => 'collapse',
-            ];
-            $mainLink = $this->Html->link($menu['title'], '#' . $collapseName, $menu['titleOptions']);
+            ]);
+            $mainLink = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions->toArray());
             $links = $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName]);
 
             return $this->Html->div('card', $mainLink . PHP_EOL . $links);
@@ -134,10 +134,10 @@ class MenuBuilderHelper extends Helper
     public function renderAsDropdown($plugin, array $titleOptions = [])
     {
         return array_map(function ($menu) use ($titleOptions) {
-            $menu['titleOptions'] += $titleOptions;
+            $titleOptions = optionsParser($menu['titleOptions'], $titleOptions);
             $links = $this->buildLinks($menu['links'], ['class' => 'dropdown-item']);
 
-            return $this->Dropdown->menu($menu['title'], $links, $menu['titleOptions']);
+            return $this->Dropdown->menu($menu['title'], $links, $titleOptions->toArray());
         }, $this->generate($plugin));
     }
 }
