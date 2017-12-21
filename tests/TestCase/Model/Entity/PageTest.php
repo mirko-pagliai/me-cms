@@ -84,5 +84,6 @@ class PageTest extends TestCase
     public function testPlainTextGetMutator()
     {
         $this->assertEquals('Text of the first page', $this->Pages->findById(1)->first()->plain_text);
+        $this->assertEmpty((new Page)->plain_text);
     }
 }

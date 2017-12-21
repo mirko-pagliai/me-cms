@@ -86,6 +86,7 @@ class PostTest extends TestCase
     public function testPlainTextGetMutator()
     {
         $this->assertEquals('Text of the first post', $this->Posts->findById(1)->first()->plain_text);
+        $this->assertEmpty((new Post)->plain_text);
     }
 
     /**
