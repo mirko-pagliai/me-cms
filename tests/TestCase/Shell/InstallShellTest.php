@@ -124,16 +124,15 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->InstallShell->all();
 
         $expectedMethodsCalledInOrder = [
-//            'called `createDirectories`',
             'called `setPermissions`',
             'called `createRobots`',
             'called `fixComposerJson`',
             'called `createPluginsLinks`',
             'called `createVendorsLinks`',
             'called `copyFonts`',
-//            'called `copyConfig`',
-//            'called `fixKcfinder`',
-//            'called `runFromOtherPlugins`',
+            'called `copyConfig`',
+            'called `fixKcfinder`',
+            'called `runFromOtherPlugins`',
         ];
 
         $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
@@ -145,7 +144,11 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         unset($this->InstallShell->params['force']);
         $this->InstallShell->all();
 
-        $expectedMethodsCalledInOrder = array_merge(['called `createDirectories`'], $expectedMethodsCalledInOrder);
+        $expectedMethodsCalledInOrder = array_merge(
+            ['called `createDirectories`'],
+            $expectedMethodsCalledInOrder,
+            ['called `createGroups`', 'called `createAdmin`']
+        );
         $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
         $this->assertEmpty($this->err->messages());
     }
