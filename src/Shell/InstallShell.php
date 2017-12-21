@@ -58,7 +58,7 @@ class InstallShell extends BaseInstallShell
         ];
 
         //Merges paths to be created and made writable
-        $this->paths += [
+        $this->paths = array_merge($this->paths, [
             getConfigOrFail(ASSETS . '.target'),
             getConfigOrFail(DATABASE_BACKUP . '.target'),
             getConfigOrFail(THUMBER . '.target'),
@@ -67,10 +67,10 @@ class InstallShell extends BaseInstallShell
             PHOTOS,
             UPLOADED,
             TMP . 'login',
-        ];
+        ]);
 
         //Questions used by `all()` method
-        $this->questions += [
+        $this->questions = array_merge($this->questions, [
             [
                 'question' => __d('me_tools', 'Copy configuration files?'),
                 'default' => 'Y',
@@ -96,7 +96,7 @@ class InstallShell extends BaseInstallShell
                 'default' => 'N',
                 'method' => 'createAdmin',
             ],
-        ];
+        ]);
     }
 
     /**
