@@ -39,6 +39,20 @@ class UserTest extends TestCase
     }
 
     /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        //@codeCoverageIgnoreStart
+        @unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
+        @unlink(WWW_ROOT . 'img' . DS . 'users' . DS . '1.jpg');
+        //@codeCoverageIgnoreEnd
+    }
+
+    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test
@@ -56,7 +70,7 @@ class UserTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['full_name'], $this->User->getVirtual());
+        $this->assertEquals(['full_name', 'picture'], $this->User->getVirtual());
     }
 
     /**
@@ -68,5 +82,24 @@ class UserTest extends TestCase
         $this->User->first_name = 'Alfa';
         $this->User->last_name = 'Beta';
         $this->assertEquals($this->User->first_name . ' ' . $this->User->last_name, $this->User->full_name);
+    }
+
+    /**
+     * Test for `_getPicture()` method
+     * @test
+     */
+    public function testPictureGetMutator()
+    {
+        $this->User->id = 1;
+
+        $this->assertEquals(ME_CMS . '.no-avatar.jpg', $this->User->picture);
+
+        $filename = WWW_ROOT . 'img' . DS . 'no-avatar.jpg';
+        file_put_contents($filename, null);
+        $this->assertEquals('no-avatar.jpg', $this->User->picture);
+
+        $filename = WWW_ROOT . 'img' . DS . 'users' . DS . '1.jpg';
+        file_put_contents($filename, null);
+        $this->assertEquals('users' . DS . '1.jpg', $this->User->picture);
     }
 }

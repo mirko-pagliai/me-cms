@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.6-RC3
+* `User` entity has the `picture` virtual field, which contains the path of the
+    user's picture or, alternatively, a default image.
+
 ### 2.22.5-RC2
 * `Page` and `Post` entities have the `plain_text` virtual field. `Photo` entity
     has the `plain_description` virtual field;

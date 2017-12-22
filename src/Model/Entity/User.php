@@ -50,7 +50,7 @@ class User extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['full_name'];
+    protected $_virtual = ['full_name', 'picture'];
 
     /**
      * Gets the full name (virtual field)
@@ -59,6 +59,26 @@ class User extends Entity
     protected function _getFullName()
     {
         return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
+    }
+
+    /**
+     * Gets the picture (virtual field)
+     * @return string
+     */
+    protected function _getPicture()
+    {
+        //Checks for a picture, with the user ID, inside `webroot/img/users`
+        if (!empty($this->_properties['id']) &&
+            is_readable(WWW_ROOT . 'img' . DS . 'users' . DS . $this->_properties['id'] . '.jpg')) {
+            return 'users' . DS . $this->_properties['id'] . '.jpg';
+        }
+
+        //Checks for `webroot/img/no-avatar.jpg`
+        if (is_readable(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
+            return 'no-avatar.jpg';
+        }
+
+        return ME_CMS . '.no-avatar.jpg';
     }
 
     /**
