@@ -46,10 +46,14 @@ class UserTest extends TestCase
     {
         parent::tearDown();
 
-        //@codeCoverageIgnoreStart
-        @unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
-        @unlink(WWW_ROOT . 'img' . DS . 'users' . DS . '1.jpg');
-        //@codeCoverageIgnoreEnd
+        foreach ([
+            WWW_ROOT . 'img' . DS . 'no-avatar.jpg',
+            WWW_ROOT . 'img' . DS . 'users' . DS . '1.jpg',
+        ] as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
 
     /**
