@@ -2,7 +2,7 @@
 ## 2.22 branch
 ### 2.22.6-RC3
 * the user's picture can be shown next to each post. It is also shown in the
-    user's profile in the admin panel;
+    user's profile in the admin panel and in the user bar;
 * `User` entity has the `picture` virtual field, which contains the path of the
     user's picture or, alternatively, a default image.
 
