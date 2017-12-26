@@ -69,7 +69,7 @@ class PostsController extends AppController
                     'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
@@ -263,7 +263,7 @@ class PostsController extends AppController
                 'Tags' => function (Query $q) {
                     return $q->order(['tag' => 'ASC']);
                 },
-                'Users' => ['fields' => ['first_name', 'last_name']],
+                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
             ])
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'preview', 'active', 'created', 'modified'])
             ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
@@ -294,7 +294,7 @@ class PostsController extends AppController
                 'Tags' => function (Query $q) {
                     return $q->order(['tag' => 'ASC']);
                 },
-                'Users' => ['fields' => ['first_name', 'last_name']],
+                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
             ])
             ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
             ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])

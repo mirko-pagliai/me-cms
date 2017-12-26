@@ -13,7 +13,16 @@
 ?>
 
 <article class="clearfix mb-4">
-    <header class="mb-3">
+    <header class="clearfix mb-3">
+        <?php if (getConfig('post.author_picture') && $post->user->has('picture')): ?>
+            <div class="float-left mr-4 user-picture">
+                <?= $this->Thumb->fit($post->user->picture, ['width' => 100], [
+                    'class' => 'rounded-circle',
+                    'title' => __d('me_cms', 'Posted by {0}', $post->user->full_name),
+                ]) ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (getConfig('post.category') && $post->category->has(['slug', 'title'])) : ?>
             <h5 class="category mb-2">
                 <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>

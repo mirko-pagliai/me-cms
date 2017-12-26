@@ -42,44 +42,51 @@ if ($this->Auth->isGroup('admin')) {
 ?>
 
 <dl class="row">
-    <?php
-    echo $this->Html->dt(I18N_USERNAME, ['class' => 'col-sm-1']);
-    echo $this->Html->dd($user->username, ['class' => 'col-sm-11']);
+    <dd class="col-12">
+        <?= $this->Thumb->fit($user->picture, ['height' => 150], ['class' => 'rounded-circle']) ?>
+    </dd>
 
-    echo $this->Html->dt(I18N_EMAIL, ['class' => 'col-sm-1']);
-    echo $this->Html->dd($user->email, ['class' => 'col-sm-11']);
+    <dt class="col-1"><?= I18N_USERNAME ?></dt>
+    <dd class="col-11"><?= $user->username ?></dd>
 
-    echo $this->Html->dt(I18N_NAME, ['class' => 'col-sm-1']);
-    echo $this->Html->dd($user->full_name, ['class' => 'col-sm-11']);
+    <dt class="col-1"><?= I18N_EMAIL ?></dt>
+    <dd class="col-11"><?= $user->email ?></dd>
 
-    echo $this->Html->dt(I18N_GROUP, ['class' => 'col-sm-1']);
-    echo $this->Html->dd($user->group->label, ['class' => 'col-sm-11']);
+    <dt class="col-1"><?= I18N_NAME ?></dt>
+    <dd class="col-11"><?= $user->full_name ?></dd>
 
-    echo $this->Html->dt(I18N_STATUS, ['class' => 'col-sm-1']);
+    <dt class="col-1"><?= I18N_GROUP ?></dt>
+    <dd class="col-11"><?= $user->group->label ?></dd>
 
-    //If the user is banned
-    if ($user->banned) {
-        echo $this->Html->dd(__d('me_cms', 'Banned'), ['class' => 'col-sm-11 text-danger']);
-    //Else, if the user is pending (not active)
-    } elseif (!$user->active) {
-        echo $this->Html->dd(__d('me_cms', 'Pending'), ['class' => 'col-sm-11 text-warning']);
-    //Else, if the user is active
-    } else {
-        echo $this->Html->dd(__d('me_cms', 'Active'), ['class' => 'col-sm-11 text-success']);
-    }
+    <dt class="col-1"><?= I18N_STATUS ?></dt>
+    <dd class="col-11">
+        <?php
+        $status = ['text' => __d('me_cms', 'Active'), 'class' => 'text-success'];
+        //If the user is banned
+        if ($user->banned) {
+            $status = ['text' => __d('me_cms', 'Banned'), 'class' => 'text-danger'];
+        //Else, if the user is pending (not active)
+        } elseif (!$user->active) {
+            $status = ['text' => __d('me_cms', 'Pending'), 'class' => 'text-warning'];
+        }
 
-    if ($user->post_count) {
-        echo $this->Html->dt(I18N_POSTS, ['class' => 'col-sm-1']);
-        echo $this->Html->dd($this->Html->link(
-            $user->post_count,
-            ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]],
-            ['title' => I18N_BELONG_USER]
-        ), ['class' => 'col-sm-11']);
-    }
+        echo $this->Html->span($status['text'], ['class' => $status['class']]);
+        ?>
+    </dd>
 
-    echo $this->Html->dt(__d('me_cms', 'Created'), ['class' => 'col-sm-1']);
-    echo $this->Html->dd($user->created->i18nFormat(), ['class' => 'col-sm-11']);
-    ?>
+    <?php if ($user->post_count) : ?>
+        <dt class="col-1"><?= I18N_POSTS ?></dt>
+        <dd class="col-11">
+            <?= $this->Html->link(
+                $user->post_count,
+                ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]],
+                ['title' => I18N_BELONG_USER]
+            ) ?>
+        </dd>
+    <?php endif; ?>
+
+    <dt class="col-1"><?= __d('me_cms', 'Created') ?></dt>
+    <dd class="col-11"><?= $user->created->i18nFormat() ?></dd>
 </dl>
 
 <?php if (!empty($loginLog)) : ?>

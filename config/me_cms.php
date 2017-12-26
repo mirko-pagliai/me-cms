@@ -106,8 +106,10 @@ return [ME_CMS => [
     ],
     //Posts
     'post' => [
-        //Displays the post author
+        //Displays the author name as "Posted by"
         'author' => true,
+        //Displays the author picture
+        'author_picture' => true,
         //Displays the post category
         'category' => true,
         //Displays the post created datetime
