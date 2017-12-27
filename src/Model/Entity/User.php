@@ -69,7 +69,7 @@ class User extends Entity
     {
         //Checks for a picture, with the user ID, inside `webroot/img/users`
         if (!empty($this->_properties['id']) &&
-            is_readable(WWW_ROOT . 'img' . DS . 'users' . DS . $this->_properties['id'] . '.jpg')) {
+            is_readable(USER_PICTURES . $this->_properties['id'] . '.jpg')) {
             return 'users' . DS . $this->_properties['id'] . '.jpg';
         }
 
