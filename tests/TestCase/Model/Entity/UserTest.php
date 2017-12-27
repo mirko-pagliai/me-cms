@@ -48,6 +48,10 @@ class UserTest extends TestCase
         parent::tearDown();
 
         foreach((new Folder(USER_PICTURES))->find() as $file) {
+            if ($file === 'empty') {
+                continue;
+            }
+            
             unlink(USER_PICTURES . DS . $file);
         }
 
