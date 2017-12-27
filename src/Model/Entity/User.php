@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
 
 /**
@@ -67,10 +68,12 @@ class User extends Entity
      */
     protected function _getPicture()
     {
-        //Checks for a picture, with the user ID, inside `webroot/img/users`
-        if (!empty($this->_properties['id']) &&
-            is_readable(USER_PICTURES . $this->_properties['id'] . '.jpg')) {
-            return 'users' . DS . $this->_properties['id'] . '.jpg';
+        if (!empty($this->_properties['id'])) {
+            $files = ((new Folder(USER_PICTURES))->find($this->_properties['id'] . '\..+'));
+
+            if (!empty($files)) {
+                return 'users' . DS . array_values($files)[0];
+            }
         }
 
         //Checks for `webroot/img/no-avatar.jpg`

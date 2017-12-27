@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\Filesystem\Folder;
 use MeCms\Model\Entity\User;
 use MeTools\TestSuite\TestCase;
 
@@ -46,13 +47,12 @@ class UserTest extends TestCase
     {
         parent::tearDown();
 
-        foreach ([
-            WWW_ROOT . 'img' . DS . 'no-avatar.jpg',
-            WWW_ROOT . 'img' . DS . 'users' . DS . '1.jpg',
-        ] as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
+        foreach((new Folder(USER_PICTURES))->find() as $file) {
+            unlink(USER_PICTURES . DS . $file);
+        }
+
+        if (file_exists(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
+            unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
         }
     }
 
@@ -102,8 +102,14 @@ class UserTest extends TestCase
         file_put_contents($filename, null);
         $this->assertEquals('no-avatar.jpg', $this->User->picture);
 
-        $filename = WWW_ROOT . 'img' . DS . 'users' . DS . '1.jpg';
-        file_put_contents($filename, null);
-        $this->assertEquals('users' . DS . '1.jpg', $this->User->picture);
+        $id = 0;
+
+        foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
+            $id++;
+            $this->User->id = $id;
+            $filename = WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.'. $extension;
+            file_put_contents($filename, null);
+            $this->assertEquals('users' . DS . $id . '.' . $extension, $this->User->picture);
+        }
     }
 }
