@@ -185,6 +185,7 @@ class SystemsController extends AppController
         foreach ([
             BANNERS,
             PHOTOS,
+            USER_PICTURES,
             WWW_ROOT . 'files',
             WWW_ROOT . 'fonts',
         ] as $path) {
