@@ -17,7 +17,7 @@
         "js-cookie/js-cookie": "v2.1.3",
         "mirko-pagliai/cakephp-database-backup": ">=2.2 <2.3",
         "mirko-pagliai/cakephp-recaptcha-mailhide":  ">=1.1 <1.2",
-        "mirko-pagliai/cakephp-thumber": ">=1.2 <1.3",
+        "mirko-pagliai/cakephp-thumber": ">=1.3 <1.4",
         "mirko-pagliai/cakephp-tokens": ">=1.1 <1.2",
         "mirko-pagliai/me-tools": ">=2.16.4-RC2 <2.17",
         "mirko-pagliai/serialized-array": "^1.0",

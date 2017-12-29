@@ -22,6 +22,7 @@ use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
 use MeTools\Utility\Apache;
+use Thumber\Utility\ThumbManager;
 
 /**
  * Systems controller
@@ -237,13 +238,12 @@ class SystemsController extends AppController
         }
 
         $assetsTarget = getConfigOrFail(ASSETS . '.target');
-        $thumberTarget = getConfigOrFail(THUMBER . '.target');
         $success = false;
 
         switch ($type) {
             case 'all':
                 $success = clearDir($assetsTarget) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap() && clearDir($thumberTarget);
+                    && self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
@@ -258,7 +258,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir($thumberTarget);
+                $success = (new ThumbManager)->clearAll();
                 break;
         }
 
