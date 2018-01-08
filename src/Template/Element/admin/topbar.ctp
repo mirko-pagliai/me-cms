@@ -39,8 +39,13 @@ use MeCms\Core\Plugin;
             echo $this->Html->ul($menus, ['class' => 'navbar-nav mr-auto'], ['class' => 'dropdown nav-item']);
 
             $userMenu[] = call_user_func(function () {
-                $picture = $this->Thumb->fit($this->Auth->user('picture'), ['height' => 23], ['class' => 'mr-2 rounded-circle']);
-                $this->Dropdown->start($picture . $this->Auth->user('full_name'), ['class' => 'nav-link']);
+                $text = $this->Auth->user('full_name');
+
+                if ($this->Auth->user('picture')) {
+                    $text = $this->Thumb->fit($this->Auth->user('picture'), ['height' => 23], ['class' => 'mr-2 rounded-circle']) . $text;
+                }
+
+                $this->Dropdown->start($text, ['class' => 'nav-link']);
 
                 if (getConfig('users.login_log')) {
                     echo $this->Html->link(
