@@ -47,11 +47,11 @@ class UserTest extends TestCase
     {
         parent::tearDown();
 
-        foreach((new Folder(USER_PICTURES))->find() as $file) {
+        foreach ((new Folder(USER_PICTURES))->find() as $file) {
             if ($file === 'empty') {
                 continue;
             }
-            
+
             unlink(USER_PICTURES . DS . $file);
         }
 
@@ -111,7 +111,7 @@ class UserTest extends TestCase
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
             $id++;
             $this->User->id = $id;
-            $filename = WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.'. $extension;
+            $filename = WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.' . $extension;
             file_put_contents($filename, null);
             $this->assertEquals('users' . DS . $id . '.' . $extension, $this->User->picture);
         }

@@ -155,9 +155,9 @@ return [ME_CMS => [
     //Users
     'users' => [
         //How to activating accounts:
-        //	`0` - No activation required, the account is immediately active;
-        //	`1` - The account will be enabled by the user via email (default);
-        //	`2`	- The account will be enabled by an administrator.
+        //  `0` - No activation required, the account is immediately active;
+        //  `1` - The account will be enabled by the user via email (default);
+        //  `2` - The account will be enabled by an administrator.
         'activation' => 1,
         //Login with cookies ("remember me" function)
         'cookies_login' => true,
