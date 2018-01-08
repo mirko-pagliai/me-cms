@@ -51,6 +51,11 @@ use MeCms\Core\Plugin;
                 }
 
                 echo $this->Html->link(
+                    __d('me_cms', 'Change picture'),
+                    ['controller' => 'Users', 'action' => 'changePicture', 'plugin' => ME_CMS],
+                    ['class' => 'dropdown-item']
+                );
+                echo $this->Html->link(
                     __d('me_cms', 'Change password'),
                     ['controller' => 'Users', 'action' => 'changePassword', 'plugin' => ME_CMS],
                     ['class' => 'dropdown-item']

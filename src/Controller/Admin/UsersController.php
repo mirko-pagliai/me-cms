@@ -12,10 +12,12 @@
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Filesystem\Folder;
 use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
 use MeCms\Controller\AppController;
+use Thumber\Utility\ThumbManager;
 
 /**
  * Users controller
@@ -255,6 +257,38 @@ class UsersController extends AppController
         }
 
         $this->set(compact('user'));
+    }
+
+    /**
+     * Changes the user's picture
+     * @return \Cake\Network\Response|null|void
+     * @uses MeCms\Controller\AppController::setUploadError()
+     * @uses MeTools\Controller\Component\UploaderComponent
+     */
+    public function changePicture()
+    {
+        $id = $this->Auth->user('id');
+
+        if ($this->request->getData('file')) {
+            //Deletes any picture that already exists
+            foreach (((new Folder(USER_PICTURES))->find($id . '\..+')) as $filename) {
+                unlink(USER_PICTURES . $filename);
+            }
+
+            $uploaded = $this->Uploader->set($this->request->getData('file'))
+                ->mimetype('image')
+                ->save(USER_PICTURES, $id);
+
+            if (!$uploaded) {
+                $this->setUploadError($this->Uploader->error());
+
+                return;
+            }
+
+            //Updates the authentication data and clears similar thumbnails
+            $this->Auth->setUser(array_merge($this->Auth->user(), ['picture' => $uploaded]));
+            (new ThumbManager)->clear($uploaded);
+        }
     }
 
     /**
