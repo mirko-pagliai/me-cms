@@ -59,11 +59,11 @@ class SystemsControllerTest extends IntegrationTestCase
             'asset' => getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
             'log' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumb' => getConfigOrFail(THUMBER . '.target') . DS . md5(null) . '_'. md5(null) . '.jpg',
+            'thumb' => getConfigOrFail(THUMBER . '.target') . DS . md5(null) . '_' . md5(null) . '.jpg',
         ];
 
         foreach ($files as $file) {
-            file_put_contents($file, null);
+            file_put_contents($file, str_repeat('a', 255));
         }
 
         return $files;
@@ -88,6 +88,30 @@ class SystemsControllerTest extends IntegrationTestCase
         Cache::clearAll();
 
         $this->url = ['controller' => 'Systems', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        //Deletes all temporary files
+        foreach ([
+            getConfigOrFail(ASSETS . '.target') . DS,
+            LOGS,
+            getConfigOrFail(THUMBER . '.target') . DS,
+        ] as $dir) {
+            foreach (glob($dir . '*') as $file) {
+                //@codingStandardsIgnoreLine
+                @unlink($file);
+            }
+        }
+
+        //@codingStandardsIgnoreLine
+        @unlink(SITEMAP);
     }
 
     /**
