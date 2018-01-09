@@ -19,6 +19,7 @@ use Cake\ORM\TableRegistry;
 use MeCms\Controller\Admin\UsersController;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\TestSuite\IntegrationTestCase;
+use MeTools\Controller\Component\UploaderComponent;
 
 /**
  * UsersControllerTest class
@@ -50,6 +51,30 @@ class UsersControllerTest extends IntegrationTestCase
     protected $url;
 
     /**
+     * Internal method to create a file to upload.
+     *
+     * It returns an array, similar to the `$_FILE` array that is created after
+     *  a upload
+     * @return array
+     */
+    protected function createFileToUpload()
+    {
+        $file = TMP . 'file_to_upload.jpg';
+
+        if (!file_exists($file)) {
+            copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+        }
+
+        return [
+            'tmp_name' => $file,
+            'error' => UPLOAD_ERR_OK,
+            'name' => basename($file),
+            'type' => mime_content_type($file),
+            'size' => filesize($file),
+        ];
+    }
+
+    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -68,6 +93,30 @@ class UsersControllerTest extends IntegrationTestCase
         Cache::clear(false, $this->Users->cache);
 
         $this->url = ['controller' => 'Users', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
+    }
+
+    /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy($event, $controller = null)
+    {
+        //Mocks the `Uploader` component
+        $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
+            ->setConstructorArgs([new ComponentRegistry])
+            ->setMethods(['move_uploaded_file'])
+            ->getMock();
+
+        $controller->Uploader->method('move_uploaded_file')
+            ->will($this->returnCallback(function ($filename, $destination) {
+                return rename($filename, $destination);
+            }));
+
+        $controller->viewBuilder()->setLayout('with_flash');
+
+        parent::controllerSpy($event, $controller);
     }
 
     /**
@@ -351,7 +400,6 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $oldPassword = 'OldPassword1"';
         $url = array_merge($this->url, ['action' => 'changePassword']);
-
         $this->setUserId(1);
 
         //Saves the password for the first user
@@ -399,6 +447,56 @@ class UsersControllerTest extends IntegrationTestCase
         $userFromView = $this->viewVariable('user');
         $this->assertNotEmpty($userFromView);
         $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
+    }
+
+    /**
+     * Tests for `changePicture()` method
+     * @test
+     */
+    public function testChangePicture()
+    {
+        $expectedPicture = USER_PICTURES . '1.jpg';
+        $file = $this->createFileToUpload();
+        $url = array_merge($this->url, ['action' => 'changePicture']);
+        $this->setUserId(1);
+
+        //GET request
+        $this->get($url);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/change_picture.ctp');
+
+        //Creates some files that simulate previous user pictures. These files
+        //  will be deleted before upload
+        file_put_contents($expectedPicture, null);
+        file_put_contents(USER_PICTURES . '1.jpeg', null);
+        file_put_contents(USER_PICTURES . '1.png', null);
+
+        $this->assertSession(null, 'Auth.User.picture');
+
+        //POST request. This works
+        $this->post(array_merge($url, ['_ext' => 'json']), compact('file'));
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertSession($expectedPicture, 'Auth.User.picture');
+        $this->assertFileExists($expectedPicture);
+        $this->assertFileNotExists(USER_PICTURES . '1.jpeg');
+        $this->assertFileNotExists(USER_PICTURES . '1.png');
+
+        //@codingStandardsIgnoreLine
+        @unlink($expectedPicture);
+    }
+
+    /**
+     * Tests for `changePicture()` method, error during the upload
+     * @test
+     */
+    public function testChangePictureErrorDuringUpload()
+    {
+        $file = array_merge($this->createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
+
+        $this->post(array_merge($this->url, ['action' => 'changePicture', '_ext' => 'json']), compact('file'));
+        $this->assertResponseFailure();
+        $this->assertResponseEquals('{"error":"No file was uploaded"}');
+        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/json/change_picture.ctp');
     }
 
     /**
