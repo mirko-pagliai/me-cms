@@ -66,6 +66,7 @@ class InstallShell extends BaseInstallShell
             LOGIN_RECORDS,
             PHOTOS,
             UPLOADED,
+            USER_PICTURES,
             TMP . 'login',
         ]);
 

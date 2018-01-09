@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\Filesystem\Folder;
 use MeCms\Model\Entity\User;
 use MeTools\TestSuite\TestCase;
 
@@ -39,6 +40,27 @@ class UserTest extends TestCase
     }
 
     /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        foreach ((new Folder(USER_PICTURES))->find() as $file) {
+            if ($file === 'empty') {
+                continue;
+            }
+
+            unlink(USER_PICTURES . DS . $file);
+        }
+
+        if (file_exists(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
+            unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
+        }
+    }
+
+    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test
@@ -56,7 +78,7 @@ class UserTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['full_name'], $this->User->getVirtual());
+        $this->assertEquals(['full_name', 'picture'], $this->User->getVirtual());
     }
 
     /**
@@ -68,5 +90,30 @@ class UserTest extends TestCase
         $this->User->first_name = 'Alfa';
         $this->User->last_name = 'Beta';
         $this->assertEquals($this->User->first_name . ' ' . $this->User->last_name, $this->User->full_name);
+    }
+
+    /**
+     * Test for `_getPicture()` method
+     * @test
+     */
+    public function testPictureGetMutator()
+    {
+        $this->User->id = 1;
+
+        $this->assertEquals(ME_CMS . '.no-avatar.jpg', $this->User->picture);
+
+        $filename = WWW_ROOT . 'img' . DS . 'no-avatar.jpg';
+        file_put_contents($filename, null);
+        $this->assertEquals('no-avatar.jpg', $this->User->picture);
+
+        $id = 0;
+
+        foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
+            $id++;
+            $this->User->id = $id;
+            $filename = WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.' . $extension;
+            file_put_contents($filename, null);
+            $this->assertEquals('users' . DS . $id . '.' . $extension, $this->User->picture);
+        }
     }
 }

@@ -14,7 +14,7 @@
 
 <article class="clearfix mb-4">
     <header class="mb-3">
-        <?php if (getConfig('page.category') && $page->category->has(['slug', 'title'])) : ?>
+        <?php if (getConfig('page.category') && $page->has('category') && $page->category->has(['slug', 'title'])) : ?>
             <h5 class="category mb-2">
                 <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
             </h5>

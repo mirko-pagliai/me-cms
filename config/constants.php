@@ -54,3 +54,8 @@ if (!defined('SITEMAP')) {
 if (!defined('UPLOADED')) {
     define('UPLOADED', WWW_ROOT . 'files' . DS);
 }
+
+//Sets the default directory for user pictures
+if (!defined('USER_PICTURES')) {
+    define('USER_PICTURES', WWW_ROOT . 'img' . DS . 'users' . DS);
+}

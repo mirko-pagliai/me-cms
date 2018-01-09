@@ -1,5 +1,14 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.6-RC3
+* users can change their picture from the admin panel;
+* the user's picture can be shown next to each post. It is also shown in the
+    user's profile in the admin panel and in the user bar;
+* `User` entity has the `picture` virtual field, which contains the path of the
+    user's picture or, alternatively, a default image;
+* updated for `cakephp-thumber` 1.3.0;
+* updated for MeTools 2.16.5-RC3 and so for Bootstrap 4 beta 3.
+
 ### 2.22.5-RC2
 * `Page` and `Post` entities have the `plain_text` virtual field. `Photo` entity
     has the `plain_description` virtual field;

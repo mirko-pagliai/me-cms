@@ -19,6 +19,11 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
     $(function() {
         $('.dropzone').dropzone({
             dictDefaultMessage: '<?= sprintf('%s %s', $this->Html->icon('cloud-upload'), __d('me_cms', 'Drag files here or click')) ?>',
+            <?php
+            if (!empty($maxFiles)) {
+                echo 'maxFiles: \'' . $maxFiles . '\',';
+            }
+            ?>
             previewsContainer: '#dropzone-preview',
             previewTemplate: '<div class="col-md-3 mb-4 dz-preview dz-file-preview">' +
                 '<div class="card bg-light border-0 p-2">' +

@@ -32,7 +32,7 @@ if (!Plugin::loaded('MeTools')) {
     Plugin::load('MeTools', ['bootstrap' => true]);
 }
 
-foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED] as $dir) {
+foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
     if (!file_exists($dir)) {
         //@codingStandardsIgnoreLine
         @mkdir($dir);
