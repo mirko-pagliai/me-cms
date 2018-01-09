@@ -6,6 +6,7 @@
     user's profile in the admin panel and in the user bar;
 * `User` entity has the `picture` virtual field, which contains the path of the
     user's picture or, alternatively, a default image;
+* the admin topbar is no longer cached;
 * updated for `cakephp-thumber` 1.3.0;
 * updated for MeTools 2.16.5-RC3 and so for Bootstrap 4 beta 3.
 

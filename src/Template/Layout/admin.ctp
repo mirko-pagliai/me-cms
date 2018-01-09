@@ -44,15 +44,7 @@
         ?>
     </head>
     <body>
-        <?php
-        //Topbar is cached only if debugging is disabled
-        $topbarCache = getConfig('debug') ? null : [
-            'config' => 'admin',
-            'key' => sprintf('topbar_user_%s', $this->Auth->user('id')),
-        ];
-
-        echo $this->element(ME_CMS . '.admin/topbar', [], ['cache' => $topbarCache]);
-        ?>
+        <?= $this->element(ME_CMS . '.admin/topbar') ?>
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebar" class="col d-none d-lg-block">
