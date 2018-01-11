@@ -169,7 +169,8 @@ return [ME_CMS => [
         'reset_password' => true,
         //Signup (enabled or disabled)
         'signup' => true,
-        //Displays the userbar
+        //Displays the userbar. This will have effect only on the frontend; in
+        //  the backend, the userbar will always be visible
         'userbar' => true,
     ],
 ]];
