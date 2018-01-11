@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.7-RC4
+* the backend and the frontend (admin panel) both have the userbar, which now
+    uses a common view and the same css.
+
 ### 2.22.6-RC3
 * users can change their picture from the admin panel;
 * the user's picture can be shown next to each post. It is also shown in the

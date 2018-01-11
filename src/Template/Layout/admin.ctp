@@ -28,6 +28,7 @@
                 '/vendor/bootstrap/css/bootstrap.min',
                 ME_TOOLS . '.default',
                 ME_TOOLS . '.forms',
+                ME_CMS . '.userbar',
                 ME_CMS . '.admin/layout',
             ], ['block' => true]);
             echo $this->fetch('css');
@@ -44,7 +45,7 @@
         ?>
     </head>
     <body>
-        <?= $this->element(ME_CMS . '.admin/topbar') ?>
+        <?= $this->element(ME_CMS . '.admin/userbar') ?>
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebar" class="col d-none d-lg-block">

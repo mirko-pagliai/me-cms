@@ -14,20 +14,17 @@
 /* -------------------------------- */
 /* Userbar */
 #userbar {
-    box-shadow: 0 .3rem .3rem 0 rgba(50, 50, 50, .3);
+    box-shadow: 0 -.15rem .2rem .3rem rgba(50, 50, 50, .3);
     font-size: 1rem;
 }
 
 /* Userbar, navigation links */
 #userbar .navbar-nav > li > a {
+    font-family: Arial,sans-serif;
     font-weight: bold;
 }
 
-/* Userbar, labels */
-#userbar .navbar-nav li .badge {
-    display: block;
-    line-height: .5;
-    margin: .5rem;
-    padding: .5rem;
-    vertical-align: sub;
+/* Userbar, dropdown, links on hover */
+#userbar .navbar-nav > li .dropdown-menu a:hover {
+    background: #eee;
 }

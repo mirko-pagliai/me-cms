@@ -10,35 +10,23 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-use MeCms\Core\Plugin;
 ?>
 
-<nav id="topbar" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+<nav id="userbar" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <?= $this->Html->button($this->Html->span(null, ['class' => 'navbar-toggler-icon']), null, [
         'class' => 'navbar-toggler',
         'data-toggle' => 'collapse',
-        'data-target' => '#topbarNav',
-        'aria-controls' => 'topbarNav',
+        'data-target' => '#userbarNav',
+        'aria-controls' => 'userbarNav',
         'aria-expanded' => 'false',
         'aria-label' => __d('me_cms', 'Toggle navigation'),
     ]) ?>
 
-    <div class="collapse navbar-collapse" id="topbarNav">
+    <div class="collapse navbar-collapse" id="userbarNav">
         <?php
-            $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
-                'class' => 'nav-link',
-                'icon' => 'home',
-                'target' => '_blank',
-            ]);
+            echo $this->fetch('content');
 
-            //Renders menus for each plugin
-            foreach (Plugin::all(['exclude' => [ME_TOOLS, ASSETS, DATABASE_BACKUP, THUMBER]]) as $plugin) {
-                $menus += $this->MenuBuilder->renderAsDropdown($plugin, ['class' => 'nav-link d-lg-none']);
-            }
-
-            echo $this->Html->ul($menus, ['class' => 'navbar-nav mr-auto'], ['class' => 'dropdown nav-item']);
-
-            $userMenu[] = call_user_func(function () {
+            $menu = call_user_func(function () {
                 $text = $this->Auth->user('full_name');
 
                 if ($this->Auth->user('picture')) {
@@ -70,7 +58,7 @@ use MeCms\Core\Plugin;
                 return $this->Dropdown->end(['class' => 'dropdown-menu-right']);
             });
 
-            echo $this->Html->ul($userMenu, ['class' => 'navbar-nav'], ['class' => 'dropdown nav-item']);
+            echo $this->Html->ul((array)$menu, ['class' => 'navbar-nav'], ['class' => 'dropdown nav-item']);
         ?>
     </div>
 </nav>
