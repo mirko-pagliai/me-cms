@@ -12,7 +12,7 @@
  */
 use MeCms\Core\Plugin;
 
-$this->extend('/Admin/Common/Element/userbar');
+$this->extend('/Common/Element/userbar');
 
 $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
     'class' => 'nav-link',
