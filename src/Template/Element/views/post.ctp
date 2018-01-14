@@ -17,7 +17,7 @@
         <?php
         if (getConfig('post.author_picture') && $post->user->has('picture')) {
             echo $this->Thumb->fit($post->user->picture, ['width' => 100], [
-                'class' => 'mr-3 user-picture rounded-circle',
+                'class' => 'd-none d-sm-block mr-3 rounded-circle user-picture',
                 'title' => __d('me_cms', 'Posted by {0}', $post->user->full_name),
             ]);
         }
