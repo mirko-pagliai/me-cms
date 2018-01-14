@@ -3,7 +3,7 @@
 ### 2.22.7-RC4
 * the backend and the frontend (admin panel) both have the userbar, which now
     uses a common view and the same css;
-* fixed bug for the user's picture on posts.
+* fixed a bug that prevented showing the user picture for some actions.
 
 ### 2.22.6-RC3
 * users can change their picture from the admin panel;

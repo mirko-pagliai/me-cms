@@ -134,7 +134,7 @@ class PostsController extends AppController
                     'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
                 ])
                 ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
                 ->where([

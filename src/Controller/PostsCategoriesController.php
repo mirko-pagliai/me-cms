@@ -70,7 +70,7 @@ class PostsCategoriesController extends AppController
                     'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
                 ])
                 ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug])
                 ->order([sprintf('%s.created', $this->PostsCategories->Posts->getAlias()) => 'DESC']);

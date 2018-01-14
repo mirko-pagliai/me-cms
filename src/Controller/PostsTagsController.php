@@ -102,7 +102,7 @@ class PostsTagsController extends AppController
                     'Tags' => function (Query $q) {
                         return $q->order(['tag' => 'ASC']);
                     },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
+                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
                 ])
                 ->matching($this->PostsTags->Tags->getAlias(), function (Query $q) use ($slug) {
                     return $q->where(['tag' => $slug]);
