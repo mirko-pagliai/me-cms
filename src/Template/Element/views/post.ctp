@@ -17,47 +17,47 @@
         <?php
         if (getConfig('post.author_picture') && $post->user->has('picture')) {
             echo $this->Thumb->fit($post->user->picture, ['width' => 100], [
-                'class' => 'mr-3 user-picture rounded-circle',
+                'class' => 'd-none d-sm-block mr-3 rounded-circle user-picture',
                 'title' => __d('me_cms', 'Posted by {0}', $post->user->full_name),
             ]);
         }
         ?>
 
         <div class="media-body">
-        <?php if (getConfig('post.category') && $post->category->has(['slug', 'title'])) : ?>
-            <h5 class="category mb-2">
-                <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
-            </h5>
-        <?php endif; ?>
+            <?php if (getConfig('post.category') && $post->category->has(['slug', 'title'])) : ?>
+                <h5 class="category mb-2">
+                    <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
+                </h5>
+            <?php endif; ?>
 
-        <h2 class="title mb-2">
-            <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
-        </h2>
+            <h2 class="title mb-2">
+                <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
+            </h2>
 
-        <?php if ($post->has('subtitle')) : ?>
-            <h4 class="subtitle mb-2">
-                <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
-            </h4>
-        <?php endif; ?>
+            <?php if ($post->has('subtitle')) : ?>
+                <h4 class="subtitle mb-2">
+                    <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
+                </h4>
+            <?php endif; ?>
 
-        <div class="info">
-            <?php
-            if (getConfig('post.author') && $post->user->has('full_name')) {
-                echo $this->Html->div(
-                    'author',
-                    __d('me_cms', 'Posted by {0}', $post->user->full_name),
-                    ['icon' => 'user']
-                );
-            }
+            <div class="info">
+                <?php
+                if (getConfig('post.author') && $post->user->has('full_name')) {
+                    echo $this->Html->div(
+                        'author',
+                        __d('me_cms', 'Posted by {0}', $post->user->full_name),
+                        ['icon' => 'user']
+                    );
+                }
 
-            if (getConfig('post.created') && $post->has('created')) {
-                echo $this->Html->time(
-                    __d('me_cms', 'Posted on {0}', $post->created->i18nFormat()),
-                    ['class' => 'date', 'icon' => 'clock-o']
-                );
-            }
-            ?>
-        </div>
+                if (getConfig('post.created') && $post->has('created')) {
+                    echo $this->Html->time(
+                        __d('me_cms', 'Posted on {0}', $post->created->i18nFormat()),
+                        ['class' => 'date', 'icon' => 'clock-o']
+                    );
+                }
+                ?>
+            </div>
         </div>
     </header>
 

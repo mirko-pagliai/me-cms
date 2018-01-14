@@ -25,27 +25,6 @@ body {
 }
 
 /* -------------------------------- */
-/*              Header              */
-/* -------------------------------- */
-/* Topbar */
-#topbar {
-    box-shadow: 0 -.15rem .2rem .3rem rgba(50, 50, 50, .3);
-}
-
-/* Topbar, navigation links */
-#topbar .navbar-nav > li > a {
-    font-family: Arial,sans-serif;
-    font-weight: bold;
-    padding-left: .70rem;
-    padding-right: .70rem;
-}
-
-/* Topbar, dropdown, links on hover */
-#topbar .navbar-nav > li .dropdown-menu a:hover {
-    background: #eee;
-}
-
-/* -------------------------------- */
 /*              Sidebar             */
 /* -------------------------------- */
 /* Sidebar */
