@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.8-RC5
+* added `PostsTable::findForIndex()` method;
 * fixed bug in measuring the elements height of the admin panel via javascript.
 
 ### 2.22.7-RC4

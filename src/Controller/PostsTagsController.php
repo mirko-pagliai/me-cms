@@ -48,7 +48,6 @@ class PostsTagsController extends AppController
         //If the data are not available from the cache
         if (empty($tags) || empty($paging)) {
             $query = $this->PostsTags->Tags->find('active');
-
             $tags = $this->paginate($query);
 
             //Writes on cache
@@ -97,19 +96,10 @@ class PostsTagsController extends AppController
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
             $query = $this->PostsTags->Posts->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function (Query $q) {
-                        return $q->order(['tag' => 'ASC']);
-                    },
-                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-                ])
+                ->find('forIndex')
                 ->matching($this->PostsTags->Tags->getAlias(), function (Query $q) use ($slug) {
                     return $q->where(['tag' => $slug]);
-                })
-                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->PostsTags->Posts->getAlias()) => 'DESC']);
-
+                });
             $posts = $this->paginate($query);
 
             //Writes on cache

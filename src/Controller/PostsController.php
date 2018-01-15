@@ -14,7 +14,6 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Network\Exception\ForbiddenException;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
@@ -63,18 +62,7 @@ class PostsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->Posts->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function (Query $q) {
-                        return $q->order(['tag' => 'ASC']);
-                    },
-                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-                ])
-                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
-
-            $posts = $this->paginate($query);
+            $posts = $this->paginate($this->Posts->find('active')->find('forIndex'));
 
             //Writes on cache
             Cache::writeMany([
@@ -129,20 +117,11 @@ class PostsController extends AppController
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
-                ->contain([
-                    'Categories' => ['fields' => ['title', 'slug']],
-                    'Tags' => function (Query $q) {
-                        return $q->order(['tag' => 'ASC']);
-                    },
-                    'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-                ])
-                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+                ->find('forIndex')
                 ->where([
                     sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
                     sprintf('%s.created <', $this->Posts->getAlias()) => $end,
-                ])
-                ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
-
+                ]);
             $posts = $this->paginate($query);
 
             //Writes on cache
@@ -258,14 +237,7 @@ class PostsController extends AppController
     public function view($slug = null)
     {
         $post = $this->Posts->find('active')
-            ->contain([
-                'Categories' => ['fields' => ['title', 'slug']],
-                'Tags' => function (Query $q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
-                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-            ])
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'preview', 'active', 'created', 'modified'])
+            ->find('forIndex')
             ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
             ->firstOrFail();
@@ -283,20 +255,13 @@ class PostsController extends AppController
      * Preview for posts.
      * It uses the `view` template.
      * @param string $slug Post slug
-     * @return \Cake\Network\Response
+     * @return void
      * @uses MeCms\Model\Table\PostsTable::getRelated()
      */
     public function preview($slug = null)
     {
         $post = $this->Posts->find('pending')
-            ->contain([
-                'Categories' => ['fields' => ['title', 'slug']],
-                'Tags' => function (Query $q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
-                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-            ])
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->find('forIndex')
             ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->firstOrFail();
 
