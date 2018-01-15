@@ -76,7 +76,7 @@ class AppTable extends Table
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -90,7 +90,7 @@ class AppTable extends Table
     }
 
     /**
-     * "Pending" find method
+     * "pending" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -104,7 +104,7 @@ class AppTable extends Table
     }
 
     /**
-     * "Random" find method
+     * "random" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
