@@ -146,6 +146,21 @@ class SystemsController extends AppController
 
         $checkup['cache'] = Cache::enabled();
 
+        //Checks for KCFinder
+        $kcfinder = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'browse.php';
+        $htaccess = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+        $checkup['kcfinder'] = false;
+
+        if (is_readable($kcfinder)) {
+            preg_match('/@version\s+([\d\.]+)/', file_get_contents($kcfinder), $matches);
+
+            $checkup['kcfinder'] = [
+                'htaccess' => is_readable($htaccess),
+                'htaccessPath' => $htaccess,
+                'version' => $matches[1],
+            ];
+        }
+
         //Checks for PHP's extensions
         foreach (['exif', 'imagick', 'mcrypt', 'zip'] as $extension) {
             $checkup['phpExtensions'][$extension] = extension_loaded($extension);

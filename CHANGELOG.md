@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.8-RC5
+* the system checkup checks the version of KCFinder and the presence of the
+    `.htaccess` file;
 * added `PostsTable::findForIndex()` method;
 * fixed bug in measuring the elements height of the admin panel via javascript.
 

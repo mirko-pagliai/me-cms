@@ -20,7 +20,7 @@ $successClasses = 'bg-success text-white p-2';
 $warningClasses = 'bg-warning text-white p-2';
 $errorOptions = ['icon' => 'times'];
 $successOptions = ['icon' => 'check'];
-$warningOptions = ['icon' => 'check'];
+$warningOptions = ['icon' => 'warning'];
 ?>
 
 <div class="row">
@@ -31,15 +31,16 @@ echo $this->Html->div('col-12', $this->Html->para($infoClasses, $text));
 $text = __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp']);
 echo $this->Html->div('col-12', $this->Html->para($infoClasses, $text));
 
+$class = $errorClasses;
+$options = $errorOptions;
+$text = __d('me_cms', 'The cache is disabled or debugging is active');
+
 if ($cache) {
     $class = $successClasses;
     $options = $successOptions;
     $text = __d('me_cms', 'The cache is enabled');
-} else {
-    $class = $errorClasses;
-    $options = $errorOptions;
-    $text = __d('me_cms', 'The cache is disabled or debugging is active');
 }
+
 echo $this->Html->div('col-12', $this->Html->para($class, $text, $options));
 ?>
 </div>
@@ -120,6 +121,35 @@ if ($backups['writeable']) {
     $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($backups['path']));
 }
 echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
+?>
+</div>
+
+<?= $this->Html->h4('KCFinder') ?>
+<div class="row">
+<?php
+if ($kcfinder) {
+    $class = $successClasses;
+    $options = $successOptions;
+    $text = __d('me_cms', '{0} version: {1}', 'KCFinder', $kcfinder['version']);
+} else {
+    $class = $warningClasses;
+    $options = $warningOptions;
+    $text = __d('me_cms', '{0} not available', 'KCFinder');
+}
+echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
+
+if ($kcfinder) {
+    if ($kcfinder['htaccess']) {
+        $class = $successClasses;
+        $options = $successOptions;
+        $text = __d('me_cms', 'The file or directory {0} is readable', $this->Html->code(rtr($kcfinder['htaccessPath'])));
+    } else {
+        $class = $errorClasses;
+        $options = $errorOptions;
+        $text = __d('me_tools', 'File or directory {0} not readable', $this->Html->code(rtr($kcfinder['htaccessPath'])));
+    }
+    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
+}
 ?>
 </div>
 
