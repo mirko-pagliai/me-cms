@@ -159,11 +159,10 @@ class SystemsController extends AppController
         //Gets plugins versions
         foreach (Plugin::all(['exclude' => ME_CMS]) as $plugin) {
             $file = Plugin::path($plugin, 'version', true);
+            $checkup['plugins']['plugins'][$plugin] = __d('me_cms', 'n.a.');
 
             if ($file) {
                 $checkup['plugins']['plugins'][$plugin] = trim(file_get_contents($file));
-            } else {
-                $checkup['plugins']['plugins'][$plugin] = __d('me_cms', 'n.a.');
             }
         }
 
