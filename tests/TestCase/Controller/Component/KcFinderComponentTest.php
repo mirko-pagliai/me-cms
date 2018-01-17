@@ -25,7 +25,12 @@ class KcFinderComponentTest extends TestCase
     /**
      * @var \MeCms\Controller\Component\KcFinderComponent
      */
-    protected $KcFinder;
+    protected $KCFinder;
+
+    /**
+     * @var string
+     */
+    protected $KCFinderFile = KCFINDER . 'browse.php';
 
     /**
      * Internal method to get a KcFinder instance
@@ -46,16 +51,14 @@ class KcFinderComponentTest extends TestCase
     {
         parent::setUp();
 
-        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
-
         //@codingStandardsIgnoreStart
-        @mkdir(dirname($file), 0777, true);
+        @mkdir(dirname($this->KCFinderFile), 0777, true);
         @mkdir(UPLOADED);
         //@codingStandardsIgnoreEnd
 
-        file_put_contents($file, null);
+        file_put_contents($this->KCFinderFile, null);
 
-        $this->KcFinder = $this->getKcFinderInstance();
+        $this->KCFinder = $this->getKcFinderInstance();
     }
 
     /**
@@ -66,11 +69,9 @@ class KcFinderComponentTest extends TestCase
     {
         parent::tearDown();
 
-        $file = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
-
         //@codingStandardsIgnoreStart
-        @unlink($file);
-        @rmdir(dirname($file));
+        @unlink($this->KCFinderFile);
+        @rmdir(dirname($this->KCFinderFile));
         //@codingStandardsIgnoreEnd
     }
 
@@ -80,7 +81,7 @@ class KcFinderComponentTest extends TestCase
      */
     public function testGetDefaultConfig()
     {
-        $defaultConfig = $this->invokeMethod($this->KcFinder, 'getDefaultConfig');
+        $defaultConfig = $this->invokeMethod($this->KCFinder, 'getDefaultConfig');
         $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,
@@ -117,9 +118,9 @@ class KcFinderComponentTest extends TestCase
         ], $defaultConfig);
 
         //Tries with admin user
-        $this->KcFinder->Auth->setUser(['group' => ['name' => 'admin']]);
+        $this->KCFinder->Auth->setUser(['group' => ['name' => 'admin']]);
 
-        $defaultConfig = $this->invokeMethod($this->KcFinder, 'getDefaultConfig');
+        $defaultConfig = $this->invokeMethod($this->KCFinder, 'getDefaultConfig');
         $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,
@@ -148,12 +149,12 @@ class KcFinderComponentTest extends TestCase
      */
     public function testGetTypes()
     {
-        $this->assertEquals(['images' => '*img'], $this->KcFinder->getTypes());
+        $this->assertEquals(['images' => '*img'], $this->KCFinder->getTypes());
 
         //@codingStandardsIgnoreLine
         @mkdir(UPLOADED . 'docs');
 
-        $this->assertEquals(['docs' => '', 'images' => '*img'], $this->KcFinder->getTypes());
+        $this->assertEquals(['docs' => '', 'images' => '*img'], $this->KCFinder->getTypes());
 
         //@codingStandardsIgnoreLine
         @rmdir(UPLOADED . 'docs');
@@ -176,7 +177,7 @@ class KcFinderComponentTest extends TestCase
             'uploadURL',
             'types',
             'access',
-        ], $this->KcFinder->request->session()->read('KCFINDER'));
+        ], $this->KCFinder->request->session()->read('KCFINDER'));
     }
 
     /**
@@ -202,7 +203,7 @@ class KcFinderComponentTest extends TestCase
     public function testInitializeKCFinderNotAvailable()
     {
         //@codingStandardsIgnoreLine
-        @unlink(WWW_ROOT . 'vendor' . DS . 'kcfinder' .DS . 'index.php');
+        @unlink($this->KCFinderFile);
 
         $this->getKcFinderInstance();
     }

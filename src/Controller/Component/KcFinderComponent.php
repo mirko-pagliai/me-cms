@@ -100,7 +100,7 @@ class KcFinderComponent extends Component
     public function initialize(array $config)
     {
         //Checks for KCFinder
-        if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php')) {
+        if (!is_readable(KCFINDER . 'browse.php')) {
             throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
         }
 

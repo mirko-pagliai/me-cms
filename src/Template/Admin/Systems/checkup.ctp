@@ -25,10 +25,10 @@ $warningOptions = ['icon' => 'warning'];
 
 <div class="row">
 <?php
-$text = __d('me_cms', '{0} version: {1}', $this->Html->strong(ME_CMS), $plugins['mecms']);
+$text = __d('me_cms', '{0} version: {1}', $this->Html->strong(ME_CMS), $plugins['me_cms']);
 echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
-$text = __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $plugins['cakephp']);
+$text = __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $cakephp);
 echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
 $class = $errorClasses;
@@ -47,7 +47,7 @@ echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 <div class="row">
 <?php
 //Plugins version
-foreach ($plugins['plugins'] as $plugin => $version) {
+foreach ($plugins['others'] as $plugin => $version) {
     $text = __d('me_cms', '{0} version: {1}', $this->Html->strong($plugin), $version);
     echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 }
@@ -62,18 +62,18 @@ $text = __d('me_cms', '{0} version: {1}', $this->Html->strong('Apache'), $apache
 echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
 //Apache's modules
-foreach (['rewrite', 'expires'] as $mod) {
+foreach ($apache['modules'] as $module => $isLoaded) {
     $class = $warningClasses;
     $options = $warningOptions;
-    $text = __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong($mod));
-    if (is_bool($apache[$mod]) && $apache[$mod]) {
+    $text = __d('me_cms', 'The {0} module cannot be checked', $this->Html->strong($module));
+    if (is_bool($isLoaded) && $isLoaded) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The {0} module is enabled', $this->Html->strong($mod));
-    } elseif (is_bool($apache[$mod]) && !$apache[$mod]) {
+        $text = __d('me_cms', 'The {0} module is enabled', $this->Html->strong($module));
+    } elseif (is_bool($isLoaded) && !$isLoaded) {
         $class = $errorClasses;
         $options = $errorOptions;
-        $text = __d('me_cms', 'The {0} module is not enabled', $this->Html->strong($mod));
+        $text = __d('me_cms', 'The {0} module is not enabled', $this->Html->strong($module));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
@@ -88,11 +88,11 @@ $text = __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), PHP_VERSIO
 echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
 //PHP's extensions
-foreach ($phpExtensions as $extension => $exists) {
+foreach ($phpExtensions as $extension => $isLoaded) {
     $class = $errorClasses;
     $options = $errorOptions;
     $text = __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($extension));
-    if ($exists) {
+    if ($isLoaded) {
         $class = $successClasses;
         $options = $successOptions;
         $text = __d('me_cms', 'The {0} extension is enabled', $this->Html->strong($extension));
@@ -105,15 +105,17 @@ foreach ($phpExtensions as $extension => $exists) {
 <?= $this->Html->h4(__d('me_cms', 'Backups'), ['class' => 'd-block-inline']) ?>
 <div class="row">
 <?php
-$class = $errorClasses;
-$options = $errorOptions;
-$text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($backups['path']));
-if ($backups['writeable']) {
-    $class = $successClasses;
-    $options = $successOptions;
-    $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($backups['path']));
+foreach ($backups as $path => $isWriteable) {
+    $class = $errorClasses;
+    $options = $errorOptions;
+    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code(rtr($path)));
+    if ($isWriteable) {
+        $class = $successClasses;
+        $options = $successOptions;
+        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code(rtr($path)));
+    }
+    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
-echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 ?>
 </div>
 
@@ -123,39 +125,22 @@ echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 $class = $warningClasses;
 $options = $warningOptions;
 $text = __d('me_cms', '{0} not available', 'KCFinder');
-if ($kcfinder) {
+if ($kcfinder['version']) {
     $class = $infoClasses;
     $options = [];
     $text = __d('me_cms', '{0} version: {1}', 'KCFinder', $kcfinder['version']);
 }
 echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 
-if ($kcfinder) {
+if ($kcfinder['version']) {
+    $file = KCFINDER . '.htaccess';
     $class = $errorClasses;
     $options = $errorOptions;
-    $text = __d('me_tools', 'File or directory {0} not readable', $this->Html->code(rtr($kcfinder['htaccessPath'])));
+    $text = __d('me_tools', 'File or directory {0} not readable', $this->Html->code(rtr($file)));
     if ($kcfinder['htaccess']) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The file or directory {0} is readable', $this->Html->code(rtr($kcfinder['htaccessPath'])));
-    }
-    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
-}
-?>
-</div>
-
-<?= $this->Html->h4(__d('me_cms', 'Webroot')) ?>
-<div class="row">
-<?php
-//Webroot directories
-foreach ($webroot as $dir) {
-    $class = $errorClasses;
-    $options = $errorOptions;
-    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($dir['path']));
-    if ($dir['writeable']) {
-        $class = $successClasses;
-        $options = $successOptions;
-        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($dir['path']));
+        $text = __d('me_cms', 'The file or directory {0} is readable', $this->Html->code(rtr($file)));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
@@ -166,14 +151,32 @@ foreach ($webroot as $dir) {
 <div class="row">
 <?php
 //Temporary directories
-foreach ($temporary as $dir) {
+foreach ($temporary as $path => $isWriteable) {
     $class = $errorClasses;
     $options = $errorOptions;
-    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code($dir['path']));
-    if ($dir['writeable']) {
+    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code(rtr($path)));
+    if ($isWriteable) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code($dir['path']));
+        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code(rtr($path)));
+    }
+    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
+}
+?>
+</div>
+
+<?= $this->Html->h4(__d('me_cms', 'Webroot')) ?>
+<div class="row">
+<?php
+//Webroot directories
+foreach ($webroot as $path => $isWriteable) {
+    $class = $errorClasses;
+    $options = $errorOptions;
+    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code(rtr($path)));
+    if ($isWriteable) {
+        $class = $successClasses;
+        $options = $successOptions;
+        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code(rtr($path)));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }

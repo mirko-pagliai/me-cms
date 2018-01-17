@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.8-RC5
+* added `MeCms\Utility\Checkup` class and some classes under the
+    `MeCms\Utility\Checkups` namespace;
 * the system checkup checks the version of KCFinder and the presence of the
     `.htaccess` file;
 * added `PostsTable::findForIndex()` method;

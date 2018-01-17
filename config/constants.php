@@ -30,6 +30,11 @@ if (!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
 }
 
+//Sets the default KCFinder path
+if (!defined('KCFINDER')) {
+    define('KCFINDER', WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS);
+}
+
 //Sets the default login log directory
 if (!defined('LOGIN_RECORDS')) {
     define('LOGIN_RECORDS', TMP . 'login' . DS);
