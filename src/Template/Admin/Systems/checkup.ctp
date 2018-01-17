@@ -33,11 +33,11 @@ echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
 $class = $errorClasses;
 $options = $errorOptions;
-$text = __d('me_cms', 'The cache is disabled or debugging is active');
+$text = __d('me_cms', 'Cache is disabled or debugging is active');
 if ($cache) {
     $class = $successClasses;
     $options = $successOptions;
-    $text = __d('me_cms', 'The cache is enabled');
+    $text = __d('me_cms', 'Cache is enabled');
 }
 echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 ?>
@@ -112,7 +112,7 @@ foreach ($backups as $path => $isWriteable) {
     if ($isWriteable) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code(rtr($path)));
+        $text = __d('me_cms', 'Directory {0} is readable and writable', $this->Html->code(rtr($path)));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
@@ -140,7 +140,7 @@ if ($kcfinder['version']) {
     if ($kcfinder['htaccess']) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The file or directory {0} is readable', $this->Html->code(rtr($file)));
+        $text = __d('me_cms', 'File or directory {0} is readable', $this->Html->code(rtr($file)));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
@@ -158,7 +158,7 @@ foreach ($temporary as $path => $isWriteable) {
     if ($isWriteable) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code(rtr($path)));
+        $text = __d('me_cms', 'Directory {0} is readable and writable', $this->Html->code(rtr($path)));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
@@ -176,7 +176,7 @@ foreach ($webroot as $path => $isWriteable) {
     if ($isWriteable) {
         $class = $successClasses;
         $options = $successOptions;
-        $text = __d('me_cms', 'The directory {0} is readable and writable', $this->Html->code(rtr($path)));
+        $text = __d('me_cms', 'Directory {0} is readable and writable', $this->Html->code(rtr($path)));
     }
     echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 }
