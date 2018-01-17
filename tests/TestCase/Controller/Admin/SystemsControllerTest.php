@@ -268,6 +268,8 @@ class SystemsControllerTest extends IntegrationTestCase
             'temporary',
             'plugins',
             'phpExtensions',
+            'kcfinder',
+            'cakephp',
             'cache',
             'backups',
             'apache',
