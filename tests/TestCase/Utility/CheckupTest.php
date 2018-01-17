@@ -114,7 +114,7 @@ class CheckupTest extends TestCase
         $result = $this->Checkup->TMP->isWriteable();
         $this->assertNotEmpty($result);
 
-        foreach($result as $path => $isWriteable) {
+        foreach ($result as $path => $isWriteable) {
             $this->assertStringStartsWith(TMP, $path);
             $this->assertTrue($isWriteable);
         }
@@ -133,7 +133,7 @@ class CheckupTest extends TestCase
         $result = $this->Checkup->Webroot->isWriteable();
         $this->assertNotEmpty($result);
 
-        foreach($result as $path => $isWriteable) {
+        foreach ($result as $path => $isWriteable) {
             $this->assertStringStartsWith(WWW_ROOT, $path);
             $this->assertTrue($isWriteable);
         }
