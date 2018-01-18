@@ -221,13 +221,13 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testFixKcfinder()
     {
-        $htaccessFile = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
-        $indexFile = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
+        $htaccessFile = KCFINDER . '.htaccess';
+        $browse = KCFINDER . 'browse.php';
 
         //@codingStandardsIgnoreStart
         @unlink($htaccessFile);
         @unlink($indexFile);
-        @rmdir(dirname($indexFile));
+        @rmdir(KCFINDER);
         //@codingStandardsIgnoreEnd
 
         //For now KCFinder is not available
@@ -236,8 +236,8 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->assertErrorContains('<error>KCFinder is not available</error>');
 
         //@codingStandardsIgnoreLine
-        @mkdir(dirname($indexFile), 0777, true);
-        file_put_contents($indexFile, null);
+        @mkdir(KCFINDER, 0777, true);
+        file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
 
         $this->exec('me_cms.install fix_kcfinder -v');
         $this->assertExitWithSuccess();
