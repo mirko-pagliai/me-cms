@@ -173,7 +173,6 @@ Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
 
 //This makes it believe that KCFinder is installed
-$kcfinder = KCFINDER . 'browse.php';
 //@codingStandardsIgnoreLine
-@mkdir(dirname($kcfinder));
-file_put_contents($kcfinder, '@version 3.12');
+@mkdir(KCFINDER, 0777, true);
+file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
