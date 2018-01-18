@@ -90,22 +90,42 @@ class KcFinderComponent extends Component
     }
 
     /**
+     * Internal method to check if KCFinder is available
+     * @return bool
+     */
+    protected function kcFinderIsAvailable()
+    {
+        return is_readable(KCFINDER . 'browse.php');
+    }
+
+    /**
+     * Internal method to check if the uploaded directory is writeable
+     * @return type
+     */
+    protected function uploadedDirIsWriteable()
+    {
+        return folderIsWriteable(UPLOADED);
+    }
+
+    /**
      * Constructor hook method
      * @param array $config The configuration settings provided to this
      *  component
      * @return void
      * @throws InternalErrorException
      * @uses getDefaultConfig()
+     * @uses kcFinderIsAvailable()
+     * @uses uploadedDirIsWriteable()
      */
     public function initialize(array $config)
     {
         //Checks for KCFinder
-        if (!is_readable(KCFINDER . 'browse.php')) {
+        if (!$this->kcFinderIsAvailable()) {
             throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
         }
 
         //Checks for the files directory (`APP/webroot/files`)
-        if (!folderIsWriteable(UPLOADED)) {
+        if (!$this->uploadedDirIsWriteable()) {
             throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
 

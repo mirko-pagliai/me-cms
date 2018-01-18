@@ -23,23 +23,14 @@ use MeTools\TestSuite\TestCase;
 class KcFinderComponentTest extends TestCase
 {
     /**
+     * @var \Cake\Controller\ComponentRegistry
+     */
+    protected $ComponentRegistry;
+
+    /**
      * @var \MeCms\Controller\Component\KcFinderComponent
      */
     protected $KCFinder;
-
-    /**
-     * @var string
-     */
-    protected $KCFinderFile = KCFINDER . 'browse.php';
-
-    /**
-     * Internal method to get a KcFinder instance
-     * @return \MeCms\Controller\Component\KcFinderComponent
-     */
-    protected function getKcFinderInstance()
-    {
-        return new KcFinderComponent(new ComponentRegistry(new Controller));
-    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -51,28 +42,8 @@ class KcFinderComponentTest extends TestCase
     {
         parent::setUp();
 
-        //@codingStandardsIgnoreStart
-        @mkdir(dirname($this->KCFinderFile), 0777, true);
-        @mkdir(UPLOADED);
-        //@codingStandardsIgnoreEnd
-
-        file_put_contents($this->KCFinderFile, null);
-
-        $this->KCFinder = $this->getKcFinderInstance();
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        //@codingStandardsIgnoreStart
-        @unlink($this->KCFinderFile);
-        @rmdir(dirname($this->KCFinderFile));
-        //@codingStandardsIgnoreEnd
+        $this->ComponentRegistry = new ComponentRegistry(new Controller);
+        $this->KCFinder = new KcFinderComponent($this->ComponentRegistry);
     }
 
     /**
@@ -188,10 +159,12 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeDirNotWritable()
     {
-        //@codingStandardsIgnoreLine
-        @rmdir(UPLOADED);
+        $KCFinder = $this->getMockBuilder(get_class($this->KCFinder))
+            ->setConstructorArgs([$this->ComponentRegistry])
+            ->setMethods(['uploadedDirIsWriteable'])
+            ->getMock();
 
-        $this->getKcFinderInstance();
+        $KCFinder->method('uploadedDirIsWriteable')->will($this->returnValue(false));
     }
 
     /**
@@ -202,9 +175,11 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeKCFinderNotAvailable()
     {
-        //@codingStandardsIgnoreLine
-        @unlink($this->KCFinderFile);
+        $KCFinder = $this->getMockBuilder(get_class($this->KCFinder))
+            ->setConstructorArgs([new ComponentRegistry(new Controller)])
+            ->setMethods(['kcFinderIsAvailable'])
+            ->getMock();
 
-        $this->getKcFinderInstance();
+        $KCFinder->method('kcFinderIsAvailable')->will($this->returnValue(false));
     }
 }
