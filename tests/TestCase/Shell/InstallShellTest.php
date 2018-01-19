@@ -221,37 +221,34 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testFixKcfinder()
     {
-        $htaccessFile = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
-        $indexFile = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
-
-        //@codingStandardsIgnoreStart
-        @unlink($htaccessFile);
-        @unlink($indexFile);
-        @rmdir(dirname($indexFile));
-        //@codingStandardsIgnoreEnd
-
-        //For now KCFinder is not available
-        $this->exec('me_cms.install fix_kcfinder -v');
-        $this->assertExitWithError();
-        $this->assertErrorContains('<error>KCFinder is not available</error>');
-
         //@codingStandardsIgnoreLine
-        @mkdir(dirname($indexFile), 0777, true);
-        file_put_contents($indexFile, null);
+        @unlink(KCFINDER . '.htaccess');
 
         $this->exec('me_cms.install fix_kcfinder -v');
         $this->assertExitWithSuccess();
-        $this->assertOutputContains('Creating file ' . $htaccessFile);
-        $this->assertOutputContains('<success>Wrote</success> `' . $htaccessFile . '`');
+        $this->assertOutputContains('Creating file ' . KCFINDER . '.htaccess');
+        $this->assertOutputContains('<success>Wrote</success> `' . KCFINDER . '.htaccess' . '`');
 
         $this->assertStringEqualsFile(
-            $htaccessFile,
+            KCFINDER . '.htaccess',
             'php_value session.cache_limiter must-revalidate' . PHP_EOL .
             'php_value session.cookie_httponly On' . PHP_EOL .
             'php_value session.cookie_lifetime 14400' . PHP_EOL .
             'php_value session.gc_maxlifetime 14400' . PHP_EOL .
             'php_value session.name CAKEPHP'
         );
+
+        $browseFile = KCFINDER . 'browse.php';
+        $browseFileContent = file_get_contents($browseFile);
+        //@codingStandardsIgnoreLine
+        @unlink($browseFile);
+
+        //For now KCFinder is not available
+        $this->exec('me_cms.install fix_kcfinder -v');
+        $this->assertExitWithError();
+        $this->assertErrorContains('<error>KCFinder is not available</error>');
+
+        file_put_contents($browseFile, $browseFileContent);
     }
 
     /**

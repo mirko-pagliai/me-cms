@@ -15,6 +15,7 @@ namespace MeCms\Shell;
 use Cake\Console\ConsoleIo;
 use Cake\Core\App;
 use Cake\Datasource\ConnectionManager;
+use MeCms\Utility\Checkup;
 use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
 
@@ -24,6 +25,13 @@ use MeTools\Shell\InstallShell as BaseInstallShell;
 class InstallShell extends BaseInstallShell
 {
     /**
+     * Instance of `Checkup`
+     * @since 2.22.8-RC5
+     * @var \MeCms\Utility\Checkup
+     */
+    public $Checkup;
+
+    /**
      * Configuration files to be copied
      * @var array
      */
@@ -32,6 +40,7 @@ class InstallShell extends BaseInstallShell
     /**
      * Construct
      * @param \Cake\Console\ConsoleIo|null $io An io instance
+     * @uses $Checkup
      * @uses $config
      * @uses $links
      * @uses $paths
@@ -41,6 +50,8 @@ class InstallShell extends BaseInstallShell
     public function __construct(ConsoleIo $io = null)
     {
         parent::__construct($io);
+
+        $this->Checkup = new Checkup;
 
         //Configuration files to be copied
         $this->config = [
@@ -178,12 +189,13 @@ class InstallShell extends BaseInstallShell
      * Creates the file `vendor/kcfinder/.htaccess`
      * @return bool `false` on failure
      * @see http://kcfinder.sunhater.com/integrate
+     * @uses $Checkup
      * @uses MeTools\Console\Shell::createFile()
      */
     public function fixKcfinder()
     {
         //Checks for KCFinder
-        if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder')) {
+        if (!$this->Checkup->KCFinder->isAvailable()) {
             $this->err(__d('me_tools', '{0} is not available', 'KCFinder'));
 
             return false;

@@ -293,6 +293,23 @@ class PostsTableTest extends TestCase
     }
 
     /**
+     * Test for `findForIndex()` method
+     * @test
+     */
+    public function testFindForIndex()
+    {
+        $query = $this->Posts->find('forIndex');
+        $sql = $query->sql();
+
+        $this->assertEquals(['title', 'slug'], $query->contain()['Categories']['fields']);
+        $this->assertTrue((new \ReflectionFunction($query->contain()['Tags']['queryBuilder']))->isClosure());
+        $this->assertEquals(['id', 'first_name', 'last_name'], $query->contain()['Users']['fields']);
+
+        $this->assertStringStartsWith('SELECT Posts.id AS `Posts__id`, Posts.title AS `Posts__title`, Posts.subtitle AS `Posts__subtitle`, Posts.slug AS `Posts__slug`, Posts.text AS `Posts__text`, Posts.created AS `Posts__created`', $sql);
+        $this->assertStringEndsWith('ORDER BY Posts.created DESC', $sql);
+    }
+
+    /**
      * Test for `getRelated()` method
      * @test
      */

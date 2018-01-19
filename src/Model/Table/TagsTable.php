@@ -42,7 +42,7 @@ class TagsTable extends AppTable
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object

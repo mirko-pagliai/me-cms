@@ -68,7 +68,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -82,7 +82,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * "Banned" find method
+     * "banned" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -95,7 +95,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * "Pending" find method
+     * "pending" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object

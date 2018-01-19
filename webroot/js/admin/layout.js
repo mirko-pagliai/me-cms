@@ -15,7 +15,7 @@
  */
 function getAvailableHeight()
 {
-    return $(window).height() - $('#topbar').outerHeight(true);
+    return $(window).height() - $('#userbar').outerHeight(true);
 }
 
 /**

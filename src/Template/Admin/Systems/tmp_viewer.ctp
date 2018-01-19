@@ -35,7 +35,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <h4><?= __d('me_cms', 'Cache') ?></h4>
 
     <?php if (!$cacheStatus) : ?>
-        <p class="text-danger"><?= __d('me_cms', 'The cache is disabled or debugging is active') ?></p>
+        <p class="text-danger"><?= __d('me_cms', 'Cache is disabled or debugging is active') ?></p>
     <?php endif; ?>
 
     <p><?= __d('me_cms', 'Cache size: {0}', $this->Number->toReadableSize($cacheSize)) ?></p>

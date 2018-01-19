@@ -197,6 +197,26 @@ class PostsTable extends AppTable
     }
 
     /**
+     * "forIndex" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     * @since 2.22.8-RC5
+     */
+    public function findForIndex(Query $query, array $options)
+    {
+        return $query->contain([
+                $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
+                $this->Tags->getAlias() => function (Query $q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
+                $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
+            ])
+            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+            ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
+    }
+
+    /**
      * Gets the related posts for a post
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
