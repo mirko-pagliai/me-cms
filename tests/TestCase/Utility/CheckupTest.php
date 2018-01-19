@@ -75,6 +75,14 @@ class CheckupTest extends TestCase
         $this->assertTrue($this->Checkup->KCFinder->htaccess());
         $this->assertTrue($this->Checkup->KCFinder->isAvailable());
         $this->assertRegExp('/[\d\.]+/', $this->Checkup->KCFinder->version());
+
+        //If the `isAvailable()` method returns `false`, the `version()` method
+        //  will also return `false`
+        $this->Checkup->KCFinder = $this->getMockBuilder(get_class($this->Checkup->KCFinder))
+            ->setMethods(['isAvailable'])
+            ->getMock();
+        $this->Checkup->KCFinder->method('isAvailable')->will($this->returnValue(false));
+        $this->assertFalse($this->Checkup->KCFinder->version());
     }
 
     /**
