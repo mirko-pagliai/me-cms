@@ -29,15 +29,24 @@ class KCFinder extends AbstractCheckup
     }
 
     /**
+     * Checks if KCFinder is available
+     * @return bool
+     */
+    public function isAvailable()
+    {
+        return is_readable(KCFINDER . 'browse.php');
+    }
+
+    /**
      * Gets the version for KCFinder
      * @return string|bool Version or `false`
+     * @uses isAvailable()
      */
     public function version()
     {
-        $file = KCFINDER . 'browse.php';
         $matches = null;
 
-        if (!is_readable($file) || !preg_match('/@version\s+([\d\.]+)/', file_get_contents($file), $matches)) {
+        if (!$this->isAvailable() || !preg_match('/@version\s+([\d\.]+)/', file_get_contents(KCFINDER . 'browse.php'), $matches)) {
             return false;
         }
 

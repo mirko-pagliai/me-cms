@@ -71,8 +71,9 @@ class CheckupTest extends TestCase
     public function testKCFinder()
     {
         $this->assertInstanceof('MeCms\Utility\Checkups\KCFinder', $this->Checkup->KCFinder);
-        $this->assertEquals(['htaccess', 'version'], get_class_methods($this->Checkup->KCFinder));
+        $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
         $this->assertTrue($this->Checkup->KCFinder->htaccess());
+        $this->assertTrue($this->Checkup->KCFinder->isAvailable());
         $this->assertRegExp('/[\d\.]+/', $this->Checkup->KCFinder->version());
     }
 

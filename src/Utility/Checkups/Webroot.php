@@ -35,8 +35,8 @@ class Webroot extends AbstractCheckup
             BANNERS,
             PHOTOS,
             USER_PICTURES,
-            WWW_ROOT . 'files',
-            WWW_ROOT . 'fonts',
+            WWW_ROOT . 'files' . DS,
+            WWW_ROOT . 'fonts' . DS,
         ];
     }
 

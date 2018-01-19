@@ -159,12 +159,10 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeDirNotWritable()
     {
-        $KCFinder = $this->getMockBuilder(get_class($this->KCFinder))
-            ->setConstructorArgs([$this->ComponentRegistry])
-            ->setMethods(['uploadedDirIsWriteable'])
+        $this->KCFinder->Checkup->Webroot = $this->getMockBuilder(get_class($this->KCFinder->Checkup->Webroot))
             ->getMock();
 
-        $KCFinder->method('uploadedDirIsWriteable')->will($this->returnValue(false));
+        $this->KCFinder->initialize([]);
     }
 
     /**
@@ -175,11 +173,9 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeKCFinderNotAvailable()
     {
-        $KCFinder = $this->getMockBuilder(get_class($this->KCFinder))
-            ->setConstructorArgs([new ComponentRegistry(new Controller)])
-            ->setMethods(['kcFinderIsAvailable'])
+        $this->KCFinder->Checkup->KCFinder = $this->getMockBuilder(get_class($this->KCFinder->Checkup->KCFinder))
             ->getMock();
 
-        $KCFinder->method('kcFinderIsAvailable')->will($this->returnValue(false));
+        $this->KCFinder->initialize([]);
     }
 }
