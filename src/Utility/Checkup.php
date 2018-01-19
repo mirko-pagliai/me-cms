@@ -9,6 +9,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @since       2.22.8-RC5
  */
 namespace MeCms\Utility;
 

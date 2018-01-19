@@ -201,6 +201,7 @@ class PostsTable extends AppTable
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
+     * @since 2.22.8-RC5
      */
     public function findForIndex(Query $query, array $options)
     {

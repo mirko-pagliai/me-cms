@@ -26,6 +26,7 @@ class InstallShell extends BaseInstallShell
 {
     /**
      * Instance of `Checkup`
+     * @since 2.22.8-RC5
      * @var \MeCms\Utility\Checkup
      */
     public $Checkup;

@@ -27,6 +27,7 @@ class KcFinderComponent extends Component
 {
     /**
      * Instance of `Checkup`
+     * @since 2.22.8-RC5
      * @var \MeCms\Utility\Checkup
      */
     public $Checkup;
@@ -42,6 +43,7 @@ class KcFinderComponent extends Component
      * @param ComponentRegistry $registry A ComponentRegistry this component can
      *  use to lazy load its components
      * @param array $config Array of configuration settings
+     * @since 2.22.8-RC5
      * @uses $Checkup
      */
     public function __construct(ComponentRegistry $registry, array $config = [])
@@ -114,6 +116,7 @@ class KcFinderComponent extends Component
     /**
      * Internal method to check if KCFinder is available
      * @return bool
+     * @since 2.22.8-RC5
      * @uses $Checkup
      */
     protected function kcFinderIsAvailable()
@@ -124,6 +127,7 @@ class KcFinderComponent extends Component
     /**
      * Internal method to check if the uploaded directory is writeable
      * @return bool
+     * @since 2.22.8-RC5
      * @uses $Checkup
      */
     protected function uploadedDirIsWriteable()
