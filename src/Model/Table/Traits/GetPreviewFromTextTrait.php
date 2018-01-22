@@ -14,8 +14,8 @@
 namespace MeCms\Model\Table\Traits;
 
 use Cake\Filesystem\Folder;
+use DOMDocument;
 use MeTools\Utility\Youtube;
-use Sunra\PhpSimple\HtmlDomParser;
 use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
@@ -35,21 +35,23 @@ trait GetPreviewFromTextTrait
      */
     protected function firstImage($html)
     {
-        $dom = (new HtmlDomParser)->str_get_html($html);
-
-        if (!$dom) {
+        if (empty($html)) {
             return false;
         }
 
-        $img = $dom->find('img', 0);
+        $dom = new DOMDocument;
+        $dom->loadHTML($html);
+        $item = $dom->getElementsByTagName('img')->item(0);
 
-        if (empty($img->src) ||
-            !in_array(strtolower(pathinfo($img->src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])
-        ) {
-            return false;
+        if ($item) {
+            $src = $item->getAttribute('src');
+
+            if (in_array(strtolower(pathinfo($src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])) {
+                return $src;
+            }
         }
 
-        return $img->src;
+        return false;
     }
 
     /**

@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.9
+* removed `php-simple-html-dom-parser` package. The
+    `GetPreviewFromTextTrait::firstImage()` method now uses only DOM functions.
+
 ### 2.22.8-RC5
 * added `MeCms\Utility\Checkup` class and some classes under the
     `MeCms\Utility\Checkups` namespace;
