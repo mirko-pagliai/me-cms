@@ -1,10 +1,10 @@
 # 2.x branch
 ## 2.22 branch
-### 2.22.9
+### 2.22.8
 * added `MeCms\Utility\Checkup` class and some classes under the
     `MeCms\Utility\Checkups` namespace;
-* the system checkup checks the version of KCFinder and the presence of the
-    `.htaccess` file;
+* the system checkup checks the version of KCFinder and if the `.htaccess` file
+    exists;
 * fixed bug in measuring the elements height of the admin panel via javascript;
 * added `PostsTable::findForIndex()` method;
 * fixed a bug for static pages;
