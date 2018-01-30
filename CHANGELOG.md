@@ -1,12 +1,15 @@
 # 2.x branch
 ## 2.22 branch
-### 2.22.8-RC5
+### 2.22.8
 * added `MeCms\Utility\Checkup` class and some classes under the
     `MeCms\Utility\Checkups` namespace;
-* the system checkup checks the version of KCFinder and the presence of the
-    `.htaccess` file;
+* the system checkup checks the version of KCFinder and if the `.htaccess` file
+    exists;
+* fixed bug in measuring the elements height of the admin panel via javascript;
 * added `PostsTable::findForIndex()` method;
-* fixed bug in measuring the elements height of the admin panel via javascript.
+* fixed a bug for static pages;
+* removed `php-simple-html-dom-parser` package. The
+    `GetPreviewFromTextTrait::firstImage()` method now uses only DOM functions.
 
 ### 2.22.7-RC4
 * the backend and the frontend (admin panel) both have the userbar, which now
