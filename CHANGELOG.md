@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.9
+* fixed a bug for static pages;
 * removed `php-simple-html-dom-parser` package. The
     `GetPreviewFromTextTrait::firstImage()` method now uses only DOM functions.
 
