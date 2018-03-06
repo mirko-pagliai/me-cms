@@ -97,7 +97,6 @@ class AppControllerTest extends IntegrationTestCase
         $this->Controller->beforeFilter($this->Event);
 
         $this->assertNotEmpty($this->Controller->Auth->allowedActions);
-        $this->assertFalse(array_search('sortWhitelist', array_keys($this->Controller->paginate)));
         $this->assertEquals(5, $this->Controller->paginate['limit']);
         $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
         $this->assertNull($this->Controller->viewBuilder()->getLayout());
@@ -112,7 +111,6 @@ class AppControllerTest extends IntegrationTestCase
 
         $this->Controller->beforeFilter($this->Event);
         $this->assertEmpty($this->Controller->Auth->allowedActions);
-        $this->assertEquals(['my-field'], $this->Controller->paginate['sortWhitelist']);
         $this->assertEquals(7, $this->Controller->paginate['limit']);
         $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
         $this->assertEquals(ME_CMS . '.View/Admin', $this->Controller->viewBuilder()->getClassName());

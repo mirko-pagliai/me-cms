@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.22 branch
+### 2.22.9
+* updated for CakePHP 3.5.13.
+
 ### 2.22.8
 * added `MeCms\Utility\Checkup` class and some classes under the
     `MeCms\Utility\Checkups` namespace;
