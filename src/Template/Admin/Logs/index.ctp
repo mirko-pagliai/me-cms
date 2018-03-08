@@ -27,6 +27,7 @@ $this->append('actions', $this->Form->postButton(
             <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
         </tr>
     </thead>
+    <tbody>
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
@@ -69,4 +70,5 @@ $this->append('actions', $this->Form->postButton(
             </td>
         </tr>
     <?php endforeach; ?>
+    </tbody>
 </table>
