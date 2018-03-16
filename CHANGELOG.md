@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.9
+* fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 
 ### 2.22.8
