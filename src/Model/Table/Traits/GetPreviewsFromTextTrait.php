@@ -14,6 +14,7 @@
 namespace MeCms\Model\Table\Traits;
 
 use Cake\Filesystem\Folder;
+use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
 use Thumber\ThumbTrait;
@@ -57,38 +58,38 @@ trait GetPreviewsFromTextTrait
     /**
      * Gets the first available image or the preview of the first YouTube video
      * @param string $text The text within which to search
-     * @return array|null Array with `preview`, `width` and `height`
+     * @return Entity|null An `Entity` with `url`, `width` and `height`
      *  properties or `null` if there is not no preview
      * @uses firstImage()
      * @uses getPreviewSize()
      */
     public function getPreview($text)
     {
-        $preview = $this->firstImage($text);
+        $url = $this->firstImage($text);
 
-        if ($preview && !isUrl($preview)) {
+        if ($url && !isUrl($url)) {
             //If is relative path
-            if (!Folder::isAbsolute($preview)) {
-                $preview = WWW_ROOT . 'img' . DS . $preview;
+            if (!Folder::isAbsolute($url)) {
+                $url = WWW_ROOT . 'img' . DS . $url;
             }
 
-            if (!file_exists($preview)) {
+            if (!file_exists($url)) {
                 return null;
             }
 
-            $thumb = (new ThumbCreator($preview))->resize(1200, 1200)->save(['format' => 'jpg']);
-            $preview = $this->getUrl($thumb, true);
+            $thumb = (new ThumbCreator($url))->resize(1200, 1200)->save(['format' => 'jpg']);
+            $url = $this->getUrl($thumb, true);
         } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $text, $matches)) {
-            $preview = Youtube::getPreview($matches[1]);
+            $url = Youtube::getPreview($matches[1]);
         }
 
-        if (empty($preview)) {
+        if (empty($url)) {
             return null;
         }
 
-        list($width, $height) = $this->getPreviewSize($preview);
+        list($width, $height) = $this->getPreviewSize($url);
 
-        return compact('preview', 'width', 'height');
+        return new Entity(compact('url', 'width', 'height'));
     }
 
     /**

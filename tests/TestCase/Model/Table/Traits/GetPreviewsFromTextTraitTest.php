@@ -114,10 +114,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             return $this->invokeMethod($this->Posts, 'getPreview', [$text]);
         };
 
-        $this->Posts = $this->getMockBuilder(PostsTable::class)
-            ->setMethods(['getPreviewSize'])
-            ->getMock();
-
+        $this->Posts = $this->getMockForModel(PostsTable::class, ['getPreviewSize']);
         $this->Posts->method('getPreviewSize')
             ->will($this->returnValue([400, 300]));
 
@@ -131,25 +128,27 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $result = $getPreviewMethod(
             '<img src=\'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg\' />'
         );
-        $this->assertEquals([
-            'preview' => 'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg',
-            'width' => 400,
-            'height' => 300,
-        ], $result);
+        $this->assertInstanceof('Cake\ORM\Entity', $result);
+        $this->assertEquals(
+            'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg',
+            $result->url
+        );
+        $this->assertEquals(400, $result->width);
+        $this->assertEquals(300, $result->height);
 
         foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
             $result = $getPreviewMethod('<img src=\'' . $image . '\' />');
-            $this->assertEquals(['preview', 'width', 'height'], array_keys($result));
-            $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $result['preview']);
-            $this->assertEquals(400, $result['width']);
-            $this->assertEquals(300, $result['height']);
+            $this->assertInstanceof('Cake\ORM\Entity', $result);
+            $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result->url);
+            $this->assertEquals(400, $result->width);
+            $this->assertEquals(300, $result->height);
         }
 
-        $result = $getPreviewMethod('[youtube]6z4KK7RWjmk[/youtube]');
-        $this->assertEquals([
-            'preview' => Youtube::getPreview('6z4KK7RWjmk'),
-            'width' => 400,
-            'height' => 300,
-        ], $result);
+        $youtubeId = '6z4KK7RWjmk';
+        $result = $getPreviewMethod('[youtube]' . $youtubeId . '[/youtube]');
+        $this->assertInstanceof('Cake\ORM\Entity', $result);
+        $this->assertEquals(Youtube::getPreview($youtubeId), $result->url);
+        $this->assertEquals(400, $result->width);
+        $this->assertEquals(300, $result->height);
     }
 }

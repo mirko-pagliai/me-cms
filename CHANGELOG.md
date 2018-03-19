@@ -2,6 +2,8 @@
 ## 2.22 branch
 ### 2.22.9
 * `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait`;
+* `GetPreviewsFromTextTrait::getPreview()` returns an `Entity` with `url`,
+    `width` and `height` properties;
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 
