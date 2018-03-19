@@ -23,7 +23,7 @@ use Thumber\Utility\ThumbCreator;
  * This trait provides a method to get the first available image or the preview
  *  of the first YouTube video
  */
-trait GetPreviewFromTextTrait
+trait GetPreviewsFromTextTrait
 {
     use ThumbTrait;
 

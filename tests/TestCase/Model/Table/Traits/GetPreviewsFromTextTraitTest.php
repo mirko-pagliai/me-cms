@@ -18,9 +18,9 @@ use MeTools\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
 
 /**
- * GetPreviewFromTextTraitTest class
+ * GetPreviewsFromTextTraitTest class
  */
-class GetPreviewFromTextTraitTest extends TestCase
+class GetPreviewsFromTextTraitTest extends TestCase
 {
     /**
      * @var \MeCms\Model\Table\PostsTable

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.9
+* `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait`;
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 

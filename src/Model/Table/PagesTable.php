@@ -21,7 +21,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\Traits\GetPreviewFromTextTrait;
+use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
@@ -38,7 +38,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 class PagesTable extends AppTable
 {
-    use GetPreviewFromTextTrait;
+    use GetPreviewsFromTextTrait;
     use LocatorAwareTrait;
     use NextToBePublishedTrait;
 
@@ -104,7 +104,7 @@ class PagesTable extends AppTable
      * @return void
      * @since 2.17.0
      * @uses MeCms\Model\Table\AppTable::beforeSave()
-     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreview()
+     * @uses MeCms\Model\Table\Traits\GetPreviewsFromTextTrait::getPreview()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
