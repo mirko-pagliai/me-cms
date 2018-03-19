@@ -46,52 +46,77 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testFirstImage()
     {
-        $firstImageMethod = function ($text) {
-            return $this->invokeMethod($this->Posts, 'firstImage', [$text]);
+        $firstImageMethod = function () {
+            return $this->invokeMethod($this->Posts, 'firstImage', func_get_args());
         };
 
-        $this->assertFalse($firstImageMethod('Text'));
+        foreach ([
+            null,
+            false,
+            '',
+            'Text',
+            '<img src=\'\'>',
+            '<img src=\'a\'>',
+            '<img src=\'a.a\'>',
+            '<img src=\'data:\'>',
+            '<img src=\'text.txt\'>',
+        ] as $value) {
+            $this->assertFalse($firstImageMethod($value));
+        }
 
-        $this->assertFalse($firstImageMethod('<img src=\'\'>'));
-        $this->assertFalse($firstImageMethod('<img src=\'a\'>'));
-        $this->assertFalse($firstImageMethod('<img src=\'a.a\'>'));
-        $this->assertFalse($firstImageMethod('<img src=\'data:\'>'));
-        $this->assertFalse($firstImageMethod('<img src=\'text.txt\'>'));
+        //Values with some attributes
+        foreach ([
+            '<img alt=\'\' src=\'image.jpg\'>',
+            '<img alt="" src="image.jpg">',
+            '<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>',
+            '<img alt="" class="my-class" src="image.jpg">',
+        ] as $value) {
+            $this->assertEquals('image.jpg', $firstImageMethod($value));
+        }
 
-        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'>'));
-        $this->assertEquals('image.jpeg', $firstImageMethod('<img src=\'image.jpeg\'>'));
-        $this->assertEquals('image.gif', $firstImageMethod('<img src=\'image.gif\'>'));
-        $this->assertEquals('image.png', $firstImageMethod('<img src=\'image.png\'>'));
+        //Remote images
+        foreach ([
+            '<img src=\'http://example.com/image.jpg\'>',
+            '<img src=\'http://example.com/image.jpg\' />',
+            '<img src=\'http://example.com/image.jpg\' />Text',
+            '<img src=\'http://example.com/image.jpg\' /> Text',
+        ] as $value) {
+            $this->assertEquals('http://example.com/image.jpg', $firstImageMethod($value));
+        }
 
-        $this->assertEquals('IMAGE.jpg', $firstImageMethod('<img src=\'IMAGE.jpg\'>'));
-        $this->assertEquals('image.JPG', $firstImageMethod('<img src=\'image.JPG\'>'));
-        $this->assertEquals('IMAGE.JPG', $firstImageMethod('<img src=\'IMAGE.JPG\'>'));
+        //Different protocols
+        foreach ([
+            'ftp://example.com/image.jpg',
+            'https://example.com/image.jpg',
+            'http://www.example.com/image.jpg',
+        ] as $value) {
+            $this->assertEquals($value, $firstImageMethod('<img src=\'' . $value . '\'>'));
+        }
 
-        $this->assertEquals('/image.jpg', $firstImageMethod('<img src=\'/image.jpg\'>'));
-        $this->assertEquals('subdir/image.jpg', $firstImageMethod('<img src=\'subdir/image.jpg\'>'));
-        $this->assertEquals('/subdir/image.jpg', $firstImageMethod('<img src=\'/subdir/image.jpg\'>'));
-
-        //Some attributes
-        $this->assertEquals('image.jpg', $firstImageMethod('<img alt=\'\' src=\'image.jpg\'>'));
-        $this->assertEquals('image.jpg', $firstImageMethod('<img alt="" src="image.jpg">'));
-        $this->assertEquals('image.jpg', $firstImageMethod('<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>'));
-        $this->assertEquals('image.jpg', $firstImageMethod('<img alt="" class="my-class" src="image.jpg">'));
+        //Different filenames
+        foreach ([
+            'image.jpg',
+            'image.jpeg',
+            'image.gif',
+            'image.png',
+            'IMAGE.jpg',
+            'image.JPG',
+            'IMAGE.JPG',
+            '/image.jpg',
+            'subdir/image.jpg',
+            '/subdir/image.jpg',
+        ] as $filename) {
+            $this->assertEquals($filename, $firstImageMethod('<img src=\'' . $filename . '\'>'));
+        }
 
         //Two images
-        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\' /><img src=\'image.gif\' />'));
-        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'><img src=\'image.gif\'>'));
-        $this->assertEquals('image.jpg', $firstImageMethod('<img src=\'image.jpg\'> Text <img src=\'image.gif\'>'));
-
-        $expected = 'http://example.com/image.jpg';
-
-        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\'>'));
-        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' />'));
-        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' />Text'));
-        $this->assertEquals($expected, $firstImageMethod('<img src=\'http://example.com/image.jpg\' /> Text'));
-
-        $this->assertEquals('ftp://example.com/image.jpg', $firstImageMethod('<img src=\'ftp://example.com/image.jpg\'>'));
-        $this->assertEquals('https://example.com/image.jpg', $firstImageMethod('<img src=\'https://example.com/image.jpg\'>'));
-        $this->assertEquals('http://www.example.com/image.jpg', $firstImageMethod('<img src=\'http://www.example.com/image.jpg\'>'));
+        foreach ([
+            '<img src=\'image.jpg\' /><img src=\'image.gif\' />',
+            '<img src=\'image.jpg\'><img src=\'image.gif\'>',
+            '<img src=\'image.jpg\'> Text <img src=\'image.gif\'>',
+        ] as $value) {
+            $this->assertEquals('image.jpg', $firstImageMethod($value));
+        }
     }
 
     /**
@@ -100,8 +125,10 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testGetPreviewSize()
     {
-        $result = $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg']);
-        $this->assertEquals([400, 400], $result);
+        $this->assertEquals(
+            [400, 400],
+            $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg'])
+        );
     }
 
     /**
@@ -110,16 +137,14 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testGetPreview()
     {
-        $getPreviewMethod = function ($text) {
-            return $this->invokeMethod($this->Posts, 'getPreview', [$text]);
+        $getPreviewMethod = function () {
+            return $this->invokeMethod($this->Posts, 'getPreview', func_get_args());
         };
 
         $this->Posts = $this->getMockForModel(PostsTable::class, ['getPreviewSize']);
-        $this->Posts->method('getPreviewSize')
-            ->will($this->returnValue([400, 300]));
+        $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         $this->assertNull($getPreviewMethod(null));
-
         $this->assertNull($getPreviewMethod('text'));
 
         //No existing file
