@@ -12,22 +12,19 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\Event\Event;
-use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 
 /**
  * PagesTableTest class
  */
-class PagesTableTest extends TestCase
+class PagesTableTest extends PostsAndPagesTablesTestCase
 {
     /**
      * @var \MeCms\Model\Table\PagesTable
      */
-    protected $Pages;
+    protected $Table;
 
     /**
      * @var array
@@ -53,7 +50,7 @@ class PagesTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
+        $this->Table = TableRegistry::get(ME_CMS . '.Pages');
 
         $this->example = [
             'category_id' => 1,
@@ -62,7 +59,7 @@ class PagesTableTest extends TestCase
             'text' => 'My text',
         ];
 
-        Cache::clear(false, $this->Pages->cache);
+        Cache::clear(false, $this->Table->cache);
     }
 
     /**
@@ -71,64 +68,7 @@ class PagesTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('pages', $this->Pages->cache);
-    }
-
-    /**
-     * Test for `_initializeSchema()` method
-     * @test
-     */
-    public function testInitializeSchema()
-    {
-        $this->assertEquals('json', $this->Pages->getSchema()->getColumnType('preview'));
-    }
-
-    /**
-     * Test for `afterDelete()` method
-     * @test
-     */
-    public function testAfterDelete()
-    {
-        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['setNextToBePublished']);
-        $this->Pages->expects($this->once())->method('setNextToBePublished');
-        $this->Pages->afterDelete(new Event(null), new Entity, new ArrayObject);
-    }
-
-    /**
-     * Test for `afterSave()` method
-     * @test
-     */
-    public function testAfterSave()
-    {
-        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['setNextToBePublished']);
-        $this->Pages->expects($this->once())->method('setNextToBePublished');
-        $this->Pages->afterSave(new Event(null), new Entity, new ArrayObject);
-    }
-
-    /**
-     * Test for `beforeSave()` method
-     * @test
-     */
-    public function testBeforeSave()
-    {
-        $this->Pages = $this->getMockForModel($this->Pages->getRegistryAlias(), ['getPreviewSize']);
-        $this->Pages->method('getPreviewSize')->will($this->returnValue([400, 300]));
-
-        //Tries with a text without images or videos
-        $entity = $this->Pages->newEntity($this->example);
-        $this->assertNotEmpty($this->Pages->save($entity));
-        $this->assertNull($entity->preview);
-
-        $this->Pages->delete($entity);
-
-        //Tries with a text with an image
-        $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
-        $entity = $this->Pages->newEntity($this->example);
-        $this->assertNotEmpty($this->Pages->save($entity));
-        $this->assertEquals(['preview', 'width', 'height'], array_keys($entity->preview));
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $entity->preview['preview']);
-        $this->assertEquals(400, $entity->preview['width']);
-        $this->assertEquals(300, $entity->preview['height']);
+        $this->assertEquals('pages', $this->Table->cache);
     }
 
     /**
@@ -137,24 +77,24 @@ class PagesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $entity = $this->Pages->newEntity($this->example);
-        $this->assertNotEmpty($this->Pages->save($entity));
+        $entity = $this->Table->newEntity($this->example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Pages->newEntity($this->example);
-        $this->assertFalse($this->Pages->save($entity));
+        $entity = $this->Table->newEntity($this->example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
 
-        $entity = $this->Pages->newEntity([
+        $entity = $this->Table->newEntity([
             'category_id' => 999,
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
             'text' => 'My text',
         ]);
-        $this->assertFalse($this->Pages->save($entity));
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
         ], $entity->getErrors());
@@ -166,22 +106,22 @@ class PagesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('pages', $this->Pages->getTable());
-        $this->assertEquals('title', $this->Pages->getDisplayField());
-        $this->assertEquals('id', $this->Pages->getPrimaryKey());
+        $this->assertEquals('pages', $this->Table->getTable());
+        $this->assertEquals('title', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Pages->Categories);
-        $this->assertEquals('category_id', $this->Pages->Categories->getForeignKey());
-        $this->assertEquals('INNER', $this->Pages->Categories->getJoinType());
-        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Pages->Categories->className());
-        $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Pages->Categories->getTarget());
-        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Pages->Categories->getTarget()->getRegistryAlias());
-        $this->assertEquals('Categories', $this->Pages->Categories->getAlias());
+        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Table->Categories);
+        $this->assertEquals('category_id', $this->Table->Categories->getForeignKey());
+        $this->assertEquals('INNER', $this->Table->Categories->getJoinType());
+        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Categories->className());
+        $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Table->Categories->getTarget());
+        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('Categories', $this->Table->Categories->getAlias());
 
-        $this->assertTrue($this->Pages->hasBehavior('Timestamp'));
-        $this->assertTrue($this->Pages->hasBehavior('CounterCache'));
+        $this->assertTrue($this->Table->hasBehavior('Timestamp'));
+        $this->assertTrue($this->Table->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Pages->getValidator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Table->getValidator());
     }
 
     /**
@@ -190,27 +130,10 @@ class PagesTableTest extends TestCase
      */
     public function testBelongsToPagesCategories()
     {
-        $page = $this->Pages->findById(1)->contain('Categories')->first();
+        $page = $this->Table->findById(1)->contain('Categories')->first();
 
         $this->assertNotEmpty($page->category);
         $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $page->category);
         $this->assertEquals(4, $page->category->id);
-    }
-
-    /**
-     * Test for `find()` method
-     * @test
-     */
-    public function testFind()
-    {
-        //Writes `next_to_be_published` and some data on cache
-        Cache::write('next_to_be_published', time() - 3600, $this->Pages->cache);
-        Cache::write('someData', 'someValue', $this->Pages->cache);
-
-        //The cache will now be cleared
-        $this->Pages->find();
-
-        $this->assertEmpty(Cache::read('next_to_be_published', $this->Pages->cache));
-        $this->assertEmpty(Cache::read('someData', $this->Pages->cache));
     }
 }

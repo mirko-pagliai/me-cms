@@ -4,6 +4,8 @@
 * `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait`;
 * `GetPreviewsFromTextTrait::getPreview()` returns an `Entity` with `url`,
     `width` and `height` properties;
+* added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
+    methods and tests common to `PagesTable` and `PostsTable` classes;
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 

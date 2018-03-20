@@ -14,19 +14,14 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\Database\Schema\Table as Schema;
-use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
-use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
-use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
+use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
-use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Posts model
@@ -43,66 +38,16 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
-class PostsTable extends AppTable
+class PostsTable extends PostsAndPagesTables
 {
-    use GetPreviewsFromTextTrait;
     use IsOwnedByTrait;
     use LocatorAwareTrait;
-    use NextToBePublishedTrait;
 
     /**
      * Name of the configuration to use for this table
      * @var string
      */
     public $cache = 'posts';
-
-    /**
-     * Alters the schema used by this table. This function is only called after
-     *  fetching the schema out of the database
-     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
-     * @return Cake\Database\Schema\TableSchema TableSchema instance
-     * @since 2.17.0
-     */
-    protected function _initializeSchema(Schema $schema)
-    {
-        $schema->setColumnType('preview', 'json');
-
-        return $schema;
-    }
-
-    /**
-     * Called after an entity has been deleted
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
-     */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
-    {
-        parent::afterDelete($event, $entity, $options);
-
-        //Sets the next record to be published
-        $this->setNextToBePublished();
-    }
-
-    /**
-     * Called after an entity is saved
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
-     */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
-    {
-        parent::afterSave($event, $entity, $options);
-
-        //Sets the next record to be published
-        $this->setNextToBePublished();
-    }
 
     /**
      * Called before request data is converted into entities
@@ -136,23 +81,6 @@ class PostsTable extends AppTable
     }
 
     /**
-     * Called before each entity is saved
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
-     * @uses MeCms\Model\Table\Traits\GetPreviewsFromTextTrait::getPreview()
-     */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
-    {
-        parent::beforeSave($event, $entity, $options);
-
-        $entity->preview = $this->getPreview($entity->text);
-    }
-
-    /**
      * Returns a rules checker object that will be used for validating
      *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -169,35 +97,7 @@ class PostsTable extends AppTable
     }
 
     /**
-     * Creates a new Query for this repository and applies some defaults based
-     *  on the type of search that was selected
-     * @param string $type The type of query to perform
-     * @param array|ArrayAccess $options An array that will be passed to
-     *  Query::applyOptions()
-     * @return \Cake\ORM\Query The query builder
-     * @uses $cache
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
-     */
-    public function find($type = 'all', $options = [])
-    {
-        //Gets from cache the timestamp of the next record to be published
-        $next = $this->getNextToBePublished();
-
-        //If the cache is invalid, it clears the cache and sets the next record
-        //  to be published
-        if ($next && time() >= $next) {
-            Cache::clear(false, $this->cache);
-
-            //Sets the next record to be published
-            $this->setNextToBePublished();
-        }
-
-        return parent::find($type, $options);
-    }
-
-    /**
-     * "forIndex" find method
+     * `forIndex()` find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
