@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.9
+* added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
+    methods and tests common to `PagesTable` and `PostsTable` classes;
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 
