@@ -40,8 +40,14 @@ trait GetPreviewsFromTextTrait
             return false;
         }
 
+        $libxmlPreviousState = libxml_use_internal_errors(true);
+
         $dom = new DOMDocument;
         $dom->loadHTML($html);
+
+        libxml_clear_errors();
+        libxml_use_internal_errors($libxmlPreviousState);
+        
         $item = $dom->getElementsByTagName('img')->item(0);
 
         if ($item) {
