@@ -112,7 +112,7 @@ class PostsTable extends PostsAndPagesTables
                 },
                 $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
             ])
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
+            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'created'])
             ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
     }
 
