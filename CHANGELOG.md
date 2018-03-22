@@ -8,6 +8,8 @@
     not just the first one;
 * `GetPreviewsFromTextTrait::getPreviews()` returns an array of `Entity` with
     `url`, `width` and `height` properties;
+* `MeCms\Model\Entity\Photo::_getPreview()` method returns an `Entity` with
+    `url`, `width` and `height` properties;
 * added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
     methods and tests common to `PagesTable` and `PostsTable` classes;
 * added `\MeCms\Database\Type\JsonEntityType`, to convert an array of `Entity`
