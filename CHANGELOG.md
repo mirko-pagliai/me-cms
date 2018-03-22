@@ -10,6 +10,8 @@
     `width` and `height` properties;
 * added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
     methods and tests common to `PagesTable` and `PostsTable` classes;
+* added `\MeCms\Database\Type\JsonEntityType`, to convert an array of `Entity`
+    as json data;
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 

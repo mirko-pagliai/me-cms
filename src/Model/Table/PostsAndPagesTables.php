@@ -42,7 +42,7 @@ abstract class PostsAndPagesTables extends AppTable
      */
     protected function _initializeSchema(Schema $schema)
     {
-        $schema->setColumnType('preview', 'json');
+        $schema->setColumnType('preview', 'jsonEntity');
 
         return $schema;
     }
