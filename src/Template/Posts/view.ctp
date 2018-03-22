@@ -58,10 +58,12 @@ if ($this->request->isAction('view', 'Posts')) {
     }
 
     if ($post->has('preview')) {
-        $this->Html->meta(['href' => $post->preview['preview'], 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $post->preview['preview'], 'property' => 'og:image']);
-        $this->Html->meta(['content' => $post->preview['width'], 'property' => 'og:image:width']);
-        $this->Html->meta(['content' => $post->preview['height'], 'property' => 'og:image:height']);
+        foreach ($post->preview as $preview) {
+            $this->Html->meta(['href' => $preview->url, 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $preview->url, 'property' => 'og:image']);
+            $this->Html->meta(['content' => $preview->width, 'property' => 'og:image:width']);
+            $this->Html->meta(['content' => $preview->height, 'property' => 'og:image:height']);
+        }
     }
 
     if ($post->has('text')) {
