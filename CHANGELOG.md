@@ -1,7 +1,11 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.9
-* `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait`;
+* `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait` and
+    `firstImage()` and `getPreview()` methods have been replaced by 
+    `extractImages()` and `getPreviews()` methods. The `getPreviews()` method
+    now returns an array of `Entity`. This allows you to get all the previews,
+    not just the first one;
 * `GetPreviewsFromTextTrait::getPreview()` returns an `Entity` with `url`,
     `width` and `height` properties;
 * added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with

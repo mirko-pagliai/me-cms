@@ -92,7 +92,7 @@ abstract class PostsAndPagesTablesTestCase extends TestCase
         //Tries with a text without images or videos
         $entity = $this->Table->newEntity($this->example);
         $this->assertNotEmpty($this->Table->save($entity));
-        $this->assertNull($entity->preview);
+        $this->assertEmpty($entity->preview);
 
         $this->Table->delete($entity);
 
@@ -100,10 +100,11 @@ abstract class PostsAndPagesTablesTestCase extends TestCase
         $this->example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
         $entity = $this->Table->newEntity($this->example);
         $this->assertNotEmpty($this->Table->save($entity));
-        $this->assertInstanceOf('Cake\ORM\Entity', $entity->preview);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $entity->preview->url);
-        $this->assertEquals(400, $entity->preview->width);
-        $this->assertEquals(300, $entity->preview->height);
+        $this->assertCount(1, $entity->preview);
+        $this->assertInstanceOf('Cake\ORM\Entity', $entity->preview[0]);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $entity->preview[0]->url);
+        $this->assertEquals(400, $entity->preview[0]->width);
+        $this->assertEquals(300, $entity->preview[0]->height);
     }
 
     /**

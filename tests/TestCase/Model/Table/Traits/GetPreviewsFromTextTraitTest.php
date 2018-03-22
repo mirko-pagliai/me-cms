@@ -41,13 +41,13 @@ class GetPreviewsFromTextTraitTest extends TestCase
     }
 
     /**
-     * Test for `firstImage()` method
+     * Test for `extractImages()` method
      * @test
      */
-    public function testFirstImage()
+    public function testExtractImages()
     {
-        $firstImageMethod = function () {
-            return $this->invokeMethod($this->Posts, 'firstImage', func_get_args());
+        $extractImagesMethod = function () {
+            return $this->invokeMethod($this->Posts, 'extractImages', func_get_args());
         };
 
         foreach ([
@@ -61,7 +61,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             '<img src=\'data:\'>',
             '<img src=\'text.txt\'>',
         ] as $value) {
-            $this->assertFalse($firstImageMethod($value));
+            $this->assertEmpty($extractImagesMethod($value));
         }
 
         //Values with some attributes
@@ -71,7 +71,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             '<img alt=\'\' class=\'my-class\' src=\'image.jpg\'>',
             '<img alt="" class="my-class" src="image.jpg">',
         ] as $value) {
-            $this->assertEquals('image.jpg', $firstImageMethod($value));
+            $this->assertEquals(['image.jpg'], $extractImagesMethod($value));
         }
 
         //Remote images
@@ -81,7 +81,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             '<img src=\'http://example.com/image.jpg\' />Text',
             '<img src=\'http://example.com/image.jpg\' /> Text',
         ] as $value) {
-            $this->assertEquals('http://example.com/image.jpg', $firstImageMethod($value));
+            $this->assertEquals(['http://example.com/image.jpg'], $extractImagesMethod($value));
         }
 
         //Different protocols
@@ -90,7 +90,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             'https://example.com/image.jpg',
             'http://www.example.com/image.jpg',
         ] as $value) {
-            $this->assertEquals($value, $firstImageMethod('<img src=\'' . $value . '\'>'));
+            $this->assertEquals([$value], $extractImagesMethod('<img src=\'' . $value . '\'>'));
         }
 
         //Different filenames
@@ -106,7 +106,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             'subdir/image.jpg',
             '/subdir/image.jpg',
         ] as $filename) {
-            $this->assertEquals($filename, $firstImageMethod('<img src=\'' . $filename . '\'>'));
+            $this->assertEquals([$filename], $extractImagesMethod('<img src=\'' . $filename . '\'>'));
         }
 
         //Two images
@@ -115,8 +115,25 @@ class GetPreviewsFromTextTraitTest extends TestCase
             '<img src=\'image.jpg\'><img src=\'image.gif\'>',
             '<img src=\'image.jpg\'> Text <img src=\'image.gif\'>',
         ] as $value) {
-            $this->assertEquals('image.jpg', $firstImageMethod($value));
+            $this->assertEquals(['image.jpg', 'image.gif'], $extractImagesMethod($value));
         }
+
+        //Youtube video
+        $youtubeId = '6z4KK7RWjmk';
+        $this->assertEquals([Youtube::getPreview($youtubeId)], $extractImagesMethod('[youtube]' . $youtubeId . '[/youtube]'));
+
+        //Image and Youtube video
+        $this->assertEquals(
+            ['http://example.com/image.jpg', Youtube::getPreview($youtubeId)],
+            $extractImagesMethod('[youtube]' . $youtubeId . '[/youtube]<img src=\'http://example.com/image.jpg\'>')
+        );
+
+        //Two Youtube videos
+        $youtubeId = ['6z4KK7RWjmk', '6z4KK7RWjmj'];
+        $this->assertEquals(
+            [Youtube::getPreview($youtubeId[0]), Youtube::getPreview($youtubeId[1])],
+            $extractImagesMethod('[youtube]' . $youtubeId[0] . '[/youtube][youtube]' . $youtubeId[1] . '[/youtube]')
+        );
     }
 
     /**
@@ -132,48 +149,60 @@ class GetPreviewsFromTextTraitTest extends TestCase
     }
 
     /**
-     * Test for `getPreview()` method
+     * Test for `getPreviews()` method
      * @test
      */
-    public function testGetPreview()
+    public function testGetPreviews()
     {
-        $getPreviewMethod = function () {
-            return $this->invokeMethod($this->Posts, 'getPreview', func_get_args());
+        $getPreviewsMethod = function () {
+            return $this->invokeMethod($this->Posts, 'getPreviews', func_get_args());
         };
 
         $this->Posts = $this->getMockForModel(PostsTable::class, ['getPreviewSize']);
         $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
-        $this->assertNull($getPreviewMethod(null));
-        $this->assertNull($getPreviewMethod('text'));
+        foreach ([
+            null,
+            false,
+            '',
+            'Text',
+            '<img src=\'\'>',
+            '<img src=\'a\'>',
+            '<img src=\'a.a\'>',
+            '<img src=\'data:\'>',
+            '<img src=\'text.txt\'>',
+        ] as $value) {
+            $this->assertEmpty($getPreviewsMethod($value));
+        }
 
         //No existing file
-        $this->assertNull($getPreviewMethod('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />'));
+        $this->assertEmpty($getPreviewsMethod('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />'));
 
-        $result = $getPreviewMethod(
-            '<img src=\'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg\' />'
-        );
-        $this->assertInstanceof('Cake\ORM\Entity', $result);
-        $this->assertEquals(
-            'https://raw.githubusercontent.com/mirko-pagliai/me-cms/master/tests/test_app/TestApp/webroot/img/image.jpg',
-            $result->url
-        );
-        $this->assertEquals(400, $result->width);
-        $this->assertEquals(300, $result->height);
+        $result = $getPreviewsMethod('<img src=\'http://example.com/image.jpg\' />');
+        $this->assertCount(1, $result);
+        $this->assertInstanceof('Cake\ORM\Entity', $result[0]);
+        $this->assertEquals('http://example.com/image.jpg', $result[0]->url);
+        $this->assertEquals(400, $result[0]->width);
+        $this->assertEquals(300, $result[0]->height);
 
-        foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
-            $result = $getPreviewMethod('<img src=\'' . $image . '\' />');
-            $this->assertInstanceof('Cake\ORM\Entity', $result);
-            $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result->url);
-            $this->assertEquals(400, $result->width);
-            $this->assertEquals(300, $result->height);
+        foreach ([
+            'image.jpg',
+            WWW_ROOT . 'img' . DS . 'image.jpg',
+        ] as $image) {
+            $result = $getPreviewsMethod('<img src=\'' . $image . '\' />');
+            $this->assertCount(1, $result);
+            $this->assertInstanceof('Cake\ORM\Entity', $result[0]);
+            $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result[0]->url);
+            $this->assertEquals(400, $result[0]->width);
+            $this->assertEquals(300, $result[0]->height);
         }
 
         $youtubeId = '6z4KK7RWjmk';
-        $result = $getPreviewMethod('[youtube]' . $youtubeId . '[/youtube]');
-        $this->assertInstanceof('Cake\ORM\Entity', $result);
-        $this->assertEquals(Youtube::getPreview($youtubeId), $result->url);
-        $this->assertEquals(400, $result->width);
-        $this->assertEquals(300, $result->height);
+        $result = $getPreviewsMethod('[youtube]' . $youtubeId . '[/youtube]');
+        $this->assertCount(1, $result);
+        $this->assertInstanceof('Cake\ORM\Entity', $result[0]);
+        $this->assertEquals(Youtube::getPreview($youtubeId), $result[0]->url);
+        $this->assertEquals(400, $result[0]->width);
+        $this->assertEquals(300, $result[0]->height);
     }
 }

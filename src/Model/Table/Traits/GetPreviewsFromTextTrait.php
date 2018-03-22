@@ -29,15 +29,16 @@ trait GetPreviewsFromTextTrait
     use ThumbTrait;
 
     /**
-     * Internal method to get the first image from an html string
+     * Internal method to extract all images from an html string, including the
+     *  previews of Youtube videos
      * @param string $html Html string
-     * @return string|bool Image or `false`
-     * @since 2.20.0
+     * @return array
+     * @since 2.22.9
      */
-    protected function firstImage($html)
+    protected function extractImages($html)
     {
         if (empty($html)) {
-            return false;
+            return [];
         }
 
         $libxmlPreviousState = libxml_use_internal_errors(true);
@@ -47,55 +48,26 @@ trait GetPreviewsFromTextTrait
 
         libxml_clear_errors();
         libxml_use_internal_errors($libxmlPreviousState);
-        
-        $item = $dom->getElementsByTagName('img')->item(0);
 
-        if ($item) {
+        $images = [];
+
+        //Gets all image tags
+        foreach ($dom->getElementsByTagName('img') as $item) {
             $src = $item->getAttribute('src');
 
             if (in_array(strtolower(pathinfo($src, PATHINFO_EXTENSION)), ['gif', 'jpg', 'jpeg', 'png'])) {
-                return $src;
+                $images[] = $src;
             }
         }
 
-        return false;
-    }
-
-    /**
-     * Gets the first available image or the preview of the first YouTube video
-     * @param string $text The text within which to search
-     * @return Entity|null An `Entity` with `url`, `width` and `height`
-     *  properties or `null` if there is not no preview
-     * @uses firstImage()
-     * @uses getPreviewSize()
-     */
-    public function getPreview($text)
-    {
-        $url = $this->firstImage($text);
-
-        if ($url && !isUrl($url)) {
-            //If is relative path
-            if (!Folder::isAbsolute($url)) {
-                $url = WWW_ROOT . 'img' . DS . $url;
+        //Gets all Youtube videos
+        if (preg_match_all('/\[youtube](.+?)\[\/youtube]/', $html, $items)) {
+            foreach ($items[1] as $item) {
+                $images[] = Youtube::getPreview($item);
             }
-
-            if (!file_exists($url)) {
-                return null;
-            }
-
-            $thumb = (new ThumbCreator($url))->resize(1200, 1200)->save(['format' => 'jpg']);
-            $url = $this->getUrl($thumb, true);
-        } elseif (preg_match('/\[youtube](.+?)\[\/youtube]/', $text, $matches)) {
-            $url = Youtube::getPreview($matches[1]);
         }
 
-        if (empty($url)) {
-            return null;
-        }
-
-        list($width, $height) = $this->getPreviewSize($url);
-
-        return new Entity(compact('url', 'width', 'height'));
+        return $images;
     }
 
     /**
@@ -106,5 +78,43 @@ trait GetPreviewsFromTextTrait
     protected function getPreviewSize($image)
     {
         return array_slice(getimagesize($image), 0, 2);
+    }
+
+    /**
+     * Gets all the available images from an html string, including the previews
+     *  of Youtube videos, and returns an array of `Entity`
+     * @param string $html Html string
+     * @return array Array of entities. Each `Entity` has `url`, `width` and
+     *  `height` properties
+     * @since 2.22.9
+     * @uses extractImages()
+     * @uses getPreviewSize()
+     */
+    public function getPreviews($html)
+    {
+        $images = array_map(function ($url) {
+            if ($url && !isUrl($url)) {
+                //If is relative path
+                if (!Folder::isAbsolute($url)) {
+                    $url = WWW_ROOT . 'img' . DS . $url;
+                }
+
+                if (!file_exists($url)) {
+                    return false;
+                }
+
+                $thumb = (new ThumbCreator($url))
+                    ->resize(1200, 1200)
+                    ->save(['format' => 'jpg']);
+
+                $url = $this->getUrl($thumb, true);
+            }
+
+            list($width, $height) = $this->getPreviewSize($url);
+
+            return new Entity(compact('url', 'width', 'height'));
+        }, $this->extractImages($html));
+
+        return array_filter($images);
     }
 }
