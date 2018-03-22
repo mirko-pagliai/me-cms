@@ -28,14 +28,18 @@ class JsonEntityType extends JsonType
      * Convert string values to PHP arrays.
      * @param mixed $value The value to convert
      * @param \Cake\Database\Driver $driver The driver instance to convert with
-     * @return array
+     * @return mixed
      */
     public function toPHP($value, Driver $driver)
     {
         $value = parent::toPHP($value, $driver);
 
+        if (!is_array($value)) {
+            return $value;
+        }
+
         return array_map(function ($value) {
-            return $value instanceof Entity ? $value : new Entity($value);
+            return is_array($value) ? new Entity($value) : $value;
         }, $value);
     }
 }
