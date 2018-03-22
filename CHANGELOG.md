@@ -6,8 +6,8 @@
     `extractImages()` and `getPreviews()` methods. The `getPreviews()` method
     now returns an array of `Entity`. This allows you to get all the previews,
     not just the first one;
-* `GetPreviewsFromTextTrait::getPreview()` returns an `Entity` with `url`,
-    `width` and `height` properties;
+* `GetPreviewsFromTextTrait::getPreviews()` returns an array of `Entity` with
+    `url`, `width` and `height` properties;
 * added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
     methods and tests common to `PagesTable` and `PostsTable` classes;
 * added `\MeCms\Database\Type\JsonEntityType`, to convert an array of `Entity`
