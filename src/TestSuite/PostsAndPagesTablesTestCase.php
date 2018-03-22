@@ -52,7 +52,7 @@ abstract class PostsAndPagesTablesTestCase extends TestCase
      */
     public function testInitializeSchema()
     {
-        $this->assertEquals('json', $this->Table->getSchema()->getColumnType('preview'));
+        $this->assertEquals('jsonEntity', $this->Table->getSchema()->getColumnType('preview'));
     }
 
     /**
