@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.22 branch
 ### 2.22.9
+* added the `UpdateShell`. This shell provides subcommands to update your
+    application;
 * `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait` and
     `firstImage()` and `getPreview()` methods have been replaced by 
     `extractImages()` and `getPreviews()` methods. The `getPreviews()` method

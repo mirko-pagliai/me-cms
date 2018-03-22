@@ -4,5 +4,4 @@
 composer.lock
 coverage/
 plugins/
-src/Shell/UpdateShell.php
 vendor/
