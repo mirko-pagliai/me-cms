@@ -96,10 +96,10 @@ class PhotoTest extends TestCase
     {
         $photo = $this->Photos->get(1);
 
-        $this->assertEquals(['preview', 'width', 'height'], array_keys($photo->preview));
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $photo->preview['preview']);
-        $this->assertEquals(400, $photo->preview['width']);
-        $this->assertEquals(400, $photo->preview['height']);
+        $this->assertInstanceof('Cake\ORM\Entity', $photo->preview);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $photo->preview->url);
+        $this->assertEquals(400, $photo->preview->width);
+        $this->assertEquals(400, $photo->preview->height);
     }
 
     /**

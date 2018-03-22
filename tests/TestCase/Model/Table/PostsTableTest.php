@@ -226,7 +226,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertTrue((new \ReflectionFunction($query->contain()['Tags']['queryBuilder']))->isClosure());
         $this->assertEquals(['id', 'first_name', 'last_name'], $query->contain()['Users']['fields']);
 
-        $this->assertStringStartsWith('SELECT Posts.id AS `Posts__id`, Posts.title AS `Posts__title`, Posts.subtitle AS `Posts__subtitle`, Posts.slug AS `Posts__slug`, Posts.text AS `Posts__text`, Posts.created AS `Posts__created`', $sql);
+        $this->assertStringStartsWith('SELECT Posts.id AS `Posts__id`, Posts.title AS `Posts__title`, Posts.preview AS `Posts__preview`, Posts.subtitle AS `Posts__subtitle`, Posts.slug AS `Posts__slug`, Posts.text AS `Posts__text`, Posts.created AS `Posts__created`', $sql);
         $this->assertStringEndsWith('ORDER BY Posts.created DESC', $sql);
     }
 
@@ -264,16 +264,15 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertCount(1, $related);
         $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->cache));
 
+        $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
         $this->assertEquals(2, $related[0]->id);
         $this->assertNotEmpty($related[0]->title);
         $this->assertNotEmpty($related[0]->slug);
         $this->assertContains('<img src="image.jpg" />Text of the second post', $related[0]->text);
-        $this->assertEquals([
-            'preview' => 'image.jpg',
-            'width' => 400,
-            'height' => 400,
-        ], $related[0]->preview);
-        $this->assertInstanceOf('MeCms\Model\Entity\Post', $related[0]);
+        $this->assertCount(1, $related[0]->preview);
+        $this->assertEquals('image.jpg', $related[0]->preview[0]->url);
+        $this->assertEquals(400, $related[0]->preview[0]->width);
+        $this->assertEquals(400, $related[0]->preview[0]->height);
 
         //This post has no tags
         $post = $this->Table->findById(4)->contain('Tags')->first();

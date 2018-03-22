@@ -77,16 +77,16 @@ class Photo extends Entity
 
     /**
      * Gets the photo preview (virtual field)
-     * @return array|void Array with `preview`, `width` and `height` keys
+     * @return Entity Entity with `preview`, `width` and `height` properties
      * @uses _getPath()
      */
     protected function _getPreview()
     {
         $thumb = (new ThumbCreator($this->_getPath()))->resize(1200, 1200)->save(['format' => 'jpg']);
-        $preview = $this->getUrl($thumb, true);
+        $url = $this->getUrl($thumb, true);
 
         list($width, $height) = getimagesize($thumb);
 
-        return compact('preview', 'width', 'height');
+        return new Entity(compact('url', 'width', 'height'));
     }
 }
