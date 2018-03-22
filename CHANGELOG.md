@@ -1,6 +1,6 @@
 # 2.x branch
-## 2.22 branch
-### 2.22.9
+## 2.23 branch
+### 2.23.0
 * added the `UpdateShell`. This shell provides subcommands to update your
     application;
 * `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait` and
@@ -20,6 +20,7 @@
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.
 
+## 2.22 branch
 ### 2.22.8
 * added `MeCms\Utility\Checkup` class and some classes under the
     `MeCms\Utility\Checkups` namespace;

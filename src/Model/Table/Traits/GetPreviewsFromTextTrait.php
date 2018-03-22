@@ -33,7 +33,7 @@ trait GetPreviewsFromTextTrait
      *  previews of Youtube videos
      * @param string $html Html string
      * @return array
-     * @since 2.22.9
+     * @since 2.23.0
      */
     protected function extractImages($html)
     {
@@ -86,7 +86,7 @@ trait GetPreviewsFromTextTrait
      * @param string $html Html string
      * @return array Array of entities. Each `Entity` has `url`, `width` and
      *  `height` properties
-     * @since 2.22.9
+     * @since 2.23.0
      * @uses extractImages()
      * @uses getPreviewSize()
      */
