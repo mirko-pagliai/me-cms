@@ -18,6 +18,9 @@
 	<filter>
 		<whitelist>
 			<directory suffix=".php">./src/</directory>
+            <exclude>
+                <file>./src/Shell/UpdateShell.php</file>
+            </exclude>
 		</whitelist>
 	</filter>
     

@@ -21,10 +21,13 @@ $this->append('actions', $this->Form->postButton(
 ?>
 
 <table class="table table-striped">
-    <tr>
-        <th><?= I18N_FILENAME ?></th>
-        <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
-    </tr>
+    <thead>
+        <tr>
+            <th><?= I18N_FILENAME ?></th>
+            <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
+        </tr>
+    </thead>
+    <tbody>
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
@@ -67,4 +70,5 @@ $this->append('actions', $this->Form->postButton(
             </td>
         </tr>
     <?php endforeach; ?>
+    </tbody>
 </table>

@@ -51,10 +51,10 @@ if ($this->request->isAction('view', 'Photos')) {
     }
 
     if ($photo->has('preview')) {
-        $this->Html->meta(['href' => $photo->preview['preview'], 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $photo->preview['preview'], 'property' => 'og:image']);
-        $this->Html->meta(['content' => $photo->preview['width'], 'property' => 'og:image:width']);
-        $this->Html->meta(['content' => $photo->preview['height'], 'property' => 'og:image:height']);
+        $this->Html->meta(['href' => $photo->preview->url, 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $photo->preview->url, 'property' => 'og:image']);
+        $this->Html->meta(['content' => $photo->preview->width, 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $photo->preview->height, 'property' => 'og:image:height']);
     }
 
     if ($photo->has('description')) {

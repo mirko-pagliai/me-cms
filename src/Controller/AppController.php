@@ -53,11 +53,6 @@ class AppController extends BaseController
         if ($this->request->isAdmin()) {
             $this->viewBuilder()->setClassName(ME_CMS . '.View/Admin');
 
-            //Adds the current sort field in the whitelist of pagination
-            if ($this->request->getQuery('sort')) {
-                $this->paginate['sortWhitelist'] = [$this->request->getQuery('sort')];
-            }
-
             $this->paginate['limit'] = getConfigOrFail('admin.records');
         } else {
             //Authorizes the current action

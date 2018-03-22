@@ -71,7 +71,7 @@ class PagesController extends AppController
         }
 
         $page = $this->Pages->find('active')
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
             ->contain($this->Pages->Categories->getAlias(), function (Query $q) {
                 return $q->select(['title', 'slug']);
             })

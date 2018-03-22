@@ -1,4 +1,25 @@
 # 2.x branch
+## 2.23 branch
+### 2.23.0
+* added the `UpdateShell`. This shell provides subcommands to update your
+    application;
+* `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait` and
+    `firstImage()` and `getPreview()` methods have been replaced by 
+    `extractImages()` and `getPreviews()` methods. The `getPreviews()` method
+    now returns an array of `Entity`. This allows you to get all the previews,
+    not just the first one;
+* `GetPreviewsFromTextTrait::getPreviews()` returns an array of `Entity` with
+    `url`, `width` and `height` properties;
+* `MeCms\Model\Entity\Photo::_getPreview()` method returns an `Entity` with
+    `url`, `width` and `height` properties;
+* added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
+    methods and tests common to `PagesTable` and `PostsTable` classes;
+* added `\MeCms\Database\Type\JsonEntityType`, to convert an array of `Entity`
+    as json data;
+* fixed bug, some previews were not correctly displayed;
+* fixed a bug in the common view of the userbar;
+* updated for CakePHP 3.5.13.
+
 ## 2.22 branch
 ### 2.22.8
 * added `MeCms\Utility\Checkup` class and some classes under the

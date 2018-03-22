@@ -150,7 +150,7 @@ class PostsController extends AppController
         }
 
         $posts = $this->Posts->find('active')
-            ->select(['title', 'slug', 'text', 'created'])
+            ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
             ->cache('rss', $this->Posts->cache);
