@@ -30,7 +30,7 @@ class UpdateShell extends Shell
     public function updatePostsAndPagesPreviewField()
     {
         foreach (['Posts', 'Pages'] as $tableName) {
-            $table = TableRegistry::get(ME_CMS . '.'. $tableName);
+            $table = TableRegistry::get(sprintf('%s.%s', ME_CMS, $tableName));
 
             $records = $table->find()
                 ->select(['id', 'text', 'preview'])
