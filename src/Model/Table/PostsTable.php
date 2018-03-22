@@ -156,7 +156,7 @@ class PostsTable extends PostsAndPagesTables
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
                     $post = $this->find('active')
-                        ->select(['id', 'title', 'slug', 'text', 'preview'])
+                        ->select(['id', 'title', 'preview', 'slug', 'text'])
                         ->matching('Tags', function (Query $q) use ($tag) {
                             return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
                         })
