@@ -163,7 +163,8 @@ class PostsTable extends PostsAndPagesTables
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
 
                     if ($images) {
-                        $post->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null]);
+                        $post->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null])
+                            ->where([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
                     }
 
                     $post = $post->first();
