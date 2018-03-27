@@ -16,6 +16,7 @@
     methods and tests common to `PagesTable` and `PostsTable` classes;
 * added `\MeCms\Database\Type\JsonEntityType`, to convert an array of `Entity`
     as json data;
+* added `MeCms\Model\Table\PostsTable::queryForRelated()` method;
 * fixed bug, some previews were not correctly displayed;
 * fixed a bug in the common view of the userbar;
 * updated for CakePHP 3.5.13.

@@ -120,9 +120,10 @@ class PostsTable extends PostsAndPagesTables
      * Gets the related posts for a post
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
-     * @param bool $images If true, gets only posts with images
+     * @param bool $images If `true`, gets only posts with images
      * @return array Array of entities
      * @throws InternalErrorException
+     * @uses queryForRelated()
      * @uses $cache
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
@@ -155,23 +156,13 @@ class PostsTable extends PostsAndPagesTables
                 //It reverses the tags order, because the tags less popular have
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
-                    $post = $this->find('active')
-                        ->select(['id', 'title', 'preview', 'slug', 'text'])
-                        ->matching('Tags', function (Query $q) use ($tag) {
-                            return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
-                        })
-                        ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
-
-                    if ($images) {
-                        $post->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null])
-                            ->where([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
-                    }
-
-                    $post = $post->first();
+                    $post = $this->queryForRelated($tag->id, $images)
+                        ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
+                        ->first();
 
                     //Adds the current post to the related posts and its ID to the
                     //  IDs to be excluded for the next query
-                    if (!empty($post)) {
+                    if ($post) {
                         $related[] = $post;
                         $exclude[] = $post->id;
                     }
@@ -219,6 +210,28 @@ class PostsTable extends PostsAndPagesTables
         ]);
 
         $this->_validatorClass = '\MeCms\Model\Validation\PostValidator';
+    }
+
+    /**
+     * Gets the query for related posts from a tag ID
+     * @param int $tagId Tag ID
+     * @param bool $images If `true`, gets only posts with images
+     * @return Cake\ORM\Query The query builder
+     * @since 2.23.0
+     */
+    public function queryForRelated($tagId, $images = true)
+    {
+        $query = $this->find('active')
+            ->select(['id', 'title', 'preview', 'slug', 'text'])
+            ->matching('Tags', function (Query $q) use ($tagId) {
+                return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
+            });
+
+        if ($images) {
+            $query->where([sprintf('%s.preview NOT IN', $this->getAlias()) => [null, []]]);
+        }
+
+        return $query;
     }
 
     /**

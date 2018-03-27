@@ -309,4 +309,25 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
         $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
     }
+
+    /**
+     * Test for `queryForRelated()` method
+     * @test
+     */
+    public function testQueryForRelated()
+    {
+        $query = $this->Table->queryForRelated(4, true);
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = (PostsTags.tag_id)) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND Posts.preview not in (:c3,:c4))', $query->sql());
+        $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceof('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertEquals(null, $query->getValueBinder()->bindings()[':c3']['value']);
+        $this->assertEquals([], $query->getValueBinder()->bindings()[':c4']['value']);
+
+        $query = $this->Table->queryForRelated(4, false);
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = (PostsTags.tag_id)) WHERE (Posts.active = :c1 AND Posts.created <= :c2)', $query->sql());
+        $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceof('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c2']['value']);
+    }
 }
