@@ -33,7 +33,7 @@ class SitemapBuilder
         $class = App::classname($plugin . '.Sitemap', 'Utility');
 
         //Gets all methods from the `Sitemap` class of the plugin
-        $methods = getChildMethods($class);
+        $methods = get_child_methods($class);
 
         if (empty($methods)) {
             return [];

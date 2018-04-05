@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.23 branch
+### 2.23.1
+* now it uses the `mirko-pagliai/php-tools` package. This also replaces
+    `mirko-pagliai/reflection`;
+* updated for cakephp-thumber 1.4 and me-tools 2.16.
+
 ### 2.23.0
 * added the `UpdateShell`. This shell provides subcommands to update your
     application;

@@ -16,7 +16,7 @@ use Cake\Core\Plugin;
 use Cake\View\View;
 use MeCms\View\Helper\MenuBuilderHelper;
 use MeTools\TestSuite\TestCase;
-use Reflection\ReflectionTrait;
+use Tools\ReflectionTrait;
 
 /**
  * MenuBuilderHelperTest class
