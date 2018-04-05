@@ -52,7 +52,7 @@ class MenuBuilderHelper extends Helper
     protected function getMenuMethods($plugin)
     {
         //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = getChildMethods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+        $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
 
         if (empty($methods)) {
             return [];

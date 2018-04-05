@@ -275,9 +275,11 @@ class UsersController extends AppController
                 unlink(USER_PICTURES . $filename);
             }
 
+            $filename = sprintf('%s.%s', $id, pathinfo($this->request->getData('file')['tmp_name'], PATHINFO_EXTENSION));
+
             $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
-                ->save(USER_PICTURES, $id);
+                ->save(USER_PICTURES, $filename);
 
             if (!$uploaded) {
                 $this->setUploadError($this->Uploader->error());
