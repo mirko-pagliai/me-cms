@@ -54,7 +54,7 @@ class UpdateShell extends Shell
     {
         $parser = parent::getOptionParser();
 
-        foreach (array_diff(get_class_methods($this), get_class_methods(get_parent_class())) as $subcommand) {
+        foreach (get_child_methods($this) as $subcommand) {
             $parser->addSubcommand($subcommand, ['help' => Inflector::humanize(Inflector::underscore($subcommand))]);
         }
 

@@ -114,7 +114,7 @@ class PagesCategoriesTableTest extends TestCase
         $this->assertTrue($this->PagesCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PagesCategories->hasBehavior('Tree'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PagesCategoryValidator', $this->PagesCategories->getValidator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PagesCategoryValidator', [$this->PagesCategories->getValidator()]);
     }
 
     /**

@@ -155,7 +155,7 @@ class PhotosTableTest extends TestCase
         $this->assertTrue($this->Photos->hasBehavior('Timestamp'));
         $this->assertTrue($this->Photos->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PhotoValidator', $this->Photos->getValidator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PhotoValidator', [$this->Photos->getValidator()]);
     }
 
     /**

@@ -121,7 +121,7 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
         $this->assertTrue($this->Table->hasBehavior('Timestamp'));
         $this->assertTrue($this->Table->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Table->getValidator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', [$this->Table->getValidator()]);
     }
 
     /**
