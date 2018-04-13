@@ -61,7 +61,7 @@ class LoginRecorderComponent extends Component
     {
         $user = $this->config('user');
 
-        if (!isPositive($user)) {
+        if (!is_positive($user)) {
             throw new InternalErrorException(__d('me_cms', 'You have to set a valid user id'));
         }
 

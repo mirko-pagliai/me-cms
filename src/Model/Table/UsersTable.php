@@ -174,7 +174,7 @@ class UsersTable extends AppTable
         }
 
         //"Group" field
-        if (!empty($data['group']) && isPositive($data['group'])) {
+        if (!empty($data['group']) && is_positive($data['group'])) {
             $query->where([sprintf('%s.group_id', $this->getAlias()) => $data['group']]);
         }
 
