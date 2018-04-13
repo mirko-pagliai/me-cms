@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.23 branch
+### 2.23.2
+* updated for cakephp-database-backup 2.5.0.
+
 ### 2.23.1
 * now it uses the `mirko-pagliai/php-tools` package. This also replaces
     `mirko-pagliai/reflection`;
