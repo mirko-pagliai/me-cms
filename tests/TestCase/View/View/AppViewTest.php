@@ -155,8 +155,7 @@ class AppViewTest extends TestCase
 
         $result = $this->View->render(false);
 
-        //@codingStandardsIgnoreLine
-        @unlink($layoutFromApp);
+        safe_unlink($layoutFromApp);
 
         $this->assertEquals('This is a layout from app', $result);
         $this->assertEquals('default', $this->View->getLayout());

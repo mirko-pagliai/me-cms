@@ -481,8 +481,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertFileNotExists(USER_PICTURES . '1.jpeg');
         $this->assertFileNotExists(USER_PICTURES . '1.png');
 
-        //@codingStandardsIgnoreLine
-        @unlink($expectedPicture);
+        safe_unlink($expectedPicture);
     }
 
     /**

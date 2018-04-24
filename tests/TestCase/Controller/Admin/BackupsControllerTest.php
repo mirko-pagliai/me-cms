@@ -85,8 +85,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         //Deletes all backups
         foreach (glob(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . '*') as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
+            safe_unlink($file);
         }
     }
 

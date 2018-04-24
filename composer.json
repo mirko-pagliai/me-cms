@@ -10,7 +10,8 @@
     }],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": ">=3.5.13 <4",
+        "cakephp/cakephp": ">=3.5.13 <3.6",
+        "crabstudio/recaptcha": "^2.0",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
         "gourmet/common-mark": "~1.0",
@@ -20,10 +21,9 @@
         "mirko-pagliai/cakephp-thumber": ">=1.4 <1.5",
         "mirko-pagliai/cakephp-tokens": ">=1.1 <1.2",
         "mirko-pagliai/me-tools": ">=2.16.8 <2.17",
-        "mirko-pagliai/php-tools": ">=1.0.2 <1.1",
+        "mirko-pagliai/php-tools": ">=1.0.5 <1.1",
         "mirko-pagliai/serialized-array": "^1.0",
-        "wyrihaximus/minify-html": "^1.1",
-        "crabstudio/recaptcha": "^2.0"
+        "wyrihaximus/minify-html": "^1.1"
     },
     "suggest": {
         "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",

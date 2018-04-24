@@ -221,8 +221,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testFixKcfinder()
     {
-        //@codingStandardsIgnoreLine
-        @unlink(KCFINDER . '.htaccess');
+        safe_unlink(KCFINDER . '.htaccess');
 
         $this->exec('me_cms.install fix_kcfinder -v');
         $this->assertExitWithSuccess();
@@ -240,8 +239,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
 
         $browseFile = KCFINDER . 'browse.php';
         $browseFileContent = file_get_contents($browseFile);
-        //@codingStandardsIgnoreLine
-        @unlink($browseFile);
+        safe_unlink($browseFile);
 
         //For now KCFinder is not available
         $this->exec('me_cms.install fix_kcfinder -v');

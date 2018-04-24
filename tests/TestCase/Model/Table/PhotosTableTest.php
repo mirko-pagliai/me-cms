@@ -60,10 +60,8 @@ class PhotosTableTest extends TestCase
         $file = PHOTOS . $this->example['album_id'] . DS . $this->example['filename'];
 
         //Creates the file for the example
-        //@codingStandardsIgnoreStart
-        @mkdir(dirname($file));
-        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
-        //@codingStandardsIgnoreEnd
+        safe_mkdir(dirname($file));
+        safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
 
         Cache::clear(false, $this->Photos->cache);
     }
@@ -77,8 +75,7 @@ class PhotosTableTest extends TestCase
         parent::tearDown();
 
         //Deletes the file for the example
-        //@codingStandardsIgnoreLine
-        @unlink(PHOTOS . $this->example['album_id'] . DS . $this->example['filename']);
+        safe_unlink(PHOTOS . $this->example['album_id'] . DS . $this->example['filename']);
     }
 
     /**

@@ -46,13 +46,11 @@ define('CACHE', TMP);
 define('LOGS', TMP . 'cakephp_log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 
-//@codingStandardsIgnoreStart
-@mkdir(LOGS);
-@mkdir(SESSIONS);
-@mkdir(CACHE);
-@mkdir(CACHE . 'views');
-@mkdir(CACHE . 'models');
-//@codingStandardsIgnoreEnd
+safe_mkdir(LOGS);
+safe_mkdir(SESSIONS);
+safe_mkdir(CACHE);
+safe_mkdir(CACHE . 'views');
+safe_mkdir(CACHE . 'models');
 
 Configure::write('debug', true);
 Configure::write('App', [
@@ -72,7 +70,7 @@ Configure::write('App', [
         'templates' => [
             APP . 'Template' . DS,
             ROOT . 'src' . DS . 'Template' . DS,
-            ],
+        ],
     ],
 ]);
 
@@ -141,9 +139,6 @@ Plugin::load('Thumber', [
     'routes' => true,
 ]);
 
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require 'apache_functions.php';
-
 Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
@@ -173,6 +168,5 @@ Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
 
 //This makes it believe that KCFinder is installed
-//@codingStandardsIgnoreLine
-@mkdir(KCFINDER, 0777, true);
+safe_mkdir(KCFINDER, 0777, true);
 file_put_contents(KCFINDER . 'browse.php', '@version 3.12');

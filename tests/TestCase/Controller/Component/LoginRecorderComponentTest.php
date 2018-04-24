@@ -115,8 +115,7 @@ class LoginRecorderComponentTest extends TestCase
         parent::tearDown();
 
         //Deletes the file
-        //@codingStandardsIgnoreLine
-        @unlink(LOGIN_RECORDS . 'user_1.log');
+        safe_unlink(LOGIN_RECORDS . 'user_1.log');
     }
 
     /**
@@ -219,20 +218,20 @@ class LoginRecorderComponentTest extends TestCase
         //For now is empty
         $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($result);
 
         $this->assertTrue($this->LoginRecorder->write());
 
         //After save, is not empty
         $result = $this->LoginRecorder->read();
         $this->assertNotEmpty($result);
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
         file_put_contents(LOGIN_RECORDS . 'user_1.log', null);
         $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($result);
     }
 
     /**

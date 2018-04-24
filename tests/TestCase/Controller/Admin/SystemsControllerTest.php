@@ -105,13 +105,11 @@ class SystemsControllerTest extends IntegrationTestCase
             getConfigOrFail(THUMBER . '.target') . DS,
         ] as $dir) {
             foreach (glob($dir . '*') as $file) {
-                //@codingStandardsIgnoreLine
-                @unlink($file);
+                safe_unlink($file);
             }
         }
 
-        //@codingStandardsIgnoreLine
-        @unlink(SITEMAP);
+        safe_unlink(SITEMAP);
     }
 
     /**
@@ -165,8 +163,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testBrowser()
     {
-        //@codingStandardsIgnoreLine
-        @mkdir(UPLOADED . 'docs');
+        safe_mkdir(UPLOADED . 'docs');
 
         $url = array_merge($this->url, ['action' => 'browser']);
 
@@ -204,8 +201,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $kcfinderFromView = $this->viewVariable('kcfinder');
         $this->assertEquals('http://localhost/vendor/kcfinder/browse.php?lang=it&type=docs', $kcfinderFromView);
 
-        //@codingStandardsIgnoreLine
-        @rmdir(UPLOADED . 'docs');
+        safe_rmdir(UPLOADED . 'docs');
 
         //GET request. Now only the `images` type exists
         $this->get($url);
@@ -282,8 +278,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testClearSitemap()
     {
-        //@codingStandardsIgnoreLine
-        @unlink(SITEMAP);
+        safe_unlink(SITEMAP);
 
         $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
 

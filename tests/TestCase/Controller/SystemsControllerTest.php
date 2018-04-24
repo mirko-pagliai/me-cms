@@ -184,8 +184,7 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->loadFixtures();
 
-        //@codingStandardsIgnoreLine
-        @unlink(SITEMAP);
+        safe_unlink(SITEMAP);
 
         //GET request. The sitemap will be created
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
