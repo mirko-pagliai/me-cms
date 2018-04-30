@@ -24,6 +24,8 @@ mb_internal_encoding('UTF-8');
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
@@ -97,12 +99,15 @@ ConnectionManager::setConfig('test', ['url' => 'mysql://root@localhost/test']);
 
 Configure::write('Session', ['defaults' => 'php']);
 
+//This adds `apache_get_modules()` and `apache_get_version()` functions
+require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
+
 /**
  * Loads plugins
  */
 Plugin::load('Assets', [
     'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-assets' . DS,
 ]);
 
 Configure::write('DatabaseBackup.connection', 'test');
@@ -152,7 +157,7 @@ Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 //Sets debug log
-Log::config('debug', [
+Log::setConfig('debug', [
     'className' => 'File',
     'path' => LOGS,
     'levels' => ['notice', 'info', 'debug'],
@@ -170,3 +175,5 @@ Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmast
 //This makes it believe that KCFinder is installed
 safe_mkdir(KCFINDER, 0777, true);
 file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+
+$_SERVER['PHP_SELF'] = '/';

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.23 branch
 ### 2.23.2
+* updated for CakePHP 3.6;
 * updated for cakephp-database-backup 2.5.0.
 
 ### 2.23.1

@@ -54,11 +54,9 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
-
-        $controller->viewBuilder()->setLayout('with_flash');
-
         parent::controllerSpy($event, $controller);
+
+        $this->_controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
     }
 
     /**
@@ -106,6 +104,7 @@ class SystemsControllerTest extends IntegrationTestCase
 
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'a']);
+//        dd($this->_getBodyAsString());
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
 
@@ -122,6 +121,8 @@ class SystemsControllerTest extends IntegrationTestCase
         ]);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
+
+        $this->markTestIncomplete('this must be completed');
 
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
@@ -167,6 +168,8 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'offline']);
         $this->assertRedirect(['_name' => 'homepage']);
+
+        $this->markTestIncomplete('this must be completed');
 
         //Offline
         Configure::write(ME_CMS . '.default.offline', true);

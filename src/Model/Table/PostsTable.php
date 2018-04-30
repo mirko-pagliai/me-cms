@@ -15,10 +15,10 @@ namespace MeCms\Model\Table;
 use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use InvalidArgumentException;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
@@ -122,14 +122,14 @@ class PostsTable extends PostsAndPagesTables
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
      * @return array Array of entities
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      * @uses queryForRelated()
      * @uses $cache
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
         if (empty($post->id) || !isset($post->tags)) {
-            throw new InternalErrorException(__d('me_cms', 'ID or tags of the post are missing'));
+            throw new InvalidArgumentException(__d('me_cms', 'ID or tags of the post are missing'));
         }
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);

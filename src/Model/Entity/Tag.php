@@ -13,7 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 /**
  * Tag entity
@@ -49,6 +49,6 @@ class Tag extends Entity
      */
     protected function _getSlug()
     {
-        return strtolower(Inflector::slug($this->_properties['tag']));
+        return strtolower(Text::slug($this->_properties['tag']));
     }
 }

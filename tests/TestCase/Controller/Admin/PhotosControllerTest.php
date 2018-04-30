@@ -17,7 +17,6 @@ use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 use MeCms\Controller\Admin\PhotosController;
 use MeCms\TestSuite\IntegrationTestCase;
-use MeTools\Controller\Component\UploaderComponent;
 
 /**
  * PhotosControllerTest class
@@ -101,13 +100,15 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
+        parent::controllerSpy($event, $controller);
+
         //Mocks the `Uploader` component
-        $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
+        $this->_controller->Uploader = $this->getMockBuilder(get_class($this->_controller->Uploader))
             ->setConstructorArgs([new ComponentRegistry])
             ->setMethods(['move_uploaded_file'])
             ->getMock();
 
-        $controller->Uploader->method('move_uploaded_file')
+        $this->_controller->Uploader->method('move_uploaded_file')
             ->will($this->returnCallback(function ($filename, $destination) {
                 return rename($filename, $destination);
             }));
@@ -115,13 +116,9 @@ class PhotosControllerTest extends IntegrationTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Photos`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $controller->Photos = $this->getMockForModel($controller->Photos->getRegistryAlias(), ['save']);
-            $controller->Photos->method('save')->will($this->returnValue(false));
+            $this->_controller->Photos = $this->getMockForModel($this->_controller->Photos->getRegistryAlias(), ['save']);
+            $this->_controller->Photos->method('save')->will($this->returnValue(false));
         }
-
-        $controller->viewBuilder()->setLayout('with_flash');
-
-        parent::controllerSpy($event, $controller);
     }
 
     /**

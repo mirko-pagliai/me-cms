@@ -10,7 +10,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-// (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -108,14 +107,16 @@ if (!getConfig('RecaptchaMailhide.encryptKey')) {
 }
 
 //Adds log for users actions
-Log::setConfig('users', [
-    'className' => 'MeCms\Log\Engine\SerializedLog',
-    'path' => LOGS,
-    'levels' => [],
-    'file' => 'users.log',
-    'scopes' => ['users'],
-    'url' => env('LOG_DEBUG_URL', null),
-]);
+if (!Log::getConfig('users')) {
+    Log::setConfig('users', [
+        'className' => 'MeCms\Log\Engine\SerializedLog',
+        'path' => LOGS,
+        'levels' => [],
+        'file' => 'users.log',
+        'scopes' => ['users'],
+        'url' => env('LOG_DEBUG_URL', null),
+    ]);
+}
 
 //Loads other plugins
 $pluginsToLoad = ['DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'Thumber', 'Tokens'];

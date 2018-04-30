@@ -14,7 +14,7 @@
 namespace MeCms\Form;
 
 use Cake\Form\Form;
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Http\Exception\InternalErrorException;
 use Cake\Validation\Validator;
 use DatabaseBackup\Utility\BackupExport;
 use MeCms\Model\Validation\AppValidator;

@@ -15,7 +15,6 @@ namespace MeCms\Model\Entity;
 use Cake\ORM\Entity;
 use Cake\View\HelperRegistry;
 use Cake\View\View;
-use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -32,8 +31,6 @@ use Thumber\Utility\ThumbCreator;
  */
 class Photo extends Entity
 {
-    use ThumbTrait;
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
@@ -82,11 +79,13 @@ class Photo extends Entity
      */
     protected function _getPreview()
     {
-        $thumb = (new ThumbCreator($this->_getPath()))->resize(1200, 1200)->save(['format' => 'jpg']);
-        $url = $this->getUrl($thumb, true);
+        $path = $this->_getPath();
 
-        list($width, $height) = getimagesize($thumb);
+        list($width, $height) = getimagesize($path);
 
-        return new Entity(compact('url', 'width', 'height'));
+        $thumber = new ThumbCreator($path);
+        $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
+
+        return new Entity(array_merge(['url' => $thumber->getUrl()], compact('width', 'height')));
     }
 }

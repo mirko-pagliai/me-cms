@@ -171,7 +171,7 @@ class PostsController extends AppController
         if ($pattern && strlen($pattern) < 4) {
             $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
 
-            return $this->redirect([]);
+            return $this->redirect(['action' => $this->request->getParam('action')]);
         }
 
         //Checks the last search
@@ -182,7 +182,7 @@ class PostsController extends AppController
                 getConfigOrFail('security.search_interval')
             ));
 
-            return $this->redirect([]);
+            return $this->redirect(['action' => $this->request->getParam('action')]);
         }
 
         if ($pattern) {

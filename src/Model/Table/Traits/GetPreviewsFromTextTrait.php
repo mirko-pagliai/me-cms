@@ -17,7 +17,6 @@ use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
-use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -26,8 +25,6 @@ use Thumber\Utility\ThumbCreator;
  */
 trait GetPreviewsFromTextTrait
 {
-    use ThumbTrait;
-
     /**
      * Internal method to extract all images from an html string, including the
      *  previews of Youtube videos
@@ -103,11 +100,9 @@ trait GetPreviewsFromTextTrait
                     return false;
                 }
 
-                $thumb = (new ThumbCreator($url))
-                    ->resize(1200, 1200)
-                    ->save(['format' => 'jpg']);
-
-                $url = $this->getUrl($thumb, true);
+                $thumber = new ThumbCreator($url);
+                $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
+                $url = $thumber->getUrl();
             }
 
             list($width, $height) = $this->getPreviewSize($url);

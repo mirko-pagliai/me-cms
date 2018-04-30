@@ -14,7 +14,7 @@ namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\I18n\Time;
-use Cake\Network\Exception\InternalErrorException;
+use InvalidArgumentException;
 use SerializedArray\SerializedArray;
 
 /**
@@ -55,19 +55,17 @@ class LoginRecorderComponent extends Component
     /**
      * Gets the `SerializedArray` instance
      * @return \MeTools\Utility\SerializedArray
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      */
     protected function getSerializedArray()
     {
-        $user = $this->config('user');
+        $user = $this->getConfig('user');
 
         if (!is_positive($user)) {
-            throw new InternalErrorException(__d('me_cms', 'You have to set a valid user id'));
+            throw new InvalidArgumentException(__d('me_cms', 'You have to set a valid user id'));
         }
 
-        $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $user . '.log');
-
-        return $this->SerializedArray;
+        return $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $user . '.log');
     }
 
     /**

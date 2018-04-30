@@ -97,8 +97,10 @@ class AppTable extends Table
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => false])
-            ->orWhere([sprintf('%s.created >', $this->getAlias()) => new Time]);
+        $query->where(['OR' => [
+            sprintf('%s.active', $this->getAlias()) => false,
+            sprintf('%s.created >', $this->getAlias()) => new Time,
+        ]]);
 
         return $query;
     }

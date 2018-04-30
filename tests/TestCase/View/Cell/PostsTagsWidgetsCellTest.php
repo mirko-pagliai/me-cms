@@ -105,7 +105,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
     /**
      * Test for `getFontSizes()` method, with invalid values
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Invalid values
      * @test
      */

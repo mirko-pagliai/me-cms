@@ -14,7 +14,7 @@
  */
 namespace MeCms\Mailer;
 
-use Cake\Network\Exception\InternalErrorException;
+use InvalidArgumentException;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -29,14 +29,14 @@ class ContactUsMailer extends Mailer
      *  and `message` keys.
      * @param array $data Form data
      * @return void
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      */
     public function contactUsMail($data)
     {
         //Checks that all required data is present
         foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
             if (empty($data[$key])) {
-                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` key from data', $key));
+                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` key from data', $key));
             }
         }
 

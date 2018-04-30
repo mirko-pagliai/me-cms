@@ -13,10 +13,10 @@
 namespace MeCms\View\Cell;
 
 use Cake\Event\EventManager;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\View\Cell;
+use InvalidArgumentException;
 
 /**
  * PostsTagsWidgets cell
@@ -46,7 +46,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return array
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      */
     protected function getFontSizes(array $style)
     {
@@ -55,7 +55,7 @@ class PostsTagsWidgetsCell extends Cell
         $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
 
         if ($maxFont <= $minFont) {
-            throw new InternalErrorException(__d('me_cms', 'Invalid values'));
+            throw new InvalidArgumentException(__d('me_cms', 'Invalid values'));
         }
 
         return [$maxFont, $minFont];

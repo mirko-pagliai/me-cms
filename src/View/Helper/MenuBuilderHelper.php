@@ -12,7 +12,7 @@
  */
 namespace MeCms\View\Helper;
 
-use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Cake\View\Helper;
 
 /**
@@ -109,7 +109,7 @@ class MenuBuilderHelper extends Helper
     {
         return implode(PHP_EOL, array_map(function ($menu) {
             //Sets the collapse name
-            $collapseName = 'collapse-' . strtolower(Inflector::slug($menu['title']));
+            $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
             $titleOptions = optionsParser($menu['titleOptions'], [
                 'aria-controls' => $collapseName,
                 'aria-expanded' => 'false',

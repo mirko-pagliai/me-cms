@@ -69,9 +69,11 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        $controller->viewBuilder()->setLayout(false);
-
         parent::controllerSpy($event, $controller);
+
+        if ($this->getName() === 'testRss') {
+            $this->_controller->viewBuilder()->setLayout(false);
+        }
     }
 
     /**

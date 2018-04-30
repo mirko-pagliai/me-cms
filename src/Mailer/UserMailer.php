@@ -12,7 +12,7 @@
  */
 namespace MeCms\Mailer;
 
-use Cake\Network\Exception\InternalErrorException;
+use InvalidArgumentException;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -28,14 +28,14 @@ class UserMailer extends Mailer
      * @return void
      * @see MeCms\Controller\Admin\UsersController::activationResend()
      * @see MeCms\Controller\Admin\UsersController::signup()
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      */
     public function activation($user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
             if (empty($user->$property)) {
-                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` property from data', $property));
+                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
 
@@ -52,14 +52,14 @@ class UserMailer extends Mailer
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::changePassword()
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      */
     public function changePassword($user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
             if (empty($user->$property)) {
-                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` property from data', $property));
+                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
 
@@ -76,14 +76,14 @@ class UserMailer extends Mailer
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
      * @see MeCms\Controller\UsersController::passwordForgot()
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
      */
     public function passwordForgot($user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
             if (empty($user->$property)) {
-                throw new InternalErrorException(__d('me_cms', 'Missing `{0}` property from data', $property));
+                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
 

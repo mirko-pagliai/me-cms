@@ -51,19 +51,6 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        $controller->viewBuilder()->setLayout(false);
-
-        parent::controllerSpy($event, $controller);
-    }
-
-    /**
      * Tests for `index()` method
      * @test
      */

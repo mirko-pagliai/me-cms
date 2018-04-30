@@ -66,19 +66,6 @@ class PagesControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        $controller->viewBuilder()->setLayout(false);
-
-        parent::controllerSpy($event, $controller);
-    }
-
-    /**
      * Tests for `view()` method
      * @test
      */
@@ -106,7 +93,7 @@ class PagesControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'page', 'page-from-app']);
         $this->assertResponseOk();
-        $this->assertResponseEquals('This is a static page');
+        $this->assertResponseContains('This is a static page');
         $this->assertTemplate(APP . 'Template/StaticPages/page-from-app.ctp');
 
         $pageFromView = $this->viewVariable('page');
@@ -128,7 +115,7 @@ class PagesControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();
-        $this->assertResponseEquals('This is a static page from a plugin');
+        $this->assertResponseContains('This is a static page from a plugin');
         $this->assertTemplate(APP . 'Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp');
     }
 
