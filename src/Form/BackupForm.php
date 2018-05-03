@@ -17,7 +17,7 @@ use Cake\Form\Form;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Validation\Validator;
 use DatabaseBackup\Utility\BackupExport;
-use MeCms\Model\Validation\AppValidator;
+use MeCms\Validation\AppValidator;
 
 /**
  * BackupForm class
@@ -33,7 +33,7 @@ class BackupForm extends Form
      * Defines the validator using the methods on Cake\Validation\Validator or
      *  loads a pre-defined validator from a concrete class.
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\AppValidator
+     * @return \MeCms\Validation\AppValidator
      */
     protected function _buildValidator(Validator $validator)
     {

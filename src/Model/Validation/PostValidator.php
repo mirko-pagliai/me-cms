@@ -12,7 +12,7 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Model\Validation\AppValidator;
+use MeCms\Validation\AppValidator;
 use MeCms\Model\Validation\Traits\TagValidatorTrait;
 
 /**
@@ -26,7 +26,7 @@ class PostValidator extends AppValidator
      * Construct.
      *
      * Adds some validation rules.
-     * @uses MeCms\Model\Validation\AppValidator::__construct()
+     * @uses MeCms\Validation\AppValidator::__construct()
      */
     public function __construct()
     {
