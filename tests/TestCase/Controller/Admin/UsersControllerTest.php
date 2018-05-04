@@ -236,8 +236,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($userFromView);
         $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
-        $this->markTestIncomplete('this must be completed');
-
         $loginLogFromView = $this->viewVariable('loginLog');
         $this->assertEmpty($loginLogFromView);
 
@@ -534,8 +532,6 @@ class UsersControllerTest extends IntegrationTestCase
         $loginLogFromView = $this->viewVariable('loginLog');
         $this->assertNotEmpty($loginLogFromView);
         $this->assertIsArray($loginLogFromView);
-
-        $this->markTestIncomplete('this must be completed');
 
         //Disabled
         Configure::write(ME_CMS . '.users.login_log', false);

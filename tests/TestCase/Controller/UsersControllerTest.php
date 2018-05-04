@@ -379,8 +379,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage('We send you an email to activate your account');
 
-        $this->markTestIncomplete('this must be completed');
-
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
@@ -525,8 +523,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage('We have sent you an email to reset your password');
 
-        $this->markTestIncomplete('this must be completed');
-
         //With reCAPTCHA
         Configure::write(ME_CMS . '.security.recaptcha', true);
         $this->post($url);
@@ -626,8 +622,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post($url, array_merge($data, ['password' => 'anotherPassword']));
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The account has not been created');
-
-        $this->markTestIncomplete('this must be completed');
 
         Configure::write(ME_CMS . '.users.activation', 2);
 
