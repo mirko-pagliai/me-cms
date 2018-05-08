@@ -12,8 +12,8 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
 use MeCms\Model\Validation\Traits\TagValidatorTrait;
+use MeCms\Validation\AppValidator;
 
 /**
  * Post validator class
