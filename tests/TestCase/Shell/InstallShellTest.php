@@ -169,7 +169,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->assertExitWithSuccess();
 
         foreach ($files as $file) {
-            $this->assertOutputContains('File or directory ' . $file . ' already exists');
+            $this->assertOutputContains('File or directory `' . $file . '` already exists');
         }
     }
 
