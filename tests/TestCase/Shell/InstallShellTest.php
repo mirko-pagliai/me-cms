@@ -159,16 +159,11 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testCopyConfig()
     {
-        $files = collection($this->getProperty($this->InstallShell, 'config'))
-            ->map(function ($file) {
-                return rtr(CONFIG . pluginSplit($file)[1] . '.php');
-            })
-            ->toArray();
-
         $this->exec('me_cms.install copy_config -v');
         $this->assertExitWithSuccess();
 
-        foreach ($files as $file) {
+        foreach ($this->getProperty($this->InstallShell, 'config') as $file) {
+            $file = rtr(CONFIG . pluginSplit($file)[1] . '.php');
             $this->assertOutputContains('File or directory `' . $file . '` already exists');
         }
     }
