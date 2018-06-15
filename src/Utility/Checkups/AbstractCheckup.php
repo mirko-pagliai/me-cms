@@ -28,7 +28,7 @@ abstract class AbstractCheckup
     protected function _isWriteable($paths)
     {
         foreach ((array)$paths as $path) {
-            $result[$path] = folderIsWriteable($path);
+            $result[$path] = is_writable_resursive($path);
         }
 
         return $result;
