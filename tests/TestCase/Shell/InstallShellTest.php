@@ -77,9 +77,9 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testConstruct()
     {
-        $this->assertNotEmpty($this->getProperty($this->InstallShell, 'config'));
-        $this->assertNotEmpty($this->getProperty($this->InstallShell, 'links'));
-        $this->assertNotEmpty($this->getProperty($this->InstallShell, 'paths'));
+        foreach (['config', 'links', 'paths'] as $property) {
+            $this->assertNotEmpty($this->getProperty($this->InstallShell, $property));
+        }
     }
 
     /**
@@ -95,6 +95,10 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->InstallShell, 'getOtherPlugins'));
     }
 
+    /**
+     * Test for `all()` method
+     * @test
+     */
     public function testAll()
     {
         //Gets all methods from `InstallShell`, except for the `all()` method
@@ -142,13 +146,10 @@ class InstallShellTest extends ConsoleIntegrationTestCase
 
         //Calls with no interactive mode
         unset($this->InstallShell->params['force']);
+        array_unshift($expectedMethodsCalledInOrder, 'called `createDirectories`');
+        array_push($expectedMethodsCalledInOrder, 'called `createGroups`', 'called `createAdmin`');
         $this->InstallShell->all();
 
-        $expectedMethodsCalledInOrder = array_merge(
-            ['called `createDirectories`'],
-            $expectedMethodsCalledInOrder,
-            ['called `createGroups`', 'called `createAdmin`']
-        );
         $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
         $this->assertEmpty($this->err->messages());
     }
@@ -178,15 +179,11 @@ class InstallShellTest extends ConsoleIntegrationTestCase
             ->setMethods(['in', '_stop', 'dispatchShell'])
             ->getMock();
 
-        $this->InstallShell->method('dispatchShell')
-            ->will($this->returnCallback(function () {
-                return ['method' => 'dispatchShell', 'args' => func_get_args()];
-            }));
+        $this->InstallShell->expects($this->once())
+            ->method('dispatchShell')
+            ->with(ME_CMS . '.user', 'add', '--group', 1);
 
-        $this->assertEquals([
-            'method' => 'dispatchShell',
-            'args' => [ME_CMS . '.user', 'add', '--group', 1],
-        ], $this->InstallShell->createAdmin());
+        $this->InstallShell->createAdmin();
     }
 
     /**
