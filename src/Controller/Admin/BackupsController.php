@@ -94,14 +94,13 @@ class BackupsController extends AppController
         $backup = new BackupForm;
 
         if ($this->request->is('post')) {
-            try {
-                //Creates the backup
-                $backup->execute($this->request->getData());
+            //Creates the backup
+            if ($backup->execute($this->request->getData())) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
-            } catch (InvalidArgumentException $e) {
-                $this->Flash->error(sprintf('%s: %s', I18N_OPERATION_NOT_OK, lcfirst($e->getMessage())));
+            } else {
+                $this->Flash->error(I18N_OPERATION_NOT_OK);
             }
         }
 

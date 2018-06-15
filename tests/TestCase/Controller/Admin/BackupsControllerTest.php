@@ -170,7 +170,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['filename' => 'backup.txt']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains(I18N_OPERATION_NOT_OK . ': invalid file extension');
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
 
         //POST request. Now data are valid
         $this->post($url, ['filename' => 'my_backup.sql']);

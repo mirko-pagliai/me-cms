@@ -62,14 +62,13 @@ class SystemsController extends AppController
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
-                try {
-                    //Sends the email
-                    $contact->execute($this->request->getData());
+                //Sends the email
+                if ($contact->execute($this->request->getData())) {
                     $this->Flash->success(I18N_OPERATION_OK);
 
                     return $this->redirect(['_name' => 'homepage']);
-                } catch (InvalidArgumentException $e) {
-                    $this->Flash->error(sprintf('%s: %s', I18N_OPERATION_NOT_OK, lcfirst($e->getMessage())));
+                } else {
+                    $this->Flash->error(I18N_OPERATION_NOT_OK);
                 }
             } else {
                 $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
