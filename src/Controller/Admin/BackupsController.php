@@ -15,6 +15,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Cache\Cache;
 use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
+use InvalidArgumentException;
 use MeCms\Controller\AppController;
 use MeCms\Form\BackupForm;
 
@@ -93,13 +94,14 @@ class BackupsController extends AppController
         $backup = new BackupForm;
 
         if ($this->request->is('post')) {
-            //Creates the backup
-            if ($backup->execute($this->request->getData())) {
+            try {
+                //Creates the backup
+                $backup->execute($this->request->getData());
                 $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(I18N_OPERATION_NOT_OK);
+            } catch (InvalidArgumentException $e) {
+                $this->Flash->error(sprintf('%s: %s', I18N_OPERATION_NOT_OK, lcfirst($e->getMessage())));
             }
         }
 
