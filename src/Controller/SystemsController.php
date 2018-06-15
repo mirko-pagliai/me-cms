@@ -14,6 +14,7 @@ namespace MeCms\Controller;
 
 use Cake\Filesystem\File;
 use Cake\I18n\Time;
+use InvalidArgumentException;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
 use MeCms\Utility\Sitemap;
@@ -60,17 +61,18 @@ class SystemsController extends AppController
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
-            if (getConfig('security.recaptcha') && !$this->Recaptcha->verify()) {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
-            } else {
-                //Sends the email
-                if ($contact->execute($this->request->getData())) {
+            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+                try {
+                    //Sends the email
+                    $contact->execute($this->request->getData());
                     $this->Flash->success(I18N_OPERATION_OK);
 
                     return $this->redirect(['_name' => 'homepage']);
+                } catch (InvalidArgumentException $e) {
+                    $this->Flash->error(sprintf('%s: %s', I18N_OPERATION_NOT_OK, lcfirst($e->getMessage())));
                 }
-
-                $this->Flash->error(I18N_OPERATION_NOT_OK);
+            } else {
+                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }
         }
 

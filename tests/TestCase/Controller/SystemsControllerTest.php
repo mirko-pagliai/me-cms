@@ -105,7 +105,7 @@ class SystemsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'a']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK . ': missing `email` key from data');
 
         $contactFromView = $this->viewVariable('contact');
         $this->assertNotEmpty($contactFromView);
