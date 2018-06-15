@@ -175,5 +175,8 @@ Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmast
 //This makes it believe that KCFinder is installed
 safe_mkdir(KCFINDER, 0777, true);
 file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+//This makes it believe that CKEditor is installed
+safe_mkdir(WWW_ROOT . 'ckeditor', 0777, true);
+file_put_contents(WWW_ROOT . 'ckeditor' . DS . 'ckeditor.js', null);
 
 $_SERVER['PHP_SELF'] = '/';
