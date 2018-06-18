@@ -15,7 +15,7 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\Database\Schema\Table as Schema;
+use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
@@ -40,7 +40,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @return Cake\Database\Schema\TableSchema TableSchema instance
      * @since 2.17.0
      */
-    protected function _initializeSchema(Schema $schema)
+    protected function _initializeSchema(TableSchema $schema)
     {
         $schema->setColumnType('preview', 'jsonEntity');
 

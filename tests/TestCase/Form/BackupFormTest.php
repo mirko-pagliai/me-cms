@@ -12,7 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Form;
 
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Http\Exception\InternalErrorException;
 use DatabaseBackup\Utility\BackupExport;
 use MeCms\Form\BackupForm;
 use MeTools\TestSuite\TestCase;

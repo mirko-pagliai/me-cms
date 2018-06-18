@@ -97,8 +97,10 @@ class AppTable extends Table
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => false])
-            ->orWhere([sprintf('%s.created >', $this->getAlias()) => new Time]);
+        $query->where(['OR' => [
+            sprintf('%s.active', $this->getAlias()) => false,
+            sprintf('%s.created >', $this->getAlias()) => new Time,
+        ]]);
 
         return $query;
     }
@@ -152,7 +154,7 @@ class AppTable extends Table
     public function queryFromFilter(Query $query, array $data = [])
     {
         //"ID" field
-        if (!empty($data['id']) && isPositive($data['id'])) {
+        if (!empty($data['id']) && is_positive($data['id'])) {
             $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
         }
 
@@ -167,12 +169,12 @@ class AppTable extends Table
         }
 
         //"User" (author) field
-        if (!empty($data['user']) && isPositive($data['user'])) {
+        if (!empty($data['user']) && is_positive($data['user'])) {
             $query->where([sprintf('%s.user_id', $this->getAlias()) => $data['user']]);
         }
 
         //"Category" field
-        if (!empty($data['category']) && isPositive($data['category'])) {
+        if (!empty($data['category']) && is_positive($data['category'])) {
             $query->where([sprintf('%s.category_id', $this->getAlias()) => $data['category']]);
         }
 

@@ -289,7 +289,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 
     /**
      * Test for `getRelated()` method, with an entity with no `tags` property
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage ID or tags of the post are missing
      */
     public function testGetRelatedNoTagsProperty()

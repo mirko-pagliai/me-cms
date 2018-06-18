@@ -16,9 +16,9 @@ namespace MeCms\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 use MeCms\Utility\Checkup;
+use RuntimeException;
 
 /**
  * A component to handle KCFinder
@@ -146,7 +146,7 @@ class KcFinderComponent extends Component
      * @param array $config The configuration settings provided to this
      *  component
      * @return void
-     * @throws InternalErrorException
+     * @throws RuntimeException
      * @uses getDefaultConfig()
      * @uses kcFinderIsAvailable()
      * @uses uploadedDirIsWriteable()
@@ -155,12 +155,12 @@ class KcFinderComponent extends Component
     {
         //Checks for KCFinder
         if (!$this->kcFinderIsAvailable()) {
-            throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
+            throw new RuntimeException(__d('me_tools', '{0} is not available', 'KCFinder'));
         }
 
         //Checks for the files directory (`APP/webroot/files`)
         if (!$this->uploadedDirIsWriteable()) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
+            throw new RuntimeException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
 
         //Merges:
@@ -174,7 +174,7 @@ class KcFinderComponent extends Component
         );
 
         //Writes on session
-        $this->getController()->request->session()->write('KCFINDER', $config);
+        $this->getController()->request->getSession()->write('KCFINDER', $config);
 
         parent::initialize($config);
     }

@@ -67,7 +67,7 @@ class UserMailerTest extends TestCase
 
     /**
      * Tests for `activation()` method, with some missing data
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Missing `email` property from data
      * @test
      */
@@ -124,7 +124,7 @@ class UserMailerTest extends TestCase
 
     /**
      * Tests for `changePassword()` method, with some missing data
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Missing `email` property from data
      * @test
      */
@@ -180,7 +180,7 @@ class UserMailerTest extends TestCase
 
     /**
      * Tests for `passwordForgot()` method, with some missing data
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Missing `email` property from data
      * @test
      */

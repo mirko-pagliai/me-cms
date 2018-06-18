@@ -19,7 +19,6 @@ use Cake\ORM\TableRegistry;
 use MeCms\Controller\Admin\UsersController;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\TestSuite\IntegrationTestCase;
-use MeTools\Controller\Component\UploaderComponent;
 
 /**
  * UsersControllerTest class
@@ -103,20 +102,18 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
+        parent::controllerSpy($event, $controller);
+
         //Mocks the `Uploader` component
-        $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
+        $this->_controller->Uploader = $this->getMockBuilder(get_class($this->_controller->Uploader))
             ->setConstructorArgs([new ComponentRegistry])
             ->setMethods(['move_uploaded_file'])
             ->getMock();
 
-        $controller->Uploader->method('move_uploaded_file')
+        $this->_controller->Uploader->method('move_uploaded_file')
             ->will($this->returnCallback(function ($filename, $destination) {
                 return rename($filename, $destination);
             }));
-
-        $controller->viewBuilder()->setLayout('with_flash');
-
-        parent::controllerSpy($event, $controller);
     }
 
     /**
@@ -240,7 +237,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         $loginLogFromView = $this->viewVariable('loginLog');
-        $this->assertNull($loginLogFromView);
+        $this->assertEmpty($loginLogFromView);
 
         Configure::write(ME_CMS . '.users.login_log', 1);
 
@@ -481,8 +478,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertFileNotExists(USER_PICTURES . '1.jpeg');
         $this->assertFileNotExists(USER_PICTURES . '1.png');
 
-        //@codingStandardsIgnoreLine
-        @unlink($expectedPicture);
+        safe_unlink($expectedPicture);
     }
 
     /**

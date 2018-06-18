@@ -17,7 +17,6 @@ use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 use MeCms\Controller\Admin\BannersController;
 use MeCms\TestSuite\IntegrationTestCase;
-use MeTools\Controller\Component\UploaderComponent;
 
 /**
  * BannersControllerTest class
@@ -101,13 +100,15 @@ class BannersControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
+        parent::controllerSpy($event, $controller);
+
         //Mocks the `Uploader` component
-        $controller->Uploader = $this->getMockBuilder(UploaderComponent::class)
+        $this->_controller->Uploader = $this->getMockBuilder(get_class($this->_controller->Uploader))
             ->setConstructorArgs([new ComponentRegistry])
             ->setMethods(['move_uploaded_file'])
             ->getMock();
 
-        $controller->Uploader->method('move_uploaded_file')
+        $this->_controller->Uploader->method('move_uploaded_file')
             ->will($this->returnCallback(function ($filename, $destination) {
                 return rename($filename, $destination);
             }));
@@ -115,13 +116,9 @@ class BannersControllerTest extends IntegrationTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Banners`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $controller->Banners = $this->getMockForModel($controller->Banners->getRegistryAlias(), ['save']);
-            $controller->Banners->method('save')->will($this->returnValue(false));
+            $this->_controller->Banners = $this->getMockForModel($this->_controller->Banners->getRegistryAlias(), ['save']);
+            $this->_controller->Banners->method('save')->will($this->returnValue(false));
         }
-
-        $controller->viewBuilder()->setLayout('with_flash');
-
-        parent::controllerSpy($event, $controller);
     }
 
     /**

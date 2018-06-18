@@ -102,15 +102,6 @@ class ContactUsFormTest extends TestCase
      */
     public function testExecute()
     {
-        $this->ContactUsForm = $this->getMockBuilder(get_class($this->ContactUsForm))
-            ->setMethods(['getMailer'])
-            ->getMock();
-
-        $this->ContactUsForm->method('getMailer')
-            ->will($this->returnCallback(function ($data) {
-                return $this->getMailer($data)->setTransport('debug');
-            }));
-
-        $this->assertEquals(['headers', 'message'], array_keys($this->ContactUsForm->execute($this->example)));
+        $this->assertArrayKeysEqual(['headers', 'message'], $this->ContactUsForm->execute($this->example));
     }
 }

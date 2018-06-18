@@ -12,7 +12,7 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Model\Validation\AppValidator;
+use MeCms\Validation\AppValidator;
 
 /**
  * PostsTag validator class

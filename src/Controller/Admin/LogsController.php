@@ -56,7 +56,7 @@ class LogsController extends AppController
         $log = file_get_contents($log);
 
         if ($serialized) {
-            return unserialize($log);
+            return safe_unserialize($log);
         }
 
         return trim($log);

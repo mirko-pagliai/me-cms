@@ -17,7 +17,7 @@ namespace MeCms\Form;
 use Cake\Form\Form;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Validation\Validator;
-use MeCms\Model\Validation\AppValidator;
+use MeCms\Validation\AppValidator;
 
 /**
  * ContactUsForm class
@@ -30,7 +30,7 @@ class ContactUsForm extends Form
      * Defines the validator using the methods on Cake\Validation\Validator or
      *  loads a pre-defined validator from a concrete class.
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Model\Validation\AppValidator
+     * @return \MeCms\Validation\AppValidator
      */
     protected function _buildValidator(Validator $validator)
     {

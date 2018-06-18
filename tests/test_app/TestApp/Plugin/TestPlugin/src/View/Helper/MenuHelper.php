@@ -7,17 +7,15 @@ class MenuHelper extends Helper
 {
     public $helpers = ['Html' => ['className' => ME_TOOLS . '.Html']];
 
-    //@codingStandardsIgnoreStart
+    //@codingStandardsIgnoreLine
     public function _invalidMethod()
     {
     }
-    //@codingStandardsIgnoreEnd
 
-    //@codingStandardsIgnoreStart
+    //@codingStandardsIgnoreLine
     public function __otherInvalidMethod()
     {
     }
-    //@codingStandardsIgnoreEnd
 
     public function articles()
     {

@@ -110,7 +110,7 @@ class BannersTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Position" field
-        if (!empty($data['position']) && isPositive($data['position'])) {
+        if (!empty($data['position']) && is_positive($data['position'])) {
             $query->where([sprintf('%s.position_id', $this->getAlias()) => $data['position']]);
         }
 

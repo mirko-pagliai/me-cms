@@ -9,18 +9,15 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @since       2.24.0
  */
+namespace MeCms;
 
-if (!function_exists('apache_get_modules')) {
-    function apache_get_modules()
-    {
-        return ['core', 'http_core', 'mod_so', 'sapi_apache2', 'mod_mime', 'mod_rewrite'];
-    }
-}
+use Cake\Core\BasePlugin;
 
-if (!function_exists('apache_get_version')) {
-    function apache_get_version()
-    {
-        return 'Apache/1.3.29 (Unix) PHP/4.3.4';
-    }
+/**
+ * Plugin class
+ */
+class Plugin extends BasePlugin
+{
 }

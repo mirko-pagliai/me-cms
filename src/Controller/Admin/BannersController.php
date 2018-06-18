@@ -133,7 +133,7 @@ class BannersController extends AppController
                 ->save(BANNERS);
 
             if (!$uploaded) {
-                $this->setUploadError($this->Uploader->error());
+                $this->setUploadError($this->Uploader->getError());
 
                 return;
             }

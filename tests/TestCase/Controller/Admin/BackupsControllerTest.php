@@ -85,8 +85,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         //Deletes all backups
         foreach (glob(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . '*') as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
+            safe_unlink($file);
         }
     }
 
@@ -98,27 +97,27 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        if ($this->getName() === 'testSend') {
-            //Only for the `testSend` test, mocks the `send()` method of
-            //  `BackupManager` class, so that it writes on the debug log
-            //  instead of sending a real mail
-            $controller->BackupManager = $this->getMockBuilder(BackupManager::class)
-                ->setMethods(['send'])
-                ->getMock();
+        parent::controllerSpy($event, $controller);
 
-            $controller->BackupManager->method('send')
-                ->will($this->returnCallback(function () {
-                    $args = implode(', ', array_map(function ($arg) {
-                        return '`' . $arg . '`';
-                    }, func_get_args()));
-
-                    return Log::write('debug', 'Called `send()` with args: ' . $args);
-                }));
+        if ($this->getName() !== 'testSend') {
+            return;
         }
 
-        $controller->viewBuilder()->setLayout('with_flash');
+        //Only for the `testSend` test, mocks the `send()` method of
+        //  `BackupManager` class, so that it writes on the debug log
+        //  instead of sending a real mail
+        $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
+            ->setMethods(['send'])
+            ->getMock();
 
-        parent::controllerSpy($event, $controller);
+        $this->_controller->BackupManager->method('send')
+            ->will($this->returnCallback(function () {
+                $args = implode(', ', array_map(function ($arg) {
+                    return '`' . $arg . '`';
+                }, func_get_args()));
+
+                return Log::write('debug', 'Called `send()` with args: ' . $args);
+            }));
     }
 
     /**
@@ -171,7 +170,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['filename' => 'backup.txt']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
 
         //POST request. Now data are valid
         $this->post($url, ['filename' => 'my_backup.sql']);

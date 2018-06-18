@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.24 branch
+### 2.24.0
+* `AppValidator` moved from `MeCms\Model\Validation` to `MeCms\Validation`;
+* updated for CakePHP 3.6, php-tools 1.0.7, me-tools 2.16.10 and
+    cakephp-database-backup 2.5.0.
+
 ## 2.23 branch
 ### 2.23.1
 * now it uses the `mirko-pagliai/php-tools` package. This also replaces

@@ -122,13 +122,11 @@ class KcFinderComponentTest extends TestCase
     {
         $this->assertEquals(['images' => '*img'], $this->KCFinder->getTypes());
 
-        //@codingStandardsIgnoreLine
-        @mkdir(UPLOADED . 'docs');
+        safe_mkdir(UPLOADED . 'docs');
 
         $this->assertEquals(['docs' => '', 'images' => '*img'], $this->KCFinder->getTypes());
 
-        //@codingStandardsIgnoreLine
-        @rmdir(UPLOADED . 'docs');
+        safe_rmdir(UPLOADED . 'docs');
     }
 
     /**
@@ -148,12 +146,12 @@ class KcFinderComponentTest extends TestCase
             'uploadURL',
             'types',
             'access',
-        ], $this->KCFinder->request->session()->read('KCFINDER'));
+        ], $this->KCFinder->request->getSession()->read('KCFINDER'));
     }
 
     /**
      * Test for `initialize()` method, with `uploaded` dir not writable
-     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage File or directory tests/test_app/TestApp/webroot/files/ not writeable
      * @test
      */
@@ -167,7 +165,7 @@ class KcFinderComponentTest extends TestCase
 
     /**
      * Test for `initialize()` method, with KCFinder not available
-     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage KCFinder is not available
      * @test
      */

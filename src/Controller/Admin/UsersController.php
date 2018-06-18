@@ -282,7 +282,7 @@ class UsersController extends AppController
                 ->save(USER_PICTURES, $filename);
 
             if (!$uploaded) {
-                $this->setUploadError($this->Uploader->error());
+                $this->setUploadError($this->Uploader->getError());
 
                 return;
             }

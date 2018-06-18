@@ -152,7 +152,7 @@ class SerializedLogTest extends TestCase
         $this->assertLogContains('Critical: This is a critical message', 'error');
 
         //Tests the serialized log is not empty
-        $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
+        $logs = safe_unserialize(file_get_contents(LOGS . 'error_serialized.log'));
         $this->assertNotEmpty($logs);
 
         $this->assertInstanceOf('stdClass', $logs[0]);
@@ -172,7 +172,7 @@ class SerializedLogTest extends TestCase
         $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4), ['0644', '0664']);
 
         //Deletes all logs, drops and reconfigure, adding `mask`
-        $this->deleteAllLogs();
+        safe_unlink_recursive(LOGS);
         Log::drop('error');
         Log::setConfig('error', array_merge($config, ['mask' => 0777]));
 
@@ -183,7 +183,7 @@ class SerializedLogTest extends TestCase
         $this->assertLogContains('Critical: This is a critical message', 'error');
 
         //Tests the serialized log is not empty
-        $logs = unserialize(file_get_contents(LOGS . 'error_serialized.log'));
+        $logs = safe_unserialize(file_get_contents(LOGS . 'error_serialized.log'));
         $this->assertNotEmpty($logs);
 
         //Checks for fileperms

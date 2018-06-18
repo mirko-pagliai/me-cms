@@ -62,18 +62,18 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
+        parent::controllerSpy($event, $controller);
+
         //Sets key for cookies
-        $controller->Cookie->config('key', $this->keyForCookies);
+        $this->_controller->Cookie->config('key', $this->keyForCookies);
 
         //Mocks the `LoginRecorder` component
-        $controller->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
+        $this->_controller->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
             ->setConstructorArgs([new ComponentRegistry])
             ->getMock();
 
-        $controller->LoginRecorder->method('config')
+        $this->_controller->LoginRecorder->method('config')
             ->will($this->returnSelf());
-
-        parent::controllerSpy($event, $controller);
     }
 
     /**

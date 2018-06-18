@@ -163,8 +163,7 @@ class ViewTest extends TestCase
         //Renders
         $result = $this->View->render(false, ME_CMS . '.default');
 
-        //@codingStandardsIgnoreLine
-        @unlink(WWW_ROOT . 'favicon.ico');
+        safe_unlink(WWW_ROOT . 'favicon.ico');
 
         //Checks for title and favicon
         $this->assertRegExp('/' . preg_quote('<title>title from controller - ' . ME_CMS . '</title>', '/') . '/', $result);
