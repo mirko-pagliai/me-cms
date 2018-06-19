@@ -16,15 +16,10 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
-use Cake\Routing\DispatcherFactory;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
-
-require dirname(__DIR__) . '/vendor/autoload.php';
-
-error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -47,6 +42,11 @@ define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP . 'cakephp_log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
+
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
 safe_mkdir(LOGS);
 safe_mkdir(SESSIONS);
@@ -154,8 +154,6 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
 
-require CORE_PATH . 'config' . DS . 'bootstrap.php';
-
 //Sets debug log
 Log::setConfig('debug', [
     'className' => 'File',
@@ -163,9 +161,6 @@ Log::setConfig('debug', [
     'levels' => ['notice', 'info', 'debug'],
     'file' => 'debug',
 ]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
 
 Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);

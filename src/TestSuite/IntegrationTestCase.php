@@ -71,19 +71,6 @@ class IntegrationTestCase extends BaseIntegrationTestCase
     }
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->useHttpServer(false);
-    }
-
-    /**
      * Adds additional event spies to the controller/view event manager
      * @param \Cake\Event\Event $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
