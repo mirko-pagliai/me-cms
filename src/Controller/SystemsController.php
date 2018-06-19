@@ -14,7 +14,6 @@ namespace MeCms\Controller;
 
 use Cake\Filesystem\File;
 use Cake\I18n\Time;
-use InvalidArgumentException;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
 use MeCms\Utility\Sitemap;
