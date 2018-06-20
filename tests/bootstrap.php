@@ -16,13 +16,10 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
-use Cake\Routing\DispatcherFactory;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
-
-require dirname(__DIR__) . '/vendor/autoload.php';
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -46,13 +43,16 @@ define('CACHE', TMP);
 define('LOGS', TMP . 'cakephp_log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 
-//@codingStandardsIgnoreStart
-@mkdir(LOGS);
-@mkdir(SESSIONS);
-@mkdir(CACHE);
-@mkdir(CACHE . 'views');
-@mkdir(CACHE . 'models');
-//@codingStandardsIgnoreEnd
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
+
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
+safe_mkdir(LOGS);
+safe_mkdir(SESSIONS);
+safe_mkdir(CACHE);
+safe_mkdir(CACHE . 'views');
+safe_mkdir(CACHE . 'models');
 
 Configure::write('debug', true);
 Configure::write('App', [
@@ -69,7 +69,10 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [APP . 'Template' . DS],
+        'templates' => [
+            APP . 'Template' . DS,
+            ROOT . 'src' . DS . 'Template' . DS,
+        ],
     ],
 ]);
 
@@ -96,12 +99,15 @@ ConnectionManager::setConfig('test', ['url' => 'mysql://root@localhost/test']);
 
 Configure::write('Session', ['defaults' => 'php']);
 
+//This adds `apache_get_modules()` and `apache_get_version()` functions
+require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
+
 /**
  * Loads plugins
  */
 Plugin::load('Assets', [
     'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'assets' . DS,
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-assets' . DS,
 ]);
 
 Configure::write('DatabaseBackup.connection', 'test');
@@ -138,9 +144,6 @@ Plugin::load('Thumber', [
     'routes' => true,
 ]);
 
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require 'apache_functions.php';
-
 Plugin::load('MeTools', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
@@ -151,18 +154,13 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
 
-require CORE_PATH . 'config' . DS . 'bootstrap.php';
-
 //Sets debug log
-Log::config('debug', [
+Log::setConfig('debug', [
     'className' => 'File',
     'path' => LOGS,
     'levels' => ['notice', 'info', 'debug'],
     'file' => 'debug',
 ]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
 
 Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
@@ -170,7 +168,7 @@ Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
 
 //This makes it believe that KCFinder is installed
-$kcfinder = WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php';
-//@codingStandardsIgnoreLine
-@mkdir(dirname($kcfinder));
-file_put_contents($kcfinder, null);
+safe_mkdir(KCFINDER, 0777, true);
+file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+
+$_SERVER['PHP_SELF'] = '/';

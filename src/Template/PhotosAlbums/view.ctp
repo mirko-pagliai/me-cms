@@ -21,17 +21,17 @@ if (getConfig('default.fancybox')) {
  * Userbar
  */
 if (!$album->active) {
-    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'badge badge-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit album'),
     ['action' => 'edit', $album->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete album'),
     ['action' => 'delete', $album->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    ['class' => 'nav-link text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**
@@ -39,41 +39,39 @@ $this->userbar($this->Form->postLink(
  */
 $this->Breadcrumbs->add(I18N_PHOTOS, ['_name' => 'albums']);
 $this->Breadcrumbs->add($title, ['_name' => 'album', $album->slug]);
+
+//Sets base options for each photo
+$baseOptions = ['class' => 'd-block'];
+
+//If Fancybox is enabled
+if (getConfig('default.fancybox')) {
+    $baseOptions = ['class' => 'd-block fancybox', 'rel' => 'fancybox-group'];
+}
 ?>
 
-<div class="clearfix">
-    <?php foreach ($photos as $photo) : ?>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="photo-box">
-                <?php
-                $text = implode(PHP_EOL, [
-                    $this->Thumb->fit($photo->path, ['width' => 275]),
-                    $this->Html->div('photo-info', $this->Html->div(
-                        null,
-                        $this->Html->para('small', $photo->description)
-                    )),
-                ]);
+<div class="row">
+    <?php
+    foreach ($photos as $photo) {
+        $linkOptions = $baseOptions;
+        if ($photo->has('description')) {
+            $linkOptions += ['title' => $photo->description];
+        }
 
-                $options = ['class' => 'thumbnail', 'title' => $photo->description];
+        $link = ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id];
+        $path = $photo->path;
+        $text = $photo->description;
 
-                //If Fancybox is enabled, adds some options
-                if (getConfig('default.fancybox')) {
-                    $options = array_merge($options, [
-                        'class' => 'fancybox thumbnail',
-                        'data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280]),
-                        'rel' => 'group',
-                    ]);
-                }
+        //If Fancybox is enabled, adds some options
+        if (getConfig('default.fancybox')) {
+            $linkOptions += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->path, ['height' => 1280])];
+        }
 
-                echo $this->Html->link(
-                    $text,
-                    ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id],
-                    $options
-                );
-                ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
+        echo $this->Html->div(
+            'col-md-4 col-lg-3 mb-4',
+            $this->element(ME_CMS . '.views/photo-preview', compact('link', 'linkOptions', 'path', 'text'))
+        );
+    }
+    ?>
 </div>
 
 <?= $this->element('MeTools.paginator') ?>

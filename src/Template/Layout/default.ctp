@@ -20,27 +20,27 @@
             echo $this->Html->title($this->fetch('title'));
             echo $this->fetch('meta');
 
-            echo $this->Html->css('https://fonts.googleapis.com/css?family=Roboto', ['block' => true]);
-            echo $this->Asset->css([
+            echo $this->Html->css([
+                'https://fonts.googleapis.com/css?family=Roboto|Abel',
                 '/vendor/font-awesome/css/font-awesome.min',
-                ME_CMS . '.bootstrap.min',
-                METOOLS . '.default',
-                METOOLS . '.forms',
+            ], ['block' => true]);
+            echo $this->Asset->css([
+                '/vendor/bootstrap/css/bootstrap.min',
+                ME_TOOLS . '.default',
+                ME_TOOLS . '.forms',
                 ME_CMS . '.userbar',
                 ME_CMS . '.cookies',
-                ME_CMS . '.widgets',
                 ME_CMS . '.layout',
                 ME_CMS . '.contents',
-                ME_CMS . '.photos'
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
-                ME_CMS . '.bootstrap.min',
-                METOOLS . '.default',
-                ME_CMS . '.layout'
+                '/vendor/bootstrap/js/bootstrap.bundle.min',
+                ME_TOOLS . '.default',
+                ME_CMS . '.layout',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
@@ -48,7 +48,7 @@
     <body>
         <?= $this->element(ME_CMS . '.userbar') ?>
         <?= $this->element(ME_CMS . '.cookies_policy') ?>
-        <header>
+        <header id="header">
             <div class="container">
                 <?php
                 $logo = $this->Html->h1(getConfigOrFail('main.title'));
@@ -72,9 +72,9 @@
             echo $this->element(ME_CMS . '.topbar', [], ['cache' => $topbarCache]);
             ?>
         </header>
-        <div class="container">
+        <div class="container mb-4">
             <div class="row">
-                <div id="content" class="col-sm-8 col-md-9">
+                <main id="content" class="col-lg-9">
                     <?php
                     echo $this->Flash->render();
 
@@ -85,11 +85,11 @@
 
                     echo $this->fetch('content');
                     ?>
-                </div>
-                <div id="sidebar" class="col-sm-4 col-md-3">
+                </main>
+                <nav id="sidebar" class="col">
                     <?= $this->fetch('sidebar') ?>
                     <?= $this->Widget->all() ?>
-                </div>
+                </nav>
             </div>
         </div>
         <?php

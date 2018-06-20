@@ -47,6 +47,7 @@ class SystemsControllerTest extends IntegrationTestCase
     /**
      * Internal method to create some temporary data (cache, assets, logs,
      *  sitemap, thumbnails)
+     * @return array Files
      */
     protected function createSomeTemporaryData()
     {
@@ -54,17 +55,18 @@ class SystemsControllerTest extends IntegrationTestCase
         Cache::write('value', 'data');
         Cache::write('valueFromGroup', 'data', 'posts');
 
-        //Creates some asset files
-        file_put_contents(getConfigOrFail(ASSETS . '.target') . DS . 'asset_file', str_repeat('a', 10));
+        $files = [
+            'asset' => getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
+            'log' => LOGS . 'log_file',
+            'sitemap' => SITEMAP,
+            'thumb' => getConfigOrFail(THUMBER . '.target') . DS . md5(null) . '_' . md5(null) . '.jpg',
+        ];
 
-        //Creates some log file
-        file_put_contents(LOGS . 'log_file', str_repeat('a', 10));
+        foreach ($files as $file) {
+            file_put_contents($file, str_repeat('a', 255));
+        }
 
-        //Creates a sitemap file
-        file_put_contents(SITEMAP, str_repeat('a', 10));
-
-        //Creates a thumbnail
-        file_put_contents(getConfigOrFail(THUMBER . '.target') . DS . 'thumb.jpg', str_repeat('a', 10));
+        return $files;
     }
 
     /**
@@ -86,6 +88,28 @@ class SystemsControllerTest extends IntegrationTestCase
         Cache::clearAll();
 
         $this->url = ['controller' => 'Systems', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        //Deletes all temporary files
+        foreach ([
+            getConfigOrFail(ASSETS . '.target') . DS,
+            LOGS,
+            getConfigOrFail(THUMBER . '.target') . DS,
+        ] as $dir) {
+            foreach (glob($dir . '*') as $file) {
+                safe_unlink($file);
+            }
+        }
+
+        safe_unlink(SITEMAP);
     }
 
     /**
@@ -139,8 +163,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testBrowser()
     {
-        //@codingStandardsIgnoreLine
-        @mkdir(UPLOADED . 'docs');
+        safe_mkdir(UPLOADED . 'docs');
 
         $url = array_merge($this->url, ['action' => 'browser']);
 
@@ -178,8 +201,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $kcfinderFromView = $this->viewVariable('kcfinder');
         $this->assertEquals('http://localhost/vendor/kcfinder/browse.php?lang=it&type=docs', $kcfinderFromView);
 
-        //@codingStandardsIgnoreLine
-        @rmdir(UPLOADED . 'docs');
+        safe_rmdir(UPLOADED . 'docs');
 
         //GET request. Now only the `images` type exists
         $this->get($url);
@@ -242,6 +264,8 @@ class SystemsControllerTest extends IntegrationTestCase
             'temporary',
             'plugins',
             'phpExtensions',
+            'kcfinder',
+            'cakephp',
             'cache',
             'backups',
             'apache',
@@ -254,8 +278,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testClearSitemap()
     {
-        //@codingStandardsIgnoreLine
-        @unlink(SITEMAP);
+        safe_unlink(SITEMAP);
 
         $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
 
@@ -272,7 +295,7 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $url = array_merge($this->url, ['action' => 'tmpCleaner']);
 
-        $this->createSomeTemporaryData();
+        $files = $this->createSomeTemporaryData();
 
         //POST request. Cleans all
         $this->post(array_merge($url, ['all']));
@@ -280,16 +303,11 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertCacheIsEmpty();
 
-        foreach ([
-            getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
-            LOGS . 'log_file',
-            SITEMAP,
-            getConfigOrFail(THUMBER . '.target') . DS . 'thumb.jpg',
-        ] as $file) {
+        foreach ($files as $file) {
             $this->assertFileNotExists($file);
         }
 
-        $this->createSomeTemporaryData();
+        $files = $this->createSomeTemporaryData();
 
         //POST request. Cleans the cache
         $this->post(array_merge($url, ['cache']));
@@ -301,25 +319,25 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->post(array_merge($url, ['assets']));
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists(getConfigOrFail(ASSETS . '.target') . DS . 'asset_file');
+        $this->assertFileNotExists($files['asset']);
 
         //POST request. Cleans logs
         $this->post(array_merge($url, ['logs']));
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists(LOGS . 'log_file');
+        $this->assertFileNotExists($files['log']);
 
         //POST request. Cleans the sitemap
         $this->post(array_merge($url, ['sitemap']));
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists(SITEMAP);
+        $this->assertFileNotExists($files['sitemap']);
 
         //POST request. Cleans thumbnails
         $this->post(array_merge($url, ['thumbs']));
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists(getConfigOrFail(THUMBER . '.target') . DS . 'thumb.jpg');
+        $this->assertFileNotExists($files['thumb']);
 
         //POST request. Invalid type
         $this->post(array_merge($url, ['invalidType']));

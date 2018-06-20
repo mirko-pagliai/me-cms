@@ -64,8 +64,6 @@ class BannerTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $this->assertNull($this->Banner->path);
-
         $this->Banner->filename = 'example.gif';
         $this->assertEquals(BANNERS . 'example.gif', $this->Banner->path);
     }
@@ -76,8 +74,6 @@ class BannerTest extends TestCase
      */
     public function testWwwGetMutator()
     {
-        $this->assertNull($this->Banner->www);
-
         $this->Banner->filename = 'example.gif';
         $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Banner->www);
     }

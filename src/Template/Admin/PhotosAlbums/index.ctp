@@ -30,13 +30,13 @@ $this->append('actions', $this->Html->button(
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
             <th class="text-center"><?= I18N_DESCRIPTION ?></th>
-            <th class="min-width text-center"><?= $this->Paginator->sort('photo_count', I18N_PHOTOS) ?></th>
+            <th class="text-nowrap text-center"><?= $this->Paginator->sort('photo_count', I18N_PHOTOS) ?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($albums as $album) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $album->id ?></code>
                 </td>
                 <td>
@@ -50,11 +50,11 @@ $this->append('actions', $this->Html->button(
 
                     //Only admins and managers can delete albums
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $album->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $album->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     $actions[] = $this->Html->link(
@@ -77,7 +77,7 @@ $this->append('actions', $this->Html->button(
                 <td class="text-center">
                     <?= $album->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($album->photo_count) {
                         echo $this->Html->link(

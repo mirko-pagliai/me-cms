@@ -114,7 +114,7 @@ class PostsCategoriesTableTest extends TestCase
         $this->assertTrue($this->PostsCategories->hasBehavior('Timestamp'));
         $this->assertTrue($this->PostsCategories->hasBehavior('Tree'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PostsCategoryValidator', $this->PostsCategories->getValidator());
+        $this->assertInstanceOf('MeCms\Model\Validation\PostsCategoryValidator', [$this->PostsCategories->getValidator()]);
     }
     /**
      * Test for the `belongsTo` association with `PostsCategories` parents

@@ -68,13 +68,15 @@ class AppTable extends Table
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if (array_key_exists('created', $entity->toArray()) && !$entity->created instanceof Time) {
+        if (empty($entity->created)) {
+            $entity->created = new Time;
+        } elseif (!empty($entity->created) && !$entity->created instanceof Time) {
             $entity->created = new Time($entity->created);
         }
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -88,21 +90,23 @@ class AppTable extends Table
     }
 
     /**
-     * "Pending" find method
+     * "pending" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => false])
-            ->orWhere([sprintf('%s.created >', $this->getAlias()) => new Time]);
+        $query->where(['OR' => [
+            sprintf('%s.active', $this->getAlias()) => false,
+            sprintf('%s.created >', $this->getAlias()) => new Time,
+        ]]);
 
         return $query;
     }
 
     /**
-     * "Random" find method
+     * "random" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -144,13 +148,13 @@ class AppTable extends Table
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])
     {
         //"ID" field
-        if (!empty($data['id']) && isPositive($data['id'])) {
+        if (!empty($data['id']) && is_positive($data['id'])) {
             $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
         }
 
@@ -165,12 +169,12 @@ class AppTable extends Table
         }
 
         //"User" (author) field
-        if (!empty($data['user']) && isPositive($data['user'])) {
+        if (!empty($data['user']) && is_positive($data['user'])) {
             $query->where([sprintf('%s.user_id', $this->getAlias()) => $data['user']]);
         }
 
         //"Category" field
-        if (!empty($data['category']) && isPositive($data['category'])) {
+        if (!empty($data['category']) && is_positive($data['category'])) {
             $query->where([sprintf('%s.category_id', $this->getAlias()) => $data['category']]);
         }
 

@@ -19,19 +19,6 @@ $this->append('actions', $this->Html->button(
 ));
 ?>
 
-<?= $this->Html->cssStart() ?>
-    .index > div > div {
-        margin-bottom: -10px;
-        padding: 10px 5px;
-    }
-
-    .index > div > div > div {
-        background-color: #f9f9f9;
-        border-bottom: 1px solid #ddd;
-        padding: 15px 15px;
-    }
-<?= $this->Html->cssEnd() ?>
-
 <?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
         <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
@@ -51,20 +38,20 @@ $this->append('actions', $this->Html->button(
     </fieldset>
 <?= $this->Form->end() ?>
 
-<div class="div-striped row">
+<div class="row">
     <?php foreach ($tags as $tag) : ?>
-        <div class="col-sm-3">
-            <div>
-                <div class="small">
-                    <?= I18N_ID ?> <code><?= $tag->id ?></code>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-light px-3 py-2 border-0">
+                <div>
+                    <samp><?= I18N_ID ?> <?= $tag->id ?></samp>
                 </div>
-                <div class="no-wrap">
+                <div class="mb-1">
                     <?= $this->Html->link(
                         $this->Html->strong($tag->tag),
                         ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]
                     ) ?>
                 </div>
-                <div class="small">
+                <div class="mb-1">
                     <?= sprintf('(%s)', $this->Html->link(
                         __dn('me_cms', '{0} post', '{0} posts', $tag->post_count, $tag->post_count),
                         ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]],
@@ -89,7 +76,7 @@ $this->append('actions', $this->Html->button(
                     ['icon' => 'external-link', 'target' => '_blank']
                 );
 
-                echo $this->Html->ul($actions, ['class' => 'actions']);
+                echo $this->Html->ul($actions, ['class' => 'actions mt-0 p-0']);
                 ?>
             </div>
         </div>

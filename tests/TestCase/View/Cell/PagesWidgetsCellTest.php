@@ -68,7 +68,7 @@ class PagesWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Pages categories',
             '/h4',
@@ -95,7 +95,7 @@ class PagesWidgetsCellTest extends TestCase
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Pages categories',
             '/h4',
@@ -161,7 +161,7 @@ class PagesWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Pages',
             '/h4',

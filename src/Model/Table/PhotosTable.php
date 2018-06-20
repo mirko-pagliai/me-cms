@@ -53,8 +53,7 @@ class PhotosTable extends AppTable
     {
         //Deletes the file
         if (file_exists($entity->path) && is_writable($entity->path)) {
-            //@codingStandardsIgnoreLine
-            @unlink($entity->path);
+            safe_unlink($entity->path);
         }
 
         parent::afterDelete($event, $entity, $options);
@@ -93,7 +92,7 @@ class PhotosTable extends AppTable
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -106,7 +105,7 @@ class PhotosTable extends AppTable
     }
 
     /**
-     * "Pending" find method
+     * "pending" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -144,7 +143,7 @@ class PhotosTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -153,7 +152,7 @@ class PhotosTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Album" field
-        if (!empty($data['album']) && isPositive($data['album'])) {
+        if (!empty($data['album']) && is_positive($data['album'])) {
             $query->where([sprintf('%s.album_id', $this->getAlias()) => $data['album']]);
         }
 

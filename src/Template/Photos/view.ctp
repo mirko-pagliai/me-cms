@@ -17,17 +17,22 @@ $this->assign('title', $title = $photo->filename);
  * Userbar
  */
 if (!$photo->active) {
-    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'label label-warning']));
+    $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'badge badge-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit photo'),
     ['action' => 'edit', $photo->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete photo'),
     ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
-    ['icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
+    [
+        'class' => 'nav-link text-danger',
+        'icon' => 'trash-o',
+        'confirm' => I18N_SURE_TO_DELETE,
+        'target' => '_blank',
+    ]
 ));
 
 /**
@@ -41,22 +46,20 @@ $this->Breadcrumbs->add($title, ['_name' => 'photo', 'slug' => $photo->album->sl
  * Meta tags
  */
 if ($this->request->isAction('view', 'Photos')) {
-    $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
-
-    if ($photo->preview) {
-        $this->Html->meta(['href' => $photo->preview['preview'], 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $photo->preview['preview'], 'property' => 'og:image']);
-        $this->Html->meta(['content' => $photo->preview['width'], 'property' => 'og:image:width']);
-        $this->Html->meta(['content' => $photo->preview['height'], 'property' => 'og:image:height']);
+    if ($photo->has('modified')) {
+        $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
     }
 
-    if ($photo->description) {
+    if ($photo->has('preview')) {
+        $this->Html->meta(['href' => $photo->preview->url, 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $photo->preview->url, 'property' => 'og:image']);
+        $this->Html->meta(['content' => $photo->preview->width, 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $photo->preview->height, 'property' => 'og:image:height']);
+    }
+
+    if ($photo->has('description')) {
         $this->Html->meta([
-            'content' => $this->Text->truncate(
-                trim(strip_tags($this->BBCode->remove($photo->description))),
-                100,
-                ['html' => true]
-            ),
+            'content' => $this->Text->truncate($photo->plain_description, 100, ['html' => true]),
             'property' => 'og:description',
         ]);
     }

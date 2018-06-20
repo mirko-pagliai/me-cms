@@ -10,46 +10,34 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+$link = ['_name' => 'post', $post->slug];
+$title = $post->title;
 ?>
 
-<div class="content-preview">
-    <a href="<?= $this->Url->build(['_name' => 'post', $post->slug]) ?>">
-        <div>
-            <div>
-                <div class="content-title">
-                    <?php
-                    if (isset($truncate['title']) && !$truncate['title']) {
-                        echo $post->title;
-                    } else {
-                        echo $this->Text->truncate(
-                            $post->title,
-                            empty($truncate['title']) ? 40 : $truncate['title'],
-                            ['exact' => false]
-                        );
-                    }
-                    ?>
-                </div>
-                <?php if ($post->text) : ?>
-                    <div class="content-text">
-                        <?php
-                        if (isset($truncate['text']) && !$truncate['text']) {
-                            echo strip_tags($post->text);
-                        } else {
-                            echo $this->Text->truncate(
-                                strip_tags($post->text),
-                                empty($truncate['text']) ? 80 : $truncate['text'],
-                                ['exact' => false]
-                            );
-                        }
-                        ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
+<div class="card">
+    <?php
+    if (!isset($truncate['title']) || $truncate['title']) {
+        $truncate['title'] = empty($truncate['title']) ? 40 : $truncate['title'];
+        $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
+    }
+    echo $this->Html->link($title, $link, ['class' => 'card-header card-title p-2 text-truncate']);
+
+    if (!empty($post->preview[0])) {
+        $thumb = $this->Thumb->fit($post->preview[0]->url, ['width' => 205], ['class' => 'card-img rounded-0']);
+        echo $this->Html->link($thumb, $link);
+    }
+    ?>
+
+    <div class="card-body small p-2">
         <?php
-        if ($post->preview) {
-            echo $this->Thumb->fit($post->preview['preview'], ['width' => 205]);
+        if ($post->has('text')) {
+            $text = strip_tags($post->text);
+            if (!isset($truncate['text']) || $truncate['text']) {
+                $truncate['text'] = empty($truncate['text']) ? 80 : $truncate['text'];
+                $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
+            }
+            echo $this->Html->para('card-text', $text);
         }
         ?>
-    </a>
+    </div>
 </div>

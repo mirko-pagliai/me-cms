@@ -14,7 +14,7 @@ namespace MeCms\Model\Validation;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\TableRegistry;
-use MeCms\Model\Validation\AppValidator;
+use MeCms\Validation\AppValidator;
 
 /**
  * User validator class
@@ -27,7 +27,7 @@ class UserValidator extends AppValidator
      * Adds some validation rules.
      * @uses Cake\Auth\DefaultPasswordHasher::check()
      * @uses Cake\ORM\TableRegistry::get()
-     * @uses MeCms\Model\Validation\AppValidator::__construct()
+     * @uses MeCms\Validation\AppValidator::__construct()
      */
     public function __construct()
     {

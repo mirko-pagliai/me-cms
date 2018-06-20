@@ -68,7 +68,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -82,7 +82,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * "Banned" find method
+     * "banned" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -95,7 +95,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * "Pending" find method
+     * "pending" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -160,7 +160,7 @@ class UsersTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -174,7 +174,7 @@ class UsersTable extends AppTable
         }
 
         //"Group" field
-        if (!empty($data['group']) && isPositive($data['group'])) {
+        if (!empty($data['group']) && is_positive($data['group'])) {
             $query->where([sprintf('%s.group_id', $this->getAlias()) => $data['group']]);
         }
 

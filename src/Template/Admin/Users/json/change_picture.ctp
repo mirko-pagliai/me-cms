@@ -1,4 +1,5 @@
-/*!
+<?php
+/**
  * This file is part of me-cms.
  *
  * Licensed under The MIT License
@@ -9,27 +10,4 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
-/* Changelog, h1 */
-#changelog > h1 {
-    font-size: 22px;
-    margin: 0 0 10px;
-}
-
-/* Changelog, h2 */
-#changelog > h2 {
-    font-size: 18px;
-    margin: 0 0 10px 10px;
-}
-
-/* Changelog, h3 */
-#changelog > h3 {
-    font-size: 16px;
-    margin: 0 0 0 20px;
-}
-
-/* Changelog, lists */
-#changelog > ul {
-    list-style: decimal outside none;
-    margin: 0 0 15px 20px;
-}
+echo json_encode(compact('error'));

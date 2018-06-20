@@ -13,6 +13,8 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\View\HelperRegistry;
+use Cake\View\View;
 
 /**
  * Post entity
@@ -49,7 +51,23 @@ class Post extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['tags_as_string'];
+    protected $_virtual = ['plain_text', 'tags_as_string'];
+
+    /**
+     * Gets text as plain text (virtual field)
+     * @return string|void
+     */
+    protected function _getPlainText()
+    {
+        if (empty($this->_properties['text'])) {
+            return;
+        }
+
+        //Loads the `BBCode` helper
+        $BBCode = (new HelperRegistry(new View))->load(ME_TOOLS . '.BBCode');
+
+        return trim(strip_tags($BBCode->remove($this->_properties['text'])));
+    }
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)

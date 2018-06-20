@@ -54,11 +54,9 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
-
-        $controller->viewBuilder()->setLayout('with_flash');
-
         parent::controllerSpy($event, $controller);
+
+        $this->_controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
     }
 
     /**
@@ -184,8 +182,7 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->loadFixtures();
 
-        //@codingStandardsIgnoreLine
-        @unlink(SITEMAP);
+        safe_unlink(SITEMAP);
 
         //GET request. The sitemap will be created
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);

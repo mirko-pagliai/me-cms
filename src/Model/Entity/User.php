@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
 
 /**
@@ -50,19 +51,37 @@ class User extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['full_name'];
+    protected $_virtual = ['full_name', 'picture'];
 
     /**
      * Gets the full name (virtual field)
-     * @return string|void
+     * @return string
      */
     protected function _getFullName()
     {
-        if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
-            return;
+        return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
+    }
+
+    /**
+     * Gets the picture (virtual field)
+     * @return string
+     */
+    protected function _getPicture()
+    {
+        if (!empty($this->_properties['id'])) {
+            $files = ((new Folder(USER_PICTURES))->find($this->_properties['id'] . '\..+'));
+
+            if (!empty($files)) {
+                return 'users' . DS . array_values($files)[0];
+            }
         }
 
-        return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
+        //Checks for `webroot/img/no-avatar.jpg`
+        if (is_readable(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
+            return 'no-avatar.jpg';
+        }
+
+        return ME_CMS . '.no-avatar.jpg';
     }
 
     /**

@@ -21,7 +21,8 @@ use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
-use MeTools\Utility\Apache;
+use MeCms\Utility\Checkup;
+use Thumber\Utility\ThumbManager;
 
 /**
  * Systems controller
@@ -123,78 +124,37 @@ class SystemsController extends AppController
     /**
      * System checkup
      * @return void
-     * @uses MeCms\Core\Plugin::all()
-     * @uses MeCms\Core\Plugin::path()
-     * @uses MeTools\Utility\Apache::module()
-     * @uses MeTools\Utility\Apache::version()
+     * @uses MeCms\Utility\Checkup::$Apache
+     * @uses MeCms\Utility\Checkup::$Backups
+     * @uses MeCms\Utility\Checkup::$KCFinder
+     * @uses MeCms\Utility\Checkup::$PHP
+     * @uses MeCms\Utility\Checkup::$Plugin
+     * @uses MeCms\Utility\Checkup::$TMP
+     * @uses MeCms\Utility\Checkup::$Webroot
      */
     public function checkup()
     {
-        $checkup['apache'] = [
-            'expires' => Apache::module('mod_expires'),
-            'rewrite' => Apache::module('mod_rewrite'),
-            'version' => Apache::version(),
-        ];
+        $Checkup = new Checkup;
 
-        $databaseBackupTarget = getConfigOrFail(DATABASE_BACKUP . '.target') . DS;
-
-        $checkup['backups'] = [
-            'path' => rtr($databaseBackupTarget),
-            'writeable' => folderIsWriteable($databaseBackupTarget),
-        ];
-
-        $checkup['cache'] = Cache::enabled();
-
-        //Checks for PHP's extensions
-        foreach (['exif', 'imagick', 'mcrypt', 'zip'] as $extension) {
-            $checkup['phpExtensions'][$extension] = extension_loaded($extension);
-        }
-
-        $checkup['plugins'] = [
+        $results = [
+            'apache' => [
+                'modules' => $Checkup->Apache->modules(),
+                'version' => $Checkup->Apache->version(),
+            ],
+            'backups' => $Checkup->Backups->isWriteable(),
+            'cache' => Cache::enabled(),
             'cakephp' => Configure::version(),
-            'mecms' => trim(file_get_contents(Plugin::path(ME_CMS, 'version'))),
+            'kcfinder' => [
+                'htaccess' => $Checkup->KCFinder->htaccess(),
+                'version' => $Checkup->KCFinder->version(),
+            ],
+            'phpExtensions' => $Checkup->PHP->extensions(),
+            'plugins' => $Checkup->Plugin->versions(),
+            'temporary' => $Checkup->TMP->isWriteable(),
+            'webroot' => $Checkup->Webroot->isWriteable(),
         ];
 
-        //Gets plugins versions
-        foreach (Plugin::all(['exclude' => ME_CMS]) as $plugin) {
-            $file = Plugin::path($plugin, 'version', true);
-
-            if ($file) {
-                $checkup['plugins']['plugins'][$plugin] = trim(file_get_contents($file));
-            } else {
-                $checkup['plugins']['plugins'][$plugin] = __d('me_cms', 'n.a.');
-            }
-        }
-
-        //Checks for temporary directories
-        foreach ([
-            LOGS,
-            TMP,
-            getConfigOrFail(ASSETS . '.target'),
-            CACHE,
-            LOGIN_RECORDS,
-            getConfigOrFail(THUMBER . '.target'),
-        ] as $path) {
-            $checkup['temporary'][] = [
-                'path' => rtr($path),
-                'writeable' => folderIsWriteable($path),
-            ];
-        }
-
-        //Checks for webroot directories
-        foreach ([
-            BANNERS,
-            PHOTOS,
-            WWW_ROOT . 'files',
-            WWW_ROOT . 'fonts',
-        ] as $path) {
-            $checkup['webroot'][] = [
-                'path' => rtr($path),
-                'writeable' => folderIsWriteable($path),
-            ];
-        }
-
-        foreach ($checkup as $key => $value) {
+        foreach ($results as $key => $value) {
             $this->set($key, $value);
         };
     }
@@ -236,13 +196,12 @@ class SystemsController extends AppController
         }
 
         $assetsTarget = getConfigOrFail(ASSETS . '.target');
-        $thumberTarget = getConfigOrFail(THUMBER . '.target');
         $success = false;
 
         switch ($type) {
             case 'all':
                 $success = clearDir($assetsTarget) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap() && clearDir($thumberTarget);
+                    && self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
@@ -257,7 +216,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = clearDir($thumberTarget);
+                $success = (new ThumbManager)->clearAll();
                 break;
         }
 

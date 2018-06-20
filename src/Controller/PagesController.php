@@ -13,6 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
@@ -58,11 +59,11 @@ class PagesController extends AppController
         $static = StaticPage::get($slug);
 
         if ($static) {
-            $page = (object)array_merge([
-                'category' => (object)['slug' => null, 'title' => null],
+            $page = new Entity(array_merge([
+                'category' => new Entity(['slug' => null, 'title' => null]),
                 'title' => StaticPage::title($slug),
                 'subtitle' => null,
-            ], compact('slug'));
+            ], compact('slug')));
 
             $this->set(compact('page'));
 
@@ -70,7 +71,7 @@ class PagesController extends AppController
         }
 
         $page = $this->Pages->find('active')
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
+            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
             ->contain($this->Pages->Categories->getAlias(), function (Query $q) {
                 return $q->select(['title', 'slug']);
             })

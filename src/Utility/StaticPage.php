@@ -136,15 +136,16 @@ class StaticPage
     public static function get($slug)
     {
         $locale = I18n::getLocale();
+        $slug = array_filter(explode('/', $slug));
 
         //Sets the cache name
-        $cache = sprintf('page_%s_locale_%s', md5($slug), $locale);
+        $cache = sprintf('page_%s_locale_%s', md5(serialize($slug)), $locale);
 
         $page = Cache::read($cache, 'static_pages');
 
         if (empty($page)) {
             //Sets the (partial) filename
-            $filename = implode(DS, array_filter(explode('/', $slug)));
+            $filename = implode(DS, $slug);
 
             //Sets the filename patterns
             $patterns = [$filename . '-' . $locale, $filename];

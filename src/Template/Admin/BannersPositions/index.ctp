@@ -37,7 +37,7 @@ $this->append('actions', $this->Html->button(
     <tbody>
         <?php foreach ($positions as $position) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $position->id ?></code>
                 </td>
                 <td>
@@ -51,11 +51,11 @@ $this->append('actions', $this->Html->button(
                             ['action' => 'edit', $position->id],
                             ['icon' => 'pencil']
                         );
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $position->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $position->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                         $actions[] = $this->Html->link(
                             I18N_UPLOAD,
                             [ 'controller' => 'Banners', 'action' => 'upload', '?' => ['position' => $position->id]],
@@ -68,7 +68,7 @@ $this->append('actions', $this->Html->button(
                 <td class="text-center">
                     <?= $position->description ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     if ($position->banner_count) {
                         echo $this->Html->link(

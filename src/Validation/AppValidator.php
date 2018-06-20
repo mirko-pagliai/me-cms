@@ -10,22 +10,15 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace MeCms\Model\Validation;
+namespace MeCms\Validation;
 
 use Cake\Validation\Validator;
 
 /**
  * Application validator class.
- * Used for validation of model data, it adds some default validation rules.
  *
- * Example:
- * <code>
- * public function validationDefault(Validator $validator) {
- *  $validator = new \MeCms\Model\Validation\AppValidator;
- *
- *  return $validator;
- * }
- * </code>
+ * This class adds some common rules and provides some common methods for all
+ *  validators.
  */
 class AppValidator extends Validator
 {

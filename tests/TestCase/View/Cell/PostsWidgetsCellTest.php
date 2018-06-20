@@ -68,7 +68,7 @@ class PostsWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Posts categories',
             '/h4',
@@ -95,7 +95,7 @@ class PostsWidgetsCellTest extends TestCase
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Posts categories',
             '/h4',
@@ -164,7 +164,7 @@ class PostsWidgetsCellTest extends TestCase
         //Tries with a limit of 1
         $result = $this->Widget->widget($widget, ['limit' => 1])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Latest post',
             '/h4',
@@ -190,7 +190,7 @@ class PostsWidgetsCellTest extends TestCase
         //Tries with a limit of 2
         $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Latest 2 posts',
             '/h4',
@@ -254,7 +254,7 @@ class PostsWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Posts by month',
             '/h4',
@@ -281,7 +281,7 @@ class PostsWidgetsCellTest extends TestCase
         //Renders as list
         $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Posts by month',
             '/h4',
@@ -352,22 +352,32 @@ class PostsWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Search posts',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'class' => 'form-inline', 'action' => '/posts/search'],
-            ['div' => ['class' => 'input form-group text']],
+            'form' => [
+                'method' => 'get',
+                'accept-charset' => 'utf-8',
+                'class' => 'form-inline',
+                'action' => '/posts/search',
+            ],
+            ['div' => ['class' => 'form-group input text']],
             ['div' => ['class' => 'input-group']],
-            'input' => ['type' => 'text', 'name' => 'p', 'placeholder' => 'Search...', 'class' => 'form-control'],
-            'span' => ['class' => 'input-group-btn'],
-            'button' => ['class' => 'btn-primary btn', 'type' => 'button'],
+            'input' => [
+                'type' => 'text',
+                'name' => 'p',
+                'placeholder' => 'Search...',
+                'class' => 'form-control',
+            ],
+            ['div' => ['class' => 'input-group-append']],
+            'button' => ['class' => 'btn btn-primary', 'type' => 'submit'],
             'i' => ['class' => 'fa fa-search'],
             ' ',
             '/i',
             '/button',
-            '/span',
+            '/div',
             '/div',
             '/div',
             '/form',

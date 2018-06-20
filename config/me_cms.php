@@ -106,8 +106,10 @@ return [ME_CMS => [
     ],
     //Posts
     'post' => [
-        //Displays the post author
+        //Displays the author name as "Posted by"
         'author' => true,
+        //Displays the author picture
+        'author_picture' => true,
         //Displays the post category
         'category' => true,
         //Displays the post created datetime
@@ -153,9 +155,9 @@ return [ME_CMS => [
     //Users
     'users' => [
         //How to activating accounts:
-        //	`0` - No activation required, the account is immediately active;
-        //	`1` - The account will be enabled by the user via email (default);
-        //	`2`	- The account will be enabled by an administrator.
+        //  `0` - No activation required, the account is immediately active;
+        //  `1` - The account will be enabled by the user via email (default);
+        //  `2` - The account will be enabled by an administrator.
         'activation' => 1,
         //Login with cookies ("remember me" function)
         'cookies_login' => true,
@@ -167,7 +169,8 @@ return [ME_CMS => [
         'reset_password' => true,
         //Signup (enabled or disabled)
         'signup' => true,
-        //Displays the userbar
+        //Displays the userbar. This will have effect only on the frontend; in
+        //  the backend, the userbar will always be visible
         'userbar' => true,
     ],
 ]];

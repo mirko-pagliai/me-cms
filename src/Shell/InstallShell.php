@@ -15,6 +15,7 @@ namespace MeCms\Shell;
 use Cake\Console\ConsoleIo;
 use Cake\Core\App;
 use Cake\Datasource\ConnectionManager;
+use MeCms\Utility\Checkup;
 use MeTools\Core\Plugin;
 use MeTools\Shell\InstallShell as BaseInstallShell;
 
@@ -24,6 +25,13 @@ use MeTools\Shell\InstallShell as BaseInstallShell;
 class InstallShell extends BaseInstallShell
 {
     /**
+     * Instance of `Checkup`
+     * @since 2.22.8
+     * @var \MeCms\Utility\Checkup
+     */
+    public $Checkup;
+
+    /**
      * Configuration files to be copied
      * @var array
      */
@@ -32,14 +40,18 @@ class InstallShell extends BaseInstallShell
     /**
      * Construct
      * @param \Cake\Console\ConsoleIo|null $io An io instance
+     * @uses $Checkup
      * @uses $config
      * @uses $links
      * @uses $paths
+     * @uses $questions
      * @uses MeTools\Shell\InstallShell::__construct()
      */
     public function __construct(ConsoleIo $io = null)
     {
         parent::__construct($io);
+
+        $this->Checkup = new Checkup;
 
         //Configuration files to be copied
         $this->config = [
@@ -51,9 +63,9 @@ class InstallShell extends BaseInstallShell
 
         //Merges assets for which create symbolic links
         $this->links = array_merge($this->links, [
-            'js-cookie/js-cookie/src' => 'js-cookie',
-            'sunhater/kcfinder' => 'kcfinder',
-            'enyo/dropzone/dist' => 'dropzone',
+            'js-cookie' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
+            'sunhater' . DS . 'kcfinder' => 'kcfinder',
+            'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
         ]);
 
         //Merges paths to be created and made writable
@@ -65,7 +77,37 @@ class InstallShell extends BaseInstallShell
             LOGIN_RECORDS,
             PHOTOS,
             UPLOADED,
+            USER_PICTURES,
             TMP . 'login',
+        ]);
+
+        //Questions used by `all()` method
+        $this->questions = array_merge($this->questions, [
+            [
+                'question' => __d('me_tools', 'Copy configuration files?'),
+                'default' => 'Y',
+                'method' => 'copyConfig',
+            ],
+            [
+                'question' => __d('me_tools', 'Fix {0}?', 'KCFinder'),
+                'default' => 'Y',
+                'method' => 'fixKcfinder',
+            ],
+            [
+                'question' => __d('me_cms', 'Run the installer of the other plugins?'),
+                'default' => 'Y',
+                'method' => 'runFromOtherPlugins',
+            ],
+            [
+                'question' => __d('me_cms', 'Create the user groups?'),
+                'default' => 'N',
+                'method' => 'createGroups',
+            ],
+            [
+                'question' => __d('me_cms', 'Create an admin user?'),
+                'default' => 'N',
+                'method' => 'createAdmin',
+            ],
         ]);
     }
 
@@ -75,64 +117,13 @@ class InstallShell extends BaseInstallShell
      */
     protected function getOtherPlugins()
     {
-        return collection(Plugin::all(['exclude' => [METOOLS, ME_CMS], 'order' => false]))
+        return collection(Plugin::all(['exclude' => [ME_TOOLS, ME_CMS], 'order' => false]))
             ->filter(function ($plugin) {
                 $class = App::classname($plugin . '.InstallShell', 'Shell');
 
                 return $class && method_exists($class, 'all');
             })
             ->toList();
-    }
-
-    /**
-     * Executes all available tasks
-     * @return void
-     * @uses MeTools\Shell\InstallShell::all()
-     * @uses getOtherPlugins()
-     * @uses copyConfig()
-     * @uses createAdmin()
-     * @uses createGroups()
-     * @uses fixKcfinder()
-     * @uses runFromOtherPlugins()
-     */
-    public function all()
-    {
-        parent::all();
-
-        if ($this->param('force')) {
-            $this->copyConfig();
-            $this->fixKcfinder();
-            $this->runFromOtherPlugins();
-
-            return;
-        }
-
-        $ask = $this->in(__d('me_cms', 'Copy configuration files?'), ['Y', 'n'], 'Y');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->copyConfig();
-        }
-
-        $ask = $this->in(__d('me_tools', 'Fix {0}?', 'KCFinder'), ['Y', 'n'], 'Y');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->fixKcfinder();
-        }
-
-        if ($this->getOtherPlugins()) {
-            $ask = $this->in(__d('me_cms', 'Run the installer of the other plugins?'), ['Y', 'n'], 'Y');
-            if (in_array($ask, ['Y', 'y'])) {
-                $this->runFromOtherPlugins();
-            }
-        }
-
-        $ask = $this->in(__d('me_cms', 'Create the user groups?'), ['y', 'N'], 'N');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->createGroups();
-        }
-
-        $ask = $this->in(__d('me_cms', 'Create an admin user?'), ['y', 'N'], 'N');
-        if (in_array($ask, ['Y', 'y'])) {
-            $this->createAdmin();
-        }
     }
 
     /**
@@ -198,12 +189,13 @@ class InstallShell extends BaseInstallShell
      * Creates the file `vendor/kcfinder/.htaccess`
      * @return bool `false` on failure
      * @see http://kcfinder.sunhater.com/integrate
+     * @uses $Checkup
      * @uses MeTools\Console\Shell::createFile()
      */
     public function fixKcfinder()
     {
         //Checks for KCFinder
-        if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder')) {
+        if (!$this->Checkup->KCFinder->isAvailable()) {
             $this->err(__d('me_tools', '{0} is not available', 'KCFinder'));
 
             return false;

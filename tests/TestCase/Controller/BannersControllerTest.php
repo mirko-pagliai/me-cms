@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * BannersControllerTest class

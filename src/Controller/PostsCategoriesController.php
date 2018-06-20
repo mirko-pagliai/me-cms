@@ -14,7 +14,6 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -64,16 +63,8 @@ class PostsCategoriesController extends AppController
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
             $query = $this->PostsCategories->Posts->find('active')
-                ->select(['id', 'title', 'subtitle', 'slug', 'text', 'created'])
-                ->contain([
-                    'Categories' => ['fields' => ['id', 'title', 'slug']],
-                    'Tags' => function (Query $q) {
-                        return $q->order(['tag' => 'ASC']);
-                    },
-                    'Users' => ['fields' => ['first_name', 'last_name']],
-                ])
-                ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug])
-                ->order([sprintf('%s.created', $this->PostsCategories->Posts->getAlias()) => 'DESC']);
+                ->find('forIndex')
+                ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
 
             if ($query->isEmpty()) {
                 throw new RecordNotFoundException(I18N_NOT_FOUND);

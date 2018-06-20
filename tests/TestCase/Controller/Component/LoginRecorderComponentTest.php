@@ -40,7 +40,7 @@ class LoginRecorderComponentTest extends TestCase
     protected function getLoginRecorderInstance()
     {
         $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
-        $this->LoginRecorder->config('user', 1);
+        $this->LoginRecorder->setConfig('user', 1);
 
         return $this->LoginRecorder;
     }
@@ -63,7 +63,7 @@ class LoginRecorderComponentTest extends TestCase
                 'version' => '55.0.2883.87',
             ]));
 
-        $this->LoginRecorder->config('user', 1);
+        $this->LoginRecorder->setConfig('user', 1);
 
         return $this->LoginRecorder;
     }
@@ -87,7 +87,7 @@ class LoginRecorderComponentTest extends TestCase
                 'version' => '1.2.3',
             ]));
 
-        $this->LoginRecorder->config('user', 1);
+        $this->LoginRecorder->setConfig('user', 1);
 
         return $this->LoginRecorder;
     }
@@ -115,8 +115,7 @@ class LoginRecorderComponentTest extends TestCase
         parent::tearDown();
 
         //Deletes the file
-        //@codingStandardsIgnoreLine
-        @unlink(LOGIN_RECORDS . 'user_1.log');
+        safe_unlink(LOGIN_RECORDS . 'user_1.log');
     }
 
     /**
@@ -162,7 +161,7 @@ class LoginRecorderComponentTest extends TestCase
 
     /**
      * Test for `getSerializedArray()` method, without the user ID
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
@@ -174,14 +173,14 @@ class LoginRecorderComponentTest extends TestCase
 
     /**
      * Test for `getSerializedArray()` method, with an invalid user ID
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
     public function testGetSerializedArrayInvalidUserId()
     {
         $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
-        $this->LoginRecorder->config('user', 'string');
+        $this->LoginRecorder->setConfig('user', 'string');
         $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
     }
 
@@ -219,32 +218,31 @@ class LoginRecorderComponentTest extends TestCase
         //For now is empty
         $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($result);
 
         $this->assertTrue($this->LoginRecorder->write());
 
         //After save, is not empty
         $result = $this->LoginRecorder->read();
         $this->assertNotEmpty($result);
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
         file_put_contents(LOGIN_RECORDS . 'user_1.log', null);
         $result = $this->LoginRecorder->read();
         $this->assertEmpty($result);
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($result);
     }
 
     /**
      * Test for `read()` method, without the user ID
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
     public function testReadMissingUserId()
     {
-        $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
-        $this->LoginRecorder->read();
+        (new LoginRecorderComponent($this->ComponentRegistry))->read();
     }
 
     /**
@@ -292,13 +290,12 @@ class LoginRecorderComponentTest extends TestCase
 
     /**
      * Test for `write()` method, without the user ID
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
     public function testWriteMissingUserId()
     {
-        $this->LoginRecorder = new LoginRecorderComponent($this->ComponentRegistry);
-        $this->LoginRecorder->write();
+        (new LoginRecorderComponent($this->ComponentRegistry))->write();
     }
 }

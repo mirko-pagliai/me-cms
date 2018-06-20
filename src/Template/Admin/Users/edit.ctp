@@ -15,10 +15,15 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
 ?>
 
 <?= $this->Form->create($user); ?>
-<div class='float-form'>
-    <?= $this->Form->control('group_id', ['label' => __d('me_cms', 'User group')]) ?>
-</div>
-<fieldset>
+<div class="row">
+    <div class="col-lg-3 order-12">
+        <div class="float-form">
+        <?php
+        echo $this->Form->control('group_id', ['label' => __d('me_cms', 'User group')]);
+        ?>
+        </div>
+    </div>
+    <fieldset class="col-lg-9">
     <?php
         echo $this->Form->control('username', [
             'disabled' => true,
@@ -63,6 +68,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
             'label' => I18N_LAST_NAME,
         ]);
     ?>
-</fieldset>
+    </fieldset>
+</div>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

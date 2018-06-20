@@ -96,16 +96,16 @@ class AppViewTest extends TestCase
         })->toArray();
 
         $this->assertEquals([
-            METOOLS . '\View\Helper\HtmlHelper',
-            METOOLS . '\View\Helper\DropdownHelper',
-            METOOLS . '\View\Helper\FormHelper',
-            METOOLS . '\View\Helper\LibraryHelper',
-            METOOLS . '\View\Helper\PaginatorHelper',
+            ME_TOOLS . '\View\Helper\HtmlHelper',
+            ME_TOOLS . '\View\Helper\DropdownHelper',
+            ME_TOOLS . '\View\Helper\FormHelper',
+            ME_TOOLS . '\View\Helper\LibraryHelper',
+            ME_TOOLS . '\View\Helper\PaginatorHelper',
             ASSETS . '\View\Helper\AssetHelper',
-            'Thumber\View\Helper\ThumbHelper',
+            THUMBER . '\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
-            METOOLS . '\View\Helper\BBCodeHelper',
-            METOOLS . '\View\Helper\BreadcrumbsHelper',
+            ME_TOOLS . '\View\Helper\BBCodeHelper',
+            ME_TOOLS . '\View\Helper\BreadcrumbsHelper',
             RECAPTCHA_MAILHIDE . '\View\Helper\MailhideHelper',
             ME_CMS . '\View\Helper\WidgetHelper',
         ], $helpers);
@@ -155,8 +155,7 @@ class AppViewTest extends TestCase
 
         $result = $this->View->render(false);
 
-        //@codingStandardsIgnoreLine
-        @unlink($layoutFromApp);
+        safe_unlink($layoutFromApp);
 
         $this->assertEquals('This is a layout from app', $result);
         $this->assertEquals('default', $this->View->getLayout());

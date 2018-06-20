@@ -56,7 +56,7 @@ class LogsController extends AppController
         $log = file_get_contents($log);
 
         if ($serialized) {
-            return unserialize($log);
+            return safe_unserialize($log);
         }
 
         return trim($log);
@@ -83,15 +83,14 @@ class LogsController extends AppController
     public function index()
     {
         //Gets all log files, except those serialized
-        $logs = (new Folder(LOGS))->find('(?!.*_serialized).+\.log');
-
-        $logs = collection($logs)->map(function ($log) {
-            return (object)[
-                'filename' => $log,
-                'hasSerialized' => is_readable($this->getPath($log, true)),
-                'size' => filesize(LOGS . $log),
-            ];
-        })->toList();
+        $logs = collection((new Folder(LOGS))->find('(?!.*_serialized).+\.log'))
+            ->map(function ($log) {
+                return (object)[
+                    'filename' => $log,
+                    'hasSerialized' => is_readable($this->getPath($log, true)),
+                    'size' => filesize(LOGS . $log),
+                ];
+            })->toList();
 
         $this->set(compact('logs'));
     }
@@ -141,7 +140,6 @@ class LogsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $success = (new File($this->getPath($filename, false)))->delete();
-
         $serialized = $this->getPath($filename, true);
 
         //Deletes the serialized log copy, if it exists

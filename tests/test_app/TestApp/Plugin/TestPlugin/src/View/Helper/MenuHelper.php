@@ -5,37 +5,35 @@ use Cake\View\Helper;
 
 class MenuHelper extends Helper
 {
-    public $helpers = ['Html' => ['className' => METOOLS . '.Html']];
+    public $helpers = ['Html' => ['className' => ME_TOOLS . '.Html']];
 
-    //@codingStandardsIgnoreStart
+    //@codingStandardsIgnoreLine
     public function _invalidMethod()
     {
     }
-    //@codingStandardsIgnoreEnd
 
-    //@codingStandardsIgnoreStart
+    //@codingStandardsIgnoreLine
     public function __otherInvalidMethod()
     {
     }
-    //@codingStandardsIgnoreEnd
 
     public function articles()
     {
-        $menu = [
-            $this->Html->link('First link', '/'),
-            $this->Html->link('Second link', '/'),
+        $links = [
+            ['First link', '/'],
+            ['Second link', '/'],
         ];
 
-        return [$menu, 'First menu', ['icon' => 'home']];
+        return [$links, 'First menu', ['icon' => 'home']];
     }
 
     public function other_items()
     {
-        $menu = [
-            $this->Html->link('Third link', '/'),
-            $this->Html->link('Fourth link', '/'),
+        $links = [
+            ['Third link', '/'],
+            ['Fourth link', '/'],
         ];
 
-        return [$menu, 'Second menu', ['icon' => 'flag']];
+        return [$links, 'Second menu', ['icon' => 'flag']];
     }
 }

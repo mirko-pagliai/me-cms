@@ -76,7 +76,7 @@ class ContactUsMailerTest extends TestCase
 
     /**
      * Tests for `contactUsMail()` method, with some missing data
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Missing `email` key from data
      * @test
      */

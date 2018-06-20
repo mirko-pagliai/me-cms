@@ -13,6 +13,7 @@
 namespace MeCms\Test\Fixture;
 
 use Cake\I18n\Time;
+use Cake\ORM\Entity;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -59,27 +60,14 @@ class PostsFixture extends TestFixture
             'title' => 'First post',
             'slug' => 'first-post',
             'subtitle' => 'Subtitle for first post',
-            'text' => 'Text of the first post',
+            'text' => '<b>Text of the first post</b>',
             'preview' => null,
             'priority' => 1,
             'created' => '2016-11-28 18:55:19',
             'modified' => '2016-11-28 18:55:19',
             'active' => 1,
         ],
-        [
-            'id' => 2,
-            'category_id' => 4,
-            'user_id' => 4,
-            'title' => 'Second post',
-            'slug' => 'second-post',
-            'subtitle' => 'Subtitle for second post',
-            'text' => '<img src="image.jpg" />Text of the second post',
-            'preview' => '{"preview":"image.jpg","width":400,"height":400}',
-            'priority' => 1,
-            'created' => '2016-12-28 18:56:19',
-            'modified' => '2016-12-28 18:56:19',
-            'active' => 1,
-        ],
+        //See `init()` for record 2
         [
             'id' => 3,
             'category_id' => 1,
@@ -150,6 +138,7 @@ class PostsFixture extends TestFixture
             'modified' => '2016-12-29 18:59:19',
             'active' => 1,
         ],
+        //See `init()` for last record
     ];
 
     /**
@@ -157,11 +146,26 @@ class PostsFixture extends TestFixture
      */
     public function init()
     {
-        $future = new Time('+999 days');
+        //Adds a post with preview
+        $preview = json_encode([new Entity(['url' => 'image.jpg', 'width' => 400, 'height' => 400])]);
+        $this->records[] = [
+            'id' => 2,
+            'category_id' => 4,
+            'user_id' => 4,
+            'title' => 'Second post',
+            'slug' => 'second-post',
+            'subtitle' => 'Subtitle for second post',
+            'text' => '<img src="image.jpg" />Text of the second post',
+            'preview' => $preview,
+            'priority' => 1,
+            'created' => '2016-12-28 18:56:19',
+            'modified' => '2016-12-28 18:56:19',
+            'active' => 1,
+        ];
 
         //Adds a future post
+        $future = new Time('+999 days');
         $this->records[] = [
-            'id' => collection($this->records)->extract('id')->last() + 1,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Future post',

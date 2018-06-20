@@ -10,10 +10,14 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-// (here `Cake\Core\Plugin` is used, as the plugins are not yet all loaded)
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Database\Type;
+use Cake\I18n\Date;
+use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
@@ -28,10 +32,9 @@ if (!Plugin::loaded('MeTools')) {
     Plugin::load('MeTools', ['bootstrap' => true]);
 }
 
-foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED] as $dir) {
+foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
     if (!file_exists($dir)) {
-        //@codingStandardsIgnoreLine
-        @mkdir($dir);
+        safe_mkdir($dir);
     }
 
     if (!is_writeable($dir)) {
@@ -104,14 +107,16 @@ if (!getConfig('RecaptchaMailhide.encryptKey')) {
 }
 
 //Adds log for users actions
-Log::setConfig('users', [
-    'className' => 'MeCms\Log\Engine\SerializedLog',
-    'path' => LOGS,
-    'levels' => [],
-    'file' => 'users.log',
-    'scopes' => ['users'],
-    'url' => env('LOG_DEBUG_URL', null),
-]);
+if (!Log::getConfig('users')) {
+    Log::setConfig('users', [
+        'className' => 'MeCms\Log\Engine\SerializedLog',
+        'path' => LOGS,
+        'levels' => [],
+        'file' => 'users.log',
+        'scopes' => ['users'],
+        'url' => env('LOG_DEBUG_URL', null),
+    ]);
+}
 
 //Loads other plugins
 $pluginsToLoad = ['DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'Thumber', 'Tokens'];
@@ -139,4 +144,13 @@ if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
 //Sets the locale based on the current user
 DispatcherFactory::add('LocaleSelector');
 
+//Sets the default format used when type converting instances of this type to string
+$format = getConfigOrFail('main.datetime.long');
+Date::setToStringFormat($format);
+FrozenDate::setToStringFormat($format);
+FrozenTime::setToStringFormat($format);
+Time::setToStringFormat($format);
+
 require_once __DIR__ . DS . 'i18n_constants.php';
+
+Type::map('jsonEntity', 'MeCms\Database\Type\JsonEntityType');

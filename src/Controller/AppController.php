@@ -53,11 +53,6 @@ class AppController extends BaseController
         if ($this->request->isAdmin()) {
             $this->viewBuilder()->setClassName(ME_CMS . '.View/Admin');
 
-            //Adds the current sort field in the whitelist of pagination
-            if ($this->request->getQuery('sort')) {
-                $this->paginate['sortWhitelist'] = [$this->request->getQuery('sort')];
-            }
-
             $this->paginate['limit'] = getConfigOrFail('admin.records');
         } else {
             //Authorizes the current action
@@ -104,9 +99,9 @@ class AppController extends BaseController
         //The configuration for `AuthComponent`  takes place in the same class
         $this->loadComponent('Cookie', ['encryption' => false]);
         $this->loadComponent(ME_CMS . '.Auth');
-        $this->loadComponent(METOOLS . '.Flash');
+        $this->loadComponent(ME_TOOLS . '.Flash');
         $this->loadComponent('RequestHandler');
-        $this->loadComponent(METOOLS . '.Uploader');
+        $this->loadComponent(ME_TOOLS . '.Uploader');
         $this->loadComponent('Recaptcha.Recaptcha', [
             'sitekey' => getConfigOrFail('Recaptcha.public'),
             'secret' => getConfigOrFail('Recaptcha.private'),

@@ -21,14 +21,19 @@ $this->append('actions', $this->Form->postButton(
 ?>
 
 <table class="table table-striped">
-    <tr>
-        <th><?= I18N_FILENAME ?></th>
-        <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
-    </tr>
+    <thead>
+        <tr>
+            <th><?= I18N_FILENAME ?></th>
+            <th class="text-center"><?= __d('me_cms', 'Size') ?></th>
+        </tr>
+    </thead>
+    <tbody>
     <?php foreach ($logs as $log) : ?>
         <tr>
             <td>
-                <strong><?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?></strong>
+                <strong>
+                    <?= $this->Html->link($log->filename, ['action' => 'view', $log->filename]) ?>
+                </strong>
                 <?php
                 $actions = [
                     $this->Html->link(
@@ -51,18 +56,19 @@ $this->append('actions', $this->Form->postButton(
                     ['action' => 'download', $log->filename],
                     ['icon' => 'download']
                 );
-                $actions[] = $this->Form->postLink(
-                    I18N_DELETE,
-                    ['action' => 'delete', $log->filename],
-                    ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                );
+                $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $log->filename], [
+                    'class' => 'text-danger',
+                    'icon' => 'trash-o',
+                    'confirm' => I18N_SURE_TO_DELETE,
+                ]);
 
                 echo $this->Html->ul($actions, ['class' => 'actions']);
                 ?>
             </td>
-            <td class="min-width text-center">
+            <td class="text-nowrap text-center">
                 <?= $this->Number->toReadableSize($log->size) ?>
             </td>
         </tr>
     <?php endforeach; ?>
+    </tbody>
 </table>

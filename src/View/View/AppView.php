@@ -59,14 +59,8 @@ class AppView extends View
         }
 
         //Sets some Facebook's tags
-        $this->Html->meta([
-            'content' => $this->getTitleForLayout(),
-            'property' => 'og:title',
-        ]);
-        $this->Html->meta([
-            'content' => Router::url(null, true),
-            'property' => 'og:url',
-        ]);
+        $this->Html->meta(['content' => $this->getTitleForLayout(), 'property' => 'og:title']);
+        $this->Html->meta(['content' => Router::url(null, true), 'property' => 'og:url']);
 
         //Sets the app ID for Facebook
         if (getConfig('default.facebook_app_id')) {
@@ -88,8 +82,8 @@ class AppView extends View
         parent::initialize();
 
         //Loads helpers
-        $this->loadHelper(METOOLS . '.BBCode');
-        $this->loadHelper(METOOLS . '.Breadcrumbs');
+        $this->loadHelper(ME_TOOLS . '.BBCode');
+        $this->loadHelper(ME_TOOLS . '.Breadcrumbs');
         $this->loadHelper(RECAPTCHA_MAILHIDE . '.Mailhide');
         $this->loadHelper(ME_CMS . '.Widget');
     }
@@ -108,6 +102,8 @@ class AppView extends View
      */
     public function renderLayout($content, $layout = null)
     {
+        $this->plugin = ME_CMS;
+
         $this->setBlocks();
 
         //Assign the userbar

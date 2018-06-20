@@ -10,7 +10,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 if (trim($this->fetch('class'))) {
     $class = sprintf('widget %s', trim($this->fetch('class')));
 } else {
@@ -19,7 +18,7 @@ if (trim($this->fetch('class'))) {
 ?>
 
 <?php if (trim($this->fetch('content'))) : ?>
-<div class="<?= $class ?>">
+<div class="<?= $class ?> mb-4">
     <?php
     if (trim($this->fetch('title'))) {
         echo $this->Html->h4(trim($this->fetch('title')), ['class' => 'widget-title']);

@@ -1,5 +1,104 @@
 # 2.x branch
+## 2.24 branch
+### 2.24.0
+* `AppValidator` moved from `MeCms\Model\Validation` to `MeCms\Validation`;
+* updated for CakePHP 3.6, php-tools 1.0.7, me-tools 2.16.10 and
+    cakephp-database-backup 2.5.0.
+
+## 2.23 branch
+### 2.23.1
+* now it uses the `mirko-pagliai/php-tools` package. This also replaces
+    `mirko-pagliai/reflection`;
+* updated for cakephp-thumber 1.4 and me-tools 2.16.8.
+
+### 2.23.0
+* added the `UpdateShell`. This shell provides subcommands to update your
+    application;
+* `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait` and
+    `firstImage()` and `getPreview()` methods have been replaced by 
+    `extractImages()` and `getPreviews()` methods. The `getPreviews()` method
+    now returns an array of `Entity`. This allows you to get all the previews,
+    not just the first one;
+* `GetPreviewsFromTextTrait::getPreviews()` returns an array of `Entity` with
+    `url`, `width` and `height` properties;
+* `MeCms\Model\Entity\Photo::_getPreview()` method returns an `Entity` with
+    `url`, `width` and `height` properties;
+* added `PostsAndPagesTables` and `PostsAndPagesTablesTestCase` classes, with
+    methods and tests common to `PagesTable` and `PostsTable` classes;
+* added `\MeCms\Database\Type\JsonEntityType`, to convert an array of `Entity`
+    as json data;
+* added `MeCms\Model\Table\PostsTable::queryForRelated()` method;
+* fixed bug, some previews were not correctly displayed;
+* fixed a bug in the common view of the userbar;
+* updated for CakePHP 3.5.13.
+
+## 2.22 branch
+### 2.22.8
+* added `MeCms\Utility\Checkup` class and some classes under the
+    `MeCms\Utility\Checkups` namespace;
+* the system checkup checks the version of KCFinder and if the `.htaccess` file
+    exists;
+* fixed bug in measuring the elements height of the admin panel via javascript;
+* added `PostsTable::findForIndex()` method;
+* fixed a bug for static pages;
+* removed `php-simple-html-dom-parser` package. The
+    `GetPreviewFromTextTrait::firstImage()` method now uses only DOM functions.
+
+### 2.22.7-RC4
+* the backend and the frontend (admin panel) both have the userbar, which now
+    uses a common view and the same css;
+* fixed a bug that prevented showing the user picture for some actions.
+
+### 2.22.6-RC3
+* users can change their picture from the admin panel;
+* the user's picture can be shown next to each post. It is also shown in the
+    user's profile in the admin panel and in the user bar;
+* `User` entity has the `picture` virtual field, which contains the path of the
+    user's picture or, alternatively, a default image;
+* the admin topbar is no longer cached;
+* updated for `cakephp-thumber` 1.3.0;
+* updated for MeTools 2.16.5-RC3 and so for Bootstrap 4 beta 3.
+
+### 2.22.5-RC2
+* `Page` and `Post` entities have the `plain_text` virtual field. `Photo` entity
+    has the `plain_description` virtual field;
+* static pages are entities;
+* updated for MeTools 2.16.4-RC2.
+
+### 2.22.4-RC1
+* when the search function is used, the searched text is highlighted;
+* updated for MeTools 2.16.3-RC1.
+
+### 2.22.3-beta
+* updated for MeTools 2.16.2-beta;
+* updated for Bootstrap 4 beta 2.
+
+### 2.22.2-beta
+* fixed little bugs on templates and css rules.
+
+### 2.22.1-beta
+* using javascript, it sets the footer to `fixed` position when needed, that is
+    when the document body is lower than the window height;
+* fixed little bugs on templates;
+* fixes on templates and css rules.
+
+### 2.22.0-beta
+* a massive improvement of pages and posts templates;
+* fixed all templates and layouts for Bootstrap 4;
+* fixed `MenuBuilderHelper` for Bootstrap 4;
+* added the `post-preview` view element;
+* `MenuHelper` class returns menus as arrays, without transforming them into
+    html.
+
 ## 2.21 branch
+### 2.21.1
+* added `PhotosAlbum::_getPreview()` method (`preview` virtual field);
+* all accessors methods (`_get()` methods) no longer check if the properties
+    used are not empty, except those methods that use properties that belong to
+    associated models;
+* the `bootstrap` file sets the default format used when type converting
+    instances of this type to string.
+
 ### 2.21.0
 * updated for CakePHP 3.5;
 * `UserShell::add()` now returns `true`. The created user id is shown through a

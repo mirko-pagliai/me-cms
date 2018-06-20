@@ -86,7 +86,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     <tbody>
         <?php foreach ($posts as $post) : ?>
             <tr>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <code><?= $post->id ?></code>
                 </td>
                 <td>
@@ -94,7 +94,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                         <?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?>
                     </strong>
                     <?php
-                    $class = 'record-label record-label-warning';
+                    $class = 'record-badge badge badge-warning';
 
                     //If the post is not active (it's a draft)
                     if (!$post->active) {
@@ -108,10 +108,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     ?>
 
                     <?php if ($post->tags) : ?>
-                        <div class="margin-top-5 small">
+                        <div class="mt-1 small d-none d-lg-block">
                             <?php
                             foreach ($post->tags as $tag) {
                                 echo $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
+                                    'class' => 'mr-1',
                                     'icon' => 'tag',
                                     'title' => I18N_BELONG_ELEMENT,
                                 ]);
@@ -125,20 +126,16 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts
                     if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                        $actions[] = $this->Html->link(
-                            I18N_EDIT,
-                            ['action' => 'edit', $post->id],
-                            ['icon' => 'pencil']
-                        );
+                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->id], ['icon' => 'pencil']);
                     }
 
                     //Only admins and managers can delete posts
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(
-                            I18N_DELETE,
-                            ['action' => 'delete', $post->id],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
-                        );
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $post->id], [
+                            'class' => 'text-danger',
+                            'icon' => 'trash-o',
+                            'confirm' => I18N_SURE_TO_DELETE,
+                        ]);
                     }
 
                     //If the post is active and is not scheduled
@@ -159,21 +156,21 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $this->Html->link(
                         $post->category->title,
                         ['?' => ['category' => $post->category->id]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?= $this->Html->link(
                         $post->user->full_name,
                         ['?' => ['user' => $post->user->id]],
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
-                <td class="min-width text-center">
+                <td class="text-nowrap text-center">
                     <?php
                     switch ($post->priority) {
                         case '1':
@@ -206,11 +203,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     echo $this->Html->badge($priority, compact('class', 'tooltip'));
                     ?>
                 </td>
-                <td class="min-width text-center">
-                    <div class="hidden-xs">
-                        <?= $post->created->i18nFormat(getConfigOrFail('main.datetime.long')) ?>
+                <td class="text-nowrap text-center">
+                    <div class="d-none d-lg-block">
+                        <?= $post->created->i18nFormat() ?>
                     </div>
-                    <div class="visible-xs">
+                    <div class="d-lg-none">
                         <div><?= $post->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
                         <div><?= $post->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>

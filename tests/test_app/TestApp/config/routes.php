@@ -1,5 +1,8 @@
 <?php
-use Cake\Core\Plugin;
+use Cake\Routing\Router;
 
-//Load all plugin routes
-Plugin::routes();
+Router::scope('/', function ($routes) {
+    $routes->loadPlugin(RECAPTCHA_MAILHIDE);
+    $routes->loadPlugin(THUMBER);
+    $routes->loadPlugin(ME_CMS);
+});

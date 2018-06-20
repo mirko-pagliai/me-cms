@@ -12,34 +12,9 @@
  */
 namespace MeCms\Test\TestCase\TestSuite;
 
-use Cake\Controller\Controller as CakeController;
+use App\Controller\ExampleController as Controller;
 use Cake\Event\Event;
 use MeCms\TestSuite\IntegrationTestCase;
-
-/**
- * Controller class
- */
-class Controller extends CakeController
-{
-    /**
-     * Checks if the user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
-     * @return bool `true` if the user is authorized, otherwise `false`
-     */
-    public function isAuthorized($user = null)
-    {
-        if ($this->Auth->user('id') === 2) {
-            return false;
-        }
-
-        if ($this->Auth->user('group.name') === 'moderator') {
-            return false;
-        }
-
-        return true;
-    }
-}
 
 /**
  * IntegrationTestCase class
@@ -73,7 +48,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase
     public function testControllerSpy()
     {
         $this->controllerSpy(new Event(null), $this->Controller);
-        $this->assertEquals('somerandomhaskeysomerandomhaskey', $this->_controller->Cookie->config('key'));
+        $this->assertEquals('somerandomhaskeysomerandomhaskey', $this->Controller->Cookie->getConfig('key'));
     }
 
     /**

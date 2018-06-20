@@ -13,7 +13,8 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use Thumber\ThumbTrait;
+use Cake\View\HelperRegistry;
+use Cake\View\View;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -30,8 +31,6 @@ use Thumber\Utility\ThumbCreator;
  */
 class Photo extends Entity
 {
-    use ThumbTrait;
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity()
      * @var array
@@ -46,39 +45,47 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path', 'preview'];
+    protected $_virtual = ['path', 'plain_description', 'preview'];
 
     /**
      * Gets the photo path (virtual field)
-     * @return string|void
+     * @return string
      */
     protected function _getPath()
     {
-        if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
-            return;
-        }
-
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
     }
 
     /**
+     * Gets description as plain text (virtual field)
+     * @return string|void
+     */
+    protected function _getPlainDescription()
+    {
+        if (empty($this->_properties['description'])) {
+            return;
+        }
+
+        //Loads the `BBCode` helper
+        $BBCode = (new HelperRegistry(new View))->load(ME_TOOLS . '.BBCode');
+
+        return trim(strip_tags($BBCode->remove($this->_properties['description'])));
+    }
+
+    /**
      * Gets the photo preview (virtual field)
-     * @return array|void Array with `preview`, `width` and `height` keys
+     * @return Entity Entity with `preview`, `width` and `height` properties
      * @uses _getPath()
      */
     protected function _getPreview()
     {
-        $preview = $this->_getPath();
+        $path = $this->_getPath();
 
-        if (!$preview) {
-            return;
-        }
+        list($width, $height) = getimagesize($path);
 
-        $thumb = (new ThumbCreator($preview))->resize(1200, 1200)->save(['format' => 'jpg']);
-        $preview = $this->getUrl($thumb, true);
+        $thumber = new ThumbCreator($path);
+        $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
 
-        list($width, $height) = getimagesize($thumb);
-
-        return compact('preview', 'width', 'height');
+        return new Entity(array_merge(['url' => $thumber->getUrl()], compact('width', 'height')));
     }
 }

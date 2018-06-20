@@ -42,7 +42,7 @@ class TagsTable extends AppTable
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -82,7 +82,7 @@ class TagsTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])

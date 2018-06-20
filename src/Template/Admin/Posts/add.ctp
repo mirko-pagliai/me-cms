@@ -19,39 +19,39 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
 ?>
 
 <?= $this->Form->create($post); ?>
-<div class='float-form'>
-    <?php
-    //Only admins and managers can add posts on behalf of other users
-    if ($this->Auth->isGroup(['admin', 'manager'])) {
-        echo $this->Form->control('user_id', [
-            'default' => $this->Auth->user('id'),
-            'label' => I18N_AUTHOR,
-        ]);
-    }
+<div class="row">
+    <div class="col-lg-3 order-12">
+        <div class="float-form">
+        <?php
+        //Only admins and managers can add posts on behalf of other users
+        if ($this->Auth->isGroup(['admin', 'manager'])) {
+            echo $this->Form->control('user_id', [
+                'default' => $this->Auth->user('id'),
+                'label' => I18N_AUTHOR,
+            ]);
+        }
 
-    echo $this->Form->control('category_id', [
-        'default' => count($categories) < 2 ? collection($categories)->first() : false,
-        'label' => I18N_CATEGORY,
-    ]);
-    echo $this->Form->datetimepicker('created', [
-        'help' => [
-            I18N_USE_CURRENT_DATETIME,
-            I18N_DELAY_PUBLICATION,
-        ],
-        'label' => I18N_DATE,
-    ]);
-    echo $this->Form->control('priority', [
-        'default' => '3',
-        'label' => I18N_PRIORITY,
-    ]);
-    echo $this->Form->control('active', [
-        'checked' => true,
-        'help' => I18N_HELP_DRAFT,
-        'label' => I18N_PUBLISHED,
-    ]);
-    ?>
-</div>
-<fieldset>
+        echo $this->Form->control('category_id', [
+            'default' => count($categories) < 2 ? collection($categories)->first() : false,
+            'label' => I18N_CATEGORY,
+        ]);
+        echo $this->Form->datetimepicker('created', [
+            'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
+            'label' => I18N_DATE,
+        ]);
+        echo $this->Form->control('priority', [
+            'default' => '3',
+            'label' => I18N_PRIORITY,
+        ]);
+        echo $this->Form->control('active', [
+            'checked' => true,
+            'help' => I18N_HELP_DRAFT,
+            'label' => I18N_PUBLISHED,
+        ]);
+        ?>
+        </div>
+    </div>
+    <fieldset class="col-lg-9">
     <?php
         echo $this->Form->control('title', [
             'id' => 'title',
@@ -77,7 +77,7 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
     </div>
     <div class="form-group hidden to-be-shown">
         <div id="tags-preview">
-            <?= sprintf('%s:', I18N_TAGS) ?>
+            <?= $this->Form->label(sprintf('%s:', I18N_TAGS)) ?>
         </div>
         <?php
             echo $this->Form->control('add_tags', [
@@ -103,6 +103,7 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
         'rows' => 10,
     ]) ?>
     <?= $this->element('admin/bbcode') ?>
-</fieldset>
+    </fieldset>
+</div>
 <?= $this->Form->submit($title) ?>
 <?= $this->Form->end() ?>

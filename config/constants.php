@@ -30,6 +30,11 @@ if (!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
 }
 
+//Sets the default KCFinder path
+if (!defined('KCFINDER')) {
+    define('KCFINDER', WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS);
+}
+
 //Sets the default login log directory
 if (!defined('LOGIN_RECORDS')) {
     define('LOGIN_RECORDS', TMP . 'login' . DS);
@@ -53,4 +58,9 @@ if (!defined('SITEMAP')) {
 //Sets the default directory for uploaded files
 if (!defined('UPLOADED')) {
     define('UPLOADED', WWW_ROOT . 'files' . DS);
+}
+
+//Sets the default directory for user pictures
+if (!defined('USER_PICTURES')) {
+    define('USER_PICTURES', WWW_ROOT . 'img' . DS . 'users' . DS);
 }

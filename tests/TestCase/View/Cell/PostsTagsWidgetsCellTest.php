@@ -105,7 +105,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
     /**
      * Test for `getFontSizes()` method, with invalid values
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Invalid values
      * @test
      */
@@ -125,7 +125,7 @@ class PostsTagsWidgetsCellTest extends TestCase
         //Tries using the style (`maxFont` and `minFont`)
         $result = $this->Widget->widget($widget, $this->options)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -151,7 +151,7 @@ class PostsTagsWidgetsCellTest extends TestCase
             'style' => false,
         ]))->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -177,7 +177,7 @@ class PostsTagsWidgetsCellTest extends TestCase
             'style' => false,
         ]))->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -207,7 +207,7 @@ class PostsTagsWidgetsCellTest extends TestCase
             'style' => false,
         ]))->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -243,7 +243,7 @@ class PostsTagsWidgetsCellTest extends TestCase
             'style' => false,
         ]))->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -329,7 +329,7 @@ class PostsTagsWidgetsCellTest extends TestCase
 
         $result = $this->Widget->widget($widget, $this->options)->render();
         $expected = [
-            ['div' => ['class' => 'widget']],
+            ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',

@@ -14,19 +14,14 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\Database\Schema\Table as Schema;
-use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\Network\Exception\InternalErrorException;
-use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use InvalidArgumentException;
 use MeCms\Model\Entity\Post;
-use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\Traits\GetPreviewFromTextTrait;
+use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
-use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
  * Posts model
@@ -43,66 +38,16 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
-class PostsTable extends AppTable
+class PostsTable extends PostsAndPagesTables
 {
-    use GetPreviewFromTextTrait;
     use IsOwnedByTrait;
     use LocatorAwareTrait;
-    use NextToBePublishedTrait;
 
     /**
      * Name of the configuration to use for this table
      * @var string
      */
     public $cache = 'posts';
-
-    /**
-     * Alters the schema used by this table. This function is only called after
-     *  fetching the schema out of the database
-     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
-     * @return Cake\Database\Schema\TableSchema TableSchema instance
-     * @since 2.17.0
-     */
-    protected function _initializeSchema(Schema $schema)
-    {
-        $schema->setColumnType('preview', 'json');
-
-        return $schema;
-    }
-
-    /**
-     * Called after an entity has been deleted
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
-     */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
-    {
-        parent::afterDelete($event, $entity, $options);
-
-        //Sets the next record to be published
-        $this->setNextToBePublished();
-    }
-
-    /**
-     * Called after an entity is saved
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
-     */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
-    {
-        parent::afterSave($event, $entity, $options);
-
-        //Sets the next record to be published
-        $this->setNextToBePublished();
-    }
 
     /**
      * Called before request data is converted into entities
@@ -136,23 +81,6 @@ class PostsTable extends AppTable
     }
 
     /**
-     * Called before each entity is saved
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
-     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreview()
-     */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
-    {
-        parent::beforeSave($event, $entity, $options);
-
-        $entity->preview = $this->getPreview($entity->text);
-    }
-
-    /**
      * Returns a rules checker object that will be used for validating
      *  application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
@@ -169,46 +97,39 @@ class PostsTable extends AppTable
     }
 
     /**
-     * Creates a new Query for this repository and applies some defaults based
-     *  on the type of search that was selected
-     * @param string $type The type of query to perform
-     * @param array|ArrayAccess $options An array that will be passed to
-     *  Query::applyOptions()
-     * @return \Cake\ORM\Query The query builder
-     * @uses $cache
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * `forIndex()` find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     * @since 2.22.8
      */
-    public function find($type = 'all', $options = [])
+    public function findForIndex(Query $query, array $options)
     {
-        //Gets from cache the timestamp of the next record to be published
-        $next = $this->getNextToBePublished();
-
-        //If the cache is invalid, it clears the cache and sets the next record
-        //  to be published
-        if ($next && time() >= $next) {
-            Cache::clear(false, $this->cache);
-
-            //Sets the next record to be published
-            $this->setNextToBePublished();
-        }
-
-        return parent::find($type, $options);
+        return $query->contain([
+                $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
+                $this->Tags->getAlias() => function (Query $q) {
+                    return $q->order(['tag' => 'ASC']);
+                },
+                $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
+            ])
+            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'created'])
+            ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
     }
 
     /**
      * Gets the related posts for a post
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
-     * @param bool $images If true, gets only posts with images
+     * @param bool $images If `true`, gets only posts with images
      * @return array Array of entities
-     * @throws InternalErrorException
+     * @throws InvalidArgumentException
+     * @uses queryForRelated()
      * @uses $cache
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
         if (empty($post->id) || !isset($post->tags)) {
-            throw new InternalErrorException(__d('me_cms', 'ID or tags of the post are missing'));
+            throw new InvalidArgumentException(__d('me_cms', 'ID or tags of the post are missing'));
         }
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
@@ -235,22 +156,13 @@ class PostsTable extends AppTable
                 //It reverses the tags order, because the tags less popular have
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
-                    $post = $this->find('active')
-                        ->select(['id', 'title', 'slug', 'text', 'preview'])
-                        ->matching('Tags', function (Query $q) use ($tag) {
-                            return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tag->id]);
-                        })
-                        ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude]);
-
-                    if ($images) {
-                        $post->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null]);
-                    }
-
-                    $post = $post->first();
+                    $post = $this->queryForRelated($tag->id, $images)
+                        ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
+                        ->first();
 
                     //Adds the current post to the related posts and its ID to the
                     //  IDs to be excluded for the next query
-                    if (!empty($post)) {
+                    if ($post) {
                         $related[] = $post;
                         $exclude[] = $post->id;
                     }
@@ -301,9 +213,31 @@ class PostsTable extends AppTable
     }
 
     /**
+     * Gets the query for related posts from a tag ID
+     * @param int $tagId Tag ID
+     * @param bool $images If `true`, gets only posts with images
+     * @return Cake\ORM\Query The query builder
+     * @since 2.23.0
+     */
+    public function queryForRelated($tagId, $images = true)
+    {
+        $query = $this->find('active')
+            ->select(['id', 'title', 'preview', 'slug', 'text'])
+            ->matching('Tags', function (Query $q) use ($tagId) {
+                return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
+            });
+
+        if ($images) {
+            $query->where([sprintf('%s.preview NOT IN', $this->getAlias()) => [null, []]]);
+        }
+
+        return $query;
+    }
+
+    /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */

@@ -11,16 +11,21 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 use MeCms\Core\Plugin;
+?>
 
-//Renders menus for MeCms
-echo $this->MenuBuilder->renderAsCollapse(ME_CMS);
+<div id="sidebar-accordion" role="tablist">
+    <?php
+    //Renders menus for MeCms
+    echo $this->MenuBuilder->renderAsCollapse(ME_CMS);
 
-//Renders menus for each plugin
-foreach (Plugin::all(['exclude' => [ME_CMS, METOOLS, ASSETS, DATABASE_BACKUP, THUMBER]]) as $plugin) {
-    $menus = $this->MenuBuilder->renderAsCollapse($plugin);
+    //Renders menus for each plugin
+    foreach (Plugin::all(['exclude' => [ME_CMS, ME_TOOLS, ASSETS, DATABASE_BACKUP, THUMBER]]) as $plugin) {
+        $menus = $this->MenuBuilder->renderAsCollapse($plugin);
 
-    if (!empty($menus)) {
-        echo $this->Html->h6($plugin);
-        echo $menus;
+        if (!empty($menus)) {
+            echo $this->Html->h6($plugin);
+            echo $menus;
+        }
     }
-}
+    ?>
+</div>

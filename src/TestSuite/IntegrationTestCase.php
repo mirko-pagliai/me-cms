@@ -80,8 +80,12 @@ class IntegrationTestCase extends BaseIntegrationTestCase
     {
         parent::controllerSpy($event, $controller);
 
+        $this->_controller->viewBuilder()->setLayout('with_flash');
+
         //Sets key for cookies
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
+        if (!empty($this->_controller->Cookie)) {
+            $this->_controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
+        }
     }
 
     /**

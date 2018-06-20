@@ -63,7 +63,7 @@ class BannersTable extends AppTable
     }
 
     /**
-     * "Active" find method
+     * "active" find method
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
@@ -101,7 +101,7 @@ class BannersTable extends AppTable
     /**
      * Build query from filter data
      * @param Query $query Query object
-     * @param array $data Filter data ($this->request->getQuery())
+     * @param array $data Filter data ($this->request->getQueryParams())
      * @return Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
@@ -110,7 +110,7 @@ class BannersTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Position" field
-        if (!empty($data['position']) && isPositive($data['position'])) {
+        if (!empty($data['position']) && is_positive($data['position'])) {
             $query->where([sprintf('%s.position_id', $this->getAlias()) => $data['position']]);
         }
 

@@ -62,18 +62,18 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function controllerSpy($event, $controller = null)
     {
+        parent::controllerSpy($event, $controller);
+
         //Sets key for cookies
-        $controller->Cookie->config('key', $this->keyForCookies);
+        $this->_controller->Cookie->config('key', $this->keyForCookies);
 
         //Mocks the `LoginRecorder` component
-        $controller->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
+        $this->_controller->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
             ->setConstructorArgs([new ComponentRegistry])
             ->getMock();
 
-        $controller->LoginRecorder->method('config')
+        $this->_controller->LoginRecorder->method('config')
             ->will($this->returnSelf());
-
-        parent::controllerSpy($event, $controller);
     }
 
     /**
@@ -272,9 +272,9 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
             ME_CMS . '\Controller\Component\AuthComponent',
-            METOOLS . '\Controller\Component\FlashComponent',
+            ME_TOOLS . '\Controller\Component\FlashComponent',
             'Cake\Controller\Component\RequestHandlerComponent',
-            METOOLS . '\Controller\Component\UploaderComponent',
+            ME_TOOLS . '\Controller\Component\UploaderComponent',
             'Recaptcha\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
             ME_CMS . '\Controller\Component\LoginRecorderComponent',

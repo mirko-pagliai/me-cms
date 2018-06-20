@@ -1025,12 +1025,12 @@ msgid "{0} version: {1}"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:47
-msgid "The cache is enabled"
+msgid "Cache is enabled"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:51
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/tmp_viewer.ctp:38
-msgid "The cache is disabled or debugging is active"
+msgid "Cache is disabled or debugging is active"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:60
@@ -1063,7 +1063,7 @@ msgid "Backups"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:132;152;174
-msgid "The directory {0} is readable and writable"
+msgid "Directory {0} is readable and writable"
 msgstr ""
 
 #: /home/mirko/Libs/Plugins/MeCms/src/Template/Admin/Systems/checkup.ctp:145

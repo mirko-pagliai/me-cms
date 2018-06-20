@@ -19,21 +19,26 @@
     </head>
     <body>
         <?php
-        foreach (explode("\n", trim($this->fetch('content'))) as $line) {
-            echo $line . '<br />' . PHP_EOL;
+        foreach (explode("\n", trim($this->fetch('content'))) as $row) {
+            echo $this->Html->para(null, $row);
         }
         ?>
-        <br />
+
         <small>
             <?= __d('me_cms', 'This email was sent automatically from {0}', $this->Html->link(
                 getConfigOrFail('main.title'),
                 $this->Url->build('/', true)
             )) ?>
-
         </small>
         <br />
-        <small><?= __d('me_cms', 'The request has been sent from the IP {0}', $this->request->clientIp()) ?></small>
+
+        <small>
+            <?= __d('me_cms', 'The request has been sent from the IP {0}', $this->request->clientIp()) ?>
+        </small>
         <br />
-        <small><?= __d('me_cms', 'Please, don\'t reply to this email') ?></small>
+
+        <small>
+            <?= __d('me_cms', 'Please, don\'t reply to this email') ?>
+        </small>
     </body>
 </html>

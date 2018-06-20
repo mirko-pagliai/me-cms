@@ -130,11 +130,11 @@ class ViewTest extends TestCase
         })->toArray();
 
         $this->assertEquals([
-            METOOLS . '\View\Helper\HtmlHelper',
-            METOOLS . '\View\Helper\DropdownHelper',
-            METOOLS . '\View\Helper\FormHelper',
-            METOOLS . '\View\Helper\LibraryHelper',
-            METOOLS . '\View\Helper\PaginatorHelper',
+            ME_TOOLS . '\View\Helper\HtmlHelper',
+            ME_TOOLS . '\View\Helper\DropdownHelper',
+            ME_TOOLS . '\View\Helper\FormHelper',
+            ME_TOOLS . '\View\Helper\LibraryHelper',
+            ME_TOOLS . '\View\Helper\PaginatorHelper',
             ASSETS . '\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
@@ -163,8 +163,7 @@ class ViewTest extends TestCase
         //Renders
         $result = $this->View->render(false, ME_CMS . '.default');
 
-        //@codingStandardsIgnoreLine
-        @unlink(WWW_ROOT . 'favicon.ico');
+        safe_unlink(WWW_ROOT . 'favicon.ico');
 
         //Checks for title and favicon
         $this->assertRegExp('/' . preg_quote('<title>title from controller - ' . ME_CMS . '</title>', '/') . '/', $result);

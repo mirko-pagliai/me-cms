@@ -16,12 +16,15 @@ use Cake\Core\Plugin;
 use Cake\View\View;
 use MeCms\View\Helper\MenuBuilderHelper;
 use MeTools\TestSuite\TestCase;
+use Tools\ReflectionTrait;
 
 /**
  * MenuBuilderHelperTest class
  */
 class MenuBuilderHelperTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @var \MeCms\View\Helper\MenuBuilderHelper
      */
@@ -61,7 +64,11 @@ class MenuBuilderHelperTest extends TestCase
      */
     public function testGetMenuMethods()
     {
-        $result = $this->MenuBuilder->getMenuMethods(ME_CMS);
+        $getMenuMethodsMethod = function ($plugin) {
+            return $this->invokeMethod($this->MenuBuilder, 'getMenuMethods', [$plugin]);
+        };
+
+        $result = $getMenuMethodsMethod(ME_CMS);
         $expected = [
             'posts',
             'pages',
@@ -78,12 +85,12 @@ class MenuBuilderHelperTest extends TestCase
             $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', $method));
         }
 
-        $result = $this->MenuBuilder->getMenuMethods('TestPlugin');
+        $result = $getMenuMethodsMethod('TestPlugin');
         $expected = ['articles', 'other_items'];
         $this->assertEquals($expected, $result);
 
         //This plugin has no menu methods
-        $result = $this->MenuBuilder->getMenuMethods('TestPluginTwo');
+        $result = $getMenuMethodsMethod('TestPluginTwo');
         $this->assertEmpty($result);
     }
 
@@ -96,21 +103,17 @@ class MenuBuilderHelperTest extends TestCase
         $result = $this->MenuBuilder->generate(ME_CMS);
 
         //Checks array keys (menu names)
-        $this->assertEquals([ME_CMS . '.posts', ME_CMS . '.pages', ME_CMS . '.photos'], array_keys($result));
+        $this->assertArrayKeysEqual([ME_CMS . '.posts', ME_CMS . '.pages', ME_CMS . '.photos'], $result);
 
         //Foreach menu
         foreach ($result as $menu) {
             //Checks array keys (menu values)
-            $this->assertArrayKeysEqual(['menu', 'title', 'titleOptions'], $menu);
+            $this->assertArrayKeysEqual(['links', 'title', 'titleOptions'], $menu);
 
-            //Checks each link
-            foreach ($menu['menu'] as $link) {
-                $expected = [
-                    'a' => ['href', 'title'],
-                    'preg:/[A-z\s]+/',
-                    '/a',
-                ];
-                $this->assertHtml($expected, $link);
+            //Checks links
+            foreach ($menu['links'] as $link) {
+                $this->assertIsString($link[0]);
+                $this->assertNotEmpty($link[1]);
             }
         }
 
@@ -122,16 +125,12 @@ class MenuBuilderHelperTest extends TestCase
         //Foreach menu
         foreach ($result as $menu) {
             //Checks array keys (menu values)
-            $this->assertEquals(['menu', 'title', 'titleOptions'], array_keys($menu));
+            $this->assertArrayKeysEqual(['links', 'title', 'titleOptions'], $menu);
 
-            //Checks each link
-            foreach ($menu['menu'] as $link) {
-                $expected = [
-                    'a' => ['href', 'title'],
-                    'preg:/[A-z\s]+/',
-                    '/a',
-                ];
-                $this->assertHtml($expected, $link);
+            //Checks links
+            foreach ($menu['links'] as $link) {
+                $this->assertIsString($link[0]);
+                $this->assertNotEmpty($link[1]);
             }
         }
 
@@ -146,7 +145,7 @@ class MenuBuilderHelperTest extends TestCase
     {
         $result = $this->MenuBuilder->renderAsCollapse('TestPlugin');
         $expected = [
-            ['div' => ['class' => 'panel']],
+            ['div' => ['class' => 'card']],
             ['a' => [
                 'href' => '#collapse-first-menu',
                 'aria-controls' => 'collapse-first-menu',
@@ -170,7 +169,7 @@ class MenuBuilderHelperTest extends TestCase
             '/a',
             '/div',
             '/div',
-            ['div' => ['class' => 'panel']],
+            ['div' => ['class' => 'card']],
             ['a' => [
                 'href' => '#collapse-second-menu',
                 'aria-controls' => 'collapse-second-menu',
@@ -210,7 +209,6 @@ class MenuBuilderHelperTest extends TestCase
         $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
 
         $result = implode(PHP_EOL, $result);
-
         $expected = [
             ['a' => [
                 'href' => '#',
@@ -225,23 +223,15 @@ class MenuBuilderHelperTest extends TestCase
             '/i',
             ' ',
             'First menu',
-            ' ',
-            ['i' => ['class' => 'fa fa-caret-down']],
-            ' ',
-            '/i',
             '/a',
-            ['ul' => ['class' => 'dropdown-menu']],
-            ['li' => true],
-            ['a' => ['href' => '/', 'title' => 'First link']],
+            ['div' => ['class' => 'dropdown-menu']],
+            ['a' => ['href' => '/', 'class' => 'dropdown-item', 'title' => 'First link']],
             'First link',
             '/a',
-            '/li',
-            ['li' => true],
-            ['a' => ['href' => '/', 'title' => 'Second link']],
+            ['a' => ['href' => '/', 'class' => 'dropdown-item', 'title' => 'Second link']],
             'Second link',
             '/a',
-            '/li',
-            '/ul',
+            '/div',
             ['a' => [
                 'href' => '#',
                 'aria-expanded' => 'false',
@@ -255,23 +245,15 @@ class MenuBuilderHelperTest extends TestCase
             '/i',
             ' ',
             'Second menu',
-            ' ',
-            ['i' => ['class' => 'fa fa-caret-down']],
-            ' ',
-            '/i',
             '/a',
-            ['ul' => ['class' => 'dropdown-menu']],
-            ['li' => true],
-            ['a' => ['href' => '/', 'title' => 'Third link']],
+            ['div' => ['class' => 'dropdown-menu']],
+            ['a' => ['href' => '/', 'class' => 'dropdown-item', 'title' => 'Third link']],
             'Third link',
             '/a',
-            '/li',
-            ['li' => true],
-            ['a' => ['href' => '/', 'title' => 'Fourth link']],
+            ['a' => ['href' => '/', 'class' => 'dropdown-item', 'title' => 'Fourth link']],
             'Fourth link',
             '/a',
-            '/li',
-            '/ul',
+            '/div',
         ];
         $this->assertHtml($expected, $result);
     }

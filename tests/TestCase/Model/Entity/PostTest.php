@@ -76,7 +76,17 @@ class PostTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['tags_as_string'], $this->Post->getVirtual());
+        $this->assertEquals(['plain_text', 'tags_as_string'], $this->Post->getVirtual());
+    }
+
+    /**
+     * Test for `_getPlainText()` method
+     * @test
+     */
+    public function testPlainTextGetMutator()
+    {
+        $this->assertEquals('Text of the first post', $this->Posts->findById(1)->first()->plain_text);
+        $this->assertEmpty((new Post)->plain_text);
     }
 
     /**

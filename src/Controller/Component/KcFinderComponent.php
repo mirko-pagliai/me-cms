@@ -14,9 +14,11 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
+use MeCms\Utility\Checkup;
+use RuntimeException;
 
 /**
  * A component to handle KCFinder
@@ -24,10 +26,32 @@ use Cake\Routing\Router;
 class KcFinderComponent extends Component
 {
     /**
+     * Instance of `Checkup`
+     * @since 2.22.8
+     * @var \MeCms\Utility\Checkup
+     */
+    public $Checkup;
+
+    /**
      * Components
      * @var array
      */
     public $components = [ME_CMS . '.Auth'];
+
+    /**
+     * Construct
+     * @param ComponentRegistry $registry A ComponentRegistry this component can
+     *  use to lazy load its components
+     * @param array $config Array of configuration settings
+     * @since 2.22.8
+     * @uses $Checkup
+     */
+    public function __construct(ComponentRegistry $registry, array $config = [])
+    {
+        $this->Checkup = new Checkup;
+
+        parent::__construct($registry, $config);
+    }
 
     /**
      * Internal method to get the default config
@@ -90,23 +114,53 @@ class KcFinderComponent extends Component
     }
 
     /**
+     * Internal method to check if KCFinder is available
+     * @return bool
+     * @since 2.22.8
+     * @uses $Checkup
+     */
+    protected function kcFinderIsAvailable()
+    {
+        return $this->Checkup->KCFinder->isAvailable();
+    }
+
+    /**
+     * Internal method to check if the uploaded directory is writeable
+     * @return bool
+     * @since 2.22.8
+     * @uses $Checkup
+     */
+    protected function uploadedDirIsWriteable()
+    {
+        $result = $this->Checkup->Webroot->isWriteable();
+
+        if (empty($result) || !array_key_exists(UPLOADED, $result)) {
+            return false;
+        }
+
+        return $result[UPLOADED];
+    }
+
+    /**
      * Constructor hook method
      * @param array $config The configuration settings provided to this
      *  component
      * @return void
-     * @throws InternalErrorException
+     * @throws RuntimeException
      * @uses getDefaultConfig()
+     * @uses kcFinderIsAvailable()
+     * @uses uploadedDirIsWriteable()
      */
     public function initialize(array $config)
     {
         //Checks for KCFinder
-        if (!is_readable(WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . 'index.php')) {
-            throw new InternalErrorException(__d('me_tools', '{0} is not available', 'KCFinder'));
+        if (!$this->kcFinderIsAvailable()) {
+            throw new RuntimeException(__d('me_tools', '{0} is not available', 'KCFinder'));
         }
 
         //Checks for the files directory (`APP/webroot/files`)
-        if (!folderIsWriteable(UPLOADED)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
+        if (!$this->uploadedDirIsWriteable()) {
+            throw new RuntimeException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
         }
 
         //Merges:
@@ -120,7 +174,7 @@ class KcFinderComponent extends Component
         );
 
         //Writes on session
-        $this->getController()->request->session()->write('KCFINDER', $config);
+        $this->getController()->request->getSession()->write('KCFINDER', $config);
 
         parent::initialize($config);
     }

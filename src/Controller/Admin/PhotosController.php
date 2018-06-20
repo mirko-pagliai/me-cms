@@ -93,7 +93,7 @@ class PhotosController extends AppController
             $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
         }
 
-        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQuery())));
+        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQueryParams())));
 
         if ($render) {
             $this->Cookie->write('renderPhotos', $render);
@@ -132,7 +132,7 @@ class PhotosController extends AppController
                 ->save(PHOTOS . $album);
 
             if (!$uploaded) {
-                $this->setUploadError($this->Uploader->error());
+                $this->setUploadError($this->Uploader->getError());
 
                 return;
             }
