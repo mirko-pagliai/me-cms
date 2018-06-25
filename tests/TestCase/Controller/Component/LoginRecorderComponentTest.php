@@ -224,7 +224,7 @@ class LoginRecorderComponentTest extends TestCase
 
         $first = $this->LoginRecorder->read();
         $this->assertEquals(1, count($first));
-        $this->assertInstanceOf('stdClass', $first[0]);
+        $this->assertInstanceOf('Cake\ORM\Entity', $first[0]);
         $this->assertEquals(false, $first[0]->ip);
         $this->assertInstanceOf('Cake\I18n\Time', $first[0]->time);
         $this->assertEquals('Linux', $first[0]->platform);
@@ -240,7 +240,7 @@ class LoginRecorderComponentTest extends TestCase
 
         $second = $this->LoginRecorder->read();
         $this->assertEquals(1, count($second));
-        $this->assertInstanceOf('stdClass', $second[0]);
+        $this->assertInstanceOf('Cake\ORM\Entity', $second[0]);
         $this->assertNotEquals($second, $first);
 
         sleep(1);
