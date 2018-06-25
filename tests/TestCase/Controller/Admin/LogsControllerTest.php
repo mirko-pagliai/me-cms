@@ -118,7 +118,6 @@ class LogsControllerTest extends IntegrationTestCase
     /**
      * Tests for `index()` method
      * @test
-     * @todo `$logsFromView` as Entity
      */
     public function testIndex()
     {
@@ -129,12 +128,14 @@ class LogsControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/index.ctp');
 
         $logsFromView = $this->viewVariable('logs');
-        $this->assertIsArray($logsFromView);
-        $this->assertEquals([
-            'filename' => 'error.log',
-            'hasSerialized' => true,
-            'size' => filesize(LOGS . 'error.log'),
-        ], (array)$logsFromView[0]);
+        $this->assertCount(1, $logsFromView);
+
+        foreach ($logsFromView as $log) {
+            $this->assertInstanceOf('Cake\ORM\Entity', $log);
+            $this->assertEquals($log->filename, 'error.log');
+            $this->assertTrue($log->hasSerialized);
+            $this->assertEquals($log->size, filesize(LOGS . 'error.log'));
+        }
     }
 
     /**

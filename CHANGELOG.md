@@ -4,6 +4,7 @@
 * `AppValidator` moved from `MeCms\Model\Validation` to `MeCms\Validation`;
 * `SerializedLog::getLogAsObject()` method return a log as `Entity`. So now all
     serialized logs are entities;
+* `LogsController::index()` action sets a collection of entities;
 * updated for CakePHP 3.6, php-tools 1.0.7, me-tools 2.16.10 and
     cakephp-database-backup 2.5.0.
 
