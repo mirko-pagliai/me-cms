@@ -126,7 +126,6 @@ class PagesControllerTest extends IntegrationTestCase
     public function testPreview()
     {
         $this->setUserGroup('user');
-
         $slug = $this->Pages->find('pending')->extract('slug')->first();
 
         $this->get(['_name' => 'pagesPreview', $slug]);

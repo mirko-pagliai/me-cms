@@ -47,19 +47,6 @@ class SystemsControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        parent::controllerSpy($event, $controller);
-
-        $this->_controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
-    }
-
-    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up

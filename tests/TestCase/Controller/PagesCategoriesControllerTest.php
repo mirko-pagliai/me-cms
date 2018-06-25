@@ -74,11 +74,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->PagesCategories->find('active')
-            ->order([sprintf('%s.id', $this->PagesCategories->getAlias()) => 'ASC'])
-            ->extract('slug')
-            ->first();
-
+        $slug = $this->PagesCategories->find('active')->extract('slug')->first();
         $url = ['_name' => 'pagesCategory', $slug];
 
         $this->get($url);
@@ -100,7 +96,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertEquals($pagesFromView->toArray(), $pagesFromCache->toArray());
 
         //GET request with query string
-        $this->get(array_merge($url, ['?' => ['q' => $slug]]));
+        $this->get($url + ['?' => ['q' => $slug]]);
         $this->assertRedirect($url);
     }
 }

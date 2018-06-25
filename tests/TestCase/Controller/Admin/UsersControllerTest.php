@@ -60,9 +60,7 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $file = TMP . 'file_to_upload.jpg';
 
-        if (!file_exists($file)) {
-            copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
-        }
+        safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
 
         return [
             'tmp_name' => $file,
@@ -123,13 +121,13 @@ class UsersControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         foreach (['index', 'add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [2]));
+            $this->get($this->url + compact('action') + [2]);
             $this->assertNotEmpty($this->viewVariable('groups'));
         }
 
         //Other actions, for example `changePassword`, still work
         $this->setUserId(1);
-        $this->get(array_merge($this->url, ['action' => 'changePassword']));
+        $this->get($this->url + ['action' => 'changePassword']);
         $this->assertEmpty($this->viewVariable('groups'));
     }
 
@@ -144,14 +142,14 @@ class UsersControllerTest extends IntegrationTestCase
 
         //`add` and `edit` actions don't work
         foreach (['index', 'add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertRedirect(['controller' => 'UsersGroups', 'action' => 'index']);
             $this->assertFlashMessage('You must first create an user group');
         }
 
         //Other actions, for example `changePassword`, still work
         $this->setUserId(1);
-        $this->get(array_merge($this->url, ['action' => 'changePassword']));
+        $this->get($this->url + ['action' => 'changePassword']);
         $this->assertEmpty($this->viewVariable('groups'));
     }
 
@@ -209,7 +207,7 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/index.ctp');
 
@@ -226,7 +224,7 @@ class UsersControllerTest extends IntegrationTestCase
     {
         Configure::write(ME_CMS . '.users.login_log', 0);
 
-        $url = array_merge($this->url, ['action' => 'view', 1]);
+        $url = $this->url + ['action' => 'view', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -252,7 +250,7 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -292,7 +290,7 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 2]);
+        $url = $this->url + ['action' => 'edit', 2];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -316,8 +314,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($userFromView);
         $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
-        $adminUser = $this->Users->find()->where(['group_id' => 1])->first();
-        $url = array_merge($this->url, ['action' => 'edit', $adminUser->id]);
+        $url = $this->url + ['action' => 'edit', $this->Users->findByGroupId(1)->extract('id')->first()];
 
         //An admin cannot edit other admin users
         $this->get($url);
@@ -337,10 +334,10 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $url = array_merge($this->url, ['action' => 'delete']);
+        $url = $this->url + ['action' => 'delete'];
 
         //Cannot delete the admin founder
-        $this->post(array_merge($url, [1]));
+        $this->post($url + [1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete the admin founder');
 
@@ -350,7 +347,7 @@ class UsersControllerTest extends IntegrationTestCase
             ->first();
 
         //Only the admin founder can delete others admin users
-        $this->post(array_merge($url, [$adminUser]));
+        $this->post($url + [$adminUser]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('Only the admin founder can do this');
 
@@ -359,7 +356,7 @@ class UsersControllerTest extends IntegrationTestCase
             ->extract('id')
             ->first();
 
-        $this->post(array_merge($url, [$userWithPosts]));
+        $this->post($url + [$userWithPosts]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
 
@@ -368,7 +365,7 @@ class UsersControllerTest extends IntegrationTestCase
             ->extract('id')
             ->first();
 
-        $this->post(array_merge($url, [$userWithNoPosts]));
+        $this->post($url + [$userWithNoPosts]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
     }
@@ -379,9 +376,9 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testActivate()
     {
-        $pendingUser = $this->Users->findByActive(false)->extract('id')->first();
+        $pendingUser = $this->Users->find('pending')->extract('id')->first();
 
-        $this->get(array_merge($this->url, ['action' => 'activate', $pendingUser]));
+        $this->get($this->url + ['action' => 'activate', $pendingUser]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
 
@@ -396,7 +393,7 @@ class UsersControllerTest extends IntegrationTestCase
     public function testChangePassword()
     {
         $oldPassword = 'OldPassword1"';
-        $url = array_merge($this->url, ['action' => 'changePassword']);
+        $url = $this->url + ['action' => 'changePassword'];
         $this->setUserId(1);
 
         //Saves the password for the first user
@@ -454,7 +451,7 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $expectedPicture = USER_PICTURES . '1.jpg';
         $file = $this->createFileToUpload();
-        $url = array_merge($this->url, ['action' => 'changePicture']);
+        $url = $this->url + ['action' => 'changePicture'];
         $this->setUserId(1);
 
         //GET request
@@ -471,7 +468,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertSession(null, 'Auth.User.picture');
 
         //POST request. This works
-        $this->post(array_merge($url, ['_ext' => 'json']), compact('file'));
+        $this->post($url + ['_ext' => 'json'], compact('file'));
         $this->assertResponseOkAndNotEmpty();
         $this->assertSession($expectedPicture, 'Auth.User.picture');
         $this->assertFileExists($expectedPicture);
@@ -487,9 +484,9 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testChangePictureErrorDuringUpload()
     {
-        $file = array_merge($this->createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
+        $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createFileToUpload();
 
-        $this->post(array_merge($this->url, ['action' => 'changePicture', '_ext' => 'json']), compact('file'));
+        $this->post($this->url + ['action' => 'changePicture', '_ext' => 'json'], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Users/json/change_picture.ctp');
@@ -521,7 +518,7 @@ class UsersControllerTest extends IntegrationTestCase
         //Writes a login log
         $this->assertTrue($this->LoginRecorder->write());
 
-        $url = array_merge($this->url, ['action' => 'lastLogin']);
+        $url = $this->url + ['action' => 'lastLogin'];
 
         $this->setUserId(1);
 

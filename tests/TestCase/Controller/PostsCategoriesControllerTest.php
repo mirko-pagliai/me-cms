@@ -77,11 +77,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->PostsCategories->find('active')
-            ->order([sprintf('%s.id', $this->PostsCategories->getAlias()) => 'ASC'])
-            ->extract('slug')
-            ->first();
-
+        $slug = $this->PostsCategories->find('active')->extract('slug')->first();
         $url = ['_name' => 'postsCategory', $slug];
 
         $this->get($url);
@@ -112,7 +108,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string
-        $this->get(array_merge($url, ['?' => ['q' => $slug]]));
+        $this->get($url + ['?' => ['q' => $slug]]);
         $this->assertRedirect($url);
 
         //GET request with a no existing category

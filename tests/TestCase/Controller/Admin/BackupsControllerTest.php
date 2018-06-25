@@ -84,9 +84,7 @@ class BackupsControllerTest extends IntegrationTestCase
         parent::tearDown();
 
         //Deletes all backups
-        foreach (glob(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . '*') as $file) {
-            safe_unlink($file);
-        }
+        safe_unlink_recursive(getConfigOrFail(DATABASE_BACKUP . '.target'));
     }
 
     /**
@@ -142,7 +140,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates some backup files
         $this->createSomeBackups();
 
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Backups/index.ctp');
 
@@ -157,7 +155,7 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -188,7 +186,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates a backup file
         $file = $this->createBackup();
 
-        $this->post(array_merge(array_merge($this->url, ['action' => 'delete']), [urlencode(basename($file))]));
+        $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertFileNotExists($file);
@@ -203,7 +201,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates some backup files
         $files = $this->createSomeBackups();
 
-        $this->post(array_merge($this->url, ['action' => 'deleteAll']));
+        $this->post($this->url + ['action' => 'deleteAll']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertFileNotExists($files);
@@ -218,7 +216,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates a backup file
         $file = $this->createBackup();
 
-        $this->get(array_merge($this->url, ['action' => 'download', urlencode(basename($file))]));
+        $this->get($this->url + ['action' => 'download', urlencode(basename($file))]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse($file);
     }
@@ -229,13 +227,11 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testRestore()
     {
-        //Creates a backup file
+        //Creates a backup file and writes some cache data
         $file = $this->createBackup();
-
-        //Writes some cache data
         Cache::writeMany(['firstKey' => 'firstValue', 'secondKey' => 'secondValue']);
 
-        $this->post(array_merge($this->url, ['action' => 'restore', urlencode(basename($file))]));
+        $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertFalse(Cache::read('firstKey'));
@@ -251,11 +247,13 @@ class BackupsControllerTest extends IntegrationTestCase
         //Creates a backup file
         $file = $this->createBackup();
 
-        $this->post(array_merge($this->url, ['action' => 'send', urlencode(basename($file))]));
+        $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
-
-        $mail = getConfigOrFail(ME_CMS . '.email.webmaster');
-        $this->assertLogContains('Called `send()` with args: `' . $file . '`, `' . $mail . '`', 'debug');
+        $this->assertLogContains(sprintf(
+            'Called `send()` with args: `%s`, `%s`',
+            $file,
+            getConfigOrFail(ME_CMS . '.email.webmaster')
+        ), 'debug');
     }
 }

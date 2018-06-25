@@ -58,9 +58,7 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         $file = TMP . 'file_to_upload.jpg';
 
-        if (!file_exists($file)) {
-            copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
-        }
+        safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
 
         return [
             'tmp_name' => $file,
@@ -127,7 +125,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testBeforeFilter()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertNotEmpty($this->viewVariable('albums'));
     }
 
@@ -140,7 +138,7 @@ class PhotosControllerTest extends IntegrationTestCase
         //Deletes all albums
         $this->Photos->Albums->deleteAll(['id IS NOT' => null]);
 
-        $this->get(array_merge($this->url, ['action' => 'add']));
+        $this->get($this->url + ['action' => 'add']);
         $this->assertRedirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
         $this->assertFlashMessage('You must first create an album');
     }
@@ -174,7 +172,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/index.ctp');
 
@@ -190,7 +188,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testIndexAsGrid()
     {
-        $this->get(array_merge($this->url, ['action' => 'index', '?' => ['render' => 'grid']]));
+        $this->get($this->url + ['action' => 'index', '?' => ['render' => 'grid']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/index_as_grid.ctp');
         $this->assertCookie('grid', 'renderPhotos');
@@ -204,7 +202,7 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         $this->cookie('renderPhotos', 'grid');
 
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/index_as_grid.ctp');
         $this->assertCookie('grid', 'renderPhotos');
@@ -217,7 +215,7 @@ class PhotosControllerTest extends IntegrationTestCase
     public function testUpload()
     {
         $file = $this->createFileToUpload();
-        $url = array_merge($this->url, ['action' => 'upload']);
+        $url = $this->url + ['action' => 'upload'];
 
         //GET request
         $this->get($url);
@@ -225,7 +223,7 @@ class PhotosControllerTest extends IntegrationTestCase
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/upload.ctp');
 
         //POST request. This works
-        $this->post(array_merge($url, ['_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
+        $this->post($url + ['_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseOkAndNotEmpty();
 
         //Checks the photo has been saved
@@ -240,9 +238,9 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorDuringUpload()
     {
-        $file = array_merge($this->createFileToUpload(), ['error' => UPLOAD_ERR_NO_FILE]);
+        $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createFileToUpload();
 
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
+        $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
@@ -254,7 +252,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorMissingAlbumIdOnQueryString()
     {
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), ['file' => true]);
+        $this->post($this->url + ['action' => 'upload', '_ext' => 'json'], ['file' => true]);
         $this->assertResponseFailure();
         $this->assertResponseContains('Missing ID');
     }
@@ -269,7 +267,7 @@ class PhotosControllerTest extends IntegrationTestCase
 
         //The table `save()` method returns `false` for this test. See the
         //  `controllerSpy()` method.
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
+        $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"' . I18N_OPERATION_NOT_OK . '"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
@@ -281,9 +279,9 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testUploadErrorOnEntity()
     {
-        $file = array_merge($this->createFileToUpload(), ['name' => 'a.jpg?name=value']);
+        $file = ['name' => 'a.jpg?name=value'] + $this->createFileToUpload();
 
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]]), compact('file'));
+        $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
         $this->assertTemplate(ROOT . 'src/Template/Admin/Photos/json/upload.ctp');
@@ -302,7 +300,7 @@ class PhotosControllerTest extends IntegrationTestCase
 
         //POST request. This should also work without the album ID on the query
         //  string, as there is only one album
-        $this->post(array_merge($this->url, ['action' => 'upload', '_ext' => 'json']), compact('file'));
+        $this->post($this->url + ['action' => 'upload', '_ext' => 'json'], compact('file'));
         $this->assertResponseOkAndNotEmpty();
 
         //Checks the photo has been saved
@@ -317,7 +315,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 1]);
+        $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -348,7 +346,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testDownload()
     {
-        $this->get(array_merge($this->url, ['action' => 'download', 1]));
+        $this->get($this->url + ['action' => 'download', 1]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(PHOTOS . '1' . DS . 'photo1.jpg');
     }
@@ -359,7 +357,7 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->post(array_merge($this->url, ['action' => 'delete', 1]));
+        $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index', 1]);
         $this->assertFlashMessage('The operation has been performed correctly');
     }

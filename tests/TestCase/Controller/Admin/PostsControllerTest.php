@@ -91,7 +91,7 @@ class PostsControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         foreach (['add', 'edit', 'index'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));
             $this->assertNotEmpty($this->viewVariable('users'));
         }
@@ -107,7 +107,7 @@ class PostsControllerTest extends IntegrationTestCase
         $this->Posts->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertRedirect(['controller' => 'PostsCategories', 'action' => 'index']);
             $this->assertFlashMessage('You must first create a category');
         }
@@ -123,7 +123,7 @@ class PostsControllerTest extends IntegrationTestCase
         $this->Posts->Users->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
             $this->assertFlashMessage('You must first create an user');
         }
@@ -200,7 +200,7 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/index.ctp');
 
@@ -215,7 +215,7 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -246,7 +246,7 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 1]);
+        $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -284,7 +284,7 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->post(array_merge($this->url, ['action' => 'delete', 1]));
+        $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
     }
@@ -300,10 +300,7 @@ class PostsControllerTest extends IntegrationTestCase
 
             foreach ([1, 2] as $userId) {
                 //Adds record
-                $this->post(
-                    array_merge($this->url, ['action' => 'add']),
-                    array_merge($this->example, ['user_id' => $userId])
-                );
+                $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + $this->example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage('The operation has been performed correctly');
 
@@ -311,15 +308,12 @@ class PostsControllerTest extends IntegrationTestCase
                 $this->assertEquals($userId, $post->user_id);
 
                 //Edits record, adding +1 to the `user_id`
-                $this->post(
-                    array_merge($this->url, ['action' => 'edit', $post->id]),
-                    array_merge($this->example, ['user_id' => $userId + 1])
-                );
+                $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + $this->example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage('The operation has been performed correctly');
 
                 $post = $this->Posts->findById($post->id)->first();
-                $this->assertEquals($userId + 1, $post->user_id);
+                $this->assertEquals($userId, $post->user_id);
 
                 $this->Posts->delete($post);
             }
@@ -337,10 +331,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         foreach ([1, 2] as $userId) {
             //Adds record
-            $this->post(
-                array_merge($this->url, ['action' => 'add']),
-                array_merge($this->example, ['user_id' => $userId])
-            );
+            $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + $this->example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage('The operation has been performed correctly');
 
@@ -348,10 +339,7 @@ class PostsControllerTest extends IntegrationTestCase
             $this->assertEquals(3, $post->user_id);
 
             //Edits record, adding +1 to the `user_id`
-            $this->post(
-                array_merge($this->url, ['action' => 'edit', $post->id]),
-                array_merge($this->example, ['user_id' => $userId + 1])
-            );
+            $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + $this->example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage('The operation has been performed correctly');
 

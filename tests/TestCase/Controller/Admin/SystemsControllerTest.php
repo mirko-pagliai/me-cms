@@ -56,10 +56,10 @@ class SystemsControllerTest extends IntegrationTestCase
         Cache::write('valueFromGroup', 'data', 'posts');
 
         $files = [
-            'asset' => getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
-            'log' => LOGS . 'log_file',
+            'assets' => getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
+            'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumb' => getConfigOrFail(THUMBER . '.target') . DS . md5(null) . '_' . md5(null) . '.jpg',
+            'thumbs' => getConfigOrFail(THUMBER . '.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
         ];
 
         foreach ($files as $file) {
@@ -99,16 +99,8 @@ class SystemsControllerTest extends IntegrationTestCase
         parent::tearDown();
 
         //Deletes all temporary files
-        foreach ([
-            getConfigOrFail(ASSETS . '.target') . DS,
-            LOGS,
-            getConfigOrFail(THUMBER . '.target') . DS,
-        ] as $dir) {
-            foreach (glob($dir . '*') as $file) {
-                safe_unlink($file);
-            }
-        }
-
+        safe_unlink_recursive(getConfigOrFail(ASSETS . '.target'));
+        safe_unlink_recursive(getConfigOrFail(THUMBER . '.target'));
         safe_unlink(SITEMAP);
     }
 
@@ -165,7 +157,7 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         safe_mkdir(UPLOADED . 'docs');
 
-        $url = array_merge($this->url, ['action' => 'browser']);
+        $url = $this->url + ['action' => 'browser'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -178,7 +170,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertEmpty($kcfinderFromView);
 
         //GET request. Asks for `docs` type
-        $this->get(array_merge($url, ['?' => ['type' => 'docs']]));
+        $this->get($url + ['?' => ['type' => 'docs']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/browser.ctp');
 
@@ -191,7 +183,7 @@ class SystemsControllerTest extends IntegrationTestCase
         I18n::setLocale('it');
 
         //GET request. Now with `it` locale
-        $this->get(array_merge($url, ['?' => ['type' => 'docs']]));
+        $this->get($url + ['?' => ['type' => 'docs']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/browser.ctp');
 
@@ -221,7 +213,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testChangelogs()
     {
-        $url = array_merge($this->url, ['action' => 'changelogs']);
+        $url = $this->url + ['action' => 'changelogs'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -235,7 +227,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertEmpty($changelogFromView);
 
         //GET request. Asks for a changelog file
-        $this->get(array_merge($url, ['?' => ['file' => ME_CMS]]));
+        $this->get($url + ['?' => ['file' => ME_CMS]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/changelogs.ctp');
 
@@ -249,13 +241,11 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testCheckup()
     {
-        $this->get(array_merge($this->url, ['action' => 'checkup']));
+        $this->get($this->url + ['action' => 'checkup']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/checkup.ctp');
 
-        $varsFromView = $this->_controller->viewVars;
-
-        foreach ($varsFromView as $var) {
+        foreach ($this->_controller->viewVars as $var) {
             $this->assertNotEmpty($var);
         }
 
@@ -269,7 +259,7 @@ class SystemsControllerTest extends IntegrationTestCase
             'cache',
             'backups',
             'apache',
-        ], $varsFromView);
+        ], $this->_controller->viewVars);
     }
 
     /**
@@ -293,59 +283,40 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testTmpCleaner()
     {
-        $url = array_merge($this->url, ['action' => 'tmpCleaner']);
+        $url = $this->url + ['action' => 'tmpCleaner'];
 
         $files = $this->createSomeTemporaryData();
 
         //POST request. Cleans all
-        $this->post(array_merge($url, ['all']));
+        $this->post($url + ['all']);
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertCacheIsEmpty();
-
-        foreach ($files as $file) {
-            $this->assertFileNotExists($file);
-        }
+        $this->assertFileNotExists($files);
 
         $files = $this->createSomeTemporaryData();
 
         //POST request. Cleans the cache
-        $this->post(array_merge($url, ['cache']));
+        $this->post($url + ['cache']);
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has been performed correctly');
         $this->assertCacheIsEmpty();
 
-        //POST request. Cleans assets
-        $this->post(array_merge($url, ['assets']));
-        $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists($files['asset']);
-
-        //POST request. Cleans logs
-        $this->post(array_merge($url, ['logs']));
-        $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists($files['log']);
-
-        //POST request. Cleans the sitemap
-        $this->post(array_merge($url, ['sitemap']));
-        $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists($files['sitemap']);
-
-        //POST request. Cleans thumbnails
-        $this->post(array_merge($url, ['thumbs']));
-        $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has been performed correctly');
-        $this->assertFileNotExists($files['thumb']);
+        //POST request. Cleans assets, logs, sitemap and thumbs
+        foreach (['assets', 'logs', 'sitemap', 'thumbs'] as $tmpName) {
+            $this->post($url + [$tmpName]);
+            $this->assertRedirect(['action' => 'tmpViewer']);
+            $this->assertFlashMessage('The operation has been performed correctly');
+            $this->assertFileNotExists($files[$tmpName]);
+        }
 
         //POST request. Invalid type
-        $this->post(array_merge($url, ['invalidType']));
+        $this->post($url + ['invalidType']);
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage('The operation has not been performed correctly');
 
         //GET request
-        $this->get(array_merge($url, ['all']));
+        $this->get($url + ['all']);
         $this->assertResponseError();
     }
 
@@ -357,13 +328,11 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->createSomeTemporaryData();
 
-        $this->get(array_merge($this->url, ['action' => 'tmpViewer']));
+        $this->get($this->url + ['action' => 'tmpViewer']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/tmp_viewer.ctp');
 
-        $varsFromView = $this->_controller->viewVars;
-
-        foreach ($varsFromView as $var) {
+        foreach ($this->_controller->viewVars as $var) {
             $this->assertNotEmpty($var);
         }
 
@@ -375,6 +344,6 @@ class SystemsControllerTest extends IntegrationTestCase
             'thumbsSize',
             'cacheStatus',
             'totalSize',
-        ], $varsFromView);
+        ], $this->_controller->viewVars);
     }
 }

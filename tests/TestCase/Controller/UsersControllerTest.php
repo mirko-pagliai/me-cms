@@ -22,7 +22,6 @@ use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Controller\UsersController;
 use MeCms\Mailer\UserMailer;
 use MeCms\TestSuite\IntegrationTestCase;
-use Tokens\Controller\Component\TokenComponent;
 
 /**
  * UsersControllerTest class
@@ -50,30 +49,18 @@ class UsersControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * @var string
+     * Internal method to get a mock instance of `LoginRecorderComponent`
+     * @return LoginRecorderComponent
      */
-    protected $keyForCookies = 'somerandomhaskeysomerandomhaskey';
-
-    /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy($event, $controller = null)
+    protected function getLoginRecorderMock()
     {
-        parent::controllerSpy($event, $controller);
-
-        //Sets key for cookies
-        $this->_controller->Cookie->config('key', $this->keyForCookies);
-
-        //Mocks the `LoginRecorder` component
-        $this->_controller->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
+        $LoginRecorderComponent = $this->getMockBuilder(LoginRecorderComponent::class)
             ->setConstructorArgs([new ComponentRegistry])
             ->getMock();
 
-        $this->_controller->LoginRecorder->method('config')
-            ->will($this->returnSelf());
+        $LoginRecorderComponent->method('config')->will($this->returnSelf());
+
+        return $LoginRecorderComponent;
     }
 
     /**
@@ -89,15 +76,11 @@ class UsersControllerTest extends IntegrationTestCase
 
         //Stubs the `getUserMailer()` method
         if (in_array('getUserMailer', (array)$methodsToSet)) {
-            $this->Controller->method('getUserMailer')
-                ->will($this->returnCallback(function () {
-                    $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
+            $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
+            $userMailerMock->method('set')->will($this->returnSelf());
+            $userMailerMock->method('send')->will($this->returnValue(true));
 
-                    $userMailerMock->method('set')->will($this->returnSelf());
-                    $userMailerMock->method('send')->will($this->returnValue(true));
-
-                    return $userMailerMock;
-                }));
+            $this->Controller->method('getUserMailer')->will($this->returnValue($userMailerMock));
         }
 
         //Stubs the `redirect()` method
@@ -106,30 +89,24 @@ class UsersControllerTest extends IntegrationTestCase
         }
 
         //Sets key for cookies
-        $this->Controller->Cookie->config('key', $this->keyForCookies);
+        $this->Controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
 
         //Mocks the `LoginRecorder` component
-        $this->Controller->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
-            ->setConstructorArgs([new ComponentRegistry])
-            ->getMock();
-
-        $this->Controller->LoginRecorder->method('config')
-            ->will($this->returnSelf());
+        $this->Controller->LoginRecorder = $this->getLoginRecorderMock();
     }
 
     /**
-     * Internal method to set a mock of `Token`
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
      */
-    protected function setTokenMock()
+    public function controllerSpy($event, $controller = null)
     {
-        //Mocks the `Token` component
-        $this->Controller->Token = $this->getMockBuilder(TokenComponent::class)
-            ->setConstructorArgs([new ComponentRegistry])
-            ->getMock();
+        parent::controllerSpy($event, $controller);
 
-        $this->Controller->Token->expects($this->any())
-            ->method('create')
-            ->will($this->returnValue('aTokenString'));
+        //Mocks the `LoginRecorder` component
+        $this->_controller->LoginRecorder = $this->getLoginRecorderMock();
     }
 
     /**
@@ -249,9 +226,7 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testSendActivationMail()
     {
-        $user = $this->Users->find()->first();
-
-        $result = $this->invokeMethod($this->Controller, 'sendActivationMail', [$user]);
+        $result = $this->invokeMethod($this->Controller, 'sendActivationMail', [$this->Users->find()->first()]);
         $this->assertNotEmpty($result);
         $this->assertIsArray($result);
     }
@@ -262,12 +237,9 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testInitialize()
     {
-        $componentsInstance = $this->Controller->components();
-
-        $components = collection($componentsInstance->loaded())
-            ->map(function ($value) use ($componentsInstance) {
-                return get_class($componentsInstance->{$value});
-            })->toList();
+        $componentsClasses = array_map(function ($name) {
+            return get_class($this->Controller->components()->get($name));
+        }, $this->Controller->components()->loaded());
 
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
@@ -278,7 +250,7 @@ class UsersControllerTest extends IntegrationTestCase
             'Recaptcha\Controller\Component\RecaptchaComponent',
             'Tokens\Controller\Component\TokenComponent',
             ME_CMS . '\Controller\Component\LoginRecorderComponent',
-        ], $components);
+        ], $componentsClasses);
 
         $this->assertEquals('aes', $this->Controller->Cookie->configKey('login')['encryption']);
         $this->assertEquals('+365 days', $this->Controller->Cookie->configKey('login')['expires']);
@@ -313,7 +285,7 @@ class UsersControllerTest extends IntegrationTestCase
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
         //GET request. This request is invalid, because the user is already active
-        $this->get(array_merge($url, ['id' => $user->id], compact('token')));
+        $this->get($url + ['id' => $user->id] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
 
@@ -326,7 +298,7 @@ class UsersControllerTest extends IntegrationTestCase
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
         //GET request. This request is valid, because the user is pending
-        $this->get(array_merge($url, ['id' => $user->id], compact('token')));
+        $this->get($url + ['id' => $user->id] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
@@ -386,8 +358,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
-        Configure::write(ME_CMS . '.users.signup', false);
-        Configure::write(ME_CMS . '.users.activation', 1);
+        Configure::write(ME_CMS . '.users', ['signup' => false, 'activation' => 1]);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Disabled');
@@ -432,7 +403,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertCookieEncrypted([
             'username' => $user->username,
             'password' => $password,
-        ], 'login', 'aes', $this->keyForCookies);
+        ], 'login', 'aes', $this->_controller->Cookie->getConfig('key'));
         $cookieExpire = Time::createFromTimestamp($this->_response->cookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 
@@ -547,7 +518,7 @@ class UsersControllerTest extends IntegrationTestCase
         $tokenOptions = ['type' => 'password_forgot', 'user_id' => $user->id];
         $token = $this->Controller->Token->create($user->email, $tokenOptions);
 
-        $url = array_merge(['_name' => 'passwordReset', 'id' => $user->id], compact('token'));
+        $url = ['_name' => 'passwordReset', 'id' => $user->id] + compact('token');
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -619,7 +590,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
 
         //POST request. For now, data are invalid
-        $this->post($url, array_merge($data, ['password' => 'anotherPassword']));
+        $this->post($url, ['password' => 'anotherPassword'] + $data);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('The account has not been created');
 

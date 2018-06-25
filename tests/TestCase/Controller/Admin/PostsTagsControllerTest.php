@@ -86,7 +86,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/index.ctp');
 
@@ -101,7 +101,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 1]);
+        $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
